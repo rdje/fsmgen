@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING` | `active` | `R12` | `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.2` | [docs/tasks/R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.md](docs/tasks/R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 

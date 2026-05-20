@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 operator/directive corpus widening selected
+- Completed `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused unsupported
+  assignment operators and unsupported `:=` reset values into maintained
+  expected-failure corpus entries.
+- The next frontier is `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.2`: add
+  bounded fixtures/catalog entries, stable diagnostic codes, corpus behavior
+  checks, and synchronized docs for the selected rejection families.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 assignment-boundary corpus widening shipped
 - Completed `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.2` and closed the tree.
 - Added six maintained expected-failure corpus entries for invalid

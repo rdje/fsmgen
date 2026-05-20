@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.2` widened the maintained
-  assignment-boundary expected-failure corpus and closed the task tree. The
-  next PNT selection should choose a fresh active tree before any further
-  source, test, fixture, generated-artifact, or config changes.
+  `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.1` activated the task tree for
+  adding maintained expected-failure corpus coverage for unsupported
+  assignment operators and unsupported `:=` reset values. The current frontier
+  is `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.2`.
+- Recent R12 operator/directive corpus-widening selection:
+  `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting already-focused unsupported
+  assignment operators and unsupported `:=` reset values into
+  stable-code-backed expected-failure corpus entries.
 - Recent R12 assignment-boundary corpus-widening completion:
   `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.2` added six named
   expected-failure corpus entries for invalid delayed-pulse RHS values, mixed

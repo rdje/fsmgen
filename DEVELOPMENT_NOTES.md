@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Operator/directive corpus widening stays narrow
+- `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.1` selects authored operator and
+  directive-value diagnostics for support-accounting promotion.
+- The implementation should promote existing unsupported assignment-operator
+  and unsupported `:=` reset-value rejections into stable-code-backed
+  expected-failure entries without adding syntax or changing strict-mode
+  compatibility behavior.
+
 ## 2026-05-20: Assignment-boundary support accounting keeps lowering unchanged
 - `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.2` promotes existing assignment
   diagnostics without changing parser acceptance or generated HDL.
