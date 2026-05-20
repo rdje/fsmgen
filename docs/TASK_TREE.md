@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R12-INLINE-MODIFIER-CORPUS-WIDENING` | `active` | `R12` | `R12-INLINE-MODIFIER-CORPUS-WIDENING.2` | [docs/tasks/R12-INLINE-MODIFIER-CORPUS-WIDENING.md](docs/tasks/R12-INLINE-MODIFIER-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-INLINE-MODIFIER-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-INLINE-MODIFIER-CORPUS-WIDENING.md](docs/tasks/R12-INLINE-MODIFIER-CORPUS-WIDENING.md) |
 | `R12-TEST-SELECTOR-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-TEST-SELECTOR-CORPUS-WIDENING.md](docs/tasks/R12-TEST-SELECTOR-CORPUS-WIDENING.md) |
 | `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.md](docs/tasks/R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.md) |
 | `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.md](docs/tasks/R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.md) |

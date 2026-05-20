@@ -313,6 +313,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A computed test selector omitted its expression or branches.',
     },
+    FSMGEN_LANGUAGE_MALFORMED_INLINE_MODIFIER => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An inline compound modifier used an unsupported payload shape.',
+    },
+    FSMGEN_LANGUAGE_DUPLICATE_INLINE_MODIFIER => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An assignment used more than one inline compound modifier.',
+    },
     FSMGEN_DIRECT_RHS_WIDTH_MISMATCH => {
         severity => 'error',
         stability => 'stable',

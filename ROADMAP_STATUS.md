@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-INLINE-MODIFIER-CORPUS-WIDENING.1` activated the task tree for adding
-  maintained expected-failure corpus coverage for malformed and duplicate
-  inline compound modifiers. The current frontier is
-  `R12-INLINE-MODIFIER-CORPUS-WIDENING.2`.
+  `R12-INLINE-MODIFIER-CORPUS-WIDENING.2` widened the maintained
+  inline-modifier expected-failure corpus and closed the task tree. The next
+  PNT selection should choose a fresh active tree before any further source,
+  test, fixture, generated-artifact, or config changes.
+- Recent R12 inline-modifier corpus-widening completion:
+  `R12-INLINE-MODIFIER-CORPUS-WIDENING.2` added two named expected-failure
+  corpus entries for malformed inline modifier payloads such as `(+= 2 3)`
+  and duplicate inline modifier clauses such as `(+= 2) (-= 1)`. Each entry
+  carries stable diagnostic-code metadata and is covered through pipeline/CLI
+  behavior, check JSON, normalized semantic JSON, manifest, corpus accounting,
+  and docs.
 - Recent R12 inline-modifier corpus-widening selection:
   `R12-INLINE-MODIFIER-CORPUS-WIDENING.1` selected a behavior-neutral
   support-accounting slice for promoting already-focused malformed and

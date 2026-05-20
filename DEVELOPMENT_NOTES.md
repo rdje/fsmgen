@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Inline-modifier support accounting stays shape-based
+- `R12-INLINE-MODIFIER-CORPUS-WIDENING.2` promotes existing inline modifier
+  diagnostics without changing accepted modifier semantics.
+- The diagnostic-code split separates malformed modifier payload shape from
+  duplicate modifier declarations because those produce different author fixes.
+
 ## 2026-05-20: Inline-modifier corpus widening keeps modifier syntax closed
 - `R12-INLINE-MODIFIER-CORPUS-WIDENING.1` selects inline compound modifier
   diagnostics for support-accounting promotion.

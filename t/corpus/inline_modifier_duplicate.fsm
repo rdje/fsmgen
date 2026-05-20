@@ -1,0 +1,9 @@
+(?fsm:inline_modifier_duplicate
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (ACC <- SRC (+= 2) (-= 1))
+  )
+)

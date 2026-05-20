@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — inline-modifier widening shipped
+- Completed `R12-INLINE-MODIFIER-CORPUS-WIDENING.2` and closed the tree.
+- The maintained corpus now has two additional inline-modifier
+  expected-failure entries for malformed inline modifier payloads and duplicate
+  inline modifier clauses.
+- Stable diagnostic codes, corpus behavior checks, check JSON, normalized
+  semantic JSON, manifest coverage, regression-corpus docs, and the mdBook are
+  synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 regression corpus — inline-modifier widening selected
 - Completed `R12-INLINE-MODIFIER-CORPUS-WIDENING.1`.
 - The active R12 frontier is now
