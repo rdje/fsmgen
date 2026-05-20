@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — IR boundary classification completed
+- Completed `FSMGEN-IR-AUDIT.2`.
+- Classified every inventoried IR or IR-like surface by phase, source-of-truth
+  status, public/private status, and disposition.
+- Synced the book-facing IR and metadata section to make clear that
+  `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` are sanitized
+  forward-IR projections, `module_info` is a compatibility/result surface,
+  composition provenance is derived evidence, and raw ISF parser/lowerer
+  hashes remain private.
+- Advanced the active architecture frontier to `FSMGEN-IR-AUDIT.3`, which
+  defines the repo-local policy for future IR additions and extensions.
+- No compiler behavior changed.
+
 ### Architecture backlog — IR inventory completed
 - Completed `FSMGEN-IR-AUDIT.1`.
 - Inventoried the current IR and IR-like surfaces across parser outputs, ISF

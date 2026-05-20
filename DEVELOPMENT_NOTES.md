@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: IR classification keeps phase boundaries distinct
+- `FSMGEN-IR-AUDIT.2` classifies current surfaces without forcing one
+  universal IR.
+- Direct `CoreAST`, private ISF parser/scheduler state, `Composition::Plan`,
+  and the three named forward IRs each own a distinct phase boundary today.
+- Public normalized semantic JSON, schedule JSON, public contract metadata,
+  provenance reports, snapshots, and `module_info` are bounded projections.
+  They are reviewable and useful, but they must not become accidental
+  compiler truth.
+- Backend-local expression and consolidated-intermediate structures remain
+  private implementation state. Any future promotion needs explicit owner,
+  invariants, serialization/report contract, and migration policy from the
+  next leaf.
+
 ## 2026-05-20: IR audit starts with factual inventory before policy
 - `FSMGEN-IR-AUDIT.1` deliberately avoided consolidation decisions. It first
   records the current compiler/report surfaces so the next leaf can classify

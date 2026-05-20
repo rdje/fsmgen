@@ -1,10 +1,19 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `architecture backlog`. `FSMGEN-IR-AUDIT.1` completed the
-  factual IR inventory; `FSMGEN-IR-AUDIT.2` is the current frontier for
-  canonical/private boundary classification.
+- Active lane: `architecture backlog`. `FSMGEN-IR-AUDIT.2` completed
+  canonical/private boundary classification; `FSMGEN-IR-AUDIT.3` is the
+  current frontier for repo-local IR policy.
 - Recent architecture backlog:
+  `FSMGEN-IR-AUDIT.2` classified every inventoried IR or IR-like surface by
+  phase, source-of-truth status, public/private status, and disposition. The
+  classification keeps direct `CoreAST`, private ISF parser/scheduler state,
+  `Composition::Plan`, and named forward IRs as distinct in-process phase
+  boundaries; public schedule/semantic JSON, contract metadata,
+  `module_info`, provenance reports, snapshots, and artifacts remain bounded
+  projections or compatibility surfaces. The mdBook IR/metadata section now
+  reflects that public/private boundary. No compiler behavior changed.
+- Previous architecture backlog:
   `FSMGEN-IR-AUDIT.1` inventoried the current IR and IR-like structures,
   including raw Lispish ASTs, direct `CoreAST`, backend expression ASTs, ISF
   typed actor metadata and scheduler `LoweringIR`, domain/CDC metadata,
@@ -2654,10 +2663,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   intent or platform/resource mapping semantics above transactions, not for
   aliases, macros, wrappers, or syntax sugar without distinct runtime meaning.
 - Architecture backlog: [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md)
-  is active. `.1` completed the factual inventory of current IR and IR-like
-  structures. `.2` now classifies which surfaces are canonical phase
-  boundaries versus local/private projections before any consolidation policy
-  or refactor follow-up is selected.
+  is active. `.1` completed factual inventory and `.2` completed
+  canonical/private boundary classification. `.3` now defines the repo-local
+  policy for adding, extending, freezing, or retiring IR boundaries before
+  any consolidation/refactor follow-up is selected.
 - User-visible deferred/not-fully-shipped feature items now have a canonical
   mdBook backlog at [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md),
   with [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) as the repo-level
@@ -4010,9 +4019,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `architecture backlog`: [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md)
   is active after the R14 task-tree frontier closed. `FSMGEN-IR-AUDIT.1`
-  completed factual inventory. The current next decision point is
-  `FSMGEN-IR-AUDIT.2`, which classifies canonical phase boundaries versus
-  local/private projections before policy or refactor follow-up is selected.
+  completed factual inventory, and `FSMGEN-IR-AUDIT.2` completed
+  canonical/private boundary classification. The current next decision point
+  is `FSMGEN-IR-AUDIT.3`, which defines repo-local policy before any
+  consolidation/refactor follow-up is selected.
 - Last R14 context:
   - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and the R14 mdBook chapters now match
     the shipped parser/scheduler surface instead of the older aspirational

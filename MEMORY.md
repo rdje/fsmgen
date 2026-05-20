@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: IR boundary classification completed
+- Completed `FSMGEN-IR-AUDIT.2`.
+- Current canonical in-process boundaries are classified as direct `CoreAST`,
+  private ISF parser/scheduler state, `Composition::Plan`, and the named
+  forward IRs `IntentHIR`, `LoweredRTLIR`, and `StructuralRTLIR`.
+- Public downstream truth remains bounded projections and artifacts:
+  schedule JSON, normalized semantic JSON, public contract metadata, emitted
+  `.fsm`/HDL artifacts, and generated composition artifacts.
+- `module_info`, provenance reports, and serializable snapshots are
+  compatibility/report projections, not independent compiler truth.
+- The active architecture frontier is now `FSMGEN-IR-AUDIT.3` for repo-local
+  IR policy.
+
 ## 2026-05-20: IR inventory completed
 - Completed `FSMGEN-IR-AUDIT.1`.
 - The inventory now records current IR and IR-like surfaces: raw Lispish AST,

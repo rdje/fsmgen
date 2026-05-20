@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — IR boundary classification completed
+- Completed `FSMGEN-IR-AUDIT.2`.
+- Every inventoried IR or IR-like surface now has a phase classification,
+  source-of-truth status, public/private status, and disposition.
+- The book-facing IR/metadata section now documents the same public/private
+  boundary for forward IR projections, `module_info`, composition provenance,
+  and private ISF lowerer/parser internals.
+- The active frontier is `FSMGEN-IR-AUDIT.3` for repo-local IR policy.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — IR inventory completed
 - Completed `FSMGEN-IR-AUDIT.1`.
 - The task tree now inventories parser, ISF scheduler, composition, forward

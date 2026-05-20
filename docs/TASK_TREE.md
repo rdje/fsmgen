@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `FSMGEN-IR-AUDIT` | `active` | `architecture backlog` | `FSMGEN-IR-AUDIT.2` | [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) |
+| `FSMGEN-IR-AUDIT` | `active` | `architecture backlog` | `FSMGEN-IR-AUDIT.3` | [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) |
 
 ## Proposed Task Trees
 

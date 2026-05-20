@@ -797,8 +797,13 @@ IR audit checkpoint:
   contract remains the emitted `.fsm`, schedule JSON, and generated
   composition artifacts, not the full mutable lowerer hash.
 - `module_info`, normalized semantic reports, composition provenance, and
-  serializable snapshots are compatibility/report projections unless the next
-  classification leaf deliberately promotes a bounded subset.
+  serializable snapshots are compatibility/report projections.
+- `FSMGEN-IR-AUDIT.2` completed classification without promoting those
+  compatibility/report surfaces. Direct `CoreAST`, private ISF
+  parser/scheduler state, `Composition::Plan`, and the named forward IRs keep
+  distinct phase-boundary roles; public JSON, contract metadata,
+  `module_info`, provenance, snapshots, and artifacts remain bounded
+  projections.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

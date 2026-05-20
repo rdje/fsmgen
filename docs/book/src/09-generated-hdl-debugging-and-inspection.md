@@ -261,6 +261,26 @@ Important live surfaces include:
 - `module_info`
 - composition provenance/report summaries
 
+Treat those names as different kinds of surfaces, not as one undifferentiated
+dump.
+
+`intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` are the canonical
+forward-IR projections exposed to users and tools. They are sanitized
+projections of internal IR objects, not raw mutable compiler objects.
+
+`module_info` is a compatibility/result surface. It mirrors useful forward-IR,
+analysis, and planning facts for existing callers, but it is not a second
+canonical compiler IR.
+
+Composition provenance and plan snapshots are reviewable evidence derived from
+the planner. They help explain what was connected and why, but the raw
+composition plan object remains private.
+
+For `.isf`, raw parser actor hashes and private `LoweringIR` hashes are not
+public APIs. Downstream tools should consume the bounded schedule JSON,
+normalized semantic JSON, public contract metadata, generated `.fsm` artifacts,
+and generated HDL/artifact files instead.
+
 These are especially useful for:
 
 - embedders

@@ -64,16 +64,16 @@ set, lifecycle, and documented handoff contract.
   Commit: `FSMGEN-IR-AUDIT.1: inventory current IR surfaces`
 
 - ID: `FSMGEN-IR-AUDIT.2`
-  Status: `active`
+  Status: `done`
   Goal: `Classify canonical boundaries versus local projections.`
   Acceptance: `Every inventoried structure has a phase classification,
   source-of-truth status, public/private status, and reason it should be kept,
   merged, or treated as derived data.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `git diff --check`; `mdbook build docs/book`
+  Commit: `FSMGEN-IR-AUDIT.2: classify IR boundaries`
 
 - ID: `FSMGEN-IR-AUDIT.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Define the repo-local policy for adding or extending IRs.`
   Acceptance: `The policy says what a new IR must document before landing:
   owner, producer, consumers, invariants, serialization/report contract,
@@ -92,13 +92,14 @@ set, lifecycle, and documented handoff contract.
 
 ## Current Frontier
 
-This tree is active. The current PNT frontier is canonical/private boundary
-classification over the factual inventory captured by `FSMGEN-IR-AUDIT.1`.
+This tree is active. The current PNT frontier is the repo-local policy for
+adding, extending, freezing, or retiring IR boundaries.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `FSMGEN-IR-AUDIT.1` | `done` | Completed factual inventory before prescribing consolidation. |
-| 2 | `FSMGEN-IR-AUDIT.2` | `active` | Classify which inventoried structures are canonical phase boundaries versus private/local projections. |
+| 2 | `FSMGEN-IR-AUDIT.2` | `done` | Classified which inventoried structures are canonical phase boundaries versus private/local projections. |
+| 3 | `FSMGEN-IR-AUDIT.3` | `active` | Turn the inventory/classification into repo-local policy for future IR changes. |
 
 ## Initial IR Inventory Targets
 
@@ -168,6 +169,53 @@ Inventory observations for later leaves:
   state. Those structures are local implementation projections unless a later
   leaf promotes one of them to an explicit phase boundary.
 
+## Classification: Canonical Boundaries And Local Projections
+
+`FSMGEN-IR-AUDIT.2` classifies the inventory without changing runtime
+behavior. The classification separates three meanings that were easy to blur:
+canonical in-process compiler truth, public/report truth, and private local
+implementation state.
+
+| Surface | Phase classification | Source-of-truth status | Public/private status | Disposition |
+| --- | --- | --- | --- | --- |
+| Raw Lispish source AST | Parsed syntax | Parser/debug input truth only before semantic parsing | Private in-process, with shell-only debug/contract exposure | Keep as mutable parser input snapshot. Do not promote as semantic IR or downstream schema. |
+| Direct `.fsm` / `.dt` semantic CoreAST | Semantic intent | Canonical direct-root semantic truth before forward IR extraction | Private object graph; public summaries are projections | Keep as direct semantic model. Future direct-root changes should extend this or documented forward IRs, not invent a parallel direct semantic carrier. |
+| Legacy/backend expression AST | Backend/emission helper | Local backend expression truth during naming/factorization | Private implementation state | Keep as backend-local for now. Later consolidation may align expression ownership, but it is not a public or source-level canonical IR. |
+| ISF normalized Lispish form | Parsed syntax adapter | Temporary source-shape truth during `.isf` parser normalization | Private | Keep as short-lived adapter output. It should stay discardable after typed actor construction. |
+| ISF typed actor hash | Semantic intent plus parser-normalized actor shell | Canonical in-process ISF parser output before scheduler lowering | Private; bounded facts project to reports/artifacts | Keep private. If it grows further, the policy leaf should require owner/invariant documentation before turning it into a named typed IR object. |
+| ISF actor-network metadata | Scheduling/structural intent metadata | Canonical ATL metadata inside the ISF parser/lowerer handoff | Private internals with bounded public schedule/artifact projections | Keep as feature-owned lowerer metadata. Public truth is `actor_network` schedule summaries and generated artifacts, not the raw hash. |
+| ISF scheduler `LoweringIR` | Scheduling and lowered behavior | Canonical ISF scheduling truth until `.fsm`, schedule JSON, and generated-top emission | Private mutable compiler IR | Keep as private scheduler phase boundary. It is eligible for helper extraction/typing, not for downstream raw export. |
+| ISF domain partition and CDC metadata | Scheduling / CDC planning | Canonical multi-domain planning truth inside `LoweringIR` | Private internals with bounded `clock_domains[]`, `crossings[]`, and artifact projections | Keep as a `LoweringIR` sub-boundary. Public reports remain bounded and versioned. |
+| Package/spec symbol model | Semantic support | Canonical package/symbol/type truth shared by parser and planner paths | Internal support structures with selected public projections | Keep as shared semantic support, not as backend IR. |
+| Composition parsed spec | Parsed syntax plus composition intent input | Canonical authored composition input before planning | Private object graph with sanitized report summaries | Keep as pre-plan input. It must not compete with `Composition::Plan` for final connectivity truth. |
+| Realized composition child carrier | Composition planning carrier | Canonical per-child realization payload inside planning | Private runtime carrier | Keep as a local planning carrier. Public consumers should use plan/report projections instead. |
+| Composition plan | Composition planning and structural/connectivity | Canonical in-process composition connectivity truth | Private plan object with bounded public snapshots/provenance | Keep as the canonical composition phase boundary. Snapshot/provenance surfaces are derived review evidence. |
+| Structural connection expressions | Structural/connectivity expression API | Canonical structural actual-binding expression nodes once lowered | Internal structural API, public only through rendered/binding summaries | Keep. It is a meaningful API under the structural layer, not a full source AST. |
+| Forward semantic HIR | Semantic intent forward IR | Canonical forward semantic IR boundary | Internal object with bounded normalized semantic and `module_info` projections | Keep as a canonical forward IR. Future semantic projections should prefer extending this layer. |
+| Forward lowered RTL IR | Lowered behavior forward IR | Canonical lowered-fact IR boundary | Internal object with bounded normalized semantic and `module_info` projections | Keep as a canonical forward IR. Future lowered summaries should prefer extending this layer. |
+| Forward structural RTL IR | Structural/connectivity forward IR | Canonical backend-facing structural IR boundary | Internal object with bounded normalized semantic, `module_info`, and HDL projections | Keep as a canonical forward IR and the preferred structural backend boundary. |
+| Generated `module_info` compatibility surface | Report/contract projection | Compatibility/result truth for legacy callers, not compiler semantic truth | Public in-process result surface with bounded contract keys | Keep as a compatibility mirror. Do not let it become a second canonical IR beside forward IR objects. |
+| Composition provenance/report projection | Report/contract projection | Derived evidence from plan and structural/intent facts | Public sanitized projection | Keep as review/debug evidence. `Composition::Plan` remains planning truth. |
+| Normalized semantic report | Report/contract projection | Canonical public JSON/report shape, not raw compiler truth | Public versioned schema | Keep as the downstream-facing contract. It freezes sanitized projection shape only. |
+| Serializable snapshots | Report/contract projection | Derived bounded snapshots for JSON-safe reporting | Public bounded snapshots | Keep as shallow projections that protect raw objects from export. |
+| Direct backend local intermediate state | Backend/emission | Local emission truth only inside the direct backend | Private implementation state | Keep private. It may feed lowered summaries, but it should not become cross-phase IR unless a future refactor creates a named boundary. |
+
+Classification conclusions:
+
+- Canonical in-process compiler boundaries today are `CoreAST` for direct
+  roots, the ISF typed actor hash plus private `LoweringIR` for the ISF
+  scheduler path, `Composition::Plan` for composition connectivity, and the
+  three named forward IRs.
+- Canonical public downstream truth is not any raw compiler object. It is the
+  bounded schedule JSON, normalized semantic JSON, public contract metadata,
+  emitted `.fsm`/HDL artifacts, and generated composition artifacts.
+- `module_info`, provenance reports, and serializable snapshots are useful and
+  stable only as compatibility/report projections. They must not be treated as
+  independent compiler truth.
+- Backend-local expression/intermediate structures remain implementation
+  details. A later follow-up may clean or standardize them, but `.2` does not
+  select that refactor.
+
 ## Decisions
 
 - `2026-05-14`: Multiple IRs are acceptable when they represent distinct
@@ -185,16 +233,21 @@ Inventory observations for later leaves:
 - `2026-05-20`: Activated the tree after all active R14 task-tree frontiers
   closed. The first leaf is inventory only; consolidation policy and refactor
   follow-ups remain later leaves.
+- `2026-05-20`: `FSMGEN-IR-AUDIT.2` classifies the current boundaries without
+  collapsing them: direct `CoreAST`, private ISF scheduler state,
+  `Composition::Plan`, and the named forward IRs have legitimate phase roles;
+  report and compatibility surfaces remain projections, not competing IR
+  truth.
 
 ## Open Questions
 
-- Which IRs are canonical enough to become explicitly documented phase
-  boundaries, and which are private projections that should stay flexible?
 - Should ISF eventually lower into an existing FSM/CoreAST or forward IR
   directly, or is the scheduled `.fsm` textual handoff the right reviewable
   and debuggable boundary?
-- Which public normalized semantic report objects are true IR projections and
-  which are intentionally report-only summaries?
+- What exact repo-local policy should future work follow before adding,
+  extending, freezing, or retiring an IR boundary?
+- Which classifications deserve concrete follow-up refactors after the policy
+  leaf, rather than documentation only?
 
 ## Blockers
 
@@ -206,6 +259,7 @@ Inventory observations for later leaves:
 | --- | --- | --- | --- |
 | `2026-05-14` | `FSMGEN-IR-AUDIT` | `git diff --check -- docs/tasks/FSMGEN-IR-AUDIT.md docs/TASK_TREE.md README.md ROADMAP_STATUS.md CHANGES.md DEVELOPMENT_NOTES.md MEMORY.md LIVE_ACHIEVEMENT_STATUS.md` | `pass` |
 | `2026-05-20` | `FSMGEN-IR-AUDIT.1` | `git diff --check`; `mdbook build docs/book` | `pass` |
+| `2026-05-20` | `FSMGEN-IR-AUDIT.2` | `git diff --check`; `mdbook build docs/book` | `pass` |
 
 ## Commit Log
 
@@ -213,9 +267,12 @@ Inventory observations for later leaves:
 | --- | --- | --- |
 | `FSMGEN-IR-AUDIT` | `FSMGEN-IR-AUDIT: capture IR audit task tree` | Created proposed task tree. |
 | `FSMGEN-IR-AUDIT.1` | `FSMGEN-IR-AUDIT.1: inventory current IR surfaces` | Inventoried current IR and IR-like structures and advanced `.2` classification. |
+| `FSMGEN-IR-AUDIT.2` | `FSMGEN-IR-AUDIT.2: classify IR boundaries` | Classified current IR boundaries/projections and advanced `.3` policy. |
 
 ## Changelog
 
+- `2026-05-20`: Completed `FSMGEN-IR-AUDIT.2` classification and advanced the
+  active frontier to `FSMGEN-IR-AUDIT.3` policy.
 - `2026-05-20`: Completed `FSMGEN-IR-AUDIT.1` factual inventory and advanced
   the active frontier to `FSMGEN-IR-AUDIT.2` classification.
 - `2026-05-14`: Created proposed task tree to capture IR inventory and
