@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.1` selected a fresh task tree for
+  `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` closed the latest task tree by
   promoting already-focused standalone DT classification and DTE guards into
-  the maintained supported-smoke corpus. The next implementation leaf is
-  `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2`.
+  the maintained supported-smoke corpus. The next PNT pass should select a new
+  task tree before any further implementation.
+- Recent R12 standalone DT guard corpus-widening completion:
+  `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` added one named supported-smoke
+  corpus entry for standalone DT classification, always-on DT enables,
+  guard-expression lowering, and guarded output-enable boundaries. The entry
+  carries strict-supported metadata and HDL-shape expectations, and is covered
+  through default/strict pipeline/CLI behavior, check JSON, normalized
+  semantic JSON, manifest, corpus accounting, and docs.
 - Recent R12 standalone DT guard corpus-widening selection:
   `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.1` selected a behavior-neutral
   support-accounting slice for promoting standalone DT classification,
@@ -4579,11 +4586,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R12`:
   [docs/tasks/R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.md](docs/tasks/R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.md)
-  is active. `.1` selects the supported standalone DT guard
-  support-accounting slice before implementation; `.2` will promote
-  standalone DT classification, unguarded enables, guard-expression lowering,
-  and guarded output-enable boundaries into a maintained supported-smoke
-  corpus entry.
+  is closed. `.1` selected the supported standalone DT guard
+  support-accounting slice before implementation; `.2` promoted standalone DT
+  classification, unguarded enables, guard-expression lowering, and guarded
+  output-enable boundaries into a maintained supported-smoke corpus entry. The
+  next PNT pass should select a new R12 task tree before changing code, tests,
+  sources, generated artifacts, or config.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -7193,6 +7201,21 @@ Done:
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
     now records `18` named supported-smoke entries and `18` positive
     strict-supported entries.
+- That same supported-smoke language-feature family now also covers standalone
+  DT guards:
+  - [t/corpus/standalone_dt_guards.fsm](t/corpus/standalone_dt_guards.fsm)
+    records standalone DT classification, always-on DT enables, scalar,
+    negated, comparison, and expression DTE guards, and guarded output-enable
+    boundaries as a supported direct-root feature through pipeline and CLI,
+  - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
+    records it as `feature.standalone_dt_guards` with emitted-HDL
+    expectations for standalone DT enables, guard-expression lowering, and
+    output-enable gating,
+  - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
+    checks the generated HDL shape in default and strict mode, and
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
+    now records `19` named supported-smoke entries and `19` positive
+    strict-supported entries.
 - That same supported-smoke language-feature family now also covers guard
   shorthand:
   - [t/corpus/guard_shorthand.fsm](t/corpus/guard_shorthand.fsm) records scalar
@@ -7205,7 +7228,7 @@ Done:
   - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
     checks the generated HDL shape in default and strict mode, and
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
-    now records `19` named supported-smoke entries and `19` positive
+    now records `20` named supported-smoke entries and `20` positive
     strict-supported entries.
 - That same supported-smoke language-feature family now also covers relational
   operator chains and word aliases:
@@ -7220,7 +7243,7 @@ Done:
   - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
     checks the generated HDL shape in default and strict mode, and
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
-    now records `20` named supported-smoke entries and `20` positive
+    now records `21` named supported-smoke entries and `21` positive
     strict-supported entries.
 - That same supported-smoke language-feature family now also covers computed
   test selectors:
@@ -7234,7 +7257,7 @@ Done:
   - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
     checks the generated HDL shape in default and strict mode, and
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
-    now records `21` named supported-smoke entries and `21` positive
+    now records `22` named supported-smoke entries and `22` positive
     strict-supported entries.
 - That same supported-smoke language-feature family now also covers relational
   test-branch selectors:
@@ -7249,7 +7272,7 @@ Done:
   - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
     checks the generated HDL shape in default and strict mode, and
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
-    now records `22` named supported-smoke entries and `22` positive
+    now records `23` named supported-smoke entries and `23` positive
     strict-supported entries.
 - The scalar literal support family now also uses one consistent positive-integer width interpretation for common scalar forms:
   - [perl/FSM/Package/IntegerLiteralSupport.pm](perl/FSM/Package/IntegerLiteralSupport.pm) is now the shared integer literal to `Math::BigInt` owner for scalar width symbols and direct `+size` constant-expression literal terms,
@@ -7419,9 +7442,10 @@ Left:
 - Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current top-level source/directive/body-form, generic/template placeholder, bare condition suffix, malformed source/body/test-form and legacy `+fsm` body entries, malformed delayed-pulse RHS/target entries, malformed system-section entries, current symbol-definition section/entry/value/token and parameter-dependency/expression entries, current direct-generation contract entries, and the current composition-contract rejection families.
 - Widen golden-output or semantic-check coverage beyond the current supported
   language-feature entries, including the new supported update-shorthand
-  variant, state-DTE guard, guard-shorthand, relational-operator,
-  computed test-selector, and test-branch selector entries, and the first
-  protocol slice where simple compile smoke is not enough.
+  variant, state-DTE guard, standalone-DT guard, guard-shorthand,
+  relational-operator, computed test-selector, and test-branch selector
+  entries, and the first protocol slice where simple compile smoke is not
+  enough.
 - Widen the capability manifest only when the added fields can be tied back to regression-backed support-accounting truth, as the diagnostic-code registry now does.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.

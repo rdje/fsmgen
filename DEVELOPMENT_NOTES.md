@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Standalone DT guard support accounting proves non-state DTE lowering
+- `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` promotes standalone DT guards
+  into the executable supported-smoke corpus.
+- The entry records emitted HDL shapes for always-on standalone DT enables,
+  scalar/negated/comparison/expression guard lowering, and guarded output
+  enables so support accounting proves non-state DTE behavior rather than only
+  parser acceptance.
+
 ## 2026-05-20: Standalone DT guard corpus widening stays DT-local
 - `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.1` selects supported standalone DT
   classification and DTE guards for support-accounting promotion.

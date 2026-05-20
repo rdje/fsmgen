@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -40,7 +40,7 @@ support-accounting visibility.
 ## Task Tree
 
 - ID: `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained supported-smoke corpus coverage for standalone DT classification and guards`
   Children: `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.1`, `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2`
 
@@ -52,17 +52,17 @@ support-accounting visibility.
   Commit: `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.1: select standalone DT guard widening`
 
 - ID: `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add a maintained supported-smoke entry for standalone DT guards`
   Acceptance: `named fixture/catalog entry covers unguarded and guarded standalone DT blocks with strict-supported checks and HDL-shape expectations`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `perl -Iperl -c t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/48-language-contract-standalone-dt-classification.t`; `prove -Iperl t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/302-normalized-semantic-json.t t/303-normalized-semantic-json-supported-corpus.t`; `prove -Iperl t/297-capability-manifest.t`; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2: widen standalone DT guard corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` | `pending` | Promotes an already-focused supported standalone DT surface after ownership is committed. |
+| 1 | `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` | `done` | Promoted an already-focused supported standalone DT surface after ownership was committed. |
 
 ## Decisions
 
@@ -87,14 +87,20 @@ support-accounting visibility.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` | `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `perl -Iperl -c t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/48-language-contract-standalone-dt-classification.t`; `prove -Iperl t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/302-normalized-semantic-json.t t/303-normalized-semantic-json-supported-corpus.t`; `prove -Iperl t/297-capability-manifest.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.1` | `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.1: select standalone DT guard widening` | Selection leaf; no compiler behavior changed. |
+| `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` | `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2: widen standalone DT guard corpus` | Added supported-smoke fixture/catalog coverage; no parser or HDL-generation behavior changed. |
 
 ## Changelog
 
 - `2026-05-20`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-20`: Added a maintained supported-smoke corpus entry for standalone
+  DT classification and DTE guards, including strict-supported metadata,
+  HDL-shape expectations, support-accounting gates, regression-corpus docs,
+  and mdBook coverage.

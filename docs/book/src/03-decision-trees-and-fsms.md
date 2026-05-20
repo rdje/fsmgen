@@ -85,6 +85,35 @@ implicit system ports. If any sequential assignment appears and no `+system`
 is authored, the current generator exposes implicit `clk` and asynchronous
 active-low `rst_n`.
 
+Standalone non-state DT blocks may also carry the same DTE guard syntax used by
+regular FSM-state headers. Unguarded blocks such as `(-plain ...)` emit an
+always-on block enable. Guarded blocks such as `(-route <req ...)`,
+`(-neg <!hold ...)`, `(-mode_hit <mode=3 ...)`, and
+`(-expr_guard <(& req ready) ...)` emit the block enable from that guard and
+gate every output-enable family behind it.
+
+```lisp
+(?fsm:standalone_dt_guards
+  (+system
+    (clock clk)
+    (sreset reset))
+
+  (+size
+    (req 1)
+    (ready 1)
+    (OUT_A 1)
+    (OUT_B 1))
+
+  (-plain
+    (= (OUT_A 1)))
+
+  (-route <req
+    (= (OUT_B 1)))
+
+  (-expr_guard <(& req ready)
+    (= (OUT_A 1))))
+```
+
 ## What a Decision Tree Is
 
 A decision tree (DT) is the combinational glue that computes mux-selection

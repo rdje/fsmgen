@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — standalone DT guard widening shipped
+- Completed `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` and closed the tree.
+- The maintained corpus now has one additional supported-smoke entry for
+  standalone DT classification, always-on DT enables, guard-expression
+  lowering, and guarded output-enable boundaries.
+- Strict-supported metadata, HDL-shape checks, supported corpus behavior,
+  check JSON, normalized semantic JSON, manifest coverage, regression-corpus
+  docs, and the mdBook are synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 regression corpus — standalone DT guard widening selected
 - Completed `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

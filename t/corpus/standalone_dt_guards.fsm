@@ -1,0 +1,43 @@
+(?fsm:standalone_dt_guards
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (req 1)
+    (hold 1)
+    (ready 1)
+    (mode 2)
+    (REG_OUT 1)
+    (OUT_A 1)
+    (OUT_B 1)
+    (OUT_C 1)
+    (OUT_D 1)
+    (OUT_E 1)
+  )
+
+  (idle
+    (<= (REG_OUT req))
+  )
+
+  (-plain
+    (= (OUT_A 1))
+  )
+
+  (-route <req
+    (= (OUT_B 1))
+  )
+
+  (-neg <!hold
+    (= (OUT_C 1))
+  )
+
+  (-mode_hit <mode=3
+    (= (OUT_D 1))
+  )
+
+  (-expr_guard <(& req ready)
+    (= (OUT_E 1))
+  )
+)
