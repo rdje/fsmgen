@@ -193,7 +193,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md` — completed architecture follow-up that inventoried private ISF `LoweringIR` subfamilies and deferred helper-owner extraction.
 - `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — completed architecture follow-up that audited `module_info` mirrors and closed without extra guard work.
 - `docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md` — completed `R9` task tree for strict-mode rejection of the legacy `<=+` assignment alias.
-- `docs/tasks/R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.md` — active `R12` task tree for widening maintained authored operator/directive expected-failure corpus coverage.
+- `docs/tasks/R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained authored operator/directive expected-failure corpus coverage.
 - `docs/tasks/R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained assignment-boundary expected-failure corpus coverage.
 - `docs/tasks/R12-NAME-REFERENCE-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained source-name, state/DT-name, and transition-target expected-failure corpus coverage.
 - `docs/tasks/R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained language-contract expected-failure corpus coverage.

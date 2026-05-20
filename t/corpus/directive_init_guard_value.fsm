@@ -1,0 +1,10 @@
+(?fsm:directive_init_guard_value
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (:= tester_reset=<start)
+  (idle
+    (A = 1)
+  )
+)

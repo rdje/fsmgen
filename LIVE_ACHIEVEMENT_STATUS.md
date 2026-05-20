@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — operator/directive widening shipped
+- Completed `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.2` and closed the tree.
+- The maintained corpus now has four additional operator/directive
+  expected-failure entries for unsupported `?=` and `=>` assignment operators
+  plus unsupported compact `:=` reset values `[DATAIN]` and `<start`.
+- Stable diagnostic codes, corpus behavior checks, check JSON, normalized
+  semantic JSON, manifest coverage, regression-corpus docs, and the mdBook are
+  synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 regression corpus — operator/directive widening selected
 - Completed `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

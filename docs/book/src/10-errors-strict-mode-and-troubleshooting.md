@@ -142,10 +142,12 @@ malformed state or standalone-DT names, malformed transition targets, and
 unknown transition targets. Assignment-boundary entries cover malformed
 delayed-pulse RHS values, mixed combinational/sequential assignment families,
 mixed pulse and non-pulse sequential writes, multiple pulse delays for one
-signal, combinational self-dependency, and D-input self-dependency. Those
-entries are not only prose examples: pipeline, CLI, check JSON, and normalized
-semantic JSON regression tests all classify them through the same
-support-accounting path.
+signal, combinational self-dependency, and D-input self-dependency. Authored
+operator/directive entries cover unsupported assignment operators such as `?=`
+and `=>`, plus unsupported compact `:=` reset values such as `[DATAIN]` and
+`<start`. Those entries are not only prose examples: pipeline, CLI, check
+JSON, and normalized semantic JSON regression tests all classify them through
+the same support-accounting path.
 
 It also keeps positive acceptance markers for canonical supported surfaces.
 
@@ -180,6 +182,8 @@ FSMGEN_LANGUAGE_MALFORMED_STATE_NAME
 FSMGEN_LANGUAGE_UNKNOWN_TRANSITION_TARGET
 FSMGEN_LANGUAGE_DELAYED_PULSE_RHS
 FSMGEN_LANGUAGE_D_INPUT_SELF_DEPENDENCY
+FSMGEN_LANGUAGE_UNSUPPORTED_ASSIGNMENT_OPERATOR
+FSMGEN_LANGUAGE_UNSUPPORTED_INIT_RESET_VALUE
 FSMGEN_COMPOSITION_MISSING_RTLIF
 ```
 

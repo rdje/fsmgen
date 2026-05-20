@@ -1,0 +1,9 @@
+(?fsm:operator_unsupported_qeq
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (A ?= B)
+  )
+)

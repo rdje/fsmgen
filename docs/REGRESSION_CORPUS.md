@@ -94,7 +94,8 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   targets. It also covers malformed delayed-pulse RHS values, mixed
   combinational/sequential assignment families, mixed pulse and non-pulse
   sequential writes, multiple pulse delays for one signal, combinational
-  self-dependency, and D-input self-dependency.
+  self-dependency, D-input self-dependency, unsupported assignment operators,
+  and unsupported compact `:=` reset values.
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
   intentionally rejected by the normal direct-generation contract through both
   the pipeline API and the CLI after parsing succeeds but before HDL is emitted,
@@ -545,6 +546,10 @@ manifest output while keeping the exact file lists widenable.
 | `contract.assignment_multiple_pulse_delays` | [t/corpus/assignment_multiple_pulse_delays.fsm](t/corpus/assignment_multiple_pulse_delays.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.assignment_comb_self_dependency` | [t/corpus/assignment_comb_self_dependency.fsm](t/corpus/assignment_comb_self_dependency.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.assignment_d_input_self_dependency` | [t/corpus/assignment_d_input_self_dependency.fsm](t/corpus/assignment_d_input_self_dependency.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.operator_unsupported_qeq` | [t/corpus/operator_unsupported_qeq.fsm](t/corpus/operator_unsupported_qeq.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.operator_unsupported_arrow` | [t/corpus/operator_unsupported_arrow.fsm](t/corpus/operator_unsupported_arrow.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.directive_init_placeholder_value` | [t/corpus/directive_init_placeholder_value.fsm](t/corpus/directive_init_placeholder_value.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.directive_init_guard_value` | [t/corpus/directive_init_guard_value.fsm](t/corpus/directive_init_guard_value.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_rhs_concat_width_mismatch` | [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.direct_aggregate_contract_mismatch` | [t/corpus/direct_aggregate_contract_mismatch.fsm](t/corpus/direct_aggregate_contract_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |

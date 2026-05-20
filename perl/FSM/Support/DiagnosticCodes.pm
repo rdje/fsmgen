@@ -289,6 +289,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A D-input assignment depended on its own D-input LHS value.',
     },
+    FSMGEN_LANGUAGE_UNSUPPORTED_ASSIGNMENT_OPERATOR => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An assignment used an unsupported operator.',
+    },
+    FSMGEN_LANGUAGE_UNSUPPORTED_INIT_RESET_VALUE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An init directive used an unsupported reset value.',
+    },
     FSMGEN_DIRECT_RHS_WIDTH_MISMATCH => {
         severity => 'error',
         stability => 'stable',

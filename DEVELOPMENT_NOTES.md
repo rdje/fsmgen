@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Operator/directive support accounting keeps syntax closed
+- `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.2` promotes existing diagnostics for
+  unsupported assignment operators and unsupported compact `:=` reset values.
+- Both new code families are deliberately broad enough to cover spelling
+  variants without pretending the rejected syntax is configurable or
+  partially supported.
+
 ## 2026-05-20: Operator/directive corpus widening stays narrow
 - `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.1` selects authored operator and
   directive-value diagnostics for support-accounting promotion.

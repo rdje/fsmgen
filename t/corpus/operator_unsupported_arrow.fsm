@@ -1,0 +1,9 @@
+(?fsm:operator_unsupported_arrow
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (A => B)
+  )
+)

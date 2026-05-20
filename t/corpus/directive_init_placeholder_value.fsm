@@ -1,0 +1,10 @@
+(?fsm:directive_init_placeholder_value
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (:= tester_reset=[DATAIN])
+  (idle
+    (A = 1)
+  )
+)
