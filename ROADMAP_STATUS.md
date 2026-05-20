@@ -2,18 +2,20 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `architecture backlog`.
-  `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` selected the in-file
+  `EXPR-AST-UTILS-OWNER-CONSOLIDATION` is closed. `.1` selected the in-file
   `FSM::AST::Utils` package in
   [perl/FSM/AST/Node.pm](perl/FSM/AST/Node.pm) as the sole live backend AST
-  constructor owner. The active implementation frontier is
-  `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2`, which will delete the unimported
-  standalone duplicate and validate current backend callers. Remaining
-  expression follow-ups are
-  `EXPR-NAMER-LEGACY-PARSE-BOUNDARY` and
-  `GLOBAL-AST-MANAGER-BOUNDARY`.
+  constructor owner, and `.2` removed the standalone
+  `perl/FSM/AST/Utils.pm` duplicate. The next architecture PNT candidate is
+  `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1`, followed by
+  `GLOBAL-AST-MANAGER-BOUNDARY.1`.
   Remaining proposed architecture follow-ups are
   `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` and `MODULE-INFO-PROJECTION-GUARD`.
 - Recent architecture backlog:
+  `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` removed the standalone
+  `perl/FSM/AST/Utils.pm` duplicate. Existing backend callers already load
+  `FSM::AST::Node`, and no generated behavior changed.
+- Previous architecture backlog:
   `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` found no live
   `use FSM::AST::Utils` or `require FSM::AST::Utils` path outside the
   standalone duplicate itself. The selected cleanup is deletion, not a
@@ -2758,11 +2760,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   classified deliberate phase separation versus accidental duplication, and
   `.3` created proposed behavior-preserving follow-up trees before any cleanup
   code is touched.
-- Active expression ownership follow-up:
+- Closed expression ownership follow-up:
   [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md)
   completed `.1` by selecting deletion of the standalone `FSM::AST::Utils`
-  duplicate; `.2` is active for source cleanup and focused backend caller
-  validation.
+  duplicate and `.2` by removing it.
 - Proposed expression ownership follow-ups:
   [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md),
   and [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md)
@@ -4134,9 +4135,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   deliberate phase boundaries and selected concrete ownership concerns.
   `.3` created proposed follow-up trees for those concerns, and
   [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md)
-  has already removed the tracked duplicate. The active frontier is
+  has already removed the tracked duplicate, and
   [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md)
-  `.2` for removing the standalone `FSM::AST::Utils` duplicate.
+  has removed the standalone `FSM::AST::Utils` duplicate. The next PNT
+  candidate is
+  [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md).
 - Closed architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
   is closed. `.1` mapped direct-root residues; `.2` selected the first no-op

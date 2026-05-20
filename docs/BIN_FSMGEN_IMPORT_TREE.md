@@ -860,9 +860,11 @@ IR audit checkpoint:
   `FSM::AST::Utils` package in
   [perl/FSM/AST/Node.pm](../perl/FSM/AST/Node.pm) as the sole live backend AST
   utility owner. Static search found no live import of standalone
-  [perl/FSM/AST/Utils.pm](../perl/FSM/AST/Utils.pm) outside that duplicate
-  file itself, so `.2` is active to remove it and validate existing backend
-  callers.
+  `perl/FSM/AST/Utils.pm` outside that duplicate file itself.
+- `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` removed the standalone
+  `perl/FSM/AST/Utils.pm` duplicate. This import tree now has a single
+  backend AST utility owner:
+  [perl/FSM/AST/Node.pm](../perl/FSM/AST/Node.pm).
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

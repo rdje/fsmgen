@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `EXPR-AST-UTILS-OWNER-CONSOLIDATION` | `active` | `architecture backlog` | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` | [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md) |
 
 ## Proposed Task Trees
 
@@ -62,6 +61,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `EXPR-AST-UTILS-OWNER-CONSOLIDATION` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md) |
 | `EXPR-NAMER-TRACKED-COPY-CLEANUP` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md) |
 | `IR-EXPRESSION-AST-OWNERSHIP` | `done` | `architecture backlog` | `closed` | [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md) |
 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `done` | `architecture backlog` | `closed` | [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md) |

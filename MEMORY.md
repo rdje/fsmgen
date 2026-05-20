@@ -1,14 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: Duplicate AST utils file removed
+- Completed `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` and closed the tree.
+- Removed the standalone `perl/FSM/AST/Utils.pm` duplicate.
+- The sole live backend AST constructor owner is now the in-file
+  `FSM::AST::Utils` package in [perl/FSM/AST/Node.pm](perl/FSM/AST/Node.pm).
+- Static search now finds no live direct import path for `FSM::AST::Utils`;
+  current backend callers continue to load `FSM::AST::Node`.
+- The next architecture PNT candidate is
+  `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1`, followed by
+  `GLOBAL-AST-MANAGER-BOUNDARY.1`.
+
 ## 2026-05-20: AST utils owner selected
 - Completed `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1`.
 - Static search found no live `use FSM::AST::Utils` or
   `require FSM::AST::Utils` path outside the standalone duplicate itself.
 - The selected owner is the in-file `FSM::AST::Utils` package in
   [perl/FSM/AST/Node.pm](perl/FSM/AST/Node.pm).
-- `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` is now active to delete
-  [perl/FSM/AST/Utils.pm](perl/FSM/AST/Utils.pm) and validate current backend
-  callers.
+- `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` then removed the standalone duplicate
+  and closed the tree.
 
 ## 2026-05-20: ExpressionNamer tracked duplicate removed
 - Completed `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` and closed the tree.

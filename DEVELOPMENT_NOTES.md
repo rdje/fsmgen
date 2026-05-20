@@ -1,8 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Backend AST utils now has one owner
+- `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` removes the standalone
+  `perl/FSM/AST/Utils.pm` file after `.1` proved there was no live direct
+  import path for it.
+- The live owner remains [perl/FSM/AST/Node.pm](perl/FSM/AST/Node.pm), which
+  defines `FSM::AST::*` node classes and the in-file `FSM::AST::Utils`
+  constructor package used by backend enable/factorization callers.
+- This avoids preserving a broken compatibility shim whose constructor class
+  names and argument order did not match the actual `FSM::AST::*` classes.
+
 ## 2026-05-20: AST utils should collapse by deleting the standalone file
 - `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` selects deletion rather than a shim
-  for [perl/FSM/AST/Utils.pm](perl/FSM/AST/Utils.pm).
+  for the former standalone `perl/FSM/AST/Utils.pm` duplicate.
 - The reason is stronger than simple non-use: no live caller imports the
   standalone module, while live backend callers already load
   [perl/FSM/AST/Node.pm](perl/FSM/AST/Node.pm), whose in-file

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `EXPR-AST-UTILS-OWNER-CONSOLIDATION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -34,7 +34,7 @@ reviewable backend AST constructor boundary.
 ## Task Tree
 
 - ID: `EXPR-AST-UTILS-OWNER-CONSOLIDATION`
-  Status: `active`
+  Status: `done`
   Goal: `Make backend AST utils ownership single and correct.`
   Children: `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1`,
   `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2`
@@ -48,26 +48,24 @@ reviewable backend AST constructor boundary.
   Commit: `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1: select AST utils owner`
 
 - ID: `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected backend AST utils owner cleanup.`
   Acceptance: `Duplicate/broken constructor ownership is removed or corrected
   without changing generated HDL.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `static import audit plus focused backend AST/enable-graph tests passed`
+  Commit: `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2: remove duplicate AST utils file`
 
 ## Current Frontier
 
-The selected implementation frontier is
-`EXPR-AST-UTILS-OWNER-CONSOLIDATION.2`. The selected owner shape is to delete
-the standalone [perl/FSM/AST/Utils.pm](../../perl/FSM/AST/Utils.pm) file and
-keep the in-file `FSM::AST::Utils` package in
-[perl/FSM/AST/Node.pm](../../perl/FSM/AST/Node.pm) as the sole live backend
+This tree is closed. The standalone `perl/FSM/AST/Utils.pm` duplicate was
+removed. The in-file `FSM::AST::Utils` package in
+[perl/FSM/AST/Node.pm](../../perl/FSM/AST/Node.pm) is the sole live backend
 AST constructor owner.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` | `done` | Selected deletion of the standalone duplicate. |
-| 2 | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` | `active` | Remove the duplicate source file and validate live backend callers. |
+| 2 | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` | `done` | Removed the duplicate source file and validated live backend callers. |
 
 ## Decisions
 
@@ -76,7 +74,7 @@ AST constructor owner.
   one references class names that do not match the actual `FSM::AST::*`
   classes.
 - `2026-05-20`: Selected deletion of the standalone
-  [perl/FSM/AST/Utils.pm](../../perl/FSM/AST/Utils.pm) file rather than a shim.
+  `perl/FSM/AST/Utils.pm` file rather than a shim.
   Static search found no live `use FSM::AST::Utils` or
   `require FSM::AST::Utils` path outside the file itself. Current backend
   callers load [perl/FSM/AST/Node.pm](../../perl/FSM/AST/Node.pm), which
@@ -88,6 +86,9 @@ AST constructor owner.
   path imports it directly, compile the live `Node.pm` owner, and run focused
   enable-graph/backend AST caller tests. Generated HDL is expected to remain
   unchanged because live callers already use the in-file owner.
+- `2026-05-20`: Removed the standalone `perl/FSM/AST/Utils.pm` source file.
+  The only remaining `FSM::AST::Utils` package definition is now in
+  [perl/FSM/AST/Node.pm](../../perl/FSM/AST/Node.pm).
 
 ## Open Questions
 
@@ -102,12 +103,14 @@ AST constructor owner.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` | `rg -n '^use FSM::AST::Utils|^require FSM::AST::Utils|package FSM::AST::Utils' perl t bin`; `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` | `rg -n '^use FSM::AST::Utils|^require FSM::AST::Utils|package FSM::AST::Utils' perl t bin`; `perl -Iperl -c perl/FSM/AST/Node.pm`; `prove -Iperl t/206-enable-graph-enable-support.t t/208-enable-graph-ast-support.t t/210-enable-graph-factorization-policy-support.t t/231-systemverilog-consolidated-intermediate-stage-support.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1: select AST utils owner` | Selects standalone-file deletion; `.2` owns implementation. |
+| `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2: remove duplicate AST utils file` | Removes the standalone duplicate; `Node.pm` remains the sole owner. |
 
 ## Changelog
 
@@ -116,3 +119,5 @@ AST constructor owner.
 - `2026-05-20`: Activated `.1`, selected the in-file `FSM::AST::Utils`
   package in `Node.pm` as the sole live owner, and advanced `.2` for source
   cleanup.
+- `2026-05-20`: Completed `.2` by deleting the standalone duplicate and
+  closing the tree.

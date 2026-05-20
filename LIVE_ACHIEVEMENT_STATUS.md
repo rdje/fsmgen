@@ -2,13 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — Duplicate AST utils file removed
+- Completed `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` and closed the tree.
+- Removed the standalone `perl/FSM/AST/Utils.pm` duplicate.
+- The sole live backend AST constructor owner is now the in-file
+  `FSM::AST::Utils` package in [perl/FSM/AST/Node.pm](perl/FSM/AST/Node.pm).
+- No generated behavior changed.
+
 ## 2026-05-20: Architecture backlog — AST utils owner selected
 - Completed `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1`.
 - Selected the in-file `FSM::AST::Utils` package in
   [perl/FSM/AST/Node.pm](perl/FSM/AST/Node.pm) as the sole live backend AST
   constructor owner.
-- The active frontier is `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2`, which will
-  delete the unimported standalone duplicate and validate backend callers.
+- `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` then removed the unimported
+  standalone duplicate and closed the tree.
 - No compiler behavior changed.
 
 ## 2026-05-20: Architecture backlog — ExpressionNamer tracked duplicate removed
