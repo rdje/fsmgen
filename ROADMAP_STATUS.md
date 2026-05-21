@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` selected
-  the next task tree for promoting already-focused `?dtc` explicit-system
-  auto-wiring into the maintained supported-smoke corpus. The next frontier is
-  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2`.
+  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` closed the
+  latest standalone-DTC explicit-system support-accounting tree. The next PNT
+  step is to select the next inactive or ongoing task-tree frontier before any
+  implementation work.
+- Recent R12 standalone DTC explicit-system autowire corpus-widening completion:
+  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` added one
+  named supported-smoke corpus entry for generated top/child binding of
+  explicit standalone-DT system ports. The entry carries strict-supported
+  metadata and HDL-shape expectations, and is covered through default/strict
+  pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest,
+  corpus accounting, and docs.
 - Recent R12 standalone DTC explicit-system autowire corpus-widening selection:
   `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` selected a
   behavior-neutral support-accounting slice for promoting generated top/child
@@ -7594,6 +7601,23 @@ Done:
     and
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
     now records `34` named supported-smoke entries and `34`
+    strict-supported entries.
+- The supported-language-feature corpus now also covers composition auto-wiring
+  of explicit standalone-DT child system ports:
+  - [t/corpus/standalone_dtc_explicit_system_autowire.fsm](t/corpus/standalone_dtc_explicit_system_autowire.fsm)
+    now exists as a named `supported_smoke` composition corpus asset for a
+    `?dtc` child whose standalone `?dt` source carries canonical `(clock clk)`
+    and `(areset rst_n)` metadata,
+  - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
+    records it as `feature.standalone_dtc_explicit_system_autowire` with
+    strict-supported metadata and semantic HDL-shape expectations for the
+    generated top boundary, child module, and child `.clk(clk)` /
+    `.rst_n(rst_n)` bindings,
+  - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
+    checks the fixture through pipeline and CLI in default and strict mode,
+    and
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
+    now records `36` named supported-smoke entries and `36`
     strict-supported entries.
 - The direct-generation failure side of the corpus now also covers a pre-generation assignment contract rejection:
   - [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) now exists as a named `expected_failure` direct-root corpus asset for a direct RHS `(concat ...)` assignment whose summed RHS width is too small for the LHS,

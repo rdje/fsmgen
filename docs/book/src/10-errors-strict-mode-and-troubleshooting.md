@@ -239,6 +239,9 @@ system-port auto-wiring, where child FSMs that omit `+system` expose implicit
 Direct standalone `?dt` roots with explicit `+system` metadata are also
 covered as supported-smoke entries with `dt` source-kind accounting, explicit
 system-port HDL-shape checks, and a no-encoded-`current_state` expectation.
+The paired generated-child path is covered too: `?dtc` composition entries
+with explicit standalone-DT system metadata must emit the child module and bind
+`.clk(clk)` / `.rst_n(rst_n)` at the generated top.
 
 ## Diagnostic Codes
 

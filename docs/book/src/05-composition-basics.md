@@ -296,6 +296,13 @@ the shared system-input auto-wiring contract. If the top exposes `clk` and
 without explicit `?wiring` entries for those system ports; ordinary data links
 still belong in `?wiring`.
 
+Generated standalone-DT children use the same shared system-input convention.
+When a `?dtc` child source has explicit `+system` metadata such as
+`(clock clk)` and `(areset rst_n)`, those system ports are part of the child
+interface and the top binds them by name. A single `?dtc` child can therefore
+emit a top instance with `.clk(clk)` and `.rst_n(rst_n)` while data ports such
+as `data_in` and `result_data` stay ordinary top/child connections.
+
 ## Same-Name Convention
 
 There are now several bounded same-name paths:

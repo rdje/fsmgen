@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-21: R12 standalone DTC explicit-system autowire corpus widening shipped
+- Completed
+  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` and closed
+  the tree.
+- Added one maintained supported-smoke corpus entry for composition tops with
+  generated standalone-DT children that carry canonical explicit `+system`
+  metadata.
+- The entry carries `strict_supported` metadata and explicit HDL-shape checks
+  for generated top/child system-port exposure and `.clk(clk)` /
+  `.rst_n(rst_n)` bindings, and is covered by supported corpus behavior,
+  check JSON, normalized semantic JSON, manifest checks, regression-corpus
+  docs, and the mdBook.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-21: R12 standalone DTC explicit-system autowire corpus widening selected
 - Completed
   `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1`.

@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-21
+### R12 regression corpus — standalone DTC explicit-system autowire widening shipped
+- Completed
+  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` and closed
+  the task tree.
+- Added one named supported-smoke fixture and catalog entry for `?dtc`
+  explicit-system auto-wiring.
+- Added strict-supported metadata and HDL-shape expectations for the new entry
+  and widened supported corpus accounting, manifest, check JSON, normalized
+  semantic JSON, regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — standalone DTC explicit-system autowire widening selected
 - Completed
   `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1`.

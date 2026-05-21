@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Standalone DTC explicit-system support accounting proves child system binding
+- `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` promotes
+  composition auto-wiring for explicit standalone-DT child system ports into
+  the executable supported-smoke corpus.
+- The entry records emitted HDL shapes for the standalone-DT child module,
+  generated top `clk`/`rst_n` boundary, and child instance bindings for
+  `.clk(clk)` and `.rst_n(rst_n)`.
+
 ## 2026-05-21: Standalone DTC explicit-system autowire widening stays composition-local
 - `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` selects
   composition auto-wiring for explicit standalone-DT child system ports.

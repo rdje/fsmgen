@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-21: R12 regression corpus — standalone DTC explicit-system autowire widening shipped
+- Completed
+  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` and closed
+  the tree.
+- The maintained corpus now has one additional supported-smoke entry for
+  `?dtc` explicit-system auto-wiring.
+- Strict-supported metadata, HDL-shape checks, supported corpus behavior,
+  check JSON, normalized semantic JSON, manifest coverage, regression-corpus
+  docs, and the mdBook are synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-21: R12 regression corpus — standalone DTC explicit-system autowire widening selected
 - Completed
   `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1`.
