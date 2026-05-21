@@ -1,0 +1,17 @@
+(?dt:standalone_dt_explicit_system
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+size
+    (data_in 8)
+    (result_data 8)
+  )
+
+  (:= (result_data 8'0))
+
+  (-capture
+    (<= (result_data data_in))
+  )
+)

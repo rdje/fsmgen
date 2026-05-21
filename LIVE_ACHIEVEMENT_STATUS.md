@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-21: R12 regression corpus — standalone DT explicit-system widening shipped
+- Completed `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` and closed
+  the tree.
+- The maintained corpus now has one additional supported-smoke entry for
+  direct standalone `?dt` roots with canonical explicit `+system` metadata.
+- Strict-supported metadata, direct `dt` source-kind assertion support,
+  HDL-shape checks, supported corpus behavior, check JSON, normalized semantic
+  JSON, manifest coverage, regression-corpus docs, and the mdBook are
+  synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-21: R12 regression corpus — standalone DT explicit-system widening selected
 - Completed `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

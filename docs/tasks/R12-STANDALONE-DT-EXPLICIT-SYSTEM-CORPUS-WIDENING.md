@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-21`
 - Last updated: `2026-05-21`
@@ -41,7 +41,7 @@ public support-accounting visibility.
 ## Task Tree
 
 - ID: `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained supported-smoke corpus coverage for direct standalone DT explicit system contracts`
   Children: `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1`, `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2`
 
@@ -53,17 +53,17 @@ public support-accounting visibility.
   Commit: `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1: select standalone DT explicit-system widening`
 
 - ID: `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add a maintained supported-smoke entry for direct standalone DT explicit system contracts`
   Acceptance: `named fixture/catalog entry covers a canonical ?dt +system source with strict-supported checks, dt source-kind support, and HDL-shape expectations for explicit system ports without current_state`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `./bin/fsmgen --strict --quiet -o /tmp/standalone_dt_explicit_system.sv t/corpus/standalone_dt_explicit_system.fsm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `perl -Iperl -c t/261-regression-corpus-supported-language-features.t`; `perl -Iperl -c t/296-regression-corpus-supported-behavior.t`; `prove -Iperl t/134-standalone-dt-explicit-system-support.t`; `prove -Iperl t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/302-normalized-semantic-json.t t/303-normalized-semantic-json-supported-corpus.t t/297-capability-manifest.t`; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2: widen standalone DT explicit-system corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` | `pending` | Ownership is selected; the next slice can promote already-focused direct standalone-DT explicit-system behavior into the maintained corpus. |
+| 1 | `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` | `done` | Promoted already-focused direct standalone-DT explicit-system behavior after ownership was committed. |
 
 ## Decisions
 
@@ -86,15 +86,20 @@ public support-accounting visibility.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-21` | `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-21` | `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` | `./bin/fsmgen --strict --quiet -o /tmp/standalone_dt_explicit_system.sv t/corpus/standalone_dt_explicit_system.fsm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `perl -Iperl -c t/261-regression-corpus-supported-language-features.t`; `perl -Iperl -c t/296-regression-corpus-supported-behavior.t`; `prove -Iperl t/134-standalone-dt-explicit-system-support.t`; `prove -Iperl t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/302-normalized-semantic-json.t t/303-normalized-semantic-json-supported-corpus.t t/297-capability-manifest.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1` | `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1: select standalone DT explicit-system widening` | Selection leaf; no compiler behavior changed. |
-| `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` | `pending` | `pending` |
+| `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` | `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2: widen standalone DT explicit-system corpus` | Added supported-smoke fixture/catalog coverage and direct `dt` source-kind assertion support; no parser or HDL-generation behavior changed. |
 
 ## Changelog
 
 - `2026-05-21`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-21`: Added a maintained supported-smoke corpus entry for direct
+  standalone `?dt` explicit-system roots, including strict-supported metadata,
+  direct `dt` source-kind assertion support, HDL-shape expectations,
+  support-accounting gates, regression-corpus docs, and mdBook coverage.

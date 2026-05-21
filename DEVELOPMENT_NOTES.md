@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Standalone DT explicit-system support accounting proves direct DT roots
+- `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` promotes direct
+  standalone `?dt` explicit-system behavior into the executable
+  supported-smoke corpus.
+- The entry records emitted HDL shapes for explicit system ports, async
+  active-low reset lowering, DT enables, and the absence of an encoded
+  `current_state` plan, while the supported-corpus assertions now accept direct
+  `dt` source-kind entries beside direct `fsm` and composition entries.
+
 ## 2026-05-21: Standalone DT explicit-system corpus widening adds source-kind coverage
 - `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1` selects direct
   standalone `?dt` explicit-system behavior for support-accounting promotion.

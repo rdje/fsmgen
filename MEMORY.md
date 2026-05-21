@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-21: R12 standalone DT explicit-system corpus widening shipped
+- Completed `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` and closed
+  the tree.
+- Added one maintained supported-smoke corpus entry for direct standalone
+  `?dt` roots with canonical explicit `+system` metadata.
+- The entry carries `strict_supported` metadata, direct `dt` source-kind
+  support in supported-corpus assertions, and explicit HDL-shape checks for
+  system ports, async active-low reset logic, DT enables, and absence of an
+  encoded `current_state` plan.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-21: R12 standalone DT explicit-system corpus widening selected
 - Completed `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting already-focused direct standalone

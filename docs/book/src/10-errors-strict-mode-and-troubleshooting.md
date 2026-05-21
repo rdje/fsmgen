@@ -236,6 +236,9 @@ Composition language-feature coverage includes implicit generated-child
 system-port auto-wiring, where child FSMs that omit `+system` expose implicit
 `clk` and `rst_n` ports and the generated top binds both children with
 `.clk(clk)` and `.rst_n(rst_n)`.
+Direct standalone `?dt` roots with explicit `+system` metadata are also
+covered as supported-smoke entries with `dt` source-kind accounting, explicit
+system-port HDL-shape checks, and a no-encoded-`current_state` expectation.
 
 ## Diagnostic Codes
 

@@ -514,6 +514,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.compound_update_variants` | [t/corpus/compound_update_variants.fsm](t/corpus/compound_update_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.state_dte_guards` | [t/corpus/state_dte_guards.fsm](t/corpus/state_dte_guards.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.standalone_dt_guards` | [t/corpus/standalone_dt_guards.fsm](t/corpus/standalone_dt_guards.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.standalone_dt_explicit_system` | [t/corpus/standalone_dt_explicit_system.fsm](t/corpus/standalone_dt_explicit_system.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.guard_shorthand` | [t/corpus/guard_shorthand.fsm](t/corpus/guard_shorthand.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.nested_compound_guards` | [t/corpus/nested_compound_guards.fsm](t/corpus/nested_compound_guards.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.relational_operator_chains` | [t/corpus/relational_operator_chains.fsm](t/corpus/relational_operator_chains.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -711,6 +712,11 @@ manifest output while keeping the exact file lists widenable.
   transition enables at the DTE boundary. The `feature.standalone_dt_guards`
   entry proves standalone DT classification, always-on DT enables, DTE guard
   lowering, and guarded output-enable boundaries for non-state DT blocks. The
+  `feature.standalone_dt_explicit_system` entry proves that direct standalone
+  `?dt` sources with explicit `+system` metadata are first-class supported
+  direct roots: they keep `dt` source-kind accounting, emit explicit system
+  ports and async active-low reset logic, and do not synthesize an encoded
+  `current_state` plan. The
   `feature.guard_shorthand` entry proves scalar truthiness, negated
   truthiness, inline comparison, and suffix guard lowering through emitted
   enable expressions. The

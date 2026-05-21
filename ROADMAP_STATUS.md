@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1` selected the next task
-  tree for promoting already-focused direct standalone `?dt` explicit-system
-  behavior into the maintained supported-smoke corpus. The next frontier is
-  `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2`.
+  `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` closed the latest
+  standalone-DT explicit-system support-accounting tree. The next PNT step is
+  to select the next inactive or ongoing task-tree frontier before any
+  implementation work.
+- Recent R12 standalone DT explicit-system corpus-widening completion:
+  `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` added one named
+  supported-smoke corpus entry for direct standalone `?dt` roots with
+  canonical explicit `+system` metadata. The entry carries strict-supported
+  metadata, direct `dt` source-kind assertion support, and HDL-shape
+  expectations, and is covered through default/strict pipeline/CLI behavior,
+  check JSON, normalized semantic JSON, manifest, corpus accounting, and docs.
 - Recent R12 standalone DT explicit-system corpus-widening selection:
   `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1` selected a
   behavior-neutral support-accounting slice for promoting direct `?dt`
@@ -7355,6 +7362,22 @@ Done:
     checks the generated HDL shape in default and strict mode, and
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
     now records `19` named supported-smoke entries and `19` positive
+    strict-supported entries.
+- That same supported-smoke language-feature family now also covers direct
+  standalone `?dt` roots with explicit system metadata:
+  - [t/corpus/standalone_dt_explicit_system.fsm](t/corpus/standalone_dt_explicit_system.fsm)
+    records a `?dt` root with canonical `(clock clk)` and `(areset rst_n)`
+    metadata as a supported direct-root feature through pipeline and CLI,
+  - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
+    records it as `feature.standalone_dt_explicit_system` with `dt`
+    source-kind accounting and emitted-HDL expectations for explicit system
+    ports, async active-low reset, DT enables, and no encoded `current_state`
+    plan,
+  - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
+    and [t/296-regression-corpus-supported-behavior.t](t/296-regression-corpus-supported-behavior.t)
+    now accept direct `dt` entries beside direct `fsm` entries, and
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
+    now records `35` named supported-smoke entries and `35`
     strict-supported entries.
 - That same supported-smoke language-feature family now also covers guard
   shorthand:

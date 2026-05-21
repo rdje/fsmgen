@@ -97,6 +97,7 @@ for my $required_id (qw(
     feature.compound_update_variants
     feature.state_dte_guards
     feature.standalone_dt_guards
+    feature.standalone_dt_explicit_system
     feature.guard_shorthand
     feature.nested_compound_guards
     feature.relational_operator_chains
@@ -303,7 +304,7 @@ for my $entry (@entries) {
     elsif (exists $entry->{diagnostic_code}) {
         fail("non-failure catalog entry '$entry->{id}' must not reserve a diagnostic code");
     }
-    elsif ($entry->{source_kind} eq 'fsm') {
+    elsif ($entry->{source_kind} eq 'fsm' || $entry->{source_kind} eq 'dt') {
         ok($entry->{expected_module_name}, "direct-root entry '$entry->{id}' records an expected module name");
     }
     elsif ($entry->{source_kind} eq 'composition') {
@@ -344,7 +345,10 @@ for my $entry (@entries) {
 
     if ($entry->{strict_supported}) {
         is($entry->{classification}, 'supported_smoke', "strict-supported entry '$entry->{id}' is a supported-smoke asset");
-        is($entry->{source_kind}, 'fsm', "strict-supported direct entry '$entry->{id}' is an FSM-root corpus asset")
+        ok(
+            $entry->{source_kind} eq 'fsm' || $entry->{source_kind} eq 'dt',
+            "strict-supported direct entry '$entry->{id}' is a direct-root corpus asset",
+        )
             if $entry->{coverage} eq 'direct_root_pipeline_cli';
         ok(
             $entry->{coverage} eq 'direct_root_pipeline_cli'
@@ -356,8 +360,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    34,
-    'catalog now keeps thirty-four named supported-smoke entries including direct and composition language-feature fixtures',
+    35,
+    'catalog now keeps thirty-five named supported-smoke entries including direct and composition language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -371,8 +375,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    34,
-    'catalog now records thirty-four positive strict-mode supported-smoke acceptance entries',
+    35,
+    'catalog now records thirty-five positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -398,6 +402,7 @@ for my $strict_supported_id (qw(
     feature.compound_update_variants
     feature.state_dte_guards
     feature.standalone_dt_guards
+    feature.standalone_dt_explicit_system
     feature.guard_shorthand
     feature.nested_compound_guards
     feature.relational_operator_chains

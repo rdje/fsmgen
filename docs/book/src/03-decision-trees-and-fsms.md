@@ -107,6 +107,27 @@ implicit system ports. If any sequential assignment appears and no `+system`
 is authored, the current generator exposes implicit `clk` and asynchronous
 active-low `rst_n`.
 
+With explicit `+system`, standalone `?dt` roots are direct module roots with
+the authored system contract. A canonical async reset example is:
+
+```lisp
+(?dt:standalone_dt_explicit_system
+  (+system
+    (clock clk)
+    (areset rst_n))
+  (+size
+    (data_in 8)
+    (result_data 8))
+  (:= (result_data 8'0))
+  (-capture
+    (<= (result_data data_in))))
+```
+
+This emits `clk`, `rst_n`, `data_in`, and `result_data` ports and async
+active-low reset logic for the flopped output. It still has no encoded
+`current_state` register because a standalone `?dt` contains decision-tree
+regions rather than regular FSM states.
+
 Standalone non-state DT blocks may also carry the same DTE guard syntax used by
 regular FSM-state headers. Unguarded blocks such as `(-plain ...)` emit an
 always-on block enable. Guarded blocks such as `(-route <req ...)`,
