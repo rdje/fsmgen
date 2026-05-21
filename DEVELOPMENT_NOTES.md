@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: ISF focused-test index audit catches doc-status coverage drift
+- `ISF-SPEC-TEST-INDEX-SYNC.2` keeps the focused-test index invariant intact
+  after `t/1332-isf-atl-doc-status-audit.t` was added for ATL doc-status truth
+  coverage.
+- The repair is intentionally limited to the spec index and live evidence
+  docs. The failed CI run proved the audit is doing its job; no parser,
+  scheduler, or generated HDL behavior needed to change.
+
 ## 2026-05-21: Standalone DTC explicit-system support accounting proves child system binding
 - `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` promotes
   composition auto-wiring for explicit standalone-DT child system ports into

@@ -4366,6 +4366,7 @@ Focused tests:
 - [t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t](../t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t)
 - [t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t)
 - [t/1331-isf-timing-conventions.t](../t/1331-isf-timing-conventions.t)
+- [t/1332-isf-atl-doc-status-audit.t](../t/1332-isf-atl-doc-status-audit.t)
 
 ## 12. Explicitly Deferred
 

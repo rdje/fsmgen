@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-21: ISF spec focused-test index CI drift repaired
+- Completed `ISF-SPEC-TEST-INDEX-SYNC.2`.
+- The ISF spec focused-test index now includes
+  `t/1332-isf-atl-doc-status-audit.t`, matching the current `t/*-isf-*.t`
+  inventory.
+- This fixes the GitHub `Perl FSM Regression` failure caused by
+  `t/1250-isf-spec-focused-test-index-audit.t` without changing compiler
+  behavior.
+
 ## 2026-05-21: R12 regression corpus — standalone DTC explicit-system autowire widening shipped
 - Completed
   `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` and closed

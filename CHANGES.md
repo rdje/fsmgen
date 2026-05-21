@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-21
+### ISF spec — focused-test index CI drift repaired
+- Completed `ISF-SPEC-TEST-INDEX-SYNC.2`.
+- Added `t/1332-isf-atl-doc-status-audit.t` to the focused tests list in
+  `docs/ISF_SPEC.md`, resolving the hosted CI failure from
+  `t/1250-isf-spec-focused-test-index-audit.t`.
+- No compiler behavior changed.
+
 ### R12 regression corpus — standalone DTC explicit-system autowire widening shipped
 - Completed
   `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` and closed

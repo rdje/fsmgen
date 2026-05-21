@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-21: ISF spec focused-test index CI drift repaired
+- Completed `ISF-SPEC-TEST-INDEX-SYNC.2` after hosted GitHub CI run
+  `26196563292` failed `t/1250-isf-spec-focused-test-index-audit.t`.
+- Added the missing `t/1332-isf-atl-doc-status-audit.t` entry to the focused
+  tests list in `docs/ISF_SPEC.md`.
+- This is a spec/test-index synchronization repair only; it does not change
+  parser, scheduler, corpus, generated `.fsm`, or HDL behavior.
+
 ## 2026-05-21: R12 standalone DTC explicit-system autowire corpus widening shipped
 - Completed
   `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` and closed

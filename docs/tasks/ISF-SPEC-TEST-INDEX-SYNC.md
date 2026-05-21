@@ -6,7 +6,7 @@
 - Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-16`
-- Last updated: `2026-05-16`
+- Last updated: `2026-05-21`
 - Owner: repo-local workflow
 
 ## Goal
@@ -34,7 +34,8 @@ repo's `t/*-isf-*.t` regression files.
 - ID: `ISF-SPEC-TEST-INDEX-SYNC`
   Status: `done`
   Goal: `Synchronize and audit the ISF spec focused-test index`
-  Children: `ISF-SPEC-TEST-INDEX-SYNC.1`
+  Children: `ISF-SPEC-TEST-INDEX-SYNC.1`,
+  `ISF-SPEC-TEST-INDEX-SYNC.2`
 
 - ID: `ISF-SPEC-TEST-INDEX-SYNC.1`
   Status: `done`
@@ -42,6 +43,14 @@ repo's `t/*-isf-*.t` regression files.
   Acceptance: `Spec index includes all current ISF tests and the new audit fails if the index drifts`
   Verification: `prove -Iperl t/1207-isf-assignment-provenance-inventory.t t/1208-isf-compatible-fanin-classification.t t/1248-isf-rule-trigger-parameter-binding.t t/1249-isf-activation-parameter-constants.t t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`; `git diff --check`
   Commit: `ISF-SPEC-TEST-INDEX-SYNC.1: audit spec test index`
+
+- ID: `ISF-SPEC-TEST-INDEX-SYNC.2`
+  Status: `done`
+  Goal: `Repair focused-test index drift after ATL doc-status audit coverage`
+  Acceptance: `Spec index includes t/1332-isf-atl-doc-status-audit.t and the focused audit passes`
+  Verification: `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t`;
+  `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-SPEC-TEST-INDEX-SYNC.2: sync ATL doc-status audit index`
 
 ## Current Frontier
 
@@ -68,15 +77,19 @@ repo's `t/*-isf-*.t` regression files.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-16` | `ISF-SPEC-TEST-INDEX-SYNC.1` | `prove -Iperl t/1207-isf-assignment-provenance-inventory.t t/1208-isf-compatible-fanin-classification.t t/1248-isf-rule-trigger-parameter-binding.t t/1249-isf-activation-parameter-constants.t t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`; `git diff --check` | `pass` |
+| `2026-05-21` | `ISF-SPEC-TEST-INDEX-SYNC.2` | `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`; `git diff --check` | `pass` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-SPEC-TEST-INDEX-SYNC.1` | `ISF-SPEC-TEST-INDEX-SYNC.1: audit spec test index` | `pending commit` |
+| `ISF-SPEC-TEST-INDEX-SYNC.1` | `ISF-SPEC-TEST-INDEX-SYNC.1: audit spec test index` | `committed` |
+| `ISF-SPEC-TEST-INDEX-SYNC.2` | `ISF-SPEC-TEST-INDEX-SYNC.2: sync ATL doc-status audit index` | `committed` |
 
 ## Changelog
 
 - `2026-05-16`: Created task tree for ISF spec focused-test index sync.
 - `2026-05-16`: Closed tree after listing missing focused ISF tests and
   adding a drift audit.
+- `2026-05-21`: Repaired focused-test index drift found by hosted CI after
+  `t/1332-isf-atl-doc-status-audit.t` was added.
