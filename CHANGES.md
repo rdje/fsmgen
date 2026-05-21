@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-21
+### R12 regression corpus — standalone DTC explicit-system autowire widening selected
+- Completed
+  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained supported-smoke corpus
+  coverage with already-focused `?dtc` explicit-system auto-wiring.
+- No compiler behavior changed.
+
 ### R12 regression corpus — standalone DT explicit-system widening shipped
 - Completed `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` and closed
   the task tree.

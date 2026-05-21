@@ -192,6 +192,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md` — completed architecture follow-up for resolving legacy `GlobalASTManager` ownership.
 - `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md` — completed architecture follow-up that inventoried private ISF `LoweringIR` subfamilies and deferred helper-owner extraction.
 - `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — completed architecture follow-up that audited `module_info` mirrors and closed without extra guard work.
+- `docs/tasks/R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.md` — active `R12` task tree for widening maintained supported standalone DTC explicit-system auto-wiring corpus coverage.
 - `docs/tasks/R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained supported standalone DT explicit-system corpus coverage.
 - `docs/tasks/R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained supported implicit composition system-port auto-wiring corpus coverage.
 - `docs/tasks/R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained supported direct implicit system defaults corpus coverage.

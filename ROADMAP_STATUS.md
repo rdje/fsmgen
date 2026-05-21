@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` closed the latest
-  standalone-DT explicit-system support-accounting tree. The next PNT step is
-  to select the next inactive or ongoing task-tree frontier before any
-  implementation work.
+  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` selected
+  the next task tree for promoting already-focused `?dtc` explicit-system
+  auto-wiring into the maintained supported-smoke corpus. The next frontier is
+  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2`.
+- Recent R12 standalone DTC explicit-system autowire corpus-widening selection:
+  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` selected a
+  behavior-neutral support-accounting slice for promoting generated top/child
+  binding of explicit standalone-DT system ports into strict-supported corpus
+  coverage.
 - Recent R12 standalone DT explicit-system corpus-widening completion:
   `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` added one named
   supported-smoke corpus entry for direct standalone `?dt` roots with

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Standalone DTC explicit-system autowire widening stays composition-local
+- `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` selects
+  composition auto-wiring for explicit standalone-DT child system ports.
+- The implementation should promote existing `?dtc` top/child binding behavior
+  without changing direct standalone `?dt` generation, explicit `+system`
+  reset semantics, or generated-FSM child auto-wiring.
+
 ## 2026-05-21: Standalone DT explicit-system support accounting proves direct DT roots
 - `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2` promotes direct
   standalone `?dt` explicit-system behavior into the executable
