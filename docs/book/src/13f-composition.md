@@ -655,15 +655,20 @@ entry, strict schedule JSON parity, scheduled `.fsm` structure with the
 default await timeout state, and plain plus strict HDL generation. It remains
 parent-handoff orchestration: it does not claim generated ATL child `.fsm`
 artifacts, generated ATL tops, actor type resolution, HDL child wiring,
-multiple event waits, actor-event fan-in, data movement coupling, CDC,
-ready/backpressure, compact aliases, or permanent actor grouping.
+hidden actor-event fan-in, data movement coupling, CDC, ready/backpressure,
+compact aliases, or permanent actor grouping.
 
-FSMGen also has negative coverage for that boundary: one temporary trigger
-batch followed by two actor event waits, for example `(await reader.done)`
-then `(await writer.done)`, fails before scheduled `.fsm` emission with the
-one-event-wait diagnostic. That regression keeps trigger-batch/event
-sequencing separate from future actor-event fan-in or generated child
-completion joins.
+The ATL trigger-batch multi-event wait fixture is shipped as
+`isf/atl_trigger_batch_multi_wait_pipeline.isf`. It uses the same task-scoped
+trigger batch, then waits on `reader.done`, `filter.done`, and `writer.done`
+as three explicit source-ordered wait states before completion. The fixture
+proves three generated event handoff inputs, three `event_waits[]` entries,
+strict schedule JSON parity, scheduled `.fsm` structure with the default
+await timeout state, and plain plus strict HDL generation. This is sequential
+parent-handoff orchestration, not a hidden same-cycle join. Repeated waits,
+non-batch waits, interleaved parent work, event payloads, generated child
+completion joins, data movement coupling, CDC, ready/backpressure, compact
+aliases, and permanent actor grouping remain outside the shipped subset.
 
 The shipped ATL source-root safety boundary rejects a second top-level
 `(actor ...)` root in the same `.isf` file. That sibling root is not yet a

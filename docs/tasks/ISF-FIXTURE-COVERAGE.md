@@ -240,6 +240,7 @@ Matrix rules:
 | `isf/atl_pin_egress_pipeline.isf` | ATL scalar pin-egress fixture. | Static actor instance, generated actor source handoff, top-level output pin sink, named drive-body actor-to-pin scalar movement, drive-call-cycle route lifetime. | `actor_network.instances[]`, one `data_movements[]` route with kind `scalar_actor_to_pin_handoff`, source `external_handoff`, sink `top_level_pin`, empty `association_schedules[]` and `group_schedules[]`, strict schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated actor source handoff input, existing top-level output sink, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8` with bounded schedule/strict/HDL coverage. |
 | `isf/atl_trigger_wait_pipeline.isf` | ATL trigger-wait orchestration fixture. | Static actor instance, one parent trigger handoff pulse, one parent event wait handoff, completion after the event wait. | `actor_network.instances[]`, one `transaction_triggers[]` entry, one `event_waits[]` entry, empty `association_schedules[]`, `group_schedules[]`, `groups[]`, and `data_movements[]`, strict schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated trigger/event handoff ports, default await timeout state, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10` with bounded schedule/strict/HDL coverage. |
 | `isf/atl_trigger_batch_wait_pipeline.isf` | ATL trigger-batch wait orchestration fixture. | Static actor instances, one same-cycle temporary trigger batch, one parent event wait handoff, completion after the event wait. | `actor_network.instances[]`, per-target `transaction_triggers[]`, one `association_schedules[]` temporary-trigger-batch entry, one `group_schedules[]` compatibility entry, one `event_waits[]` entry, empty `groups[]` and `data_movements[]`, strict schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated trigger/event handoff ports, default await timeout state, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12` with bounded schedule/strict/HDL coverage. |
+| `isf/atl_trigger_batch_multi_wait_pipeline.isf` | ATL trigger-batch multi-event wait orchestration fixture. | Static actor instances, one same-cycle temporary trigger batch, three source-ordered parent event waits, completion after the last event wait. | `actor_network.instances[]`, per-target `transaction_triggers[]`, one `association_schedules[]` temporary-trigger-batch entry, one `group_schedules[]` compatibility entry, three `event_waits[]` entries, empty `groups[]` and `data_movements[]`, strict schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated trigger/event handoff ports, one trigger-batch state followed by three wait states, default await timeout state, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by `ISF-ATL-MULTI-EVENT-WAIT.2` with bounded schedule/strict/HDL coverage. |
 | `isf/atl_resolved_child_pin_ingress_pipeline.isf` | ATL resolved-child generated-top pin-ingress fixture. | One resolved library-qualified child instance, one top-level input pin, one named drive-body `(worker.payload pins.payload)` route, one trigger handoff, one event wait, matching parent/child clock and reset policy. | `actor_network.instances[]` resolved child metadata, one `transaction_triggers[]` entry, one `event_waits[]` entry, one `data_movements[]` route with kind `scalar_pin_to_actor_handoff`, one `generated_tops[]` entry, strict schedule JSON CLI parity. | Parent, child, and top `.fsm` artifacts; generated child `+interface` input role metadata for `payload`; generated top wires top `payload` to the parent, parent `worker_payload` to child `payload`, trigger/event links, and plain plus strict HDL generation. | `isf`; not quick. | Promoted by `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30` with bounded schedule/strict/HDL coverage. |
 | `isf/atl_resolved_child_pin_egress_pipeline.isf` | ATL resolved-child generated-top pin-egress fixture. | One resolved library-qualified child instance, one top-level output pin, one named drive-body `(pins.result worker.payload)` route after the child event wait, one trigger handoff, one event wait, matching parent/child clock and reset policy. | `actor_network.instances[]` resolved child metadata, one `transaction_triggers[]` entry, one `event_waits[]` entry, one `data_movements[]` route with kind `scalar_actor_to_pin_handoff`, one `generated_tops[]` entry, strict schedule JSON CLI parity. | Parent, child, and top `.fsm` artifacts; generated child `+interface` output role metadata for `payload`; generated top wires child `payload` to parent `worker_payload`, parent `result` to top `result`, trigger/event links, and plain plus strict HDL generation. | `isf`; not quick. | Promoted by `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32` with bounded schedule/strict/HDL coverage. |
 | `isf/atl_two_child_pipeline.isf` | ATL two-child generated-top trigger/event fixture. | Two resolved library-qualified child instances, sequential `reader.capture`/`reader.done` then `writer.emit`/`writer.done` handoffs, no ATL data movement, matching parent/child clock and reset policy. | Two resolved `actor_network.instances[]` entries, two `transaction_triggers[]` entries, two `event_waits[]` entries, one `generated_tops[]` entry with `children[]` child wiring records, strict schedule JSON CLI parity. | Parent, reader child, writer child, and generated top `.fsm` artifacts; generated top wires public pins to parent, parent trigger handoffs to child start inputs, child `done` outputs to parent event handoffs, and plain plus strict HDL generation. | `isf`; not quick. | Promoted by `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36` with bounded schedule/strict/outdir/HDL coverage. |
@@ -520,9 +521,28 @@ trigger outputs, generated event input `writer_done`,
 timeout state, and plain plus strict HDL generation. It remains in the `isf`
 regression tier, not `quick`, and remains a bounded parent-handoff
 orchestration fixture: it does not claim generated ATL children, generated ATL
-tops, actor type resolution, HDL child wiring, multi-event fan-in, data
-movement coupling, CDC, ready/backpressure, compact aliases, or permanent
-actor grouping.
+tops, actor type resolution, HDL child wiring, hidden multi-event fan-in
+joins, data movement coupling, CDC, ready/backpressure, compact aliases, or
+permanent actor grouping.
+
+## Post-Closure ATL Trigger-Batch Multi-Event Wait Fixture Promotion
+
+`ISF-ATL-MULTI-EVENT-WAIT.2` promotes
+`isf/atl_trigger_batch_multi_wait_pipeline.isf` after this matrix tree closed.
+The file-backed regression
+`t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t` covers strict schedule
+JSON parity, scheduled `.fsm` structure, generated reader/filter/writer
+trigger outputs, generated event inputs `reader_done`, `filter_done`, and
+`writer_done`, `actor_network.association_schedules[]` temporary-association
+evidence, `actor_network.group_schedules[]` compatibility evidence, three
+source-ordered `actor_network.event_waits[]` entries, empty data movement,
+one trigger-batch state followed by three explicit wait states, the default
+await timeout state, and plain plus strict HDL generation. It remains in the
+`isf` regression tier, not `quick`, and remains bounded sequential
+parent-handoff orchestration: it does not claim hidden same-cycle event joins,
+repeated waits, generated ATL child event wiring, payload waits, data movement
+coupling, CDC, ready/backpressure, compact aliases, or permanent actor
+grouping.
 
 ## ISF-FIXTURES.4 Regression Tier Placement
 

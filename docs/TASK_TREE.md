@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ATL-MULTI-EVENT-WAIT` | `active` | `R14` | `ISF-ATL-MULTI-EVENT-WAIT.2` | [docs/tasks/ISF-ATL-MULTI-EVENT-WAIT.md](docs/tasks/ISF-ATL-MULTI-EVENT-WAIT.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ATL-MULTI-EVENT-WAIT` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-MULTI-EVENT-WAIT.md](docs/tasks/ISF-ATL-MULTI-EVENT-WAIT.md) |
 | `ISF-ATL-PIN-MIXED-ROUTE-SETS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-PIN-MIXED-ROUTE-SETS.md](docs/tasks/ISF-ATL-PIN-MIXED-ROUTE-SETS.md) |
 | `ISF-ATL-PIN-VECTOR-MULTI-ROUTE` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-PIN-VECTOR-MULTI-ROUTE.md](docs/tasks/ISF-ATL-PIN-VECTOR-MULTI-ROUTE.md) |
 | `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.md](docs/tasks/ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.md) |

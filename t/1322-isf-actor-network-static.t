@@ -1211,7 +1211,7 @@ ISF
 
     parse_fails_like(
         <<'ISF',
-(actor multiple_qualified_event_waits
+(actor repeated_qualified_event_wait
   (clock clk)
   (interface (input start) (output done))
   (instance reader of packet_reader)
@@ -1221,13 +1221,13 @@ ISF
     (await reader.ready)
     (complete done)))
 ISF
-        qr/exceeds the current one-event-wait subset/,
-        'multiple qualified actor event waits fail closed until fan-in/fan-out policy ships',
+        qr/exceeds the current multi-event wait subset/,
+        'repeated actor event waits still fail closed outside the temporary trigger-batch subset',
     );
 
     parse_fails_like(
         <<'ISF',
-(actor trigger_batch_multiple_event_waits
+(actor trigger_batch_repeated_event_waits
   (clock clk)
   (interface (input start) (output done))
   (instance reader of packet_reader)
@@ -1240,10 +1240,11 @@ ISF
     (trigger writer.emit)
     (await reader.done)
     (await writer.done)
+    (await writer.ready)
     (complete done)))
 ISF
-        qr/ATL actor event wait '\(await writer\.done\)' exceeds the current one-event-wait subset/,
-        'temporary trigger batch plus multiple event waits fails closed before scheduled emission',
+        qr/ATL actor event wait '\(await writer\.done\)' exceeds the current multi-event wait subset/,
+        'temporary trigger batch plus repeated target waits still fails closed before scheduled emission',
     );
 
     parse_fails_like(

@@ -1426,11 +1426,65 @@ sub _validate_selected_atl_event_wait_count {
         $event_waits,
         $transaction_triggers,
     );
+    return 1 if _selected_atl_temporary_trigger_batch_multi_event_wait_shape(
+        $actor,
+        $event_waits,
+        $transaction_triggers,
+        $data_movements,
+    );
 
     my $wait = $waits[1];
     my $transaction = $wait->{transaction} // 'unknown';
     my $target = $wait->{target} // (($wait->{instance} // 'actor') . '.' . ($wait->{event} // 'event'));
-    confess "Error: transaction '$transaction' ATL actor event wait '(await $target)' exceeds the current one-event-wait subset; fan-in, fan-out, and multiple event waits remain deferred\n";
+    confess "Error: transaction '$transaction' ATL actor event wait '(await $target)' exceeds the current multi-event wait subset; multiple event waits require distinct triggered actor instances, one temporary trigger batch, contiguous source-ordered waits after the batch, and no ATL data movement; fan-in, fan-out, repeated waits, non-batch waits, and payload waits remain deferred\n";
+}
+
+sub _selected_atl_temporary_trigger_batch_multi_event_wait_shape {
+    my ($actor, $event_waits, $transaction_triggers, $data_movements) = @_;
+    my @waits = @{$event_waits || []};
+    my @triggers = @{$transaction_triggers || []};
+    return 0 unless @waits > 1
+        && @triggers > 1
+        && !@{$data_movements || []};
+
+    my $network = $actor->{actor_network} || {};
+    my @associations = @{$network->{association_schedules} || []};
+    return 0 unless @associations == 1;
+    my $association = $associations[0];
+    return 0 unless ($association->{kind} // '') eq 'temporary_trigger_batch';
+
+    my $transaction = $association->{owner_transaction};
+    return 0 unless defined($transaction) && !ref($transaction) && length($transaction);
+    for my $trigger (@triggers) {
+        return 0 unless ($trigger->{owner_transaction} // '') eq $transaction;
+    }
+    for my $wait (@waits) {
+        return 0 unless ($wait->{transaction} // '') eq $transaction;
+    }
+
+    my %batch_members = map { $_ => 1 } @{$association->{members} || []};
+    return 0 unless keys(%batch_members);
+    my %waited_instances;
+    for my $wait (@waits) {
+        my $instance = $wait->{instance} // '';
+        return 0 unless $batch_members{$instance};
+        return 0 if $waited_instances{$instance}++;
+    }
+
+    my @trigger_indices = sort { $a <=> $b }
+        grep { defined($_) } map { $_->{_clause_index} } @triggers;
+    my @wait_indices = sort { $a <=> $b }
+        grep { defined($_) } map { $_->{_clause_index} } @waits;
+    return 0 unless @trigger_indices == @triggers && @wait_indices == @waits;
+    for my $idx (1 .. $#trigger_indices) {
+        return 0 unless $trigger_indices[$idx] == $trigger_indices[$idx - 1] + 1;
+    }
+    for my $idx (1 .. $#wait_indices) {
+        return 0 unless $wait_indices[$idx] == $wait_indices[$idx - 1] + 1;
+    }
+    return 0 unless $wait_indices[0] == $trigger_indices[-1] + 1;
+
+    return 1;
 }
 
 sub _selected_atl_two_child_generated_top_candidate {

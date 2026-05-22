@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL multi-event wait sequencing shipped
+- Completed `ISF-ATL-MULTI-EVENT-WAIT.2` and closed the task tree.
+- FSMGen now accepts one temporary trigger batch followed immediately by a
+  source-ordered chain of top-level `(await actor.event)` waits when every
+  wait targets a distinct triggered actor instance and the transaction segment
+  has no ATL data movement.
+- Added `isf/atl_trigger_batch_multi_wait_pipeline.isf` with focused
+  scheduled `.fsm`, strict schedule JSON, plain HDL, and strict HDL coverage.
+  The scheduled parent keeps one trigger-batch state followed by explicit wait
+  states for `reader_done`, `filter_done`, and `writer_done`; this is not a
+  hidden same-cycle event join.
+- Repeated waits, non-batch multi-wait forms, interleaved parent work, event
+  payloads, generated child event wiring, data movement coupling, CDC,
+  ready/backpressure, and permanent actor grouping remain fail-closed or
+  deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  ATL design proposal, mdBook composition/support/backlog chapters, fixture
+  matrix, roadmap status, task-tree docs, and live docs.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: ATL multi-event wait tree selected
 - Completed `ISF-ATL-MULTI-EVENT-WAIT.1`.
 - Activated the next R14 task tree for bounded transaction-body ATL

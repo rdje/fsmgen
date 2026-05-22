@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ATL-MULTI-EVENT-WAIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -52,7 +52,7 @@ reviewable cycle boundary, and each wait reports through the existing
 ## Task Tree
 
 - ID: `ISF-ATL-MULTI-EVENT-WAIT`
-  Status: `active`
+  Status: `done`
   Goal: `ship bounded transaction-body ATL multi-event wait sequencing`
   Children: `ISF-ATL-MULTI-EVENT-WAIT.1`,
   `ISF-ATL-MULTI-EVENT-WAIT.2`
@@ -65,17 +65,17 @@ reviewable cycle boundary, and each wait reports through the existing
   Commit: `this commit: ISF-ATL-MULTI-EVENT-WAIT.1: select ATL multi-event waits`
 
 - ID: `ISF-ATL-MULTI-EVENT-WAIT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `implement sequential multi-event waits after a temporary trigger batch`
   Acceptance: `one parent transaction may trigger distinct static actors in one temporary trigger batch and then wait for multiple actor events in source order while preserving explicit wait states, ports, reports, and HDL evidence`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c t/1322-isf-actor-network-static.t`; `perl -Iperl -c t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t`; `prove -Iperl t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1328-isf-atl-trigger-wait-fixture-coverage.t t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ATL-MULTI-EVENT-WAIT.2` | `pending` | Multi-event waits are the next smallest ATL orchestration widening after trigger batches and one-event waits shipped; the selected leaf keeps explicit sequential wait semantics rather than introducing a hidden join. |
+| 1 | `closed` | `done` | `ISF-ATL-MULTI-EVENT-WAIT.2` shipped the selected bounded multi-event wait subset and closed the tree. |
 
 ## Decisions
 
@@ -87,6 +87,9 @@ reviewable cycle boundary, and each wait reports through the existing
   batches over direct static actor instances. This avoids mixing the event
   widening with generated-child tops, route scheduling, group endpoints, or
   CDC behavior.
+- `2026-05-22`: Shipped multi-event waits as parser-gated sequential
+  scheduling over the already existing event-wait lowering path. No new source
+  syntax or hidden join primitive was added.
 
 ## Open Questions
 
@@ -101,14 +104,19 @@ reviewable cycle boundary, and each wait reports through the existing
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-ATL-MULTI-EVENT-WAIT.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-22` | `ISF-ATL-MULTI-EVENT-WAIT.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c t/1322-isf-actor-network-static.t`; `perl -Iperl -c t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t`; `prove -Iperl t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t`; public doc audit group; ATL fixture group; `mdbook build docs/book`; `./bin/ci-regression isf --no-book (Files=238, Tests=1582)`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ATL-MULTI-EVENT-WAIT.1` | `this commit: ISF-ATL-MULTI-EVENT-WAIT.1: select ATL multi-event waits` | Selection commit. |
+| `ISF-ATL-MULTI-EVENT-WAIT.2` | `pending this commit: ISF-ATL-MULTI-EVENT-WAIT.2: ship ATL multi-event waits` | Implementation commit. |
 
 ## Changelog
 
 - `2026-05-22`: Created active R14 task tree and selected the bounded
   transaction-body ATL multi-event wait implementation sequence.
+- `2026-05-22`: Shipped the bounded sequential multi-event wait subset after
+  one temporary trigger batch, added file-backed fixture coverage, synchronized
+  public docs/book/handoff, and closed the tree.

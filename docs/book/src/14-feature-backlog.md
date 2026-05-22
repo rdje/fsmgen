@@ -927,8 +927,8 @@ state, and `actor_network.association_schedules[]` report evidence. Static
 `(group ...)` declarations are not required and remain review metadata only.
 
 Noncontiguous batches, repeated members, generated children, group endpoints,
-data-movement coupling, multi-event fan-in, route mux/storage, CDC, and
-compact aliases remain later leaves.
+data-movement coupling, hidden same-cycle event joins, route mux/storage,
+CDC, and compact aliases remain later leaves.
 
 The compatibility `actor_network.group_schedules[]` array remains for schedule
 JSON `schema_version: 1`. The canonical association entry uses
@@ -998,24 +998,19 @@ trigger-batch surface to one following actor event wait: a parent transaction
 triggers reader, filter, and writer in one same-cycle batch, waits on
 `writer.done`, then completes. The fixture proves parent-level
 trigger-batch/event sequencing, strict schedule JSON, and plain plus strict
-HDL reachability without claiming multiple event waits, actor-event fan-in,
-generated children, generated ATL tops, actor type resolution, HDL child
-wiring, data movement coupling, CDC, ready/backpressure, or permanent
-grouping.
+HDL reachability without claiming hidden actor-event fan-in, generated
+children, generated ATL tops, actor type resolution, HDL child wiring, data
+movement coupling, CDC, ready/backpressure, or permanent grouping.
 
-The multi-event fan-in boundary is regression-backed. A parent transaction
-that emits one temporary trigger batch and then attempts two actor event waits
-remains outside the shipped subset; the second wait fails before scheduled
-emission with the current one-event-wait diagnostic, and production behavior
-is not widened.
-
-The next selected ATL orchestration widening is bounded multi-event waits. It
-is tracked by `ISF-ATL-MULTI-EVENT-WAIT`. The selected first implementation
-keeps the existing `(await actor.event)` syntax and preserves each authored
-wait as a source-ordered scheduled wait state after one temporary trigger
-batch. It is not a hidden same-cycle join and does not claim event payloads,
-event fan-out, generated-child route coupling, group endpoints, CDC, or
-ready/backpressure.
+The bounded multi-event wait widening is now shipped through
+`isf/atl_trigger_batch_multi_wait_pipeline.isf`. It keeps the existing
+`(await actor.event)` syntax and preserves each authored wait as a
+source-ordered scheduled wait state after one temporary trigger batch. The
+accepted subset requires contiguous top-level waits, distinct triggered actor
+instances, and no ATL data movement in the same transaction segment. It is
+not a hidden same-cycle join and does not claim repeated waits, event
+payloads, event fan-out, generated-child route coupling, group endpoints,
+CDC, or ready/backpressure.
 
 The ATL source-root boundary is shipped before generated child resolution. A
 sibling top-level `(actor ...)` root in the same `.isf` source fails closed

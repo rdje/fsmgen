@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL multi-event wait sequencing shipped
+- Completed `ISF-ATL-MULTI-EVENT-WAIT.2` and closed the task tree.
+- FSMGen now lowers one temporary trigger batch followed by multiple
+  contiguous top-level actor event waits into explicit sequential wait states.
+  The shipped fixture waits on `reader_done`, `filter_done`, and
+  `writer_done` after one reader/filter/writer trigger batch.
+- Added `isf/atl_trigger_batch_multi_wait_pipeline.isf` and expanded
+  `t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t` for scheduled `.fsm`
+  structure, strict schedule JSON parity, and plain plus strict HDL
+  generation.
+- Schedule reports preserve every wait as a source-ordered
+  `actor_network.event_waits[]` entry and keep the task-scoped
+  `association_schedules[]`/compatibility `group_schedules[]` trigger-batch
+  evidence.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook, fixture matrix, roadmap, task-tree docs, and live
+  docs.
+
 ## 2026-05-22: R14 — ATL multi-event wait tree selected
 - Completed `ISF-ATL-MULTI-EVENT-WAIT.1`.
 - Activated the next R14 task tree for bounded transaction-body ATL

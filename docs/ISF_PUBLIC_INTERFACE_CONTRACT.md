@@ -1930,18 +1930,23 @@ parent-handoff subset supports one declared static actor instance and lowers
 to a generated one-bit parent event handoff input named `actor_event`; for
 example, `reader.done` lowers through `reader_done`. The generated-top subset
 also uses these event wait records for the selected one-child and two-child
-resolved-library forms. Schedule reports expose waits through
+resolved-library forms. A temporary trigger batch may also be followed by a
+contiguous source-ordered chain of multiple top-level waits when each wait
+targets a distinct triggered actor instance and no ATL data movement is in
+that transaction segment; the waits remain sequential scheduled states, not a
+hidden same-cycle join. Schedule reports expose waits through
 `actor_network.event_waits[]` entries with `transaction`, `context`,
 `instance`, `event`, `signal`, and `source` keys, where `source` is currently
-`external_handoff`. Nested event waits, fan-in, fan-out, event payloads,
-cross-clock actor events, concurrent group events, and waits outside the
-selected generated-top/source-order shapes remain fail-closed/deferred.
+`external_handoff`. Nested event waits, repeated actor waits, hidden fan-in or
+fan-out event joins, event payloads, cross-clock actor events, concurrent
+group events, and waits outside the selected generated-top/source-order
+shapes remain fail-closed/deferred.
 Existing unqualified local `(await signal)` and rule-level
 `(trigger transaction)` behavior remains unchanged, and dotted enum-looking
 names outside actor-network instances keep their prior diagnostics.
-Regression coverage includes a temporary trigger batch followed by two actor
-event waits; that source remains unsupported multi-event fan-in and fails
-before scheduled `.fsm` emission with the one-event-wait diagnostic.
+Regression coverage includes the accepted temporary trigger-batch multi-event
+wait fixture and negative repeated-wait boundaries; repeated waits fail before
+scheduled `.fsm` emission with the multi-event wait diagnostic.
 The current qualified actor-trigger subset is one top-level transaction-body
 `(trigger actor.transaction)` for a static actor instance, plus the exact
 same-cycle temporary trigger batch described above. Each trigger lowers to a

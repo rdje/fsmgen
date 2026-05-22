@@ -15,6 +15,7 @@ use FSM::Scheduler::ISF;
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $isf_file = File::Spec->catfile($repo_root, 'isf', 'atl_trigger_batch_wait_pipeline.isf');
+my $multi_wait_isf_file = File::Spec->catfile($repo_root, 'isf', 'atl_trigger_batch_multi_wait_pipeline.isf');
 
 subtest 'ATL trigger-batch wait fixture lowers to one scheduled parent artifact' => sub {
     my ($files, $report) = lower_atl_fixture();
@@ -44,6 +45,46 @@ subtest 'ATL trigger-batch wait fixture lowers to one scheduled parent artifact'
     assert_report_shape($report);
 };
 
+subtest 'ATL trigger-batch multi-event wait fixture lowers explicit source-ordered waits' => sub {
+    my ($files, $report) = lower_atl_fixture($multi_wait_isf_file);
+
+    is_deeply(
+        sorted([keys %$files]),
+        ['atl_trigger_batch_multi_wait_pipeline.fsm'],
+        'multi-event wait lowering emits only the selected parent scheduled FSM',
+    );
+
+    my $fsm = $files->{'atl_trigger_batch_multi_wait_pipeline.fsm'};
+    like($fsm, qr/\A\(\?fsm:atl_trigger_batch_multi_wait_pipeline\b/,
+        'scheduled FSM names atl_trigger_batch_multi_wait_pipeline');
+    like($fsm, qr/\(reader_done 1\)/,
+        'scheduled FSM exposes reader event handoff input');
+    like($fsm, qr/\(filter_done 1\)/,
+        'scheduled FSM exposes filter event handoff input');
+    like($fsm, qr/\(writer_done 1\)/,
+        'scheduled FSM exposes writer event handoff input');
+    like($fsm, qr/\brun_atl_trigger_batch_1\b/,
+        'scheduled FSM contains one batch trigger state');
+    unlike($fsm, qr/run_atl_trigger_[0-9]/,
+        'scheduled FSM still does not split the batch into per-trigger states');
+    like($fsm, qr/\brun_await_2\b/,
+        'scheduled FSM contains the first source-ordered event wait state');
+    like($fsm, qr/\brun_await_3\b/,
+        'scheduled FSM contains the second source-ordered event wait state');
+    like($fsm, qr/\brun_await_4\b/,
+        'scheduled FSM contains the third source-ordered event wait state');
+    like($fsm, qr/\(<reader_done\s+\(-> run_await_3\)\s+\)/,
+        'first wait advances from reader done to the filter wait');
+    like($fsm, qr/\(<filter_done\s+\(-> run_await_4\)\s+\)/,
+        'second wait advances from filter done to the writer wait');
+    like($fsm, qr/\(<writer_done\s+\(-> run_done_5\)\s+\)/,
+        'third wait advances from writer done to completion');
+    like($fsm, qr/\brun_timeout\b/,
+        'scheduled FSM retains the default await timeout state for the wait chain');
+
+    assert_multi_wait_report_shape($report);
+};
+
 subtest 'ATL trigger-batch wait fixture strict schedule JSON matches the in-process report' => sub {
     my (undef, $in_process_report) = lower_atl_fixture();
     my ($success, $stdout, $stderr) = run_cli(
@@ -63,6 +104,28 @@ subtest 'ATL trigger-batch wait fixture strict schedule JSON matches the in-proc
         decode_json($stdout),
         $in_process_report,
         'strict schedule JSON generation matches the in-process report',
+    );
+};
+
+subtest 'ATL trigger-batch multi-event wait fixture strict schedule JSON matches the in-process report' => sub {
+    my (undef, $in_process_report) = lower_atl_fixture($multi_wait_isf_file);
+    my ($success, $stdout, $stderr) = run_cli(
+        [
+            './bin/fsmgen',
+            '--strict',
+            '--quiet',
+            '--emit-schedule-json',
+            $multi_wait_isf_file,
+        ],
+        'strict schedule JSON generation for multi-event waits',
+    );
+
+    ok($success, 'strict schedule JSON generation succeeds for the ATL trigger-batch multi-event wait fixture');
+    is($stderr, '', 'multi-event wait strict schedule JSON generation keeps stderr clean');
+    is_deeply(
+        decode_json($stdout),
+        $in_process_report,
+        'multi-event wait strict schedule JSON generation matches the in-process report',
     );
 };
 
@@ -95,10 +158,38 @@ subtest 'ATL trigger-batch wait fixture reaches plain and strict HDL generation'
     like($strict, qr/\bdone_pulse_delay_pipe\b/, 'strict HDL implements delayed completion pulse state');
 };
 
+subtest 'ATL trigger-batch multi-event wait fixture reaches plain and strict HDL generation' => sub {
+    my $plain_dir = tempdir(CLEANUP => 1);
+    my $plain_hdl = File::Spec->catfile($plain_dir, 'atl_trigger_batch_multi_wait_pipeline_plain.sv');
+    my $plain = generate_hdl(
+        $plain_hdl,
+        [],
+        'plain HDL generation for multi-event waits',
+        $multi_wait_isf_file,
+    );
+
+    assert_multi_wait_hdl($plain, 'plain multi-event wait HDL');
+
+    my $strict_dir = tempdir(CLEANUP => 1);
+    my $strict_hdl = File::Spec->catfile($strict_dir, 'atl_trigger_batch_multi_wait_pipeline_strict.sv');
+    my $strict = generate_hdl(
+        $strict_hdl,
+        ['--strict'],
+        'strict HDL generation for multi-event waits',
+        $multi_wait_isf_file,
+    );
+
+    assert_multi_wait_hdl($strict, 'strict multi-event wait HDL');
+    like($strict, qr/\bdone_pulse_delay_pipe\b/,
+        'strict multi-event wait HDL implements delayed completion pulse state');
+};
+
 done_testing();
 
 sub lower_atl_fixture {
-    my $actor = FSM::Adapter::ISF->new()->parse_file($isf_file);
+    my ($source_file) = @_;
+    $source_file //= $isf_file;
+    my $actor = FSM::Adapter::ISF->new()->parse_file($source_file);
     my $scheduler = FSM::Scheduler::ISF->new();
     my $result = $scheduler->lower($actor);
     my $report = decode_json($scheduler->report($actor));
@@ -185,6 +276,111 @@ sub assert_report_shape {
     );
 }
 
+sub assert_multi_wait_report_shape {
+    my ($report) = @_;
+
+    is($report->{source}, 'atl_trigger_batch_multi_wait_pipeline.isf',
+        'multi-event wait schedule report names the fixture');
+    is($report->{scheduled_fsm}, 'atl_trigger_batch_multi_wait_pipeline.fsm',
+        'multi-event wait schedule report names the scheduled parent FSM');
+    is($report->{inputs}, 4,
+        'multi-event wait report input count includes start and three event handoffs');
+    is($report->{outputs}, 4,
+        'multi-event wait report output count includes trigger handoffs and done');
+    is($report->{port_count}, 8,
+        'multi-event wait report port count includes generated orchestration handoffs');
+    is($report->{state_count}, 7,
+        'multi-event wait report state count includes three explicit await states and timeout');
+    is_deeply($report->{compile_issues}, [],
+        'multi-event wait schedule report has no compile issues');
+    is_deeply($report->{dt_blocks}, [],
+        'multi-event wait schedule report has no drive bodies');
+    is_deeply(
+        $report->{transactions},
+        [
+            {
+                name => 'run',
+                count => 7,
+                states => [qw(
+                  run_idle_0
+                  run_atl_trigger_batch_1
+                  run_await_2
+                  run_await_3
+                  run_await_4
+                  run_done_5
+                  run_timeout
+                )],
+            },
+        ],
+        'multi-event wait report records the source-ordered wait chain',
+    );
+
+    my $actor_network = $report->{actor_network};
+    is($actor_network->{kind}, 'static_declaration', 'multi-event wait actor network kind');
+    is_deeply(
+        $actor_network->{instances},
+        [
+            { name => 'reader', actor_type => 'packet_reader', declaration => 'actor' },
+            { name => 'filter', actor_type => 'packet_filter', declaration => 'actor' },
+            { name => 'writer', actor_type => 'packet_writer', declaration => 'actor' },
+        ],
+        'multi-event wait report records the static actor instances',
+    );
+    is_deeply($actor_network->{groups}, [],
+        'multi-event wait fixture has no permanent static group');
+    is_deeply($actor_network->{data_movements}, [],
+        'multi-event wait fixture does not use ATL data movement');
+    is_deeply(
+        $actor_network->{event_waits},
+        expected_multi_wait_event_waits(),
+        'multi-event wait report records every source-ordered event wait handoff',
+    );
+    is_deeply(
+        $actor_network->{transaction_triggers},
+        expected_transaction_triggers(),
+        'multi-event wait report records per-target trigger handoffs',
+    );
+    is_deeply(
+        $actor_network->{association_schedules},
+        [ expected_association_schedule() ],
+        'multi-event wait report records canonical task-scoped association evidence',
+    );
+    is_deeply(
+        $actor_network->{group_schedules},
+        [ expected_group_schedule() ],
+        'multi-event wait report records compatibility group schedule evidence',
+    );
+}
+
+sub expected_multi_wait_event_waits {
+    return [
+        {
+            transaction => 'run',
+            context     => 'transaction_body',
+            instance    => 'reader',
+            event       => 'done',
+            signal      => 'reader_done',
+            source      => 'external_handoff',
+        },
+        {
+            transaction => 'run',
+            context     => 'transaction_body',
+            instance    => 'filter',
+            event       => 'done',
+            signal      => 'filter_done',
+            source      => 'external_handoff',
+        },
+        {
+            transaction => 'run',
+            context     => 'transaction_body',
+            instance    => 'writer',
+            event       => 'done',
+            signal      => 'writer_done',
+            source      => 'external_handoff',
+        },
+    ];
+}
+
 sub expected_transaction_triggers {
     return [
         {
@@ -242,15 +438,45 @@ sub expected_association_schedule {
 }
 
 sub generate_hdl {
-    my ($output_file, $extra_args, $label) = @_;
-    my @command = ('./bin/fsmgen', @{$extra_args || []}, '--quiet', '--output', $output_file, $isf_file);
+    my ($output_file, $extra_args, $label, $source_file) = @_;
+    $source_file //= $isf_file;
+    my @command = ('./bin/fsmgen', @{$extra_args || []}, '--quiet', '--output', $output_file, $source_file);
     my ($success, undef, $stderr) = run_cli(\@command, $label);
 
-    ok($success, "$label succeeds for the ATL trigger-batch wait fixture");
+    ok($success, "$label succeeds");
     is($stderr, '', "$label keeps stderr clean");
     ok(-f $output_file, "$label writes the requested output");
 
     return slurp($output_file);
+}
+
+sub assert_multi_wait_hdl {
+    my ($hdl, $label) = @_;
+
+    like($hdl, qr/\bmodule\s+atl_trigger_batch_multi_wait_pipeline\b/,
+        "$label contains the ATL parent module");
+    like($hdl, qr/\bRUN_ATL_TRIGGER_BATCH_1\b/,
+        "$label contains the trigger-batch state encoding");
+    like($hdl, qr/\bRUN_AWAIT_2\b/,
+        "$label contains the reader event wait state encoding");
+    like($hdl, qr/\bRUN_AWAIT_3\b/,
+        "$label contains the filter event wait state encoding");
+    like($hdl, qr/\bRUN_AWAIT_4\b/,
+        "$label contains the writer event wait state encoding");
+    like($hdl, qr/\bRUN_TIMEOUT\b/,
+        "$label contains the default await timeout state encoding");
+    like($hdl, qr/\breader_done\b/,
+        "$label exposes the reader done handoff");
+    like($hdl, qr/\bfilter_done\b/,
+        "$label exposes the filter done handoff");
+    like($hdl, qr/\bwriter_done\b/,
+        "$label exposes the writer done handoff");
+    like($hdl, qr/\breader_capture_start\b/,
+        "$label exposes the reader trigger handoff");
+    like($hdl, qr/\bfilter_process_start\b/,
+        "$label exposes the filter trigger handoff");
+    like($hdl, qr/\bwriter_emit_start\b/,
+        "$label exposes the writer trigger handoff");
 }
 
 sub run_cli {

@@ -2,8 +2,21 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: `ISF-ATL-MULTI-EVENT-WAIT`; current frontier:
-  `ISF-ATL-MULTI-EVENT-WAIT.2`.
+  Active task tree: none. Next PNT step must select or create the next
+  roadmap-aligned task tree before any code changes.
+- Recent R14 ATL multi-event wait sequencing completion:
+  `ISF-ATL-MULTI-EVENT-WAIT.2` shipped the bounded parent-handoff
+  multi-event wait subset and closed the task tree. FSMGen now accepts one
+  contiguous same-cycle temporary trigger batch followed immediately by
+  multiple top-level `(await actor.event)` clauses in source order when every
+  wait targets a distinct triggered actor instance and no ATL data movement is
+  present in that transaction segment. The scheduled parent keeps explicit
+  wait states for each event handoff, and schedule JSON reports every wait
+  through `actor_network.event_waits[]` while preserving the task-scoped
+  `association_schedules[]` and compatibility `group_schedules[]` trigger
+  batch evidence. Hidden same-cycle event joins, repeated waits, event
+  payloads, generated child event wiring, route coupling, CDC,
+  ready/backpressure, and permanent actor grouping remain deferred.
 - Recent R14 ATL multi-event wait selection:
   `ISF-ATL-MULTI-EVENT-WAIT.1` activated the next bounded ATL orchestration
   tree. The selected implementation will allow one parent transaction to emit
@@ -1349,11 +1362,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   schedule JSON parity, scheduled `.fsm` structure including the default await
   timeout state, and plain plus strict HDL reachability.
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13` selected negative boundary coverage
-  for the deferred multi-event fan-in case. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`
-  implemented that proof without widening production behavior: one temporary
-  trigger batch followed by two actor event waits now has focused regression
-  coverage, and the second wait fails before scheduled emission with the
-  one-event-wait diagnostic. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`
+  for the then-deferred multi-event fan-in case.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14` implemented that proof without
+  widening production behavior at the time. The later
+  `ISF-ATL-MULTI-EVENT-WAIT.2` slice supersedes the old distinct-actor
+  two-wait boundary by accepting explicit source-ordered waits after one
+  temporary trigger batch; repeated waits and hidden event joins remain
+  fail-closed. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`
   selected the next prerequisite as an actor-root boundary.
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16` shipped that targeted diagnostic:
   multiple top-level `(actor ...)` roots now fail closed before sibling actor
@@ -5127,14 +5142,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-ATL-MULTI-EVENT-WAIT`.
-- Current frontier: `ISF-ATL-MULTI-EVENT-WAIT.2`.
-- Completion status: `ISF-ATL-MULTI-EVENT-WAIT.1` selected the bounded
-  transaction-body ATL multi-event wait tree. The next leaf owns the first
-  implementation: one temporary trigger batch followed by multiple explicit
-  source-ordered actor event waits. Event payloads, true same-cycle fan-in,
-  CDC, ready/backpressure, group endpoints, generated-child route coupling,
-  and ATL data movement coupling remain deferred.
+- Active task tree: none.
+- Current frontier: select or create the next roadmap-aligned task tree before
+  any code changes.
+- Completion status: `ISF-ATL-MULTI-EVENT-WAIT.2` shipped the bounded
+  transaction-body ATL multi-event wait tree and closed it. One temporary
+  trigger batch may now be followed by multiple explicit source-ordered actor
+  event waits to distinct triggered actors. Event payloads, hidden same-cycle
+  joins, repeated waits, CDC, ready/backpressure, group endpoints,
+  generated-child event wiring, route coupling, and ATL data movement coupling
+  remain deferred.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8746,10 +8763,9 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Continue the active `ISF-ATL-MULTI-EVENT-WAIT` tree before selecting a
-  different implementation task. `ISF-ATL-MULTI-EVENT-WAIT.2` is the next
-  frontier and owns sequential multi-event waits after a temporary trigger
-  batch.
+- Select or create the next roadmap-aligned task tree before the next
+  implementation. No active task tree remains after
+  `ISF-ATL-MULTI-EVENT-WAIT.2`.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

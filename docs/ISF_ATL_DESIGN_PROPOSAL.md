@@ -554,18 +554,21 @@ outputs fire in one state, then the parent waits on `writer_done` before
 completion. The fixture proves one task-scoped association entry, one
 schema-version-1 compatibility group schedule entry, one event-wait entry,
 strict schedule/HDL reachability, and the default await timeout state without
-claiming multiple event waits, actor-event fan-in, generated ATL children,
-generated ATL tops, actor type resolution, HDL child wiring, data movement
-coupling, CDC, ready/backpressure, compact aliases, or permanent actor
-grouping.
+claiming hidden actor-event fan-in, generated ATL children, generated ATL
+tops, actor type resolution, HDL child wiring, data movement coupling, CDC,
+ready/backpressure, compact aliases, or permanent actor grouping.
 
-The next selected ATL parent-handoff widening is tracked by
-`ISF-ATL-MULTI-EVENT-WAIT`. Its first implementation will keep repeated
+The ATL trigger-batch multi-event wait fixture is shipped as
+`isf/atl_trigger_batch_multi_wait_pipeline.isf`. It keeps repeated
 transaction-body `(await actor.event)` clauses explicit and source ordered
-after one temporary trigger batch. It is selected as sequential wait-state
-orchestration, not as hidden same-cycle event fan-in, event payload movement,
-generated-child route coupling, group endpoint scheduling, CDC, or
-ready/backpressure.
+after one temporary trigger batch. The scheduler emits one trigger-batch state
+followed by one wait state per authored wait, so reader/filter/writer can each
+contribute a completion handoff without introducing a hidden same-cycle event
+join. The supported subset requires contiguous top-level waits, distinct
+triggered actor instances, and no ATL data movement in the same transaction
+segment. Event payload movement, generated-child route coupling, group
+endpoint scheduling, CDC, ready/backpressure, repeated waits, and fan-in or
+fan-out event joins remain deferred.
 
 The ATL resolved-child generated-top fixture is shipped as
 `isf/atl_resolved_child_pipeline.isf`. It uses one same-source library actor
@@ -764,12 +767,14 @@ ready/backpressure, payload protocols, repeated triggers, trigger batches,
 groups, recursive actor networks, and permanent actor grouping remain
 deferred.
 
-The shipped multi-event boundary proof is negative: a transaction that emits
-one temporary trigger batch and then attempts two actor event waits, such as
-`(await reader.done)` followed by `(await writer.done)`, fails before
-scheduled `.fsm` emission with the current one-event-wait diagnostic. This
-keeps `.9.12` transparent as a single-event parent-handoff subset, not
-actor-event fan-in or generated child completion joining.
+The shipped multi-event boundary is now split between an accepted sequential
+subset and negative guardrails. A transaction may emit one temporary trigger
+batch and then wait on multiple distinct triggered actors in source order; the
+scheduled parent FSM keeps those as separate wait states. Repeated waits to
+one actor, non-batch waits, interleaved parent work, event payloads, generated
+child completion joining, and hidden actor-event fan-in or fan-out joins still
+fail before scheduled `.fsm` emission with the current multi-event wait
+diagnostic.
 
 The shipped generated-child prerequisite is a source-root boundary. A second
 top-level `(actor ...)` root in the same `.isf` source is not an inline child

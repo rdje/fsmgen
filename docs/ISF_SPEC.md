@@ -749,16 +749,50 @@ orchestration, not a permanent group or a data route. The fixture is backed by
 [t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t](../t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t)
 for strict schedule JSON parity, scheduled `.fsm` structure including the
 default await timeout state, and plain plus strict HDL generation. It
-deliberately does not claim multiple event waits, actor-event fan-in,
-generated ATL child artifacts, generated ATL tops, actor type resolution, HDL
-child wiring, event payloads, endpoint data movement coupling, route
-mux/storage, CDC, ready/backpressure, compact aliases, or permanent actor
-grouping.
-Focused negative coverage in
+deliberately stays a single-wait fixture and does not claim hidden
+actor-event fan-in, generated ATL child artifacts, generated ATL tops, actor
+type resolution, HDL child wiring, event payloads, endpoint data movement
+coupling, route mux/storage, CDC, ready/backpressure, compact aliases, or
+permanent actor grouping.
+
+The ATL trigger-batch multi-event wait fixture is shipped as
+[isf/atl_trigger_batch_multi_wait_pipeline.isf](../isf/atl_trigger_batch_multi_wait_pipeline.isf).
+It uses the same parent-handoff surface, but preserves three authored
+top-level transaction-body event waits as three sequential scheduled wait
+states after the single temporary trigger-batch state:
+
+```lisp
+(transaction run
+  (on start)
+  (trigger reader.capture)
+  (trigger filter.process)
+  (trigger writer.emit)
+  (await reader.done)
+  (await filter.done)
+  (await writer.done)
+  (complete done))
+```
+
+The fixture emits only `atl_trigger_batch_multi_wait_pipeline.fsm`, exposes
+the generated trigger outputs `reader_capture_start`,
+`filter_process_start`, and `writer_emit_start`, exposes generated event
+inputs `reader_done`, `filter_done`, and `writer_done`, reports three
+source-ordered `actor_network.event_waits[]` entries, and keeps the same
+task-scoped `association_schedules[]` plus compatibility `group_schedules[]`
+metadata as the single-wait trigger-batch fixture. The scheduled parent FSM
+uses one `run_atl_trigger_batch_1` state followed by `run_await_2`,
+`run_await_3`, and `run_await_4`; each wait advances only when its matching
+event handoff is observed, and the default await timeout state remains
+present. This is explicit sequential waiting, not a hidden same-cycle event
+join. The shipped subset requires all multi-event waits to be top-level,
+contiguous, source ordered, after exactly one temporary trigger batch, and to
+target distinct triggered actor instances with no ATL data movement in the
+same transaction segment. Repeated waits, non-batch waits, interleaved parent
+work, actor-event fan-in/fan-out joins, payload waits, generated child event
+wiring, route coupling, CDC, ready/backpressure, and permanent actor grouping
+remain fail-closed/deferred. Focused negative coverage in
 [t/1322-isf-actor-network-static.t](../t/1322-isf-actor-network-static.t)
-also proves that one temporary trigger batch followed by two actor event waits
-still fails before scheduled `.fsm` emission with the one-event-wait
-diagnostic.
+keeps repeated actor waits outside the selected shape.
 
 The ATL resolved-child fixture is shipped as
 [isf/atl_resolved_child_pipeline.isf](../isf/atl_resolved_child_pipeline.isf).
@@ -3664,22 +3698,30 @@ handoff, and report-only group metadata subsets implemented so far:
   view. If the trigger set matches one declared static group, the
   compatibility `group` field names that group; otherwise it uses a synthetic
   transaction-scoped name such as `run_trigger_batch`. The selected coupling
-  subset permits one actor event wait after that temporary trigger batch.
-  Generated child wiring, group endpoints, data-movement coupling, multi-event
-  fan-in, storage/mux insertion, CDC, compact aliases, repeated-instance
-  batches, and broader fan-in/fan-out remain fail-closed.
+  subset permits either one following actor event wait or a contiguous
+  source-ordered chain of multiple following event waits after that temporary
+  trigger batch. Multi-event waits must target distinct triggered actor
+  instances and remain explicit sequential wait states. Generated child
+  wiring, group endpoints, data-movement coupling, hidden actor-event
+  fan-in/fan-out joins, storage/mux insertion, CDC, compact aliases,
+  repeated-instance batches, and broader fan-in/fan-out remain fail-closed.
 
 The current actor-event wait subset is deliberately narrower than full child
-orchestration. FSMGen accepts exactly one top-level transaction-body
+orchestration. FSMGen accepts top-level transaction-body
 `(await actor.event)` when `actor` names a declared direct static actor
-instance and `event` is a scalar HDL identifier. That wait may stand alone for
-a single static actor, or follow one selected same-cycle temporary trigger
-batch. The wait lowers to a deterministic one-bit parent event handoff input
-named `actor_event`; for example, `(await reader.done)` lowers to an await on
-`reader_done` and the scheduled parent `.fsm` exposes `reader_done` as a
-one-bit input. The event source is external in this subset even when the
-target actor type resolves and a child `.fsm` artifact is emitted. FSMGen
-does not generate an ATL top or wire the event producer.
+instance and `event` is a scalar HDL identifier. A single wait may stand alone
+for a single static actor, or follow one selected same-cycle temporary trigger
+batch. A bounded multi-wait chain is also accepted after one temporary trigger
+batch when every wait is contiguous, source ordered, top level, targets a
+distinct triggered actor instance, and the transaction segment has no ATL data
+movement. Each wait lowers to a deterministic one-bit parent event handoff
+input named `actor_event`; for example, `(await reader.done)` lowers to an
+await on `reader_done` and the scheduled parent `.fsm` exposes `reader_done`
+as a one-bit input. Multiple accepted waits remain explicit sequential states
+and are not collapsed into a same-cycle join. The event source is external in
+this subset even when the target actor type resolves and a child `.fsm`
+artifact is emitted. FSMGen does not generate an ATL top or wire the event
+producer for parent-handoff-only trigger-batch waits.
 
 Schedule JSON reports the shipped wait under `actor_network.event_waits[]`.
 Each entry has `transaction`, `context`, `instance`, `event`, `signal`, and
@@ -4122,6 +4164,7 @@ Representative shipped fixtures:
 - [isf/atl_pin_egress_pipeline.isf](../isf/atl_pin_egress_pipeline.isf)
 - [isf/atl_trigger_wait_pipeline.isf](../isf/atl_trigger_wait_pipeline.isf)
 - [isf/atl_trigger_batch_wait_pipeline.isf](../isf/atl_trigger_batch_wait_pipeline.isf)
+- [isf/atl_trigger_batch_multi_wait_pipeline.isf](../isf/atl_trigger_batch_multi_wait_pipeline.isf)
 - [isf/atl_resolved_child_pipeline.isf](../isf/atl_resolved_child_pipeline.isf)
 - [isf/atl_resolved_child_pin_ingress_pipeline.isf](../isf/atl_resolved_child_pin_ingress_pipeline.isf)
 - [isf/atl_resolved_child_pin_ingress_vector_pipeline.isf](../isf/atl_resolved_child_pin_ingress_vector_pipeline.isf)
@@ -4270,8 +4313,19 @@ one `event_waits[]` entry, empty data movement, strict schedule JSON parity,
 scheduled `.fsm` structure including the default await timeout state, and
 plain plus strict HDL generation. It stays inside the shipped parent-handoff
 subset and does not claim generated ATL child artifacts, generated ATL tops,
-actor type resolution, HDL child wiring, multi-event fan-in, data movement
-coupling, CDC, or permanent actor grouping.
+actor type resolution, HDL child wiring, hidden multi-event fan-in joins,
+data movement coupling, CDC, or permanent actor grouping.
+The [isf/atl_trigger_batch_multi_wait_pipeline.isf](../isf/atl_trigger_batch_multi_wait_pipeline.isf)
+fixture now has file-backed ATL trigger-batch multi-event wait coverage for
+three direct static actor instances, one same-cycle temporary trigger batch,
+three contiguous source-ordered waits on `reader.done`, `filter.done`, and
+`writer.done`, three `event_waits[]` entries, strict schedule JSON parity,
+scheduled `.fsm` structure with one trigger-batch state followed by three
+explicit wait states and the default await timeout state, and plain plus
+strict HDL generation. It stays inside the shipped parent-handoff subset and
+does not claim hidden actor-event fan-in/fan-out joins, payload waits,
+generated ATL child event wiring, data movement coupling, CDC, or permanent
+actor grouping.
 The [isf/atl_resolved_child_pipeline.isf](../isf/atl_resolved_child_pipeline.isf)
 fixture now has file-backed ATL resolved-child coverage for one same-source
 library actor export, one resolved `(instance worker of

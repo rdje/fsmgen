@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL multi-event waits preserve authored sequencing
+- `ISF-ATL-MULTI-EVENT-WAIT.2` ships the selected multi-event wait subset
+  without adding a new surface syntax. Authors keep writing ordinary
+  top-level `(await actor.event)` clauses after an accepted temporary trigger
+  batch.
+- The parser recognizes only the bounded shape: one task-scoped
+  `temporary_trigger_batch`, contiguous trigger clauses, contiguous wait
+  clauses immediately after the batch, waits targeting distinct triggered
+  actor instances, and no ATL data movement in the same segment.
+- The scheduler already lowers each accepted event wait as a normal await
+  state, so widening the parser gate is enough to preserve reviewable cycle
+  boundaries. This deliberately avoids a hidden join primitive, event payload
+  protocol, route coupling, or storage/mux policy.
+- Repeated waits remain a useful fail-closed boundary because they would need
+  a policy for whether multiple events from one actor are independent,
+  ordered, sticky, or sampled in a single child completion protocol.
+
 ## 2026-05-22: ATL multi-event waits start with explicit sequencing
 - `ISF-ATL-MULTI-EVENT-WAIT.1` selects the next bounded ATL orchestration
   widening after temporary trigger batches and one-event waits shipped.

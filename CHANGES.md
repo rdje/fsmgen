@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL multi-event wait sequencing shipped
+- Completed `ISF-ATL-MULTI-EVENT-WAIT.2` and closed the task tree.
+- Added bounded ATL parent-handoff multi-event waits after one temporary
+  trigger batch. A parent transaction may now emit a contiguous same-cycle
+  batch of `(trigger actor.transaction)` clauses, then wait on multiple
+  contiguous top-level `(await actor.event)` clauses in source order when
+  every wait targets a distinct triggered actor instance and no ATL data
+  movement is present in that transaction segment.
+- Added `isf/atl_trigger_batch_multi_wait_pipeline.isf` plus focused coverage
+  for scheduled `.fsm` structure, generated trigger/event handoff ports,
+  strict schedule JSON parity, plain HDL generation, and strict HDL
+  generation.
+- Schedule JSON preserves each wait in `actor_network.event_waits[]`, keeps
+  per-target `transaction_triggers[]`, and retains the existing task-scoped
+  `association_schedules[]` plus compatibility `group_schedules[]` trigger
+  batch evidence.
+- Repeated waits, non-batch multi-wait forms, interleaved parent work, hidden
+  same-cycle event joins, event payloads, generated child event wiring, data
+  movement coupling, CDC, ready/backpressure, and permanent actor grouping
+  remain fail-closed or deferred.
+- Synchronized the public ISF spec, downstream handoff spec, public contract,
+  ATL design proposal, mdBook, fixture matrix, roadmap status, and task-tree
+  docs.
+
+## 2026-05-22
 ### R14 — ATL multi-event wait tree selected
 - Completed `ISF-ATL-MULTI-EVENT-WAIT.1`.
 - Activated a new R14 task tree for bounded transaction-body ATL multi-event

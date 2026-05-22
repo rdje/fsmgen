@@ -1822,8 +1822,8 @@ capability manifest and this handoff:
 
   Downstream producers must still avoid repeated members, noncontiguous
   batches, generated child assumptions, group endpoints, data-movement
-  coupling, multi-event fan-in, storage/mux insertion, CDC, compact aliases,
-  and broader fan-in/fan-out.
+  coupling, hidden same-cycle event joins, storage/mux insertion, CDC,
+  compact aliases, and broader fan-in/fan-out.
 
 ### 12.5.3. Static Groups Versus Task-Scoped Associations
 
@@ -1858,12 +1858,21 @@ Schedule JSON reports accepted waits under `actor_network.event_waits[]`.
 Each entry exposes `transaction`, `context`, `instance`, `event`, `signal`,
 and `source`; the current source is `external_handoff`.
 
+The selected multi-event parent-handoff subset is also supported after one
+temporary trigger batch. Downstream producers may emit a contiguous,
+source-ordered chain of top-level `(await actor.event)` clauses immediately
+after the accepted trigger-batch state when every wait targets a distinct
+triggered actor instance and the transaction segment has no ATL data
+movement. FSMGen preserves the chain as sequential wait states; it does not
+collapse them into a hidden same-cycle event join.
+
 The rest of the ATL event boundary remains fail-closed.
 
-Downstream producers must not emit multiple actor-event waits, nested
-actor-event waits, fan-in/fan-out event structures, event payloads,
+Downstream producers must not emit nested actor-event waits, repeated waits
+to one actor instance, non-batch multi-wait forms, interleaved parent work
+inside the multi-wait segment, fan-in/fan-out event joins, event payloads,
 cross-clock actor events, concurrent group events, or source that relies on
-generated ATL child artifacts or generated ATL top wiring until the
+generated ATL child artifacts or generated ATL top event wiring until the
 corresponding support is documented here and advertised in the manifest.
 
 Existing unqualified local forms are unchanged: `(await signal)` remains a
@@ -1873,10 +1882,10 @@ local transaction trigger.
 Dotted enum-looking names that do not name a static actor instance keep their
 prior diagnostics.
 
-The regression suite specifically covers one temporary trigger batch followed
-by two actor event waits; downstream producers must still treat that as
-unsupported multi-event fan-in, and FSMGen fails it before scheduled `.fsm`
-emission with the one-event-wait diagnostic.
+The regression suite specifically covers the accepted source-ordered
+multi-event wait form through `isf/atl_trigger_batch_multi_wait_pipeline.isf`
+and keeps repeated target waits outside that subset with the current
+multi-event wait diagnostic.
 
 Current actor-transaction trigger handoff subset: downstream producers may
 emit a top-level transaction-body `(trigger actor.transaction)` against a
@@ -2741,6 +2750,7 @@ isf/atl_pin_ingress_pipeline.isf
 isf/atl_pin_egress_pipeline.isf
 isf/atl_trigger_wait_pipeline.isf
 isf/atl_trigger_batch_wait_pipeline.isf
+isf/atl_trigger_batch_multi_wait_pipeline.isf
 isf/atl_resolved_child_pipeline.isf
 isf/atl_resolved_child_pin_ingress_pipeline.isf
 isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
@@ -2927,8 +2937,22 @@ trigger output pulses, one following `writer_done` event input wait,
 strict HDL generation for `isf/atl_trigger_batch_wait_pipeline.isf`.
 
 It intentionally does not claim generated ATL children, generated ATL tops,
-actor type resolution, HDL child wiring, multi-event fan-in, data movement
-coupling, CDC, ready/backpressure, or permanent actor grouping.
+actor type resolution, HDL child wiring, hidden multi-event fan-in joins, data
+movement coupling, CDC, ready/backpressure, or permanent actor grouping.
+
+The ATL trigger-batch multi-event wait fixture is covered by the same test. It
+proves strict schedule JSON parity, scheduled `.fsm` structure, three
+same-cycle generated trigger output pulses, three following source-ordered
+event input waits (`reader_done`, `filter_done`, and `writer_done`), three
+`actor_network.event_waits[]` entries, one task-scoped
+`association_schedules[]` entry, one compatibility `group_schedules[]` entry,
+empty data movement, and plain plus strict HDL generation for
+`isf/atl_trigger_batch_multi_wait_pipeline.isf`.
+
+It intentionally remains sequential parent-handoff orchestration and does not
+claim hidden same-cycle actor-event joins, repeated waits to one actor, event
+payloads, generated ATL child event wiring, data route coupling, CDC,
+ready/backpressure, or permanent actor grouping.
 
 The ATL resolved-child fixture is covered by
 `t/1330-isf-atl-resolved-child-fixture-coverage.t`, which proves strict
@@ -3131,6 +3155,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_wait_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_batch_wait_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_batch_multi_wait_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
