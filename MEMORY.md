@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 composition duplicate-declaration corpus widening selected
+- Completed `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused duplicate top-port
+  and duplicate child-instance diagnostics into maintained expected-failure
+  corpus coverage.
+- The next frontier is
+  `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2`: add bounded
+  fixtures and catalog entries for duplicate top ports and duplicate child
+  instance names, with synchronized docs and corpus gates.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 composition child-kind/ports-mapping corpus widening completed
 - Completed
   `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.2` and closed the

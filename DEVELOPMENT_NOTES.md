@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition duplicate-declaration coverage stays parser-diagnostic-only
+- `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.1` selects
+  support-accounting promotion for duplicate top-port and duplicate
+  child-instance diagnostics whose existing focused test already locks the
+  parser boundary.
+- The implementation should preserve the existing diagnostics and only add
+  maintained expected-failure corpus assets for the bounded duplicate
+  declaration family.
+
 ## 2026-05-22: Composition child-kind and ports-mapping failures are support-accounting failures
 - `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.2` keeps the
   existing parser diagnostics intact and promotes two already-focused

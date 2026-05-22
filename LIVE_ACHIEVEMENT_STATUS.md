@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — duplicate declaration widening selected
+- Completed `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2`.
+- The selected implementation will promote duplicate top-port and duplicate
+  child-instance diagnostics into maintained expected-failure corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 regression corpus — child-kind/ports-mapping coverage widened
 - Completed
   `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.2`.
