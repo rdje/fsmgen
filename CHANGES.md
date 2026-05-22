@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Temporal contract actor-constant windows shipped
+- Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` and closed the task tree.
+- Added support for positive actor constants as bounded eventual temporal
+  contract `within` cycle counts in both nested `(within CONST)` and flat
+  `within CONST` spellings.
+- Schedule reports continue to expose `temporal_contracts[].within_cycles` as
+  the resolved positive integer; no source-token field or schema shape was
+  added.
+- Actor parameters, transaction parameters, runtime signals, arbitrary
+  expressions, min/max windows, nested contracts, same-cycle checks, and
+  multiple outstanding obligations remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused contract/boundary tests;
+  public/doc audits; broad `./bin/ci-regression isf --no-book` with
+  `Files=238, Tests=1584`; `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — Temporal contract actor-constant window tree selected
 - Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1`.
 - Activated a new R14 task tree for accepting positive actor constants as

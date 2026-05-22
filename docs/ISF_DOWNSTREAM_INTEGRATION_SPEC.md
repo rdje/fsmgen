@@ -1576,7 +1576,12 @@ contract monitor metadata. Assertion projection is currently
 verification-only assertion from the generated sticky fail bit under
 `` `ifndef SYNTHESIS``. Verilog output remains assertion-free. FSMGen also
 accepts the older nested alias `(eventually signal (within N))`; downstream
-emitters should prefer the flat `within N` form shown above.
+emitters should prefer the flat `within N` form shown above. `N` may be a
+positive integer literal or a declared actor constant that resolves to a
+positive integer. Reports keep `temporal_contracts[].within_cycles` as the
+resolved integer and do not expose a separate source-token field. Actor
+parameters, transaction parameters, runtime signals, and arbitrary expressions
+remain invalid contract windows.
 
 Latency:
 

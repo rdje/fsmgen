@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS`
-- Status: `active`
+- Status: `completed`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -40,7 +40,7 @@ constants anywhere the shipped literal `within` cycle count is accepted.
 ## Task Tree
 
 - ID: `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS`
-  Status: `active`
+  Status: `completed`
   Goal: `ship positive actor constants as bounded eventual contract windows`
   Children: `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1`,
   `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2`
@@ -50,20 +50,20 @@ constants anywhere the shipped literal `within` cycle count is accepted.
   Goal: `select the temporal-contract actor-constant window task tree`
   Acceptance: `task-tree owner, source boundary, non-goals, and implementation leaf are recorded before code`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `8890ca29 ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1: select contract actor-constant windows`
 
 - ID: `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `implement and document actor-constant temporal-contract windows`
   Acceptance: `positive actor constants lower as literal windows; unsupported window tokens fail closed; docs and focused tests are synchronized`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1224-isf-contract-lowering.t`; focused contract/boundary tests; public/doc audits; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` | `pending` | The tree is selected; the implementation leaf owns the parser/lowerer, tests, and user-facing docs. |
+| 1 | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` | `done` | Completed; no remaining frontier in this tree. |
 
 ## Decisions
 
@@ -84,14 +84,19 @@ constants anywhere the shipped literal `within` cycle count is accepted.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | 2026-05-22 | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1` | `mdbook build docs/book`; `git diff --check` | Pass |
+| 2026-05-22 | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1224-isf-contract-lowering.t`; `prove -Iperl t/1175-isf-contract-fail-closed.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1224-isf-contract-lowering.t t/1225-isf-stage-contract-schedule-report.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | Pass; broad ISF gate `Files=238, Tests=1584` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1` | `pending this commit: ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1: select contract actor-constant windows` | Selection commit. |
+| `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1` | `8890ca29 ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1: select contract actor-constant windows` | Selection commit. |
+| `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` | `pending this commit: ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2: ship contract actor-constant windows` | Implementation and documentation commit. |
 
 ## Changelog
 
 - `2026-05-22`: Created active R14 task tree for positive actor constants in
   bounded eventual temporal-contract windows.
+- `2026-05-22`: Shipped positive actor constants for nested and flat bounded
+  eventual temporal-contract windows, with parameters and dynamic windows still
+  fail-closed.

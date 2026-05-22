@@ -2,8 +2,18 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS`; current frontier:
-  `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2`.
+  Active task tree: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before any code changes.
+- Recent R14 temporal-contract actor-constant window completion:
+  `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` shipped positive actor constants as
+  bounded eventual temporal-contract `within` windows and closed the task tree.
+  Both `(eventually signal (within CONST))` and flat
+  `(eventually signal within CONST)` resolve `CONST` when it is a declared
+  actor constant with a positive resolved integer value. Reports keep
+  `temporal_contracts[].within_cycles` as the resolved integer without adding
+  a source-token field. Actor parameters, transaction parameters, runtime
+  signals, dynamic expressions, min/max windows, nested contracts, same-cycle
+  checks, and multiple outstanding obligations remain fail-closed or deferred.
 - Recent R14 temporal-contract actor-constant window selection:
   `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1` activated the bounded temporal
   contract tree for positive actor constants in `(eventually signal (within
@@ -8819,10 +8829,9 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Continue the active `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` task tree. The
-  next frontier is `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2`, a bounded
-  temporal-contract widening for positive actor constants as static `within`
-  cycle-count evidence.
+- Select or create the next roadmap-aligned task tree before any further code
+  changes. `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` is closed after shipping
+  positive actor constants as static bounded-eventual contract window evidence.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

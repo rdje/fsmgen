@@ -3352,13 +3352,16 @@ accepts the older nested alias
 `(contract name (eventually signal (within cycles)))`; both forms lower to the
 same bounded-eventually monitor. The contract is supported only as a top-level
 transaction clause, with a unique contract name per transaction, `signal` bound
-to a scalar actor interface input or output, and `cycles` as a positive integer
-literal. Reaching the clause emits one arm state. The checked window starts on
-the next cycle and lasts for the `cycles` bound. The generated scheduled `.fsm`
-artifact contains the arm state plus an always-on monitor DT with pending, age,
-and sticky-fail storage. Actor reset clears the monitor storage. Seeing
-`signal` while pending clears the obligation; window expiry or re-arming the
-same contract while pending sets the sticky fail bit. Schedule-report
+to a scalar actor interface input or output, and `cycles` as either a positive
+integer literal or a declared actor constant that resolves to a positive
+integer. Actor parameters, transaction parameters, runtime signals, and
+arbitrary expressions are not accepted as contract windows. Reaching the
+clause emits one arm state. The checked window starts on the next cycle and
+lasts for the resolved `cycles` bound. The generated scheduled `.fsm` artifact
+contains the arm state plus an always-on monitor DT with pending, age, and
+sticky-fail storage. Actor reset clears the monitor storage. Seeing `signal`
+while pending clears the obligation; window expiry or re-arming the same
+contract while pending sets the sticky fail bit. Schedule-report
 `dt_blocks` classify the generated monitor as `temporal_contract_monitor`, and
 `inferred_storage` reports pending/fail as registers and age as a counter.
 Pending samples before a runtime wait whose zero-count successor is the
@@ -4039,6 +4042,9 @@ assertion text. The
 capability-manifest ISF public contract advertises the keys, kind values,
 overlap values, assertion-projection values, and reset-policy shape through the
 matching `schedule_report_temporal_contract_*` metadata fields.
+When a contract window is authored with a positive actor constant,
+`within_cycles` reports the resolved positive integer and no separate
+source-token field is public.
 The reset summary's `kind` value is currently `async` or `sync`, and its
 `polarity` value is currently `active_high` or `active_low`. The
 capability-manifest ISF public contract advertises those value families through

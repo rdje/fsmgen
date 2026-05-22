@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Temporal contract actor-constant windows shipped
+- Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` and closed the task tree.
+- FSMGen now accepts positive actor constants as the `within` cycle count in
+  bounded eventual temporal contracts for both
+  `(eventually signal (within CONST))` and flat `(eventually signal within
+  CONST)` spellings.
+- The lowerer resolves the actor constant to the same positive integer monitor
+  bound used by literal windows. Schedule JSON keeps
+  `temporal_contracts[].within_cycles` as the resolved integer and does not
+  add a public source-token field.
+- Actor parameters, transaction parameters, runtime signals, arbitrary
+  expressions, min/max windows, nested contracts, same-cycle checks, and
+  multiple outstanding obligations remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook intent scheduling/support matrix/backlog chapters, roadmap status,
+  task-tree docs, and live docs.
+- Validation passed: LoweringIR/test syntax; focused contract/boundary tests;
+  public/doc audits; broad `./bin/ci-regression isf --no-book` with
+  `Files=238, Tests=1584`; `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Temporal contract actor-constant window tree selected
 - Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1`.
 - Activated the next R14 feature tree for positive actor constants in bounded

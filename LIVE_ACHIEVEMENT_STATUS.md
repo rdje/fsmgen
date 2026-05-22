@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Temporal contract actor-constant windows shipped
+- Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` and closed the task tree.
+- FSMGen now accepts declared positive actor constants as bounded eventual
+  temporal-contract windows in both `(within CONST)` and flat `within CONST`
+  spellings.
+- Generated monitor timing is unchanged from literal windows after resolution;
+  schedule reports keep `temporal_contracts[].within_cycles` as the resolved
+  integer and do not add a source-token field.
+- Actor/transaction parameters, runtime signals, arbitrary expressions,
+  min/max windows, nested contracts, same-cycle checks, and multiple
+  outstanding obligations remain fail-closed or deferred.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Validation passed: focused contract/boundary tests, public/doc audits, broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1584`,
+  `mdbook build docs/book`, and `git diff --check`.
+
 ## 2026-05-22: R14 — Temporal contract actor-constant window tree selected
 - Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1`.
 - Activated the active R14 task tree for positive actor constants in bounded

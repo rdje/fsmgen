@@ -760,6 +760,10 @@ The ISF-specific current limitations are:
 - The first `(contract ...)` temporal assertion subset is implemented for
   top-level `(contract name (eventually signal within cycles))`. The older
   nested `(eventually signal (within cycles))` spelling remains accepted as an
-  alias. Both forms lower to an arm state plus an always-on monitor DT with
-  pending, age, and sticky-fail storage. Nested contracts and richer temporal
-  forms still fail closed instead of being dropped from the scheduled `.fsm`.
+  alias. The `cycles` token may be a positive integer literal or a declared
+  actor constant that resolves to a positive integer; actor/transaction
+  parameters and runtime expressions remain invalid. Both forms lower to an arm
+  state plus an always-on monitor DT with pending, age, and sticky-fail storage,
+  and reports expose the resolved bound in `temporal_contracts[].within_cycles`.
+  Nested contracts and richer temporal forms still fail closed instead of being
+  dropped from the scheduled `.fsm`.

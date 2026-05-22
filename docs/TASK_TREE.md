@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` | `active` | `R14` | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` | [docs/tasks/ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.md) |
 | `ISF-ATL-COMPACT-INSTANCE-ALIAS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-COMPACT-INSTANCE-ALIAS.md](docs/tasks/ISF-ATL-COMPACT-INSTANCE-ALIAS.md) |
 | `ISF-ATL-COMPACT-GROUP-ALIAS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-COMPACT-GROUP-ALIAS.md](docs/tasks/ISF-ATL-COMPACT-GROUP-ALIAS.md) |
 | `ISF-ATL-MULTI-EVENT-WAIT` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-MULTI-EVENT-WAIT.md](docs/tasks/ISF-ATL-MULTI-EVENT-WAIT.md) |

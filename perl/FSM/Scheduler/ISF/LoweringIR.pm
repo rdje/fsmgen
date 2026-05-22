@@ -3849,7 +3849,7 @@ sub _validate_stage_clause {
 sub _validate_contract_clause {
     my ($clause, $tn, $label) = @_;
 
-    _parse_bounded_eventual_contract_clause($clause, $tn, $label);
+    _bounded_eventual_contract_parts($clause, $tn, $label);
     return 1;
 }
 
@@ -3901,6 +3901,19 @@ sub _parse_stage_handshake_clause {
 }
 
 sub _parse_bounded_eventual_contract_clause {
+    my ($clause, $tn, $label, $actor) = @_;
+
+    my ($name, $signal, $within_token) = _bounded_eventual_contract_parts($clause, $tn, $label);
+    my $within_cycles = _temporal_contract_within_cycles($within_token, $actor, $tn, $name, $label);
+
+    return {
+        name          => $name,
+        signal        => $signal,
+        within_cycles => $within_cycles,
+    };
+}
+
+sub _bounded_eventual_contract_parts {
     my ($clause, $tn, $label) = @_;
 
     confess "Transaction '$tn': contract requires '(contract name (eventually signal within cycles))' or '(contract name (eventually signal (within cycles)))' in $label\n"
@@ -3921,7 +3934,7 @@ sub _parse_bounded_eventual_contract_clause {
             && !ref($eventual->[1])
             && length($eventual->[1]);
 
-    my $within_cycles;
+    my $within_token;
     if (
         @$eventual == 4
         && defined($eventual->[2])
@@ -3929,9 +3942,8 @@ sub _parse_bounded_eventual_contract_clause {
         && $eventual->[2] eq 'within'
         && defined($eventual->[3])
         && !ref($eventual->[3])
-        && $eventual->[3] =~ /\A[1-9][0-9]*\z/
     ) {
-        $within_cycles = $eventual->[3];
+        $within_token = $eventual->[3];
     }
     elsif (
         @$eventual == 3
@@ -3942,19 +3954,43 @@ sub _parse_bounded_eventual_contract_clause {
         && $eventual->[2][0] eq 'within'
         && defined($eventual->[2][1])
         && !ref($eventual->[2][1])
-        && $eventual->[2][1] =~ /\A[1-9][0-9]*\z/
     ) {
-        $within_cycles = $eventual->[2][1];
+        $within_token = $eventual->[2][1];
     }
     else {
         confess "Transaction '$tn': contract '$name' supports only '(eventually signal within cycles)' or '(eventually signal (within cycles))'\n";
     }
 
-    return {
-        name          => $name,
-        signal        => $eventual->[1],
-        within_cycles => 0 + $within_cycles,
-    };
+    return ($name, $eventual->[1], $within_token);
+}
+
+sub _temporal_contract_within_cycles {
+    my ($token, $actor, $tn, $contract_name, $label) = @_;
+
+    return 0 + $token
+        if defined($token) && !ref($token) && $token =~ /\A[1-9][0-9]*\z/;
+
+    confess "Transaction '$tn': contract '$contract_name' within cycles must be positive in $label\n"
+        if defined($token) && !ref($token) && $token =~ /\A0+\z/;
+
+    if (defined($token) && !ref($token) && _is_hdl_identifier($token)) {
+        return $token unless ref($actor) eq 'HASH';
+
+        my $constant = _actor_constant_by_name($actor, $token);
+        if ($constant) {
+            my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
+            confess "Transaction '$tn': contract '$contract_name' within constant '$token' must resolve to a positive cycle count in $label\n"
+                unless defined($constant_value) && $constant_value > 0;
+            return $constant_value;
+        }
+
+        confess "Transaction '$tn': contract '$contract_name' within token '$token' is an actor parameter; temporal contract windows accept positive integer literals or actor constants only in $label\n"
+            if _actor_param_by_name($actor, $token);
+
+        confess "Transaction '$tn': contract '$contract_name' within token '$token' is not a declared actor constant in $label\n";
+    }
+
+    confess "Transaction '$tn': contract '$contract_name' supports only '(eventually signal within cycles)' or '(eventually signal (within cycles))'\n";
 }
 
 sub _validate_child_action_clause {
@@ -6166,7 +6202,7 @@ sub _ir_stage {
 
 sub _ir_contract {
     my ($cl, $tn, $i, $actor, $widths, $counters, $storage_roles, $seen_contracts) = @_;
-    my $contract = _parse_bounded_eventual_contract_clause($cl, $tn, 'transaction body');
+    my $contract = _parse_bounded_eventual_contract_clause($cl, $tn, 'transaction body', $actor);
     my %interface_signals = map {
         $_->{name} => 1
     } (@{$actor->{interface}{inputs} || []}, @{$actor->{interface}{outputs} || []});

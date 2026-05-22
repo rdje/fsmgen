@@ -130,6 +130,122 @@ ISF
     ok($payload->{success}, 'strict JSON payload reports success for the accepted flat within form');
 };
 
+subtest 'actor constants can name bounded eventual contract windows' => sub {
+    my $nested_source = <<'ISF';
+(actor contract_constant_window
+  (clock clk)
+  (reset rst_n)
+  (constants
+    (ACK_WINDOW 4))
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (contract ack_seen (eventually ack (within ACK_WINDOW)))
+    (complete done)))
+ISF
+
+    my $lowered = lower_source($nested_source);
+    like(
+        $lowered->{files}{'contract_constant_window.fsm'},
+        qr/\(== main_contract_1_age 3\)/,
+        'nested constant window resolves to the literal monitor expiry cycle',
+    );
+
+    my $report = report_source($nested_source);
+    is($report->{temporal_contracts}[0]{within_cycles}, 4, 'nested constant window reports the resolved cycle bound');
+
+    my $flat_source = <<'ISF';
+(actor contract_flat_constant_window
+  (clock clk)
+  (reset rst_n)
+  (constants
+    (ACK_WINDOW 2))
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (contract ack_seen (eventually ack within ACK_WINDOW))
+    (complete done)))
+ISF
+
+    my $flat_report = report_source($flat_source);
+    is($flat_report->{temporal_contracts}[0]{within_cycles}, 2, 'flat constant window reports the resolved cycle bound');
+};
+
+subtest 'unsupported symbolic bounded eventual contract windows fail closed' => sub {
+    my ($ok_zero, $zero_diag) = lower_rejected(<<'ISF');
+(actor contract_zero_constant_window
+  (clock clk)
+  (reset rst_n)
+  (constants
+    (ACK_WINDOW 0))
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (contract ack_seen (eventually ack (within ACK_WINDOW)))
+    (complete done)))
+ISF
+
+    ok(!$ok_zero, 'zero-valued actor constant window is rejected');
+    like(
+        $zero_diag,
+        qr/\ATransaction 'main': contract 'ack_seen' within constant 'ACK_WINDOW' must resolve to a positive cycle count in transaction body/,
+        'zero-valued actor constant diagnostic is targeted',
+    );
+
+    my ($ok_param, $param_diag) = lower_rejected(<<'ISF');
+(actor contract_parameter_window
+  (clock clk)
+  (reset rst_n)
+  (params
+    (ACK_WINDOW 3))
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (contract ack_seen (eventually ack (within ACK_WINDOW)))
+    (complete done)))
+ISF
+
+    ok(!$ok_param, 'actor parameter window is rejected');
+    like(
+        $param_diag,
+        qr/\ATransaction 'main': contract 'ack_seen' within token 'ACK_WINDOW' is an actor parameter; temporal contract windows accept positive integer literals or actor constants only in transaction body/,
+        'actor parameter diagnostic is targeted',
+    );
+
+    my ($ok_unknown, $unknown_diag) = lower_rejected(<<'ISF');
+(actor contract_unknown_symbol_window
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (contract ack_seen (eventually ack (within ACK_WINDOW)))
+    (complete done)))
+ISF
+
+    ok(!$ok_unknown, 'unknown symbolic window is rejected');
+    like(
+        $unknown_diag,
+        qr/\ATransaction 'main': contract 'ack_seen' within token 'ACK_WINDOW' is not a declared actor constant in transaction body/,
+        'unknown symbolic window diagnostic is targeted',
+    );
+};
+
 subtest 'single-cycle bounded eventual contract omits unreachable age increment' => sub {
     my $lowered = lower_source(<<'ISF');
 (actor contract_single_cycle

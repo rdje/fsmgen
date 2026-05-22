@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Contract constant windows keep monitor sizing static
+- `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` resolves actor constants before
+  temporal-contract monitor construction, so generated pending/age/fail
+  storage and expiry comparisons are identical to the already shipped literal
+  window path.
+- The public report remains stable: downstream consumers continue to read the
+  resolved integer from `temporal_contracts[].within_cycles`; the authored
+  source token is not exposed as a new schema field.
+- Actor and transaction parameters stay out of scope because later generated
+  composition overrides could change them. Supporting parameterized contract
+  windows would require a separate policy for specialization timing and
+  generated monitor widths.
+
 ## 2026-05-22: Temporal contract windows can reuse static constants
 - `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1` selects a narrow temporal-contract
   widening: actor constants are compile-time evidence and can naturally serve
