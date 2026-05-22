@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL pin vector multi-route selected
+- Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1`.
+- Activated a new R14 task tree for exact-width vector generated-child
+  top-level pin multi-route sets.
+- The next frontier is `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`: widen same-child
+  generated-child pin-ingress route sets from scalar one-bit routes to vector
+  routes when each top-level input pin and resolved child input endpoint has a
+  matching positive width.
+- `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` will handle the inverse same-child
+  resolved-child output to top-level output vector route set after ingress is
+  proven.
+- Mixed scalar/vector route sets, width adaptation, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
+  repeated activation, and cross-transaction continuation remain deferred.
+- No compiler behavior changed.
+
 ## 2026-05-22: ATL pin-egress vector width shipped
 - Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` and closed the task tree.
 - FSMGen now accepts one generated-child resolved-child output to top-level

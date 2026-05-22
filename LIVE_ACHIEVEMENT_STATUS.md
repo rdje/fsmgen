@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL pin vector multi-route selected
+- Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1`.
+- The active R14 frontier is now `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`.
+- The selected implementation will widen generated-child same-child
+  top-level input-pin to resolved-child input route sets to exact-width vector
+  routes only when each route's top-level pin and child endpoint have the same
+  positive width.
+- The inverse same-child resolved-child output to top-level output vector
+  route set remains tracked as `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL pin-egress vector width shipped
 - Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` and closed the task tree.
 - FSMGen now lowers one exact-width vector resolved-child output route into

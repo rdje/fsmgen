@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL pin vector multi-routes combine two shipped surfaces
+- `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1` selects the next bounded ATL widening:
+  same-child top-level pin route sets where every route is vector and every
+  top-level pin/child endpoint pair proves exact matching width.
+- This deliberately builds on existing semantics rather than adding syntax.
+  The route body remains `(sink source)`, the route drive call remains the
+  transfer timing point, and each route keeps its own width evidence.
+- Mixed scalar/vector route sets stay deferred. That keeps the first widening
+  easy to audit and avoids silently changing the current route-kind grouping
+  rules before a later task selects mixed-width behavior explicitly.
+
 ## 2026-05-22: ATL pin-egress vector routes require resolved endpoint proof
 - `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` implements only the generated-child
   pin-egress vector route where both endpoints are known: a resolved child

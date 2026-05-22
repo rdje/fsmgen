@@ -871,6 +871,15 @@ fan-in/fan-out, ready/backpressure, CDC/reset remapping, mixed route sets,
 vector pin-ingress or pin-egress multi-route scheduling, or payload protocol
 inference.
 
+The next selected pin-route widening is exact-width vector multi-route sets.
+It is tracked by `ISF-ATL-PIN-VECTOR-MULTI-ROUTE`. The selected sequence will
+first widen same-child pin-ingress route sets, then same-child pin-egress
+route sets. Each route keeps the existing `(sink source)` spelling and must
+prove a matching top-level pin and resolved child endpoint width. Mixed
+scalar/vector route sets, width adaptation, storage, muxing, fan-in/fan-out,
+ready/backpressure, CDC/reset remapping, repeated activation, and payload
+protocol inference remain deferred.
+
 The selected orchestration vocabulary reuses existing ISF activation forms:
 `(do actor.transaction)` for blocking actor transaction activation, `(spawn
 actor.transaction as NAME)` for nonblocking activation, `(trigger

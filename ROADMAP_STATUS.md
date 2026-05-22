@@ -2,9 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: none selected after closing
-  `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH`; the next PNT slice must select or create
-  task-tree ownership before any code change.
+  Active task tree: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE`; current frontier:
+  `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`.
+- Recent R14 ATL pin vector multi-route selection:
+  `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1` activated the next bounded ATL feature
+  tree. The selected implementation sequence combines the shipped scalar
+  same-child pin multi-route sets with the shipped one-route exact-width
+  vector pin-ingress/pin-egress routes. Pin ingress is first, followed by pin
+  egress. Mixed scalar/vector route sets, width adaptation, payload packing,
+  route storage, route muxing, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, repeated activation, and cross-transaction continuation
+  remain deferred. No compiler behavior changed.
 - Recent R14 ATL pin-egress vector-width completion:
   `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` shipped the bounded generated-child
   resolved-child output to top-level output-pin exact-width vector route and
@@ -5041,16 +5049,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: none selected after closing
-  `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH`.
-- Current frontier: none selected.
-- Completion status: `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` shipped exact-width
-  vector generated-child pin-egress routing for one resolved child output into
-  one top-level output pin and closed the tree. The next PNT slice must select
-  or create task-tree ownership before any code change. Width adaptation,
-  storage, muxing, payload protocols, ready/backpressure, CDC/reset remapping,
-  mixed route sets, repeated activation, and cross-transaction continuation
-  remain deferred.
+- Active task tree: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE`.
+- Current frontier: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`.
+- Completion status: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1` selected exact-width
+  vector generated-child top-level pin multi-route sets. The next
+  implementation leaf widens same-child pin-ingress route sets when each
+  top-level input pin and resolved child input endpoint has the same positive
+  width. Mixed scalar/vector route sets, width adaptation, storage, muxing,
+  payload protocols, ready/backpressure, CDC/reset remapping, repeated
+  activation, and cross-transaction continuation remain deferred.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8662,9 +8669,10 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- No task tree is active after closing `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH`.
-  Select or create the next roadmap-aligned task tree before any future code
-  change.
+- Continue the active `ISF-ATL-PIN-VECTOR-MULTI-ROUTE` tree before selecting
+  a different implementation task. `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2` is the
+  next frontier and owns exact-width vector same-child top-level input-pin to
+  resolved-child input multi-route sets.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.
