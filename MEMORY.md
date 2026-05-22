@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL compact instance alias tree selected
+- Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.1`.
+- Activated the next R14 task tree for compact static ATL instance
+  declarations.
+- The next frontier is `ISF-ATL-COMPACT-INSTANCE-ALIAS.2`: normalize direct
+  actor-body `(NAME : ACTOR_TYPE)` to the existing
+  `(instance NAME of ACTOR_TYPE)` static instance metadata surface while
+  preserving transparent declaration provenance and existing fail-closed
+  boundaries.
+- The selected tree does not change instance scheduling behavior, actor type
+  resolution, generated child emission, generated ATL tops, compact movement
+  syntax, or route behavior.
+- No compiler behavior changed.
+
 ## 2026-05-22: ATL compact group alias shipped
 - Completed `ISF-ATL-COMPACT-GROUP-ALIAS.2` and closed the task tree.
 - FSMGen now accepts direct actor-body `(concurrent NAME ACTOR...)` as a

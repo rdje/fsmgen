@@ -922,6 +922,13 @@ group form and keeps group behavior report-only. Runtime group scheduling,
 group endpoints, group handoff routing, generated HDL behavior, and compact
 movement syntax remain later leaves.
 
+The next selected compact source task tree is
+`ISF-ATL-COMPACT-INSTANCE-ALIAS`. It owns the direct actor-body
+`(NAME : ACTOR_TYPE)` readability alias for verbose
+`(instance NAME of ACTOR_TYPE)` static instance declarations. No behavior has
+shipped from that tree yet; the selection only records the source shape,
+boundaries, and implementation leaf.
+
 The first multi-actor trigger scheduling leaf is shipped as a same-cycle
 external trigger batch over existing transaction-body
 `(trigger actor.transaction)` clauses: one contiguous batch, distinct static

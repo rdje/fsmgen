@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL compact instance alias tree selected
+- Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.1`.
+- Activated the next R14 task tree for direct actor-body
+  `(NAME : ACTOR_TYPE)` compact static instance declarations.
+- The active R14 frontier is now `ISF-ATL-COMPACT-INSTANCE-ALIAS.2`.
+- The selected implementation will keep instance behavior metadata-only where
+  the verbose form is metadata-only and will not change actor type resolution,
+  generated child emission, generated ATL tops, compact movement syntax, or
+  route behavior.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL compact group alias shipped
 - Completed `ISF-ATL-COMPACT-GROUP-ALIAS.2` and closed the task tree.
 - FSMGen now accepts direct actor-body `(concurrent NAME ACTOR...)` as a

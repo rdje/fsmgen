@@ -967,7 +967,10 @@ Candidate compact source aliases:
 The verbose form was accepted first. The first compact form now shipped is
 `(concurrent name actor...)`, which lowers to the same report-only static group
 semantics as the verbose group declaration while preserving transparent
-declaration provenance. Compact instance declarations remain future work.
+declaration provenance. The next selected compact source task tree is
+`ISF-ATL-COMPACT-INSTANCE-ALIAS`, which will evaluate `(inst : actor_type)` as
+a provenance-preserving alias for `(instance inst of actor_type)` before any
+implementation code changes.
 
 No new compact movement spelling is planned for ATL v0. The movement surface
 is the existing drive definition and drive-call surface with endpoint-aware

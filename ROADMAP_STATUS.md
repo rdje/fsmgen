@@ -2,8 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+  Active task tree: `ISF-ATL-COMPACT-INSTANCE-ALIAS`; current frontier:
+  `ISF-ATL-COMPACT-INSTANCE-ALIAS.2`.
+- Recent R14 ATL compact instance alias selection:
+  `ISF-ATL-COMPACT-INSTANCE-ALIAS.1` activated the next bounded ATL source
+  ergonomics tree. The selected implementation will ship direct actor-body
+  `(NAME : ACTOR_TYPE)` as a compact readability alias for the already
+  shipped verbose `(instance NAME of ACTOR_TYPE)` static instance surface,
+  while preserving reviewable declaration provenance. It does not add
+  instance scheduling behavior, actor type resolution changes, generated child
+  emission changes, generated ATL top behavior, compact movement syntax, or
+  route behavior. No compiler behavior changed.
 - Recent R14 ATL compact group alias completion:
   `ISF-ATL-COMPACT-GROUP-ALIAS.2` shipped direct actor-body
   `(concurrent NAME ACTOR...)` as a compact readability alias for the already
@@ -8776,9 +8785,9 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Select or create the next roadmap-aligned task tree before any further code
-  changes. `ISF-ATL-COMPACT-GROUP-ALIAS` is closed after shipping compact
-  group alias normalization and coverage.
+- Continue the active `ISF-ATL-COMPACT-INSTANCE-ALIAS` tree before selecting a
+  different implementation task. `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` owns
+  compact static instance alias normalization and coverage.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL compact instance alias tree selected
+- Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.1`.
+- Activated a new R14 task tree for direct actor-body
+  `(NAME : ACTOR_TYPE)` compact static instance declarations.
+- The selected implementation will normalize compact static instances to the
+  already shipped verbose `(instance NAME of ACTOR_TYPE)` metadata surface
+  while preserving reviewable declaration provenance.
+- Instance scheduling behavior, actor type resolution, generated child
+  emission, generated ATL tops, compact movement syntax, and route behavior
+  remain unchanged.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL compact group alias shipped
 - Completed `ISF-ATL-COMPACT-GROUP-ALIAS.2` and closed the task tree.
 - Added direct actor-body `(concurrent NAME ACTOR...)` as a compact

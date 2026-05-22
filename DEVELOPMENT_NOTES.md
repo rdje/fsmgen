@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Compact instance aliases should stay provenance-only
+- `ISF-ATL-COMPACT-INSTANCE-ALIAS.1` selects `(NAME : ACTOR_TYPE)` as the next
+  compact ATL source alias because the verbose static instance contract is
+  already shipped and parser-visible.
+- The implementation leaf should reuse the same static instance validation and
+  metadata surface as `(instance NAME of ACTOR_TYPE)`, with only declaration
+  provenance distinguishing the compact spelling for downstream review.
+- This tree is syntax ergonomics. It must not change instance scheduling,
+  actor type resolution, generated-child emission, generated ATL tops, route
+  behavior, or compact movement policy.
+
 ## 2026-05-22: Compact groups preserve static metadata semantics
 - `ISF-ATL-COMPACT-GROUP-ALIAS.2` deliberately routes
   `(concurrent NAME ACTOR...)` through the same `actor_network.groups[]`
