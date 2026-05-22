@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat actor-constant widths tree selected
+- Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated the next R14 feature tree for using declared actor constants as
+  repeat counter width evidence.
+- The next frontier is `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2`: infer repeat
+  counter width from the resolved actor constant while preserving existing
+  repeat runtime behavior and the authored repeat load token.
+- Dynamic repeat counts, actor/transaction parameter specialization,
+  generated-top respecialization, and repeat loop semantics remain out of
+  scope.
+- No compiler behavior changed.
+
 ## 2026-05-22: Watchdog actor-constant limits shipped
 - Completed `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` and closed the task tree.
 - FSMGen now accepts declared positive actor constants as actor-level

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Repeat constants are width evidence only
+- `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.1` selects a narrow repeat-counter
+  improvement: actor constants can provide the same counter-width evidence as
+  literal repeat counts.
+- The implementation should not change repeat runtime behavior. The scheduled
+  `.fsm` can still load the authored constant token, while the counter width is
+  inferred from the resolved value.
+- Actor and transaction parameters remain out of scope because supporting them
+  as static repeat evidence would need a separate specialization policy.
+
 ## 2026-05-22: Watchdog constants keep the public scalar numeric
 - `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` resolves actor-level watchdog
   constants in the parser after actor constants and parameters are finalized.

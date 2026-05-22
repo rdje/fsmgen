@@ -2,8 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+  Active task tree: `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS`. Current frontier:
+  `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2`.
+- Recent R14 repeat actor-constant width selection:
+  `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.1` activated the repeat width-evidence
+  tree for using resolved actor constants to infer repeat counter widths.
+  Runtime repeat semantics, repeat counter load semantics, dynamic repeat
+  counts, actor/transaction parameter specialization, and generated-top
+  respecialization remain out of scope. No compiler behavior changed.
 - Recent R14 watchdog actor-constant limits completion:
   `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` shipped positive actor constants as
   actor-level and await-local watchdog limits and closed the task tree.
@@ -8864,8 +8870,8 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Select or create the next roadmap-aligned task tree before any further code
-  changes. `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS` is closed after shipping
-  positive actor constants as static watchdog limit evidence.
+  changes. `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS` is active with frontier `.2`,
+  targeting actor constants as static repeat counter width evidence.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

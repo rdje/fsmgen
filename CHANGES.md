@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat actor-constant widths tree selected
+- Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated a new R14 task tree for using actor constants as static repeat
+  counter width evidence.
+- The selected implementation keeps repeat runtime semantics, repeat counter
+  load semantics, dynamic repeat counts, actor/transaction parameter
+  specialization, and generated-top respecialization out of scope.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Watchdog actor-constant limits shipped
 - Completed `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` and closed the task tree.
 - Added support for declared positive actor constants as actor-level

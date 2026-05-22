@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat actor-constant widths tree selected
+- Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated the active R14 task tree for actor constants as repeat counter
+  width evidence.
+- The active R14 frontier is now `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2`.
+- The selected implementation will preserve repeat runtime behavior and the
+  authored repeat load token while using the resolved actor constant for
+  counter-width inference.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Watchdog actor-constant limits shipped
 - Completed `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` and closed the task tree.
 - FSMGen now accepts declared positive actor constants as actor-level and

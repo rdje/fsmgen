@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS` | `active` | `R14` | `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` | [docs/tasks/ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.md](docs/tasks/ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.md) |
 
 ## Proposed Task Trees
 
@@ -318,6 +319,7 @@ as done work unless a future task reopens them.
 | Schedule-report full-schema stability flag | `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
 | Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW`, `ISF-WAIT-ZERO` |
+| Actor constants as repeat counter width evidence | `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS` |
 | Non-literal transaction wait counts | `ISF-DYNAMIC-WAIT` |
 | Parameter-backed static transaction wait counts | `ISF-PARAM-WAIT-COUNTS` |
 | Consecutive runtime wait pending-sample zero-link carrying | `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE` |
