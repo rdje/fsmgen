@@ -748,9 +748,46 @@ The child `.fsm` includes generated `+interface` role metadata for the
 selected child input so the HDL backend preserves `payload` as a child module
 port.
 
-This one-child pin-ingress route does not include actor-to-actor
-generated-child routing, multi-child data wiring, route mux/storage,
-CDC/reset remapping, ready/backpressure, or payload protocols.
+The bounded multi-route extension of that same one-child pin-ingress shape is
+also shipped as `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf`.
+
+It still uses the existing `(sink source)` drive-body movement surface. The
+parent has two route drives:
+
+```lisp
+(drive feed_payload
+  (worker.payload pins.payload))
+
+(drive feed_sideband
+  (worker.sideband pins.sideband))
+```
+
+The parent transaction calls both route drives in adjacent transaction-body
+clauses, triggers `worker.process`, waits on `worker.done`, and completes.
+
+Lowering emits two drive-call states, two generated drive request signals, two
+parent-to-child handoff outputs (`worker_payload`, `worker_sideband`), and
+child `+interface` roles for both routed inputs. The generated top wires top
+`payload` and top `sideband` into the scheduled parent, then wires the parent
+handoffs to child `payload` and `sideband`.
+
+Schedule JSON reports each scalar path as its own
+`actor_network.data_movements[]` entry with
+`kind: "scalar_pin_to_actor_handoff"`. The generated-top discovery still uses
+`actor_network.generated_tops[]`; the internal generated-top data-link list
+remains private.
+
+This extension is not a route fabric. All accepted pin-ingress routes must
+target the same resolved child, live in the same parent transaction, use one
+scalar `(child.endpoint pins.input_pin)` pair per drive body, use unique
+top-level input pins and unique child input endpoints, and be activated by
+adjacent argument-free top-level drive calls before the child trigger and event
+wait.
+
+These one-child pin-ingress routes do not include actor-to-actor
+generated-child routing, child-to-pin multi-route egress, multi-child data
+wiring, route mux/storage, fan-in/fan-out, CDC/reset remapping,
+ready/backpressure, or payload protocols.
 
 The inverse generated-child data route is also shipped for one scalar
 resolved-child output route to one top-level output pin through that

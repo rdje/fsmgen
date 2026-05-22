@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL pin-ingress multi-route stays one-child and storage-free
+- `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2` widens only the already-shipped
+  generated-top pin-ingress path: several top-level input pins can feed several
+  inputs on the same resolved child through adjacent drive-call cycles.
+- The parser keeps the drive-body `(sink source)` order and rejects malformed
+  route sets before inferring muxing or storage. The accepted route set requires
+  one parent transaction, one resolved child, unique source pins, unique child
+  inputs, one scalar pair per named drive body, and contiguous drive calls before
+  the child trigger/event wait.
+- The lowerer returns one private generated-top data link per scalar route but
+  leaves the public report schema unchanged. Downstream consumers continue to
+  read `actor_network.data_movements[]` and `actor_network.generated_tops[]`;
+  there is still no public `data_links` key.
+
 ## 2026-05-22: ATL pin-ingress multi-route is a one-child route-set widening
 - `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1` selects the next bounded ATL widening
   from the already-shipped one-child pin-ingress route.

@@ -1064,7 +1064,7 @@ ISF
     (on start)
     (complete done)))
 ISF
-        qr/drive 'feed_consumer' ATL scalar actor-to-actor data movement requires exactly one top-level transaction drive call/,
+        qr/drive 'feed_consumer' ATL scalar data movement requires exactly one top-level transaction drive call/,
         'selected data movement drive requires one top-level drive call',
     );
 
@@ -1083,7 +1083,7 @@ ISF
       (drive feed_consumer))
     (complete done)))
 ISF
-        qr/transaction 'run' when body ATL scalar actor-to-actor data movement drive '\(drive feed_consumer\)' is reserved for top-level transaction bodies only/,
+        qr/transaction 'run' when body ATL scalar data movement drive '\(drive feed_consumer\)' is reserved for top-level transaction bodies only/,
         'selected data movement drive call remains top-level only',
     );
 

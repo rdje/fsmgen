@@ -193,11 +193,12 @@ covered.
 The same ATL fixture now has plain plus strict CLI HDL generation coverage,
 asserting the generated top, parent, child, and selected internal
 trigger/event links in SystemVerilog without widening the report schema.
-The same focused coverage now also covers the shipped scalar pin-ingress
-route into the resolved child through the generated top. Public consumers
-should read the route from `actor_network.data_movements[]`, discover the top
-from `actor_network.generated_tops[]`, and treat the generated-top data-link
-plumbing as private implementation detail.
+The same focused coverage now also covers the shipped scalar pin-ingress route
+and same-child pin-ingress multi-route extension into the resolved child through
+the generated top. Public consumers should read each route from
+`actor_network.data_movements[]`, discover the top from
+`actor_network.generated_tops[]`, and treat the generated-top data-link plumbing
+as private implementation detail.
 The same focused coverage also covers
 [isf/atl_two_child_pipeline.isf](../isf/atl_two_child_pipeline.isf), the
 first data-free two-child generated-top subset. It proves parent, reader,
@@ -652,8 +653,9 @@ resolved child, one parent trigger handoff, and one parent event wait with
 matching parent/child clock and reset policy; its report entry is advertised
 through `schedule_report_actor_network_generated_top_keys` under
 `actor_network.generated_tops[]`. The bounded scalar top-level input-pin to
-resolved-child input route and resolved-child output to top-level output
-route described below are also shipped for that same one-child top. The first
+resolved-child input route, its same-child multi-route extension, and the
+resolved-child output to top-level output route described below are also shipped
+for that same one-child top. The first
 control-only two-child generated top is shipped for sequential trigger/event
 handoffs with no data movement; its generated-top entry uses `children[]`
 records advertised through
@@ -679,12 +681,15 @@ is shipped: no new report keys were selected, and the proof asserts that plain
 and strict CLI SystemVerilog contains the generated top, scheduled parent,
 resolved child, and selected internal trigger/event links.
 The first generated-child scalar pin-ingress route is shipped for one
-top-level input pin to one resolved-child input through the generated top. It
-uses the existing `actor_network.data_movements[]` route metadata and
+top-level input pin to one resolved-child input through the generated top, and
+the bounded multi-route extension is shipped for multiple scalar top-level input
+pins feeding multiple scalar inputs on that same resolved child through adjacent
+drive-call cycles. Both forms use the existing
+`actor_network.data_movements[]` route metadata and
 `actor_network.generated_tops[]` top discovery metadata; no new public report
 family or public `data_links` key is exposed. The generated child `.fsm` may
-include generated `+interface` role metadata for the selected child input so
-the HDL backend preserves that child input as a module port.
+include generated `+interface` role metadata for the selected child inputs so
+the HDL backend preserves those child inputs as module ports.
 The inverse generated-child scalar pin-egress route is also shipped for one
 resolved-child output to one top-level output through the generated top. It
 uses `(pins.result worker.payload)` and the existing
@@ -694,10 +699,10 @@ family or public `data_links` key is exposed. The generated child `.fsm` may
 include generated `+interface` role metadata for the selected child output so
 the HDL backend preserves that child output as a module port.
 Generated-child actor-to-actor data movement across two resolved children is
-still outside the public generated-top contract. When that reserved shape is
-combined with qualified actor trigger/event handoffs, FSMGen fails closed with
-a targeted diagnostic; no public report family, generated-top schema, or
-public data-link key is added for it.
+shipped only for the documented scalar same-source/same-sink route set through
+the generated top. Wider actor-to-actor route fabrics still fail closed before
+FSMGen infers remapping, storage, muxing, fan-in/fan-out, payload, or
+backpressure behavior; no public data-link key is added for them.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields
@@ -1750,11 +1755,12 @@ library-qualified child artifact metadata, and the bounded generated ATL top
 families. Schedule reports project it through top-level `actor_network`.
 Resolved instance entries report actor type provenance and child artifact
 names. The generated-top subset wires the selected one-child trigger/event
-forms, the selected one-child pin-ingress and pin-egress routes, the selected
+forms, the selected one-child pin-ingress route, the same-child pin-ingress
+multi-route extension, the selected one-child pin-egress route, the selected
 two-child trigger/event sequence, and the selected two-child scalar
-generated-child actor-to-actor route. No group endpoints, route mux/storage,
-broader HDL event wiring, or broader generated-top data routing is promised by
-this field.
+generated-child actor-to-actor route set. No group endpoints, route mux/storage,
+broader HDL event wiring, child-to-pin multi-route egress, or broader
+generated-top data routing is promised by this field.
 The selected broader ATL v0 public direction is direct actor-body syntax plus
 existing drive-body movement syntax, but most of those forms remain future
 behavior until advertised by capability metadata. Endpoint-aware movement

@@ -1982,9 +1982,10 @@ trigger/event subset, reporting them through
 `actor_network.generated_tops[]`.
 
 FSMGen still emits no generated ATL route mux, data-route storage,
-generated-child data wiring beyond the selected same-source/same-sink scalar
-two-child route set, CDC child wiring, payload/ready/backpressure binding, or
-broader HDL event wiring.
+generated-child data wiring beyond the selected one-child scalar pin-ingress
+route set and selected same-source/same-sink scalar two-child actor-to-actor
+route set, CDC child wiring, payload/ready/backpressure binding, or broader HDL
+event wiring.
 
 The selected generated-child actor-to-actor data route set is shipped only for
 scalar same-source/same-sink two-child shapes that use qualified trigger/event
@@ -2028,6 +2029,23 @@ exposed.
 The generated child `.fsm` carries generated `+interface` role metadata for
 the selected child input so HDL generation preserves the child `payload`
 port.
+
+The bounded multi-route extension of that same pin-ingress generated top is now
+shipped: `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` wires
+`(worker.payload pins.payload)` and `(worker.sideband pins.sideband)` through
+one resolved child and one parent transaction.
+
+Downstream producers may emit multiple named scalar pin-ingress drive bodies in
+the same parent transaction only when all routes target the same resolved child,
+use one scalar `(child.endpoint pins.input_pin)` endpoint pair per drive body,
+have unique top-level input pins and unique child input endpoints, and are
+activated by adjacent argument-free top-level drive calls before the child
+trigger/event wait sequence.
+
+Downstream consumers still read every public route from
+`actor_network.data_movements[]` with `kind: "scalar_pin_to_actor_handoff"` and
+still discover the generated top through `actor_network.generated_tops[]`. No
+new report family or public `data_links` key is exposed.
 
 The inverse generated-child data slice is also shipped:
 `isf/atl_resolved_child_pin_egress_pipeline.isf` wires one scalar
@@ -2580,6 +2598,7 @@ isf/atl_trigger_wait_pipeline.isf
 isf/atl_trigger_batch_wait_pipeline.isf
 isf/atl_resolved_child_pipeline.isf
 isf/atl_resolved_child_pin_ingress_pipeline.isf
+isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 isf/atl_resolved_child_pin_egress_pipeline.isf
 isf/atl_two_child_pipeline.isf
 isf/atl_two_child_data_pipeline.isf
@@ -2792,6 +2811,19 @@ strict schedule JSON parity, parent/child/top `.fsm` artifacts, generated
 child input role preservation, plain and strict CLI HDL generation, and a
 fail-closed missing child input diagnostic for that route.
 
+The generated-child pin-ingress multi-route leaf extends that same downstream
+contract: `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` proves
+multiple top-level input pins to multiple inputs on one resolved child through
+the generated top.
+
+The same `t/1330-isf-atl-resolved-child-fixture-coverage.t` regression proves
+strict schedule JSON parity, parent/child/top `.fsm` artifacts, two
+`scalar_pin_to_actor_handoff` `data_movements[]` entries, generated child input
+role preservation for both routed scalar signals, generated-top wiring for both
+pin-ingress handoffs, strict outdir materialization, plain plus strict CLI HDL
+generation, and fail-closed missing-input, interleaved-drive-call, and
+duplicate-source-pin diagnostics for that route set.
+
 The generated-child pin-egress leaf extends the same downstream contract:
 `isf/atl_resolved_child_pin_egress_pipeline.isf` proves one resolved child
 output to one top-level output pin through the generated top.
@@ -2849,6 +2881,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_batch_wait_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_data_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_multi_data_pipeline.isf
@@ -2857,6 +2890,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress isf/atl_resolved_child_pin_ingress_pipeline.isf
+./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-multi isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-data isf/atl_two_child_data_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-multi-data isf/atl_two_child_multi_data_pipeline.isf

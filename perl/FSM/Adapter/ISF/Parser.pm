@@ -1230,11 +1230,11 @@ sub _validate_selected_atl_data_movement_drive_call {
         && $data_movement_drives->{$clause->[1]};
 
     my $drive_name = $clause->[1];
-    confess "Error: $context ATL scalar actor-to-actor data movement drive '(drive $drive_name)' is reserved for top-level transaction bodies only in the current subset\n"
+    confess "Error: $context ATL scalar data movement drive '(drive $drive_name)' is reserved for top-level transaction bodies only in the current subset\n"
         unless $options->{allow_data_movement_drive_call};
-    confess "Error: $context ATL scalar actor-to-actor data movement drive '(drive $drive_name)' does not accept actual arguments in the current subset\n"
+    confess "Error: $context ATL scalar data movement drive '(drive $drive_name)' does not accept actual arguments in the current subset\n"
         unless @$clause == 2;
-    confess "Error: $context ATL scalar actor-to-actor data movement drive '(drive $drive_name)' exceeds the current one-call-per-route subset; repeated movement remains deferred\n"
+    confess "Error: $context ATL scalar data movement drive '(drive $drive_name)' exceeds the current one-call-per-route subset; repeated movement remains deferred\n"
         if grep { ($_->{drive} // '') eq $drive_name } @{$data_movement_drive_calls || []};
 
     push @$data_movement_drive_calls, {
@@ -2003,7 +2003,7 @@ sub _finalize_selected_atl_data_movements {
 
     for my $movement (@$data_movements) {
         my @calls = grep { $_->{drive} eq $movement->{drive} } @{$data_movement_drive_calls || []};
-        confess "Error: drive '$movement->{drive}' ATL scalar actor-to-actor data movement requires exactly one top-level transaction drive call in the current subset\n"
+        confess "Error: drive '$movement->{drive}' ATL scalar data movement requires exactly one top-level transaction drive call in the current subset\n"
             unless @calls == 1;
         $movement->{transaction} = $calls[0]{transaction};
         $movement->{context} = $calls[0]{context};
@@ -2020,6 +2020,9 @@ sub _finalize_selected_atl_data_movements {
     confess "Error: actor '$actor->{actor_name}' ATL resolved-child pin-egress data movement requires trigger before event wait and drive call after event wait in the current subset\n"
         if !$generated_top_pin_egress_candidate
             && _selected_atl_generated_top_pin_egress_shape($instances, $data_movements, $event_waits, $transaction_triggers);
+    confess "Error: actor '$actor->{actor_name}' ATL resolved-child pin-ingress data movement requires one-to-one top-level input pins and child inputs, contiguous data drive calls before trigger, and trigger before event wait in the current subset\n"
+        if !$generated_top_pin_ingress_candidate
+            && _selected_atl_generated_top_pin_ingress_shape($instances, $data_movements, $event_waits, $transaction_triggers);
     confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data movement requires simple '(on PORT)' and '(complete PORT)' boundaries around the route in the current subset; activation-body samples and completion payloads remain deferred\n"
         if !$generated_top_actor_route_candidate
             && _selected_atl_generated_top_actor_route_boundary_non_simple_shape($instances, $data_movements, $event_waits, $transaction_triggers, $actor);
@@ -2038,7 +2041,7 @@ sub _finalize_selected_atl_data_movements {
     confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order\n"
         if !$generated_top_actor_route_candidate
             && _selected_atl_generated_top_actor_route_shape($instances, $data_movements, $event_waits, $transaction_triggers);
-    confess "Error: actor '$actor->{actor_name}' ATL scalar actor data movement cannot be combined with actor event waits or actor transaction triggers except for the selected single resolved-child pin-ingress, pin-egress, or two-child actor-to-actor generated-top subsets\n"
+    confess "Error: actor '$actor->{actor_name}' ATL scalar actor data movement cannot be combined with actor event waits or actor transaction triggers except for the selected resolved-child pin-ingress, pin-egress, or two-child actor-to-actor generated-top subsets\n"
         if (@{$event_waits || []} || @{$transaction_triggers || []})
             && !$generated_top_pin_ingress_candidate
             && !$generated_top_pin_egress_candidate
@@ -2060,31 +2063,78 @@ sub _strip_private_atl_metadata {
 
 sub _selected_atl_generated_top_pin_ingress_candidate {
     my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    return 0 unless _selected_atl_generated_top_pin_ingress_shape(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
+
+    my @instances = @{$instances || []};
+    my @movements = @{$data_movements || []};
+    my @waits = @{$event_waits || []};
+    my @triggers = @{$transaction_triggers || []};
+
+    my $instance = $instances[0]{name};
+    my $wait = $waits[0];
+    my $trigger = $triggers[0];
+
+    my (%source_pins, %sink_endpoints);
+    my @drive_indices;
+    for my $movement (@movements) {
+        return 0 if $source_pins{$movement->{source_endpoint} // ''}++;
+        return 0 if $sink_endpoints{$movement->{sink_endpoint} // ''}++;
+        push @drive_indices, $movement->{_drive_clause_index}
+            if defined($movement->{_drive_clause_index});
+    }
+    return 0 unless @drive_indices == @movements;
+
+    @drive_indices = sort { $a <=> $b } @drive_indices;
+    for my $idx (1 .. $#drive_indices) {
+        return 0 unless $drive_indices[$idx] == $drive_indices[$idx - 1] + 1;
+    }
+
+    my $trigger_index = $trigger->{_clause_index};
+    my $wait_index = $wait->{_clause_index};
+    return 0 unless defined($trigger_index)
+        && defined($wait_index)
+        && $drive_indices[-1] < $trigger_index
+        && $trigger_index < $wait_index;
+
+    return 1;
+}
+
+sub _selected_atl_generated_top_pin_ingress_shape {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
     my @instances = @{$instances || []};
     my @movements = @{$data_movements || []};
     my @waits = @{$event_waits || []};
     my @triggers = @{$transaction_triggers || []};
 
     return 0 unless @instances == 1
-        && @movements == 1
+        && @movements >= 1
         && @waits == 1
         && @triggers == 1;
 
     my $instance = $instances[0]{name};
-    my $movement = $movements[0];
     my $wait = $waits[0];
     my $trigger = $triggers[0];
 
     return 0 unless defined($instance) && !ref($instance) && length($instance);
-    return 0 unless ($movement->{kind} // '') eq 'scalar_pin_to_actor_handoff'
-        && ($movement->{source} // '') eq 'top_level_pin'
-        && ($movement->{sink} // '') eq 'external_handoff'
-        && ($movement->{source_instance} // '') eq 'pins'
-        && ($movement->{sink_instance} // '') eq $instance;
     return 0 unless ($wait->{instance} // '') eq $instance
         && ($trigger->{instance} // '') eq $instance;
-    return 0 unless ($movement->{transaction} // '') eq ($trigger->{owner_transaction} // '')
-        && ($movement->{transaction} // '') eq ($wait->{transaction} // '');
+    my $transaction = $trigger->{owner_transaction};
+    return 0 unless defined($transaction) && !ref($transaction) && length($transaction)
+        && ($wait->{transaction} // '') eq $transaction;
+
+    for my $movement (@movements) {
+        return 0 unless ($movement->{kind} // '') eq 'scalar_pin_to_actor_handoff'
+            && ($movement->{source} // '') eq 'top_level_pin'
+            && ($movement->{sink} // '') eq 'external_handoff'
+            && ($movement->{source_instance} // '') eq 'pins'
+            && ($movement->{sink_instance} // '') eq $instance
+            && ($movement->{transaction} // '') eq $transaction;
+    }
 
     return 1;
 }

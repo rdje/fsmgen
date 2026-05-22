@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL pin-ingress multi-route shipped
+- Completed `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2` and closed the task tree.
+- Added the bounded same-child generated-child pin-ingress multi-route subset:
+  multiple scalar top-level input-pin routes may feed multiple scalar inputs on
+  one resolved child when they live in one parent transaction and are called
+  contiguously before the child trigger/event wait.
+- Added `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` and focused
+  coverage for parent/child/top `.fsm` artifacts, strict schedule JSON parity,
+  generated-top wiring, child `+interface` preservation, strict outdir
+  materialization, plain plus strict HDL generation, missing child input
+  failure, interleaved route-drive failure, and duplicate source-pin failure.
+- Synchronized the public ISF spec, downstream handoff spec, public contract,
+  ATL design proposal, mdBook, roadmap status, and task-tree docs. Child-to-pin
+  multi-route egress, route mux/storage, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, payload protocols, repeated activation, and
+  cross-transaction continuation remain deferred.
+
+## 2026-05-22
 ### R14 — ATL pin-ingress multi-route selected
 - Completed `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1`.
 - Activated a new R14 task tree for bounded generated-child ATL top-level

@@ -994,11 +994,11 @@ qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `module`, and `scheduled_fsm` to resolved `actor_network.instances[]` entries
 and now emit their child `.fsm` files. The first generated ATL top is shipped
 for one resolved child plus one trigger/event handoff pair, and the scalar
-pin-ingress and pin-egress routes below are shipped for that same one-child
-top. Broader generated ATL tops, HDL child wiring outside that selected pair
-plus scalar pin-ingress/pin-egress routes, interface binding inference, event
-fan-in, route mux/storage, CDC, recursive actor networks, and
-ready/backpressure remain later leaves.
+pin-ingress route, same-child pin-ingress multi-route extension, and pin-egress
+route below are shipped for that same one-child top. Broader generated ATL tops,
+HDL child wiring outside that selected pair plus scalar pin-ingress/pin-egress
+routes, interface binding inference, event fan-in, route mux/storage, CDC,
+recursive actor networks, and ready/backpressure remain later leaves.
 
 The resolved-child fixture is now shipped as
 `isf/atl_resolved_child_pipeline.isf`. It proves the generated-top boundary
@@ -1017,10 +1017,17 @@ input-pin route into one resolved child through the generated top, written as
 `(worker.payload pins.payload)` in a named drive body. The fixture
 `isf/atl_resolved_child_pin_ingress_pipeline.isf` proves parent/child/top
 artifacts, generated-top wiring, route metadata, child input port
-preservation, and plain plus strict HDL generation. Actor-to-actor
-generated-child routes, multi-child data wiring, route mux/storage,
-CDC/reset remapping, ready/backpressure, and payload protocols remain
-deferred.
+preservation, and plain plus strict HDL generation.
+
+The bounded multi-route extension of that one-child pin-ingress shape is now
+shipped as `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf`. It routes
+`(worker.payload pins.payload)` and `(worker.sideband pins.sideband)` through
+adjacent top-level drive calls before the child trigger, with separate drive
+states, generated handoffs, generated child interface roles, generated-top
+wiring, and route metadata for each scalar path. Actor-to-actor generated-child
+routes outside their own two-child subset, child-to-pin multi-route egress,
+multi-child data wiring, route mux/storage, fan-in/fan-out, CDC/reset
+remapping, ready/backpressure, and payload protocols remain deferred.
 
 The inverse generated-child data-route slice is now shipped as one scalar
 resolved-child output route to one top-level output through the generated top,
@@ -2389,6 +2396,9 @@ ready/backpressure, recursive actor networks, or permanent actor grouping.
 The follow-on `isf/atl_resolved_child_pin_ingress_pipeline.isf` fixture is now
 promoted for one generated-top scalar pin-ingress route into that resolved
 child, using `(worker.payload pins.payload)`. The follow-on
+`isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` fixture is now promoted
+for the bounded same-child two-route pin-ingress case from top `payload` to
+`worker.payload` and from top `sideband` to `worker.sideband`. The follow-on
 `isf/atl_resolved_child_pin_egress_pipeline.isf` fixture is now promoted for
 one generated-top scalar pin-egress route from that resolved child to a
 top-level output, using `(pins.result worker.payload)` after the child event

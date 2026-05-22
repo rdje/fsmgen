@@ -1,0 +1,37 @@
+(actor atl_resolved_child_pin_ingress_multi_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input payload)
+    (input sideband)
+    (output done))
+  (imports
+    (library common.packet as pkt_lib))
+  (instance worker of pkt_lib.packet_worker)
+  (drive feed_payload
+    (worker.payload pins.payload))
+  (drive feed_sideband
+    (worker.sideband pins.sideband))
+  (transaction run
+    (on start)
+    (drive feed_payload)
+    (drive feed_sideband)
+    (trigger worker.process)
+    (await worker.done)
+    (complete done)))
+
+(library common.packet
+  (exports
+    (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (reset (rst_n async active_low))
+    (interface
+      (input process_start)
+      (input payload)
+      (input sideband)
+      (output done))
+    (transaction process
+      (on process_start)
+      (complete done))))

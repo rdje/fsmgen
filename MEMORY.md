@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL pin-ingress multi-route shipped
+- Completed `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2` and closed the task tree.
+- FSMGen now accepts bounded multiple one-bit generated-child pin-ingress
+  routes when every route targets the same resolved child, lives in one parent
+  transaction, uses one scalar `(child.endpoint pins.input_pin)` drive-body pair,
+  and is activated by adjacent argument-free drive calls before the child
+  trigger/event wait.
+- Added `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` plus focused
+  parent/child/top `.fsm`, strict schedule JSON, generated-top wiring, child
+  `+interface`, strict outdir, plain HDL, strict HDL, and fail-closed malformed
+  route-set coverage.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  design proposal, mdBook composition/support/backlog chapters, and live task
+  docs. Child-to-pin multi-route egress, actor-to-actor widening beyond the
+  selected two-child route set, route mux/storage, fan-in/fan-out,
+  CDC/reset remapping, ready/backpressure, payload protocols, repeated
+  activation, and cross-transaction continuation remain deferred.
+
 ## 2026-05-22: ATL pin-ingress multi-route selected
 - Completed `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1`.
 - Activated a new R14 task tree for the next bounded ATL data-route widening:
