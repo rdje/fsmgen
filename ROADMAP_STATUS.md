@@ -2,9 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-- Active `R12` task tree just closed. The next PNT step should select the next
-  roadmap-aligned maintained regression-corpus widening slice before any new
-  source/test/config changes.
+- `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.1` selected composition
+  `?ports` shape-gate diagnostics as the next support-accounting corpus
+  widening. The active frontier is
+  `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2`.
+- Recent R12 composition ports-shape corpus-widening selection:
+  `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.1` activated a task tree to
+  promote already-focused multiple-`?ports`, omitted-`?ports`, and
+  empty-`?ports` diagnostics into maintained expected-failure corpus coverage.
+  No compiler behavior changed.
 - Recent R12 composition duplicate-declaration corpus-widening completion:
   `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2` added named
   expected-failure corpus entries for duplicate top-port declarations and

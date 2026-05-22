@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING` | `active` | `R12` | `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2` | [docs/tasks/R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.md](docs/tasks/R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 

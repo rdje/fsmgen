@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition ports-shape coverage stays parser-diagnostic-only
+- `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.1` selects support-accounting
+  promotion for multiple `?ports`, omitted `?ports`, and empty `?ports`
+  diagnostics whose existing focused test already locks the non-inferable
+  composition shape boundary.
+- The implementation should preserve the existing diagnostics and only add
+  maintained expected-failure corpus assets for the bounded ports shape-gate
+  family.
+
 ## 2026-05-22: Composition duplicate declarations are support-accounting failures
 - `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2` keeps the existing
   parser diagnostics intact and promotes duplicate top-port and duplicate
