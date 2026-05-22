@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL route drive argument boundary selected
+- Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1`.
+- Activated a new R14 task tree for the shared ATL route-drive formal and
+  actual-argument boundary across shipped actor-to-actor, pin-ingress, and
+  pin-egress data-movement route kinds.
+- The next frontier is `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2`: implement
+  pin-ingress and pin-egress fail-closed coverage, make the route-drive
+  diagnostic kind-neutral where appropriate, and synchronize the mdBook,
+  specs, downstream handoff, public contract, design proposal, and live docs.
+- No compiler behavior changed.
+
 ## 2026-05-22: ATL pin-egress multi-route shipped
 - Completed `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` and closed the task tree.
 - FSMGen now accepts bounded multiple one-bit generated-child pin-egress

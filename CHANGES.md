@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL route drive argument boundary selected
+- Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1`.
+- Activated a new R14 task tree to make parameterized ATL route drive
+  definitions and route drive-call actual arguments fail closed uniformly for
+  actor-to-actor, top-level pin-ingress, and top-level pin-egress data
+  movement.
+- The selected implementation leaf will keep accepted positive route subsets
+  unchanged while adding focused pin-route coverage and kind-neutral shared
+  route-drive diagnostics.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL pin-egress multi-route shipped
 - Completed `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` and closed the task tree.
 - Added the bounded same-child generated-child pin-egress multi-route subset:

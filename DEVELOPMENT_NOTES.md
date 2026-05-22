@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL route drives stay timing points, not parameterized procedures
+- `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1` selects a shared hardening slice
+  for the shipped ATL route families.
+- The design rule is the same for actor-to-actor routes and pin routes:
+  a route drive call marks a one-cycle transfer timing point. It does not bind
+  route-local actual values, transform payloads, or select hidden storage.
+- Parameterized route drives would need a separate payload/transform/storage
+  contract before they can be interpreted safely, so this slice will keep them
+  fail-closed and make the diagnostic name the shared scalar data-movement
+  boundary.
+
 ## 2026-05-22: ATL pin-egress multi-route stays one-child and storage-free
 - `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` widens only the already-shipped
   generated-top pin-egress path: several outputs from the same resolved child

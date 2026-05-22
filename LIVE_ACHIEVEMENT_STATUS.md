@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL route drive argument boundary selected
+- Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1`.
+- The active R14 frontier is now
+  `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2`.
+- The selected implementation will harden route drive formal/actual-argument
+  rejection across shipped actor-to-actor, pin-ingress, and pin-egress ATL
+  data-movement route kinds.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL pin-egress multi-route shipped
 - Completed `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` and closed the task tree.
 - FSMGen now accepts bounded multiple scalar resolved-child output routes into
