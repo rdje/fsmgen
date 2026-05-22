@@ -125,6 +125,8 @@ my @required_examples = (
     'ATL temporary trigger-batch fixture',
     'same-source/same-sink scalar or exact-width vector generated-child actor-to-actor routes are shipped through that two-child top',
     'one exact-width vector top-level input-pin to resolved-child input route',
+    'same-child vector multi-route subset',
+    'its own exact matching top-input/child-input width',
     'vector_pin_to_actor_handoff',
     'top_level_input_pin_resolved_child_endpoint_exact_width',
     'one exact-width vector resolved-child output to top-level output route',

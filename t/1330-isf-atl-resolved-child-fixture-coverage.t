@@ -25,6 +25,11 @@ my $pin_ingress_vector_isf_file = File::Spec->catfile(
     'isf',
     'atl_resolved_child_pin_ingress_vector_pipeline.isf',
 );
+my $pin_ingress_vector_multi_isf_file = File::Spec->catfile(
+    $repo_root,
+    'isf',
+    'atl_resolved_child_pin_ingress_vector_multi_pipeline.isf',
+);
 my $pin_ingress_multi_isf_file = File::Spec->catfile(
     $repo_root,
     'isf',
@@ -203,6 +208,74 @@ subtest 'ATL pin-ingress vector fixture lowers exact-width top input through par
         'pin-ingress vector generated top wires child event pulse to the parent event handoff input');
 
     assert_pin_ingress_vector_report_shape($report);
+};
+
+subtest 'ATL pin-ingress vector multi-route fixture lowers exact-width top inputs through parent into one resolved child' => sub {
+    my ($files, $report) = lower_atl_fixture($pin_ingress_vector_multi_isf_file);
+
+    is_deeply(
+        sorted([keys %$files]),
+        [
+            'atl_resolved_child_pin_ingress_vector_multi_pipeline.fsm',
+            'atl_resolved_child_pin_ingress_vector_multi_pipeline__worker.fsm',
+            'atl_resolved_child_pin_ingress_vector_multi_pipeline_top.fsm',
+        ],
+        'pin-ingress vector multi-route lowering emits exactly the parent, resolved child, and generated ATL top FSM artifacts',
+    );
+
+    my $parent = $files->{'atl_resolved_child_pin_ingress_vector_multi_pipeline.fsm'};
+    like($parent, qr/\A\(\?fsm:atl_resolved_child_pin_ingress_vector_multi_pipeline\b/,
+        'pin-ingress vector multi-route parent uses the fixture module name');
+    like($parent, qr/\(payload 8\)/, 'pin-ingress vector multi-route parent exposes the top payload input width');
+    like($parent, qr/\(sideband 4\)/, 'pin-ingress vector multi-route parent exposes the top sideband input width');
+    like($parent, qr/\(worker_payload 8\)/,
+        'pin-ingress vector multi-route parent exposes the generated worker payload handoff width');
+    like($parent, qr/\(worker_sideband 4\)/,
+        'pin-ingress vector multi-route parent exposes the generated worker sideband handoff width');
+    like($parent, qr/\brun_drive_1\b/, 'pin-ingress vector multi-route parent contains the first drive-call state');
+    like($parent, qr/\brun_drive_2\b/, 'pin-ingress vector multi-route parent contains the second drive-call state');
+    like($parent, qr/\brun_atl_trigger_3\b/,
+        'pin-ingress vector multi-route parent triggers the child after both vector drive calls');
+    like($parent, qr/\brun_await_4\b/,
+        'pin-ingress vector multi-route parent waits for the child after the trigger');
+    like($parent, qr/\(= \(feed_payload_start 1\)\)/,
+        'pin-ingress vector multi-route first drive-call state pulses the payload route enable');
+    like($parent, qr/\(= \(feed_sideband_start 1\)\)/,
+        'pin-ingress vector multi-route second drive-call state pulses the sideband route enable');
+    like($parent, qr/\(-feed_payload\s+\(<- \(worker_payload> payload\) <feed_payload_start\)\s+\)/s,
+        'pin-ingress vector multi-route payload drive transfers the top payload into the worker handoff');
+    like($parent, qr/\(-feed_sideband\s+\(<- \(worker_sideband> sideband\) <feed_sideband_start\)\s+\)/s,
+        'pin-ingress vector multi-route sideband drive transfers the top sideband into the worker handoff');
+
+    my $child = $files->{'atl_resolved_child_pin_ingress_vector_multi_pipeline__worker.fsm'};
+    like($child, qr/\A\(\?fsm:atl_resolved_child_pin_ingress_vector_multi_pipeline__worker\b/,
+        'pin-ingress vector multi-route child uses the resolved child module name');
+    like($child, qr/\(\+interface\s+\(input payload\)\s+\(input sideband\)\s+\)/s,
+        'pin-ingress vector multi-route child preserves both routed inputs as explicit generated interface roles');
+    like($child, qr/\(payload 8\)/, 'pin-ingress vector multi-route child keeps the payload size declaration');
+    like($child, qr/\(sideband 4\)/, 'pin-ingress vector multi-route child keeps the sideband size declaration');
+    like($child, qr/\(process_start 1\)/, 'pin-ingress vector multi-route child keeps its authored process_start input');
+    like($child, qr/\(done 1\)/, 'pin-ingress vector multi-route child keeps its authored done output');
+
+    my $top = $files->{'atl_resolved_child_pin_ingress_vector_multi_pipeline_top.fsm'};
+    like($top, qr/\A\(\?top:atl_resolved_child_pin_ingress_vector_multi_pipeline_top\b/,
+        'pin-ingress vector multi-route generated top uses the fixture top module name');
+    like($top, qr/\(\?ports:public_io\s+clk\s+rst_n\s+start\s+payload<8\s+sideband<4\s+done>\s+\)/s,
+        'pin-ingress vector multi-route generated top exposes only parent public pins plus clock/reset');
+    like($top, qr/\(payload atl_resolved_child_pin_ingress_vector_multi_pipeline\.payload\)/,
+        'pin-ingress vector multi-route generated top wires top payload into the parent');
+    like($top, qr/\(sideband atl_resolved_child_pin_ingress_vector_multi_pipeline\.sideband\)/,
+        'pin-ingress vector multi-route generated top wires top sideband into the parent');
+    like($top, qr/\(atl_resolved_child_pin_ingress_vector_multi_pipeline\.worker_payload worker\.payload\)/,
+        'pin-ingress vector multi-route generated top wires the parent payload handoff into the child');
+    like($top, qr/\(atl_resolved_child_pin_ingress_vector_multi_pipeline\.worker_sideband worker\.sideband\)/,
+        'pin-ingress vector multi-route generated top wires the parent sideband handoff into the child');
+    like($top, qr/\(atl_resolved_child_pin_ingress_vector_multi_pipeline\.worker_process_start worker\.process_start\)/,
+        'pin-ingress vector multi-route generated top wires parent trigger handoff to the child transaction start input');
+    like($top, qr/\(worker\.done atl_resolved_child_pin_ingress_vector_multi_pipeline\.worker_done\)/,
+        'pin-ingress vector multi-route generated top wires child event pulse to the parent event handoff input');
+
+    assert_pin_ingress_vector_multi_report_shape($report);
 };
 
 subtest 'ATL pin-ingress multi-route fixture lowers multiple top inputs through parent into one resolved child' => sub {
@@ -834,6 +907,28 @@ subtest 'ATL pin-ingress vector fixture strict schedule JSON matches the in-proc
     );
 };
 
+subtest 'ATL pin-ingress vector multi-route fixture strict schedule JSON matches the in-process report' => sub {
+    my (undef, $in_process_report) = lower_atl_fixture($pin_ingress_vector_multi_isf_file);
+    my ($success, $stdout, $stderr) = run_cli(
+        [
+            './bin/fsmgen',
+            '--strict',
+            '--quiet',
+            '--emit-schedule-json',
+            $pin_ingress_vector_multi_isf_file,
+        ],
+        'pin-ingress vector multi-route strict schedule JSON generation',
+    );
+
+    ok($success, 'strict schedule JSON generation succeeds for the ATL pin-ingress vector multi-route fixture');
+    is($stderr, '', 'pin-ingress vector multi-route strict schedule JSON generation keeps stderr clean');
+    is_deeply(
+        decode_json($stdout),
+        $in_process_report,
+        'pin-ingress vector multi-route strict schedule JSON generation matches the in-process report',
+    );
+};
+
 subtest 'ATL pin-ingress multi-route fixture strict schedule JSON matches the in-process report' => sub {
     my (undef, $in_process_report) = lower_atl_fixture($pin_ingress_multi_isf_file);
     my ($success, $stdout, $stderr) = run_cli(
@@ -1085,6 +1180,31 @@ subtest 'ATL pin-ingress vector fixture strict outdir lowering writes the genera
         sorted([fsm_basenames_in($dir)]),
         expected_fsm_basenames_for_source($pin_ingress_vector_isf_file),
         'pin-ingress vector strict outdir lowering writes the parent, resolved child, and generated top files',
+    );
+};
+
+subtest 'ATL pin-ingress vector multi-route fixture strict outdir lowering writes the generated top' => sub {
+    my $dir = tempdir(CLEANUP => 1);
+    my ($success, $stdout, $stderr) = run_cli(
+        [
+            './bin/fsmgen',
+            '--strict',
+            '--quiet',
+            '--outdir',
+            $dir,
+            $pin_ingress_vector_multi_isf_file,
+        ],
+        'pin-ingress vector multi-route strict outdir lowering',
+    );
+
+    ok($success, 'strict outdir lowering succeeds for the ATL pin-ingress vector multi-route fixture');
+    like($stdout, qr/Wrote: .*atl_resolved_child_pin_ingress_vector_multi_pipeline_top\.fsm/,
+        'pin-ingress vector multi-route strict outdir lowering reports the written generated top');
+    is($stderr, '', 'pin-ingress vector multi-route strict outdir lowering keeps stderr clean');
+    is_deeply(
+        sorted([fsm_basenames_in($dir)]),
+        expected_fsm_basenames_for_source($pin_ingress_vector_multi_isf_file),
+        'pin-ingress vector multi-route strict outdir lowering writes the parent, resolved child, and generated top files',
     );
 };
 
@@ -1348,6 +1468,30 @@ subtest 'ATL pin-ingress vector fixture reaches generated-top HDL generation' =>
     );
 
     assert_pin_ingress_vector_generated_top_hdl($strict, 'pin-ingress vector strict HDL');
+};
+
+subtest 'ATL pin-ingress vector multi-route fixture reaches generated-top HDL generation' => sub {
+    my $plain_dir = tempdir(CLEANUP => 1);
+    my $plain_hdl = File::Spec->catfile($plain_dir, 'atl_resolved_child_pin_ingress_vector_multi_pipeline_plain.sv');
+    my $plain = generate_hdl(
+        $plain_hdl,
+        [],
+        'pin-ingress vector multi-route plain HDL generation',
+        $pin_ingress_vector_multi_isf_file,
+    );
+
+    assert_pin_ingress_vector_multi_generated_top_hdl($plain, 'pin-ingress vector multi-route plain HDL');
+
+    my $strict_dir = tempdir(CLEANUP => 1);
+    my $strict_hdl = File::Spec->catfile($strict_dir, 'atl_resolved_child_pin_ingress_vector_multi_pipeline_strict.sv');
+    my $strict = generate_hdl(
+        $strict_hdl,
+        ['--strict'],
+        'pin-ingress vector multi-route strict HDL generation',
+        $pin_ingress_vector_multi_isf_file,
+    );
+
+    assert_pin_ingress_vector_multi_generated_top_hdl($strict, 'pin-ingress vector multi-route strict HDL');
 };
 
 subtest 'ATL pin-ingress multi-route fixture reaches generated-top HDL generation' => sub {
@@ -1640,6 +1784,12 @@ LIBRARY
         pin_ingress_vector_atl_fixture_variant(4),
         qr/ATL generated-child pin-ingress data movement 'feed_worker' top-level input pin 'pins\.payload' width 8 does not match sink endpoint 'worker\.payload' width 4; width adaptation remains deferred/,
         'pin-ingress vector data route fails closed when top input and child input widths differ',
+    );
+
+    lower_source_fails_like(
+        pin_ingress_vector_multi_atl_fixture_variant(3),
+        qr/ATL generated-child pin-ingress data movement 'feed_sideband' top-level input pin 'pins\.sideband' width 4 does not match sink endpoint 'worker\.sideband' width 3; width adaptation remains deferred/,
+        'pin-ingress vector multi-route data route fails closed when one top input and child input width differ',
     );
 
     lower_source_fails_like(
@@ -2517,6 +2667,152 @@ sub assert_pin_ingress_vector_report_shape {
             },
         ],
         'pin-ingress vector report records the worker done event handoff',
+    );
+}
+
+sub assert_pin_ingress_vector_multi_report_shape {
+    my ($report) = @_;
+
+    is($report->{source}, 'atl_resolved_child_pin_ingress_vector_multi_pipeline.isf',
+        'pin-ingress vector multi-route schedule report names the fixture');
+    is($report->{scheduled_fsm}, 'atl_resolved_child_pin_ingress_vector_multi_pipeline.fsm',
+        'pin-ingress vector multi-route schedule report names the scheduled parent FSM');
+    is($report->{inputs}, 4, 'pin-ingress vector multi-route report input count includes payload, sideband, and worker event handoff');
+    is($report->{outputs}, 4, 'pin-ingress vector multi-route report output count includes done, trigger, and data handoffs');
+    is($report->{port_count}, 8, 'pin-ingress vector multi-route report port count includes public and generated handoff ports');
+    is($report->{state_count}, 7, 'pin-ingress vector multi-route report state count includes two drives, trigger, await, done, and timeout states');
+    is_deeply($report->{compile_issues}, [], 'pin-ingress vector multi-route schedule report has no compile issues');
+    is_deeply(
+        $report->{dt_blocks},
+        [
+            {
+                assignments => 1,
+                kind        => 'drive',
+                name        => 'feed_payload',
+            },
+            {
+                assignments => 1,
+                kind        => 'drive',
+                name        => 'feed_sideband',
+            },
+        ],
+        'pin-ingress vector multi-route schedule report records both vector transfer drive bodies',
+    );
+    is_deeply(
+        $report->{transactions},
+        [
+            {
+                name => 'run',
+                count => 7,
+                states => [qw(
+                  run_idle_0
+                  run_drive_1
+                  run_drive_2
+                  run_atl_trigger_3
+                  run_await_4
+                  run_done_5
+                  run_timeout
+                )],
+            },
+        ],
+        'pin-ingress vector multi-route schedule report records both drives before trigger and await',
+    );
+
+    my $actor_network = $report->{actor_network};
+    is($actor_network->{kind}, 'static_declaration', 'pin-ingress vector multi-route actor network kind');
+    is_deeply(
+        $actor_network->{generated_tops},
+        [
+            {
+                kind                 => 'resolved_child_trigger_event_handoff',
+                top_module           => 'atl_resolved_child_pin_ingress_vector_multi_pipeline_top',
+                top_fsm              => 'atl_resolved_child_pin_ingress_vector_multi_pipeline_top.fsm',
+                parent_module        => 'atl_resolved_child_pin_ingress_vector_multi_pipeline',
+                parent_scheduled_fsm => 'atl_resolved_child_pin_ingress_vector_multi_pipeline.fsm',
+                instance             => 'worker',
+                child_module         => 'atl_resolved_child_pin_ingress_vector_multi_pipeline__worker',
+                child_scheduled_fsm  => 'atl_resolved_child_pin_ingress_vector_multi_pipeline__worker.fsm',
+                target_transaction   => 'process',
+                trigger_parent_port  => 'worker_process_start',
+                trigger_child_port   => 'process_start',
+                event                => 'done',
+                event_parent_port    => 'worker_done',
+                event_child_port     => 'done',
+                clock                => 'clk',
+                reset                => 'rst_n',
+            },
+        ],
+        'pin-ingress vector multi-route report records the generated ATL top without private data-link internals',
+    );
+    is_deeply(
+        $actor_network->{data_movements},
+        [
+            {
+                kind            => 'vector_pin_to_actor_handoff',
+                drive           => 'feed_payload',
+                transaction     => 'run',
+                context         => 'transaction_body',
+                source          => 'top_level_pin',
+                source_instance => 'pins',
+                source_endpoint => 'payload',
+                source_signal   => 'payload',
+                sink            => 'external_handoff',
+                sink_instance   => 'worker',
+                sink_endpoint   => 'payload',
+                sink_signal     => 'worker_payload',
+                width           => 8,
+                width_source    => 'top_level_input_pin_resolved_child_endpoint_exact_width',
+                route_lifetime  => 'drive_call_cycle',
+                storage         => 'none',
+            },
+            {
+                kind            => 'vector_pin_to_actor_handoff',
+                drive           => 'feed_sideband',
+                transaction     => 'run',
+                context         => 'transaction_body',
+                source          => 'top_level_pin',
+                source_instance => 'pins',
+                source_endpoint => 'sideband',
+                source_signal   => 'sideband',
+                sink            => 'external_handoff',
+                sink_instance   => 'worker',
+                sink_endpoint   => 'sideband',
+                sink_signal     => 'worker_sideband',
+                width           => 4,
+                width_source    => 'top_level_input_pin_resolved_child_endpoint_exact_width',
+                route_lifetime  => 'drive_call_cycle',
+                storage         => 'none',
+            },
+        ],
+        'pin-ingress vector multi-route report records both public exact-width pin-to-child data movements',
+    );
+    is_deeply(
+        $actor_network->{transaction_triggers},
+        [
+            {
+                owner_transaction  => 'run',
+                context            => 'transaction_body',
+                instance           => 'worker',
+                target_transaction => 'process',
+                signal             => 'worker_process_start',
+                sink               => 'external_handoff',
+            },
+        ],
+        'pin-ingress vector multi-route report records the worker process trigger handoff',
+    );
+    is_deeply(
+        $actor_network->{event_waits},
+        [
+            {
+                transaction => 'run',
+                context     => 'transaction_body',
+                instance    => 'worker',
+                event       => 'done',
+                signal      => 'worker_done',
+                source      => 'external_handoff',
+            },
+        ],
+        'pin-ingress vector multi-route report records the worker done event handoff',
     );
 }
 
@@ -3939,6 +4235,47 @@ sub assert_pin_ingress_vector_generated_top_hdl {
         "$label connects the parent event handoff input to the internal event link");
 }
 
+sub assert_pin_ingress_vector_multi_generated_top_hdl {
+    my ($hdl, $label) = @_;
+
+    like($hdl, qr/\bmodule\s+atl_resolved_child_pin_ingress_vector_multi_pipeline_top\b/,
+        "$label contains the generated ATL top module");
+    like($hdl, qr/\bmodule\s+atl_resolved_child_pin_ingress_vector_multi_pipeline\b/,
+        "$label contains the scheduled parent module");
+    like($hdl, qr/\bmodule\s+atl_resolved_child_pin_ingress_vector_multi_pipeline__worker\b/,
+        "$label contains the resolved child module");
+    like($hdl, qr/\bmodule\s+atl_resolved_child_pin_ingress_vector_multi_pipeline__worker\s*\([^;]*\binput\s+wire\s+\[7:0\]\s+payload\b/s,
+        "$label preserves the child payload input as an 8-bit module port");
+    like($hdl, qr/\bmodule\s+atl_resolved_child_pin_ingress_vector_multi_pipeline__worker\s*\([^;]*\binput\s+wire\s+\[3:0\]\s+sideband\b/s,
+        "$label preserves the child sideband input as a 4-bit module port");
+    like($hdl, qr/\bwire\s+\[7:0\]\s+comp_link_atl_resolved_child_pin_ingress_vector_multi_pipeline_worker_payload\b/,
+        "$label declares the 8-bit parent-to-child payload link");
+    like($hdl, qr/\bwire\s+\[3:0\]\s+comp_link_atl_resolved_child_pin_ingress_vector_multi_pipeline_worker_sideband\b/,
+        "$label declares the 4-bit parent-to-child sideband link");
+    like($hdl, qr/\bwire\s+comp_link_atl_resolved_child_pin_ingress_vector_multi_pipeline_worker_process_start\b/,
+        "$label declares the parent-to-child trigger link");
+    like($hdl, qr/\bwire\s+comp_link_worker_done\b/,
+        "$label declares the child-to-parent event link");
+    like($hdl, qr/\.payload\(payload\)/,
+        "$label connects the public top payload input to the parent payload input");
+    like($hdl, qr/\.sideband\(sideband\)/,
+        "$label connects the public top sideband input to the parent sideband input");
+    like($hdl, qr/\.worker_payload\(comp_link_atl_resolved_child_pin_ingress_vector_multi_pipeline_worker_payload\)/,
+        "$label connects the parent payload handoff to the internal payload link");
+    like($hdl, qr/\.worker_sideband\(comp_link_atl_resolved_child_pin_ingress_vector_multi_pipeline_worker_sideband\)/,
+        "$label connects the parent sideband handoff to the internal sideband link");
+    like($hdl, qr/\.payload\(comp_link_atl_resolved_child_pin_ingress_vector_multi_pipeline_worker_payload\)/,
+        "$label connects the internal payload link to the child payload input");
+    like($hdl, qr/\.sideband\(comp_link_atl_resolved_child_pin_ingress_vector_multi_pipeline_worker_sideband\)/,
+        "$label connects the internal sideband link to the child sideband input");
+    like($hdl, qr/\.process_start\(comp_link_atl_resolved_child_pin_ingress_vector_multi_pipeline_worker_process_start\)/,
+        "$label connects the child process start input to the internal trigger link");
+    like($hdl, qr/\.done\(comp_link_worker_done\)/,
+        "$label connects the child done output to the internal event link");
+    like($hdl, qr/\.worker_done\(comp_link_worker_done\)/,
+        "$label connects the parent event handoff input to the internal event link");
+}
+
 sub assert_pin_ingress_multi_generated_top_hdl {
     my ($hdl, $label) = @_;
 
@@ -4346,6 +4683,50 @@ sub pin_ingress_vector_atl_fixture_variant {
     (interface
       (input process_start)
       (input payload (width $child_payload_width))
+      (output done))
+    (transaction process
+      (on process_start)
+      (complete done))))
+ISF
+}
+
+sub pin_ingress_vector_multi_atl_fixture_variant {
+    my ($child_sideband_width) = @_;
+    $child_sideband_width //= 4;
+    return <<"ISF";
+(actor atl_resolved_child_pin_ingress_vector_multi_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input payload (width 8))
+    (input sideband (width 4))
+    (output done))
+  (imports
+    (library common.packet as pkt_lib))
+  (instance worker of pkt_lib.packet_worker)
+  (drive feed_payload
+    (worker.payload pins.payload))
+  (drive feed_sideband
+    (worker.sideband pins.sideband))
+  (transaction run
+    (on start)
+    (drive feed_payload)
+    (drive feed_sideband)
+    (trigger worker.process)
+    (await worker.done)
+    (complete done)))
+
+(library common.packet
+  (exports
+    (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (reset (rst_n async active_low))
+    (interface
+      (input process_start)
+      (input payload (width 8))
+      (input sideband (width $child_sideband_width))
       (output done))
     (transaction process
       (on process_start)

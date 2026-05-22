@@ -771,11 +771,42 @@ Schedule JSON keeps the existing public route entry shape and reports
 `kind: "vector_pin_to_actor_handoff"`, `width: 8`, and
 `width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
 
-This vector pin-ingress leaf is intentionally exact-width and one-route only.
 If the top-level input width and child input width differ, lowering fails
 before scheduled `.fsm` emission. FSMGen does not infer width adaptation,
 packing, truncation, extension, slicing, route mux/storage,
 fan-in/fan-out, ready/backpressure, or a payload protocol for the route.
+
+The exact-width vector multi-route form of that same one-child pin-ingress
+path is shipped as
+`isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf`.
+
+It keeps the same `(sink source)` movement surface and uses adjacent route
+drive calls before the child trigger:
+
+```lisp
+(drive feed_payload
+  (worker.payload pins.payload))
+
+(drive feed_sideband
+  (worker.sideband pins.sideband))
+```
+
+The fixture proves route-local widths. Top `payload` and child `payload` are
+8 bits; top `sideband` and child `sideband` are 4 bits. Lowering emits two
+drive-call states, two generated parent-to-child handoff outputs, child
+`+interface` roles for both vector inputs, and generated-top wiring at each
+route's exact width.
+
+Schedule JSON reports both routes as `vector_pin_to_actor_handoff` entries
+with `width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
+
+This vector multi-route subset is still not a route fabric. All accepted
+routes must target the same resolved child, live in the same parent
+transaction, use unique top-level input pins and child input endpoints, and be
+activated by adjacent argument-free drive calls before the child trigger and
+event wait. Mixed scalar/vector route sets, width adaptation, route
+mux/storage, fan-in/fan-out, ready/backpressure, and payload protocols remain
+deferred.
 
 The bounded multi-route extension of that same one-child pin-ingress shape is
 also shipped as `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf`.
@@ -814,9 +845,9 @@ adjacent argument-free top-level drive calls before the child trigger and event
 wait.
 
 These one-child pin-ingress routes do not include actor-to-actor
-generated-child routing, multi-child data wiring, vector pin-ingress
-multi-route sets, width adaptation, route mux/storage, fan-in/fan-out,
-CDC/reset remapping, ready/backpressure, or payload protocols.
+generated-child routing, multi-child data wiring, mixed scalar/vector route
+sets, width adaptation, route mux/storage, fan-in/fan-out, CDC/reset
+remapping, ready/backpressure, or payload protocols.
 
 The inverse generated-child data route is also shipped for one scalar
 resolved-child output route to one top-level output pin through that

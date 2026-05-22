@@ -2046,8 +2046,7 @@ The exact-width vector generated-child pin-ingress leaf is also shipped:
 parent and generated top into one resolved child input.
 
 Downstream producers may emit that route only when the source is a declared
-top-level input pin, the sink is a resolved child input endpoint, the route is
-the only vector pin-ingress route in the parent transaction, and the two
+top-level input pin, the sink is a resolved child input endpoint, and the two
 endpoint widths are the same positive value.
 
 Downstream consumers should read the public route evidence from
@@ -2061,7 +2060,22 @@ private generated-top data-link list is still not a public report family.
 Width mismatch fails before scheduled `.fsm` emission. Downstream producers
 must not rely on width adaptation, packing, truncation, extension, slicing,
 route mux/storage, fan-in/fan-out, ready/backpressure, payload protocols, or
-vector pin-ingress multi-route scheduling.
+mixed scalar/vector route sets.
+
+The exact-width vector multi-route extension of that same pin-ingress
+generated top is now shipped:
+`isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf` wires
+`(worker.payload pins.payload)` and `(worker.sideband pins.sideband)` through
+one resolved child and one parent transaction at route-local widths 8 and 4.
+
+Downstream producers may emit multiple named vector pin-ingress drive bodies
+in the same parent transaction only when all routes target the same resolved
+child, each route has a matching top-level input pin and child input width,
+source pins and child inputs are unique, and drive calls are adjacent before
+the child trigger. Downstream consumers should read each route from
+`actor_network.data_movements[]` as `vector_pin_to_actor_handoff` with
+`width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
+Mixed scalar/vector route sets and width adaptation remain unshipped.
 
 The bounded multi-route extension of that same pin-ingress generated top is now
 shipped: `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` wires
@@ -2673,6 +2687,7 @@ isf/atl_trigger_batch_wait_pipeline.isf
 isf/atl_resolved_child_pipeline.isf
 isf/atl_resolved_child_pin_ingress_pipeline.isf
 isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
+isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf
 isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 isf/atl_resolved_child_pin_egress_pipeline.isf
 isf/atl_resolved_child_pin_egress_vector_pipeline.isf
@@ -2900,6 +2915,20 @@ role preservation at width 8, generated-top wiring for the exact-width route,
 strict outdir materialization, plain plus strict CLI HDL generation, and a
 fail-closed top-input/child-input width mismatch diagnostic.
 
+The generated-child exact-width vector pin-ingress multi-route leaf extends
+that same downstream contract:
+`isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf` proves multiple
+vector top-level input pins to multiple vector inputs on one resolved child
+through the generated top.
+
+The same `t/1330-isf-atl-resolved-child-fixture-coverage.t` regression proves
+strict schedule JSON parity, parent/child/top `.fsm` artifacts, two
+`vector_pin_to_actor_handoff` `data_movements[]` entries, route-local widths
+8 and 4, generated child input role preservation for both routed vector
+signals, generated-top wiring for both exact-width handoffs, strict outdir
+materialization, plain plus strict CLI HDL generation, and a fail-closed
+route-local top-input/child-input width mismatch diagnostic.
+
 The generated-child pin-ingress multi-route leaf extends that same downstream
 contract: `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` proves
 multiple top-level input pins to multiple inputs on one resolved child through
@@ -3005,6 +3034,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_vector_pipeline.isf
@@ -3017,6 +3047,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress isf/atl_resolved_child_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-vector isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
+./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-vector-multi isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-multi isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress-vector isf/atl_resolved_child_pin_egress_vector_pipeline.isf

@@ -3,7 +3,22 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
   Active task tree: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE`; current frontier:
-  `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`.
+  `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3`.
+- Recent R14 ATL pin-ingress vector multi-route completion:
+  `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2` shipped the bounded same-child
+  generated-child top-level input-pin to resolved-child input exact-width
+  vector multi-route subset. FSMGen now accepts adjacent pre-trigger drive
+  calls such as `(worker.payload pins.payload)` and
+  `(worker.sideband pins.sideband)` when every route targets the same resolved
+  child, uses unique top-level input pins and child input endpoints, and each
+  top-level pin/child endpoint pair declares the same positive route-local
+  width. The parent handoff ports, child `+interface` roles, generated-top
+  links, HDL links, and `actor_network.data_movements[]` entries all preserve
+  each route width. Width mismatches fail closed before scheduled `.fsm`
+  emission. Width adaptation, vector pin-egress multi-route sets, mixed
+  scalar/vector route sets, route storage, route muxing, fan-in/fan-out,
+  CDC/reset remapping, ready/backpressure, repeated activation, payload
+  protocols, and cross-transaction continuation remain deferred.
 - Recent R14 ATL pin vector multi-route selection:
   `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1` activated the next bounded ATL feature
   tree. The selected implementation sequence combines the shipped scalar
@@ -37,10 +52,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   route as `vector_pin_to_actor_handoff` with
   `width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
   Width mismatches fail closed before scheduled `.fsm` emission. Width
-  adaptation, vector pin-ingress multi-route sets, route storage, route muxing,
+  adaptation, broader pin-ingress route sets outside the later same-child
+  exact-width vector multi-route subset, route storage, route muxing,
   fan-in/fan-out, mixed route sets, CDC/reset remapping, ready/backpressure,
   repeated activation, payload protocols, and cross-transaction continuation
-  remain deferred.
+  remained deferred at that point.
 - Recent R14 ATL pin-route vector-width selection:
   `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1` activated the next bounded ATL feature
   tree. The selected implementation sequence will keep existing `(sink source)`
@@ -5050,12 +5066,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - Active task tree: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE`.
-- Current frontier: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`.
-- Completion status: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1` selected exact-width
-  vector generated-child top-level pin multi-route sets. The next
-  implementation leaf widens same-child pin-ingress route sets when each
-  top-level input pin and resolved child input endpoint has the same positive
-  width. Mixed scalar/vector route sets, width adaptation, storage, muxing,
+- Current frontier: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3`.
+- Completion status: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2` shipped exact-width
+  vector generated-child top-level input-pin to resolved-child input
+  multi-route sets. The next implementation leaf widens the inverse
+  same-child resolved-child output to top-level output vector multi-route
+  set. Mixed scalar/vector route sets, width adaptation, storage, muxing,
   payload protocols, ready/backpressure, CDC/reset remapping, repeated
   activation, and cross-transaction continuation remain deferred.
 - Closed architecture backlog context:
@@ -8670,9 +8686,9 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Continue the active `ISF-ATL-PIN-VECTOR-MULTI-ROUTE` tree before selecting
-  a different implementation task. `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2` is the
-  next frontier and owns exact-width vector same-child top-level input-pin to
-  resolved-child input multi-route sets.
+  a different implementation task. `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` is the
+  next frontier and owns exact-width vector same-child resolved-child output
+  to top-level output multi-route sets.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

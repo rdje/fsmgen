@@ -879,10 +879,10 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
         my $kind = $movements[0]{kind} // '';
         confess "$context cannot mix pin-to-resolved-child, resolved-child-to-pin, and actor-to-actor data movements in the current subset\n"
             if grep { ($_->{kind} // '') ne $kind } @movements;
-        confess "$context supports multiple scalar pin-to-resolved-child or resolved-child-to-pin data movements only for top-level pin ingress/egress in the current subset\n"
+        confess "$context supports multiple same-direction pin-to-resolved-child or resolved-child-to-pin data movements only for top-level pin ingress/egress in the current subset\n"
             if @movements != 1
-                && $kind ne 'scalar_pin_to_actor_handoff'
-                && $kind ne 'scalar_actor_to_pin_handoff';
+                && !_is_atl_pin_to_actor_handoff_kind($kind)
+                && !_is_atl_actor_to_pin_handoff_kind($kind);
     }
 
     my $movement = $movements[0];

@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL pin-ingress vector multi-route shipped
+- Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`.
+- FSMGen now lowers same-child exact-width vector top-level input-pin routes
+  into resolved child inputs through the generated ATL top when every route
+  has unique pins/endpoints, adjacent pre-trigger drive calls, and matching
+  route-local widths.
+- Added `isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf` with
+  focused `.fsm`, schedule JSON, strict outdir, HDL, and width-mismatch
+  coverage.
+- Schedule reports identify each route as `vector_pin_to_actor_handoff` with
+  `width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
+- The active R14 frontier is now `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` for the
+  inverse exact-width vector pin-egress multi-route set.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook, roadmap, and task-tree docs.
+
 ## 2026-05-22: R14 — ATL pin vector multi-route selected
 - Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1`.
 - The active R14 frontier is now `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`.

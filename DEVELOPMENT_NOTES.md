@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL vector pin-ingress multi-routes stay route-local
+- `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2` intentionally removes only the
+  one-vector-route ceiling from the generated-child pin-ingress selector. It
+  keeps the existing same-child, same-parent-transaction, unique-pin,
+  unique-child-input, adjacent pre-trigger drive-call, and uniform route-kind
+  checks.
+- Each route carries its own exact-width evidence from the top-level input pin
+  and resolved child input endpoint. That avoids inventing a route-set-wide
+  payload protocol, packing rule, or storage policy while still allowing
+  independent vector paths such as `payload[7:0]` and `sideband[3:0]` in the
+  same scheduled transfer sequence.
+- Mixed scalar/vector route sets remain deferred. They need an explicit
+  selected leaf because the current grouping logic uses route kind as part of
+  the fail-closed contract, and silently mixing one-bit and vector route
+  evidence would make downstream route consumers harder to audit.
+
 ## 2026-05-22: ATL pin vector multi-routes combine two shipped surfaces
 - `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1` selects the next bounded ATL widening:
   same-child top-level pin route sets where every route is vector and every

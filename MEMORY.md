@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL pin-ingress vector multi-route shipped
+- Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`.
+- FSMGen now accepts same-child generated-child top-level input-pin to
+  resolved-child input ATL route sets where every route is vector, each route
+  has a unique top-level input pin and unique child input endpoint, the drive
+  calls are adjacent before the child trigger, and each top-level pin/child
+  endpoint pair declares the same positive width.
+- Added `isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf` plus
+  focused parent/child/top `.fsm`, strict schedule JSON, strict outdir, plain
+  HDL, strict HDL, and width-mismatch fail-closed coverage.
+- Schedule JSON keeps the existing `actor_network.data_movements[]` entry
+  shape and reports each exact-width vector pin-ingress route as
+  `vector_pin_to_actor_handoff` with
+  `width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
+- The active frontier is now `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3`: the inverse
+  same-child resolved-child output to top-level output vector multi-route set.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook composition/support/backlog chapters, roadmap
+  status, task-tree docs, and live docs. Width adaptation, vector pin-egress
+  multi-route sets, mixed scalar/vector route sets, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
+  repeated activation, and cross-transaction continuation remain deferred.
+
 ## 2026-05-22: ATL pin vector multi-route selected
 - Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1`.
 - Activated a new R14 task tree for exact-width vector generated-child
@@ -49,10 +72,11 @@ This is the live continuity document for fast session recovery after crashes, re
   resolved-child output to top-level output exact-width vector route.
 - Synchronized the ISF spec, downstream integration spec, public contract, ATL
   design proposal, mdBook composition/support/backlog chapters, roadmap
-  status, task-tree docs, and live docs. Width adaptation, vector pin-ingress
-  multi-route sets, route mux/storage, fan-in/fan-out, CDC/reset remapping,
+  status, task-tree docs, and live docs. Width adaptation, broader
+  pin-ingress route sets outside the later same-child exact-width vector
+  multi-route subset, route mux/storage, fan-in/fan-out, CDC/reset remapping,
   ready/backpressure, payload protocols, repeated activation, and
-  cross-transaction continuation remain deferred.
+  cross-transaction continuation remained deferred at that point.
 
 ## 2026-05-22: ATL pin-route vector width selected
 - Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1`.
