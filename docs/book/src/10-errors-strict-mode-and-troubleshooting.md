@@ -371,13 +371,14 @@ contract. Current out-of-support examples include:
   placeholder selectors, repeat macros, and placeholder tokens
 - composition requests with no child instances, empty child entries,
   non-string child headers, dotted-pair child payloads, duplicate child names,
-  unsupported child kinds, missing external generated child sources,
-  wrong-kind external generated-child roots such as `?fsmc` resolving to
-  `?dt:name` or `?dtc` resolving to `?fsm:name`, malformed `?fsmc` / `?dtc`
-  source counts, unsupported nested `?fsmc` / `?dtc` payload blocks, malformed
-  `?rtl` module-reference counts, unsupported nested `?rtl` payload blocks, or
-  external RTL metadata that is missing, non-flat, empty, duplicated, wrongly
-  typed, or system-output directed
+  unsupported child kinds, legacy `?ports` mapping directives, missing
+  external generated child sources, wrong-kind external generated-child roots
+  such as `?fsmc` resolving to `?dt:name` or `?dtc` resolving to `?fsm:name`,
+  malformed `?fsmc` / `?dtc` source counts, unsupported nested `?fsmc` /
+  `?dtc` payload blocks, malformed `?rtl` module-reference counts,
+  unsupported nested `?rtl` payload blocks, or external RTL metadata that is
+  missing, non-flat, empty, duplicated, wrongly typed, or system-output
+  directed
 
 This list is not a replacement for the exact diagnostic text. It is the book
 home for the active rejection policy: unsupported syntax should be rejected

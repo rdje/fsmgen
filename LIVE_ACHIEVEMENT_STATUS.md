@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — child-kind/ports-mapping coverage widened
+- Completed
+  `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.2`.
+- The task tree is closed.
+- FSMGen now support-accounts unsupported composition child-kind failures and
+  legacy `?ports` mapping directive failures.
+- Stable diagnostic-code metadata, check JSON, normalized semantic JSON,
+  manifest, regression-corpus docs, and mdBook coverage are synchronized.
+- No parser or HDL-generation behavior changed.
+
 ## 2026-05-22: R12 regression corpus — child-kind/ports-mapping widening selected
 - Completed
   `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.1`.

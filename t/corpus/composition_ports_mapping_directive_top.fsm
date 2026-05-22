@@ -1,0 +1,20 @@
+(?top:composition_ports_mapping_directive_top
+  (?ports:public_io
+    /foo/bar/
+    result_data>8
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)

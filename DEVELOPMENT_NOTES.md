@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition child-kind and ports-mapping failures are support-accounting failures
+- `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.2` keeps the
+  existing parser diagnostics intact and promotes two already-focused
+  composition parser rejections into maintained corpus truth.
+- `FSMGEN_COMPOSITION_CHILD_KIND_SUPPORT` covers unknown child headers because
+  the active composition parser accepts only the explicit child/declaration
+  families named in the diagnostic.
+- `FSMGEN_COMPOSITION_PORT_DECLARATION_MODE` covers legacy `/source/sink/`
+  forms inside `?ports` because current composition syntax separates top-port
+  declaration from explicit connectivity; authors should use `?wiring` for
+  paths.
+
 ## 2026-05-22: Composition child-kind and ports-mapping coverage stays parser-diagnostic-only
 - `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.1` selects
   support-accounting promotion for unsupported child-kind and legacy `?ports`

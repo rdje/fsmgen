@@ -595,6 +595,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'composition_contract',
         summary => 'A composition child entry used an unsupported item-list shape.',
     },
+    FSMGEN_COMPOSITION_CHILD_KIND_SUPPORT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition child entry used an unsupported child kind.',
+    },
+    FSMGEN_COMPOSITION_PORT_DECLARATION_MODE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition ports block used an unsupported mapping directive.',
+    },
     FSMGEN_COMPOSITION_MISSING_RTLIF => {
         severity => 'error',
         stability => 'stable',

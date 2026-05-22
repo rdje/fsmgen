@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 composition child-kind/ports-mapping corpus widening completed
+- Completed
+  `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.2` and closed the
+  task tree.
+- Added maintained expected-failure corpus coverage for unsupported
+  composition child kinds and legacy `?ports` mapping directives.
+- Added stable diagnostic-code metadata for child-kind support and port
+  declaration mode failures, and synchronized regression-corpus docs plus
+  mdBook composition/error coverage.
+- No parser acceptance or HDL-generation behavior changed.
+
 ## 2026-05-22: R12 composition child-kind/ports-mapping corpus widening selected
 - Completed
   `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.1`.

@@ -9,6 +9,10 @@ Current child kinds are:
 - `?dtc` for generated standalone-DT children
 - `?rtl` for external RTL children
 
+Other child headers such as `?bogus:child` are rejected as unsupported child
+kinds; FSMGen does not reinterpret unknown composition children as raw HDL or
+legacy extension hooks.
+
 ## Top Root Shape
 
 A composition source uses one `?top:name` root with an
@@ -68,6 +72,10 @@ Plain direction tokens are:
   `payload<BYTE_W`
 
 The plain forms are ordinary explicit ports.
+
+Legacy mapping directives such as `/foo/bar/` do not belong inside `?ports`.
+Use `?wiring` for explicit connectivity; `?ports` is only for top-port
+declarations.
 
 For readability, `?ports` also accepts verbose declarations. These are aliases
 of the compact tokens, not a separate port kind:

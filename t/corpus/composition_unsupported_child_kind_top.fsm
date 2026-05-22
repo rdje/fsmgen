@@ -1,0 +1,3 @@
+(?top:composition_unsupported_child_kind_top
+  (?bogus:child foo)
+)
