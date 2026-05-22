@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Temporal contract actor-constant window tree selected
+- Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1`.
+- Activated the active R14 task tree for positive actor constants in bounded
+  eventual temporal-contract `within` windows.
+- The active R14 frontier is now `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2`.
+- The selected implementation will preserve the current monitor timing and
+  public `temporal_contracts[].within_cycles` shape while resolving a declared
+  positive actor constant to the same integer bound as a literal.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL backlog truth-sync completed
 - Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.2` and closed the task tree.
 - The mdBook feature backlog now describes bounded generated ATL tops as

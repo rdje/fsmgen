@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` | `active` | `R14` | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` | [docs/tasks/ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.md) |
 
 ## Proposed Task Trees
 
@@ -261,6 +262,7 @@ as done work unless a future task reopens them.
 | Shareable resource kind catalog and public resource registry | `ISF-RESOURCE-CATALOG` |
 | Expression-valued rule assignments and rule action widening | `ISF-RULE-ACTIONS` |
 | Transaction stage lowering and temporal contract lowering | `ISF-STAGES-CONTRACTS` |
+| Temporal-contract actor-constant window counts | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` |
 | Temporal-contract monitor storage schedule-report roles | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` |
 | Temporal-contract SystemVerilog assertion projection | `ISF-TEMPORAL-CONTRACT-ASSERTIONS` |
 | Actor-level phase/stage schedule-report metadata | `ISF-ACTOR-PHASE-STAGE-REPORTS` |

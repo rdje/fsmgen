@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Temporal contract actor-constant window tree selected
+- Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1`.
+- Activated the next R14 feature tree for positive actor constants in bounded
+  eventual temporal-contract `within` windows.
+- The next frontier is `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2`: implement and
+  document `(within CONST)` and flat `within CONST` forms when `CONST` is a
+  declared actor constant with a positive resolved value.
+- Actor parameters, transaction parameters, runtime signals, dynamic
+  expressions, min/max windows, nested contracts, same-cycle checks, and
+  multiple outstanding obligations remain out of scope.
+- No compiler behavior changed.
+
 ## 2026-05-22: ATL backlog truth-sync completed
 - Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.2` and closed the task tree.
 - The mdBook feature backlog now says resolved ATL child `.fsm` files and

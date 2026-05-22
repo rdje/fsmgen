@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Temporal contract windows can reuse static constants
+- `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1` selects a narrow temporal-contract
+  widening: actor constants are compile-time evidence and can naturally serve
+  as named `within` cycle counts.
+- The implementation should resolve the constant to the same positive integer
+  monitor bound that literal windows already use, keeping the report's
+  `within_cycles` field numeric and stable.
+- Parameters remain deliberately excluded because they are overrideable
+  specialization values. Accepting them would need a generated-top binding
+  policy for temporal monitor sizing and should be selected separately.
+
 ## 2026-05-22: ATL backlog truth-sync keeps private generated-top links private
 - `ISF-ATL-BACKLOG-TRUTH-SYNC.2` updates the book-facing backlog to name the
   bounded generated ATL top subsets that are now shipped without widening the

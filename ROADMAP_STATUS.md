@@ -2,8 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+  Active task tree: `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS`; current frontier:
+  `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2`.
+- Recent R14 temporal-contract actor-constant window selection:
+  `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1` activated the bounded temporal
+  contract tree for positive actor constants in `(eventually signal (within
+  CONST))` and `(eventually signal within CONST)` windows. Actor parameters,
+  transaction parameters, runtime signals, dynamic expressions, min/max
+  windows, nested contracts, same-cycle checks, and multiple outstanding
+  obligations remain out of scope. No compiler behavior changed.
 - Recent R14 ATL backlog truth-sync completion:
   `ISF-ATL-BACKLOG-TRUTH-SYNC.2` synchronized the mdBook feature backlog with
   the shipped bounded ATL generated-top and actor-network surfaces and closed
@@ -8812,10 +8819,10 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Select or create the next roadmap-aligned task tree before any further code
-  changes. `ISF-ATL-BACKLOG-TRUTH-SYNC` is closed after synchronizing stale
-  ATL backlog prose with shipped generated-top subsets and explicit
-  deferrals.
+- Continue the active `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` task tree. The
+  next frontier is `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2`, a bounded
+  temporal-contract widening for positive actor constants as static `within`
+  cycle-count evidence.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

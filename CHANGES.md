@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Temporal contract actor-constant window tree selected
+- Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1`.
+- Activated a new R14 task tree for accepting positive actor constants as
+  static `within` cycle-count evidence in bounded eventual temporal contracts.
+- The selected implementation keeps actor parameters, transaction parameters,
+  runtime signals, dynamic expressions, min/max windows, nested contracts,
+  same-cycle checks, and multiple outstanding obligations out of scope.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL backlog truth-sync completed
 - Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.2` and closed the task tree.
 - Updated the mdBook feature backlog so it no longer says generated ATL tops
