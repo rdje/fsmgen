@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition child-kind and ports-mapping coverage stays parser-diagnostic-only
+- `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.1` selects
+  support-accounting promotion for unsupported child-kind and legacy `?ports`
+  mapping directive diagnostics whose existing focused tests already lock
+  pipeline and CLI behavior.
+- The implementation should preserve the existing diagnostics and only add
+  maintained expected-failure corpus assets for the bounded child-kind and
+  `?ports` mapping family.
+
 ## 2026-05-22: Composition child-structure failures are support-accounting failures
 - `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.2` preserves the existing
   parser diagnostics and promotes seven malformed child-entry forms into

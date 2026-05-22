@@ -2,9 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-- Active `R12` task tree just closed. The next PNT step should select the next
-  roadmap-aligned maintained regression-corpus widening slice before any new
-  source/test/config changes.
+- `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.1` selected
+  unsupported child-kind and legacy `?ports` mapping diagnostics as the next
+  support-accounting corpus widening. The active frontier is
+  `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.2`.
+- Recent R12 composition child-kind/ports-mapping corpus-widening selection:
+  `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.1` activated a
+  task tree to promote already-focused unsupported child-kind and legacy
+  `?ports` mapping directive diagnostics into maintained expected-failure
+  corpus coverage. No compiler behavior changed.
 - Recent R12 composition child-structure corpus-widening completion:
   `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.2` added named
   expected-failure corpus entries for empty child entries, non-string child
