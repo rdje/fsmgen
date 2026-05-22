@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL pin-egress multi-route shipped
+- Completed `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` and closed the task tree.
+- Added the bounded same-child generated-child pin-egress multi-route subset:
+  multiple scalar resolved-child output routes may feed multiple scalar
+  top-level output pins when they live in one parent transaction and are called
+  contiguously after the child trigger/event wait.
+- Added `isf/atl_resolved_child_pin_egress_multi_pipeline.isf` and focused
+  coverage for parent/child/top `.fsm` artifacts, strict schedule JSON parity,
+  generated-top wiring, child `+interface` preservation, strict outdir
+  materialization, plain plus strict HDL generation, missing child output
+  failure, interleaved route-drive failure, and duplicate output-pin failure.
+- Synchronized the public ISF spec, downstream handoff spec, public contract,
+  ATL design proposal, mdBook, roadmap status, and task-tree docs. Route
+  mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload
+  protocols, repeated activation, and cross-transaction continuation remain
+  deferred.
+
+## 2026-05-22
 ### R14 — ATL pin-egress multi-route selected
 - Completed `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.1`.
 - Activated a new R14 task tree for bounded generated-child ATL resolved-child

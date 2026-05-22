@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ATL-PIN-EGRESS-MULTI-ROUTE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -51,7 +51,7 @@ child's event wait has completed.
 ## Task Tree
 
 - ID: `ISF-ATL-PIN-EGRESS-MULTI-ROUTE`
-  Status: `active`
+  Status: `done`
   Goal: `ship a bounded generated-child ATL resolved-child output to top-level pin-egress multi-route scalar subset`
   Children: `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.1`,
   `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2`
@@ -64,17 +64,17 @@ child's event wait has completed.
   Commit: `this commit: ISF-ATL-PIN-EGRESS-MULTI-ROUTE.1: select ATL pin-egress multi-route slice`
 
 - ID: `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `implement bounded multiple scalar generated-child pin-egress routes`
   Acceptance: `positive fixture, schedule report, generated top wiring, HDL reachability, docs, and focused gates prove the shipped subset`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c t/1322-isf-actor-network-static.t; perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t; perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1322-isf-actor-network-static.t; prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t; prove -Iperl t/1324-isf-atl-fixture-coverage.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1328-isf-atl-trigger-wait-fixture-coverage.t t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t t/1331-isf-timing-conventions.t; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
+  Commit: `this commit: ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2: ship bounded ATL pin-egress route sets`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` | `pending` | The inverse one-child generated-top output route is still scalar-only while actor-to-actor and pin-ingress route sets are already shipped. |
+| 1 | `closed` | `done` | `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` shipped the bounded one-child resolved-child output to top-level output route set without adding mux/storage or fan-in/fan-out semantics. |
 
 ## Decisions
 
@@ -101,16 +101,18 @@ child's event wait has completed.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
-| `2026-05-22` | `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` | `pending` | `pending` |
+| `2026-05-22` | `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1322-isf-actor-network-static.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1324-isf-atl-fixture-coverage.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1328-isf-atl-trigger-wait-fixture-coverage.t t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t t/1331-isf-timing-conventions.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.1` | `this commit: ISF-ATL-PIN-EGRESS-MULTI-ROUTE.1: select ATL pin-egress multi-route slice` | Selection committed. |
-| `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` | `pending` | Implementation pending. |
+| `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` | `this commit: ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2: ship bounded ATL pin-egress route sets` | Implementation committed through this slice. |
 
 ## Changelog
 
 - `2026-05-22`: Created active R14 task tree and selected the bounded
   implementation leaf.
+- `2026-05-22`: Shipped the bounded one-child pin-egress multi-route subset,
+  synchronized public docs and the mdBook, and closed the tree.

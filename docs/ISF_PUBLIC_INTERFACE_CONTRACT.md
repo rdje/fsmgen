@@ -690,14 +690,16 @@ drive-call cycles. Both forms use the existing
 family or public `data_links` key is exposed. The generated child `.fsm` may
 include generated `+interface` role metadata for the selected child inputs so
 the HDL backend preserves those child inputs as module ports.
-The inverse generated-child scalar pin-egress route is also shipped for one
-resolved-child output to one top-level output through the generated top. It
-uses `(pins.result worker.payload)` and the existing
-`actor_network.data_movements[]` route metadata plus
+The inverse generated-child pin-egress route is also shipped for one or more
+one-bit resolved-child outputs to one or more one-bit top-level outputs through
+the generated top. The scalar fixture uses `(pins.result worker.payload)`, and
+the bounded route-set fixture uses `(pins.result worker.payload)` plus
+`(pins.status worker.status)` from the same child after the event wait. Both
+use the existing `actor_network.data_movements[]` route metadata plus
 `actor_network.generated_tops[]` top discovery metadata; no new public report
 family or public `data_links` key is exposed. The generated child `.fsm` may
-include generated `+interface` role metadata for the selected child output so
-the HDL backend preserves that child output as a module port.
+include generated `+interface` role metadata for each selected child output so
+the HDL backend preserves those child outputs as module ports.
 Generated-child actor-to-actor data movement across two resolved children is
 shipped only for the documented scalar same-source/same-sink route set through
 the generated top. Wider actor-to-actor route fabrics still fail closed before
@@ -1756,11 +1758,11 @@ families. Schedule reports project it through top-level `actor_network`.
 Resolved instance entries report actor type provenance and child artifact
 names. The generated-top subset wires the selected one-child trigger/event
 forms, the selected one-child pin-ingress route, the same-child pin-ingress
-multi-route extension, the selected one-child pin-egress route, the selected
-two-child trigger/event sequence, and the selected two-child scalar
-generated-child actor-to-actor route set. No group endpoints, route mux/storage,
-broader HDL event wiring, child-to-pin multi-route egress, or broader
-generated-top data routing is promised by this field.
+multi-route extension, the selected one-child pin-egress route, the same-child
+pin-egress multi-route extension, the selected two-child trigger/event
+sequence, and the selected two-child scalar generated-child actor-to-actor
+route set. No group endpoints, route mux/storage, broader HDL event wiring, or
+broader generated-top data routing is promised by this field.
 The selected broader ATL v0 public direction is direct actor-body syntax plus
 existing drive-body movement syntax, but most of those forms remain future
 behavior until advertised by capability metadata. Endpoint-aware movement

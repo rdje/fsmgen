@@ -2834,6 +2834,18 @@ child output role preservation, plain and strict CLI HDL generation, a
 fail-closed missing child output diagnostic, and a fail-closed pre-event
 drive-order diagnostic for that route.
 
+The generated-child pin-egress multi-route leaf extends that downstream
+contract without adding new source syntax:
+`isf/atl_resolved_child_pin_egress_multi_pipeline.isf` proves multiple one-bit
+outputs from one resolved child to multiple one-bit top-level output pins
+through the generated top. The same regression proves strict schedule JSON
+parity, parent/child/top `.fsm` artifacts, two
+`scalar_actor_to_pin_handoff` `data_movements[]` entries, generated child
+output role preservation for both routed scalar signals, generated-top wiring
+for both pin-egress handoffs, strict outdir materialization, plain plus strict
+CLI HDL generation, and fail-closed missing-output, interleaved-drive-call,
+and duplicate-output-pin diagnostics for that route set.
+
 The same focused regression also covers `isf/atl_two_child_pipeline.isf`:
 parent/reader/writer/top `.fsm` artifacts, strict schedule JSON parity,
 nested generated-top `children[]` metadata, generated-top wiring, and plain

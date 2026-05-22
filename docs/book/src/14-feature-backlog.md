@@ -1025,9 +1025,9 @@ shipped as `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf`. It routes
 adjacent top-level drive calls before the child trigger, with separate drive
 states, generated handoffs, generated child interface roles, generated-top
 wiring, and route metadata for each scalar path. Actor-to-actor generated-child
-routes outside their own two-child subset, child-to-pin multi-route egress,
-multi-child data wiring, route mux/storage, fan-in/fan-out, CDC/reset
-remapping, ready/backpressure, and payload protocols remain deferred.
+routes outside their own two-child subset, multi-child data wiring, route
+mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure, and
+payload protocols remain deferred.
 
 The inverse generated-child data-route slice is now shipped as one scalar
 resolved-child output route to one top-level output through the generated top,
@@ -1039,6 +1039,16 @@ preservation, plain plus strict HDL generation, missing child output failure,
 and pre-event drive-order failure. That one-child pin route does not include
 actor-to-actor generated-child routing, multi-child data wiring, route
 mux/storage, CDC/reset remapping, ready/backpressure, or payload protocols.
+
+The bounded multi-route extension of that one-child pin-egress shape is now
+shipped as `isf/atl_resolved_child_pin_egress_multi_pipeline.isf`. It routes
+`(pins.result worker.payload)` and `(pins.status worker.status)` through
+adjacent top-level drive calls after the child event wait, with separate drive
+states, generated handoffs, generated child interface roles, generated-top
+wiring, and route metadata for each scalar path. That one-child route set does
+not include actor-to-actor generated-child routing, multi-child data wiring,
+route mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure, or
+payload protocols.
 
 The selected generated-child actor-to-actor data movement across two resolved
 children is shipped only for scalar same-source/same-sink two-child routes that

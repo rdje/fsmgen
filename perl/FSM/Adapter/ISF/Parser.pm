@@ -2017,7 +2017,7 @@ sub _finalize_selected_atl_data_movements {
         _selected_atl_generated_top_pin_egress_candidate($instances, $data_movements, $event_waits, $transaction_triggers);
     my $generated_top_actor_route_candidate =
         _selected_atl_generated_top_actor_route_candidate($instances, $data_movements, $event_waits, $transaction_triggers, $actor);
-    confess "Error: actor '$actor->{actor_name}' ATL resolved-child pin-egress data movement requires trigger before event wait and drive call after event wait in the current subset\n"
+    confess "Error: actor '$actor->{actor_name}' ATL resolved-child pin-egress data movement requires one-to-one child outputs and top-level output pins, trigger before event wait, and contiguous data drive calls after event wait in the current subset\n"
         if !$generated_top_pin_egress_candidate
             && _selected_atl_generated_top_pin_egress_shape($instances, $data_movements, $event_waits, $transaction_triggers);
     confess "Error: actor '$actor->{actor_name}' ATL resolved-child pin-ingress data movement requires one-to-one top-level input pins and child inputs, contiguous data drive calls before trigger, and trigger before event wait in the current subset\n"
@@ -2148,18 +2148,31 @@ sub _selected_atl_generated_top_pin_egress_candidate {
         $transaction_triggers,
     );
 
-    my $movement = $data_movements->[0];
+    my @movements = @{$data_movements || []};
     my $wait = $event_waits->[0];
     my $trigger = $transaction_triggers->[0];
 
+    my (%source_endpoints, %sink_pins);
+    my @drive_indices;
+    for my $movement (@movements) {
+        return 0 if $source_endpoints{$movement->{source_endpoint} // ''}++;
+        return 0 if $sink_pins{$movement->{sink_endpoint} // ''}++;
+        push @drive_indices, $movement->{_drive_clause_index}
+            if defined($movement->{_drive_clause_index});
+    }
+    return 0 unless @drive_indices == @movements;
+
+    @drive_indices = sort { $a <=> $b } @drive_indices;
+    for my $idx (1 .. $#drive_indices) {
+        return 0 unless $drive_indices[$idx] == $drive_indices[$idx - 1] + 1;
+    }
+
     my $trigger_index = $trigger->{_clause_index};
     my $wait_index = $wait->{_clause_index};
-    my $drive_index = $movement->{_drive_clause_index};
     return 0 unless defined($trigger_index)
         && defined($wait_index)
-        && defined($drive_index)
         && $trigger_index < $wait_index
-        && $wait_index < $drive_index;
+        && $wait_index < $drive_indices[0];
 
     return 1;
 }
@@ -2172,25 +2185,29 @@ sub _selected_atl_generated_top_pin_egress_shape {
     my @triggers = @{$transaction_triggers || []};
 
     return 0 unless @instances == 1
-        && @movements == 1
+        && @movements >= 1
         && @waits == 1
         && @triggers == 1;
 
     my $instance = $instances[0]{name};
-    my $movement = $movements[0];
     my $wait = $waits[0];
     my $trigger = $triggers[0];
 
     return 0 unless defined($instance) && !ref($instance) && length($instance);
-    return 0 unless ($movement->{kind} // '') eq 'scalar_actor_to_pin_handoff'
-        && ($movement->{source} // '') eq 'external_handoff'
-        && ($movement->{sink} // '') eq 'top_level_pin'
-        && ($movement->{source_instance} // '') eq $instance
-        && ($movement->{sink_instance} // '') eq 'pins';
     return 0 unless ($wait->{instance} // '') eq $instance
         && ($trigger->{instance} // '') eq $instance;
-    return 0 unless ($movement->{transaction} // '') eq ($trigger->{owner_transaction} // '')
-        && ($movement->{transaction} // '') eq ($wait->{transaction} // '');
+    my $transaction = $trigger->{owner_transaction};
+    return 0 unless defined($transaction) && !ref($transaction) && length($transaction)
+        && ($wait->{transaction} // '') eq $transaction;
+
+    for my $movement (@movements) {
+        return 0 unless ($movement->{kind} // '') eq 'scalar_actor_to_pin_handoff'
+            && ($movement->{source} // '') eq 'external_handoff'
+            && ($movement->{sink} // '') eq 'top_level_pin'
+            && ($movement->{source_instance} // '') eq $instance
+            && ($movement->{sink_instance} // '') eq 'pins'
+            && ($movement->{transaction} // '') eq $transaction;
+    }
 
     return 1;
 }

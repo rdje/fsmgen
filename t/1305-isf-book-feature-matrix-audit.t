@@ -126,7 +126,7 @@ my @required_examples = (
     'the shipped two-child same-source/same-sink scalar actor-to-actor route set',
     'route between two resolved children through the generated ATL top',
     'one named drive-call cycle',
-    'Generated-child actor-to-actor and pin-ingress route support is intentionally',
+    'Generated-child actor-to-actor and pin route support is intentionally',
     'generated handoffs, and one named',
     'route drive unparameterized',
     'route drive call remains',

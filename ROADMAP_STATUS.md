@@ -1,8 +1,23 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14` / `ISF-ATL-PIN-EGRESS-MULTI-ROUTE`.
-  Current frontier: `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2`.
+- Active lane: none selected.
+  The previous PNT frontier `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` is complete;
+  the next PNT slice must select or create a task tree before code changes.
+- Recent R14 ATL pin-egress multi-route completion:
+  `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` shipped the bounded generated-child
+  resolved-child output to top-level output-pin multi-route subset. FSMGen now
+  accepts several one-bit routes out of one resolved child when every route
+  lives in one parent transaction, uses one scalar
+  `(pins.output_pin child.endpoint)` drive-body pair, and is called in an
+  adjacent post-event drive-call segment after the child trigger/event wait.
+  The fixture `isf/atl_resolved_child_pin_egress_multi_pipeline.isf` proves
+  parent/child/top `.fsm` artifacts, strict schedule JSON parity,
+  generated-top wiring, child `+interface` preservation, strict outdir
+  materialization, plain plus strict HDL generation, and fail-closed malformed
+  route-set diagnostics. Route mux/storage, fan-in/fan-out, CDC/reset
+  remapping, ready/backpressure, payload protocols, repeated activations, and
+  cross-transaction continuation remain deferred.
 - Recent R14 ATL pin-egress multi-route selection:
   `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.1` activated the next bounded ATL feature
   tree. The selected implementation will widen generated-child resolved-child
@@ -22,9 +37,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   parent/child/top `.fsm` artifacts, strict schedule JSON parity, generated-top
   wiring, child `+interface` preservation, strict outdir materialization, plain
   plus strict HDL generation, and fail-closed malformed route-set diagnostics.
-  Child-to-pin multi-route egress, route mux/storage, fan-in/fan-out,
-  CDC/reset remapping, ready/backpressure, payload protocols, repeated
-  activations, and cross-transaction continuation remain deferred.
+  Route mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure,
+  payload protocols, repeated activations, and cross-transaction continuation
+  remain deferred.
 - Recent R14 ATL pin-ingress multi-route selection:
   `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1` activated the next bounded ATL feature
   tree. The selected implementation will widen generated-child top-level
@@ -4944,13 +4959,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree:
-  [docs/tasks/ISF-ATL-PIN-EGRESS-MULTI-ROUTE.md](docs/tasks/ISF-ATL-PIN-EGRESS-MULTI-ROUTE.md).
-- Current frontier: `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2`.
-- Selected scope: bounded generated-child ATL resolved-child output to
-  top-level output-pin scalar movement with several contiguous same-child route
-  drive calls after the child trigger/event wait in one parent transaction.
-  Broader route fabrics remain deferred.
+- Active task tree: none selected.
+- Current frontier: none selected; the latest completed PNT frontier
+  `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` is closed.
+- Selection rule: the next behavior-bearing slice must select or create its
+  owning task tree before implementation starts.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8562,14 +8575,13 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Continue the active
-  [docs/tasks/ISF-ATL-PIN-EGRESS-MULTI-ROUTE.md](docs/tasks/ISF-ATL-PIN-EGRESS-MULTI-ROUTE.md)
-  tree at `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` before selecting any unrelated
-  PNT implementation slice. The completed
-  `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2` leaf owns the shipped bounded ATL
-  top-level input-pin to resolved-child input multi-route subset; the new
-  active tree owns the inverse child-to-top-level-output route-set widening.
-  Keep `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
+- Select or create the next feature tree in
+  [docs/TASK_TREE.md](docs/TASK_TREE.md) before the next PNT implementation
+  slice. The completed `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2` leaf now owns the
+  shipped bounded ATL resolved-child output to top-level output-pin multi-route
+  subset; future parser, scheduler, emitter, contract, fixture, or book changes
+  need a fresh active tree. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and
+  feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

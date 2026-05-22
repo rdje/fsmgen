@@ -854,8 +854,10 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
         my $kind = $movements[0]{kind} // '';
         confess "$context cannot mix pin-to-resolved-child, resolved-child-to-pin, and actor-to-actor data movements in the current subset\n"
             if grep { ($_->{kind} // '') ne $kind } @movements;
-        confess "$context supports multiple scalar pin-to-resolved-child data movements only for top-level input-pin ingress in the current subset\n"
-            if @movements != 1 && $kind ne 'scalar_pin_to_actor_handoff';
+        confess "$context supports multiple scalar pin-to-resolved-child or resolved-child-to-pin data movements only for top-level pin ingress/egress in the current subset\n"
+            if @movements != 1
+                && $kind ne 'scalar_pin_to_actor_handoff'
+                && $kind ne 'scalar_actor_to_pin_handoff';
     }
 
     my $movement = $movements[0];
@@ -905,34 +907,46 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
     }
 
     if (($movement->{kind} // '') eq 'scalar_actor_to_pin_handoff') {
-        confess "$context can only wire scalar resolved child output to top-level output pin data movement when sink is a top-level pin\n"
-            unless ($movement->{source} // '') eq 'external_handoff'
-                && ($movement->{sink} // '') eq 'top_level_pin'
-                && ($movement->{sink_instance} // '') eq 'pins';
-        confess "$context data movement must source from resolved actor instance '$instance'\n"
-            unless ($movement->{source_instance} // '') eq $instance;
+        my (@links, %top_sink_ports, %child_source_ports, %parent_source_ports);
+        for my $route (@movements) {
+            my $route_width = $route->{width} || 1;
+            confess "$context can only wire scalar resolved child output to top-level output pin data movement when sink is a top-level pin\n"
+                unless ($route->{source} // '') eq 'external_handoff'
+                    && ($route->{sink} // '') eq 'top_level_pin'
+                    && ($route->{sink_instance} // '') eq 'pins';
+            confess "$context data movement must source from resolved actor instance '$instance'\n"
+                unless ($route->{source_instance} // '') eq $instance;
 
-        my $child_port = $movement->{source_endpoint};
-        confess "$context data movement '$movement->{drive}' requires a scalar child output port '$child_port' on instance '$instance'\n"
-            unless defined($child_port)
-                && !ref($child_port)
-                && exists($child_ports->{$child_port})
-                && ($child_ports->{$child_port}{direction} || '') eq 'output'
-                && ($child_ports->{$child_port}{width} || 1) == $width;
+            my $child_port = $route->{source_endpoint};
+            confess "$context data movement '$route->{drive}' requires a scalar child output port '$child_port' on instance '$instance'\n"
+                unless defined($child_port)
+                    && !ref($child_port)
+                    && exists($child_ports->{$child_port})
+                    && ($child_ports->{$child_port}{direction} || '') eq 'output'
+                    && ($child_ports->{$child_port}{width} || 1) == $route_width;
 
-        my $parent_port = $movement->{source_signal};
-        my $top_port = $movement->{sink_signal};
-        confess "$context data movement '$movement->{drive}' requires generated parent source handoff and top sink pin signals\n"
-            unless _non_empty_scalar($parent_port) && _non_empty_scalar($top_port);
+            my $parent_port = $route->{source_signal};
+            my $top_port = $route->{sink_signal};
+            confess "$context data movement '$route->{drive}' requires generated parent source handoff and top sink pin signals\n"
+                unless _non_empty_scalar($parent_port) && _non_empty_scalar($top_port);
+            confess "$context data movement '$route->{drive}' reuses child output port '$child_port' in the current one-to-one pin-egress subset\n"
+                if $child_source_ports{$child_port}++;
+            confess "$context data movement '$route->{drive}' reuses top-level output pin '$top_port' in the current one-to-one pin-egress subset\n"
+                if $top_sink_ports{$top_port}++;
+            confess "$context data movement '$route->{drive}' reuses generated parent source handoff '$parent_port'\n"
+                if $parent_source_ports{$parent_port}++;
 
-        return ({
-            kind               => 'scalar_resolved_child_to_pin_handoff',
-            drive              => $movement->{drive},
-            child_source_port  => $child_port,
-            parent_source_port => $parent_port,
-            top_sink_port      => $top_port,
-            width              => $width,
-        });
+            push @links, {
+                kind               => 'scalar_resolved_child_to_pin_handoff',
+                drive              => $route->{drive},
+                child_source_port  => $child_port,
+                parent_source_port => $parent_port,
+                top_sink_port      => $top_port,
+                width              => $route_width,
+            };
+        }
+
+        return @links;
     }
 
     if (($movement->{kind} // '') eq 'scalar_actor_handoff') {

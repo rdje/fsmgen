@@ -143,9 +143,10 @@ deterministic `<parent_actor>__<instance>.fsm` files while keeping the parent
 scheduled `.fsm` unchanged. The first generated ATL top is available when one
 resolved child is paired with one parent trigger handoff and one parent event
 wait. That same one-child top can also carry the shipped scalar pin-ingress
-route, bounded same-child pin-ingress multi-route extension, or pin-egress data
-route described below. Interface binding beyond that selected trigger/event
-pair plus the shipped scalar pin routes, broader data handoff wiring, route
+route, bounded same-child pin-ingress multi-route extension, scalar
+pin-egress data route, and bounded same-child pin-egress multi-route extension
+described below. Interface binding beyond that selected trigger/event pair
+plus the shipped scalar pin route sets, broader data handoff wiring, route
 mux/storage, ready/backpressure, CDC, actor-event fan-in,
 recursive actor networks, and permanent actor grouping remain separate future
 selections.
@@ -185,8 +186,8 @@ It routes `(worker.payload pins.payload)` and
 the child trigger. The generated top wires both top input pins through separate
 parent sink handoffs to separate child inputs, and the public report keeps both
 routes in `actor_network.data_movements[]`. This still does not include
-child-to-pin multi-route egress, fan-in/fan-out, route mux/storage, CDC/reset
-remapping, ready/backpressure, or payload protocols.
+fan-in/fan-out, route mux/storage, CDC/reset remapping, ready/backpressure, or
+payload protocols.
 
 The inverse generated-child data step is also shipped as one scalar resolved
 child output route to one top-level output through the generated ATL top. The
@@ -199,6 +200,16 @@ the existing trigger/event links as in the resolved-child one-top fixture.
 This one-child pin-egress route does not include actor-to-actor
 generated-child routing, multi-child data wiring, route mux/storage,
 CDC/reset remapping, ready/backpressure, or payload protocols.
+
+The bounded multi-route extension of that same one-child pin-egress path is
+also shipped through `isf/atl_resolved_child_pin_egress_multi_pipeline.isf`.
+It routes `(pins.result worker.payload)` and
+`(pins.status worker.status)` with adjacent argument-free drive calls after the
+child event wait. The generated top wires both child output pins through
+separate parent source handoffs to separate top-level output pins, and the
+public report keeps both routes in `actor_network.data_movements[]`. This
+still does not include fan-in/fan-out, route mux/storage, CDC/reset remapping,
+ready/backpressure, or payload protocols.
 
 The selected generated-child actor-to-actor data-route shape across two
 resolved children is shipped through the two-child generated ATL top. It
@@ -497,9 +508,9 @@ child `+interface` roles for both routed inputs, and generated-top wiring for
 both top-level input pins. Schedule JSON reports both routes through
 `actor_network.data_movements[]` and still discovers the top through
 `actor_network.generated_tops[]`; no public `data_links` key is exposed. This
-does not claim child-to-pin multi-route egress, fan-in/fan-out, route
-mux/storage, CDC/reset remapping, ready/backpressure, payload protocols,
-recursive actor networks, or permanent actor grouping.
+does not claim fan-in/fan-out, route mux/storage, CDC/reset remapping,
+ready/backpressure, payload protocols, recursive actor networks, or permanent
+actor grouping.
 
 The ATL resolved-child scalar pin-egress generated-top fixture is shipped as
 `isf/atl_resolved_child_pin_egress_pipeline.isf`. It keeps the same one
@@ -514,6 +525,20 @@ internally in the generated top. This fixture still does not claim
 broader actor-to-actor generated-child routes, multi-child data wiring,
 route mux/storage, CDC/reset remapping, ready/backpressure, payload
 protocols, recursive actor networks, or permanent actor grouping.
+
+The ATL resolved-child pin-egress multi-route fixture is shipped as
+`isf/atl_resolved_child_pin_egress_multi_pipeline.isf`. It keeps the same one
+resolved `worker` child and trigger/event pair, adds scalar top-level output
+pins `result` and `status`, and activates two drive bodies with
+`(pins.result worker.payload)` and `(pins.status worker.status)` after the
+child event wait. Lowering emits the parent, child, and generated top `.fsm`
+artifacts, reports both routes through `actor_network.data_movements[]`,
+preserves child `payload` and `status` as explicit child output ports, and
+wires both child outputs to the generated parent handoffs internally in the
+generated top. This fixture still does not claim broader actor-to-actor
+generated-child routes, multi-child data wiring, route mux/storage, CDC/reset
+remapping, ready/backpressure, payload protocols, recursive actor networks, or
+permanent actor grouping.
 
 The ATL two-child trigger/event generated-top fixture is shipped as
 `isf/atl_two_child_pipeline.isf`. It uses two same-source library actor

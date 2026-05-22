@@ -865,10 +865,28 @@ covers strict schedule JSON parity, parent/child/top `.fsm` artifacts, plain
 and strict HDL generation, fail-closed missing child output diagnostics, and
 fail-closed pre-event drive-order diagnostics for this fixture.
 
+The bounded multi-route extension of that one-child pin-egress shape is shipped
+as
+[isf/atl_resolved_child_pin_egress_multi_pipeline.isf](../isf/atl_resolved_child_pin_egress_multi_pipeline.isf).
+It allows multiple scalar outputs from the same resolved child to feed multiple
+scalar top-level output pins through adjacent argument-free drive calls after
+the child event wait. The shipped fixture routes
+`(pins.result worker.payload)` and `(pins.status worker.status)`. Lowering emits
+separate drive-call states, separate drive request signals, separate generated
+parent source handoffs, child `+interface` roles for both routed outputs, and
+generated-top wiring for both top-level output-pin paths. Schedule JSON reports
+each route as a separate `actor_network.data_movements[]` entry with
+`kind: "scalar_actor_to_pin_handoff"`; it does not expose the private
+generated-top `data_links`. The subset requires one resolved child, one parent
+transaction, one scalar `(pins.output_pin child.endpoint)` pair per drive body,
+one top-level drive call per route, unique child output endpoints, unique
+top-level output pins, the child trigger before the event wait, and a
+contiguous drive-call segment after the event wait.
+
 Broader actor-to-actor generated-child routes, multi-child data wiring beyond
-the selected two-child scalar route set, child-to-pin multi-route egress,
-route mux/storage, CDC/reset remapping, ready/backpressure, payload protocols,
-fan-in/fan-out, and permanent actor grouping remain deferred.
+the selected two-child scalar route set, route mux/storage, CDC/reset remapping,
+ready/backpressure, payload protocols, fan-in/fan-out, and permanent actor
+grouping remain deferred.
 
 The first positive two-child generated-top subset is shipped by
 [isf/atl_two_child_pipeline.isf](../isf/atl_two_child_pipeline.isf). The
@@ -3504,13 +3522,20 @@ wires parent generated handoff outputs such as `worker_payload` and
 `worker_sideband` to child scalar inputs such as `payload` and `sideband`. The
 child scheduled `.fsm` may include generated `+interface` role metadata for
 those selected inputs so HDL generation preserves the child module ports.
+For the selected scalar pin-egress generated-child route set, the same top also
+wires child scalar outputs such as `payload` and `status` to parent generated
+handoff inputs such as `worker_payload` and `worker_status`; the parent then
+drives the public top-level output pins through the scheduled drive-call
+states. The child scheduled `.fsm` may include generated `+interface` role
+metadata for those selected outputs so HDL generation preserves the child
+module ports.
 
 FSMGen still emits no generated route mux, no generated internal handoff
-storage, no broader HDL event wiring, no child-to-pin multi-route egress, and
-no multi-child generated ATL top beyond the selected two-child trigger/event and
-same-source/same-sink actor-to-actor route set. Any later ATL implementation
-that emits broader artifacts must document their names, report keys, and review
-surfaces in the same slice that ships them.
+storage, no broader HDL event wiring, and no multi-child generated ATL top
+beyond the selected two-child trigger/event and same-source/same-sink
+actor-to-actor route set. Any later ATL implementation that emits broader
+artifacts must document their names, report keys, and review surfaces in the
+same slice that ships them.
 
 ## 10. Schedule JSON Report
 
@@ -4085,6 +4110,22 @@ one-child scalar pin-egress generated-top subset and does not claim
 actor-to-actor generated-child routes, multi-child data wiring,
 route mux/storage, CDC/reset remapping, ready/backpressure, payload
 protocols, recursive actor networks, or permanent actor grouping.
+The [isf/atl_resolved_child_pin_egress_multi_pipeline.isf](../isf/atl_resolved_child_pin_egress_multi_pipeline.isf)
+fixture now has file-backed ATL generated-top pin-egress multi-route coverage
+for one resolved child, two top-level scalar output pins `result` and `status`,
+two drive-body routes `(pins.result worker.payload)` and
+`(pins.status worker.status)`, adjacent transaction drive calls after the child
+event wait, one trigger handoff, one event wait, parent/child/top `.fsm`
+artifacts, strict schedule JSON parity, generated child `+interface` metadata
+for both selected child outputs, internal generated-top wiring from child
+`payload`/`status` to parent `worker_payload`/`worker_status`, strict outdir
+materialization, plain plus strict HDL generation, missing child output
+failure, interleaved-drive-call failure, and duplicate top-level output pin
+failure. It stays inside the shipped one-child same-child scalar pin-egress
+route-set subset and does not claim actor-to-actor generated-child route
+widening, multi-child data wiring, route mux/storage, fan-in/fan-out,
+CDC/reset remapping, ready/backpressure, payload protocols, recursive actor
+networks, or permanent actor grouping.
 The [isf/atl_two_child_pipeline.isf](../isf/atl_two_child_pipeline.isf)
 fixture now has file-backed two-child generated-top coverage for sequential
 trigger/event handoffs without data movement. It proves parent/reader/writer

@@ -785,9 +785,8 @@ adjacent argument-free top-level drive calls before the child trigger and event
 wait.
 
 These one-child pin-ingress routes do not include actor-to-actor
-generated-child routing, child-to-pin multi-route egress, multi-child data
-wiring, route mux/storage, fan-in/fan-out, CDC/reset remapping,
-ready/backpressure, or payload protocols.
+generated-child routing, multi-child data wiring, route mux/storage,
+fan-in/fan-out, CDC/reset remapping, ready/backpressure, or payload protocols.
 
 The inverse generated-child data route is also shipped for one scalar
 resolved-child output route to one top-level output pin through that
@@ -810,6 +809,20 @@ module port.
 This one-child pin-egress route does not include actor-to-actor
 generated-child routing, multi-child data wiring, route mux/storage,
 CDC/reset remapping, ready/backpressure, or payload protocols.
+
+The bounded multi-route extension of that one-child pin-egress path is shipped
+as `isf/atl_resolved_child_pin_egress_multi_pipeline.isf`.
+
+It routes `(pins.result worker.payload)` and
+`(pins.status worker.status)` with adjacent argument-free drive calls after the
+child event wait. The generated top wires both child output pins through
+separate parent source handoffs to separate top-level output pins, and the
+public report keeps both routes in `actor_network.data_movements[]` with
+`kind: "scalar_actor_to_pin_handoff"`.
+
+This is still a one-child one-to-one route set. It does not include
+fan-in/fan-out, route mux/storage, CDC/reset remapping, ready/backpressure, or
+payload protocols.
 
 The selected generated-child actor-to-actor data-route shape across two
 resolved children reuses the existing `(sink source)` drive-body movement
