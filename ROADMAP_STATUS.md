@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2` closed the latest malformed
-  external RTL child source count/payload-shape support-accounting tree. The
-  next PNT step is to select the next inactive or ongoing task-tree frontier
-  before any implementation work.
+  `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.1` selected malformed
+  composition child-entry structure as the next support-accounting corpus
+  widening. The active frontier is
+  `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.2`.
+- Recent R12 composition child-structure corpus-widening selection:
+  `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.1` activated a task tree to
+  promote already-focused empty child-entry, non-string header, and dotted-pair
+  payload diagnostics into maintained expected-failure corpus coverage. No
+  compiler behavior changed.
 - Recent R12 RTL child source-shape corpus-widening completion:
   `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2` added named expected-failure
   corpus entries for multi-token `?rtl` aliases and unsupported nested `?rtl`

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition child-structure coverage stays parser-diagnostic-only
+- `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.1` selects
+  support-accounting promotion for malformed child-entry list shapes whose
+  existing parser diagnostics already distinguish empty entries, non-string
+  headers, and dotted-pair payloads.
+- The implementation should preserve the existing diagnostics and only add
+  maintained expected-failure corpus assets for the bounded child-entry
+  structure family.
+
 ## 2026-05-22: RTL child source count and payload shape are support-accounting failures
 - `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2` keeps the existing parser
   diagnostics intact and promotes the two representative malformed external
