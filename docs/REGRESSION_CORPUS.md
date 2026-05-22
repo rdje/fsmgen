@@ -126,12 +126,13 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   `?ports` outside inferable lanes, empty `?ports` outside inferable lanes,
   unsupported VHDL composition backend targets, missing explicit `?wiring` in
   explicit-link topologies, C1 passthrough missing exposure, unknown top-port,
-  width mismatch, and direction mismatch failures, wrong-kind external
-  generated-child source realization for both `?fsmc` and `?dtc`, malformed
-  generated-child source counts, malformed nested generated-child payload
-  shapes, malformed external RTL child source counts, malformed nested external
-  RTL child payload shapes, missing external `?rtl` sidecar metadata, invalid
-  `.rtlif` system-role
+  width mismatch, and direction mismatch failures, declared same-name on shared
+  system ports, child aggregate-member endpoints without declared aggregate
+  types, wrong-kind external generated-child source realization for both
+  `?fsmc` and `?dtc`, malformed generated-child source counts, malformed
+  nested generated-child payload shapes, malformed external RTL child source
+  counts, malformed nested external RTL child payload shapes, missing external
+  `?rtl` sidecar metadata, invalid `.rtlif` system-role
   directions, duplicate `.rtlif` port
   declarations, unsupported `.rtlif` port types, invalid `.rtlif` port tokens,
   non-positive `.rtlif` port widths, missing `.rtlif` roots, empty `.rtlif`
@@ -677,6 +678,8 @@ manifest output while keeping the exact file lists widenable.
 | `contract.composition_c1_unknown_top_port` | [t/corpus/composition_c1_unknown_top_port_top.fsm](t/corpus/composition_c1_unknown_top_port_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.composition_c1_width_mismatch` | [t/corpus/composition_c1_width_mismatch_top.fsm](t/corpus/composition_c1_width_mismatch_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.composition_c1_direction_mismatch` | [t/corpus/composition_c1_direction_mismatch_top.fsm](t/corpus/composition_c1_direction_mismatch_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_system_port_same_name` | [t/corpus/composition_system_port_same_name_top.fsm](t/corpus/composition_system_port_same_name_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_child_endpoint_missing_aggregate_type` | [t/corpus/composition_child_endpoint_missing_aggregate_type_top.fsm](t/corpus/composition_child_endpoint_missing_aggregate_type_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_fsm_child_source` | [t/corpus/missing_fsm_child_source_top.fsm](t/corpus/missing_fsm_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_dt_child_source` | [t/corpus/missing_dt_child_source_top.fsm](t/corpus/missing_dt_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |

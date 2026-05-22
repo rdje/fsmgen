@@ -667,6 +667,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'composition_contract',
         summary => 'A C1 passthrough top port direction did not match the child port direction.',
     },
+    FSMGEN_COMPOSITION_SYSTEM_PORT_SAME_NAME => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A shared system port was declared for same-name binding.',
+    },
+    FSMGEN_COMPOSITION_CHILD_ENDPOINT_AGGREGATE_TYPE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A child endpoint used member access without a declared aggregate type.',
+    },
     FSMGEN_COMPOSITION_MISSING_RTLIF => {
         severity => 'error',
         stability => 'stable',

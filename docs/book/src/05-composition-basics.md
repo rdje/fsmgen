@@ -170,6 +170,10 @@ Practical rules for declared same-name ports:
 - use explicit `?wiring` when you need renaming, remapping, or non-system
   child-to-child wiring
 
+FSMGen rejects declared same-name markers on shared system ports such as
+`=clk` or `=rst_n`. Clock and reset ports use the dedicated shared system-input
+contract instead of the general connect-by-name path.
+
 ## Inference-First Top Boundaries
 
 The preferred authoring model is:
@@ -327,6 +331,11 @@ The verbose spelling `(connect source target)` is equivalent and can improve
 readability in dense wiring blocks. The older `/source/target/` token remains
 accepted as compatibility input, but new examples and generated artifacts use
 the list form.
+
+Member/item endpoints such as `producer.output_data.extra` require the base
+endpoint to carry a declared aggregate type. If the child port is only a scalar
+or untyped vector, FSMGen rejects the link and asks for an aggregate `+types`
+alias before member or item access is used in composition wiring.
 
 When a generated child FSM omits `+system`, it still has the same direct-root
 implicit system defaults as a standalone FSM: `clk` and async active-low

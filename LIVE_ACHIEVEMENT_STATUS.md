@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — endpoint-shape coverage widened
+- Completed `R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.2`.
+- The task tree is closed.
+- FSMGen now support-accounts shared system-port declared same-name rejection
+  and child aggregate-member endpoint rejection without declared aggregate
+  types.
+- Stable diagnostic-code metadata, check JSON, normalized semantic JSON,
+  manifest, regression-corpus docs, and mdBook coverage are synchronized.
+- No parser or HDL-generation behavior changed.
+
 ## 2026-05-22: R12 regression corpus — endpoint-shape widening selected
 - Completed `R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

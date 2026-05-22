@@ -1,0 +1,38 @@
+(?top:composition_child_endpoint_missing_aggregate_type_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?wiring:wiring
+    /producer.output_data.extra/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (output_data 8)
+  )
+  (idle
+    (output_data> <= 8'2)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (final_data 8)
+  )
+  (idle
+    (final_data> <= 8'3)
+  )
+)

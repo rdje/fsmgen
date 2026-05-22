@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition endpoint-shape failures are support-accounting failures
+- `R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.2` preserves the existing
+  endpoint-shape diagnostics and promotes two focused failures into maintained
+  corpus truth.
+- `FSMGEN_COMPOSITION_SYSTEM_PORT_SAME_NAME` covers attempts to mark shared
+  system ports such as `clk` for declared same-name binding.
+- `FSMGEN_COMPOSITION_CHILD_ENDPOINT_AGGREGATE_TYPE` covers child
+  member/item endpoint access when the base child endpoint has no declared
+  aggregate type.
+
 ## 2026-05-22: Composition endpoint-shape coverage stays diagnostic-only
 - `R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.1` selects
   support-accounting promotion for endpoint-shape diagnostics whose existing

@@ -1,0 +1,20 @@
+(?top:composition_system_port_same_name_top
+  (?ports:public_io
+    =clk
+    result_data>8
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (result_data 8)
+  )
+  (idle
+    (result_data> <= 8'1)
+  )
+)

@@ -381,6 +381,8 @@ contract. Current out-of-support examples include:
   inferable lanes, missing explicit `?wiring` for explicit-link topologies,
   C1 passthrough missing exposure, unknown top-port, width mismatch, or
   direction mismatch failures,
+  declared same-name on shared system ports, aggregate-member child endpoints
+  without declared aggregate types,
   missing external generated child sources, wrong-kind external generated-child
   roots such as `?fsmc` resolving to `?dt:name` or `?dtc` resolving to
   `?fsm:name`, malformed `?fsmc` / `?dtc` source counts, unsupported nested
