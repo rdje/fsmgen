@@ -674,7 +674,7 @@ Transaction clauses currently supported:
 (wait count)
 (while condition body...)
 (until condition body...)
-(repeat count body...)
+(repeat count body...)          ;; count may be literal, actor constant, or known-width runtime name
 (switch selector branch...)
 (set target expr)
 (update target expr)
@@ -884,6 +884,13 @@ Repeat:
 (repeat count
   body...)
 ```
+
+Repeat counts are runtime counter load values, not elaboration directives.
+Decimal literals infer the minimum counter width for that literal. Declared
+actor constants infer width from their resolved non-negative integer value
+while preserving the authored constant token in the scheduled `.fsm` load.
+Known-width sampled/interface names keep the dynamic-repeat behavior and use
+their known source width; unknown names fall back to the existing default.
 
 Switch:
 

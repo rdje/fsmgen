@@ -66,6 +66,32 @@ ISF
     like($fsm, qr/\(<= \(main_cnt beats\)\)/, 'repeat init loads the sampled count alias');
 };
 
+subtest 'actor constant repeat counts use the resolved constant width' => sub {
+    my $source = <<'ISF';
+(actor repeat_constant
+  (clock clk)
+  (reset (rst_n async active_low))
+  (constants
+    (COUNT 9))
+  (interface
+    (input start)
+    (output done)
+    (output flag))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (repeat COUNT
+      (drive tick))
+    (complete done)))
+ISF
+
+    my $fsm = lower_source($source, 'repeat_constant.fsm');
+
+    like($fsm, qr/\(main_cnt 4\)/, 'actor constant repeat count drives the resolved counter width');
+    like($fsm, qr/\(<= \(main_cnt COUNT\)\)/, 'repeat init preserves the authored constant token');
+};
+
 subtest 'switch-nested repeats declare the shared transaction counter width' => sub {
     my $source = <<'ISF';
 (actor repeat_nested

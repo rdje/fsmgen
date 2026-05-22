@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat actor-constant widths shipped
+- Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` and closed the task tree.
+- Added support for declared actor constants as repeat counter width evidence
+  when the constant resolves to a non-negative integer.
+- Repeat init still loads the authored count token in scheduled `.fsm`, so the
+  change does not alter repeat runtime semantics or dynamic repeat behavior.
+- Actor/transaction parameter specialization, generated-top
+  respecialization, dynamic repeat semantic changes, and zero-count policy
+  changes remain deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused repeat tests; public/doc audits;
+  broad `./bin/ci-regression isf --no-book` with `Files=238, Tests=1590`;
+  `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — Repeat actor-constant widths tree selected
 - Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.1`.
 - Activated a new R14 task tree for using actor constants as static repeat

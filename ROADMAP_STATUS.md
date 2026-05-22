@@ -2,14 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS`. Current frontier:
-  `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2`.
-- Recent R14 repeat actor-constant width selection:
-  `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.1` activated the repeat width-evidence
-  tree for using resolved actor constants to infer repeat counter widths.
-  Runtime repeat semantics, repeat counter load semantics, dynamic repeat
-  counts, actor/transaction parameter specialization, and generated-top
-  respecialization remain out of scope. No compiler behavior changed.
+  Active task tree: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Recent R14 repeat actor-constant width completion:
+  `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` shipped declared actor constants as
+  repeat counter width evidence and closed the task tree. The repeat counter
+  width now uses the resolved non-negative actor constant value, while the
+  scheduled `.fsm` repeat-init assignment preserves the authored constant
+  token. Literal repeat counts and sampled/runtime dynamic repeat counts keep
+  their existing behavior. Actor/transaction parameter specialization,
+  generated-top respecialization, dynamic repeat semantic changes, and
+  zero-count policy changes remain deferred.
 - Recent R14 watchdog actor-constant limits completion:
   `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` shipped positive actor constants as
   actor-level and await-local watchdog limits and closed the task tree.

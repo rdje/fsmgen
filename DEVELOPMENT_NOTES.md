@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Repeat constant widths preserve runtime semantics
+- `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` threads actor context into repeat
+  counter width inference so a declared constant can provide the same static
+  sizing evidence as a decimal literal.
+- The lowerer deliberately preserves the authored repeat load token in the
+  generated `.fsm`. Resolving the constant only for counter sizing avoids
+  turning this slice into a broader repeat-elaboration or specialization
+  change.
+- Actor and transaction parameters remain deferred because their values can be
+  specialized by future composition bindings. Treating them as static width
+  evidence needs a separate generated-top policy.
+
 ## 2026-05-22: Repeat constants are width evidence only
 - `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.1` selects a narrow repeat-counter
   improvement: actor constants can provide the same counter-width evidence as

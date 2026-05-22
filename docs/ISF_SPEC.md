@@ -2187,8 +2187,10 @@ Current lowering:
 - The repeat check state decrements with `<-` and loops while the counter is
   nonzero.
 - Repeat counter width is inferred. Decimal literal counts use the minimum
-  width that can represent the loaded count; named counts use the known
-  interface/sample width; unknown count forms fall back to `8`.
+  width that can represent the loaded count; actor constants use their
+  resolved non-negative integer value as width evidence while preserving the
+  authored load token; named dynamic counts use the known interface/sample
+  width; unknown count forms fall back to `8`.
 - Top-level repeats and switch-nested repeats register the shared transaction
   counter at the widest required width.
 - The shipped repeat-body clause surface is named drive calls, `await`,
@@ -2363,13 +2365,15 @@ Current lowering:
   subset.
 
 The repeat count is a runtime counter load value, not an elaboration count.
-Literal counts give statically reviewable loop bounds. Named counts may be
-dynamic scalar signals when their width is known, but they make transaction
-latency data-dependent and require a clear zero-count policy before the loop
-can be treated as fully general. Repeat-body local `do` and repeat-body spawn
-support preserve the same runtime-counter rule: the loop reactivates a local
-child only after its fresh done pulse, or reactivates a lexically named static
-spawn child instance after same-body `await_all`, or after same-body
+Literal counts give statically reviewable loop bounds. Actor constants are
+static width evidence for the repeat counter, but the scheduled `.fsm` still
+loads the authored constant token. Named counts may be dynamic scalar signals
+when their width is known, but they make transaction latency data-dependent and
+require a clear zero-count policy before the loop can be treated as fully
+general. Repeat-body local `do` and repeat-body spawn support preserve the
+same runtime-counter rule: the loop reactivates a local child only after its
+fresh done pulse, or reactivates a lexically named static spawn child instance
+after same-body `await_all`, or after same-body
 `await_any` when exactly one child is pending, or for top-level repeat bodies
 and documented branch-contained nested repeats after multi-pending `await_any`
 followed by a same-body `await_all` drain; neither form creates one child

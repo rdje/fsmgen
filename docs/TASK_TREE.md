@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS` | `active` | `R14` | `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` | [docs/tasks/ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.md](docs/tasks/ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.md](docs/tasks/ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.md) |
 | `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS` | `done` | `R14` | `closed` | [docs/tasks/ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.md](docs/tasks/ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.md) |
 | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.md](docs/tasks/ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.md) |
 | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.md) |

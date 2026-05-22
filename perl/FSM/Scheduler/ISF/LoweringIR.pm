@@ -3463,10 +3463,18 @@ sub _register_repeat_counters {
 }
 
 sub _repeat_count_width {
-    my ($count, $widths) = @_;
+    my ($count, $widths, $actor) = @_;
     return 8 if ref($count);
     return $widths->{$count}
         if defined($count) && exists($widths->{$count}) && $widths->{$count} > 0;
+    if (defined($count) && _is_hdl_identifier($count)) {
+        my $constant = _actor_constant_by_name($actor, $count);
+        if ($constant) {
+            my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
+            return _repeat_count_width_for_integer($constant_value)
+                if defined $constant_value;
+        }
+    }
     if (defined($count)) {
         my $literal_width = _literal_repeat_count_width($count);
         return $literal_width if defined $literal_width;
@@ -3478,7 +3486,13 @@ sub _literal_repeat_count_width {
     my ($count) = @_;
     return undef unless defined($count) && !ref($count) && $count =~ /\A(?:\+)?([0-9]+)\z/;
 
-    my $limit = 0 + $1;
+    return _repeat_count_width_for_integer(0 + $1);
+}
+
+sub _repeat_count_width_for_integer {
+    my ($limit) = @_;
+    return undef unless defined($limit) && !ref($limit) && $limit =~ /\A[0-9]+\z/;
+
     my $width = 1;
     my $max_value = 1;
     while ($max_value < $limit) {
@@ -6572,7 +6586,7 @@ sub _expand_loop_body {
 
 sub _ir_repeat {
     my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters; my @spawn_done_ports;
-    my $width = _repeat_count_width($cl->[1], $widths);
+    my $width = _repeat_count_width($cl->[1], $widths, $actor);
     push @s, {name=>"${tn}_repeat_init_".$$ir++,kind=>'sequential',assignments=>[{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],transitions=>[]};
     for my $bc(@{$cl}[2..$#$cl]){next unless ref($bc)eq'ARRAY';my $bk=$bc->[0];
         if($bk eq'drive'){push @s,_ir_transaction_drive_clause($bc,$tn,$$ir++,$drives,[splice @lp])}

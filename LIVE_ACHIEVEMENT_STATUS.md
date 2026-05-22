@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat actor-constant widths shipped
+- Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` and closed the task tree.
+- FSMGen now accepts declared actor constants as repeat counter width evidence
+  when the constant resolves to a non-negative integer.
+- The generated repeat counter width uses the resolved constant value while
+  the scheduled `.fsm` repeat-init assignment preserves the authored constant
+  token.
+- Literal repeat counts and sampled/runtime dynamic repeat counts keep their
+  existing behavior. Actor/transaction parameter specialization,
+  generated-top respecialization, dynamic repeat semantic changes, and
+  zero-count policy changes remain deferred.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Validation passed: focused repeat tests, public/doc audits, broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1590`,
+  `mdbook build docs/book`, and `git diff --check`.
+
 ## 2026-05-22: R14 — Repeat actor-constant widths tree selected
 - Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.1`.
 - Activated the active R14 task tree for actor constants as repeat counter

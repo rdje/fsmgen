@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat actor-constant widths shipped
+- Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` and closed the task tree.
+- FSMGen now uses declared actor constants as static repeat counter width
+  evidence when the constant resolves to a non-negative integer.
+- The scheduled `.fsm` repeat-init assignment still loads the authored
+  constant token, so this is a width-inference improvement rather than a
+  repeat runtime semantic change.
+- Literal repeat counts and sampled/runtime dynamic repeat counts keep their
+  existing behavior. Actor/transaction parameter specialization,
+  generated-top respecialization, dynamic repeat semantic changes, and
+  zero-count policy changes remain deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/support-matrix/backlog chapters, roadmap status,
+  task-tree docs, and live docs.
+- Validation passed: LoweringIR/test syntax; focused repeat tests; public/doc
+  audits; broad `./bin/ci-regression isf --no-book` with `Files=238,
+  Tests=1590`; `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Repeat actor-constant widths tree selected
 - Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.1`.
 - Activated the next R14 feature tree for using declared actor constants as

@@ -766,6 +766,9 @@ Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
 data-dependent, and the repeat contract still needs an explicit zero-count
 policy for the fully general case.
+Actor-constant repeat counts are now static width evidence only: the counter
+width uses the resolved constant value while scheduled `.fsm` still loads the
+authored constant token.
 
 ## Intent Scheduling Format
 
