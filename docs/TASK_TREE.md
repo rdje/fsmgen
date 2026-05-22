@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ATL-COMPACT-GROUP-ALIAS` | `active` | `R14` | `ISF-ATL-COMPACT-GROUP-ALIAS.2` | [docs/tasks/ISF-ATL-COMPACT-GROUP-ALIAS.md](docs/tasks/ISF-ATL-COMPACT-GROUP-ALIAS.md) |
 
 ## Proposed Task Trees
 

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Compact groups are an alias, not scheduling
+- `ISF-ATL-COMPACT-GROUP-ALIAS.1` selects the reserved
+  `(concurrent NAME ACTOR...)` source shape because the verbose static group
+  contract already exists and remains report-only.
+- The implementation leaf should normalize the alias into the same group
+  semantics as `(group NAME (members ACTOR...) (mode concurrent))` while
+  preserving enough declaration provenance for downstream reviewers to know
+  which source spelling was used.
+- No group runtime scheduling, group endpoint, route, handoff, or generated
+  HDL policy is selected by this tree. Those features need separate task-tree
+  ownership because they change scheduling semantics rather than syntax
+  ergonomics.
+
 ## 2026-05-22: ATL multi-event waits preserve authored sequencing
 - `ISF-ATL-MULTI-EVENT-WAIT.2` ships the selected multi-event wait subset
   without adding a new surface syntax. Authors keep writing ordinary

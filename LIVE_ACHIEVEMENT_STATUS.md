@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL compact group alias tree selected
+- Completed `ISF-ATL-COMPACT-GROUP-ALIAS.1`.
+- Activated the next R14 task tree for the reserved compact
+  `(concurrent NAME ACTOR...)` alias over the shipped verbose static group
+  metadata surface.
+- The active R14 frontier is now `ISF-ATL-COMPACT-GROUP-ALIAS.2`.
+- The selected implementation will keep groups report-only and will not add
+  runtime group scheduling, group endpoints, compact movement syntax, or
+  generated HDL behavior.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL multi-event wait sequencing shipped
 - Completed `ISF-ATL-MULTI-EVENT-WAIT.2` and closed the task tree.
 - FSMGen now lowers one temporary trigger batch followed by multiple

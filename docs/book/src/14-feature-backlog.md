@@ -916,8 +916,13 @@ fan-in, width, lifetime, or CDC safety.
 The group axis starts with shipped fail-closed diagnostics for direct `(group
 ...)` declarations and compact `(concurrent ...)` aliases.
 
-Report-only static group metadata is shipped for verbose `(group ...)`;
-scheduling behavior and compact aliases remain later leaves.
+Report-only static group metadata is shipped for verbose `(group ...)`.
+
+The compact `(concurrent NAME ACTOR...)` alias is now selected in
+`ISF-ATL-COMPACT-GROUP-ALIAS`. It is intended only as a readability alias for
+the verbose group form and will keep group behavior report-only. Runtime group
+scheduling, group endpoints, group handoff routing, generated HDL behavior,
+and compact movement syntax remain later leaves.
 
 The first multi-actor trigger scheduling leaf is shipped as a same-cycle
 external trigger batch over existing transaction-body
@@ -927,8 +932,8 @@ state, and `actor_network.association_schedules[]` report evidence. Static
 `(group ...)` declarations are not required and remain review metadata only.
 
 Noncontiguous batches, repeated members, generated children, group endpoints,
-data-movement coupling, hidden same-cycle event joins, route mux/storage,
-CDC, and compact aliases remain later leaves.
+data-movement coupling, hidden same-cycle event joins, route mux/storage, and
+CDC remain later leaves.
 
 The compatibility `actor_network.group_schedules[]` array remains for schedule
 JSON `schema_version: 1`. The canonical association entry uses

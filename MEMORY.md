@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL compact group alias tree selected
+- Completed `ISF-ATL-COMPACT-GROUP-ALIAS.1`.
+- Activated the next R14 task tree for the reserved compact
+  `(concurrent NAME ACTOR...)` ATL group alias.
+- The next frontier is `ISF-ATL-COMPACT-GROUP-ALIAS.2`: normalize the compact
+  alias to the existing report-only static group metadata surface while
+  preserving transparent declaration provenance and existing fail-closed
+  boundaries.
+- Runtime group scheduling, group endpoints, group handoff routing, generated
+  HDL behavior, compact movement syntax, and permanent runtime group coupling
+  remain deferred.
+- No compiler behavior changed.
+
 ## 2026-05-22: ATL multi-event wait sequencing shipped
 - Completed `ISF-ATL-MULTI-EVENT-WAIT.2` and closed the task tree.
 - FSMGen now accepts one temporary trigger batch followed immediately by a

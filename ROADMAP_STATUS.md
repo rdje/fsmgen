@@ -2,8 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: none. Next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+  Active task tree: `ISF-ATL-COMPACT-GROUP-ALIAS`; current frontier:
+  `ISF-ATL-COMPACT-GROUP-ALIAS.2`.
+- Recent R14 ATL compact group alias selection:
+  `ISF-ATL-COMPACT-GROUP-ALIAS.1` activated the next bounded ATL source
+  ergonomics tree. The selected implementation will ship the reserved compact
+  `(concurrent NAME ACTOR...)` alias as a readability form for the already
+  shipped verbose `(group NAME (members ACTOR...) (mode concurrent))`
+  report-only metadata surface. It does not add group runtime scheduling,
+  group endpoints, group handoff routing, generated HDL behavior, compact
+  movement syntax, or permanent runtime group coupling. No compiler behavior
+  changed.
 - Recent R14 ATL multi-event wait sequencing completion:
   `ISF-ATL-MULTI-EVENT-WAIT.2` shipped the bounded parent-handoff
   multi-event wait subset and closed the task tree. FSMGen now accepts one
@@ -5142,16 +5151,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: none.
-- Current frontier: select or create the next roadmap-aligned task tree before
-  any code changes.
-- Completion status: `ISF-ATL-MULTI-EVENT-WAIT.2` shipped the bounded
-  transaction-body ATL multi-event wait tree and closed it. One temporary
-  trigger batch may now be followed by multiple explicit source-ordered actor
-  event waits to distinct triggered actors. Event payloads, hidden same-cycle
-  joins, repeated waits, CDC, ready/backpressure, group endpoints,
-  generated-child event wiring, route coupling, and ATL data movement coupling
-  remain deferred.
+- Active task tree: `ISF-ATL-COMPACT-GROUP-ALIAS`.
+- Current frontier: `ISF-ATL-COMPACT-GROUP-ALIAS.2`.
+- Completion status: `ISF-ATL-COMPACT-GROUP-ALIAS.1` selected the compact
+  concurrent-group alias tree. The next leaf owns implementation of
+  `(concurrent NAME ACTOR...)` as a compact source alias for the shipped
+  report-only verbose group metadata surface; no runtime group scheduling,
+  group endpoints, compact movement syntax, or generated HDL behavior is
+  selected.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8763,9 +8770,9 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Select or create the next roadmap-aligned task tree before the next
-  implementation. No active task tree remains after
-  `ISF-ATL-MULTI-EVENT-WAIT.2`.
+- Continue the active `ISF-ATL-COMPACT-GROUP-ALIAS` tree before selecting a
+  different implementation task. `ISF-ATL-COMPACT-GROUP-ALIAS.2` owns compact
+  group alias normalization and coverage.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

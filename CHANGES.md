@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL compact group alias tree selected
+- Completed `ISF-ATL-COMPACT-GROUP-ALIAS.1`.
+- Activated a new R14 task tree for the reserved compact
+  `(concurrent NAME ACTOR...)` ATL group alias.
+- The selected implementation will normalize compact concurrent groups to the
+  already shipped verbose `(group NAME (members ACTOR...) (mode concurrent))`
+  report-only metadata surface while preserving reviewable declaration
+  provenance.
+- Runtime group scheduling, group endpoints, group handoff routing, generated
+  HDL behavior, compact movement syntax, and permanent runtime group coupling
+  remain deferred.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL multi-event wait sequencing shipped
 - Completed `ISF-ATL-MULTI-EVENT-WAIT.2` and closed the task tree.
 - Added bounded ATL parent-handoff multi-event waits after one temporary

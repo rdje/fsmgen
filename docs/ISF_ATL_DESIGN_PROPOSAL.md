@@ -962,9 +962,11 @@ Candidate compact aliases:
 | `(inst : actor_type)` | `(instance inst of actor_type)` |
 | `(concurrent name actor...)` | `(group name (members actor...) (mode concurrent))` |
 
-The verbose form should be accepted first if implementation risk requires
-phasing. The compact form should only ship once it is proven to lower to the
-same internal ATL IR and diagnostics.
+The verbose form was accepted first. The first compact form now selected for
+implementation is `(concurrent name actor...)`, and it must lower to the same
+report-only static group semantics as the verbose group declaration while
+preserving transparent declaration provenance. Compact instance declarations
+remain future work.
 
 No new compact movement spelling is planned for ATL v0. The movement surface
 is the existing drive definition and drive-call surface with endpoint-aware
