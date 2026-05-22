@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 composition C1 port-exposure corpus widening completed
+- Completed `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2` and closed
+  the task tree.
+- Added maintained expected-failure corpus coverage for missing child
+  exposure, unknown explicit top port, width mismatch, and direction mismatch
+  failures in the C1 passthrough lane.
+- Added stable diagnostic-code metadata for each C1 exposure failure kind and
+  synchronized regression-corpus docs plus mdBook composition/error coverage.
+- No parser acceptance or HDL-generation behavior changed.
+
 ## 2026-05-22: R12 composition C1 port-exposure corpus widening selected
 - Completed `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting already-focused C1 passthrough

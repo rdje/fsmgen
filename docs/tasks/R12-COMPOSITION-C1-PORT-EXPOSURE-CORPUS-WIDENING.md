@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -37,7 +37,7 @@ public support-accounting visibility.
 ## Task Tree
 
 - ID: `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained expected-failure corpus coverage for C1 passthrough exposure diagnostics`
   Children: `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.1`, `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2`
 
@@ -49,17 +49,17 @@ public support-accounting visibility.
   Commit: `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.1: select C1 port exposure widening`
 
 - ID: `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add maintained expected-failure entries for C1 passthrough exposure mismatches`
   Acceptance: `named fixtures/catalog entries cover missing exposure, unknown top-port, width mismatch, and direction mismatch with stable diagnostics and corpus behavior checks`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c perl/FSM/Support/DiagnosticCodes.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `prove -Iperl t/111-composition-c1-port-exposure-diagnostics.t`; `prove -Iperl t/248-regression-corpus-accounting.t`; `prove -Iperl t/249-regression-corpus-classified-behavior.t`; `prove -Iperl t/300-check-json-regression-corpus.t`; `prove -Iperl t/304-normalized-semantic-json-regression-corpus.t`; `prove -Iperl t/297-capability-manifest.t`; `prove -Iperl t/298-diagnostic-code-registry.t`; `prove -Iperl t/320-diagnostics-contract.t t/490-diagnostic-codes-runtime-defensive-copy-boundary-audit.t`; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2: widen C1 port exposure corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2` | `pending` | Promote focused C1 passthrough exposure diagnostics into maintained corpus coverage after ownership is committed. |
+| 1 | `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2` | `done` | Promoted focused C1 passthrough exposure diagnostics into maintained corpus coverage. |
 
 ## Decisions
 
@@ -71,6 +71,10 @@ public support-accounting visibility.
   shape/mapping, duplicate declaration, explicit-link topology, child-source,
   generated-child source-shape, external RTL source-shape, `.rtlif` metadata,
   and target-support boundaries.
+- `2026-05-22`: Kept C1 passthrough exposure fail-closed. Explicit `?ports`
+  must accurately expose the realized child interface; FSMGen rejects missing
+  child exposure, unknown top ports, and direction/width mismatches before HDL
+  emission.
 
 ## Open Questions
 
@@ -85,15 +89,19 @@ public support-accounting visibility.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-22` | `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2` | `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c perl/FSM/Support/DiagnosticCodes.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `prove -Iperl t/111-composition-c1-port-exposure-diagnostics.t`; `prove -Iperl t/248-regression-corpus-accounting.t`; `prove -Iperl t/249-regression-corpus-classified-behavior.t`; `prove -Iperl t/300-check-json-regression-corpus.t`; `prove -Iperl t/304-normalized-semantic-json-regression-corpus.t`; `prove -Iperl t/297-capability-manifest.t`; `prove -Iperl t/298-diagnostic-code-registry.t`; `prove -Iperl t/320-diagnostics-contract.t t/490-diagnostic-codes-runtime-defensive-copy-boundary-audit.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.1` | `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.1: select C1 port exposure widening` | `selection leaf; no compiler behavior changed` |
-| `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2` | `pending` | `pending` |
+| `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2` | `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2: widen C1 port exposure corpus` | `added four C1 passthrough exposure failures to maintained expected-failure corpus coverage` |
 
 ## Changelog
 
 - `2026-05-22`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-22`: Added C1 passthrough exposure fixture/catalog entries, stable
+  diagnostic-code metadata, regression-corpus docs, and mdBook
+  composition/error coverage; closed the task tree.

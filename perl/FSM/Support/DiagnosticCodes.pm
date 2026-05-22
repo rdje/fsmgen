@@ -643,6 +643,30 @@ my %DIAGNOSTIC_CODES = (
         family => 'composition_contract',
         summary => 'A composition topology required explicit wiring that was not declared.',
     },
+    FSMGEN_COMPOSITION_C1_MISSING_CHILD_EXPOSURE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A C1 passthrough top omitted an exposed child port.',
+    },
+    FSMGEN_COMPOSITION_C1_UNKNOWN_TOP_PORT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A C1 passthrough top declared a port that no child exposes.',
+    },
+    FSMGEN_COMPOSITION_C1_PORT_WIDTH_MISMATCH => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A C1 passthrough top port width did not match the child port width.',
+    },
+    FSMGEN_COMPOSITION_C1_PORT_DIRECTION_MISMATCH => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A C1 passthrough top port direction did not match the child port direction.',
+    },
     FSMGEN_COMPOSITION_MISSING_RTLIF => {
         severity => 'error',
         stability => 'stable',

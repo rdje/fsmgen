@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — C1 port-exposure coverage widened
+- Completed `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2`.
+- The task tree is closed.
+- FSMGen now support-accounts missing child exposure, unknown explicit top
+  ports, width mismatch, and direction mismatch in the C1 passthrough lane.
+- Stable diagnostic-code metadata, check JSON, normalized semantic JSON,
+  manifest, regression-corpus docs, and mdBook coverage are synchronized.
+- No parser or HDL-generation behavior changed.
+
 ## 2026-05-22: R12 regression corpus — C1 port-exposure widening selected
 - Completed `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

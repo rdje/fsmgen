@@ -1,0 +1,22 @@
+(?top:composition_c1_unknown_top_port_top
+  (?ports:public_io
+    clk
+    rst_n
+    output_data>8
+    extra_probe>8
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+  (+size
+    (output_data 8)
+  )
+  (idle
+    (output_data> <= 8'1)
+  )
+)

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition C1 port-exposure failures are support-accounting failures
+- `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2` preserves the existing
+  C1 passthrough exposure diagnostics and promotes four explicit `?ports`
+  mismatch families into maintained corpus truth.
+- The stable codes distinguish missing child exposure, unknown top-port,
+  top/child width mismatch, and top/child direction mismatch so downstream
+  diagnostics can report the specific failed C1 contract.
+- This does not change C1 inference or HDL generation; explicit top ports
+  still have to match the realized child interface before emission.
+
 ## 2026-05-22: Composition C1 port-exposure coverage stays diagnostic-only
 - `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.1` selects
   support-accounting promotion for C1 passthrough exposure diagnostics whose

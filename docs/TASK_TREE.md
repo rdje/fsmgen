@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING` | `active` | `R12` | `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2` | [docs/tasks/R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.md](docs/tasks/R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.md](docs/tasks/R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.md) |
 | `R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING.md](docs/tasks/R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING.md) |
 | `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.md](docs/tasks/R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.md) |
 | `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.md](docs/tasks/R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.md) |

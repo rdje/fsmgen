@@ -222,6 +222,12 @@ Generated-child example:
 
 This works because the top can honestly expose the realized child interface.
 
+When a C1 source authors an explicit `?ports` block, that block must expose
+the realized child interface accurately. FSMGen rejects the top before HDL
+emission if a child data port is missing from `?ports`, if `?ports` declares a
+data port the child does not have, or if an explicitly exposed port disagrees
+with the child port's direction or width.
+
 Generated child source roots can be embedded in the same file or resolved from
 external `.fsm` sources. Resolution searches repeated `--path DIR` roots, then
 `FSMLIB`, then the local directory context. Strict mode requires canonical

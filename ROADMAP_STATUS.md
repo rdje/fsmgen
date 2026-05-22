@@ -2,9 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-- Active `R12` task tree:
-  `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING`. Current frontier:
-  `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2`.
+- Active `R12` task tree just closed. The next PNT step should select the next
+  roadmap-aligned maintained regression-corpus widening slice before any new
+  source/test/config changes.
+- Recent R12 composition C1 port-exposure corpus-widening completion:
+  `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2` added named
+  expected-failure corpus entries for missing child exposure, unknown explicit
+  top ports, top/child width mismatch, and top/child direction mismatch in C1
+  passthrough composition, with stable diagnostic-code metadata and coverage
+  through pipeline/CLI behavior, check JSON, normalized semantic JSON,
+  manifest, corpus accounting, regression-corpus docs, and the mdBook. No
+  parser or HDL-generation behavior changed.
 - Recent R12 composition C1 port-exposure corpus-widening selection:
   `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.1` activated a task tree
   to promote the already-focused C1 passthrough exposure diagnostics into
