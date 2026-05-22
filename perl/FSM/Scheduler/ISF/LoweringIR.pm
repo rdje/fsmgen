@@ -3591,7 +3591,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
             push @st, @$ss;
         }
         elsif ($k eq 'repeat')   { my ($rs,$rc,$rw,$rdw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths,$actor,\@bank_accesses,\@spc,$constant_values,$generated_children,\$repeat_do_ordinal); push @st,@$rs; _register_repeat_counters(\%ct,\%storage_roles,$rc,$rw,$rdw); }
-        elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn); }
+        elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn, $actor); }
         elsif ($k eq 'params')   { next; }
         elsif ($k eq 'do')       {
             my $do_ref = _do_ref_from_clause($cl, $tn, $do_ordinal++, $generated_children, $constant_values, $actor);
@@ -5484,6 +5484,20 @@ sub _actor_param_by_name {
     for my $param (@{$actor->{params} || []}) {
         next unless ref($param) eq 'HASH';
         return $param if ($param->{name} // '') eq $name;
+    }
+
+    return undef;
+}
+
+sub _actor_interface_signal_by_name {
+    my ($actor, $name) = @_;
+    return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
+
+    for my $direction (qw(inputs outputs)) {
+        for my $port (@{($actor->{interface} || {})->{$direction} || []}) {
+            next unless ref($port) eq 'HASH';
+            return $port if ($port->{name} // '') eq $name;
+        }
     }
 
     return undef;
@@ -8989,7 +9003,7 @@ sub _build_drive_dts {
 }
 
 sub _parse_latency {
-    my ($cl, $tn) = @_;
+    my ($cl, $tn, $actor) = @_;
     my %result;
 
     my @options = grep { defined } @{$cl}[1 .. $#$cl];
@@ -9005,19 +9019,48 @@ sub _parse_latency {
                 && !ref($option->[0])
                 && ($option->[0] eq 'min' || $option->[0] eq 'max')
                 && defined($option->[1])
-                && !ref($option->[1])
-                && $option->[1] =~ /\A[1-9][0-9]*\z/;
+                && !ref($option->[1]);
 
         my $key = $option->[0];
         confess "Transaction '$tn': duplicate latency '$key' option\n"
             if exists $result{$key};
-        $result{$key} = $option->[1];
+        $result{$key} = _latency_bound_cycles($option->[1], $key, $tn, $actor);
     }
 
     confess "Transaction '$tn': latency min must be less than or equal to max\n"
         if exists($result{min}) && exists($result{max}) && $result{min} > $result{max};
 
     return \%result;
+}
+
+sub _latency_bound_cycles {
+    my ($token, $key, $tn, $actor) = @_;
+
+    return 0 + $token
+        if defined($token) && !ref($token) && $token =~ /\A[1-9][0-9]*\z/;
+
+    confess "Transaction '$tn': latency $key cycles must be positive in transaction body\n"
+        if defined($token) && !ref($token) && $token =~ /\A0+\z/;
+
+    if (defined($token) && !ref($token) && _is_hdl_identifier($token)) {
+        my $constant = _actor_constant_by_name($actor, $token);
+        if ($constant) {
+            my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
+            confess "Transaction '$tn': latency $key constant '$token' must resolve to a positive cycle count in transaction body\n"
+                unless defined($constant_value) && $constant_value > 0;
+            return $constant_value;
+        }
+
+        confess "Transaction '$tn': latency $key token '$token' is an actor parameter; latency bounds accept positive integer literals or actor constants only in transaction body\n"
+            if _actor_param_by_name($actor, $token);
+
+        confess "Transaction '$tn': latency $key token '$token' is a runtime interface signal; latency bounds accept positive integer literals or actor constants only in transaction body\n"
+            if _actor_interface_signal_by_name($actor, $token);
+
+        confess "Transaction '$tn': latency $key token '$token' is not a declared actor constant in transaction body\n";
+    }
+
+    confess "Transaction '$tn': latency options must be '(min N)' or '(max N)'\n";
 }
 sub _parse_await_wd { my($cl)=@_; for my $i(2..$#$cl){my$x=$cl->[$i];return$x->[1]if ref($x)eq'ARRAY'&&$x->[0]eq'watchdog'} undef }
 

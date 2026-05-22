@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Latency constant bounds preserve the literal path
+- `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` resolves actor constants inside the
+  latency parser before the existing counter injection step. After resolution,
+  the lowerer sees the same positive integer values that literal `(min ...)`
+  and `(max ...)` bounds already provided.
+- The public schedule-report shape remains stable. There is no new
+  latency-bound source-token field; downstream consumers see the usual
+  `actor_constants[]` declaration evidence plus the resolved latency counter
+  storage and DT roles.
+- Actor and transaction parameters stay out of scope because they can be
+  overrideable specialization values. Supporting them would need a separate
+  policy for when generated tops specialize counter widths and timeout checks.
+
 ## 2026-05-22: Latency bounds can reuse static constants
 - `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1` selects a narrow transaction latency
   widening: actor constants are compile-time evidence and can naturally serve

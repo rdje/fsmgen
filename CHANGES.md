@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Latency actor-constant bounds shipped
+- Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` and closed the task tree.
+- Added support for declared positive actor constants as transaction latency
+  `(min ...)` and `(max ...)` bounds.
+- Actor constants resolve to the same integer path as literal bounds before
+  latency counter lowering, preserving generated guard/timeout behavior and
+  report-visible storage shapes.
+- Actor parameters, transaction parameters, runtime interface signals, unknown
+  symbols, arbitrary expressions, zero-valued constants, stage-local latency,
+  and parameterized counter specialization remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused latency/schedule/contract tests;
+  public/doc audits; broad `./bin/ci-regression isf --no-book` with
+  `Files=238, Tests=1585`; `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — Latency actor-constant bounds tree selected
 - Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1`.
 - Activated a new R14 task tree for accepting positive actor constants as

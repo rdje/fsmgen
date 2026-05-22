@@ -279,12 +279,13 @@ package-qualified `shared.mode.BUSY` after `(imports (package shared))`.
 The referenced member must resolve before lowering to a non-negative integer
 literal. Constants are emitted into scheduled `.fsm` as `+constants`, appear
 in schedule reports as `actor_constants[]` with the authored value token, and
-are legal symbolic sources for static `(wait NAME)` counts and the existing
-static activation-parameter override path. Actor-local scalar parameter
-defaults that resolve to non-negative integer literals are also legal static
-wait sources in the actor's own schedule. Transaction parameters and use-site
-activation overrides are not wait-count constants; they do not respecialize an
-already-emitted fixed wait-state chain.
+are legal symbolic sources for static `(wait NAME)` counts, positive
+transaction latency min/max bounds, and the existing static
+activation-parameter override path. Actor-local scalar parameter defaults that
+resolve to non-negative integer literals are also legal static wait sources in
+the actor's own schedule. Actor parameters, transaction parameters, and
+use-site activation overrides are not latency-bound constants and do not
+respecialize already-emitted fixed latency counter logic.
 
 ISF scalar type-alias references are shipped for width-bearing declarations.
 Actor bodies may declare local `(types ...)` clauses whose payloads map
@@ -1883,7 +1884,8 @@ Current transaction clauses:
 - `(await_all done_port)`
 - `(await_any done_port)`
 - `(complete port)`
-- `(latency (min N) (max M))`
+- `(latency (min N) (max M))`, where each bound is a positive decimal literal
+  or actor constant
 
 Unsupported transaction clause heads now fail closed during lowering instead
 of being silently ignored. The same applies inside currently lowered body
@@ -2136,8 +2138,17 @@ Current lowering:
 
 Current lowering:
 - Latency metadata accepts one or both `(min N)` and `(max N)` options.
-- `N` must be a positive integer, each option may appear at most once, and
-  `min` must be less than or equal to `max` when both are present.
+- `N` must be a positive decimal integer literal or a declared actor constant
+  whose resolved value is a positive integer. Each option may appear at most
+  once, and `min` must be less than or equal to `max` when both are present.
+- Actor constants are resolved before the existing counter lowering path. The
+  emitted `.fsm` guard and timeout checks contain the resolved integer, not a
+  symbolic runtime reference.
+- Actor parameters, transaction parameters, runtime interface signals, unknown
+  symbolic names, arbitrary expressions, and zero-valued constants fail
+  closed. Parameters are excluded because they are overrideable specialization
+  values; accepting them would require a separate policy for latency counter
+  specialization.
 - The scheduler creates a transaction cycle counter, an increment source, and
   latency error wiring without adding an authored transaction state.
 - A valid explicit `max` bound drives the generated counter width and max
@@ -4045,6 +4056,12 @@ matching `schedule_report_temporal_contract_*` metadata fields.
 When a contract window is authored with a positive actor constant,
 `within_cycles` reports the resolved positive integer and no separate
 source-token field is public.
+Latency bounds do not have a dedicated public schedule-report entry. When a
+positive actor constant names `(latency (min ...))` or `(latency (max ...))`,
+the report-visible effect is the same as the equivalent literal bound: the
+latency counter storage appears in `inferred_storage[]`/`dt_blocks[]` with its
+resolved width and storage role, and `actor_constants[]` still reports the
+actor-local constant declaration.
 The reset summary's `kind` value is currently `async` or `sync`, and its
 `polarity` value is currently `active_high` or `active_low`. The
 capability-manifest ISF public contract advertises those value families through
@@ -4923,6 +4940,11 @@ Focused tests:
   expression `(wait N)` shapes: unknown-width expressions and any remaining
   predecessor-edge or sample-incompatible successor splits remain deferred
   until their timing and diagnostics are implemented.
+- Transaction latency bounds beyond the shipped positive decimal literal and
+  positive actor-constant `(min ...)`/`(max ...)` shapes: actor parameters,
+  transaction parameters, runtime signals, arbitrary expressions, stage-local
+  latency, and parameter-specialized counter sizing remain deferred until a
+  separate specialization/scheduling policy is selected.
 - Runtime division/modulo safety beyond literal-zero and actor-constant-zero
   divisor rejection: proving arbitrary dynamic scalar divisor expressions
   nonzero remains deferred until range/dataflow evidence is specified.

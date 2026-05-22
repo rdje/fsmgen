@@ -49,6 +49,27 @@ ISF
     like($fsm, qr/<main_cc<1/, 'minimum latency guard is emitted');
 };
 
+subtest 'actor constants can name latency bounds' => sub {
+    my $result = lower_source(<<'ISF');
+(actor latency_constant_boundary
+  (clock clk)
+  (constants
+    (MIN_LAT 2)
+    (MAX_LAT 8))
+  (interface
+    (input start)
+    (output done))
+  (transaction main
+    (on start)
+    (complete done)
+    (latency (min MIN_LAT) (max MAX_LAT))))
+ISF
+
+    my $fsm = $result->{files}{'latency_constant_boundary.fsm'};
+    like($fsm, qr/<main_cc<2/, 'constant minimum latency resolves before guard emission');
+    like($fsm, qr/\(=8 \(-> main_timeout\)\)/, 'constant maximum latency resolves before timeout emission');
+};
+
 subtest 'malformed latency metadata fails before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'empty latency clause', qr/\ATransaction 'main': latency requires '\(latency \(min N\) \(max M\)\)'/);
 (actor empty_latency
@@ -70,7 +91,7 @@ ISF
     (latency (avg 4))))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'noninteger latency value', qr/\ATransaction 'main': latency options must be '\(min N\)' or '\(max N\)'/);
+    assert_lower_rejected(<<'ISF', 'unknown symbolic latency value', qr/\ATransaction 'main': latency min token 'fast' is not a declared actor constant in transaction body/);
 (actor noninteger_latency
   (clock clk)
   (interface (input start) (output done))
@@ -78,6 +99,40 @@ ISF
     (on start)
     (complete done)
     (latency (min fast) (max 8))))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'zero-valued latency constant', qr/\ATransaction 'main': latency min constant 'MIN_LAT' must resolve to a positive cycle count in transaction body/);
+(actor zero_latency_constant
+  (clock clk)
+  (constants
+    (MIN_LAT 0))
+  (interface (input start) (output done))
+  (transaction main
+    (on start)
+    (complete done)
+    (latency (min MIN_LAT) (max 8))))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'actor parameter latency bound', qr/\ATransaction 'main': latency min token 'MIN_LAT' is an actor parameter; latency bounds accept positive integer literals or actor constants only in transaction body/);
+(actor parameter_latency_bound
+  (clock clk)
+  (params
+    (MIN_LAT 2))
+  (interface (input start) (output done))
+  (transaction main
+    (on start)
+    (complete done)
+    (latency (min MIN_LAT) (max 8))))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'runtime interface latency bound', qr/\ATransaction 'main': latency min token 'delay' is a runtime interface signal; latency bounds accept positive integer literals or actor constants only in transaction body/);
+(actor runtime_latency_bound
+  (clock clk)
+  (interface (input start) (input delay) (output done))
+  (transaction main
+    (on start)
+    (complete done)
+    (latency (min delay) (max 8))))
 ISF
 
     assert_lower_rejected(<<'ISF', 'duplicate latency min', qr/\ATransaction 'main': duplicate latency 'min' option/);

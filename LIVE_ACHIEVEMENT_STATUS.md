@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Latency actor-constant bounds shipped
+- Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` and closed the task tree.
+- FSMGen now accepts declared positive actor constants as transaction latency
+  `(min ...)` and `(max ...)` bounds.
+- Constants resolve before existing latency counter lowering, so generated
+  guards, timeout checks, inferred counter widths, and report-visible storage
+  roles match the equivalent literal bounds without adding a source-token
+  report field.
+- Actor/transaction parameters, runtime interface signals, unknown symbols,
+  arbitrary expressions, zero-valued constants, stage-local latency, and
+  parameterized latency counter specialization remain fail-closed or deferred.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Validation passed: focused latency/schedule/contract tests, public/doc
+  audits, broad `./bin/ci-regression isf --no-book` with `Files=238,
+  Tests=1585`, `mdbook build docs/book`, and `git diff --check`.
+
 ## 2026-05-22: R14 — Latency actor-constant bounds tree selected
 - Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1`.
 - Activated the active R14 task tree for positive actor constants in

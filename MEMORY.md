@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Latency actor-constant bounds shipped
+- Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` and closed the task tree.
+- FSMGen now accepts declared actor constants as transaction latency
+  `(min ...)` and `(max ...)` bounds when each constant resolves to a positive
+  integer.
+- Actor constants resolve before the existing latency counter lowering path,
+  so generated `.fsm` minimum guards, maximum timeout checks, inferred counter
+  widths, and report-visible storage roles match the equivalent literal
+  bounds. There is no separate latency-bound source-token report field.
+- Actor parameters, transaction parameters, runtime interface signals, unknown
+  symbolic names, arbitrary expressions, zero-valued constants, stage-local
+  latency, and parameterized latency counter specialization remain fail-closed
+  or deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook intent scheduling/support matrix chapters, roadmap status, task-tree
+  docs, and live docs.
+- Validation passed: LoweringIR/test syntax; focused latency/schedule/contract
+  tests; public/doc audits; broad `./bin/ci-regression isf --no-book` with
+  `Files=238, Tests=1585`; `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Latency actor-constant bounds tree selected
 - Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1`.
 - Activated the next R14 feature tree for positive actor constants in

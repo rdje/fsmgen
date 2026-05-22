@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS`
-- Status: `active`
+- Status: `completed`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -37,7 +37,7 @@ actor constants anywhere the shipped positive literal bound is accepted.
 ## Task Tree
 
 - ID: `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS`
-  Status: `active`
+  Status: `completed`
   Goal: `ship positive actor constants as transaction latency bounds`
   Children: `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1`,
   `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2`
@@ -47,20 +47,20 @@ actor constants anywhere the shipped positive literal bound is accepted.
   Goal: `select the latency actor-constant bounds task tree`
   Acceptance: `task-tree owner, source boundary, non-goals, and implementation leaf are recorded before code`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `4cfcce88 ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1: select latency actor-constant bounds`
 
 - ID: `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `implement and document actor-constant transaction latency bounds`
   Acceptance: `positive actor constants lower as literal latency bounds; unsupported bound tokens fail closed; docs and focused tests are synchronized`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1197-isf-latency-clause-boundary.t`; focused latency/schedule/contract tests; public/doc audits; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` | `pending` | The tree is selected; the implementation leaf owns the lowerer, tests, and user-facing docs. |
+| 1 | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` | `done` | Completed; no remaining frontier in this tree. |
 
 ## Decisions
 
@@ -82,14 +82,18 @@ actor constants anywhere the shipped positive literal bound is accepted.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | 2026-05-22 | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1` | `mdbook build docs/book`; `git diff --check` | Pass |
+| 2026-05-22 | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1197-isf-latency-clause-boundary.t`; `prove -Iperl t/1197-isf-latency-clause-boundary.t t/1096-isf-schedule-json-report.t t/1106-isf-schedule-json-counter-storage.t t/1224-isf-contract-lowering.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | Pass; broad ISF gate `Files=238, Tests=1585` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1` | `pending this commit: ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1: select latency actor-constant bounds` | Selection commit. |
+| `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1` | `4cfcce88 ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1: select latency actor-constant bounds` | Selection commit. |
+| `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` | `pending this commit: ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2: ship latency actor-constant bounds` | Implementation and documentation commit. |
 
 ## Changelog
 
 - `2026-05-22`: Created active R14 task tree for positive actor constants in
   transaction latency min/max bounds.
+- `2026-05-22`: Shipped positive actor constants for transaction latency
+  min/max bounds, with parameters and dynamic bounds still fail-closed.

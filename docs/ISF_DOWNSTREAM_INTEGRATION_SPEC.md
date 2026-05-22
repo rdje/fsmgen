@@ -687,7 +687,7 @@ Transaction clauses currently supported:
 (await_all done_port)
 (await_any done_port)
 (complete port)
-(latency (min N) (max M))
+(latency (min N) (max M))       ;; N/M: positive literal or actor constant
 (stage ...)
 (contract ...)
 ```
@@ -1591,10 +1591,17 @@ Latency:
 
 Rules:
 
-- `min` and `max` are positive integers.
+- `min` and `max` are positive integer literals or declared actor constants
+  that resolve to positive integers.
 - Duplicate options and `min > max` fail closed.
+- Actor constants resolve before the existing counter/error lowering path, so
+  generated `.fsm` guard and timeout checks contain the resolved integer.
+- Actor parameters, transaction parameters, runtime interface signals,
+  unknown symbolic names, arbitrary expressions, and zero-valued constants
+  remain invalid latency bounds.
 - Latency metadata lowers to counters/error checks where supported and reports
-  through `dt_blocks[]`.
+  through `dt_blocks[]`/`inferred_storage[]`; there is no separate
+  latency-bound source-token report field.
 
 ## 12. Rules, Priorities, Resources
 
@@ -2714,6 +2721,9 @@ Required fail-closed examples:
 - Rule-trigger output bindings.
 - Literal-zero and actor-constant-zero divisor operands in shipped runtime
   division/modulo expression contexts.
+- Latency min/max bounds that name actor parameters, transaction parameters,
+  runtime interface signals, unknown symbolic names, arbitrary expressions, or
+  constants that resolve to zero.
 - Direct cross-domain access without a shipped crossing primitive.
 - Width mismatch where width evidence is known.
 - Parameter override unknown names, duplicate names, symbolic values, and
@@ -3353,6 +3363,7 @@ For a SPECFORGE-style producer:
 - Use transaction ports and `(bind ...)` for runtime-varying data.
 - Use `(params ...)` only for static specialization on generated activation
   forms that explicitly support it.
+- Use actor constants for static latency bound symbols.
 - Use actor constants or actor-local scalar parameter defaults for static
   wait-count symbols.
 - Treat every fail-closed diagnostic as a source-generation bug.

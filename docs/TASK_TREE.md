@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` | `active` | `R14` | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` | [docs/tasks/ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.md](docs/tasks/ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.md](docs/tasks/ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.md) |
 | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.md) |
 | `ISF-ATL-COMPACT-INSTANCE-ALIAS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-COMPACT-INSTANCE-ALIAS.md](docs/tasks/ISF-ATL-COMPACT-INSTANCE-ALIAS.md) |
 | `ISF-ATL-COMPACT-GROUP-ALIAS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-COMPACT-GROUP-ALIAS.md](docs/tasks/ISF-ATL-COMPACT-GROUP-ALIAS.md) |
