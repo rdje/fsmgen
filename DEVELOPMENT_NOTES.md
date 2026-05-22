@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL pin-egress vector routes require resolved endpoint proof
+- `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` implements only the generated-child
+  pin-egress vector route where both endpoints are known: a resolved child
+  output endpoint and a top-level output pin with the same positive width.
+- Unqualified external vector actor-to-pin routes remain fail-closed because
+  there is no child interface metadata to prove the source width. This mirrors
+  the pin-ingress policy and keeps the direct-static parent-handoff surface
+  scalar until a future route contract selects external vector endpoint
+  evidence.
+- The lowerer keeps generated-top data links private. Public consumers keep
+  reading `actor_network.data_movements[]` and
+  `actor_network.generated_tops[]`; no public `data_links` key, width
+  conversion, mux, storage, or payload protocol was introduced.
+
 ## 2026-05-22: ATL pin-ingress vector routes require resolved endpoint proof
 - `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2` implements only the generated-child
   pin-ingress vector route where both endpoints are known: a top-level input

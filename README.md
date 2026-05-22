@@ -132,7 +132,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md` — completed `R14` task tree for repeat-body spawn parameter overrides.
 - `docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md` — completed `R14` task tree for repeat-body child activation widening.
 - `docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md` — completed `R14` task tree for static ISF Actor Transfer Level actor-network orchestration.
-- `docs/tasks/ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.md` — active `R14` task tree for bounded generated-child ATL top-level pin exact-width vector routes.
+- `docs/tasks/ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.md` — completed `R14` task tree for bounded generated-child ATL top-level pin exact-width vector routes.
 - `docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md` — completed `R14` task tree for bounded generated-child ATL actor-to-actor exact-width vector routes.
 - `docs/tasks/ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.md` — completed `R14` task tree for shared ATL route-drive formal/actual-argument boundary hardening.
 - `docs/tasks/ISF-ATL-PIN-EGRESS-MULTI-ROUTE.md` — completed `R14` task tree for bounded generated-child ATL resolved-child pin-egress multi-route scalar movement.

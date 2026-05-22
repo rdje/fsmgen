@@ -864,11 +864,12 @@ The selected pin-route widening is exact-width vector movement for the
 generated-child top-level pin routes. It is tracked by
 `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH`. The first implementation leaf is shipped for
 one top-level input pin to one resolved child input when both endpoints have
-the same positive width; the inverse resolved-child output to top-level output
-pin route remains the next unshipped leaf. The selected boundary is same-width
-only, with no packing, truncation, storage, muxing, fan-in/fan-out,
-ready/backpressure, CDC/reset remapping, mixed route sets, vector pin-ingress
-multi-route scheduling, or payload protocol inference.
+the same positive width, and the inverse resolved-child output to top-level
+output pin route is now shipped under the same exact-width policy. The selected
+boundary is same-width only, with no packing, truncation, storage, muxing,
+fan-in/fan-out, ready/backpressure, CDC/reset remapping, mixed route sets,
+vector pin-ingress or pin-egress multi-route scheduling, or payload protocol
+inference.
 
 The selected orchestration vocabulary reuses existing ISF activation forms:
 `(do actor.transaction)` for blocking actor transaction activation, `(spawn
@@ -1004,11 +1005,12 @@ qualified entries add `type_resolution`, `library`, `alias`, `export`,
 and now emit their child `.fsm` files. The first generated ATL top is shipped
 for one resolved child plus one trigger/event handoff pair, and the scalar
 pin-ingress route, exact-width vector pin-ingress route, same-child scalar
-pin-ingress multi-route extension, and pin-egress route below are shipped for
-that same one-child top. Broader generated ATL tops, HDL child wiring outside
-that selected pair plus shipped scalar/vector pin routes, interface binding
-inference, event fan-in, route mux/storage, CDC, recursive actor networks, and
-ready/backpressure remain later leaves.
+pin-ingress multi-route extension, scalar pin-egress route, exact-width vector
+pin-egress route, and scalar same-child pin-egress multi-route extension below
+are shipped for that same one-child top. Broader generated ATL tops, HDL child
+wiring outside that selected pair plus shipped scalar/vector pin routes,
+interface binding inference, event fan-in, route mux/storage, CDC, recursive
+actor networks, and ready/backpressure remain later leaves.
 
 The resolved-child fixture is now shipped as
 `isf/atl_resolved_child_pipeline.isf`. It proves the generated-top boundary
@@ -1058,6 +1060,15 @@ preservation, plain plus strict HDL generation, missing child output failure,
 and pre-event drive-order failure. That one-child pin route does not include
 actor-to-actor generated-child routing, multi-child data wiring, route
 mux/storage, CDC/reset remapping, ready/backpressure, or payload protocols.
+
+The exact-width vector version of that pin-egress slice is shipped as
+`isf/atl_resolved_child_pin_egress_vector_pipeline.isf`. It uses the same
+drive-body spelling and routes one resolved child output into one top-level
+output pin when both endpoints have the same width. The fixture proves
+parent/child/top artifacts, exact-width handoff ports, generated-top wiring,
+route metadata with `vector_actor_to_pin_handoff`, child output port
+preservation, strict outdir materialization, plain plus strict HDL generation,
+and a fail-closed child-output/top-output width mismatch diagnostic.
 
 The bounded multi-route extension of that one-child pin-egress shape is now
 shipped as `isf/atl_resolved_child_pin_egress_multi_pipeline.isf`. It routes
@@ -2445,10 +2456,14 @@ for the bounded same-child two-route pin-ingress case from top `payload` to
 `isf/atl_resolved_child_pin_egress_pipeline.isf` fixture is now promoted for
 one generated-top scalar pin-egress route from that resolved child to a
 top-level output, using `(pins.result worker.payload)` after the child event
-wait. The follow-on `isf/atl_two_child_data_pipeline.isf` fixture is now
-promoted for one generated-top scalar generated-child actor-to-actor route
-from `reader.payload` to `writer.payload` after the reader event wait and
-before the writer trigger. The follow-on
+wait. The follow-on
+`isf/atl_resolved_child_pin_egress_vector_pipeline.isf` fixture is now
+promoted for one generated-top exact-width vector pin-egress route from
+`worker.payload` to top `result` at width 8. The follow-on
+`isf/atl_two_child_data_pipeline.isf` fixture is now promoted for one
+generated-top scalar generated-child actor-to-actor route from `reader.payload`
+to `writer.payload` after the reader event wait and before the writer trigger.
+The follow-on
 `isf/atl_two_child_vector_data_pipeline.isf` fixture is now promoted for the
 same generated-top route at exact 8-bit source/sink endpoint width. The
 follow-on

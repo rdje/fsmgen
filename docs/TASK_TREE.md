@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH` | `active` | `R14` | `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` | [docs/tasks/ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.md](docs/tasks/ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.md](docs/tasks/ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.md) |
 | `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md](docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md) |
 | `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.md](docs/tasks/ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.md) |
 | `ISF-ATL-PIN-EGRESS-MULTI-ROUTE` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-PIN-EGRESS-MULTI-ROUTE.md](docs/tasks/ISF-ATL-PIN-EGRESS-MULTI-ROUTE.md) |

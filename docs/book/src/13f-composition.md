@@ -840,6 +840,32 @@ This one-child pin-egress route does not include actor-to-actor
 generated-child routing, multi-child data wiring, route mux/storage,
 CDC/reset remapping, ready/backpressure, or payload protocols.
 
+The exact-width vector form of that one-child pin-egress route is shipped as
+`isf/atl_resolved_child_pin_egress_vector_pipeline.isf`.
+
+It uses the same `(sink source)` movement surface:
+
+```lisp
+(drive publish_result
+  (pins.result worker.payload))
+```
+
+The top-level actor declares `result` as an 8-bit output, and the resolved
+child declares its `payload` output at the same width. Lowering emits the
+parent, child, and top `.fsm` artifacts, keeps parent handoff `worker_payload`
+at width 8, preserves the child `payload` output as an 8-bit module port, and
+wires child `payload` through the parent to public top `result`.
+
+Schedule JSON keeps the existing public route entry shape and reports
+`kind: "vector_actor_to_pin_handoff"`, `width: 8`, and
+`width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"`.
+
+This vector pin-egress leaf is intentionally exact-width and one-route only.
+If the child output width and top-level output width differ, lowering fails
+before scheduled `.fsm` emission. FSMGen does not infer width adaptation,
+packing, truncation, extension, slicing, route mux/storage,
+fan-in/fan-out, ready/backpressure, or a payload protocol for the route.
+
 The bounded multi-route extension of that one-child pin-egress path is shipped
 as `isf/atl_resolved_child_pin_egress_multi_pipeline.isf`.
 
@@ -850,9 +876,10 @@ separate parent source handoffs to separate top-level output pins, and the
 public report keeps both routes in `actor_network.data_movements[]` with
 `kind: "scalar_actor_to_pin_handoff"`.
 
-This is still a one-child one-to-one route set. It does not include
-fan-in/fan-out, route mux/storage, CDC/reset remapping, ready/backpressure, or
-payload protocols.
+This is still a one-child one-to-one route set. It does not include vector
+pin-egress multi-route sets, width adaptation, fan-in/fan-out,
+route mux/storage, CDC/reset remapping, ready/backpressure, or payload
+protocols.
 
 The selected generated-child actor-to-actor data-route shape across two
 resolved children reuses the existing `(sink source)` drive-body movement

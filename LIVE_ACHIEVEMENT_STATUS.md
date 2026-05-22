@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL pin-egress vector width shipped
+- Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` and closed the task tree.
+- FSMGen now lowers one exact-width vector resolved-child output route into
+  one top-level output pin through the generated ATL top.
+- Added `isf/atl_resolved_child_pin_egress_vector_pipeline.isf` with focused
+  `.fsm`, schedule JSON, strict outdir, HDL, and width-mismatch coverage.
+- Schedule reports now identify this route as `vector_actor_to_pin_handoff`
+  with
+  `width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook, roadmap, and task-tree docs.
+
 ## 2026-05-22: R14 — ATL pin-ingress vector width shipped
 - Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2`.
 - FSMGen now lowers one exact-width vector top-level input-pin route into one
