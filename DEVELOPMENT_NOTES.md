@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition endpoint-shape coverage stays diagnostic-only
+- `R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.1` selects
+  support-accounting promotion for endpoint-shape diagnostics whose existing
+  focused test already locks pipeline behavior.
+- The implementation should preserve the current declared same-name/system-port
+  split and aggregate-member endpoint fail-closed boundary; this tree only adds
+  maintained expected-failure corpus assets.
+
 ## 2026-05-22: Composition C1 port-exposure failures are support-accounting failures
 - `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2` preserves the existing
   C1 passthrough exposure diagnostics and promotes four explicit `?ports`

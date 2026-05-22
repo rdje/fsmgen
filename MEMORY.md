@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 composition endpoint-shape corpus widening selected
+- Completed `R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused endpoint-shape
+  diagnostics into maintained expected-failure corpus coverage.
+- The next frontier is `R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.2`:
+  add bounded fixtures and catalog entries for shared system-port same-name
+  rejection and aggregate-member child endpoint rejection, with synchronized
+  docs and corpus gates.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 composition C1 port-exposure corpus widening completed
 - Completed `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.2` and closed
   the task tree.
