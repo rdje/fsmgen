@@ -97,7 +97,7 @@ ISF
             qr/\AError: \(reset \.\.\.\) requires a scalar name/,
         ],
         [
-            'non-integer watchdog',
+            'unknown symbolic watchdog',
             <<'ISF',
 (actor bad_watchdog
   (clock clk)
@@ -105,7 +105,7 @@ ISF
   (interface
     (input start)))
 ISF
-            qr/\AError: \(watchdog \.\.\.\) requires a positive integer/,
+            qr/\AError: actor 'bad_watchdog' watchdog token 'slow' is not a declared actor constant/,
         ],
     ) {
         my ($label, $source, $pattern) = @$case;

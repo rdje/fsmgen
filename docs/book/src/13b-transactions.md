@@ -214,9 +214,20 @@ value.
 ```lisp
 (await PREADY)                        ;; default watchdog from actor
 (await PREADY (watchdog 100))         ;; per-await override
+(await PREADY (watchdog WD_LIMIT))    ;; actor constant override
 ```
 
 **Timing**: 1 to watchdog_limit cycles. Self-looping.
+
+The actor-level `(watchdog N)` and await-local `(watchdog N)` limit may use a
+positive decimal literal or a declared actor constant that resolves to a
+positive integer. Actor-level constants resolve in the parser-visible watchdog
+scalar and still appear in `actor_constants[]`; await-local constants resolve
+before watchdog counter injection.
+
+One transaction currently has one watchdog counter. If a transaction contains
+multiple awaits with distinct effective watchdog limits, FSMGen fails closed
+until per-await counter reset semantics are selected.
 
 **Cycle-by-cycle**:
 - Cycle N: check `port` and the current watchdog Q value

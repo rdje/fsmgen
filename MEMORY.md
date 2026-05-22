@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Watchdog actor-constant limits shipped
+- Completed `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` and closed the task tree.
+- FSMGen now accepts declared positive actor constants as actor-level
+  `(watchdog CONST)` and await-local `(await ready (watchdog CONST))` limits.
+- Actor-level watchdog constants resolve in the public parser actor shell and
+  schedule report `watchdog` scalar while the authored declaration remains in
+  `actor_constants[]`. Await-local constants resolve before watchdog counter
+  injection.
+- One transaction still owns one watchdog counter. Distinct per-await watchdog
+  limits in the same transaction now fail closed until per-await counter reset
+  semantics are selected.
+- Actor parameters, transaction parameters, runtime signals, arbitrary
+  expressions, cross-domain watchdog policy, and parameterized generated-top
+  watchdog specialization remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/intent scheduling/support matrix chapters, roadmap
+  status, task-tree docs, and live docs.
+- Validation passed: parser/lowerer/test syntax; focused watchdog/timing/
+  storage tests; public/doc audits; broad `./bin/ci-regression isf --no-book`
+  with `Files=238, Tests=1589`; `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Watchdog actor-constant limits tree selected
 - Completed `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.1`.
 - Activated the next R14 feature tree for positive actor constants in

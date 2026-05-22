@@ -769,7 +769,9 @@ discoverable as bounded current handoff metadata.
 The default timing convention is checked by
 [t/1331-isf-timing-conventions.t](../t/1331-isf-timing-conventions.t)
 to keep omitted legacy single-clock timing normalized to clock `clk`, async
-active-low reset `rst_n`, and watchdog `65535`.
+active-low reset `rst_n`, and watchdog `65535`, and to keep positive
+actor-constant watchdog limits resolved to the same numeric public shape as
+literals.
 The actor-shell rule shape is checked by
 [t/1166-isf-public-actor-shell-rule-shape-audit.t](../t/1166-isf-public-actor-shell-rule-shape-audit.t)
 to keep parser-returned rule entries discoverable as unique non-empty scalar
@@ -2031,8 +2033,14 @@ The current public parser handoff also advertises bounded actor timing fields:
 `clock` is a non-empty scalar, with omitted legacy single-clock actor clocks
 defaulting to `clk`; `reset` is a default-domain hash with scalar `name`,
 `kind`, and `polarity`, with omitted legacy single-clock actor resets
-defaulting to async active-low `rst_n`; and `watchdog` is a positive integer,
-with omitted watchdog clauses defaulting to `65535` exactly `(2^16 - 1)`.
+defaulting to async active-low `rst_n`; and `watchdog` is a positive resolved
+integer, with omitted watchdog clauses defaulting to `65535` exactly
+`(2^16 - 1)`. Actor-level watchdog constants are accepted when they resolve
+to positive integers; the parser returns the resolved integer in `watchdog`
+and keeps the authored declaration visible through `actor_constants[]`.
+Await-local watchdog constants resolve during lowering. One transaction still
+has one watchdog counter, so distinct per-await watchdog limits in the same
+transaction fail closed.
 When `clock_domains` is present, `clock` and `reset` expose the selected
 default-domain timing, and `reset` is null only when that domain omits reset.
 Public multi-domain `lower(...)` emits domain-specific scheduled `.fsm`
@@ -2532,8 +2540,9 @@ The top-level `source` value is an actor-derived `.isf` basename, and
 Multi-domain reports use the generated `<actor>_top.fsm` artifact. `clock` is
 the scalar clock signal name from the actor declaration, `clk` for omitted
 legacy single-clock actor clocks, or the selected default-domain clock when
-`clock_domains` is present. `watchdog` is a scalar limit, with omitted
-watchdog clauses normalized to `65535`. The machine-readable contract
+`clock_domains` is present. `watchdog` is a scalar resolved limit, with omitted
+watchdog clauses normalized to `65535` and actor-constant actor watchdogs
+reported as the resolved integer. The machine-readable contract
 advertises these through
 `schedule_report_source_shape`, `schedule_report_scheduled_fsm_shape`,
 `schedule_report_clock_shape`, and `schedule_report_watchdog_shape`.

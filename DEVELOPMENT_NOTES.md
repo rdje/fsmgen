@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Watchdog constants keep the public scalar numeric
+- `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` resolves actor-level watchdog
+  constants in the parser after actor constants and parameters are finalized.
+  That keeps the public parser shell and schedule report `watchdog` field as
+  the resolved positive integer rather than exposing a second source-token
+  shape.
+- Await-local watchdog constants resolve in the lowerer before watchdog counter
+  injection. The generated counter width and init assignment therefore match
+  the equivalent literal override.
+- FSMGen still has one watchdog counter per transaction. Supporting distinct
+  per-await limits in a single transaction would require explicit per-await
+  counter reset semantics, so that shape now fails closed instead of silently
+  using the wrong limit.
+
 ## 2026-05-22: Watchdog limits can reuse static constants
 - `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.1` selects a narrow timing-surface
   widening: actor constants are compile-time evidence and can naturally serve

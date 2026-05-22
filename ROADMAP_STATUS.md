@@ -2,8 +2,18 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS`. Current frontier:
-  `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2`.
+  Active task tree: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before any code changes.
+- Recent R14 watchdog actor-constant limits completion:
+  `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` shipped positive actor constants as
+  actor-level and await-local watchdog limits and closed the task tree.
+  Actor-level constants resolve into the public numeric `watchdog` scalar
+  while the authored declaration remains visible through `actor_constants[]`.
+  Await-local constants resolve before watchdog counter injection. One
+  transaction still has one watchdog counter, so distinct per-await limits in
+  the same transaction fail closed. Actor parameters, transaction parameters,
+  runtime signals, arbitrary expressions, cross-domain watchdog policy, and
+  parameterized generated-top watchdog specialization remain deferred.
 - Recent R14 watchdog actor-constant limits selection:
   `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.1` activated the watchdog limit tree for
   positive actor constants in actor-level `(watchdog CONST)` and await-local
@@ -8854,8 +8864,8 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Select or create the next roadmap-aligned task tree before any further code
-  changes. `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS` is active with frontier `.2`,
-  targeting positive actor constants as static watchdog limit evidence.
+  changes. `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS` is closed after shipping
+  positive actor constants as static watchdog limit evidence.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

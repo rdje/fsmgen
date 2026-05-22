@@ -181,6 +181,10 @@ clk`, `reset = { name: rst_n, kind: async, polarity: active_low }`, and
 `watchdog = 65535` exactly `(2^16 - 1)`. With `(clock-domains ...)`,
 `clock` and `reset` expose the selected default-domain timing, and `reset`
 is null only when that default domain omits reset ownership.
+Explicit actor-level watchdogs may use a positive decimal literal or a
+declared actor constant that resolves to a positive integer. The parser
+returns the resolved integer in the public `watchdog` scalar; the authored
+constant remains visible through `actor_constants[]`.
 Current rule entries are advertised as a bounded shell: `rules` is an array of
 entries with scalar `name`, optional `when`, and `actions` array fields. Rule
 condition/action payload contents remain private scheduler input.
@@ -1470,8 +1474,14 @@ Selected lowering artifact strategy and current implementation status:
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.
-- `N` must be a positive integer.
+- `N` must be a positive integer literal or a declared actor constant that
+  resolves to a positive integer.
 - `(await port (watchdog M))` overrides the default for that wait.
+- Await-local `M` may also be a positive actor constant. The current scheduled
+  `.fsm` model has one watchdog counter per transaction, so one transaction
+  must have a single effective watchdog limit; distinct per-await limits in
+  the same transaction fail closed until per-await counter reset semantics are
+  selected.
 - Await states decrement an inferred watchdog counter and transition to a
   timeout state at zero.
 
@@ -2099,6 +2109,7 @@ Current lowering:
 ```lisp
 (await ready)
 (await ready (watchdog 32))
+(await ready (watchdog WD_LIMIT))
 ```
 
 Current lowering:
@@ -2112,6 +2123,11 @@ Current lowering:
   but the emitted next-value selection stays blocked at zero.
 - Timeout states assign `done` with a one-cycle delayed pulse (`<1`) and
   `last_error` with a flopped output assignment (`<-`).
+- Actor-level and await-local watchdog limits may use declared actor constants
+  that resolve to positive integers. The generated counter width and init
+  value use the resolved integer. Actor parameters, transaction parameters,
+  runtime signals, unknown symbols, arbitrary expressions, and zero-valued
+  constants fail closed.
 
 ### 7.4 Completion
 
@@ -4099,9 +4115,10 @@ The top-level `source` and `scheduled_fsm` values are actor-derived `.isf` and
 `scheduled_fsm` is the generated `<actor>_top.fsm` artifact. `clock` is the
 actor clock signal name, or `clk` when a legacy single-clock actor omits
 `(clock ...)`; with `clock-domains`, it is the selected default-domain clock.
-`watchdog` is always a scalar limit after parser defaults, with omitted
-`(watchdog ...)` normalized to `65535`. The capability-manifest ISF public
-contract advertises this through `schedule_report_source_shape`,
+`watchdog` is always a scalar resolved limit after parser defaults, with
+omitted `(watchdog ...)` normalized to `65535` and actor-constant watchdogs
+reported as the resolved integer. The capability-manifest ISF public contract
+advertises this through `schedule_report_source_shape`,
 `schedule_report_scheduled_fsm_shape`, `schedule_report_clock_shape`, and
 `schedule_report_watchdog_shape`.
 Successful reports keep `compile_issues` present as an array. Reports with no
@@ -4945,6 +4962,11 @@ Focused tests:
   transaction parameters, runtime signals, arbitrary expressions, stage-local
   latency, and parameter-specialized counter sizing remain deferred until a
   separate specialization/scheduling policy is selected.
+- Watchdog limits beyond the shipped positive decimal literal and positive
+  actor-constant actor-level/await-local shapes: actor parameters,
+  transaction parameters, runtime signals, arbitrary expressions, distinct
+  per-await limits in one transaction, cross-domain watchdog policy, and
+  parameter-specialized watchdog counter sizing remain deferred.
 - Runtime division/modulo safety beyond literal-zero and actor-constant-zero
   divisor rejection: proving arbitrary dynamic scalar divisor expressions
   nonzero remains deferred until range/dataflow evidence is specified.

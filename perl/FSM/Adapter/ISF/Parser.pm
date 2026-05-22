@@ -290,6 +290,8 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_symbol_tables($result, $source_label);
     $self->_finalize_actor_constant_values($result);
     $self->_finalize_actor_param_values($result);
+    $self->_finalize_actor_watchdog_limit($result)
+        if $singleton_actor_clauses{watchdog};
     $self->_finalize_actor_type_references($result);
     $self->_validate_deferred_atl_drive_sink_expression_candidates($result);
     $self->_validate_actor_aggregate_storage_paths($result);
@@ -589,6 +591,35 @@ sub _finalize_actor_param_values($self, $actor) {
     }
 
     return 1;
+}
+
+sub _finalize_actor_watchdog_limit($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    my $token = $actor->{watchdog};
+
+    return 1
+        if defined($token) && !ref($token) && $token =~ /\A[1-9][0-9]*\z/;
+
+    if (defined($token) && !ref($token) && _is_hdl_identifier($token)) {
+        my $constant = _actor_constant_by_name($actor, $token);
+        if ($constant) {
+            my $constant_value = _positive_integer_from_literal_value(_constant_resolved_value($constant));
+            confess "Error: actor '$actor_name' watchdog constant '$token' must resolve to a positive integer\n"
+                unless defined $constant_value;
+            $actor->{watchdog} = "$constant_value";
+            return 1;
+        }
+
+        confess "Error: actor '$actor_name' watchdog token '$token' is an actor parameter; watchdog limits accept positive integer literals or actor constants only\n"
+            if _actor_param_by_name($actor, $token);
+
+        confess "Error: actor '$actor_name' watchdog token '$token' is a runtime interface signal; watchdog limits accept positive integer literals or actor constants only\n"
+            if _actor_interface_signal_by_name($actor, $token);
+
+        confess "Error: actor '$actor_name' watchdog token '$token' is not a declared actor constant\n";
+    }
+
+    confess "Error: (watchdog ...) requires a positive integer literal or actor constant\n";
 }
 
 sub _resolve_actor_param_enum_leaf_values($self, $actor, $value, $context) {
@@ -4246,6 +4277,44 @@ sub _validate_actor_constant_names($self, $actor) {
     return 1;
 }
 
+sub _actor_constant_by_name {
+    my ($actor, $name) = @_;
+    return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
+
+    for my $constant (@{$actor->{constants} || []}) {
+        next unless ref($constant) eq 'HASH';
+        return $constant if ($constant->{name} // '') eq $name;
+    }
+
+    return undef;
+}
+
+sub _actor_param_by_name {
+    my ($actor, $name) = @_;
+    return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
+
+    for my $param (@{$actor->{params} || []}) {
+        next unless ref($param) eq 'HASH';
+        return $param if ($param->{name} // '') eq $name;
+    }
+
+    return undef;
+}
+
+sub _actor_interface_signal_by_name {
+    my ($actor, $name) = @_;
+    return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
+
+    for my $direction (qw(inputs outputs)) {
+        for my $port (@{($actor->{interface} || {})->{$direction} || []}) {
+            next unless ref($port) eq 'HASH';
+            return $port if ($port->{name} // '') eq $name;
+        }
+    }
+
+    return undef;
+}
+
 sub _finalize_actor_domain_annotations($self, $actor) {
     my $actor_name = $actor->{actor_name} // 'unknown';
     my $clock_domains = $actor->{clock_domains};
@@ -5300,6 +5369,23 @@ sub _is_non_negative_integer_literal_value {
     return $integer->bcmp(0) >= 0;
 }
 
+sub _positive_integer_from_literal_value {
+    my ($value) = @_;
+    return undef unless defined($value) && !ref($value);
+
+    my $integer = FSM::Package::IntegerLiteralSupport->integer_from_literal_like($value);
+    return undef unless defined $integer && $integer->bcmp(0) > 0;
+    return 0 + $integer->bstr;
+}
+
+sub _constant_resolved_value {
+    my ($constant) = @_;
+    return undef unless ref($constant) eq 'HASH';
+    return exists($constant->{resolved_value})
+        ? $constant->{resolved_value}
+        : $constant->{value};
+}
+
 sub _param_values_shape_compatible {
     my ($declared, $override) = @_;
     return 1 if !ref($declared) && !ref($override);
@@ -5578,9 +5664,12 @@ sub _default_actor_reset {
 }
 
 sub _parse_watchdog($self, $clause) {
-    confess "Error: (watchdog ...) requires a positive integer\n" unless @$clause == 2;
-    confess "Error: (watchdog ...) requires a positive integer\n"
-        unless defined($clause->[1]) && !ref($clause->[1]) && $clause->[1] =~ /\A[1-9][0-9]*\z/;
+    confess "Error: (watchdog ...) requires a positive integer literal or actor constant\n"
+        unless @$clause == 2;
+    confess "Error: (watchdog ...) requires a positive integer literal or actor constant\n"
+        unless defined($clause->[1])
+            && !ref($clause->[1])
+            && ($clause->[1] =~ /\A[1-9][0-9]*\z/ || _is_hdl_identifier($clause->[1]));
     return $clause->[1];
 }
 

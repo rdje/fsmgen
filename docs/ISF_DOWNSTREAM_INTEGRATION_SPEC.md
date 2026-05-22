@@ -247,7 +247,7 @@ Supported actor clauses:
 (reset (name async active_low))
 (reset (name async active_high))
 (reset (name sync active_low))
-(watchdog positive_integer)
+(watchdog positive_integer_or_actor_constant)
 (interface ...)
 (params ...)
 (constants ...)
@@ -323,8 +323,13 @@ Rules:
   `active_high`.
 - List reset form may include `sync`, `async`, `active_low`, or `active_high`.
 - Async reset lowers to `.fsm` `areset`; sync reset lowers to `.fsm` `sreset`.
-- `(watchdog N)` is the actor default for `(await ...)`; per-await watchdog
-  overrides are supported with `(await port (watchdog M))`.
+- `(watchdog N)` is the actor default for `(await ...)`; `N` may be a positive
+  integer literal or a declared actor constant that resolves to a positive
+  integer.
+- Per-await watchdog overrides are supported with `(await port (watchdog M))`;
+  `M` may also be a positive actor constant. The current scheduled `.fsm`
+  model has one watchdog counter per transaction, so distinct per-await limits
+  in one transaction fail closed.
 
 Named domains:
 
@@ -769,9 +774,12 @@ Await:
 ```lisp
 (await ready)
 (await ready (watchdog 1024))
+(await ready (watchdog WD_LIMIT))
 ```
 
 Await waits for a port and uses the actor watchdog unless overridden.
+Actor-level and await-local watchdog constants resolve before counter lowering,
+and reports expose the actor watchdog scalar as the resolved integer.
 
 Wait:
 
@@ -2721,6 +2729,9 @@ Required fail-closed examples:
 - Rule-trigger output bindings.
 - Literal-zero and actor-constant-zero divisor operands in shipped runtime
   division/modulo expression contexts.
+- Watchdog limits that name actor parameters, transaction parameters, runtime
+  interface signals, unknown symbolic names, arbitrary expressions, constants
+  that resolve to zero, or distinct per-await limits in one transaction.
 - Latency min/max bounds that name actor parameters, transaction parameters,
   runtime interface signals, unknown symbolic names, arbitrary expressions, or
   constants that resolve to zero.

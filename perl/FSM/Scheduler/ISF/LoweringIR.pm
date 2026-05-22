@@ -3491,7 +3491,7 @@ sub _literal_repeat_count_width {
 # --- Transaction → IR states ---
 sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
     my $tn  = $tx->{name};
-    my $wd  = $actor->{watchdog};
+    my $wd  = _watchdog_limit_cycles($actor->{watchdog}, $actor, $tn, 'actor watchdog');
     my $drives = $actor->{drives} || {};
     $generated_children ||= {};
     my $constant_values = _actor_constant_value_map($actor);
@@ -3525,7 +3525,14 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         elsif ($k eq 'drive')    {
             push @st, _ir_transaction_drive_clause($cl, $tn, $si++, $drives, [splice @ps]);
         }
-        elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd, [splice @ps]); }
+        elsif ($k eq 'await')    {
+            $ha=1; $wdc="${tn}_wd";
+            my $wd_override = _parse_await_wd($cl, $tn);
+            my $wd_limit = defined($wd_override)
+                ? _watchdog_limit_cycles($wd_override, $actor, $tn, 'await watchdog override')
+                : $wd;
+            push @st, _ir_await($cl, $tn, $si++, $wd_limit, [splice @ps]);
+        }
         elsif ($k eq 'atl_trigger') { push @st, _ir_atl_trigger($cl, $tn, $si++, [splice @ps]); }
         elsif ($k eq 'atl_trigger_batch') { push @st, _ir_atl_trigger_batch($cl, $tn, $si++, [splice @ps]); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
@@ -3608,7 +3615,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
 
     # Watchdog
     if ($ha && $wdc) {
-        my $lim = $wd // 65535;
+        my $lim = _transaction_watchdog_limit(\@st, $wd, $tn);
         $ct{$wdc} = int(log($lim)/log(2)) + 1;
         $storage_roles{$wdc} = 'watchdog_counter';
         _inj_watchdog(\@st, $tn, $wdc, $lim, \%ct);
@@ -9062,7 +9069,68 @@ sub _latency_bound_cycles {
 
     confess "Transaction '$tn': latency options must be '(min N)' or '(max N)'\n";
 }
-sub _parse_await_wd { my($cl)=@_; for my $i(2..$#$cl){my$x=$cl->[$i];return$x->[1]if ref($x)eq'ARRAY'&&$x->[0]eq'watchdog'} undef }
+
+sub _watchdog_limit_cycles {
+    my ($token, $actor, $tn, $label) = @_;
+
+    return 0 + $token
+        if defined($token) && !ref($token) && $token =~ /\A[1-9][0-9]*\z/;
+
+    confess "Transaction '$tn': watchdog limit must be positive in $label\n"
+        if defined($token) && !ref($token) && $token =~ /\A0+\z/;
+
+    if (defined($token) && !ref($token) && _is_hdl_identifier($token)) {
+        my $constant = _actor_constant_by_name($actor, $token);
+        if ($constant) {
+            my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
+            confess "Transaction '$tn': watchdog constant '$token' must resolve to a positive cycle count in $label\n"
+                unless defined($constant_value) && $constant_value > 0;
+            return $constant_value;
+        }
+
+        confess "Transaction '$tn': watchdog token '$token' is an actor parameter; watchdog limits accept positive integer literals or actor constants only in $label\n"
+            if _actor_param_by_name($actor, $token);
+
+        confess "Transaction '$tn': watchdog token '$token' is a runtime interface signal; watchdog limits accept positive integer literals or actor constants only in $label\n"
+            if _actor_interface_signal_by_name($actor, $token);
+
+        confess "Transaction '$tn': watchdog token '$token' is not a declared actor constant in $label\n";
+    }
+
+    confess "Transaction '$tn': watchdog limits accept positive integer literals or actor constants only in $label\n";
+}
+
+sub _transaction_watchdog_limit {
+    my ($states, $default_limit, $tn) = @_;
+
+    my %limits;
+    for my $state (@$states) {
+        next unless ref($state) eq 'HASH' && $state->{kind} eq 'await';
+        my $limit = (($state->{watchdog} || {})->{limit}) // $default_limit // 65535;
+        $limits{$limit} = 1;
+    }
+
+    my @limits = sort { $a <=> $b } keys %limits;
+    confess "Transaction '$tn': multiple distinct await watchdog limits are not supported by the current single watchdog counter\n"
+        if @limits > 1;
+
+    return @limits ? $limits[0] : ($default_limit // 65535);
+}
+
+sub _parse_await_wd {
+    my ($cl, $tn) = @_;
+    for my $i (2 .. $#$cl) {
+        my $option = $cl->[$i];
+        next unless ref($option) eq 'ARRAY'
+            && defined($option->[0])
+            && !ref($option->[0])
+            && $option->[0] eq 'watchdog';
+        confess "Transaction '$tn': await watchdog override requires '(watchdog N)'\n"
+            unless @$option == 2 && defined($option->[1]) && !ref($option->[1]);
+        return $option->[1];
+    }
+    return undef;
+}
 
 sub _wire_do_children {
     my ($self,$st,$ctrs,$actor,$generated_children)=@_;

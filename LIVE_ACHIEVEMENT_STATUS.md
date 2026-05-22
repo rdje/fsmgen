@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Watchdog actor-constant limits shipped
+- Completed `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` and closed the task tree.
+- FSMGen now accepts declared positive actor constants as actor-level and
+  await-local watchdog limits.
+- Actor-level constants resolve into the public numeric `watchdog` scalar and
+  schedule reports while remaining visible through `actor_constants[]`;
+  await-local constants resolve before watchdog counter injection.
+- Distinct per-await watchdog limits in one transaction now fail closed because
+  the current scheduled `.fsm` model owns one watchdog counter per transaction.
+- Actor/transaction parameters, runtime signals, arbitrary expressions,
+  cross-domain watchdog policy, and parameterized watchdog specialization
+  remain fail-closed or deferred.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Validation passed: focused watchdog/timing/storage tests, public/doc audits,
+  broad `./bin/ci-regression isf --no-book` with `Files=238, Tests=1589`,
+  `mdbook build docs/book`, and `git diff --check`.
+
 ## 2026-05-22: R14 — Watchdog actor-constant limits tree selected
 - Completed `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.1`.
 - Activated the active R14 task tree for positive actor constants in
