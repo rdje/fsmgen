@@ -637,6 +637,12 @@ my %DIAGNOSTIC_CODES = (
         family => 'composition_contract',
         summary => 'A composition source requested an unsupported backend target.',
     },
+    FSMGEN_COMPOSITION_EXPLICIT_LINK_TOPOLOGY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition topology required explicit wiring that was not declared.',
+    },
     FSMGEN_COMPOSITION_MISSING_RTLIF => {
         severity => 'error',
         stability => 'stable',

@@ -330,6 +330,11 @@ the shared system-input auto-wiring contract. If the top exposes `clk` and
 without explicit `?wiring` entries for those system ports; ordinary data links
 still belong in `?wiring`.
 
+If a multi-child composition topology needs explicit data routing and no
+`?wiring` block is present, FSMGen rejects it after typed composition parsing
+and before HDL emission. The scheduler does not guess which child output should
+feed a top output or another child input.
+
 Generated standalone-DT children use the same shared system-input convention.
 When a `?dtc` child source has explicit `+system` metadata such as
 `(clock clk)` and `(areset rst_n)`, those system ports are part of the child

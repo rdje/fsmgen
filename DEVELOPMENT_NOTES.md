@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition explicit-link topology failures are support-accounting failures
+- `R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING.2` preserves the
+  existing C2 explicit-link diagnostic and promotes the missing-`?wiring`
+  topology into maintained corpus truth.
+- `FSMGEN_COMPOSITION_EXPLICIT_LINK_TOPOLOGY` covers multi-child composition
+  topologies where data routing is required but no explicit `?wiring` block is
+  declared.
+- This does not change inference behavior: FSMGen still refuses to invent
+  child-to-child or child-to-top data movement when the active lane requires
+  explicit wiring.
+
 ## 2026-05-22: Composition explicit-link topology coverage stays diagnostic-only
 - `R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING.1` selects
   support-accounting promotion for the missing explicit `?wiring` diagnostic
