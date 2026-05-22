@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL pin-egress multi-route selected
+- Completed `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.1`.
+- Activated a new R14 task tree for bounded generated-child ATL resolved-child
+  output to top-level output-pin multi-route scalar movement.
+- The selected implementation leaf will accept several one-bit pin-egress
+  routes only when they source the same resolved child, live in one parent
+  transaction, use one scalar `(pins.output_pin child.endpoint)` pair per drive
+  body, and are called contiguously after the child trigger/event wait.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL pin-ingress multi-route shipped
 - Completed `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2` and closed the task tree.
 - Added the bounded same-child generated-child pin-ingress multi-route subset:

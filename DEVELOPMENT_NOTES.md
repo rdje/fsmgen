@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL pin-egress multi-route follows child completion
+- `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.1` selects the inverse one-child generated-top
+  route-set widening after the pin-ingress route-set subset.
+- The selected source shape keeps the existing drive-body `(sink source)`
+  order and uses adjacent post-event drive calls as explicit timing points:
+  `(pins.result worker.payload)` and a sibling route such as
+  `(pins.status worker.status)`.
+- This is deliberately not mux/storage insertion, fan-in/fan-out routing,
+  ready/backpressure, payload protocols, CDC/reset remapping, repeated child
+  activation, bidirectional pin movement, or cross-transaction routing.
+
 ## 2026-05-22: ATL pin-ingress multi-route stays one-child and storage-free
 - `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2` widens only the already-shipped
   generated-top pin-ingress path: several top-level input pins can feed several

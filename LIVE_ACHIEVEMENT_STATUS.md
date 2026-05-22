@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL pin-egress multi-route selected
+- Completed `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.1`.
+- The active R14 frontier is now `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2`.
+- The selected implementation will widen generated-child resolved-child output
+  to top-level output routing from one scalar route to several same-child,
+  one-bit, contiguous post-event drive-call routes.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL pin-ingress multi-route shipped
 - Completed `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2` and closed the task tree.
 - FSMGen now accepts bounded multiple scalar top-level input-pin routes into

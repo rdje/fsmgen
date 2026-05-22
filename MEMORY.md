@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL pin-egress multi-route selected
+- Completed `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.1`.
+- Activated a new R14 task tree for the next bounded ATL data-route widening:
+  multiple one-bit outputs from one resolved child into multiple one-bit
+  top-level output pins through adjacent named drive calls after the child
+  trigger/event wait.
+- The next frontier is `ISF-ATL-PIN-EGRESS-MULTI-ROUTE.2`: implement the
+  bounded generated-child pin-egress multi-route subset with
+  fixture/report/top/HDL coverage and synchronized public docs.
+- No compiler behavior changed.
+
 ## 2026-05-22: ATL pin-ingress multi-route shipped
 - Completed `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2` and closed the task tree.
 - FSMGen now accepts bounded multiple one-bit generated-child pin-ingress
