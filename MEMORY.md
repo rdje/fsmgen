@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 generated-child source-shape corpus widening completed
+- Completed
+  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2`.
+- Added maintained expected-failure corpus coverage for malformed generated
+  child source count and nested payload shape:
+  - `?fsmc` with no flat source name.
+  - `?dtc` with no flat source name.
+  - `?fsmc` with an unsupported nested payload block.
+  - `?dtc` with an unsupported nested payload block.
+- Added stable diagnostic-code metadata for generated-child source-count and
+  source-shape failures and synchronized regression-corpus docs plus mdBook
+  composition/error coverage.
+- No parser acceptance, source-resolution, or HDL-generation behavior changed.
+
 ## 2026-05-22: R12 generated-child source-shape corpus widening selected
 - Completed
   `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1`.

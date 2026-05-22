@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1` selected malformed
-  generated-child source count and nested payload shape as the next
-  support-accounting corpus widening. The active frontier is
-  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2`.
+  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2` closed the latest
+  malformed generated-child source count/payload-shape support-accounting
+  tree. The next PNT step is to select the next inactive or ongoing task-tree
+  frontier before any implementation work.
+- Recent R12 generated-child source-shape corpus-widening completion:
+  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2` added named
+  expected-failure corpus entries for malformed `?fsmc` and `?dtc` source
+  counts plus unsupported nested payload blocks, with stable diagnostic-code
+  metadata and coverage through pipeline/CLI behavior, check JSON, normalized
+  semantic JSON, manifest, corpus accounting, regression-corpus docs, and the
+  mdBook. No parser or HDL-generation behavior changed.
 - Recent R12 generated-child source-shape corpus-widening selection:
   `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1` activated a task tree
   to promote already-focused malformed `?fsmc`/`?dtc` source-count and nested
@@ -7738,6 +7745,11 @@ Done:
   wrong-kind external generated-child source realization:
   - [t/corpus/wrong_kind_fsmc_child_source_top.fsm](t/corpus/wrong_kind_fsmc_child_source_top.fsm) records a `?fsmc` child whose external source resolves to a standalone-DT `?dt` root as an expected failure with `FSMGEN_COMPOSITION_WRONG_FSM_CHILD_KIND`,
   - [t/corpus/wrong_kind_dtc_child_source_top.fsm](t/corpus/wrong_kind_dtc_child_source_top.fsm) records a `?dtc` child whose external source resolves to an FSM `?fsm` root as an expected failure with `FSMGEN_COMPOSITION_WRONG_DT_CHILD_KIND`,
+  - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
+- The maintained composition-contract expected-failure corpus now accounts for
+  malformed generated-child source-count and nested payload-shape failures:
+  - [t/corpus/generated_child_source_count_fsmc_top.fsm](t/corpus/generated_child_source_count_fsmc_top.fsm) and [t/corpus/generated_child_source_count_dtc_top.fsm](t/corpus/generated_child_source_count_dtc_top.fsm) record missing flat source names for `?fsmc` and `?dtc` as expected failures with `FSMGEN_COMPOSITION_GENERATED_CHILD_SOURCE_COUNT`,
+  - [t/corpus/generated_child_source_shape_fsmc_top.fsm](t/corpus/generated_child_source_shape_fsmc_top.fsm) and [t/corpus/generated_child_source_shape_dtc_top.fsm](t/corpus/generated_child_source_shape_dtc_top.fsm) record unsupported nested generated-child payload blocks as expected failures with `FSMGEN_COMPOSITION_GENERATED_CHILD_SOURCE_SHAPE`,
   - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.

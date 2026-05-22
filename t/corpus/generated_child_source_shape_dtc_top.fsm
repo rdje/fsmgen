@@ -1,0 +1,5 @@
+(?top:generated_child_source_shape_dtc_top
+  (?dtc:child
+    (opt foo)
+  )
+)

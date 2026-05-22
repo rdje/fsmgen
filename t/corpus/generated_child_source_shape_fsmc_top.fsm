@@ -1,0 +1,5 @@
+(?top:generated_child_source_shape_fsmc_top
+  (?fsmc:child
+    (opt foo)
+  )
+)

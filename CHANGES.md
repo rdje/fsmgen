@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R12 regression corpus — generated-child source-shape coverage widened
+- Completed
+  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2`.
+- Added expected-failure fixtures/catalog entries for malformed `?fsmc` and
+  `?dtc` source counts plus unsupported nested generated-child payload blocks.
+- Added stable diagnostic codes for generated-child source-count and
+  source-shape failures and synchronized regression-corpus docs plus mdBook
+  composition/error coverage.
+- No parser or HDL-generation behavior changed.
+
+## 2026-05-22
 ### R12 regression corpus — generated-child source-shape widening selected
 - Completed
   `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1`.

@@ -220,6 +220,12 @@ wrong-kind FSM child source and tells the author to use `?dtc` instead. A
 wrong-kind standalone-DT child source and tells the author to use `?fsmc`
 instead.
 
+Each `?fsmc` or `?dtc` instance must provide exactly one flat source name. The
+only supported nested semantic block on those instances is `(params (NAME
+value) ...)`. Other nested blocks, including target-HDL-looking payloads, are
+rejected before source realization because generated-child declarations are
+structural composition intent, not raw backend text.
+
 Generated children can also be parameterized semantically. Declare the
 supported names in the child source with `(+params ...)`, then override those
 names on the `?fsmc` or `?dtc` instance:

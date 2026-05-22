@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Generated-child source count and payload shape are support-accounting failures
+- `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2` keeps the existing
+  parser diagnostics intact and promotes four representative malformed
+  generated-child declarations into maintained corpus truth.
+- `FSMGEN_COMPOSITION_GENERATED_CHILD_SOURCE_COUNT` covers the no-flat-source
+  `?fsmc` and `?dtc` cases because both failures share the same contract
+  boundary: exactly one flat source name is required per generated child
+  instance.
+- `FSMGEN_COMPOSITION_GENERATED_CHILD_SOURCE_SHAPE` covers unsupported nested
+  payload blocks because the only nested generated-child semantic block shipped
+  for `?fsmc` / `?dtc` remains `(params (NAME value) ...)`.
+
 ## 2026-05-22: Generated-child source-shape coverage stays parser-diagnostic-only
 - `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1` selects
   support-accounting promotion for malformed generated-child payloads whose
