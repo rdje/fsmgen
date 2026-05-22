@@ -2,8 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+  Active task tree: `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS`. Current frontier:
+  `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2`.
+- Recent R14 latency actor-constant bounds selection:
+  `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1` activated the transaction latency
+  tree for positive actor constants in `(latency (min CONST) (max CONST))`
+  bounds. Actor parameters, transaction parameters, runtime signals,
+  arbitrary expressions, latency semantics changes, timeout-state changes,
+  report/storage shape changes, generated HDL changes beyond static constant
+  resolution, and stage-local latency semantics remain out of scope. No
+  compiler behavior changed.
 - Recent R14 temporal-contract actor-constant window completion:
   `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` shipped positive actor constants as
   bounded eventual temporal-contract `within` windows and closed the task tree.
@@ -8830,8 +8838,9 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Select or create the next roadmap-aligned task tree before any further code
-  changes. `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` is closed after shipping
-  positive actor constants as static bounded-eventual contract window evidence.
+  changes. `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` is active with frontier
+  `.2`, targeting positive actor constants as static transaction latency
+  min/max bound evidence.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

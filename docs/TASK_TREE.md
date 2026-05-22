@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` | `active` | `R14` | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` | [docs/tasks/ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.md](docs/tasks/ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.md) |
 
 ## Proposed Task Trees
 
@@ -263,6 +264,7 @@ as done work unless a future task reopens them.
 | Expression-valued rule assignments and rule action widening | `ISF-RULE-ACTIONS` |
 | Transaction stage lowering and temporal contract lowering | `ISF-STAGES-CONTRACTS` |
 | Temporal-contract actor-constant window counts | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` |
+| Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
 | Temporal-contract monitor storage schedule-report roles | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` |
 | Temporal-contract SystemVerilog assertion projection | `ISF-TEMPORAL-CONTRACT-ASSERTIONS` |
 | Actor-level phase/stage schedule-report metadata | `ISF-ACTOR-PHASE-STAGE-REPORTS` |

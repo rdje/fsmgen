@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Latency actor-constant bounds tree selected
+- Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1`.
+- Activated a new R14 task tree for accepting positive actor constants as
+  static transaction latency `(min ...)` and `(max ...)` bound evidence.
+- The selected implementation keeps actor parameters, transaction parameters,
+  runtime signals, arbitrary expressions, stage-local latency semantics,
+  timeout-state changes, and report/storage shape changes out of scope.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Temporal contract actor-constant windows shipped
 - Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` and closed the task tree.
 - Added support for positive actor constants as bounded eventual temporal

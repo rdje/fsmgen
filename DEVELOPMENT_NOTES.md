@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Latency bounds can reuse static constants
+- `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1` selects a narrow transaction latency
+  widening: actor constants are compile-time evidence and can naturally serve
+  as named positive `(min ...)` and `(max ...)` bounds.
+- The implementation should resolve constants before existing latency counter
+  lowering, so generated guards, timeout checks, and report/storage roles stay
+  identical to the literal-bound path after resolution.
+- Actor and transaction parameters remain out of scope because they are
+  overrideable specialization values. Supporting parameterized latency bounds
+  would need a separate generated-top/specialization policy.
+
 ## 2026-05-22: Contract constant windows keep monitor sizing static
 - `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` resolves actor constants before
   temporal-contract monitor construction, so generated pending/age/fail

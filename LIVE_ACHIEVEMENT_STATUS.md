@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Latency actor-constant bounds tree selected
+- Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1`.
+- Activated the active R14 task tree for positive actor constants in
+  transaction latency `(min ...)` and `(max ...)` bounds.
+- The active R14 frontier is now `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2`.
+- The selected implementation will preserve literal latency lowering and
+  public report/storage shapes while resolving declared positive actor
+  constants to the same integer bounds as literals.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Temporal contract actor-constant windows shipped
 - Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` and closed the task tree.
 - FSMGen now accepts declared positive actor constants as bounded eventual

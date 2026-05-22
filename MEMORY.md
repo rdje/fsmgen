@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Latency actor-constant bounds tree selected
+- Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1`.
+- Activated the next R14 feature tree for positive actor constants in
+  transaction `(latency (min CONST) (max CONST))` bounds.
+- The next frontier is `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2`: implement and
+  document actor-constant latency bounds while preserving existing literal
+  latency behavior and report/storage shapes.
+- Actor parameters, transaction parameters, runtime signals, arbitrary
+  expressions, stage-local latency semantics, timeout-state changes, and
+  generated HDL changes beyond static constant resolution remain out of
+  scope.
+- No compiler behavior changed.
+
 ## 2026-05-22: Temporal contract actor-constant windows shipped
 - Completed `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` and closed the task tree.
 - FSMGen now accepts positive actor constants as the `within` cycle count in
