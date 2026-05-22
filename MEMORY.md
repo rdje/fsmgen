@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 composition ports-shape corpus widening completed
+- Completed `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2` and closed the
+  task tree.
+- Added maintained expected-failure corpus coverage for multiple `?ports`
+  blocks, omitted `?ports` outside inferable lanes, and empty `?ports` outside
+  inferable lanes.
+- Added stable diagnostic-code metadata for ports block-count and empty ports
+  block failures, and synchronized regression-corpus docs plus mdBook
+  composition/error coverage.
+- No parser acceptance or HDL-generation behavior changed.
+
 ## 2026-05-22: R12 composition ports-shape corpus widening selected
 - Completed `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting already-focused composition

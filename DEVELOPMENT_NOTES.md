@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition ports-shape failures are support-accounting failures
+- `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2` keeps the existing shape-gate
+  diagnostics intact and promotes three non-inferable `?ports` failures into
+  maintained corpus truth.
+- `FSMGEN_COMPOSITION_PORTS_BLOCK_COUNT` covers both multiple `?ports` blocks
+  and omitted `?ports` in lanes that require exactly one explicit block.
+- `FSMGEN_COMPOSITION_EMPTY_PORTS_BLOCK` covers empty `?ports` blocks in lanes
+  where explicit top-port declarations are required before composition can
+  continue.
+
 ## 2026-05-22: Composition ports-shape coverage stays parser-diagnostic-only
 - `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.1` selects support-accounting
   promotion for multiple `?ports`, omitted `?ports`, and empty `?ports`

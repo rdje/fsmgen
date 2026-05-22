@@ -1,0 +1,22 @@
+(?top:multi_ports_blocks_top
+  (?ports:first
+    clk
+  )
+  (?ports:second
+    rstn
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (OUT <= 1)
+  )
+  (+size
+    (OUT 1)
+  )
+)

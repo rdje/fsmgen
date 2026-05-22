@@ -53,6 +53,9 @@ instance name must be unique within the `?top`.
 In the narrowest `C1` lane, one child may be enough for the top interface to be
 inferred directly when `?ports` is omitted or empty.
 
+Outside inferable single-child lanes, the top boundary must have exactly one
+explicit `?ports` block and that block must declare at least one top port.
+
 ## Ports
 
 Top ports live in one `?ports` block.

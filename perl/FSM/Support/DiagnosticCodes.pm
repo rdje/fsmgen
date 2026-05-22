@@ -619,6 +619,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'composition_contract',
         summary => 'A composition top declared the same child instance name more than once.',
     },
+    FSMGEN_COMPOSITION_PORTS_BLOCK_COUNT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition top used the wrong number of explicit ports blocks for the active lane.',
+    },
+    FSMGEN_COMPOSITION_EMPTY_PORTS_BLOCK => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition ports block declared no explicit top ports where the active lane required them.',
+    },
     FSMGEN_COMPOSITION_MISSING_RTLIF => {
         severity => 'error',
         stability => 'stable',

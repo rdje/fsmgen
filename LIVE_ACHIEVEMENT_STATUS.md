@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — ports-shape coverage widened
+- Completed `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2`.
+- The task tree is closed.
+- FSMGen now support-accounts multiple `?ports` blocks, omitted `?ports`
+  outside inferable lanes, and empty `?ports` outside inferable lanes.
+- Stable diagnostic-code metadata, check JSON, normalized semantic JSON,
+  manifest, regression-corpus docs, and mdBook coverage are synchronized.
+- No parser or HDL-generation behavior changed.
+
 ## 2026-05-22: R12 regression corpus — ports-shape widening selected
 - Completed `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

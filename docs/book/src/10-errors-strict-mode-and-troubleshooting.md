@@ -372,9 +372,10 @@ contract. Current out-of-support examples include:
 - composition requests with no child instances, empty child entries,
   non-string child headers, dotted-pair child payloads, duplicate child names,
   duplicate top ports, unsupported child kinds, legacy `?ports` mapping
-  directives, missing external generated child sources, wrong-kind external
-  generated-child roots such as `?fsmc` resolving to `?dt:name` or `?dtc`
-  resolving to `?fsm:name`, malformed `?fsmc` / `?dtc` source counts,
+  directives, multiple `?ports` blocks, omitted or empty `?ports` outside
+  inferable lanes, missing external generated child sources, wrong-kind
+  external generated-child roots such as `?fsmc` resolving to `?dt:name` or
+  `?dtc` resolving to `?fsm:name`, malformed `?fsmc` / `?dtc` source counts,
   unsupported nested `?fsmc` / `?dtc` payload blocks, malformed `?rtl`
   module-reference counts, unsupported nested `?rtl` payload blocks, or
   external RTL metadata that is missing, non-flat, empty, duplicated, wrongly

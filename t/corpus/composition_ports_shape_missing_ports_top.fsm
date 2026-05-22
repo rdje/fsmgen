@@ -1,0 +1,30 @@
+(?top:missing_ports_top
+  (?fsmc:left left_src)
+  (?fsmc:right right_src)
+)
+
+(?fsm:left_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (OUT <= 1)
+  )
+  (+size
+    (OUT 1)
+  )
+)
+
+(?fsm:right_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (DONE <= 1)
+  )
+  (+size
+    (DONE 1)
+  )
+)

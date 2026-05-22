@@ -239,6 +239,9 @@ for my $required_id (qw(
     contract.composition_ports_mapping_directive
     contract.composition_duplicate_top_port
     contract.composition_duplicate_child_instance
+    contract.composition_ports_shape_multiple_blocks
+    contract.composition_ports_shape_missing_ports
+    contract.composition_ports_shape_empty_ports
     contract.missing_rtl_metadata_sidecar
     contract.missing_fsm_child_source
     contract.missing_dt_child_source
@@ -390,8 +393,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    140,
-    'catalog now records one hundred forty explicit expected-failure entries',
+    143,
+    'catalog now records one hundred forty-three explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

@@ -122,15 +122,17 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   now covers malformed child-entry structure, non-string child headers,
   dotted-pair child payloads, unsupported child kinds, legacy `?ports` mapping
   directives, duplicate top ports, duplicate child instance names, missing
-  external generated-child source lookup, wrong-kind external generated-child
-  source realization for both `?fsmc` and `?dtc`, malformed generated-child
-  source counts, malformed nested generated-child payload shapes, malformed
-  external RTL child source counts, malformed nested external RTL child
-  payload shapes, missing external `?rtl` sidecar metadata, invalid `.rtlif`
-  system-role directions, duplicate `.rtlif` port declarations, unsupported
-  `.rtlif` port types, invalid `.rtlif` port tokens, non-positive `.rtlif`
-  port widths, missing `.rtlif` roots, empty `.rtlif` roots, unsupported
-  nested `.rtlif` structures, and duplicate embedded `.rtlif` roots.
+  external generated-child source lookup, multiple `?ports` blocks, omitted
+  `?ports` outside inferable lanes, empty `?ports` outside inferable lanes,
+  wrong-kind external generated-child source realization for both `?fsmc` and
+  `?dtc`, malformed generated-child source counts, malformed nested
+  generated-child payload shapes, malformed external RTL child source counts,
+  malformed nested external RTL child payload shapes, missing external `?rtl`
+  sidecar metadata, invalid `.rtlif` system-role directions, duplicate
+  `.rtlif` port declarations, unsupported `.rtlif` port types, invalid
+  `.rtlif` port tokens, non-positive `.rtlif` port widths, missing `.rtlif`
+  roots, empty `.rtlif` roots, unsupported nested `.rtlif` structures, and
+  duplicate embedded `.rtlif` roots.
 
 ## Supported-success markers
 
@@ -662,6 +664,9 @@ manifest output while keeping the exact file lists widenable.
 | `contract.composition_ports_mapping_directive` | [t/corpus/composition_ports_mapping_directive_top.fsm](t/corpus/composition_ports_mapping_directive_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.composition_duplicate_top_port` | [t/corpus/composition_duplicate_top_port_top.fsm](t/corpus/composition_duplicate_top_port_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.composition_duplicate_child_instance` | [t/corpus/composition_duplicate_child_instance_top.fsm](t/corpus/composition_duplicate_child_instance_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_ports_shape_multiple_blocks` | [t/corpus/composition_ports_shape_multiple_blocks_top.fsm](t/corpus/composition_ports_shape_multiple_blocks_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_ports_shape_missing_ports` | [t/corpus/composition_ports_shape_missing_ports_top.fsm](t/corpus/composition_ports_shape_missing_ports_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_ports_shape_empty_ports` | [t/corpus/composition_ports_shape_empty_ports_top.fsm](t/corpus/composition_ports_shape_empty_ports_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_fsm_child_source` | [t/corpus/missing_fsm_child_source_top.fsm](t/corpus/missing_fsm_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_dt_child_source` | [t/corpus/missing_dt_child_source_top.fsm](t/corpus/missing_dt_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
