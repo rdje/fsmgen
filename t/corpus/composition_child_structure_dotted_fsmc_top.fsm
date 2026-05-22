@@ -1,0 +1,3 @@
+(?top:composition_child_structure_dotted_fsmc_top
+  (?fsmc:child . foo)
+)

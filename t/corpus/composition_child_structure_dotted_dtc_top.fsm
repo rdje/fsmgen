@@ -1,0 +1,3 @@
+(?top:composition_child_structure_dotted_dtc_top
+  (?dtc:child . foo)
+)

@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.1` selected malformed
-  composition child-entry structure as the next support-accounting corpus
-  widening. The active frontier is
-  `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.2`.
+- Active `R12` task tree just closed. The next PNT step should select the next
+  roadmap-aligned maintained regression-corpus widening slice before any new
+  source/test/config changes.
+- Recent R12 composition child-structure corpus-widening completion:
+  `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.2` added named
+  expected-failure corpus entries for empty child entries, non-string child
+  headers, and dotted-pair child payloads across `?fsmc`, `?wiring`, `?ports`,
+  `?dtc`, and `?rtl`, with stable diagnostic-code metadata and coverage
+  through pipeline/CLI behavior, check JSON, normalized semantic JSON,
+  manifest, corpus accounting, regression-corpus docs, and the mdBook. No
+  parser or HDL-generation behavior changed.
 - Recent R12 composition child-structure corpus-widening selection:
   `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.1` activated a task tree to
   promote already-focused empty child-entry, non-string header, and dotted-pair

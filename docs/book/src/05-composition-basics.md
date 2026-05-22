@@ -213,6 +213,12 @@ external `.fsm` sources. Resolution searches repeated `--path DIR` roots, then
 `?fsm:name` roots for `?fsmc` children and canonical `?dt:name` roots for
 `?dtc` children.
 
+Every child entry must be a proper list whose first item is a real child header
+string. Empty child entries, non-string child headers, and dotted-pair child
+payloads such as `(?fsmc:child . foo)`, `(?wiring:wiring . foo)`, `(?ports .
+foo)`, `(?dtc:child . foo)`, or `(?rtl:uart_tx . foo)` are rejected before
+the parser tries to interpret the child kind.
+
 The child form and resolved source root must agree before HDL generation starts.
 A `?fsmc` child whose external file is rooted at `?dt:name` is rejected as a
 wrong-kind FSM child source and tells the author to use `?dtc` instead. A

@@ -1,0 +1,3 @@
+(?top:composition_child_structure_dotted_ports_top
+  (?ports . foo)
+)

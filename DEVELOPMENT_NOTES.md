@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition child-structure failures are support-accounting failures
+- `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.2` preserves the existing
+  parser diagnostics and promotes seven malformed child-entry forms into
+  maintained corpus truth.
+- `FSMGEN_COMPOSITION_CHILD_STRUCTURE` covers empty child entries, because a
+  child entry without a real header cannot be classified into any composition
+  child family.
+- `FSMGEN_COMPOSITION_CHILD_HEADER_SHAPE` covers non-string headers, keeping
+  the parser boundary explicit before any child-kind matching starts.
+- `FSMGEN_COMPOSITION_CHILD_ITEM_LIST_SHAPE` covers dotted-pair payloads across
+  `?fsmc`, `?wiring`, `?ports`, `?dtc`, and `?rtl`, because the active
+  composition parser contract requires child entries to be proper list forms.
+
 ## 2026-05-22: Composition child-structure coverage stays parser-diagnostic-only
 - `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.1` selects
   support-accounting promotion for malformed child-entry list shapes whose

@@ -577,6 +577,24 @@ my %DIAGNOSTIC_CODES = (
         family => 'direct_generation_contract',
         summary => 'A direct aggregate assignment used an incompatible source contract.',
     },
+    FSMGEN_COMPOSITION_CHILD_STRUCTURE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition child entry was empty or missing its header.',
+    },
+    FSMGEN_COMPOSITION_CHILD_HEADER_SHAPE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition child entry did not begin with a string header.',
+    },
+    FSMGEN_COMPOSITION_CHILD_ITEM_LIST_SHAPE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition child entry used an unsupported item-list shape.',
+    },
     FSMGEN_COMPOSITION_MISSING_RTLIF => {
         severity => 'error',
         stability => 'stable',

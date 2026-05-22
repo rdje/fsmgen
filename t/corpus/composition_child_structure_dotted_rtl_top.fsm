@@ -1,0 +1,3 @@
+(?top:composition_child_structure_dotted_rtl_top
+  (?rtl:uart_tx . foo)
+)

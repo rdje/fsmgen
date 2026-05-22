@@ -119,16 +119,17 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
 - `composition_contract_rejection_pipeline_cli`: the entry is intentionally
   rejected by the normal composition contract through both the pipeline API and
   the CLI, and that rejection is part of the supported contract. This bucket
-  now covers missing external generated-child source lookup, wrong-kind
-  external generated-child source realization for both `?fsmc` and `?dtc`,
-  malformed generated-child source counts, malformed nested generated-child
-  payload shapes, malformed external RTL child source counts, malformed nested
-  external RTL child payload shapes, missing external `?rtl` sidecar metadata,
-  invalid `.rtlif` system-role directions, duplicate `.rtlif` port
-  declarations, unsupported `.rtlif` port types, invalid `.rtlif` port tokens,
-  non-positive `.rtlif` port widths, missing `.rtlif` roots, empty `.rtlif`
-  roots, unsupported nested `.rtlif` structures, and duplicate embedded
-  `.rtlif` roots.
+  now covers malformed child-entry structure, non-string child headers,
+  dotted-pair child payloads, missing external generated-child source lookup,
+  wrong-kind external generated-child source realization for both `?fsmc` and
+  `?dtc`, malformed generated-child source counts, malformed nested
+  generated-child payload shapes, malformed external RTL child source counts,
+  malformed nested external RTL child payload shapes, missing external `?rtl`
+  sidecar metadata, invalid `.rtlif` system-role directions, duplicate
+  `.rtlif` port declarations, unsupported `.rtlif` port types, invalid
+  `.rtlif` port tokens, non-positive `.rtlif` port widths, missing `.rtlif`
+  roots, empty `.rtlif` roots, unsupported nested `.rtlif` structures, and
+  duplicate embedded `.rtlif` roots.
 
 ## Supported-success markers
 
@@ -649,6 +650,13 @@ manifest output while keeping the exact file lists widenable.
 | `contract.update_shorthand_tail_multi` | [t/corpus/update_shorthand_tail_multi.fsm](t/corpus/update_shorthand_tail_multi.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_rhs_concat_width_mismatch` | [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.direct_aggregate_contract_mismatch` | [t/corpus/direct_aggregate_contract_mismatch.fsm](t/corpus/direct_aggregate_contract_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
+| `contract.composition_child_structure_empty_entry` | [t/corpus/composition_child_structure_empty_entry_top.fsm](t/corpus/composition_child_structure_empty_entry_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_child_header_nonstring` | [t/corpus/composition_child_structure_nonstring_header_top.fsm](t/corpus/composition_child_structure_nonstring_header_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_child_item_list_dotted_fsmc` | [t/corpus/composition_child_structure_dotted_fsmc_top.fsm](t/corpus/composition_child_structure_dotted_fsmc_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_child_item_list_dotted_wiring` | [t/corpus/composition_child_structure_dotted_wiring_top.fsm](t/corpus/composition_child_structure_dotted_wiring_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_child_item_list_dotted_ports` | [t/corpus/composition_child_structure_dotted_ports_top.fsm](t/corpus/composition_child_structure_dotted_ports_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_child_item_list_dotted_dtc` | [t/corpus/composition_child_structure_dotted_dtc_top.fsm](t/corpus/composition_child_structure_dotted_dtc_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_child_item_list_dotted_rtl` | [t/corpus/composition_child_structure_dotted_rtl_top.fsm](t/corpus/composition_child_structure_dotted_rtl_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_fsm_child_source` | [t/corpus/missing_fsm_child_source_top.fsm](t/corpus/missing_fsm_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_dt_child_source` | [t/corpus/missing_dt_child_source_top.fsm](t/corpus/missing_dt_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
