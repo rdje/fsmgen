@@ -1,9 +1,20 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: none. No task tree is active after
-  `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1`; the next behavior-bearing work must
-  select or create its task tree before code changes.
+- Active lane: `R14` / `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2`.
+  The current PNT frontier is bounded generated-child ATL top-level
+  pin-ingress multi-route movement: several one-bit top-level input pins into
+  several one-bit inputs on one resolved child through adjacent named drive
+  calls before that child is triggered.
+- Recent R14 ATL pin-ingress multi-route selection:
+  `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1` activated the next bounded ATL feature
+  tree. The selected implementation will widen generated-child top-level
+  input-pin to resolved-child input routing from one scalar route to several
+  contiguous one-bit routes into the same resolved child, while keeping
+  child-to-pin egress, actor-to-actor widening, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
+  repeated activation, and cross-transaction continuation deferred. No
+  compiler behavior changed.
 - Recent roadmap R14 frontier truth-sync completion:
   `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1` removed lower R14 `Left` text that still
   named the completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` leaf as current.
@@ -8531,11 +8542,12 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Use [docs/TASK_TREE.md](docs/TASK_TREE.md) for the next PNT slice. No R14
-  task tree is currently active after the bounded ATL multi-route data-movement
-  tree closed, so the next parser, scheduler, emitter, contract, fixture, or
-  book change must first activate an existing relevant tree or create a new
-  task tree. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
+- Use the active feature tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) for
+  the next PNT slice. `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2` is the current
+  frontier and must own parser, scheduler, emitter, contract, fixture, or book
+  changes for the bounded ATL top-level input-pin to resolved-child input
+  multi-route subset. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and
+  feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

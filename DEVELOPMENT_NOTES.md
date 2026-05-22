@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL pin-ingress multi-route is a one-child route-set widening
+- `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1` selects the next bounded ATL widening
+  from the already-shipped one-child pin-ingress route.
+- The selected source shape keeps the existing drive-body `(sink source)`
+  order and uses adjacent drive calls as explicit timing points:
+  `(worker.payload pins.payload)` and a sibling route such as
+  `(worker.sideband pins.sideband)`.
+- This is deliberately not child-to-pin egress, actor-to-actor widening,
+  mux/storage insertion, fan-in/fan-out routing, ready/backpressure, payload
+  protocols, CDC/reset remapping, repeated child activation, or
+  cross-transaction routing.
+
 ## 2026-05-22: Closed leaves must not remain current frontiers
 - `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1` removes a stale lower-roadmap reference
   to `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` as the current frontier after that

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL pin-ingress multi-route selected
+- Completed `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1`.
+- Activated a new R14 task tree for the next bounded ATL data-route widening:
+  multiple one-bit top-level input pins into multiple one-bit inputs on one
+  resolved child through adjacent named drive calls before the child trigger.
+- The next frontier is `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2`: implement the
+  bounded generated-child pin-ingress multi-route subset with
+  fixture/report/top/HDL coverage and synchronized public docs.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 frontier truth sync completed
 - Completed `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1` and closed the maintenance
   tree.

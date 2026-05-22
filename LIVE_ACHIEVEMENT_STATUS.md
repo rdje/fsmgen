@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL pin-ingress multi-route selected
+- Completed `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1`.
+- The active R14 frontier is now `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2`.
+- The selected implementation will widen generated-child top-level input-pin
+  to resolved-child input routing from one scalar route to several
+  same-child, one-bit, contiguous drive-call routes.
+- No compiler behavior changed.
+
 ## 2026-05-22: Roadmap maintenance — R14 frontier truth synchronized
 - Completed `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1`.
 - The maintenance tree is closed.

@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL pin-ingress multi-route selected
+- Completed `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1`.
+- Activated a new R14 task tree for bounded generated-child ATL top-level
+  input-pin to resolved-child input multi-route scalar movement.
+- The selected implementation leaf will accept several one-bit pin-ingress
+  routes only when they target the same resolved child, live in one parent
+  transaction, use one scalar `(child.endpoint pins.input_pin)` pair per drive
+  body, and are called contiguously before the child trigger/event wait.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### Roadmap maintenance — R14 frontier truth synchronized
 - Completed `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1` and closed the maintenance
   tree.
