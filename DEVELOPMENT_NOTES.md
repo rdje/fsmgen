@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Generated-child source-shape coverage stays parser-diagnostic-only
+- `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1` selects
+  support-accounting promotion for malformed generated-child payloads whose
+  existing parser diagnostics already distinguish source-count failures from
+  nested payload shape failures.
+- The implementation should preserve the existing diagnostics and only add
+  maintained expected-failure corpus assets for representative `?fsmc` and
+  `?dtc` malformed source-count/source-shape cases.
+
 ## 2026-05-22: Wrong-kind generated-child sources are support-accounting failures
 - `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2` intentionally keeps the
   existing generated-child source-resolution behavior unchanged and promotes

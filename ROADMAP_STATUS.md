@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2` closed the latest
-  wrong-kind generated-child source realization support-accounting tree. The
-  next PNT step is to select the next inactive or ongoing task-tree frontier
-  before any implementation work.
+  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1` selected malformed
+  generated-child source count and nested payload shape as the next
+  support-accounting corpus widening. The active frontier is
+  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2`.
+- Recent R12 generated-child source-shape corpus-widening selection:
+  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1` activated a task tree
+  to promote already-focused malformed `?fsmc`/`?dtc` source-count and nested
+  payload-shape diagnostics into maintained expected-failure corpus coverage.
+  No compiler behavior changed.
 - Recent R12 wrong-kind child-source corpus-widening completion:
   `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2` added named
   expected-failure corpus entries for `?fsmc` resolving to standalone-DT

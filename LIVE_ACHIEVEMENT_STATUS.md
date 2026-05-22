@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — generated-child source-shape widening selected
+- Completed
+  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2`.
+- The selected implementation will promote malformed generated-child
+  source-count and nested payload-shape diagnostics into maintained
+  expected-failure corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 regression corpus — wrong-kind child-source coverage widened
 - Completed
   `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2`.

@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 generated-child source-shape corpus widening selected
+- Completed
+  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused malformed
+  generated-child source count and nested payload shape diagnostics into
+  maintained expected-failure corpus coverage.
+- The next frontier is
+  `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2`: add bounded fixtures
+  and catalog entries for representative malformed `?fsmc` and `?dtc`
+  source-count/source-shape cases, with synchronized docs and corpus gates.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 wrong-kind child-source corpus widening completed
 - Completed
   `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2`.
