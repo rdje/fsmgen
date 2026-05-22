@@ -477,13 +477,15 @@ counter construction.
 |--------|-------|---------|
 | `{tx}_cnt` | inferred | Repeat counter |
 
-Repeat counter width is inferred from the count expression. Decimal literal
-counts use the minimum width that can represent the loaded count. Declared
-actor constants use the resolved non-negative integer value as width evidence
-while preserving the authored constant token in the scheduled `.fsm` load.
-Named dynamic counts use their known interface or sample-derived width, and
-unknown forms fall back to 8 bits. Repeats nested in switch branches declare
-the same transaction counter, widened to the largest branch requirement.
+Repeat counter width is inferred from the count expression. Positive decimal
+literal counts use the minimum width that can represent the loaded count.
+Declared positive actor constants use the resolved integer value as width
+evidence while preserving the authored constant token in the scheduled `.fsm`
+load. Literal zero counts and actor constants resolving to zero fail closed
+before scheduled `.fsm` emission. Named dynamic counts use their known
+interface or sample-derived width, and unknown forms fall back to 8 bits.
+Repeats nested in switch branches declare the same transaction counter,
+widened to the largest branch requirement.
 
 The shipped repeat-body clause surface is named drive calls, `await`,
 `sample`, `update`, `set`, `shift_left`, `shift_right`, `assemble`,
@@ -1194,14 +1196,16 @@ generated do instance still has deterministic
 check is reached only after that instance reports fresh done.
 
 The repeat count is not an elaboration count. It is loaded into a runtime
-counter. A declared actor constant gives static counter-width evidence, but
-FSMGen still emits the authored constant as the load value. A named count may
-be a dynamic scalar signal when its width is known. Dynamic counts make latency
-data-dependent rather than statically fixed; verification and reports need
-either a known width-derived bound or an explicit future bound if tighter proof
-is required. Dynamic counts also make zero-count semantics important: a fully
-general repeat contract must either define zero-count as "skip the body" or
-reject zero as an illegal count before the loop body can run.
+counter. A declared positive actor constant gives static counter-width
+evidence, but FSMGen still emits the authored constant as the load value.
+Static zero counts fail closed rather than silently running the body once. A
+named count may be a dynamic scalar signal when its width is known. Dynamic
+counts make latency data-dependent rather than statically fixed; verification
+and reports need either a known width-derived bound or an explicit future bound
+if tighter proof is required. Dynamic counts still make runtime zero-count
+semantics important: a fully general repeat contract must either define
+zero-count as "skip the body" or reject zero as an illegal count before the
+loop body can run.
 
 For the shipped repeat-body spawn subset, `(spawn child as name)` may add
 optional `(params ...)`, `(bind ...)`, and `(domain NAME)` subclauses while

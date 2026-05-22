@@ -2186,11 +2186,14 @@ Current lowering:
 - The repeat body is expanded inline.
 - The repeat check state decrements with `<-` and loops while the counter is
   nonzero.
-- Repeat counter width is inferred. Decimal literal counts use the minimum
-  width that can represent the loaded count; actor constants use their
-  resolved non-negative integer value as width evidence while preserving the
+- Repeat counter width is inferred. Positive decimal literal counts use the
+  minimum width that can represent the loaded count; positive actor constants
+  use their resolved integer value as width evidence while preserving the
   authored load token; named dynamic counts use the known interface/sample
   width; unknown count forms fall back to `8`.
+- Repeat counts that are statically known to be zero, either as literal zero
+  or as an actor constant resolving to zero, fail closed before scheduled
+  `.fsm` emission.
 - Top-level repeats and switch-nested repeats register the shared transaction
   counter at the widest required width.
 - The shipped repeat-body clause surface is named drive calls, `await`,
@@ -2365,12 +2368,15 @@ Current lowering:
   subset.
 
 The repeat count is a runtime counter load value, not an elaboration count.
-Literal counts give statically reviewable loop bounds. Actor constants are
-static width evidence for the repeat counter, but the scheduled `.fsm` still
-loads the authored constant token. Named counts may be dynamic scalar signals
-when their width is known, but they make transaction latency data-dependent and
-require a clear zero-count policy before the loop can be treated as fully
-general. Repeat-body local `do` and repeat-body spawn support preserve the
+Positive literal counts give statically reviewable loop bounds. Actor
+constants resolving to positive integers are static width evidence for the
+repeat counter, but the scheduled `.fsm` still loads the authored constant
+token. Literal zero counts and actor constants resolving to zero fail closed
+under the bounded static zero-count policy. Named counts may be dynamic scalar
+signals when their width is known, but they make transaction latency
+data-dependent and still require a runtime zero-count policy before the loop
+can be treated as fully general. Repeat-body local `do` and repeat-body spawn
+support preserve the
 same runtime-counter rule: the loop reactivates a local child only after its
 fresh done pulse, or reactivates a lexically named static spawn child instance
 after same-body `await_all`, or after same-body

@@ -1060,10 +1060,12 @@ so `(repeat count body...)` requires one scalar non-empty count and at least
 one list-form body clause before repeat counter emission.
 Repeat counter width inference is checked by
 [t/1102-isf-repeat-counter-widths.t](../t/1102-isf-repeat-counter-widths.t),
-so decimal literal counts use the minimum width for the loaded count, actor
-constants use their resolved non-negative integer value as width evidence
+so positive decimal literal counts use the minimum width for the loaded count,
+positive actor constants use their resolved integer value as width evidence
 while preserving the authored load token, and sampled/runtime names continue
 to use known source width or the existing fallback.
+The same boundary test also checks that literal zero repeat counts and actor
+constants resolving to zero fail closed before scheduled `.fsm` emission.
 The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, the top-level

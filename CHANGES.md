@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat static zero-count policy shipped
+- Completed `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` and closed the task tree.
+- Added targeted fail-closed handling for repeat counts that are statically
+  known to be zero: literal zero counts and actor constants resolving to zero
+  now fail before scheduled `.fsm` emission.
+- Positive literal repeat counts, positive actor constants, sampled/runtime
+  dynamic repeat counts, repeat-body lowering, and dynamic runtime zero-count
+  semantics remain unchanged or deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused repeat tests; public/doc audits;
+  broad `./bin/ci-regression isf --no-book` with `Files=238, Tests=1591`;
+  `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — Repeat static zero-count policy tree selected
 - Completed selection work for `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.1`.
 - Activated a new R14 task tree for fail-closed handling of repeat counts

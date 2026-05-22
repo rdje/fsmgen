@@ -2,16 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY`. Current frontier:
-  `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2`.
-- Recent R14 repeat static zero-count policy selection:
-  `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.1` activated the bounded repeat policy
-  tree for fail-closed handling of repeat counts that are statically known to
-  be zero. The selected implementation will cover literal zero counts and
-  actor constants that resolve to zero without changing positive literal,
-  positive actor-constant, sampled/runtime dynamic repeat counts,
-  repeat-body lowering, parameterized specialization, or generated-top
-  respecialization.
+  Active task tree: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Recent R14 repeat static zero-count policy completion:
+  `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` shipped fail-closed handling for
+  repeat counts that are statically known to be zero and closed the task tree.
+  Literal zero counts and actor constants resolving to zero now fail before
+  scheduled `.fsm` emission. Positive literal repeat counts, positive
+  actor-constant repeat counts, sampled/runtime dynamic repeat counts,
+  repeat-body lowering, parameterized specialization, generated-top
+  respecialization, and fully dynamic runtime zero-count skip semantics remain
+  unchanged or deferred.
 - Recent R14 repeat actor-constant width completion:
   `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` shipped declared actor constants as
   repeat counter width evidence and closed the task tree. The repeat counter
@@ -5261,13 +5262,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY`.
-- Current frontier: `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2`.
-- Completion status: the PNT loop selected a bounded repeat zero-count policy
-  tree after `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS` closed. The first leaf recorded
-  task-tree ownership before implementation; the next leaf will fail closed
-  literal zero and zero-valued actor-constant repeat counts while leaving
-  positive and dynamic repeat counts unchanged.
+- Active task tree: none.
+- Current frontier: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Completion status: `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` closed the most
+  recent active R14 task tree after shipping fail-closed handling for repeat
+  counts statically known to be zero.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8879,9 +8879,8 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY` is active with frontier `.2`,
-  targeting bounded fail-closed handling for repeat counts that are statically
-  known to be zero.
+- Select or create the next roadmap-aligned task tree before any further code
+  changes. The repeat static zero-count policy tree is closed.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

@@ -98,4 +98,34 @@ ISF
 ISF
 };
 
+subtest 'statically zero repeat counts fail closed before scheduled emission' => sub {
+    assert_lower_rejected(<<'ISF', 'literal zero repeat count', qr/\ATransaction 'main': repeat count '0' is statically zero; zero-count repeat semantics remain deferred/);
+(actor repeat_literal_zero
+  (clock clk)
+  (interface (input start) (output flag) (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (repeat 0
+      (drive tick))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'actor constant zero repeat count', qr/\ATransaction 'main': repeat count 'COUNT' is statically zero; zero-count repeat semantics remain deferred/);
+(actor repeat_constant_zero
+  (clock clk)
+  (constants
+    (COUNT 0))
+  (interface (input start) (output flag) (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (repeat COUNT
+      (drive tick))
+    (complete done)))
+ISF
+};
+
 done_testing();

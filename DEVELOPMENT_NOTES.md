@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Static repeat zero counts are rejected
+- `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` rejects repeat counts that resolve
+  to zero before scheduled `.fsm` emission when the zero is statically visible
+  as a literal or actor constant.
+- The lowerer keeps positive repeat behavior unchanged and still preserves
+  authored actor-constant load tokens for positive constants. The static zero
+  check is policy only; it does not add a dynamic zero-count skip path.
+- Dynamic zero-count semantics remain deferred because a correct skip policy
+  must decide how entry-path samples and the first body state are bypassed at
+  runtime.
+
 ## 2026-05-22: Static repeat zero policy is fail-closed first
 - `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.1` selects a bounded policy slice for
   counts that are statically known to be zero.

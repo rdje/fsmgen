@@ -886,11 +886,13 @@ Repeat:
 ```
 
 Repeat counts are runtime counter load values, not elaboration directives.
-Decimal literals infer the minimum counter width for that literal. Declared
-actor constants infer width from their resolved non-negative integer value
-while preserving the authored constant token in the scheduled `.fsm` load.
-Known-width sampled/interface names keep the dynamic-repeat behavior and use
-their known source width; unknown names fall back to the existing default.
+Positive decimal literals infer the minimum counter width for that literal.
+Declared positive actor constants infer width from their resolved integer
+value while preserving the authored constant token in the scheduled `.fsm`
+load. Literal zero counts and actor constants resolving to zero fail closed
+before scheduled `.fsm` emission. Known-width sampled/interface names keep the
+dynamic-repeat behavior and use their known source width; unknown names fall
+back to the existing default.
 
 Switch:
 

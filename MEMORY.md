@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat static zero-count policy shipped
+- Completed `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` and closed the task tree.
+- FSMGen now rejects repeat counts that are statically known to be zero before
+  scheduled `.fsm` emission: literal zero counts and actor constants resolving
+  to zero fail closed with a targeted diagnostic.
+- Positive literal repeat counts, positive actor constants, sampled/runtime
+  dynamic repeat counts, repeat-body lowering, parameterized specialization,
+  generated-top respecialization, and fully dynamic runtime zero-count skip
+  semantics remain unchanged or deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/support-matrix/backlog chapters, roadmap status,
+  task-tree docs, and live docs.
+- Validation passed: LoweringIR/test syntax; focused repeat tests; public/doc
+  audits; broad `./bin/ci-regression isf --no-book` with `Files=238,
+  Tests=1591`; `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Repeat static zero-count policy tree selected
 - Completed selection work for `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.1`.
 - Activated a new R14 task tree for a bounded repeat zero-count policy.

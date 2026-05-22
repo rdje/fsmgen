@@ -3467,19 +3467,47 @@ sub _repeat_count_width {
     return 8 if ref($count);
     return $widths->{$count}
         if defined($count) && exists($widths->{$count}) && $widths->{$count} > 0;
-    if (defined($count) && _is_hdl_identifier($count)) {
-        my $constant = _actor_constant_by_name($actor, $count);
-        if ($constant) {
-            my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
-            return _repeat_count_width_for_integer($constant_value)
-                if defined $constant_value;
-        }
-    }
+    my $constant_value = _actor_constant_repeat_count_value($count, $actor);
+    return _repeat_count_width_for_integer($constant_value)
+        if defined $constant_value;
     if (defined($count)) {
         my $literal_width = _literal_repeat_count_width($count);
         return $literal_width if defined $literal_width;
     }
     return 8;
+}
+
+sub _static_repeat_count_value {
+    my ($count, $actor) = @_;
+    return undef unless defined($count) && !ref($count);
+
+    my $literal_value = _non_negative_integer_from_literal($count);
+    return $literal_value if defined $literal_value;
+
+    return _actor_constant_repeat_count_value($count, $actor);
+}
+
+sub _actor_constant_repeat_count_value {
+    my ($count, $actor) = @_;
+    return undef unless defined($count) && !ref($count);
+
+    if (_is_hdl_identifier($count)) {
+        my $constant = _actor_constant_by_name($actor, $count);
+        if ($constant) {
+            my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
+            return $constant_value if defined $constant_value;
+        }
+    }
+
+    return undef;
+}
+
+sub _reject_static_zero_repeat_count {
+    my ($count, $actor, $tn) = @_;
+    my $static_value = _static_repeat_count_value($count, $actor);
+    return 1 unless defined($static_value) && $static_value == 0;
+
+    confess "Transaction '$tn': repeat count '$count' is statically zero; zero-count repeat semantics remain deferred\n";
 }
 
 sub _literal_repeat_count_width {
@@ -6586,6 +6614,7 @@ sub _expand_loop_body {
 
 sub _ir_repeat {
     my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters; my @spawn_done_ports;
+    _reject_static_zero_repeat_count($cl->[1], $actor, $tn);
     my $width = _repeat_count_width($cl->[1], $widths, $actor);
     push @s, {name=>"${tn}_repeat_init_".$$ir++,kind=>'sequential',assignments=>[{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],transitions=>[]};
     for my $bc(@{$cl}[2..$#$cl]){next unless ref($bc)eq'ARRAY';my $bk=$bc->[0];

@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat static zero-count policy shipped
+- Completed `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` and closed the task tree.
+- FSMGen now fails closed for repeat counts that are statically known to be
+  zero: literal zero counts and actor constants resolving to zero are rejected
+  before scheduled `.fsm` emission.
+- Positive literal repeat counts, positive actor constants, sampled/runtime
+  dynamic repeat counts, repeat-body lowering, parameterized specialization,
+  generated-top respecialization, and fully dynamic runtime zero-count skip
+  semantics remain unchanged or deferred.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Validation passed: focused repeat tests, public/doc audits, broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1591`,
+  `mdbook build docs/book`, and `git diff --check`.
+
 ## 2026-05-22: R14 — Repeat static zero-count policy tree selected
 - Completed selection work for `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.1`.
 - Activated the active R14 task tree for a bounded static repeat zero-count
