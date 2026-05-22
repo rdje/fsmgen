@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Roadmap active-lane truth sync selected
+- Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1`.
+- Activated a roadmap-maintenance task tree after finding that
+  `ROADMAP_STATUS.md` still contained an old `R12-CUSTOM-SYSTEM-CLOCK`
+  active-frontier claim while `docs/TASK_TREE.md` had no active tree after the
+  latest R12 closure.
+- The next frontier is `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2`: repair the stale
+  live-roadmap active-lane/frontier claims before selecting the next
+  behavior-bearing PNT slice.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 composition parser-token corpus widening completed
 - Completed `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2` and closed the
   task tree.

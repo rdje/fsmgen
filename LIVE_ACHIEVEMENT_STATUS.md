@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: Roadmap maintenance — active-lane truth sync selected
+- Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1`.
+- The active maintenance frontier is now `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2`.
+- The selected implementation will remove stale active-lane/frontier claims
+  from `ROADMAP_STATUS.md` before the next behavior-bearing PNT selection.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 regression corpus — parser-token coverage widened
 - Completed `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2`.
 - The task tree is closed.

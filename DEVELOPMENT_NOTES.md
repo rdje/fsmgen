@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Roadmap status truth sync is maintenance work
+- `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1` selects a small maintenance tree because
+  live roadmap text must not contradict `docs/TASK_TREE.md` about active
+  frontiers.
+- This tree is intentionally documentation-only; it repairs status truth before
+  the next behavior-bearing PNT selection and does not change compiler
+  behavior.
+
 ## 2026-05-22: Composition parser-token failures are support-accounting failures
 - `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2` keeps the existing
   parser-token/top-symbol diagnostics intact and promotes seven focused

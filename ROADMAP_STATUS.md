@@ -1,11 +1,14 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R12`.
-- Active `R12` task tree: none currently active. The most recent R12 task
-  tree, `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING`, is closed; the next
-  PNT pass should select the next inactive or ongoing roadmap-aligned tree
-  before implementation.
+- Active lane: `roadmap maintenance`.
+- Active task tree:
+  `ROADMAP-ACTIVE-LANE-TRUTH-SYNC`. Current frontier:
+  `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2`.
+- Recent roadmap active-lane truth-sync selection:
+  `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1` activated a maintenance tree to remove
+  stale active-lane/frontier claims before selecting the next behavior-bearing
+  PNT slice. No compiler behavior changed.
 - Recent R12 composition parser-token corpus-widening completion:
   `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2` added named
   expected-failure corpus entries for malformed verbose `?ports`

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### Roadmap maintenance — active-lane truth sync selected
+- Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1`.
+- Activated a maintenance task tree to repair stale active-lane/frontier text
+  in `ROADMAP_STATUS.md` before selecting the next behavior-bearing PNT slice.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R12 regression corpus — parser-token coverage widened
 - Completed `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2` and closed the
   task tree.

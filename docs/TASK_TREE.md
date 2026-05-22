@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-ACTIVE-LANE-TRUTH-SYNC` | `active` | `roadmap maintenance` | `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` | [docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md](docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md) |
 
 ## Proposed Task Trees
 
