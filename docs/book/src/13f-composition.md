@@ -891,11 +891,36 @@ Schedule JSON keeps the existing public route entry shape and reports
 `kind: "vector_actor_to_pin_handoff"`, `width: 8`, and
 `width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"`.
 
-This vector pin-egress leaf is intentionally exact-width and one-route only.
 If the child output width and top-level output width differ, lowering fails
 before scheduled `.fsm` emission. FSMGen does not infer width adaptation,
 packing, truncation, extension, slicing, route mux/storage,
 fan-in/fan-out, ready/backpressure, or a payload protocol for the route.
+
+The exact-width vector multi-route form of that same one-child pin-egress path
+is shipped as `isf/atl_resolved_child_pin_egress_vector_multi_pipeline.isf`.
+
+It routes both child outputs to top-level output pins after the child event
+wait:
+
+```lisp
+(drive publish_result
+  (pins.result worker.payload))
+(drive publish_status
+  (pins.status worker.status))
+```
+
+In that fixture, the result route is 8 bits and the status route is 4 bits.
+Each route reports `kind: "vector_actor_to_pin_handoff"` with
+`width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"`.
+The route set keeps the same one-child, same-parent-transaction,
+unique-child-output, unique-top-output, contiguous post-event drive-call rules
+as the scalar pin-egress multi-route subset. A route-local child-output to
+top-output width mismatch fails closed before scheduled `.fsm` emission.
+
+This vector multi-route subset is still not a route fabric. FSMGen does not
+mix scalar and vector routes in one set, infer width adaptation, add storage,
+insert muxing, support fan-in/fan-out, add CDC/reset remapping, or infer
+ready/backpressure or payload protocols for these routes.
 
 The bounded multi-route extension of that one-child pin-egress path is shipped
 as `isf/atl_resolved_child_pin_egress_multi_pipeline.isf`.
@@ -907,10 +932,9 @@ separate parent source handoffs to separate top-level output pins, and the
 public report keeps both routes in `actor_network.data_movements[]` with
 `kind: "scalar_actor_to_pin_handoff"`.
 
-This is still a one-child one-to-one route set. It does not include vector
-pin-egress multi-route sets, width adaptation, fan-in/fan-out,
-route mux/storage, CDC/reset remapping, ready/backpressure, or payload
-protocols.
+This is still a one-child one-to-one scalar route set. It does not include
+width adaptation, fan-in/fan-out, route mux/storage, CDC/reset remapping,
+ready/backpressure, or payload protocols.
 
 The selected generated-child actor-to-actor data-route shape across two
 resolved children reuses the existing `(sink source)` drive-body movement

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -58,7 +58,7 @@ pin and resolved child endpoint widths before scheduled `.fsm` emission.
 ## Task Tree
 
 - ID: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE`
-  Status: `active`
+  Status: `done`
   Goal: `ship exact-width vector generated-child ATL top-level pin multi-route sets`
   Children: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1`,
   `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`,
@@ -86,17 +86,25 @@ pin and resolved child endpoint widths before scheduled `.fsm` emission.
   Commit: `this commit: ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2: ship ATL pin-ingress vector multi-route`
 
 - ID: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3`
-  Status: `pending`
+  Status: `done`
   Goal: `implement exact-width vector generated-child pin-egress multi-route sets`
   Acceptance: `matching-width resolved-child output to top-level output vector route sets lower through parent/top/HDL artifacts, mismatches fail closed, and public docs describe the shipped boundary`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`;
+  `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`;
+  `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`;
+  `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`;
+  `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`;
+  `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1328-isf-atl-trigger-wait-fixture-coverage.t t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`;
+  `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`;
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
+  `git diff --check`
+  Commit: `this commit: ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3: ship ATL pin-egress vector multi-route`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` | `pending` | Pin-egress follows the shipped ingress vector multi-route subset so the inverse post-event direction can reuse the same exact-width vector route-set policy. |
+| 1 | `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` | `done` | Pin-egress followed the shipped ingress vector multi-route subset so the inverse post-event direction could reuse the same exact-width vector route-set policy. |
 
 ## Decisions
 
@@ -115,6 +123,11 @@ pin and resolved child endpoint widths before scheduled `.fsm` emission.
   vector pin-ingress routes when all routes share one resolved child and
   parent transaction, remain adjacent before the trigger, and prove exact
   route-local top-input/child-input widths.
+- `2026-05-22`: Shipped `.3` with the symmetric actor-to-pin policy. The
+  existing `(sink source)` route syntax now covers multiple vector pin-egress
+  routes when all routes share one resolved child and parent transaction,
+  remain adjacent after the event wait, and prove exact route-local
+  child-output/top-output widths.
 
 ## Open Questions
 
@@ -130,6 +143,7 @@ pin and resolved child endpoint widths before scheduled `.fsm` emission.
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-22` | `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `passed: Files=238, Tests=1565` |
+| `2026-05-22` | `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1328-isf-atl-trigger-wait-fixture-coverage.t t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `passed: Files=238, Tests=1571` |
 
 ## Commit Log
 
@@ -137,6 +151,7 @@ pin and resolved child endpoint widths before scheduled `.fsm` emission.
 | --- | --- | --- |
 | `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1` | `this commit: ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1: select ATL pin vector multi-route` | Selection committed. |
 | `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2` | `this commit: ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2: ship ATL pin-ingress vector multi-route` | Exact-width vector pin-ingress route-set committed. |
+| `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` | `this commit: ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3: ship ATL pin-egress vector multi-route` | Exact-width vector pin-egress route-set committed. |
 
 ## Changelog
 
@@ -146,3 +161,4 @@ pin and resolved child endpoint widths before scheduled `.fsm` emission.
   vector same-child pin-ingress multi-route sets.
 - `2026-05-22`: Completed `.2`: the active frontier is now `.3`, exact-width
   vector same-child pin-egress multi-route sets.
+- `2026-05-22`: Completed `.3` and closed the tree.

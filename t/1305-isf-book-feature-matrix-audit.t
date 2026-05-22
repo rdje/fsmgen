@@ -130,6 +130,8 @@ my @required_examples = (
     'vector_pin_to_actor_handoff',
     'top_level_input_pin_resolved_child_endpoint_exact_width',
     'one exact-width vector resolved-child output to top-level output route',
+    'vector same-child pin-egress multi-route extension',
+    'exact matching child-output/top-output width',
     'vector_actor_to_pin_handoff',
     'top_level_output_pin_resolved_child_endpoint_exact_width',
     'actor-to-actor route between two resolved children through the generated ATL',

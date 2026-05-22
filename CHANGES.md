@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL pin-egress vector multi-route shipped
+- Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` and closed the task tree.
+- Added exact-width generated-child pin-egress vector multi-route lowering.
+  The parser now accepts same-child route sets from resolved child output
+  endpoints into top-level output pins when every route has unique
+  child-output/top-pin endpoints, adjacent post-event drive calls, and a
+  matching positive child-output/top-pin width.
+- Added `isf/atl_resolved_child_pin_egress_vector_multi_pipeline.isf` and
+  focused coverage for parent/child/top `.fsm` artifacts, strict schedule JSON
+  parity, strict outdir materialization, plain and strict HDL generation,
+  generated top vector links, and width-mismatch diagnostics.
+- Schedule JSON keeps the existing `actor_network.data_movements[]` keys and
+  reports each route as `kind: "vector_actor_to_pin_handoff"` with
+  `width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"`.
+- Synchronized the public ISF spec, downstream handoff spec, public contract,
+  ATL design proposal, mdBook, roadmap status, and task-tree docs. Width
+  adaptation, mixed scalar/vector route sets, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
+  repeated activation, and cross-transaction continuation remain deferred.
+
+## 2026-05-22
 ### R14 — ATL pin-ingress vector multi-route shipped
 - Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`.
 - Added exact-width generated-child pin-ingress vector multi-route lowering.

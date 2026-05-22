@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL vector pin-egress multi-routes mirror ingress
+- `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` removes the generated-child pin-egress
+  one-vector-route ceiling while keeping the same route-set safety rails as
+  scalar egress: one resolved child, one parent transaction, unique child
+  outputs, unique top-level output pins, and adjacent drive calls after the
+  child event wait.
+- Width evidence remains route-local. Each child output/top-level output pair
+  must match exactly, and the generated parent handoff plus generated-top HDL
+  link carry that route width. No route-set-wide payload protocol, mux,
+  storage, or width conversion is inferred.
+- This closes the vector pin multi-route tree. Mixed scalar/vector pin route
+  sets are still deferred because they would deliberately change route-kind
+  grouping semantics and downstream route consumers should see that as a
+  selected feature, not an incidental side effect of vector egress.
+
 ## 2026-05-22: ATL vector pin-ingress multi-routes stay route-local
 - `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2` intentionally removes only the
   one-vector-route ceiling from the generated-child pin-ingress selector. It

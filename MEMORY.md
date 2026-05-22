@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL pin-egress vector multi-route shipped
+- Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` and closed the task tree.
+- FSMGen now accepts same-child generated-child resolved-child output to
+  top-level output-pin ATL route sets where every route is vector, each route
+  has a unique child output endpoint and unique top-level output pin, the
+  drive calls are adjacent after the child event wait, and each child
+  output/top-level pin pair declares the same positive width.
+- Added `isf/atl_resolved_child_pin_egress_vector_multi_pipeline.isf` plus
+  focused parent/child/top `.fsm`, strict schedule JSON, strict outdir, plain
+  HDL, strict HDL, and width-mismatch fail-closed coverage.
+- Schedule JSON keeps the existing `actor_network.data_movements[]` entry
+  shape and reports each exact-width vector pin-egress route as
+  `vector_actor_to_pin_handoff` with
+  `width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook composition/support/backlog chapters, roadmap
+  status, task-tree docs, and live docs. Width adaptation, mixed
+  scalar/vector route sets, route mux/storage, fan-in/fan-out, CDC/reset
+  remapping, ready/backpressure, payload protocols, repeated activation, and
+  cross-transaction continuation remain deferred.
+
 ## 2026-05-22: ATL pin-ingress vector multi-route shipped
 - Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`.
 - FSMGen now accepts same-child generated-child top-level input-pin to
