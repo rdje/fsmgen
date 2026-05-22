@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R12 regression corpus — RTL child source-shape coverage widened
+- Completed `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2`.
+- Added expected-failure fixtures/catalog entries for multi-token `?rtl`
+  aliases and unsupported nested `?rtl` payload blocks.
+- Added stable diagnostic codes for external RTL child source-count and
+  source-shape failures and synchronized regression-corpus docs plus mdBook
+  composition/error coverage.
+- No parser or HDL-generation behavior changed.
+
+## 2026-05-22
 ### R12 regression corpus — RTL child source-shape widening selected
 - Completed `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained expected-failure

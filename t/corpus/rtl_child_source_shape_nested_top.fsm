@@ -1,0 +1,7 @@
+(?top:rtl_child_source_shape_nested_top
+  (?rtl:u_uart
+    (options
+      (WIDTH 8)
+    )
+  )
+)

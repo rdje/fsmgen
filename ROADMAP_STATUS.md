@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1` selected malformed external
-  RTL child source count and nested payload shape as the next
-  support-accounting corpus widening. The active frontier is
-  `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2`.
+  `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2` closed the latest malformed
+  external RTL child source count/payload-shape support-accounting tree. The
+  next PNT step is to select the next inactive or ongoing task-tree frontier
+  before any implementation work.
+- Recent R12 RTL child source-shape corpus-widening completion:
+  `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2` added named expected-failure
+  corpus entries for multi-token `?rtl` aliases and unsupported nested `?rtl`
+  payload blocks, with stable diagnostic-code metadata and coverage through
+  pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest,
+  corpus accounting, regression-corpus docs, and the mdBook. No parser or HDL
+  behavior changed.
 - Recent R12 RTL child source-shape corpus-widening selection:
   `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1` activated a task tree to
   promote already-focused malformed `?rtl` source-count and nested
@@ -7755,6 +7762,11 @@ Done:
   malformed generated-child source-count and nested payload-shape failures:
   - [t/corpus/generated_child_source_count_fsmc_top.fsm](t/corpus/generated_child_source_count_fsmc_top.fsm) and [t/corpus/generated_child_source_count_dtc_top.fsm](t/corpus/generated_child_source_count_dtc_top.fsm) record missing flat source names for `?fsmc` and `?dtc` as expected failures with `FSMGEN_COMPOSITION_GENERATED_CHILD_SOURCE_COUNT`,
   - [t/corpus/generated_child_source_shape_fsmc_top.fsm](t/corpus/generated_child_source_shape_fsmc_top.fsm) and [t/corpus/generated_child_source_shape_dtc_top.fsm](t/corpus/generated_child_source_shape_dtc_top.fsm) record unsupported nested generated-child payload blocks as expected failures with `FSMGEN_COMPOSITION_GENERATED_CHILD_SOURCE_SHAPE`,
+  - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
+- The maintained composition-contract expected-failure corpus now accounts for
+  malformed external RTL child source-count and nested payload-shape failures:
+  - [t/corpus/rtl_child_source_count_multi_token_top.fsm](t/corpus/rtl_child_source_count_multi_token_top.fsm) records a `?rtl` alias with multiple flat module references as an expected failure with `FSMGEN_COMPOSITION_RTL_CHILD_SOURCE_COUNT`,
+  - [t/corpus/rtl_child_source_shape_nested_top.fsm](t/corpus/rtl_child_source_shape_nested_top.fsm) records an unsupported nested `?rtl` payload block as an expected failure with `FSMGEN_COMPOSITION_RTL_CHILD_SOURCE_SHAPE`,
   - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.

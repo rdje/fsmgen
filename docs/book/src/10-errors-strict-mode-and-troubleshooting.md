@@ -374,8 +374,9 @@ contract. Current out-of-support examples include:
   child sources, wrong-kind external generated-child roots such as `?fsmc`
   resolving to `?dt:name` or `?dtc` resolving to `?fsm:name`, malformed
   `?fsmc` / `?dtc` source counts, unsupported nested `?fsmc` / `?dtc`
-  payload blocks, or external RTL metadata that is missing, non-flat, empty,
-  duplicated, wrongly typed, or system-output directed
+  payload blocks, malformed `?rtl` module-reference counts, unsupported nested
+  `?rtl` payload blocks, or external RTL metadata that is missing, non-flat,
+  empty, duplicated, wrongly typed, or system-output directed
 
 This list is not a replacement for the exact diagnostic text. It is the book
 home for the active rejection policy: unsupported syntax should be rejected

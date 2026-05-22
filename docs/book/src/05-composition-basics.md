@@ -439,6 +439,13 @@ Here `uart_tx` is the reused RTL module/interface contract, while `u_uart_a`
 and `u_uart_b` are the actual child instance names used in links and emitted
 HDL.
 
+Each `?rtl` instance must use either the shorthand `(?rtl:module_name)`, the
+explicit alias `(?rtl:instance_name module_name)`, or the semantic nested form
+`(?rtl:instance_name (module module_name) (params ...))`. Extra flat module
+names and unsupported nested blocks are rejected before `.rtlif` metadata is
+loaded, because `?rtl` declarations describe an external module contract rather
+than raw backend text.
+
 If an external RTL module is parameterized, keep that contract semantic too:
 declare supported parameter/generic names in an optional `.rtlif`
 `(params (NAME default_value) ...)` block, then override declared names on the

@@ -619,6 +619,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'composition_contract',
         summary => 'A generated child declaration used an unsupported nested payload shape.',
     },
+    FSMGEN_COMPOSITION_RTL_CHILD_SOURCE_COUNT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'An external RTL child declaration used the wrong number of module references.',
+    },
+    FSMGEN_COMPOSITION_RTL_CHILD_SOURCE_SHAPE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'An external RTL child declaration used an unsupported nested payload shape.',
+    },
     FSMGEN_RTLIF_SYSTEM_PORT_DIRECTION => {
         severity => 'error',
         stability => 'stable',

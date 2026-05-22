@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING` | `active` | `R12` | `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2` | [docs/tasks/R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.md](docs/tasks/R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.md](docs/tasks/R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.md) |
 | `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.md](docs/tasks/R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.md) |
 | `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.md](docs/tasks/R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.md) |
 | `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.md](docs/tasks/R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.md) |

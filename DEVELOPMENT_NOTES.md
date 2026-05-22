@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: RTL child source count and payload shape are support-accounting failures
+- `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2` keeps the existing parser
+  diagnostics intact and promotes the two representative malformed external
+  RTL child declaration classes into maintained corpus truth.
+- `FSMGEN_COMPOSITION_RTL_CHILD_SOURCE_COUNT` covers multi-token alias forms
+  because explicit `?rtl:instance` declarations accept exactly one flat module
+  reference before metadata lookup.
+- `FSMGEN_COMPOSITION_RTL_CHILD_SOURCE_SHAPE` covers unsupported nested
+  payload blocks because the only nested external RTL semantic blocks shipped
+  today are `(module module_name)` and `(params (NAME value) ...)`.
+
 ## 2026-05-22: RTL child source-shape coverage stays parser-diagnostic-only
 - `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1` selects support-accounting
   promotion for malformed external RTL child declarations whose existing parser
