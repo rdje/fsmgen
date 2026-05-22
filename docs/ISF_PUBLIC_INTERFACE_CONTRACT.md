@@ -280,6 +280,12 @@ simple start boundary and one simple completion boundary until a later
 contract explicitly adds activation fan-in, completion fan-out,
 start-condition arbitration, setup/cleanup, continuation, storage, muxing,
 backpressure, or payload metadata.
+The shared route-drive argument boundary also keeps the public surface
+unchanged: selected ATL route drive definitions are unparameterized and
+selected route drive calls are argument-free for actor-to-actor, pin-ingress,
+and pin-egress data-movement routes. Parameterized route drives and route
+drive-call actuals fail closed before drive actual binding, payload protocols,
+route mux/storage, or additional report keys are claimed.
 The shipped boundary-simplicity hardening keeps that surface unchanged as
 well: the start and completion boundaries must remain body-free until a later
 contract explicitly adds activation-body sampling, completion payload/fan-out,

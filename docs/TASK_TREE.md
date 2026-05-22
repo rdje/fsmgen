@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY` | `active` | `R14` | `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` | [docs/tasks/ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.md](docs/tasks/ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.md](docs/tasks/ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.md) |
 | `ISF-ATL-PIN-EGRESS-MULTI-ROUTE` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-PIN-EGRESS-MULTI-ROUTE.md](docs/tasks/ISF-ATL-PIN-EGRESS-MULTI-ROUTE.md) |
 | `ISF-ATL-PIN-INGRESS-MULTI-ROUTE` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-PIN-INGRESS-MULTI-ROUTE.md](docs/tasks/ISF-ATL-PIN-INGRESS-MULTI-ROUTE.md) |
 | `ROADMAP-R14-FRONTIER-TRUTH-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-FRONTIER-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-FRONTIER-TRUTH-SYNC.md) |

@@ -1,8 +1,21 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14` / `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY`.
-  Current frontier: `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2`.
+- Active lane: none selected.
+  The previous PNT frontier `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` is
+  complete; the next PNT slice must select or create a task tree before code
+  changes.
+- Recent R14 ATL route drive argument-boundary completion:
+  `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` shipped the shared ATL route-drive
+  formal/actual-argument boundary across generated-child actor-to-actor,
+  top-level pin-ingress, and top-level pin-egress data movement. FSMGen now
+  rejects parameterized selected ATL route drive definitions with a
+  route-kind-neutral `ATL scalar data movement` diagnostic and proves
+  pin-ingress/pin-egress route drive-call actual arguments fail closed before
+  scheduled `.fsm` emission. Route payload binding, expression movement, route
+  mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload
+  protocols, repeated activations, and cross-transaction continuation remain
+  deferred.
 - Recent R14 ATL route drive argument-boundary selection:
   `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1` activated the next bounded ATL
   hardening tree. The selected implementation will make parameterized selected
@@ -4968,11 +4981,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree:
-  [docs/tasks/ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.md](docs/tasks/ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.md).
-- Current frontier: `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2`.
-- Selection rule: satisfied for the current frontier; the next behavior-bearing
-  slice is owned by the active R14 task tree before implementation starts.
+- Active task tree: none selected.
+- Current frontier: none selected; the latest completed PNT frontier
+  `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` is closed.
+- Selection rule: the next behavior-bearing slice must select or create its
+  owning task tree before implementation starts.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8584,12 +8597,13 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Complete
-  `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` from
-  [docs/tasks/ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.md](docs/tasks/ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.md):
-  harden the shared ATL route-drive formal/actual-argument boundary across
-  shipped actor-to-actor, pin-ingress, and pin-egress route kinds, then close
-  or deliberately advance the tree.
+- Select or create the next feature tree in
+  [docs/TASK_TREE.md](docs/TASK_TREE.md) before the next PNT implementation
+  slice. The completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` leaf now owns
+  the shared route-drive formal/actual-argument boundary across shipped ATL
+  route kinds; future parser, scheduler, emitter, contract, fixture, or book
+  changes need a fresh active tree. Keep `ISF-PUBLIC-CONTRACT` cross-cutting
+  and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

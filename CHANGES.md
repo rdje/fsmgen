@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL route drive argument boundary shipped
+- Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` and closed the task
+  tree.
+- Made the selected ATL route-drive formal-parameter diagnostic kind-neutral:
+  route drives now fail closed as `ATL scalar data movement` before the
+  scheduler infers actor-to-actor, pin-ingress, or pin-egress routing.
+- Added focused pin-ingress and pin-egress coverage for parameterized route
+  drive definitions and route drive calls with actual arguments.
+- Synchronized the public ISF spec, downstream handoff spec, public contract,
+  ATL design proposal, mdBook, roadmap status, and task-tree docs. Drive actual
+  binding, expression movement, route mux/storage, ready/backpressure, payload
+  protocols, repeated activation, and cross-transaction continuation remain
+  deferred.
+
+## 2026-05-22
 ### R14 — ATL route drive argument boundary selected
 - Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1`.
 - Activated a new R14 task tree to make parameterized ATL route drive

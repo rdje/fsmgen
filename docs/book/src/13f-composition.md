@@ -1040,10 +1040,11 @@ remain deferred until a later task tree selects and verifies a wider
 protocol.
 
 Parameterized route drive definitions and drive-call actual arguments are
-also outside this route. `(drive (forward_payload value) ...)` and
-`(drive forward_payload value)` fail closed in the generated-child
-actor-to-actor route subset before drive actual binding, expression movement,
-or payload protocols can be inferred.
+also outside the shipped ATL route families. `(drive (forward_payload value)
+...)` and `(drive forward_payload value)` fail closed in the generated-child
+actor-to-actor, pin-ingress, and pin-egress route subsets before drive actual
+binding, expression movement, route mux/storage, or payload protocols can be
+inferred.
 
 Route endpoint expressions are also outside this route. The source half of
 the drive-body pair must be the scalar endpoint `reader.payload`; a source

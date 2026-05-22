@@ -1288,6 +1288,24 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        pin_ingress_atl_fixture_variant(
+            default_pin_ingress_multi_library(),
+            { route_drive_parameters => 1 },
+        ),
+        qr/drive 'feed_worker' body ATL scalar data movement does not accept drive parameters in the current subset/,
+        'pin-ingress data route fails closed when the route drive declares formal parameters',
+    );
+
+    lower_source_fails_like(
+        pin_ingress_atl_fixture_variant(
+            default_pin_ingress_multi_library(),
+            { drive_call_actual => 1 },
+        ),
+        qr/transaction 'run' ATL scalar data movement drive '\(drive feed_worker\)' does not accept actual arguments in the current subset/,
+        'pin-ingress data route fails closed when the route drive call carries an actual argument',
+    );
+
+    lower_source_fails_like(
         pin_egress_atl_fixture_variant(<<'LIBRARY'),
 (library common.packet
   (exports
@@ -1367,6 +1385,24 @@ LIBRARY
         ),
         qr/ATL generated handoff signal 'result' is used by both actor data movement 'publish_result' sink endpoint and actor data movement 'publish_status'/,
         'pin-egress multi-route data route fails closed when two routes reuse one top-level output pin',
+    );
+
+    lower_source_fails_like(
+        pin_egress_atl_fixture_variant(
+            default_pin_egress_multi_library(),
+            { route_drive_parameters => 1 },
+        ),
+        qr/drive 'publish_result' body ATL scalar data movement does not accept drive parameters in the current subset/,
+        'pin-egress data route fails closed when the route drive declares formal parameters',
+    );
+
+    lower_source_fails_like(
+        pin_egress_atl_fixture_variant(
+            default_pin_egress_multi_library(),
+            { drive_call_actual => 1 },
+        ),
+        qr/transaction 'run' ATL scalar data movement drive '\(drive publish_result\)' does not accept actual arguments in the current subset/,
+        'pin-egress data route fails closed when the route drive call carries an actual argument',
     );
 
     lower_source_fails_like(
@@ -1648,7 +1684,7 @@ LIBRARY
 
     lower_source_fails_like(
         generated_child_actor_route_fixture({ route_drive_parameters => 1 }),
-        qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement does not accept drive parameters in the current subset/,
+        qr/drive 'forward_payload' body ATL scalar data movement does not accept drive parameters in the current subset/,
         'generated-child actor-to-actor data route fails closed when the route drive declares formal parameters',
     );
 
@@ -3314,7 +3350,14 @@ ISF
 }
 
 sub pin_ingress_atl_fixture_variant {
-    my ($library) = @_;
+    my ($library, $options) = @_;
+    $options ||= {};
+    my $route_drive = $options->{route_drive_parameters}
+        ? "  (drive (feed_worker value)\n"
+        : "  (drive feed_worker\n";
+    my $route_drive_call = $options->{drive_call_actual}
+        ? "    (drive feed_worker start)\n"
+        : "    (drive feed_worker)\n";
     my $actor = <<'ISF';
 (actor atl_resolved_child_pin_ingress_pipeline
   (clock clk)
@@ -3326,11 +3369,15 @@ sub pin_ingress_atl_fixture_variant {
   (imports
     (library common.packet as pkt_lib))
   (instance worker of pkt_lib.packet_worker)
-  (drive feed_worker
+ISF
+    $actor .= $route_drive;
+    $actor .= <<'ISF';
     (worker.payload pins.payload))
   (transaction run
     (on start)
-    (drive feed_worker)
+ISF
+    $actor .= $route_drive_call;
+    $actor .= <<'ISF';
     (trigger worker.process)
     (await worker.done)
     (complete done)))
@@ -3396,17 +3443,19 @@ LIBRARY
 sub pin_egress_atl_fixture_variant {
     my ($library, $options) = @_;
     $options ||= {};
+    my $route_drive = $options->{route_drive_parameters}
+        ? "  (drive (publish_result value)\n"
+        : "  (drive publish_result\n";
+    my $route_drive_call = $options->{drive_call_actual}
+        ? "    (drive publish_result start)\n"
+        : "    (drive publish_result)\n";
     my $clauses = $options->{drive_before_event_wait}
-        ? <<'CLAUSES'
-    (drive publish_result)
-    (trigger worker.process)
-    (await worker.done)
-CLAUSES
-        : <<'CLAUSES';
-    (trigger worker.process)
-    (await worker.done)
-    (drive publish_result)
-CLAUSES
+        ? $route_drive_call
+            . "    (trigger worker.process)\n"
+            . "    (await worker.done)\n"
+        : "    (trigger worker.process)\n"
+            . "    (await worker.done)\n"
+            . $route_drive_call;
 
     my $actor = <<'ISF';
 (actor atl_resolved_child_pin_egress_pipeline
@@ -3419,7 +3468,9 @@ CLAUSES
   (imports
     (library common.packet as pkt_lib))
   (instance worker of pkt_lib.packet_worker)
-  (drive publish_result
+ISF
+    $actor .= $route_drive;
+    $actor .= <<'ISF';
     (pins.result worker.payload))
   (transaction run
     (on start)

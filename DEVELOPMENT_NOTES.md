@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL route-drive argument diagnostics are route-kind neutral
+- `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` changes the formal-parameter
+  rejection from actor-to-actor-specific wording to the shared
+  `ATL scalar data movement` boundary because parser validation rejects
+  parameterized selected route drives before the final route kind is selected.
+- Pin-ingress and pin-egress now have focused coverage for both route-drive
+  formal parameters and route drive-call actual arguments, matching the
+  already-covered actor-to-actor route family.
+- The accepted route behavior is unchanged: route calls remain one-cycle timing
+  points, not payload-binding procedure calls.
+
 ## 2026-05-22: ATL route drives stay timing points, not parameterized procedures
 - `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1` selects a shared hardening slice
   for the shipped ATL route families.

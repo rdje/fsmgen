@@ -1025,7 +1025,7 @@ sub _accept_selected_atl_data_movement_drive {
     return undef unless @endpoint_entries;
 
     my $context = "drive '$drive_name' body";
-    confess "Error: $context ATL scalar actor-to-actor data movement does not accept drive parameters in the current subset\n"
+    confess "Error: $context ATL scalar data movement does not accept drive parameters in the current subset\n"
         if @{($drive || {})->{params} || []};
     confess "Error: $context ATL scalar actor-to-actor data movement requires exactly one drive-body pair in the current subset\n"
         unless @$body == 1 && @endpoint_entries == 1;

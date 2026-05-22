@@ -545,8 +545,9 @@ trigger, event, data, or named-drive request handoffs fail closed in parser
 coverage for normal `.isf` source and lowerer coverage for malformed
 scheduler-facing metadata.
 
-The shipped route drive argument hardening keeps the generated-child
-actor-to-actor route drive unparameterized. The route drive call remains
+The shipped route drive argument hardening keeps each selected ATL
+data-movement route drive unparameterized across actor-to-actor,
+pin-ingress, and pin-egress route families. The route drive call remains
 argument-free: `(drive (forward_payload value) ...)` and
 `(drive forward_payload value)` remain outside this subset before drive
 actual binding, expression movement, payload protocols, storage, muxing,

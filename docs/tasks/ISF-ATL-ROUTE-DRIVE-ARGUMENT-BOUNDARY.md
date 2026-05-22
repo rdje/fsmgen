@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -50,7 +50,7 @@ route kind has not yet been selected.
 ## Task Tree
 
 - ID: `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY`
-  Status: `active`
+  Status: `done`
   Goal: `harden ATL route drive formal and actual-argument rejection across shipped data-movement route kinds`
   Children: `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1`,
   `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2`
@@ -63,17 +63,17 @@ route kind has not yet been selected.
   Commit: `this commit: ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1: select ATL route-drive argument boundary`
 
 - ID: `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2`
-  Status: `pending`
+  Status: `done`
   Goal: `implement and document the shared ATL route-drive argument boundary`
   Acceptance: `pin-ingress and pin-egress formal/actual-argument fail-closed coverage, kind-neutral diagnostics, synchronized public docs, and focused gates prove the boundary`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t; prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
+  Commit: `this commit: ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2: harden ATL route-drive argument boundary`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` | `pending` | The selection leaf is complete; the next slice implements and documents the shared ATL route-drive argument boundary. |
+| 1 | `closed` | `done` | `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` implemented and documented the shared ATL route-drive argument boundary across shipped route kinds. |
 
 ## Decisions
 
@@ -99,15 +99,19 @@ route kind has not yet been selected.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-22` | `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed`; ISF regression gate reported `Files=238, Tests=1541` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1` | `this commit: ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1: select ATL route-drive argument boundary` | Selection committed. |
-| `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` | `pending` | `pending` |
+| `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` | `this commit: ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2: harden ATL route-drive argument boundary` | Implementation committed. |
 
 ## Changelog
 
 - `2026-05-22`: Created active R14 task tree and selected the shared ATL
   route-drive argument-boundary implementation leaf.
+- `2026-05-22`: Hardened the route-drive formal/actual-argument boundary for
+  pin-ingress and pin-egress route families, synchronized public docs, and
+  closed the tree.

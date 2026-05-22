@@ -4194,11 +4194,14 @@ mdBook now gives route lifetime/value boundary, generated handoffs, handoff
 remapping, diagnostic ownership, route muxing/storage, fan-in/fan-out,
 ready/backpressure, and payload protocols their own generated-child route
 term subsections.
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.80` hardens the same route boundary for
-drive arguments: generated-child actor-to-actor route drive definitions do
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.80` hardens the generated-child
+actor-to-actor route boundary for drive arguments: route drive definitions do
 not accept formal parameters, and route drive calls do not accept actual
-arguments in this subset. Those shapes remain fail-closed before drive actual
-binding, expression movement, or payload protocols are inferred.
+arguments in this subset. `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` applies
+the same shared boundary to the shipped generated-top pin-ingress and
+pin-egress route families. Those shapes remain fail-closed before drive
+actual binding, expression movement, route mux/storage, or payload protocols
+are inferred.
 `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91` hardens the source-expression boundary:
 the route source side remains one scalar endpoint, and a drive-body source
 expression such as `(writer.payload (+ reader.payload 1))` fails closed

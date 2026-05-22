@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL route drive argument boundary shipped
+- Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` and closed the task tree.
+- FSMGen now rejects parameterized selected ATL route drives through a
+  route-kind-neutral `ATL scalar data movement` diagnostic.
+- Added focused pin-ingress and pin-egress coverage for route drive formal
+  parameters and route drive-call actual arguments.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook, roadmap, and task-tree docs.
+
 ## 2026-05-22: R14 — ATL route drive argument boundary selected
 - Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1`.
 - The active R14 frontier is now

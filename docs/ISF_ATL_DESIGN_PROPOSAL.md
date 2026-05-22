@@ -1276,10 +1276,10 @@ audit-backed so the user-facing book remains synchronized with this design
 proposal, the ISF spec, and the downstream integration handoff.
 
 The shipped route drive remains non-parameterized and the selected drive call
-remains argument-free. Parameterized route drive definitions and drive calls
-with actual arguments fail closed before drive actual binding, expression
-movement, route mux/storage, ready/backpressure, or payload protocols are
-claimed.
+remains argument-free across the actor-to-actor, pin-ingress, and pin-egress
+route families. Parameterized route drive definitions and drive calls with
+actual arguments fail closed before drive actual binding, expression movement,
+route mux/storage, ready/backpressure, or payload protocols are claimed.
 
 The route source and sink sides also remain scalar endpoints. Source
 expressions such as `(writer.payload (+ reader.payload 1))` fail closed

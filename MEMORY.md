@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL route drive argument boundary shipped
+- Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` and closed the task tree.
+- FSMGen now rejects parameterized selected ATL route drive definitions with a
+  shared `ATL scalar data movement` diagnostic instead of actor-to-actor-only
+  wording.
+- Focused coverage now proves that top-level pin-ingress and pin-egress route
+  drives reject formal parameters and route drive-call actual arguments before
+  scheduled `.fsm` emission.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook, roadmap status, task-tree docs, and live docs. Route
+  payload binding, expression movement, route mux/storage, ready/backpressure,
+  payload protocols, repeated activation, and cross-transaction continuation
+  remain deferred.
+
 ## 2026-05-22: ATL route drive argument boundary selected
 - Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1`.
 - Activated a new R14 task tree for the shared ATL route-drive formal and

@@ -2122,6 +2122,9 @@ Downstream producers must also keep the route drive unparameterized and the
 route drive call argument-free. Parameterized route drive definitions and
 route drive calls with actual arguments remain fail-closed before drive
 actual binding, expression movement, or payload protocols are inferred.
+That same route-drive argument boundary applies to the shipped generated-top
+pin-ingress and pin-egress route families; route drive calls are one-cycle
+timing points, not parameterized payload-binding calls.
 
 The route source must remain one scalar endpoint. A drive-body source
 expression such as `(writer.payload (+ reader.payload 1))` remains

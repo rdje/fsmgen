@@ -1209,9 +1209,10 @@ the current definitions, shipped subset, and deferred behavior are reviewable
 without reading implementation code.
 
 Parameterized route drive definitions and route drive calls with actual
-arguments also remain outside the generated-child actor-to-actor route. Those
-forms fail closed before drive actual binding, expression movement, or payload
-protocol behavior can be inferred.
+arguments also remain outside the shipped ATL actor-to-actor, pin-ingress, and
+pin-egress route families. Those forms fail closed before drive actual binding,
+expression movement, route mux/storage, or payload protocol behavior can be
+inferred.
 
 Route endpoint expressions also remain outside that route. The selected
 source stays the scalar endpoint `reader.payload`; a source expression such
