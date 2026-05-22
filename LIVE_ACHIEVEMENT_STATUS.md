@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL backlog truth-sync tree selected
+- Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.1`.
+- Activated the active R14 documentation truth-sync tree for stale ATL backlog
+  prose.
+- The active R14 frontier is now `ISF-ATL-BACKLOG-TRUTH-SYNC.2`, which will
+  correct the book-facing generated ATL top status while preserving explicit
+  deferrals for route mux/storage, handoff storage, compact movement aliases,
+  broader inferred child interface bindings, and broader fail-closed
+  boundaries.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL compact instance alias shipped
 - Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` and closed the task tree.
 - FSMGen now accepts direct actor-body `(NAME : ACTOR_TYPE)` as a compact

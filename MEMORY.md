@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL backlog truth-sync tree selected
+- Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.1`.
+- Activated the next R14 documentation truth-sync tree after finding stale ATL
+  backlog prose that still described generated ATL tops as excluded even
+  though bounded generated ATL top subsets are shipped.
+- The next frontier is `ISF-ATL-BACKLOG-TRUTH-SYNC.2`: correct the mdBook
+  backlog language while preserving explicit deferrals for route mux/storage,
+  handoff storage, compact movement aliases, broader inferred child interface
+  bindings, and broader fail-closed boundaries.
+- No parser, scheduler, lowerer, generated `.fsm`, HDL, or public API behavior
+  changed.
+
 ## 2026-05-22: ATL compact instance alias shipped
 - Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` and closed the task tree.
 - FSMGen now accepts direct actor-body `(NAME : ACTOR_TYPE)` as a compact

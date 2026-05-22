@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL backlog truth-sync is documentation only
+- `ISF-ATL-BACKLOG-TRUTH-SYNC.1` selects a narrow documentation truth-sync
+  tree because the book backlog still had an older exclusion statement for
+  generated ATL tops after bounded generated-top subsets had shipped.
+- The selected follow-up must correct the stale user-facing claim without
+  broadening the implementation contract. Route mux/storage, handoff storage,
+  compact movement aliases, broader inferred child interface bindings, and
+  broader fail-closed boundaries remain separate future work until selected by
+  their own task trees and backed by executable coverage.
+- This tree must not change parser, scheduler, lowerer, generated `.fsm`, HDL,
+  public API, or schedule-report behavior.
+
 ## 2026-05-22: Compact instance aliases reuse instance semantics
 - `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` routes `(NAME : ACTOR_TYPE)` through the
   same static actor instance validation and metadata path as

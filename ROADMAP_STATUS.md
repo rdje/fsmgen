@@ -2,8 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+  Active task tree: `ISF-ATL-BACKLOG-TRUTH-SYNC`; current frontier:
+  `ISF-ATL-BACKLOG-TRUTH-SYNC.2`.
+- Recent R14 ATL backlog truth-sync selection:
+  `ISF-ATL-BACKLOG-TRUTH-SYNC.1` activated a documentation truth-sync tree for
+  stale ATL backlog prose. The selected leaf will correct the mdBook backlog
+  claim that generated ATL tops are still excluded, while preserving explicit
+  deferrals for route mux/storage, handoff storage, compact movement aliases,
+  broader inferred child interface bindings, and broader fail-closed
+  boundaries. No compiler behavior changed.
 - Recent R14 ATL compact instance alias completion:
   `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` shipped direct actor-body
   `(NAME : ACTOR_TYPE)` as a compact readability alias for the already
@@ -8792,9 +8799,10 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Select or create the next roadmap-aligned task tree before any further code
-  changes. `ISF-ATL-COMPACT-INSTANCE-ALIAS` is closed after shipping compact
-  static instance alias normalization and coverage.
+- Continue the active `ISF-ATL-BACKLOG-TRUTH-SYNC` task tree. The next
+  frontier is `ISF-ATL-BACKLOG-TRUTH-SYNC.2`, a doc-only correction of stale
+  ATL backlog prose around generated ATL tops and remaining deferred route /
+  handoff / compact movement boundaries.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

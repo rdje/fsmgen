@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL backlog truth-sync tree selected
+- Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.1`.
+- Activated a new R14 documentation truth-sync tree for stale ATL backlog
+  prose around generated ATL tops and remaining deferred ATL boundaries.
+- The selected doc-sync leaf will correct the mdBook backlog claim that
+  generated ATL tops are still excluded, while keeping route mux/storage,
+  handoff storage, compact movement aliases, broader inferred child interface
+  bindings, and broader fail-closed boundaries explicit as limitations.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL compact instance alias shipped
 - Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` and closed the task tree.
 - Added direct actor-body `(NAME : ACTOR_TYPE)` as a compact readability alias
