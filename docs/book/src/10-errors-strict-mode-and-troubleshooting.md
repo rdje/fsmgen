@@ -383,6 +383,10 @@ contract. Current out-of-support examples include:
   direction mismatch failures,
   declared same-name on shared system ports, aggregate-member child endpoints
   without declared aggregate types,
+  malformed verbose `?ports` declarations, invalid `?ports` tokens,
+  non-positive `?ports` widths, malformed `?wiring` list-form endpoints,
+  unsupported `?wiring` tokens, malformed composition-top symbol names, or
+  non-literal composition-top enum values,
   missing external generated child sources, wrong-kind external generated-child
   roots such as `?fsmc` resolving to `?dt:name` or `?dtc` resolving to
   `?fsm:name`, malformed `?fsmc` / `?dtc` source counts, unsupported nested

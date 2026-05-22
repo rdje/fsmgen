@@ -1,0 +1,12 @@
+(?top:composition_top_enums_nonliteral_value_top
+  (+enums
+    (mode
+      (BUSY unresolved_name)
+    )
+  )
+  (?rtl:uart_tx)
+)
+
+(?rtlif:uart_tx
+  data_in<8:data
+)

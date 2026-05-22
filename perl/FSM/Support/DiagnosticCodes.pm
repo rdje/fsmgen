@@ -679,6 +679,48 @@ my %DIAGNOSTIC_CODES = (
         family => 'composition_contract',
         summary => 'A child endpoint used member access without a declared aggregate type.',
     },
+    FSMGEN_COMPOSITION_PORT_DECLARATION_SHAPE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition ports block used a malformed verbose declaration.',
+    },
+    FSMGEN_COMPOSITION_PORT_TOKEN_SHAPE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition ports block used an invalid compact port token.',
+    },
+    FSMGEN_COMPOSITION_PORT_SIZING => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition ports block declared an unsupported top-port size.',
+    },
+    FSMGEN_COMPOSITION_WIRING_ENDPOINT_SHAPE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'An explicit composition wiring entry used a malformed endpoint form.',
+    },
+    FSMGEN_COMPOSITION_WIRING_TOKEN_SHAPE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'An explicit composition wiring entry used an unsupported token shape.',
+    },
+    FSMGEN_COMPOSITION_TOP_SYMBOL_TOKEN_SHAPE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition top symbol declaration used a malformed symbol token.',
+    },
+    FSMGEN_COMPOSITION_TOP_SYMBOL_LITERAL_SUPPORT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition top symbol declaration used a non-literal value outside the active contract.',
+    },
     FSMGEN_COMPOSITION_MISSING_RTLIF => {
         severity => 'error',
         stability => 'stable',

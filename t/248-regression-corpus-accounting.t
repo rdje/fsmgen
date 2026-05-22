@@ -258,6 +258,13 @@ for my $required_id (qw(
     contract.composition_c1_direction_mismatch
     contract.composition_system_port_same_name
     contract.composition_child_endpoint_missing_aggregate_type
+    contract.composition_ports_verbose_declaration_shape
+    contract.composition_ports_invalid_token
+    contract.composition_ports_nonpositive_width
+    contract.composition_wiring_wrapped_slash_item
+    contract.composition_wiring_unsupported_token
+    contract.composition_top_constants_bad_identifier
+    contract.composition_top_enums_nonliteral_value
     contract.missing_rtl_metadata_sidecar
     contract.missing_fsm_child_source
     contract.missing_dt_child_source
@@ -413,8 +420,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    151,
-    'catalog now records one hundred fifty-one explicit expected-failure entries',
+    158,
+    'catalog now records one hundred fifty-eight explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

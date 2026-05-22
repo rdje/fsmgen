@@ -128,7 +128,10 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   explicit-link topologies, C1 passthrough missing exposure, unknown top-port,
   width mismatch, and direction mismatch failures, declared same-name on shared
   system ports, child aggregate-member endpoints without declared aggregate
-  types, wrong-kind external generated-child source realization for both
+  types, malformed verbose `?ports` declarations, invalid `?ports` tokens,
+  non-positive `?ports` widths, malformed `?wiring` list-form endpoints,
+  unsupported `?wiring` tokens, malformed top `+constants` identifiers,
+  non-literal top `+enums` values, wrong-kind external generated-child source realization for both
   `?fsmc` and `?dtc`, malformed generated-child source counts, malformed
   nested generated-child payload shapes, malformed external RTL child source
   counts, malformed nested external RTL child payload shapes, missing external
@@ -680,6 +683,13 @@ manifest output while keeping the exact file lists widenable.
 | `contract.composition_c1_direction_mismatch` | [t/corpus/composition_c1_direction_mismatch_top.fsm](t/corpus/composition_c1_direction_mismatch_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.composition_system_port_same_name` | [t/corpus/composition_system_port_same_name_top.fsm](t/corpus/composition_system_port_same_name_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.composition_child_endpoint_missing_aggregate_type` | [t/corpus/composition_child_endpoint_missing_aggregate_type_top.fsm](t/corpus/composition_child_endpoint_missing_aggregate_type_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_ports_verbose_declaration_shape` | [t/corpus/composition_ports_verbose_declaration_shape_top.fsm](t/corpus/composition_ports_verbose_declaration_shape_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_ports_invalid_token` | [t/corpus/composition_ports_invalid_token_top.fsm](t/corpus/composition_ports_invalid_token_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_ports_nonpositive_width` | [t/corpus/composition_ports_nonpositive_width_top.fsm](t/corpus/composition_ports_nonpositive_width_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_wiring_wrapped_slash_item` | [t/corpus/composition_wiring_wrapped_slash_item_top.fsm](t/corpus/composition_wiring_wrapped_slash_item_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_wiring_unsupported_token` | [t/corpus/composition_wiring_unsupported_token_top.fsm](t/corpus/composition_wiring_unsupported_token_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_top_constants_bad_identifier` | [t/corpus/composition_top_constants_bad_identifier_top.fsm](t/corpus/composition_top_constants_bad_identifier_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.composition_top_enums_nonliteral_value` | [t/corpus/composition_top_enums_nonliteral_value_top.fsm](t/corpus/composition_top_enums_nonliteral_value_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_fsm_child_source` | [t/corpus/missing_fsm_child_source_top.fsm](t/corpus/missing_fsm_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_dt_child_source` | [t/corpus/missing_dt_child_source_top.fsm](t/corpus/missing_dt_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |

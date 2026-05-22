@@ -131,6 +131,11 @@ is equivalent to:
 Both forms resolve `frame_t`, use its packed bit width for sizing, and preserve
 its declared type contract on the port. The packed width is only the bit count.
 
+Verbose declarations must start with `input` or `output`. Compact tokens must
+use HDL-identifier-compatible names and positive widths. FSMGen rejects nested
+or wrapper forms in `?ports`, malformed names such as `bad-name>8`, and
+non-positive widths such as `data_in<0` at the composition parser boundary.
+
 The declared type contract may also carry signedness, two-state/four-state
 intent, aggregate shape, member layout, and type identity. Two ports can
 therefore have the same packed width while still being incompatible because
@@ -331,6 +336,12 @@ The verbose spelling `(connect source target)` is equivalent and can improve
 readability in dense wiring blocks. The older `/source/target/` token remains
 accepted as compatibility input, but new examples and generated artifacts use
 the list form.
+
+List-form wiring entries must be real directed links; a list wrapper around an
+old slash token such as `(group /child.out/top_out/)` is rejected instead of
+being guessed. Bare arrow-like tokens such as `child.out->top_out` are also
+rejected; use `(child.out top_out)`, `(connect child.out top_out)`, or the
+legacy `/child.out/top_out/` compatibility token.
 
 Member/item endpoints such as `producer.output_data.extra` require the base
 endpoint to carry a declared aggregate type. If the child port is only a scalar

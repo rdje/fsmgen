@@ -1,0 +1,10 @@
+(?top:composition_top_constants_bad_identifier_top
+  (+constants
+    (bad-name 8'165)
+  )
+  (?rtl:uart_tx)
+)
+
+(?rtlif:uart_tx
+  data_in<8:data
+)

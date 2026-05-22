@@ -2,9 +2,20 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-- Active `R12` task tree:
-  `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING`. Current frontier:
-  `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2`.
+- Active `R12` task tree: none currently active. The most recent R12 task
+  tree, `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING`, is closed; the next
+  PNT pass should select the next inactive or ongoing roadmap-aligned tree
+  before implementation.
+- Recent R12 composition parser-token corpus-widening completion:
+  `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2` added named
+  expected-failure corpus entries for malformed verbose `?ports`
+  declarations, invalid `?ports` tokens, non-positive `?ports` widths,
+  malformed `?wiring` list-form endpoints, unsupported `?wiring` tokens,
+  malformed composition-top `+constants` identifiers, and non-literal
+  composition-top `+enums` values, with stable diagnostic-code metadata and
+  coverage through pipeline/CLI behavior, check JSON, normalized semantic
+  JSON, manifest, corpus accounting, regression-corpus docs, and the mdBook.
+  No parser or HDL-generation behavior changed.
 - Recent R12 composition parser-token corpus-widening selection:
   `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.1` activated a task tree to
   promote the already-focused composition parser token/top-symbol diagnostics

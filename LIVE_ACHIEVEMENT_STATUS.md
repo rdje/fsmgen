@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — parser-token coverage widened
+- Completed `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2`.
+- The task tree is closed.
+- FSMGen now support-accounts malformed verbose `?ports` declarations,
+  invalid `?ports` tokens, non-positive `?ports` widths, malformed `?wiring`
+  list-form endpoints, unsupported `?wiring` tokens, malformed
+  composition-top `+constants` identifiers, and non-literal composition-top
+  `+enums` values.
+- Stable diagnostic-code metadata, check JSON, normalized semantic JSON,
+  manifest, regression-corpus docs, and mdBook coverage are synchronized.
+- No parser or HDL-generation behavior changed.
+
 ## 2026-05-22: R12 regression corpus — parser-token widening selected
 - Completed `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

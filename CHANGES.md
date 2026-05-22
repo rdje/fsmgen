@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R12 regression corpus — parser-token coverage widened
+- Completed `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2` and closed the
+  task tree.
+- Added expected-failure fixture/catalog entries for malformed verbose
+  `?ports` declarations, invalid `?ports` tokens, non-positive `?ports`
+  widths, malformed `?wiring` list-form endpoints, unsupported `?wiring`
+  tokens, malformed composition-top `+constants` identifiers, and non-literal
+  composition-top `+enums` values.
+- Added stable diagnostic-code metadata for the seven parser-token/top-symbol
+  failure kinds and synchronized regression-corpus docs plus mdBook
+  composition/error coverage.
+- No parser or HDL-generation behavior changed.
+
+## 2026-05-22
 ### R12 regression corpus — parser-token widening selected
 - Completed `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained expected-failure

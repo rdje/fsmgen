@@ -169,6 +169,11 @@ Concat operands may currently include:
 - named literal actuals from top-root constants/enums or imported packages
 - repeat groups
 
+Composition-top `+constants` and `+enums` may feed named literal actuals, but
+the top symbol declarations are still literal-contract declarations. Symbol
+names must be HDL identifiers, and top enum values must resolve to literal
+scalar values before the composition planner uses them.
+
 The same ambiguity hardening applies here too: bare `=00001110`-style
 payloads are not guessed as decimal or binary.
 

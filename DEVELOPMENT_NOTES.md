@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition parser-token failures are support-accounting failures
+- `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2` keeps the existing
+  parser-token/top-symbol diagnostics intact and promotes seven focused
+  failures into maintained corpus truth.
+- `FSMGEN_COMPOSITION_PORT_DECLARATION_SHAPE`,
+  `FSMGEN_COMPOSITION_PORT_TOKEN_SHAPE`, and
+  `FSMGEN_COMPOSITION_PORT_SIZING` distinguish malformed verbose `?ports`
+  declarations, malformed compact port tokens, and non-positive top-port
+  widths.
+- `FSMGEN_COMPOSITION_WIRING_ENDPOINT_SHAPE` and
+  `FSMGEN_COMPOSITION_WIRING_TOKEN_SHAPE` distinguish malformed list-form
+  endpoint wrappers from unsupported bare wiring-token shapes.
+- `FSMGEN_COMPOSITION_TOP_SYMBOL_TOKEN_SHAPE` and
+  `FSMGEN_COMPOSITION_TOP_SYMBOL_LITERAL_SUPPORT` keep composition-top symbol
+  declaration failures separate from ordinary direct-root symbol failures.
+- This does not change accepted composition syntax or HDL generation; the
+  slice only makes the existing fail-closed boundary visible through the
+  maintained corpus, check JSON, semantic JSON, and capability manifest.
+
 ## 2026-05-22: Composition parser-token coverage stays diagnostic-only
 - `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.1` selects
   support-accounting promotion for composition parser token/top-symbol

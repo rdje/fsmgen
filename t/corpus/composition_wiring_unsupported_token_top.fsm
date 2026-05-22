@@ -1,0 +1,24 @@
+(?top:composition_wiring_unsupported_token_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:child child_src)
+  (?wiring:wiring
+    child.result_data->result_data
+  )
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
