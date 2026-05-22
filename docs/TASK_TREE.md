@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ATL-MULTI-EVENT-WAIT` | `active` | `R14` | `ISF-ATL-MULTI-EVENT-WAIT.2` | [docs/tasks/ISF-ATL-MULTI-EVENT-WAIT.md](docs/tasks/ISF-ATL-MULTI-EVENT-WAIT.md) |
 
 ## Proposed Task Trees
 
@@ -290,7 +291,7 @@ as done work unless a future task reopens them.
 | Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
 | Expression-valued activation input bindings | `ISF-ACTIVATION-BIND-EXPRESSIONS` |
 | Remaining repeat-body child activation widening: `await_any` after generated `do`, new spawn after `do` before drain, cross-domain activation, deeper branch/loop nesting, and broader outstanding-child semantics | `ISF-REPEAT-BODY-CHILD-ACTIVATION` |
-| Actor Transfer Level (`ATL`) actor-network orchestration: top-level actor-as-network structure, actor/transaction triggers, event sync, actor-to-actor and pin-to-actor data movement, concurrent actor groups, and network-level scheduling/reporting | `ISF-ACTOR-NETWORK-ORCHESTRATION` |
+| Actor Transfer Level (`ATL`) actor-network orchestration: top-level actor-as-network structure, actor/transaction triggers, event sync, actor-to-actor and pin-to-actor data movement, concurrent actor groups, and network-level scheduling/reporting | `ISF-ACTOR-NETWORK-ORCHESTRATION`, `ISF-ATL-MULTI-EVENT-WAIT` |
 | Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |
 | Task-like transaction activation semantics and parameter overrides | `ISF-TRANSACTION-ACTIVATION` |
 | Remaining rule-trigger and direct-activation parameter overrides | `ISF-ACTIVATION-PARAM-OVERRIDES` |

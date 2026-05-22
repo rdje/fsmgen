@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL multi-event waits start with explicit sequencing
+- `ISF-ATL-MULTI-EVENT-WAIT.1` selects the next bounded ATL orchestration
+  widening after temporary trigger batches and one-event waits shipped.
+- The first implementation leaf deliberately preserves authored `(await
+  actor.event)` clauses as source-ordered wait states. That keeps cycle
+  boundaries reviewable and avoids introducing hidden same-cycle joins,
+  storage, fan-in logic, or payload protocols.
+- The selected surface is tied to one parent transaction and one temporary
+  trigger batch. Generated-child route coupling, group endpoints, CDC, and
+  ready/backpressure remain future decisions.
+
 ## 2026-05-22: ATL mixed pin-egress routes mirror ingress
 - `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` applies the same route-grouping policy to
   generated-child pin egress that `.2` applied to pin ingress. A same-child

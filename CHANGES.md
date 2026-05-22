@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL multi-event wait tree selected
+- Completed `ISF-ATL-MULTI-EVENT-WAIT.1`.
+- Activated a new R14 task tree for bounded transaction-body ATL multi-event
+  waits after one same-cycle temporary trigger batch.
+- The selected implementation will preserve explicit source-ordered wait
+  states and report each wait through the existing
+  `actor_network.event_waits[]` entry shape.
+- Event payloads, event fan-out, true hidden joins, CDC, ready/backpressure,
+  group endpoints, generated-child route coupling, and ATL data movement
+  coupling remain deferred.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL pin-egress mixed route set shipped
 - Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` and closed the task tree.
 - Added same-child generated-child pin-egress mixed scalar/vector route-set

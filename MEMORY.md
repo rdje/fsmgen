@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL multi-event wait tree selected
+- Completed `ISF-ATL-MULTI-EVENT-WAIT.1`.
+- Activated the next R14 task tree for bounded transaction-body ATL
+  multi-event waits after one same-cycle temporary trigger batch.
+- The next frontier is `ISF-ATL-MULTI-EVENT-WAIT.2`: allow a parent
+  transaction to wait for multiple actor events in explicit source order while
+  preserving one scheduled wait state and one `actor_network.event_waits[]`
+  entry per authored wait.
+- The selected semantics are sequential wait states, not a hidden same-cycle
+  join. Event payloads, event fan-out, CDC, ready/backpressure, group
+  endpoints, generated-child route coupling, and ATL data movement coupling
+  remain deferred.
+- No compiler behavior changed.
+
 ## 2026-05-22: ATL pin-egress mixed route set shipped
 - Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` and closed the task tree.
 - FSMGen now accepts same-child generated-child resolved-child output to

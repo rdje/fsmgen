@@ -2,8 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: none; next PNT selection pending after
-  `ISF-ATL-PIN-MIXED-ROUTE-SETS` closed.
+  Active task tree: `ISF-ATL-MULTI-EVENT-WAIT`; current frontier:
+  `ISF-ATL-MULTI-EVENT-WAIT.2`.
+- Recent R14 ATL multi-event wait selection:
+  `ISF-ATL-MULTI-EVENT-WAIT.1` activated the next bounded ATL orchestration
+  tree. The selected implementation will allow one parent transaction to emit
+  one same-cycle temporary trigger batch and then wait for multiple actor
+  events in explicit source order. The first runtime semantics are sequential
+  wait states, not a hidden same-cycle join. Event payloads, event fan-out,
+  CDC, ready/backpressure, group endpoints, generated-child route coupling,
+  and ATL data movement coupling remain deferred. No compiler behavior changed.
 - Recent R14 ATL pin-egress mixed route-set completion:
   `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` shipped the bounded same-child
   generated-child resolved-child output to top-level output-pin mixed
@@ -5119,14 +5127,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: none; next PNT selection pending.
-- Current frontier: none after `ISF-ATL-PIN-MIXED-ROUTE-SETS` closed.
-- Completion status: `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` completed the inverse
-  mixed scalar/vector same-child pin-egress route-set leaf and closed the
-  tree. Both bounded same-child mixed pin directions now preserve route-local
-  `kind`, `width`, and `width_source` metadata. Width adaptation, storage,
-  muxing, payload protocols, ready/backpressure, CDC/reset remapping,
-  repeated activation, and cross-transaction continuation remain deferred.
+- Active task tree: `ISF-ATL-MULTI-EVENT-WAIT`.
+- Current frontier: `ISF-ATL-MULTI-EVENT-WAIT.2`.
+- Completion status: `ISF-ATL-MULTI-EVENT-WAIT.1` selected the bounded
+  transaction-body ATL multi-event wait tree. The next leaf owns the first
+  implementation: one temporary trigger batch followed by multiple explicit
+  source-ordered actor event waits. Event payloads, true same-cycle fan-in,
+  CDC, ready/backpressure, group endpoints, generated-child route coupling,
+  and ATL data movement coupling remain deferred.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8738,8 +8746,10 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Select the next roadmap-aligned task tree before starting more code. The
-  `ISF-ATL-PIN-MIXED-ROUTE-SETS` tree is closed.
+- Continue the active `ISF-ATL-MULTI-EVENT-WAIT` tree before selecting a
+  different implementation task. `ISF-ATL-MULTI-EVENT-WAIT.2` is the next
+  frontier and owns sequential multi-event waits after a temporary trigger
+  batch.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

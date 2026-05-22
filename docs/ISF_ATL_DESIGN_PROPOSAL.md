@@ -559,6 +559,14 @@ generated ATL tops, actor type resolution, HDL child wiring, data movement
 coupling, CDC, ready/backpressure, compact aliases, or permanent actor
 grouping.
 
+The next selected ATL parent-handoff widening is tracked by
+`ISF-ATL-MULTI-EVENT-WAIT`. Its first implementation will keep repeated
+transaction-body `(await actor.event)` clauses explicit and source ordered
+after one temporary trigger batch. It is selected as sequential wait-state
+orchestration, not as hidden same-cycle event fan-in, event payload movement,
+generated-child route coupling, group endpoint scheduling, CDC, or
+ready/backpressure.
+
 The ATL resolved-child generated-top fixture is shipped as
 `isf/atl_resolved_child_pipeline.isf`. It uses one same-source library actor
 export, one resolved `(instance worker of pkt_lib.packet_worker)`, one parent

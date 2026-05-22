@@ -1009,6 +1009,14 @@ remains outside the shipped subset; the second wait fails before scheduled
 emission with the current one-event-wait diagnostic, and production behavior
 is not widened.
 
+The next selected ATL orchestration widening is bounded multi-event waits. It
+is tracked by `ISF-ATL-MULTI-EVENT-WAIT`. The selected first implementation
+keeps the existing `(await actor.event)` syntax and preserves each authored
+wait as a source-ordered scheduled wait state after one temporary trigger
+batch. It is not a hidden same-cycle join and does not claim event payloads,
+event fan-out, generated-child route coupling, group endpoints, CDC, or
+ready/backpressure.
+
 The ATL source-root boundary is shipped before generated child resolution. A
 sibling top-level `(actor ...)` root in the same `.isf` source fails closed
 until FSMGen has an explicit actor type-resolution and generated child

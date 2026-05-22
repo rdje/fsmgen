@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL multi-event wait tree selected
+- Completed `ISF-ATL-MULTI-EVENT-WAIT.1`.
+- Activated the next R14 task tree for bounded transaction-body ATL
+  multi-event waits after one same-cycle temporary trigger batch.
+- The active R14 frontier is now `ISF-ATL-MULTI-EVENT-WAIT.2`.
+- The selected implementation will preserve explicit source-ordered wait
+  states and report every wait through `actor_network.event_waits[]`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL pin-egress mixed route set shipped
 - Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` and closed the task tree.
 - FSMGen now lowers same-child generated-child resolved-child output to
