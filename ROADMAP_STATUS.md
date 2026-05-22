@@ -2,9 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-- Active `R12` task tree just closed. The next PNT step should select the next
-  roadmap-aligned maintained regression-corpus widening slice before any new
-  source/test/config changes.
+- Active `R12` task tree:
+  `R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING`. Current frontier:
+  `R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING.2`.
+- Recent R12 composition explicit-link topology corpus-widening selection:
+  `R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING.1` activated a task
+  tree to promote the already-focused missing explicit `?wiring` diagnostic
+  into maintained expected-failure corpus coverage. No compiler behavior
+  changed.
 - Recent R12 composition target-support corpus-widening completion:
   `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` added one named
   expected-failure corpus entry for VHDL composition target rejection, with

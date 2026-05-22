@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition explicit-link topology coverage stays diagnostic-only
+- `R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING.1` selects
+  support-accounting promotion for the missing explicit `?wiring` diagnostic
+  whose existing focused test already locks pipeline behavior.
+- The implementation should preserve the current explicit-link C2 boundary
+  and only add a maintained expected-failure corpus asset; this tree does not
+  infer missing wiring or widen composition scheduling.
+
 ## 2026-05-22: Composition target-support failures are target-language-specific corpus entries
 - `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` keeps the current
   fail-closed VHDL composition boundary and promotes that target rejection

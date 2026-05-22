@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — explicit-link topology widening selected
+- Completed `R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING.2`.
+- The selected implementation will promote missing explicit `?wiring`
+  diagnostics into maintained expected-failure corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 regression corpus — target-support coverage widened
 - Completed `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2`.
 - The task tree is closed.

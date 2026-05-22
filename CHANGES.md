@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R12 regression corpus — explicit-link topology widening selected
+- Completed `R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure
+  corpus coverage with the already-focused missing explicit `?wiring`
+  diagnostic.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R12 regression corpus — target-support coverage widened
 - Completed `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` and closed the
   task tree.
