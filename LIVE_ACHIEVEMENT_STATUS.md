@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL pin-route vector width selected
+- Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1`.
+- The active R14 frontier is now `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2`.
+- The selected implementation will widen generated-child top-level input-pin
+  to resolved-child input routes only when both endpoint declarations have the
+  same positive width.
+- The inverse resolved-child output to top-level output vector route remains
+  tracked as `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL actor-route vector width shipped
 - Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` and closed the task tree.
 - FSMGen now lowers same-width generated-child actor-to-actor vector routes

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL pin-route vectors follow actor-route exact-width policy
+- `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1` selects exact-width generated-child
+  top-level pin routes as the next bounded ATL vector-width tree.
+- The selected design keeps the same route vocabulary as scalar pin routes:
+  `(worker.payload pins.payload)` for ingress and
+  `(pins.result worker.payload)` for egress. The drive call remains the
+  transfer timing point.
+- The only selected widening is width evidence. A vector route must have a
+  matching top-level pin width and resolved child endpoint width. Width
+  conversion, route storage, route muxing, mixed route sets, payload
+  protocols, ready/backpressure, CDC/reset remapping, repeated activation, and
+  cross-transaction continuation remain separate future decisions.
+
 ## 2026-05-22: ATL vector routes are width evidence, not payload protocols
 - `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` implements the bounded
   generated-child actor-to-actor vector route slice without adding new syntax:

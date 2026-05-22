@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL pin-route vector width selected
+- Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1`.
+- Activated a new R14 task tree for exact-width generated-child top-level
+  pin-route vector movement.
+- The next frontier is `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2`: widen top-level
+  input-pin to resolved-child input routing only when the top-level input pin
+  and child input declare the same positive width.
+- `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` will handle the inverse resolved-child
+  output to top-level output direction after ingress is proven.
+- Width adaptation, payload packing, route storage, route muxing,
+  fan-in/fan-out, mixed route sets, CDC/reset remapping, ready/backpressure,
+  repeated activation, and cross-transaction continuation remain deferred.
+- No compiler behavior changed.
+
 ## 2026-05-22: ATL actor-route vector width shipped
 - Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` and closed the task tree.
 - FSMGen now accepts generated-child actor-to-actor ATL routes whose resolved

@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL pin-route vector width selected
+- Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1`.
+- Activated a new R14 task tree for bounded generated-child ATL top-level pin
+  exact-width vector routes.
+- The selected implementation sequence keeps the existing `(sink source)`
+  route syntax and drive-call timing while widening only routes whose
+  top-level pin and resolved child endpoint declare the same positive width.
+- Pin ingress is the next frontier; pin egress follows after ingress is
+  proven. Width adaptation, payload packing, route storage, route muxing,
+  fan-in/fan-out, mixed route sets, CDC/reset remapping, ready/backpressure,
+  repeated activation, and cross-transaction continuation remain deferred.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL actor-route vector width shipped
 - Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` and closed the task tree.
 - Added exact-width generated-child actor-to-actor ATL route lowering. The

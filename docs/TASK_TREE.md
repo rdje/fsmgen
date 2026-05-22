@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `_none_` | `_none_` | `_none_` | `_next PNT selection required_` | `_none_` |
+| `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH` | `active` | `R14` | `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2` | [docs/tasks/ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.md](docs/tasks/ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.md) |
 
 ## Proposed Task Trees
 

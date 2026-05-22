@@ -860,6 +860,15 @@ drive body, one direct static actor instance, one top-level transaction drive
 call, and one-bit top-level pins only. Wider pin payloads and mixed
 pin/actor movement in one drive remain later leaves.
 
+The next selected pin-route widening is exact-width vector movement for the
+generated-child top-level pin routes. It is tracked by
+`ISF-ATL-PIN-ROUTE-VECTOR-WIDTH` and remains unshipped until its implementation
+leaves complete. The selected boundary is same-width only: top-level input pins
+to resolved child inputs first, then resolved child outputs to top-level output
+pins, with no packing, truncation, storage, muxing, fan-in/fan-out,
+ready/backpressure, CDC/reset remapping, mixed route sets, or payload protocol
+inference.
+
 The selected orchestration vocabulary reuses existing ISF activation forms:
 `(do actor.transaction)` for blocking actor transaction activation, `(spawn
 actor.transaction as NAME)` for nonblocking activation, `(trigger
