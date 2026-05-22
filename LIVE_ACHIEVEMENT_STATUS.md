@@ -2,14 +2,33 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL compact group alias shipped
+- Completed `ISF-ATL-COMPACT-GROUP-ALIAS.2` and closed the task tree.
+- FSMGen now accepts direct actor-body `(concurrent NAME ACTOR...)` as a
+  compact readability alias for the shipped verbose static group metadata
+  form `(group NAME (members ACTOR...) (mode concurrent))`.
+- Schedule JSON reports the compact alias through `actor_network.groups[]`
+  with `declaration: "concurrent_alias"`, `mode: "concurrent"`,
+  `source: "actor_body"`, and `scheduling: "metadata_only"`; verbose groups
+  keep `declaration: "group"`.
+- This is syntax ergonomics only. Runtime group scheduling, group endpoints,
+  group handoff routing, generated HDL group behavior, compact movement
+  syntax, and permanent runtime group coupling remain deferred.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Validation passed: focused actor-network test, public/doc audit group, ATL
+  fixture group, and broad `./bin/ci-regression isf --no-book` with
+  `Files=238, Tests=1582`, plus `mdbook build docs/book` and
+  `git diff --check`.
+
 ## 2026-05-22: R14 — ATL compact group alias tree selected
 - Completed `ISF-ATL-COMPACT-GROUP-ALIAS.1`.
 - Activated the next R14 task tree for the reserved compact
   `(concurrent NAME ACTOR...)` alias over the shipped verbose static group
   metadata surface.
-- The active R14 frontier is now `ISF-ATL-COMPACT-GROUP-ALIAS.2`.
-- The selected implementation will keep groups report-only and will not add
-  runtime group scheduling, group endpoints, compact movement syntax, or
+- The selected next frontier was `ISF-ATL-COMPACT-GROUP-ALIAS.2`.
+- The selected implementation was required to keep groups report-only and not
+  add runtime group scheduling, group endpoints, compact movement syntax, or
   generated HDL behavior.
 - No compiler behavior changed.
 
@@ -2902,8 +2921,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   coverage while preserving the current fail-closed boundaries.
 - The selected fixture does not claim peer event synchronization, endpoint
   data movement, generated ATL child `.fsm` artifacts, generated ATL tops,
-  group endpoints, compact aliases, CDC, route mux/storage, payloads, or
-  ready/backpressure.
+  group endpoints, compact group aliases for that leaf, CDC,
+  route mux/storage, payloads, or ready/backpressure.
 - Validation passed: `mdbook build docs/book`; `git diff --check`.
 
 ## 2026-05-18: R14 — ATL realistic fixture frontier decomposed
@@ -2928,9 +2947,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.8`
   for realistic multi-actor orchestration fixtures.
 - Generated children, group endpoints, event/data-movement coupling,
-  route mux/storage, CDC, compact aliases, partial/mixed/noncontiguous
-  batches, repeated members, and fan-in/fan-out remain deferred or
-  fail-closed.
+  route mux/storage, CDC, compact group aliases for that leaf,
+  partial/mixed/noncontiguous batches, repeated members, and fan-in/fan-out
+  remain deferred or fail-closed.
 - Validation passed: syntax checks, focused actor-network, schedule-report
   matrix, and public-contract audits, `mdbook build docs/book`, broad
   `./bin/ci-regression isf --no-book` with `Files=229, Tests=1353`, and
@@ -2947,7 +2966,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `actor_network.group_schedules[]` evidence.
 - No behavior is implemented by this selection leaf; generated children,
   group endpoints, storage/mux insertion, event/data-movement coupling, CDC,
-  compact aliases, and broader fan-in/fan-out remain deferred or fail-closed.
+  compact group aliases for that leaf, and broader fan-in/fan-out remain
+  deferred or fail-closed.
 - Validation passed: `mdbook build docs/book`; `prove -Iperl
   t/1250-isf-spec-focused-test-index-audit.t
   t/1305-isf-book-feature-matrix-audit.t`; `git diff --check`.

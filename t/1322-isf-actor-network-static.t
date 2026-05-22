@@ -354,6 +354,67 @@ ISF
         },
         'static concurrent group report',
     );
+
+    my $alias_source = <<'ISF';
+(actor atl_static_concurrent_alias
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (concurrent pipeline reader writer)
+  (transaction run
+    (on start)
+    (complete done)))
+ISF
+    my $alias_actor = parse_source($alias_source, 'atl-static-concurrent-alias.isf');
+    my $expected_alias_group = {
+        name        => 'pipeline',
+        members     => [qw(reader writer)],
+        mode        => 'concurrent',
+        declaration => 'concurrent_alias',
+        source      => 'actor_body',
+        scheduling  => 'metadata_only',
+    };
+
+    is_deeply(
+        $alias_actor->{actor_network}{groups},
+        [ $expected_alias_group ],
+        'parser normalizes the compact concurrent alias to static group metadata',
+    );
+
+    my $alias_scheduler = FSM::Scheduler::ISF->new();
+    my $alias_lowered = $alias_scheduler->lower($alias_actor);
+    is_deeply(
+        [sort keys %{$alias_lowered->{files}}],
+        ['atl_static_concurrent_alias.fsm'],
+        'compact concurrent alias remains report-only and emits no child artifacts or ATL top',
+    );
+
+    my $alias_report = decode_json($alias_scheduler->report($alias_actor));
+    assert_actor_network_report(
+        $alias_report,
+        {
+            kind      => 'static_declaration',
+            instances => [
+                {
+                    name        => 'reader',
+                    actor_type  => 'packet_reader',
+                    declaration => 'actor',
+                },
+                {
+                    name        => 'writer',
+                    actor_type  => 'packet_writer',
+                    declaration => 'actor',
+                },
+            ],
+            groups => [ $expected_alias_group ],
+            group_schedules => [],
+            data_movements => [],
+            event_waits => [],
+            transaction_triggers => [],
+        },
+        'compact concurrent alias report',
+    );
 };
 
 subtest 'selected concurrent group trigger batch lowers to one parent state' => sub {
@@ -484,6 +545,62 @@ ISF
         },
         'group trigger batch report',
     , 'group-transaction-trigger.isf');
+
+    my $alias_actor = parse_source(<<'ISF', 'atl-concurrent-alias-trigger-batch.isf');
+(actor atl_concurrent_alias_trigger_batch
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (concurrent pipeline reader writer)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (trigger writer.emit)
+    (complete done)))
+ISF
+    my $expected_alias_group = {
+        %$expected_group,
+        declaration => 'concurrent_alias',
+    };
+    my $alias_scheduler = FSM::Scheduler::ISF->new();
+    my $alias_lowered = $alias_scheduler->lower($alias_actor);
+    ok(
+        $alias_lowered->{files}{'atl_concurrent_alias_trigger_batch.fsm'},
+        'compact concurrent alias trigger batch emits the parent scheduled .fsm',
+    );
+    is_deeply(
+        $alias_actor->{actor_network}{group_schedules},
+        [ $expected_group_schedule ],
+        'compact concurrent alias participates in declared-group trigger-batch evidence',
+    );
+
+    my $alias_report = decode_json($alias_scheduler->report($alias_actor));
+    assert_actor_network_report(
+        $alias_report,
+        {
+            kind      => 'static_declaration',
+            instances => [
+                {
+                    name        => 'reader',
+                    actor_type  => 'packet_reader',
+                    declaration => 'actor',
+                },
+                {
+                    name        => 'writer',
+                    actor_type  => 'packet_writer',
+                    declaration => 'actor',
+                },
+            ],
+            groups => [ $expected_alias_group ],
+            association_schedules => [ $expected_association_schedule ],
+            group_schedules => [ $expected_group_schedule ],
+            data_movements => [],
+            event_waits => [],
+            transaction_triggers => $expected_triggers,
+        },
+        'compact concurrent alias trigger-batch report',
+    );
 };
 
 subtest 'unsupported static graph shapes fail closed' => sub {
@@ -554,14 +671,15 @@ ISF
 
     parse_fails_like(
         <<'ISF',
-(actor unsupported_concurrent_alias
+(actor concurrent_alias_single_member
   (clock clk)
   (interface (input start) (output done))
-  (concurrent pipeline reader writer)
+  (instance reader of packet_reader)
+  (concurrent pipeline reader)
   (transaction run (on start) (complete done)))
 ISF
-        qr/ATL compact concurrent group alias '\(concurrent \.\.\.\)' is reserved but not supported yet/,
-        'unsupported compact concurrent group alias fails closed with ATL diagnostic',
+        qr/ATL concurrent group 'pipeline' requires at least two members/,
+        'compact concurrent aliases require at least two members',
     );
 
     parse_fails_like(

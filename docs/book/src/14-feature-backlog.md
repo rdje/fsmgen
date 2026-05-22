@@ -913,16 +913,14 @@ Concurrent groups use `(group NAME (members ACTOR...)
 (mode concurrent))` as schedulable intent, not as a bypass for ordering,
 fan-in, width, lifetime, or CDC safety.
 
-The group axis starts with shipped fail-closed diagnostics for direct `(group
-...)` declarations and compact `(concurrent ...)` aliases.
+The group axis started with fail-closed diagnostics, then shipped report-only
+static group metadata for verbose `(group ...)` declarations.
 
-Report-only static group metadata is shipped for verbose `(group ...)`.
-
-The compact `(concurrent NAME ACTOR...)` alias is now selected in
-`ISF-ATL-COMPACT-GROUP-ALIAS`. It is intended only as a readability alias for
-the verbose group form and will keep group behavior report-only. Runtime group
-scheduling, group endpoints, group handoff routing, generated HDL behavior,
-and compact movement syntax remain later leaves.
+The compact `(concurrent NAME ACTOR...)` alias is now shipped by
+`ISF-ATL-COMPACT-GROUP-ALIAS`. It is only a readability alias for the verbose
+group form and keeps group behavior report-only. Runtime group scheduling,
+group endpoints, group handoff routing, generated HDL behavior, and compact
+movement syntax remain later leaves.
 
 The first multi-actor trigger scheduling leaf is shipped as a same-cycle
 external trigger batch over existing transaction-body
@@ -946,7 +944,7 @@ shipped surfaces: three direct static actor instances and one contiguous
 transaction-body trigger batch. It proves scheduled `.fsm`, strict schedule
 JSON, and HDL reachability coverage. It does not claim peer event
 synchronization, endpoint data movement, generated ATL child artifacts,
-generated ATL tops, group endpoints, compact aliases, CDC, route mux/storage,
+generated ATL tops, group endpoints, compact movement aliases, CDC, route mux/storage,
 payloads, ready/backpressure, trigger/data/event coupling, or permanent actor
 grouping.
 
@@ -1500,7 +1498,7 @@ child HDL wiring, and inferred child interface bindings.
 Event pulse semantics, actor-to-actor and pin-to-actor data movement,
 concurrent actor-group scheduling, global versus local scheduling ownership,
 generated top names, report visibility beyond the shipped actor-network
-metadata, compact aliases, and broader fail-closed boundaries remain under
+metadata, compact movement aliases, and broader fail-closed boundaries remain under
 task-tree ownership.
 
 This direction is still IAL1 if the source remains explicit actor/network

@@ -259,7 +259,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
                 $self->_parse_actor_network_group($clause, $actor_name),
             );
         } elsif ($keyword eq 'concurrent') {
-            confess "Error: actor '$actor_name' ATL compact concurrent group alias '(concurrent ...)' is reserved but not supported yet; compact aliases remain deferred until the verbose group contract ships\n";
+            $self->_merge_actor_network(
+                $result,
+                $self->_parse_actor_network_concurrent_alias($clause, $actor_name),
+            );
         } elsif ($keyword eq 'priority') {
             push @{$result->{priorities}}, $self->_parse_priority($clause);
         } elsif ($keyword eq 'drive') {
@@ -6552,6 +6555,31 @@ sub _parse_actor_network_group($self, $clause, $actor_name) {
                 members     => $members,
                 mode        => $mode,
                 declaration => 'group',
+                source      => 'actor_body',
+                scheduling  => 'metadata_only',
+            },
+        ],
+    );
+}
+
+sub _parse_actor_network_concurrent_alias($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' ATL compact concurrent group alias requires '(concurrent name actor actor...)'\n"
+        unless @$clause >= 3;
+
+    my $name = $clause->[1];
+    confess "Error: actor '$actor_name' ATL compact concurrent group alias name must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($name);
+
+    my @members = @{$clause}[2 .. $#$clause];
+    return _actor_network_from_instances(
+        $actor_name,
+        [],
+        [
+            {
+                name        => $name,
+                members     => \@members,
+                mode        => 'concurrent',
+                declaration => 'concurrent_alias',
                 source      => 'actor_body',
                 scheduling  => 'metadata_only',
             },

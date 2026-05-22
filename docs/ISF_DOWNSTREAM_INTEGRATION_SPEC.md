@@ -1795,13 +1795,15 @@ capability manifest and this handoff:
   review metadata only. They are not required for task-scoped ATL trigger
   associations and never create permanent runtime associations or override
   fan-in, lifetime, ordering, width, or CDC safety.
-- The concurrent-group implementation axis has shipped targeted diagnostics
-  and report-only metadata. Downstream producers may emit direct actor-body
-  `(group NAME (members ACTOR...) (mode concurrent))` declarations only for
-  the shipped metadata subset: at least two already declared direct static
-  actor instances, single-clock actor scope, no dynamic membership, no nested
-  groups, and no scheduling behavior. Compact `(concurrent NAME ACTOR...)`
-  remains reserved and unsupported.
+- The concurrent-group implementation axis has shipped targeted diagnostics,
+  report-only metadata, and the compact readability alias. Downstream
+  producers may emit either direct actor-body
+  `(group NAME (members ACTOR...) (mode concurrent))` declarations or compact
+  `(concurrent NAME ACTOR...)` aliases for the shipped metadata subset: at
+  least two already declared direct static actor instances, single-clock actor
+  scope, no dynamic membership, no nested groups, and no scheduling behavior.
+  Verbose groups report `declaration: "group"`; compact aliases report
+  `declaration: "concurrent_alias"`.
 - The first multi-actor trigger scheduling subset is now
   downstream-emittable.
 
@@ -1823,16 +1825,17 @@ capability manifest and this handoff:
   Downstream producers must still avoid repeated members, noncontiguous
   batches, generated child assumptions, group endpoints, data-movement
   coupling, hidden same-cycle event joins, storage/mux insertion, CDC,
-  compact aliases, and broader fan-in/fan-out.
+  compact movement aliases, and broader fan-in/fan-out.
 
 ### 12.5.3. Static Groups Versus Task-Scoped Associations
 
 Static group declarations are review metadata unless a later leaf explicitly
 selects scheduling behavior. A `(group NAME (members ACTOR...) (mode
-concurrent))` declaration alone reports `actor_network.groups[]` with
-`scheduling: "metadata_only"` and does not run actors concurrently, create a
-permanent association, infer dependencies, insert storage, or bypass CDC,
-width, ordering, or lifetime checks.
+concurrent))` declaration or compact `(concurrent NAME ACTOR...)` alias alone
+reports `actor_network.groups[]` with `scheduling: "metadata_only"` and does
+not run actors concurrently, create a permanent association, infer
+dependencies, insert storage, or bypass CDC, width, ordering, or lifetime
+checks.
 
 Task-scoped associations are scheduled evidence created by accepted behavior,
 not permanent membership. The shipped temporary trigger-batch subset reports

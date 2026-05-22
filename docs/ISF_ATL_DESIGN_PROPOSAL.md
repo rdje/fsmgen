@@ -62,13 +62,15 @@ selected source shape because it:
   one unified ATL surface;
 - avoids a second lexical section that could be mistaken for a semantic root.
 
-The shipped metadata surfaces accept direct `(instance ...)` clauses and the
+The shipped metadata surfaces accept direct `(instance ...)` clauses, the
 direct verbose `(group NAME (members ACTOR...) (mode concurrent))` group
-form. Instances lower to `actor_network.instances[]`; groups lower to
-report-only `actor_network.groups[]` entries with `scheduling:
-metadata_only`. `(network ...)`, compact `(concurrent ...)` aliases, broader
-group placement, generated children, group endpoints, and multi-instance
-scheduling are still deferred unless a later leaf advertises them explicitly.
+form, and the compact `(concurrent NAME ACTOR...)` alias. Instances lower to
+`actor_network.instances[]`; groups lower to report-only
+`actor_network.groups[]` entries with `scheduling: metadata_only`. Verbose
+groups report `declaration: "group"` and compact group aliases report
+`declaration: "concurrent_alias"`. `(network ...)`, broader group placement,
+generated children, group endpoints, and multi-instance scheduling are still
+deferred unless a later leaf advertises them explicitly.
 
 This keeps the model natural:
 
@@ -492,7 +494,7 @@ triggers, one canonical `association_schedules[]` entry, and one
 compatibility `group_schedules[]` entry named `run_trigger_batch`. It
 deliberately does not claim peer event synchronization, endpoint data
 movement, generated ATL child `.fsm` artifacts, generated ATL tops, group
-endpoints, compact aliases, CDC, route mux/storage, payloads, or
+endpoints, compact movement aliases, CDC, route mux/storage, payloads, or
 ready/backpressure.
 
 The scalar data-route ATL fixture is shipped as
@@ -503,7 +505,7 @@ transaction drive call. The fixture proves generated parent handoff ports,
 `actor_network.data_movements[]` route metadata, strict schedule JSON parity,
 and plain/strict HDL reachability without claiming generated ATL children,
 generated ATL tops, route mux/storage, trigger/data coupling, wider payloads,
-fan-in/fan-out, CDC, ready/backpressure, compact aliases, or permanent actor
+fan-in/fan-out, CDC, ready/backpressure, compact movement aliases, or permanent actor
 grouping.
 
 The scalar pin-ingress ATL fixture is shipped as
@@ -517,7 +519,7 @@ with kind `scalar_pin_to_actor_handoff`, strict schedule JSON parity, and
 plain/strict HDL reachability without claiming generated ATL children,
 generated ATL tops, actor-to-pin egress, bidirectional pin movement, route
 mux/storage, trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
-ready/backpressure, compact aliases, or permanent actor grouping.
+ready/backpressure, compact movement aliases, or permanent actor grouping.
 
 The scalar pin-egress ATL fixture is shipped as
 `isf/atl_pin_egress_pipeline.isf`. It stays inside the shipped scalar
@@ -530,7 +532,7 @@ call. The fixture proves the generated actor source handoff input
 `scalar_actor_to_pin_handoff`, strict schedule JSON parity, and plain/strict
 HDL reachability without claiming generated ATL children, generated ATL tops,
 bidirectional pin movement, route mux/storage, trigger/data coupling, wider
-payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases, or
+payloads, fan-in/fan-out, CDC, ready/backpressure, compact movement aliases, or
 permanent actor grouping.
 
 The ATL trigger-wait fixture is shipped as
@@ -543,7 +545,7 @@ The fixture proves single-actor orchestration sequencing, including
 `event_waits[]`, without claiming temporary trigger-batch plus event coupling,
 generated ATL children, generated ATL tops, actor type resolution, HDL child
 wiring, event payloads, data movement coupling, route mux/storage,
-fan-in/fan-out, CDC, ready/backpressure, compact aliases, or permanent actor
+fan-in/fan-out, CDC, ready/backpressure, compact movement aliases, or permanent actor
 grouping.
 
 The ATL trigger-batch wait fixture is shipped as
@@ -556,7 +558,7 @@ schema-version-1 compatibility group schedule entry, one event-wait entry,
 strict schedule/HDL reachability, and the default await timeout state without
 claiming hidden actor-event fan-in, generated ATL children, generated ATL
 tops, actor type resolution, HDL child wiring, data movement coupling, CDC,
-ready/backpressure, compact aliases, or permanent actor grouping.
+ready/backpressure, compact movement aliases, or permanent actor grouping.
 
 The ATL trigger-batch multi-event wait fixture is shipped as
 `isf/atl_trigger_batch_multi_wait_pipeline.isf`. It keeps repeated
@@ -955,18 +957,17 @@ different semantic surface.
   (complete done))
 ```
 
-Candidate compact aliases:
+Candidate compact source aliases:
 
 | Compact form | Verbose meaning |
 | --- | --- |
 | `(inst : actor_type)` | `(instance inst of actor_type)` |
 | `(concurrent name actor...)` | `(group name (members actor...) (mode concurrent))` |
 
-The verbose form was accepted first. The first compact form now selected for
-implementation is `(concurrent name actor...)`, and it must lower to the same
-report-only static group semantics as the verbose group declaration while
-preserving transparent declaration provenance. Compact instance declarations
-remain future work.
+The verbose form was accepted first. The first compact form now shipped is
+`(concurrent name actor...)`, which lowers to the same report-only static group
+semantics as the verbose group declaration while preserving transparent
+declaration provenance. Compact instance declarations remain future work.
 
 No new compact movement spelling is planned for ATL v0. The movement surface
 is the existing drive definition and drive-call surface with endpoint-aware
@@ -1115,13 +1116,14 @@ The first group implementation can be conservative. It can accept only
 single-clock actor instances with explicit endpoint-aware drive body pairs and
 no dynamic membership.
 
-The shipped group metadata subset is direct actor-body groups only: HDL
-identifier group names, at least two already declared direct static actor
-members, explicit `(mode concurrent)`, single-clock actor scope, no dynamic
-membership, no nested groups, no group endpoints, no generated child
-artifacts, no route mux/storage, no CDC, and no scheduling overlap claims
-until separate leaves ship them. Compact `(concurrent NAME ACTOR...)` aliases
-remain reserved and fail closed.
+The shipped group metadata subset accepts direct actor-body verbose groups and
+the compact readability alias: HDL identifier group names, at least two
+already declared direct static actor members, explicit concurrent mode,
+single-clock actor scope, no dynamic membership, no nested groups, no group
+endpoints, no generated child artifacts, no route mux/storage, no CDC, and no
+scheduling overlap claims until separate leaves ship them. Verbose groups
+report `declaration: "group"`; compact `(concurrent NAME ACTOR...)` aliases
+report `declaration: "concurrent_alias"`.
 
 The shipped first behavior-bearing multi-actor trigger subset is a same-cycle
 external trigger batch. In one top-level transaction body, a contiguous run of
@@ -1283,7 +1285,7 @@ vector pin-egress multi-route subset is a separate shipped generated-child
 extension with unique child outputs/top-level output pins and route-local
 exact widths.
 
-Later slices can add multiple sources feeding one sink, compact aliases, and
+Later slices can add multiple sources feeding one sink, compact movement aliases, and
 concurrent groups.
 
 The shipped first generated-child data-route subset reuses the pin-to-actor
@@ -1537,7 +1539,7 @@ ATL v0 should reject:
 - cross-clock actor-network movement without explicit CDC syntax;
 - recursive actor-network instantiation;
 - combinational dependency cycles without storage;
-- compact aliases before they are mapped to the same IR as verbose forms;
+- compact movement aliases before they are mapped to the same IR as verbose forms;
 - `(network ...)` wrappers;
 - any endpoint-aware drive-body pair whose width, lifetime, endpoint
   direction, or ordering cannot be proven.

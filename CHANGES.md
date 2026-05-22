@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL compact group alias shipped
+- Completed `ISF-ATL-COMPACT-GROUP-ALIAS.2` and closed the task tree.
+- Added direct actor-body `(concurrent NAME ACTOR...)` as a compact
+  readability alias for verbose
+  `(group NAME (members ACTOR...) (mode concurrent))` static group metadata.
+- Compact aliases now report through `actor_network.groups[]` with
+  `declaration: "concurrent_alias"`, `source: "actor_body"`,
+  `mode: "concurrent"`, and `scheduling: "metadata_only"`; verbose groups keep
+  `declaration: "group"`.
+- Existing group validation and fail-closed boundaries remain intact:
+  single-clock scope, at least two declared direct static actor members,
+  scalar HDL identifiers, no duplicate members, and no combinations with the
+  currently unsupported group/event/data-movement shapes.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  public manifest metadata, ATL design proposal, mdBook, roadmap, task-tree
+  docs, live achievement status, memory, and development notes.
+- Validation passed: syntax checks; focused actor-network test; public/doc
+  audit group; ATL fixture group; broad `./bin/ci-regression isf --no-book`
+  with `Files=238, Tests=1582`; `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — ATL compact group alias tree selected
 - Completed `ISF-ATL-COMPACT-GROUP-ALIAS.1`.
 - Activated a new R14 task tree for the reserved compact
@@ -3469,10 +3490,10 @@ This is the persistent technical change history for FSMGen.
   with group, owner transaction, members, target transaction names, generated
   trigger signals, schedule, dependency policy, storage, source, and sink
   fields.
-- Kept group declarations as metadata and left compact aliases, generated
-  child wiring, group endpoints, event/data-movement coupling, route
-  mux/storage, CDC, fan-in/fan-out, and noncontiguous or mixed-group trigger
-  batches deferred or fail-closed. The active ATL frontier advances to
+- Kept group declarations as metadata and left compact group aliases for that
+  leaf, generated child wiring, group endpoints, event/data-movement coupling,
+  route mux/storage, CDC, fan-in/fan-out, and noncontiguous or mixed-group
+  trigger batches deferred or fail-closed. The active ATL frontier advances to
   `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5`.
 
 ### R14 — ATL static group metadata shipped

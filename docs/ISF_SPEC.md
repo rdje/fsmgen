@@ -613,7 +613,7 @@ for strict schedule JSON parity, scheduled `.fsm` structure, and plain plus
 strict HDL generation. It deliberately does not declare a permanent
 `(group ...)` association and does not claim peer events, endpoint data
 movement, generated ATL child artifacts, generated ATL tops, group endpoints,
-compact aliases, CDC, payloads, ready/backpressure, route mux/storage, or
+compact movement aliases, CDC, payloads, ready/backpressure, route mux/storage, or
 trigger/data/event coupling.
 
 The scalar ATL data-route fixture is shipped as
@@ -638,7 +638,7 @@ for strict schedule JSON parity, scheduled `.fsm` structure, and plain plus
 strict HDL generation. It deliberately does not claim generated ATL child
 artifacts, generated ATL tops, route mux/storage, peer events,
 trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure,
-compact aliases, or permanent actor grouping.
+compact movement aliases, or permanent actor grouping.
 
 The scalar ATL pin-ingress fixture is shipped as
 [isf/atl_pin_ingress_pipeline.isf](../isf/atl_pin_ingress_pipeline.isf). It
@@ -663,7 +663,7 @@ for strict schedule JSON parity, scheduled `.fsm` structure, and plain plus
 strict HDL generation. It deliberately does not claim generated ATL child
 artifacts, generated ATL tops, actor-to-pin egress, bidirectional pin
 movement, route mux/storage, peer events, trigger/data coupling, wider
-payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases, or
+payloads, fan-in/fan-out, CDC, ready/backpressure, compact movement aliases, or
 permanent actor grouping.
 
 The scalar ATL pin-egress fixture is shipped as
@@ -689,7 +689,7 @@ for strict schedule JSON parity, scheduled `.fsm` structure, and plain plus
 strict HDL generation. It deliberately does not claim generated ATL child
 artifacts, generated ATL tops, bidirectional pin movement, route mux/storage,
 peer events, trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
-ready/backpressure, compact aliases, or permanent actor grouping.
+ready/backpressure, compact movement aliases, or permanent actor grouping.
 
 The ATL trigger-wait fixture is shipped as
 [isf/atl_trigger_wait_pipeline.isf](../isf/atl_trigger_wait_pipeline.isf). It
@@ -718,7 +718,7 @@ strict HDL generation. It deliberately does not claim temporary trigger-batch
 plus event coupling, multiple waits or triggers, generated ATL child
 artifacts, generated ATL tops, actor type resolution, HDL child wiring, event
 payloads, data movement coupling, route mux/storage, fan-in/fan-out, CDC,
-ready/backpressure, compact aliases, or permanent actor grouping.
+ready/backpressure, compact movement aliases, or permanent actor grouping.
 
 The ATL trigger-batch wait fixture is shipped as
 [isf/atl_trigger_batch_wait_pipeline.isf](../isf/atl_trigger_batch_wait_pipeline.isf).
@@ -752,7 +752,7 @@ default await timeout state, and plain plus strict HDL generation. It
 deliberately stays a single-wait fixture and does not claim hidden
 actor-event fan-in, generated ATL child artifacts, generated ATL tops, actor
 type resolution, HDL child wiring, event payloads, endpoint data movement
-coupling, route mux/storage, CDC, ready/backpressure, compact aliases, or
+coupling, route mux/storage, CDC, ready/backpressure, compact movement aliases, or
 permanent actor grouping.
 
 The ATL trigger-batch multi-event wait fixture is shipped as
@@ -3672,16 +3672,19 @@ handoff, and report-only group metadata subsets implemented so far:
   `(group NAME (members ACTOR...) (mode concurrent))`, but groups are static
   review metadata only. Task-scoped ATL associations are created by scheduled
   transaction behavior, not by permanent group membership.
-- The concurrent-group implementation axis has shipped targeted diagnostics
-  and report-only metadata. FSMGen accepts direct actor-body
-  `(group NAME (members ACTOR...) (mode concurrent))` declarations when every
+- The concurrent-group implementation axis has shipped targeted diagnostics,
+  report-only metadata, and the compact readability alias. FSMGen accepts
+  direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`
+  declarations and compact `(concurrent NAME ACTOR...)` aliases when every
   member names an already declared direct static actor instance, at least two
   members are present, and the actor is single-clock. Schedule JSON reports
   each group through `actor_network.groups[]` with `name`, `members`, `mode`,
   `declaration`, `source`, and `scheduling`; the current `scheduling` value is
-  `metadata_only`. Compact `(concurrent NAME ACTOR...)` aliases, group
-  endpoints, concurrent execution, storage/mux insertion, generated child
-  artifacts, and CDC behavior remain deferred.
+  `metadata_only`. Verbose groups report `declaration: "group"`, while compact
+  aliases report `declaration: "concurrent_alias"` so downstream consumers can
+  audit the original source spelling. Group endpoints, concurrent execution,
+  storage/mux insertion, generated child artifacts, compact movement aliases,
+  and CDC behavior remain deferred.
 - The shipped first multi-actor trigger scheduling subset uses existing
   top-level transaction-body `(trigger actor.transaction)` clauses: one
   contiguous batch may target distinct static actor instances and lowers as
@@ -3703,7 +3706,7 @@ handoff, and report-only group metadata subsets implemented so far:
   trigger batch. Multi-event waits must target distinct triggered actor
   instances and remain explicit sequential wait states. Generated child
   wiring, group endpoints, data-movement coupling, hidden actor-event
-  fan-in/fan-out joins, storage/mux insertion, CDC, compact aliases,
+  fan-in/fan-out joins, storage/mux insertion, CDC, compact movement aliases,
   repeated-instance batches, and broader fan-in/fan-out remain fail-closed.
 
 The current actor-event wait subset is deliberately narrower than full child

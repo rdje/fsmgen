@@ -2,17 +2,23 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: `ISF-ATL-COMPACT-GROUP-ALIAS`; current frontier:
-  `ISF-ATL-COMPACT-GROUP-ALIAS.2`.
-- Recent R14 ATL compact group alias selection:
-  `ISF-ATL-COMPACT-GROUP-ALIAS.1` activated the next bounded ATL source
-  ergonomics tree. The selected implementation will ship the reserved compact
-  `(concurrent NAME ACTOR...)` alias as a readability form for the already
+  Active task tree: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before any code changes.
+- Recent R14 ATL compact group alias completion:
+  `ISF-ATL-COMPACT-GROUP-ALIAS.2` shipped direct actor-body
+  `(concurrent NAME ACTOR...)` as a compact readability alias for the already
   shipped verbose `(group NAME (members ACTOR...) (mode concurrent))`
-  report-only metadata surface. It does not add group runtime scheduling,
-  group endpoints, group handoff routing, generated HDL behavior, compact
-  movement syntax, or permanent runtime group coupling. No compiler behavior
-  changed.
+  report-only metadata surface and closed the task tree. Compact aliases now
+  report through `actor_network.groups[]` with
+  `declaration: "concurrent_alias"`, while verbose groups keep
+  `declaration: "group"`. Group validation and fail-closed boundaries remain
+  unchanged. This does not add group runtime scheduling, group endpoints,
+  group handoff routing, generated HDL group behavior, compact movement
+  syntax, or permanent runtime group coupling.
+- Recent R14 ATL compact group alias selection:
+  `ISF-ATL-COMPACT-GROUP-ALIAS.1` activated the bounded ATL source ergonomics
+  tree for the compact `(concurrent NAME ACTOR...)` alias before code. No
+  compiler behavior changed.
 - Recent R14 ATL multi-event wait sequencing completion:
   `ISF-ATL-MULTI-EVENT-WAIT.2` shipped the bounded parent-handoff
   multi-event wait subset and closed the task tree. FSMGen now accepts one
@@ -1262,7 +1268,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `scheduling => metadata_only`. The group metadata does not schedule
   concurrent execution, infer dependencies, insert route mux/storage, create
   group endpoints, emit child artifacts, cross clock domains, or accept
-  compact aliases. The next ATL frontier is
+  compact group aliases in that leaf. The next ATL frontier is
   `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`, which selects the first group
   scheduling behavior before code. `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`
   selected that first behavior as a same-cycle external trigger batch:
@@ -1316,8 +1322,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   arrays, strict schedule JSON parity, and plain plus strict HDL reachability.
   This remains a bounded scalar data-route fixture; generated ATL children,
   generated ATL tops, route mux/storage, peer events, trigger/data coupling,
-  wider payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases,
-  and permanent actor grouping remain deferred.
+  wider payloads, fan-in/fan-out, CDC, ready/backpressure, compact movement
+  aliases, and permanent actor grouping remain deferred.
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5` selected the next fixture as
   `isf/atl_pin_ingress_pipeline.isf`: one direct static actor, one existing
   top-level input pin `payload`, one scalar pin-to-actor drive-body route
@@ -1331,8 +1337,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   remains a bounded scalar pin-ingress fixture; generated ATL children,
   generated ATL tops, actor-to-pin egress, bidirectional pin movement, route
   mux/storage, peer events, trigger/data coupling, wider payloads,
-  fan-in/fan-out, CDC, ready/backpressure, compact aliases, and permanent
-  actor grouping remain deferred.
+  fan-in/fan-out, CDC, ready/backpressure, compact movement aliases, and
+  permanent actor grouping remain deferred.
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7` selected the inverse boundary fixture
   as `isf/atl_pin_egress_pipeline.isf`: one direct static actor, one existing
   top-level output pin `result`, one scalar actor-to-pin drive-body route
@@ -1346,8 +1352,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   remains a bounded scalar pin-egress fixture; generated ATL children,
   generated ATL tops, bidirectional pin movement, route mux/storage, peer
   events, trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
-  ready/backpressure, compact aliases, and permanent actor grouping remain
-  deferred. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9` then selected the next ATL
+  ready/backpressure, compact movement aliases, and permanent actor grouping
+  remain deferred. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9` then selected the next ATL
   fixture as `isf/atl_trigger_wait_pipeline.isf`: one direct static actor
   `worker`, one top-level transaction that emits a one-cycle
   `(trigger worker.process)` parent handoff, waits on one
@@ -8770,8 +8776,8 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Continue the active `ISF-ATL-COMPACT-GROUP-ALIAS` tree before selecting a
-  different implementation task. `ISF-ATL-COMPACT-GROUP-ALIAS.2` owns compact
+- Select or create the next roadmap-aligned task tree before any further code
+  changes. `ISF-ATL-COMPACT-GROUP-ALIAS` is closed after shipping compact
   group alias normalization and coverage.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather

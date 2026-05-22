@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL compact group alias shipped
+- Completed `ISF-ATL-COMPACT-GROUP-ALIAS.2` and closed the task tree.
+- FSMGen now accepts direct actor-body `(concurrent NAME ACTOR...)` as a
+  compact readability alias for the shipped verbose
+  `(group NAME (members ACTOR...) (mode concurrent))` static group metadata
+  form.
+- The parser normalizes compact aliases into `actor_network.groups[]` with
+  `mode: "concurrent"`, `source: "actor_body"`,
+  `scheduling: "metadata_only"`, and `declaration: "concurrent_alias"`.
+  Verbose groups continue to report `declaration: "group"`.
+- The alias keeps existing group validation: single-clock actor scope, at
+  least two already declared direct static actor members, scalar HDL
+  identifiers, duplicate-member rejection, and the existing fail-closed
+  boundaries for group/event/data-movement combinations.
+- No runtime group scheduling, group endpoints, group handoff routing,
+  generated HDL group behavior, compact movement syntax, or permanent runtime
+  group coupling was added.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  public manifest metadata, ATL design proposal, mdBook composition/support
+  matrix/backlog chapters, roadmap status, task-tree docs, and live docs.
+- Validation passed: parser/public-contract/test syntax checks; focused
+  `t/1322-isf-actor-network-static.t`; public/doc audit group; ATL fixture
+  group; broad `./bin/ci-regression isf --no-book` with `Files=238,
+  Tests=1582`; `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: ATL compact group alias tree selected
 - Completed `ISF-ATL-COMPACT-GROUP-ALIAS.1`.
 - Activated the next R14 task tree for the reserved compact
@@ -3437,9 +3464,9 @@ This is the live continuity document for fast session recovery after crashes, re
   plus plain/strict HDL generation.
 - The selected fixture explicitly does not claim peer event synchronization,
   endpoint data movement, generated ATL child artifacts, generated ATL tops,
-  group endpoints, compact aliases, CDC, payloads, ready/backpressure,
-  route mux/storage, or trigger/data/event coupling. The active ATL frontier
-  advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2`.
+  group endpoints, compact group aliases for that leaf, CDC, payloads,
+  ready/backpressure, route mux/storage, or trigger/data/event coupling. The
+  active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2`.
 - Validation passed: `mdbook build docs/book`; `git diff --check`.
 ## 2026-05-18: ATL realistic fixture frontier decomposed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8` decomposition before code.
@@ -3463,8 +3490,8 @@ This is the live continuity document for fast session recovery after crashes, re
   `actor_network.group_schedules[]`.
 - Generated children, group endpoints, event/data-movement coupling,
   route mux/storage, CDC, partial or mixed-group batches, noncontiguous
-  batches, repeated members, compact aliases, and fan-in/fan-out remain
-  deferred or fail-closed. The active ATL frontier advances to
+  batches, repeated members, compact group aliases for that leaf, and
+  fan-in/fan-out remain deferred or fail-closed. The active ATL frontier advances to
   `ISF-ACTOR-NETWORK-ORCHESTRATION.8`.
 - Validation passed: syntax checks, focused actor-network, schedule-report
   matrix, and public-contract audits, `mdbook build docs/book`, broad

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Compact groups preserve static metadata semantics
+- `ISF-ATL-COMPACT-GROUP-ALIAS.2` deliberately routes
+  `(concurrent NAME ACTOR...)` through the same `actor_network.groups[]`
+  metadata path as verbose `(group NAME (members ACTOR...) (mode
+  concurrent))`.
+- The only semantic difference is source provenance:
+  `declaration: "concurrent_alias"` for the compact form versus
+  `declaration: "group"` for the verbose form. Downstream consumers can review
+  the authored spelling without treating the compact form as a new scheduling
+  construct.
+- The alias is not an ATL scheduler shortcut. Runtime group scheduling,
+  group endpoints, handoff routing, generated HDL group behavior, compact
+  movement syntax, and permanent runtime group coupling remain separate future
+  leaves.
+
 ## 2026-05-22: Compact groups are an alias, not scheduling
 - `ISF-ATL-COMPACT-GROUP-ALIAS.1` selects the reserved
   `(concurrent NAME ACTOR...)` source shape because the verbose static group
@@ -2889,9 +2904,9 @@ This document captures engineering rationale, design constraints, and working de
 - The parser validates the selected static shape in one place: group name,
   explicit concurrent mode, at least two declared direct static actor members,
   duplicate members, and single-clock scope.
-- Keeping compact aliases, group endpoints, event/trigger/data-movement
-  combinations, mux/storage insertion, and CDC deferred prevents metadata from
-  being mistaken for execution semantics.
+- Keeping compact group aliases for that leaf, group endpoints,
+  event/trigger/data-movement combinations, mux/storage insertion, and CDC
+  deferred prevents metadata from being mistaken for execution semantics.
 ## 2026-05-18: ATL group diagnostics stay behavior-free
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2` intentionally changes only the parser
   failure surface for reserved group syntax.

@@ -180,7 +180,7 @@ to keep file-backed static actor instances, one task-scoped same-cycle
 external trigger batch, strict schedule JSON parity,
 scheduled `.fsm` structure, and plain plus strict HDL generation covered
 without claiming peer events, endpoint data movement, generated ATL child
-artifacts, generated ATL tops, group endpoints, compact aliases, CDC,
+artifacts, generated ATL tops, group endpoints, compact movement aliases, CDC,
 payloads, ready/backpressure, route mux/storage, or permanent actor grouping.
 The ATL resolved-child fixture is checked by
 [t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t)
@@ -1909,7 +1909,10 @@ report-only metadata:
 direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`
 declarations now report static `actor_network.groups[]` metadata when every
 member names an already declared direct static actor instance. Compact
-`(concurrent NAME ACTOR...)` aliases remain reserved and unsupported. No
+`(concurrent NAME ACTOR...)` aliases now normalize to the same report-only
+metadata surface and report `declaration: "concurrent_alias"` instead of the
+verbose form's `declaration: "group"`. Group entries also keep
+`source: "actor_body"` and `scheduling: "metadata_only"` in this subset. No
 public group endpoint behavior is implemented yet.
 The first public multi-actor trigger scheduling contract is a same-cycle
 external trigger batch over existing top-level transaction-body

@@ -491,10 +491,9 @@ pulses with no payloads in ATL v0.
 ### Static Groups Versus Task-Scoped Associations
 
 Concurrent groups may still use
-`(group NAME (members ACTOR...) (mode concurrent))`, but that declaration is
-static review metadata, not a permanent runtime association and not a way to
-bypass fan-in, ordering, width, lifetime, or CDC safety. Compact
-`(concurrent ...)` aliases remain deferred.
+`(group NAME (members ACTOR...) (mode concurrent))` or the compact
+`(concurrent NAME ACTOR...)` alias, but each declaration is static review metadata, not a permanent runtime association, and not a way to bypass
+fan-in, ordering, width, lifetime, or CDC safety.
 
 The first multi-actor trigger scheduling leaf is shipped as a same-cycle
 external trigger batch. It uses only existing transaction-body
@@ -522,11 +521,26 @@ Report-only static group metadata is now shipped for the verbose form:
     (complete done)))
 ```
 
+The compact alias is equivalent for scheduling purposes:
+
+```lisp
+(actor grouped_pipeline_compact
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (concurrent pipeline reader writer)
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
 The group appears in `actor_network.groups[]` with `scheduling:
-"metadata_only"`. By itself, the declaration names a static review set; it
-does not run actors concurrently, infer dependencies, insert storage or muxes,
-emit child artifacts, cross clock domains, or accept compact
-`(concurrent ...)` aliases.
+"metadata_only"`. Verbose groups report `declaration: "group"`; compact
+aliases report `declaration: "concurrent_alias"` so downstream reviewers can
+recover the source spelling. By itself, either declaration names a static
+review set; it does not run actors concurrently, infer dependencies, insert
+storage or muxes, emit child artifacts, or cross clock domains.
 
 The accepted temporary trigger batch does not require a group declaration:
 
@@ -583,7 +597,7 @@ JSON reports the route in `actor_network.data_movements[]` with
 drive-activated data route, not a trigger-batch association. It does not claim
 generated ATL child `.fsm` artifacts, generated ATL tops, route mux/storage,
 trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure,
-compact aliases, or permanent actor grouping.
+compact movement aliases, or permanent actor grouping.
 
 The scalar pin-ingress ATL fixture is shipped as
 `isf/atl_pin_ingress_pipeline.isf`. It uses the same drive-body movement
@@ -605,7 +619,7 @@ empty because it is a drive-activated data route, not a trigger-batch
 association. It does not claim generated ATL child `.fsm` artifacts, generated
 ATL tops, actor-to-pin egress, bidirectional pin movement, route mux/storage,
 trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure,
-compact aliases, or permanent actor grouping.
+compact movement aliases, or permanent actor grouping.
 
 The scalar pin-egress ATL fixture is shipped as
 `isf/atl_pin_egress_pipeline.isf`. It uses the same drive-body movement syntax
@@ -629,7 +643,7 @@ because it is a drive-activated data route, not a trigger-batch association.
 
 It does not claim generated ATL child `.fsm` artifacts, generated ATL tops,
 bidirectional pin movement, route mux/storage, trigger/data coupling, wider
-payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases, or
+payloads, fan-in/fan-out, CDC, ready/backpressure, compact movement aliases, or
 permanent actor grouping.
 
 The ATL trigger-wait fixture is shipped as
@@ -643,7 +657,7 @@ default await timeout state, and plain plus strict HDL generation. It does not
 claim temporary trigger-batch plus event coupling, generated ATL child `.fsm`
 artifacts, generated ATL tops, actor type resolution, HDL child wiring, event
 payloads, data movement coupling, fan-in/fan-out, CDC, ready/backpressure,
-compact aliases, or permanent actor grouping.
+compact movement aliases, or permanent actor grouping.
 
 The ATL trigger-batch wait fixture is shipped as
 `isf/atl_trigger_batch_wait_pipeline.isf`. It couples one same-cycle temporary
@@ -656,7 +670,7 @@ default await timeout state, and plain plus strict HDL generation. It remains
 parent-handoff orchestration: it does not claim generated ATL child `.fsm`
 artifacts, generated ATL tops, actor type resolution, HDL child wiring,
 hidden actor-event fan-in, data movement coupling, CDC, ready/backpressure,
-compact aliases, or permanent actor grouping.
+compact movement aliases, or permanent actor grouping.
 
 The ATL trigger-batch multi-event wait fixture is shipped as
 `isf/atl_trigger_batch_multi_wait_pipeline.isf`. It uses the same task-scoped
