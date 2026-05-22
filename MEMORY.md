@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Watchdog actor-constant limits tree selected
+- Completed `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.1`.
+- Activated the next R14 feature tree for positive actor constants in
+  actor-level `(watchdog CONST)` and await-local
+  `(await ready (watchdog CONST))` limits.
+- The next frontier is `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2`: implement and
+  document actor-constant watchdog limits while preserving omitted watchdog
+  defaults, existing watchdog counter semantics, and public watchdog report
+  shape.
+- Actor parameters, transaction parameters, runtime signals, arbitrary
+  expressions, cross-domain watchdog policy, and parameterized generated-top
+  watchdog specialization remain out of scope.
+- No compiler behavior changed.
+
 ## 2026-05-22: Latency actor-constant bounds shipped
 - Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` and closed the task tree.
 - FSMGen now accepts declared actor constants as transaction latency

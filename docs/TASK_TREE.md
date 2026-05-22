@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS` | `active` | `R14` | `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` | [docs/tasks/ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.md](docs/tasks/ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.md) |
 
 ## Proposed Task Trees
 
@@ -290,6 +291,7 @@ as done work unless a future task reopens them.
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
 | Reusable-library clock/reset name remapping inside the single-clock-domain ISF model | `ISF-LIBRARY-SYSTEM-BINDINGS` |
 | Default actor timing conventions for omitted legacy single-clock actor clock/reset/watchdog clauses | `ISF-TIMING-CONVENTIONS` |
+| Actor-constant watchdog limits | `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS` |
 | Multi-clock, asynchronous, and interacting clock-domain semantics | `ISF-CLOCK-DOMAINS` |
 | Multi-clock/CDC fixture matrix hardening | `ISF-CDC-FIXTURE-MATRIX` |
 | ISF enum/type/aggregate parity with existing `.fsm` semantic machinery | `ISF-TYPE-AGGREGATE-PARITY` |

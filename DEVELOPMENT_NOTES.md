@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Watchdog limits can reuse static constants
+- `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.1` selects a narrow timing-surface
+  widening: actor constants are compile-time evidence and can naturally serve
+  as named positive watchdog limits.
+- The implementation should resolve constants before watchdog counter
+  injection, so generated counter widths, init values, decrement behavior, and
+  timeout transitions stay identical to the literal-limit path.
+- Parameters remain deliberately excluded because they are overrideable
+  specialization values. Accepting parameterized watchdog limits would need a
+  separate generated-top/specialization policy.
+
 ## 2026-05-22: Latency constant bounds preserve the literal path
 - `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` resolves actor constants inside the
   latency parser before the existing counter injection step. After resolution,

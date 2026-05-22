@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Watchdog actor-constant limits tree selected
+- Completed `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.1`.
+- Activated a new R14 task tree for accepting positive actor constants as
+  static actor-level and await-local watchdog limit evidence.
+- The selected implementation keeps actor parameters, transaction parameters,
+  runtime signals, arbitrary expressions, cross-domain watchdog policy,
+  omitted default changes, and parameterized generated-top watchdog
+  specialization out of scope.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Latency actor-constant bounds shipped
 - Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` and closed the task tree.
 - Added support for declared positive actor constants as transaction latency

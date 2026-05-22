@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Watchdog actor-constant limits tree selected
+- Completed `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.1`.
+- Activated the active R14 task tree for positive actor constants in
+  actor-level and await-local watchdog limits.
+- The active R14 frontier is now `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2`.
+- The selected implementation will preserve omitted watchdog defaults,
+  watchdog counter behavior, and public watchdog report shape while resolving
+  declared positive actor constants to the same integer limits as literals.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Latency actor-constant bounds shipped
 - Completed `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` and closed the task tree.
 - FSMGen now accepts declared positive actor constants as transaction latency

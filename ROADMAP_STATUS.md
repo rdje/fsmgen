@@ -2,8 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+  Active task tree: `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS`. Current frontier:
+  `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2`.
+- Recent R14 watchdog actor-constant limits selection:
+  `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.1` activated the watchdog limit tree for
+  positive actor constants in actor-level `(watchdog CONST)` and await-local
+  `(await ready (watchdog CONST))` limits. Actor parameters, transaction
+  parameters, runtime signals, arbitrary expressions, omitted watchdog default
+  changes, cross-domain watchdog policy, and parameterized generated-top
+  watchdog specialization remain out of scope. No compiler behavior changed.
 - Recent R14 latency actor-constant bounds completion:
   `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` shipped positive actor constants as
   transaction latency `(min ...)` and `(max ...)` bounds and closed the task
@@ -8847,9 +8854,8 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Select or create the next roadmap-aligned task tree before any further code
-  changes. `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` is closed after shipping
-  positive actor constants as static transaction latency min/max bound
-  evidence.
+  changes. `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS` is active with frontier `.2`,
+  targeting positive actor constants as static watchdog limit evidence.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.
