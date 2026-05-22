@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ATL-BACKLOG-TRUTH-SYNC` | `active` | `R14` | `ISF-ATL-BACKLOG-TRUTH-SYNC.2` | [docs/tasks/ISF-ATL-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-ATL-BACKLOG-TRUTH-SYNC.md) |
 
 ## Proposed Task Trees
 

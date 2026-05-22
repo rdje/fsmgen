@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ATL-BACKLOG-TRUTH-SYNC`
-- Status: `active`
+- Status: `completed`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -37,7 +37,7 @@ waits, generated ATL tops, and generated-child route families shipped.
 ## Task Tree
 
 - ID: `ISF-ATL-BACKLOG-TRUTH-SYNC`
-  Status: `active`
+  Status: `completed`
   Goal: `synchronize ATL backlog truth after recent ATL shipped subsets`
   Children: `ISF-ATL-BACKLOG-TRUTH-SYNC.1`,
   `ISF-ATL-BACKLOG-TRUTH-SYNC.2`
@@ -47,20 +47,20 @@ waits, generated ATL tops, and generated-child route families shipped.
   Goal: `select the ATL backlog truth-sync task tree`
   Acceptance: `task-tree owner, stale statement, boundaries, and doc-sync leaf are recorded before edits`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `aa985588 ISF-ATL-BACKLOG-TRUTH-SYNC.1: select ATL backlog truth sync`
 
 - ID: `ISF-ATL-BACKLOG-TRUTH-SYNC.2`
-  Status: `pending`
+  Status: `done`
   Goal: `synchronize stale ATL backlog generated-top and deferred-feature prose`
   Acceptance: `book-facing ATL backlog prose matches shipped generated-top behavior and explicit deferrals`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1332-isf-atl-doc-status-audit.t t/1305-isf-book-feature-matrix-audit.t`; stale-wording `rg` audit; `git diff --check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ATL-BACKLOG-TRUTH-SYNC.2` | `pending` | The mdBook backlog still says generated ATL tops are excluded even though bounded generated ATL tops are shipped. |
+| 1 | `ISF-ATL-BACKLOG-TRUTH-SYNC.2` | `done` | Completed; no remaining frontier in this tree. |
 
 ## Decisions
 
@@ -80,14 +80,18 @@ waits, generated ATL tops, and generated-child route families shipped.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | 2026-05-22 | `ISF-ATL-BACKLOG-TRUTH-SYNC.1` | `mdbook build docs/book`; `git diff --check` | Pass |
+| 2026-05-22 | `ISF-ATL-BACKLOG-TRUTH-SYNC.2` | `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1332-isf-atl-doc-status-audit.t t/1305-isf-book-feature-matrix-audit.t`; stale-wording `rg` audit; `git diff --check` | Pass |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ATL-BACKLOG-TRUTH-SYNC.1` | `pending this commit: ISF-ATL-BACKLOG-TRUTH-SYNC.1: select ATL backlog truth sync` | Selection commit. |
+| `ISF-ATL-BACKLOG-TRUTH-SYNC.1` | `aa985588 ISF-ATL-BACKLOG-TRUTH-SYNC.1: select ATL backlog truth sync` | Selection commit. |
+| `ISF-ATL-BACKLOG-TRUTH-SYNC.2` | `pending this commit: ISF-ATL-BACKLOG-TRUTH-SYNC.2: sync ATL backlog truth` | Documentation truth-sync commit. |
 
 ## Changelog
 
 - `2026-05-22`: Created active R14 documentation truth-sync tree for stale ATL
   backlog prose.
+- `2026-05-22`: Synchronized the mdBook feature backlog with shipped bounded
+  generated ATL top subsets and explicit deferred ATL boundaries.

@@ -2,8 +2,21 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: `ISF-ATL-BACKLOG-TRUTH-SYNC`; current frontier:
-  `ISF-ATL-BACKLOG-TRUTH-SYNC.2`.
+  Active task tree: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before any code changes.
+- Recent R14 ATL backlog truth-sync completion:
+  `ISF-ATL-BACKLOG-TRUTH-SYNC.2` synchronized the mdBook feature backlog with
+  the shipped bounded ATL generated-top and actor-network surfaces and closed
+  the task tree. The backlog now states that resolved ATL child `.fsm` files
+  and bounded generated ATL tops are shipped for documented one-child/two-child
+  resolved-child trigger/event and data-route subsets, while private
+  generated-top data-link plumbing remains outside the public contract. Route
+  mux/storage, handoff remapping/storage, payload protocols,
+  ready/backpressure, CDC/reset remapping, fan-in/fan-out, compact movement
+  aliases, group endpoints, runtime group scheduling, broader inferred child
+  interface bindings, broader global scheduling ownership, and broader
+  fail-closed boundaries remain explicit deferrals. No compiler behavior
+  changed.
 - Recent R14 ATL backlog truth-sync selection:
   `ISF-ATL-BACKLOG-TRUTH-SYNC.1` activated a documentation truth-sync tree for
   stale ATL backlog prose. The selected leaf will correct the mdBook backlog
@@ -8799,10 +8812,10 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Continue the active `ISF-ATL-BACKLOG-TRUTH-SYNC` task tree. The next
-  frontier is `ISF-ATL-BACKLOG-TRUTH-SYNC.2`, a doc-only correction of stale
-  ATL backlog prose around generated ATL tops and remaining deferred route /
-  handoff / compact movement boundaries.
+- Select or create the next roadmap-aligned task tree before any further code
+  changes. `ISF-ATL-BACKLOG-TRUTH-SYNC` is closed after synchronizing stale
+  ATL backlog prose with shipped generated-top subsets and explicit
+  deferrals.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

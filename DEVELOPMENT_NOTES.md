@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL backlog truth-sync keeps private generated-top links private
+- `ISF-ATL-BACKLOG-TRUTH-SYNC.2` updates the book-facing backlog to name the
+  bounded generated ATL top subsets that are now shipped without widening the
+  public contract.
+- The public review surface remains `actor_network.generated_tops[]` plus
+  `actor_network.data_movements[]` for documented subsets. The lower-level
+  generated-top `data_links` remain private plumbing until a future task tree
+  selects a public route-fabric contract.
+- The corrected backlog deliberately keeps route mux/storage, handoff storage,
+  ready/backpressure, payload protocols, CDC/reset remapping, fan-in/fan-out,
+  compact movement aliases, runtime group scheduling, and broader inferred
+  child interface bindings as explicit deferrals.
+
 ## 2026-05-22: ATL backlog truth-sync is documentation only
 - `ISF-ATL-BACKLOG-TRUTH-SYNC.1` selects a narrow documentation truth-sync
   tree because the book backlog still had an older exclusion statement for

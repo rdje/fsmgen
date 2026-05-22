@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL backlog truth-sync completed
+- Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.2` and closed the task tree.
+- The mdBook feature backlog now says resolved ATL child `.fsm` files and
+  bounded generated ATL tops are shipped for documented one-child/two-child
+  resolved-child trigger/event and data-route subsets.
+- The same backlog block now keeps remaining deferrals explicit: route
+  mux/storage, handoff remapping/storage, payload protocols,
+  ready/backpressure, CDC/reset remapping, fan-in/fan-out, compact movement
+  aliases, group endpoints, runtime group scheduling, broader inferred child
+  interface bindings, broader global scheduling ownership, and broader
+  fail-closed boundaries.
+- The exact stale generated-ATL-top exclusion wording was audited out of the
+  mdBook/live-doc search set. No parser, scheduler, lowerer, generated `.fsm`,
+  HDL, or public API behavior changed.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: ATL backlog truth-sync tree selected
 - Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.1`.
 - Activated the next R14 documentation truth-sync tree after finding stale ATL

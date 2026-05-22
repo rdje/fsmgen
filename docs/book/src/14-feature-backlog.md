@@ -1499,17 +1499,25 @@ transactions, rules, stages, resources, storage, and generated child
 transaction activations.
 
 They now define public actor-network source surfaces: static actor instance
-declarations, library-qualified resolved child artifacts, and report-only
-static group declarations recorded as `actor_network` metadata.
+declarations and compact `(NAME : ACTOR_TYPE)` aliases, library-qualified
+resolved child artifacts, and report-only static group declarations plus
+compact `(concurrent NAME ACTOR...)` aliases recorded as `actor_network`
+metadata. Parent transactions can use selected child trigger/event handoffs,
+one bounded temporary trigger batch followed by source-ordered event waits,
+and selected generated-child data routes written with existing drive-body
+`(sink source)` movement syntax.
 
-Resolved ATL child `.fsm` files are emitted, but the ATL generated-artifact
-contract still excludes generated ATL tops, route muxes, handoff storage,
-child HDL wiring, and inferred child interface bindings.
+Resolved ATL child `.fsm` files and bounded generated ATL tops are shipped for
+the documented one-child/two-child resolved-child trigger/event and data-route
+subsets. The public report surface includes `actor_network.generated_tops[]`
+and `actor_network.data_movements[]` evidence for those subsets; private
+generated-top data-link plumbing remains outside the public contract.
 
-Event pulse semantics, actor-to-actor and pin-to-actor data movement,
-concurrent actor-group scheduling, global versus local scheduling ownership,
-generated top names, report visibility beyond the shipped actor-network
-metadata, compact movement aliases, and broader fail-closed boundaries remain under
+Route mux/storage, handoff remapping/storage, payload protocols,
+ready/backpressure, CDC/reset remapping, fan-in/fan-out, compact movement
+aliases, group endpoints, runtime group scheduling, inferred child interface
+bindings outside the documented generated-child subsets, broader global
+scheduling ownership, and broader fail-closed boundaries remain under
 task-tree ownership.
 
 This direction is still IAL1 if the source remains explicit actor/network

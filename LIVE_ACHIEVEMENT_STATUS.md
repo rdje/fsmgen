@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL backlog truth-sync completed
+- Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.2` and closed the task tree.
+- The mdBook feature backlog now describes bounded generated ATL tops as
+  shipped for documented one-child/two-child resolved-child trigger/event and
+  data-route subsets instead of globally excluded.
+- Remaining ATL limits stay explicit: route mux/storage, handoff
+  remapping/storage, payload protocols, ready/backpressure, CDC/reset
+  remapping, fan-in/fan-out, compact movement aliases, group endpoints,
+  runtime group scheduling, broader inferred child interface bindings, broader
+  global scheduling ownership, and broader fail-closed boundaries.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL backlog truth-sync tree selected
 - Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.1`.
 - Activated the active R14 documentation truth-sync tree for stale ATL backlog

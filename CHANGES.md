@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL backlog truth-sync completed
+- Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.2` and closed the task tree.
+- Updated the mdBook feature backlog so it no longer says generated ATL tops
+  are globally excluded.
+- The backlog now records shipped bounded generated ATL tops for documented
+  one-child/two-child resolved-child trigger/event and data-route subsets, plus
+  public `actor_network.generated_tops[]` and `actor_network.data_movements[]`
+  evidence.
+- Route mux/storage, handoff remapping/storage, payload protocols,
+  ready/backpressure, CDC/reset remapping, fan-in/fan-out, compact movement
+  aliases, group endpoints, runtime group scheduling, broader inferred child
+  interface bindings, broader global scheduling ownership, and broader
+  fail-closed boundaries remain documented deferrals.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL backlog truth-sync tree selected
 - Completed `ISF-ATL-BACKLOG-TRUTH-SYNC.1`.
 - Activated a new R14 documentation truth-sync tree for stale ATL backlog
