@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 RTL child source-shape corpus widening selected
+- Completed `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused malformed external
+  RTL child source count and nested payload shape diagnostics into maintained
+  expected-failure corpus coverage.
+- The next frontier is
+  `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2`: add bounded fixtures and
+  catalog entries for representative malformed `?rtl` source-count/source-shape
+  cases, with synchronized docs and corpus gates.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 generated-child source-shape corpus widening completed
 - Completed
   `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2`.

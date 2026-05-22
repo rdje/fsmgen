@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: RTL child source-shape coverage stays parser-diagnostic-only
+- `R12-RTL-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.1` selects support-accounting
+  promotion for malformed external RTL child declarations whose existing parser
+  diagnostics already distinguish source-count failures from nested payload
+  shape failures.
+- The implementation should preserve the existing diagnostics and only add
+  maintained expected-failure corpus assets for representative malformed
+  `?rtl` source-count/source-shape cases.
+
 ## 2026-05-22: Generated-child source count and payload shape are support-accounting failures
 - `R12-GENERATED-CHILD-SOURCE-SHAPE-CORPUS-WIDENING.2` keeps the existing
   parser diagnostics intact and promotes four representative malformed
