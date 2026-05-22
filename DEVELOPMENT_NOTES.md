@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Static repeat zero policy is fail-closed first
+- `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.1` selects a bounded policy slice for
+  counts that are statically known to be zero.
+- The first implementation should reject literal zero and zero-valued
+  actor-constant repeat counts before scheduled `.fsm` emission. That avoids
+  silently treating a static zero count as one body iteration under the
+  current runtime-counter lowering.
+- Fully general dynamic zero-count skip semantics remain separate because
+  they need an explicit runtime entry-path rewrite and pending-sample policy.
+
 ## 2026-05-22: Repeat constant widths preserve runtime semantics
 - `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` threads actor context into repeat
   counter width inference so a declared constant can provide the same static

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat static zero-count policy tree selected
+- Completed selection work for `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.1`.
+- Activated a new R14 task tree for a bounded repeat zero-count policy.
+- The next frontier is `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2`: reject
+  literal zero repeat counts and actor constants that resolve to zero before
+  scheduled `.fsm` emission.
+- Positive literal repeat counts, positive actor constants, sampled/runtime
+  dynamic repeat counts, repeat-body lowering, parameterized specialization,
+  and generated-top respecialization remain out of scope.
+- No compiler behavior changed.
+
 ## 2026-05-22: Roadmap active-lane snapshot repaired
 - Synchronized the `ROADMAP_STATUS.md` "Current active lane" section with the
   top live snapshot after `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` closed.

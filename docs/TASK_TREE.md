@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY` | `active` | `R14` | `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` | [docs/tasks/ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.md](docs/tasks/ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.md) |
 
 ## Proposed Task Trees
 
@@ -320,6 +321,7 @@ as done work unless a future task reopens them.
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
 | Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW`, `ISF-WAIT-ZERO` |
 | Actor constants as repeat counter width evidence | `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS` |
+| Static zero-count repeat policy | `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY` |
 | Non-literal transaction wait counts | `ISF-DYNAMIC-WAIT` |
 | Parameter-backed static transaction wait counts | `ISF-PARAM-WAIT-COUNTS` |
 | Consecutive runtime wait pending-sample zero-link carrying | `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE` |

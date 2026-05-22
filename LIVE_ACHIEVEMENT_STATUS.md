@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat static zero-count policy tree selected
+- Completed selection work for `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.1`.
+- Activated the active R14 task tree for a bounded static repeat zero-count
+  policy.
+- The active R14 frontier is now
+  `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2`.
+- The selected implementation will reject literal zero repeat counts and
+  actor constants resolving to zero while preserving positive and dynamic
+  repeat behavior.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Repeat actor-constant widths shipped
 - Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` and closed the task tree.
 - FSMGen now accepts declared actor constants as repeat counter width evidence

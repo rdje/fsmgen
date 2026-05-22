@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat static zero-count policy tree selected
+- Completed selection work for `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.1`.
+- Activated a new R14 task tree for fail-closed handling of repeat counts
+  that are statically known to be zero.
+- The selected implementation covers literal zero counts and actor constants
+  resolving to zero while preserving positive literal, positive
+  actor-constant, and sampled/runtime dynamic repeat behavior.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### Roadmap active-lane snapshot repaired
 - Synchronized the `ROADMAP_STATUS.md` "Current active lane" section with the
   top live snapshot after the repeat actor-constant width tree closed.
