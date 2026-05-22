@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -36,7 +36,7 @@ and public support-accounting visibility.
 ## Task Tree
 
 - ID: `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained expected-failure corpus coverage for unsupported composition backend target diagnostics`
   Children: `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1`, `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2`
 
@@ -48,17 +48,17 @@ and public support-accounting visibility.
   Commit: `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1: select target support widening`
 
 - ID: `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add a maintained expected-failure entry for unsupported composition backend targets`
   Acceptance: `named fixture/catalog entry covers VHDL composition target rejection with stable diagnostics and corpus behavior checks`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c perl/FSM/Support/DiagnosticCodes.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `perl -Iperl -c t/249-regression-corpus-classified-behavior.t`; `perl -Iperl -c t/300-check-json-regression-corpus.t`; `perl -Iperl -c t/304-normalized-semantic-json-regression-corpus.t`; `prove -Iperl t/114-composition-target-support-diagnostics.t`; `prove -Iperl t/248-regression-corpus-accounting.t`; `prove -Iperl t/249-regression-corpus-classified-behavior.t`; `prove -Iperl t/300-check-json-regression-corpus.t`; `prove -Iperl t/304-normalized-semantic-json-regression-corpus.t`; `prove -Iperl t/297-capability-manifest.t`; `prove -Iperl t/298-diagnostic-code-registry.t`; `prove -Iperl t/320-diagnostics-contract.t t/490-diagnostic-codes-runtime-defensive-copy-boundary-audit.t`; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2: widen target support corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` | `pending` | Promote focused composition target-support diagnostics into maintained corpus coverage after ownership is committed. |
+| 1 | `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` | `done` | Promoted focused composition target-support diagnostics into maintained corpus coverage. |
 
 ## Decisions
 
@@ -69,6 +69,10 @@ and public support-accounting visibility.
   accounts for child-entry, child-kind, ports shape/mapping, duplicate
   declaration, child-source, generated-child source-shape, external RTL
   source-shape, and `.rtlif` metadata boundaries.
+- `2026-05-22`: Kept VHDL composition as a fail-closed target boundary. The
+  regression corpus now carries per-entry target-language metadata so this
+  target-specific expected failure executes with `--language vhdl` while the
+  default corpus language remains SystemVerilog.
 
 ## Open Questions
 
@@ -83,15 +87,20 @@ and public support-accounting visibility.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-22` | `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` | `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c perl/FSM/Support/DiagnosticCodes.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `perl -Iperl -c t/249-regression-corpus-classified-behavior.t`; `perl -Iperl -c t/300-check-json-regression-corpus.t`; `perl -Iperl -c t/304-normalized-semantic-json-regression-corpus.t`; `prove -Iperl t/114-composition-target-support-diagnostics.t`; `prove -Iperl t/248-regression-corpus-accounting.t`; `prove -Iperl t/249-regression-corpus-classified-behavior.t`; `prove -Iperl t/300-check-json-regression-corpus.t`; `prove -Iperl t/304-normalized-semantic-json-regression-corpus.t`; `prove -Iperl t/297-capability-manifest.t`; `prove -Iperl t/298-diagnostic-code-registry.t`; `prove -Iperl t/320-diagnostics-contract.t t/490-diagnostic-codes-runtime-defensive-copy-boundary-audit.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1` | `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1: select target support widening` | `selection leaf; no compiler behavior changed` |
-| `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` | `pending` | `pending` |
+| `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` | `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2: widen target support corpus` | `added VHDL composition target rejection to maintained expected-failure corpus coverage` |
 
 ## Changelog
 
 - `2026-05-22`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-22`: Added the VHDL composition target rejection fixture/catalog
+  entry, stable diagnostic-code metadata, per-entry target-language corpus
+  harness support, regression-corpus docs, and mdBook backend-boundary note;
+  closed the task tree.

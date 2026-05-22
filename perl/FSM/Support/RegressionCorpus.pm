@@ -1947,6 +1947,17 @@ my @REGRESSION_CORPUS = (
         expected_error_pattern => qr/Composition source '\?top:empty_ports_top' in '.*composition_ports_shape_empty_ports_top\.fsm' is recognized and parsed into typed composition IR, .*composition shape is blocked because the current active composition lanes require '\?ports' to declare at least one explicit top port/s,
     },
     {
+        id => 'contract.composition_target_support_vhdl',
+        relpath => 't/corpus/composition_target_support_vhdl_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        target_language => 'vhdl',
+        diagnostic_code => 'FSMGEN_COMPOSITION_TARGET_SUPPORT',
+        expected_error_pattern => qr/Composition source '\?top:vhdl_composition_top' in '.*composition_target_support_vhdl_top\.fsm' is recognized and parsed into typed composition IR, .*composition target support is blocked because the current active composition lanes only emit SystemVerilog\/Verilog tops.*Target language 'vhdl' is not implemented for composition yet/s,
+    },
+    {
         id => 'contract.missing_rtl_metadata_sidecar',
         relpath => 't/corpus/missing_rtl_metadata_top.fsm',
         family => 'composition_contract_fixture',

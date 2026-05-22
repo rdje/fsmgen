@@ -192,7 +192,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md` — completed architecture follow-up for resolving legacy `GlobalASTManager` ownership.
 - `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md` — completed architecture follow-up that inventoried private ISF `LoweringIR` subfamilies and deferred helper-owner extraction.
 - `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — completed architecture follow-up that audited `module_info` mirrors and closed without extra guard work.
-- `docs/tasks/R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.md` — active `R12` task tree for widening maintained expected-failure corpus coverage for unsupported composition backend target diagnostics.
+- `docs/tasks/R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained expected-failure corpus coverage for unsupported composition backend target diagnostics.
 - `docs/tasks/R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained expected-failure corpus coverage for composition ports shape-gate diagnostics.
 - `docs/tasks/R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained expected-failure corpus coverage for duplicate composition declaration diagnostics.
 - `docs/tasks/R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained expected-failure corpus coverage for unsupported composition child-kind and legacy ports-mapping diagnostics.

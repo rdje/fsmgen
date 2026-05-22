@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — target-support coverage widened
+- Completed `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2`.
+- The task tree is closed.
+- FSMGen now support-accounts VHDL composition target rejection as a maintained
+  expected-failure corpus entry.
+- Stable diagnostic-code metadata, per-entry target-language corpus gates,
+  check JSON, normalized semantic JSON, manifest, regression-corpus docs, and
+  mdBook backend-boundary coverage are synchronized.
+- No backend implementation behavior changed.
+
 ## 2026-05-22: R12 regression corpus — target-support widening selected
 - Completed `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

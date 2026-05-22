@@ -2,10 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-- `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1` selected unsupported
-  composition backend target diagnostics as the next support-accounting corpus
-  widening. The active frontier is
-  `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2`.
+- Active `R12` task tree just closed. The next PNT step should select the next
+  roadmap-aligned maintained regression-corpus widening slice before any new
+  source/test/config changes.
+- Recent R12 composition target-support corpus-widening completion:
+  `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` added one named
+  expected-failure corpus entry for VHDL composition target rejection, with
+  stable diagnostic-code metadata, per-entry target-language corpus harness
+  support, and coverage through pipeline/CLI behavior, check JSON, normalized
+  semantic JSON, manifest, corpus accounting, regression-corpus docs, and the
+  mdBook. No backend implementation behavior changed.
 - Recent R12 composition target-support corpus-widening selection:
   `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1` activated a task tree to
   promote the already-focused unsupported VHDL composition target diagnostic

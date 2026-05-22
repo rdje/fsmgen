@@ -336,6 +336,11 @@ So a VHDL request currently failing is not a mystery bug. It is the honest
 current boundary. Full VHDL support is tracked in
 [Feature Backlog](14-feature-backlog.md).
 
+Composition has the same backend boundary: active composition lanes emit
+SystemVerilog/Verilog tops. A composition source requested with
+`--language vhdl` is rejected before HDL emission with an explicit target
+support diagnostic.
+
 ## Explicitly Out Of Active Support
 
 FSMGen should fail closed when a source uses syntax outside the active

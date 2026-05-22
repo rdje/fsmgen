@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R12 regression corpus — target-support coverage widened
+- Completed `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` and closed the
+  task tree.
+- Added an expected-failure fixture/catalog entry for VHDL composition target
+  rejection.
+- Added stable diagnostic-code metadata for unsupported composition backend
+  targets and per-entry target-language metadata in the corpus behavior,
+  check-JSON, and normalized-semantic-JSON gates.
+- Synchronized regression-corpus docs plus mdBook backend-boundary coverage.
+- No backend implementation behavior changed.
+
+## 2026-05-22
 ### R12 regression corpus — target-support widening selected
 - Completed `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained expected-failure

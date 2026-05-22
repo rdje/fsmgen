@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition target-support failures are target-language-specific corpus entries
+- `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` keeps the current
+  fail-closed VHDL composition boundary and promotes that target rejection
+  into maintained corpus truth.
+- The regression corpus now supports optional per-entry `target_language`
+  metadata so target-specific expected failures can run the same behavior,
+  check-JSON, and normalized semantic JSON gates without changing the default
+  SystemVerilog lane.
+- `FSMGEN_COMPOSITION_TARGET_SUPPORT` covers unsupported backend targets for
+  typed composition sources; it is not a signal that VHDL composition output
+  is implemented.
+
 ## 2026-05-22: Composition target-support coverage stays target-diagnostic-only
 - `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1` selects
   support-accounting promotion for the unsupported VHDL composition target

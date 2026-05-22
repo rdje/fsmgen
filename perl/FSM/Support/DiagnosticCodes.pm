@@ -631,6 +631,12 @@ my %DIAGNOSTIC_CODES = (
         family => 'composition_contract',
         summary => 'A composition ports block declared no explicit top ports where the active lane required them.',
     },
+    FSMGEN_COMPOSITION_TARGET_SUPPORT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition source requested an unsupported backend target.',
+    },
     FSMGEN_COMPOSITION_MISSING_RTLIF => {
         severity => 'error',
         stability => 'stable',

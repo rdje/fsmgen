@@ -56,6 +56,11 @@ sub cli_path_args_for_entry {
     return @args;
 }
 
+sub cli_language_args_for_entry {
+    my ($entry) = @_;
+    return $entry->{target_language} ? ('--language', $entry->{target_language}) : ();
+}
+
 sub strict_args_for_entry {
     my ($entry) = @_;
     return $strict_rejection_coverages{$entry->{coverage}} ? ('--strict') : ();
@@ -77,6 +82,7 @@ sub assert_semantic_json_rejection {
         command => [
             './bin/fsmgen',
             strict_args_for_entry($entry),
+            cli_language_args_for_entry($entry),
             '--emit-semantic-json',
             cli_path_args_for_entry($entry),
             '-o',

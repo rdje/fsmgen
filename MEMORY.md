@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 composition target-support corpus widening completed
+- Completed `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2` and closed the
+  task tree.
+- Added maintained expected-failure corpus coverage for VHDL composition target
+  rejection.
+- Added optional per-entry target-language metadata to the expected-failure
+  corpus behavior/check-JSON/semantic-JSON gates so target-specific failures
+  remain executable without changing the SystemVerilog default.
+- Added stable diagnostic-code metadata for composition target support failures
+  and synchronized regression-corpus docs plus mdBook backend coverage.
+- No backend implementation behavior changed.
+
 ## 2026-05-22: R12 composition target-support corpus widening selected
 - Completed `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting the already-focused unsupported

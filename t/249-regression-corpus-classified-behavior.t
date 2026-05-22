@@ -36,12 +36,22 @@ sub cli_path_args_for_entry {
     return @args;
 }
 
+sub target_language_for_entry {
+    my ($entry) = @_;
+    return $entry->{target_language} || 'systemverilog';
+}
+
+sub cli_language_args_for_entry {
+    my ($entry) = @_;
+    return $entry->{target_language} ? ('--language', $entry->{target_language}) : ();
+}
+
 subtest 'legacy-out-of-scope entries stay compatibility-covered in default mode' => sub {
     for my $entry (grep { $_->{classification} eq 'legacy_out_of_scope' } regression_corpus_entries()) {
         my $path = repo_path($entry->{relpath});
         my @search_paths = source_search_paths_for_entry($entry);
         my $pipeline = FSM::Pipeline::HDLGenerator->new(
-            target_language => 'systemverilog',
+            target_language => target_language_for_entry($entry),
             debug_level => 0,
             quiet => 1,
             source_search_paths => \@search_paths,
@@ -71,7 +81,7 @@ subtest 'legacy-out-of-scope entries stay compatibility-covered in default mode'
 
         my $out_path = File::Spec->catfile($tempdir, "$entry->{id}.sv");
         my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
-            command => ['./bin/fsmgen', '--quiet', cli_path_args_for_entry($entry), '-o', $out_path, $path],
+            command => ['./bin/fsmgen', '--quiet', cli_language_args_for_entry($entry), cli_path_args_for_entry($entry), '-o', $out_path, $path],
         );
 
         ok($success, "CLI still compiles $entry->{id} in default mode");
@@ -91,7 +101,7 @@ subtest 'expected-failure entries reject through the classified strict support-t
         my $path = repo_path($entry->{relpath});
         my @search_paths = source_search_paths_for_entry($entry);
         my $pipeline = FSM::Pipeline::HDLGenerator->new(
-            target_language => 'systemverilog',
+            target_language => target_language_for_entry($entry),
             debug_level => 0,
             quiet => 1,
             strict_mode => 1,
@@ -112,7 +122,7 @@ subtest 'expected-failure entries reject through the classified strict support-t
 
         my $out_path = File::Spec->catfile($tempdir, "$entry->{id}.sv");
         my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
-            command => ['./bin/fsmgen', '--strict', '--quiet', cli_path_args_for_entry($entry), '-o', $out_path, $path],
+            command => ['./bin/fsmgen', '--strict', '--quiet', cli_language_args_for_entry($entry), cli_path_args_for_entry($entry), '-o', $out_path, $path],
         );
 
         ok(!$success, "CLI strict mode rejects $entry->{id}");
@@ -133,14 +143,13 @@ subtest 'expected-failure entries reject through the classified strict support-t
 };
 
 subtest 'language-contract expected-failure entries reject through the normal pipeline boundary' => sub {
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        target_language => 'systemverilog',
-        debug_level => 0,
-        quiet => 1,
-    );
-
     for my $entry (grep { $_->{coverage} eq 'language_contract_rejection_pipeline_cli' } regression_corpus_entries()) {
         my $path = File::Spec->catfile($repo_root, split m{/}, $entry->{relpath});
+        my $pipeline = FSM::Pipeline::HDLGenerator->new(
+            target_language => target_language_for_entry($entry),
+            debug_level => 0,
+            quiet => 1,
+        );
 
         my $pipeline_error = eval {
             $pipeline->generate_hdl_from_file($path);
@@ -153,7 +162,7 @@ subtest 'language-contract expected-failure entries reject through the normal pi
 
         my $out_path = File::Spec->catfile($tempdir, "$entry->{id}.sv");
         my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
-            command => ['./bin/fsmgen', '--quiet', '-o', $out_path, $path],
+            command => ['./bin/fsmgen', '--quiet', cli_language_args_for_entry($entry), '-o', $out_path, $path],
         );
 
         ok(!$success, "CLI rejects $entry->{id}");
@@ -172,14 +181,13 @@ subtest 'language-contract expected-failure entries reject through the normal pi
 };
 
 subtest 'direct-generation contract expected-failure entries reject through the normal pipeline boundary' => sub {
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        target_language => 'systemverilog',
-        debug_level => 0,
-        quiet => 1,
-    );
-
     for my $entry (grep { $_->{coverage} eq 'direct_generation_contract_rejection_pipeline_cli' } regression_corpus_entries()) {
         my $path = File::Spec->catfile($repo_root, split m{/}, $entry->{relpath});
+        my $pipeline = FSM::Pipeline::HDLGenerator->new(
+            target_language => target_language_for_entry($entry),
+            debug_level => 0,
+            quiet => 1,
+        );
 
         my $pipeline_error = eval {
             $pipeline->generate_hdl_from_file($path);
@@ -193,7 +201,7 @@ subtest 'direct-generation contract expected-failure entries reject through the 
 
         my $out_path = File::Spec->catfile($tempdir, "$entry->{id}.sv");
         my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
-            command => ['./bin/fsmgen', '--quiet', '-o', $out_path, $path],
+            command => ['./bin/fsmgen', '--quiet', cli_language_args_for_entry($entry), '-o', $out_path, $path],
         );
 
         ok(!$success, "CLI rejects $entry->{id}");
@@ -216,7 +224,7 @@ subtest 'composition-contract expected-failure entries reject through the normal
         my $path = File::Spec->catfile($repo_root, split m{/}, $entry->{relpath});
         my @search_paths = source_search_paths_for_entry($entry);
         my $pipeline = FSM::Pipeline::HDLGenerator->new(
-            target_language => 'systemverilog',
+            target_language => target_language_for_entry($entry),
             debug_level => 0,
             quiet => 1,
             source_search_paths => \@search_paths,
@@ -233,7 +241,7 @@ subtest 'composition-contract expected-failure entries reject through the normal
 
         my $out_path = File::Spec->catfile($tempdir, "$entry->{id}.sv");
         my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
-            command => ['./bin/fsmgen', '--quiet', cli_path_args_for_entry($entry), '-o', $out_path, $path],
+            command => ['./bin/fsmgen', '--quiet', cli_language_args_for_entry($entry), cli_path_args_for_entry($entry), '-o', $out_path, $path],
         );
 
         ok(!$success, "CLI rejects $entry->{id}");
