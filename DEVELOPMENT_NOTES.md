@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL mixed pin-ingress routes keep route-local proof
+- `ISF-ATL-PIN-MIXED-ROUTE-SETS.2` deliberately widens grouping, not syntax.
+  A generated-child pin-ingress route set may now contain both
+  `scalar_pin_to_actor_handoff` and `vector_pin_to_actor_handoff` routes when
+  they share one resolved child, one parent transaction, unique pins/endpoints,
+  and adjacent pre-trigger drive calls.
+- The route-set selector no longer requires one route kind for pin ingress,
+  but each route still carries its own width evidence. Vector routes must prove
+  exact top-input/child-input width equality; scalar routes remain one bit.
+- The lowerer validates route direction instead of uniform route kind so the
+  generated top can wire a mixed set without introducing route storage, muxing,
+  packing, truncation, extension, ready/backpressure, or a payload protocol.
+
 ## 2026-05-22: ATL mixed pin route sets are route grouping only
 - `ISF-ATL-PIN-MIXED-ROUTE-SETS.1` selects the next bounded ATL widening:
   same-child top-level pin route sets that can combine one-bit scalar routes

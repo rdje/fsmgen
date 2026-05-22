@@ -884,11 +884,15 @@ The next selected pin-route widening is mixed scalar/vector route sets. It is
 tracked by `ISF-ATL-PIN-MIXED-ROUTE-SETS`. The selected sequence keeps the
 same `(sink source)` spelling and drive-call timing while allowing one
 same-child route set to contain both scalar one-bit routes and exact-width
-vector routes in one direction. Pin ingress is the first implementation leaf;
-pin egress follows after ingress is proven. Each route will keep route-local
-`kind`, `width`, and `width_source` metadata. Width adaptation, storage,
-muxing, fan-in/fan-out, ready/backpressure, CDC/reset remapping, repeated
-activation, and payload protocol inference remain deferred.
+vector routes in one direction. The pin-ingress leaf is shipped as
+`isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf`: `(worker.payload
+pins.payload)` is an exact-width vector route at width 8 and `(worker.valid
+pins.valid)` is a scalar one-bit route into the same resolved child through
+adjacent pre-trigger drive calls. Each route keeps route-local `kind`, `width`,
+and `width_source` metadata. Pin egress remains the next leaf. Width
+adaptation, storage, muxing, fan-in/fan-out, ready/backpressure, CDC/reset
+remapping, repeated activation, and payload protocol inference remain
+deferred.
 
 The selected orchestration vocabulary reuses existing ISF activation forms:
 `(do actor.transaction)` for blocking actor transaction activation, `(spawn
@@ -1024,10 +1028,13 @@ qualified entries add `type_resolution`, `library`, `alias`, `export`,
 and now emit their child `.fsm` files. The first generated ATL top is shipped
 for one resolved child plus one trigger/event handoff pair, and the scalar
 pin-ingress route, exact-width vector pin-ingress route, same-child scalar
-pin-ingress multi-route extension, scalar pin-egress route, exact-width vector
-pin-egress route, and scalar same-child pin-egress multi-route extension below
-are shipped for that same one-child top. Broader generated ATL tops, HDL child
-wiring outside that selected pair plus shipped scalar/vector pin routes,
+pin-ingress multi-route extension, same-child vector pin-ingress multi-route
+extension, same-child mixed scalar/vector pin-ingress route-set extension,
+scalar pin-egress route, exact-width vector pin-egress route, scalar
+same-child pin-egress multi-route extension, and vector same-child pin-egress
+multi-route extension below are shipped for that same one-child top. Broader
+generated ATL tops, HDL child wiring outside that selected pair plus shipped
+scalar/vector pin routes,
 interface binding inference, event fan-in, route mux/storage, CDC, recursive
 actor networks, and ready/backpressure remain later leaves.
 
@@ -1069,6 +1076,17 @@ route metadata with two `vector_pin_to_actor_handoff` entries, child vector
 input port preservation, strict outdir materialization, plain plus strict HDL
 generation, and a fail-closed route-local top-input/child-input width mismatch
 diagnostic.
+
+The mixed scalar/vector route-set extension of that one-child pin-ingress shape
+is now shipped as `isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf`. It
+routes `(worker.payload pins.payload)` at width 8 and
+`(worker.valid pins.valid)` at width 1 through adjacent top-level drive calls
+before the child trigger. The fixture proves parent/child/top artifacts,
+route-local vector and scalar handoff ports, generated-top wiring, route
+metadata with `vector_pin_to_actor_handoff` and
+`scalar_pin_to_actor_handoff` entries, child input port preservation, strict
+outdir materialization, plain plus strict HDL generation, and a fail-closed
+route-local vector top-input/child-input width mismatch diagnostic.
 
 The bounded multi-route extension of that one-child pin-ingress shape is now
 shipped as `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf`. It routes
@@ -2494,6 +2512,10 @@ promoted for one generated-top exact-width vector pin-ingress route from top
 promoted for the bounded same-child two-route exact-width vector pin-ingress
 case from top `payload` to `worker.payload` at width 8 and from top `sideband`
 to `worker.sideband` at width 4. The follow-on
+`isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf` fixture is now
+promoted for the bounded same-child mixed scalar/vector pin-ingress case from
+top `payload` to `worker.payload` at width 8 and from top `valid` to
+`worker.valid` at width 1. The follow-on
 `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` fixture is now promoted
 for the bounded same-child two-route pin-ingress case from top `payload` to
 `worker.payload` and from top `sideband` to `worker.sideband`. The follow-on

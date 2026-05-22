@@ -1992,8 +1992,9 @@ trigger/event subset, reporting them through
 FSMGen still emits no generated ATL route mux, data-route storage,
 generated-child data wiring beyond the selected one-child scalar and
 exact-width vector pin-ingress routes, selected one-child scalar and
-exact-width vector pin-egress routes, and selected same-source/same-sink scalar
-or exact-width vector two-child actor-to-actor route set, CDC child wiring,
+exact-width vector pin-egress routes, selected same-child mixed scalar/vector
+pin-ingress route set, and selected same-source/same-sink scalar or
+exact-width vector two-child actor-to-actor route set, CDC child wiring,
 payload/ready/backpressure binding, or broader HDL event wiring.
 
 The selected generated-child actor-to-actor data route set is shipped only for
@@ -2060,7 +2061,7 @@ private generated-top data-link list is still not a public report family.
 Width mismatch fails before scheduled `.fsm` emission. Downstream producers
 must not rely on width adaptation, packing, truncation, extension, slicing,
 route mux/storage, fan-in/fan-out, ready/backpressure, payload protocols, or
-mixed scalar/vector route sets.
+mixed scalar/vector route behavior from this one-route vector leaf.
 
 The exact-width vector multi-route extension of that same pin-ingress
 generated top is now shipped:
@@ -2075,7 +2076,26 @@ source pins and child inputs are unique, and drive calls are adjacent before
 the child trigger. Downstream consumers should read each route from
 `actor_network.data_movements[]` as `vector_pin_to_actor_handoff` with
 `width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
-Mixed scalar/vector route sets and width adaptation remain unshipped.
+Broader mixed scalar/vector route sets outside the bounded pin-ingress subset
+below and width adaptation remain unshipped.
+
+The mixed scalar/vector pin-ingress extension of that same generated top is
+now shipped:
+`isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf` wires
+`(worker.payload pins.payload)` and `(worker.valid pins.valid)` through one
+resolved child and one parent transaction. `payload` is an exact-width vector
+route at width 8; `valid` is a scalar one-bit route.
+
+Downstream producers may emit mixed scalar/vector pin-ingress drive bodies in
+the same parent transaction only when all routes target the same resolved
+child, every route uses a unique top-level input pin and child input endpoint,
+vector route widths match exactly, scalar routes are one bit, and drive calls
+are adjacent before the child trigger. Downstream consumers should read each
+route from `actor_network.data_movements[]` with route-local `kind`, `width`,
+and `width_source` values: `vector_pin_to_actor_handoff` plus
+`top_level_input_pin_resolved_child_endpoint_exact_width` for vector routes,
+and `scalar_pin_to_actor_handoff` plus `top_level_pin_scalar_one_bit` for
+scalar routes. Width adaptation remains unshipped.
 
 The bounded multi-route extension of that same pin-ingress generated top is now
 shipped: `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` wires
@@ -2707,6 +2727,7 @@ isf/atl_resolved_child_pipeline.isf
 isf/atl_resolved_child_pin_ingress_pipeline.isf
 isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
 isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf
+isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf
 isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 isf/atl_resolved_child_pin_egress_pipeline.isf
 isf/atl_resolved_child_pin_egress_vector_pipeline.isf
@@ -2949,6 +2970,21 @@ signals, generated-top wiring for both exact-width handoffs, strict outdir
 materialization, plain plus strict CLI HDL generation, and a fail-closed
 route-local top-input/child-input width mismatch diagnostic.
 
+The generated-child mixed scalar/vector pin-ingress route-set leaf extends that
+same downstream contract:
+`isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf` proves one exact-width
+vector top-level input pin and one scalar top-level input pin to matching
+inputs on one resolved child through the generated top.
+
+The same `t/1330-isf-atl-resolved-child-fixture-coverage.t` regression proves
+strict schedule JSON parity, parent/child/top `.fsm` artifacts, one
+`vector_pin_to_actor_handoff` entry, one `scalar_pin_to_actor_handoff` entry,
+route-local widths 8 and 1, generated child input role preservation for both
+routed signals, generated-top wiring for both handoffs, strict outdir
+materialization, plain plus strict CLI HDL generation, and a fail-closed
+route-local top-input/child-input width mismatch diagnostic for the vector
+route.
+
 The generated-child pin-ingress multi-route leaf extends that same downstream
 contract: `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` proves
 multiple top-level input pins to multiple inputs on one resolved child through
@@ -3067,6 +3103,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_vector_pipeline.isf
@@ -3081,6 +3118,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress isf/atl_resolved_child_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-vector isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-vector-multi isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf
+./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-mixed isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-multi isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress-vector isf/atl_resolved_child_pin_egress_vector_pipeline.isf

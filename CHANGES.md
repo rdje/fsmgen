@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL pin-ingress mixed route set shipped
+- Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.2`.
+- Added same-child generated-child pin-ingress mixed scalar/vector route-set
+  lowering. The parser now accepts one route set that combines exact-width
+  vector top-level input-pin routes and scalar one-bit top-level input-pin
+  routes into the same resolved child when every route has unique
+  pins/endpoints, adjacent pre-trigger drive calls, and route-local width
+  proof.
+- Added `isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf` and focused
+  coverage for parent/child/top `.fsm` artifacts, strict schedule JSON parity,
+  strict outdir materialization, plain and strict HDL generation, generated top
+  scalar/vector links, and vector width-mismatch diagnostics.
+- Schedule JSON keeps the existing `actor_network.data_movements[]` keys and
+  reports the vector route as `kind: "vector_pin_to_actor_handoff"` with
+  `width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`;
+  the scalar route reports `kind: "scalar_pin_to_actor_handoff"` with
+  `width_source: "top_level_pin_scalar_one_bit"`.
+- Synchronized the public ISF spec, downstream handoff spec, public contract,
+  ATL design proposal, mdBook, roadmap status, and task-tree docs. Width
+  adaptation, mixed pin-egress route sets, route mux/storage, fan-in/fan-out,
+  CDC/reset remapping, ready/backpressure, payload protocols, repeated
+  activation, and cross-transaction continuation remain deferred.
+
+## 2026-05-22
 ### R14 — ATL pin mixed route sets selected
 - Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.1`.
 - Activated a new R14 task tree for bounded generated-child ATL top-level pin

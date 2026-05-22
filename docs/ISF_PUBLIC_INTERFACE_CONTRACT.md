@@ -196,9 +196,10 @@ trigger/event links in SystemVerilog without widening the report schema.
 The same focused coverage now also covers the shipped scalar pin-ingress route,
 the exact-width vector pin-ingress route, the same-child scalar pin-ingress
 multi-route extension, the same-child vector pin-ingress multi-route
-extension, the scalar pin-egress route, the exact-width vector pin-egress
-route, the same-child scalar pin-egress multi-route extension, and the
-same-child vector pin-egress multi-route extension through the generated top.
+extension, the same-child mixed scalar/vector pin-ingress route-set extension,
+the scalar pin-egress route, the exact-width vector pin-egress route, the
+same-child scalar pin-egress multi-route extension, and the same-child vector
+pin-egress multi-route extension through the generated top.
 Public consumers should read each route from
 `actor_network.data_movements[]`, discover the top from
 `actor_network.generated_tops[]`, and treat the generated-top data-link plumbing
@@ -676,11 +677,12 @@ through `schedule_report_actor_network_generated_top_keys` under
 `actor_network.generated_tops[]`. The bounded scalar top-level input-pin to
 resolved-child input route, one exact-width vector top-level input-pin to
 resolved-child input route, the same-child scalar pin-ingress multi-route
-extension, the same-child vector pin-ingress multi-route extension, one
-scalar resolved-child output to top-level output route, one
+extension, the same-child vector pin-ingress multi-route extension, the
+same-child mixed scalar/vector pin-ingress route-set extension, one scalar
+resolved-child output to top-level output route, one
 exact-width vector resolved-child output to top-level output route, and the
-same-child scalar pin-egress multi-route extension described below are also
-shipped for that same one-child top. The first
+same-child scalar and vector pin-egress multi-route extensions described below
+are also shipped for that same one-child top. The first
 control-only two-child generated top is shipped for sequential trigger/event
 handoffs with no data movement; its generated-top entry uses `children[]`
 records advertised through
@@ -722,7 +724,10 @@ multiple vector top-level input pins feeding matching vector child inputs on
 that same resolved child, through adjacent drive-call cycles. Vector route-set
 entries keep `kind: "vector_pin_to_actor_handoff"` and
 `width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"` per
-route. All forms use the existing
+route. The mixed scalar/vector pin-ingress route-set extension is also shipped
+for scalar one-bit and exact-width vector routes into that same resolved child
+through the same adjacent pre-trigger drive-call policy; each route preserves
+its own `kind`, `width`, and `width_source`. All forms use the existing
 `actor_network.data_movements[]` route metadata and
 `actor_network.generated_tops[]` top discovery metadata; no new public report
 family or public `data_links` key is exposed. The generated child `.fsm` may
@@ -1806,10 +1811,11 @@ names. The generated-top subset wires the selected one-child trigger/event
 forms, the selected one-child scalar pin-ingress route, the selected
 one-child exact-width vector pin-ingress route, the same-child scalar
 pin-ingress multi-route extension, the same-child vector pin-ingress
-multi-route extension, the selected one-child pin-egress route, the selected
+multi-route extension, the same-child mixed scalar/vector pin-ingress
+route-set extension, the selected one-child pin-egress route, the selected
 one-child exact-width vector pin-egress route, the same-child pin-egress
-multi-route extension, the same-child vector pin-egress multi-route
-extension, the selected two-child trigger/event
+multi-route extension, the same-child vector pin-egress multi-route extension,
+the selected two-child trigger/event
 sequence, and the selected two-child scalar or exact-width vector
 generated-child actor-to-actor route set. No group endpoints,
 route mux/storage, broader HDL event wiring, or
@@ -1855,8 +1861,13 @@ The public route entry reports `kind: "vector_pin_to_actor_handoff"`,
 `width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`;
 the same-child vector pin-ingress multi-route subset accepts multiple such
 routes when every route has unique pins/endpoints and exact matching
-route-local widths. Width adaptation and mixed scalar/vector route sets remain
-outside the public contract.
+route-local widths. The same-child mixed scalar/vector pin-ingress route-set
+subset accepts scalar one-bit and exact-width vector routes together when all
+routes target the same resolved child, share one parent transaction, use unique
+top-level input pins and child input endpoints, and keep adjacent pre-trigger
+drive calls. Each route keeps its own public `kind`, `width`, and
+`width_source`. Width adaptation and mixed pin-egress route sets remain outside
+the public contract.
 The inverse actor-to-top-level output pin public subset is implemented: one
 `(pins.output_pin actor.endpoint)` scalar pair in one named drive body, one
 direct static actor instance, and one top-level transaction drive call. The
@@ -1871,8 +1882,8 @@ and
 `width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"`;
 the same-child vector pin-egress multi-route subset accepts multiple such
 routes when every route has unique child outputs/top-level pins and exact
-matching route-local widths. Width adaptation and mixed scalar/vector route
-sets remain outside the public contract.
+matching route-local widths. Width adaptation and mixed scalar/vector
+pin-egress route sets remain outside the public contract.
 Future blocking and nonblocking orchestration spellings are reserved as
 `(do actor.transaction)` and `(spawn actor.transaction as NAME)`, with event
 payloads deferred. Transaction-body `(trigger actor.transaction)` has a

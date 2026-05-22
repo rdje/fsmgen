@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL pin-ingress mixed route set shipped
+- Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.2`.
+- FSMGen now lowers same-child generated-child top-level input-pin to
+  resolved-child input route sets that combine exact-width vector routes and
+  scalar one-bit routes in one contiguous pre-trigger drive-call segment.
+- Added `isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf` with focused
+  `.fsm`, schedule JSON, strict outdir, HDL, and route-local vector
+  width-mismatch coverage.
+- Schedule reports preserve each route in `actor_network.data_movements[]`
+  with route-local `kind`, `width`, and `width_source` values:
+  `vector_pin_to_actor_handoff` for the 8-bit payload route and
+  `scalar_pin_to_actor_handoff` for the one-bit valid route.
+- The active R14 frontier is now `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` for the
+  inverse mixed scalar/vector pin-egress route set.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook, roadmap, task-tree docs, and live docs.
+
 ## 2026-05-22: R14 — ATL pin mixed route sets selected
 - Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.1`.
 - The active R14 frontier is now `ISF-ATL-PIN-MIXED-ROUTE-SETS.2`.

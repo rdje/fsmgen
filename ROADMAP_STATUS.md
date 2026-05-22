@@ -3,7 +3,23 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
   Active task tree: `ISF-ATL-PIN-MIXED-ROUTE-SETS`; current frontier:
-  `ISF-ATL-PIN-MIXED-ROUTE-SETS.2`.
+  `ISF-ATL-PIN-MIXED-ROUTE-SETS.3`.
+- Recent R14 ATL pin-ingress mixed route-set completion:
+  `ISF-ATL-PIN-MIXED-ROUTE-SETS.2` shipped the bounded same-child
+  generated-child top-level input-pin to resolved-child input mixed
+  scalar/vector route-set subset. FSMGen now accepts adjacent pre-trigger
+  drive calls such as `(worker.payload pins.payload)` and
+  `(worker.valid pins.valid)` when every route targets the same resolved
+  child, uses unique top-level input pins and child input endpoints, scalar
+  routes are one bit, and vector routes have exact matching top-input/child
+  input widths. The parent handoff ports, child `+interface` roles,
+  generated-top links, HDL links, and `actor_network.data_movements[]` entries
+  preserve each route's local `kind`, `width`, and `width_source`. Vector width
+  mismatches fail closed before scheduled `.fsm` emission. The active frontier
+  is now the inverse pin-egress mixed route set. Width adaptation, route
+  storage, route muxing, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, repeated activation, payload protocols, and
+  cross-transaction continuation remain deferred.
 - Recent R14 ATL pin mixed route-set selection:
   `ISF-ATL-PIN-MIXED-ROUTE-SETS.1` activated the next bounded ATL feature
   tree. The selected implementation sequence combines shipped scalar-only and

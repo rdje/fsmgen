@@ -2143,7 +2143,9 @@ sub _selected_atl_generated_top_pin_ingress_shape {
         || $route_kind eq 'vector_pin_to_actor_handoff';
 
     for my $movement (@movements) {
-        return 0 unless ($movement->{kind} // '') eq $route_kind
+        my $movement_kind = $movement->{kind} // '';
+        return 0 unless ($movement_kind eq 'scalar_pin_to_actor_handoff'
+                || $movement_kind eq 'vector_pin_to_actor_handoff')
             && ($movement->{source} // '') eq 'top_level_pin'
             && ($movement->{sink} // '') eq 'external_handoff'
             && ($movement->{source_instance} // '') eq 'pins'

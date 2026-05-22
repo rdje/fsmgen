@@ -876,13 +876,10 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
 
     my @non_actor_movements = grep { !_is_atl_actor_route_handoff_kind($_->{kind} // '') } @movements;
     if (@non_actor_movements) {
-        my $kind = $movements[0]{kind} // '';
+        my $all_pin_to_actor = !grep { !_is_atl_pin_to_actor_handoff_kind($_->{kind} // '') } @movements;
+        my $all_actor_to_pin = !grep { !_is_atl_actor_to_pin_handoff_kind($_->{kind} // '') } @movements;
         confess "$context cannot mix pin-to-resolved-child, resolved-child-to-pin, and actor-to-actor data movements in the current subset\n"
-            if grep { ($_->{kind} // '') ne $kind } @movements;
-        confess "$context supports multiple same-direction pin-to-resolved-child or resolved-child-to-pin data movements only for top-level pin ingress/egress in the current subset\n"
-            if @movements != 1
-                && !_is_atl_pin_to_actor_handoff_kind($kind)
-                && !_is_atl_actor_to_pin_handoff_kind($kind);
+            unless $all_pin_to_actor || $all_actor_to_pin;
     }
 
     my $movement = $movements[0];
