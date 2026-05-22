@@ -595,6 +595,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'composition_contract',
         summary => 'A generated DT child source could not be resolved.',
     },
+    FSMGEN_COMPOSITION_WRONG_FSM_CHILD_KIND => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A generated FSM child source resolved to a non-FSM root.',
+    },
+    FSMGEN_COMPOSITION_WRONG_DT_CHILD_KIND => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A generated DT child source resolved to a non-DT root.',
+    },
     FSMGEN_RTLIF_SYSTEM_PORT_DIRECTION => {
         severity => 'error',
         stability => 'stable',

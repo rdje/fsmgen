@@ -231,6 +231,8 @@ for my $required_id (qw(
     contract.missing_rtl_metadata_sidecar
     contract.missing_fsm_child_source
     contract.missing_dt_child_source
+    contract.wrong_kind_fsm_child_source
+    contract.wrong_kind_dt_child_source
     contract.invalid_rtl_system_port_direction
     contract.duplicate_rtlif_port_declaration
     contract.invalid_rtlif_port_type
@@ -371,8 +373,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    121,
-    'catalog now records one hundred twenty-one explicit expected-failure entries',
+    123,
+    'catalog now records one hundred twenty-three explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

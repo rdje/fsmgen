@@ -1,0 +1,8 @@
+(?top:wrong_kind_dtc_child_source_top
+  (?ports:public_io
+    clk
+    rst_n
+    output_data>8
+  )
+  (?dtc:child wrong_kind_fsm_child_source)
+)

@@ -1,0 +1,7 @@
+(?top:wrong_kind_fsmc_child_source_top
+  (?ports:public_io
+    data_in<8
+    route_data>8
+  )
+  (?fsmc:router wrong_kind_dt_child_source)
+)

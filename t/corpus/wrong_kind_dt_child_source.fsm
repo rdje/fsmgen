@@ -1,0 +1,9 @@
+(?dt:wrong_kind_dt_child_source
+  (-route
+    (route_data> = data_in)
+  )
+  (+size
+    (data_in 8)
+    (route_data 8)
+  )
+)

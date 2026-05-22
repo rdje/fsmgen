@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 wrong-kind child-source corpus widening completed
+- Completed
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2`.
+- Added maintained expected-failure corpus coverage for external generated
+  child files whose active root kind does not match the requested composition
+  child form:
+  - `?fsmc` resolving to a standalone-DT `?dt` root.
+  - `?dtc` resolving to an FSM `?fsm` root.
+- Added stable diagnostic-code metadata for both wrong-kind child-source
+  realization families and synchronized regression-corpus docs plus mdBook
+  composition/error coverage.
+- No parser acceptance, source-resolution order, search-path semantics, or HDL
+  generation behavior changed.
+
 ## 2026-05-22: R12 wrong-kind child-source corpus widening selected
 - Completed
   `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1`.

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R12 regression corpus — wrong-kind child-source coverage widened
+- Completed
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2`.
+- Added expected-failure fixtures/catalog entries for `?fsmc` resolving to a
+  standalone-DT root and `?dtc` resolving to an FSM root.
+- Added stable diagnostic codes for both wrong-kind realization families and
+  synchronized regression-corpus docs plus mdBook composition/error coverage.
+- No parser, source-resolution, or HDL-generation behavior changed.
+
+## 2026-05-22
 ### R12 regression corpus — wrong-kind child-source widening selected
 - Completed
   `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1`.

@@ -213,6 +213,13 @@ external `.fsm` sources. Resolution searches repeated `--path DIR` roots, then
 `?fsm:name` roots for `?fsmc` children and canonical `?dt:name` roots for
 `?dtc` children.
 
+The child form and resolved source root must agree before HDL generation starts.
+A `?fsmc` child whose external file is rooted at `?dt:name` is rejected as a
+wrong-kind FSM child source and tells the author to use `?dtc` instead. A
+`?dtc` child whose external file is rooted at `?fsm:name` is rejected as a
+wrong-kind standalone-DT child source and tells the author to use `?fsmc`
+instead.
+
 Generated children can also be parameterized semantically. Declare the
 supported names in the child source with `(+params ...)`, then override those
 names on the `?fsmc` or `?dtc` instance:

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Wrong-kind generated-child sources are support-accounting failures
+- `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2` intentionally keeps the
+  existing generated-child source-resolution behavior unchanged and promotes
+  only the already-focused wrong-kind realization diagnostics into maintained
+  corpus truth.
+- The new stable codes distinguish the requested child form rather than the
+  physical file:
+  - `FSMGEN_COMPOSITION_WRONG_FSM_CHILD_KIND` covers a `?fsmc` instance whose
+    resolved file is not an active FSM child source.
+  - `FSMGEN_COMPOSITION_WRONG_DT_CHILD_KIND` covers a `?dtc` instance whose
+    resolved file is not an active standalone-DT child source.
+- The book now explains this as an authoring mismatch between the child form
+  and the active root in the resolved external `.fsm` file.
+
 ## 2026-05-22: Wrong-kind generated-child source coverage stays diagnostic-only
 - `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1` selects support-accounting
   promotion for resolved generated-child files whose root kind does not match

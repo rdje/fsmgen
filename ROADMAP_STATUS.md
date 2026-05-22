@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1` selected wrong-kind
-  generated-child source realization as the next support-accounting corpus
-  widening. The active frontier is
-  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2`.
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2` closed the latest
+  wrong-kind generated-child source realization support-accounting tree. The
+  next PNT step is to select the next inactive or ongoing task-tree frontier
+  before any implementation work.
+- Recent R12 wrong-kind child-source corpus-widening completion:
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2` added named
+  expected-failure corpus entries for `?fsmc` resolving to standalone-DT
+  source and `?dtc` resolving to FSM source, with stable diagnostic-code
+  metadata and coverage through pipeline/CLI behavior, check JSON, normalized
+  semantic JSON, manifest, corpus accounting, regression-corpus docs, and the
+  mdBook. No parser, source-resolution, or HDL-generation behavior changed.
 - Recent R12 wrong-kind child-source corpus-widening selection:
   `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1` activated a task tree to
   promote already-focused `?fsmc`/`?dtc` wrong-kind generated-child source
@@ -7721,6 +7728,11 @@ Done:
   accounts for already-focused direct FSM body failures:
   - [t/corpus/unsupported_top_level_infix_init_form.fsm](t/corpus/unsupported_top_level_infix_init_form.fsm) records future-looking top-level infix init forms as an expected failure with `FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_FORM`,
   - [t/corpus/unsupported_top_level_bare_scalar_form.fsm](t/corpus/unsupported_top_level_bare_scalar_form.fsm) records malformed bare scalar top-level body forms as an expected failure with `FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_FORM`,
+  - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
+- The maintained composition-contract expected-failure corpus now accounts for
+  wrong-kind external generated-child source realization:
+  - [t/corpus/wrong_kind_fsmc_child_source_top.fsm](t/corpus/wrong_kind_fsmc_child_source_top.fsm) records a `?fsmc` child whose external source resolves to a standalone-DT `?dt` root as an expected failure with `FSMGEN_COMPOSITION_WRONG_FSM_CHILD_KIND`,
+  - [t/corpus/wrong_kind_dtc_child_source_top.fsm](t/corpus/wrong_kind_dtc_child_source_top.fsm) records a `?dtc` child whose external source resolves to an FSM `?fsm` root as an expected failure with `FSMGEN_COMPOSITION_WRONG_DT_CHILD_KIND`,
   - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.

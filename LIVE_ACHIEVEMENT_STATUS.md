@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — wrong-kind child-source coverage widened
+- Completed
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2`.
+- The task tree is closed.
+- FSMGen now support-accounts two wrong-kind external generated-child source
+  failures:
+  - `?fsmc` resolving to a standalone-DT `?dt` root.
+  - `?dtc` resolving to an FSM `?fsm` root.
+- Stable diagnostic-code metadata, check JSON, normalized semantic JSON,
+  manifest, regression-corpus docs, and mdBook coverage are synchronized.
+- No parser, source-resolution, or HDL-generation behavior changed.
+
 ## 2026-05-22: R12 regression corpus — wrong-kind child-source widening selected
 - Completed
   `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1`.

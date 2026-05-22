@@ -119,12 +119,13 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
 - `composition_contract_rejection_pipeline_cli`: the entry is intentionally
   rejected by the normal composition contract through both the pipeline API and
   the CLI, and that rejection is part of the supported contract. This bucket
-  now covers missing external generated-child source lookup, missing external
-  `?rtl` sidecar metadata, invalid `.rtlif` system-role directions, and
-  duplicate `.rtlif` port declarations, unsupported `.rtlif` port types,
-  invalid `.rtlif` port tokens, non-positive `.rtlif` port widths, missing
-  `.rtlif` roots, empty `.rtlif` roots, unsupported nested `.rtlif` structures, and
-  duplicate embedded `.rtlif` roots.
+  now covers missing external generated-child source lookup, wrong-kind
+  external generated-child source realization for both `?fsmc` and `?dtc`,
+  missing external `?rtl` sidecar metadata, invalid `.rtlif` system-role
+  directions, duplicate `.rtlif` port declarations, unsupported `.rtlif` port
+  types, invalid `.rtlif` port tokens, non-positive `.rtlif` port widths,
+  missing `.rtlif` roots, empty `.rtlif` roots, unsupported nested `.rtlif`
+  structures, and duplicate embedded `.rtlif` roots.
 
 ## Supported-success markers
 
@@ -648,6 +649,8 @@ manifest output while keeping the exact file lists widenable.
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_fsm_child_source` | [t/corpus/missing_fsm_child_source_top.fsm](t/corpus/missing_fsm_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_dt_child_source` | [t/corpus/missing_dt_child_source_top.fsm](t/corpus/missing_dt_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.wrong_kind_fsm_child_source` | [t/corpus/wrong_kind_fsmc_child_source_top.fsm](t/corpus/wrong_kind_fsmc_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.wrong_kind_dt_child_source` | [t/corpus/wrong_kind_dtc_child_source_top.fsm](t/corpus/wrong_kind_dtc_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.invalid_rtl_system_port_direction` | [t/corpus/invalid_rtl_system_direction_top.fsm](t/corpus/invalid_rtl_system_direction_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.duplicate_rtlif_port_declaration` | [t/corpus/duplicate_rtlif_port_top.fsm](t/corpus/duplicate_rtlif_port_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.invalid_rtlif_port_type` | [t/corpus/invalid_rtlif_port_type_top.fsm](t/corpus/invalid_rtlif_port_type_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
