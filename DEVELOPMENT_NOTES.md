@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition duplicate declarations are support-accounting failures
+- `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2` keeps the existing
+  parser diagnostics intact and promotes duplicate top-port and duplicate
+  child-instance declarations into maintained corpus truth.
+- `FSMGEN_COMPOSITION_DUPLICATE_TOP_PORT` covers duplicate public top
+  interface names because every top port must have one unambiguous declaration.
+- `FSMGEN_COMPOSITION_DUPLICATE_CHILD_INSTANCE` covers duplicate realized child
+  instance names because wiring paths, child exports, and scheduling metadata
+  depend on instance names being unique inside the `?top`.
+
 ## 2026-05-22: Composition duplicate-declaration coverage stays parser-diagnostic-only
 - `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.1` selects
   support-accounting promotion for duplicate top-port and duplicate

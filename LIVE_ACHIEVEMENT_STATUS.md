@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — duplicate declaration coverage widened
+- Completed `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2`.
+- The task tree is closed.
+- FSMGen now support-accounts duplicate top-port declaration failures and
+  duplicate child instance-name failures.
+- Stable diagnostic-code metadata, check JSON, normalized semantic JSON,
+  manifest, regression-corpus docs, and mdBook coverage are synchronized.
+- No parser or HDL-generation behavior changed.
+
 ## 2026-05-22: R12 regression corpus — duplicate declaration widening selected
 - Completed `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

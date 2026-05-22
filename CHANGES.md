@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R12 regression corpus — duplicate declaration coverage widened
+- Completed `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2` and
+  closed the task tree.
+- Added expected-failure fixtures/catalog entries for duplicate top-port
+  declarations and duplicate child instance names.
+- Added stable diagnostic codes for duplicate top-port and duplicate
+  child-instance failures and synchronized regression-corpus docs plus mdBook
+  composition/error coverage.
+- No parser or HDL-generation behavior changed.
+
+## 2026-05-22
 ### R12 regression corpus — duplicate declaration widening selected
 - Completed `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained expected-failure

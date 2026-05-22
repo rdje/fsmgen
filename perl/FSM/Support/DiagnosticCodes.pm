@@ -607,6 +607,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'composition_contract',
         summary => 'A composition ports block used an unsupported mapping directive.',
     },
+    FSMGEN_COMPOSITION_DUPLICATE_TOP_PORT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition top declared the same top port more than once.',
+    },
+    FSMGEN_COMPOSITION_DUPLICATE_CHILD_INSTANCE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A composition top declared the same child instance name more than once.',
+    },
     FSMGEN_COMPOSITION_MISSING_RTLIF => {
         severity => 'error',
         stability => 'stable',

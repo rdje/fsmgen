@@ -1,0 +1,46 @@
+(?top:composition_duplicate_child_instance_top
+  (?ports:public_io
+    clk
+    rstn
+    start
+    result_data>8
+  )
+  (?fsmc:dup producer_src)
+  (?fsmc:dup consumer_src)
+  (?wiring:wiring
+    /start/dup.go/
+    /dup.output_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (<go
+      (output_data> <= 8'2)
+    )
+  )
+  (+size
+    (go 1)
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (<go
+      (output_data> <= 8'3)
+    )
+  )
+  (+size
+    (go 1)
+    (output_data 8)
+  )
+)

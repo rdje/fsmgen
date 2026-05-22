@@ -33,6 +33,10 @@ Malformed top names, duplicate child declarations, duplicate top ports, several
 tokens, and malformed wiring tokens are rejected at the composition boundary
 rather than being left for HDL emission.
 
+Duplicate names are rejected before scheduling or wiring inference starts. A
+top port name may appear only once in `?ports`, and each realized child
+instance name must be unique within the `?top`.
+
 ## The Minimal Shape
 
 ```lisp

@@ -2,10 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-- `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.1` selected
-  duplicate top-port and duplicate child-instance diagnostics as the next
-  support-accounting corpus widening. The active frontier is
-  `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2`.
+- Active `R12` task tree just closed. The next PNT step should select the next
+  roadmap-aligned maintained regression-corpus widening slice before any new
+  source/test/config changes.
+- Recent R12 composition duplicate-declaration corpus-widening completion:
+  `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2` added named
+  expected-failure corpus entries for duplicate top-port declarations and
+  duplicate child instance names, with stable diagnostic-code metadata and
+  coverage through pipeline/CLI behavior, check JSON, normalized semantic JSON,
+  manifest, corpus accounting, regression-corpus docs, and the mdBook. No
+  parser or HDL-generation behavior changed.
 - Recent R12 composition duplicate-declaration corpus-widening selection:
   `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.1` activated a task
   tree to promote already-focused duplicate top-port and duplicate
