@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition C1 port-exposure coverage stays diagnostic-only
+- `R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.1` selects
+  support-accounting promotion for C1 passthrough exposure diagnostics whose
+  existing focused test already locks pipeline behavior.
+- The implementation should preserve the current single-child passthrough
+  compatibility checks and only add maintained expected-failure corpus assets;
+  this tree does not relax port name, direction, or width requirements.
+
 ## 2026-05-22: Composition explicit-link topology failures are support-accounting failures
 - `R12-COMPOSITION-EXPLICIT-LINK-TOPOLOGY-CORPUS-WIDENING.2` preserves the
   existing C2 explicit-link diagnostic and promotes the missing-`?wiring`
