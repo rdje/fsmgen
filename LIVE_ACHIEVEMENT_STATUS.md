@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL pin mixed route sets selected
+- Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.1`.
+- The active R14 frontier is now `ISF-ATL-PIN-MIXED-ROUTE-SETS.2`.
+- The selected implementation will allow same-child generated-child
+  top-level input-pin to resolved-child input route sets to combine scalar
+  one-bit routes and exact-width vector routes while preserving route-local
+  public metadata.
+- The inverse same-child resolved-child output to top-level output mixed route
+  set remains tracked as `ISF-ATL-PIN-MIXED-ROUTE-SETS.3`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL pin-egress vector multi-route shipped
 - Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` and closed the task tree.
 - FSMGen now lowers same-child exact-width vector resolved-child output routes

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL mixed pin route sets are route grouping only
+- `ISF-ATL-PIN-MIXED-ROUTE-SETS.1` selects the next bounded ATL widening:
+  same-child top-level pin route sets that can combine one-bit scalar routes
+  and exact-width vector routes in one direction.
+- The selected work deliberately avoids new syntax. Existing drive bodies keep
+  `(sink source)` order, drive calls keep the transfer timing, and every route
+  keeps its own public `kind`, `width`, and `width_source` evidence.
+- Width adaptation, packing, truncation, extension, storage, muxing,
+  fan-in/fan-out, ready/backpressure, CDC/reset remapping, payload protocols,
+  and cross-transaction continuation remain separate future decisions.
+
 ## 2026-05-22: ATL vector pin-egress multi-routes mirror ingress
 - `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` removes the generated-child pin-egress
   one-vector-route ceiling while keeping the same route-set safety rails as

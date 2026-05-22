@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL pin mixed route sets selected
+- Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.1`.
+- Activated a new R14 task tree for generated-child same-child top-level pin
+  route sets that mix scalar one-bit routes and exact-width vector routes in
+  the same direction.
+- The next frontier is `ISF-ATL-PIN-MIXED-ROUTE-SETS.2`: widen same-child
+  generated-child pin-ingress route sets so scalar and vector routes may share
+  one contiguous pre-trigger route set while preserving route-local `kind`,
+  `width`, and `width_source` metadata.
+- `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` will handle the inverse same-child
+  resolved-child output to top-level output mixed scalar/vector route set
+  after ingress is proven.
+- Width adaptation, route mux/storage, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, payload protocols, repeated activation, and
+  cross-transaction continuation remain deferred.
+- No compiler behavior changed.
+
 ## 2026-05-22: ATL pin-egress vector multi-route shipped
 - Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` and closed the task tree.
 - FSMGen now accepts same-child generated-child resolved-child output to

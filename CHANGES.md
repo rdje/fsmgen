@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL pin mixed route sets selected
+- Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.1`.
+- Activated a new R14 task tree for bounded generated-child ATL top-level pin
+  route sets that mix scalar one-bit routes and exact-width vector routes.
+- The selected implementation sequence combines shipped scalar-only pin route
+  sets with shipped vector-only pin route sets. Pin ingress is the next
+  frontier; pin egress follows after ingress is proven.
+- Width adaptation, payload packing, route storage, route muxing,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, repeated
+  activation, and cross-transaction continuation remain deferred.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL pin-egress vector multi-route shipped
 - Completed `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` and closed the task tree.
 - Added exact-width generated-child pin-egress vector multi-route lowering.

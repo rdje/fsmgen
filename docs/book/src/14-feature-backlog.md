@@ -876,9 +876,19 @@ It is tracked by `ISF-ATL-PIN-VECTOR-MULTI-ROUTE`. The same-child
 pin-ingress vector multi-route leaf and inverse same-child pin-egress vector
 multi-route leaf are shipped. Each route keeps the existing `(sink source)`
 spelling and must prove a matching top-level pin and resolved child endpoint
-width. Mixed scalar/vector route sets, width adaptation, storage, muxing,
-fan-in/fan-out, ready/backpressure, CDC/reset remapping, repeated activation,
-and payload protocol inference remain deferred.
+width. Width adaptation, storage, muxing, fan-in/fan-out,
+ready/backpressure, CDC/reset remapping, repeated activation, and payload
+protocol inference remain deferred.
+
+The next selected pin-route widening is mixed scalar/vector route sets. It is
+tracked by `ISF-ATL-PIN-MIXED-ROUTE-SETS`. The selected sequence keeps the
+same `(sink source)` spelling and drive-call timing while allowing one
+same-child route set to contain both scalar one-bit routes and exact-width
+vector routes in one direction. Pin ingress is the first implementation leaf;
+pin egress follows after ingress is proven. Each route will keep route-local
+`kind`, `width`, and `width_source` metadata. Width adaptation, storage,
+muxing, fan-in/fan-out, ready/backpressure, CDC/reset remapping, repeated
+activation, and payload protocol inference remain deferred.
 
 The selected orchestration vocabulary reuses existing ISF activation forms:
 `(do actor.transaction)` for blocking actor transaction activation, `(spawn
