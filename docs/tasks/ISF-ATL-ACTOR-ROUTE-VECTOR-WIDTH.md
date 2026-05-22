@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -56,7 +56,7 @@ scheduled `.fsm` remains the explicit timing owner for the drive-call cycle.
 ## Task Tree
 
 - ID: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH`
-  Status: `active`
+  Status: `done`
   Goal: `ship exact-width vector generated-child actor-to-actor ATL routes`
   Children: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1`,
   `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2`
@@ -69,17 +69,17 @@ scheduled `.fsm` remains the explicit timing owner for the drive-call cycle.
   Commit: `this commit: ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1: select ATL actor-route vector width`
 
 - ID: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2`
-  Status: `pending`
+  Status: `done`
   Goal: `implement exact-width vector generated-child actor-to-actor ATL routes`
   Acceptance: `matching-width vector routes lower through parent/top/HDL artifacts, mismatches fail closed, and public docs describe the shipped boundary`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `final gate pending`
+  Commit: `this commit: ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2: ship ATL actor-route vector width`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` | `pending` | `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` selected the bounded exact-width vector route subset; implementation can start after this selection commit. |
+| 1 | `closed` | `done` | `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` shipped the bounded exact-width vector route subset. |
 
 ## Decisions
 
@@ -106,16 +106,21 @@ scheduled `.fsm` remains the explicit timing owner for the drive-call cycle.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
-| `2026-05-22` | `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` | `pending` | `pending` |
+| `2026-05-22` | `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` | `this commit: ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1: select ATL actor-route vector width` | Selection committed. |
-| `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` | `pending` | `pending` |
+| `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` | `this commit: ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2: ship ATL actor-route vector width` | Implementation, focused coverage, public docs, and final gates committed. |
 
 ## Changelog
 
 - `2026-05-22`: Created active R14 task tree and selected the bounded
   generated-child actor-to-actor vector-width route implementation leaf.
+- `2026-05-22`: Implemented exact-width generated-child actor-to-actor vector
+  routes. Matching source-output and sink-input child endpoint widths now
+  lower through parent handoff ports, generated top links, HDL vector links,
+  and `actor_network.data_movements[]` as `vector_actor_handoff`; mismatches
+  fail closed before scheduled `.fsm` emission.

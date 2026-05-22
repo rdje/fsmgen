@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL vector routes are width evidence, not payload protocols
+- `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` implements the bounded
+  generated-child actor-to-actor vector route slice without adding new syntax:
+  the drive body remains `(sink source)`, and the drive call remains the
+  timing point.
+- Width selection is parser-owned after library-qualified actor type
+  resolution, where both generated child actor interfaces are available. If
+  the source output and sink input widths match, the route width is copied into
+  the parent handoff ports, generated top links, HDL links, and schedule
+  report. If they differ, the parse fails before scheduled `.fsm` emission.
+- The public report shape stays stable: scalar one-bit routes remain
+  `scalar_actor_handoff`/`scalar_one_bit`, and vector routes use
+  `vector_actor_handoff`/`resolved_child_endpoint_exact_width`. No public
+  generated-top `data_links` key, route mux, storage, width conversion, or
+  payload protocol was introduced.
+
 ## 2026-05-22: ATL actor-to-actor vector routes are exact-width only
 - `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` selects exact-width generated-child
   actor-to-actor routes as the next bounded ATL feature slice.

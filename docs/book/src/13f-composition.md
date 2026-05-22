@@ -398,20 +398,22 @@ timing points.
 `connect`, `transfer`, and `move` are not part of ATL v0 movement syntax.
 
 The first endpoint-movement implementation sequence first shipped fail-closed
-reservation for unsupported endpoint drive-body pairs, then shipped the first
-generated scalar actor-to-actor handoff subset.
+reservation for unsupported endpoint drive-body pairs, then shipped the
+generated actor-to-actor handoff subset for one-bit scalar and exact-width
+vector generated-child routes.
 
 The accepted subset is intentionally narrow: exactly two direct static actor
 instances, one named drive body with one `(sink_actor.endpoint
-source_actor.endpoint)` scalar pair, and one top-level transaction drive
-call.
+source_actor.endpoint)` pair, matching source-output and sink-input endpoint
+widths, and one top-level transaction drive call.
 
-The generated parent `.fsm` exposes a one-bit external source input named
-`source_actor_source_endpoint` and a one-bit external sink output named
-`sink_actor_sink_endpoint`; the route lasts for the drive-call cycle and does
-not imply storage, a mux, generated child `.fsm` artifacts, an ATL top, HDL
-child wiring, pin movement in that actor-to-actor route, fan-in/fan-out,
-groups, CDC, or trigger/await coupling.
+The generated parent `.fsm` exposes an external source input named
+`source_actor_source_endpoint` and an external sink output named
+`sink_actor_sink_endpoint`. Their width is one for scalar one-bit routes or
+the exact matching child endpoint width for vector routes. The route lasts for
+the drive-call cycle and does not imply storage, a mux, pin movement in that
+actor-to-actor route, fan-in/fan-out, groups, CDC, or trigger/await coupling
+beyond the selected generated-child top sequence.
 
 ```lisp
 (actor atl_scalar_data_movement
@@ -826,10 +828,10 @@ payload protocols.
 
 The selected generated-child actor-to-actor data-route shape across two
 resolved children reuses the existing `(sink source)` drive-body movement
-surface and is shipped only for the two-child scalar data route described
-below. Malformed or wider actor-to-actor route shapes still fail closed before
-FSMGen infers remapping, storage, muxing, fan-in/fan-out, payload, or
-backpressure behavior.
+surface and is shipped only for the two-child same-source/same-sink scalar or
+exact-width vector data routes described below. Malformed or mismatched-width
+actor-to-actor route shapes still fail closed before FSMGen infers remapping,
+storage, muxing, fan-in/fan-out, payload adaptation, or backpressure behavior.
 
 The first control-only two-child generated top is now shipped.
 
@@ -848,7 +850,7 @@ Schedule JSON keeps the same actor-network families and uses
 `actor_network.generated_tops[].children[]` for the per-child generated-top
 wiring records.
 
-The first scalar generated-child actor-to-actor route through that two-child
+The first one-bit generated-child actor-to-actor route through that two-child
 top is also shipped as `isf/atl_two_child_data_pipeline.isf`.
 
 It reuses a named drive body with `(writer.payload reader.payload)` and calls
@@ -861,8 +863,22 @@ handoff output, drives `writer_payload` from `reader_payload` only for the
 `actor_network.data_movements[]` and the generated top in
 `actor_network.generated_tops[]` with `children[]`. Fan-in/fan-out, broader
 route data wiring, route mux/storage, CDC/reset remapping, ready/backpressure,
-payload protocols, repeated triggers, trigger batches, groups, recursive actor
-networks, and permanent actor grouping remain unavailable.
+payload protocols beyond exact-width handoff wiring, repeated triggers,
+trigger batches, groups, recursive actor networks, and permanent actor
+grouping remain unavailable.
+
+The exact-width vector extension of the same route is shipped as
+`isf/atl_two_child_vector_data_pipeline.isf`.
+
+It keeps the same `(writer.payload reader.payload)` drive-body pair and the
+same trigger/await/drive/trigger/await transaction order. The reader
+`payload` output and writer `payload` input are both declared with width 8,
+so FSMGen emits 8-bit parent handoff ports `reader_payload` and
+`writer_payload`, preserves the 8-bit child ports as generated `+interface`
+roles, wires both 8-bit generated-top links, and emits vector HDL links.
+Schedule JSON records this route with `kind: "vector_actor_handoff"`,
+`width: 8`, and
+`width_source: "resolved_child_endpoint_exact_width"`.
 
 The bounded multi-route extension of that same shape is now shipped as
 `isf/atl_two_child_multi_data_pipeline.isf`.
@@ -889,26 +905,31 @@ generated top wires `reader.payload` and `reader.sideband` into the parent
 handoffs, and wires the parent handoffs to `writer.payload` and
 `writer.sideband`.
 
-Schedule JSON reports each scalar path as its own
-`actor_network.data_movements[]` entry with `kind: "scalar_actor_handoff"`.
-The generated-top discovery still uses `actor_network.generated_tops[]` with
-`children[]`; the internal generated-top data-link list remains private.
+Schedule JSON reports each path as its own
+`actor_network.data_movements[]` entry. One-bit paths use
+`kind: "scalar_actor_handoff"` and exact-width vector paths use
+`kind: "vector_actor_handoff"`. The generated-top discovery still uses
+`actor_network.generated_tops[]` with `children[]`; the internal generated-top
+data-link list remains private.
 
 This extension is not general muxing. All accepted routes must share the same
-source child, the same sink child, the same parent transaction, one scalar
-endpoint pair per drive body, and one top-level drive call per route. The
-route segment must stay contiguous: source trigger, source event wait, all
-route drive calls, sink trigger, and sink event wait.
+source child, the same sink child, the same parent transaction, one direct
+endpoint pair with matching source/sink endpoint widths per drive body, and
+one top-level drive call per route. The route segment must stay contiguous:
+source trigger, source event wait, all route drive calls, sink trigger, and
+sink event wait.
 
 The shipped hardening around this route surface locks the nearby fail-closed
-rules: every source endpoint must be a scalar output on the source child,
-every sink endpoint must be a scalar input on the sink child, and each route
-drive body may contribute exactly one endpoint pair activated by exactly one
-top-level drive call.
+rules: every source endpoint must be an output on the source child, every sink
+endpoint must be an input on the sink child, and each route drive body may
+contribute exactly one endpoint pair activated by exactly one top-level drive
+call.
 
-The shipped width hardening keeps the route scalar one-bit only. Wider child
-payload endpoints remain fail-closed until a later payload-width protocol
-defines packing, truncation, extension, or storage behavior.
+The shipped width hardening accepts exact-width generated-child
+actor-to-actor routes when the resolved source child output and sink child
+input declare the same positive width. Width mismatches fail closed until a
+later payload-width protocol defines packing, truncation, extension, slicing,
+storage, or muxing behavior.
 
 The shipped clock/reset hardening keeps the same route in one parent
 clock/reset policy. Source or sink child clock/reset mismatches fail closed
@@ -1010,9 +1031,10 @@ fan-in/fan-out, or payload behavior.
 #### Generated-Child Route Terms
 
 The current generated-child actor-to-actor route set is intentionally small.
-Each route means one scalar child output reaches one scalar child input through
-fixed generated parent handoffs for exactly that route's named drive-call
-cycle.
+Each route means one child output reaches one child input through fixed
+generated parent handoffs for exactly that route's named drive-call cycle.
+The route width is one for scalar endpoints or the exact matching child
+endpoint width for vector endpoints.
 
 This terminology is part of the user-facing contract and is kept in this
 dedicated section so route support, explicit non-support, and diagnostic
@@ -1027,17 +1049,17 @@ The shipped route lifetime is one named drive-call cycle per route. In
 sideband paths each have their own adjacent drive-call cycle in that same route
 segment.
 
-The shipped data value for each route is exactly one scalar bit. The generated
-top presents the payload value as `reader.payload` to parent handoff
-`reader_payload`, then parent handoff `writer_payload` to `writer.payload`.
-The multi-route fixture adds the same pattern for `reader.sideband`,
-`reader_sideband`, `writer_sideband`, and `writer.sideband`. FSMGen transfers
-each one-bit value during its named drive-call cycle and does not define a
+The shipped data value for each route is exactly the resolved child endpoint
+width. The generated top presents the payload value as `reader.payload` to
+parent handoff `reader_payload`, then parent handoff `writer_payload` to
+`writer.payload`. The multi-route fixture adds the same pattern for
+`reader.sideband`, `reader_sideband`, `writer_sideband`, and
+`writer.sideband`. The vector fixture uses the same path at width 8. FSMGen
+transfers each value during its named drive-call cycle and does not define a
 multi-cycle route lifetime.
 
-Wider payloads, structured payloads, replayed payloads, or delayed delivery
-remain deferred until a later task tree selects and verifies a wider
-protocol.
+Structured payloads, replayed payloads, delayed delivery, or width adaptation
+remain deferred until a later task tree selects and verifies a wider protocol.
 
 Parameterized route drive definitions and drive-call actual arguments are
 also outside the shipped ATL route families. `(drive (forward_payload value)
@@ -1047,12 +1069,12 @@ binding, expression movement, route mux/storage, or payload protocols can be
 inferred.
 
 Route endpoint expressions are also outside this route. The source half of
-the drive-body pair must be the scalar endpoint `reader.payload`; a source
+the drive-body pair must be the direct endpoint `reader.payload`; a source
 expression such as `(+ reader.payload 1)` fails closed before FSMGen infers
 expression movement, value transformation, width conversion, storage, or a
 payload protocol.
 
-The sink half of the drive-body pair must likewise be the scalar endpoint
+The sink half of the drive-body pair must likewise be the direct endpoint
 `writer.payload`. A sink expression such as `(+ writer.payload 1)` fails
 closed before FSMGen infers expression destinations, route-side transforms,
 width conversion, storage, or a payload protocol.
@@ -1070,7 +1092,7 @@ that ATL-looking source expression until the actor instance set is known, then
 reports the same source-expression diagnostic. Expression movement itself
 remains outside the shipped contract.
 
-The accepted scalar route is source-order independent too. The named
+The accepted actor-to-actor route is source-order independent too. The named
 `forward_payload` drive may appear before or after the `reader` and `writer`
 instance declarations; after the full actor body is parsed, FSMGen resolves
 the same `reader.payload` to `writer.payload` route, emits the same generated
@@ -1125,8 +1147,8 @@ Route storage would hold route data across cycles before the sink consumes
 it.
 
 The current route set has neither. It has one source child, one sink child,
-one named drive call per scalar route, no route-local storage, and no
-route-local selector.
+one named drive call per route, no route-local storage, and no route-local
+selector.
 
 ##### Fan-In And Fan-Out
 
@@ -1137,8 +1159,9 @@ Fan-out would let one trigger, event, or data source drive multiple generated
 handoffs or child endpoints.
 
 The current route set has one source child, one sink child, one trigger and
-event per child, and one or more scalar data movements only when those data
-movements share the same source/sink child pair and contiguous route segment.
+event per child, and one or more data movements only when those movements
+share the same source/sink child pair, have matching endpoint widths per
+route, and occupy the same contiguous route segment.
 Multi-source, multi-sink, multi-event, and multi-trigger route structures
 remain fail-closed or deferred according to the surrounding diagnostics.
 
@@ -1156,13 +1179,14 @@ replay are not part of this route.
 
 ##### Payload Protocols
 
-Payload protocols would define data movement richer than the current one-bit
-scalar drive-call-cycle value, such as multi-bit payloads, structured
-payloads, valid/ready payload transfer, or multi-cycle packet movement.
+Payload protocols would define data movement richer than the current exact
+child-endpoint drive-call-cycle value, such as structured payloads,
+valid/ready payload transfer, width adaptation, or multi-cycle packet
+movement.
 
-The current route deliberately stays at one scalar bit until a later task
-tree selects and proves a wider protocol. FSMGen does not truncate, extend,
-pack, unpack, buffer, or handshake route payloads in this subset.
+The current route preserves matching scalar or vector child endpoint widths
+only. FSMGen does not truncate, extend, pack, unpack, buffer, or handshake
+route payloads in this subset.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

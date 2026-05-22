@@ -561,7 +561,7 @@ routes, trigger batches, event fan-in/fan-out, route mux/storage, CDC/reset
 remapping, ready/backpressure, payload protocols, recursive actor networks,
 or permanent actor grouping.
 
-The ATL two-child scalar data-route generated-top fixture is shipped as
+The ATL two-child one-bit data-route generated-top fixture is shipped as
 `isf/atl_two_child_data_pipeline.isf`. It adds one named drive body pair
 `(writer.payload reader.payload)` between the same resolved `reader` and
 `writer` children. The parent transaction triggers `reader.capture`, awaits
@@ -575,16 +575,28 @@ generated top wires `reader.payload` to parent `reader_payload` plus parent
 `actor_network.data_movements[]` with `kind: "scalar_actor_handoff"` and
 generated-top discovery in `actor_network.generated_tops[]` with `children[]`.
 
+The exact-width vector route extension is shipped as
+`isf/atl_two_child_vector_data_pipeline.isf`. It keeps the same source syntax,
+transaction order, and generated-top shape, but resolves the reader output and
+writer input endpoint widths after actor type resolution. Matching positive
+widths lower into parent handoff ports, child `+interface` roles, generated
+top links, and HDL links at that exact width. Schedule JSON reports
+`kind: "vector_actor_handoff"`, `width` equal to the endpoint width, and
+`width_source: "resolved_child_endpoint_exact_width"`.
+
 The bounded multi-route extension of that same generated top is shipped as
 `isf/atl_two_child_multi_data_pipeline.isf`. It keeps the same source child,
 sink child, parent transaction, and contiguous route segment, then moves
 `payload` and `sideband` through separate named drive bodies and separate
-one-cycle drive-call states. Schedule JSON reports both scalar routes through
-`actor_network.data_movements[]`; generated-top discovery stays in
+one-cycle drive-call states. Schedule JSON reports each route through
+`actor_network.data_movements[]`; one-bit routes use
+`scalar_actor_handoff`, and exact-width vector routes use
+`vector_actor_handoff`. Generated-top discovery stays in
 `actor_network.generated_tops[]` with `children[]`. Broader fan-in/fan-out
-route sets, route mux/storage, CDC/reset remapping, ready/backpressure,
-payload protocols, repeated triggers, trigger batches, groups, recursive
-actor networks, and permanent actor grouping remain deferred.
+route sets, width adaptation, route mux/storage, CDC/reset remapping,
+ready/backpressure, payload protocols, repeated triggers, trigger batches,
+groups, recursive actor networks, and permanent actor grouping remain
+deferred.
 
 The shipped multi-event boundary proof is negative: a transaction that emits
 one temporary trigger batch and then attempts two actor event waits, such as
@@ -658,10 +670,11 @@ ATL needs a reviewable endpoint vocabulary:
 | `group.name` | A named concurrent group, used only where group-level semantics are explicit. |
 
 The current shipped subsets accept only bounded qualified endpoint movement:
-one scalar actor-to-actor data route, one scalar top-level pin-to-actor route,
-and one scalar actor-to-top-level pin route. Ambiguous or dynamic instance
+scalar or exact-width vector generated-child actor-to-actor data routes in the
+selected two-child shape, one scalar top-level pin-to-actor route, and one
+scalar actor-to-top-level pin route. Ambiguous or dynamic instance
 declarations, recursive self-instantiation, implicit default transactions,
-dynamic instance names, wider endpoint routes, fan-in/fan-out routes, route
+dynamic instance names, width adaptation, fan-in/fan-out routes, route
 mux/storage insertion, and endpoint movement coupled to trigger batches or
 event waits remain deferred or fail closed.
 
@@ -1023,10 +1036,12 @@ than full actor-to-actor routing:
    `(sink_actor.sink_endpoint source_actor.source_endpoint)`.
 5. One top-level transaction drive call that activates that named drive.
 6. Generated parent handoff ports, not generated children:
-   `source_actor_source_endpoint` is a scalar external parent input, and
-   `sink_actor_sink_endpoint` is a scalar external parent output.
-7. One-bit width evidence only. Bit-vectors, aggregates, inferred actor-type
-   port widths, payload records, and expression movement remain deferred.
+   `source_actor_source_endpoint` is an external parent input, and
+   `sink_actor_sink_endpoint` is an external parent output.
+7. Width evidence is one-bit by default and exact-width for resolved
+   generated-child actor-to-actor routes when source-output and sink-input
+   child endpoint widths match. Width adaptation, aggregates, payload records,
+   and expression movement remain deferred.
 8. One drive-call-cycle route lifetime. The first subset drives the sink
    handoff output from the source handoff input through the named drive
    request and inserts no storage, route mux, ready/backpressure, or
@@ -1126,7 +1141,7 @@ The first positive multi-child step shipped as a control-only generated ATL
 top with two resolved children and sequential trigger/event handoffs. The
 next shipped widening is the first positive child-to-child payload route
 through that generated top. The source shape has two resolved children, one or
-more same-source/same-sink scalar drive body pairs such as
+more same-source/same-sink drive body pairs such as
 `(writer.payload reader.payload)` and `(writer.sideband reader.sideband)`, and
 one parent transaction ordered as:
 
@@ -1145,24 +1160,27 @@ reader/writer trigger and event links internal. The scheduled parent remains
 the timing owner for the route: it drives `writer_payload` from
 `reader_payload` only for the selected drive-call cycle. The bounded
 multi-route fixture repeats that exact handoff pattern for `sideband` through
-its own adjacent drive-call cycle. This does not select route storage, route
-muxes, ready/backpressure, CDC/reset remapping, route fan-in/fan-out, wider
-payload protocols, recursive actor networks, or permanent actor grouping.
+its own adjacent drive-call cycle. The exact-width vector fixture keeps the
+same handoff pattern and widens only the generated route ports/links to the
+matching child endpoint width. This does not select route storage, route
+muxes, ready/backpressure, CDC/reset remapping, route fan-in/fan-out, width
+adaptation, payload protocols, recursive actor networks, or permanent actor
+grouping.
 
-The shipped hardening around that route set is deliberately not a wider
+The shipped hardening around that route set is deliberately not a broader
 routing feature. It locks the nearby fail-closed boundary for this same
-generated child route set: every source endpoint must be a scalar output of
-the same source child, every sink endpoint must be a scalar input of the same
-sink child, each selected ATL data-route drive body must contain exactly one
+generated child route set: every source endpoint must be an output of the
+same source child, every sink endpoint must be an input of the same sink
+child, each selected ATL data-route drive body must contain exactly one
 endpoint pair, and each route drive may be activated by exactly one top-level
 transaction drive call. The source-side diagnostic names the source instance
 role explicitly before any future mux/storage or fan-in/fan-out design.
 
-The shipped route-boundary width hardening keeps the same scalar contract and
-targets endpoint width evidence. A source child output or sink child input
-wider than one bit fails closed until a later slice selects a real
-payload-width protocol, including any packing, truncation, extension, or
-storage semantics.
+The shipped route-boundary width hardening now accepts matching positive
+source-output and sink-input widths for generated-child actor-to-actor routes.
+Width mismatches fail closed until a later slice selects real adaptation
+semantics, including any packing, truncation, extension, slicing, payload
+protocol, or storage behavior.
 
 The shipped route-boundary clock/reset hardening keeps the same generated
 top a same-domain wiring artifact only. Focused coverage rejects source or
@@ -1301,7 +1319,7 @@ source-expression diagnostic after actor instances are known. This is
 diagnostic hardening only; it does not select expression movement, route-side
 transforms, storage, route mux/storage, ready/backpressure, or payload
 protocols.
-The accepted scalar route is source-order independent too: placing
+The accepted actor-to-actor route is source-order independent too: placing
 `forward_payload` before the `reader` and `writer` instance declarations still
 resolves to the same generated-child route, generated ATL top handoffs, and
 `actor_network.data_movements[]` metadata after the full actor body is parsed.

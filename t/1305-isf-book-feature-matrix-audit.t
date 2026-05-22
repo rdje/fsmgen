@@ -123,7 +123,7 @@ my @required_examples = (
     'FIFO controller fixture',
     'FIFO library fixture',
     'ATL temporary trigger-batch fixture',
-    'the shipped two-child same-source/same-sink scalar actor-to-actor route set',
+    'same-source/same-sink scalar or exact-width vector generated-child actor-to-actor routes are shipped through that two-child top',
     'route between two resolved children through the generated ATL top',
     'one named drive-call cycle',
     'Generated-child actor-to-actor and pin route support is intentionally',
@@ -319,13 +319,13 @@ like(
 
 like(
     $downstream,
-    qr{The selected generated-child actor-to-actor data route set is shipped only for\s+scalar same-source/same-sink two-child shapes},
+    qr{The selected generated-child actor-to-actor data route set is shipped only for\s+same-source/same-sink two-child shapes},
     'downstream handoff states selected generated-child actor-to-actor route is shipped narrowly',
 );
 
 like(
     $backlog,
-    qr{The selected generated-child actor-to-actor data movement across two resolved\s+children is shipped only for scalar same-source/same-sink two-child routes},
+    qr{The selected generated-child actor-to-actor data movement across two resolved\s+children is shipped only for same-source/same-sink two-child routes},
     'feature backlog states selected generated-child actor-to-actor route is shipped narrowly',
 );
 
@@ -432,8 +432,8 @@ my @required_downstream_atl_markers = (
     'sink expression such as `(+ writer.payload 1)`',
     'source-order independent',
     '((out) 1)',
-    'accepted scalar route is also source-order independent',
-    'selected same-source/same-sink scalar',
+    'accepted actor-to-actor route is also source-order independent',
+    'selected same-source/same-sink scalar or exact-width vector',
     'broader actor-to-actor generated-child',
 );
 
@@ -464,7 +464,7 @@ my @required_route_term_markers = (
     '##### Fan-In And Fan-Out',
     '##### Ready/Backpressure',
     '##### Payload Protocols',
-    'one scalar child output reaches one scalar child input',
+    'one child output reaches one child input',
     'named drive-call cycle',
     'Parameterized route drive definitions',
     'drive-call actual arguments',
@@ -472,7 +472,7 @@ my @required_route_term_markers = (
     'sink expression such as `(+ writer.payload 1)`',
     'source-order independent',
     '((out) 1)',
-    'accepted scalar route is source-order independent',
+    'accepted actor-to-actor route is source-order independent',
     'Generated handoffs are',
     'Handoff remapping would',
     'Route muxing would',
@@ -484,7 +484,7 @@ my @required_route_term_markers = (
     'Parser-owned diagnostics',
     'The lowerer repeats the safety check',
     'already registered generated',
-    'each one-bit value during its named drive-call cycle',
+    'transfers each value during its named drive-call cycle',
 );
 
 for my $marker (@required_route_term_markers) {

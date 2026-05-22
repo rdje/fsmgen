@@ -840,18 +840,17 @@ drive calls can carry the same intent.
 
 The first `.5` data-movement implementation sequence shipped fail-closed
 reservation for unsupported endpoint drive-body pairs, then shipped the first
-generated scalar actor-to-actor handoff subset. The shipped subset is exactly
+generated actor-to-actor handoff subset. The shipped subset is exactly
 two direct static actor instances, one named drive body with one
-`(sink_actor.endpoint source_actor.endpoint)` pair, and one top-level
-transaction drive call. It emits one-bit external parent handoff ports named
-`source_actor_source_endpoint` and `sink_actor_sink_endpoint`, uses a
-one-cycle route lifetime, and reports through
+`(sink_actor.endpoint source_actor.endpoint)` pair, matching endpoint widths,
+and one top-level transaction drive call. It emits external parent handoff
+ports named `source_actor_source_endpoint` and `sink_actor_sink_endpoint`, uses
+a one-cycle route lifetime, and reports through
 `actor_network.data_movements[]`.
 
-Storage, muxing, generated child `.fsm` artifacts, generated ATL tops, HDL
-child wiring, broader pin movement, inline/expression movement,
-fan-in/fan-out, groups, CDC, and trigger/await coupling remain separate
-backlog leaves.
+Storage, muxing, broader pin movement, inline/expression movement, width
+adaptation, fan-in/fan-out, groups, CDC, and trigger/await coupling outside
+the selected generated-child top sequence remain separate backlog leaves.
 
 The first pin-movement subsets are shipped in both scalar directions:
 top-level input pin to actor endpoint as `(actor.endpoint pins.input_pin)`,
@@ -1051,11 +1050,11 @@ route mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure, or
 payload protocols.
 
 The selected generated-child actor-to-actor data movement across two resolved
-children is shipped only for scalar same-source/same-sink two-child routes that
-use qualified trigger/event handoffs. The source shape reuses the existing
-`(sink source)` drive-body pair; malformed or wider routes still fail closed
-before remapping, storage, muxing, fan-in/fan-out, payload, or backpressure
-behavior is inferred.
+children is shipped only for same-source/same-sink two-child routes that use
+qualified trigger/event handoffs and matching endpoint widths. The source
+shape reuses the existing `(sink source)` drive-body pair; malformed or
+mismatched-width routes still fail closed before remapping, storage, muxing,
+fan-in/fan-out, payload adaptation, or backpressure behavior is inferred.
 
 The first positive two-child generated top is now shipped for the control-only
 case: `isf/atl_two_child_pipeline.isf` triggers `reader.capture`, waits on
@@ -1065,7 +1064,7 @@ Lowering emits parent, both children, and one generated top; schedule JSON
 records the generated-top child wiring under
 `actor_network.generated_tops[].children[]`.
 
-The first scalar generated-child actor-to-actor route through that two-child
+The first one-bit generated-child actor-to-actor route through that two-child
 top is now shipped as `isf/atl_two_child_data_pipeline.isf`. The source uses
 `(writer.payload reader.payload)` in a named drive body, called after
 `reader.done` and before `writer.emit`. Lowering emits parent, both children,
@@ -1073,6 +1072,15 @@ and one generated top. The parent exposes `reader_payload` and
 `writer_payload` handoffs, the parent drive body moves the scalar payload for
 the drive-call cycle, and the generated top wires `reader.payload` to the
 parent source handoff plus the parent sink handoff to `writer.payload`.
+
+The exact-width vector route through that two-child top is now shipped as
+`isf/atl_two_child_vector_data_pipeline.isf`. It uses the same
+`(writer.payload reader.payload)` source shape and ordering, but both child
+payload endpoints declare width 8. Lowering emits 8-bit parent handoffs,
+8-bit child interface roles, generated-top wiring, SystemVerilog vector links,
+and `actor_network.data_movements[]` metadata with
+`kind: "vector_actor_handoff"` and
+`width_source: "resolved_child_endpoint_exact_width"`.
 
 The bounded multi-route extension of that same route shape is now shipped as
 `isf/atl_two_child_multi_data_pipeline.isf`. It keeps the same parent
@@ -1094,8 +1102,9 @@ fixtures before any mux/storage, fan-in/fan-out, or payload-protocol work is
 claimed.
 
 The shipped width hardening narrows that payload-protocol backlog further by
-locking wider generated-child route endpoints as fail-closed until explicit
-packing, truncation, extension, or storage semantics are selected.
+allowing only same-width generated-child actor-to-actor route endpoints.
+Mismatched widths remain fail-closed until explicit packing, truncation,
+extension, slicing, storage, or mux semantics are selected.
 
 The shipped clock/reset hardening narrows the CDC/reset-remap backlog by
 requiring source and sink children in the generated-child actor-to-actor
@@ -2417,11 +2426,14 @@ wait. The follow-on `isf/atl_two_child_data_pipeline.isf` fixture is now
 promoted for one generated-top scalar generated-child actor-to-actor route
 from `reader.payload` to `writer.payload` after the reader event wait and
 before the writer trigger. The follow-on
+`isf/atl_two_child_vector_data_pipeline.isf` fixture is now promoted for the
+same generated-top route at exact 8-bit source/sink endpoint width. The
+follow-on
 `isf/atl_two_child_multi_data_pipeline.isf` fixture is now promoted for the
 bounded same-source/same-sink two-route case from `reader.payload` to
 `writer.payload` and from `reader.sideband` to `writer.sideband`, while
-fan-in/fan-out routing, mux/storage, wider payload protocols, and broader
-generated-child data routes remain backlog.
+fan-in/fan-out routing, mux/storage, width adaptation, payload protocols, and
+broader generated-child data routes remain backlog.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

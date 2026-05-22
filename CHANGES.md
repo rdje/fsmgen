@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL actor-route vector width shipped
+- Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` and closed the task tree.
+- Added exact-width generated-child actor-to-actor ATL route lowering. The
+  parser now resolves source child output and sink child input endpoint widths
+  after actor type resolution, accepts matching positive widths, and fails
+  mismatches before scheduled `.fsm` emission.
+- Added `isf/atl_two_child_vector_data_pipeline.isf` and focused coverage for
+  parent/reader/writer/top `.fsm` artifacts, strict schedule JSON parity,
+  strict outdir materialization, plain and strict HDL generation, vector
+  generated-top links, and width-mismatch diagnostics.
+- Schedule JSON keeps the existing `actor_network.data_movements[]` keys and
+  distinguishes vector routes with `kind: "vector_actor_handoff"` and
+  `width_source: "resolved_child_endpoint_exact_width"`.
+- Synchronized the public ISF spec, downstream handoff spec, public contract,
+  ATL design proposal, mdBook, roadmap status, and task-tree docs. Width
+  adaptation, top-level pin vector routes, route mux/storage, fan-in/fan-out,
+  CDC/reset remapping, ready/backpressure, payload protocols, repeated
+  activation, and cross-transaction continuation remain deferred.
+
+## 2026-05-22
 ### R14 — ATL actor-route vector width selected
 - Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1`.
 - Activated a new R14 task tree for bounded generated-child ATL

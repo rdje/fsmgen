@@ -291,7 +291,7 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
 
     if (@resolutions == 2
         && @data_movements >= 1
-        && !(grep { ($_->{kind} // '') ne 'scalar_actor_handoff' } @data_movements)
+        && !(grep { !_is_atl_actor_route_handoff_kind($_->{kind} // '') } @data_movements)
         && (@triggers >= 2 || @event_waits >= 2))
     {
         confess "$context two-child data route requires exactly one transaction trigger per source and sink child in the current subset; repeated activation remains deferred\n"
@@ -301,7 +301,7 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
 
         my $movement = $data_movements[0];
         for my $route (@data_movements) {
-            confess "$context two-child data route requires all scalar actor-to-actor data movements to share the same source and sink child in the current subset; fan-in and fan-out remain deferred\n"
+            confess "$context two-child data route requires all generated-child actor-to-actor data movements to share the same source and sink child in the current subset; fan-in and fan-out remain deferred\n"
                 unless ($route->{source_instance} // '') eq ($movement->{source_instance} // '')
                     && ($route->{sink_instance} // '') eq ($movement->{sink_instance} // '');
         }
@@ -796,6 +796,13 @@ sub _mark_atl_data_link_child_interface_ports {
     }
 }
 
+sub _is_atl_actor_route_handoff_kind {
+    my ($kind) = @_;
+    return defined($kind)
+        && !ref($kind)
+        && ($kind eq 'scalar_actor_handoff' || $kind eq 'vector_actor_handoff');
+}
+
 sub _ensure_atl_child_data_source_ports {
     my ($context, $instance, $child_ir, $child_actor, $data_movements) = @_;
     return unless ref($child_ir) eq 'HASH' && ref($child_actor) eq 'HASH';
@@ -807,7 +814,7 @@ sub _ensure_atl_child_data_source_ports {
 
     for my $movement (@{$data_movements || []}) {
         next unless (($movement->{kind} // '') eq 'scalar_actor_to_pin_handoff'
-                || ($movement->{kind} // '') eq 'scalar_actor_handoff')
+                || _is_atl_actor_route_handoff_kind($movement->{kind} // ''))
             && ($movement->{source_instance} // '') eq $instance;
 
         my $port_name = $movement->{source_endpoint};
@@ -815,13 +822,16 @@ sub _ensure_atl_child_data_source_ports {
         my $declared = defined($port_name) && !ref($port_name)
             ? $declared_outputs{$port_name}
             : undef;
-        my $instance_role = ($movement->{kind} // '') eq 'scalar_actor_handoff'
+        my $instance_role = _is_atl_actor_route_handoff_kind($movement->{kind} // '')
             ? 'source instance'
             : 'instance';
-        confess "$context data movement '$movement->{drive}' requires a scalar child output port '$port_name' on $instance_role '$instance'\n"
+        my $port_label = _is_atl_actor_route_handoff_kind($movement->{kind} // '') && $width > 1
+            ? 'child output port'
+            : 'scalar child output port';
+        confess "$context data movement '$movement->{drive}' requires a $port_label '$port_name' on $instance_role '$instance'\n"
             unless ref($declared) eq 'HASH'
                 && ($declared->{width} || 1) == $width
-                && $width == 1;
+                && $width > 0;
 
         _push_port($child_ir->{ports}, \%seen, $port_name, 'output', $width)
             unless $seen{$port_name};
@@ -845,11 +855,11 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
                 && ($movement->{storage} // '') eq 'none';
 
         my $width = $movement->{width} || 1;
-        confess "$context data movement '$movement->{drive}' must be scalar width 1 in the current subset\n"
-            unless $width == 1;
+        confess "$context data movement '$movement->{drive}' must have a positive route width\n"
+            unless $width > 0;
     }
 
-    my @non_actor_movements = grep { ($_->{kind} // '') ne 'scalar_actor_handoff' } @movements;
+    my @non_actor_movements = grep { !_is_atl_actor_route_handoff_kind($_->{kind} // '') } @movements;
     if (@non_actor_movements) {
         my $kind = $movements[0]{kind} // '';
         confess "$context cannot mix pin-to-resolved-child, resolved-child-to-pin, and actor-to-actor data movements in the current subset\n"
@@ -949,17 +959,18 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
         return @links;
     }
 
-    if (($movement->{kind} // '') eq 'scalar_actor_handoff') {
+    if (_is_atl_actor_route_handoff_kind($movement->{kind} // '')) {
         my @links;
         for my $route (@movements) {
             my $route_width = $route->{width} || 1;
-            confess "$context can only wire scalar generated-child actor-to-actor data movement through parent handoffs\n"
+            confess "$context can only wire selected generated-child actor-to-actor data movement through parent handoffs\n"
                 unless ($route->{source} // '') eq 'external_handoff'
                     && ($route->{sink} // '') eq 'external_handoff';
 
             if (($route->{source_instance} // '') eq $instance) {
                 my $child_port = $route->{source_endpoint};
-                confess "$context data movement '$route->{drive}' requires a scalar child output port '$child_port' on source instance '$instance'\n"
+                my $port_label = $route_width > 1 ? 'child output port' : 'scalar child output port';
+                confess "$context data movement '$route->{drive}' requires a $port_label '$child_port' on source instance '$instance'\n"
                     unless defined($child_port)
                         && !ref($child_port)
                         && exists($child_ports->{$child_port})
@@ -982,7 +993,8 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
 
             if (($route->{sink_instance} // '') eq $instance) {
                 my $child_port = $route->{sink_endpoint};
-                confess "$context data movement '$route->{drive}' requires a scalar child input port '$child_port' on sink instance '$instance'\n"
+                my $port_label = $route_width > 1 ? 'child input port' : 'scalar child input port';
+                confess "$context data movement '$route->{drive}' requires a $port_label '$child_port' on sink instance '$instance'\n"
                     unless defined($child_port)
                         && !ref($child_port)
                         && exists($child_ports->{$child_port})

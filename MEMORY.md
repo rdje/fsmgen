@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL actor-route vector width shipped
+- Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` and closed the task tree.
+- FSMGen now accepts generated-child actor-to-actor ATL routes whose resolved
+  source child output and sink child input declare the same positive width.
+- Added `isf/atl_two_child_vector_data_pipeline.isf` plus focused
+  parent/reader/writer/top `.fsm`, strict schedule JSON, strict outdir, plain
+  HDL, strict HDL, and mismatch fail-closed coverage.
+- Schedule JSON keeps the existing `actor_network.data_movements[]` entry
+  shape and reports exact-width vector routes as `vector_actor_handoff` with
+  `width_source: "resolved_child_endpoint_exact_width"`.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook composition/support/backlog chapters, roadmap
+  status, task-tree docs, and live docs. Width adaptation, top-level pin vector
+  routes, route mux/storage, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, payload protocols, repeated activation, and
+  cross-transaction continuation remain deferred.
+
 ## 2026-05-22: ATL actor-route vector width selected
 - Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1`.
 - Activated a new R14 task tree for the next bounded ATL data-route widening:

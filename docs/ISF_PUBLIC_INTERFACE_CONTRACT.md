@@ -207,11 +207,20 @@ plain plus strict HDL generation, and per-child generated-top wiring metadata
 under `actor_network.generated_tops[].children[]`.
 The same focused coverage now covers
 [isf/atl_two_child_data_pipeline.isf](../isf/atl_two_child_data_pipeline.isf),
-the first scalar generated-child actor-to-actor data route through that
+the first one-bit generated-child actor-to-actor data route through that
 two-child top. Public consumers should read the route from
 `actor_network.data_movements[]` with `kind: "scalar_actor_handoff"` and
 discover parent/reader/writer/top wiring from `actor_network.generated_tops[]`
 with `children[]`; no public `data_links` key is exposed.
+The same focused coverage now covers
+[isf/atl_two_child_vector_data_pipeline.isf](../isf/atl_two_child_vector_data_pipeline.isf),
+the exact-width vector generated-child actor-to-actor route through that
+two-child top. Public consumers should read the route from
+`actor_network.data_movements[]` with `kind: "vector_actor_handoff"`,
+`width` equal to the resolved child endpoint width, and
+`width_source: "resolved_child_endpoint_exact_width"`; generated-top discovery
+still comes from `actor_network.generated_tops[]` with `children[]`, and no
+public `data_links` key is exposed.
 The same focused coverage now covers
 [isf/atl_two_child_multi_data_pipeline.isf](../isf/atl_two_child_multi_data_pipeline.isf),
 the bounded same-source, same-sink multi-route extension of that generated
@@ -223,9 +232,11 @@ The shipped hardening around that route keeps the same public surface: it adds
 focused fail-closed coverage for source child output validation, sink child
 input validation, one endpoint pair per route drive body, and one top-level
 drive call per route, without adding report keys or new ATL movement syntax.
-The shipped width hardening also keeps the public surface unchanged: it locks
-the scalar-width boundary for generated-child actor-to-actor route endpoints
-and does not add payload-width report keys or conversion semantics.
+The shipped width hardening widens only the generated-child actor-to-actor
+public route values: matching source-output and sink-input child endpoint
+widths greater than one report as `vector_actor_handoff` with
+`width_source: "resolved_child_endpoint_exact_width"`. It does not add public
+data-link keys, width adaptation, payload protocols, or conversion semantics.
 The shipped clock/reset hardening likewise keeps the public surface
 unchanged: generated-child actor-to-actor routes remain same-domain
 generated-top wiring, and child clock/reset mismatches fail closed until a
@@ -666,19 +677,24 @@ control-only two-child generated top is shipped for sequential trigger/event
 handoffs with no data movement; its generated-top entry uses `children[]`
 records advertised through
 `schedule_report_actor_network_generated_top_multi_child_keys` and
-`schedule_report_actor_network_generated_top_child_keys`. The first scalar
+`schedule_report_actor_network_generated_top_child_keys`. The first
 generated-child actor-to-actor route through that two-child top is also
 shipped for `(writer.payload reader.payload)` when the parent transaction is
 ordered as source trigger, source event wait, drive call, sink trigger, and
-sink event wait. The bounded multi-route extension is shipped only for
-multiple scalar routes that share that same source child, sink child, parent
-transaction, and contiguous route segment. Each route uses existing
+sink event wait. One-bit routes report `kind: "scalar_actor_handoff"` and
+`width_source: "scalar_one_bit"`. Same-width vector routes report
+`kind: "vector_actor_handoff"` and
+`width_source: "resolved_child_endpoint_exact_width"`. The bounded multi-route
+extension is shipped only for routes that share that same source child, sink
+child, parent transaction, and contiguous route segment, with matching
+source/sink endpoint widths per route. Each route uses existing
 `schedule_report_actor_network_data_movement_keys`; no new report family is
 introduced. The nearby hardening slices lock fail-closed diagnostics for
-missing or wrong-direction child payload ports and route cardinality, but
-still do not expose new public keys. Broader generated ATL tops, fan-in/fan-out
-data routing, broader data-route coupling, route mux/storage, and inferred
-payload/ready/backpressure binding remain unshipped behavior.
+missing or wrong-direction child payload ports, width mismatches, and route
+cardinality, but still do not expose new public keys. Broader generated ATL
+tops, fan-in/fan-out data routing, broader data-route coupling, route
+mux/storage, width adaptation, and inferred payload/ready/backpressure binding
+remain unshipped behavior.
 Unqualified
 `(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
 intent surface.
@@ -707,10 +723,11 @@ family or public `data_links` key is exposed. The generated child `.fsm` may
 include generated `+interface` role metadata for each selected child output so
 the HDL backend preserves those child outputs as module ports.
 Generated-child actor-to-actor data movement across two resolved children is
-shipped only for the documented scalar same-source/same-sink route set through
-the generated top. Wider actor-to-actor route fabrics still fail closed before
-FSMGen infers remapping, storage, muxing, fan-in/fan-out, payload, or
-backpressure behavior; no public data-link key is added for them.
+shipped only for the documented same-source/same-sink scalar or exact-width
+vector route set through the generated top. Width-mismatched or broader
+actor-to-actor route fabrics still fail closed before FSMGen infers remapping,
+storage, muxing, fan-in/fan-out, payload adaptation, or backpressure behavior;
+no public data-link key is added for them.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields
@@ -1766,8 +1783,9 @@ names. The generated-top subset wires the selected one-child trigger/event
 forms, the selected one-child pin-ingress route, the same-child pin-ingress
 multi-route extension, the selected one-child pin-egress route, the same-child
 pin-egress multi-route extension, the selected two-child trigger/event
-sequence, and the selected two-child scalar generated-child actor-to-actor
-route set. No group endpoints, route mux/storage, broader HDL event wiring, or
+sequence, and the selected two-child scalar or exact-width vector
+generated-child actor-to-actor route set. No group endpoints,
+route mux/storage, broader HDL event wiring, or
 broader generated-top data routing is promised by this field.
 The selected broader ATL v0 public direction is direct actor-body syntax plus
 existing drive-body movement syntax, but most of those forms remain future
@@ -1777,23 +1795,26 @@ qualified `pins.name`, `actor.port`, `actor.transaction`, `actor.event`, and
 `group.name` endpoints. `connect`, `transfer`, and `move` are not public ATL
 v0 movement clauses. Unsupported qualified actor endpoint drive-body pairs
 naming a declared static actor instance reject with ATL data-movement
-diagnostics unless they match the shipped scalar actor-to-actor subset.
-The first generated scalar actor-to-actor handoff subset is now implemented in
-the public API. That subset admits exactly two direct static actor instances,
-one named drive body with one `(sink_actor.endpoint source_actor.endpoint)`
-scalar pair, and one top-level transaction drive call. FSMGen rewrites the
-pair to generated parent handoff signals and emits
-`source_actor_source_endpoint` for the one-bit external source input and
-`sink_actor_sink_endpoint` for the one-bit external sink output. The
-schedule-report surface is `actor_network.data_movements[]` with
+diagnostics unless they match the shipped actor-to-actor subset.
+The generated actor-to-actor handoff subset is now implemented in the public
+API for one-bit scalar and exact-width vector child endpoint routes. That
+subset admits exactly two direct static actor instances, one named drive body
+with one `(sink_actor.endpoint source_actor.endpoint)` pair, and one top-level
+transaction drive call. FSMGen rewrites the pair to generated parent handoff
+signals named `source_actor_source_endpoint` and
+`sink_actor_sink_endpoint`; their width is the resolved matching child endpoint
+width. The schedule-report surface is `actor_network.data_movements[]` with
 `kind`, `transaction`, `context`, `drive`, `source_instance`,
 `source_endpoint`, `source_signal`, `sink_instance`, `sink_endpoint`,
 `sink_signal`, `width`, `width_source`, `route_lifetime`, `storage`,
-`source`, and `sink`. Storage, muxing, actor type resolution, generated child
-artifacts, generated ATL tops, HDL child wiring, broader pin movement,
-inline/expression movement, fan-in/fan-out, broader group scheduling outside
-the exact trigger-batch subset, CDC, and trigger/await coupling remain future
-public contracts.
+`source`, and `sink`. Scalar one-bit routes use
+`kind: "scalar_actor_handoff"` and `width_source: "scalar_one_bit"`;
+same-width vector routes use `kind: "vector_actor_handoff"` and
+`width_source: "resolved_child_endpoint_exact_width"`. Storage, muxing,
+broader pin movement, inline/expression movement, width adaptation,
+fan-in/fan-out, broader group scheduling outside the exact trigger-batch
+subset, CDC, and trigger/await coupling beyond the selected generated-child
+top sequence remain future public contracts.
 The first top-level pin movement public subset is implemented: one
 `(actor.endpoint pins.input_pin)` scalar pair in one named drive body, one
 direct static actor instance, and one top-level transaction drive call. The

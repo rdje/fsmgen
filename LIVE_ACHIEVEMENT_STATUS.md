@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL actor-route vector width shipped
+- Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` and closed the task tree.
+- FSMGen now lowers same-width generated-child actor-to-actor vector routes
+  through parent handoff ports, generated top links, child `+interface` roles,
+  HDL vector links, and schedule-report `vector_actor_handoff` metadata.
+- Added `isf/atl_two_child_vector_data_pipeline.isf` with focused `.fsm`,
+  schedule JSON, strict outdir, HDL, and width-mismatch coverage.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook, roadmap, and task-tree docs.
+
 ## 2026-05-22: R14 — ATL actor-route vector width selected
 - Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1`.
 - The active R14 frontier is now `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2`.

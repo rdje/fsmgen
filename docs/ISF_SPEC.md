@@ -901,8 +901,8 @@ to `writer_done`. Schedule JSON keeps the existing actor-network families and
 uses `actor_network.generated_tops[].children[]` for the per-child generated
 top wiring records.
 
-The first positive generated-child actor-to-actor scalar data route through
-that two-child top is shipped by
+The first positive generated-child actor-to-actor data route through that
+two-child top is shipped by
 [isf/atl_two_child_data_pipeline.isf](../isf/atl_two_child_data_pipeline.isf).
 The source shape reuses the existing drive-body `(sink source)` order:
 
@@ -924,25 +924,43 @@ internal. Schedule JSON reports the route through existing
 `actor_network.data_movements[]` `scalar_actor_handoff` fields and discovers
 the top through existing `actor_network.generated_tops[]` `children[]`
 metadata. Route mux/storage, fan-in/fan-out, CDC/reset remapping,
-ready/backpressure, wider payload protocols, repeated triggers, trigger
-batches, groups, recursive actor networks, and permanent actor grouping remain
-deferred.
+ready/backpressure, payload protocols beyond exact-width handoff wiring,
+repeated triggers, trigger batches, groups, recursive actor networks, and
+permanent actor grouping remain deferred.
+
+The exact-width vector extension of that same two-child route shape is shipped
+by
+[isf/atl_two_child_vector_data_pipeline.isf](../isf/atl_two_child_vector_data_pipeline.isf).
+The source syntax is still the same `(writer.payload reader.payload)` drive
+body pair and the same parent transaction ordering. FSMGen resolves the source
+child output and sink child input widths from the generated children after
+library-qualified actor type resolution. When both endpoints exist and declare
+the same positive width, the parent source/sink handoff ports, child
+`+interface` roles, generated top links, and generated HDL links use that
+exact width. Schedule JSON keeps the same `actor_network.data_movements[]`
+entry shape; vector routes report `kind: "vector_actor_handoff"`, `width`
+equal to the child endpoint width, and
+`width_source: "resolved_child_endpoint_exact_width"`. Scalar one-bit routes
+continue to report `kind: "scalar_actor_handoff"` and
+`width_source: "scalar_one_bit"`.
 
 The bounded multi-route extension of that same two-child shape is shipped by
 [isf/atl_two_child_multi_data_pipeline.isf](../isf/atl_two_child_multi_data_pipeline.isf).
-It allows more than one scalar actor-to-actor route only when every route has
-the same resolved source child, the same resolved sink child, the same parent
-transaction, one scalar endpoint pair, and one argument-free top-level drive
-call. The transaction must keep the contiguous order `trigger source`, `await
-source event`, all route drive calls, `trigger sink`, and `await sink event`.
-The fixture routes both `(writer.payload reader.payload)` and
+It allows more than one actor-to-actor route only when every route has the
+same resolved source child, the same resolved sink child, the same parent
+transaction, one direct endpoint pair, matching source/sink endpoint widths
+for that route, and one argument-free top-level drive call. The transaction
+must keep the contiguous order `trigger source`, `await source event`, all
+route drive calls, `trigger sink`, and `await sink event`. The fixture routes
+both `(writer.payload reader.payload)` and
 `(writer.sideband reader.sideband)`. Lowering emits separate drive-call states,
 separate drive request signals, separate source/sink parent handoffs, generated
 child `+interface` roles for both reader outputs and both writer inputs, and
-generated-top wiring for both scalar paths. Schedule JSON reports both routes
-as separate `actor_network.data_movements[]` entries with
-`kind: "scalar_actor_handoff"`; it does not expose the private generated-top
-`data_links`.
+generated-top wiring for both paths. Schedule JSON reports both routes as
+separate `actor_network.data_movements[]` entries; one-bit routes use
+`kind: "scalar_actor_handoff"`, and exact-width vector routes use
+`kind: "vector_actor_handoff"`. The public report still does not expose the
+private generated-top `data_links`.
 
 The shipped hardening around that positive route keeps the route unchanged
 and adds focused fail-closed coverage around it. A generated-child
@@ -953,10 +971,12 @@ top-level transaction drive call activates that route. Fan-in/fan-out,
 mux/storage, route endpoint expressions, CDC/reset remapping,
 ready/backpressure, payload protocols, and permanent actor grouping remain
 deferred.
-The shipped width hardening keeps the route scalar one-bit only and adds
-focused rejection coverage for wider source child outputs and wider sink
-child inputs. No packing, truncation, extension, payload protocol, or storage
-semantics are selected for wider generated-child route endpoints.
+The shipped width hardening now accepts exact-width generated-child
+actor-to-actor routes when the source child output and sink child input
+declare the same positive width. Mismatched source/sink widths fail closed
+before scheduled `.fsm` emission. No packing, truncation, extension, slicing,
+payload protocol, storage, or route muxing semantics are selected for
+generated-child route endpoints.
 The shipped clock/reset hardening keeps the same route in one parent
 clock/reset policy. Source or sink children whose clock or reset signature
 differs from the parent fail closed before FSMGen claims any CDC bridge,
@@ -3264,12 +3284,12 @@ parser/schedule-report metadata:
 `declaration` is `actor` in the current subset because static actor instances
 are direct clauses of the enclosing actor. Instance names and actor types must
 be scalar HDL identifiers. Multiple direct static instances are accepted only
-by shipped bounded subsets: the scalar actor-to-actor handoff route and
-report-only static group metadata. Unqualified static instance metadata does
-not instantiate or resolve actor types. Library-qualified static instances
-resolve only to report metadata and reserved child names; they still do not
-emit generated child `.fsm`, create a generated composition top, or change HDL
-generation.
+by shipped bounded subsets: scalar or exact-width vector actor-to-actor
+handoff routes and report-only static group metadata. Unqualified static
+instance metadata does not instantiate or resolve actor types.
+Library-qualified static instances resolve to report metadata and reserved
+child names, and the selected generated-child subsets emit child `.fsm`
+artifacts plus generated tops where documented.
 
 The shipped source contract for ATL actor type resolution is the qualified
 library-backed form:
@@ -3335,20 +3355,26 @@ The shipped resolved-child pin-egress fixture
 wires the resolved child output through the parent and to the top-level output
 pin while preserving public route metadata in `actor_network.data_movements[]`.
 The shipped two-child data fixture `isf/atl_two_child_data_pipeline.isf` adds
-one scalar generated-child actor-to-actor route `(writer.payload
+one one-bit generated-child actor-to-actor route `(writer.payload
 reader.payload)` through a generated top with resolved `reader` and `writer`
 children. It preserves public route metadata in
 `actor_network.data_movements[]` and top discovery in
 `actor_network.generated_tops[]`.
+The shipped two-child vector data fixture
+`isf/atl_two_child_vector_data_pipeline.isf` uses the same route spelling and
+generated top but carries the route through matching 8-bit child payload
+ports. It reports `kind: "vector_actor_handoff"` and
+`width_source: "resolved_child_endpoint_exact_width"`.
 The shipped bounded multi-route fixture
 `isf/atl_two_child_multi_data_pipeline.isf` keeps the same resolved
-`reader`/`writer` generated top and adds a second same-source/same-sink scalar
-route `(writer.sideband reader.sideband)`. It reports both route records in
-`actor_network.data_movements[]` without adding a public data-link report key.
+`reader`/`writer` generated top and adds a second same-source/same-sink
+one-bit route `(writer.sideband reader.sideband)`. It reports both route
+records in `actor_network.data_movements[]` without adding a public data-link
+report key.
 
 The following remain fail-closed/deferred:
 
-- multiple static actor instances outside the shipped scalar handoff,
+- multiple static actor instances outside the shipped actor handoff,
   generated-top, and report-only group metadata subsets;
 - `(network ...)` wrappers;
 - broader actor-to-actor endpoint movement through widened drive-body
@@ -3374,23 +3400,25 @@ handoff, and report-only group metadata subsets implemented so far:
   ATL v0. Movement remains temporal intent placed by drive-call timing, not a
   permanent actor-to-actor wire.
 - The first endpoint-movement code leaf shipped fail-closed reservation for
-  unsupported qualified actor endpoint drive-body pairs, and the first
-  generated scalar actor-to-actor handoff subset is now shipped. The accepted
-  source shape is exactly two direct static actor instances, one or more named
-  drive bodies with one `(sink_actor.endpoint source_actor.endpoint)` scalar
-  pair each, and one top-level transaction drive call per route. All routes in
-  the widened generated-child route subset must share the same source child,
-  sink child, parent transaction, and contiguous route segment. FSMGen rewrites
-  each pair to
-  generated parent handoff signals, emits scalar one-bit external ports named
-  `source_actor_source_endpoint` for each source input and
-  `sink_actor_sink_endpoint` for each sink output, and drives each sink output
-  from its source input during that route's named drive-call cycle.
-- The scalar actor-to-actor handoff inserts no storage, route mux, generated
-  child `.fsm`, generated ATL top, HDL child wiring, actor type resolution,
-  pin movement in that actor-to-actor route, inline drive movement,
-  expression movement, fan-in/fan-out, groups, CDC, or trigger/await
-  coupling. Schedule reports expose accepted movements through
+  unsupported qualified actor endpoint drive-body pairs, and the generated
+  actor-to-actor handoff subset is now shipped for one-bit scalar and
+  exact-width vector child endpoint routes. The accepted source shape is
+  exactly two direct static actor instances, one or more named drive bodies
+  with one `(sink_actor.endpoint source_actor.endpoint)` pair each, and one
+  top-level transaction drive call per route. All routes in the widened
+  generated-child route subset must share the same source child, sink child,
+  parent transaction, and contiguous route segment. For each route, FSMGen
+  resolves the source child output and sink child input widths. Matching
+  positive widths become the generated parent handoff port width; mismatches
+  fail closed before scheduled `.fsm` emission. FSMGen rewrites each pair to
+  generated parent handoff signals named `source_actor_source_endpoint` and
+  `sink_actor_sink_endpoint`, then drives each sink handoff from its source
+  handoff during that route's named drive-call cycle.
+- The actor-to-actor handoff inserts no storage, route mux, pin movement in
+  that actor-to-actor route, inline drive movement, expression movement,
+  fan-in/fan-out, groups, CDC, or trigger/await coupling beyond the selected
+  generated-child top sequence. Schedule reports expose accepted movements
+  through
   `actor_network.data_movements[]` with `kind`, `transaction`, `context`,
   `drive`, `source_instance`, `source_endpoint`, `source_signal`,
   `sink_instance`, `sink_endpoint`, `sink_signal`, `width`, `width_source`,
@@ -4134,7 +4162,7 @@ and top `.fsm` artifacts, strict schedule JSON parity, nested
 and plain plus strict HDL generation.
 The [isf/atl_two_child_data_pipeline.isf](../isf/atl_two_child_data_pipeline.isf)
 fixture now has file-backed two-child generated-top data-route coverage for
-the selected scalar generated-child actor-to-actor route. It proves
+the selected one-bit generated-child actor-to-actor route. It proves
 parent/reader/writer/top `.fsm` artifacts, strict schedule JSON parity,
 `actor_network.data_movements[]` `scalar_actor_handoff` route metadata,
 nested `generated_tops[].children[]` child wiring metadata, reader output and
@@ -4142,6 +4170,14 @@ writer input generated `+interface` metadata, internal generated-top payload
 wiring, plain plus strict HDL generation, a missing sink payload diagnostic,
 and a fail-closed diagnostic when the drive call does not follow the source
 event wait.
+The [isf/atl_two_child_vector_data_pipeline.isf](../isf/atl_two_child_vector_data_pipeline.isf)
+fixture now has file-backed exact-width vector route coverage for the same
+two-child generated-top shape. It proves 8-bit parent source/sink handoff
+ports, 8-bit child payload ports, generated top wiring, strict schedule JSON
+parity, strict outdir materialization, plain plus strict HDL generation, and
+`actor_network.data_movements[]` metadata with
+`kind: "vector_actor_handoff"` and
+`width_source: "resolved_child_endpoint_exact_width"`.
 The [isf/atl_two_child_multi_data_pipeline.isf](../isf/atl_two_child_multi_data_pipeline.isf)
 fixture now has file-backed bounded multi-route coverage for that same
 generated top shape. It proves two same-source/same-sink scalar
@@ -4154,8 +4190,12 @@ same fixture family: source-child output validation and route-cardinality
 fail-closed coverage before any broader generated-child data wiring is
 claimed.
 `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42` shipped scalar endpoint-width
-hardening for that same route family; positive wider payload movement remains
-unclaimed until a payload-width protocol is explicitly selected.
+hardening for that same route family. `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2`
+then selected the bounded exact-width widening: matching source-output and
+sink-input child endpoint widths greater than one lower through the same
+drive-call-cycle handoff route, while mismatches still fail closed before any
+packing, truncation, extension, storage, muxing, or payload protocol is
+inferred.
 `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68` shipped the next fail-closed
 hardening for that route family: route start/completion boundaries remain
 parent interface pins with fixed roles. The parser and lowerer now require
@@ -4225,10 +4265,10 @@ matching `(instance ...)` clauses with a malformed source expression such as
 source-expression diagnostic after actor instances are known. This does not
 select expression movement, route-side transforms, storage, route
 mux/storage, ready/backpressure, or payload protocols.
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.97` proves the accepted scalar route is
-source-order independent as well: the `forward_payload` drive may appear
-before the `reader` and `writer` instances and still resolves to the same
-one-bit generated-child actor-to-actor route, generated ATL top handoffs, and
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.97` proves the accepted actor-to-actor
+route is source-order independent as well: the `forward_payload` drive may
+appear before the `reader` and `writer` instances and still resolves to the
+same generated-child actor-to-actor route, generated ATL top handoffs, and
 `actor_network.data_movements[]` report entry.
 `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` widens only the bounded same-source,
 same-sink route cardinality: `isf/atl_two_child_multi_data_pipeline.isf` ships
@@ -4237,8 +4277,14 @@ transaction. The scheduler emits separate drive states and handoffs for
 `payload` and `sideband`, reports both routes through
 `actor_network.data_movements[]`, preserves the same
 `generated_tops[].children[]` public top evidence, and keeps route mux/storage,
-fan-in/fan-out, wider payloads, CDC/reset remapping, ready/backpressure,
+fan-in/fan-out, width adaptation, CDC/reset remapping, ready/backpressure,
 repeated activation, and cross-transaction continuation deferred.
+`ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` widens the payload width only for
+same-width generated-child actor-to-actor routes. The source syntax, drive
+call timing, same-source/same-sink route topology, and generated-top evidence
+stay unchanged; only the route handoff width and public `data_movements[]`
+`kind`/`width_source` values distinguish vector routes from one-bit scalar
+routes.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

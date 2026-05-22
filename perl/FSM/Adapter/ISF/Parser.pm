@@ -122,6 +122,7 @@ sub parse_source($self, $source_text, $source_label) {
     my $result = $self->_build_actor($actor_ast, $source_label);
     $self->_resolve_library_uses($result, $forms, $source_label);
     $self->_resolve_atl_actor_type_metadata($result, $forms, $source_label);
+    $self->_finalize_atl_data_movement_endpoint_widths($result);
     $self->_finalize_actor_domain_annotations($result);
     $self->_finalize_actor_crossings($result);
     fsm_debug("Actor '" . $result->{actor_name} . "' parsed: "
@@ -4618,6 +4619,84 @@ sub _resolve_atl_actor_type_metadata($self, $actor, $forms, $source_label) {
     }
 
     return 1;
+}
+
+sub _finalize_atl_data_movement_endpoint_widths($self, $actor) {
+    my $network = $actor->{actor_network};
+    return 1 unless ref($network) eq 'HASH'
+        && ref($network->{data_movements}) eq 'ARRAY'
+        && @{$network->{data_movements}};
+
+    my $resolutions = $actor->{_atl_actor_type_resolutions};
+    return 1 unless ref($resolutions) eq 'HASH' && %$resolutions;
+
+    for my $movement (@{$network->{data_movements}}) {
+        next unless ($movement->{kind} // '') eq 'scalar_actor_handoff'
+            && ($movement->{source} // '') eq 'external_handoff'
+            && ($movement->{sink} // '') eq 'external_handoff';
+
+        my $source_instance = $movement->{source_instance};
+        my $sink_instance = $movement->{sink_instance};
+        my $source_endpoint = $movement->{source_endpoint};
+        my $sink_endpoint = $movement->{sink_endpoint};
+        next unless defined($source_instance) && !ref($source_instance) && length($source_instance)
+            && defined($sink_instance) && !ref($sink_instance) && length($sink_instance)
+            && defined($source_endpoint) && !ref($source_endpoint) && length($source_endpoint)
+            && defined($sink_endpoint) && !ref($sink_endpoint) && length($sink_endpoint);
+
+        my $source_resolution = $resolutions->{$source_instance};
+        my $sink_resolution = $resolutions->{$sink_instance};
+        next unless ref($source_resolution) eq 'HASH' && ref($sink_resolution) eq 'HASH';
+
+        my $source_port = _atl_actor_type_resolution_port($source_resolution, 'output', $source_endpoint);
+        my $sink_port = _atl_actor_type_resolution_port($sink_resolution, 'input', $sink_endpoint);
+        next unless ref($source_port) eq 'HASH' && ref($sink_port) eq 'HASH';
+
+        my $source_width = $source_port->{width} // 1;
+        my $sink_width = $sink_port->{width} // 1;
+        confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data movement '$movement->{drive}' source endpoint '$source_instance.$source_endpoint' width $source_width does not match sink endpoint '$sink_instance.$sink_endpoint' width $sink_width; width adaptation remains deferred\n"
+            unless $source_width == $sink_width;
+
+        $movement->{width} = $source_width;
+        if ($source_width > 1) {
+            $movement->{kind} = 'vector_actor_handoff';
+            $movement->{width_source} = 'resolved_child_endpoint_exact_width';
+        } else {
+            $movement->{kind} = 'scalar_actor_handoff';
+            $movement->{width_source} = 'scalar_one_bit';
+        }
+    }
+
+    return 1;
+}
+
+sub _atl_actor_type_resolution_port {
+    my ($resolution, $direction, $port_name) = @_;
+    return undef unless ref($resolution) eq 'HASH'
+        && defined($direction)
+        && !ref($direction)
+        && defined($port_name)
+        && !ref($port_name);
+
+    my $actor = $resolution->{actor};
+    return undef unless ref($actor) eq 'HASH';
+
+    my $ports = $direction eq 'input'
+        ? (($actor->{interface} || {})->{inputs} || [])
+        : $direction eq 'output'
+            ? (($actor->{interface} || {})->{outputs} || [])
+            : undef;
+    return undef unless ref($ports) eq 'ARRAY';
+
+    for my $port (@$ports) {
+        next unless ref($port) eq 'HASH'
+            && defined($port->{name})
+            && !ref($port->{name})
+            && $port->{name} eq $port_name;
+        return $port;
+    }
+
+    return undef;
 }
 
 sub _same_source_libraries($self, $forms, $source_label) {

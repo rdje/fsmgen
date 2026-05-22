@@ -1,11 +1,22 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14` / `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2`.
-  The next implementation frontier is bounded generated-child actor-to-actor
-  ATL exact-width vector routes. The selection leaf
-  `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` is complete and no compiler behavior
-  changed yet.
+- Active lane: `none`.
+  `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` is complete; the next PNT iteration
+  should select a fresh roadmap-aligned task tree before any further code
+  changes.
+- Recent R14 ATL actor-route vector-width completion:
+  `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` shipped bounded generated-child
+  actor-to-actor exact-width vector routes. FSMGen now resolves source child
+  output and sink child input endpoint widths after actor type resolution;
+  matching positive widths lower through parent handoff ports, generated top
+  links, child `+interface` roles, HDL vector links, and
+  `actor_network.data_movements[]` as `vector_actor_handoff` with
+  `width_source: "resolved_child_endpoint_exact_width"`. Width mismatches fail
+  closed before scheduled `.fsm` emission. Width adaptation, top-level pin
+  vector routes, route storage, route muxing, fan-in/fan-out, CDC/reset
+  remapping, ready/backpressure, repeated activation, payload protocols, and
+  cross-transaction continuation remain deferred.
 - Recent R14 ATL actor-route vector-width selection:
   `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` activated the next bounded ATL feature
   tree. The selected implementation will keep the existing `(sink source)`
@@ -4992,15 +5003,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree:
-  [docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md](docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md).
-- Current frontier: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2`.
-- Selection status: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` selected the bounded
-  generated-child actor-to-actor ATL exact-width vector-route slice before code
-  changes. The implementation frontier may now widen only same-width resolved
-  child output-to-input routes and must keep width adaptation, top-level pin
-  vector routes, storage, muxing, fan-in/fan-out, ready/backpressure, CDC, and
-  cross-transaction continuation deferred.
+- Active task tree: `none`.
+- Current frontier: `next PNT selection required`.
+- Completion status: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` shipped the bounded
+  generated-child actor-to-actor ATL exact-width vector-route slice. The next
+  task must be attached to a new or existing task tree before code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8612,14 +8619,9 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Implement the active
-  [docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md](docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md)
-  frontier next: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` owns the bounded
-  generated-child actor-to-actor ATL exact-width vector-route widening. Keep
-  width adaptation, top-level pin vector routes, storage, muxing,
-  fan-in/fan-out, ready/backpressure, CDC/reset remapping, repeated
-  activation, and cross-transaction continuation deferred. Keep
-  `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
+- Select the next roadmap-aligned task tree before further implementation.
+  `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH` is closed; keep `ISF-PUBLIC-CONTRACT`
+  cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.
