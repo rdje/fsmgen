@@ -2,8 +2,23 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: `ISF-ATL-PIN-MIXED-ROUTE-SETS`; current frontier:
-  `ISF-ATL-PIN-MIXED-ROUTE-SETS.3`.
+  Active task tree: none; next PNT selection pending after
+  `ISF-ATL-PIN-MIXED-ROUTE-SETS` closed.
+- Recent R14 ATL pin-egress mixed route-set completion:
+  `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` shipped the bounded same-child
+  generated-child resolved-child output to top-level output-pin mixed
+  scalar/vector route-set subset and closed the task tree. FSMGen now accepts
+  adjacent post-event drive calls such as `(pins.result worker.payload)` and
+  `(pins.valid worker.valid)` when every route sources the same resolved
+  child, uses unique child output endpoints and top-level output pins, scalar
+  routes are one bit, and vector routes have exact matching child-output/top
+  output widths. The parent handoff ports, child `+interface` roles,
+  generated-top links, HDL links, and `actor_network.data_movements[]` entries
+  preserve each route's local `kind`, `width`, and `width_source`. Vector width
+  mismatches fail closed before scheduled `.fsm` emission. Width adaptation,
+  route storage, route muxing, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, repeated activation, payload protocols, and
+  cross-transaction continuation remain deferred.
 - Recent R14 ATL pin-ingress mixed route-set completion:
   `ISF-ATL-PIN-MIXED-ROUTE-SETS.2` shipped the bounded same-child
   generated-child top-level input-pin to resolved-child input mixed
@@ -15,9 +30,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   input widths. The parent handoff ports, child `+interface` roles,
   generated-top links, HDL links, and `actor_network.data_movements[]` entries
   preserve each route's local `kind`, `width`, and `width_source`. Vector width
-  mismatches fail closed before scheduled `.fsm` emission. The active frontier
-  is now the inverse pin-egress mixed route set. Width adaptation, route
-  storage, route muxing, fan-in/fan-out, CDC/reset remapping,
+  mismatches fail closed before scheduled `.fsm` emission. Width adaptation,
+  route storage, route muxing, fan-in/fan-out, CDC/reset remapping,
   ready/backpressure, repeated activation, payload protocols, and
   cross-transaction continuation remain deferred.
 - Recent R14 ATL pin mixed route-set selection:
@@ -5105,14 +5119,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-ATL-PIN-MIXED-ROUTE-SETS`.
-- Current frontier: `ISF-ATL-PIN-MIXED-ROUTE-SETS.2`.
-- Completion status: `ISF-ATL-PIN-MIXED-ROUTE-SETS.1` selected mixed
-  scalar/vector generated-child top-level pin route sets. The next
-  implementation leaf widens same-child pin-ingress route sets so scalar and
-  exact-width vector routes may share one route set while preserving
-  route-local `kind`, `width`, and `width_source` metadata. Width adaptation,
-  storage, muxing, payload protocols, ready/backpressure, CDC/reset remapping,
+- Active task tree: none; next PNT selection pending.
+- Current frontier: none after `ISF-ATL-PIN-MIXED-ROUTE-SETS` closed.
+- Completion status: `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` completed the inverse
+  mixed scalar/vector same-child pin-egress route-set leaf and closed the
+  tree. Both bounded same-child mixed pin directions now preserve route-local
+  `kind`, `width`, and `width_source` metadata. Width adaptation, storage,
+  muxing, payload protocols, ready/backpressure, CDC/reset remapping,
   repeated activation, and cross-transaction continuation remain deferred.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
@@ -8725,10 +8738,8 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Continue the active `ISF-ATL-PIN-MIXED-ROUTE-SETS` tree before selecting a
-  different implementation task. `ISF-ATL-PIN-MIXED-ROUTE-SETS.2` is the next
-  frontier and owns mixed scalar/vector same-child top-level input-pin to
-  resolved-child input route sets.
+- Select the next roadmap-aligned task tree before starting more code. The
+  `ISF-ATL-PIN-MIXED-ROUTE-SETS` tree is closed.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL mixed pin-egress routes mirror ingress
+- `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` applies the same route-grouping policy to
+  generated-child pin egress that `.2` applied to pin ingress. A same-child
+  post-event route set may now contain both `scalar_actor_to_pin_handoff` and
+  `vector_actor_to_pin_handoff` routes when it keeps one resolved child, one
+  parent transaction, unique child outputs/top-level output pins, and adjacent
+  drive calls after the child event wait.
+- The selector widens only the accepted route-kind grouping. Vector routes
+  still need exact child-output/top-output width equality, scalar routes remain
+  one bit, and every report entry keeps route-local `kind`, `width`, and
+  `width_source` evidence.
+- The lowerer continues to validate route direction instead of assuming a
+  route fabric. No width conversion, storage, muxing, fan-in/fan-out,
+  ready/backpressure, payload protocol, repeated activation, or
+  cross-transaction continuation is inferred.
+
 ## 2026-05-22: ATL mixed pin-ingress routes keep route-local proof
 - `ISF-ATL-PIN-MIXED-ROUTE-SETS.2` deliberately widens grouping, not syntax.
   A generated-child pin-ingress route set may now contain both

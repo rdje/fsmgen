@@ -950,10 +950,42 @@ unique-child-output, unique-top-output, contiguous post-event drive-call rules
 as the scalar pin-egress multi-route subset. A route-local child-output to
 top-output width mismatch fails closed before scheduled `.fsm` emission.
 
-This vector multi-route subset is still not a route fabric. FSMGen does not
-mix scalar and vector routes in one set, infer width adaptation, add storage,
-insert muxing, support fan-in/fan-out, add CDC/reset remapping, or infer
-ready/backpressure or payload protocols for these routes.
+This vector multi-route subset is still not a route fabric. Broader mixed
+scalar/vector route sets outside the bounded same-child pin-egress subset
+below, width adaptation, storage, muxing, fan-in/fan-out, CDC/reset remapping,
+ready/backpressure, and payload protocols remain deferred.
+
+The mixed scalar/vector form of that same one-child pin-egress path is shipped
+as `isf/atl_resolved_child_pin_egress_mixed_pipeline.isf`.
+
+It keeps the same `(sink source)` movement surface and uses adjacent route
+drive calls after the child event wait:
+
+```lisp
+(drive publish_result
+  (pins.result worker.payload))
+
+(drive publish_valid
+  (pins.valid worker.valid))
+```
+
+The fixture proves one exact-width vector route and one scalar route in the
+same route set. Child `payload` and top `result` are 8 bits. Child `valid` and
+top `valid` are one-bit scalar pins. Lowering emits two post-event drive-call
+states, two generated child-to-parent handoff inputs, child `+interface` roles
+for both outputs, and generated-top wiring at each route's own width.
+
+Schedule JSON reports the result route as `vector_actor_to_pin_handoff` with
+`width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"` and
+the valid route as `scalar_actor_to_pin_handoff` with
+`width_source: "top_level_output_pin_scalar_one_bit"`.
+
+This mixed subset is still not a route fabric. All accepted routes must source
+the same resolved child, live in the same parent transaction, use unique child
+output endpoints and top-level output pins, and be activated by adjacent
+argument-free drive calls after the child event wait. Width adaptation,
+route mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure,
+and payload protocols remain deferred.
 
 The bounded multi-route extension of that one-child pin-egress path is shipped
 as `isf/atl_resolved_child_pin_egress_multi_pipeline.isf`.

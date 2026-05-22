@@ -957,9 +957,28 @@ The subset requires one resolved child, one parent transaction, one vector
 call per route, unique child output endpoints, unique top-level output pins,
 the child trigger before the event wait, and a contiguous drive-call segment
 after the event wait. Mismatched route-local widths fail closed before
-scheduled `.fsm` emission. Mixed scalar/vector pin-egress route sets, width
-adaptation, route storage, muxing, fan-in/fan-out, ready/backpressure, and
-payload protocols remain deferred.
+scheduled `.fsm` emission. Broader mixed scalar/vector route sets outside the
+bounded same-child pin-egress subset described next, width adaptation, route
+storage, muxing, fan-in/fan-out, ready/backpressure, and payload protocols
+remain deferred.
+
+The resolved-child mixed scalar/vector pin-egress route-set fixture is shipped
+as
+[isf/atl_resolved_child_pin_egress_mixed_pipeline.isf](../isf/atl_resolved_child_pin_egress_mixed_pipeline.isf).
+It keeps the same one-child generated-top shape and routes one exact-width
+vector resolved child output plus one scalar resolved child output into
+matching top-level output pins. The fixture uses
+`(pins.result worker.payload)` at width 8 and `(pins.valid worker.valid)` at
+width 1. Both drive calls must stay adjacent after the child event wait in the
+same parent transaction. Schedule JSON reports each route independently in
+`actor_network.data_movements[]`: the result route uses
+`kind: "vector_actor_to_pin_handoff"` and
+`width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"`,
+while the valid route uses `kind: "scalar_actor_to_pin_handoff"` and
+`width_source: "top_level_output_pin_scalar_one_bit"`. Mismatched vector route
+widths still fail closed before scheduled `.fsm` emission. The subset does not
+add width adaptation, route storage, muxing, fan-in/fan-out, ready/backpressure,
+or payload protocols.
 
 The bounded multi-route extension of that one-child pin-egress shape is shipped
 as
@@ -3480,6 +3499,12 @@ same direction to a bounded same-child vector route set. It preserves
 route-local widths for `(pins.result worker.payload)` and
 `(pins.status worker.status)` and reports each route as
 `vector_actor_to_pin_handoff` with the same width source.
+The shipped resolved-child mixed pin-egress fixture
+`isf/atl_resolved_child_pin_egress_mixed_pipeline.isf` uses the same
+same-child generated-top shape with one exact-width vector route
+`(pins.result worker.payload)` and one scalar route
+`(pins.valid worker.valid)`. Each route keeps its own
+`actor_network.data_movements[]` entry, kind, width, and width source.
 The shipped two-child data fixture `isf/atl_two_child_data_pipeline.isf` adds
 one one-bit generated-child actor-to-actor route `(writer.payload
 reader.payload)` through a generated top with resolved `reader` and `writer`
@@ -3595,9 +3620,13 @@ handoff, and report-only group metadata subsets implemented so far:
   `source => external_handoff`, and `sink => top_level_pin`. The selected
   same-child vector multi-route pin-egress subset accepts multiple such route
   entries when every route has unique child outputs/top-level pins, adjacent
-  post-event drive calls, and exact route-local widths. Width adaptation,
-  mixed scalar/vector pin-egress route sets, and unresolved external vector
-  pin routing remain deferred.
+  post-event drive calls, and exact route-local widths. The selected
+  same-child mixed scalar/vector pin-egress subset accepts a route set that
+  combines scalar one-bit entries and exact-width vector entries when every
+  route shares one resolved child and parent transaction, uses unique
+  child-output/top-output endpoints, and keeps adjacent post-event drive
+  calls. Width adaptation and unresolved external vector pin routing remain
+  deferred.
 - Future blocking orchestration uses `(do actor.transaction)`, future
   nonblocking orchestration uses `(spawn actor.transaction as NAME)`, and
   future rule-level orchestration uses `(trigger actor.transaction)`.
@@ -4102,6 +4131,7 @@ Representative shipped fixtures:
 - [isf/atl_resolved_child_pin_egress_pipeline.isf](../isf/atl_resolved_child_pin_egress_pipeline.isf)
 - [isf/atl_resolved_child_pin_egress_vector_pipeline.isf](../isf/atl_resolved_child_pin_egress_vector_pipeline.isf)
 - [isf/atl_resolved_child_pin_egress_vector_multi_pipeline.isf](../isf/atl_resolved_child_pin_egress_vector_multi_pipeline.isf)
+- [isf/atl_resolved_child_pin_egress_mixed_pipeline.isf](../isf/atl_resolved_child_pin_egress_mixed_pipeline.isf)
 - [isf/atl_two_child_pipeline.isf](../isf/atl_two_child_pipeline.isf)
 - [isf/atl_two_child_data_pipeline.isf](../isf/atl_two_child_data_pipeline.isf)
 - [isf/atl_two_child_vector_data_pipeline.isf](../isf/atl_two_child_vector_data_pipeline.isf)
@@ -4315,9 +4345,9 @@ parent `worker_payload`/`worker_valid` to child `payload`/`valid`, strict
 outdir materialization, plain plus strict HDL generation, and fail-closed
 route-local top-pin/child-input width mismatch coverage for the vector route.
 It stays inside the shipped one-child same-child mixed pin-ingress route-set
-subset and does not claim pin-egress mixed route sets, width adaptation, route
-mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload
-protocols, recursive actor networks, or permanent actor grouping.
+subset and does not claim broader mixed route fabrics, width adaptation,
+route mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure,
+payload protocols, recursive actor networks, or permanent actor grouping.
 The [isf/atl_resolved_child_pin_ingress_multi_pipeline.isf](../isf/atl_resolved_child_pin_ingress_multi_pipeline.isf)
 fixture now has file-backed ATL generated-top pin-ingress multi-route coverage
 for one resolved child, two top-level scalar input pins `payload` and
@@ -4372,8 +4402,25 @@ internal generated-top wiring from child `payload`/`status` to parent
 `worker_payload`/`worker_status`, strict outdir materialization, plain plus
 strict HDL generation, and route-local width mismatch coverage. It stays
 inside the shipped one-child same-child exact-width vector pin-egress route-set
-subset and does not claim mixed scalar/vector pin-egress route sets, width
-adaptation, packing, truncation, extension, slicing, route mux/storage,
+subset and does not claim width adaptation, packing, truncation, extension,
+slicing, route mux/storage, fan-in/fan-out, CDC/reset remapping,
+ready/backpressure, payload protocols, recursive actor networks, or permanent
+actor grouping.
+The [isf/atl_resolved_child_pin_egress_mixed_pipeline.isf](../isf/atl_resolved_child_pin_egress_mixed_pipeline.isf)
+fixture now has file-backed ATL generated-top mixed scalar/vector pin-egress
+route-set coverage for one resolved child, top-level output `result` declared
+at width 8, scalar top-level output `valid`, matching child outputs,
+drive-body routes `(pins.result worker.payload)` and
+`(pins.valid worker.valid)`, adjacent transaction drive calls after the child
+event wait, one trigger handoff, one event wait, parent/child/top `.fsm`
+artifacts, strict schedule JSON parity, `vector_actor_to_pin_handoff` plus
+`scalar_actor_to_pin_handoff` report entries, generated child `+interface`
+metadata for both selected child outputs, internal generated-top wiring from
+child `payload`/`valid` to parent `worker_payload`/`worker_valid`, strict
+outdir materialization, plain plus strict HDL generation, and fail-closed
+route-local child-output/top-output width mismatch coverage for the vector
+route. It stays inside the shipped one-child same-child mixed pin-egress
+route-set subset and does not claim width adaptation, route mux/storage,
 fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
 recursive actor networks, or permanent actor grouping.
 The [isf/atl_resolved_child_pin_egress_multi_pipeline.isf](../isf/atl_resolved_child_pin_egress_multi_pipeline.isf)

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ATL-PIN-MIXED-ROUTE-SETS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -60,7 +60,7 @@ and each route keeps its own scalar or exact-width evidence in
 ## Task Tree
 
 - ID: `ISF-ATL-PIN-MIXED-ROUTE-SETS`
-  Status: `active`
+  Status: `done`
   Goal: `ship mixed scalar/vector generated-child ATL top-level pin route sets`
   Children: `ISF-ATL-PIN-MIXED-ROUTE-SETS.1`,
   `ISF-ATL-PIN-MIXED-ROUTE-SETS.2`,
@@ -81,18 +81,18 @@ and each route keeps its own scalar or exact-width evidence in
   Commit: `this commit: ISF-ATL-PIN-MIXED-ROUTE-SETS.2: ship ATL pin-ingress mixed route sets`
 
 - ID: `ISF-ATL-PIN-MIXED-ROUTE-SETS.3`
-  Status: `pending`
+  Status: `done`
   Goal: `implement mixed scalar/vector generated-child pin-egress route sets`
   Acceptance: `same-child resolved-child output to top-level output route sets may combine scalar and exact-width vector routes while preserving route-local public metadata and generated-top wiring`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `mdbook build docs/book`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1328-isf-atl-trigger-wait-fixture-coverage.t t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `./bin/ci-regression isf --no-book`; `git diff --check`
+  Commit: `this commit: ISF-ATL-PIN-MIXED-ROUTE-SETS.3: ship ATL pin-egress mixed route sets`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `ISF-ATL-PIN-MIXED-ROUTE-SETS.2` | `done` | Pin-ingress shipped first because it is the smaller pre-trigger direction and follows the already-shipped scalar-only and vector-only ingress route sets. |
-| 2 | `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` | `pending` | Pin-egress follows ingress so the inverse post-event direction can reuse the same mixed route-set policy once ingress is proven. |
+| 2 | `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` | `done` | Pin-egress follows ingress so the inverse post-event direction can reuse the same mixed route-set policy once ingress is proven. |
 
 ## Decisions
 
@@ -110,6 +110,11 @@ and each route keeps its own scalar or exact-width evidence in
   scalar one-bit top-level input routes into one resolved child when the
   routes are adjacent before the trigger and each route keeps unique
   pins/endpoints plus route-local metadata.
+- `2026-05-22`: Shipped the pin-egress mixed scalar/vector route-set leaf and
+  closed the tree. A route set may now combine exact-width vector resolved
+  child output routes and scalar one-bit resolved child output routes into
+  top-level output pins when the routes are adjacent after the child event wait
+  and each route keeps unique endpoints plus route-local metadata.
 
 ## Open Questions
 
@@ -125,6 +130,7 @@ and each route keeps its own scalar or exact-width evidence in
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-ATL-PIN-MIXED-ROUTE-SETS.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-22` | `ISF-ATL-PIN-MIXED-ROUTE-SETS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `mdbook build docs/book`; focused fixture, public-doc audit, ATL fixture group, `./bin/ci-regression isf --no-book`; `git diff --check` | `passed` |
+| `2026-05-22` | `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `mdbook build docs/book`; focused fixture, public-doc audit, ATL fixture group, `./bin/ci-regression isf --no-book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -132,6 +138,7 @@ and each route keeps its own scalar or exact-width evidence in
 | --- | --- | --- |
 | `ISF-ATL-PIN-MIXED-ROUTE-SETS.1` | `this commit: ISF-ATL-PIN-MIXED-ROUTE-SETS.1: select ATL pin mixed route sets` | Selection commit. |
 | `ISF-ATL-PIN-MIXED-ROUTE-SETS.2` | `this commit: ISF-ATL-PIN-MIXED-ROUTE-SETS.2: ship ATL pin-ingress mixed route sets` | Pin-ingress mixed scalar/vector route-set implementation. |
+| `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` | `this commit: ISF-ATL-PIN-MIXED-ROUTE-SETS.3: ship ATL pin-egress mixed route sets` | Pin-egress mixed scalar/vector route-set implementation; tree closed. |
 
 ## Changelog
 
@@ -141,3 +148,6 @@ and each route keeps its own scalar or exact-width evidence in
 - `2026-05-22`: Shipped same-child generated-child pin-ingress mixed
   scalar/vector route sets through
   `isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf`.
+- `2026-05-22`: Shipped same-child generated-child pin-egress mixed
+  scalar/vector route sets through
+  `isf/atl_resolved_child_pin_egress_mixed_pipeline.isf` and closed the tree.

@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL pin-egress mixed route set shipped
+- Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` and closed the task tree.
+- FSMGen now accepts same-child generated-child resolved-child output to
+  top-level output-pin ATL route sets that combine exact-width vector routes
+  and scalar one-bit routes, as long as every route has a unique child output
+  endpoint and top-level output pin and the drive calls stay adjacent after
+  the child event wait.
+- Added `isf/atl_resolved_child_pin_egress_mixed_pipeline.isf` plus focused
+  parent/child/top `.fsm`, strict schedule JSON, strict outdir, plain HDL,
+  strict HDL, and route-local vector width-mismatch fail-closed coverage.
+- Schedule JSON keeps the existing `actor_network.data_movements[]` entry
+  shape and preserves route-local `kind`, `width`, and `width_source` for the
+  mixed vector/scalar routes.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook composition/support/backlog chapters, roadmap
+  status, task-tree docs, and live docs.
+
 ## 2026-05-22: ATL pin-ingress mixed route set shipped
 - Completed `ISF-ATL-PIN-MIXED-ROUTE-SETS.2`.
 - FSMGen now accepts same-child generated-child top-level input-pin to

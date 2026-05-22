@@ -1993,9 +1993,9 @@ FSMGen still emits no generated ATL route mux, data-route storage,
 generated-child data wiring beyond the selected one-child scalar and
 exact-width vector pin-ingress routes, selected one-child scalar and
 exact-width vector pin-egress routes, selected same-child mixed scalar/vector
-pin-ingress route set, and selected same-source/same-sink scalar or
-exact-width vector two-child actor-to-actor route set, CDC child wiring,
-payload/ready/backpressure binding, or broader HDL event wiring.
+pin-ingress and pin-egress route sets, and selected same-source/same-sink
+scalar or exact-width vector two-child actor-to-actor route set, CDC child
+wiring, payload/ready/backpressure binding, or broader HDL event wiring.
 
 The selected generated-child actor-to-actor data route set is shipped only for
 same-source/same-sink two-child shapes that use qualified trigger/event
@@ -2148,7 +2148,7 @@ private generated-top data-link list is still not a public report family.
 Width mismatch fails before scheduled `.fsm` emission. Downstream producers
 must not rely on width adaptation, packing, truncation, extension, slicing,
 route mux/storage, fan-in/fan-out, ready/backpressure, payload protocols, or
-mixed scalar/vector route-set scheduling.
+mixed scalar/vector route behavior from this one-route vector leaf.
 
 The exact-width vector generated-child pin-egress multi-route leaf is also
 shipped:
@@ -2169,6 +2169,24 @@ Downstream consumers should read each route as a separate
 `width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"`.
 Generated-top discovery remains in `actor_network.generated_tops[]`; private
 generated-top data links remain out of the public report contract.
+
+The mixed scalar/vector pin-egress extension of that same generated top is now
+shipped:
+`isf/atl_resolved_child_pin_egress_mixed_pipeline.isf` wires
+`(pins.result worker.payload)` and `(pins.valid worker.valid)` through one
+resolved child and one parent transaction. `result` is an exact-width vector
+route at width 8; `valid` is a scalar one-bit route.
+
+Downstream producers may emit mixed scalar/vector pin-egress drive bodies in
+the same parent transaction only when all routes source the same resolved
+child, every route uses a unique child output endpoint and top-level output
+pin, vector route widths match exactly, scalar routes are one bit, and drive
+calls are adjacent after the child event wait. Downstream consumers should read
+each route from `actor_network.data_movements[]` with route-local `kind`,
+`width`, and `width_source` values: `vector_actor_to_pin_handoff` plus
+`top_level_output_pin_resolved_child_endpoint_exact_width` for vector routes,
+and `scalar_actor_to_pin_handoff` plus `top_level_output_pin_scalar_one_bit`
+for scalar routes. Width adaptation remains unshipped.
 
 The first two-child generated-top data-free slice is also shipped:
 `isf/atl_two_child_pipeline.isf` emits parent, reader, writer, and generated
@@ -2732,6 +2750,7 @@ isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 isf/atl_resolved_child_pin_egress_pipeline.isf
 isf/atl_resolved_child_pin_egress_vector_pipeline.isf
 isf/atl_resolved_child_pin_egress_vector_multi_pipeline.isf
+isf/atl_resolved_child_pin_egress_mixed_pipeline.isf
 isf/atl_two_child_pipeline.isf
 isf/atl_two_child_data_pipeline.isf
 isf/atl_two_child_vector_data_pipeline.isf
@@ -3033,6 +3052,19 @@ exact-width routes, strict outdir materialization, plain plus strict CLI HDL
 generation, and fail-closed child-output/top-output width mismatch
 diagnostics.
 
+The generated-child mixed scalar/vector pin-egress route-set leaf extends that
+same downstream contract:
+`isf/atl_resolved_child_pin_egress_mixed_pipeline.isf` proves one exact-width
+vector resolved child output and one scalar resolved child output to matching
+top-level output pins through the generated top. The same regression proves
+strict schedule JSON parity, parent/child/top `.fsm` artifacts, one
+`vector_actor_to_pin_handoff` entry, one `scalar_actor_to_pin_handoff` entry,
+route-local widths 8 and 1, generated child output role preservation for both
+routed signals, generated-top wiring for both handoffs, strict outdir
+materialization, plain plus strict CLI HDL generation, and a fail-closed
+route-local child-output/top-output width mismatch diagnostic for the vector
+route.
+
 The generated-child pin-egress multi-route leaf extends that downstream
 contract without adding new source syntax:
 `isf/atl_resolved_child_pin_egress_multi_pipeline.isf` proves multiple one-bit
@@ -3108,6 +3140,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_vector_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_vector_multi_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_mixed_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_data_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_vector_data_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_multi_data_pipeline.isf
@@ -3123,6 +3156,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress-vector isf/atl_resolved_child_pin_egress_vector_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress-vector-multi isf/atl_resolved_child_pin_egress_vector_multi_pipeline.isf
+./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress-mixed isf/atl_resolved_child_pin_egress_mixed_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-data isf/atl_two_child_data_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-vector-data isf/atl_two_child_vector_data_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-multi-data isf/atl_two_child_multi_data_pipeline.isf
