@@ -803,6 +803,13 @@ sub _is_atl_actor_route_handoff_kind {
         && ($kind eq 'scalar_actor_handoff' || $kind eq 'vector_actor_handoff');
 }
 
+sub _is_atl_pin_to_actor_handoff_kind {
+    my ($kind) = @_;
+    return defined($kind)
+        && !ref($kind)
+        && ($kind eq 'scalar_pin_to_actor_handoff' || $kind eq 'vector_pin_to_actor_handoff');
+}
+
 sub _ensure_atl_child_data_source_ports {
     my ($context, $instance, $child_ir, $child_actor, $data_movements) = @_;
     return unless ref($child_ir) eq 'HASH' && ref($child_actor) eq 'HASH';
@@ -873,11 +880,12 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
     my $movement = $movements[0];
     my $width = $movement->{width} || 1;
 
-    if (($movement->{kind} // '') eq 'scalar_pin_to_actor_handoff') {
+    if (_is_atl_pin_to_actor_handoff_kind($movement->{kind} // '')) {
         my (@links, %top_source_ports, %child_sink_ports, %parent_sink_ports);
         for my $route (@movements) {
             my $route_width = $route->{width} || 1;
-            confess "$context can only wire scalar top-level input pin to resolved child input data movement when source is a top-level pin\n"
+            my $port_label = $route_width > 1 ? 'child input port' : 'scalar child input port';
+            confess "$context can only wire top-level input pin to resolved child input data movement when source is a top-level pin\n"
                 unless ($route->{source} // '') eq 'top_level_pin'
                     && ($route->{sink} // '') eq 'external_handoff'
                     && ($route->{source_instance} // '') eq 'pins';
@@ -885,7 +893,7 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
                 unless ($route->{sink_instance} // '') eq $instance;
 
             my $child_port = $route->{sink_endpoint};
-            confess "$context data movement '$route->{drive}' requires a scalar child input port '$child_port' on instance '$instance'\n"
+            confess "$context data movement '$route->{drive}' requires a $port_label '$child_port' on instance '$instance'\n"
                 unless defined($child_port)
                     && !ref($child_port)
                     && exists($child_ports->{$child_port})
@@ -1021,7 +1029,7 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
         return @links;
     }
 
-    confess "$context can only wire scalar top-level input pin to resolved child input, resolved child output to top-level output, or selected generated-child actor-to-actor data movement in the current subset\n";
+    confess "$context can only wire top-level input pin to resolved child input, resolved child output to top-level output, or selected generated-child actor-to-actor data movement in the current subset\n";
 }
 
 sub _non_empty_scalar {

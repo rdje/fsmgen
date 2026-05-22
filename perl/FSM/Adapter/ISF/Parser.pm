@@ -1135,28 +1135,31 @@ sub _accept_selected_atl_actor_to_actor_data_movement {
 
 sub _accept_selected_atl_pin_to_actor_data_movement {
     my ($context, $drive_name, $instances, $sink_instance, $sink_endpoint, $source_pin, $entry, $input_widths, $declared_signals) = @_;
-    confess "Error: $context ATL scalar pin-to-actor data movement requires exactly one direct static actor instance in the current subset\n"
+    confess "Error: $context ATL pin-to-actor data movement requires exactly one direct static actor instance in the current subset\n"
         unless ref($instances) eq 'ARRAY' && @$instances == 1;
-    confess "Error: $context ATL scalar pin-to-actor data movement source must be 'pins.input_pin'\n"
+    confess "Error: $context ATL pin-to-actor data movement source must be 'pins.input_pin'\n"
         unless defined($source_pin) && _is_hdl_identifier($source_pin);
-    confess "Error: $context ATL scalar pin-to-actor data movement source pin 'pins.$source_pin' is not a declared top-level input pin\n"
+    confess "Error: $context ATL pin-to-actor data movement source pin 'pins.$source_pin' is not a declared top-level input pin\n"
         unless ref($input_widths) eq 'HASH' && exists $input_widths->{$source_pin};
-    confess "Error: $context ATL scalar pin-to-actor data movement source pin 'pins.$source_pin' must be one bit in the current subset\n"
-        unless ($input_widths->{$source_pin} || 1) == 1;
+    my $source_width = $input_widths->{$source_pin} || 1;
+    confess "Error: $context ATL pin-to-actor data movement source pin 'pins.$source_pin' must have a positive width\n"
+        unless $source_width > 0;
 
     my $sink_signal = _actor_atl_data_handoff_signal($sink_instance, $sink_endpoint);
-    confess "Error: $context ATL scalar pin-to-actor data movement generated handoff signal '$sink_signal' conflicts with a declared actor signal\n"
+    confess "Error: $context ATL pin-to-actor data movement generated handoff signal '$sink_signal' conflicts with a declared actor signal\n"
         if $declared_signals->{$sink_signal};
-    confess "Error: $context ATL scalar pin-to-actor data movement source pin 'pins.$source_pin' conflicts with drive '$drive_name' request signal '${drive_name}_start'\n"
+    confess "Error: $context ATL pin-to-actor data movement source pin 'pins.$source_pin' conflicts with drive '$drive_name' request signal '${drive_name}_start'\n"
         if $source_pin eq "${drive_name}_start";
-    confess "Error: $context ATL scalar pin-to-actor data movement generated handoff signal '$sink_signal' conflicts with drive '$drive_name' request signal '${drive_name}_start'\n"
+    confess "Error: $context ATL pin-to-actor data movement generated handoff signal '$sink_signal' conflicts with drive '$drive_name' request signal '${drive_name}_start'\n"
         if $sink_signal eq "${drive_name}_start";
 
     $entry->[0] = $sink_signal;
     $entry->[1] = $source_pin;
 
     return {
-        kind            => 'scalar_pin_to_actor_handoff',
+        kind            => $source_width > 1
+            ? 'vector_pin_to_actor_handoff'
+            : 'scalar_pin_to_actor_handoff',
         transaction     => undef,
         context         => undef,
         drive           => $drive_name,
@@ -1166,8 +1169,10 @@ sub _accept_selected_atl_pin_to_actor_data_movement {
         sink_instance   => $sink_instance,
         sink_endpoint   => $sink_endpoint,
         sink_signal     => $sink_signal,
-        width           => 1,
-        width_source    => 'top_level_pin_scalar_one_bit',
+        width           => $source_width,
+        width_source    => $source_width > 1
+            ? 'top_level_input_pin_declared_width_pending_child_endpoint_check'
+            : 'top_level_pin_scalar_one_bit',
         route_lifetime  => 'drive_call_cycle',
         storage         => 'none',
         source          => 'top_level_pin',
@@ -2128,8 +2133,13 @@ sub _selected_atl_generated_top_pin_ingress_shape {
     return 0 unless defined($transaction) && !ref($transaction) && length($transaction)
         && ($wait->{transaction} // '') eq $transaction;
 
+    my $route_kind = $movements[0]{kind} // '';
+    return 0 unless $route_kind eq 'scalar_pin_to_actor_handoff'
+        || $route_kind eq 'vector_pin_to_actor_handoff';
+    return 0 if $route_kind eq 'vector_pin_to_actor_handoff' && @movements != 1;
+
     for my $movement (@movements) {
-        return 0 unless ($movement->{kind} // '') eq 'scalar_pin_to_actor_handoff'
+        return 0 unless ($movement->{kind} // '') eq $route_kind
             && ($movement->{source} // '') eq 'top_level_pin'
             && ($movement->{sink} // '') eq 'external_handoff'
             && ($movement->{source_instance} // '') eq 'pins'
@@ -4628,9 +4638,49 @@ sub _finalize_atl_data_movement_endpoint_widths($self, $actor) {
         && @{$network->{data_movements}};
 
     my $resolutions = $actor->{_atl_actor_type_resolutions};
-    return 1 unless ref($resolutions) eq 'HASH' && %$resolutions;
+    if (!(ref($resolutions) eq 'HASH' && %$resolutions)) {
+        for my $movement (@{$network->{data_movements}}) {
+            next unless ($movement->{kind} // '') eq 'vector_pin_to_actor_handoff';
+            confess "Error: actor '$actor->{actor_name}' ATL generated-child pin-ingress data movement '$movement->{drive}' requires resolved child actor type metadata before vector top-level pin routes can be accepted; unqualified external vector pin routing remains deferred\n";
+        }
+        return 1;
+    }
 
     for my $movement (@{$network->{data_movements}}) {
+        if ((($movement->{kind} // '') eq 'scalar_pin_to_actor_handoff'
+                || ($movement->{kind} // '') eq 'vector_pin_to_actor_handoff')
+            && ($movement->{source} // '') eq 'top_level_pin'
+            && ($movement->{sink} // '') eq 'external_handoff')
+        {
+            my $sink_instance = $movement->{sink_instance};
+            my $sink_endpoint = $movement->{sink_endpoint};
+            my $source_pin = $movement->{source_endpoint};
+            next unless defined($sink_instance) && !ref($sink_instance) && length($sink_instance)
+                && defined($sink_endpoint) && !ref($sink_endpoint) && length($sink_endpoint)
+                && defined($source_pin) && !ref($source_pin) && length($source_pin);
+
+            my $sink_resolution = $resolutions->{$sink_instance};
+            next unless ref($sink_resolution) eq 'HASH';
+
+            my $sink_port = _atl_actor_type_resolution_port($sink_resolution, 'input', $sink_endpoint);
+            next unless ref($sink_port) eq 'HASH';
+
+            my $source_width = $movement->{width} // 1;
+            my $sink_width = $sink_port->{width} // 1;
+            confess "Error: actor '$actor->{actor_name}' ATL generated-child pin-ingress data movement '$movement->{drive}' top-level input pin 'pins.$source_pin' width $source_width does not match sink endpoint '$sink_instance.$sink_endpoint' width $sink_width; width adaptation remains deferred\n"
+                unless $source_width == $sink_width;
+
+            $movement->{width} = $source_width;
+            if ($source_width > 1) {
+                $movement->{kind} = 'vector_pin_to_actor_handoff';
+                $movement->{width_source} = 'top_level_input_pin_resolved_child_endpoint_exact_width';
+            } else {
+                $movement->{kind} = 'scalar_pin_to_actor_handoff';
+                $movement->{width_source} = 'top_level_pin_scalar_one_bit';
+            }
+            next;
+        }
+
         next unless ($movement->{kind} // '') eq 'scalar_actor_handoff'
             && ($movement->{source} // '') eq 'external_handoff'
             && ($movement->{sink} // '') eq 'external_handoff';

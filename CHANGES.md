@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL pin-ingress vector width shipped
+- Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2`.
+- Added exact-width generated-child pin-ingress ATL route lowering. The parser
+  now accepts one top-level input-pin to resolved-child input route when both
+  endpoint widths match, and rejects mismatches before scheduled `.fsm`
+  emission.
+- Added `isf/atl_resolved_child_pin_ingress_vector_pipeline.isf` and focused
+  coverage for parent/child/top `.fsm` artifacts, strict schedule JSON parity,
+  strict outdir materialization, plain and strict HDL generation, generated
+  top vector links, and width-mismatch diagnostics.
+- Schedule JSON keeps the existing `actor_network.data_movements[]` keys and
+  distinguishes vector pin-ingress routes with
+  `kind: "vector_pin_to_actor_handoff"` and
+  `width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
+- Synchronized the public ISF spec, downstream handoff spec, public contract,
+  ATL design proposal, mdBook, roadmap status, and task-tree docs. Width
+  adaptation, vector pin-ingress multi-route sets, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
+  repeated activation, and cross-transaction continuation remain deferred.
+
+## 2026-05-22
 ### R14 — ATL pin-route vector width selected
 - Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1`.
 - Activated a new R14 task tree for bounded generated-child ATL top-level pin

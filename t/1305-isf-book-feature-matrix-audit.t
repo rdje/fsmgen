@@ -124,6 +124,9 @@ my @required_examples = (
     'FIFO library fixture',
     'ATL temporary trigger-batch fixture',
     'same-source/same-sink scalar or exact-width vector generated-child actor-to-actor routes are shipped through that two-child top',
+    'one exact-width vector top-level input-pin to resolved-child input route',
+    'vector_pin_to_actor_handoff',
+    'top_level_input_pin_resolved_child_endpoint_exact_width',
     'route between two resolved children through the generated ATL top',
     'one named drive-call cycle',
     'Generated-child actor-to-actor and pin route support is intentionally',
@@ -433,7 +436,7 @@ my @required_downstream_atl_markers = (
     'source-order independent',
     '((out) 1)',
     'accepted actor-to-actor route is also source-order independent',
-    'selected same-source/same-sink scalar or exact-width vector',
+    'scalar or exact-width vector two-child actor-to-actor route set',
     'broader actor-to-actor generated-child',
 );
 

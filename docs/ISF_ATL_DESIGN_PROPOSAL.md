@@ -143,11 +143,12 @@ deterministic `<parent_actor>__<instance>.fsm` files while keeping the parent
 scheduled `.fsm` unchanged. The first generated ATL top is available when one
 resolved child is paired with one parent trigger handoff and one parent event
 wait. That same one-child top can also carry the shipped scalar pin-ingress
-route, bounded same-child pin-ingress multi-route extension, scalar
-pin-egress data route, and bounded same-child pin-egress multi-route extension
-described below. Interface binding beyond that selected trigger/event pair
-plus the shipped scalar pin route sets, broader data handoff wiring, route
-mux/storage, ready/backpressure, CDC, actor-event fan-in,
+route, one exact-width vector pin-ingress route, bounded same-child scalar
+pin-ingress multi-route extension, scalar pin-egress data route, and bounded
+same-child pin-egress multi-route extension described below. Interface binding
+beyond that selected trigger/event pair plus the shipped scalar/vector pin
+route sets, broader data handoff wiring, route mux/storage,
+ready/backpressure, CDC, actor-event fan-in,
 recursive actor networks, and permanent actor grouping remain separate future
 selections.
 
@@ -178,6 +179,19 @@ generation preserves the child `payload` port. This one-child pin-ingress
 route does not include actor-to-actor generated-child routing, multi-child
 data wiring, route mux/storage, CDC/reset remapping, ready/backpressure, or
 payload protocols.
+
+The exact-width vector version of that pin-ingress step is now shipped through
+`isf/atl_resolved_child_pin_ingress_vector_pipeline.isf`. It uses the same
+drive-body route spelling but requires the top-level input pin and the
+resolved child input endpoint to declare the same positive width. The shipped
+fixture uses width 8 and reports `kind: "vector_pin_to_actor_handoff"` with
+`width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
+The generated top wires public top `payload` into the parent, then wires the
+parent handoff `worker_payload` into child `payload` at that exact width.
+Mismatched widths fail closed before scheduled `.fsm` emission. This vector
+leaf does not claim vector pin-ingress multi-route sets, width adaptation,
+packing, truncation, extension, slicing, route mux/storage, fan-in/fan-out,
+CDC/reset remapping, ready/backpressure, or payload protocols.
 
 The bounded multi-route extension of that same one-child pin-ingress path is
 also shipped through `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf`.
@@ -497,6 +511,19 @@ input `payload` internally in the generated top. This fixture still does not
 claim broader actor-to-actor generated-child routes, route mux/storage,
 CDC/reset remapping, ready/backpressure, payload protocols, multi-child data
 wiring, recursive actor networks, or permanent actor grouping.
+
+The ATL resolved-child exact-width vector pin-ingress generated-top fixture is
+shipped as `isf/atl_resolved_child_pin_ingress_vector_pipeline.isf`. It keeps
+one resolved `worker` child and one trigger/event pair, adds one top-level
+input pin `payload` at width 8, and routes it into child input `payload` at the
+same width. Lowering emits parent, child, and generated top `.fsm` artifacts,
+reports the route through `actor_network.data_movements[]` with
+`vector_pin_to_actor_handoff`, preserves child `payload` as an 8-bit input
+port, and wires the exact-width parent handoff to the child in the generated
+top. This fixture still does not claim vector pin-ingress multi-route sets,
+width adaptation, route mux/storage, fan-in/fan-out, CDC/reset remapping,
+ready/backpressure, payload protocols, recursive actor networks, or permanent
+actor grouping.
 
 The bounded multi-route extension of that same one-child pin-ingress fixture is
 shipped as `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf`. It keeps one
@@ -1068,6 +1095,16 @@ The shipped first pin-movement subset is pin-to-actor:
    `actor_endpoint`; the source is the existing top-level input pin.
 6. The route lifetime is one drive-call cycle, with no storage, mux,
    actor-to-pin output publication, generated children, groups, or CDC.
+
+The generated-child one-child top widens that pin-to-actor movement only for
+one exact-width vector route into a resolved child. The source spelling stays
+`(actor.endpoint pins.input_pin)`, but `pins.input_pin` and the resolved child
+input endpoint must have the same positive width. The report kind is
+`vector_pin_to_actor_handoff`, the `width` is the matched endpoint width, and
+the `width_source` is
+`top_level_input_pin_resolved_child_endpoint_exact_width`. It is not a general
+direct-static-actor pin movement widening and does not ship vector
+pin-ingress multi-route sets.
 
 The shipped inverse pin-movement subset is actor-to-top-level output pin:
 

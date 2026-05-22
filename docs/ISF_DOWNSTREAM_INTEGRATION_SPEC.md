@@ -1990,10 +1990,10 @@ trigger/event subset, reporting them through
 `actor_network.generated_tops[]`.
 
 FSMGen still emits no generated ATL route mux, data-route storage,
-generated-child data wiring beyond the selected one-child scalar pin-ingress
-route set and selected same-source/same-sink scalar or exact-width vector
-two-child actor-to-actor route set, CDC child wiring,
-payload/ready/backpressure binding, or broader HDL event wiring.
+generated-child data wiring beyond the selected one-child scalar and
+exact-width vector pin-ingress routes and selected same-source/same-sink
+scalar or exact-width vector two-child actor-to-actor route set, CDC child
+wiring, payload/ready/backpressure binding, or broader HDL event wiring.
 
 The selected generated-child actor-to-actor data route set is shipped only for
 same-source/same-sink two-child shapes that use qualified trigger/event
@@ -2038,6 +2038,29 @@ exposed.
 The generated child `.fsm` carries generated `+interface` role metadata for
 the selected child input so HDL generation preserves the child `payload`
 port.
+
+The exact-width vector generated-child pin-ingress leaf is also shipped:
+`isf/atl_resolved_child_pin_ingress_vector_pipeline.isf` wires one vector
+`(worker.payload pins.payload)` route from a top-level input pin through the
+parent and generated top into one resolved child input.
+
+Downstream producers may emit that route only when the source is a declared
+top-level input pin, the sink is a resolved child input endpoint, the route is
+the only vector pin-ingress route in the parent transaction, and the two
+endpoint widths are the same positive value.
+
+Downstream consumers should read the public route evidence from
+`actor_network.data_movements[]` with
+`kind: "vector_pin_to_actor_handoff"`, `width` equal to the endpoint width,
+and
+`width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
+Generated-top discovery remains in `actor_network.generated_tops[]`; the
+private generated-top data-link list is still not a public report family.
+
+Width mismatch fails before scheduled `.fsm` emission. Downstream producers
+must not rely on width adaptation, packing, truncation, extension, slicing,
+route mux/storage, fan-in/fan-out, ready/backpressure, payload protocols, or
+vector pin-ingress multi-route scheduling.
 
 The bounded multi-route extension of that same pin-ingress generated top is now
 shipped: `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` wires
@@ -2625,10 +2648,12 @@ isf/atl_trigger_wait_pipeline.isf
 isf/atl_trigger_batch_wait_pipeline.isf
 isf/atl_resolved_child_pipeline.isf
 isf/atl_resolved_child_pin_ingress_pipeline.isf
+isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
 isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 isf/atl_resolved_child_pin_egress_pipeline.isf
 isf/atl_two_child_pipeline.isf
 isf/atl_two_child_data_pipeline.isf
+isf/atl_two_child_vector_data_pipeline.isf
 isf/atl_two_child_multi_data_pipeline.isf
 ```
 
@@ -2838,6 +2863,18 @@ strict schedule JSON parity, parent/child/top `.fsm` artifacts, generated
 child input role preservation, plain and strict CLI HDL generation, and a
 fail-closed missing child input diagnostic for that route.
 
+The generated-child exact-width vector pin-ingress leaf extends that same
+downstream contract: `isf/atl_resolved_child_pin_ingress_vector_pipeline.isf`
+proves one vector top-level input pin to one vector input on the resolved
+child through the generated top.
+
+The same `t/1330-isf-atl-resolved-child-fixture-coverage.t` regression proves
+strict schedule JSON parity, parent/child/top `.fsm` artifacts, one
+`vector_pin_to_actor_handoff` `data_movements[]` entry, generated child input
+role preservation at width 8, generated-top wiring for the exact-width route,
+strict outdir materialization, plain plus strict CLI HDL generation, and a
+fail-closed top-input/child-input width mismatch diagnostic.
+
 The generated-child pin-ingress multi-route leaf extends that same downstream
 contract: `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf` proves
 multiple top-level input pins to multiple inputs on one resolved child through
@@ -2929,18 +2966,22 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_batch_wait_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_data_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_vector_data_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_multi_data_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress isf/atl_resolved_child_pin_ingress_pipeline.isf
+./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-vector isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-multi isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-data isf/atl_two_child_data_pipeline.isf
+./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-vector-data isf/atl_two_child_vector_data_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-multi-data isf/atl_two_child_multi_data_pipeline.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
 ./bin/fsmgen --outdir /tmp/isf-cdc isf/clock_domain_dual_event_crossing.isf

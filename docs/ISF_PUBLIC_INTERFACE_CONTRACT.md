@@ -193,9 +193,10 @@ covered.
 The same ATL fixture now has plain plus strict CLI HDL generation coverage,
 asserting the generated top, parent, child, and selected internal
 trigger/event links in SystemVerilog without widening the report schema.
-The same focused coverage now also covers the shipped scalar pin-ingress route
-and same-child pin-ingress multi-route extension into the resolved child through
-the generated top. Public consumers should read each route from
+The same focused coverage now also covers the shipped scalar pin-ingress route,
+the exact-width vector pin-ingress route, and same-child scalar pin-ingress
+multi-route extension into the resolved child through the generated top. Public
+consumers should read each route from
 `actor_network.data_movements[]`, discover the top from
 `actor_network.generated_tops[]`, and treat the generated-top data-link plumbing
 as private implementation detail.
@@ -670,9 +671,10 @@ resolved child, one parent trigger handoff, and one parent event wait with
 matching parent/child clock and reset policy; its report entry is advertised
 through `schedule_report_actor_network_generated_top_keys` under
 `actor_network.generated_tops[]`. The bounded scalar top-level input-pin to
-resolved-child input route, its same-child multi-route extension, and the
-resolved-child output to top-level output route described below are also shipped
-for that same one-child top. The first
+resolved-child input route, one exact-width vector top-level input-pin to
+resolved-child input route, the same-child scalar pin-ingress multi-route
+extension, and the resolved-child output to top-level output route described
+below are also shipped for that same one-child top. The first
 control-only two-child generated top is shipped for sequential trigger/event
 handoffs with no data movement; its generated-top entry uses `children[]`
 records advertised through
@@ -703,10 +705,14 @@ is shipped: no new report keys were selected, and the proof asserts that plain
 and strict CLI SystemVerilog contains the generated top, scheduled parent,
 resolved child, and selected internal trigger/event links.
 The first generated-child scalar pin-ingress route is shipped for one
-top-level input pin to one resolved-child input through the generated top, and
-the bounded multi-route extension is shipped for multiple scalar top-level input
-pins feeding multiple scalar inputs on that same resolved child through adjacent
-drive-call cycles. Both forms use the existing
+top-level input pin to one resolved-child input through the generated top. One
+exact-width vector pin-ingress route is also shipped when the top-level input
+pin and resolved child input endpoint declare the same positive width; it
+reports `kind: "vector_pin_to_actor_handoff"` and
+`width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
+The bounded multi-route extension is shipped for multiple scalar top-level
+input pins feeding multiple scalar inputs on that same resolved child through
+adjacent drive-call cycles. All forms use the existing
 `actor_network.data_movements[]` route metadata and
 `actor_network.generated_tops[]` top discovery metadata; no new public report
 family or public `data_links` key is exposed. The generated child `.fsm` may
@@ -1780,11 +1786,12 @@ library-qualified child artifact metadata, and the bounded generated ATL top
 families. Schedule reports project it through top-level `actor_network`.
 Resolved instance entries report actor type provenance and child artifact
 names. The generated-top subset wires the selected one-child trigger/event
-forms, the selected one-child pin-ingress route, the same-child pin-ingress
-multi-route extension, the selected one-child pin-egress route, the same-child
-pin-egress multi-route extension, the selected two-child trigger/event
-sequence, and the selected two-child scalar or exact-width vector
-generated-child actor-to-actor route set. No group endpoints,
+forms, the selected one-child scalar pin-ingress route, the selected
+one-child exact-width vector pin-ingress route, the same-child scalar
+pin-ingress multi-route extension, the selected one-child pin-egress route,
+the same-child pin-egress multi-route extension, the selected two-child
+trigger/event sequence, and the selected two-child scalar or exact-width
+vector generated-child actor-to-actor route set. No group endpoints,
 route mux/storage, broader HDL event wiring, or
 broader generated-top data routing is promised by this field.
 The selected broader ATL v0 public direction is direct actor-body syntax plus
@@ -1820,6 +1827,14 @@ The first top-level pin movement public subset is implemented: one
 direct static actor instance, and one top-level transaction drive call. The
 report kind is `scalar_pin_to_actor_handoff`, with
 `source => top_level_pin` and `sink => external_handoff`.
+The generated-child top-level input-pin movement subset also accepts one
+exact-width vector `(actor.endpoint pins.input_pin)` route for a resolved child
+when the top-level input pin and child input endpoint widths match exactly.
+The public route entry reports `kind: "vector_pin_to_actor_handoff"`,
+`width` equal to that endpoint width, and
+`width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`;
+width adaptation and vector pin-ingress multi-route sets remain outside the
+public contract.
 The inverse actor-to-top-level output pin public subset is implemented: one
 `(pins.output_pin actor.endpoint)` scalar pair in one named drive body, one
 direct static actor instance, and one top-level transaction drive call. The

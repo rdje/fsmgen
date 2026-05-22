@@ -1119,8 +1119,8 @@ ISF
     (drive feed_consumer)
     (complete done)))
 ISF
-        qr/source pin 'pins\.in_data' must be one bit/,
-        'pin-to-actor movement rejects wider top-level pins in the first subset',
+        qr/requires resolved child actor type metadata before vector top-level pin routes can be accepted; unqualified external vector pin routing remains deferred/,
+        'pin-to-actor movement rejects unresolved wider top-level pins in the first subset',
     );
 
     parse_fails_like(

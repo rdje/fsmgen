@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL pin-ingress vector width shipped
+- Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2`.
+- FSMGen now accepts one generated-child top-level input-pin to resolved-child
+  input ATL route when both endpoints declare the same positive width.
+- Added `isf/atl_resolved_child_pin_ingress_vector_pipeline.isf` plus focused
+  parent/child/top `.fsm`, strict schedule JSON, strict outdir, plain HDL,
+  strict HDL, and width-mismatch fail-closed coverage.
+- Schedule JSON keeps the existing `actor_network.data_movements[]` entry
+  shape and reports exact-width vector pin-ingress routes as
+  `vector_pin_to_actor_handoff` with
+  `width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
+- The next frontier is `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3`: the inverse
+  resolved-child output to top-level output exact-width vector route.
+- Synchronized the ISF spec, downstream integration spec, public contract, ATL
+  design proposal, mdBook composition/support/backlog chapters, roadmap
+  status, task-tree docs, and live docs. Width adaptation, vector pin-ingress
+  multi-route sets, route mux/storage, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, payload protocols, repeated activation, and
+  cross-transaction continuation remain deferred.
+
 ## 2026-05-22: ATL pin-route vector width selected
 - Completed `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1`.
 - Activated a new R14 task tree for exact-width generated-child top-level

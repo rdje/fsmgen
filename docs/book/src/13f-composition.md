@@ -750,6 +750,33 @@ The child `.fsm` includes generated `+interface` role metadata for the
 selected child input so the HDL backend preserves `payload` as a child module
 port.
 
+The exact-width vector form of that one-child pin-ingress route is shipped as
+`isf/atl_resolved_child_pin_ingress_vector_pipeline.isf`.
+
+It uses the same `(sink source)` movement surface:
+
+```lisp
+(drive feed_worker
+  (worker.payload pins.payload))
+```
+
+The top-level actor declares `payload` as an 8-bit input, and the resolved
+child declares its `payload` input at the same width. Lowering emits the
+parent, child, and top `.fsm` artifacts, keeps parent handoff
+`worker_payload` at width 8, preserves the child `payload` input as an 8-bit
+module port, and wires public top `payload` through the parent into child
+`payload`.
+
+Schedule JSON keeps the existing public route entry shape and reports
+`kind: "vector_pin_to_actor_handoff"`, `width: 8`, and
+`width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"`.
+
+This vector pin-ingress leaf is intentionally exact-width and one-route only.
+If the top-level input width and child input width differ, lowering fails
+before scheduled `.fsm` emission. FSMGen does not infer width adaptation,
+packing, truncation, extension, slicing, route mux/storage,
+fan-in/fan-out, ready/backpressure, or a payload protocol for the route.
+
 The bounded multi-route extension of that same one-child pin-ingress shape is
 also shipped as `isf/atl_resolved_child_pin_ingress_multi_pipeline.isf`.
 
@@ -787,8 +814,9 @@ adjacent argument-free top-level drive calls before the child trigger and event
 wait.
 
 These one-child pin-ingress routes do not include actor-to-actor
-generated-child routing, multi-child data wiring, route mux/storage,
-fan-in/fan-out, CDC/reset remapping, ready/backpressure, or payload protocols.
+generated-child routing, multi-child data wiring, vector pin-ingress
+multi-route sets, width adaptation, route mux/storage, fan-in/fan-out,
+CDC/reset remapping, ready/backpressure, or payload protocols.
 
 The inverse generated-child data route is also shipped for one scalar
 resolved-child output route to one top-level output pin through that

@@ -72,11 +72,11 @@ keeps owning the explicit drive-call timing cycle.
   Commit: `this commit: ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1: select ATL pin-route vector width`
 
 - ID: `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2`
-  Status: `pending`
+  Status: `done`
   Goal: `implement exact-width vector generated-child pin-ingress routes`
   Acceptance: `matching-width top-level input to resolved-child input routes lower through parent/top/HDL artifacts, mismatches fail closed, and public docs describe the shipped boundary`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`
+  Commit: `this commit: ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2: ship ATL pin-ingress vector width`
 
 - ID: `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3`
   Status: `pending`
@@ -89,7 +89,7 @@ keeps owning the explicit drive-call timing cycle.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2` | `pending` | Pin-ingress is the first top-level pin route vector-width widening because it follows the existing one-child ingress route and keeps the transfer before child activation. |
+| 1 | `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2` | `done` | Pin-ingress shipped first because it follows the existing one-child ingress route and keeps the transfer before child activation. |
 | 2 | `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` | `pending` | Pin-egress follows after ingress so the inverse post-event direction can reuse the same exact-width policy once the ingress path is proven. |
 
 ## Decisions
@@ -104,6 +104,11 @@ keeps owning the explicit drive-call timing cycle.
   muxing, fan-in/fan-out, CDC/reset remapping, and mixed route sets out of
   this tree. Those need explicit scheduling, generated-top, and downstream
   contracts before they can be inferred safely.
+- `2026-05-22`: Shipped pin ingress before pin egress. The accepted vector
+  ingress path requires one resolved child, one top-level input pin, one child
+  input endpoint, and exact matching positive widths. Unresolved external
+  vector pin routing remains fail-closed because FSMGen cannot validate the
+  child endpoint width without actor type metadata.
 
 ## Open Questions
 
@@ -118,16 +123,21 @@ keeps owning the explicit drive-call timing cycle.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-22` | `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book` | `passed; broad ISF gate passed with Files=238, Tests=1552` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1` | `this commit: ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1: select ATL pin-route vector width` | Selection committed. |
-| `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2` | `pending` | `pending` |
+| `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2` | `this commit: ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2: ship ATL pin-ingress vector width` | Exact-width generated-child pin-ingress vector route committed. |
 | `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` | `pending` | `pending` |
 
 ## Changelog
 
 - `2026-05-22`: Created active R14 task tree and selected the bounded
   generated-child top-level pin route vector-width implementation sequence.
+- `2026-05-22`: Shipped `.2`: exact-width vector top-level input-pin to
+  resolved-child input routes now lower through parent/top/HDL artifacts and
+  report as `vector_pin_to_actor_handoff`; mismatched widths and unresolved
+  external vector pin routing fail closed.
