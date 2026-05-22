@@ -2,9 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-- Active `R12` task tree just closed. The next PNT step should select the next
-  roadmap-aligned maintained regression-corpus widening slice before any new
-  source/test/config changes.
+- Active `R12` task tree:
+  `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING`. Current frontier:
+  `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2`.
+- Recent R12 composition parser-token corpus-widening selection:
+  `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.1` activated a task tree to
+  promote the already-focused composition parser token/top-symbol diagnostics
+  into maintained expected-failure corpus coverage. No compiler behavior
+  changed.
 - Recent R12 composition endpoint-shape corpus-widening completion:
   `R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.2` added named
   expected-failure corpus entries for shared system-port declared same-name

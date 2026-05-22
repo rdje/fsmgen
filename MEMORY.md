@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 composition parser-token corpus widening selected
+- Completed `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused composition parser
+  token and top-symbol diagnostics into maintained expected-failure corpus
+  coverage.
+- The next frontier is `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.2`: add
+  bounded fixtures and catalog entries for malformed `?ports`, malformed
+  `?wiring`, malformed top `+constants`, and non-literal top `+enums`
+  failures, with synchronized docs and corpus gates.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 composition endpoint-shape corpus widening completed
 - Completed `R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.2` and closed the
   task tree.

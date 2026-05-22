@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition parser-token coverage stays diagnostic-only
+- `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.1` selects
+  support-accounting promotion for composition parser token/top-symbol
+  diagnostics whose existing focused test already locks pipeline and CLI
+  behavior.
+- The implementation should preserve the current fail-closed parser boundary
+  and only add maintained expected-failure corpus assets.
+
 ## 2026-05-22: Composition endpoint-shape failures are support-accounting failures
 - `R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.2` preserves the existing
   endpoint-shape diagnostics and promotes two focused failures into maintained
