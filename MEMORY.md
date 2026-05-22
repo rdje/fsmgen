@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL multi-route data movement shipped
+- Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` and closed the task tree.
+- FSMGen now accepts bounded multiple one-bit generated-child actor-to-actor
+  routes when every route shares the same resolved source child, resolved sink
+  child, parent transaction, and contiguous route segment between the source
+  event wait and sink trigger.
+- Added `isf/atl_two_child_multi_data_pipeline.isf` plus focused report,
+  generated-top, strict outdir, plain HDL, and strict HDL coverage.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook composition/support/backlog chapters, and live task-tree docs. Route
+  mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure,
+  payload protocols, repeated activation, and cross-transaction continuation
+  remain deferred.
+
 ## 2026-05-22: ATL multi-route data movement selected
 - Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1`.
 - Activated a new R14 task tree for the next bounded ATL data-route widening:

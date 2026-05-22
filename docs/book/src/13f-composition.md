@@ -809,16 +809,52 @@ handoff output, drives `writer_payload` from `reader_payload` only for the
 `reader.payload` to parent `reader_payload` plus parent `writer_payload` to
 `writer.payload`. Schedule JSON records the route in
 `actor_network.data_movements[]` and the generated top in
-`actor_network.generated_tops[]` with `children[]`. Multi-route data wiring,
-fan-in/fan-out, route mux/storage, CDC/reset remapping, ready/backpressure,
-payload protocols, repeated triggers, trigger batches, groups, recursive
-actor networks, and permanent actor grouping remain unavailable.
+`actor_network.generated_tops[]` with `children[]`. Fan-in/fan-out, broader
+route data wiring, route mux/storage, CDC/reset remapping, ready/backpressure,
+payload protocols, repeated triggers, trigger batches, groups, recursive actor
+networks, and permanent actor grouping remain unavailable.
 
-The shipped hardening around this one-route surface locks the nearby
-fail-closed rules: the source endpoint must be a scalar output on the source
-child, the sink endpoint must be a scalar input on the sink child, and only
-one route drive body, one endpoint pair, and one top-level drive call may
-participate.
+The bounded multi-route extension of that same shape is now shipped as
+`isf/atl_two_child_multi_data_pipeline.isf`.
+
+It still uses the same `(sink source)` drive-body movement surface. The parent
+has two route drives:
+
+```lisp
+(drive forward_payload
+  (writer.payload reader.payload))
+
+(drive forward_sideband
+  (writer.sideband reader.sideband))
+```
+
+The parent transaction triggers `reader.capture`, waits on `reader.done`, calls
+both route drives in adjacent transaction-body clauses, triggers `writer.emit`,
+waits on `writer.done`, and completes.
+
+Lowering emits two drive-call states, two generated drive request signals, two
+reader-to-parent handoff inputs (`reader_payload`, `reader_sideband`), and two
+parent-to-writer handoff outputs (`writer_payload`, `writer_sideband`). The
+generated top wires `reader.payload` and `reader.sideband` into the parent
+handoffs, and wires the parent handoffs to `writer.payload` and
+`writer.sideband`.
+
+Schedule JSON reports each scalar path as its own
+`actor_network.data_movements[]` entry with `kind: "scalar_actor_handoff"`.
+The generated-top discovery still uses `actor_network.generated_tops[]` with
+`children[]`; the internal generated-top data-link list remains private.
+
+This extension is not general muxing. All accepted routes must share the same
+source child, the same sink child, the same parent transaction, one scalar
+endpoint pair per drive body, and one top-level drive call per route. The
+route segment must stay contiguous: source trigger, source event wait, all
+route drive calls, sink trigger, and sink event wait.
+
+The shipped hardening around this route surface locks the nearby fail-closed
+rules: every source endpoint must be a scalar output on the source child,
+every sink endpoint must be a scalar input on the sink child, and each route
+drive body may contribute exactly one endpoint pair activated by exactly one
+top-level drive call.
 
 The shipped width hardening keeps the route scalar one-bit only. Wider child
 payload endpoints remain fail-closed until a later payload-width protocol
@@ -923,9 +959,10 @@ fan-in/fan-out, or payload behavior.
 
 #### Generated-Child Route Terms
 
-The current generated-child actor-to-actor route is intentionally small. It
-means one scalar child output reaches one scalar child input through fixed
-generated parent handoffs for exactly the named drive-call cycle.
+The current generated-child actor-to-actor route set is intentionally small.
+Each route means one scalar child output reaches one scalar child input through
+fixed generated parent handoffs for exactly that route's named drive-call
+cycle.
 
 This terminology is part of the user-facing contract and is kept in this
 dedicated section so route support, explicit non-support, and diagnostic
@@ -933,15 +970,20 @@ ownership stay reviewable in the book.
 
 ##### Route Lifetime And Value Boundary
 
-The shipped route lifetime is one named drive-call cycle. In
+The shipped route lifetime is one named drive-call cycle per route. In
 `atl_two_child_data_pipeline`, that cycle is the parent transaction's
 `(drive forward_payload)` clause between `await reader.done` and
-`trigger writer.emit`.
+`trigger writer.emit`. In `atl_two_child_multi_data_pipeline`, the payload and
+sideband paths each have their own adjacent drive-call cycle in that same route
+segment.
 
-The shipped data value is exactly one scalar bit. The generated top presents
-the value as `reader.payload` to parent handoff `reader_payload`, then parent
-handoff `writer_payload` to `writer.payload`. FSMGen transfers a one-bit value during the `forward_payload` drive-call
-cycle and does not define a multi-cycle route lifetime.
+The shipped data value for each route is exactly one scalar bit. The generated
+top presents the payload value as `reader.payload` to parent handoff
+`reader_payload`, then parent handoff `writer_payload` to `writer.payload`.
+The multi-route fixture adds the same pattern for `reader.sideband`,
+`reader_sideband`, `writer_sideband`, and `writer.sideband`. FSMGen transfers
+each one-bit value during its named drive-call cycle and does not define a
+multi-cycle route lifetime.
 
 Wider payloads, structured payloads, replayed payloads, or delayed delivery
 remain deferred until a later task tree selects and verifies a wider
@@ -1031,8 +1073,9 @@ with a selector deciding which source is active in a given cycle.
 Route storage would hold route data across cycles before the sink consumes
 it.
 
-The current route has neither. It has one source child, one sink child, one
-named drive call, no route-local storage, and no route-local selector.
+The current route set has neither. It has one source child, one sink child,
+one named drive call per scalar route, no route-local storage, and no
+route-local selector.
 
 ##### Fan-In And Fan-Out
 
@@ -1042,10 +1085,11 @@ generated handoff or child endpoint.
 Fan-out would let one trigger, event, or data source drive multiple generated
 handoffs or child endpoints.
 
-The current route has one source child, one sink child, one trigger and event
-per child, and one data movement. Multi-source, multi-sink, multi-event, and
-multi-trigger route structures remain fail-closed or deferred according to
-the surrounding diagnostics.
+The current route set has one source child, one sink child, one trigger and
+event per child, and one or more scalar data movements only when those data
+movements share the same source/sink child pair and contiguous route segment.
+Multi-source, multi-sink, multi-event, and multi-trigger route structures
+remain fail-closed or deferred according to the surrounding diagnostics.
 
 ##### Ready/Backpressure
 

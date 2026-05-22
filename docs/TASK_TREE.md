@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT` | `active` | `R14` | `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` | [docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md](docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md](docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md) |
 | `ROADMAP-ACTIVE-LANE-TRUTH-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md](docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md) |
 | `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.md](docs/tasks/R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.md) |
 | `R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.md](docs/tasks/R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.md) |

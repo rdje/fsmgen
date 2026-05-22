@@ -1,10 +1,21 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14` / ISF ATL multi-route data movement.
-- Active task tree:
-  [docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md](docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md)
-  at frontier `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2`.
+- Active lane: none. No task tree is active after
+  `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2`; the next behavior-bearing work must
+  select or create its task tree before code changes.
+- Recent R14 ATL multi-route data movement completion:
+  `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` shipped the bounded generated-child
+  actor-to-actor multi-route subset. FSMGen now accepts several one-bit route
+  drive bodies and drive calls when all routes share the same resolved source
+  child, resolved sink child, parent transaction, and contiguous source
+  trigger/source event wait, route drive-call(s), sink trigger/sink event wait
+  sequence. The fixture `isf/atl_two_child_multi_data_pipeline.isf` proves
+  parent/reader/writer/top `.fsm` artifacts, strict schedule JSON parity,
+  generated-top wiring, child `+interface` preservation, strict outdir
+  materialization, and plain plus strict HDL generation. Route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
+  repeated activations, and cross-transaction continuation remain deferred.
 - Recent R14 ATL multi-route data movement selection:
   `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1` activated the next bounded ATL
   feature tree. The selected implementation will widen generated-child

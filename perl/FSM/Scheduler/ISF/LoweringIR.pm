@@ -165,7 +165,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     };
 
     # Inject entry state if missing (spawn targets need start handshake)
-    if (!grep { $_->{kind} eq 'entry' } @{$ir->{states}}) {
+    if (!(grep { $_->{kind} eq 'entry' } @{$ir->{states}})) {
         unshift @{$ir->{states}}, {
             name        => "${cname}_idle_0",
             kind        => 'entry',
@@ -290,8 +290,8 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
     }
 
     if (@resolutions == 2
-        && @data_movements == 1
-        && ($data_movements[0]{kind} // '') eq 'scalar_actor_handoff'
+        && @data_movements >= 1
+        && !(grep { ($_->{kind} // '') ne 'scalar_actor_handoff' } @data_movements)
         && (@triggers >= 2 || @event_waits >= 2))
     {
         confess "$context two-child data route requires exactly one transaction trigger per source and sink child in the current subset; repeated activation remains deferred\n"
@@ -300,11 +300,16 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
             unless @event_waits == 2;
 
         my $movement = $data_movements[0];
+        for my $route (@data_movements) {
+            confess "$context two-child data route requires all scalar actor-to-actor data movements to share the same source and sink child in the current subset; fan-in and fan-out remain deferred\n"
+                unless ($route->{source_instance} // '') eq ($movement->{source_instance} // '')
+                    && ($route->{sink_instance} // '') eq ($movement->{sink_instance} // '');
+        }
         my @ordered_instances = ($movement->{source_instance}, $movement->{sink_instance});
         my %resolution_by_instance = map { $_->{instance} => $_ } @resolutions;
         my %seen_instance;
         my @child_specs;
-        my @route_owners = ($movement->{transaction});
+        my @route_owners = map { $_->{transaction} } @data_movements;
         my @children;
 
         for my $instance (@ordered_instances) {
@@ -328,92 +333,91 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
         my %route_owners = map { $_ => 1 }
             grep { defined($_) && !ref($_) && length($_) } @route_owners;
         confess "$context two-child data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to belong to one parent transaction in the current subset; cross-transaction route continuation remains deferred\n"
-            if keys(%route_owners) > 1;
+            unless keys(%route_owners) == 1;
+        my ($route_transaction_name) = keys %route_owners;
+        my ($transaction) = grep { ($_->{name} // '') eq $route_transaction_name }
+            @{$actor->{transactions} || []};
+        confess "$context two-child data route cannot find parent transaction '$route_transaction_name'\n"
+            unless ref($transaction) eq 'HASH' && ref($transaction->{clauses}) eq 'ARRAY';
 
-        my @route_indices = (
-            $child_specs[0][1]{_clause_index},
-            $child_specs[0][2]{_clause_index},
-            $movement->{_drive_clause_index},
-            $child_specs[1][1]{_clause_index},
-            $child_specs[1][2]{_clause_index},
+        my @route_indices = _atl_two_child_data_route_clause_indices(
+            $context,
+            $transaction,
+            \@child_specs,
+            \@data_movements,
         );
-        if (!grep { !defined($_) } @route_indices) {
-            for my $idx (1 .. $#route_indices) {
-                confess "$context two-child data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order\n"
-                    unless $route_indices[$idx - 1] < $route_indices[$idx];
-            }
-            for my $idx (1 .. $#route_indices) {
-                confess "$context two-child data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to be contiguous in the current subset; interleaved parent work remains deferred\n"
-                    unless $route_indices[$idx] == $route_indices[$idx - 1] + 1;
-            }
 
-            my ($transaction) = grep { ($_->{name} // '') eq ($movement->{transaction} // '') }
-                @{$actor->{transactions} || []};
-            if (ref($transaction) eq 'HASH' && ref($transaction->{clauses}) eq 'ARRAY') {
-                my $clauses = $transaction->{clauses};
-                my $first_route_index = $route_indices[0];
-                my $last_route_index = $route_indices[-1];
-                my $start_boundary_count = 0;
-                my $completion_boundary_count = 0;
-                my %parent_input_widths = map { $_->{name} => ($_->{width} // 1) }
-                    @{$actor->{interface}{inputs} || []};
-                my %parent_output_widths = map { $_->{name} => ($_->{width} // 1) }
-                    @{$actor->{interface}{outputs} || []};
-                for my $clause_idx (0 .. $#$clauses) {
-                    next if $clause_idx >= $first_route_index && $clause_idx <= $last_route_index;
-                    my $clause = $clauses->[$clause_idx];
-                    if ($clause_idx < $first_route_index) {
-                        confess "$context two-child data route requires simple '(on PORT)' and '(complete PORT)' boundaries around the route in the current subset; activation-body samples and completion payloads remain deferred\n"
-                            if ref($clause) eq 'ARRAY'
-                                && @$clause
-                                && ($clause->[0] // '') eq 'on'
-                                && !(@$clause == 2
-                                    && defined($clause->[1])
-                                    && !ref($clause->[1])
-                                    && length($clause->[1]));
-                        confess "$context two-child data route requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred\n"
-                            unless ref($clause) eq 'ARRAY'
-                                && @$clause == 2
-                                && ($clause->[0] // '') eq 'on'
-                                && defined($clause->[1])
-                                && !ref($clause->[1])
-                                && length($clause->[1]);
-                        confess "$context two-child data route requires scalar parent interface boundaries '(on INPUT_PIN)' and '(complete OUTPUT_PIN)' in the current subset; interface remapping and boundary expressions remain deferred\n"
-                            unless exists $parent_input_widths{$clause->[1]}
-                                && ($parent_input_widths{$clause->[1]} || 1) == 1;
-                        ++$start_boundary_count;
-                        next;
-                    }
-                    confess "$context two-child data route requires simple '(on PORT)' and '(complete PORT)' boundaries around the route in the current subset; activation-body samples and completion payloads remain deferred\n"
-                        if ref($clause) eq 'ARRAY'
-                            && @$clause
-                            && ($clause->[0] // '') eq 'complete'
-                            && !(@$clause == 2
-                                && defined($clause->[1])
-                                && !ref($clause->[1])
-                                && length($clause->[1]));
-                    confess "$context two-child data route requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred\n"
-                        unless ref($clause) eq 'ARRAY'
-                            && @$clause == 2
-                            && ($clause->[0] // '') eq 'complete'
+        for my $idx (1 .. $#route_indices) {
+            confess "$context two-child data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order\n"
+                unless $route_indices[$idx - 1] < $route_indices[$idx];
+        }
+        for my $idx (1 .. $#route_indices) {
+            confess "$context two-child data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to be contiguous in the current subset; interleaved parent work remains deferred\n"
+                unless $route_indices[$idx] == $route_indices[$idx - 1] + 1;
+        }
+
+        my $clauses = $transaction->{clauses};
+        my $first_route_index = $route_indices[0];
+        my $last_route_index = $route_indices[-1];
+        my $start_boundary_count = 0;
+        my $completion_boundary_count = 0;
+        my %parent_input_widths = map { $_->{name} => ($_->{width} // 1) }
+            @{$actor->{interface}{inputs} || []};
+        my %parent_output_widths = map { $_->{name} => ($_->{width} // 1) }
+            @{$actor->{interface}{outputs} || []};
+        for my $clause_idx (0 .. $#$clauses) {
+            next if $clause_idx >= $first_route_index && $clause_idx <= $last_route_index;
+            my $clause = $clauses->[$clause_idx];
+            if ($clause_idx < $first_route_index) {
+                confess "$context two-child data route requires simple '(on PORT)' and '(complete PORT)' boundaries around the route in the current subset; activation-body samples and completion payloads remain deferred\n"
+                    if ref($clause) eq 'ARRAY'
+                        && @$clause
+                        && ($clause->[0] // '') eq 'on'
+                        && !(@$clause == 2
                             && defined($clause->[1])
                             && !ref($clause->[1])
-                            && length($clause->[1]);
-                    confess "$context two-child data route requires scalar parent interface boundaries '(on INPUT_PIN)' and '(complete OUTPUT_PIN)' in the current subset; interface remapping and boundary expressions remain deferred\n"
-                        unless exists $parent_output_widths{$clause->[1]}
-                            && ($parent_output_widths{$clause->[1]} || 1) == 1;
-                    ++$completion_boundary_count;
-                }
-                confess "$context two-child data route requires exactly one start boundary and exactly one completion boundary around the route in the current subset; activation fan-in and completion fan-out remain deferred\n"
-                    unless $start_boundary_count == 1
-                        && $completion_boundary_count == 1;
+                            && length($clause->[1]));
+                confess "$context two-child data route requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred\n"
+                    unless ref($clause) eq 'ARRAY'
+                        && @$clause == 2
+                        && ($clause->[0] // '') eq 'on'
+                        && defined($clause->[1])
+                        && !ref($clause->[1])
+                        && length($clause->[1]);
+                confess "$context two-child data route requires scalar parent interface boundaries '(on INPUT_PIN)' and '(complete OUTPUT_PIN)' in the current subset; interface remapping and boundary expressions remain deferred\n"
+                    unless exists $parent_input_widths{$clause->[1]}
+                        && ($parent_input_widths{$clause->[1]} || 1) == 1;
+                ++$start_boundary_count;
+                next;
             }
+            confess "$context two-child data route requires simple '(on PORT)' and '(complete PORT)' boundaries around the route in the current subset; activation-body samples and completion payloads remain deferred\n"
+                if ref($clause) eq 'ARRAY'
+                    && @$clause
+                    && ($clause->[0] // '') eq 'complete'
+                    && !(@$clause == 2
+                        && defined($clause->[1])
+                        && !ref($clause->[1])
+                        && length($clause->[1]));
+            confess "$context two-child data route requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred\n"
+                unless ref($clause) eq 'ARRAY'
+                    && @$clause == 2
+                    && ($clause->[0] // '') eq 'complete'
+                    && defined($clause->[1])
+                    && !ref($clause->[1])
+                    && length($clause->[1]);
+            confess "$context two-child data route requires scalar parent interface boundaries '(on INPUT_PIN)' and '(complete OUTPUT_PIN)' in the current subset; interface remapping and boundary expressions remain deferred\n"
+                unless exists $parent_output_widths{$clause->[1]}
+                    && ($parent_output_widths{$clause->[1]} || 1) == 1;
+            ++$completion_boundary_count;
         }
+        confess "$context two-child data route requires exactly one start boundary and exactly one completion boundary around the route in the current subset; activation fan-in and completion fan-out remain deferred\n"
+            unless $start_boundary_count == 1
+                && $completion_boundary_count == 1;
 
         _validate_atl_two_child_route_generated_handoffs(
             $context,
             $actor,
-            $movement,
+            \@data_movements,
             \@child_specs,
         );
 
@@ -493,9 +497,89 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
     });
 }
 
-sub _validate_atl_two_child_route_generated_handoffs($context, $actor, $movement, $child_specs) {
+sub _atl_two_child_data_route_clause_indices($context, $transaction, $child_specs, $data_movements) {
+    my @clauses = @{($transaction || {})->{clauses} || []};
+    my (%trigger_indices_by_signal, %wait_indices_by_signal, %drive_indices_by_name);
+
+    for my $clause_idx (0 .. $#clauses) {
+        my $clause = $clauses[$clause_idx];
+        next unless ref($clause) eq 'ARRAY' && @$clause >= 2;
+        my ($head, $name) = @$clause[0, 1];
+        next unless defined($head) && !ref($head)
+            && defined($name) && !ref($name) && length($name);
+
+        if ($head eq 'atl_trigger') {
+            push @{$trigger_indices_by_signal{$name}}, $clause_idx;
+            next;
+        }
+        if ($head eq 'await') {
+            push @{$wait_indices_by_signal{$name}}, $clause_idx;
+            next;
+        }
+        if ($head eq 'drive') {
+            push @{$drive_indices_by_name{$name}}, $clause_idx;
+            next;
+        }
+    }
+
+    my $source_trigger_index = _single_atl_clause_index(
+        $context,
+        'source transaction trigger handoff',
+        $child_specs->[0][1]{signal},
+        \%trigger_indices_by_signal,
+    );
+    my $source_wait_index = _single_atl_clause_index(
+        $context,
+        'source event wait handoff',
+        $child_specs->[0][2]{signal},
+        \%wait_indices_by_signal,
+    );
+    my $sink_trigger_index = _single_atl_clause_index(
+        $context,
+        'sink transaction trigger handoff',
+        $child_specs->[1][1]{signal},
+        \%trigger_indices_by_signal,
+    );
+    my $sink_wait_index = _single_atl_clause_index(
+        $context,
+        'sink event wait handoff',
+        $child_specs->[1][2]{signal},
+        \%wait_indices_by_signal,
+    );
+    my @drive_indices = sort { $a <=> $b }
+        map {
+            _single_atl_clause_index(
+                $context,
+                'data movement drive call',
+                $_->{drive},
+                \%drive_indices_by_name,
+            )
+        } @{$data_movements || []};
+
+    return (
+        $source_trigger_index,
+        $source_wait_index,
+        @drive_indices,
+        $sink_trigger_index,
+        $sink_wait_index,
+    );
+}
+
+sub _single_atl_clause_index($context, $label, $name, $indices_by_name) {
+    confess "$context two-child data route requires $label to reference a scalar transaction-body clause name\n"
+        unless defined($name) && !ref($name) && length($name);
+
+    my $indices = $indices_by_name->{$name} || [];
+    confess "$context two-child data route requires $label '$name' to appear exactly once in the selected parent transaction body\n"
+        unless @$indices == 1;
+
+    return $indices->[0];
+}
+
+sub _validate_atl_two_child_route_generated_handoffs($context, $actor, $movements, $child_specs) {
     my %declared = _atl_parent_declared_signal_origins($actor);
     my %generated;
+    my @movements = ref($movements) eq 'ARRAY' ? @$movements : ();
 
     my @handoffs;
     if (ref($child_specs) eq 'ARRAY' && @$child_specs >= 2) {
@@ -506,7 +590,8 @@ sub _validate_atl_two_child_route_generated_handoffs($context, $actor, $movement
             [ 'sink event handoff',     $child_specs->[1][2]{signal} ];
     }
 
-    if (ref($movement) eq 'HASH') {
+    for my $movement (@movements) {
+        next unless ref($movement) eq 'HASH';
         push @handoffs,
             [ 'source data handoff', $movement->{source_signal} ],
             [ 'sink data handoff',   $movement->{sink_signal} ];
@@ -747,24 +832,29 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
     my @movements = @{$data_movements || []};
     return () unless @movements;
 
+    for my $movement (@movements) {
+        confess "$context data movement must belong to the same parent transaction as the trigger/event handoffs\n"
+            unless ($movement->{transaction} // '') eq ($trigger->{owner_transaction} // '')
+                && ($movement->{transaction} // '') eq ($event_wait->{transaction} // '');
+        confess "$context data movement must be activated from a transaction body drive call in the current subset\n"
+            unless ($movement->{context} // '') eq 'transaction_body'
+                && defined($movement->{drive})
+                && length($movement->{drive});
+        confess "$context data movement must be a drive-call-cycle route without inserted storage\n"
+            unless ($movement->{route_lifetime} // '') eq 'drive_call_cycle'
+                && ($movement->{storage} // '') eq 'none';
+
+        my $width = $movement->{width} || 1;
+        confess "$context data movement '$movement->{drive}' must be scalar width 1 in the current subset\n"
+            unless $width == 1;
+    }
+
+    my @non_actor_movements = grep { ($_->{kind} // '') ne 'scalar_actor_handoff' } @movements;
     confess "$context supports at most one scalar pin-to/from-resolved-child data movement in the current subset\n"
-        unless @movements == 1;
+        if @non_actor_movements && @movements != 1;
 
     my $movement = $movements[0];
-    confess "$context data movement must belong to the same parent transaction as the trigger/event handoffs\n"
-        unless ($movement->{transaction} // '') eq ($trigger->{owner_transaction} // '')
-            && ($movement->{transaction} // '') eq ($event_wait->{transaction} // '');
-    confess "$context data movement must be activated from a transaction body drive call in the current subset\n"
-        unless ($movement->{context} // '') eq 'transaction_body'
-            && defined($movement->{drive})
-            && length($movement->{drive});
-    confess "$context data movement must be a drive-call-cycle route without inserted storage\n"
-        unless ($movement->{route_lifetime} // '') eq 'drive_call_cycle'
-            && ($movement->{storage} // '') eq 'none';
-
     my $width = $movement->{width} || 1;
-    confess "$context data movement '$movement->{drive}' must be scalar width 1 in the current subset\n"
-        unless $width == 1;
 
     if (($movement->{kind} // '') eq 'scalar_pin_to_actor_handoff') {
         confess "$context can only wire scalar top-level input pin to resolved child input data movement when source is a top-level pin\n"
@@ -829,55 +919,63 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
     }
 
     if (($movement->{kind} // '') eq 'scalar_actor_handoff') {
-        confess "$context can only wire scalar generated-child actor-to-actor data movement through parent handoffs\n"
-            unless ($movement->{source} // '') eq 'external_handoff'
-                && ($movement->{sink} // '') eq 'external_handoff';
+        my @links;
+        for my $route (@movements) {
+            my $route_width = $route->{width} || 1;
+            confess "$context can only wire scalar generated-child actor-to-actor data movement through parent handoffs\n"
+                unless ($route->{source} // '') eq 'external_handoff'
+                    && ($route->{sink} // '') eq 'external_handoff';
 
-        if (($movement->{source_instance} // '') eq $instance) {
-            my $child_port = $movement->{source_endpoint};
-            confess "$context data movement '$movement->{drive}' requires a scalar child output port '$child_port' on source instance '$instance'\n"
-                unless defined($child_port)
-                    && !ref($child_port)
-                    && exists($child_ports->{$child_port})
-                    && ($child_ports->{$child_port}{direction} || '') eq 'output'
-                    && ($child_ports->{$child_port}{width} || 1) == $width;
+            if (($route->{source_instance} // '') eq $instance) {
+                my $child_port = $route->{source_endpoint};
+                confess "$context data movement '$route->{drive}' requires a scalar child output port '$child_port' on source instance '$instance'\n"
+                    unless defined($child_port)
+                        && !ref($child_port)
+                        && exists($child_ports->{$child_port})
+                        && ($child_ports->{$child_port}{direction} || '') eq 'output'
+                        && ($child_ports->{$child_port}{width} || 1) == $route_width;
 
-            my $parent_port = $movement->{source_signal};
-            confess "$context data movement '$movement->{drive}' requires a generated parent source handoff signal\n"
-                unless _non_empty_scalar($parent_port);
+                my $parent_port = $route->{source_signal};
+                confess "$context data movement '$route->{drive}' requires a generated parent source handoff signal\n"
+                    unless _non_empty_scalar($parent_port);
 
-            return ({
-                kind               => 'scalar_resolved_child_to_parent_handoff',
-                drive              => $movement->{drive},
-                child_source_port  => $child_port,
-                parent_source_port => $parent_port,
-                width              => $width,
-            });
+                push @links, {
+                    kind               => 'scalar_resolved_child_to_parent_handoff',
+                    drive              => $route->{drive},
+                    child_source_port  => $child_port,
+                    parent_source_port => $parent_port,
+                    width              => $route_width,
+                };
+                next;
+            }
+
+            if (($route->{sink_instance} // '') eq $instance) {
+                my $child_port = $route->{sink_endpoint};
+                confess "$context data movement '$route->{drive}' requires a scalar child input port '$child_port' on sink instance '$instance'\n"
+                    unless defined($child_port)
+                        && !ref($child_port)
+                        && exists($child_ports->{$child_port})
+                        && ($child_ports->{$child_port}{direction} || '') eq 'input'
+                        && ($child_ports->{$child_port}{width} || 1) == $route_width;
+
+                my $parent_port = $route->{sink_signal};
+                confess "$context data movement '$route->{drive}' requires a generated parent sink handoff signal\n"
+                    unless _non_empty_scalar($parent_port);
+
+                push @links, {
+                    kind             => 'scalar_parent_to_resolved_child_handoff',
+                    drive            => $route->{drive},
+                    parent_sink_port => $parent_port,
+                    child_sink_port  => $child_port,
+                    width            => $route_width,
+                };
+                next;
+            }
+
+            confess "$context data movement '$route->{drive}' does not involve child instance '$instance'\n";
         }
 
-        if (($movement->{sink_instance} // '') eq $instance) {
-            my $child_port = $movement->{sink_endpoint};
-            confess "$context data movement '$movement->{drive}' requires a scalar child input port '$child_port' on sink instance '$instance'\n"
-                unless defined($child_port)
-                    && !ref($child_port)
-                    && exists($child_ports->{$child_port})
-                    && ($child_ports->{$child_port}{direction} || '') eq 'input'
-                    && ($child_ports->{$child_port}{width} || 1) == $width;
-
-            my $parent_port = $movement->{sink_signal};
-            confess "$context data movement '$movement->{drive}' requires a generated parent sink handoff signal\n"
-                unless _non_empty_scalar($parent_port);
-
-            return ({
-                kind             => 'scalar_parent_to_resolved_child_handoff',
-                drive            => $movement->{drive},
-                parent_sink_port => $parent_port,
-                child_sink_port  => $child_port,
-                width            => $width,
-            });
-        }
-
-        confess "$context data movement '$movement->{drive}' does not involve child instance '$instance'\n";
+        return @links;
     }
 
     confess "$context can only wire scalar top-level input pin to resolved child input, resolved child output to top-level output, or selected generated-child actor-to-actor data movement in the current subset\n";
@@ -8411,10 +8509,10 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
 
     return 1 if $kind eq 'wait';
     return 1 if $kind eq 'await'
-        && !grep { ($_->{source_kind} // '') =~ /\Ado_/ } @{$target_state->{assignments} || []};
+        && !(grep { ($_->{source_kind} // '') =~ /\Ado_/ } @{$target_state->{assignments} || []});
     return 1 if $kind eq 'terminal'
         && @{$target_state->{assignments} || []}
-        && !grep { ($_->{source_kind} // '') ne 'complete_pulse' } @{$target_state->{assignments} || []};
+        && !(grep { ($_->{source_kind} // '') ne 'complete_pulse' } @{$target_state->{assignments} || []});
     return 1 if $kind eq 'stage'
         && _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(stage_valid latency_increment_request));
     return 1 if $kind eq 'contract'

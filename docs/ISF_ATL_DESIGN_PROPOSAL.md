@@ -193,10 +193,13 @@ The selected generated-child actor-to-actor data-route shape across two
 resolved children is shipped through the two-child generated ATL top. It
 reuses the existing `(sink source)` drive-body movement surface, for example
 `(writer.payload reader.payload)`, and is active only in the named
-drive-call cycle selected by the parent transaction. Broader multi-route
-generated-child data wiring, route mux/storage, fan-in/fan-out, CDC/reset
-remapping, ready/backpressure, payload protocols, recursive actor networks,
-and permanent actor grouping remain deferred.
+drive-call cycle selected by the parent transaction. The bounded multi-route
+extension of that same shape is also shipped when every route shares the same
+source child, sink child, parent transaction, and contiguous route segment, as
+shown by `isf/atl_two_child_multi_data_pipeline.isf`. Broader fan-in/fan-out
+route sets, route mux/storage, CDC/reset remapping, ready/backpressure,
+payload protocols, recursive actor networks, and permanent actor grouping
+remain deferred.
 
 ## Shipped First Actor-Event Wait Subset
 
@@ -521,10 +524,17 @@ generated top wires `reader.payload` to parent `reader_payload` plus parent
 `writer_payload` to `writer.payload`. Schedule JSON keeps route provenance in
 `actor_network.data_movements[]` with `kind: "scalar_actor_handoff"` and
 generated-top discovery in `actor_network.generated_tops[]` with `children[]`.
-Broader multi-route data wiring, fan-in/fan-out, route mux/storage,
-CDC/reset remapping, ready/backpressure, payload protocols, repeated
-triggers, trigger batches, groups, recursive actor networks, and permanent
-actor grouping remain deferred.
+
+The bounded multi-route extension of that same generated top is shipped as
+`isf/atl_two_child_multi_data_pipeline.isf`. It keeps the same source child,
+sink child, parent transaction, and contiguous route segment, then moves
+`payload` and `sideband` through separate named drive bodies and separate
+one-cycle drive-call states. Schedule JSON reports both scalar routes through
+`actor_network.data_movements[]`; generated-top discovery stays in
+`actor_network.generated_tops[]` with `children[]`. Broader fan-in/fan-out
+route sets, route mux/storage, CDC/reset remapping, ready/backpressure,
+payload protocols, repeated triggers, trigger batches, groups, recursive
+actor networks, and permanent actor grouping remain deferred.
 
 The shipped multi-event boundary proof is negative: a transaction that emits
 one temporary trigger batch and then attempts two actor event waits, such as
@@ -1065,9 +1075,10 @@ permanent route, inserted storage, route mux, or broader child-to-child wiring.
 The first positive multi-child step shipped as a control-only generated ATL
 top with two resolved children and sequential trigger/event handoffs. The
 next shipped widening is the first positive child-to-child payload route
-through that generated top. The source shape has two resolved children, one
-drive body pair `(writer.payload reader.payload)`, and one parent transaction
-ordered as:
+through that generated top. The source shape has two resolved children, one or
+more same-source/same-sink scalar drive body pairs such as
+`(writer.payload reader.payload)` and `(writer.sideband reader.sideband)`, and
+one parent transaction ordered as:
 
 ```lisp
 (trigger reader.capture)
@@ -1082,19 +1093,20 @@ handoff input `reader_payload`, wires the parent handoff output
 `writer_payload` into the writer child input `payload`, and keeps the existing
 reader/writer trigger and event links internal. The scheduled parent remains
 the timing owner for the route: it drives `writer_payload` from
-`reader_payload` only for the selected drive-call cycle. This does not select
-route storage, route muxes, ready/backpressure, CDC/reset remapping,
-multi-route fan-in/fan-out, wider payload protocols, recursive actor
-networks, or permanent actor grouping.
+`reader_payload` only for the selected drive-call cycle. The bounded
+multi-route fixture repeats that exact handoff pattern for `sideband` through
+its own adjacent drive-call cycle. This does not select route storage, route
+muxes, ready/backpressure, CDC/reset remapping, route fan-in/fan-out, wider
+payload protocols, recursive actor networks, or permanent actor grouping.
 
-The shipped hardening around that route is deliberately not a wider routing
-feature. It locks the nearby fail-closed boundary for this same generated
-child route: the source endpoint must be a scalar output of the source child,
-the sink endpoint must be a scalar input of the sink child, only one selected
-ATL data-route drive body with one endpoint pair may participate, and only
-one top-level transaction drive call may activate it. The source-side
-diagnostic names the source instance role explicitly before any future
-mux/storage or fan-in/fan-out design.
+The shipped hardening around that route set is deliberately not a wider
+routing feature. It locks the nearby fail-closed boundary for this same
+generated child route set: every source endpoint must be a scalar output of
+the same source child, every sink endpoint must be a scalar input of the same
+sink child, each selected ATL data-route drive body must contain exactly one
+endpoint pair, and each route drive may be activated by exactly one top-level
+transaction drive call. The source-side diagnostic names the source instance
+role explicitly before any future mux/storage or fan-in/fan-out design.
 
 The shipped route-boundary width hardening keeps the same scalar contract and
 targets endpoint width evidence. A source child output or sink child input

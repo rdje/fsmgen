@@ -1034,8 +1034,8 @@ actor-to-actor generated-child routing, multi-child data wiring, route
 mux/storage, CDC/reset remapping, ready/backpressure, or payload protocols.
 
 The selected generated-child actor-to-actor data movement across two resolved
-children is shipped only for the one scalar two-child route that uses
-qualified trigger/event handoffs. The source shape reuses the existing
+children is shipped only for scalar same-source/same-sink two-child routes that
+use qualified trigger/event handoffs. The source shape reuses the existing
 `(sink source)` drive-body pair; malformed or wider routes still fail closed
 before remapping, storage, muxing, fan-in/fan-out, payload, or backpressure
 behavior is inferred.
@@ -1057,15 +1057,24 @@ and one generated top. The parent exposes `reader_payload` and
 the drive-call cycle, and the generated top wires `reader.payload` to the
 parent source handoff plus the parent sink handoff to `writer.payload`.
 
-Multi-route data wiring, fan-in/fan-out, mux/storage, CDC/reset remapping,
+The bounded multi-route extension of that same route shape is now shipped as
+`isf/atl_two_child_multi_data_pipeline.isf`. It keeps the same parent
+transaction and child pair, then routes both `(writer.payload reader.payload)`
+and `(writer.sideband reader.sideband)` with adjacent top-level drive calls
+between `reader.done` and `writer.emit`. Lowering emits separate drive states,
+separate handoff signals, generated child interface roles for both scalar
+paths, and generated-top wiring for both paths.
+
+Fan-in/fan-out data routing, mux/storage, CDC/reset remapping,
 ready/backpressure, payload protocols, repeated triggers, trigger batches,
-groups, recursive actor networks, and permanent actor grouping remain
-backlog.
+groups, recursive actor networks, cross-transaction continuation, and
+permanent actor grouping remain backlog.
 
 The shipped hardening does not widen that support. It locks focused
 fail-closed coverage for missing or wrong-direction child payload ports and
-route-cardinality violations around the shipped one-route fixture before any
-multi-route, mux/storage, fan-in/fan-out, or payload-protocol work is claimed.
+route-cardinality violations around the shipped same-source/same-sink route
+fixtures before any mux/storage, fan-in/fan-out, or payload-protocol work is
+claimed.
 
 The shipped width hardening narrows that payload-protocol backlog further by
 locking wider generated-child route endpoints as fail-closed until explicit
@@ -2386,8 +2395,12 @@ top-level output, using `(pins.result worker.payload)` after the child event
 wait. The follow-on `isf/atl_two_child_data_pipeline.isf` fixture is now
 promoted for one generated-top scalar generated-child actor-to-actor route
 from `reader.payload` to `writer.payload` after the reader event wait and
-before the writer trigger, while broader generated-child data routes remain
-backlog.
+before the writer trigger. The follow-on
+`isf/atl_two_child_multi_data_pipeline.isf` fixture is now promoted for the
+bounded same-source/same-sink two-route case from `reader.payload` to
+`writer.payload` and from `reader.sideband` to `writer.sideband`, while
+fan-in/fan-out routing, mux/storage, wider payload protocols, and broader
+generated-child data routes remain backlog.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

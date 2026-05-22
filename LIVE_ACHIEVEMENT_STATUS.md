@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL multi-route data movement shipped
+- Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` and closed the task tree.
+- FSMGen now accepts bounded multiple scalar generated-child actor-to-actor
+  routes in one same-source/same-sink parent route segment.
+- Added `isf/atl_two_child_multi_data_pipeline.isf` with focused schedule
+  report, generated-top, strict outdir, and HDL coverage.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap, and task-tree docs.
+
 ## 2026-05-22: R14 — ATL multi-route data movement selected
 - Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1`.
 - The active R14 frontier is now

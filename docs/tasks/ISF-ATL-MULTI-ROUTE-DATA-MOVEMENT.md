@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT`
-- Status: `active`
+- Status: `closed`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -48,7 +48,7 @@ one resolved child before the sink child is triggered.
 ## Task Tree
 
 - ID: `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT`
-  Status: `active`
+  Status: `done`
   Goal: `ship a bounded generated-child ATL multi-route scalar movement subset`
   Children: `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1`,
   `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2`
@@ -58,20 +58,20 @@ one resolved child before the sink child is triggered.
   Goal: `select the next bounded ATL data-route feature slice`
   Acceptance: `task-tree owner, scope, boundaries, and implementation leaf are recorded before code changes`
   Verification: `git diff --check; mdbook build docs/book`
-  Commit: `pending`
+  Commit: `8ec95e9e ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1: select ATL multi-route slice`
 
 - ID: `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `implement bounded multiple scalar generated-child actor-to-actor routes`
   Acceptance: `positive fixture, schedule report, generated top wiring, HDL reachability, docs, and focused gates prove the shipped subset`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
+  Commit: `this commit: ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2: ship bounded ATL multi-route data movement`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` | `pending` | The existing ATL route code is already hardened around the one-route boundary, so the next safe widening is multiple scalar routes between the same resolved source/sink pair without adding mux/storage or fan-in/fan-out semantics. |
+| 1 | `closed` | `done` | `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` shipped the bounded same-source/same-sink multi-route subset. |
 
 ## Decisions
 
@@ -86,6 +86,11 @@ one resolved child before the sink child is triggered.
   ready/backpressure, payload protocols, CDC/reset remapping, repeated
   triggers, repeated waits, and multi-transaction continuation because each
   needs independent scheduling evidence and user-facing semantics.
+- `2026-05-22`: Shipped the first accepted multi-route generated-child ATL
+  actor-to-actor subset with no new authoring syntax. The accepted shape keeps
+  existing drive-body `(sink source)` pairs and accepts several contiguous
+  route drive calls only for the same resolved source child, same resolved
+  sink child, same parent transaction, and one scalar endpoint pair per route.
 
 ## Open Questions
 
@@ -99,17 +104,20 @@ one resolved child before the sink child is triggered.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-22` | `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1` | `git diff --check`; `mdbook build docs/book` | `pending` |
-| `2026-05-22` | `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` | `pending` | `pending` |
+| `2026-05-22` | `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-22` | `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1` | `pending` | Selection commit pending. |
-| `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` | `pending` | Implementation pending. |
+| `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1` | `8ec95e9e ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1: select ATL multi-route slice` | Selection committed. |
+| `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` | `this commit: ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2: ship bounded ATL multi-route data movement` | Implementation committed through this slice. |
 
 ## Changelog
 
 - `2026-05-22`: Created active R14 task tree and selected the first bounded
   implementation leaf.
+- `2026-05-22`: Implemented the bounded same-source/same-sink multi-route
+  subset, added fixture/report/top/HDL coverage, synchronized public docs and
+  the mdBook, and closed the tree.

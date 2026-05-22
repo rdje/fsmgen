@@ -892,13 +892,29 @@ ready/backpressure, wider payload protocols, repeated triggers, trigger
 batches, groups, recursive actor networks, and permanent actor grouping remain
 deferred.
 
+The bounded multi-route extension of that same two-child shape is shipped by
+[isf/atl_two_child_multi_data_pipeline.isf](../isf/atl_two_child_multi_data_pipeline.isf).
+It allows more than one scalar actor-to-actor route only when every route has
+the same resolved source child, the same resolved sink child, the same parent
+transaction, one scalar endpoint pair, and one argument-free top-level drive
+call. The transaction must keep the contiguous order `trigger source`, `await
+source event`, all route drive calls, `trigger sink`, and `await sink event`.
+The fixture routes both `(writer.payload reader.payload)` and
+`(writer.sideband reader.sideband)`. Lowering emits separate drive-call states,
+separate drive request signals, separate source/sink parent handoffs, generated
+child `+interface` roles for both reader outputs and both writer inputs, and
+generated-top wiring for both scalar paths. Schedule JSON reports both routes
+as separate `actor_network.data_movements[]` entries with
+`kind: "scalar_actor_handoff"`; it does not expose the private generated-top
+`data_links`.
+
 The shipped hardening around that positive route keeps the route unchanged
 and adds focused fail-closed coverage around it. A generated-child
 actor-to-actor route must prove the source endpoint is a scalar output on the
 source child, the sink endpoint is a scalar input on the sink child, one
 selected data-route drive body owns exactly one endpoint pair, and one
-top-level transaction drive call activates the route. Multi-route wiring,
-mux/storage, route endpoint expressions, fan-in/fan-out, CDC/reset remapping,
+top-level transaction drive call activates that route. Fan-in/fan-out,
+mux/storage, route endpoint expressions, CDC/reset remapping,
 ready/backpressure, payload protocols, and permanent actor grouping remain
 deferred.
 The shipped width hardening keeps the route scalar one-bit only and adds
@@ -3282,6 +3298,11 @@ reader.payload)` through a generated top with resolved `reader` and `writer`
 children. It preserves public route metadata in
 `actor_network.data_movements[]` and top discovery in
 `actor_network.generated_tops[]`.
+The shipped bounded multi-route fixture
+`isf/atl_two_child_multi_data_pipeline.isf` keeps the same resolved
+`reader`/`writer` generated top and adds a second same-source/same-sink scalar
+route `(writer.sideband reader.sideband)`. It reports both route records in
+`actor_network.data_movements[]` without adding a public data-link report key.
 
 The following remain fail-closed/deferred:
 
@@ -3295,7 +3316,8 @@ The following remain fail-closed/deferred:
 - generated top-level ATL wiring, interface binding, generated child HDL
   wiring, and group scheduling outside the exact shipped trigger/event top,
   scalar pin-ingress and pin-egress generated-child routes, selected
-  generated-child actor-to-actor route, and trigger-batch subsets;
+  same-source/same-sink generated-child actor-to-actor route set, and
+  trigger-batch subsets;
 - recursive actor-network declarations.
 
 The broader ATL v0 vocabulary is selected, with only the bounded event-wait,
@@ -3312,13 +3334,16 @@ handoff, and report-only group metadata subsets implemented so far:
 - The first endpoint-movement code leaf shipped fail-closed reservation for
   unsupported qualified actor endpoint drive-body pairs, and the first
   generated scalar actor-to-actor handoff subset is now shipped. The accepted
-  source shape is exactly two direct static actor instances, one named drive
-  body with one `(sink_actor.endpoint source_actor.endpoint)` scalar pair,
-  and one top-level transaction drive call. FSMGen rewrites the pair to
+  source shape is exactly two direct static actor instances, one or more named
+  drive bodies with one `(sink_actor.endpoint source_actor.endpoint)` scalar
+  pair each, and one top-level transaction drive call per route. All routes in
+  the widened generated-child route subset must share the same source child,
+  sink child, parent transaction, and contiguous route segment. FSMGen rewrites
+  each pair to
   generated parent handoff signals, emits scalar one-bit external ports named
-  `source_actor_source_endpoint` for the source input and
-  `sink_actor_sink_endpoint` for the sink output, and drives the sink output
-  from the source input during the named drive-call cycle.
+  `source_actor_source_endpoint` for each source input and
+  `sink_actor_sink_endpoint` for each sink output, and drives each sink output
+  from its source input during that route's named drive-call cycle.
 - The scalar actor-to-actor handoff inserts no storage, route mux, generated
   child `.fsm`, generated ATL top, HDL child wiring, actor type resolution,
   pin movement in that actor-to-actor route, inline drive movement,
@@ -3841,6 +3866,7 @@ Representative shipped fixtures:
 - [isf/atl_resolved_child_pin_egress_pipeline.isf](../isf/atl_resolved_child_pin_egress_pipeline.isf)
 - [isf/atl_two_child_pipeline.isf](../isf/atl_two_child_pipeline.isf)
 - [isf/atl_two_child_data_pipeline.isf](../isf/atl_two_child_data_pipeline.isf)
+- [isf/atl_two_child_multi_data_pipeline.isf](../isf/atl_two_child_multi_data_pipeline.isf)
 
 The current realistic fixture matrix is tracked in
 [docs/tasks/ISF-FIXTURE-COVERAGE.md](tasks/ISF-FIXTURE-COVERAGE.md). That
@@ -4034,6 +4060,13 @@ writer input generated `+interface` metadata, internal generated-top payload
 wiring, plain plus strict HDL generation, a missing sink payload diagnostic,
 and a fail-closed diagnostic when the drive call does not follow the source
 event wait.
+The [isf/atl_two_child_multi_data_pipeline.isf](../isf/atl_two_child_multi_data_pipeline.isf)
+fixture now has file-backed bounded multi-route coverage for that same
+generated top shape. It proves two same-source/same-sink scalar
+`scalar_actor_handoff` route records, separate drive-call states and handoffs,
+reader/writer generated `+interface` preservation for both scalar paths,
+generated-top wiring for both paths, strict outdir materialization, and plain
+plus strict HDL generation.
 `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40` shipped focused hardening for that
 same fixture family: source-child output validation and route-cardinality
 fail-closed coverage before any broader generated-child data wiring is
@@ -4112,6 +4145,15 @@ source-order independent as well: the `forward_payload` drive may appear
 before the `reader` and `writer` instances and still resolves to the same
 one-bit generated-child actor-to-actor route, generated ATL top handoffs, and
 `actor_network.data_movements[]` report entry.
+`ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` widens only the bounded same-source,
+same-sink route cardinality: `isf/atl_two_child_multi_data_pipeline.isf` ships
+two scalar actor-to-actor route drives from `reader` to `writer` in one parent
+transaction. The scheduler emits separate drive states and handoffs for
+`payload` and `sideband`, reports both routes through
+`actor_network.data_movements[]`, preserves the same
+`generated_tops[].children[]` public top evidence, and keeps route mux/storage,
+fan-in/fan-out, wider payloads, CDC/reset remapping, ready/backpressure,
+repeated activation, and cross-transaction continuation deferred.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

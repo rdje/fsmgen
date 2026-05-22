@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL multi-route widening stays same-source and same-sink
+- `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` implements the smallest behavior
+  widening that preserves the prior generated-child route model: several
+  independent scalar routes may occupy the same source-child to sink-child
+  segment, but no route-local mux, storage, arbitration, or backpressure is
+  inferred.
+- Parser shape validation now accepts multiple selected scalar actor-to-actor
+  route drives while keeping one call per drive and requiring all route drive
+  calls to stay contiguous between the source event wait and sink trigger.
+- The lowerer reconstructs route clause indices from the transformed parent
+  transaction body instead of relying on private parser metadata that is
+  stripped before scheduling. That keeps the public report clean while still
+  preserving lowerer order, contiguity, and boundary backstops.
+- Schedule JSON remains schema-stable: each route is another
+  `actor_network.data_movements[]` entry with `kind: "scalar_actor_handoff"`;
+  generated-top data links remain private implementation detail.
+
 ## 2026-05-22: ATL multi-route widening stays storage-free
 - `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1` selects the next ATL widening as
   several scalar route drive calls between the same resolved source/sink child

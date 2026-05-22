@@ -123,8 +123,8 @@ my @required_examples = (
     'FIFO controller fixture',
     'FIFO library fixture',
     'ATL temporary trigger-batch fixture',
-    'the shipped two-child scalar actor-to-actor route',
-    'actor-to-actor route between two resolved children',
+    'the shipped two-child same-source/same-sink scalar actor-to-actor route set',
+    'route between two resolved children through the generated ATL top',
     'one named drive-call cycle',
     'Generated-child actor-to-actor route support is intentionally small',
     'generated handoffs, and one named',
@@ -319,13 +319,13 @@ like(
 
 like(
     $downstream,
-    qr{The selected generated-child actor-to-actor data route is shipped only for\s+the one scalar two-child shape},
+    qr{The selected generated-child actor-to-actor data route set is shipped only for\s+scalar same-source/same-sink two-child shapes},
     'downstream handoff states selected generated-child actor-to-actor route is shipped narrowly',
 );
 
 like(
     $backlog,
-    qr{The selected generated-child actor-to-actor data movement across two resolved\s+children is shipped only for the one scalar two-child route},
+    qr{The selected generated-child actor-to-actor data movement across two resolved\s+children is shipped only for scalar same-source/same-sink two-child routes},
     'feature backlog states selected generated-child actor-to-actor route is shipped narrowly',
 );
 
@@ -349,7 +349,7 @@ like(
 
 like(
     $design,
-    qr{Broader multi-route\s+generated-child data wiring, route mux/storage, fan-in/fan-out, CDC/reset\s+remapping, ready/backpressure, payload protocols, recursive actor networks,\s+and permanent actor grouping remain deferred},
+    qr{Broader fan-in/fan-out\s+route sets, route mux/storage, CDC/reset\s+remapping, ready/backpressure,\s+payload protocols, recursive actor networks,\s+and permanent actor grouping\s+remain deferred},
     'ATL design proposal keeps broader generated-child route features deferred',
 );
 
@@ -433,7 +433,7 @@ my @required_downstream_atl_markers = (
     'source-order independent',
     '((out) 1)',
     'accepted scalar route is also source-order independent',
-    'selected one scalar two-child route',
+    'selected same-source/same-sink scalar',
     'broader actor-to-actor generated-child',
 );
 
@@ -484,7 +484,7 @@ my @required_route_term_markers = (
     'Parser-owned diagnostics',
     'The lowerer repeats the safety check',
     'already registered generated',
-    'one-bit value during the',
+    'each one-bit value during its named drive-call cycle',
 );
 
 for my $marker (@required_route_term_markers) {

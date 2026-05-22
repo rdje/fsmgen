@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL multi-route data movement shipped
+- Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` and closed the task tree.
+- Added the bounded same-source/same-sink generated-child actor-to-actor
+  multi-route subset: multiple scalar route drive bodies and drive calls may
+  participate when they share one resolved source child, one resolved sink
+  child, one parent transaction, and one contiguous route segment.
+- Added `isf/atl_two_child_multi_data_pipeline.isf` and focused coverage for
+  parent/reader/writer/top `.fsm` artifacts, strict schedule JSON parity,
+  generated-top wiring, child `+interface` preservation, strict outdir
+  materialization, and plain plus strict HDL generation.
+- Synchronized the public ISF spec, downstream handoff spec, public contract,
+  mdBook, roadmap status, and task-tree docs. Route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
+  repeated activation, and cross-transaction continuation remain deferred.
+
+## 2026-05-22
 ### R14 — ATL multi-route data movement selected
 - Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1`.
 - Activated a new R14 task tree for bounded generated-child ATL multi-route

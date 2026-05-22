@@ -1931,9 +1931,9 @@ For downstream implementation, the current route terms mean:
   `reader_done`, `writer_done`, and `forward_payload_start`.
 - Handoff remapping is not shipped; collisions with authored parent interface
   or actor-owned storage names fail closed.
-- Route muxing and route storage are not shipped; the selected route has one
-  source child, one sink child, one named drive call, no route-local selector,
-  and no route-local storage.
+- Route muxing and route storage are not shipped; the selected route set has
+  one source child, one sink child, one named drive call per scalar route, no
+  route-local selector, and no route-local storage.
 - Fan-in and fan-out are not shipped for route triggers, events, or data.
 - Ready/backpressure is not shipped; there is no ready signal, retry,
   buffering, or replay contract.
@@ -1982,15 +1982,16 @@ trigger/event subset, reporting them through
 `actor_network.generated_tops[]`.
 
 FSMGen still emits no generated ATL route mux, data-route storage,
-generated-child data wiring beyond the selected one scalar two-child route,
-CDC child wiring, payload/ready/backpressure binding, or broader HDL event
-wiring.
+generated-child data wiring beyond the selected same-source/same-sink scalar
+two-child route set, CDC child wiring, payload/ready/backpressure binding, or
+broader HDL event wiring.
 
-The selected generated-child actor-to-actor data route is shipped only for
-the one scalar two-child shape that uses qualified trigger/event handoffs,
-one named drive-call cycle, and deterministic generated handoffs. Malformed
-or wider route shapes still fail closed before FSMGen infers remapping,
-storage, muxing, fan-in/fan-out, payload, or backpressure behavior.
+The selected generated-child actor-to-actor data route set is shipped only for
+scalar same-source/same-sink two-child shapes that use qualified trigger/event
+handoffs, one named drive-call cycle per route, and deterministic generated
+handoffs. Malformed or wider route shapes still fail closed before FSMGen
+infers remapping, storage, muxing, fan-in/fan-out, payload, or backpressure
+behavior.
 
 The selected generated-child actor-to-actor data route remains bounded by a
 simple parent input start boundary and a simple parent output completion
@@ -2073,12 +2074,31 @@ generated-top discovery from `actor_network.generated_tops[]` with
 
 No new report family or public `data_links` key is exposed.
 
+The bounded multi-route form is shipped by
+`isf/atl_two_child_multi_data_pipeline.isf`.
+
+Downstream producers may emit multiple named scalar drive bodies in the same
+parent transaction only when all routes share the same resolved source child,
+the same resolved sink child, one scalar endpoint pair per drive body, and one
+argument-free top-level drive call per route.
+
+The accepted route segment is contiguous: source trigger, source event wait,
+all route drive calls, sink trigger, sink event wait. The shipped fixture moves
+`payload` and `sideband` from `reader` to `writer` through separate route drive
+calls and separate generated parent handoffs.
+
+Downstream consumers still read every route from
+`actor_network.data_movements[]` with `kind: "scalar_actor_handoff"` and still
+discover the generated top through `actor_network.generated_tops[]` with
+`children[]`. No new report family or public `data_links` key is exposed.
+
 Downstream producers must still treat broader actor-to-actor generated-child
-routes, multi-route data wiring, fan-in/fan-out, route mux/storage,
-CDC/reset remapping, ready/backpressure, payload protocols, recursive actor
-networks, repeated triggers, trigger batches, groups, and permanent actor
-grouping as deferred. The shipped route fails closed if the drive call does
-not follow the source event wait and precede the sink trigger.
+routes, fan-in/fan-out source or sink sets, route mux/storage, CDC/reset
+remapping, ready/backpressure, payload protocols, recursive actor networks,
+repeated triggers, trigger batches, groups, cross-transaction continuation, and
+permanent actor grouping as deferred. A shipped route segment fails closed if
+its drive calls do not follow the source event wait and precede the sink
+trigger.
 
 Downstream producers must also keep the route drive unparameterized and the
 route drive call argument-free. Parameterized route drive definitions and
@@ -2095,14 +2115,16 @@ surface.
 
 It adds focused fail-closed coverage for adjacent invalid shapes: the source
 endpoint must be a scalar output on the source child, the sink endpoint must
-be a scalar input on the sink child, exactly one selected route drive body
-may participate, that drive body must contain exactly one endpoint pair, and
-the route must be activated by exactly one top-level drive call.
+be a scalar input on the sink child, every selected route drive body must
+contain exactly one endpoint pair, and each route must be activated by exactly
+one top-level drive call.
 
-Downstream producers should keep emitting only the shipped one-route shape
-until a later spec update explicitly widens the contract.
+Downstream producers should keep emitting only the shipped same-source,
+same-sink scalar route set until a later spec update explicitly widens the
+contract.
 
-The shipped width hardening keeps that same one-route surface scalar one-bit.
+The shipped width hardening keeps that same route surface scalar one-bit per
+route.
 
 Wider source child outputs and wider sink child inputs remain
 deferred/fail-closed until FSMGen publishes an explicit payload-width
@@ -2561,6 +2583,7 @@ isf/atl_resolved_child_pin_ingress_pipeline.isf
 isf/atl_resolved_child_pin_egress_pipeline.isf
 isf/atl_two_child_pipeline.isf
 isf/atl_two_child_data_pipeline.isf
+isf/atl_two_child_multi_data_pipeline.isf
 ```
 
 The SPI-like fixture and I2C-like fixture are bounded realistic examples, not
@@ -2794,6 +2817,14 @@ payload wiring, plain plus strict CLI HDL generation, missing sink payload
 diagnostics, and wrong-order diagnostics for the selected two-child scalar
 data route.
 
+The same focused regression now also covers
+`isf/atl_two_child_multi_data_pipeline.isf`: parent/reader/writer/top `.fsm`
+artifacts, strict schedule JSON parity, two `scalar_actor_handoff`
+`data_movements[]` entries for the same reader-to-writer route segment,
+generated child `+interface` preservation for both routed scalar signals,
+generated-top wiring for both route handoffs, strict outdir materialization,
+and plain plus strict CLI HDL generation.
+
 Recommended downstream smoke commands:
 
 ```bash
@@ -2820,6 +2851,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_data_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_multi_data_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf
@@ -2827,6 +2859,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress isf/atl_resolved_child_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-data isf/atl_two_child_data_pipeline.isf
+./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-multi-data isf/atl_two_child_multi_data_pipeline.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
 ./bin/fsmgen --outdir /tmp/isf-cdc isf/clock_domain_dual_event_crossing.isf
 ./bin/fsmgen --capability-manifest
