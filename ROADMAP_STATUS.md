@@ -5253,14 +5253,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-ATL-COMPACT-GROUP-ALIAS`.
-- Current frontier: `ISF-ATL-COMPACT-GROUP-ALIAS.2`.
-- Completion status: `ISF-ATL-COMPACT-GROUP-ALIAS.1` selected the compact
-  concurrent-group alias tree. The next leaf owns implementation of
-  `(concurrent NAME ACTOR...)` as a compact source alias for the shipped
-  report-only verbose group metadata surface; no runtime group scheduling,
-  group endpoints, compact movement syntax, or generated HDL behavior is
-  selected.
+- Active task tree: none.
+- Current frontier: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Completion status: `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` closed the most
+  recent active R14 task tree after shipping actor constants as repeat counter
+  width evidence. The top live snapshot and this section now agree that no
+  task tree is active.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

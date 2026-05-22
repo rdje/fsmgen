@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### Roadmap active-lane snapshot repaired
+- Synchronized the `ROADMAP_STATUS.md` "Current active lane" section with the
+  top live snapshot after the repeat actor-constant width tree closed.
+- The roadmap now consistently records no active task tree and requires the
+  next PNT step to select or create the next roadmap-aligned task tree before
+  code changes.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Repeat actor-constant widths shipped
 - Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` and closed the task tree.
 - Added support for declared actor constants as repeat counter width evidence

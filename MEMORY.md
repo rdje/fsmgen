@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Roadmap active-lane snapshot repaired
+- Synchronized the `ROADMAP_STATUS.md` "Current active lane" section with the
+  top live snapshot after `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` closed.
+- The roadmap now consistently says there is no active task tree and that the
+  next PNT step must select or create the next roadmap-aligned task tree
+  before code changes.
+- No compiler, test, public contract, or mdBook behavior changed.
+
 ## 2026-05-22: Repeat actor-constant widths shipped
 - Completed `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` and closed the task tree.
 - FSMGen now uses declared actor constants as static repeat counter width
