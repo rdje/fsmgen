@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### Roadmap maintenance — active-lane truth synchronized
+- Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` and closed the maintenance tree.
+- Removed a stale old R12 custom-clock active-frontier claim from
+  `ROADMAP_STATUS.md`.
+- Synchronized the top roadmap snapshot, lower current-active-lane section,
+  and task-tree index so they all report no currently active task tree before
+  the next PNT selection.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### Roadmap maintenance — active-lane truth sync selected
 - Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1`.
 - Activated a maintenance task tree to repair stale active-lane/frontier text

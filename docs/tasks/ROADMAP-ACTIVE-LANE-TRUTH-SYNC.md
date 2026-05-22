@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ROADMAP-ACTIVE-LANE-TRUTH-SYNC`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `roadmap maintenance`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -35,7 +35,7 @@ task-tree closure so PNT selection starts from a truthful roadmap snapshot.
 ## Task Tree
 
 - ID: `ROADMAP-ACTIVE-LANE-TRUTH-SYNC`
-  Status: `active`
+  Status: `done`
   Goal: `synchronize stale active-lane roadmap status after the latest task-tree closure`
   Children: `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1`, `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2`
 
@@ -47,17 +47,17 @@ task-tree closure so PNT selection starts from a truthful roadmap snapshot.
   Commit: `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1: select active-lane truth sync`
 
 - ID: `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2`
-  Status: `pending`
+  Status: `done`
   Goal: `repair stale active-lane/frontier claims in live roadmap docs`
   Acceptance: `ROADMAP_STATUS.md and docs/TASK_TREE.md no longer contradict each other about the active tree/frontier`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `git diff --check`; `mdbook build docs/book`
+  Commit: `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2: sync active-lane truth`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` | `pending` | Repair stale live-roadmap active-lane claims before selecting the next behavior-bearing PNT slice. |
+| 1 | `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` | `done` | Repaired stale live-roadmap active-lane claims before selecting the next behavior-bearing PNT slice. |
 
 ## Decisions
 
@@ -65,6 +65,10 @@ task-tree closure so PNT selection starts from a truthful roadmap snapshot.
   `ROADMAP_STATUS.md` still contained an old `R12-CUSTOM-SYSTEM-CLOCK`
   active-frontier claim even though `docs/TASK_TREE.md` has no active tree
   after the parser-token corpus-widening closure.
+- `2026-05-22`: Completed the truth sync by removing the stale old R12
+  custom-clock frontier, closing this maintenance tree, and making the top
+  roadmap snapshot, lower current-active-lane section, and task-tree index
+  agree that no tree is active before the next PNT selection.
 
 ## Open Questions
 
@@ -79,15 +83,18 @@ task-tree closure so PNT selection starts from a truthful roadmap snapshot.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-22` | `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` | `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1` | `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1: select active-lane truth sync` | `selection leaf; no compiler behavior changed` |
-| `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` | `pending` | `pending` |
+| `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` | `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2: sync active-lane truth` | `roadmap/task-tree status sync; no compiler behavior changed` |
 
 ## Changelog
 
 - `2026-05-22`: Created task tree and selected the live-roadmap truth-sync
   implementation frontier.
+- `2026-05-22`: Removed stale active-lane/frontier claims and closed the
+  maintenance tree.

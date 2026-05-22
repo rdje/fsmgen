@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Roadmap active-lane truth sync completed
+- Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` and closed the maintenance tree.
+- Removed the stale `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING` active-frontier
+  claim from `ROADMAP_STATUS.md`.
+- The top roadmap snapshot, lower current-active-lane section, and
+  `docs/TASK_TREE.md` now agree that no task tree is active before the next
+  PNT selection.
+- No compiler behavior changed.
+
 ## 2026-05-22: Roadmap active-lane truth sync selected
 - Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1`.
 - Activated a roadmap-maintenance task tree after finding that

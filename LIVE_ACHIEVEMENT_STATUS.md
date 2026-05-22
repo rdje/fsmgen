@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: Roadmap maintenance — active-lane truth synchronized
+- Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2`.
+- The maintenance tree is closed.
+- `ROADMAP_STATUS.md` no longer claims the old R12 custom-clock task tree is
+  active.
+- `ROADMAP_STATUS.md` and `docs/TASK_TREE.md` now agree that no task tree is
+  active before the next PNT selection.
+- No compiler behavior changed.
+
 ## 2026-05-22: Roadmap maintenance — active-lane truth sync selected
 - Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1`.
 - The active maintenance frontier is now `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2`.

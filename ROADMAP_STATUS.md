@@ -1,10 +1,15 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `roadmap maintenance`.
-- Active task tree:
-  `ROADMAP-ACTIVE-LANE-TRUTH-SYNC`. Current frontier:
-  `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2`.
+- Active lane: none currently selected.
+- Active task tree: none currently active in `docs/TASK_TREE.md`.
+- Recent roadmap active-lane truth-sync completion:
+  `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` removed stale live-roadmap claims that
+  an old `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING` frontier was active after
+  later R12 task trees had already closed. The top roadmap snapshot, the
+  lower current-active-lane section, and `docs/TASK_TREE.md` now agree that no
+  task tree is active before the next PNT selection. No compiler behavior
+  changed.
 - Recent roadmap active-lane truth-sync selection:
   `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1` activated a maintenance tree to remove
   stale active-lane/frontier claims before selecting the next behavior-bearing
@@ -4882,13 +4887,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `R12`:
-  [docs/tasks/R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.md](docs/tasks/R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.md)
-  is active. `.1` selected the custom system clock support-accounting slice
-  before implementation. The current frontier is `.2`: promote a canonical
-  reset declaration with a custom authored clock identifier into a maintained
-  supported-smoke corpus entry with strict-supported metadata and HDL-shape
-  expectations.
+- No task tree is currently active in [docs/TASK_TREE.md](docs/TASK_TREE.md).
+  The next PNT pass must select or create a task-tree owner before changing
+  code, tests, sources, generated artifacts, config, or downstream-visible
+  behavior.
+- The most recent active tree was
+  [docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md](docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md),
+  which closed after removing the stale old R12 custom-clock frontier from
+  this section.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8501,13 +8507,11 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
-  when selecting the next PNT slice. Active R14 ownership currently includes
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION` for remaining repeat-body child
-  activation widening and `ISF-ACTOR-NETWORK-ORCHESTRATION` for ATL
-  actor-network clarification. Any future ISF implementation slice must stay
-  attached to an active tree or create a new task tree before changing parser,
-  scheduler, emitter, contract, fixture, or book behavior. Keep
-  `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
+  when selecting the next PNT slice. No R14 task tree is currently active
+  after the latest closures; any future ISF implementation slice must stay
+  attached to a newly selected active tree or create a new task tree before
+  changing parser, scheduler, emitter, contract, fixture, or book behavior.
+  Keep `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

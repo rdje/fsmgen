@@ -192,7 +192,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md` — completed architecture follow-up for resolving legacy `GlobalASTManager` ownership.
 - `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md` — completed architecture follow-up that inventoried private ISF `LoweringIR` subfamilies and deferred helper-owner extraction.
 - `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — completed architecture follow-up that audited `module_info` mirrors and closed without extra guard work.
-- `docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md` — active roadmap-maintenance task tree for repairing stale live-roadmap active-lane/frontier claims.
+- `docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md` — completed roadmap-maintenance task tree for repairing stale live-roadmap active-lane/frontier claims.
 - `docs/tasks/R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained expected-failure corpus coverage for composition parser token and top-symbol diagnostics.
 - `docs/tasks/R12-COMPOSITION-ENDPOINT-SHAPE-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained expected-failure corpus coverage for composition endpoint-shape diagnostics.
 - `docs/tasks/R12-COMPOSITION-C1-PORT-EXPOSURE-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained expected-failure corpus coverage for C1 passthrough exposure diagnostics.

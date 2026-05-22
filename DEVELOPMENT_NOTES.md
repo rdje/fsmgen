@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Active-lane truth sync keeps PNT honest
+- `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` removes stale active-frontier text instead
+  of letting PNT accidentally resume an already-completed R12 custom-clock
+  task tree.
+- The current truth is explicit: no task tree is active after this maintenance
+  leaf, so the next behavior-bearing slice must first select or create its
+  owning task tree.
+
 ## 2026-05-22: Roadmap status truth sync is maintenance work
 - `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.1` selects a small maintenance tree because
   live roadmap text must not contradict `docs/TASK_TREE.md` about active
