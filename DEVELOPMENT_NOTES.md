@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL multi-route widening stays storage-free
+- `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1` selects the next ATL widening as
+  several scalar route drive calls between the same resolved source/sink child
+  pair, not a general route fabric.
+- The subset preserves the existing drive-body `(sink source)` order and uses
+  existing drive-call timing points. It deliberately avoids route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
+  repeated activations, and cross-transaction continuation until those
+  semantics have their own task-tree evidence.
+
 ## 2026-05-22: Active-lane truth sync keeps PNT honest
 - `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` removes stale active-frontier text instead
   of letting PNT accidentally resume an already-completed R12 custom-clock

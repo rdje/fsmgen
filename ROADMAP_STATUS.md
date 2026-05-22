@@ -1,8 +1,18 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: none currently selected.
-- Active task tree: none currently active in `docs/TASK_TREE.md`.
+- Active lane: `R14` / ISF ATL multi-route data movement.
+- Active task tree:
+  [docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md](docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md)
+  at frontier `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2`.
+- Recent R14 ATL multi-route data movement selection:
+  `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1` activated the next bounded ATL
+  feature tree. The selected implementation will widen generated-child
+  actor-to-actor scalar data movement from one route to several contiguous
+  same-source/same-sink one-bit routes in one parent transaction, while
+  keeping route mux/storage, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, payload protocols, repeated activations, and
+  cross-transaction continuation deferred. No compiler behavior changed.
 - Recent roadmap active-lane truth-sync completion:
   `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` removed stale live-roadmap claims that
   an old `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING` frontier was active after
@@ -4887,14 +4897,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- No task tree is currently active in [docs/TASK_TREE.md](docs/TASK_TREE.md).
-  The next PNT pass must select or create a task-tree owner before changing
-  code, tests, sources, generated artifacts, config, or downstream-visible
-  behavior.
-- The most recent active tree was
-  [docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md](docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md),
-  which closed after removing the stale old R12 custom-clock frontier from
-  this section.
+- Active task tree:
+  [docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md](docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md).
+- Current frontier: `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2`.
+- Selected scope: bounded generated-child ATL actor-to-actor scalar data
+  movement with several contiguous same-source/same-sink route drive calls in
+  one parent transaction. Broader route fabrics remain deferred.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8506,11 +8514,10 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
-  when selecting the next PNT slice. No R14 task tree is currently active
-  after the latest closures; any future ISF implementation slice must stay
-  attached to a newly selected active tree or create a new task tree before
-  changing parser, scheduler, emitter, contract, fixture, or book behavior.
+- Use the active feature tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) for
+  the next PNT slice. `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` is the current
+  frontier and must own any parser, scheduler, emitter, contract, fixture, or
+  book changes for the bounded ATL multi-route data-movement subset.
   Keep `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather

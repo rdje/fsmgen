@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL multi-route data movement selected
+- Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1`.
+- The active R14 frontier is now
+  `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2`.
+- The selected implementation will widen generated-child ATL actor-to-actor
+  data movement from one scalar route to several same-source/same-sink scalar
+  routes in one contiguous route segment, without claiming mux/storage,
+  fan-in/fan-out, ready/backpressure, payload protocols, CDC, or repeated
+  activation semantics.
+- No compiler behavior changed.
+
 ## 2026-05-22: Roadmap maintenance — active-lane truth synchronized
 - Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2`.
 - The maintenance tree is closed.

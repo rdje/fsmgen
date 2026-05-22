@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL multi-route data movement selected
+- Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1`.
+- Activated a new R14 task tree for bounded generated-child ATL multi-route
+  scalar data movement.
+- The selected implementation leaf will allow several one-bit actor-to-actor
+  routes only when they share one resolved source child, one resolved sink
+  child, one parent transaction, and a contiguous source-trigger/source-wait,
+  route-drive-call(s), sink-trigger/sink-wait sequence.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### Roadmap maintenance — active-lane truth synchronized
 - Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` and closed the maintenance tree.
 - Removed a stale old R12 custom-clock active-frontier claim from

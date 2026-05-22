@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL multi-route data movement selected
+- Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1`.
+- Activated a new R14 task tree for the next bounded ATL data-route widening:
+  multiple one-bit generated-child actor-to-actor routes between one resolved
+  source child and one resolved sink child, scheduled as contiguous drive calls
+  between the source event wait and the sink trigger.
+- The next frontier is `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2`: implement the
+  bounded multi-route subset with fixture/report/top/HDL coverage and
+  synchronized public docs.
+- No compiler behavior changed.
+
 ## 2026-05-22: Roadmap active-lane truth sync completed
 - Completed `ROADMAP-ACTIVE-LANE-TRUTH-SYNC.2` and closed the maintenance tree.
 - Removed the stale `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING` active-frontier
