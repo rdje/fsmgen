@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### Roadmap maintenance — R14 frontier truth synchronized
+- Completed `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1` and closed the maintenance
+  tree.
+- Removed stale lower R14 status text that still named the completed
+  `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` leaf as the current frontier.
+- The top roadmap snapshot, lower R14 status, and task-tree index now agree
+  that no task tree is active before the next PNT selection.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL multi-route data movement shipped
 - Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` and closed the task tree.
 - Added the bounded same-source/same-sink generated-child actor-to-actor

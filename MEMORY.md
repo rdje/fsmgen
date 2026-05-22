@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R14 frontier truth sync completed
+- Completed `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1` and closed the maintenance
+  tree.
+- Removed lower R14 roadmap text that still named
+  `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` as the current frontier after that
+  implementation leaf had already closed.
+- `ROADMAP_STATUS.md` and `docs/TASK_TREE.md` now agree that no task tree is
+  active before the next PNT selection.
+- No compiler behavior changed.
+
 ## 2026-05-22: ATL multi-route data movement shipped
 - Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` and closed the task tree.
 - FSMGen now accepts bounded multiple one-bit generated-child actor-to-actor

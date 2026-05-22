@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Closed leaves must not remain current frontiers
+- `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1` removes a stale lower-roadmap reference
+  to `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` as the current frontier after that
+  feature leaf had already been committed and closed.
+- The live status invariant is that top-level active-lane text, lower
+  workstream `Left` sections, and `docs/TASK_TREE.md` must agree before PNT
+  selects a new behavior-bearing task.
+- This is intentionally documentation-only maintenance; the next compiler
+  change still needs its own active task tree before implementation.
+
 ## 2026-05-22: ATL multi-route widening stays same-source and same-sink
 - `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` implements the smallest behavior
   widening that preserves the prior generated-child route model: several

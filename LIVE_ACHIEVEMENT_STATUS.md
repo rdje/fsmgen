@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: Roadmap maintenance — R14 frontier truth synchronized
+- Completed `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1`.
+- The maintenance tree is closed.
+- `ROADMAP_STATUS.md` no longer names the completed
+  `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` leaf as the current R14 frontier.
+- `ROADMAP_STATUS.md` and `docs/TASK_TREE.md` now agree that no task tree is
+  active before the next PNT selection.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL multi-route data movement shipped
 - Completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` and closed the task tree.
 - FSMGen now accepts bounded multiple scalar generated-child actor-to-actor

@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-R14-FRONTIER-TRUTH-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-FRONTIER-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-FRONTIER-TRUTH-SYNC.md) |
 | `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md](docs/tasks/ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.md) |
 | `ROADMAP-ACTIVE-LANE-TRUTH-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md](docs/tasks/ROADMAP-ACTIVE-LANE-TRUTH-SYNC.md) |
 | `R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.md](docs/tasks/R12-COMPOSITION-PARSER-TOKEN-CORPUS-WIDENING.md) |

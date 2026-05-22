@@ -2,8 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: none. No task tree is active after
-  `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2`; the next behavior-bearing work must
+  `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1`; the next behavior-bearing work must
   select or create its task tree before code changes.
+- Recent roadmap R14 frontier truth-sync completion:
+  `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1` removed lower R14 `Left` text that still
+  named the completed `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` leaf as current.
+  The top roadmap snapshot, lower R14 status, and `docs/TASK_TREE.md` now
+  agree that no task tree is active before the next PNT selection. No compiler
+  behavior changed.
 - Recent R14 ATL multi-route data movement completion:
   `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` shipped the bounded generated-child
   actor-to-actor multi-route subset. FSMGen now accepts several one-bit route
@@ -8525,11 +8531,11 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Use the active feature tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) for
-  the next PNT slice. `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` is the current
-  frontier and must own any parser, scheduler, emitter, contract, fixture, or
-  book changes for the bounded ATL multi-route data-movement subset.
-  Keep `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
+- Use [docs/TASK_TREE.md](docs/TASK_TREE.md) for the next PNT slice. No R14
+  task tree is currently active after the bounded ATL multi-route data-movement
+  tree closed, so the next parser, scheduler, emitter, contract, fixture, or
+  book change must first activate an existing relevant tree or create a new
+  task tree. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.
