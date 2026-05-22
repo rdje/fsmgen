@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 composition target-support corpus widening selected
+- Completed `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting the already-focused unsupported
+  composition backend target diagnostic into maintained expected-failure corpus
+  coverage.
+- The next frontier is `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2`: add
+  a bounded fixture and catalog entry for VHDL composition target rejection,
+  with synchronized docs and corpus gates.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 composition ports-shape corpus widening completed
 - Completed `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2` and closed the
   task tree.

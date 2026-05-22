@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — target-support widening selected
+- Completed `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.2`.
+- The selected implementation will promote unsupported VHDL composition target
+  diagnostics into maintained expected-failure corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-22: R12 regression corpus — ports-shape coverage widened
 - Completed `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2`.
 - The task tree is closed.

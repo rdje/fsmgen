@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R12 regression corpus — target-support widening selected
+- Completed `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure
+  corpus coverage with the already-focused unsupported composition backend
+  target diagnostic.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R12 regression corpus — ports-shape coverage widened
 - Completed `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2` and closed the
   task tree.

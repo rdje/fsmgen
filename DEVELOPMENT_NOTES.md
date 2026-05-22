@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Composition target-support coverage stays target-diagnostic-only
+- `R12-COMPOSITION-TARGET-SUPPORT-CORPUS-WIDENING.1` selects
+  support-accounting promotion for the unsupported VHDL composition target
+  diagnostic whose existing focused test already locks pipeline and CLI
+  behavior.
+- The implementation should preserve the current fail-closed target boundary
+  and only add a maintained expected-failure corpus asset; VHDL composition
+  output remains unimplemented.
+
 ## 2026-05-22: Composition ports-shape failures are support-accounting failures
 - `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2` keeps the existing shape-gate
   diagnostics intact and promotes three non-inferable `?ports` failures into
