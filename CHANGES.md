@@ -1,5 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-22
+### R12 regression corpus — wrong-kind child-source widening selected
+- Completed
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure
+  corpus coverage with already-focused wrong-kind generated-child source
+  realization diagnostics.
+- No compiler behavior changed.
+
 ## 2026-05-21
 ### ISF spec — focused-test index CI drift repaired
 - Completed `ISF-SPEC-TEST-INDEX-SYNC.2`.

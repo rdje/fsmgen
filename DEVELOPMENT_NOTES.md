@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Wrong-kind generated-child source coverage stays diagnostic-only
+- `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1` selects support-accounting
+  promotion for resolved generated-child files whose root kind does not match
+  the requested child form.
+- The implementation should preserve the existing realization diagnostics and
+  only add maintained expected-failure corpus assets for the `?fsmc` to
+  standalone-DT and `?dtc` to FSM wrong-kind cases.
+
 ## 2026-05-21: ISF focused-test index audit catches doc-status coverage drift
 - `ISF-SPEC-TEST-INDEX-SYNC.2` keeps the focused-test index invariant intact
   after `t/1332-isf-atl-doc-status-audit.t` was added for ATL doc-status truth

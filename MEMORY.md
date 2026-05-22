@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R12 wrong-kind child-source corpus widening selected
+- Completed
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused wrong-kind
+  generated-child source realization diagnostics into maintained
+  expected-failure corpus coverage.
+- The next frontier is
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2`: add bounded fixtures and
+  catalog entries for `?fsmc` resolving to standalone-DT source and `?dtc`
+  resolving to FSM source, with synchronized docs and corpus gates.
+- No compiler behavior changed.
+
 ## 2026-05-21: ISF spec focused-test index CI drift repaired
 - Completed `ISF-SPEC-TEST-INDEX-SYNC.2` after hosted GitHub CI run
   `26196563292` failed `t/1250-isf-spec-focused-test-index-audit.t`.

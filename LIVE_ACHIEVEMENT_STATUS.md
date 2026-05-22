@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R12 regression corpus — wrong-kind child-source widening selected
+- Completed
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2`.
+- The selected implementation will promote wrong-kind generated-child source
+  realization diagnostics into maintained expected-failure corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-21: ISF spec focused-test index CI drift repaired
 - Completed `ISF-SPEC-TEST-INDEX-SYNC.2`.
 - The ISF spec focused-test index now includes

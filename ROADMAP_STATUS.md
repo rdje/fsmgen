@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` closed the
-  latest standalone-DTC explicit-system support-accounting tree. The next PNT
-  step is to select the next inactive or ongoing task-tree frontier before any
-  implementation work.
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1` selected wrong-kind
+  generated-child source realization as the next support-accounting corpus
+  widening. The active frontier is
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.2`.
+- Recent R12 wrong-kind child-source corpus-widening selection:
+  `R12-WRONG-KIND-CHILD-SOURCE-CORPUS-WIDENING.1` activated a task tree to
+  promote already-focused `?fsmc`/`?dtc` wrong-kind generated-child source
+  diagnostics into maintained expected-failure corpus coverage. No compiler
+  behavior changed.
 - Recent R12 standalone DTC explicit-system autowire corpus-widening completion:
   `R12-STANDALONE-DTC-EXPLICIT-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` added one
   named supported-smoke corpus entry for generated top/child binding of
