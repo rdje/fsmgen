@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL actor-route vector width selected
+- Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1`.
+- Activated a new R14 task tree for bounded generated-child ATL
+  actor-to-actor exact-width vector routes.
+- The selected implementation leaf will keep existing route syntax and
+  drive-call timing while widening only routes whose resolved source child
+  output and sink child input declare the same positive width.
+- Width adaptation, payload packing, route storage, route muxing,
+  fan-in/fan-out, top-level pin vector routes, CDC/reset remapping,
+  ready/backpressure, repeated activation, and cross-transaction continuation
+  remain deferred.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — ATL route drive argument boundary shipped
 - Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` and closed the task
   tree.

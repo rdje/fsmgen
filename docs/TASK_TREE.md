@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH` | `active` | `R14` | `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` | [docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md](docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md) |
 
 ## Proposed Task Trees
 

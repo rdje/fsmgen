@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL actor-route vector width selected
+- Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1`.
+- Activated a new R14 task tree for the next bounded ATL data-route widening:
+  exact-width generated-child actor-to-actor vector routes.
+- The next frontier is `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2`: keep existing
+  `(sink source)` route syntax and drive-call timing, infer the route width
+  from matching resolved child endpoint declarations, lower parent/top/HDL
+  handoffs at that width, reject mismatches cleanly, and synchronize public
+  docs.
+- No compiler behavior changed.
+
 ## 2026-05-22: ATL route drive argument boundary shipped
 - Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` and closed the task tree.
 - FSMGen now rejects parameterized selected ATL route drive definitions with a

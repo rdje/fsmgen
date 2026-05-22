@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL actor-to-actor vector routes are exact-width only
+- `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` selects exact-width generated-child
+  actor-to-actor routes as the next bounded ATL feature slice.
+- The design keeps the current route syntax and timing contract: a named drive
+  body still uses `(sink source)`, and a drive call still marks the transfer
+  cycle. The selected widening is width evidence, not a new payload protocol.
+- The first vector subset will require the resolved source output and sink
+  input widths to match exactly. Packing, truncation, extension, slicing,
+  top-level pin vector routes, storage, muxing, ready/backpressure, CDC, and
+  cross-transaction continuation remain separate future decisions.
+
 ## 2026-05-22: ATL route-drive argument diagnostics are route-kind neutral
 - `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` changes the formal-parameter
   rejection from actor-to-actor-specific wording to the shared

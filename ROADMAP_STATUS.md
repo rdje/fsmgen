@@ -1,10 +1,21 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: none selected.
-  The previous PNT frontier `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` is
-  complete; the next PNT slice must select or create a task tree before code
-  changes.
+- Active lane: `R14` / `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2`.
+  The next implementation frontier is bounded generated-child actor-to-actor
+  ATL exact-width vector routes. The selection leaf
+  `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` is complete and no compiler behavior
+  changed yet.
+- Recent R14 ATL actor-route vector-width selection:
+  `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` activated the next bounded ATL feature
+  tree. The selected implementation will keep the existing `(sink source)`
+  route-drive syntax and drive-call timing model while widening only
+  generated-child actor-to-actor routes whose resolved source child output and
+  sink child input declare the same positive width. Width adaptation, payload
+  packing, route storage, route muxing, fan-in/fan-out, top-level pin vector
+  routes, CDC/reset remapping, ready/backpressure, repeated activation, and
+  cross-transaction continuation remain deferred. No compiler behavior
+  changed.
 - Recent R14 ATL route drive argument-boundary completion:
   `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` shipped the shared ATL route-drive
   formal/actual-argument boundary across generated-child actor-to-actor,
@@ -4981,11 +4992,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: none selected.
-- Current frontier: none selected; the latest completed PNT frontier
-  `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` is closed.
-- Selection rule: the next behavior-bearing slice must select or create its
-  owning task tree before implementation starts.
+- Active task tree:
+  [docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md](docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md).
+- Current frontier: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2`.
+- Selection status: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` selected the bounded
+  generated-child actor-to-actor ATL exact-width vector-route slice before code
+  changes. The implementation frontier may now widen only same-width resolved
+  child output-to-input routes and must keep width adaptation, top-level pin
+  vector routes, storage, muxing, fan-in/fan-out, ready/backpressure, CDC, and
+  cross-transaction continuation deferred.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8597,13 +8612,14 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Select or create the next feature tree in
-  [docs/TASK_TREE.md](docs/TASK_TREE.md) before the next PNT implementation
-  slice. The completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` leaf now owns
-  the shared route-drive formal/actual-argument boundary across shipped ATL
-  route kinds; future parser, scheduler, emitter, contract, fixture, or book
-  changes need a fresh active tree. Keep `ISF-PUBLIC-CONTRACT` cross-cutting
-  and feature-driven.
+- Implement the active
+  [docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md](docs/tasks/ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.md)
+  frontier next: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` owns the bounded
+  generated-child actor-to-actor ATL exact-width vector-route widening. Keep
+  width adaptation, top-level pin vector routes, storage, muxing,
+  fan-in/fan-out, ready/backpressure, CDC/reset remapping, repeated
+  activation, and cross-transaction continuation deferred. Keep
+  `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

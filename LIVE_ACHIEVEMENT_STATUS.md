@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL actor-route vector width selected
+- Completed `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1`.
+- The active R14 frontier is now `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2`.
+- The selected implementation will widen generated-child actor-to-actor ATL
+  routes only when the resolved source child output and sink child input have
+  the same explicit positive width.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — ATL route drive argument boundary shipped
 - Completed `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` and closed the task tree.
 - FSMGen now rejects parameterized selected ATL route drives through a
