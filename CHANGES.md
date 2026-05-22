@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL compact instance alias shipped
+- Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` and closed the task tree.
+- Added direct actor-body `(NAME : ACTOR_TYPE)` as a compact readability alias
+  for verbose `(instance NAME of ACTOR_TYPE)` static instance metadata.
+- Compact instances now report through `actor_network.instances[]` with
+  `declaration: "instance_alias"`; verbose instances keep
+  `declaration: "actor"`.
+- Compact library-qualified forms use the same explicit-import
+  `ALIAS.EXPORT` resolution path as verbose instances and preserve resolved
+  child metadata plus scheduled child `.fsm` emission.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  public manifest metadata, ATL design proposal, mdBook, roadmap, task-tree
+  docs, live achievement status, memory, and development notes.
+- Validation passed: syntax checks; focused actor-network test; public/doc
+  audit group; ATL fixture group; broad `./bin/ci-regression isf --no-book`
+  with `Files=238, Tests=1582`; `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — ATL compact instance alias tree selected
 - Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.1`.
 - Activated a new R14 task tree for direct actor-body

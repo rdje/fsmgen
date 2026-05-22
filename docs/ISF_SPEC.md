@@ -221,10 +221,11 @@ explicitly selected. Imported sources may additionally provide
 `(library name ...)` roots as described in [3.1](#31-reusable-library-imports).
 The shipped ATL actor type-resolution source is not a sibling actor root; it
 is a library-qualified static instance type,
-`(instance NAME of ALIAS.EXPORT)`, where `ALIAS` is declared by the enclosing
-actor's library imports and `EXPORT` names a library actor export. That
-qualified spelling now resolves to metadata only when the alias is an explicit
-import and the export exists. Accepted qualified instances add
+`(instance NAME of ALIAS.EXPORT)` or compact `(NAME : ALIAS.EXPORT)`, where
+`ALIAS` is declared by the enclosing actor's library imports and `EXPORT`
+names a library actor export. Those qualified spellings now resolve to
+metadata only when the alias is an explicit import and the export exists.
+Accepted qualified instances add
 library/export provenance to their `actor_network.instances[]` report entry
 and reserve deterministic child names. Lowering now emits the parent scheduled
 `.fsm` plus those resolved child scheduled `.fsm` files. It still emits no
@@ -3387,11 +3388,12 @@ FSMGen preserves that identity in the parser shell and schedule JSON report.
 
 The selected ATL v0 source contract keeps the existing `(actor NAME ...)` root.
 The actor body is the network boundary; there is no accepted `(network ...)`
-wrapper. The current shipped static instance syntax is the direct actor-body
-`(instance NAME of ACTOR_TYPE)` form below. Report-only static groups use
-direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`
-declarations. Future ATL leaves must keep the same boundary unless a
-task-tree leaf explicitly changes the public contract.
+wrapper. The shipped static instance syntax accepts the direct actor-body
+`(instance NAME of ACTOR_TYPE)` form below and the compact readability alias
+`(NAME : ACTOR_TYPE)`. Report-only static groups use direct actor-body
+`(group NAME (members ACTOR...) (mode concurrent))` declarations or the
+compact `(concurrent NAME ACTOR...)` alias. Future ATL leaves must keep the
+same boundary unless a task-tree leaf explicitly changes the public contract.
 
 Accepted form:
 
@@ -3402,6 +3404,20 @@ Accepted form:
     (input start)
     (output done))
   (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+The compact instance alias is equivalent for scheduling purposes:
+
+```lisp
+(actor packet_pipe_compact
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (reader : packet_reader)
   (transaction run
     (on start)
     (complete done)))
@@ -3430,12 +3446,15 @@ parser/schedule-report metadata:
 }
 ```
 
-`declaration` is `actor` in the current subset because static actor instances
-are direct clauses of the enclosing actor. Instance names and actor types must
-be scalar HDL identifiers. Multiple direct static instances are accepted only
-by shipped bounded subsets: scalar or exact-width vector actor-to-actor
-handoff routes and report-only static group metadata. Unqualified static
-instance metadata does not instantiate or resolve actor types.
+Verbose instance declarations report `declaration: "actor"`. Compact
+`(NAME : ACTOR_TYPE)` aliases report `declaration: "instance_alias"` so
+downstream consumers can audit the original source spelling. Instance names
+and actor types must be scalar HDL identifiers, except that selected
+library-qualified actor types may use `ALIAS.EXPORT` as described below.
+Multiple direct static instances are accepted only by shipped bounded subsets:
+scalar or exact-width vector actor-to-actor handoff routes and report-only
+static group metadata. Unqualified static instance metadata does not
+instantiate or resolve actor types.
 Library-qualified static instances resolve to report metadata and reserved
 child names, and the selected generated-child subsets emit child `.fsm`
 artifacts plus generated tops where documented.

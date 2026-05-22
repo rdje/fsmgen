@@ -336,7 +336,9 @@ drive exports, and nested library imports remain future work.
 
 The first Actor Transfer Level (`ATL`) implementation slice is intentionally
 small: a top-level actor may declare one static actor instance, and FSMGen
-preserves that declaration in the parser shell and schedule report.
+preserves that declaration in the parser shell and schedule report. The
+shipped source surface accepts the verbose `(instance NAME of ACTOR_TYPE)`
+form and the compact `(NAME : ACTOR_TYPE)` readability alias.
 
 Accepted form:
 
@@ -347,6 +349,20 @@ Accepted form:
     (input start)
     (output done))
   (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+Compact equivalent:
+
+```lisp
+(actor packet_pipe_compact
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (reader : packet_reader)
   (transaction run
     (on start)
     (complete done)))
@@ -375,6 +391,11 @@ The report field is `actor_network`:
   "transaction_triggers": []
 }
 ```
+
+Verbose instances report `declaration: "actor"`. Compact instance aliases
+report `declaration: "instance_alias"` so downstream reviewers can recover
+the source spelling. Both forms share the same validation and scheduling
+boundary.
 
 This is not generated-child composition yet. FSMGen does not resolve
 `packet_reader`, emit a child `.fsm`, build an ATL top, or wire `reader`
@@ -686,9 +707,10 @@ aliases, and permanent actor grouping remain outside the shipped subset.
 
 The shipped ATL source-root safety boundary rejects a second top-level
 `(actor ...)` root in the same `.isf` file. That sibling root is not yet a
-resolved actor type for `(instance name of ActorType)`. One actor root plus
-`(library ...)` roots remains accepted, and the shipped library-qualified ATL
-subsets now emit generated child `.fsm` artifacts and generated ATL tops.
+resolved actor type for `(instance name of ActorType)` or the compact
+`(name : ActorType)` alias. One actor root plus `(library ...)` roots remains
+accepted, and the shipped library-qualified ATL subsets now emit generated
+child `.fsm` artifacts and generated ATL tops.
 
 Sibling-root child type resolution remains deferred.
 
@@ -712,8 +734,11 @@ library qualification:
 The alias before the dot must come from the enclosing actor's explicit library
 imports, and the name after the dot must be an actor export from that library.
 
-Unqualified `(instance name of ActorType)` remains metadata-only external
-intent for now, not an implicit search through sibling actor roots or files.
+The compact `(reader : pkt_lib.packet_reader)` spelling shares the same
+library-qualified type-resolution rules. Unqualified
+`(instance name of ActorType)` and compact `(name : ActorType)` remain
+metadata-only external intent for now, not an implicit search through sibling
+actor roots or files.
 
 Existing `(use alias.actor as instance ...)` remains the separate reusable
 library generated-top path with explicit bindings. The targeted fail-closed

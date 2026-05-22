@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Compact instance aliases reuse instance semantics
+- `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` routes `(NAME : ACTOR_TYPE)` through the
+  same static actor instance validation and metadata path as
+  `(instance NAME of ACTOR_TYPE)`.
+- The only public semantic difference is declaration provenance:
+  `declaration: "instance_alias"` for compact instances versus
+  `declaration: "actor"` for verbose instances.
+- Compact `ALIAS.EXPORT` actor types intentionally reuse the same explicit
+  library import resolver as verbose instances. The alias changes source
+  spelling only; it does not change generated child naming, generated top
+  policy, scheduling, routing, or movement behavior.
+
 ## 2026-05-22: Compact instance aliases should stay provenance-only
 - `ISF-ATL-COMPACT-INSTANCE-ALIAS.1` selects `(NAME : ACTOR_TYPE)` as the next
   compact ATL source alias because the verbose static instance contract is

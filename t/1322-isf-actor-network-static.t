@@ -83,6 +83,53 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
     my $path = write_temp_isf($source);
     my $cli_report = run_schedule_json($path, 'actor-body static actor network');
     is_deeply($cli_report, $report, 'CLI schedule JSON matches in-process report for actor-body static actor network');
+
+    my $alias_source = <<'ISF';
+(actor atl_static_instance_alias
+  (clock clk)
+  (interface (input start) (output done))
+  (reader : packet_reader)
+  (transaction run
+    (on start)
+    (complete done)))
+ISF
+    my $alias_actor = parse_source($alias_source, 'atl-static-instance-alias.isf');
+    my $expected_alias_network = {
+        kind      => 'static_declaration',
+        instances => [
+            {
+                name        => 'reader',
+                actor_type  => 'packet_reader',
+                declaration => 'instance_alias',
+            },
+        ],
+        groups => [],
+        association_schedules => [],
+        group_schedules => [],
+        data_movements => [],
+        event_waits => [],
+        transaction_triggers => [],
+    };
+    is_deeply(
+        $alias_actor->{actor_network},
+        $expected_alias_network,
+        'parser normalizes the compact static instance alias to actor-network metadata',
+    );
+
+    my $alias_scheduler = FSM::Scheduler::ISF->new();
+    my $alias_lowered = $alias_scheduler->lower($alias_actor);
+    is_deeply(
+        [sort keys %{$alias_lowered->{files}}],
+        ['atl_static_instance_alias.fsm'],
+        'compact static instance alias remains report-only and emits no child artifacts',
+    );
+
+    my $alias_report = decode_json($alias_scheduler->report($alias_actor));
+    assert_actor_network_report(
+        $alias_report,
+        $expected_alias_network,
+        'compact static instance alias report',
+    );
 };
 
 subtest 'multiple top-level actor roots fail closed before ATL child type resolution' => sub {
@@ -240,6 +287,32 @@ ISF
     assert_resolved_actor_type_metadata(
         parse_source($same_source, 'atl-type-resolution-same-source.isf'),
         'same-source library root',
+    );
+
+    my $compact_same_source = <<'ISF';
+(actor compact_atl_parent
+  (clock clk)
+  (interface (input start) (output done))
+  (imports (library common.packet as pkt_lib))
+  (worker : pkt_lib.packet_worker)
+  (transaction run
+    (on start)
+    (complete done)))
+
+(library common.packet
+  (exports (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (interface (input start) (output done))
+    (transaction process
+      (on start)
+      (complete done))))
+ISF
+    assert_resolved_actor_type_metadata(
+        parse_source($compact_same_source, 'atl-compact-type-resolution-same-source.isf'),
+        'compact same-source library root',
+        'compact_atl_parent',
+        'instance_alias',
     );
 
     my $dir = tempdir(CLEANUP => 1);
@@ -680,6 +753,30 @@ ISF
 ISF
         qr/ATL concurrent group 'pipeline' requires at least two members/,
         'compact concurrent aliases require at least two members',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor compact_instance_alias_extra
+  (clock clk)
+  (interface (input start) (output done))
+  (reader : packet_reader extra)
+  (transaction run (on start) (complete done)))
+ISF
+        qr/compact static actor instance alias requires '\(name : actor_type\)'/,
+        'compact static instance aliases require exactly one type operand',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor compact_instance_alias_dynamic_name
+  (clock clk)
+  (interface (input start) (output done))
+  ((select reader writer) : packet_reader)
+  (transaction run (on start) (complete done)))
+ISF
+        qr/static actor instance name must be a scalar HDL identifier/,
+        'compact static instance aliases require scalar HDL instance names',
     );
 
     parse_fails_like(
@@ -1597,13 +1694,14 @@ sub assert_actor_network_report {
 }
 
 sub assert_resolved_actor_type_metadata {
-    my ($actor, $label, $actor_name) = @_;
+    my ($actor, $label, $actor_name, $declaration) = @_;
     $actor_name //= 'atl_parent';
+    $declaration //= 'actor';
 
     my $expected_instance = {
         name            => 'worker',
         actor_type      => 'pkt_lib.packet_worker',
-        declaration     => 'actor',
+        declaration     => $declaration,
         type_resolution => 'library_actor_export',
         library         => 'common.packet',
         alias           => 'pkt_lib',

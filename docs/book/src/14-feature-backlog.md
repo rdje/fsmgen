@@ -809,13 +809,16 @@ Current ATL v0 proposal:
 
 The top-level root remains `(actor name ...)`. The first metadata-only
 implementation slices are shipped: static actor instances may be declared with
-the direct actor-level `(instance NAME of ACTOR_TYPE)` clause, and static
-concurrent groups may be declared with direct actor-level
-`(group NAME (members ACTOR...) (mode concurrent))` clauses.
+the direct actor-level `(instance NAME of ACTOR_TYPE)` clause or compact
+`(NAME : ACTOR_TYPE)` alias, and static concurrent groups may be declared with
+direct actor-level `(group NAME (members ACTOR...) (mode concurrent))` clauses
+or compact `(concurrent NAME ACTOR...)` aliases.
 
 The enclosing actor is the network boundary; `(network ...)` is not part of
-the shipped source surface. The accepted form lowers to parser shell and
-schedule-report metadata under `actor_network` with `declaration: "actor"`.
+the shipped source surface. The accepted forms lower to parser shell and
+schedule-report metadata under `actor_network`; verbose instances report
+`declaration: "actor"` and compact instance aliases report
+`declaration: "instance_alias"`.
 
 Unqualified static instances remain metadata-only external intent.
 
@@ -922,12 +925,13 @@ group form and keeps group behavior report-only. Runtime group scheduling,
 group endpoints, group handoff routing, generated HDL behavior, and compact
 movement syntax remain later leaves.
 
-The next selected compact source task tree is
-`ISF-ATL-COMPACT-INSTANCE-ALIAS`. It owns the direct actor-body
-`(NAME : ACTOR_TYPE)` readability alias for verbose
-`(instance NAME of ACTOR_TYPE)` static instance declarations. No behavior has
-shipped from that tree yet; the selection only records the source shape,
-boundaries, and implementation leaf.
+The compact `(NAME : ACTOR_TYPE)` instance alias is now shipped by
+`ISF-ATL-COMPACT-INSTANCE-ALIAS`. It is only a readability alias for verbose
+`(instance NAME of ACTOR_TYPE)` static instance declarations. Verbose
+instances report `declaration: "actor"`; compact instance aliases report
+`declaration: "instance_alias"`. Instance scheduling behavior, actor type
+resolution, generated child emission, generated ATL tops, compact movement
+syntax, and route behavior are unchanged by the alias.
 
 The first multi-actor trigger scheduling leaf is shipped as a same-cycle
 external trigger batch over existing transaction-body

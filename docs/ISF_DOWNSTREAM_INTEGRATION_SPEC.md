@@ -1648,9 +1648,10 @@ Rules:
 ## 12.5. Static Actor Network Metadata
 
 FSMGen now accepts bounded Actor Transfer Level (`ATL`) source surfaces owned
-by the top-level actor: direct static actor declarations, report-only static
-groups, selected scalar handoffs, selected parent event/trigger handoffs, and
-the exact same-cycle temporary trigger batch.
+by the top-level actor: direct static actor declarations, compact static actor
+declaration aliases, report-only static groups, selected scalar handoffs,
+selected parent event/trigger handoffs, and the exact same-cycle temporary
+trigger batch.
 
 The static declarations record actor-network intent for downstream discovery;
 behavior-bearing leaves add only the explicitly documented parent handoff
@@ -1661,8 +1662,9 @@ scheduled `.fsm` artifacts, and emits the first generated ATL top for the
 selected one-resolved-child trigger/event subset.
 
 The shipped source contract for ATL actor type resolution is explicit library
-qualification in `(instance NAME of ALIAS.EXPORT)`, not sibling actor roots
-and not implicit lookup of unqualified `ACTOR_TYPE` names.
+qualification in `(instance NAME of ALIAS.EXPORT)` or compact
+`(NAME : ALIAS.EXPORT)`, not sibling actor roots and not implicit lookup of
+unqualified `ACTOR_TYPE` names.
 
 The shipped resolution subset reports metadata for that qualified form:
 `type_resolution: library_actor_export`, the resolved `library`, `alias`, and
@@ -1684,6 +1686,20 @@ Accepted form:
     (input start)
     (output done))
   (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+Compact equivalent:
+
+```lisp
+(actor packet_pipe_compact
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (reader : packet_reader)
   (transaction run
     (on start)
     (complete done)))
@@ -1714,12 +1730,14 @@ The schedule report exposes this through top-level `actor_network`:
 }
 ```
 
-`declaration` is always `actor` in this subset because the static instance is
-a direct actor-body declaration. Current fail-closed boundaries include
-multiple instances outside the shipped actor-to-actor handoff or report-only
-group metadata subsets, `(network ...)`, dynamic/non-scalar names, direct
-recursive instantiation, qualified actor/event behavior beyond the selected
-single parent-handoff event wait and single parent-handoff transaction trigger
+Verbose `(instance NAME of ACTOR_TYPE)` declarations report
+`declaration: "actor"`. Compact `(NAME : ACTOR_TYPE)` aliases report
+`declaration: "instance_alias"`. Both forms share the same validation and
+metadata surface. Current fail-closed boundaries include multiple instances
+outside the shipped actor-to-actor handoff or report-only group metadata
+subsets, `(network ...)`, dynamic/non-scalar names, direct recursive
+instantiation, qualified actor/event behavior beyond the selected single
+parent-handoff event wait and single parent-handoff transaction trigger
 subsets, and group scheduling behavior beyond the exact same-cycle trigger
 batch subset documented below.
 
@@ -2577,8 +2595,9 @@ dt_blocks[]: name, kind, assignments
 actor_network: kind, instances, groups, association_schedules,
   group_schedules, data_movements, event_waits, transaction_triggers
 actor_network.instances[]: name, actor_type, declaration
+actor_network instance declaration values: actor, instance_alias
 resolved actor_network.instances[] child-artifact metadata keys:
-  type_resolution, library, alias, export, module, scheduled_fsm
+type_resolution, library, alias, export, module, scheduled_fsm
 actor_network.groups[]: name, members, mode, declaration, source, scheduling
 actor_network.association_schedules[]: association, kind, lifetime,
   owner_transaction, context, members, target_transactions, signals, schedule,

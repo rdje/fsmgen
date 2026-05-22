@@ -132,7 +132,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md` — completed `R14` task tree for repeat-body spawn parameter overrides.
 - `docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md` — completed `R14` task tree for repeat-body child activation widening.
 - `docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md` — completed `R14` task tree for static ISF Actor Transfer Level actor-network orchestration.
-- `docs/tasks/ISF-ATL-COMPACT-INSTANCE-ALIAS.md` — active `R14` task tree for the compact ATL static instance alias.
+- `docs/tasks/ISF-ATL-COMPACT-INSTANCE-ALIAS.md` — completed `R14` task tree for the compact ATL static instance alias.
 - `docs/tasks/ISF-ATL-COMPACT-GROUP-ALIAS.md` — completed `R14` task tree for the compact ATL concurrent group alias.
 - `docs/tasks/ISF-ATL-MULTI-EVENT-WAIT.md` — completed `R14` task tree for bounded ATL transaction-body multi-event waits.
 - `docs/tasks/ISF-ATL-PIN-MIXED-ROUTE-SETS.md` — completed `R14` task tree for bounded generated-child ATL top-level pin mixed scalar/vector route sets.

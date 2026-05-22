@@ -187,7 +187,12 @@ sub _build_actor($self, $actor_ast, $source_label) {
             unless ref($clause) eq 'ARRAY';
 
         my $keyword = defined($clause->[0]) && !ref($clause->[0]) ? $clause->[0] : '';
-        if ($keyword eq 'clock') {
+        if (_looks_like_actor_network_compact_instance_alias($clause)) {
+            $self->_merge_actor_network(
+                $result,
+                $self->_parse_actor_network_compact_instance_alias($clause, $actor_name),
+            );
+        } elsif ($keyword eq 'clock') {
             $self->_claim_singleton_actor_clause($actor_name, 'clock', \%singleton_actor_clauses);
             $result->{clock} = $self->_parse_clock($clause);
         } elsif ($keyword eq 'clock-domains') {
@@ -6485,6 +6490,27 @@ sub _parse_actor_network_instance($self, $clause, $actor_name) {
             && $clause->[2] eq 'of';
 
     my ($name, $actor_type) = ($clause->[1], $clause->[3]);
+    return _actor_network_from_instance_parts($actor_name, $name, $actor_type, 'actor');
+}
+
+sub _looks_like_actor_network_compact_instance_alias($clause) {
+    return ref($clause) eq 'ARRAY'
+        && @$clause >= 2
+        && defined($clause->[1])
+        && !ref($clause->[1])
+        && $clause->[1] eq ':';
+}
+
+sub _parse_actor_network_compact_instance_alias($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' compact static actor instance alias requires '(name : actor_type)'\n"
+        unless @$clause == 3;
+
+    my ($name, $actor_type) = ($clause->[0], $clause->[2]);
+    return _actor_network_from_instance_parts($actor_name, $name, $actor_type, 'instance_alias');
+}
+
+sub _actor_network_from_instance_parts {
+    my ($actor_name, $name, $actor_type, $declaration) = @_;
     confess "Error: actor '$actor_name' static actor instance name must be a scalar HDL identifier\n"
         unless _is_hdl_identifier($name);
     confess "Error: actor '$actor_name' static actor instance '$name' type must be a scalar HDL identifier or selected ATL library-qualified 'ALIAS.EXPORT' token\n"
@@ -6498,7 +6524,7 @@ sub _parse_actor_network_instance($self, $clause, $actor_name) {
             {
                 name        => $name,
                 actor_type  => $actor_type,
-                declaration => 'actor',
+                declaration => $declaration,
             },
         ],
         [],

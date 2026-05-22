@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL compact instance alias shipped
+- Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` and closed the task tree.
+- FSMGen now accepts direct actor-body `(NAME : ACTOR_TYPE)` as a compact
+  readability alias for the shipped verbose `(instance NAME of ACTOR_TYPE)`
+  static instance metadata form.
+- The parser normalizes compact aliases into `actor_network.instances[]` with
+  `declaration: "instance_alias"`. Verbose instances continue to report
+  `declaration: "actor"`.
+- Compact library-qualified forms such as `(worker : pkt_lib.packet_worker)`
+  use the same explicit import alias and actor-export resolution path as
+  `(instance worker of pkt_lib.packet_worker)`, preserving resolved child
+  metadata and scheduled child `.fsm` emission.
+- No instance scheduling behavior, actor type resolution policy, generated
+  child emission policy, generated ATL top behavior, compact movement syntax,
+  or route behavior was changed.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  public manifest metadata, ATL design proposal, mdBook composition/support
+  matrix/backlog chapters, roadmap status, task-tree docs, and live docs.
+- Validation passed: parser/public-contract/test syntax checks; focused
+  `t/1322-isf-actor-network-static.t`; public/doc audit group; ATL fixture
+  group; broad `./bin/ci-regression isf --no-book` with `Files=238,
+  Tests=1582`; `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: ATL compact instance alias tree selected
 - Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.1`.
 - Activated the next R14 task tree for compact static ATL instance

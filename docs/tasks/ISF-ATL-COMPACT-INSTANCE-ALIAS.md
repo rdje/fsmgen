@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ATL-COMPACT-INSTANCE-ALIAS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -55,7 +55,7 @@ It must normalize to the same bounded static instance metadata as:
 ## Task Tree
 
 - ID: `ISF-ATL-COMPACT-INSTANCE-ALIAS`
-  Status: `active`
+  Status: `done`
   Goal: `ship compact ATL static instance alias`
   Children: `ISF-ATL-COMPACT-INSTANCE-ALIAS.1`,
   `ISF-ATL-COMPACT-INSTANCE-ALIAS.2`
@@ -65,20 +65,20 @@ It must normalize to the same bounded static instance metadata as:
   Goal: `select the compact ATL static instance alias task tree`
   Acceptance: `task-tree owner, source shape, boundaries, and implementation leaf are recorded before code changes`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `6245e321 ISF-ATL-COMPACT-INSTANCE-ALIAS.1: select compact ATL instance alias`
 
 - ID: `ISF-ATL-COMPACT-INSTANCE-ALIAS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `implement compact static instance alias normalization and coverage`
   Acceptance: `compact static instances lower to the same static actor instance metadata surface as verbose instances while preserving transparent declaration provenance and fail-closed boundaries`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `parser/public-contract/test syntax checks`; `prove -Iperl t/1322-isf-actor-network-static.t`; public/doc audit group; ATL fixture group; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` | `pending` | Compact instance declarations are the remaining documented compact ATL source alias after compact concurrent groups shipped. |
+| 1 | `closed` | `done` | Compact static instance aliases are shipped; the next PNT selection should use the roadmap/task-tree frontier outside this tree. |
 
 ## Decisions
 
@@ -101,14 +101,18 @@ It must normalize to the same bounded static instance metadata as:
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-ATL-COMPACT-INSTANCE-ALIAS.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-22` | `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` | `parser/public-contract/test syntax checks`; `prove -Iperl t/1322-isf-actor-network-static.t`; public/doc audit group; ATL fixture group; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ATL-COMPACT-INSTANCE-ALIAS.1` | `pending this commit: ISF-ATL-COMPACT-INSTANCE-ALIAS.1: select compact ATL instance alias` | Selection commit. |
+| `ISF-ATL-COMPACT-INSTANCE-ALIAS.1` | `6245e321 ISF-ATL-COMPACT-INSTANCE-ALIAS.1: select compact ATL instance alias` | Selection commit. |
+| `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` | `pending this commit: ISF-ATL-COMPACT-INSTANCE-ALIAS.2: ship compact ATL instance alias` | Implementation commit. |
 
 ## Changelog
 
 - `2026-05-22`: Created active R14 task tree and selected the compact static
   instance alias implementation sequence.
+- `2026-05-22`: Shipped the compact alias as static actor instance metadata
+  with `declaration: "instance_alias"` provenance and closed the task tree.

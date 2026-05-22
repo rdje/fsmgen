@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ATL-COMPACT-INSTANCE-ALIAS` | `active` | `R14` | `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` | [docs/tasks/ISF-ATL-COMPACT-INSTANCE-ALIAS.md](docs/tasks/ISF-ATL-COMPACT-INSTANCE-ALIAS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ATL-COMPACT-INSTANCE-ALIAS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-COMPACT-INSTANCE-ALIAS.md](docs/tasks/ISF-ATL-COMPACT-INSTANCE-ALIAS.md) |
 | `ISF-ATL-COMPACT-GROUP-ALIAS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-COMPACT-GROUP-ALIAS.md](docs/tasks/ISF-ATL-COMPACT-GROUP-ALIAS.md) |
 | `ISF-ATL-MULTI-EVENT-WAIT` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-MULTI-EVENT-WAIT.md](docs/tasks/ISF-ATL-MULTI-EVENT-WAIT.md) |
 | `ISF-ATL-PIN-MIXED-ROUTE-SETS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-PIN-MIXED-ROUTE-SETS.md](docs/tasks/ISF-ATL-PIN-MIXED-ROUTE-SETS.md) |

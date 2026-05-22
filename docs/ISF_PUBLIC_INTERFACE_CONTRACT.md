@@ -660,10 +660,11 @@ top-level `(actor ...)` roots fail closed with a targeted diagnostic; sibling
 actor roots are not ATL child type definitions until actor type resolution is
 explicitly selected. One actor root plus `(library ...)` roots remains part of
 the supported reusable-library source model.
-The shipped ATL actor type-resolution spelling is library-qualified
-`(instance NAME of ALIAS.EXPORT)`, where `ALIAS` is an explicit library import
-alias and `EXPORT` is a library actor export. The shipped resolution reports
-metadata and emits child artifacts: `actor_network.instances[]` adds
+The shipped ATL actor type-resolution spellings are library-qualified
+`(instance NAME of ALIAS.EXPORT)` and compact `(NAME : ALIAS.EXPORT)`, where
+`ALIAS` is an explicit library import alias and `EXPORT` is a library actor
+export. The shipped resolution reports metadata and emits child artifacts:
+`actor_network.instances[]` adds
 `type_resolution`, `library`,
 `alias`, `export`, `module`, and `scheduled_fsm` only for resolved
 `ALIAS.EXPORT` actor types, and the lowerer emits the child scheduled `.fsm`
@@ -1803,16 +1804,19 @@ singleton `(constants ...)` clause. That field is not a required actor shell
 key, but the advertised value-shape string records that `constants` is an
 optional array reference when present.
 Actor roots may also carry the first bounded ATL static actor-network
-metadata through a direct actor-level `(instance NAME of ACTOR_TYPE)` clause.
-The enclosing actor is the network boundary; `(network ...)` wrappers are not
-part of the shipped source surface. That field is not a required actor shell
-key. When present, `actor_network` is a `static_declaration` hash with direct
-static instance metadata, optional report-only group metadata, shipped event,
-trigger, data movement, exact temporary trigger-batch metadata, resolved
-library-qualified child artifact metadata, and the bounded generated ATL top
-families. Schedule reports project it through top-level `actor_network`.
-Resolved instance entries report actor type provenance and child artifact
-names. The generated-top subset wires the selected one-child trigger/event
+metadata through direct actor-level `(instance NAME of ACTOR_TYPE)` clauses or
+compact `(NAME : ACTOR_TYPE)` aliases. The enclosing actor is the network
+boundary; `(network ...)` wrappers are not part of the shipped source surface.
+That field is not a required actor shell key. When present, `actor_network` is
+a `static_declaration` hash with direct static instance metadata, optional
+report-only group metadata, shipped event, trigger, data movement, exact
+temporary trigger-batch metadata, resolved library-qualified child artifact
+metadata, and the bounded generated ATL top families. Schedule reports project
+it through top-level `actor_network`. Verbose instances report
+`declaration: "actor"`; compact instance aliases report
+`declaration: "instance_alias"`. Resolved instance entries report actor type
+provenance and child artifact names. The generated-top subset wires the
+selected one-child trigger/event
 forms, the selected one-child scalar pin-ingress route, the selected
 one-child exact-width vector pin-ingress route, the same-child scalar
 pin-ingress multi-route extension, the same-child vector pin-ingress
@@ -2290,6 +2294,7 @@ actor_params entries: name, value
 actor_constants entries: name, value
 actor_network: kind, instances, groups, generated_tops, association_schedules, group_schedules, data_movements, event_waits, transaction_triggers
 actor_network instances entries: name, actor_type, declaration
+actor_network instance declaration values: actor, instance_alias
 actor_network groups entries: name, members, mode, declaration, source, scheduling
 actor_network generated_tops entries: kind, top_module, top_fsm, parent_module, parent_scheduled_fsm, instance, child_module, child_scheduled_fsm, target_transaction, trigger_parent_port, trigger_child_port, event, event_parent_port, event_child_port, clock, reset
 actor_network generated_tops multi-child entries: kind, top_module, top_fsm, parent_module, parent_scheduled_fsm, children, clock, reset

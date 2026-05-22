@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL compact instance alias shipped
+- Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` and closed the task tree.
+- FSMGen now accepts direct actor-body `(NAME : ACTOR_TYPE)` as a compact
+  readability alias for the shipped verbose static instance form
+  `(instance NAME of ACTOR_TYPE)`.
+- Schedule JSON reports compact instances through `actor_network.instances[]`
+  with `declaration: "instance_alias"`; verbose instances keep
+  `declaration: "actor"`.
+- Compact library-qualified forms use the same explicit import and actor-export
+  resolution path as verbose `(instance NAME of ALIAS.EXPORT)` declarations.
+- This is syntax ergonomics only. Instance scheduling behavior, actor type
+  resolution policy, generated child emission policy, generated ATL top
+  behavior, compact movement syntax, and route behavior are unchanged.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Validation passed: focused actor-network test, public/doc audit group, ATL
+  fixture group, and broad `./bin/ci-regression isf --no-book` with
+  `Files=238, Tests=1582`, plus `mdbook build docs/book` and
+  `git diff --check`.
+
 ## 2026-05-22: R14 — ATL compact instance alias tree selected
 - Completed `ISF-ATL-COMPACT-INSTANCE-ALIAS.1`.
 - Activated the next R14 task tree for direct actor-body

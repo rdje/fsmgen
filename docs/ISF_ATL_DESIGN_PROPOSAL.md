@@ -62,12 +62,15 @@ selected source shape because it:
   one unified ATL surface;
 - avoids a second lexical section that could be mistaken for a semantic root.
 
-The shipped metadata surfaces accept direct `(instance ...)` clauses, the
-direct verbose `(group NAME (members ACTOR...) (mode concurrent))` group
-form, and the compact `(concurrent NAME ACTOR...)` alias. Instances lower to
+The shipped metadata surfaces accept direct `(instance ...)` clauses, compact
+`(NAME : ACTOR_TYPE)` instance aliases, the direct verbose
+`(group NAME (members ACTOR...) (mode concurrent))` group form, and the
+compact `(concurrent NAME ACTOR...)` group alias. Instances lower to
 `actor_network.instances[]`; groups lower to report-only
 `actor_network.groups[]` entries with `scheduling: metadata_only`. Verbose
-groups report `declaration: "group"` and compact group aliases report
+instances report `declaration: "actor"`, compact instance aliases report
+`declaration: "instance_alias"`, verbose groups report
+`declaration: "group"`, and compact group aliases report
 `declaration: "concurrent_alias"`. `(network ...)`, broader group placement,
 generated children, group endpoints, and multi-instance scheduling are still
 deferred unless a later leaf advertises them explicitly.
@@ -801,13 +804,14 @@ The selected ATL actor type-resolution source contract is library-qualified:
     (complete done)))
 ```
 
-`ALIAS` in `(instance NAME of ALIAS.EXPORT)` must come from the enclosing
-actor's explicit `(imports (library LIBRARY as ALIAS))` clause, and `EXPORT`
-must name an actor export from that imported library. Same-source
-`(library ...)` roots and external library files remain the resolver inputs,
-reusing the existing library import model. Unqualified
-`(instance NAME of ACTOR_TYPE)` remains metadata-only external intent until a
-later leaf explicitly widens it; sibling top-level `(actor ...)` roots remain
+`ALIAS` in `(instance NAME of ALIAS.EXPORT)` or compact
+`(NAME : ALIAS.EXPORT)` must come from the enclosing actor's explicit
+`(imports (library LIBRARY as ALIAS))` clause, and `EXPORT` must name an actor
+export from that imported library. Same-source `(library ...)` roots and
+external library files remain the resolver inputs, reusing the existing
+library import model. Unqualified `(instance NAME of ACTOR_TYPE)` and compact
+`(NAME : ACTOR_TYPE)` remain metadata-only external intent until a later leaf
+explicitly widens it; sibling top-level `(actor ...)` roots remain
 fail-closed. The source-contract reservation diagnostic is shipped: missing
 imports, non-explicit import aliases, unknown aliases, unknown actor exports,
 and, in the `.9.18` reservation leaf, known actor exports failed before
@@ -817,10 +821,10 @@ yet. `.9.20` kept the invalid-source diagnostics and replaced the known
 export failure with metadata resolution; `.9.22` adds child artifact emission
 for those resolved entries.
 
-The shipped type-resolution subset accepts the same
-`(instance NAME of ALIAS.EXPORT)` source shape only when `ALIAS` is an
-explicit import alias and `EXPORT` names a library actor export, then widens
-the resolved `actor_network.instances[]` entry with
+The shipped type-resolution subset accepts
+`(instance NAME of ALIAS.EXPORT)` and compact `(NAME : ALIAS.EXPORT)` only
+when `ALIAS` is an explicit import alias and `EXPORT` names a library actor
+export, then widens the resolved `actor_network.instances[]` entry with
 `type_resolution`, `library`, `alias`, `export`, `module`, and
 `scheduled_fsm`. `type_resolution` is `library_actor_export`; `module` and
 `scheduled_fsm` name the deterministic child artifacts
@@ -964,13 +968,12 @@ Candidate compact source aliases:
 | `(inst : actor_type)` | `(instance inst of actor_type)` |
 | `(concurrent name actor...)` | `(group name (members actor...) (mode concurrent))` |
 
-The verbose form was accepted first. The first compact form now shipped is
+The verbose form was accepted first. The shipped compact forms are
 `(concurrent name actor...)`, which lowers to the same report-only static group
-semantics as the verbose group declaration while preserving transparent
-declaration provenance. The next selected compact source task tree is
-`ISF-ATL-COMPACT-INSTANCE-ALIAS`, which will evaluate `(inst : actor_type)` as
-a provenance-preserving alias for `(instance inst of actor_type)` before any
-implementation code changes.
+semantics as the verbose group declaration, and `(inst : actor_type)`, which
+lowers to the same static instance metadata as
+`(instance inst of actor_type)`. Both compact forms preserve transparent
+declaration provenance for downstream review.
 
 No new compact movement spelling is planned for ATL v0. The movement surface
 is the existing drive definition and drive-call surface with endpoint-aware
