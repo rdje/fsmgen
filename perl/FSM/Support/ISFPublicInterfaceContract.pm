@@ -527,6 +527,7 @@ sub build_isf_public_interface_contract {
             't/1340-isf-bank-storage-actor-constant-widths.t',
             't/1341-isf-bank-storage-actor-constant-depths.t',
             't/1342-isf-transaction-port-actor-constant-widths.t',
+            't/1343-isf-data-op-static-width-sources.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

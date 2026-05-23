@@ -72,7 +72,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'unknown extract option', qr/\Aextract optional arguments must be '\(widths N\.\.\.\)'/);
+    assert_lower_rejected(<<'ISF', 'unknown extract option', qr/\Aextract optional arguments must be '\(widths N\|PARAM\|CONST\.\.\.\)'/);
 (actor unknown_extract_option
   (clock clk)
   (interface (input start) (input packet) (output header) (output done))

@@ -723,12 +723,12 @@ Transaction clauses currently supported:
 (store bank index value)
 (load bank index as target)
 (shift_left reg bit)
-(shift_left reg bit (width N))
+(shift_left reg bit (width N|PARAM|CONST))
 (shift_right reg bit)
-(shift_right reg bit (width N))
+(shift_right reg bit (width N|PARAM|CONST))
 (assemble part... as target)
 (extract word as field...)
-(extract word as field... (widths N...))
+(extract word as field... (widths N|PARAM|CONST...))
 (do transaction [(domain NAME)] [(params ...)] [(bind ...)])
 (spawn transaction as instance [(params ...)] [(bind ...)] [(domain NAME)])
 (await_all done_port)
@@ -1193,12 +1193,12 @@ Supported forms:
 (set target expr)
 (update target expr)
 (shift_left reg bit)
-(shift_left reg bit (width N))
+(shift_left reg bit (width N|PARAM|CONST))
 (shift_right reg bit)
-(shift_right reg bit (width N))
+(shift_right reg bit (width N|PARAM|CONST))
 (assemble part... as target)
 (extract word as field...)
-(extract word as field... (widths N...))
+(extract word as field... (widths N|PARAM|CONST...))
 ```
 
 Rules:
@@ -1207,17 +1207,24 @@ Rules:
 - `update` is the older transaction-local assignment spelling.
 - Shift/extract/assemble forms use known width evidence and fail closed on
   contradictory or missing width evidence where exact lowering requires it.
-  `shift_left` accepts optional `(width N)` as width evidence for the shifted
-  register, but plain `shift_left` remains accepted without width evidence
-  because left insertion does not require a computed MSB position.
+  `shift_left` accepts optional `(width N|PARAM|CONST)` as width evidence for
+  the shifted register, but plain `shift_left` remains accepted without width
+  evidence because left insertion does not require a computed MSB position.
+  `shift_right` accepts the same explicit source set for its inserted-bit
+  position. `PARAM` must name an actor-local scalar parameter default that
+  resolves to a positive integer, and `CONST` must name a declared actor
+  constant that resolves to a positive integer.
 - `assemble` can infer exactly one missing part width from a known target
   width and known sibling part widths. Two or more unknown parts still lower
   only as non-evidence concat operands; non-positive inferred remainders fail
   closed.
 - `extract` emits concrete slices, not placeholder bounds. It can infer
   exactly one missing destination field width from a known source word width
-  and known sibling field widths; two or more unknown fields, non-positive
-  inferred remainders, and known source/field total mismatches fail closed.
+  and known sibling field widths. Explicit `(widths ...)` entries may mix
+  positive integer literals, actor-local scalar parameters, and declared actor
+  constants that resolve to positive integers. Two or more unknown fields,
+  non-positive inferred remainders, and known source/field total mismatches
+  fail closed.
 
 ### 11.6 Transaction Parameters And Generated Activations
 

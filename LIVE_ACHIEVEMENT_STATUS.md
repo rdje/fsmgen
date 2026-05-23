@@ -2,6 +2,27 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Data operation static width sources shipped
+- Completed `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` and closed the task tree.
+- `shift_left`, `shift_right`, and `extract` explicit width evidence now
+  accepts actor-local scalar parameter defaults and declared actor constants
+  that resolve to positive integers.
+- Accepted static values lower like literal widths in width fact collection,
+  scheduled `.fsm` shift insert positions and extraction slices,
+  schedule-report storage width metadata, and generated HDL.
+- Unsupported sources fail closed: transaction parameters, runtime interface
+  signals, arbitrary expressions, unknown names, zero values, aggregate values,
+  use-site/generated-top respecialization, new `assemble` syntax, timing
+  changes, generated handoff naming changes, activation binding semantics
+  changes, and schedule-report key-family changes.
+- Validation passed: syntax checks; focused data-operation/public/spec/book
+  tests with `Files=11, Tests=342`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=249, Tests=1652`;
+  post-closure doc/public audits with `Files=7, Tests=352`;
+  `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Data operation static width sources selected
 - Completed selection work for `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1`.
 - Activated the active R14 task tree for actor-local scalar parameter defaults

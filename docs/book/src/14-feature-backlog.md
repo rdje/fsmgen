@@ -44,7 +44,7 @@ not fixed actor constants.
 
 ### Automatic Aggregate Growth From Usage
 
-Status: backlog; next bounded width-source slice selected.
+Status: partially shipped; broader inference surfaces remain backlog.
 
 Goal: infer aggregate record/list shapes from member/index usage when no
 explicit aggregate type anchor is present.
@@ -2313,17 +2313,14 @@ Status: backlog.
 Goal: infer widths for data operations in more cases without requiring
 explicit width options, and keep accepted lowering free of width placeholders.
 
-Current boundary: `shift_left` and `shift_right` accept `(width N)` and
-`extract` accepts `(widths N...)` as explicit assertions. `shift_left` uses
-the optional width only as register-width evidence; plain widthless
-`shift_left` remains accepted because no insertion-position width is needed.
-
-The active
-[`ISF-DATA-OP-STATIC-WIDTH-SOURCES`](../../tasks/ISF-DATA-OP-STATIC-WIDTH-SOURCES.md)
-task tree selects the next bounded slice: the existing `shift_left`,
-`shift_right`, and `extract` width-evidence options should accept actor-local
-scalar parameter defaults and declared actor constants that resolve to
-positive integers. That selection does not change current behavior yet.
+Current boundary: `shift_left` and `shift_right` accept
+`(width N|PARAM|CONST)` and `extract` accepts
+`(widths N|PARAM|CONST...)` as explicit assertions. `PARAM` names an
+actor-local scalar parameter default that resolves to a positive integer, and
+`CONST` names a declared actor constant that resolves to a positive integer.
+`shift_left` uses the optional width only as register-width evidence; plain
+widthless `shift_left` remains accepted because no insertion-position width
+is needed.
 
 `extract` also infers exactly one missing destination field width when the
 source word width and all sibling field widths prove one positive remainder;

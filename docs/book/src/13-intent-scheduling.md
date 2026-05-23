@@ -787,23 +787,30 @@ The ISF-specific current limitations are:
   `(priority over other_rule)`. `set` is the canonical explicit scalar setter;
   `(port expr)` remains rule shorthand. Rule trigger targets must resolve to a
   declared transaction in the same actor before parser handoff returns.
-- `(shift_right ...)` accepts an explicit `(width N)` option when the shifted
-  register width is not declared elsewhere. The option is an assertion and
+- `(shift_left ...)` and `(shift_right ...)` accept explicit
+  `(width N|PARAM|CONST)` options when the shifted register width is not
+  declared elsewhere. `PARAM` names an actor-local scalar parameter default
+  that resolves to a positive integer, and `CONST` names a declared actor
+  constant that resolves to a positive integer. The option is an assertion and
   must agree with any known register width. Values with no known or explicit
-  width now fail closed instead of emitting a placeholder `WIDTH` expression.
+  width still fail closed for `shift_right` instead of emitting a placeholder
+  `WIDTH` expression. Plain `shift_left` remains accepted without width
+  evidence because it does not need an insertion-position width.
 - `(assemble ...)` derives target width when every part width is known. It
   also infers exactly one missing part width when the target width and every
   sibling part width prove a positive remainder. Two or more unknown part
   widths may still lower as a reviewable concat expression, but they are not
   used as width evidence. Known target-width disagreements or non-positive
   inferred remainders fail closed.
-- `(extract ...)` accepts an ordered `(widths N...)` option when field widths
-  are not declared elsewhere. It also infers exactly one missing destination
-  field width when the source word width and every sibling field width prove a
-  positive remainder. Accepted `extract` source now emits exact descending
-  slices only; multiple unknown field widths, non-positive inferred
-  remainders, or source/field width disagreement fail closed before scheduled
-  `.fsm` emission.
+- `(extract ...)` accepts an ordered `(widths N|PARAM|CONST...)` option when
+  field widths are not declared elsewhere. The list may mix positive integer
+  literals, actor-local scalar parameter defaults, and declared actor
+  constants that resolve to positive integers. It also infers exactly one
+  missing destination field width when the source word width and every sibling
+  field width prove a positive remainder. Accepted `extract` source now emits
+  exact descending slices only; multiple unknown field widths, non-positive
+  inferred remainders, or source/field width disagreement fail closed before
+  scheduled `.fsm` emission.
 - The first `(contract ...)` temporal assertion subset is implemented for
   top-level `(contract name (eventually signal within cycles))`. The older
   nested `(eventually signal (within cycles))` spelling remains accepted as an

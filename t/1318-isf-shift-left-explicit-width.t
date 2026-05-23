@@ -150,7 +150,7 @@ subtest 'shift_left width option rejects malformed payloads' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'bad_shift_left_width_option.fsm', 'unknown shift_left width option', qr/shift_left optional arguments must be '\(width N\)'/);
+    assert_lower_rejected(<<'ISF', 'bad_shift_left_width_option.fsm', 'unknown shift_left width option', qr/shift_left optional arguments must be '\(width N\|PARAM\|CONST\)'/);
 (actor bad_shift_left_width_option
   (clock clk)
   (interface

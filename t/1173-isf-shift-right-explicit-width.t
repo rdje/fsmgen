@@ -121,7 +121,7 @@ ISF
 };
 
 subtest 'shift_right without width evidence fails closed' => sub {
-    assert_lower_rejected(<<'ISF', 'shift_right_unknown_width.fsm', 'unknown shift_right width', qr/shift_right width for 'shreg' is unknown; add an interface width or '\(width N\)' option/);
+    assert_lower_rejected(<<'ISF', 'shift_right_unknown_width.fsm', 'unknown shift_right width', qr/shift_right width for 'shreg' is unknown; add an interface width or '\(width N\|PARAM\|CONST\)' option/);
 (actor shift_right_unknown_width
   (clock clk)
   (interface

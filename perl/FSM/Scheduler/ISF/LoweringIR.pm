@@ -3145,9 +3145,9 @@ sub _build_signal_width_map {
         }
     }
     _collect_sample_widths($tx->{clauses}, \%widths);
-    _collect_shift_widths($tx->{clauses}, \%widths);
+    _collect_shift_widths($tx->{clauses}, \%widths, $actor, $tx->{name});
     _collect_data_widths($tx->{clauses}, \%widths);
-    _collect_extract_widths($tx->{clauses}, \%widths);
+    _collect_extract_widths($tx->{clauses}, \%widths, $actor, $tx->{name});
     _collect_data_widths($tx->{clauses}, \%widths);
     return \%widths;
 }
@@ -3191,12 +3191,17 @@ sub _collect_data_widths {
 }
 
 sub _collect_shift_widths {
-    my ($node, $widths) = @_;
+    my ($node, $widths, $actor, $tn) = @_;
     return unless ref($node) eq 'ARRAY';
 
     if (@$node >= 4 && ($node->[0] eq 'shift_left' || $node->[0] eq 'shift_right')) {
         my $keyword = $node->[0];
-        my $explicit_width = _parse_shift_width($node, $keyword);
+        my $explicit_width = _static_data_width_evidence_value(
+            _parse_shift_width($node, $keyword),
+            $actor,
+            $tn,
+            "$keyword width",
+        );
         my $target = $node->[1];
         if (defined($explicit_width) && defined($target) && !ref($target)) {
             my $known_width = $widths->{$target};
@@ -3207,16 +3212,16 @@ sub _collect_shift_widths {
     }
 
     for my $child (@$node) {
-        _collect_shift_widths($child, $widths) if ref($child) eq 'ARRAY';
+        _collect_shift_widths($child, $widths, $actor, $tn) if ref($child) eq 'ARRAY';
     }
 }
 
 sub _collect_extract_widths {
-    my ($node, $widths) = @_;
+    my ($node, $widths, $actor, $tn) = @_;
     return unless ref($node) eq 'ARRAY';
 
     if (@$node >= 5 && $node->[0] eq 'extract') {
-        my ($word, $fields, $explicit_widths) = _parse_extract_clause($node);
+        my ($word, $fields, $explicit_widths) = _parse_extract_clause($node, $actor, $tn);
         my @field_widths = _resolve_extract_field_widths(
             $word,
             $fields,
@@ -3233,7 +3238,7 @@ sub _collect_extract_widths {
     }
 
     for my $child (@$node) {
-        _collect_extract_widths($child, $widths) if ref($child) eq 'ARRAY';
+        _collect_extract_widths($child, $widths, $actor, $tn) if ref($child) eq 'ARRAY';
     }
 }
 
@@ -3302,14 +3307,14 @@ sub _resolve_assemble_widths {
 }
 
 sub _parse_extract_clause {
-    my ($cl) = @_;
+    my ($cl, $actor, $tn) = @_;
     confess "extract requires '(extract word as field...)'\n"
         unless @$cl >= 4 && defined $cl->[2] && !ref($cl->[2]) && $cl->[2] eq 'as';
 
     my $word = $cl->[1];
     my @items = @{$cl}[3 .. $#$cl];
     my @fields;
-    my @explicit_widths;
+    my @raw_explicit_widths;
     my $saw_widths;
 
     confess "extract word must be a scalar name\n"
@@ -3322,17 +3327,16 @@ sub _parse_extract_clause {
                 if @$item == 1 || grep { !defined($_) || ref($_) } @$item;
             confess "extract accepts at most one '(widths ...)' option\n"
                 if $saw_widths;
-            confess "extract optional arguments must be '(widths N...)'\n"
+            confess "extract optional arguments must be '(widths N|PARAM|CONST...)'\n"
                 unless @$item >= 2
                     && defined($item->[0])
                     && !ref($item->[0])
                     && $item->[0] eq 'widths';
             $saw_widths = 1;
-            @explicit_widths = @{$item}[1 .. $#$item];
-            for my $width (@explicit_widths) {
-                confess "extract widths must be positive integers\n"
-                    if !defined($width) || ref($width) || $width !~ /\A[1-9][0-9]*\z/;
-                $width = 0 + $width;
+            @raw_explicit_widths = @{$item}[1 .. $#$item];
+            for my $width (@raw_explicit_widths) {
+                confess "extract widths must be positive integer literals, actor constants, or actor scalar parameters\n"
+                    if !defined($width) || ref($width) || !length($width);
             }
             next;
         }
@@ -3345,7 +3349,17 @@ sub _parse_extract_clause {
 
     confess "extract requires at least one scalar field\n" unless @fields;
     confess "extract '(widths ...)' count must match the field count\n"
-        if @explicit_widths && @explicit_widths != @fields;
+        if @raw_explicit_widths && @raw_explicit_widths != @fields;
+
+    my @explicit_widths;
+    for my $idx (0 .. $#raw_explicit_widths) {
+        push @explicit_widths, _static_data_width_evidence_value(
+            $raw_explicit_widths[$idx],
+            $actor,
+            $tn,
+            "extract width for '$fields[$idx]'",
+        );
+    }
 
     return ($word, \@fields, \@explicit_widths);
 }
@@ -3427,16 +3441,55 @@ sub _parse_shift_width {
 
     for my $idx (3 .. $#$cl) {
         my $option = $cl->[$idx];
-        confess "$keyword optional arguments must be '(width N)'\n"
+        confess "$keyword optional arguments must be '(width N|PARAM|CONST)'\n"
             unless ref($option) eq 'ARRAY' && @$option == 2 && $option->[0] eq 'width';
-        confess "$keyword accepts at most one '(width N)' option\n"
+        confess "$keyword accepts at most one '(width N|PARAM|CONST)' option\n"
             if defined $width;
-        confess "$keyword width must be a positive integer\n"
-            if ref($option->[1]) || $option->[1] !~ /\A[1-9][0-9]*\z/;
-        $width = 0 + $option->[1];
+        confess "$keyword width must be a positive integer literal, actor constant, or actor scalar parameter\n"
+            if !defined($option->[1]) || ref($option->[1]) || !length($option->[1]);
+        confess "$keyword width must be a positive integer literal, actor constant, or actor scalar parameter\n"
+            unless $option->[1] =~ /\A[1-9][0-9]*\z/ || _is_hdl_identifier($option->[1]);
+        $width = $option->[1] =~ /\A[1-9][0-9]*\z/ ? 0 + $option->[1] : $option->[1];
     }
 
     return $width;
+}
+
+sub _static_data_width_evidence_value {
+    my ($token, $actor, $tn, $context) = @_;
+    return undef unless defined($token);
+    $tn //= 'unknown';
+    $context //= 'data-operation width';
+
+    return 0 + $token
+        if !ref($token) && $token =~ /\A[1-9][0-9]*\z/;
+
+    confess "$context must be a positive integer literal, actor constant, or actor scalar parameter\n"
+        if ref($token) || !length($token) || !_is_hdl_identifier($token);
+
+    confess "Transaction '$tn': $context token '$token' is a transaction parameter; data-operation width evidence accepts positive integer literals, actor constants, or actor scalar parameters only\n"
+        if _transaction_param_by_name($actor, $tn, $token);
+
+    my $constant = _actor_constant_by_name($actor, $token);
+    if ($constant) {
+        my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
+        confess "Transaction '$tn': $context constant '$token' must resolve to a positive integer\n"
+            unless defined($constant_value) && $constant_value > 0;
+        return $constant_value;
+    }
+
+    my $param = _actor_param_by_name($actor, $token);
+    if ($param) {
+        my $param_value = _non_negative_integer_from_literal(_param_resolved_value($param));
+        confess "Transaction '$tn': $context parameter '$token' must resolve to a positive integer\n"
+            unless defined($param_value) && $param_value > 0;
+        return $param_value;
+    }
+
+    confess "Transaction '$tn': $context token '$token' is a runtime interface signal; data-operation width evidence accepts positive integer literals, actor constants, or actor scalar parameters only\n"
+        if _actor_interface_signal_by_name($actor, $token);
+
+    confess "Transaction '$tn': $context token '$token' is not a declared actor constant or actor scalar parameter\n";
 }
 
 sub _register_counter_width {
@@ -3702,10 +3755,10 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
             push @dt, $cdt;
             push @contracts, $cm;
         }
-        elsif ($k eq 'shift_left')  { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_left($cl,$tn,$si++,$widths); }
-        elsif ($k eq 'shift_right') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_right($cl,$tn,$si++,$widths); }
+        elsif ($k eq 'shift_left')  { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_left($cl,$tn,$si++,$widths,$actor); }
+        elsif ($k eq 'shift_right') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_right($cl,$tn,$si++,$widths,$actor); }
         elsif ($k eq 'assemble')    { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_assemble($cl,$tn,$si++); }
-        elsif ($k eq 'extract')     { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_extract($cl,$tn,$si++,$widths); }
+        elsif ($k eq 'extract')     { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_extract($cl,$tn,$si++,$widths,$actor); }
         elsif ($k eq 'store' || $k eq 'load') {
             _push_sample_state(\@st, $tn, \@ps, \$si);
             my ($state, $accesses) = _ir_bank_access($cl, $tn, $si++, $actor, $widths, 'transaction');
@@ -3901,8 +3954,8 @@ sub _validate_shift_clause {
     my ($clause, $tn, $label) = @_;
     my $keyword = $clause->[0];
     my $shape = $keyword eq 'shift_left'
-        ? '(shift_left reg bit [(width N)])'
-        : '(shift_right reg bit [(width N)])';
+        ? '(shift_left reg bit [(width N|PARAM|CONST)])'
+        : '(shift_right reg bit [(width N|PARAM|CONST)])';
 
     confess "Transaction '$tn': $keyword requires '$shape' in $label\n"
         unless @$clause >= 3
@@ -5799,7 +5852,7 @@ sub _ir_when_activation {
         transitions => [],
     };
 }
-sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i,$widths) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i) : $op eq'extract' ? _ir_extract($cl,$tn,$i,$widths) : _ir_update($cl,$tn,$i,$op) }
+sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths,$actor)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i,$widths,$actor) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths,$actor) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i) : $op eq'extract' ? _ir_extract($cl,$tn,$i,$widths,$actor) : _ir_update($cl,$tn,$i,$op) }
 sub _ir_named_drive_call {
     my ($cl, $tn, $i, $def, $pending_samples) = @_;
     my $name = $cl->[1];
@@ -6088,11 +6141,16 @@ sub _ir_bank_access {
     ]);
 }
 sub _ir_shift_left {
-    my ($cl, $tn, $i, $widths) = @_;
+    my ($cl, $tn, $i, $widths, $actor) = @_;
     $widths ||= {};
     my $reg = $cl->[1];
     my $bit = $cl->[2];
-    my $explicit_width = _parse_shift_left_width($cl);
+    my $explicit_width = _static_data_width_evidence_value(
+        _parse_shift_left_width($cl),
+        $actor,
+        $tn,
+        'shift_left width',
+    );
     my $known_width = $widths->{$reg};
 
     confess "shift_left explicit width $explicit_width conflicts with known width $known_width for '$reg'\n"
@@ -6109,10 +6167,15 @@ sub _ir_shift_left {
     };
 }
 sub _ir_shift_right {
-    my ($cl, $tn, $i, $widths) = @_;
+    my ($cl, $tn, $i, $widths, $actor) = @_;
     my $reg = $cl->[1];
     my $bit = $cl->[2];
-    my $explicit_width = _parse_shift_right_width($cl);
+    my $explicit_width = _static_data_width_evidence_value(
+        _parse_shift_right_width($cl),
+        $actor,
+        $tn,
+        'shift_right width',
+    );
     my $known_width = $widths->{$reg};
 
     confess "shift_right explicit width $explicit_width conflicts with known width $known_width for '$reg'\n"
@@ -6122,7 +6185,7 @@ sub _ir_shift_right {
             && $explicit_width != $known_width;
 
     my $width = defined($explicit_width) ? $explicit_width : $known_width;
-    confess "shift_right width for '$reg' is unknown; add an interface width or '(width N)' option\n"
+    confess "shift_right width for '$reg' is unknown; add an interface width or '(width N|PARAM|CONST)' option\n"
         unless defined($width) && $width > 0;
 
     my $insert = $width - 1;
@@ -6136,8 +6199,8 @@ sub _ir_shift_right {
 }
 sub _ir_assemble  { my ($cl,$tn,$i)=@_; my($var,@parts)=_parse_assemble_clause($cl);my$rhs='(concat '.join(' ',@parts).')'; {name=>"${tn}_asm_$i",kind=>'sequential',assignments=>[{lhs=>$var,rhs=>$rhs,op=>'<-',source_kind=>'assemble'}],transitions=>[]} }
 sub _ir_extract {
-    my ($cl, $tn, $i, $widths) = @_;
-    my ($word, $fields, $explicit_widths) = _parse_extract_clause($cl);
+    my ($cl, $tn, $i, $widths, $actor) = @_;
+    my ($word, $fields, $explicit_widths) = _parse_extract_clause($cl, $actor, $tn);
     my @assignments;
     my @field_widths = _resolve_extract_field_widths($word, $fields, $explicit_widths, $widths);
     my $word_width = $widths->{$word};
@@ -6592,7 +6655,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
         }
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
         elsif($bk eq'repeat'){my($rs,$rc,$rw,$rdw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$rs;_register_repeat_counters($counters,$storage_roles,$rc,$rw,$rdw)}
-        elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
+        elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths,$actor)}
         elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
         elsif($bk eq'when'){my($ws)=_expand_when($bc,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses);push @body_states,@$ws}}
     if(@lp){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)}
@@ -6635,7 +6698,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
                 }
             }
             elsif($bk2 eq'repeat'){my($rs,$rc,$rw,$rdw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$rs;_register_repeat_counters($counters,$storage_roles,$rc,$rw,$rdw)}
-            elsif($bk2 eq'update'||$bk2 eq'set'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
+            elsif($bk2 eq'update'||$bk2 eq'set'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths,$actor)}
             elsif($bk2 eq'store'||$bk2 eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc2,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
             elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses);push @body_states,@$ws}}
         if(@lp||!@body_states){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)if@lp;push @body_states,{name=>"${tn}_switch_${val}_" . $$ir++,kind=>'sequential',assignments=>[],transitions=>[]}unless@body_states}
@@ -6687,7 +6750,7 @@ sub _expand_loop_body {
             _register_repeat_counters($counters, $storage_roles, $rc, $rw, $rdw);
         } elsif ($bk eq 'update' || $bk eq 'set' || $bk eq 'shift_left' || $bk eq 'shift_right' || $bk eq 'assemble' || $bk eq 'extract') {
             _push_sample_state(\@states, $tn, \@lp, $ir);
-            push @states, _ir_data_op($bk, $bc, $tn, $$ir++, $widths);
+            push @states, _ir_data_op($bk, $bc, $tn, $$ir++, $widths, $actor);
         } elsif ($bk eq 'store' || $bk eq 'load') {
             _push_sample_state(\@states, $tn, \@lp, $ir);
             my ($state, $accesses) = _ir_bank_access($bc, $tn, $$ir++, $actor, $widths, 'transaction');
@@ -6738,7 +6801,7 @@ sub _ir_repeat {
                 push @dynamic_wait_counters,{name=>$counter,width=>$counter_width};
             }
         }
-        elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@s,$tn,\@lp,$ir);push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
+        elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@s,$tn,\@lp,$ir);push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths,$actor)}
         elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@s,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @s,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
         elsif($bk eq'spawn'){
             _push_sample_state(\@s,$tn,\@lp,$ir);

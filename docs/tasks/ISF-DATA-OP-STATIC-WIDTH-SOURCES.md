@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DATA-OP-STATIC-WIDTH-SOURCES`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -54,7 +54,7 @@ static scalar values when those values resolve to positive integers.
 ## Task Tree
 
 - ID: `ISF-DATA-OP-STATIC-WIDTH-SOURCES`
-  Status: `active`
+  Status: `done`
   Goal: `Ship actor-local static value sources for data-operation width evidence.`
   Children: `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1`,
   `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2`
@@ -69,20 +69,22 @@ static scalar values when those values resolve to positive integers.
   Commit: `this commit`
 
 - ID: `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document static data-operation width sources.`
   Acceptance: `Positive actor scalar parameters and declared actor constants
   lower as shift/extract width evidence; unsupported sources fail closed;
   specs, book, public contract, downstream handoff, and focused tests are
   synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks`; `focused data-operation/public/spec/book tests`;
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
+  `post-closure doc/public audits`; `git diff --check`
+  Commit: `this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` | `pending` | `Task tree ownership is now in place; implementation can widen the existing explicit data-operation width evidence surface.` |
+| 1 | `closed` | `done` | `Actor-local static data-operation width evidence support is shipped and the tree is closed.` |
 
 ## Decisions
 
@@ -109,16 +111,21 @@ static scalar values when those values resolve to positive integers.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-23` | `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-23` | `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` | `syntax checks`; `prove -Iperl t/1343-isf-data-op-static-width-sources.t t/1173-isf-shift-right-explicit-width.t t/1318-isf-shift-left-explicit-width.t t/1199-isf-shift-clause-boundary.t t/1201-isf-extract-clause-boundary.t t/1226-isf-data-width-storage-report.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `post-closure doc/public audits`; `git diff --check` | `static data-operation width sources shipped; focused tests Files=11, Tests=342; broad ISF gate Files=249, Tests=1652; post-closure audits Files=7, Tests=352` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1` | `this commit: ISF-DATA-OP-STATIC-WIDTH-SOURCES.1: select static data op width sources` | `selects actor-local static value sources for data-operation width evidence` |
-| `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` | `pending` | `pending` |
+| `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` | `this commit: ISF-DATA-OP-STATIC-WIDTH-SOURCES.2: ship static data op width sources` | `ships actor-local static value sources for data-operation width evidence` |
 
 ## Changelog
 
 - `2026-05-23`: Created task tree and selected actor-local static value
   sources for data-operation explicit width evidence as the next bounded R14
   slice.
+- `2026-05-23`: Shipped actor-local scalar parameter defaults and declared
+  actor constants as explicit `shift_left`, `shift_right`, and `extract`
+  width evidence, synchronized specs/book/public contract/downstream handoff/
+  live docs, and closed the task tree.

@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Data operation static width sources shipped
+- Completed `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` and closed the task tree.
+- `shift_left`, `shift_right`, and `extract` explicit width evidence now
+  accepts actor-local scalar parameter defaults and declared actor constants
+  when those values resolve to positive integers.
+- Accepted static values lower like literal widths in width fact collection,
+  scheduled `.fsm` shift insert positions and extraction slices,
+  schedule-report storage width metadata, and generated HDL. Mixed literal and
+  accepted symbolic extract width lists are supported.
+- Unsupported sources fail closed: transaction parameters, runtime interface
+  signals, arbitrary expressions, unknown names, zero-valued actor parameters,
+  zero-valued actor constants, aggregate values, use-site override
+  specialization, generated-top respecialization, new `assemble` syntax,
+  timing changes, generated handoff naming changes, activation binding
+  semantics changes, and schedule-report key-family changes remain outside
+  this slice.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused data-operation/public/spec/book
+  tests with `Files=11, Tests=342`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=249, Tests=1652`;
+  post-closure doc/public audits with `Files=7, Tests=352`;
+  `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Data operation static width sources selected
 - Completed selection work for `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1`.
 - Activated a new R14 task tree for actor-local scalar parameter defaults and

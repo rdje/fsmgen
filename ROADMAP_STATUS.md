@@ -2,8 +2,26 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-DATA-OP-STATIC-WIDTH-SOURCES`.
-- Current frontier: `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 data-operation static width source completion:
+  `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` shipped actor-local scalar parameter
+  defaults and declared actor constants as explicit data-operation width
+  evidence for `(shift_left REG BIT (width NAME))`,
+  `(shift_right REG BIT (width NAME))`, and
+  `(extract WORD as FIELD... (widths NAME...))` when those values resolve to
+  positive integers. Accepted static values lower like equivalent positive
+  literals in width fact collection, scheduled `.fsm` shift insert positions
+  and extraction slices, schedule-report storage width metadata, and generated
+  HDL. Mixed literal/static extract width lists are accepted. Unsupported
+  sources fail closed: transaction parameters, runtime interface signals,
+  arbitrary expressions, unknown names, zero-valued actor parameters,
+  zero-valued actor constants, aggregate values, use-site override
+  specialization, generated-top respecialization, new `assemble` syntax,
+  timing changes, schedule-report key-family changes, generated handoff naming
+  changes, and activation binding semantics changes remain deferred or
+  rejected. The ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task tree, and live docs were synchronized.
 - Recent R14 data-operation static width source selection:
   `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1` activated a new R14 task tree for
   widening existing data-operation explicit width-evidence options to accept

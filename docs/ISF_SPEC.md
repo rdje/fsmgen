@@ -1955,10 +1955,12 @@ Current transaction clauses:
 - `(set var expr)`
 - `(update var expr)`
 - `(shift_left reg bit)`
+- `(shift_left reg bit (width N|PARAM|CONST))`
 - `(shift_right reg bit)`
+- `(shift_right reg bit (width N|PARAM|CONST))`
 - `(assemble part... as var)`
 - `(extract word as field...)`
-- `(extract word as field... (widths N...))`
+- `(extract word as field... (widths N|PARAM|CONST...))`
 - `(do transaction [(domain NAME)] [(params (NAME value) ...)] [(bind ...)])`
 - `(spawn transaction as instance [(domain NAME)] [(params (NAME value) ...)] [(bind ...)])`
 - `(trigger transaction [(params (NAME value) ...)] [(bind ...)])`
@@ -2892,12 +2894,12 @@ The `condition` value is the normalized condition text used in the scheduled
 (set var expr)
 (update var expr)
 (shift_left reg bit)
-(shift_left reg bit (width N))
+(shift_left reg bit (width N|PARAM|CONST))
 (shift_right reg bit)
-(shift_right reg bit (width N))
+(shift_right reg bit (width N|PARAM|CONST))
 (assemble header payload crc as packet)
 (extract packet as header payload crc)
-(extract packet as header payload crc (widths 4 8 4))
+(extract packet as header payload crc (widths 4 HEADER_W CRC_W))
 ```
 
 Current lowering:
@@ -2908,21 +2910,24 @@ Current lowering:
 - `update` remains supported as the older transaction-local spelling for the
   same flopped transaction update behavior.
 - `shift_left` is structurally validated as
-  `(shift_left reg bit [(width N)])` with scalar `reg` and scalar `bit`, then
-  emits a left shift plus inserted bit. The optional `(width N)` is width
-  evidence for the shifted register. It may fill missing transaction-local
+  `(shift_left reg bit [(width N|PARAM|CONST)])` with scalar `reg` and scalar
+  `bit`, then emits a left shift plus inserted bit. The optional `(width ...)`
+  is width evidence for the shifted register. It may be a positive integer
+  literal, actor-local scalar parameter default, or declared actor constant
+  that resolves to a positive integer. It may fill missing transaction-local
   width evidence for later data operations and report metadata, but it must
   match any already-known width for the same register. Plain
   `(shift_left reg bit)` remains accepted without width evidence because the
   emitted left-shift expression does not need an insertion-position width.
 - `shift_right` is structurally validated as
-  `(shift_right reg bit [(width N)])` with scalar `reg` and scalar `bit`, then
-  emits a right shift plus inserted bit. When the shifted signal has a known
-  interface, sampled-source, assemble-inferred, or explicit `(width N)` width,
-  the insert position uses that width. Unknown-width values now fail closed
-  before scheduled `.fsm` emission instead of emitting a placeholder `WIDTH`
-  expression. Explicit `(width N)` is an assertion: it may fill missing width
-  evidence, but it must match any already-known width for the shifted register.
+  `(shift_right reg bit [(width N|PARAM|CONST)])` with scalar `reg` and
+  scalar `bit`, then emits a right shift plus inserted bit. When the shifted
+  signal has a known interface, sampled-source, assemble-inferred, or explicit
+  `(width ...)` value, the insert position uses that width. Unknown-width
+  values now fail closed before scheduled `.fsm` emission instead of emitting
+  a placeholder `WIDTH` expression. Explicit `(width ...)` is an assertion:
+  it may fill missing width evidence, but it must match any already-known
+  width for the shifted register.
 - `assemble` is structurally validated as `(assemble part... as target)` with
   one or more scalar parts and one scalar target, then emits a concat
   expression into the target variable. The private width map infers the target
@@ -2935,17 +2940,21 @@ Current lowering:
   Two or more unknown part widths may still be accepted for the reviewable
   concat expression, but they are not used as width evidence.
 - `extract` is structurally validated as
-  `(extract word as field... [(widths N...)])` with one scalar source word and
-  one or more scalar destination fields. It emits one extraction state. When
-  the source word and destination fields have known widths, or when the clause
-  supplies an ordered `(widths N...)` list matching the field count, fields are
-  assigned exact descending slices. If exactly one destination field width is
-  missing and the source word width plus every sibling field width is known,
-  the missing field width is inferred as the positive remainder. The inferred
-  width becomes transaction-local evidence for later data operations in the
-  same transaction. Two or more unknown field widths remain ambiguous and fail
-  closed instead of producing placeholder slice bounds. Explicit widths must
-  be positive integers and must not conflict with already known field widths.
+  `(extract word as field... [(widths N|PARAM|CONST...)])` with one scalar
+  source word and one or more scalar destination fields. It emits one
+  extraction state. When the source word and destination fields have known
+  widths, or when the clause supplies an ordered `(widths ...)` list matching
+  the field count, fields are assigned exact descending slices. Each explicit
+  width entry may be a positive integer literal, actor-local scalar parameter
+  default, or declared actor constant that resolves to a positive integer.
+  Mixed literal and accepted symbolic entries are allowed. If exactly one
+  destination field width is missing and the source word width plus every
+  sibling field width is known, the missing field width is inferred as the
+  positive remainder. The inferred width becomes transaction-local evidence
+  for later data operations in the same transaction. Two or more unknown field
+  widths remain ambiguous and fail closed instead of producing placeholder
+  slice bounds. Explicit widths must be positive and must not conflict with
+  already known field widths.
   When the source word width is known, the sum of field widths must match it;
   a zero or negative inferred remainder fails closed.
 
@@ -2959,7 +2968,13 @@ as `tx_byte[7]` rather than relying on implicit truncation from an 8-bit word.
 Width evidence is transaction-local and private to lowering today. Interface
 declarations seed it, sampled aliases inherit known source widths, explicit
 `shift_left`, `shift_right`, and `extract` options add local evidence, and
-`assemble` can infer target width from known parts. The evidence is collected
+`assemble` can infer target width from known parts. Explicit data-operation
+width options accept positive integer literals, actor-local scalar parameter
+defaults, or declared actor constants that resolve to positive integers.
+Transaction parameters, runtime signals, unknown names, arbitrary
+expressions, zero values, non-scalar values, use-site overrides, and
+generated-top respecialization are not data-operation width evidence. The
+evidence is collected
 from the whole transaction clause tree before scheduled state emission, so it
 is not source-order-sensitive. Schedule reports expose positive integer
 `width` metadata for inferred scheduler counters and for register storage
@@ -2986,7 +3001,7 @@ with known facts, the inferred remainder is not positive, or the sum of field
 widths disagrees with a known source word width. `shift_right` uses a concrete
 insert position from known or explicit width evidence and fails when width
 evidence is missing or contradictory. `shift_left` accepts the same optional
-`(width N)` evidence shape, rejects contradictory explicit widths, and keeps
+`(width ...)` evidence shape, rejects contradictory explicit widths, and keeps
 plain widthless shifting accepted because no insertion-position width is
 needed. `assemble` derives a target width only from fully known part widths,
 can infer exactly one missing part width from a known target and known
@@ -5056,6 +5071,7 @@ Focused tests:
 - [t/1340-isf-bank-storage-actor-constant-widths.t](../t/1340-isf-bank-storage-actor-constant-widths.t)
 - [t/1341-isf-bank-storage-actor-constant-depths.t](../t/1341-isf-bank-storage-actor-constant-depths.t)
 - [t/1342-isf-transaction-port-actor-constant-widths.t](../t/1342-isf-transaction-port-actor-constant-widths.t)
+- [t/1343-isf-data-op-static-width-sources.t](../t/1343-isf-data-op-static-width-sources.t)
 
 ## 12. Explicitly Deferred
 

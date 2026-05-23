@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Data-operation static widths resolve once into width facts
+- `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` resolves accepted actor-local scalar
+  parameter defaults and declared actor constants at the lowerer boundary,
+  then feeds the existing transaction-local width fact map with the resolved
+  positive integer.
+- This keeps emitted `.fsm` data-operation shapes unchanged except where a
+  symbolic option supplies the same bit positions a literal option would have
+  supplied. `shift_left` still uses the value only as width evidence,
+  `shift_right` uses it for the inserted-bit position, and `extract` uses it
+  for exact descending field slices.
+- Transaction parameters remain rejected because they are activation-
+  specialized values. Letting them affect width facts would require generated
+  schedule specialization rather than a simple local evidence lookup.
+
 ## 2026-05-23: Data-operation width options should follow static dimension sources
 - `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1` selects existing data-operation
   explicit width-evidence options as the next author-facing static-width

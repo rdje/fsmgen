@@ -943,19 +943,27 @@ Verilog no-assertion boundary remain regression-backed after ISF lowers through
 scheduled `.fsm` into HDL.
 The explicit-width `shift_right` data-operation path is checked by
 [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
-so explicit `(width N)` fills otherwise missing register-width evidence,
-known-width shifts do not need the option, conflicting explicit widths fail
-closed, and accepted `shift_right` source no longer emits placeholder `WIDTH`
-terms.
+so explicit `(width N|PARAM|CONST)` fills otherwise missing register-width
+evidence, known-width shifts do not need the option, conflicting explicit
+widths fail closed, and accepted `shift_right` source no longer emits
+placeholder `WIDTH` terms.
 The explicit-width `shift_left` data-operation path is checked by
 [t/1318-isf-shift-left-explicit-width.t](../t/1318-isf-shift-left-explicit-width.t)
-so optional `(width N)` fills missing register-width evidence for later data
-operations and schedule-report storage metadata, conflicting explicit widths
-fail closed, and ordinary widthless `shift_left` source remains accepted.
+so optional `(width N|PARAM|CONST)` fills missing register-width evidence for
+later data operations and schedule-report storage metadata, conflicting
+explicit widths fail closed, and ordinary widthless `shift_left` source
+remains accepted.
 The explicit-width `extract` data-operation path is checked by
 [t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
 so authors can avoid placeholder slice bounds when extract field widths are
 not declared elsewhere.
+Static data-operation width sources are checked by
+[t/1343-isf-data-op-static-width-sources.t](../t/1343-isf-data-op-static-width-sources.t),
+so `shift_left`, `shift_right`, and `extract` explicit width evidence may use
+positive integer literals, actor-local scalar parameter defaults, or declared
+actor constants that resolve to positive integers. Unsupported transaction
+parameters, runtime interface signals, unknown names, arbitrary expressions,
+zero values, and aggregate values fail closed.
 The single-missing-field `extract` inference path is checked by
 [t/1101-isf-extract-slices.t](../t/1101-isf-extract-slices.t), so one
 unknown destination field can derive its width from a known source word and
@@ -1131,9 +1139,9 @@ expression payload, and nested expression payloads are formatted as `.fsm`
 expressions instead of Perl reference strings.
 The shift-clause boundary is checked by
 [t/1199-isf-shift-clause-boundary.t](../t/1199-isf-shift-clause-boundary.t)
-so `(shift_left reg bit [(width N)])` and
-`(shift_right reg bit [(width N)])` require scalar register/bit operands
-before scheduled `.fsm` emission.
+so `(shift_left reg bit [(width N|PARAM|CONST)])` and
+`(shift_right reg bit [(width N|PARAM|CONST)])` require scalar register/bit
+operands before scheduled `.fsm` emission.
 The assemble-clause boundary is checked by
 [t/1200-isf-assemble-clause-boundary.t](../t/1200-isf-assemble-clause-boundary.t)
 so `(assemble part... as target)` requires one or more scalar parts and one
@@ -1145,9 +1153,9 @@ a positive remainder for later data-operation evidence. Multiple unknown parts
 remain non-evidence concat operands.
 The extract-clause boundary is checked by
 [t/1201-isf-extract-clause-boundary.t](../t/1201-isf-extract-clause-boundary.t)
-so `(extract word as field... [(widths N...)])` requires one scalar source
-word, one or more scalar fields, and at most one ordered positive-integer
-`(widths N...)` option before scheduled `.fsm` emission.
+so `(extract word as field... [(widths N|PARAM|CONST...)])` requires one
+scalar source word, one or more scalar fields, and at most one ordered
+positive static-width `(widths ...)` option before scheduled `.fsm` emission.
 The exact-slice extraction behavior is checked by
 [t/1101-isf-extract-slices.t](../t/1101-isf-extract-slices.t), so accepted
 `extract` source emits concrete descending slices, infers exactly one missing

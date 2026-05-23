@@ -1,6 +1,35 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Data operation static width sources shipped
+- Completed `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` and closed the task tree.
+- Existing data-operation explicit width evidence now accepts actor-local
+  scalar parameter defaults and declared actor constants that resolve to
+  positive integers.
+- Accepted static values lower like equivalent positive integer literals for
+  `(shift_left REG BIT (width NAME))`,
+  `(shift_right REG BIT (width NAME))`, and
+  `(extract WORD as FIELD... (widths NAME...))`, including mixed literal and
+  accepted symbolic extract width lists.
+- The resolved values feed width fact collection, scheduled `.fsm` shift
+  insert positions and extraction slices, schedule-report storage width
+  metadata, and generated HDL without changing state timing or generated
+  handoff naming.
+- Unsupported sources fail closed: transaction parameters, runtime interface
+  signals, arbitrary expressions, unknown names, zero-valued actor parameters,
+  zero-valued actor constants, aggregate values, use-site override
+  specialization, generated-top respecialization, new `assemble` syntax,
+  activation binding semantics changes, and schedule-report key-family
+  changes.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused data-operation/public/spec/book
+  tests with `Files=11, Tests=342`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=249, Tests=1652`;
+  post-closure doc/public audits with `Files=7, Tests=352`;
+  `git diff --check`.
+
 ### R14 — Data operation static width sources selected
 - Completed selection work for `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1`.
 - Activated a new R14 task tree for accepting actor-local scalar parameter
