@@ -2,8 +2,25 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-DATA-OP-STATIC-WIDTH-SOURCES`.
+- Current frontier: `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2`.
+- Recent R14 data-operation static width source selection:
+  `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1` activated a new R14 task tree for
+  widening existing data-operation explicit width-evidence options to accept
+  actor-local scalar parameter defaults and declared actor constants that
+  resolve to positive integers. The selected first implementation slice is
+  intentionally narrow: `(shift_left REG BIT (width NAME))`,
+  `(shift_right REG BIT (width NAME))`, and
+  `(extract WORD as FIELD... (widths NAME...))` may use actor-local static
+  width names when they resolve positive, including mixed literal and accepted
+  symbolic extract widths. Transaction parameters, runtime interface signals,
+  arbitrary expressions, unknown names, zero-valued actor parameters,
+  zero-valued actor constants, aggregate values, use-site override
+  specialization, generated-top respecialization, new `assemble` syntax,
+  state timing changes, schedule-report key-family changes, generated handoff
+  naming changes, and activation binding semantics changes remain deferred or
+  fail-closed. No parser, scheduler, report, generated artifact, HDL, CLI, or
+  public ISF behavior changed.
 - Recent R14 transaction port actor-constant width completion:
   `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` shipped declared actor
   constants as transaction-local `(ports ...)`

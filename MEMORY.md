@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Data operation static width sources selected
+- Completed selection work for `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1`.
+- Activated a new R14 task tree for actor-local scalar parameter defaults and
+  declared actor constants as existing data-operation explicit width-evidence
+  sources when those values resolve to positive integers.
+- The active frontier is `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2`.
+- The selected boundary is narrow: `shift_left` and `shift_right`
+  `(width NAME)` plus `extract` `(widths NAME...)`, including mixed literal
+  and accepted symbolic extract widths. Transaction parameters, runtime
+  interface signals, expressions, unknown names, zero values, aggregate
+  values, use-site/generated-top respecialization, new `assemble` syntax,
+  timing changes, generated handoff naming changes, activation binding
+  semantics changes, and schedule-report key-family changes remain deferred
+  or fail-closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-23: Transaction port actor-constant widths shipped
 - Completed `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` and closed the
   task tree.

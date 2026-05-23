@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Data operation static width sources selected
+- Completed selection work for `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1`.
+- Activated a new R14 task tree for accepting actor-local scalar parameter
+  defaults and declared actor constants resolving to positive integers as
+  existing data-operation explicit width evidence.
+- The selected implementation slice covers
+  `(shift_left REG BIT (width NAME))`,
+  `(shift_right REG BIT (width NAME))`, and
+  `(extract WORD as FIELD... (widths NAME...))`, including mixed literal and
+  accepted symbolic extract widths.
+- The slice deliberately excludes transaction parameters, runtime interface
+  signals, arbitrary expressions, unknown names, zero-valued actor parameters,
+  zero-valued actor constants, aggregate values, use-site override
+  specialization, generated-top respecialization, new `assemble` syntax,
+  timing changes, generated handoff naming changes, activation binding
+  semantics changes, and schedule-report key-family changes.
+- No compiler behavior changed.
+
 ### R14 — Transaction port actor-constant widths shipped
 - Completed `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` and closed the
   task tree.

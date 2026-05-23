@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DATA-OP-STATIC-WIDTH-SOURCES` | `active` | `R14` | `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` | [docs/tasks/ISF-DATA-OP-STATIC-WIDTH-SOURCES.md](docs/tasks/ISF-DATA-OP-STATIC-WIDTH-SOURCES.md) |
 
 ## Proposed Task Trees
 

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Data-operation width options should follow static dimension sources
+- `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1` selects existing data-operation
+  explicit width-evidence options as the next author-facing static-width
+  surface.
+- The selected source set mirrors shipped actor-local static dimension
+  behavior: positive integer literals remain accepted, and actor-local scalar
+  parameter defaults plus declared actor constants are selected when they
+  resolve to positive integers.
+- The slice keeps transaction parameters out of scope because they are
+  activation-specialized values. Width evidence is static shape information,
+  so use-site overrides and generated-top respecialization need a separate
+  policy before they can safely affect scheduled `.fsm` bit positions.
+
 ## 2026-05-23: Transaction port constants reuse port width finalization
 - `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` widens transaction-local port
   width finalization to resolve declared actor constants after actor scalar

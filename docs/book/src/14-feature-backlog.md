@@ -44,7 +44,7 @@ not fixed actor constants.
 
 ### Automatic Aggregate Growth From Usage
 
-Status: backlog.
+Status: backlog; next bounded width-source slice selected.
 
 Goal: infer aggregate record/list shapes from member/index usage when no
 explicit aggregate type anchor is present.
@@ -2317,6 +2317,13 @@ Current boundary: `shift_left` and `shift_right` accept `(width N)` and
 `extract` accepts `(widths N...)` as explicit assertions. `shift_left` uses
 the optional width only as register-width evidence; plain widthless
 `shift_left` remains accepted because no insertion-position width is needed.
+
+The active
+[`ISF-DATA-OP-STATIC-WIDTH-SOURCES`](../../tasks/ISF-DATA-OP-STATIC-WIDTH-SOURCES.md)
+task tree selects the next bounded slice: the existing `shift_left`,
+`shift_right`, and `extract` width-evidence options should accept actor-local
+scalar parameter defaults and declared actor constants that resolve to
+positive integers. That selection does not change current behavior yet.
 
 `extract` also infers exactly one missing destination field width when the
 source word width and all sibling field widths prove one positive remainder;
