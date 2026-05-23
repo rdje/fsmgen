@@ -362,6 +362,10 @@ deferred. The remaining enforcement work is tracked in
     (kind rule_slot)
     (arbiter priority)
     (users high_pri low_pri))
+  (resource response_outputs
+    (kind output_bundle)
+    (arbiter priority)
+    (users force_valid normal_valid))
   (resource mem_port
     (arbiter round_robin)))
 ```
@@ -375,9 +379,9 @@ how requesters are selected. Arbiter names accepted by the parser are
 
 Resource metadata is structurally validated by the parser, including supported
 arbiter names, resource kinds, duplicate resource names, duplicate resource
-subclauses, duplicate users, and known `rule_slot` users. `(resources ...)` is
-a singleton actor clause, so repeated resources blocks are rejected rather
-than merged or overwritten.
+subclauses, duplicate users, and known `rule_slot` or `output_bundle` users.
+`(resources ...)` is a singleton actor clause, so repeated resources blocks
+are rejected rather than merged or overwritten.
 
 The table below is the current public registry of things ISF can name as
 shareable resources. It deliberately starts small. A new kind should enter the
@@ -395,17 +399,20 @@ Current shareable resource registry:
 | Kind | Status | Meaning |
 | --- | --- | --- |
 | `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
-| `output_bundle` | backlog | A group of actor outputs or LHS targets that must have one owner for a cycle. |
+| `output_bundle` | shipped for `priority` arbitration | A group of actor outputs or LHS targets with rule users. A grant enables the whole winning bound rule DT for that cycle. |
 | `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
 | `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
 | `transaction_start` | backlog | The start/request fan-in for one transaction. |
 | `child_instance` | backlog | A spawned child instance that must not be re-entered while busy. |
 | `storage_port` | backlog | A shared state, register, memory, or storage-port access path. |
 
-Today, only `rule_slot` with `priority` arbitration has shipped scheduler
-behavior. Each bound rule requests the slot when its normalized rule guard is
-true. Priority edges choose the active winner, and the generated grant gates
-the whole lowered rule DT DTE without adding a cycle. Backlog resource kinds
-are parser-recognized names, not runtime support claims; a backlog kind with
-bound users fails closed until its lowering contract ships. The remaining
-resource work is tracked in [Feature Backlog](14-feature-backlog.md).
+Today, `rule_slot` and `output_bundle` with `priority` arbitration have
+shipped scheduler behavior for declared rule users. Each bound rule requests
+the resource when its normalized rule guard is true. Priority edges choose the
+active winner, and the generated grant gates the whole lowered rule DT DTE
+without adding a cycle. Backlog resource kinds are parser-recognized names,
+not runtime support claims; a backlog kind with bound users fails closed until
+its lowering contract ships. The first `output_bundle` surface does not add a
+separate member-list syntax: the named bundle is represented by its bound rule
+users and the outputs or LHS targets those rules drive. The remaining resource
+work is tracked in [Feature Backlog](14-feature-backlog.md).

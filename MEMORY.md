@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Output-bundle resource priority shipped
+- Completed `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` and closed the task tree.
+- `output_bundle` resources are now enforced for declared rule users under the
+  static `priority` arbiter. Each bound rule requests the named bundle when
+  its normalized rule guard is true, priority edges choose a unique winner, and
+  lower-priority bound rule DTs are gated off without adding a cycle.
+- The resource catalog and public contract now list `output_bundle` in
+  `enforced_resource_kind_values`; schedule reports keep the existing
+  `resource_arbitration[]` shape and set `kind` to `output_bundle` for those
+  grants.
+- `rule_slot` behavior is unchanged. `interface_bundle`, `named_drive`,
+  `transaction_start`, `child_instance`, `storage_port`, `round_robin`,
+  transaction users, named-drive users, output-target users, dynamic resource
+  names, multi-capacity resources, fairness state, hold/release semantics,
+  route mux/storage, and explicit output-bundle member-list syntax remain
+  deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused resource/public/spec/book tests
+  with `Files=8, Tests=336`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1657`;
+  post-closure doc/public audits with `Files=6, Tests=347`;
+  `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Output-bundle resource priority selected
 - Completed selection work for `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1`.
 - Activated a new R14 task tree for the first non-`rule_slot` resource kind.

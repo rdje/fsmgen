@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Output-bundle resource priority shipped
+- Completed `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` and closed the task tree.
+- `output_bundle` resources now enforce static `priority` arbitration for
+  declared rule users. Bound rules request when their guards are true, the
+  priority graph chooses a unique winner, and losing rule DTs are guarded off
+  without adding a cycle.
+- The public resource catalog now lists `output_bundle` as enforced, and
+  schedule reports keep the existing `resource_arbitration[]` entry shape with
+  `kind: output_bundle`.
+- Unsupported resource kinds, `round_robin`, non-rule users, target-member
+  syntax, route mux/storage, fairness, and hold/release semantics remain
+  deferred.
+- Validation passed: syntax checks; focused resource/public/spec/book tests
+  with `Files=8, Tests=336`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1657`;
+  post-closure doc/public audits with `Files=6, Tests=347`;
+  `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Output-bundle resource priority selected
 - Completed selection work for `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1`.
 - Activated the active R14 task tree for bounded `output_bundle` resource

@@ -1196,7 +1196,7 @@ sub _build_parent_ir($self, $actor, $generated_children) {
         bank_accesses => \@bank_accesses,
         transaction_port_bindings => $transaction_port_bindings,
     };
-    $ir->{resource_arbitration} = _apply_rule_slot_resource_arbitration($ir, $actor);
+    $ir->{resource_arbitration} = _apply_priority_rule_user_resource_arbitration($ir, $actor);
     $ir->{priority_resolution} = _merge_priority_resolution(
         _apply_rule_priority_resolution($ir, $actor),
         _apply_rule_transaction_priority_resolution($ir, $actor),
@@ -6876,7 +6876,7 @@ sub _ir_repeat {
     return (\@s,$ctr,$width,\@dynamic_wait_counters);
 }
 
-sub _apply_rule_slot_resource_arbitration {
+sub _apply_priority_rule_user_resource_arbitration {
     my ($ir, $actor) = @_;
     my @resources = @{$actor->{resources} || []};
     my %rule_dt = map {
@@ -6900,12 +6900,12 @@ sub _apply_rule_slot_resource_arbitration {
             'isf_resource_unsupported_kind',
             $resource_name,
             "resource kind '$kind' is not enforced yet",
-        ) unless $kind eq 'rule_slot';
+        ) unless _resource_kind_supports_priority_rule_users($kind);
 
         _resource_arbitration_error(
             'isf_resource_unsupported_arbiter',
             $resource_name,
-            "arbiter '$arbiter' is not enforced yet for rule_slot resources",
+            "arbiter '$arbiter' is not enforced yet for $kind resources",
         ) unless $arbiter eq 'priority';
 
         for my $user (@users) {
@@ -6970,6 +6970,11 @@ sub _apply_rule_slot_resource_arbitration {
     }
 
     return { grants => \@grants, issues => [] };
+}
+
+sub _resource_kind_supports_priority_rule_users {
+    my ($kind) = @_;
+    return defined($kind) && ($kind eq 'rule_slot' || $kind eq 'output_bundle');
 }
 
 sub _combine_rule_dte_with_resource_suppressors {

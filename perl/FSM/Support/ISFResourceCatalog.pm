@@ -28,7 +28,7 @@ my @RESOURCE_KINDS = qw(
 
 my %RESOURCE_KIND_STATUS = (
     rule_slot         => 'shipped_for_priority_arbitration',
-    output_bundle     => 'backlog',
+    output_bundle     => 'shipped_for_priority_arbitration',
     interface_bundle  => 'backlog',
     named_drive       => 'backlog',
     transaction_start => 'backlog',

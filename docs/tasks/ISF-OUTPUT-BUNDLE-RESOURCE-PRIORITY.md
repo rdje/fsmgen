@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -61,7 +61,7 @@ current report key family.
 ## Task Tree
 
 - ID: `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY`
-  Status: `active`
+  Status: `done`
   Goal: `Enforce output_bundle resources for rule users under priority arbitration`
   Children: `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1`,
   `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2`
@@ -74,22 +74,23 @@ current report key family.
   any code changes.`
   Verification: `documentation-only selection review, live-doc audits,
   git diff check`
-  Commit: `pending this commit`
+  Commit: `db719fab`
 
 - ID: `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement output_bundle priority resource enforcement`
   Acceptance: `The resource catalog status, scheduler lowering, tests,
   public contract metadata, specs, mdBook, and live docs are updated and
   validated.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax, focused resource/public/spec/book checks,
+  mdBook build, broad ISF regression, post-closure audits, git diff check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `active` | `The selected output_bundle boundary is recorded; behavior-bearing work can start after this selection commit.` |
+| 1 | `closed` | `done` | `The selected output_bundle priority resource slice is implemented, documented, validated, and ready for commit.` |
 
 ## Decisions
 
@@ -102,6 +103,11 @@ current report key family.
   current grammar names a resource and its users, but it does not name bundle
   members separately. Broader target-member syntax and output-target users
   remain deferred until their ownership and diagnostics are explicit.
+- `2026-05-23`: Ship `output_bundle` by reusing the existing static
+  priority grant shape for declared rule users. This intentionally gates the
+  whole losing rule DT, just like `rule_slot`, and keeps explicit bundle member
+  lists, output-target users, route mux/storage, and hold/release semantics
+  deferred.
 
 ## Open Questions
 
@@ -110,8 +116,7 @@ current report key family.
 
 ## Blockers
 
-- None for selection. Implementation depends on reusing the existing
-  priority resource grant shape without weakening `rule_slot` coverage.
+- None. The selected implementation leaf is complete.
 
 ## Verification Log
 
@@ -120,17 +125,27 @@ current report key family.
 | `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1` | `documentation-only selection review` | `passed` |
 | `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t` | `passed: Files=2, Tests=25` |
 | `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1` | `git diff --check` | `passed` |
-| `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `pending` | `pending` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `perl -Iperl -c perl/FSM/Support/ISFResourceCatalog.pm`; `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm` | `passed` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `prove -Iperl t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t t/1220-isf-arbitration-schedule-report.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t` | `passed: Files=8, Tests=336` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `./bin/ci-regression isf --no-book` | `passed: Files=250, Tests=1657` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t` | `passed: Files=6, Tests=347` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1` | `pending this commit: ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1: select output_bundle priority resource` | `selection slice` |
-| `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `pending` | `pending` |
+| `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1` | `db719fab ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1: select output_bundle priority resource` | `selection slice` |
+| `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `pending this commit: ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2: ship output_bundle priority resource` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-23`: Created and activated task tree; selected
   `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` as the implementation frontier after
   the selection commit.
+- `2026-05-23`: Shipped `output_bundle` resources for declared rule users
+  under the static `priority` arbiter. Synchronized the resource catalog, ISF
+  spec, downstream integration handoff, public contract, mdBook, roadmap
+  status, task index, memory, development notes, live achievement status, and
+  focused validation evidence.

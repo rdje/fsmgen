@@ -105,6 +105,70 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'resource_slot_priority');
 };
 
+subtest 'priority output_bundle grant gates the lower-priority rule DT' => sub {
+    my $source = <<'ISF';
+(actor output_bundle_priority
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done)
+    (output valid)
+    (output err))
+  (transaction main
+    (on start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter priority)
+      (users high low)))
+  (rule high a
+    (valid 1))
+  (rule low b
+    (err 1)))
+ISF
+
+    my $ir = lower_ir($source);
+    my $low_err = find_record($ir, owner => 'low', target => 'err');
+    is_deeply(
+        $low_err->{resource_suppressed_by},
+        ['high'],
+        'low output-bundle rule action records the higher resource requester',
+    );
+    is_deeply(
+        $ir->{resource_arbitration}{grants},
+        [
+            {
+                resource => 'response_outputs',
+                kind     => 'output_bundle',
+                arbiter  => 'priority',
+                user     => 'high',
+                higher   => [],
+            },
+            {
+                resource => 'response_outputs',
+                kind     => 'output_bundle',
+                arbiter  => 'priority',
+                user     => 'low',
+                higher   => ['high'],
+            },
+        ],
+        'output_bundle grants preserve the existing resource arbitration IR shape',
+    );
+
+    my $fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($source))->{files}{'output_bundle_priority.fsm'};
+    like(
+        $fsm,
+        qr/\(-low\s+<\(& b \(! a\)\)\s+\(<- \(err> 1\)\)\s+\)/s,
+        'scheduled .fsm gates the whole low output-bundle rule DT with the priority grant',
+    );
+    assert_fsm_reaches_hdl($fsm, 'output_bundle_priority');
+};
+
 subtest 'resource priority rejects incomplete and cyclic orderings' => sub {
     assert_lower_rejected(<<'ISF', 'incomplete priority order', qr/isf_resource_priority_incomplete/);
 (actor incomplete_resource_priority
@@ -183,6 +247,31 @@ subtest 'unsupported resource arbitration surfaces fail closed' => sub {
     (valid 0)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'round_robin output_bundle with bound users', qr/isf_resource_unsupported_arbiter/);
+(actor unsupported_rr_output_bundle_resource
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done)
+    (output valid))
+  (transaction main
+    (on start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter round_robin)
+      (users high low)))
+  (rule high a
+    (valid 1))
+  (rule low b
+    (valid 0)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'unsupported resource kind with bound users', qr/isf_resource_unsupported_kind/);
 (actor unsupported_kind_resource
   (clock clk)
@@ -199,7 +288,7 @@ ISF
   (priority high over low)
   (resources
     (resource shared_bus
-      (kind output_bundle)
+      (kind interface_bundle)
       (arbiter priority)
       (users high low)))
   (rule high a
@@ -209,7 +298,7 @@ ISF
 ISF
 };
 
-subtest 'rule_slot user references fail before scheduler handoff' => sub {
+subtest 'rule resource user references fail before scheduler handoff' => sub {
     my $ok = eval {
         parse_actor(<<'ISF');
 (actor unknown_resource_user
@@ -236,6 +325,33 @@ ISF
 
     ok(!$ok, 'unknown rule_slot user is rejected');
     like($@, qr/resource 'shared_bus' user 'missing' is not a declared rule/, 'unknown user diagnostic names the resource and user');
+
+    $ok = eval {
+        parse_actor(<<'ISF');
+(actor unknown_output_bundle_resource_user
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (output done)
+    (output valid))
+  (transaction main
+    (on start)
+    (complete done))
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter priority)
+      (users high missing)))
+  (rule high a
+    (valid 1)))
+ISF
+        1;
+    };
+
+    ok(!$ok, 'unknown output_bundle user is rejected');
+    like($@, qr/resource 'response_outputs' user 'missing' is not a declared rule/, 'unknown output_bundle user diagnostic names the resource and user');
 };
 
 done_testing();

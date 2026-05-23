@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Output-bundle enforcement is a typed rule-user grant
+- `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` deliberately implements
+  `output_bundle` with the same static priority grant mechanics as
+  `rule_slot`.
+- That is the correct first executable subset because the current resource
+  grammar names the resource and bound users, not a separate list of bundle
+  members. For rule users, the driven outputs and LHS targets are already
+  visible in the lowered rule DTs, so the named bundle can be enforced by
+  choosing one active rule owner for the cycle.
+- The implementation does not claim target-level muxing, multi-cycle
+  ownership, fairness, or protocol ownership. Those still need explicit
+  syntax and diagnostics before they can be implemented safely.
+
 ## 2026-05-23: Output-bundle priority should reuse static grant gating first
 - `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1` selects the next resource
   arbitration slice after the shipped `rule_slot`/`priority` path.

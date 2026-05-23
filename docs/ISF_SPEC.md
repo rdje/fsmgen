@@ -3411,8 +3411,10 @@ the parser, and both `lhs` and `rhs` must name declared transactions or rules
 in the same actor. Forward references are accepted. Actor-level priority
 metadata is enforced for same-target rule/rule data conflicts when both
 targets are rules, for priority-arbitrated `rule_slot` resources when the
-endpoints are bound rules of the same resource, and for the lowerable
-rule-over-transaction and transaction-over-rule same-target data cases.
+endpoints are bound rules of the same resource, for priority-arbitrated
+`output_bundle` resources when the endpoints are bound rules of the same
+resource, and for the lowerable rule-over-transaction and
+transaction-over-rule same-target data cases.
 Transaction/transaction priority beyond ordinary state mutual exclusion and
 broader resource arbitration remain deferred.
 
@@ -3420,9 +3422,10 @@ broader resource arbitration remain deferred.
 non-empty scalar names, an `(arbiter priority|round_robin)` subclause, and
 optional `(kind ...)` and `(users ...)` subclauses. Duplicate resource names,
 duplicate resource subclauses, duplicate users, malformed kinds, malformed
-users, and unknown `rule_slot` users are rejected before scheduled `.fsm`
-emission. `(resources ...)` is an actor-level singleton clause, so repeated
-resources blocks are rejected instead of merged or overwritten. Resource
+users, and unknown `rule_slot` or `output_bundle` users are rejected before
+scheduled `.fsm` emission. `(resources ...)` is an actor-level singleton
+clause, so repeated resources blocks are rejected instead of merged or
+overwritten. Resource
 semantics use a growable catalog of shareable resource kinds. The resource name
 is the author-defined instance handle; the kind says what is being shared; the
 `arbiter` says how requesters are selected. The table below is the current
@@ -3440,7 +3443,7 @@ Current shareable resource registry:
 | Kind | Status | Meaning |
 | --- | --- | --- |
 | `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
-| `output_bundle` | backlog | A group of actor outputs or LHS targets that must have one owner for a cycle. |
+| `output_bundle` | shipped for `priority` arbitration | A group of actor outputs or LHS targets with rule users. A grant enables the whole winning bound rule DT for that cycle. |
 | `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
 | `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
 | `transaction_start` | backlog | The start/request fan-in for one transaction. |
@@ -3453,20 +3456,21 @@ path, runtime semantics, diagnostics, report surface, and regression coverage
 ship.
 
 The shipped resource-arbitration implementation covers priority-arbitrated
-`rule_slot` users. The source shape keeps binding centralized under
-`(resources ...)` by extending a resource entry with `(kind rule_slot)` and
-`(users rule_a rule_b ...)` subclauses. For that covered case, each bound rule
-requests the resource when its normalized rule guard is true. Rule-local
-`(priority over other_rule)` and actor-level `(priority lhs over rhs)` edges
-choose the active winner when the endpoints are bound rules of the same
-resource. The generated grant gates the whole lowered rule DT DTE, while
-existing same-target priority suppression remains assignment-local. Cycles,
-incomplete ordering among potentially simultaneous bound users,
-ambiguous future user namespaces, unsupported resource kinds, and
-`round_robin` resources with bound users fail closed. Transaction users,
-named-drive users, output-target users, child-instance users, storage-port
-users, multi-capacity resources, and transaction-lifetime hold/release
-semantics remain deferred.
+`rule_slot` and `output_bundle` rule users. The source shape keeps binding
+centralized under `(resources ...)` by extending a resource entry with
+`(kind rule_slot)` or `(kind output_bundle)` and `(users rule_a rule_b ...)`
+subclauses. For those covered cases, each bound rule requests the resource
+when its normalized rule guard is true. Rule-local `(priority over other_rule)`
+and actor-level `(priority lhs over rhs)` edges choose the active winner when
+the endpoints are bound rules of the same resource. The generated grant gates
+the whole lowered rule DT DTE, while existing same-target priority suppression
+remains assignment-local. Cycles, incomplete ordering among potentially
+simultaneous bound users, ambiguous future user namespaces, unsupported
+resource kinds, and `round_robin` resources with bound users fail closed.
+Transaction users, named-drive users, output-target users, child-instance
+users, storage-port users, explicit output-bundle member-list syntax,
+multi-capacity resources, and transaction-lifetime hold/release semantics
+remain deferred.
 
 Actor-level `(phase name property...)` and `(stage name property...)` metadata
 is structurally validated by the parser and carried in the actor shell for

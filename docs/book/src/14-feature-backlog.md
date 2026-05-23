@@ -1746,11 +1746,11 @@ exclusion and arbiter behavior.
 
 Current boundary: resource metadata is structurally validated, including
 supported arbiter names, resource kinds, duplicate resource rejection, and
-resource-user validation for `rule_slot`. The scheduler now enforces the first
-resource kind: `rule_slot`, a one-cycle mutual-exclusion slot where each bound
-rule requests when its guard is true, the priority graph chooses a unique
-active winner, and the generated grant gates the whole rule DT DTE without
-adding a cycle.
+resource-user validation for the enforced rule-user resource kinds. The
+scheduler now enforces `rule_slot` and `output_bundle` under the static
+`priority` arbiter for declared rule users. Each bound rule requests when its
+guard is true, the priority graph chooses a unique active winner, and the
+generated grant gates the whole rule DT DTE without adding a cycle.
 
 The resource-kind catalog is owned in code by
 `FSM::Support::ISFResourceCatalog` and exposed through the machine-readable
@@ -1762,17 +1762,18 @@ Current shareable resource registry:
 | Kind | Status | Meaning |
 | --- | --- | --- |
 | `rule_slot` | shipped for `priority` arbitration | One-cycle mutual exclusion for rule users under the `priority` arbiter. |
-| `output_bundle` | backlog | One-cycle ownership of a group of actor outputs or LHS targets. |
+| `output_bundle` | shipped for `priority` arbitration | One-cycle ownership of a group of actor outputs or LHS targets for rule users under the `priority` arbiter. |
 | `interface_bundle` | backlog | Ownership of a protocol-facing interface or bus bundle. |
 | `named_drive` | backlog | Ownership of a reusable actor `(drive ...)` body or drive-call path. |
 | `transaction_start` | backlog | Arbitration for start/request fan-in into one transaction. |
 | `child_instance` | backlog | Re-entry control for a spawned child instance. |
 | `storage_port` | backlog | Arbitration for shared state, register, memory, or storage-port access. |
 
-Remaining backlog: non-`rule_slot` resource kinds, `round_robin`, transaction
-lifetime ownership, named-drive users, output-target users, multi-capacity
-resources, and dynamic resource names remain backlog until their reset,
-hold/release, fairness, and diagnostic contracts are explicit.
+Remaining backlog: non-`rule_slot`/`output_bundle` resource kinds,
+`round_robin`, transaction lifetime ownership, named-drive users,
+output-target users, explicit output-bundle member-list syntax,
+multi-capacity resources, and dynamic resource names remain backlog until
+their reset, hold/release, fairness, and diagnostic contracts are explicit.
 
 ### Priority Resolution
 

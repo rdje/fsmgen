@@ -6700,7 +6700,7 @@ sub _parse_resources($self, $clause) {
 
         confess "Error: resource '$name' requires '(arbiter $RESOURCE_ARBITER_SYNTAX)'\n"
             unless defined($arbiter);
-        confess "Error: resource '$name' with users requires '(kind rule_slot)'\n"
+        confess "Error: resource '$name' with users requires an enforced '(kind ...)' such as '(kind rule_slot)' or '(kind output_bundle)'\n"
             if @users && !defined($kind);
 
         my %resource = (name => $name, arbiter => $arbiter);
@@ -6716,7 +6716,8 @@ sub _validate_resource_user_targets($self, $actor) {
     my %rule_names = map { $_->{name} => 1 } @{$actor->{rules} || []};
 
     for my $resource (@{$actor->{resources} || []}) {
-        next unless ($resource->{kind} // '') eq 'rule_slot';
+        my $kind = $resource->{kind} // '';
+        next unless $kind eq 'rule_slot' || $kind eq 'output_bundle';
         for my $user (@{$resource->{users} || []}) {
             confess "Error: resource '$resource->{name}' user '$user' is not a declared rule in actor '$actor_name'\n"
                 unless defined($user)

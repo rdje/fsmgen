@@ -1739,15 +1739,16 @@ Resource arbitration:
 
 ```lisp
 (resources
-  (resource rule_slot
-    (kind exclusive)
+  (resource response_outputs
+    (kind output_bundle)
     (arbiter priority)
     (users rule_a rule_b)))
 ```
 
 Rules:
 
-- Current enforced resource kind is `rule_slot` with `priority` arbitration.
+- Current enforced resource kinds are `rule_slot` and `output_bundle` with
+  `priority` arbitration for declared rule users.
 - Reports expose `resource_arbitration[]`.
 - Additional resource kinds may be cataloged as backlog but are not enforced
   unless listed as enforced by the public contract.
@@ -2968,8 +2969,10 @@ rule-over-transaction priority suppression, `rule_slot`/`priority` resource
 metadata, lower-priority rule gating by a higher-priority rule, and delayed
 completion pulse behavior.
 
-This fixture covers the shipped priority arbiter for `rule_slot`; it does not
-claim round-robin, weighted, token bucket, or output-bundle resource support.
+Dedicated resource arbitration tests now cover the shipped priority arbiter
+for both `rule_slot` and `output_bundle`. The fixture above remains a
+`rule_slot` fixture; it does not claim round-robin, weighted, token bucket, or
+broader resource-kind support.
 
 The stage/contract fixture is covered by
 `t/1317-isf-stage-contract-fixture-coverage.t`, which proves strict schedule

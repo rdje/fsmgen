@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Output-bundle resource priority shipped
+- Completed `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` and closed the task tree.
+- `output_bundle` resources now enforce static `priority` arbitration for
+  declared rule users. Bound rules request the named bundle when their guards
+  are true; priority edges choose a unique active winner; lower-priority bound
+  rule DTs are guarded off without adding a cycle.
+- `output_bundle` now appears in the public resource catalog's enforced kind
+  list and in `resource_kind_status_map` as shipped for priority arbitration.
+- Schedule reports keep the existing `resource_arbitration[]` key family and
+  identify output-bundle grants with `kind: output_bundle`.
+- `rule_slot` behavior is unchanged. `interface_bundle`, `named_drive`,
+  `transaction_start`, `child_instance`, `storage_port`, `round_robin`,
+  transaction users, named-drive users, output-target users, dynamic resource
+  names, multi-capacity resources, fairness state, hold/release semantics,
+  route mux/storage, and explicit output-bundle member-list syntax remain
+  deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused resource/public/spec/book tests
+  with `Files=8, Tests=336`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1657`;
+  post-closure doc/public audits with `Files=6, Tests=347`;
+  `git diff --check`.
+
 ### R14 — Output-bundle resource priority selected
 - Completed selection work for `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1`.
 - Activated a new R14 task tree for enforcing the first non-`rule_slot`
