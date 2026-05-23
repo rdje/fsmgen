@@ -1216,12 +1216,13 @@ requirements. The shipped reusable FIFO actor target is fixed-shape
 `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Those parameters
 are provenance and binding evidence in this fixture; actor top-level
 interface widths may use actor-local scalar parameter defaults that resolve
-to positive integers, while the reusable FIFO fixture still uses fixed shape
-and storage widths/depths still require concrete positive integer literals. The
-actor has actor-owned storage, read and write pointers, occupancy state,
-actor-maintained flags, reset ownership, and first-class handling of the four
-request cases every cycle: no request, push without pop, pop without push,
-and push with pop. Push-only is accepted when the FIFO is not full, pop-only
+to positive integers, actor-owned scalar storage widths may use the same
+positive actor-local scalar parameter defaults, and bank widths/depths still
+require concrete positive integer literals. The actor has actor-owned storage,
+read and write pointers, occupancy state, actor-maintained flags, reset
+ownership, and first-class handling of the four request cases every cycle: no
+request, push without pop, pop without push, and push with pop. Push-only is
+accepted when the FIFO is not full, pop-only
 is accepted when the FIFO is not empty, simultaneous push+pop derives its
 read-fire and write-fire predicates from the same pre-cycle
 occupancy/full/empty snapshot, and idle preserves state. Depth 4 gives the
@@ -1247,8 +1248,10 @@ entry 0. The reusable FIFO fixture models the internal data bank through
 `(bank data (width 8) (depth 4))`, `(store data wr_ptr data_in)`, and
 `(load data rd_ptr as data_out)`.
 Actor top-level interface widths may now use actor-local scalar parameter
-defaults that resolve to positive integers. Use-site FIFO interface shape
-specialization, parameter-driven storage dimensions, arbitrary-depth
+defaults that resolve to positive integers. Actor-owned scalar storage widths
+may now use actor-local scalar parameter defaults that resolve to positive
+integers. Use-site FIFO interface shape, bank shape, generated-top
+respecialization, parameter-driven bank dimensions, arbitrary-depth
 memory-backed FIFO generation beyond the first `DEPTH=4` fixture, automatic
 non-zero reset values such as empty=1, standalone transaction/drive exports,
 package/imported constants beyond actor-local constants, derived parameter
@@ -1539,20 +1542,32 @@ clause:
 ```lisp
 (storage
   (var rd_ptr (width 2))
-  (variable wr_ptr (width 2))
+  (variable wr_ptr (width PTR_W))
   (var occupancy (width 3))
   (bank data (width 8) (depth 4)))
 ```
 
+In this example `PTR_W` must be declared in the same actor's `(params ...)`
+block as a scalar default that resolves to a positive integer.
+
 The first shipped storage forms are:
 
-- `(var name (width N))`: a fixed-width actor-owned internal scalar variable.
-- `(variable name (width N))`: verbose alias for `(var ...)`.
+- `(var name (width N|PARAM))`: an actor-owned internal scalar variable.
+- `(variable name (width N|PARAM))`: verbose alias for `(var ...)`.
 - `(bank name (width N) (depth N))`: a fixed-depth actor-owned storage bank.
 
-All storage widths and depths are positive integer literals in the current
-shipped surface. Parameter-derived storage widths/depths, actor constants as
-storage dimension symbols, dynamic storage depth, and memory-array backend
+Actor-owned scalar storage widths may be positive integer literals or
+actor-local scalar parameter defaults that resolve to positive integer
+literals. The parser returns the resolved integer width, scheduled `.fsm`
+`+size` uses that integer, schedule reports expose that integer as
+`inferred_storage[].width`, and generated HDL uses the resolved range. Unknown
+symbolic names, actor constants, runtime interface signals, zero-valued or
+non-scalar actor parameters, and arbitrary expressions fail closed. Type
+aliases remain spelled with `(type NAME)`, not `(width NAME)`.
+
+Storage bank widths and depths remain positive integer literals in the
+current shipped surface. Parameter-derived bank widths/depths, actor constants
+as storage dimension symbols, dynamic storage depth, and memory-array backend
 emission remain deferred.
 
 Storage banks lower to deterministic scalar storage element names in the
@@ -1678,9 +1693,9 @@ generated top scheduled `.fsm` files, records fixed parameter overrides and
 use-site bindings in `library_uses[]`, and reaches plain plus strict generated
 top SystemVerilog. This fixture is deliberately fixed to `DATA_WIDTH=8`,
 `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`; it does not claim use-site
-parameter-driven FIFO interface or storage shape elaboration, nested library
-imports, standalone exported transactions or drives, memory-array backend
-emission, or automatic non-zero reset values.
+parameter-driven FIFO interface shape, bank shape, generated-top
+respecialization, nested library imports, standalone exported transactions or
+drives, memory-array backend emission, or automatic non-zero reset values.
 
 ## 6. Drive Definitions and Calls
 
@@ -4993,6 +5008,7 @@ Focused tests:
 - [t/1331-isf-timing-conventions.t](../t/1331-isf-timing-conventions.t)
 - [t/1332-isf-atl-doc-status-audit.t](../t/1332-isf-atl-doc-status-audit.t)
 - [t/1333-isf-interface-actor-param-widths.t](../t/1333-isf-interface-actor-param-widths.t)
+- [t/1334-isf-scalar-storage-actor-param-widths.t](../t/1334-isf-scalar-storage-actor-param-widths.t)
 
 ## 12. Explicitly Deferred
 
@@ -5002,7 +5018,7 @@ Focused tests:
   library fixture/catalog slices:
   standalone transaction/drive exports,
   package/imported constants beyond actor-local constants, derived parameter expressions,
-  parameter-derived storage dimensions, memory-array backend emission, and
+  parameter-derived bank dimensions, transaction-port dimensions, memory-array backend emission, and
   library actors that import other libraries.
 - Unconditional transaction delay beyond the shipped non-negative literal,
   actor-constant, actor-parameter, bounded runtime scalar, and bounded runtime

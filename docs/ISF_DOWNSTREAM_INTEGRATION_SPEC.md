@@ -216,9 +216,10 @@ General source rules:
   parameters, domains, and instances are scalar HDL identifiers. Current
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.
 - Widths and depths are positive integer literals unless a specific clause says
-  otherwise. Actor top-level interface port widths also accept actor-local
-  scalar parameter defaults that resolve to positive integers; storage
-  dimensions and transaction port widths remain literal-only.
+  otherwise. Actor top-level interface port widths and actor-owned scalar
+  storage widths also accept actor-local scalar parameter defaults that resolve
+  to positive integers; bank dimensions and transaction port widths remain
+  literal-only.
 - Actor constants, scalar actor parameter defaults, and generated child
   transaction scalar parameter defaults use non-negative integer literals or
   enum member references that resolve to non-negative integers; static wait
@@ -453,16 +454,25 @@ Actor-owned storage:
 ```lisp
 (storage
   (var rd_ptr (width 2))
-  (variable wr_ptr (width 2))
+  (variable wr_ptr (width PTR_W))
   (bank data (width 8) (depth 4)))
 ```
+
+Here `PTR_W` must be an actor-local scalar parameter default that resolves to
+a positive integer.
 
 Rules:
 
 - `(var ...)` and `(variable ...)` declare fixed-width actor-owned scalar
   state.
 - `(bank ...)` declares a fixed-depth actor-owned storage bank.
-- Widths and depths are positive integer literals.
+- Scalar `(var ...)` and `(variable ...)` widths are positive integer literals
+  or actor-local scalar parameter defaults that resolve to positive integers.
+  Unknown symbolic names, actor constants, runtime interface signals,
+  zero-valued or non-scalar actor parameters, and arbitrary expressions fail
+  closed. Type aliases remain spelled as `(type NAME)`.
+- Bank widths and depths are positive integer literals in the current shipped
+  surface.
 - Storage names must not collide with interface ports, clock/reset names, or
   generated scheduler names.
 - Banks lower to deterministic scalar storage entries such as `data_0`,
@@ -572,7 +582,8 @@ storage: wr_ptr[2], rd_ptr[2], occupancy[3], data bank width 8 depth 4
 Known FIFO library limitations:
 
 - Fixed-shape `DATA_WIDTH=8`, `DEPTH=4` fixture.
-- No use-site parameter-driven FIFO interface or storage shape elaboration yet.
+- No use-site parameter-driven FIFO interface shape, bank shape, or
+  generated-top respecialization yet.
 - No memory-array backend emission yet.
 - No automatic non-zero reset values yet.
 - No standalone transaction or drive exports yet.
@@ -586,10 +597,10 @@ specialized child, and top `.fsm` artifacts in `--outdir`, fixed
 bindings, use-site clock/reset/input/output bindings, scalarized bank entries,
 pointer-gated accepted push/pop datapath paths, and plain plus strict
 generated-top HDL generation. It is a fixed-shape reusable-library fixture,
-not a claim for use-site parameter-derived FIFO interface/storage shape
-elaboration, nested imports, standalone transaction/drive exports,
-arbitrary-depth generated FIFOs, memory-array backend emission, or automatic
-non-zero reset values.
+not a claim for use-site parameter-derived FIFO interface shape, bank shape,
+generated-top respecialization, nested imports, standalone transaction/drive
+exports, arbitrary-depth generated FIFOs, memory-array backend emission, or
+automatic non-zero reset values.
 
 ## 10. Drive Definitions And Calls
 
@@ -3332,7 +3343,9 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1300-isf-enum-member-standalone-condition-values.t \
   t/1301-isf-enum-member-rule-standalone-guard-values.t \
   t/1302-isf-aggregate-rule-standalone-guard-values.t \
-  t/1331-isf-timing-conventions.t
+  t/1331-isf-timing-conventions.t \
+  t/1333-isf-interface-actor-param-widths.t \
+  t/1334-isf-scalar-storage-actor-param-widths.t
 
 ./bin/ci-regression isf
 mdbook build docs/book
@@ -3382,8 +3395,9 @@ The following are not public shipped integration surfaces today:
 - Full schedule JSON schema beyond the advertised key families.
 - Textual include semantics for libraries.
 - Standalone transaction or drive library exports.
-- Parameter-driven storage dimensions, transaction port widths, and broader
-  interface-width expressions beyond actor-local scalar parameter defaults.
+- Parameter-driven bank dimensions, transaction port widths, and broader
+  interface/storage width expressions beyond actor-local scalar parameter
+  defaults.
 - Derived parameter expressions and package/imported constants beyond current
   actor-local constants.
 - General memory-array HDL emission for actor-owned banks.

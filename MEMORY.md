@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Scalar storage actor-parameter widths shipped
+- Completed `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` and closed the task
+  tree.
+- Actor-owned scalar storage entries now accept `(width PARAM)` when `PARAM`
+  names an actor-local scalar parameter default that resolves to a positive
+  integer, including enum-member-backed defaults that resolve positive.
+- Accepted parameter-backed scalar storage widths lower like equivalent
+  literals: the public parser handoff exposes resolved integer `width`, each
+  storage signal uses that resolved width, scheduled `.fsm` `+size` uses that
+  integer, schedule reports expose `actor_storage` entries with that width,
+  generated HDL emits the expected register ranges, and `+params` preserves
+  the authored actor parameter for review.
+- Unsupported width sources fail closed: actor-owned bank widths and depths,
+  transaction-local port widths, actor constants, runtime interface signals,
+  zero-valued or non-scalar actor parameters, transaction parameters,
+  arbitrary expressions, use-site override specialization, and generated-top
+  respecialization remain outside this slice.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused scalar-storage, storage, bank,
+  public, spec, and book tests with `Files=9, Tests=333`; `mdbook build
+  docs/book`; broad `./bin/ci-regression isf --no-book` with `Files=240,
+  Tests=1621`; post-closure doc audits with `Files=3, Tests=339`; `git diff
+  --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Scalar storage actor-parameter widths selected
 - Completed selection work for
   `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1`.
@@ -29,8 +56,9 @@ This is the live continuity document for fast session recovery after crashes, re
 - Unsupported width sources fail closed: unknown symbolic names, actor
   constants, runtime interface signals, zero-valued or non-scalar actor
   parameters, transaction parameters, arbitrary expressions, use-site
-  override specialization, generated-top respecialization, storage widths,
-  bank depths, and transaction-local port widths remain outside this slice.
+  override specialization, generated-top respecialization, actor-owned bank
+  widths, bank depths, and transaction-local port widths remain outside this
+  slice.
 - Synchronized the ISF spec, downstream integration handoff, public contract,
   mdBook, roadmap status, task index, and live docs.
 - Validation passed: syntax checks; focused interface/public/spec/book tests
@@ -46,7 +74,8 @@ This is the live continuity document for fast session recovery after crashes, re
   `(width PARAM)` declarations backed by actor-local scalar parameter defaults
   resolving to positive integers.
 - The active frontier is `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2`.
-- The selected boundary is narrow: actor-owned storage widths, bank depths,
+- The selected boundary is narrow: actor-owned scalar storage widths were
+  handled later by `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS`; bank depths,
   transaction-local port widths, use-site override specialization,
   generated-top respecialization, transaction parameters, runtime signals,
   arbitrary expressions, zero-valued actor parameters, and non-scalar actor
@@ -7718,9 +7747,10 @@ This is the live continuity document for fast session recovery after crashes, re
   [isf/fifo_library_use.isf](isf/fifo_library_use.isf).
 - The fixture is explicitly fixed-shape:
   `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`. It does not
-  claim use-site FIFO interface/storage shape elaboration, nested imports,
-  standalone transaction/drive exports, arbitrary-depth generated FIFOs,
-  memory-array backend emission, or automatic non-zero reset values.
+  claim use-site FIFO interface shape, bank shape, generated-top
+  respecialization, nested imports, standalone transaction/drive exports,
+  arbitrary-depth generated FIFOs, memory-array backend emission, or
+  automatic non-zero reset values.
 - Updated public `tested_by` metadata, CI tier assertions, the ISF spec,
   downstream handoff, public contract, library catalog, mdBook feature
   matrix/backlog and intent chapters, fixture matrix, roadmap board, README
@@ -10050,9 +10080,9 @@ This is the live continuity document for fast session recovery after crashes, re
   actor-owned bank `store`/`load` data movement. It models push-only,
   pop-only, simultaneous push+pop, full/empty maintenance, pointer wrap, and
   read-before-write same-cycle data access for the fixed depth-4 target.
-- The fixture deliberately keeps concrete interface/storage dimensions because
-  use-site FIFO interface/storage shape elaboration and parameter-driven
-  storage dimensions are still deferred.
+- The fixture deliberately keeps concrete FIFO interface, scalar storage, and
+  bank dimensions because use-site FIFO interface shape, bank shape, and
+  generated-top respecialization are still deferred.
 - The next active R14 frontier is `ISF-LIBRARIES.4.6`, proving the reusable
   FIFO fixture through generated top HDL and focused generated-artifact
   checks.

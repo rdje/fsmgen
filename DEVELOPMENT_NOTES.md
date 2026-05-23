@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Scalar storage width parameters resolve before type handoff
+- `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` resolves actor-owned scalar
+  storage `(width PARAM)` tokens in the parser after actor parameter values
+  are finalized and before type-reference lowering.
+- The scheduler continues to receive concrete positive integer widths for
+  actor-owned scalar storage. That keeps `.fsm` `+size`, schedule-report
+  `actor_storage` width metadata, and HDL register emission on the same path
+  as literal widths while retaining authored parameter provenance in
+  `+params` / `actor_params[]`.
+- Bank widths and depths remain literal-only in this slice. Accepting
+  parameterized banks would also specialize scalarized element counts, bank
+  access metadata, generated memory policy, and use-site/generated-top
+  respecialization, so it needs a separate task tree.
+
 ## 2026-05-23: Scalar storage widths are the next static parameter slice
 - `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1` selects actor-owned scalar
   storage widths as the next bounded actor-parameter elaboration surface.
@@ -26,9 +40,10 @@ This document captures engineering rationale, design constraints, and working de
 - Actor constants and runtime interface signals are rejected as symbolic width
   sources for this slice even when they are otherwise meaningful ISF symbols.
   The point of this slice is actor-parameter elaboration, not a general
-  symbolic dimension system. Storage dimensions, bank depths, transaction port
-  widths, use-site overrides, and generated-top respecialization still need
-  separate policies before they can be accepted.
+  symbolic dimension system. Actor-owned scalar storage widths are now handled
+  by `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS`; bank dimensions, transaction
+  port widths, use-site overrides, and generated-top respecialization still
+  need separate policies before they can be accepted.
 
 ## 2026-05-23: Interface parameter widths are the first elaboration slice
 - `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1` selects actor top-level interface port
@@ -5767,10 +5782,10 @@ This document captures engineering rationale, design constraints, and working de
   pointer-gated accepted push/pop paths, and plain plus strict generated-top
   HDL generation.
 - The fixture remains deliberately fixed to `DATA_WIDTH=8`, `DEPTH=4`,
-  `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Use-site FIFO interface/storage shape
-  elaboration, parameter-driven storage dimensions, nested library imports,
-  standalone transaction/drive exports, memory-array backend emission, and
-  automatic non-zero reset values remain explicit future work.
+  `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Use-site FIFO interface shape, bank shape,
+  generated-top respecialization, nested library imports, standalone
+  transaction/drive exports, memory-array backend emission, and automatic
+  non-zero reset values remain explicit future work.
 ## 2026-05-16: FIFO controller fixture promotion keeps controller and datapath claims separate
 - `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.1` promotes
   `isf/fifo_controller.isf` as a file-backed strict fixture for the existing
@@ -7792,11 +7807,10 @@ This document captures engineering rationale, design constraints, and working de
 - The simultaneous full push+pop case intentionally uses read-before-write
   data semantics: the accepted pop reads the old entry selected by `rd_ptr`,
   while the accepted push writes the selected entry for the next cycle.
-- Automatic non-zero reset values, use-site FIFO interface/storage shape
-  elaboration, and parameter-driven storage dimensions remain future features.
-  Until they ship, the fixture documents the fixed reset/shape boundary
-  instead of pretending the parameter values specialize storage widths or
-  depths.
+- Automatic non-zero reset values, use-site FIFO interface shape, bank shape,
+  and generated-top respecialization remain future features. Until they ship,
+  the fixture documents the fixed reset/shape boundary instead of pretending
+  the parameter values specialize FIFO banks or generated child artifacts.
 ## 2026-05-15: ISF FIFO data-buffer access implementation
 - Store/load bank access is implemented as ordinary lowering into the same IR
   assignment model used by rules and transaction states. There is no special

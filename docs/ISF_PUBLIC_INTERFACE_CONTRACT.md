@@ -172,8 +172,9 @@ The FIFO reusable-library fixture is checked by
 to keep file-backed strict schedule JSON, generated importer/child/top
 scheduled `.fsm` artifacts, strict `--outdir` emission, fixed parameter
 overrides, use-site bindings, scalarized FIFO data entries, and plain plus
-strict generated-top HDL generation covered without claiming parameter-driven
-FIFO interface/storage shape elaboration or nested library imports.
+strict generated-top HDL generation covered without claiming use-site
+parameter-driven FIFO interface shape, bank shape, generated-top
+respecialization, or nested library imports.
 The ATL temporary trigger-batch fixture is checked by
 [t/1324-isf-atl-fixture-coverage.t](../t/1324-isf-atl-fixture-coverage.t)
 to keep file-backed static actor instances, one task-scoped same-cycle
@@ -358,6 +359,15 @@ Actor-owned fixed storage declarations are checked by
 for parser shape, authored `(var ...)` / `(variable ...)` scalar storage
 forms, scalarized bank lowering, `actor_storage` report metadata, fail-closed
 diagnostics, and SystemVerilog generation for used storage.
+Actor-owned scalar storage widths backed by actor-local scalar parameter
+defaults are checked by
+[t/1334-isf-scalar-storage-actor-param-widths.t](../t/1334-isf-scalar-storage-actor-param-widths.t)
+so accepted `(var NAME (width PARAM))` and
+`(variable NAME (width PARAM))` entries resolve to positive integer storage
+widths, scheduled `.fsm` `+size` declarations, schedule-report widths, and HDL
+register ranges while bank widths, unknown symbolic names, actor constants,
+runtime interface signals, zero-valued or non-scalar actor parameters, and
+arbitrary expressions fail closed.
 Rule expression guards are checked by
 [t/1233-isf-rule-expression-guards.t](../t/1233-isf-rule-expression-guards.t)
 for shorthand and long-form guard normalization, scheduled `.fsm` DT-DTE
@@ -1831,10 +1841,12 @@ full raw actor hash remains non-public.
 Actor roots may also carry parser-validated actor-owned storage declarations
 through a singleton `(storage ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `storage` is an
-optional array reference when present. The shipped storage entries are
-fixed-width scalar declarations authored with preferred `(var ...)`,
-verbose `(variable ...)`, plus fixed-depth `bank` declarations whose
-scalarized element names are scheduler input.
+optional array reference when present. The shipped storage entries include
+scalar declarations authored with preferred `(var ...)` or verbose
+`(variable ...)`, where widths may be positive integer literals or
+actor-local scalar parameters that resolve to positive integers, plus
+fixed-depth `bank` declarations whose width and depth remain literal-only and
+whose scalarized element names are scheduler input.
 Schedule reports still use coarse `kind: register` for generated storage
 class; that report value is not the source vocabulary.
 Actor roots may also carry parser-validated actor-local constants through a

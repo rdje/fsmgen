@@ -2,9 +2,22 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS`.
-- Current frontier: `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` will implement
-  the bounded actor-owned scalar storage `(width PARAM)` slice.
+- Active task tree: `none`.
+- Current frontier: `none`; the next PNT step must select or create the next
+  roadmap-aligned task tree before any code changes.
+- Recent R14 scalar storage actor-parameter width completion:
+  `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` shipped actor-local scalar
+  parameter defaults as actor-owned scalar storage `(width PARAM)` sources
+  when the defaults resolve to positive integers. Accepted `(var ...)` and
+  `(variable ...)` widths lower like equivalent literal widths in the public
+  parser handoff, scheduled `.fsm` `+size`, schedule reports, and generated
+  HDL. Actor-owned bank widths and depths, transaction-local port widths,
+  actor constants, use-site override specialization, generated-top
+  respecialization, transaction parameters, runtime signals, arbitrary
+  expressions, zero-valued actor parameters, and non-scalar actor parameters
+  remain deferred or fail-closed. The ISF spec, downstream integration
+  handoff, public contract, mdBook, roadmap, task tree, and live docs were
+  synchronized.
 - Recent R14 scalar storage actor-parameter width selection:
   `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1` activated the next
   parameter-driven storage tree. The selected first slice is intentionally
@@ -23,8 +36,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   schedule reports, and generated HDL. Unknown symbolic width names, actor
   constants, runtime interface signals, zero-valued or non-scalar actor
   parameters, transaction parameters, arbitrary expressions, use-site
-  override specialization, generated-top respecialization, storage widths,
-  bank depths, and transaction-local port widths remain fail-closed or
+  override specialization, generated-top respecialization, actor-owned bank
+  widths, bank depths, and transaction-local port widths remain fail-closed or
   deferred. The ISF spec, downstream integration handoff, public contract,
   mdBook, roadmap, task tree, and live docs were synchronized.
 - Recent R14 interface actor-parameter width selection:
@@ -32,7 +45,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   interface elaboration tree. The selected first slice is intentionally
   narrow: only actor top-level interface input/output `(width PARAM)` entries
   may use actor-local scalar parameter defaults that resolve to positive
-  integers. Actor-owned storage widths, bank depths, transaction-local port
+  integers. Actor-owned scalar storage widths are now covered by
+  `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS`; bank depths, transaction-local port
   widths, use-site override specialization, generated-top
   respecialization, transaction parameters, runtime signals, arbitrary
   expressions, zero-valued actor parameters, and non-scalar actor parameters
@@ -3809,7 +3823,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   same-cycle controller matrix with actor-owned bank `store`/`load` data
   movement for `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`.
   Those parameters are provenance for this fixed fixture; use-site FIFO
-  interface/storage shape elaboration remains deferred. The active frontier
+  interface shape, bank shape, and generated-top respecialization remain
+  deferred. The active frontier
   advances to `ISF-LIBRARIES.4.6`, proving the reusable FIFO fixture through
   generated top HDL and focused generated-artifact checks.
 - `ISF-LIBRARIES.4.6` is complete. The fixed FIFO library fixture now reaches
@@ -5505,12 +5520,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS`.
-- Current frontier: `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2`.
-- Completion status: `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` closed the
-  previous active R14 task tree. `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1`
-  now selects the next bounded parameter-driven storage slice before any code
-  changes.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` closed the
+  previous active R14 task tree. The next PNT step must select or create the
+  next roadmap-aligned task tree before any code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

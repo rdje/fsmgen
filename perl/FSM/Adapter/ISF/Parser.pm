@@ -293,6 +293,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_watchdog_limit($result)
         if $singleton_actor_clauses{watchdog};
     $self->_finalize_actor_interface_widths($result);
+    $self->_finalize_actor_scalar_storage_widths($result);
     $self->_finalize_actor_type_references($result);
     $self->_validate_deferred_atl_drive_sink_expression_candidates($result);
     $self->_validate_actor_aggregate_storage_paths($result);
@@ -663,6 +664,51 @@ sub _finalize_actor_interface_widths($self, $actor) {
 
             confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is not a declared actor scalar parameter\n";
         }
+    }
+
+    return 1;
+}
+
+sub _finalize_actor_scalar_storage_widths($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+
+    for my $entry (@{$actor->{storage} || []}) {
+        next if exists $entry->{type};
+
+        my $width = $entry->{width};
+        if (defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/) {
+            $_->{width} = 0 + $width for @{$entry->{signals} || []};
+            $entry->{width} = 0 + $width;
+            next;
+        }
+
+        my $storage_name = $entry->{name};
+        if (($entry->{kind} // '') ne 'var') {
+            confess "Error: actor '$actor_name' storage bank '$storage_name' width token '$width' is not supported in this slice; bank widths accept positive integer literals or '(type NAME)' only\n"
+                if defined($width) && !ref($width) && _is_hdl_identifier($width);
+            confess "Error: actor '$actor_name' storage bank '$storage_name' width must be a positive integer literal in this slice\n";
+        }
+
+        confess "Error: actor '$actor_name' storage '$storage_name' width must be a positive integer literal or actor scalar parameter\n"
+            unless defined($width) && !ref($width) && _is_hdl_identifier($width);
+
+        my $param = _actor_param_by_name($actor, $width);
+        if ($param) {
+            my $param_width = _positive_integer_from_literal_value(_param_resolved_value($param));
+            confess "Error: actor '$actor_name' storage '$storage_name' width parameter '$width' must resolve to a positive integer\n"
+                unless defined $param_width;
+            $entry->{width} = $param_width;
+            $_->{width} = $param_width for @{$entry->{signals} || []};
+            next;
+        }
+
+        confess "Error: actor '$actor_name' storage '$storage_name' width token '$width' is an actor constant; scalar storage widths accept positive integer literals or actor scalar parameters only; use '(type NAME)' for type aliases\n"
+            if _actor_constant_by_name($actor, $width);
+
+        confess "Error: actor '$actor_name' storage '$storage_name' width token '$width' is a runtime interface signal; scalar storage widths accept positive integer literals or actor scalar parameters only; use '(type NAME)' for type aliases\n"
+            if _actor_interface_signal_by_name($actor, $width);
+
+        confess "Error: actor '$actor_name' storage '$storage_name' width token '$width' is not a declared actor scalar parameter; use '(type NAME)' for type aliases\n";
     }
 
     return 1;
@@ -5832,7 +5878,7 @@ sub _parse_storage($self, $clause, $actor_name) {
                 if $parsed_options{$option_name}++;
 
             if ($option_name eq 'width') {
-                $parsed_options{width_value} = _parse_storage_positive_integer_option(
+                $parsed_options{width_value} = _parse_storage_width_option(
                     $option,
                     "Error: actor '$actor_name' storage '$name' width",
                 );
@@ -5921,6 +5967,21 @@ sub _parse_storage_positive_integer_option {
             && $option->[1] =~ /\A[1-9][0-9]*\z/;
 
     return 0 + $option->[1];
+}
+
+sub _parse_storage_width_option {
+    my ($option, $context) = @_;
+
+    confess "$context requires '(width positive_integer_or_actor_scalar_parameter)'\n"
+        unless ref($option) eq 'ARRAY'
+            && @$option == 2
+            && defined($option->[1])
+            && !ref($option->[1])
+            && ($option->[1] =~ /\A[1-9][0-9]*\z/ || _is_hdl_identifier($option->[1]));
+
+    return $option->[1] =~ /\A[1-9][0-9]*\z/
+        ? 0 + $option->[1]
+        : $option->[1];
 }
 
 sub _parse_domain_option {

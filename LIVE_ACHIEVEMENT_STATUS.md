@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Scalar storage actor-parameter widths shipped
+- Completed `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` and closed the task
+  tree.
+- Actor-owned scalar storage entries now accept `(width PARAM)` when `PARAM`
+  names an actor-local scalar parameter default resolving to a positive
+  integer.
+- Accepted parameter-backed widths lower like literal widths in public parser
+  handoff, scheduled `.fsm` `+size`, schedule reports, and generated HDL,
+  while authored parameters remain visible through `+params` and
+  `actor_params[]`.
+- Unsupported width sources fail closed: actor-owned bank widths and depths,
+  transaction-local port widths, actor constants, runtime interface signals,
+  zero-valued or non-scalar actor parameters, transaction parameters,
+  arbitrary expressions, use-site override specialization, and generated-top
+  respecialization.
+- Validation passed: syntax checks; focused scalar-storage, storage, bank,
+  public, spec, and book tests with `Files=9, Tests=333`; `mdbook build
+  docs/book`; broad `./bin/ci-regression isf --no-book` with `Files=240,
+  Tests=1621`; post-closure doc audits with `Files=3, Tests=339`; `git diff
+  --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Scalar storage actor-parameter widths selected
 - Completed selection work for
   `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1`.

@@ -518,6 +518,7 @@ sub build_isf_public_interface_contract {
             't/1330-isf-atl-resolved-child-fixture-coverage.t',
             't/1331-isf-timing-conventions.t',
             't/1333-isf-interface-actor-param-widths.t',
+            't/1334-isf-scalar-storage-actor-param-widths.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -782,7 +783,7 @@ sub isf_public_interface_shipped_library_definitions {
             ],
             limitations => [
                 'fixed-shape DATA_WIDTH=8 DEPTH=4 fixture',
-                'no use-site parameter-driven FIFO interface or storage shape elaboration yet',
+                'no use-site parameter-driven FIFO interface shape, bank shape, or generated-top respecialization yet',
                 'no memory-array backend emission yet',
                 'no automatic non-zero reset values yet',
                 'no standalone transaction or drive library exports yet',
@@ -858,7 +859,7 @@ sub isf_public_interface_actor_shell_required_keys {
 }
 
 sub isf_public_interface_actor_shell_value_shape {
-    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; constants is an optional array reference for actor-local compile-time integer constants; clock_domains is null for legacy one-clock actors or an optional live metadata hash for accepted clock-domain declarations; crossings is an optional array reference for accepted clock-domain event crossing declarations; actor_network is null when omitted or a bounded static_declaration metadata hash for the current ATL subset, including direct static actor instance metadata from verbose instances or compact instance aliases, resolved library-qualified actor type metadata and child artifact names, report-only static group metadata from verbose groups or compact concurrent aliases, selected parent-handoff event waits, selected parent-handoff transaction triggers, selected temporary trigger batches, selected generated ATL tops, and selected scalar or exact-width vector actor-to-actor data movements including the bounded generated-child reader-to-writer handoff route when present; unsupported qualified ATL trigger and endpoint-aware drive movement variants fail closed before scheduled emission when the qualifier names a static actor instance';
+    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; scalar storage widths are resolved positive integers from literals or actor-local scalar parameters, while bank width/depth values are literal-backed in the shipped surface; constants is an optional array reference for actor-local compile-time integer constants; clock_domains is null for legacy one-clock actors or an optional live metadata hash for accepted clock-domain declarations; crossings is an optional array reference for accepted clock-domain event crossing declarations; actor_network is null when omitted or a bounded static_declaration metadata hash for the current ATL subset, including direct static actor instance metadata from verbose instances or compact instance aliases, resolved library-qualified actor type metadata and child artifact names, report-only static group metadata from verbose groups or compact concurrent aliases, selected parent-handoff event waits, selected parent-handoff transaction triggers, selected temporary trigger batches, selected generated ATL tops, and selected scalar or exact-width vector actor-to-actor data movements including the bounded generated-child reader-to-writer handoff route when present; unsupported qualified ATL trigger and endpoint-aware drive movement variants fail closed before scheduled emission when the qualifier names a static actor instance';
 }
 
 sub isf_public_interface_actor_shell_actor_name_shape {
