@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -55,7 +55,7 @@ widths when those defaults resolve to positive integer literals.
 ## Task Tree
 
 - ID: `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship actor-parameter-backed actor-owned bank storage widths.`
   Children: `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1`,
   `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2`
@@ -67,22 +67,40 @@ widths when those defaults resolve to positive integer literals.
   actor-parameter source boundary, preserve non-goals, and update
   roadmap/live docs without behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit`
+  Commit: `6efa1164`
 
 - ID: `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document actor-parameter bank storage widths.`
   Acceptance: `Positive actor scalar parameters lower as actor-owned bank
   element widths; unsupported width sources fail closed; specs, book, public
   contract, downstream handoff, and focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`;
+  `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
+  `perl -Iperl -c t/1335-isf-bank-storage-actor-param-widths.t`;
+  `perl -Iperl -c t/1144-isf-public-tested-by-metadata-audit.t`;
+  `prove -Iperl t/1335-isf-bank-storage-actor-param-widths.t
+  t/1334-isf-scalar-storage-actor-param-widths.t
+  t/1232-isf-actor-storage-declarations.t
+  t/1236-isf-bank-access-lowering.t
+  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1112-isf-public-interface-contract.t
+  t/1115-isf-public-interface-cli-manifest-audit.t
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1305-isf-book-feature-matrix-audit.t`;
+  `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`;
+  `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t
+  t/1303-isf-public-live-book-paths-audit.t
+  t/1305-isf-book-feature-matrix-audit.t`;
+  `git diff --check`;
+  Commit: `this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` | `pending` | Scalar storage widths are shipped; bank element width parameters are the next bounded storage-width surface because width changes do not alter bank depth scalarization counts. |
+| _none_ | _none_ | _closed_ | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` completed and the tree is closed. |
 
 ## Decisions
 
@@ -110,16 +128,20 @@ widths when those defaults resolve to positive integer literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-23` | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-23` | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1335-isf-bank-storage-actor-param-widths.t`; `perl -Iperl -c t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1335-isf-bank-storage-actor-param-widths.t t/1334-isf-scalar-storage-actor-param-widths.t t/1232-isf-actor-storage-declarations.t t/1236-isf-bank-access-lowering.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `passed; focused Files=9, Tests=335; broad Files=241, Tests=1624; post-doc Files=3, Tests=339; diff clean` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1` | `this commit: ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1: select bank storage actor-param widths` | `selects static actor-parameter bank element width support` |
-| `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` | `pending` | `pending` |
+| `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1` | `6efa1164: ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1: select bank storage actor-param widths` | `selects static actor-parameter bank element width support` |
+| `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` | `this commit: ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2: ship bank storage actor-param widths` | `ships actor-parameter bank element width support` |
 
 ## Changelog
 
 - `2026-05-23`: Created task tree and selected actor-parameter-backed
   actor-owned bank storage widths as the next bounded parameter-driven storage
   slice.
+- `2026-05-23`: Shipped actor-parameter-backed actor-owned bank storage
+  widths, fail-closed unsupported symbolic sources, synchronized specs/book
+  and public/downstream contracts, and closed the tree.

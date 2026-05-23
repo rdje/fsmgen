@@ -2,10 +2,21 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS`.
-- Current frontier: `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` will implement
-  the bounded actor-owned bank storage `(width PARAM)` slice while keeping
-  bank depths literal-only.
+- Active task tree: `none`.
+- Current frontier: `none`; the next PNT step must select or create the next
+  roadmap-aligned task tree before any code changes.
+- Recent R14 bank storage actor-parameter width completion:
+  `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` shipped actor-local scalar
+  parameter defaults as actor-owned bank storage `(width PARAM)` sources when
+  the defaults resolve to positive integers. Accepted bank widths lower like
+  equivalent literal widths in the public parser handoff, scheduled `.fsm`
+  `+size`, schedule reports, `bank_accesses[]` metadata, and generated HDL.
+  Bank depths, transaction-local port widths, actor constants, use-site
+  override specialization, generated-top respecialization, transaction
+  parameters, runtime signals, arbitrary expressions, zero-valued actor
+  parameters, and non-scalar actor parameters remain deferred or fail-closed.
+  The ISF spec, downstream integration handoff, public contract, mdBook,
+  roadmap, task tree, and live docs were synchronized.
 - Recent R14 bank storage actor-parameter width selection:
   `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1` activated the next
   parameter-driven storage tree. The selected first slice is intentionally
@@ -22,7 +33,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   when the defaults resolve to positive integers. Accepted `(var ...)` and
   `(variable ...)` widths lower like equivalent literal widths in the public
   parser handoff, scheduled `.fsm` `+size`, schedule reports, and generated
-  HDL. Actor-owned bank widths and depths, transaction-local port widths,
+  HDL. Actor-owned bank depths, transaction-local port widths,
   actor constants, use-site override specialization, generated-top
   respecialization, transaction parameters, runtime signals, arbitrary
   expressions, zero-valued actor parameters, and non-scalar actor parameters
@@ -34,8 +45,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   parameter-driven storage tree. The selected first slice is intentionally
   narrow: only actor-owned scalar storage `(var NAME (width PARAM))` and
   `(variable NAME (width PARAM))` entries may use actor-local scalar parameter
-  defaults that resolve to positive integers. Actor-owned bank widths, bank
-  depths, transaction-local port widths, actor constants, use-site override
+  defaults that resolve to positive integers. Actor-owned bank depths,
+  transaction-local port widths, actor constants, use-site override
   specialization, generated-top respecialization, transaction parameters,
   runtime signals, arbitrary expressions, zero-valued actor parameters, and
   non-scalar actor parameters remain deferred or fail-closed.
@@ -48,7 +59,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   constants, runtime interface signals, zero-valued or non-scalar actor
   parameters, transaction parameters, arbitrary expressions, use-site
   override specialization, generated-top respecialization, actor-owned bank
-  widths, bank depths, and transaction-local port widths remain fail-closed or
+  depths, and transaction-local port widths remain fail-closed or
   deferred. The ISF spec, downstream integration handoff, public contract,
   mdBook, roadmap, task tree, and live docs were synchronized.
 - Recent R14 interface actor-parameter width selection:
@@ -3834,7 +3845,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   same-cycle controller matrix with actor-owned bank `store`/`load` data
   movement for `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`.
   Those parameters are provenance for this fixed fixture; use-site FIFO
-  interface shape, bank shape, and generated-top respecialization remain
+  interface shape, bank depth, and generated-top respecialization remain
   deferred. The active frontier
   advances to `ISF-LIBRARIES.4.6`, proving the reusable FIFO fixture through
   generated top HDL and focused generated-artifact checks.
@@ -5531,12 +5542,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS`.
-- Current frontier: `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2`.
-- Completion status: `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` closed the
-  previous active R14 task tree. `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1` now
-  selects the next bounded parameter-driven storage slice before any code
-  changes.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` closed the
+  previous active R14 task tree. The next PNT step must select or create the
+  next roadmap-aligned task tree before any code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

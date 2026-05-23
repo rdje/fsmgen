@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Bank width parameters reuse storage width finalization
+- `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` widens the storage width
+  finalization path so actor-owned scalar storage and actor-owned bank widths
+  both resolve actor-local scalar parameter defaults before scheduler handoff.
+- Bank depth remains literal-only. That keeps scalarized element names,
+  generated signal counts, and bank-access metadata stable while allowing
+  reusable bank element width authoring.
+- The scheduler and HDL backend still see concrete positive integer widths,
+  so `.fsm` `+size`, `inferred_storage[]`, `bank_accesses[]`, and register
+  declaration generation stay on the existing literal-width path.
+
 ## 2026-05-23: Bank widths are the next static parameter slice
 - `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1` selects actor-owned bank element
   widths as the next bounded actor-parameter elaboration surface.
@@ -53,7 +64,7 @@ This document captures engineering rationale, design constraints, and working de
   sources for this slice even when they are otherwise meaningful ISF symbols.
   The point of this slice is actor-parameter elaboration, not a general
   symbolic dimension system. Actor-owned scalar storage widths are now handled
-  by `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS`; bank dimensions, transaction
+  by `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS`; bank depths, transaction
   port widths, use-site overrides, and generated-top respecialization still
   need separate policies before they can be accepted.
 
@@ -5794,7 +5805,7 @@ This document captures engineering rationale, design constraints, and working de
   pointer-gated accepted push/pop paths, and plain plus strict generated-top
   HDL generation.
 - The fixture remains deliberately fixed to `DATA_WIDTH=8`, `DEPTH=4`,
-  `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Use-site FIFO interface shape, bank shape,
+  `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Use-site FIFO interface shape, bank depth,
   generated-top respecialization, nested library imports, standalone
   transaction/drive exports, memory-array backend emission, and automatic
   non-zero reset values remain explicit future work.
@@ -7819,7 +7830,7 @@ This document captures engineering rationale, design constraints, and working de
 - The simultaneous full push+pop case intentionally uses read-before-write
   data semantics: the accepted pop reads the old entry selected by `rd_ptr`,
   while the accepted push writes the selected entry for the next cycle.
-- Automatic non-zero reset values, use-site FIFO interface shape, bank shape,
+- Automatic non-zero reset values, use-site FIFO interface shape, bank depth,
   and generated-top respecialization remain future features. Until they ship,
   the fixture documents the fixed reset/shape boundary instead of pretending
   the parameter values specialize FIFO banks or generated child artifacts.

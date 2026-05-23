@@ -2765,7 +2765,7 @@ and the current directory. For a dotted namespace such as `common.fifo`, both
 can use same-source library roots but cannot resolve external files without a
 real source path. Standalone transaction/drive exports, symbolic parameter
 values beyond the shipped actor-local scalar width defaults, derived parameter
-expressions, parameter-derived bank dimensions, transaction-port dimensions,
+expressions, parameter-derived bank depths, transaction-port dimensions,
 memory-array backend emission, nested library imports, and multi-clock-domain
 ISF semantics are still deferred.
 
@@ -2792,8 +2792,9 @@ Shipped actor-owned storage model:
 ```
 
 `(var name (width N|PARAM))` declares one internal actor scalar storage value.
-`(variable ...)` is the verbose scalar-storage alias. `PARAM` must be an
-actor-local scalar parameter default that resolves to a positive integer.
+`(variable ...)` is the verbose scalar-storage alias. Bank width uses
+`(bank name (width N|PARAM) (depth N))`. `PARAM` must be an actor-local scalar
+parameter default that resolves to a positive integer.
 
 `(bank name (width N) (depth N))` remains the fixed-depth actor-owned storage
 form. The FIFO-controller matrix does not use an internal bank, but the
@@ -2845,9 +2846,9 @@ fixture is fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and
 `OCC_WIDTH=3`. Those parameters are emitted as provenance and use-site binding
 evidence. Actor top-level interface port widths may use actor-local scalar
 parameter defaults when they resolve to positive integers, and actor-owned
-scalar storage widths may use the same static parameter source. FIFO use-site
-interface shape specialization, bank dimensions, generated-top
-respecialization, and transaction port widths remain future work.
+scalar storage widths plus bank widths may use the same static parameter
+source. FIFO use-site interface shape specialization, bank depths,
+generated-top respecialization, and transaction port widths remain future work.
 
 The fixture explicitly models the four request cases: no request, push without
 pop, pop without push, and push with pop. Push-only updates occupancy and the

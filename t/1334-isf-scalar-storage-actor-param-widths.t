@@ -161,22 +161,6 @@ ISF
 
     assert_parse_rejected(
         <<'ISF',
-(actor bank_parameter_storage_width
-  (clock clk)
-  (params
-    (STATE_W 5))
-  (interface
-    (input start)
-    (output done))
-  (storage
-    (bank counters (width STATE_W) (depth 2))))
-ISF
-        qr/\AError: actor 'bank_parameter_storage_width' storage bank 'counters' width token 'STATE_W' is not supported in this slice/,
-        'bank widths stay literal-only in this slice',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
 (actor expression_parameter_storage_width
   (clock clk)
   (interface

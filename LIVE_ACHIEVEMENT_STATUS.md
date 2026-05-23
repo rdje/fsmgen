@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Bank storage actor-parameter widths shipped
+- Completed `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` and closed the task tree.
+- Actor-owned bank storage entries now accept `(width PARAM)` when `PARAM`
+  names an actor-local scalar parameter default resolving to a positive
+  integer.
+- Accepted parameter-backed widths lower like literal widths in public parser
+  handoff, scheduled `.fsm` `+size`, schedule reports, `bank_accesses[]`
+  metadata, and generated HDL, while authored parameters remain visible
+  through `+params` and `actor_params[]`.
+- Unsupported width sources fail closed: actor-owned bank depths,
+  transaction-local port widths, actor constants, runtime interface signals,
+  zero-valued or non-scalar actor parameters, transaction parameters,
+  arbitrary expressions, use-site override specialization, and generated-top
+  respecialization.
+- Validation passed: syntax checks; focused bank/scalar storage,
+  bank-access, public, spec, and book tests with `Files=9, Tests=335`;
+  `mdbook build docs/book`; broad `./bin/ci-regression isf --no-book` with
+  `Files=241, Tests=1624`; post-closure doc audits with `Files=3,
+  Tests=339`; `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Bank storage actor-parameter widths selected
 - Completed selection work for `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1`.
 - Activated the active R14 task tree for actor-owned bank storage
@@ -20,7 +42,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   handoff, scheduled `.fsm` `+size`, schedule reports, and generated HDL,
   while authored parameters remain visible through `+params` and
   `actor_params[]`.
-- Unsupported width sources fail closed: actor-owned bank widths and depths,
+- Unsupported width sources fail closed: actor-owned bank depths,
   transaction-local port widths, actor constants, runtime interface signals,
   zero-valued or non-scalar actor parameters, transaction parameters,
   arbitrary expressions, use-site override specialization, and generated-top

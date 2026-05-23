@@ -292,15 +292,15 @@ domain to sample or drive the port directly.
   (var rd_ptr (width 2))
   (variable wr_ptr (width PTR_W))
   (var occupancy (width 3))
-  (bank data (width 8) (depth 4)))
+  (bank data (width DATA_W) (depth 4)))
 ```
 
 The shipped actor-owned storage forms are fixed-width internal scalar
 variables and fixed-depth banks. The preferred scalar spelling is
 `(var name (width N|PARAM))`; `(variable ...)` is the verbose alias. When
-`PARAM` is used, it must name an actor-local scalar parameter default that
-resolves to a positive integer. A scalar entry lowers to one internal storage
-signal with the authored name. A bank lowers to
+`PARAM` is used for scalar storage or bank width, it must name an actor-local
+scalar parameter default that resolves to a positive integer. A scalar entry
+lowers to one internal storage signal with the authored name. A bank lowers to
 deterministic scalar element names in the scheduled `.fsm` review artifact:
 `data_0`, `data_1`, `data_2`, and `data_3` for the example above.
 
@@ -308,10 +308,10 @@ This scalarized representation is deliberate for the first reusable FIFO work.
 
 It lets the `DEPTH=4` fixture use four concrete storage entries, 2-bit
 pointers, and 3-bit occupancy state while staying on the existing scalar
-signal/flop backend path. Actor-owned scalar storage widths may use
-actor-local scalar parameter defaults that resolve to positive integers; bank
-widths/depths, dynamic storage depth, arbitrary storage-width expressions, and
-memory-array backend emission remain future generalizations.
+signal/flop backend path. Actor-owned scalar storage widths and bank widths
+may use actor-local scalar parameter defaults that resolve to positive
+integers; bank depths, dynamic storage depth, arbitrary storage-width
+expressions, and memory-array backend emission remain future generalizations.
 
 Pointer-selected access is available through explicit action forms such as
 `(store data wr_ptr data_in)` and `(load data rd_ptr as data_out)`, which
@@ -322,8 +322,9 @@ element names must not collide with interface ports, actor clock/reset signals,
 or generated scheduler signals such as `can_accept`. Missing scalar storage
 `(width N|PARAM)`, missing bank `(depth N)`, duplicate storage names,
 duplicate scalarized element names, unknown parameter names, actor constants,
-runtime interface signals, zero-valued or non-scalar actor parameters, width
-expressions, and repeated storage clauses fail closed before scheduler handoff.
+runtime interface signals, zero-valued or non-scalar actor parameters, bank
+depth parameters, width expressions, and repeated storage clauses fail closed
+before scheduler handoff.
 
 When `(clock-domains ...)` is present, storage entries may add `(domain NAME)`.
 

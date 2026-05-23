@@ -327,11 +327,11 @@ The shipped catalog is
 contract advertises the catalog through `library_catalog_paths`, the bounded
 entry fields through `library_catalog_entry_keys`, and the current shipped
 entries through `shipped_library_definitions`. Actor top-level interface width
-parameters and actor-owned scalar storage width parameters are shipped for
-positive actor-local scalar defaults, but use-site FIFO interface shape, bank
-shape, generated-top respecialization, memory-array backend emission,
-standalone transaction or drive exports, and nested library imports remain
-future work.
+parameters, actor-owned scalar storage width parameters, and actor-owned bank
+width parameters are shipped for positive actor-local scalar defaults, but
+use-site FIFO interface shape, bank depth, generated-top respecialization,
+memory-array backend emission, standalone transaction or drive exports, and
+nested library imports remain future work.
 
 ## Static Actor-Network Metadata
 

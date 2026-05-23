@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Bank storage actor-parameter widths shipped
+- Completed `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` and closed the task
+  tree.
+- Actor-owned bank storage entries now accept `(width PARAM)` when `PARAM`
+  names an actor-local scalar parameter default that resolves to a positive
+  integer. Enum-member-backed scalar defaults are accepted when they resolve
+  to a positive integer.
+- Accepted widths lower like literal widths in parser handoff, scheduled
+  `.fsm` `+size`, schedule-report `actor_storage` and `bank_accesses[]`
+  widths, and generated HDL register ranges, while authored actor parameters
+  remain visible through `+params` and `actor_params[]`.
+- Unsupported width sources fail closed: actor-owned bank depths,
+  transaction-local port widths, actor constants, runtime interface signals,
+  zero-valued or non-scalar actor parameters, transaction parameters,
+  arbitrary expressions, use-site override specialization, and generated-top
+  respecialization.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused bank/scalar storage,
+  bank-access, public, spec, and book tests with `Files=9, Tests=335`;
+  `mdbook build docs/book`; broad `./bin/ci-regression isf --no-book` with
+  `Files=241, Tests=1624`; post-closure doc audits with `Files=3,
+  Tests=339`; `git diff --check`.
+
 ### R14 — Bank storage actor-parameter widths selected
 - Completed selection work for `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1`.
 - Activated a new R14 task tree for accepting actor-local scalar parameter
@@ -24,7 +49,7 @@ This is the persistent technical change history for FSMGen.
   `.fsm` `+size`, schedule-report `actor_storage` widths, and generated HDL
   register ranges, while authored actor parameters remain visible through
   `+params` and `actor_params[]`.
-- Unsupported width sources fail closed: actor-owned bank widths and depths,
+- Unsupported width sources fail closed: actor-owned bank depths,
   transaction-local port widths, actor constants, runtime interface signals,
   zero-valued or non-scalar actor parameters, transaction parameters,
   arbitrary expressions, use-site override specialization, and generated-top
@@ -44,8 +69,8 @@ This is the persistent technical change history for FSMGen.
 - Activated a new R14 task tree for accepting actor-local scalar parameter
   defaults resolving to positive integers as actor-owned scalar storage
   `(var NAME (width PARAM))` and `(variable NAME (width PARAM))` values.
-- The selected first slice deliberately excludes actor-owned bank widths, bank
-  depths, transaction-local port widths, actor constants, use-site override
+- The selected first slice deliberately excludes actor-owned bank depths,
+  transaction-local port widths, actor constants, use-site override
   specialization, generated-top respecialization, transaction parameters,
   runtime signals, arbitrary expressions, zero-valued actor parameters, and
   non-scalar actor parameters.
@@ -64,7 +89,7 @@ This is the persistent technical change history for FSMGen.
 - Unsupported width sources fail closed: unknown symbolic names, actor
   constants, runtime interface signals, zero-valued or non-scalar actor
   parameters, transaction parameters, arbitrary expressions, storage
-  bank dimensions, transaction-local port widths, and use-site or
+  bank depths, transaction-local port widths, and use-site or
   generated-top respecialization.
 - Synchronized the ISF spec, downstream integration spec, public contract,
   mdBook, roadmap status, task-tree docs, live achievement status, memory, and
@@ -6935,7 +6960,7 @@ This is the persistent technical change history for FSMGen.
   plain plus strict generated-top HDL generation for
   `isf/fifo_library_use.isf`.
 - Kept the fixture boundary fixed-shape: it does not claim use-site FIFO
-  interface shape, bank shape, generated-top respecialization, nested imports,
+  interface shape, bank depth, generated-top respecialization, nested imports,
   standalone transaction/drive exports, arbitrary-depth generated FIFOs,
   memory-array backend emission, or automatic non-zero reset values.
 - Added the test to public `tested_by` metadata and the ISF regression tier
