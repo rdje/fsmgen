@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Output-bundle roadmap wording cleanup
+- Completed `ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1` and closed the
+  one-leaf roadmap-maintenance task tree.
+- Repaired duplicated `explicit` wording and a split `route mux/storage`
+  phrase in `ROADMAP_STATUS.md` after the output-bundle member-domain truth
+  sync.
+- No parser, scheduler, report, HDL, CLI, public contract, spec, downstream
+  handoff, mdBook, or public ISF behavior changed.
+- Validation passed: focused text checks and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Output-bundle storage members shipped
 - Completed `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` and closed the task tree.
 - Explicit `(members name...)` lists for `output_bundle` resources may now

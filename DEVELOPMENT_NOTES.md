@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Roadmap wording stays maintenance-scoped
+- `ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1` is intentionally
+  documentation-only. It repairs duplicated wording in the live status board
+  without changing the output-bundle member contract.
+
 ## 2026-05-23: Output-bundle storage members remain validation evidence
 - `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` widens explicit member validation from
   declared actor outputs to declared actor outputs plus concrete actor-owned

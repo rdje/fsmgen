@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.md](docs/tasks/ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.md) |
 | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS` | `done` | `R14` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.md](docs/tasks/ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.md) |
 | `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.md](docs/tasks/ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.md) |
 | `ISF-OUTPUT-BUNDLE-MEMBER-LIST` | `done` | `R14` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-MEMBER-LIST.md](docs/tasks/ISF-OUTPUT-BUNDLE-MEMBER-LIST.md) |
