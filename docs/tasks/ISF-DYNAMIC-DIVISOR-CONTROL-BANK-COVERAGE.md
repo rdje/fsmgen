@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -37,7 +37,7 @@ rule guard, and actor-owned bank access expression surfaces.
 ## Task Tree
 
 - ID: `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE`
-  Status: `active`
+  Status: `done`
   Goal: `Harden focused coverage for documented control and bank divisor guards.`
   Children: `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1`,
   `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2`
@@ -49,22 +49,23 @@ rule guard, and actor-owned bank access expression surfaces.
   coverage gap, set the implementation frontier, and update roadmap/live docs
   without behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending commit`
+  Commit: `141ed202 ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1: select divisor control bank coverage`
 
 - ID: `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Add control and bank dynamic-divisor coverage.`
   Acceptance: `Focused tests prove divisor-zero failures in transaction
   conditions, rule guards, and actor-owned bank access index/value
   expressions; focused dynamic-divisor and doc checks pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: focused syntax, dynamic-divisor, public contract, spec audit,
+  book audit, mdBook, and diff checks passed.
+  Commit: `pending commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` | `pending` | The spec already documents these expression surfaces; focused tests should prove them. |
+| 1 | none | `closed` | All selected leaves are complete. |
 
 ## Decisions
 
@@ -85,15 +86,19 @@ rule guard, and actor-owned bank access expression surfaces.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-22` | `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` | `perl -Iperl -c t/1308-isf-dynamic-divisor-safety.t`; `prove -Iperl t/1308-isf-dynamic-divisor-safety.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `focused coverage and docs passed; no behavior changed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1` | `this commit: ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1: select divisor control bank coverage` | `selects focused coverage hardening for control and bank expression divisor guards` |
-| `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` | `pending` | `pending` |
+| `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1` | `141ed202 ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1: select divisor control bank coverage` | `selects focused coverage hardening for control and bank expression divisor guards` |
+| `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` | `this commit: ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2: cover divisor control bank expressions` | `adds focused coverage for transaction condition, rule guard, and bank access expression divisor guards` |
 
 ## Changelog
 
 - `2026-05-22`: Created task tree and selected control/bank
   dynamic-divisor coverage hardening.
+- `2026-05-22`: Added focused tests for transaction condition, rule guard,
+  bank store index, bank store value, and bank load index divisor guards; no
+  behavior changed.

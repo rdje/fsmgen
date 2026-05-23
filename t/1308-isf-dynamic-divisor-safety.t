@@ -81,6 +81,94 @@ subtest 'literal zero divisor in runtime wait expression fails closed' => sub {
 ISF
 };
 
+subtest 'literal zero divisor in transaction condition fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'condition_division_by_zero', qr/\AError: transaction 'main' when condition expression '\(\/ numerator 0\)' uses literal zero divisor '0' in division/);
+(actor condition_division_by_zero
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input numerator (width 8))
+    (output out (width 8)))
+  (transaction main
+    (on start)
+    (when (/ numerator 0)
+      (set out 1))))
+ISF
+};
+
+subtest 'actor zero constant divisor in rule guard fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'rule_guard_constant_division_by_zero', qr/\AError: rule 'capture' guard expression '\(\/ numerator ZERO\)' uses actor constant zero divisor 'ZERO' in division/);
+(actor rule_guard_constant_division_by_zero
+  (clock clk)
+  (reset rst)
+  (constants
+    (ZERO 0))
+  (interface
+    (input numerator (width 8))
+    (output out (width 8)))
+  (rule capture (when (/ numerator ZERO))
+    (set out 1)))
+ISF
+};
+
+subtest 'literal zero divisor in bank store index fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'bank_store_index_division_by_zero', qr/\AError: transaction 'main' store index expression '\(\/ idx 0\)' uses literal zero divisor '0' in division/);
+(actor bank_store_index_division_by_zero
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input value (width 8))
+    (output done))
+  (storage
+    (var idx (width 2))
+    (bank data (width 8) (depth 4)))
+  (transaction main
+    (on start)
+    (store data (/ idx 0) value)
+    (complete done)))
+ISF
+};
+
+subtest 'actor zero constant divisor in bank store value fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'bank_store_value_constant_division_by_zero', qr/\AError: transaction 'main' store value expression '\(\/ value ZERO\)' uses actor constant zero divisor 'ZERO' in division/);
+(actor bank_store_value_constant_division_by_zero
+  (clock clk)
+  (reset rst)
+  (constants
+    (ZERO 0))
+  (interface
+    (input start)
+    (input value (width 8))
+    (output done))
+  (storage
+    (var idx (width 2))
+    (bank data (width 8) (depth 4)))
+  (transaction main
+    (on start)
+    (store data idx (/ value ZERO))
+    (complete done)))
+ISF
+};
+
+subtest 'literal zero divisor in bank load index fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'bank_load_index_division_by_zero', qr/\AError: transaction 'main' load index expression '\(\/ idx 0\)' uses literal zero divisor '0' in division/);
+(actor bank_load_index_division_by_zero
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (output out (width 8)))
+  (storage
+    (var idx (width 2))
+    (bank data (width 8) (depth 4)))
+  (transaction main
+    (on start)
+    (load data (/ idx 0) as out)))
+ISF
+};
+
 subtest 'literal zero divisor in activation input binding expression fails closed' => sub {
     assert_parse_rejected(<<'ISF', 'activation_binding_division_by_zero', qr/\AError: transaction 'main' do input binding 'value' expression '\(\/ numerator 0\)' uses literal zero divisor '0' in division/);
 (actor activation_binding_division_by_zero

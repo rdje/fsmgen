@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Control/bank divisor coverage stays behavior-neutral
+- `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` adds regression coverage for
+  parser paths that were already implemented and documented: transaction
+  conditions, rule guards, bank store index expressions, bank store value
+  expressions, and bank load index expressions.
+- The tests deliberately mix literal-zero and actor-constant-zero divisors so
+  both shipped diagnostic families remain exercised outside the RHS, wait,
+  activation, and drive surfaces.
+
 ## 2026-05-22: Dynamic-divisor control/bank coverage is a proof slice
 - `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1` selects coverage hardening for
   documented parser paths, not behavior changes.
