@@ -964,6 +964,11 @@ positive integer literals, actor-local scalar parameter defaults, or declared
 actor constants that resolve to positive integers. Unsupported transaction
 parameters, runtime interface signals, unknown names, arbitrary expressions,
 zero values, and aggregate values fail closed.
+Assemble static part widths are checked by
+[t/1344-isf-assemble-static-part-widths.t](../t/1344-isf-assemble-static-part-widths.t),
+so `(assemble part... as target (widths N|PARAM|CONST...))` supplies ordered
+part-width evidence from the same accepted static source set while preserving
+the emitted concat assignment shape.
 The single-missing-field `extract` inference path is checked by
 [t/1101-isf-extract-slices.t](../t/1101-isf-extract-slices.t), so one
 unknown destination field can derive its width from a known source word and
@@ -1144,13 +1149,15 @@ so `(shift_left reg bit [(width N|PARAM|CONST)])` and
 operands before scheduled `.fsm` emission.
 The assemble-clause boundary is checked by
 [t/1200-isf-assemble-clause-boundary.t](../t/1200-isf-assemble-clause-boundary.t)
-so `(assemble part... as target)` requires one or more scalar parts and one
-scalar target before scheduled `.fsm` emission. The same regression covers the
-width-evidence boundary: when all part widths are known, the derived sum must
-match any already-known target width; when exactly one part width is missing,
-a known target width and known sibling part widths infer that missing width as
-a positive remainder for later data-operation evidence. Multiple unknown parts
-remain non-evidence concat operands.
+so `(assemble part... as target [(widths N|PARAM|CONST...)])` requires one or
+more scalar parts, one scalar target, and any optional trailing width list to
+match the part count before scheduled `.fsm` emission. The same regression
+covers the width-evidence boundary: explicit widths derive target evidence for
+later data operations, known part-width sums must match any already-known
+target width, and when exactly one part width is missing, a known target width
+and known sibling part widths infer that missing width as a positive
+remainder. Multiple unknown parts remain non-evidence concat operands unless
+explicit widths make them known.
 The extract-clause boundary is checked by
 [t/1201-isf-extract-clause-boundary.t](../t/1201-isf-extract-clause-boundary.t)
 so `(extract word as field... [(widths N|PARAM|CONST...)])` requires one

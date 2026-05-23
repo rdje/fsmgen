@@ -2314,7 +2314,8 @@ Goal: infer widths for data operations in more cases without requiring
 explicit width options, and keep accepted lowering free of width placeholders.
 
 Current boundary: `shift_left` and `shift_right` accept
-`(width N|PARAM|CONST)` and `extract` accepts
+`(width N|PARAM|CONST)`, `assemble` accepts
+`(widths N|PARAM|CONST...)` after the target, and `extract` accepts
 `(widths N|PARAM|CONST...)` as explicit assertions. `PARAM` names an
 actor-local scalar parameter default that resolves to a positive integer, and
 `CONST` names a declared actor constant that resolves to a positive integer.
@@ -2328,11 +2329,13 @@ two or more unknown fields remain backlog. `extract` fails closed instead of
 emitting placeholder slice bounds when field positions cannot be proven, the
 inferred remainder is not positive, or field totals conflict with known source
 width. `shift_right` now fails closed when width evidence is missing or
-conflicts with an explicit option. `assemble` infers exactly one missing part
-width when the target width and all sibling part widths prove one positive
-remainder; two or more unknown parts remain backlog for inference and are
-accepted only as non-evidence concat operands. `assemble` also rejects known
-target-width mismatches and non-positive single-part inferred remainders.
+conflicts with an explicit option. `assemble` accepts ordered explicit part
+widths, infers exactly one missing part width when the target width and all
+sibling part widths prove one positive remainder, and rejects contradictory
+explicit part widths, known target-width mismatches, and non-positive
+single-part inferred remainders. Two or more unknown parts remain backlog for
+inference and are accepted only as non-evidence concat operands unless
+explicit widths make them known.
 
 Schedule reports now expose positive integer `width` metadata for inferred
 scheduler counters and register storage with known ISF width evidence.

@@ -2,8 +2,26 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-ASSEMBLE-STATIC-PART-WIDTHS`.
-- Current frontier: `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 assemble static part-width completion:
+  `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` shipped optional trailing
+  `(assemble part... as target (widths N|PARAM|CONST...))` width evidence.
+  Accepted part widths may be positive integer literals, actor-local scalar
+  parameter defaults, or declared actor constants that resolve to positive
+  integers. The resolved widths feed transaction-local width fact collection,
+  assembled-target width derivation, later data-operation width consumers,
+  schedule-report storage width metadata, and generated HDL while preserving
+  the emitted concat assignment, state timing, generated handoff naming, and
+  report key families. Existing `(assemble part... as target)` behavior,
+  single-unknown-part inference, and multiple-unknown non-evidence concat
+  lowering remain unchanged. Unsupported width sources fail closed:
+  transaction parameters, runtime interface signals, arbitrary expressions,
+  unknown names, zero-valued actor parameters, zero-valued actor constants,
+  aggregate values, activation override specialization, generated-top
+  respecialization, and broader multiple-unknown inference remain deferred or
+  rejected. The ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task tree, and live docs were synchronized.
 - Recent R14 assemble static part-width selection:
   `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1` activated the next data-manipulation
   task tree. The selected implementation slice is intentionally narrow:

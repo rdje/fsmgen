@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Assemble width evidence changes facts, not concat emission
+- `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` extends `assemble` with an optional
+  trailing `(widths ...)` list that resolves once into the existing
+  transaction-local width fact map.
+- The emitted scheduled `.fsm` assignment remains the same concat expression.
+  The new evidence only lets the lowerer prove part and target widths early
+  enough for later `shift_right`, `extract`, storage report metadata, and HDL
+  register sizing to stay concrete.
+- Transaction parameters remain rejected for the same reason as the earlier
+  data-operation static-width slice: they are activation-specialized values,
+  not actor-shell compile-time shape facts.
+
 ## 2026-05-23: Assemble explicit widths should reuse data-op evidence rules
 - `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1` selects an optional trailing
   `(widths ...)` clause for `assemble` so explicit part-width evidence mirrors

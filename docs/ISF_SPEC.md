@@ -1959,6 +1959,7 @@ Current transaction clauses:
 - `(shift_right reg bit)`
 - `(shift_right reg bit (width N|PARAM|CONST))`
 - `(assemble part... as var)`
+- `(assemble part... as var (widths N|PARAM|CONST...))`
 - `(extract word as field...)`
 - `(extract word as field... (widths N|PARAM|CONST...))`
 - `(do transaction [(domain NAME)] [(params (NAME value) ...)] [(bind ...)])`
@@ -2898,6 +2899,7 @@ The `condition` value is the normalized condition text used in the scheduled
 (shift_right reg bit)
 (shift_right reg bit (width N|PARAM|CONST))
 (assemble header payload crc as packet)
+(assemble header payload crc as packet (widths HEADER_W PAYLOAD_W CRC_W))
 (extract packet as header payload crc)
 (extract packet as header payload crc (widths 4 HEADER_W CRC_W))
 ```
@@ -2928,17 +2930,23 @@ Current lowering:
   a placeholder `WIDTH` expression. Explicit `(width ...)` is an assertion:
   it may fill missing width evidence, but it must match any already-known
   width for the shifted register.
-- `assemble` is structurally validated as `(assemble part... as target)` with
-  one or more scalar parts and one scalar target, then emits a concat
-  expression into the target variable. The private width map infers the target
-  width as the sum of known part widths. If exactly one part width is missing
-  and the target width plus every sibling part width is known, the missing part
-  width is inferred as the positive remainder. The inferred part width becomes
-  transaction-local evidence for later data operations in the same
-  transaction. When every part width is known and the target already has a
-  known width, the sum must match the target width or lowering fails closed.
-  Two or more unknown part widths may still be accepted for the reviewable
-  concat expression, but they are not used as width evidence.
+- `assemble` is structurally validated as
+  `(assemble part... as target [(widths N|PARAM|CONST...)])` with one or more
+  scalar parts and one scalar target, then emits a concat expression into the
+  target variable. An optional trailing `(widths ...)` list supplies ordered
+  part-width evidence and must have one entry per part. Each explicit width
+  entry may be a positive integer literal, actor-local scalar parameter
+  default, or declared actor constant that resolves to a positive integer.
+  Mixed literal and accepted symbolic entries are allowed. The private width
+  map infers the target width as the sum of known or explicit part widths. If
+  exactly one part width is missing and the target width plus every sibling
+  part width is known, the missing part width is inferred as the positive
+  remainder. Explicit or inferred part widths become transaction-local
+  evidence for later data operations in the same transaction. When every part
+  width is known and the target already has a known width, the sum must match
+  the target width or lowering fails closed. Two or more unknown part widths
+  may still be accepted for the reviewable concat expression, but they are not
+  used as width evidence unless the `(widths ...)` option makes them known.
 - `extract` is structurally validated as
   `(extract word as field... [(widths N|PARAM|CONST...)])` with one scalar
   source word and one or more scalar destination fields. It emits one
@@ -2967,22 +2975,22 @@ as `tx_byte[7]` rather than relying on implicit truncation from an 8-bit word.
 
 Width evidence is transaction-local and private to lowering today. Interface
 declarations seed it, sampled aliases inherit known source widths, explicit
-`shift_left`, `shift_right`, and `extract` options add local evidence, and
-`assemble` can infer target width from known parts. Explicit data-operation
-width options accept positive integer literals, actor-local scalar parameter
-defaults, or declared actor constants that resolve to positive integers.
+`shift_left`, `shift_right`, `assemble`, and `extract` options add local
+evidence, and `assemble` can infer target width from known parts. Explicit
+data-operation width options accept positive integer literals, actor-local
+scalar parameter defaults, or declared actor constants that resolve to
+positive integers.
 Transaction parameters, runtime signals, unknown names, arbitrary
 expressions, zero values, non-scalar values, use-site overrides, and
 generated-top respecialization are not data-operation width evidence. The
-evidence is collected
-from the whole transaction clause tree before scheduled state emission, so it
-is not source-order-sensitive. Schedule reports expose positive integer
-`width` metadata for inferred scheduler counters and for register storage
-whose ISF width evidence is known. They also expose optional `role` metadata
-when the lowerer has stable scheduler evidence for the storage purpose, such
-as sampled aliases, extracted fields, ordinary data registers, completion
-pulses, watchdog/latency/repeat counters, and named-drive request/payload
-storage.
+evidence is collected from the whole transaction clause tree before scheduled
+state emission, so it is not source-order-sensitive. Schedule reports expose
+positive integer `width` metadata for inferred scheduler counters and for
+register storage whose ISF width evidence is known. They also expose optional
+`role` metadata when the lowerer has stable scheduler evidence for the storage
+purpose, such as sampled aliases, extracted fields, ordinary data registers,
+completion pulses, watchdog/latency/repeat counters, and named-drive
+request/payload storage.
 
 Planned width-evidence precedence for this tree is: actor interface
 declaration, operation-local explicit option, sampled-alias propagation,
@@ -3003,10 +3011,11 @@ insert position from known or explicit width evidence and fails when width
 evidence is missing or contradictory. `shift_left` accepts the same optional
 `(width ...)` evidence shape, rejects contradictory explicit widths, and keeps
 plain widthless shifting accepted because no insertion-position width is
-needed. `assemble` derives a target width only from fully known part widths,
-can infer exactly one missing part width from a known target and known
-siblings, and rejects known target-width mismatches or non-positive inferred
-remainders.
+needed. `assemble` accepts an optional `(widths N|PARAM|CONST...)` evidence
+list for ordered part widths, derives a target width from fully known or
+explicit part widths, can infer exactly one missing part width from a known
+target and known siblings, and rejects known target-width mismatches,
+contradictory explicit part widths, or non-positive inferred remainders.
 
 ## 8. Composition Between Transactions
 
@@ -5072,6 +5081,7 @@ Focused tests:
 - [t/1341-isf-bank-storage-actor-constant-depths.t](../t/1341-isf-bank-storage-actor-constant-depths.t)
 - [t/1342-isf-transaction-port-actor-constant-widths.t](../t/1342-isf-transaction-port-actor-constant-widths.t)
 - [t/1343-isf-data-op-static-width-sources.t](../t/1343-isf-data-op-static-width-sources.t)
+- [t/1344-isf-assemble-static-part-widths.t](../t/1344-isf-assemble-static-part-widths.t)
 
 ## 12. Explicitly Deferred
 

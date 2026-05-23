@@ -1,5 +1,33 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Assemble static part widths shipped
+- Completed `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` and closed the task tree.
+- `assemble` now accepts optional trailing ordered part-width evidence:
+  `(assemble part... as target (widths N|PARAM|CONST...))`.
+- Accepted part widths may be positive integer literals, actor-local scalar
+  parameter defaults, or declared actor constants that resolve to positive
+  integers. Resolved widths feed the existing width fact map, assembled-target
+  width derivation, later data-operation consumers, schedule-report storage
+  width metadata, and generated HDL.
+- Existing concat assignment shape, state timing, generated handoff naming,
+  report key families, plain `assemble` behavior, single-unknown-part
+  inference, and multiple-unknown non-evidence concat lowering remain
+  unchanged.
+- Unsupported sources fail closed: transaction parameters, runtime interface
+  signals, arbitrary expressions, unknown names, zero-valued actor parameters,
+  zero-valued actor constants, aggregate values, activation override
+  specialization, generated-top respecialization, and broader
+  multiple-unknown inference remain outside this slice.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused assemble/data-operation/public/
+  spec/book tests with `Files=14, Tests=358`; `mdbook build docs/book`;
+  broad `./bin/ci-regression isf --no-book` with `Files=250, Tests=1656`;
+  post-closure doc/public audits with `Files=7, Tests=352`;
+  `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Assemble static part widths selected
 - Completed selection work for `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1`.
 - Activated the active R14 task tree for optional `assemble` part-width

@@ -50,6 +50,26 @@ ISF
     like($fsm, qr/\(<- \(packet> \(concat header payload\)\)\)/, 'assemble lowers to concat assignment');
 };
 
+subtest 'valid assemble clause accepts explicit part widths' => sub {
+    my $result = lower_source(<<'ISF');
+(actor assemble_explicit_part_widths
+  (clock clk)
+  (interface
+    (input start)
+    (input bit_in)
+    (output done))
+  (transaction main
+    (on start)
+    (assemble header payload as packet (widths 4 8))
+    (shift_right packet bit_in)
+    (complete done)))
+ISF
+
+    my $fsm = $result->{files}{'assemble_explicit_part_widths.fsm'};
+    like($fsm, qr/\(<- \(packet \(concat header payload\)\)\)/, 'assemble lowers to concat assignment');
+    like($fsm, qr/\(<- \(packet \(\| \(>> packet 1\) \(<< bit_in 11\)\)\)\)/, 'explicit part widths derive target width evidence');
+};
+
 subtest 'assemble rejects target width mismatch when part widths are known' => sub {
     assert_lower_rejected(<<'ISF', 'assemble target width mismatch', qr/assemble part widths sum 12 conflicts with known width 13 for 'packet'/);
 (actor assemble_width_mismatch
@@ -131,7 +151,7 @@ ISF
 };
 
 subtest 'malformed assemble clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'assemble without parts', qr/\Aassemble requires '\(assemble part\.\.\. as target\)'/);
+    assert_lower_rejected(<<'ISF', 'assemble without parts', qr/\Aassemble requires '\(assemble part\.\.\. as target \[\(widths N\|PARAM\|CONST\.\.\.\)\]\)'/);
 (actor assemble_without_parts
   (clock clk)
   (interface (input start) (output packet) (output done))
@@ -141,7 +161,7 @@ subtest 'malformed assemble clauses fail before scheduled emission' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'assemble without as keyword', qr/\Aassemble requires '\(assemble part\.\.\. as target\)'/);
+    assert_lower_rejected(<<'ISF', 'assemble without as keyword', qr/\Aassemble requires '\(assemble part\.\.\. as target \[\(widths N\|PARAM\|CONST\.\.\.\)\]\)'/);
 (actor assemble_without_as
   (clock clk)
   (interface (input start) (input header) (output packet) (output done))
@@ -171,13 +191,33 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'extra assemble operand after target', qr/\Aassemble requires '\(assemble part\.\.\. as target\)'/);
+    assert_lower_rejected(<<'ISF', 'extra assemble operand after target', qr/\Aassemble optional arguments must be '\(widths N\|PARAM\|CONST\.\.\.\)'/);
 (actor extra_assemble_operand
   (clock clk)
   (interface (input start) (input header) (output packet) (output done))
   (transaction main
     (on start)
     (assemble header as packet extra)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'assemble widths count mismatch', qr/\Aassemble '\(widths \.\.\.\)' count must match the part count/);
+(actor assemble_width_count_mismatch
+  (clock clk)
+  (interface (input start) (input header) (output packet) (output done))
+  (transaction main
+    (on start)
+    (assemble header payload as packet (widths 4))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'assemble unknown option', qr/\Aassemble optional arguments must be '\(widths N\|PARAM\|CONST\.\.\.\)'/);
+(actor assemble_unknown_option
+  (clock clk)
+  (interface (input start) (input header) (output packet) (output done))
+  (transaction main
+    (on start)
+    (assemble header payload as packet (width 4 8))
     (complete done)))
 ISF
 };

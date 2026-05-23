@@ -3146,9 +3146,9 @@ sub _build_signal_width_map {
     }
     _collect_sample_widths($tx->{clauses}, \%widths);
     _collect_shift_widths($tx->{clauses}, \%widths, $actor, $tx->{name});
-    _collect_data_widths($tx->{clauses}, \%widths);
+    _collect_data_widths($tx->{clauses}, \%widths, $actor, $tx->{name});
     _collect_extract_widths($tx->{clauses}, \%widths, $actor, $tx->{name});
-    _collect_data_widths($tx->{clauses}, \%widths);
+    _collect_data_widths($tx->{clauses}, \%widths, $actor, $tx->{name});
     return \%widths;
 }
 
@@ -3167,15 +3167,15 @@ sub _collect_sample_widths {
 }
 
 sub _collect_data_widths {
-    my ($node, $widths) = @_;
+    my ($node, $widths, $actor, $tn) = @_;
     return unless ref($node) eq 'ARRAY';
 
     if (@$node >= 4 && $node->[0] eq 'assemble') {
-        my ($target, @parts) = _parse_assemble_clause($node);
-        my ($part_widths, $total) = _resolve_assemble_widths($target, \@parts, $widths);
-        for my $idx (0 .. $#parts) {
+        my ($target, $parts, $explicit_widths) = _parse_assemble_clause($node, $actor, $tn);
+        my ($part_widths, $total) = _resolve_assemble_widths($target, $parts, $explicit_widths, $widths);
+        for my $idx (0 .. $#$parts) {
             next unless defined($part_widths->[$idx]) && $part_widths->[$idx] > 0;
-            my $part = $parts[$idx];
+            my $part = $parts->[$idx];
             $widths->{$part} = $part_widths->[$idx]
                 unless exists($widths->{$part}) && defined($widths->{$part}) && $widths->{$part} > 0;
         }
@@ -3186,7 +3186,7 @@ sub _collect_data_widths {
     }
 
     for my $child (@$node) {
-        _collect_data_widths($child, $widths) if ref($child) eq 'ARRAY';
+        _collect_data_widths($child, $widths, $actor, $tn) if ref($child) eq 'ARRAY';
     }
 }
 
@@ -3251,31 +3251,72 @@ sub _as_index {
 }
 
 sub _parse_assemble_clause {
-    my ($cl) = @_;
+    my ($cl, $actor, $tn) = @_;
     my $as_idx = _as_index($cl, 2);
-    confess "assemble requires '(assemble part... as target)'\n"
-        unless defined $as_idx && $as_idx > 1 && $as_idx == $#$cl - 1;
+    confess "assemble requires '(assemble part... as target [(widths N|PARAM|CONST...)])'\n"
+        unless defined $as_idx && $as_idx > 1 && ($as_idx == $#$cl - 1 || $as_idx == $#$cl - 2);
 
     my @parts = @{$cl}[1 .. $as_idx - 1];
     my $target = $cl->[$as_idx + 1];
+    my @raw_explicit_widths;
+    my $saw_widths;
+
+    if ($as_idx == $#$cl - 2) {
+        my $option = $cl->[$as_idx + 2];
+        confess "assemble optional arguments must be '(widths N|PARAM|CONST...)'\n"
+            unless ref($option) eq 'ARRAY'
+                && @$option >= 1
+                && defined($option->[0])
+                && !ref($option->[0])
+                && $option->[0] eq 'widths';
+        $saw_widths = 1;
+        @raw_explicit_widths = @{$option}[1 .. $#$option];
+        for my $width (@raw_explicit_widths) {
+            confess "assemble widths must be positive integer literals, actor constants, or actor scalar parameters\n"
+                if !defined($width) || ref($width) || !length($width);
+        }
+    }
+
     for my $part (@parts) {
         confess "assemble parts must be scalar names\n"
             if !defined($part) || ref($part) || !length($part);
     }
     confess "assemble target must be a scalar name\n"
         if !defined($target) || ref($target) || !length($target);
-    return ($target, @parts);
+    confess "assemble '(widths ...)' count must match the part count\n"
+        if $saw_widths && @raw_explicit_widths != @parts;
+
+    my @explicit_widths;
+    for my $idx (0 .. $#raw_explicit_widths) {
+        push @explicit_widths, _static_data_width_evidence_value(
+            $raw_explicit_widths[$idx],
+            $actor,
+            $tn,
+            "assemble width for '$parts[$idx]'",
+        );
+    }
+
+    return ($target, \@parts, \@explicit_widths);
 }
 
 sub _resolve_assemble_widths {
-    my ($target, $parts, $widths) = @_;
+    my ($target, $parts, $explicit_widths, $widths) = @_;
     my @part_widths;
     my @unknown_indices;
     my $known_total = 0;
 
     for my $idx (0 .. $#$parts) {
         my $part = $parts->[$idx];
-        my $part_width = $widths->{$part};
+        my $explicit_width = $explicit_widths->[$idx];
+        my $known_width = $widths->{$part};
+
+        confess "assemble explicit width for '$part' conflicts with known width\n"
+            if defined($explicit_width)
+                && defined($known_width)
+                && $known_width > 0
+                && $explicit_width != $known_width;
+
+        my $part_width = defined($explicit_width) ? $explicit_width : $known_width;
         if (defined($part_width) && $part_width > 0) {
             $part_widths[$idx] = $part_width;
             $known_total += $part_width;
@@ -3757,7 +3798,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         }
         elsif ($k eq 'shift_left')  { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_left($cl,$tn,$si++,$widths,$actor); }
         elsif ($k eq 'shift_right') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_right($cl,$tn,$si++,$widths,$actor); }
-        elsif ($k eq 'assemble')    { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_assemble($cl,$tn,$si++); }
+        elsif ($k eq 'assemble')    { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_assemble($cl,$tn,$si++,$actor); }
         elsif ($k eq 'extract')     { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_extract($cl,$tn,$si++,$widths,$actor); }
         elsif ($k eq 'store' || $k eq 'load') {
             _push_sample_state(\@st, $tn, \@ps, \$si);
@@ -5852,7 +5893,7 @@ sub _ir_when_activation {
         transitions => [],
     };
 }
-sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths,$actor)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i,$widths,$actor) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths,$actor) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i) : $op eq'extract' ? _ir_extract($cl,$tn,$i,$widths,$actor) : _ir_update($cl,$tn,$i,$op) }
+sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths,$actor)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i,$widths,$actor) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths,$actor) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i,$actor) : $op eq'extract' ? _ir_extract($cl,$tn,$i,$widths,$actor) : _ir_update($cl,$tn,$i,$op) }
 sub _ir_named_drive_call {
     my ($cl, $tn, $i, $def, $pending_samples) = @_;
     my $name = $cl->[1];
@@ -6197,7 +6238,7 @@ sub _ir_shift_right {
         transitions => [],
     };
 }
-sub _ir_assemble  { my ($cl,$tn,$i)=@_; my($var,@parts)=_parse_assemble_clause($cl);my$rhs='(concat '.join(' ',@parts).')'; {name=>"${tn}_asm_$i",kind=>'sequential',assignments=>[{lhs=>$var,rhs=>$rhs,op=>'<-',source_kind=>'assemble'}],transitions=>[]} }
+sub _ir_assemble  { my ($cl,$tn,$i,$actor)=@_; my($var,$parts)=_parse_assemble_clause($cl,$actor,$tn);my$rhs='(concat '.join(' ',@$parts).')'; {name=>"${tn}_asm_$i",kind=>'sequential',assignments=>[{lhs=>$var,rhs=>$rhs,op=>'<-',source_kind=>'assemble'}],transitions=>[]} }
 sub _ir_extract {
     my ($cl, $tn, $i, $widths, $actor) = @_;
     my ($word, $fields, $explicit_widths) = _parse_extract_clause($cl, $actor, $tn);

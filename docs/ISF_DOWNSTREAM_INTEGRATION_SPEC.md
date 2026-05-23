@@ -727,6 +727,7 @@ Transaction clauses currently supported:
 (shift_right reg bit)
 (shift_right reg bit (width N|PARAM|CONST))
 (assemble part... as target)
+(assemble part... as target (widths N|PARAM|CONST...))
 (extract word as field...)
 (extract word as field... (widths N|PARAM|CONST...))
 (do transaction [(domain NAME)] [(params ...)] [(bind ...)])
@@ -1197,6 +1198,7 @@ Supported forms:
 (shift_right reg bit)
 (shift_right reg bit (width N|PARAM|CONST))
 (assemble part... as target)
+(assemble part... as target (widths N|PARAM|CONST...))
 (extract word as field...)
 (extract word as field... (widths N|PARAM|CONST...))
 ```
@@ -1215,9 +1217,13 @@ Rules:
   resolves to a positive integer, and `CONST` must name a declared actor
   constant that resolves to a positive integer.
 - `assemble` can infer exactly one missing part width from a known target
-  width and known sibling part widths. Two or more unknown parts still lower
-  only as non-evidence concat operands; non-positive inferred remainders fail
-  closed.
+  width and known sibling part widths. It also accepts one optional trailing
+  `(widths N|PARAM|CONST...)` list after the target to supply ordered part
+  widths, with one positive entry per part. Explicit assemble part widths use
+  the same accepted static source set as shift/extract width options and must
+  not conflict with known part widths. Two or more unknown parts still lower
+  only as non-evidence concat operands unless explicit widths make them known;
+  non-positive inferred remainders fail closed.
 - `extract` emits concrete slices, not placeholder bounds. It can infer
   exactly one missing destination field width from a known source word width
   and known sibling field widths. Explicit `(widths ...)` entries may mix
@@ -3385,7 +3391,9 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1339-isf-scalar-storage-actor-constant-widths.t \
   t/1340-isf-bank-storage-actor-constant-widths.t \
   t/1341-isf-bank-storage-actor-constant-depths.t \
-  t/1342-isf-transaction-port-actor-constant-widths.t
+  t/1342-isf-transaction-port-actor-constant-widths.t \
+  t/1343-isf-data-op-static-width-sources.t \
+  t/1344-isf-assemble-static-part-widths.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

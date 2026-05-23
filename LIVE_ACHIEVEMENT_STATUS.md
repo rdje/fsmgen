@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Assemble static part widths shipped
+- Completed `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` and closed the task tree.
+- `assemble` now accepts optional trailing
+  `(widths N|PARAM|CONST...)` part-width evidence after the target.
+- Accepted part widths lower like known part widths in width fact collection,
+  assembled-target width derivation, later data-operation consumers,
+  schedule-report storage width metadata, and generated HDL.
+- Existing `assemble` concat emission, state timing, report key families,
+  generated handoff naming, plain-form behavior, single-unknown-part
+  inference, and multiple-unknown non-evidence concat lowering remain
+  unchanged.
+- Unsupported width sources fail closed: transaction parameters, runtime
+  interface signals, arbitrary expressions, unknown names, zero values,
+  aggregate values, activation override specialization, generated-top
+  respecialization, and broader multiple-unknown inference.
+- Validation passed: syntax checks; focused assemble/data-operation/public/
+  spec/book tests with `Files=14, Tests=358`; `mdbook build docs/book`;
+  broad `./bin/ci-regression isf --no-book` with `Files=250, Tests=1656`;
+  post-closure doc/public audits with `Files=7, Tests=352`;
+  `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Assemble static part widths selected
 - Completed selection work for `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1`.
 - Activated the active R14 task tree for optional `assemble` part-width

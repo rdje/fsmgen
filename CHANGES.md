@@ -1,6 +1,36 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Assemble static part widths shipped
+- Completed `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` and closed the task tree.
+- `assemble` now accepts optional trailing
+  `(widths N|PARAM|CONST...)` part-width evidence after the target:
+  `(assemble part... as target (widths N|PARAM|CONST...))`.
+- Accepted part widths may be positive integer literals, actor-local scalar
+  parameter defaults, or declared actor constants that resolve to positive
+  integers. Mixed accepted static entries are supported.
+- Resolved part widths lower like equivalent known part widths in
+  transaction-local width fact collection, assembled-target width derivation,
+  later data-operation width consumers, schedule-report storage width
+  metadata, and generated HDL.
+- Existing concat assignment shape, state timing, generated handoff naming,
+  report key families, plain `assemble` behavior, single-unknown-part
+  inference, and multiple-unknown non-evidence concat lowering remain
+  unchanged.
+- Unsupported sources fail closed: transaction parameters, runtime interface
+  signals, arbitrary expressions, unknown names, zero-valued actor parameters,
+  zero-valued actor constants, aggregate values, activation override
+  specialization, generated-top respecialization, and broader
+  multiple-unknown inference.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused assemble/data-operation/public/
+  spec/book tests with `Files=14, Tests=358`; `mdbook build docs/book`;
+  broad `./bin/ci-regression isf --no-book` with `Files=250, Tests=1656`;
+  post-closure doc/public audits with `Files=7, Tests=352`;
+  `git diff --check`.
+
 ### R14 — Assemble static part widths selected
 - Completed selection work for `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1`.
 - Activated a new R14 task tree for explicit static part-width evidence on

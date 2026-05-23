@@ -89,23 +89,33 @@ positive integer width when the option is present.
   (-> next_state))
 ```
 
-Known interface, sampled-source, assemble-inferred, and explicit `(width N)`
-widths use a concrete insert position. If the shifted value has no known width
-and no explicit width option, lowering fails before scheduled `.fsm` emission
-instead of emitting a placeholder `WIDTH` expression. An explicit `(width N)`
-is an assertion: it may fill missing width evidence, but it must match any
-already-known width for the shifted register.
+Known interface, sampled-source, assemble-inferred, and explicit
+`(width N|PARAM|CONST)` widths use a concrete insert position. If the shifted
+value has no known width and no explicit width option, lowering fails before
+scheduled `.fsm` emission instead of emitting a placeholder `WIDTH`
+expression. An explicit `(width N|PARAM|CONST)` is an assertion: it may fill
+missing width evidence, but it must match any already-known width for the
+shifted register. `PARAM` names an actor-local scalar parameter default that
+resolves to a positive integer, and `CONST` names a declared actor constant
+that resolves to a positive integer.
 
-## `(assemble field1 field2 ... as var)` — Concatenation
+## `(assemble field1 field2 ... as var [(widths N...)])` — Concatenation
 
 ```lisp
 (assemble header payload crc as packet)
+(assemble header payload crc as packet (widths 4 8 4))
 ```
 
 Concatenates fields into a single variable.
 
-The form is exact: `(assemble part... as var)`, with one or more scalar parts
-and scalar target `var`.
+The form is exact:
+`(assemble part... as var [(widths N|PARAM|CONST...)])`, with one or more
+scalar parts and scalar target `var`.
+
+When present, the optional trailing `(widths ...)` list must contain one
+positive width per part, in the same order as the parts. Entries may be
+positive integer literals, actor-local scalar parameter defaults, or declared
+actor constants that resolve to positive integers.
 
 **Lowering**: `(<- (var (concat field1 field2 ...)))`
 
@@ -120,15 +130,17 @@ and scalar target `var`.
 (assemble cmd addr data as spi_frame)
 ```
 
-When every part width is known, `assemble` derives the target width from the
-part-width sum. If exactly one part width is missing and the target width plus
-all sibling part widths are known, FSMGen infers the missing part width as the
-positive remainder. That inferred part width remains available as
+When every part width is known, or the `(widths ...)` option supplies every
+part width, `assemble` derives the target width from the part-width sum. If
+exactly one part width is missing and the target width plus all sibling part
+widths are known, FSMGen infers the missing part width as the positive
+remainder. Explicit or inferred part widths remain available as
 transaction-local evidence for later data operations, such as a following
-`shift_right` on the assembled part. If the target already has a known width,
-the final part-width sum must match it. A zero or negative inferred remainder
-fails closed. Two or more unknown part widths may still lower to the
-reviewable concat expression, but they are not used as width evidence.
+`shift_right` on the assembled target or part. If the target already has a
+known width, the final part-width sum must match it. A zero or negative
+inferred remainder fails closed. Two or more unknown part widths may still
+lower to the reviewable concat expression, but they are not used as width
+evidence unless the `(widths ...)` option makes them known.
 
 ## `(extract word as field1 field2 ... [(widths N...)])` — Field Extraction
 
@@ -177,9 +189,10 @@ zero or negative inferred remainder fails closed.
 Before lowering a transaction, ISF builds one private width map from the whole
 actor and transaction shape. Interface declarations and actor-owned
 `(storage ...)` declarations seed that map, samples inherit known source
-widths, explicit `shift_left`, `shift_right`, and `extract` width options add
-local evidence, and `assemble` can infer its target width when all parts are
-known or infer one missing part width from a known target and known siblings.
+widths, explicit `shift_left`, `shift_right`, `assemble`, and `extract` width
+options add local evidence, and `assemble` can infer its target width when all
+parts are known or infer one missing part width from a known target and known
+siblings.
 
 This is
 type/shape evidence, not cycle-value evidence, so it is not
@@ -210,8 +223,9 @@ single-missing-field inference rule.
 contradictory. `shift_left` accepts optional width evidence and rejects
 contradictory explicit widths while still accepting widthless shifts.
 
-`assemble` rejects known target-width mismatches and non-positive single-part
-inferred remainders.
+`assemble` accepts optional ordered part-width evidence, rejects known
+target-width mismatches, rejects contradictory explicit part widths, and
+rejects non-positive single-part inferred remainders.
 
 ## I2C Shift Register — Complete Example
 

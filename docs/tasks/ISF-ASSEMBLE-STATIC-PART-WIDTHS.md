@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ASSEMBLE-STATIC-PART-WIDTHS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -58,7 +58,7 @@ that resolves to a positive integer.
 ## Task Tree
 
 - ID: `ISF-ASSEMBLE-STATIC-PART-WIDTHS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship explicit static part-width evidence for assemble`
   Children: `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1`,
   `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2`
@@ -70,21 +70,23 @@ that resolves to a positive integer.
   live roadmap/docs identify the exact selected implementation boundary before
   any code changes.`
   Verification: `documentation-only selection review`
-  Commit: `pending`
+  Commit: `935d0fba`
 
 - ID: `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement assemble optional static part widths`
   Acceptance: `Parser/lowerer handling, focused tests, public contract
   metadata, specs, mdBook, and live docs are updated and validated.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks`; `focused assemble/data/public/spec/book tests`;
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
+  `post-closure doc/public audits`; `git diff --check`
+  Commit: `this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` | `pending` | Completes the remaining explicit static width-evidence gap in shipped data-operation syntax. |
+| 1 | `closed` | `done` | `Assemble static part-width evidence is shipped and the tree is closed.` |
 
 ## Decisions
 
@@ -110,16 +112,19 @@ that resolves to a positive integer.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-23` | `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1` | documentation-only selection review | passed |
-| `2026-05-23` | `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` | `pending` | `pending` |
+| `2026-05-23` | `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` | `syntax checks`; `prove -Iperl t/1344-isf-assemble-static-part-widths.t t/1200-isf-assemble-clause-boundary.t t/1101-isf-extract-slices.t t/1173-isf-shift-right-explicit-width.t t/1174-isf-extract-explicit-widths.t t/1199-isf-shift-clause-boundary.t t/1201-isf-extract-clause-boundary.t t/1226-isf-data-width-storage-report.t t/1343-isf-data-op-static-width-sources.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `post-closure doc/public audits`; `git diff --check` | `assemble static part widths shipped; focused tests Files=14, Tests=358; broad ISF gate Files=250, Tests=1656; post-closure audits Files=7, Tests=352` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1` | `pending` | selection slice |
-| `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` | `pending` | implementation slice |
+| `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1` | `935d0fba: ISF-ASSEMBLE-STATIC-PART-WIDTHS.1: select assemble static part widths` | selection slice |
+| `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` | `this commit: ISF-ASSEMBLE-STATIC-PART-WIDTHS.2: ship assemble static part widths` | implementation slice |
 
 ## Changelog
 
 - `2026-05-23`: Created and activated task tree; selected
   `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` as the implementation frontier.
+- `2026-05-23`: Shipped optional trailing `assemble` `(widths ...)` part-width
+  evidence, synchronized specs/book/public contract/downstream handoff/live
+  docs, and closed the task tree.
