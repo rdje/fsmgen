@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Assemble static part widths selected
+- Completed selection work for `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1`.
+- Activated the active R14 task tree for optional `assemble` part-width
+  evidence using positive integer literals, actor-local scalar parameter
+  defaults, and declared actor constants.
+- The active frontier is now `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Data operation static width sources shipped
 - Completed `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` and closed the task tree.
 - `shift_left`, `shift_right`, and `extract` explicit width evidence now

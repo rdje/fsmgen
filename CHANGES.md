@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Assemble static part widths selected
+- Completed selection work for `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1`.
+- Activated a new R14 task tree for explicit static part-width evidence on
+  `assemble`.
+- The selected implementation slice is
+  `(assemble part... as target (widths N|PARAM|CONST...))`, where actor-local
+  scalar parameter defaults and declared actor constants are accepted only
+  when they resolve to positive integers.
+- The slice deliberately preserves existing `assemble` timing, generated
+  concat shape, report key families, handoff naming, single-unknown-part
+  inference, and multiple-unknown non-evidence concat lowering.
+- Transaction parameters, runtime interface signals, arbitrary expressions,
+  unknown names, zero-valued actor parameters, zero-valued actor constants,
+  aggregate values, activation override specialization, generated-top
+  respecialization, and broader full-width inference remain deferred or
+  fail-closed.
+- No compiler behavior changed.
+
 ### R14 — Data operation static width sources shipped
 - Completed `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` and closed the task tree.
 - Existing data-operation explicit width evidence now accepts actor-local

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ASSEMBLE-STATIC-PART-WIDTHS` | `active` | `R14` | `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` | [docs/tasks/ISF-ASSEMBLE-STATIC-PART-WIDTHS.md](docs/tasks/ISF-ASSEMBLE-STATIC-PART-WIDTHS.md) |
 
 ## Proposed Task Trees
 

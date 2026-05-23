@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Assemble explicit widths should reuse data-op evidence rules
+- `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1` selects an optional trailing
+  `(widths ...)` clause for `assemble` so explicit part-width evidence mirrors
+  the already-shipped `extract` spelling.
+- The selected source set is intentionally the same static width-evidence
+  domain used by `shift_left`, `shift_right`, and `extract`: positive integer
+  literals, actor-local scalar parameter defaults, and declared actor
+  constants.
+- The implementation must feed the existing transaction-local width fact map
+  and leave the emitted concat assignment unchanged. Width evidence changes
+  what the scheduler can prove; it should not change `assemble` timing or
+  introduce a new generated-artifact shape.
+
 ## 2026-05-23: Data-operation static widths resolve once into width facts
 - `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` resolves accepted actor-local scalar
   parameter defaults and declared actor constants at the lowerer boundary,

@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Assemble static part widths selected
+- Completed selection work for `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1`.
+- Activated the active R14 task tree for optional `assemble` part-width
+  evidence.
+- The active frontier is `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2`.
+- The selected boundary is narrow:
+  `(assemble part... as target (widths N|PARAM|CONST...))` may provide
+  ordered part widths using positive integer literals, actor-local scalar
+  parameter defaults, or declared actor constants. Transaction parameters,
+  runtime interface signals, arbitrary expressions, unknown names, zero
+  values, aggregate values, activation override specialization,
+  generated-top respecialization, and broader full-width inference remain
+  deferred or fail-closed.
+- Existing `assemble` state timing, concat emission, report key families,
+  handoff naming, single-unknown-part inference, and multiple-unknown
+  non-evidence concat behavior are explicitly preserved.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-23: Data operation static width sources shipped
 - Completed `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` and closed the task tree.
 - `shift_left`, `shift_right`, and `extract` explicit width evidence now

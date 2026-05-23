@@ -2,8 +2,24 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-ASSEMBLE-STATIC-PART-WIDTHS`.
+- Current frontier: `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2`.
+- Recent R14 assemble static part-width selection:
+  `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1` activated the next data-manipulation
+  task tree. The selected implementation slice is intentionally narrow:
+  `(assemble part... as target (widths N|PARAM|CONST...))` may supply ordered
+  part-width evidence, where `PARAM` names an actor-local scalar parameter
+  default resolving to a positive integer and `CONST` names a declared actor
+  constant resolving to a positive integer. The slice preserves existing
+  `(assemble part... as target)` behavior, state timing, generated concat
+  shape, report key families, generated handoff naming, single-unknown-part
+  inference, and multiple-unknown non-evidence concat lowering. Transaction
+  parameters, runtime interface signals, arbitrary expressions, unknown names,
+  zero-valued actor parameters, zero-valued actor constants, aggregate values,
+  activation override specialization, generated-top respecialization, and
+  broader full-width inference remain deferred or fail-closed. No parser,
+  scheduler, report, generated artifact, HDL, CLI, or public ISF behavior
+  changed.
 - Recent R14 data-operation static width source completion:
   `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` shipped actor-local scalar parameter
   defaults and declared actor constants as explicit data-operation width
