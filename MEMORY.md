@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Latency actor-parameter bounds shipped
+- Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` and closed the task tree.
+- Transaction latency `(min ...)` and `(max ...)` bounds now accept
+  actor-local scalar parameter defaults that resolve to positive integers.
+- The lowerer resolves accepted actor parameters before existing latency
+  counter emission, so generated `.fsm` guards/timeouts and schedule-report
+  storage roles match equivalent literal bounds.
+- Transaction parameters, runtime signals, expression-valued bounds, unknown
+  symbols, zero-valued constants, zero-valued or non-scalar actor parameters,
+  use-site override specialization, stage-local latency, and stage runtime
+  semantics remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused latency/public/doc tests; broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1609`;
+  `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Latency actor-parameter bounds selected
 - Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1`.
 - Activated a new R14 task tree for static actor-parameter-backed transaction

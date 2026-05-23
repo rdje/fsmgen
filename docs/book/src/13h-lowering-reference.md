@@ -1704,6 +1704,11 @@ bank datapath.
 (latency (min 2) (max 16))
 ```
 
+`min` and `max` may also name a declared positive actor constant or an
+actor-local scalar parameter default that resolves to a positive integer.
+Named static bounds are resolved before the scheduler emits the same counter,
+guard, and timeout logic used for literal bounds.
+
 **Generated .fsm** — adds to entry state:
 ```lisp
 (apb_transfer_idle_0

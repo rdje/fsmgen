@@ -108,7 +108,8 @@ clear lower-layer mapping, and clear runtime behavior.
     (latency (min 2) (max 16))))
 ```
 
-Latency bounds can use named actor constants when the values are static:
+Latency bounds can use named actor constants or actor-local scalar parameter
+defaults when the values are static:
 
 ```lisp
 (actor bounded_worker
@@ -124,12 +125,28 @@ Latency bounds can use named actor constants when the values are static:
     (latency (min MIN_LAT) (max MAX_LAT))))
 ```
 
+The actor parameter form uses the same lowering path:
+
+```lisp
+(actor parameter_bounded_worker
+  (params
+    (MIN_LAT 2)
+    (MAX_LAT 5'd16))
+  (interface
+    (input start)
+    (output done))
+  (transaction step
+    (on start)
+    (complete done)
+    (latency (min MIN_LAT) (max MAX_LAT))))
+```
+
 The scheduler resolves `MIN_LAT` and `MAX_LAT` before emitting the existing
 latency counter logic. The generated `.fsm` contains the resolved integer
-guard and timeout values, while `actor_constants[]` still reports the constant
-declarations. Actor parameters, transaction parameters, runtime signals,
-expressions, unknown symbols, and zero-valued constants remain invalid latency
-bounds.
+guard and timeout values, while `actor_constants[]` or `actor_params[]` still
+reports the authored actor-local declaration. Transaction parameters, runtime
+signals, expressions, unknown symbols, zero-valued constants, and zero-valued
+or non-scalar actor parameters remain invalid latency bounds.
 
 ## Pipeline
 
@@ -791,10 +808,11 @@ The ISF-specific current limitations are:
   and reports expose the resolved bound in `temporal_contracts[].within_cycles`.
   Nested contracts and richer temporal forms still fail closed instead of being
   dropped from the scheduled `.fsm`.
-- Transaction `(latency (min N) (max M))` accepts positive decimal literals
-  and declared actor constants that resolve to positive integers. Constants are
-  resolved before the existing latency counter lowering path, so generated
-  guards, timeout checks, inferred counter widths, and report-visible storage
-  roles match the equivalent literal bounds. Actor parameters, transaction
-  parameters, runtime interface signals, unknown symbolic names, arbitrary
-  expressions, and zero-valued constants fail closed.
+- Transaction `(latency (min N) (max M))` accepts positive decimal literals,
+  declared actor constants, and actor-local scalar parameter defaults that
+  resolve to positive integers. Static symbols are resolved before the
+  existing latency counter lowering path, so generated guards, timeout checks,
+  inferred counter widths, and report-visible storage roles match the
+  equivalent literal bounds. Transaction parameters, runtime interface
+  signals, unknown symbolic names, arbitrary expressions, zero-valued
+  constants, and zero-valued or non-scalar actor parameters fail closed.

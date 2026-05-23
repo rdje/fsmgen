@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Latency actor-parameter bounds shipped
+- Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` and closed the task tree.
+- Transaction latency bounds now accept actor-local scalar parameter defaults
+  that resolve to positive integers and lower to the same generated `.fsm`
+  guard/timeout shape as equivalent literal bounds.
+- Transaction parameters, runtime signals, expressions, unknown symbols,
+  zero-valued constants, zero-valued or non-scalar actor parameters, use-site
+  specialization, stage-local latency, and stage runtime semantics remain
+  fail-closed or deferred.
+- Validation passed: focused latency/public/doc tests, broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1609`,
+  `mdbook build docs/book`, and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-22: R14 — Latency actor-parameter bounds selected
 - Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1`.
 - Activated the active R14 task tree for static actor-parameter-backed

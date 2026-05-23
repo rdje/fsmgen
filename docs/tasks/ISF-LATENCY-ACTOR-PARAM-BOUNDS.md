@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LATENCY-ACTOR-PARAM-BOUNDS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -43,7 +43,7 @@ literals.
 ## Task Tree
 
 - ID: `ISF-LATENCY-ACTOR-PARAM-BOUNDS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship actor-parameter-backed static transaction latency bounds.`
   Children: `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1`,
   `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2`
@@ -55,22 +55,23 @@ literals.
   source boundary, preserve non-goals, and update roadmap/live docs without
   behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending commit`
+  Commit: `8bf157ab ISF-LATENCY-ACTOR-PARAM-BOUNDS.1: select latency actor-param bounds`
 
 - ID: `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document actor-parameter transaction latency bounds.`
   Acceptance: `Positive actor scalar parameters lower as literal latency
   bounds; unsupported bound tokens fail closed; specs, book, public contract,
   downstream handoff, and focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: focused syntax, latency/public/doc tests, mdBook, diff check,
+  and broad ISF regression passed.
+  Commit: `pending commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` | `pending` | The source boundary is selected; implementation can reuse the existing static actor-parameter default model from wait counts. |
+| 1 | none | `closed` | All selected leaves are complete. |
 
 ## Decisions
 
@@ -92,15 +93,19 @@ literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-22` | `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1197-isf-latency-clause-boundary.t`; `prove -Iperl t/1197-isf-latency-clause-boundary.t t/1096-isf-schedule-json-report.t t/1106-isf-schedule-json-counter-storage.t t/1224-isf-contract-lowering.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `behavior, public contract, docs, book, and broad ISF regression passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1` | `this commit: ISF-LATENCY-ACTOR-PARAM-BOUNDS.1: select latency actor-param bounds` | `selects static actor-parameter latency bound support` |
-| `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` | `pending` | `pending` |
+| `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1` | `8bf157ab ISF-LATENCY-ACTOR-PARAM-BOUNDS.1: select latency actor-param bounds` | `selects static actor-parameter latency bound support` |
+| `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` | `this commit: ISF-LATENCY-ACTOR-PARAM-BOUNDS.2: ship latency actor-param bounds` | `ships actor-local scalar parameter defaults as static transaction latency min/max bounds` |
 
 ## Changelog
 
 - `2026-05-22`: Created task tree and selected static actor-parameter
   transaction latency bounds.
+- `2026-05-22`: Shipped positive actor-local scalar parameter defaults as
+  transaction latency `(min ...)`/`(max ...)` bounds and synchronized the
+  spec, handoff, public contract, mdBook, roadmap, task tree, and live docs.

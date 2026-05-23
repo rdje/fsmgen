@@ -692,7 +692,7 @@ Transaction clauses currently supported:
 (await_all done_port)
 (await_any done_port)
 (complete port)
-(latency (min N) (max M))       ;; N/M: positive literal or actor constant
+(latency (min N) (max M))       ;; N/M: positive literal, actor constant, or actor scalar parameter
 (stage ...)
 (contract ...)
 ```
@@ -1611,14 +1611,15 @@ Latency:
 
 Rules:
 
-- `min` and `max` are positive integer literals or declared actor constants
-  that resolve to positive integers.
+- `min` and `max` are positive integer literals, declared actor constants, or
+  actor-local scalar parameter defaults that resolve to positive integers.
 - Duplicate options and `min > max` fail closed.
-- Actor constants resolve before the existing counter/error lowering path, so
-  generated `.fsm` guard and timeout checks contain the resolved integer.
-- Actor parameters, transaction parameters, runtime interface signals,
-  unknown symbolic names, arbitrary expressions, and zero-valued constants
-  remain invalid latency bounds.
+- Actor constants and actor scalar parameter defaults resolve before the
+  existing counter/error lowering path, so generated `.fsm` guard and timeout
+  checks contain the resolved integer.
+- Transaction parameters, runtime interface signals, unknown symbolic names,
+  arbitrary expressions, zero-valued constants, and zero-valued or non-scalar
+  actor parameters remain invalid latency bounds.
 - Latency metadata lowers to counters/error checks where supported and reports
   through `dt_blocks[]`/`inferred_storage[]`; there is no separate
   latency-bound source-token report field.
@@ -2744,9 +2745,10 @@ Required fail-closed examples:
 - Watchdog limits that name actor parameters, transaction parameters, runtime
   interface signals, unknown symbolic names, arbitrary expressions, constants
   that resolve to zero, or distinct per-await limits in one transaction.
-- Latency min/max bounds that name actor parameters, transaction parameters,
-  runtime interface signals, unknown symbolic names, arbitrary expressions, or
-  constants that resolve to zero.
+- Latency min/max bounds that name transaction parameters, runtime interface
+  signals, unknown symbolic names, arbitrary expressions, constants that
+  resolve to zero, or actor parameters that resolve to zero or non-scalar
+  values.
 - Direct cross-domain access without a shipped crossing primitive.
 - Width mismatch where width evidence is known.
 - Parameter override unknown names, duplicate names, symbolic values, and
@@ -3386,7 +3388,8 @@ For a SPECFORGE-style producer:
 - Use transaction ports and `(bind ...)` for runtime-varying data.
 - Use `(params ...)` only for static specialization on generated activation
   forms that explicitly support it.
-- Use actor constants for static latency bound symbols.
+- Use actor constants or actor-local scalar parameter defaults for static
+  latency bound symbols.
 - Use actor constants or actor-local scalar parameter defaults for static
   wait-count symbols.
 - Treat every fail-closed diagnostic as a source-generation bug.

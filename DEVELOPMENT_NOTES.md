@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Latency actor-parameter bounds stay static
+- `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` reuses the actor-local static parameter
+  default model already accepted for wait counts, but only for positive scalar
+  defaults at the transaction latency boundary.
+- The lowerer resolves the parameter before the existing latency counter path,
+  deliberately avoiding any runtime parameter read, generated-top
+  respecialization, schedule-report key-family change, or HDL shape change
+  beyond substituting the resolved integer in the existing guard/timeout
+  checks.
+- Transaction-local parameters remain rejected at this boundary even when the
+  transaction is a generated child. Supporting them safely would require a
+  generated-top counter-sizing and specialization policy, which remains
+  deferred.
+- Non-scalar actor parameters, zero-valued actor parameters, runtime signals,
+  arbitrary expressions, and use-site overrides also remain outside the
+  accepted latency-bound source domain.
+
 ## 2026-05-22: Latency actor-parameter bounds reuse static defaults
 - `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1` selects actor-local scalar parameter
   defaults as latency min/max sources, mirroring the shipped static

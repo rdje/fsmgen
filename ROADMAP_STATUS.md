@@ -2,13 +2,21 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-LATENCY-ACTOR-PARAM-BOUNDS`.
-- Current frontier: `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` will implement static
-  actor-parameter-backed transaction latency bounds. The selected boundary
-  accepts actor-local scalar parameter defaults that resolve to positive
-  integer literals and keeps transaction parameters, runtime signals,
-  expression-valued bounds, use-site override specialization, stage-local
-  latency, and stage runtime semantics deferred.
+- Active task tree: none.
+- Current frontier: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Recent R14 latency actor-parameter bounds completion:
+  `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` shipped actor-local scalar parameter
+  defaults that resolve to positive integers as transaction latency
+  `(min ...)`/`(max ...)` bounds. The lowerer resolves those static defaults
+  before existing latency counter lowering, so generated guards, timeout
+  checks, inferred counter widths, and report-visible storage roles match the
+  equivalent literal bounds. Transaction parameters, runtime signals,
+  expression-valued bounds, unknown symbols, zero-valued constants,
+  zero-valued or non-scalar actor parameters, use-site override
+  specialization, stage-local latency, and stage runtime semantics remain
+  fail-closed or deferred. The ISF spec, downstream integration handoff,
+  public contract, mdBook, roadmap, task tree, and live docs were synchronized.
 - Recent R14 latency actor-parameter bounds selection:
   `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1` activated the transaction latency
   actor-parameter bounds tree. The selected implementation will reuse the
@@ -164,18 +172,21 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   transaction latency `(min ...)` and `(max ...)` bounds and closed the task
   tree. Constants resolve before existing latency counter lowering, so
   generated `.fsm` guard/timeout checks and schedule-report storage roles
-  match the equivalent literal bounds. Actor parameters, transaction
+  match the equivalent literal bounds. The later actor-parameter bounds slice
+  superseded the former scalar actor-parameter deferral; transaction
   parameters, runtime interface signals, unknown symbolic names, arbitrary
-  expressions, zero-valued constants, stage-local latency, and parameterized
-  latency counter specialization remain fail-closed or deferred.
+  expressions, zero-valued constants, zero-valued or non-scalar actor
+  parameters, stage-local latency, and parameterized latency counter
+  specialization remain fail-closed or deferred.
 - Recent R14 latency actor-constant bounds selection:
   `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1` activated the transaction latency
   tree for positive actor constants in `(latency (min CONST) (max CONST))`
-  bounds. Actor parameters, transaction parameters, runtime signals,
-  arbitrary expressions, latency semantics changes, timeout-state changes,
-  report/storage shape changes, generated HDL changes beyond static constant
-  resolution, and stage-local latency semantics remain out of scope. No
-  compiler behavior changed.
+  bounds. Actor parameters were not part of that earlier selection and were
+  handled by the later actor-parameter bounds slice. Transaction parameters,
+  runtime signals, arbitrary expressions, latency semantics changes,
+  timeout-state changes, report/storage shape changes, generated HDL changes
+  beyond static constant resolution, and stage-local latency semantics remain
+  out of scope. No compiler behavior changed.
 - Recent R14 temporal-contract actor-constant window completion:
   `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` shipped positive actor constants as
   bounded eventual temporal-contract `within` windows and closed the task tree.
@@ -5385,9 +5396,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: none.
 - Current frontier: none. The next PNT step must select or create the next
   roadmap-aligned task tree before code changes.
-- Completion status: `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` closed the most
-  recent active R14 task tree after shipping the accepted repeat count source
-  boundary.
+- Completion status: `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` closed the most
+  recent active R14 task tree after shipping actor-local scalar parameter
+  defaults as static transaction latency min/max bounds.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8914,8 +8925,9 @@ Done:
   covering exact scalar completion targets before scheduled `.fsm` emission.
 - Latency clause validation is now regression-backed by
   [t/1197-isf-latency-clause-boundary.t](t/1197-isf-latency-clause-boundary.t),
-  covering positive-integer `min`/`max` options before latency counter
-  emission plus max-bound counter-width behavior.
+  covering positive-integer literal, actor-constant, and actor-local scalar
+  parameter `min`/`max` options before latency counter emission plus max-bound
+  counter-width behavior and unsupported source diagnostics.
 - Update clause validation is now regression-backed by
   [t/1198-isf-update-clause-boundary.t](t/1198-isf-update-clause-boundary.t),
   covering exact scalar target plus one expression payload before scheduled

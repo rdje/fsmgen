@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-LATENCY-ACTOR-PARAM-BOUNDS` | `active` | `R14` | `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` | [docs/tasks/ISF-LATENCY-ACTOR-PARAM-BOUNDS.md](docs/tasks/ISF-LATENCY-ACTOR-PARAM-BOUNDS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-LATENCY-ACTOR-PARAM-BOUNDS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LATENCY-ACTOR-PARAM-BOUNDS.md](docs/tasks/ISF-LATENCY-ACTOR-PARAM-BOUNDS.md) |
 | `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.md) |
 | `ISF-ATL-FRONTIER-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md](docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md) |
 | `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.md](docs/tasks/ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.md) |
@@ -277,6 +277,7 @@ as done work unless a future task reopens them.
 | Transaction stage lowering and temporal contract lowering | `ISF-STAGES-CONTRACTS` |
 | Temporal-contract actor-constant window counts | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` |
 | Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
+| Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
 | Temporal-contract monitor storage schedule-report roles | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` |
 | Temporal-contract SystemVerilog assertion projection | `ISF-TEMPORAL-CONTRACT-ASSERTIONS` |
 | Actor-level phase/stage schedule-report metadata | `ISF-ACTOR-PHASE-STAGE-REPORTS` |

@@ -1540,10 +1540,11 @@ Shift operations are also exact scalar forms:
 **Timing**: no extra states. Adds counter + comparators.
 
 The latency clause accepts one or both `(min N)` and `(max N)` options. `N`
-must be a positive integer, each option may appear at most once, and `min`
-must be less than or equal to `max` when both are present. A valid explicit
-`max` bound drives the generated counter width and max violation check; omitted
-bounds use scheduler defaults.
+must be a positive integer literal, a declared positive actor constant, or an
+actor-local scalar parameter default that resolves to a positive integer. Each
+option may appear at most once, and `min` must be less than or equal to `max`
+when both are present. A valid explicit `max` bound drives the generated
+counter width and max violation check; omitted bounds use scheduler defaults.
 
 **What happens**:
 1. Entry state: `(<- (cc 0))` — reset counter

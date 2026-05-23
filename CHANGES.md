@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Latency actor-parameter bounds shipped
+- Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` and closed the task tree.
+- Transaction latency `(min ...)` and `(max ...)` bounds now accept
+  actor-local scalar parameter defaults that resolve to positive integers.
+- Accepted actor parameters lower exactly like equivalent literal/static
+  bounds: the generated `.fsm` guard and timeout checks contain resolved
+  integers, and schedule-report storage roles remain unchanged.
+- Transaction parameters, runtime signals, expression-valued bounds, unknown
+  symbols, zero-valued constants, zero-valued or non-scalar actor parameters,
+  use-site override specialization, stage-local latency, and stage runtime
+  semantics remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused latency/public/doc tests; broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1609`;
+  `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — Latency actor-parameter bounds selected
 - Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1`.
 - Activated a new R14 task tree for static actor-parameter-backed transaction

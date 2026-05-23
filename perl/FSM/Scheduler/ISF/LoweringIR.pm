@@ -9205,13 +9205,21 @@ sub _latency_bound_cycles {
             return $constant_value;
         }
 
-        confess "Transaction '$tn': latency $key token '$token' is an actor parameter; latency bounds accept positive integer literals or actor constants only in transaction body\n"
-            if _actor_param_by_name($actor, $token);
+        confess "Transaction '$tn': latency $key token '$token' is a transaction parameter; latency bounds accept positive integer literals, actor constants, or actor scalar parameters only in transaction body\n"
+            if _transaction_param_by_name($actor, $tn, $token);
 
-        confess "Transaction '$tn': latency $key token '$token' is a runtime interface signal; latency bounds accept positive integer literals or actor constants only in transaction body\n"
+        my $param = _actor_param_by_name($actor, $token);
+        if ($param) {
+            my $param_value = _non_negative_integer_from_literal(_param_resolved_value($param));
+            confess "Transaction '$tn': latency $key parameter '$token' must resolve to a positive cycle count in transaction body\n"
+                unless defined($param_value) && $param_value > 0;
+            return $param_value;
+        }
+
+        confess "Transaction '$tn': latency $key token '$token' is a runtime interface signal; latency bounds accept positive integer literals, actor constants, or actor scalar parameters only in transaction body\n"
             if _actor_interface_signal_by_name($actor, $token);
 
-        confess "Transaction '$tn': latency $key token '$token' is not a declared actor constant in transaction body\n";
+        confess "Transaction '$tn': latency $key token '$token' is not a declared actor constant or actor scalar parameter in transaction body\n";
     }
 
     confess "Transaction '$tn': latency options must be '(min N)' or '(max N)'\n";
