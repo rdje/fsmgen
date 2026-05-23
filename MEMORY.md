@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Temporal contract actor-parameter windows shipped
+- Completed `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` and closed the task tree.
+- Bounded eventual temporal contracts now accept actor-local scalar parameter
+  defaults that resolve to positive integers as `within` windows.
+- Both nested `(eventually signal (within PARAM))` and flat
+  `(eventually signal within PARAM)` spellings lower through the same static
+  source path and emit the same monitor shape as equivalent positive literal
+  or actor-constant windows.
+- Schedule reports continue to expose the resolved positive integer as
+  `temporal_contracts[].within_cycles`; no source-token field was added, and
+  the declaration remains visible through `actor_params[]`.
+- Transaction parameters, runtime signals, arbitrary expressions, unknown
+  names, zero-valued constants, zero-valued or non-scalar actor parameters,
+  use-site override specialization, dynamic bounds, min/max windows,
+  same-cycle checks, nested contracts, expression operands, and multiple
+  outstanding obligations remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused contract/public/doc tests; broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1610`;
+  `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Temporal contract actor-parameter windows selected
 - Completed selection work for `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1`.
 - Activated a new R14 task tree for static actor-parameter-backed bounded

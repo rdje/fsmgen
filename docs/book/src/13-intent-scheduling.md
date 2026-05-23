@@ -802,10 +802,12 @@ The ISF-specific current limitations are:
   top-level `(contract name (eventually signal within cycles))`. The older
   nested `(eventually signal (within cycles))` spelling remains accepted as an
   alias. The `cycles` token may be a positive integer literal or a declared
-  actor constant that resolves to a positive integer; actor/transaction
-  parameters and runtime expressions remain invalid. Both forms lower to an arm
-  state plus an always-on monitor DT with pending, age, and sticky-fail storage,
-  and reports expose the resolved bound in `temporal_contracts[].within_cycles`.
+  actor constant or actor-local scalar parameter default that resolves to a
+  positive integer; transaction parameters, runtime expressions, zero-valued
+  constants, and zero-valued or non-scalar actor parameters remain invalid.
+  Both forms lower to an arm state plus an always-on monitor DT with pending,
+  age, and sticky-fail storage, and reports expose the resolved bound in
+  `temporal_contracts[].within_cycles`.
   Nested contracts and richer temporal forms still fail closed instead of being
   dropped from the scheduled `.fsm`.
 - Transaction `(latency (min N) (max M))` accepts positive decimal literals,

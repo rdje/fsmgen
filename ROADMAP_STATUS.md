@@ -2,22 +2,30 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS`.
-- Current frontier: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` will implement
-  static actor-parameter-backed temporal-contract windows. The selected
-  boundary accepts actor-local scalar parameter defaults that resolve to
-  positive integer literals for bounded eventual `within` windows and keeps
-  transaction parameters, runtime signals, expression-valued windows, use-site
-  override specialization, dynamic bounds, min/max windows, same-cycle checks,
-  nested contracts, expression operands, and multiple outstanding obligations
-  deferred.
+- Active task tree: `none`.
+- Current frontier: `none`; the next PNT step must select or create the next
+  roadmap-aligned task tree before any further code changes.
+- Recent R14 temporal-contract actor-parameter window completion:
+  `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` shipped actor-local scalar parameter
+  defaults that resolve to positive integers as bounded eventual
+  temporal-contract `within` windows. Both nested
+  `(eventually signal (within PARAM))` and flat
+  `(eventually signal within PARAM)` spelling lower through the same static
+  source path. Reports continue to expose only the resolved
+  `temporal_contracts[].within_cycles` integer while the declaration remains
+  visible through `actor_params[]`. Transaction parameters, runtime signals,
+  arbitrary expressions, unknown names, zero-valued constants, zero-valued or
+  non-scalar actor parameters, use-site override specialization, dynamic
+  bounds, min/max windows, same-cycle checks, nested contracts, expression
+  operands, and multiple outstanding obligations remain fail-closed or
+  deferred. The ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap, task tree, and live docs were synchronized.
 - Recent R14 temporal-contract actor-parameter window selection:
   `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1` activates the temporal-contract
-  actor-parameter window tree. The selected implementation will reuse the
-  static actor-parameter default model already shipped for wait counts and
-  latency bounds without changing monitor timing, sticky-fail behavior,
-  assertion projection, generated HDL shape, or public schedule-report key
-  families.
+  actor-parameter window tree. The selected implementation reused the static
+  actor-parameter default model already shipped for wait counts and latency
+  bounds without changing monitor timing, sticky-fail behavior, assertion
+  projection, generated HDL shape, or public schedule-report key families.
 - Recent R14 latency actor-parameter bounds completion:
   `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` shipped actor-local scalar parameter
   defaults that resolve to positive integers as transaction latency
@@ -5406,12 +5414,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS`.
-- Current frontier: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` will implement the
-  static actor-parameter temporal-contract window boundary.
-- Completion status: `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` closed the previous
+- Active task tree: `none`.
+- Current frontier: `none`; the next PNT step must select or create the next
+  roadmap-aligned task tree before any further code changes.
+- Completion status: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` closed the previous
   active R14 task tree after shipping actor-local scalar parameter defaults as
-  static transaction latency min/max bounds.
+  static bounded eventual temporal-contract `within` windows.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8941,6 +8949,11 @@ Done:
   covering positive-integer literal, actor-constant, and actor-local scalar
   parameter `min`/`max` options before latency counter emission plus max-bound
   counter-width behavior and unsupported source diagnostics.
+- Temporal-contract window lowering is now regression-backed by
+  [t/1224-isf-contract-lowering.t](t/1224-isf-contract-lowering.t), covering
+  positive-integer literal, actor-constant, and actor-local scalar parameter
+  bounded eventual `within` windows plus unsupported source diagnostics before
+  temporal monitor emission.
 - Update clause validation is now regression-backed by
   [t/1198-isf-update-clause-boundary.t](t/1198-isf-update-clause-boundary.t),
   covering exact scalar target plus one expression payload before scheduled

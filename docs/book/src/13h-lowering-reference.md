@@ -1985,10 +1985,12 @@ shipped contract model is a transaction-local bounded eventual check:
 When the transaction reaches the contract clause, lowering emits one arm state
 that asserts an internal combinational arm request for that cycle. The checked
 window starts on the next cycle and lasts for the specified positive integer
-number of cycles. If `done` is seen before the window expires, the obligation
-clears. If the window expires first, or if the same contract is armed again
-while an obligation is still pending, a generated sticky fail bit is set until
-actor reset.
+number of cycles. That window can be authored as a positive literal, a
+declared positive actor constant, or an actor-local scalar parameter default
+that resolves to a positive integer. If `done` is seen before the window
+expires, the obligation clears. If the window expires first, or if the same
+contract is armed again while an obligation is still pending, a generated
+sticky fail bit is set until actor reset.
 
 The reviewable artifact is not SVA-only. The scheduled `.fsm` contains one arm
 state plus an always-on monitor DT with pending, age, and fail storage. The
@@ -2007,10 +2009,10 @@ state, the generated contract clone materializes the sample and emits the same
 arm request; the monitor DT remains unchanged and remains the only owner of
 pending, age, and fail storage.
 
-Unsupported bodies and nested contracts fail closed. Global
-`always` implication forms, min/max windows, dynamic bounds, same-cycle
-windows, expression operands, and multiple outstanding obligations remain
-deferred.
+Unsupported bodies and nested contracts fail closed. Transaction parameter
+windows, runtime-signal or expression windows, global `always` implication
+forms, min/max windows, dynamic bounds, same-cycle windows, expression
+operands, and multiple outstanding obligations remain deferred.
 
 For a three-cycle window, the scheduled artifact has this shape:
 

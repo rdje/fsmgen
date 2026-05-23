@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Contract actor-parameter windows stay static
+- `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` reuses the actor-local static
+  parameter default model already accepted for wait counts and latency bounds,
+  but only for positive scalar defaults at the temporal-contract window
+  boundary.
+- The lowerer resolves the parameter before the existing bounded-eventually
+  monitor path, deliberately avoiding runtime parameter reads, generated-top
+  respecialization, schedule-report key-family changes, or HDL shape changes
+  beyond substituting the resolved integer into the existing monitor window.
+- Transaction-local parameters remain rejected at this boundary even when the
+  transaction is a generated child. Supporting them safely would require a
+  generated-top monitor-sizing and specialization policy, which remains
+  deferred.
+- Non-scalar actor parameters, zero-valued actor parameters, runtime signals,
+  arbitrary expressions, and use-site overrides also remain outside the
+  accepted temporal-contract window source domain.
+
 ## 2026-05-22: Contract actor-parameter windows reuse static defaults
 - `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1` selects actor-local scalar parameter
   defaults as bounded eventual temporal-contract window sources, mirroring the

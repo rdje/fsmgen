@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -50,7 +50,7 @@ literals.
 ## Task Tree
 
 - ID: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship actor-parameter-backed static temporal-contract windows.`
   Children: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1`,
   `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2`
@@ -62,22 +62,24 @@ literals.
   source boundary, preserve non-goals, and update roadmap/live docs without
   behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending commit`
+  Commit: `5fa55f61`
 
 - ID: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document actor-parameter temporal-contract windows.`
   Acceptance: `Positive actor scalar parameters lower as literal contract
   windows; unsupported window tokens fail closed; specs, book, public
   contract, downstream handoff, and focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused contract/public/doc tests; broad
+  ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff
+  --check`
+  Commit: `pending commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` | `pending` | The source boundary is selected; implementation can reuse the existing static actor-parameter default model from wait counts and latency bounds. |
+| 1 | `none` | `closed` | All planned leaves are complete. |
 
 ## Decisions
 
@@ -99,15 +101,18 @@ literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-22` | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1224-isf-contract-lowering.t`; `prove -Iperl t/1224-isf-contract-lowering.t`; `prove -Iperl t/1175-isf-contract-fail-closed.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1224-isf-contract-lowering.t t/1225-isf-stage-contract-schedule-report.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `passed; broad gate Files=238, Tests=1610` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1` | `this commit: ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1: select contract actor-param windows` | `selects static actor-parameter temporal-contract window support` |
-| `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` | `pending` | `pending` |
+| `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1` | `5fa55f61 ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1: select contract actor-param windows` | `selects static actor-parameter temporal-contract window support` |
+| `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` | `this commit: ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2: ship contract actor-param windows` | `ships actor-parameter-backed temporal-contract windows and closes the tree` |
 
 ## Changelog
 
 - `2026-05-22`: Created task tree and selected static actor-parameter
   temporal-contract windows.
+- `2026-05-22`: Shipped actor-local scalar parameter defaults as bounded
+  eventual temporal-contract window sources and closed the task tree.

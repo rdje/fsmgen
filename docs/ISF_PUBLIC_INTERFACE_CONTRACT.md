@@ -872,9 +872,11 @@ The shipped subset is the top-level transaction form
 `(contract name (eventually signal (within cycles)))` spelling remains an
 accepted alias; both lower to one arm state plus an always-on monitor DT with
 pending, age, and sticky-fail storage. The `cycles` token may be a positive
-integer literal or a declared actor constant that resolves to a positive
-integer. Actor parameters, transaction parameters, runtime signals, and
-arbitrary expressions remain outside the contract-window surface.
+integer literal, a declared actor constant, or an actor-local scalar parameter
+default that resolves to a positive integer. Transaction parameters, runtime
+signals, arbitrary expressions, unknown names, zero-valued constants, and
+zero-valued or non-scalar actor parameters remain outside the contract-window
+surface.
 Schedule reports classify that DT as `temporal_contract_monitor` and classify
 the generated pending/fail storage as registers and age storage as a counter.
 Those three monitor storage entries also carry the advertised
@@ -883,9 +885,9 @@ Those three monitor storage entries also carry the advertised
 pending, counter, and fail signal names.
 The bounded `temporal_contracts` summary projection reports the public trigger,
 observed signal, cycle bound, generated storage names, reset policy, overlap
-policy, and assertion projection status for downstream consumers. Actor-constant
-windows report the resolved positive integer in `within_cycles`; no public
-source-token field is added.
+policy, and assertion projection status for downstream consumers.
+Actor-constant and actor-scalar-parameter windows report the resolved positive
+integer in `within_cycles`; no public source-token field is added.
 Unsupported top-level bodies and nested contracts still fail closed with
 targeted diagnostics. Verification-only assertion text is not advertised yet.
 The parser boundary for resource and priority metadata is checked by

@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Temporal contract actor-parameter windows shipped
+- Completed `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` and closed the task tree.
+- Bounded eventual temporal-contract `within` windows now accept actor-local
+  scalar parameter defaults that resolve to positive integers.
+- Accepted actor parameters lower exactly like equivalent positive
+  literal/static actor-constant windows: the generated monitor uses the
+  resolved integer, and schedule reports keep
+  `temporal_contracts[].within_cycles` as that integer without adding a
+  source-token field.
+- Transaction parameters, runtime signals, arbitrary expressions, unknown
+  names, zero-valued constants, zero-valued or non-scalar actor parameters,
+  use-site override specialization, dynamic bounds, min/max windows,
+  same-cycle checks, nested contracts, expression operands, and multiple
+  outstanding obligations remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused contract/public/doc tests; broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1610`;
+  `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — Temporal contract actor-parameter windows selected
 - Completed selection work for `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1`.
 - Activated a new R14 task tree for static actor-parameter-backed bounded

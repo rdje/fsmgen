@@ -4089,10 +4089,21 @@ sub _temporal_contract_within_cycles {
             return $constant_value;
         }
 
-        confess "Transaction '$tn': contract '$contract_name' within token '$token' is an actor parameter; temporal contract windows accept positive integer literals or actor constants only in $label\n"
-            if _actor_param_by_name($actor, $token);
+        confess "Transaction '$tn': contract '$contract_name' within token '$token' is a transaction parameter; temporal contract windows accept positive integer literals, actor constants, or actor scalar parameters only in $label\n"
+            if _transaction_param_by_name($actor, $tn, $token);
 
-        confess "Transaction '$tn': contract '$contract_name' within token '$token' is not a declared actor constant in $label\n";
+        my $param = _actor_param_by_name($actor, $token);
+        if ($param) {
+            my $param_value = _non_negative_integer_from_literal(_param_resolved_value($param));
+            confess "Transaction '$tn': contract '$contract_name' within parameter '$token' must resolve to a positive cycle count in $label\n"
+                unless defined($param_value) && $param_value > 0;
+            return $param_value;
+        }
+
+        confess "Transaction '$tn': contract '$contract_name' within token '$token' is a runtime interface signal; temporal contract windows accept positive integer literals, actor constants, or actor scalar parameters only in $label\n"
+            if _actor_interface_signal_by_name($actor, $token);
+
+        confess "Transaction '$tn': contract '$contract_name' within token '$token' is not a declared actor constant or actor scalar parameter in $label\n";
     }
 
     confess "Transaction '$tn': contract '$contract_name' supports only '(eventually signal within cycles)' or '(eventually signal (within cycles))'\n";

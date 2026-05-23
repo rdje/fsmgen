@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Temporal contract actor-parameter windows shipped
+- Completed `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` and closed the task tree.
+- Bounded eventual temporal-contract windows now accept actor-local scalar
+  parameter defaults that resolve to positive integers and lower to the same
+  monitor shape as equivalent positive literal or actor-constant windows.
+- Transaction parameters, runtime signals, expressions, unknown names,
+  zero-valued constants, zero-valued or non-scalar actor parameters, use-site
+  specialization, dynamic bounds, min/max windows, same-cycle checks, nested
+  contracts, expression operands, and multiple outstanding obligations remain
+  fail-closed or deferred.
+- Validation passed: focused contract/public/doc tests, broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1610`,
+  `mdbook build docs/book`, and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-22: R14 — Temporal contract actor-parameter windows selected
 - Completed selection work for `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1`.
 - Activated the active R14 task tree for static actor-parameter-backed

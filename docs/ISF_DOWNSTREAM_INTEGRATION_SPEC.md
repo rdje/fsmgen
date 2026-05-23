@@ -1597,11 +1597,12 @@ verification-only assertion from the generated sticky fail bit under
 `` `ifndef SYNTHESIS``. Verilog output remains assertion-free. FSMGen also
 accepts the older nested alias `(eventually signal (within N))`; downstream
 emitters should prefer the flat `within N` form shown above. `N` may be a
-positive integer literal or a declared actor constant that resolves to a
-positive integer. Reports keep `temporal_contracts[].within_cycles` as the
-resolved integer and do not expose a separate source-token field. Actor
-parameters, transaction parameters, runtime signals, and arbitrary expressions
-remain invalid contract windows.
+positive integer literal, a declared actor constant, or an actor-local scalar
+parameter default that resolves to a positive integer. Reports keep
+`temporal_contracts[].within_cycles` as the resolved integer and do not expose
+a separate source-token field. Transaction parameters, runtime signals,
+arbitrary expressions, unknown names, zero-valued constants, and zero-valued or
+non-scalar actor parameters remain invalid contract windows.
 
 Latency:
 
@@ -2749,6 +2750,10 @@ Required fail-closed examples:
   signals, unknown symbolic names, arbitrary expressions, constants that
   resolve to zero, or actor parameters that resolve to zero or non-scalar
   values.
+- Temporal contract windows that name transaction parameters, runtime
+  interface signals, unknown symbolic names, arbitrary expressions, constants
+  that resolve to zero, or actor parameters that resolve to zero or non-scalar
+  values.
 - Direct cross-domain access without a shipped crossing primitive.
 - Width mismatch where width evidence is known.
 - Parameter override unknown names, duplicate names, symbolic values, and
@@ -3390,6 +3395,8 @@ For a SPECFORGE-style producer:
   forms that explicitly support it.
 - Use actor constants or actor-local scalar parameter defaults for static
   latency bound symbols.
+- Use actor constants or actor-local scalar parameter defaults for static
+  temporal-contract window symbols.
 - Use actor constants or actor-local scalar parameter defaults for static
   wait-count symbols.
 - Treat every fail-closed diagnostic as a source-generation bug.

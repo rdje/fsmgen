@@ -289,9 +289,11 @@ activation-parameter override path. Actor-local scalar parameter defaults that
 resolve to non-negative integer literals are also legal static wait sources in
 the actor's own schedule. Actor-local scalar parameter defaults that resolve
 to positive integer literals are legal static transaction latency min/max
-sources in the actor's own schedule. Transaction parameters, non-scalar actor
-parameters, and use-site activation overrides are not latency-bound constants
-and do not respecialize already-emitted fixed latency counter logic.
+sources and bounded eventual temporal-contract window sources in the actor's
+own schedule. Transaction parameters, non-scalar actor parameters, and
+use-site activation overrides are not latency-bound or contract-window
+constants and do not respecialize already-emitted fixed latency counter or
+temporal monitor logic.
 
 ISF scalar type-alias references are shipped for width-bearing declarations.
 Actor bodies may declare local `(types ...)` clauses whose payloads map
@@ -3401,9 +3403,11 @@ accepts the older nested alias
 same bounded-eventually monitor. The contract is supported only as a top-level
 transaction clause, with a unique contract name per transaction, `signal` bound
 to a scalar actor interface input or output, and `cycles` as either a positive
-integer literal or a declared actor constant that resolves to a positive
-integer. Actor parameters, transaction parameters, runtime signals, and
-arbitrary expressions are not accepted as contract windows. Reaching the
+integer literal, a declared actor constant that resolves to a positive
+integer, or an actor-local scalar parameter default that resolves to a
+positive integer. Transaction parameters, runtime signals, arbitrary
+expressions, unknown names, zero-valued constants, and zero-valued or
+non-scalar actor parameters are not accepted as contract windows. Reaching the
 clause emits one arm state. The checked window starts on the next cycle and
 lasts for the resolved `cycles` bound. The generated scheduled `.fsm` artifact
 contains the arm state plus an always-on monitor DT with pending, age, and
@@ -3426,7 +3430,8 @@ verification-only assertion under `` `ifndef SYNTHESIS`` that checks the
 generated sticky fail bit remains clear outside reset, while Verilog output
 stays assertion-free. Raw monitor equations and backend assertion text are not
 schedule-report payloads; the scheduled monitor remains the source of truth.
-Historical/free-form contract bodies, global `always` implication forms,
+Historical/free-form contract bodies, transaction-parameter windows,
+runtime-signal or expression windows, global `always` implication forms,
 min/max windows, dynamic bounds, same-cycle checks, nested contracts,
 expression operands, and multiple outstanding obligations remain
 fail-closed/deferred.
@@ -4090,9 +4095,10 @@ assertion text. The
 capability-manifest ISF public contract advertises the keys, kind values,
 overlap values, assertion-projection values, and reset-policy shape through the
 matching `schedule_report_temporal_contract_*` metadata fields.
-When a contract window is authored with a positive actor constant,
-`within_cycles` reports the resolved positive integer and no separate
-source-token field is public.
+When a contract window is authored with a positive actor constant or actor
+scalar parameter, `within_cycles` reports the resolved positive integer and no
+separate source-token field is public. The actor-local declaration remains
+visible through `actor_constants[]` or `actor_params[]`.
 Latency bounds do not have a dedicated public schedule-report entry. When a
 positive actor constant or actor scalar parameter names
 `(latency (min ...))` or `(latency (max ...))`, the report-visible effect is
