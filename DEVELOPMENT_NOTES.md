@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: State-active guards keep priority suppression explicit
+- `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` introduces `(state_active STATE)` as
+  the smallest scheduled `.fsm` surface needed for generated
+  transaction-state guards.
+- The expression is intentionally state-name based, not generated-wire based.
+  That keeps priority suppression tied to the real FSM state register and
+  avoids turning backend implementation names into authored module inputs.
+- The ISF lowerer uses the guard only to suppress the losing non-state rule
+  assignment while the winning transaction state is active. The transaction
+  assignment remains in its state-local DT, so the change adds no route mux,
+  transaction lifetime ownership model, or transaction/transaction priority
+  policy.
+
 ## 2026-05-23: Transaction-over-rule priority needs state-active guards
 - `ISF-TRANSACTION-OVER-RULE-PRIORITY.1` selects the covered same-target data
   case where a transaction wins over a rule, but deliberately splits the work

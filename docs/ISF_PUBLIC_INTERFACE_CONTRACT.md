@@ -1028,8 +1028,9 @@ for parser metadata, scheduled `.fsm` DTE gating, HDL handoff, and
 fail-closed unsupported arbitration cases.
 The first rule/transaction priority path is checked by
 [t/1219-isf-rule-transaction-priority.t](../t/1219-isf-rule-transaction-priority.t)
-for accepted rule-over-transaction suppression, unordered conflict rejection,
-cycle rejection, and transaction-over-rule fail-closed diagnostics.
+for accepted rule-over-transaction suppression, accepted transaction-over-rule
+suppression through scheduled `.fsm` state-active guards, unordered conflict
+rejection, and cycle rejection.
 The arbitration schedule-report projection is checked by
 [t/1220-isf-arbitration-schedule-report.t](../t/1220-isf-arbitration-schedule-report.t)
 for bounded successful `priority_resolutions` and `resource_arbitration`
@@ -2246,11 +2247,14 @@ transaction-state assignment is guarded with the inverse active rule
 condition. Spawned transaction output bindings are also treated as
 transaction-owned data for this conflict pass, so a spawned child output bound
 to an actor output cannot silently coexist with a conflicting rule writer.
-Unordered rule/transaction conflicts, priority cycles, mixed timing operators,
-and transaction-over-rule priority all fail closed.
-Transaction-over-rule is not lowered yet because scheduled `.fsm` review text
-does not expose a state-active predicate that can safely guard a non-state
-rule DT assignment.
+Actor-level transaction-over-rule priority is enforced for the covered
+same-target data case too: the transaction-state assignment stays unchanged,
+and the lower-priority rule assignment is guarded with the inverse scheduled
+`.fsm` `(state_active STATE)` predicate for the winning transaction state.
+That predicate lowers to an internal `current_state == STATE` comparison
+without creating fake module inputs for `current_state`, state constants, or
+generated state-enable names. Unordered rule/transaction conflicts, priority
+cycles, and mixed timing operators still fail closed.
 After scheduled `.fsm` reaches the HDL backend, generated SystemVerilog now
 adds verification-only selector assertions derived from backend assignment
 analysis. Same-value source selectors for one `LHS`/`VAL` selector and

@@ -118,8 +118,8 @@ subtest 'rule/transaction priority cycles fail closed' => sub {
 ISF
 };
 
-subtest 'transaction-over-rule priority fails until state-active rule guards ship' => sub {
-    assert_lower_rejected(<<'ISF', 'transaction-over-rule priority', qr/isf_priority_transaction_winner_unsupported.*state-active guards/s);
+subtest 'transaction-over-rule priority suppresses the rule assignment while the transaction state is active' => sub {
+    my $source = <<'ISF';
 (actor transaction_over_rule_priority
   (clock clk)
   (reset rst_n)
@@ -136,6 +136,42 @@ subtest 'transaction-over-rule priority fails until state-active rule guards shi
   (rule force_out force
     (out 1)))
 ISF
+
+    my $ir = lower_ir($source);
+    is_deeply($ir->{conflict_issues}, [], 'transaction-over-rule priority resolves the data conflict');
+
+    is_deeply(
+        $ir->{priority_resolution}{resolutions},
+        [
+            {
+                target      => 'out',
+                winner      => 'main',
+                winner_kind => 'transaction',
+                loser       => 'force_out',
+                loser_kind  => 'rule',
+            },
+        ],
+        'priority resolution records the transaction winner and rule loser',
+    );
+
+    my $rule_out = find_record($ir, owner => 'force_out', owner_kind => 'rule', target => 'out');
+    is_deeply(
+        $rule_out->{priority_suppressed_by},
+        ['main'],
+        'rule assignment records the suppressing transaction',
+    );
+
+    my $fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($source))->{files}{'transaction_over_rule_priority.fsm'};
+    like(
+        $fsm,
+        qr/\(-force_out\s+<force\s+\(<- \(out> 1\) <\(! \(state_active main_update_\d+\)\)\)\s+\)/s,
+        'scheduled .fsm guards the lower-priority rule with the inverse transaction-state activity',
+    );
+
+    my $hdl = assert_fsm_reaches_hdl($fsm, 'transaction_over_rule_priority');
+    unlike($hdl, qr/\binput\s+wire\s+current_state\b/, 'state-active guard does not create a current_state input port');
+    unlike($hdl, qr/\binput\s+wire\s+MAIN_UPDATE_\d+\b/, 'state-active guard does not create a state-name input port');
+    unlike($hdl, qr/\binput\s+wire\s+main_update_\d+_en\b/, 'state-active guard does not create a generated state-enable input port');
 };
 
 done_testing();
@@ -173,6 +209,7 @@ sub assert_fsm_reaches_hdl {
 
     my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
     like($hdl, qr/\bmodule\s+\Q$module_name\E\b/, 'rule/transaction priority scheduled .fsm reaches HDL generation');
+    return $hdl;
 }
 
 sub write_file {

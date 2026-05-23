@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-OVER-RULE-PRIORITY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -59,7 +59,7 @@ state-enable name or `current_state` enum symbols as user module inputs.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-OVER-RULE-PRIORITY`
-  Status: `active`
+  Status: `done`
   Goal: `Ship covered transaction-over-rule same-target data priority`
   Children: `ISF-TRANSACTION-OVER-RULE-PRIORITY.1`,
   `ISF-TRANSACTION-OVER-RULE-PRIORITY.2`
@@ -71,22 +71,23 @@ state-enable name or `current_state` enum symbols as user module inputs.
   live roadmap/docs identify the exact selected implementation boundary before
   any code changes.`
   Verification: `documentation-only selection review`
-  Commit: `this commit`
+  Commit: `71574f34`
 
 - ID: `ISF-TRANSACTION-OVER-RULE-PRIORITY.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement scheduled state-active guards and transaction-over-rule lowering`
   Acceptance: `The scheduled .fsm guard, priority lowering, focused tests,
   public contract metadata, specs, mdBook, and live docs are updated and
   validated.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax, focused priority/state-active/public/spec/book checks,
+  mdBook build, broad ISF regression, post-closure audits, git diff check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `active` | `The selected implementation boundary is recorded; behavior-bearing work can start after this selection commit.` |
+| 1 | `closed` | `done` | `The selected transaction-over-rule priority slice is implemented, documented, validated, and ready for commit.` |
 
 ## Decisions
 
@@ -97,6 +98,18 @@ state-enable name or `current_state` enum symbols as user module inputs.
 - `2026-05-23`: Reject using generated `STATE_en` names in scheduled `.fsm`
   text. A probe showed that such names become implicit module inputs and then
   collide with backend-generated state-enable assignments.
+- `2026-05-23`: Ship `(state_active STATE)` as a bounded scheduled `.fsm`
+  expression surface for generated guards. The parser validates the referenced
+  state against declared regular FSM states, lowers the expression to the
+  internal `current_state == STATE` comparison, and keeps `current_state`,
+  state enum literals, and generated state-enable names out of the authored
+  module input set.
+- `2026-05-23`: Lower covered transaction-over-rule same-target data priority
+  by leaving the winning transaction assignment in its state DT and guarding
+  the lower-priority non-state rule assignment with the inverse transaction
+  state-active condition. Transaction/transaction priority, unordered
+  conflicts, mixed-timing conflicts, and broader resource arbitration remain
+  deferred or unchanged.
 
 ## Open Questions
 
@@ -105,25 +118,35 @@ state-enable name or `current_state` enum symbols as user module inputs.
 
 ## Blockers
 
-- None for selection. Implementation depends on landing the bounded
-  state-active scheduled `.fsm` guard before changing ISF priority lowering.
+- None. The selected implementation leaf is complete.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-23` | `ISF-TRANSACTION-OVER-RULE-PRIORITY.1` | `documentation-only selection review` | `passed` |
-| `2026-05-23` | `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `pending` | `pending` |
+| `2026-05-23` | `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`; `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm` | `passed` |
+| `2026-05-23` | `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `prove -Iperl t/1345-fsm-state-active-guard.t t/1219-isf-rule-transaction-priority.t` | `passed: Files=2, Tests=8` |
+| `2026-05-23` | `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `prove -Iperl t/1345-fsm-state-active-guard.t t/1219-isf-rule-transaction-priority.t t/1210-isf-priority-conflict-resolution.t t/1220-isf-arbitration-schedule-report.t t/1218-isf-rule-slot-resource-arbitration.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=10, Tests=342` |
+| `2026-05-23` | `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-23` | `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `./bin/ci-regression isf --no-book` | `passed: Files=250, Tests=1656` |
+| `2026-05-23` | `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t` | `passed: Files=6, Tests=347` |
+| `2026-05-23` | `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TRANSACTION-OVER-RULE-PRIORITY.1` | `this commit: ISF-TRANSACTION-OVER-RULE-PRIORITY.1: select transaction-over-rule priority` | `selection slice` |
-| `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `pending` | `pending` |
+| `ISF-TRANSACTION-OVER-RULE-PRIORITY.1` | `71574f34 ISF-TRANSACTION-OVER-RULE-PRIORITY.1: select transaction-over-rule priority` | `selection slice` |
+| `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `pending this commit: ISF-TRANSACTION-OVER-RULE-PRIORITY.2: ship transaction-over-rule priority` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-23`: Created and activated task tree; selected
   `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` as the implementation frontier after
   the selection commit.
+- `2026-05-23`: Shipped scheduled `.fsm` state-active guards and covered
+  transaction-over-rule same-target data priority. Synchronized the ISF spec,
+  downstream integration handoff, public contract, mdBook, roadmap status,
+  task index, memory, development notes, live achievement status, and focused
+  validation evidence.

@@ -2,8 +2,25 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-OVER-RULE-PRIORITY`.
-- Current frontier: `ISF-TRANSACTION-OVER-RULE-PRIORITY.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 transaction-over-rule priority completion:
+  `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` shipped the covered same-target data
+  priority case where a transaction is declared higher priority than a rule.
+  Scheduled `.fsm` now has a bounded `(state_active STATE)` expression for
+  generated guards; it validates `STATE` against declared regular FSM states,
+  lowers to the internal `current_state == STATE` comparison, and avoids fake
+  `current_state`, state-name, or generated state-enable input ports. ISF
+  lowering leaves the winning transaction assignment in its transaction state
+  DT and guards the lower-priority non-state rule assignment off while that
+  transaction state is active. The existing `priority_resolutions[]` report
+  shape records the transaction winner and rule loser. Rule-over-transaction
+  priority, rule/rule priority, unordered rule/transaction conflicts,
+  priority cycles, mixed timing conflicts, transaction/transaction priority,
+  drive/rule arbitration, broader resource arbitration, and transaction
+  lifetime ownership remain unchanged or deferred. The ISF spec, downstream
+  integration handoff, public contract, mdBook, roadmap status, task tree, and
+  live docs were synchronized.
 - Recent R14 transaction-over-rule priority selection:
   `ISF-TRANSACTION-OVER-RULE-PRIORITY.1` activated the next R14 priority
   task tree. The selected implementation path is intentionally narrow:

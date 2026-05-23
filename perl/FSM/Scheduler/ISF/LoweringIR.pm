@@ -7138,18 +7138,6 @@ sub _apply_rule_transaction_priority_resolution {
                 }
 
                 my ($winner, $loser) = $left_over_right ? ($left, $right) : ($right, $left);
-                if (($winner->{owner_kind} // '') eq 'transaction' && ($loser->{owner_kind} // '') eq 'rule') {
-                    push @issues, _priority_conflict_issue(
-                        code         => 'isf_priority_transaction_winner_unsupported',
-                        proof_status => 'not_doable',
-                        target       => $target,
-                        reason       => 'transaction-over-rule priority needs state-active guards before non-state rule suppression can be lowered',
-                        left         => $winner,
-                        right        => $loser,
-                    );
-                    next;
-                }
-
                 _suppress_priority_assignment($loser, $winner, \@resolutions);
             }
         }
@@ -7301,7 +7289,10 @@ sub _transaction_data_assignment_refs {
                 assignment       => $assignment,
                 state            => $state->{name},
                 state_kind       => $state->{kind},
-                owner_condition  => _guard_condition_expr($assignment->{guard}) // '1',
+                owner_condition  => _combine_condition_exprs(
+                    _state_active_condition_expr($state->{name}),
+                    _guard_condition_expr($assignment->{guard}) // '1',
+                ),
                 assignment_index => $current_index,
             };
         }
@@ -7339,6 +7330,12 @@ sub _transaction_data_assignment_refs {
     }
 
     return @records;
+}
+
+sub _state_active_condition_expr {
+    my ($state_name) = @_;
+    return undef unless defined($state_name) && length($state_name);
+    return "(state_active $state_name)";
 }
 
 sub _rule_assignment_pair_compatible {

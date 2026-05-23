@@ -1,6 +1,33 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Transaction-over-rule priority shipped
+- Completed `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` and closed the task tree.
+- Scheduled `.fsm` now accepts bounded `(state_active STATE)` guard
+  expressions. `STATE` must name a declared regular FSM state; the frontend
+  lowers the expression to the internal `current_state == STATE` comparison
+  without creating fake module inputs for `current_state`, state enum names,
+  or generated state-enable names.
+- ISF now lowers the covered same-target data case where a transaction wins
+  over a rule by keeping the transaction assignment unchanged and guarding the
+  lower-priority rule assignment off while the winning transaction state is
+  active.
+- The existing `priority_resolutions[]` schedule-report shape records the
+  transaction winner and rule loser.
+- Rule-over-transaction priority, rule/rule priority, unordered
+  rule/transaction conflicts, priority cycles, mixed timing conflicts,
+  transaction/transaction priority, drive/rule arbitration, broader resource
+  arbitration, and transaction lifetime ownership remain unchanged or
+  deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused state-active/priority/public/
+  spec/book tests with `Files=10, Tests=342`; `mdbook build docs/book`;
+  broad `./bin/ci-regression isf --no-book` with `Files=250, Tests=1656`;
+  post-closure doc/public audits with `Files=6, Tests=347`;
+  `git diff --check`.
+
 ### R14 — Transaction-over-rule priority selected
 - Completed selection work for `ISF-TRANSACTION-OVER-RULE-PRIORITY.1`.
 - Activated a new R14 task tree for the covered same-target data case where a

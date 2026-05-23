@@ -24,7 +24,17 @@ sub new($class, %args) {
         debug => $args{debug} // 0,
         signal_manager => $args{signal_manager},
         intermediate_counter => 0,
+        state_active_references => [],
     }, $class;
+}
+
+sub state_active_references($self) {
+    return [ @{$self->{state_active_references} || []} ];
+}
+
+sub clear_state_active_references($self) {
+    $self->{state_active_references} = [];
+    return 1;
 }
 
 sub parse_condition($self, $condition) {
@@ -154,6 +164,7 @@ sub parse_legacy_condition_spec($self, $condition_spec, %options) {
 
 sub is_recursive_expression($self, $expr) {
     return 0 unless ref($expr) eq 'ARRAY' && @$expr >= 1 && !ref($expr->[0]);
+    return 1 if $expr->[0] eq 'state_active';
 
     my ($normalized_op) = $self->normalize_expression_operator($expr->[0]);
     return defined($normalized_op) ? 1 : 0;
@@ -263,13 +274,16 @@ sub parse_recursive_expression($self, $expr) {
     if (@operands == 1 && ref($operands[0]) eq 'ARRAY') {
         @operands = @{$operands[0]};
     }
+
+    return $self->parse_state_active_expression($operator, \@operands)
+        if defined($operator) && !ref($operator) && $operator eq 'state_active';
     
     my $normalized_operator = $self->normalize_expression_operator($operator);
     my $operator_family = $self->operator_family_for($normalized_operator);
 
     Carp::confess
         "Unsupported expression operator '$operator'. ".
-        "Active expression operators currently include '!', '!&', '!|', '!^', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '<<', '>>', '<<<', '>>>', '&', '|', '^', 'concat' and their documented aliases. ".
+        "Active expression operators currently include '!', '!&', '!|', '!^', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '<<', '>>', '<<<', '>>>', '&', '|', '^', 'concat', bounded 'state_active', and their documented aliases. ".
         supported_boundary_hint()
         unless $operator_family;
 
@@ -341,6 +355,35 @@ sub parse_recursive_expression($self, $expr) {
     }
 
     return $self->finalize_nary_expression($normalized_operator, \@parsed_operands);
+}
+
+sub parse_state_active_expression($self, $operator, $operands) {
+    Carp::confess
+        "Malformed expression operator '$operator' with " . scalar(@$operands) . " operand(s). ".
+        "The bounded state-active guard form requires exactly one FSM state name: '(state_active state_name)'. ".
+        supported_boundary_hint()
+        unless @$operands == 1 && defined($operands->[0]) && !ref($operands->[0]);
+
+    my $state_name = $operands->[0];
+    Carp::confess
+        "Malformed state-active guard state name '$state_name'. ".
+        "State-active guards require an HDL-identifier-compatible FSM state name. ".
+        supported_boundary_hint()
+        unless $state_name =~ /\A[A-Za-z_]\w*\z/;
+
+    push @{$self->{state_active_references}}, $state_name;
+
+    my $current_state_signal = $self->{signal_manager}->register_signal(
+        'current_state',
+        type => 'wire',
+        is_intermediate => 1,
+    );
+
+    return FSM::CoreAST::BinaryOp->new(
+        '==',
+        FSM::CoreAST::SignalRef->new($current_state_signal),
+        FSM::CoreAST::Literal->new(uc($state_name)),
+    );
 }
 
 sub generate_intermediate_signal($self, $operator, $operands) {
@@ -861,7 +904,7 @@ sub parse_sexpr_expression($self, $sexpr) {
     
     Carp::confess
         "Unsupported expression operator '$operator'. ".
-        "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '<<', '>>', '<<<', '>>>', '&', '|', '^', 'concat' and their documented aliases. ".
+        "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '<<', '>>', '<<<', '>>>', '&', '|', '^', 'concat', bounded 'state_active', and their documented aliases. ".
         supported_boundary_hint();
 }
 

@@ -116,6 +116,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
     fsm_trace_enter('Parser parse_fsm_module() entry', 2);
     $self->reset_combinational_dependency_tracking();
     $self->reset_transition_target_tracking();
+    $self->{expression_builder}->clear_state_active_references;
     my $module_name;
     my $fsm_contents;
     
@@ -308,9 +309,30 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
 
     $self->reconcile_simple_assignment_signal_widths($module);
     $self->validate_transition_targets($module);
+    $self->validate_state_active_references($module);
     $self->validate_no_combinational_self_dependency();
     fsm_trace_exit("Parser parse_fsm_module() completed for '$module_name'", 2);
     return $module;
+}
+
+sub validate_state_active_references($self, $module) {
+    my $refs = $self->{expression_builder}->state_active_references;
+    return unless @$refs;
+
+    my %regular_state = map { $_->name => 1 }
+        grep { $_ && $_->can('is_regular_state') && $_->is_regular_state }
+        @{$module->states || []};
+
+    for my $state_name (@$refs) {
+        next if $regular_state{$state_name};
+        $self->{expression_builder}->clear_state_active_references;
+        Carp::confess
+            "State-active guard references unknown regular FSM state '$state_name'. ".
+            "State-active guards must reference a declared regular FSM-state DT block in the same source. ".
+            supported_boundary_hint();
+    }
+
+    $self->{expression_builder}->clear_state_active_references;
 }
 
 sub reconcile_simple_assignment_signal_widths($self, $fsm_module) {

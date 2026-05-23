@@ -431,6 +431,10 @@ The guard syntax is exactly the normal guard syntax:
 - `<name<op>value` uses the existing compact comparison grammar, such as
   `<mode=3`, `<mode!=0`, `<count<=7`, or `<count>=2`
 - `<(& req ready)` uses the normal list-form expression language
+- `<(state_active state_name)` and `<(! (state_active state_name))` are
+  bounded scheduled-`.fsm` guard expressions for internal state activity.
+  They lower to `current_state == STATE_NAME` comparisons without creating
+  `current_state`, `STATE_NAME`, or `state_name_en` module input ports.
 
 The lowered model for a regular state DT is:
 
@@ -476,6 +480,13 @@ top-level DTE assignments instead of inlining the comparison twice.
 Header DTE guards are supported on regular state DTs and non-state DTs. The
 header is ordinary DT activation; it is not an asynchronous reset-tree
 construction mechanism.
+
+`state_active` is intentionally narrow. Its operand must name a declared
+regular FSM-state DT in the same source. It is useful for generated review
+artifacts such as ISF priority lowering, where a non-state DT assignment must
+be disabled while a specific FSM state is active. It is not a general shortcut
+for reading or writing state registers, and unknown state names fail before
+HDL generation.
 
 ## Practical Guidance
 

@@ -1,5 +1,33 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Transaction-over-rule priority shipped
+- Completed `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` and closed the task tree.
+- Scheduled `.fsm` now accepts a bounded `(state_active STATE)` expression for
+  generated guard conditions. The parser validates `STATE` against declared
+  regular FSM states, lowers to the internal `current_state == STATE`
+  comparison, and does not create authored input ports for `current_state`,
+  state enum literals, or generated state-enable names.
+- ISF transaction-over-rule priority now covers the same-target data case
+  where a transaction is declared higher priority than a rule. The transaction
+  assignment remains in its transaction state DT; the lower-priority non-state
+  rule assignment is guarded off while the winning transaction state is
+  active.
+- The existing `priority_resolutions[]` report shape records the transaction
+  winner and rule loser. Rule-over-transaction priority, rule/rule priority,
+  unordered rule/transaction conflicts, priority cycles, mixed timing
+  conflicts, transaction/transaction priority, drive/rule arbitration, broader
+  resource arbitration, and transaction lifetime ownership remain unchanged or
+  deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused state-active/priority/public/
+  spec/book tests with `Files=10, Tests=342`; `mdbook build docs/book`;
+  broad `./bin/ci-regression isf --no-book` with `Files=250, Tests=1656`;
+  post-closure doc/public audits with `Files=6, Tests=347`;
+  `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Transaction-over-rule priority selected
 - Completed selection work for `ISF-TRANSACTION-OVER-RULE-PRIORITY.1`.
 - Activated a new R14 task tree for the covered transaction-over-rule

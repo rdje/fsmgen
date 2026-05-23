@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Transaction-over-rule priority shipped
+- Completed `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` and closed the task tree.
+- Scheduled `.fsm` now accepts bounded `(state_active STATE)` guard
+  expressions that validate against declared regular FSM states and lower to
+  internal `current_state == STATE` comparisons without creating fake authored
+  input ports.
+- ISF now lowers the covered same-target data case where a transaction wins
+  over a rule. The winning transaction assignment remains unchanged in its
+  transaction state DT, and the lower-priority non-state rule assignment is
+  guarded off while that transaction state is active.
+- The existing `priority_resolutions[]` report shape records the transaction
+  winner and rule loser. Transaction/transaction priority, drive/rule
+  arbitration, broader resource arbitration, and transaction lifetime
+  ownership remain deferred.
+- Validation passed: syntax checks; focused state-active/priority/public/
+  spec/book tests with `Files=10, Tests=342`; `mdbook build docs/book`;
+  broad `./bin/ci-regression isf --no-book` with `Files=250, Tests=1656`;
+  post-closure doc/public audits with `Files=6, Tests=347`;
+  `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Transaction-over-rule priority selected
 - Completed selection work for `ISF-TRANSACTION-OVER-RULE-PRIORITY.1`.
 - Activated the active R14 task tree for the covered same-target data case

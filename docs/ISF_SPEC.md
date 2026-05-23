@@ -3308,11 +3308,15 @@ Current lowering:
   assignment in its guarded non-state DT and adds the inverse active rule
   condition to the transaction-state assignment. Unordered rule/transaction
   conflicts fail closed with `isf_conflicting_rule_transaction_writes`.
-  Priority cycles still fail with `isf_priority_cycle_conflict`. If the
-  transaction is declared higher priority than the rule, lowering fails with
-  `isf_priority_transaction_winner_unsupported` because the scheduled `.fsm`
-  review artifact does not yet expose state-active predicates that can safely
-  guard non-state rule DT assignments.
+  Actor-level transaction-over-rule priority is also supported for the
+  covered same-target data case: the lowerer leaves the transaction-state
+  assignment unchanged and guards the lower-priority rule assignment with the
+  inverse scheduled `.fsm` `(state_active STATE)` predicate for the
+  transaction state that owns the winning assignment. The state-active
+  predicate lowers to an internal `current_state == STATE` comparison without
+  creating fake input ports for `current_state`, state constants, or generated
+  state-enable names. Priority cycles still fail with
+  `isf_priority_cycle_conflict`.
 - Generated SystemVerilog includes verification-only selector assertions for
   analyzed muxes after ISF lowers through scheduled `.fsm`. Same-value
   `LHS`/`VAL` source selectors and whole-`LHS` value selectors are checked
@@ -3408,8 +3412,8 @@ in the same actor. Forward references are accepted. Actor-level priority
 metadata is enforced for same-target rule/rule data conflicts when both
 targets are rules, for priority-arbitrated `rule_slot` resources when the
 endpoints are bound rules of the same resource, and for the lowerable
-rule-over-transaction same-target data case. Transaction-over-rule priority,
-transaction/transaction priority beyond ordinary state mutual exclusion, and
+rule-over-transaction and transaction-over-rule same-target data cases.
+Transaction/transaction priority beyond ordinary state mutual exclusion and
 broader resource arbitration remain deferred.
 
 `(resources ...)` entries are structurally validated as resource entries with
@@ -5181,9 +5185,9 @@ Focused tests:
   `named_drive`, `transaction_start`, `child_instance`, `storage_port`,
   multi-capacity resources, dynamic resource names, and transaction lifetime
   ownership remain deferred.
-- Priority resolution beyond the currently shipped same-target rule/rule
-  data-conflict case, rule-over-transaction data-conflict case, and
-  resource-level bound-rule grant case.
+- Priority resolution beyond the currently shipped same-target rule/rule,
+  rule-over-transaction, and transaction-over-rule data-conflict cases, plus
+  the resource-level bound-rule grant case.
 - Alternate rule assignment operators beyond the shipped flopped rule
   `set`/shorthand assignment family.
 - Transaction `(stage ...)` forms beyond the shipped top-level ready/valid

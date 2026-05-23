@@ -1722,6 +1722,13 @@ Rules:
 - Rule DTs are non-state concurrent logic guarded by the rule condition.
 - Same-target rule writes are accepted only when direct contradictory guard
   facts prove they cannot fire in the same cycle.
+- Rule/rule, rule-over-transaction, and transaction-over-rule same-target data
+  conflicts can be resolved by declared priority when both writes use the same
+  timing operator and the priority graph has one winner. Transaction-over-rule
+  lowering uses scheduled `.fsm` `(state_active STATE)` guard syntax to disable
+  the lower-priority rule assignment while the winning transaction state is
+  active; that guard lowers to internal state-register comparison logic, not
+  downstream-visible module input ports.
 - Rule triggers emit one-cycle delayed per-rule trigger sources.
 - Multiple rules triggering the same local transaction lower through a
   deterministic trigger fan-in DT unless the target is generated.

@@ -85,7 +85,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
 - `docs/tasks/COMPOSITION-WIRING-LISPISH.md` — completed `R11` task tree for canonical Lisp-ish `?wiring` list forms.
 - `docs/tasks/ISF-CONFLICT-RESOLUTION.md` — completed `R14` task tree for ISF same-cycle conflict semantics.
-- `docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md` — active `R14` task tree for covered transaction-over-rule same-target priority.
+- `docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md` — completed `R14` task tree for covered transaction-over-rule same-target priority.
 - `docs/tasks/ISF-COMPOSITION-INSTANTIATION.md` — completed `R14` task tree for generated child instantiation and spawn parameter binding.
 - `docs/tasks/ISF-RESOURCE-PRIORITY.md` — completed `R14` task tree for resource arbitration and priority enforcement.
 - `docs/tasks/ISF-RESOURCE-CATALOG.md` — completed `R14` task tree for the shareable resource kind registry.

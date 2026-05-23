@@ -189,6 +189,23 @@ whole lower-priority rule. Priority cycles fail closed with
 `isf_priority_cycle_conflict`, and incomparable conflicting rules still fail
 closed instead of being ordered by source text.
 
+Actor-level rule/transaction priority uses the same target-local rule. In the
+covered same-target data case, `rule over transaction` guards the
+transaction-state assignment with the inverse active rule condition. The
+opposite direction, `transaction over rule`, leaves the transaction-state
+assignment unchanged and guards the lower-priority rule assignment with a
+scheduled `.fsm` state-active predicate such as:
+
+```lisp
+(-force_out <force
+  (<- (out> 1) <(! (state_active main_update_1)))
+)
+```
+
+The `state_active` guard is internal scheduled `.fsm` review syntax. It lowers
+to a `current_state == MAIN_UPDATE_1` comparison without creating fake module
+input ports for `current_state`, `MAIN_UPDATE_1`, or `main_update_1_en`.
+
 Generated SystemVerilog now adds verification-only selector assertions for the
 analyzed muxes that reach HDL generation. These checks are wrapped in
 `` `ifndef SYNTHESIS`` and are not emitted for Verilog. The runtime checks use
@@ -329,9 +346,13 @@ Priority declarations are structurally validated as
 in the same actor; forward references are accepted. When both sides are rules,
 the edge can resolve same-target rule/rule data conflicts by suppressing the
 lower-priority assignment under the higher-priority rule condition.
+When one side is a rule and the other side is a transaction, actor-level
+priority can resolve the covered same-target data case in either direction as
+long as both assignments use the same timing operator.
 
-Transaction priority and broader resource arbitration are still deferred. The
-remaining enforcement work is tracked in [Feature Backlog](14-feature-backlog.md).
+Transaction/transaction priority and broader resource arbitration are still
+deferred. The remaining enforcement work is tracked in
+[Feature Backlog](14-feature-backlog.md).
 
 ## Resources
 
