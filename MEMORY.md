@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Transaction port actor-parameter widths shipped
+- Completed `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` and closed the task
+  tree.
+- Transaction-local `(ports ...)` entries now accept `(width PARAM)` when
+  `PARAM` names an actor-local scalar parameter default that resolves to a
+  positive integer, including enum-member-backed defaults that resolve
+  positive.
+- Accepted parameter-backed transaction port widths lower like equivalent
+  literals: the public parser handoff exposes resolved integer `width`,
+  scheduled `.fsm` `+size` uses that integer, activation handoff storage and
+  `transaction_port_bindings[]` metadata use that width, generated HDL emits
+  the expected register ranges, and `+params` preserves the authored actor
+  parameter for review.
+- Unsupported width sources fail closed: transaction parameters, bank depths,
+  actor constants, runtime interface signals, zero-valued or non-scalar actor
+  parameters, arbitrary expressions, use-site override specialization, and
+  generated-top respecialization remain outside this slice.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused transaction-port, binding,
+  public, spec, and book tests with `Files=9, Tests=339`; `mdbook build
+  docs/book`; broad `./bin/ci-regression isf --no-book` with `Files=242,
+  Tests=1627`; post-closure doc audits with `Files=3, Tests=339`; `git diff
+  --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Transaction port actor-parameter widths selected
 - Completed selection work for
   `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1`.

@@ -294,6 +294,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         if $singleton_actor_clauses{watchdog};
     $self->_finalize_actor_interface_widths($result);
     $self->_finalize_actor_storage_widths($result);
+    $self->_finalize_actor_transaction_port_widths($result);
     $self->_finalize_actor_type_references($result);
     $self->_validate_deferred_atl_drive_sink_expression_candidates($result);
     $self->_validate_actor_aggregate_storage_paths($result);
@@ -708,6 +709,53 @@ sub _finalize_actor_storage_widths($self, $actor) {
             if _actor_interface_signal_by_name($actor, $width);
 
         confess "Error: actor '$actor_name' $context width token '$width' is not a declared actor scalar parameter; use '(type NAME)' for type aliases\n";
+    }
+
+    return 1;
+}
+
+sub _finalize_actor_transaction_port_widths($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        my $transaction_name = $tx->{name} // 'unknown';
+        for my $direction (qw(inputs outputs)) {
+            for my $port (@{($tx->{ports} || {})->{$direction} || []}) {
+                next if exists $port->{type};
+
+                my $width = $port->{width};
+                if (defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/) {
+                    $port->{width} = 0 + $width;
+                    next;
+                }
+
+                my $port_name = $port->{name};
+                my $context = "transaction '$transaction_name' port '$port_name'";
+
+                confess "Error: actor '$actor_name' $context width must be a positive integer literal or actor scalar parameter\n"
+                    unless defined($width) && !ref($width) && _is_hdl_identifier($width);
+
+                confess "Error: actor '$actor_name' $context width token '$width' is a transaction parameter; transaction port widths accept positive integer literals or actor scalar parameters only; use '(type NAME)' for type aliases\n"
+                    if _transaction_param_by_name($tx, $width);
+
+                my $param = _actor_param_by_name($actor, $width);
+                if ($param) {
+                    my $param_width = _positive_integer_from_literal_value(_param_resolved_value($param));
+                    confess "Error: actor '$actor_name' $context width parameter '$width' must resolve to a positive integer\n"
+                        unless defined $param_width;
+                    $port->{width} = $param_width;
+                    next;
+                }
+
+                confess "Error: actor '$actor_name' $context width token '$width' is an actor constant; transaction port widths accept positive integer literals or actor scalar parameters only; use '(type NAME)' for type aliases\n"
+                    if _actor_constant_by_name($actor, $width);
+
+                confess "Error: actor '$actor_name' $context width token '$width' is a runtime interface signal; transaction port widths accept positive integer literals or actor scalar parameters only; use '(type NAME)' for type aliases\n"
+                    if _actor_interface_signal_by_name($actor, $width);
+
+                confess "Error: actor '$actor_name' $context width token '$width' is not a declared actor scalar parameter; use '(type NAME)' for type aliases\n";
+            }
+        }
     }
 
     return 1;
@@ -4400,6 +4448,27 @@ sub _actor_param_by_name {
     return undef;
 }
 
+sub _transaction_param_by_name {
+    my ($tx, $name) = @_;
+    return undef unless ref($tx) eq 'HASH' && defined($name) && !ref($name);
+
+    for my $clause (@{$tx->{clauses} || []}) {
+        next unless ref($clause) eq 'ARRAY'
+            && @$clause >= 2
+            && defined($clause->[0])
+            && !ref($clause->[0])
+            && $clause->[0] eq 'params';
+        for my $entry (@{$clause}[1 .. $#$clause]) {
+            next unless ref($entry) eq 'ARRAY' && @$entry >= 1;
+            my $param_name = $entry->[0];
+            next unless defined($param_name) && !ref($param_name);
+            return $entry if $param_name eq $name;
+        }
+    }
+
+    return undef;
+}
+
 sub _actor_interface_signal_by_name {
     my ($actor, $name) = @_;
     return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
@@ -5877,7 +5946,7 @@ sub _parse_storage($self, $clause, $actor_name) {
                 if $parsed_options{$option_name}++;
 
             if ($option_name eq 'width') {
-                $parsed_options{width_value} = _parse_storage_width_option(
+                $parsed_options{width_value} = _parse_positive_integer_or_actor_scalar_parameter_width_option(
                     $option,
                     "Error: actor '$actor_name' storage '$name' width",
                 );
@@ -5968,7 +6037,7 @@ sub _parse_storage_positive_integer_option {
     return 0 + $option->[1];
 }
 
-sub _parse_storage_width_option {
+sub _parse_positive_integer_or_actor_scalar_parameter_width_option {
     my ($option, $context) = @_;
 
     confess "$context requires '(width positive_integer_or_actor_scalar_parameter)'\n"
@@ -6109,12 +6178,10 @@ sub _parse_transaction_ports($self, $clause, $transaction_name) {
                 if $seen_options{$option_name}++;
 
             if ($option_name eq 'width') {
-                confess "Error: transaction '$transaction_name' port '$name' width requires '(width positive_integer)'\n"
-                    unless @$option == 2
-                        && defined($option->[1])
-                        && !ref($option->[1])
-                        && $option->[1] =~ /\A[1-9][0-9]*\z/;
-                $width = 0 + $option->[1];
+                $width = _parse_positive_integer_or_actor_scalar_parameter_width_option(
+                    $option,
+                    "Error: transaction '$transaction_name' port '$name' width",
+                );
                 next;
             }
             if ($option_name eq 'type') {

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -53,7 +53,7 @@ integer literals.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship actor-parameter-backed transaction-local port widths.`
   Children: `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1`,
   `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2`
@@ -65,22 +65,41 @@ integer literals.
   actor-parameter source boundary, preserve non-goals, and update
   roadmap/live docs without behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit`
+  Commit: `dcf216d1`
 
 - ID: `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document actor-parameter transaction port widths.`
   Acceptance: `Positive actor scalar parameters lower as transaction-local
   port widths; unsupported width sources fail closed; specs, book, public
   contract, downstream handoff, and focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`;
+  `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
+  `perl -Iperl -c t/1336-isf-transaction-port-actor-param-widths.t`;
+  `perl -Iperl -c t/1240-isf-transaction-port-declarations.t`;
+  `perl -Iperl -c t/1144-isf-public-tested-by-metadata-audit.t`;
+  `prove -Iperl t/1336-isf-transaction-port-actor-param-widths.t
+  t/1240-isf-transaction-port-declarations.t
+  t/1241-isf-transaction-port-bindings.t
+  t/1243-isf-port-binding-schedule-report.t
+  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1112-isf-public-interface-contract.t
+  t/1115-isf-public-interface-cli-manifest-audit.t
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1305-isf-book-feature-matrix-audit.t`;
+  `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`;
+  `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t
+  t/1303-isf-public-live-book-paths-audit.t
+  t/1305-isf-book-feature-matrix-audit.t`;
+  `git diff --check`;
+  Commit: `this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` | `pending` | Selection is complete; implementation can reuse the actor-parameter width policy already shipped for actor interface and actor-owned storage widths. |
+| _none_ | _none_ | _closed_ | `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` completed and the tree is closed. |
 
 ## Decisions
 
@@ -110,16 +129,20 @@ integer literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-23` | `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-23` | `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1336-isf-transaction-port-actor-param-widths.t`; `perl -Iperl -c t/1240-isf-transaction-port-declarations.t`; `perl -Iperl -c t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1336-isf-transaction-port-actor-param-widths.t t/1240-isf-transaction-port-declarations.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `passed; focused Files=9, Tests=339; broad Files=242, Tests=1627; post-doc Files=3, Tests=339; diff clean` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1` | `this commit: ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1: select transaction port actor-param widths` | `selects static actor-parameter transaction-local port width support` |
-| `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` | `pending` | `pending` |
+| `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1` | `dcf216d1: ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1: select transaction port actor-param widths` | `selects static actor-parameter transaction-local port width support` |
+| `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` | `this commit: ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2: ship transaction port actor-param widths` | `ships actor-parameter transaction-local port width support` |
 
 ## Changelog
 
 - `2026-05-23`: Created task tree and selected actor-parameter-backed
   transaction-local port widths as the next bounded parameter-driven
   transaction boundary slice.
+- `2026-05-23`: Shipped actor-parameter-backed transaction-local port widths,
+  fail-closed unsupported symbolic sources, synchronized specs/book and
+  public/downstream contracts, and closed the tree.

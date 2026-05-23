@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Transaction port actor-parameter widths shipped
+- Completed `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` and closed the task
+  tree.
+- Transaction-local `(ports ...)` entries now accept `(width PARAM)` when
+  `PARAM` names an actor-local scalar parameter default resolving to a
+  positive integer.
+- Accepted parameter-backed widths lower like literal widths in public parser
+  handoff, scheduled `.fsm` `+size`, activation handoff storage,
+  `transaction_port_bindings[]` metadata, and generated HDL, while authored
+  parameters remain visible through `+params` and `actor_params[]`.
+- Unsupported width sources fail closed: transaction parameters, bank depths,
+  actor constants, runtime interface signals, zero-valued or non-scalar actor
+  parameters, arbitrary expressions, use-site override specialization, and
+  generated-top respecialization.
+- Validation passed: syntax checks; focused transaction-port, binding,
+  public, spec, and book tests with `Files=9, Tests=339`; `mdbook build
+  docs/book`; broad `./bin/ci-regression isf --no-book` with `Files=242,
+  Tests=1627`; post-closure doc audits with `Files=3, Tests=339`; `git diff
+  --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Transaction port actor-parameter widths selected
 - Completed selection work for
   `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1`.

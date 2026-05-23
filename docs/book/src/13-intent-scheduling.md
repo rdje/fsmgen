@@ -607,8 +607,9 @@ The ISF-specific current limitations are:
   Actor/transaction parameter values, runtime-signal values, arbitrary
   expressions, and richer generated-child surfaces remain backlog work.
 - Transaction-local `(ports ...)` declarations are parser-public metadata and
-  can be bound at activation sites with scalar, literal, or list-expression
-  input `(bind ...)` sources. `do`
+  can use positive literal widths or actor-local scalar parameter defaults
+  that resolve to positive integers. They can be bound at activation sites
+  with scalar, literal, or list-expression input `(bind ...)` sources. `do`
   supports input and output bindings in the parent await state. `spawn`
   supports input and output bindings through hidden generated-top handoffs and
   parent binding DTs. Rule `trigger` supports input bindings through per-rule
@@ -618,7 +619,7 @@ The ISF-specific current limitations are:
   snapshot-vs-live timing selection remain backlog.
 - Width-bearing actor interface ports, transaction-local ports, and
   actor-owned storage entries may use scalar type aliases through `(type
-  NAME)`, mutually exclusive with `(width N)`.
+  NAME)`, mutually exclusive with `(width N)` or `(width PARAM)`.
 
   Actor-owned storage variables may also use packed `list` or `record`
   aliases as whole-root aggregate carriers.

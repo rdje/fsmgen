@@ -2105,11 +2105,12 @@ decision/body/exit states, and body clause count.
 
 Status: shipped base surface; richer output/report surfaces remain backlog.
 
-Transaction `(ports ...)` declarations, scalar and expression-valued input
-activation bindings, first actor-pin conflict/runtime coverage, and bounded
-schedule-report binding provenance are shipped. The original
-`ISF-PORT-BINDING` task tree is complete; expression-valued input bindings are
-tracked by `ISF-ACTIVATION-BIND-EXPRESSIONS`.
+Transaction `(ports ...)` declarations, actor-parameter-backed transaction
+port widths, scalar and expression-valued input activation bindings, first
+actor-pin conflict/runtime coverage, and bounded schedule-report binding
+provenance are shipped. The original `ISF-PORT-BINDING` task tree is complete;
+expression-valued input bindings are tracked by
+`ISF-ACTIVATION-BIND-EXPRESSIONS`.
 
 Goal: make it easy to connect actor variables, actor-owned storage, and actor
 top-level pins to transaction ports so rules and transactions can exchange
@@ -2167,11 +2168,13 @@ Shipped declaration shape:
 
 The parser accepts at most one `(ports ...)` clause per transaction. Each port
 has direction `input` or `output`, a scalar HDL identifier name, and optional
-positive integer `(width N)`; omitted width means 1. The normalized public
-transaction shell has `ports.inputs[]` and `ports.outputs[]` entries with
-`name` and `width`. The declaration is not a scheduler body clause; behavior
-comes from transaction states/rules that use the port and activation sites
-that bind it.
+positive integer `(width N)` or actor-parameter-backed `(width PARAM)` where
+`PARAM` names an actor-local scalar parameter default that resolves to a
+positive integer; omitted width means 1. Transaction parameters remain outside
+the shipped width source set. The normalized public transaction shell has
+`ports.inputs[]` and `ports.outputs[]` entries with `name` and resolved integer
+`width`. The declaration is not a scheduler body clause; behavior comes from
+transaction states/rules that use the port and activation sites that bind it.
 
 Shipped binding shape:
 
@@ -2765,7 +2768,8 @@ and the current directory. For a dotted namespace such as `common.fifo`, both
 can use same-source library roots but cannot resolve external files without a
 real source path. Standalone transaction/drive exports, symbolic parameter
 values beyond the shipped actor-local scalar width defaults, derived parameter
-expressions, parameter-derived bank depths, transaction-port dimensions,
+expressions, parameter-derived bank depths, transaction-port dimensions beyond
+positive literals, actor-local scalar parameters, and scalar type aliases,
 memory-array backend emission, nested library imports, and multi-clock-domain
 ISF semantics are still deferred.
 
@@ -2844,11 +2848,11 @@ depth-1 element may be useful as a register slice or holding element, but it
 does not exercise FIFO depth, pointers, or occupancy semantics. The first
 fixture is fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and
 `OCC_WIDTH=3`. Those parameters are emitted as provenance and use-site binding
-evidence. Actor top-level interface port widths may use actor-local scalar
-parameter defaults when they resolve to positive integers, and actor-owned
-scalar storage widths plus bank widths may use the same static parameter
-source. FIFO use-site interface shape specialization, bank depths,
-generated-top respecialization, and transaction port widths remain future work.
+evidence. Actor top-level interface port widths, transaction-local port
+widths, actor-owned scalar storage widths, and bank widths may use actor-local
+scalar parameter defaults when they resolve to positive integers. FIFO use-site
+interface shape specialization, bank depths, and generated-top
+respecialization remain future work.
 
 The fixture explicitly models the four request cases: no request, push without
 pop, pop without push, and push with pop. Push-only updates occupancy and the

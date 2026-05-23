@@ -377,6 +377,16 @@ schedule-report storage and `bank_accesses[]` widths, and HDL register ranges
 while bank depths, unknown symbolic names, actor constants, runtime interface
 signals, zero-valued or non-scalar actor parameters, and arbitrary expressions
 fail closed.
+Transaction-local port widths backed by actor-local scalar parameter defaults
+are checked by
+[t/1336-isf-transaction-port-actor-param-widths.t](../t/1336-isf-transaction-port-actor-param-widths.t)
+so accepted transaction `(ports ...)` `(input NAME (width PARAM))` and
+`(output NAME (width PARAM))` entries resolve to positive integer port widths,
+scheduled `.fsm` `+size` declarations, activation handoff widths,
+`transaction_port_bindings[]` report widths, and HDL register ranges while
+transaction parameters, unknown symbolic names, actor constants, runtime
+interface signals, zero-valued or non-scalar actor parameters, and arbitrary
+expressions fail closed.
 Rule expression guards are checked by
 [t/1233-isf-rule-expression-guards.t](../t/1233-isf-rule-expression-guards.t)
 for shorthand and long-form guard normalization, scheduled `.fsm` DT-DTE
@@ -584,6 +594,11 @@ The transaction-port declaration boundary is checked by
 so parser-accepted `(ports ...)` clauses normalize to directional
 `name`/`width` entries and malformed direction, duplicate, width, or option
 forms fail before scheduler lowering.
+Actor-parameter-backed transaction port width declarations are checked by
+[t/1336-isf-transaction-port-actor-param-widths.t](../t/1336-isf-transaction-port-actor-param-widths.t)
+so the same public transaction shell exposes resolved positive integer widths
+for accepted actor-local scalar parameter defaults and rejects transaction
+parameters or unsupported symbolic sources before scheduler lowering.
 The first activation-binding lowering boundary is checked by
 [t/1241-isf-transaction-port-bindings.t](../t/1241-isf-transaction-port-bindings.t)
 so `do`, `spawn`, and rule-trigger input bindings accept scalar signals,
@@ -2071,11 +2086,15 @@ it does not make actor fields outside the advertised shell public or freeze
 future ISF interface extensions before they are documented and audited.
 The current public parser handoff also advertises a bounded transaction-entry
 shell: `transactions` is an array of entries with unique non-empty scalar
-`name`, `clauses` array fields, and optional scalar `domain` ownership
-metadata. The machine-readable contract advertises this through
-`actor_shell_transaction_shape`. The `clauses` array is a scheduler-consumable
-container; its payload contents are intentionally not frozen as a public API by
-this field.
+`name`, `ports.inputs[]` / `ports.outputs[]` entries that carry resolved
+positive integer `width` values, `clauses` array fields, and optional scalar
+`domain` ownership metadata. Transaction-local `(width PARAM)` entries are
+accepted only when `PARAM` names an actor-local scalar parameter default that
+resolves to a positive integer; the public port entry carries the resolved
+integer width, not the authored token. The machine-readable contract
+advertises this through `actor_shell_transaction_shape`. The `clauses` array
+is a scheduler-consumable container; its payload contents are intentionally
+not frozen as a public API by this field.
 The current public parser handoff also advertises the actor identity shell:
 `actor_name` is a non-empty scalar actor identifier preserved from the ISF actor
 root. The machine-readable contract advertises this through

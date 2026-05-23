@@ -216,11 +216,10 @@ General source rules:
   parameters, domains, and instances are scalar HDL identifiers. Current
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.
 - Widths and depths are positive integer literals unless a specific clause says
-  otherwise. Actor top-level interface port widths and actor-owned scalar
-  storage widths also accept actor-local scalar parameter defaults that resolve
-  to positive integers. Actor-owned bank storage widths accept the same static
-  actor parameter source; bank depths and transaction port widths remain
-  literal-only.
+  otherwise. Actor top-level interface port widths, transaction-local port
+  widths, actor-owned scalar storage widths, and actor-owned bank storage
+  widths also accept actor-local scalar parameter defaults that resolve to
+  positive integers. Bank depths remain literal-only.
 - Actor constants, scalar actor parameter defaults, and generated child
   transaction scalar parameter defaults use non-negative integer literals or
   enum member references that resolve to non-negative integers; static wait
@@ -743,12 +742,12 @@ Rules:
 
 ### 11.2 Transaction Ports And Bindings
 
-Transaction ports:
+Transaction ports, assuming actor-level `(params (DATA_W 8))`:
 
 ```lisp
 (ports
   (input addr (width 8))
-  (output data (width 8)))
+  (output data (width DATA_W)))
 ```
 
 Activation bindings:
@@ -772,7 +771,9 @@ Activation bindings:
 Rules:
 
 - Port directions are `input` and `output`.
-- Width defaults to `1`.
+- Width defaults to `1`. Explicit widths may be positive integer literals or
+  actor-local scalar parameter defaults that resolve to positive integers.
+  The parser returns resolved integer widths in the public transaction shell.
 - Port names are unique across directions.
 - Input bindings may pass scalar signals, numeric/exact-width literals, or
   non-empty list expressions.
@@ -1288,6 +1289,9 @@ Rules:
   this first contract.
 - Width-bearing actor interface ports, transaction-local ports, and
   actor-owned storage entries may use `(type NAME)` for scalar aliases.
+  Actor interface ports, transaction-local ports, actor-owned scalar storage,
+  and actor-owned bank storage may use actor-local scalar parameter defaults
+  that resolve to positive integers as `(width PARAM)` sources.
 - Actor-owned storage variables may also use `(type NAME)` when `NAME`
   resolves to a packed aggregate `list` or `record` alias. The first aggregate
   carrier subset is anchored on declared actor-owned storage roots.
@@ -3346,7 +3350,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1331-isf-timing-conventions.t \
   t/1333-isf-interface-actor-param-widths.t \
   t/1334-isf-scalar-storage-actor-param-widths.t \
-  t/1335-isf-bank-storage-actor-param-widths.t
+  t/1335-isf-bank-storage-actor-param-widths.t \
+  t/1336-isf-transaction-port-actor-param-widths.t
 
 ./bin/ci-regression isf
 mdbook build docs/book
@@ -3396,9 +3401,8 @@ The following are not public shipped integration surfaces today:
 - Full schedule JSON schema beyond the advertised key families.
 - Textual include semantics for libraries.
 - Standalone transaction or drive library exports.
-- Parameter-driven bank depths, transaction port widths, and broader
-  interface/storage width expressions beyond actor-local scalar parameter
-  defaults.
+- Parameter-driven bank depths and broader interface, transaction-port, or
+  storage width expressions beyond actor-local scalar parameter defaults.
 - Derived parameter expressions and package/imported constants beyond current
   actor-local constants.
 - General memory-array HDL emission for actor-owned banks.

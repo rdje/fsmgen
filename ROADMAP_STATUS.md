@@ -2,9 +2,22 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS`.
-- Current frontier: `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2`;
-  implement the selected transaction-local port actor-parameter width slice.
+- Active task tree: `none`.
+- Current frontier: `none`; the next PNT step must select or create the next
+  roadmap-aligned task tree before any code changes.
+- Recent R14 transaction port actor-parameter width completion:
+  `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` shipped actor-local scalar
+  parameter defaults as transaction-local `(ports ...)` input/output
+  `(width PARAM)` sources when the defaults resolve to positive integers.
+  Accepted port widths lower like equivalent literal widths in the public
+  parser handoff, scheduled `.fsm` `+size`, activation handoff storage,
+  `transaction_port_bindings[]` report widths, and generated HDL.
+  Transaction-parameter-backed port widths, bank depths, actor constants,
+  use-site override specialization, generated-top respecialization, runtime
+  signals, arbitrary expressions, zero-valued actor parameters, and
+  non-scalar actor parameters remain deferred or fail-closed. The ISF spec,
+  downstream integration handoff, public contract, mdBook, roadmap, task tree,
+  and live docs were synchronized.
 - Recent R14 transaction port actor-parameter width selection:
   `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1` activated the next
   parameter-driven transaction-boundary tree. The selected first slice is
@@ -21,10 +34,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   the defaults resolve to positive integers. Accepted bank widths lower like
   equivalent literal widths in the public parser handoff, scheduled `.fsm`
   `+size`, schedule reports, `bank_accesses[]` metadata, and generated HDL.
-  Bank depths, transaction-local port widths, actor constants, use-site
-  override specialization, generated-top respecialization, transaction
-  parameters, runtime signals, arbitrary expressions, zero-valued actor
-  parameters, and non-scalar actor parameters remain deferred or fail-closed.
+  Bank depths, actor constants, use-site override specialization,
+  generated-top respecialization, transaction parameters, runtime signals,
+  arbitrary expressions, zero-valued actor parameters, and non-scalar actor
+  parameters remain deferred or fail-closed.
   The ISF spec, downstream integration handoff, public contract, mdBook,
   roadmap, task tree, and live docs were synchronized.
 - Recent R14 bank storage actor-parameter width selection:
@@ -32,34 +45,32 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   parameter-driven storage tree. The selected first slice is intentionally
   narrow: only actor-owned storage bank `(bank NAME (width PARAM) (depth N))`
   entries may use actor-local scalar parameter defaults that resolve to
-  positive integers. Bank depths, transaction-local port widths, actor
-  constants, use-site override specialization, generated-top
-  respecialization, transaction parameters, runtime signals, arbitrary
-  expressions, zero-valued actor parameters, and non-scalar actor parameters
-  remain deferred or fail-closed.
+  positive integers. Bank depths, actor constants, use-site override
+  specialization, generated-top respecialization, transaction parameters,
+  runtime signals, arbitrary expressions, zero-valued actor parameters, and
+  non-scalar actor parameters remain deferred or fail-closed.
 - Recent R14 scalar storage actor-parameter width completion:
   `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` shipped actor-local scalar
   parameter defaults as actor-owned scalar storage `(width PARAM)` sources
   when the defaults resolve to positive integers. Accepted `(var ...)` and
   `(variable ...)` widths lower like equivalent literal widths in the public
   parser handoff, scheduled `.fsm` `+size`, schedule reports, and generated
-  HDL. Actor-owned bank depths, transaction-local port widths,
-  actor constants, use-site override specialization, generated-top
-  respecialization, transaction parameters, runtime signals, arbitrary
-  expressions, zero-valued actor parameters, and non-scalar actor parameters
-  remain deferred or fail-closed. The ISF spec, downstream integration
-  handoff, public contract, mdBook, roadmap, task tree, and live docs were
-  synchronized.
+  HDL. Actor-owned bank depths, actor constants, use-site override
+  specialization, generated-top respecialization, transaction parameters,
+  runtime signals, arbitrary expressions, zero-valued actor parameters, and
+  non-scalar actor parameters remain deferred or fail-closed. The ISF spec,
+  downstream integration handoff, public contract, mdBook, roadmap, task tree,
+  and live docs were synchronized.
 - Recent R14 scalar storage actor-parameter width selection:
   `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1` activated the next
   parameter-driven storage tree. The selected first slice is intentionally
   narrow: only actor-owned scalar storage `(var NAME (width PARAM))` and
   `(variable NAME (width PARAM))` entries may use actor-local scalar parameter
   defaults that resolve to positive integers. Actor-owned bank depths,
-  transaction-local port widths, actor constants, use-site override
-  specialization, generated-top respecialization, transaction parameters,
-  runtime signals, arbitrary expressions, zero-valued actor parameters, and
-  non-scalar actor parameters remain deferred or fail-closed.
+  actor constants, use-site override specialization, generated-top
+  respecialization, transaction parameters, runtime signals, arbitrary
+  expressions, zero-valued actor parameters, and non-scalar actor parameters
+  remain deferred or fail-closed.
 - Recent R14 interface actor-parameter width completion:
   `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` shipped actor-local scalar parameter
   defaults as actor top-level interface port `(width PARAM)` sources when the
@@ -68,20 +79,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   schedule reports, and generated HDL. Unknown symbolic width names, actor
   constants, runtime interface signals, zero-valued or non-scalar actor
   parameters, transaction parameters, arbitrary expressions, use-site
-  override specialization, generated-top respecialization, actor-owned bank
-  depths, and transaction-local port widths remain fail-closed or
-  deferred. The ISF spec, downstream integration handoff, public contract,
-  mdBook, roadmap, task tree, and live docs were synchronized.
+  override specialization, generated-top respecialization, and actor-owned
+  bank depths remain fail-closed or deferred. The ISF spec, downstream
+  integration handoff, public contract, mdBook, roadmap, task tree, and live
+  docs were synchronized.
 - Recent R14 interface actor-parameter width selection:
   `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1` activated the next parameter-driven
   interface elaboration tree. The selected first slice is intentionally
   narrow: only actor top-level interface input/output `(width PARAM)` entries
   may use actor-local scalar parameter defaults that resolve to positive
   integers. Actor-owned scalar storage widths are now covered by
-  `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS`; bank depths, transaction-local port
-  widths, use-site override specialization, generated-top
-  respecialization, transaction parameters, runtime signals, arbitrary
-  expressions, zero-valued actor parameters, and non-scalar actor parameters
+  `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS`; bank depths, use-site override
+  specialization, generated-top respecialization, transaction parameters,
+  runtime signals, arbitrary expressions, zero-valued actor parameters, and
+  non-scalar actor parameters
   remain deferred or fail-closed.
 - Recent R14 dynamic-divisor actor-parameter-zero completion:
   `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` shipped fail-closed

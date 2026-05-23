@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Transaction port actor-parameter widths shipped
+- Completed `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` and closed the task
+  tree.
+- Transaction-local `(ports ...)` entries now accept `(width PARAM)` when
+  `PARAM` names an actor-local scalar parameter default that resolves to a
+  positive integer. Enum-member-backed scalar defaults are accepted when they
+  resolve to a positive integer.
+- Accepted widths lower like literal widths in parser handoff, scheduled
+  `.fsm` `+size`, activation handoff storage, schedule-report
+  `transaction_port_bindings[]` widths, and generated HDL register ranges,
+  while authored actor parameters remain visible through `+params` and
+  `actor_params[]`.
+- Unsupported width sources fail closed: transaction parameters, bank depths,
+  actor constants, runtime interface signals, zero-valued or non-scalar actor
+  parameters, arbitrary expressions, use-site override specialization, and
+  generated-top respecialization.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused transaction-port, binding,
+  public, spec, and book tests with `Files=9, Tests=339`; `mdbook build
+  docs/book`; broad `./bin/ci-regression isf --no-book` with `Files=242,
+  Tests=1627`; post-closure doc audits with `Files=3, Tests=339`; `git diff
+  --check`.
+
 ### R14 — Transaction port actor-parameter widths selected
 - Completed selection work for
   `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1`.

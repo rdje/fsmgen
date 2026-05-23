@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Transaction port width parameters resolve before binding handoff
+- `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` resolves transaction-local
+  `(ports ...)` `(width PARAM)` tokens in the parser after actor parameter
+  values are finalized and before type-reference lowering.
+- The scheduler continues to receive concrete positive integer transaction
+  port widths. That keeps local `do`, `spawn`, and rule-trigger binding
+  width checks, generated handoff storage widths, `transaction_port_bindings[]`
+  metadata, and HDL register emission on the same path as literal widths.
+- Transaction parameters stay out of this width source set because they are
+  activation-specialized values; allowing them to size transaction ports would
+  require a separate generated-top respecialization policy.
+
 ## 2026-05-23: Transaction port widths are the next static parameter slice
 - `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1` selects transaction-local
   `(ports ...)` widths as the next bounded actor-parameter elaboration

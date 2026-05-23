@@ -150,7 +150,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'bad width', qr/\AError: transaction 'main' port 'addr' width requires '\(width positive_integer\)'/);
+    assert_parse_rejected(<<'ISF', 'bad width', qr/\AError: transaction 'main' port 'addr' width requires '\(width positive_integer_or_actor_scalar_parameter\)'/);
 (actor bad_width
   (clock clk)
   (interface (input start) (output done))
