@@ -813,10 +813,10 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
                 my $port_name = $port->{name};
                 my $context = "transaction '$transaction_name' port '$port_name'";
 
-                confess "Error: actor '$actor_name' $context width must be a positive integer literal or actor scalar parameter\n"
+                confess "Error: actor '$actor_name' $context width must be a positive integer literal, actor constant, or actor scalar parameter\n"
                     unless defined($width) && !ref($width) && _is_hdl_identifier($width);
 
-                confess "Error: actor '$actor_name' $context width token '$width' is a transaction parameter; transaction port widths accept positive integer literals or actor scalar parameters only; use '(type NAME)' for type aliases\n"
+                confess "Error: actor '$actor_name' $context width token '$width' is a transaction parameter; transaction port widths accept positive integer literals, actor constants, or actor scalar parameters only; use '(type NAME)' for type aliases\n"
                     if _transaction_param_by_name($tx, $width);
 
                 my $param = _actor_param_by_name($actor, $width);
@@ -828,13 +828,19 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
                     next;
                 }
 
-                confess "Error: actor '$actor_name' $context width token '$width' is an actor constant; transaction port widths accept positive integer literals or actor scalar parameters only; use '(type NAME)' for type aliases\n"
-                    if _actor_constant_by_name($actor, $width);
+                my $constant = _actor_constant_by_name($actor, $width);
+                if ($constant) {
+                    my $constant_width = _positive_integer_from_literal_value(_constant_resolved_value($constant));
+                    confess "Error: actor '$actor_name' $context width constant '$width' must resolve to a positive integer\n"
+                        unless defined $constant_width;
+                    $port->{width} = $constant_width;
+                    next;
+                }
 
-                confess "Error: actor '$actor_name' $context width token '$width' is a runtime interface signal; transaction port widths accept positive integer literals or actor scalar parameters only; use '(type NAME)' for type aliases\n"
+                confess "Error: actor '$actor_name' $context width token '$width' is a runtime interface signal; transaction port widths accept positive integer literals, actor constants, or actor scalar parameters only; use '(type NAME)' for type aliases\n"
                     if _actor_interface_signal_by_name($actor, $width);
 
-                confess "Error: actor '$actor_name' $context width token '$width' is not a declared actor scalar parameter; use '(type NAME)' for type aliases\n";
+                confess "Error: actor '$actor_name' $context width token '$width' is not a declared actor scalar parameter or actor constant; use '(type NAME)' for type aliases\n";
             }
         }
     }
@@ -6114,21 +6120,6 @@ sub _parse_positive_integer_or_actor_scalar_parameter_depth_option {
         : $option->[1];
 }
 
-sub _parse_positive_integer_or_actor_scalar_parameter_width_option {
-    my ($option, $context) = @_;
-
-    confess "$context requires '(width positive_integer_or_actor_scalar_parameter)'\n"
-        unless ref($option) eq 'ARRAY'
-            && @$option == 2
-            && defined($option->[1])
-            && !ref($option->[1])
-            && ($option->[1] =~ /\A[1-9][0-9]*\z/ || _is_hdl_identifier($option->[1]));
-
-    return $option->[1] =~ /\A[1-9][0-9]*\z/
-        ? 0 + $option->[1]
-        : $option->[1];
-}
-
 sub _parse_positive_integer_or_actor_scalar_parameter_or_actor_constant_width_option {
     my ($option, $context) = @_;
 
@@ -6270,7 +6261,7 @@ sub _parse_transaction_ports($self, $clause, $transaction_name) {
                 if $seen_options{$option_name}++;
 
             if ($option_name eq 'width') {
-                $width = _parse_positive_integer_or_actor_scalar_parameter_width_option(
+                $width = _parse_positive_integer_or_actor_scalar_parameter_or_actor_constant_width_option(
                     $option,
                     "Error: transaction '$transaction_name' port '$name' width",
                 );

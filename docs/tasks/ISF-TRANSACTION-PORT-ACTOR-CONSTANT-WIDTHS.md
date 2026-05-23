@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -54,7 +54,7 @@ literals.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship actor-constant-backed transaction-local port widths.`
   Children: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1`,
   `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2`
@@ -66,22 +66,24 @@ literals.
   boundary, preserve non-goals, and update roadmap/live docs without behavior
   changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit`
+  Commit: `794dbb78`
 
 - ID: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document actor-constant transaction port widths.`
   Acceptance: `Positive actor constants lower as transaction-local port
   widths; unsupported width sources fail closed; specs, book, public
   contract, downstream handoff, and focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks`; `focused transaction-port/public/spec/book tests`;
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
+  `post-closure doc/public audits with Files=7, Tests=352`; `git diff --check`
+  Commit: `this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` | `pending` | `Actor-owned interface/storage/bank constant dimensions are shipped; transaction-local port widths are the remaining static actor-constant width frontier named by the roadmap.` |
+| 1 | `closed` | `done` | `Actor-constant transaction-local port width support is shipped and the tree is closed.` |
 
 ## Decisions
 
@@ -107,15 +109,19 @@ literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-23` | `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-23` | `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` | `syntax checks`; `prove -Iperl t/1342-isf-transaction-port-actor-constant-widths.t t/1336-isf-transaction-port-actor-param-widths.t t/1240-isf-transaction-port-declarations.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1160-isf-public-actor-shell-value-shape-audit.t t/1163-isf-public-actor-shell-transaction-shape-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `post-closure doc/public audits with Files=7, Tests=352`; `git diff --check` | `actor-constant transaction port widths shipped; broad ISF gate passed with Files=248, Tests=1649` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1` | `this commit: ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1: select transaction port actor-constant widths` | `selects actor-constant transaction port width support` |
-| `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` | `pending` | `pending` |
+| `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1` | `794dbb78: ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1: select transaction port actor-constant widths` | `selects actor-constant transaction port width support` |
+| `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` | `this commit: ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2: ship transaction port actor-constant widths` | `ships actor-constant transaction port width support` |
 
 ## Changelog
 
 - `2026-05-23`: Created task tree and selected actor-constant-backed
   transaction-local port widths as the next bounded static-dimension slice.
+- `2026-05-23`: Shipped actor-constant-backed transaction-local port widths,
+  synchronized specs/book/public contract/downstream handoff/live docs, and
+  closed the task tree.

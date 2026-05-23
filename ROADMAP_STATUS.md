@@ -2,8 +2,25 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS`.
-- Current frontier: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 transaction port actor-constant width completion:
+  `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` shipped declared actor
+  constants as transaction-local `(ports ...)`
+  `(input NAME (width CONST))` and `(output NAME (width CONST))` width sources
+  when the constants resolve to positive integers. Accepted constants lower
+  like equivalent literal widths in the public parser handoff, scheduled `.fsm`
+  `+size`, activation handoff storage, `transaction_port_bindings[]` report
+  widths, and generated HDL register ranges while preserving authored
+  constants through `actor_constants[]` and scheduled `+constants`.
+  Unsupported sources fail closed: transaction parameters, runtime interface
+  signals, unknown symbolic names, zero-valued constants, non-scalar constant
+  definitions, arbitrary expressions, use-site override specialization,
+  generated-top respecialization, activation binding semantics changes,
+  binding timing changes, output binding shape changes, and schedule-report
+  key-family changes remain deferred or rejected. The ISF spec, downstream
+  integration handoff, public contract, mdBook, roadmap status, task tree, and
+  live docs were synchronized.
 - Recent R14 transaction port actor-constant width selection:
   `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1` activated the next
   static-dimension tree. The selected first implementation slice is
@@ -5694,11 +5711,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS`.
-- Current frontier: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2`.
-- Completion status: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1` selected
-  the next active R14 static-dimension tree. No behavior changes are included
-  in the selection leaf.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` shipped
+  actor-constant-backed transaction-local port widths and closed the active
+  tree. The next PNT step must select or create the next roadmap-aligned task
+  tree before any code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8856,11 +8874,9 @@ Done:
   and data-manipulation constructs such as `shift_left`, `shift_right`,
   `assemble`, and `extract`.
 - Actor top-level interface widths, actor-owned scalar storage widths,
-  actor-owned bank storage widths, and actor-owned bank storage depths now
-  accept positive actor-local literals, declared actor constants, or
-  actor-local scalar parameter defaults. Transaction-local port widths accept
-  positive literals or actor-local scalar parameter defaults; actor-constant
-  transaction-local port widths remain the next static-dimension frontier.
+  actor-owned bank storage widths, actor-owned bank storage depths, and
+  transaction-local port widths now accept positive actor-local literals,
+  declared actor constants, or actor-local scalar parameter defaults.
 - The mdBook now carries the R14 ISF chapter split, including the lowering
   reference.
 - The mdBook now also carries

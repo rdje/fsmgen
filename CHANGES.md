@@ -1,6 +1,33 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Transaction port actor-constant widths shipped
+- Completed `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` and closed the
+  task tree.
+- Transaction-local `(ports ...)` `(input NAME (width CONST))` and
+  `(output NAME (width CONST))` entries now accept declared actor constants
+  that resolve to positive integers. Enum-backed constants are accepted when
+  they resolve positive.
+- Accepted constants lower like literal widths in parser handoff, scheduled
+  `.fsm` `+size`, activation handoff storage,
+  `transaction_port_bindings[]` report widths, and generated HDL register
+  ranges, while authored constants remain visible through `actor_constants[]`
+  and scheduled `+constants`.
+- Unsupported sources fail closed: transaction parameters, runtime interface
+  signals, unknown symbolic names, zero-valued constants, non-scalar constant
+  definitions, arbitrary expressions, use-site override specialization,
+  generated-top respecialization, activation binding semantics changes,
+  binding timing changes, output binding shape changes, and schedule-report
+  key-family changes.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused transaction-port/public/spec/book
+  tests with `Files=12, Tests=349`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=248, Tests=1649`;
+  post-closure doc/public audits with `Files=7, Tests=352`;
+  `git diff --check`.
+
 ### R14 — Transaction port actor-constant widths selected
 - Completed selection work for
   `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1`.

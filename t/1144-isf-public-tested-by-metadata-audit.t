@@ -233,6 +233,7 @@ my $expected_tested_by = [
     't/1339-isf-scalar-storage-actor-constant-widths.t',
     't/1340-isf-bank-storage-actor-constant-widths.t',
     't/1341-isf-bank-storage-actor-constant-depths.t',
+    't/1342-isf-transaction-port-actor-constant-widths.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

@@ -619,7 +619,8 @@ The ISF-specific current limitations are:
   snapshot-vs-live timing selection remain backlog.
 - Width-bearing actor interface ports, transaction-local ports, and
   actor-owned storage entries may use scalar type aliases through `(type
-  NAME)`, mutually exclusive with `(width N)` or `(width PARAM)`.
+  NAME)`, mutually exclusive with `(width N)`, `(width PARAM)`, or
+  `(width CONST)` where supported.
 
   Actor-owned storage variables may also use packed `list` or `record`
   aliases as whole-root aggregate carriers.

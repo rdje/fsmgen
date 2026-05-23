@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Transaction port constants reuse port width finalization
+- `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` widens transaction-local port
+  width finalization to resolve declared actor constants after actor scalar
+  parameters and before scheduler handoff.
+- The scheduler, `.fsm` emitter, binding lowerer, schedule reports, and HDL
+  backend continue to see resolved positive integer transaction port widths,
+  so constant-backed ports reuse the literal-width handoff path.
+- Transaction parameters remain outside the width source set because they are
+  activation-specialized values. Use-site overrides, generated-top
+  respecialization, binding timing policy, output binding shape changes, and
+  report key-family changes remain separate policies.
+
 ## 2026-05-23: Transaction port constants are the next static-dimension slice
 - `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1` selects transaction-local
   `(ports ...)` widths as the remaining actor-constant static-dimension

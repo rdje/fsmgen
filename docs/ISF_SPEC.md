@@ -313,13 +313,14 @@ when `bin/fsmgen` uses a temporary lowered `.fsm` path.
 
 Width-bearing actor interface ports, transaction-local ports, and actor-owned
 storage entries may use `(type NAME)` for a scalar alias. They keep
-`(width N)` or `(width PARAM)` for raw positive integer widths; actor
-interface ports, actor-owned scalar storage variables, and actor-owned bank
-widths may also use `(width CONST)` when `CONST` is a declared actor constant
-that resolves to a positive integer. Type and width options are mutually
-exclusive. `PARAM` may name an actor-local scalar parameter default that
-resolves to a positive integer on actor interface ports, transaction-local
-ports, actor-owned scalar storage, and actor-owned bank storage. `NAME` may be
+`(width N)` or `(width PARAM)` for raw positive integer widths, and may use
+`(width CONST)` when `CONST` is a declared actor constant that resolves to a
+positive integer on actor interface ports, transaction-local ports,
+actor-owned scalar storage variables, and actor-owned bank storage. Type and
+width options are mutually exclusive. `PARAM` may name an actor-local scalar
+parameter default that resolves to a positive integer on actor interface ports,
+transaction-local ports, actor-owned scalar storage, and actor-owned bank
+storage. `NAME` may be
 local, such as `byte`, or package-qualified, such as `shared.byte`.
 Unknown aliases fail closed. Resolved `list` or `record` aliases are accepted
 only on actor-owned storage variables, for example `(var frame (type
@@ -2031,7 +2032,7 @@ connect transactions; the compiler lowers the ISF boundary into explicit
 scheduled `.fsm` handoff assignments and reviewable generated-top wiring.
 
 Shipped transaction declaration shape, assuming actor-level
-`(params (DATA_W 32))`:
+`(params (DATA_W 32))` or `(constants (DATA_W 32))`:
 
 ```lisp
 (transaction read_word
@@ -2043,14 +2044,15 @@ Shipped transaction declaration shape, assuming actor-level
 
 Each transaction may contain at most one `(ports ...)` clause. Each port entry
 is `(input name)`, `(output name)`, `(input name (width N))`, or
-`(output name (width N))`; `(width PARAM)` is also accepted when `PARAM` names
-an actor-local scalar parameter default that resolves to a positive integer.
-`name` is a scalar HDL identifier and `N` is a positive integer literal.
-Omitted width means 1. Transaction parameters, actor constants, runtime
-interface signals, unknown symbolic names, zero-valued or non-scalar actor
-parameters, and arbitrary expressions are rejected as port widths. Port names
-are unique across both directions within the transaction. The parser returns
-the normalized transaction-shell shape with resolved integer widths:
+`(output name (width N))`; `(width PARAM)` and `(width CONST)` are also
+accepted when the symbol names an actor-local scalar parameter default or
+declared actor constant that resolves to a positive integer. `name` is a scalar
+HDL identifier and `N` is a positive integer literal. Omitted width means 1.
+Transaction parameters, runtime interface signals, unknown symbolic names,
+zero-valued or non-scalar actor parameters, zero-valued actor constants, and
+arbitrary expressions are rejected as port widths. Port names are unique across
+both directions within the transaction. The parser returns the normalized
+transaction-shell shape with resolved integer widths:
 
 ```lisp
 ports = {
@@ -5053,6 +5055,7 @@ Focused tests:
 - [t/1339-isf-scalar-storage-actor-constant-widths.t](../t/1339-isf-scalar-storage-actor-constant-widths.t)
 - [t/1340-isf-bank-storage-actor-constant-widths.t](../t/1340-isf-bank-storage-actor-constant-widths.t)
 - [t/1341-isf-bank-storage-actor-constant-depths.t](../t/1341-isf-bank-storage-actor-constant-depths.t)
+- [t/1342-isf-transaction-port-actor-constant-widths.t](../t/1342-isf-transaction-port-actor-constant-widths.t)
 
 ## 12. Explicitly Deferred
 

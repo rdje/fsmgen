@@ -14,11 +14,11 @@ use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 use FSM::Scheduler::ISF;
 
-subtest 'actor scalar parameter transaction port widths lower like literal widths' => sub {
+subtest 'actor constants transaction port widths lower like literal widths' => sub {
     my $source = <<'ISF';
-(actor parameter_transaction_port_widths
+(actor constant_transaction_port_widths
   (clock clk)
-  (params
+  (constants
     (DATA_W 8))
   (interface
     (input start)
@@ -41,15 +41,15 @@ subtest 'actor scalar parameter transaction port widths lower like literal width
     (complete done)))
 ISF
 
-    my $actor = parse_source($source, 'parameter-transaction-port-widths.isf');
-    is(transaction_port_width($actor, 'child', 'inputs', 'addr'), 8, 'input port width resolves from actor parameter');
-    is(transaction_port_width($actor, 'child', 'outputs', 'data'), 8, 'output port width resolves from actor parameter');
+    my $actor = parse_source($source, 'constant-transaction-port-widths.isf');
+    is(transaction_port_width($actor, 'child', 'inputs', 'addr'), 8, 'input port width resolves from actor constant');
+    is(transaction_port_width($actor, 'child', 'outputs', 'data'), 8, 'output port width resolves from actor constant');
 
     my $scheduler = FSM::Scheduler::ISF->new();
     my $lowered = $scheduler->lower($actor);
-    my $fsm = $lowered->{files}{'parameter_transaction_port_widths.fsm'};
+    my $fsm = $lowered->{files}{'constant_transaction_port_widths.fsm'};
 
-    like($fsm, qr/\(\+params\s+\(DATA_W 8\)\s+\)/s, 'scheduled .fsm preserves actor parameter declaration');
+    like($fsm, qr/\(\+constants\s+\(DATA_W 8\)\s+\)/s, 'scheduled .fsm preserves actor constant declaration');
     like($fsm, qr/\(\+size[\s\S]*\(addr 8\)[\s\S]*\(data 8\)/, 'scheduled .fsm uses resolved transaction port widths');
     like($fsm, qr/\(= \(addr req_addr\)\)/, 'do binding drives resolved input port');
     like($fsm, qr/\(= \(resp> data\) <child_done\)/, 'do binding reads resolved output port');
@@ -61,17 +61,17 @@ ISF
         'schedule report binding widths use the resolved transaction port width',
     );
 
-    assert_fsm_reaches_hdl($fsm, 'parameter_transaction_port_widths', qr/\breg\s+\[7:0\]\s+addr\b/, 'HDL addr width is resolved');
-    assert_fsm_reaches_hdl($fsm, 'parameter_transaction_port_widths', qr/\breg\s+\[7:0\]\s+data\b/, 'HDL data width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'constant_transaction_port_widths', qr/\breg\s+\[7:0\]\s+addr\b/, 'HDL addr width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'constant_transaction_port_widths', qr/\breg\s+\[7:0\]\s+data\b/, 'HDL data width is resolved');
 };
 
-subtest 'enum-resolved actor scalar parameter transaction port width lowers' => sub {
-    my $actor = parse_source(<<'ISF', 'enum-parameter-transaction-port-width.isf');
-(actor enum_parameter_transaction_port_width
+subtest 'enum-resolved actor constant transaction port width lowers' => sub {
+    my $actor = parse_source(<<'ISF', 'enum-constant-transaction-port-width.isf');
+(actor enum_constant_transaction_port_width
   (clock clk)
   (enums
     (sizes (W 6)))
-  (params
+  (constants
     (DATA_W sizes.W))
   (interface
     (input start)
@@ -90,18 +90,18 @@ subtest 'enum-resolved actor scalar parameter transaction port width lowers' => 
     (complete done)))
 ISF
 
-    is(transaction_port_width($actor, 'child', 'inputs', 'data'), 6, 'enum-resolved actor parameter becomes a positive transaction port width');
+    is(transaction_port_width($actor, 'child', 'inputs', 'data'), 6, 'enum-resolved actor constant becomes a positive transaction port width');
 
-    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_parameter_transaction_port_width.fsm'};
+    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_constant_transaction_port_width.fsm'};
     like($fsm, qr/\(\+size[\s\S]*\(data 6\)/, 'scheduled .fsm uses enum-resolved transaction port width');
 };
 
-subtest 'unsupported actor parameter transaction port width sources fail closed' => sub {
+subtest 'unsupported actor constant transaction port width sources fail closed' => sub {
     assert_parse_rejected(
         <<'ISF',
-(actor zero_parameter_transaction_port_width
+(actor zero_constant_transaction_port_width
   (clock clk)
-  (params
+  (constants
     (DATA_W 0))
   (interface
     (input start)
@@ -110,15 +110,15 @@ subtest 'unsupported actor parameter transaction port width sources fail closed'
     (ports
       (input addr (width DATA_W)))))
 ISF
-        qr/\AError: actor 'zero_parameter_transaction_port_width' transaction 'child' port 'addr' width parameter 'DATA_W' must resolve to a positive integer/,
-        'zero-valued actor parameter is rejected',
+        qr/\AError: actor 'zero_constant_transaction_port_width' transaction 'child' port 'addr' width constant 'DATA_W' must resolve to a positive integer/,
+        'zero-valued actor constant is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor aggregate_parameter_transaction_port_width
+(actor aggregate_constant_transaction_port_width
   (clock clk)
-  (params
+  (constants
     (DATA_W (4 4)))
   (interface
     (input start)
@@ -127,13 +127,13 @@ ISF
     (ports
       (input addr (width DATA_W)))))
 ISF
-        qr/\AError: actor 'aggregate_parameter_transaction_port_width' transaction 'child' port 'addr' width parameter 'DATA_W' must resolve to a positive integer/,
-        'non-scalar actor parameter is rejected',
+        qr/\AError: actor 'aggregate_constant_transaction_port_width' constant 'DATA_W' requires a non-negative integer literal value or enum member reference/,
+        'non-scalar actor constant definition is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor transaction_parameter_port_width
+(actor transaction_parameter_port_constant_width
   (clock clk)
   (interface
     (input start)
@@ -144,13 +144,13 @@ ISF
     (ports
       (input addr (width DATA_W)))))
 ISF
-        qr/\AError: actor 'transaction_parameter_port_width' transaction 'child' port 'addr' width token 'DATA_W' is a transaction parameter/,
+        qr/\AError: actor 'transaction_parameter_port_constant_width' transaction 'child' port 'addr' width token 'DATA_W' is a transaction parameter/,
         'transaction parameters remain outside this port-width slice',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor unknown_parameter_transaction_port_width
+(actor unknown_constant_transaction_port_width
   (clock clk)
   (interface
     (input start)
@@ -159,13 +159,13 @@ ISF
     (ports
       (input addr (width DATA_W)))))
 ISF
-        qr/\AError: actor 'unknown_parameter_transaction_port_width' transaction 'child' port 'addr' width token 'DATA_W' is not a declared actor scalar parameter or actor constant/,
+        qr/\AError: actor 'unknown_constant_transaction_port_width' transaction 'child' port 'addr' width token 'DATA_W' is not a declared actor scalar parameter or actor constant/,
         'unknown symbolic width is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor runtime_parameter_transaction_port_width
+(actor runtime_constant_transaction_port_width
   (clock clk)
   (interface
     (input start)
@@ -175,13 +175,13 @@ ISF
     (ports
       (input addr (width DATA_W)))))
 ISF
-        qr/\AError: actor 'runtime_parameter_transaction_port_width' transaction 'child' port 'addr' width token 'DATA_W' is a runtime interface signal/,
+        qr/\AError: actor 'runtime_constant_transaction_port_width' transaction 'child' port 'addr' width token 'DATA_W' is a runtime interface signal/,
         'runtime interface signals are rejected as widths',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor expression_parameter_transaction_port_width
+(actor expression_constant_transaction_port_width
   (clock clk)
   (interface
     (input start)

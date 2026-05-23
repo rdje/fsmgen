@@ -326,11 +326,11 @@ lower through guarded scalarized entries.
 `(storage ...)` is a singleton actor clause. Storage names and scalarized
 element names must not collide with interface ports, actor clock/reset signals,
 or generated scheduler signals such as `can_accept`. Missing scalar storage
-`(width N|PARAM|CONST)`, missing bank `(depth N)`, duplicate storage names,
-duplicate scalarized element names, unknown parameter or constant names,
-runtime interface signals, zero-valued or non-scalar actor parameters,
-zero-valued actor constants, arbitrary width/depth expressions, and repeated
-storage clauses fail closed before scheduler handoff.
+`(width N|PARAM|CONST)`, missing bank `(depth N|PARAM|CONST)`, duplicate
+storage names, duplicate scalarized element names, unknown parameter or
+constant names, runtime interface signals, zero-valued or non-scalar actor
+parameters, zero-valued actor constants, arbitrary width/depth expressions,
+and repeated storage clauses fail closed before scheduler handoff.
 
 When `(clock-domains ...)` is present, storage entries may add `(domain NAME)`.
 

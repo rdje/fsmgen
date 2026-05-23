@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Transaction port actor-constant widths shipped
+- Completed `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` and closed the
+  task tree.
+- Transaction-local `(ports ...)` `(width CONST)` declarations now accept
+  declared actor constants resolving to positive integers.
+- Accepted constant-backed widths lower like literal widths in public parser
+  handoff, scheduled `.fsm` `+size`, activation handoff storage,
+  `transaction_port_bindings[]` report widths, and generated HDL, while
+  authored constants remain visible through `actor_constants[]` and scheduled
+  `+constants`.
+- Unsupported sources fail closed: transaction parameters, runtime interface
+  signals, unknown symbolic names, zero-valued constants, non-scalar constant
+  definitions, arbitrary expressions, use-site override specialization,
+  generated-top respecialization, activation binding semantics changes,
+  binding timing changes, output binding shape changes, and schedule-report
+  key-family changes.
+- Validation passed: syntax checks; focused transaction-port/public/spec/book
+  tests with `Files=12, Tests=349`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=248, Tests=1649`;
+  post-closure doc/public audits with `Files=7, Tests=352`;
+  `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Transaction port actor-constant widths selected
 - Completed selection work for
   `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1`.

@@ -217,11 +217,9 @@ General source rules:
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.
 - Widths and depths are positive integer literals unless a specific clause says
   otherwise. Actor top-level interface port widths, actor-owned scalar storage
-  widths, actor-owned bank storage widths, and actor-owned bank storage depths
-  also accept declared actor constants and actor-local scalar parameter
-  defaults that resolve to positive integers. Transaction-local port widths
-  also accept actor-local scalar parameter defaults that resolve to positive
-  integers.
+  widths, actor-owned bank storage widths, actor-owned bank storage depths,
+  and transaction-local port widths also accept declared actor constants and
+  actor-local scalar parameter defaults that resolve to positive integers.
 - Actor constants, scalar actor parameter defaults, and generated child
   transaction scalar parameter defaults use non-negative integer literals or
   enum member references that resolve to non-negative integers; static wait
@@ -450,8 +448,9 @@ Rules:
   literal values before lowering.
 - Constants are emitted into scheduled `.fsm` `+constants`.
 - Schedule reports preserve the authored value token in `actor_constants[]`.
-- Constants may be used as static `(wait NAME)` counts and existing static
-  activation parameter override values.
+- Constants may be used as static actor timing/count values, static
+  width/depth values where documented, and existing static activation
+  parameter override values.
 - Actor-local scalar parameter defaults may also be used as static
   `(wait NAME)` counts when they resolve to non-negative integer literals.
   Transaction `params` and generated activation use-site overrides are not
@@ -761,7 +760,8 @@ Rules:
 
 ### 11.2 Transaction Ports And Bindings
 
-Transaction ports, assuming actor-level `(params (DATA_W 8))`:
+Transaction ports, assuming actor-level `(params (DATA_W 8))` or
+`(constants (DATA_W 8))`:
 
 ```lisp
 (ports
@@ -790,9 +790,10 @@ Activation bindings:
 Rules:
 
 - Port directions are `input` and `output`.
-- Width defaults to `1`. Explicit widths may be positive integer literals or
-  actor-local scalar parameter defaults that resolve to positive integers.
-  The parser returns resolved integer widths in the public transaction shell.
+- Width defaults to `1`. Explicit widths may be positive integer literals,
+  actor-local scalar parameter defaults, or declared actor constants that
+  resolve to positive integers. The parser returns resolved integer widths in
+  the public transaction shell.
 - Port names are unique across directions.
 - Input bindings may pass scalar signals, numeric/exact-width literals, or
   non-empty list expressions.
@@ -1310,7 +1311,8 @@ Rules:
   actor-owned storage entries may use `(type NAME)` for scalar aliases.
   Actor interface ports, transaction-local ports, actor-owned scalar storage,
   and actor-owned bank storage may use actor-local scalar parameter defaults
-  that resolve to positive integers as `(width PARAM)` sources.
+  or declared actor constants that resolve to positive integers as
+  `(width PARAM)` / `(width CONST)` sources.
 - Actor-owned storage variables may also use `(type NAME)` when `NAME`
   resolves to a packed aggregate `list` or `record` alias. The first aggregate
   carrier subset is anchored on declared actor-owned storage roots.
@@ -3375,7 +3377,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1338-isf-interface-actor-constant-widths.t \
   t/1339-isf-scalar-storage-actor-constant-widths.t \
   t/1340-isf-bank-storage-actor-constant-widths.t \
-  t/1341-isf-bank-storage-actor-constant-depths.t
+  t/1341-isf-bank-storage-actor-constant-depths.t \
+  t/1342-isf-transaction-port-actor-constant-widths.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

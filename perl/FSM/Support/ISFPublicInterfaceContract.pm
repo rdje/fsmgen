@@ -526,6 +526,7 @@ sub build_isf_public_interface_contract {
             't/1339-isf-scalar-storage-actor-constant-widths.t',
             't/1340-isf-bank-storage-actor-constant-widths.t',
             't/1341-isf-bank-storage-actor-constant-depths.t',
+            't/1342-isf-transaction-port-actor-constant-widths.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -866,7 +867,7 @@ sub isf_public_interface_actor_shell_required_keys {
 }
 
 sub isf_public_interface_actor_shell_value_shape {
-    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; actor interface widths, scalar storage widths, bank widths, and bank depths are resolved positive integers from literals, actor constants, or actor-local scalar parameters; transaction-local port widths are resolved positive integers from literals or actor-local scalar parameters; constants is an optional array reference for actor-local compile-time integer constants; clock_domains is null for legacy one-clock actors or an optional live metadata hash for accepted clock-domain declarations; crossings is an optional array reference for accepted clock-domain event crossing declarations; actor_network is null when omitted or a bounded static_declaration metadata hash for the current ATL subset, including direct static actor instance metadata from verbose instances or compact instance aliases, resolved library-qualified actor type metadata and child artifact names, report-only static group metadata from verbose groups or compact concurrent aliases, selected parent-handoff event waits, selected parent-handoff transaction triggers, selected temporary trigger batches, selected generated ATL tops, and selected scalar or exact-width vector actor-to-actor data movements including the bounded generated-child reader-to-writer handoff route when present; unsupported qualified ATL trigger and endpoint-aware drive movement variants fail closed before scheduled emission when the qualifier names a static actor instance';
+    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; actor interface widths, scalar storage widths, bank widths, bank depths, and transaction-local port widths are resolved positive integers from literals, actor constants, or actor-local scalar parameters; constants is an optional array reference for actor-local compile-time integer constants; clock_domains is null for legacy one-clock actors or an optional live metadata hash for accepted clock-domain declarations; crossings is an optional array reference for accepted clock-domain event crossing declarations; actor_network is null when omitted or a bounded static_declaration metadata hash for the current ATL subset, including direct static actor instance metadata from verbose instances or compact instance aliases, resolved library-qualified actor type metadata and child artifact names, report-only static group metadata from verbose groups or compact concurrent aliases, selected parent-handoff event waits, selected parent-handoff transaction triggers, selected temporary trigger batches, selected generated ATL tops, and selected scalar or exact-width vector actor-to-actor data movements including the bounded generated-child reader-to-writer handoff route when present; unsupported qualified ATL trigger and endpoint-aware drive movement variants fail closed before scheduled emission when the qualifier names a static actor instance';
 }
 
 sub isf_public_interface_actor_shell_actor_name_shape {
@@ -882,7 +883,7 @@ sub isf_public_interface_actor_shell_interface_shape {
 }
 
 sub isf_public_interface_actor_shell_transaction_shape {
-    return 'transactions is an array of public transaction shell entries; each entry has unique non-empty scalar name, ports hash with inputs/outputs arrays whose entries carry resolved positive integer widths, clauses array, and optional scalar domain ownership metadata; transaction-local port width parameters are accepted when they name actor-local scalar parameter defaults that resolve to positive integers, while clause payload contents remain private scheduler input';
+    return 'transactions is an array of public transaction shell entries; each entry has unique non-empty scalar name, ports hash with inputs/outputs arrays whose entries carry resolved positive integer widths, clauses array, and optional scalar domain ownership metadata; transaction-local port width parameters and constants are accepted when they name actor-local scalar parameter defaults or declared actor constants that resolve to positive integers, while clause payload contents remain private scheduler input';
 }
 
 sub isf_public_interface_actor_shell_rule_shape {
