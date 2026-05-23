@@ -2,9 +2,22 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: none.
-- Current frontier: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before code changes.
+- Active task tree: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS`.
+- Current frontier: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` will implement
+  static actor-parameter-backed temporal-contract windows. The selected
+  boundary accepts actor-local scalar parameter defaults that resolve to
+  positive integer literals for bounded eventual `within` windows and keeps
+  transaction parameters, runtime signals, expression-valued windows, use-site
+  override specialization, dynamic bounds, min/max windows, same-cycle checks,
+  nested contracts, expression operands, and multiple outstanding obligations
+  deferred.
+- Recent R14 temporal-contract actor-parameter window selection:
+  `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1` activates the temporal-contract
+  actor-parameter window tree. The selected implementation will reuse the
+  static actor-parameter default model already shipped for wait counts and
+  latency bounds without changing monitor timing, sticky-fail behavior,
+  assertion projection, generated HDL shape, or public schedule-report key
+  families.
 - Recent R14 latency actor-parameter bounds completion:
   `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` shipped actor-local scalar parameter
   defaults that resolve to positive integers as transaction latency
@@ -5393,12 +5406,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: none.
-- Current frontier: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before code changes.
-- Completion status: `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` closed the most
-  recent active R14 task tree after shipping actor-local scalar parameter
-  defaults as static transaction latency min/max bounds.
+- Active task tree: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS`.
+- Current frontier: `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` will implement the
+  static actor-parameter temporal-contract window boundary.
+- Completion status: `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` closed the previous
+  active R14 task tree after shipping actor-local scalar parameter defaults as
+  static transaction latency min/max bounds.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

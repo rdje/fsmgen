@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Temporal contract actor-parameter windows selected
+- Completed selection work for `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1`.
+- Activated the active R14 task tree for static actor-parameter-backed
+  bounded eventual temporal-contract windows.
+- The active frontier is now `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Latency actor-parameter bounds shipped
 - Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` and closed the task tree.
 - Transaction latency bounds now accept actor-local scalar parameter defaults

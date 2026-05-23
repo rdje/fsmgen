@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Temporal contract actor-parameter windows selected
+- Completed selection work for `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1`.
+- Activated a new R14 task tree for static actor-parameter-backed bounded
+  eventual temporal-contract windows.
+- The selected source boundary accepts actor-local scalar parameter defaults
+  resolving to positive integers, matching the static wait-count and latency
+  parameter models.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Latency actor-parameter bounds shipped
 - Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` and closed the task tree.
 - Transaction latency `(min ...)` and `(max ...)` bounds now accept

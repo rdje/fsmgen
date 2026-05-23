@@ -2249,10 +2249,11 @@ contract is armed again while pending.
 
 SystemVerilog generation now projects the sticky fail bit into a
 verification-only assertion under `` `ifndef SYNTHESIS``; Verilog output stays
-assertion-free. Remaining backlog: actor/transaction parameter windows,
-runtime-signal or expression windows, global `always` implication forms,
-min/max windows, dynamic bounds, same-cycle checks, nested contracts,
-expression operands, and multiple outstanding obligations.
+assertion-free. Actor-local scalar parameter windows are selected under
+`ISF-CONTRACT-ACTOR-PARAM-WINDOWS` but are not shipped yet. Remaining backlog:
+transaction parameter windows, runtime-signal or expression windows, global
+`always` implication forms, min/max windows, dynamic bounds, same-cycle checks,
+nested contracts, expression operands, and multiple outstanding obligations.
 
 The file-backed `isf/stream_stage_contract.isf` fixture covers the shipped
 top-level ready/valid stage plus bounded eventual contract path through

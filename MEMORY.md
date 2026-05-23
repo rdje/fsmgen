@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Temporal contract actor-parameter windows selected
+- Completed selection work for `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1`.
+- Activated a new R14 task tree for static actor-parameter-backed bounded
+  eventual temporal-contract windows.
+- The active frontier is `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2`.
+- The selected boundary accepts actor-local scalar parameter defaults resolving
+  to positive integers and keeps transaction parameters, runtime signals,
+  expression-valued windows, use-site override specialization, dynamic bounds,
+  min/max windows, same-cycle checks, nested contracts, expression operands,
+  and multiple outstanding obligations deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-22: Latency actor-parameter bounds shipped
 - Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` and closed the task tree.
 - Transaction latency `(min ...)` and `(max ...)` bounds now accept

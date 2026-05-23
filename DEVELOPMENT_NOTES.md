@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Contract actor-parameter windows reuse static defaults
+- `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1` selects actor-local scalar parameter
+  defaults as bounded eventual temporal-contract window sources, mirroring the
+  shipped static parameter-backed wait-count and latency-bound behavior.
+- The selected implementation should resolve only the actor shell's own
+  default value. Use-site override specialization, transaction parameters,
+  runtime values, expressions, dynamic bounds, min/max windows, same-cycle
+  checks, nested contracts, expression operands, and multiple outstanding
+  obligations remain deferred.
+
 ## 2026-05-22: Latency actor-parameter bounds stay static
 - `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` reuses the actor-local static parameter
   default model already accepted for wait counts, but only for positive scalar

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CONTRACT-ACTOR-PARAM-WINDOWS` | `active` | `R14` | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` | [docs/tasks/ISF-CONTRACT-ACTOR-PARAM-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTOR-PARAM-WINDOWS.md) |
 
 ## Proposed Task Trees
 
@@ -276,6 +277,7 @@ as done work unless a future task reopens them.
 | Expression-valued rule assignments and rule action widening | `ISF-RULE-ACTIONS` |
 | Transaction stage lowering and temporal contract lowering | `ISF-STAGES-CONTRACTS` |
 | Temporal-contract actor-constant window counts | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` |
+| Temporal-contract actor-scalar-parameter window counts | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS` |
 | Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
 | Temporal-contract monitor storage schedule-report roles | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` |
