@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Interface actor-constant widths selected
+- Completed selection work for `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated the active R14 task tree for actor top-level interface
+  `(width CONST)` declarations backed by actor-local constants resolving to
+  positive integers.
+- The active frontier is now `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Bank storage actor-parameter depths shipped
 - Completed `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` and closed the task tree.
 - Actor-owned bank storage entries now accept `(depth PARAM)` when `PARAM`

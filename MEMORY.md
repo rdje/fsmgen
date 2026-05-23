@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Interface actor-constant widths selected
+- Completed selection work for `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated a new R14 task tree for actor top-level interface input/output
+  `(width CONST)` declarations backed by actor-local constants resolving to
+  positive integers.
+- The active frontier is `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2`.
+- The selected boundary is narrow: actor-constant-backed scalar storage
+  widths, bank widths, bank depths, transaction-local port widths, runtime
+  interface signals, transaction parameters, arbitrary expressions, unknown
+  names, zero-valued actor constants, use-site override specialization, and
+  generated-top respecialization remain deferred or fail-closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-23: Bank storage actor-parameter depths shipped
 - Completed `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` and closed the task tree.
 - Actor-owned bank storage entries now accept `(depth PARAM)` when `PARAM`

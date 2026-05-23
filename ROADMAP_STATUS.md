@@ -2,9 +2,20 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`; the next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+- Active task tree: `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS`.
+- Current frontier: `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2`.
+- Recent R14 interface actor-constant width selection:
+  `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1` activated the next static-dimension
+  tree. The selected first implementation slice is intentionally narrow: only
+  actor top-level interface `(input NAME (width CONST))` and
+  `(output NAME (width CONST))` entries may use actor-local constants that
+  resolve to positive integers. Actor-constant-backed scalar storage widths,
+  bank widths, bank depths, transaction-local port widths, runtime interface
+  signals, transaction parameters, arbitrary expressions, unknown names,
+  zero-valued actor constants, use-site override specialization, and
+  generated-top respecialization remain deferred or fail-closed. No parser,
+  scheduler, report, generated artifact, HDL, CLI, or public ISF behavior
+  changed.
 - Recent R14 bank storage actor-parameter depth completion:
   `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` shipped actor-local scalar
   parameter defaults as actor-owned bank storage `(depth PARAM)` sources when

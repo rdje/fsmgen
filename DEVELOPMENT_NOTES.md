@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Interface constants are the next static-dimension slice
+- `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1` selects actor top-level interface
+  widths as the first actor-constant static-dimension surface.
+- The selection mirrors the earlier actor-parameter sequence by starting at
+  the actor boundary, where a resolved positive width becomes public parser
+  handoff data, scheduled `.fsm` `+size`, report metadata, and HDL port
+  range without changing storage scalarization or transaction activation
+  handoff behavior.
+- Only the owning actor shell's constant value is selected as width evidence.
+  Storage dimensions, transaction-local ports, use-site overrides, generated
+  top respecialization, runtime signals, and expressions remain separate
+  policies.
+
 ## 2026-05-23: Bank depth parameters resolve before storage width finalization
 - `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` moves bank scalarization into actor
   finalization so actor-local scalar parameter defaults can resolve before the

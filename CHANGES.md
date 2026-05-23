@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Interface actor-constant widths selected
+- Completed selection work for `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated a new R14 task tree for accepting actor-local constants resolving
+  to positive integers as actor top-level interface input/output
+  `(width CONST)` values.
+- The selected first implementation slice deliberately excludes
+  actor-constant-backed scalar storage widths, bank widths, bank depths,
+  transaction-local port widths, runtime interface signals, transaction
+  parameters, arbitrary expressions, unknown names, zero-valued actor
+  constants, use-site override specialization, and generated-top
+  respecialization.
+- No compiler behavior changed.
+
 ### R14 — Bank storage actor-parameter depths shipped
 - Completed `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` and closed the task tree.
 - Actor-owned bank storage entries now accept `(depth PARAM)` when `PARAM`

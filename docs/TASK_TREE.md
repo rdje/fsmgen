@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS` | `active` | `R14` | `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` | [docs/tasks/ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.md](docs/tasks/ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.md) |
 
 ## Proposed Task Trees
 
@@ -288,6 +289,7 @@ as done work unless a future task reopens them.
 | Temporal-contract actor-scalar-parameter window counts | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS` |
 | Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
+| Actor top-level interface actor-constant widths | `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS` |
 | Actor top-level interface actor-scalar-parameter widths | `ISF-INTERFACE-ACTOR-PARAM-WIDTHS` |
 | Actor-owned scalar storage actor-scalar-parameter widths | `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS` |
 | Actor-owned bank storage actor-scalar-parameter widths | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS` |
