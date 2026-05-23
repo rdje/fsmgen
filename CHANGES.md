@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Latency actor-parameter bounds selected
+- Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1`.
+- Activated a new R14 task tree for static actor-parameter-backed transaction
+  latency bounds.
+- The selected source boundary accepts actor-local scalar parameter defaults
+  resolving to positive integers, matching the static wait-count parameter
+  model.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Next-PNT roadmap wording synced
 - Completed `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` and closed the
   maintenance tree.

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-LATENCY-ACTOR-PARAM-BOUNDS` | `active` | `R14` | `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` | [docs/tasks/ISF-LATENCY-ACTOR-PARAM-BOUNDS.md](docs/tasks/ISF-LATENCY-ACTOR-PARAM-BOUNDS.md) |
 
 ## Proposed Task Trees
 

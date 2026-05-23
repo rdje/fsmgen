@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Latency actor-parameter bounds selected
+- Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1`.
+- Activated a new R14 task tree for static actor-parameter-backed transaction
+  latency bounds.
+- The active frontier is `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2`.
+- The selected boundary accepts actor-local scalar parameter defaults resolving
+  to positive integers and keeps transaction parameters, runtime signals,
+  expression-valued bounds, use-site override specialization, stage-local
+  latency, and stage runtime semantics deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-22: R14 next-PNT text truth sync shipped
 - Completed `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` and closed the
   maintenance tree.

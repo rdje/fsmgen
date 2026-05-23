@@ -2,8 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before code changes.
+- Active task tree: `ISF-LATENCY-ACTOR-PARAM-BOUNDS`.
+- Current frontier: `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` will implement static
+  actor-parameter-backed transaction latency bounds. The selected boundary
+  accepts actor-local scalar parameter defaults that resolve to positive
+  integer literals and keeps transaction parameters, runtime signals,
+  expression-valued bounds, use-site override specialization, stage-local
+  latency, and stage runtime semantics deferred.
+- Recent R14 latency actor-parameter bounds selection:
+  `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1` activated the transaction latency
+  actor-parameter bounds tree. The selected implementation will reuse the
+  static actor-parameter default model already shipped for wait counts without
+  changing latency counter timing, report storage roles, generated HDL, or
+  public schedule-report key families.
 - Recent R14 next-PNT text truth-sync completion:
   `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` replaced stale R14 `Left`
   wording that named an old closed tree with wording that points to the live

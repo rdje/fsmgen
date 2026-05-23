@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Latency actor-parameter bounds selected
+- Completed `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1`.
+- Activated the active R14 task tree for static actor-parameter-backed
+  transaction latency bounds.
+- The active frontier is now `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Next-PNT roadmap wording synced
 - Completed `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` and closed the
   maintenance tree.

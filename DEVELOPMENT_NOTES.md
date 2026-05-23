@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Latency actor-parameter bounds reuse static defaults
+- `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1` selects actor-local scalar parameter
+  defaults as latency min/max sources, mirroring the shipped static
+  parameter-backed wait-count behavior.
+- The selected implementation should resolve only the actor shell's own
+  default value. Use-site override specialization, transaction parameters,
+  runtime values, expressions, and stage-local latency remain deferred.
+
 ## 2026-05-22: R14 next-PNT text should not name a closed tree
 - `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` keeps the active R14 `Left`
   section from drifting by pointing to the live active-task pointer instead of
