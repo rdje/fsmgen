@@ -130,6 +130,7 @@ current report key family.
 | `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `mdbook build docs/book` | `passed` |
 | `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `./bin/ci-regression isf --no-book` | `passed: Files=250, Tests=1657` |
 | `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t` | `passed: Files=6, Tests=347` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t` | `passed after final roadmap truth sync: Files=2, Tests=25` |
 | `2026-05-23` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `git diff --check` | `passed` |
 
 ## Commit Log
@@ -137,7 +138,7 @@ current report key family.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1` | `db719fab ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1: select output_bundle priority resource` | `selection slice` |
-| `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `pending this commit: ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2: ship output_bundle priority resource` | `implementation slice` |
+| `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | `e643791e ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2: ship output_bundle priority resource` | `implementation slice` |
 
 ## Changelog
 

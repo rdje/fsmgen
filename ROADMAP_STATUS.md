@@ -4221,14 +4221,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   catalog of shareable resource kinds. The first implementation target is
   `rule_slot`, a one-cycle mutual-exclusion slot for rule users, bound through
   planned resource-local `(kind rule_slot)` and `(users ...)` subclauses.
-  Planned but unshipped kinds include `output_bundle`, `interface_bundle`,
-  `named_drive`, `transaction_start`, `child_instance`, and `storage_port`.
-  `round_robin`, multi-capacity resources, dynamic resource names, and
-  transaction lifetime ownership remain deferred.
+  `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` later shipped `output_bundle` for
+  declared rule users under `priority`; remaining planned but unshipped kinds
+  include `interface_bundle`, `named_drive`, `transaction_start`,
+  `child_instance`, and `storage_port`. `round_robin`, multi-capacity
+  resources, dynamic resource names, and transaction lifetime ownership remain
+  deferred.
 - `ISF-RESOURCE-PRIORITY.3` is complete. The parser accepts resource
   `(kind ...)` and `(users ...)` subclauses, validates `rule_slot` users
   against declared rules, and the scheduler enforces `rule_slot` + `priority`
-  by gating bound rule DT enables. Unsupported bound resource kinds,
+  by gating bound rule DT enables. `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2`
+  later widened the same parser-side user validation and scheduler grant path
+  to `output_bundle` rule users. Unsupported bound resource kinds,
   `round_robin` with users, incomplete priority orderings, and resource
   priority cycles fail closed.
 - `ISF-RESOURCE-PRIORITY.4` is complete. Actor-level rule-over-transaction
@@ -4247,10 +4251,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-RULE-ACTIONS.1`.
 - `ISF-RESOURCE-CATALOG.1` is complete. The ISF spec, mdBook rules chapter,
   public contract, and feature backlog now publish the growable shareable
-  resource kind catalog. `rule_slot` is the only shipped enforced kind today;
-  `output_bundle`, `interface_bundle`, `named_drive`, `transaction_start`,
-  `child_instance`, and `storage_port` remain backlog catalog names until
-  their lowering contracts ship.
+  resource kind catalog. `rule_slot` was the only shipped enforced kind when
+  this catalog slice landed; `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` later
+  shipped `output_bundle` for declared rule users under `priority`.
+  `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
+  and `storage_port` remain backlog catalog names until their lowering
+  contracts ship.
 - `ISF-RESOURCE-CATALOG.2` is complete. The same public surfaces now call the
   table the current shareable resource registry, explicitly separate
   author-defined resource names from registry resource kinds, and preserve the
