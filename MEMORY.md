@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Dynamic-divisor drive coverage shipped
+- Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` and closed the task tree.
+- Focused tests now prove literal-zero divisor rejection in named drive-call
+  actual expressions and actor-constant-zero divisor rejection in inline drive
+  RHS expressions.
+- No parser, scheduler, report, generated artifact, or HDL behavior changed.
+- Validation passed: `t/1308-isf-dynamic-divisor-safety.t`, public/doc
+  audits, `mdbook build docs/book`, and `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Dynamic-divisor drive coverage selected
 - Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1`.
 - Activated a new R14 task tree for focused coverage of documented

@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Dynamic-divisor drive coverage shipped
+- Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` and closed the task tree.
+- Focused dynamic-divisor tests now cover named drive-call actual expressions
+  and inline drive RHS expressions.
+- No compiler behavior changed.
+- Validation passed: focused dynamic-divisor test, public/doc audits,
+  `mdbook build docs/book`, and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-22: R14 — Dynamic-divisor drive coverage selected
 - Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1`.
 - Activated the active R14 task tree for dynamic-divisor drive expression

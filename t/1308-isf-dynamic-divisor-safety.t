@@ -105,6 +105,41 @@ subtest 'literal zero divisor in activation input binding expression fails close
 ISF
 };
 
+subtest 'literal zero divisor in named drive actual fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'drive_actual_division_by_zero', qr/\AError: transaction 'main' drive 'publish' actual expression '\(\/ numerator 0\)' uses literal zero divisor '0' in division/);
+(actor drive_actual_division_by_zero
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input numerator (width 8))
+    (output out (width 8)))
+  (drive (publish value)
+    (out value))
+  (transaction main
+    (on start)
+    (drive publish (/ numerator 0))))
+ISF
+};
+
+subtest 'actor zero constant divisor in inline drive RHS fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'inline_drive_constant_division_by_zero', qr/\AError: transaction 'main' inline drive RHS expression '\(\/ numerator ZERO\)' uses actor constant zero divisor 'ZERO' in division/);
+(actor inline_drive_constant_division_by_zero
+  (clock clk)
+  (reset rst)
+  (constants
+    (ZERO 0))
+  (interface
+    (input start)
+    (input numerator (width 8))
+    (output out (width 8)))
+  (transaction main
+    (on start)
+    (drive
+      (out (/ numerator ZERO)))))
+ISF
+};
+
 subtest 'actor zero constant division divisor in transaction RHS fails closed' => sub {
     assert_parse_rejected(<<'ISF', 'transaction_constant_division_by_zero', qr/\AError: transaction 'main' set RHS expression '\(\/ numerator ZERO\)' uses actor constant zero divisor 'ZERO' in division/);
 (actor transaction_constant_division_by_zero

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Dynamic-divisor drive coverage shipped
+- Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` and closed the task tree.
+- Added focused tests proving literal-zero divisor rejection for named
+  drive-call actual expressions and actor-constant-zero divisor rejection for
+  inline drive RHS expressions.
+- No compiler behavior changed.
+- Validation passed: `t/1308-isf-dynamic-divisor-safety.t`, public/doc
+  audits, `mdbook build docs/book`, and `git diff --check`.
+
+## 2026-05-22
 ### R14 — Dynamic-divisor drive coverage selected
 - Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1`.
 - Activated a new R14 task tree for focused coverage of documented

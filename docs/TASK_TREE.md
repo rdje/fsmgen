@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE` | `active` | `R14` | `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` | [docs/tasks/ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.md](docs/tasks/ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.md](docs/tasks/ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.md) |
 | `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md](docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md) |
 | `ISF-BACKLOG-OWNER-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-BACKLOG-OWNER-TRUTH-SYNC.md](docs/tasks/ISF-BACKLOG-OWNER-TRUTH-SYNC.md) |
 | `ISF-REPEAT-COUNT-SOURCE-BOUNDARY` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-COUNT-SOURCE-BOUNDARY.md](docs/tasks/ISF-REPEAT-COUNT-SOURCE-BOUNDARY.md) |

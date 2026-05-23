@@ -2,12 +2,13 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE`.
-- Current frontier: `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` will add focused
-  coverage for the already documented literal-zero and actor-constant-zero
-  divisor guards on named drive-call actual expressions and inline drive RHS
-  expressions. No parser, scheduler, report, generated artifact, or HDL
-  behavior change is selected.
+- Active task tree: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Recent R14 dynamic-divisor drive coverage completion:
+  `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` added focused coverage for the
+  already documented literal-zero and actor-constant-zero divisor guards on
+  named drive-call actual expressions and inline drive RHS expressions. No
+  parser, scheduler, report, generated artifact, or HDL behavior changed.
 - Recent R14 dynamic-divisor drive coverage selection:
   `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1` activated a coverage-hardening tree
   for documented drive expression divisor guards. The selected implementation

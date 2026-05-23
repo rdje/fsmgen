@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Drive divisor coverage stays behavior-neutral
+- `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` adds regression coverage for two
+  parser paths that were already implemented and documented: named drive-call
+  actual expressions and inline drive RHS expressions.
+- The tests intentionally use both literal-zero and actor-constant-zero
+  divisor cases so both shipped error families are exercised on drive
+  surfaces.
+
 ## 2026-05-22: Dynamic-divisor drive coverage is a proof slice
 - `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1` selects coverage hardening for an
   already documented parser boundary.
