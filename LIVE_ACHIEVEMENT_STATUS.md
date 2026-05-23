@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL frontier truth sync shipped
+- Completed `ISF-ATL-FRONTIER-TRUTH-SYNC.2` and closed the maintenance tree.
+- The exhausted ATL implementation tree now reports `none` / `closed` in its
+  current-frontier table.
+- No compiler behavior changed.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-22: R14 — ATL frontier truth sync selected
 - Completed `ISF-ATL-FRONTIER-TRUTH-SYNC.1`.
 - Activated the active R14 roadmap-maintenance task tree for stale

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ATL-FRONTIER-TRUTH-SYNC`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14 roadmap maintenance`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -41,7 +41,7 @@ completed leaves as if they were still selectable frontier work.
 ## Task Tree
 
 - ID: `ISF-ATL-FRONTIER-TRUTH-SYNC`
-  Status: `active`
+  Status: `done`
   Goal: `Correct stale ATL frontier truth after tree exhaustion.`
   Children: `ISF-ATL-FRONTIER-TRUTH-SYNC.1`,
   `ISF-ATL-FRONTIER-TRUTH-SYNC.2`
@@ -53,22 +53,22 @@ completed leaves as if they were still selectable frontier work.
   ATL frontier wording, and update roadmap/live docs without behavior
   changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending commit`
+  Commit: `266ffc99 ISF-ATL-FRONTIER-TRUTH-SYNC.1: select ATL frontier truth sync`
 
 - ID: `ISF-ATL-FRONTIER-TRUTH-SYNC.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Synchronize the closed ATL frontier.`
   Acceptance: `The ATL task tree reports a closed frontier and current
   metadata; roadmap, task index, README, and live docs close this maintenance
   tree; focused documentation checks pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `pending commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ATL-FRONTIER-TRUTH-SYNC.2` | `pending` | The stale ATL current-frontier table must be synchronized after selection. |
+| 1 | none | `closed` | The stale ATL current-frontier table is synchronized. |
 
 ## Decisions
 
@@ -90,15 +90,18 @@ completed leaves as if they were still selectable frontier work.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-ATL-FRONTIER-TRUTH-SYNC.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-22` | `ISF-ATL-FRONTIER-TRUTH-SYNC.2` | `mdbook build docs/book`; `git diff --check` | `frontier truth-sync docs passed; no behavior changed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ATL-FRONTIER-TRUTH-SYNC.1` | `this commit: ISF-ATL-FRONTIER-TRUTH-SYNC.1: select ATL frontier truth sync` | `selects stale closed-frontier synchronization for the exhausted ATL tree` |
-| `ISF-ATL-FRONTIER-TRUTH-SYNC.2` | `pending` | `pending` |
+| `ISF-ATL-FRONTIER-TRUTH-SYNC.1` | `266ffc99 ISF-ATL-FRONTIER-TRUTH-SYNC.1: select ATL frontier truth sync` | `selects stale closed-frontier synchronization for the exhausted ATL tree` |
+| `ISF-ATL-FRONTIER-TRUTH-SYNC.2` | `this commit: ISF-ATL-FRONTIER-TRUTH-SYNC.2: sync ATL frontier truth` | `syncs the exhausted ATL tree's current frontier and closes this maintenance tree` |
 
 ## Changelog
 
 - `2026-05-22`: Created task tree and selected ATL frontier truth
   synchronization.
+- `2026-05-22`: Synchronized the closed ATL current frontier and closed this
+  maintenance tree.

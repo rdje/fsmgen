@@ -6,7 +6,7 @@
 - Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-18`
-- Last updated: `2026-05-20`
+- Last updated: `2026-05-22`
 - Owner: repo-local workflow
 
 ## Goal
@@ -984,8 +984,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` | `completed` | `.9.97` proved accepted generated-child route source-order independence. |
-| 2 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99` | `done` | Shipped source-expression source-order diagnostic hardening and exhausted the active ATL tree. |
+| 1 | none | `closed` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99` shipped source-expression source-order diagnostic hardening and exhausted the ATL tree. |
 
 ## Selected Two-Child Generated Data Route
 
@@ -4650,3 +4649,6 @@ Current proposal summary:
   multi-route, actor-to-actor, actor-to-pin, multi-child, route mux/storage,
   CDC, ready/backpressure, payload protocol, recursive-network, and permanent
   grouping behavior deferred.
+- `2026-05-22`: Maintenance sync updated the current-frontier table to record
+  that `.9.99` exhausted the ATL tree; no behavior or deferred-feature status
+  changed.

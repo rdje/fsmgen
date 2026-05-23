@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ATL-FRONTIER-TRUTH-SYNC` | `active` | `R14 roadmap maintenance` | `ISF-ATL-FRONTIER-TRUTH-SYNC.2` | [docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md](docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ATL-FRONTIER-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md](docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md) |
 | `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.md](docs/tasks/ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.md) |
 | `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.md](docs/tasks/ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.md) |
 | `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md](docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md) |

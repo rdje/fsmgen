@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL frontier truth sync shipped
+- Completed `ISF-ATL-FRONTIER-TRUTH-SYNC.2` and closed the maintenance tree.
+- Synchronized the exhausted `ISF-ACTOR-NETWORK-ORCHESTRATION` task tree so
+  its current-frontier table now records a closed frontier instead of completed
+  leaves.
+- No compiler behavior changed.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
+
+## 2026-05-22
 ### R14 — ATL frontier truth sync selected
 - Completed `ISF-ATL-FRONTIER-TRUTH-SYNC.1`.
 - Activated a new R14 roadmap-maintenance task tree to synchronize stale

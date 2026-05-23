@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: ATL tree closure must be local and global
+- `ISF-ATL-FRONTIER-TRUTH-SYNC.2` fixes local task-tree drift only: the global
+  task index already marked the ATL tree done, and the ATL task file now does
+  the same in its current-frontier table.
+- No user-visible ATL behavior changed; deferred route mux/storage,
+  fan-in/fan-out, ready/backpressure, payload, CDC, recursive-network, and
+  permanent-group boundaries remain deferred.
+
 ## 2026-05-22: Closed ATL frontier truth is task-tree state
 - `ISF-ATL-FRONTIER-TRUTH-SYNC.1` selects a documentation-truth slice because
   the global task index says the ATL tree is done while the ATL task file's
