@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TRANSACTION-OVER-RULE-PRIORITY` | `active` | `R14` | `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | [docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md](docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md) |
 
 ## Proposed Task Trees
 

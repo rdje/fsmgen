@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Transaction-over-rule priority selected
+- Completed selection work for `ISF-TRANSACTION-OVER-RULE-PRIORITY.1`.
+- Activated a new R14 task tree for the covered transaction-over-rule
+  same-target data priority case.
+- The active frontier is `ISF-TRANSACTION-OVER-RULE-PRIORITY.2`.
+- The selected implementation path is narrow: add a bounded scheduled `.fsm`
+  state-active guard surface that does not create fake `current_state`,
+  state-name, or generated `STATE_en` input ports, then use it to guard the
+  lower-priority rule assignment off while the winning transaction state is
+  active.
+- Rule-over-transaction priority, rule/rule priority, unordered
+  rule/transaction conflicts, priority cycles, mixed timing conflicts,
+  transaction/transaction priority, drive/rule arbitration, broader resource
+  arbitration, and transaction lifetime ownership remain unchanged or
+  deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-23: Assemble static part widths shipped
 - Completed `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` and closed the task tree.
 - `assemble` now accepts optional trailing ordered part-width evidence:

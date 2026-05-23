@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Transaction-over-rule priority selected
+- Completed selection work for `ISF-TRANSACTION-OVER-RULE-PRIORITY.1`.
+- Activated a new R14 task tree for the covered same-target data case where a
+  transaction is declared higher priority than a rule.
+- The selected implementation path first needs a bounded scheduled `.fsm`
+  state-active guard surface that can suppress a non-state rule DT while a
+  transaction state is active without creating fake `current_state`,
+  state-name, or generated `STATE_en` input ports.
+- After that guard exists, the implementation slice will lower the
+  transaction-over-rule priority case by leaving the transaction assignment
+  unchanged and guarding the lower-priority rule assignment off while the
+  winning transaction state is active.
+- Rule-over-transaction priority, rule/rule priority, unordered
+  rule/transaction conflicts, priority cycles, mixed timing conflicts,
+  transaction/transaction priority, drive/rule arbitration, broader resource
+  arbitration, and transaction lifetime ownership remain unchanged or
+  deferred.
+- No compiler behavior changed.
+
 ### R14 — Assemble static part widths shipped
 - Completed `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` and closed the task tree.
 - `assemble` now accepts optional trailing

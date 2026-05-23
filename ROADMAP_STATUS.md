@@ -2,8 +2,21 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-TRANSACTION-OVER-RULE-PRIORITY`.
+- Current frontier: `ISF-TRANSACTION-OVER-RULE-PRIORITY.2`.
+- Recent R14 transaction-over-rule priority selection:
+  `ISF-TRANSACTION-OVER-RULE-PRIORITY.1` activated the next R14 priority
+  task tree. The selected implementation path is intentionally narrow:
+  first add a bounded scheduled `.fsm` state-active guard surface that can
+  suppress a non-state rule DT while a transaction state is active without
+  creating fake `current_state`, state-name, or generated `STATE_en` input
+  ports; then use that guard to lower the covered same-target data case where
+  a transaction is declared higher priority than a rule. Rule-over-transaction
+  priority, rule/rule priority, unordered rule/transaction conflicts,
+  priority cycles, mixed timing conflicts, transaction/transaction priority,
+  drive/rule arbitration, broader resource arbitration, and transaction
+  lifetime ownership remain unchanged or deferred. No parser, scheduler,
+  report, generated artifact, HDL, CLI, or public ISF behavior changed.
 - Recent R14 assemble static part-width completion:
   `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` shipped optional trailing
   `(assemble part... as target (widths N|PARAM|CONST...))` width evidence.

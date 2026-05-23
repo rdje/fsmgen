@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Transaction-over-rule priority selected
+- Completed selection work for `ISF-TRANSACTION-OVER-RULE-PRIORITY.1`.
+- Activated the active R14 task tree for the covered same-target data case
+  where a transaction is declared higher priority than a rule.
+- The selected path first introduces a bounded scheduled `.fsm` state-active
+  guard surface that does not create fake `current_state`, state-name, or
+  generated `STATE_en` input ports, then uses it to suppress the lower-priority
+  rule assignment while the winning transaction state is active.
+- The active frontier is now `ISF-TRANSACTION-OVER-RULE-PRIORITY.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Assemble static part widths shipped
 - Completed `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` and closed the task tree.
 - `assemble` now accepts optional trailing

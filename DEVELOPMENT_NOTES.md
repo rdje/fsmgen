@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Transaction-over-rule priority needs state-active guards
+- `ISF-TRANSACTION-OVER-RULE-PRIORITY.1` selects the covered same-target data
+  case where a transaction wins over a rule, but deliberately splits the work
+  through a scheduled `.fsm` guard foundation first.
+- Guarding a rule with an authored-looking generated `STATE_en` signal is not
+  safe: a probe showed the `.fsm` frontend treats that token as an implicit
+  input port, while the backend also generates a state-enable wire with the
+  same name.
+- The implementation should therefore introduce a bounded state-active guard
+  representation that lowers to an internal `current_state == STATE`
+  comparison without registering `current_state`, state constants, or
+  generated state-enable names as user module ports.
+
 ## 2026-05-23: Assemble width evidence changes facts, not concat emission
 - `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` extends `assemble` with an optional
   trailing `(widths ...)` list that resolves once into the existing
