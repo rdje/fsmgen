@@ -6884,10 +6884,13 @@ sub _apply_priority_rule_user_resource_arbitration {
     } @{$ir->{dt_blocks} || []};
     my %transactions = map { $_->{name} => 1 } @{$actor->{transactions} || []};
     my %generated_children = _generated_child_transaction_refs($actor);
-    my %actor_member_targets = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
+    my %output_bundle_member_targets = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
+    my %storage_port_member_targets;
     for my $entry (@{$actor->{storage} || []}) {
         for my $signal (@{$entry->{signals} || []}) {
-            $actor_member_targets{$signal->{name}} = 1
+            $output_bundle_member_targets{$signal->{name}} = 1
+                if defined($signal->{name}) && !ref($signal->{name});
+            $storage_port_member_targets{$signal->{name}} = 1
                 if defined($signal->{name}) && !ref($signal->{name});
         }
     }
@@ -6938,8 +6941,14 @@ sub _apply_priority_rule_user_resource_arbitration {
             $resource,
             \@users,
             \%rule_dt,
-            \%actor_member_targets,
+            \%output_bundle_member_targets,
         ) if $kind eq 'output_bundle' && @members;
+        _validate_storage_port_member_coverage(
+            $resource,
+            \@users,
+            \%rule_dt,
+            \%storage_port_member_targets,
+        ) if $kind eq 'storage_port';
 
         for my $left_idx (0 .. $#users) {
             my $left = $users[$left_idx];
@@ -7000,7 +7009,11 @@ sub _apply_priority_rule_user_resource_arbitration {
 
 sub _resource_kind_supports_priority_rule_users {
     my ($kind) = @_;
-    return defined($kind) && ($kind eq 'rule_slot' || $kind eq 'output_bundle' || $kind eq 'transaction_start');
+    return defined($kind)
+        && ($kind eq 'rule_slot'
+            || $kind eq 'output_bundle'
+            || $kind eq 'transaction_start'
+            || $kind eq 'storage_port');
 }
 
 sub _validate_transaction_start_resource {
@@ -7074,6 +7087,46 @@ sub _validate_output_bundle_member_coverage {
             'isf_output_bundle_member_unwritten',
             $resource_name,
             "explicit output_bundle member '$member' is not written by any bound rule user",
+        ) unless $written_members{$member};
+    }
+
+    return 1;
+}
+
+sub _validate_storage_port_member_coverage {
+    my ($resource, $users, $rule_dt, $storage_member_targets) = @_;
+    my $resource_name = $resource->{name} // '<unnamed>';
+    my @members = @{$resource->{members} || []};
+
+    _resource_arbitration_error(
+        'isf_storage_port_members_required',
+        $resource_name,
+        "storage_port resource '$resource_name' requires explicit storage members",
+    ) unless @members;
+
+    my %members = map { $_ => 1 } @members;
+    my %written_members;
+
+    for my $user (@$users) {
+        my $dt = $rule_dt->{$user} || next;
+        for my $assignment (@{$dt->{assignments} || []}) {
+            my $target = $assignment->{lhs};
+            next unless defined($target) && length($target);
+            next unless $storage_member_targets->{$target};
+            _resource_arbitration_error(
+                'isf_storage_port_member_mismatch',
+                $resource_name,
+                "rule user '$user' writes storage member '$target' outside explicit storage_port members",
+            ) unless $members{$target};
+            $written_members{$target} = 1;
+        }
+    }
+
+    for my $member (@members) {
+        _resource_arbitration_error(
+            'isf_storage_port_member_unwritten',
+            $resource_name,
+            "explicit storage_port member '$member' is not written by any bound rule user",
         ) unless $written_members{$member};
     }
 

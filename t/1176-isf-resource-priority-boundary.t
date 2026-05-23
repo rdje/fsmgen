@@ -163,6 +163,49 @@ ISF
     );
 };
 
+subtest 'storage_port members survive parsing and validate actor-owned storage' => sub {
+    my $actor = parse_source(<<'ISF');
+(actor storage_port_member_metadata
+  (clock clk)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done)
+    (output valid))
+  (storage
+    (var slot (width 1))
+    (bank data (width 8) (depth 2)))
+  (transaction main (on start) (complete done))
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter priority)
+      (members slot data_0 data_1)
+      (users high low)))
+  (priority high over low)
+  (rule high a
+    (slot 1)
+    (data_0 3))
+  (rule low b
+    (data_1 4)))
+ISF
+
+    is_deeply(
+        $actor->{resources},
+        [
+            {
+                name    => 'store_bus',
+                kind    => 'storage_port',
+                arbiter => 'priority',
+                members => ['slot', 'data_0', 'data_1'],
+                users   => ['high', 'low'],
+            },
+        ],
+        'storage_port member metadata is preserved',
+    );
+};
+
 subtest 'malformed resources are rejected before actor shell return' => sub {
     assert_parse_rejected(<<'ISF', 'malformed resource keyword', qr/resource entries require/);
 (actor bad_resource_keyword
@@ -192,7 +235,7 @@ ISF
     (resource shared_bus (arbiter round_robin))))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'members require output_bundle kind', qr/resource 'shared_bus' members are supported only with '\(kind output_bundle\)'/);
+    assert_parse_rejected(<<'ISF', 'members require output_bundle or storage_port kind', qr/resource 'shared_bus' members are supported only with '\(kind output_bundle\)' or '\(kind storage_port\)'/);
 (actor members_on_rule_slot
   (clock clk)
   (interface (input start) (output done))
@@ -252,6 +295,74 @@ ISF
       (kind output_bundle)
       (arbiter priority)
       (members missing))))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'storage_port with users requires members', qr/storage_port resource 'store_bus' with users requires explicit/);
+(actor storage_port_without_members
+  (clock clk)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done))
+  (storage
+    (var slot (width 1)))
+  (transaction main (on start) (complete done))
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter priority)
+      (users high low)))
+  (rule high a
+    (slot 1))
+  (rule low b
+    (slot 0)))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'output cannot be storage_port member', qr/resource 'store_bus' member 'done' is not a declared actor-owned storage signal/);
+(actor output_storage_port_member
+  (clock clk)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done))
+  (storage
+    (var slot (width 1)))
+  (transaction main (on start) (complete done))
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter priority)
+      (members done)
+      (users high low)))
+  (rule high a
+    (slot 1))
+  (rule low b
+    (slot 0)))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'bank root cannot be storage_port member', qr/resource 'store_bus' member 'data' is not a declared actor-owned storage signal/);
+(actor bank_root_storage_port_member
+  (clock clk)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done))
+  (storage
+    (bank data (width 8) (depth 2)))
+  (transaction main (on start) (complete done))
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter priority)
+      (members data)
+      (users high low)))
+  (rule high a
+    (data_0 1))
+  (rule low b
+    (data_1 0)))
 ISF
 
     assert_parse_rejected(<<'ISF', 'transaction_start resource name must be a transaction', qr/transaction_start resource 'missing' is not a declared transaction/);

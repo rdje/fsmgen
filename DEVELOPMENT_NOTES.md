@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Storage-port priority is storage-member validation plus grant gating
+- `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` ships the first storage-port subset
+  as explicit storage-member validation over the existing static priority
+  rule-user grant model.
+- The implementation deliberately requires members. That keeps the protected
+  storage set reviewable and avoids making the resource name imply hidden
+  storage discovery or a broader memory-port protocol.
+- The grant still gates the whole bound rule DT. That means unrelated actions
+  in the losing rule are suppressed for the arbitration cycle, matching the
+  behavior of the existing priority resource kinds and avoiding target-level
+  route mux/storage until that has a separate contract.
+
 ## 2026-05-23: Storage-port resources should be explicit storage evidence
 - `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1` selects the concrete actor-owned
   storage signal domain before broader protocol or lifetime semantics.

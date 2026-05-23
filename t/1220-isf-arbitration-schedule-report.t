@@ -26,6 +26,8 @@ my $source = <<'ISF';
     (input low_bundle_req)
     (input high_start_req)
     (input low_start_req)
+    (input high_storage_req)
+    (input low_storage_req)
     (output done)
     (output out)
     (output valid)
@@ -33,11 +35,14 @@ my $source = <<'ISF';
     (output flag)
     (output warn))
   (storage
-    (var status (width 1)))
+    (var status (width 1))
+    (var slot (width 1))
+    (var shadow (width 1)))
   (priority force_out over main)
   (priority high over low)
   (priority high_bundle over low_bundle)
   (priority high_start over low_start)
+  (priority high_storage over low_storage)
   (resources
     (resource shared_slot
       (kind rule_slot)
@@ -51,7 +56,12 @@ my $source = <<'ISF';
     (resource work
       (kind transaction_start)
       (arbiter priority)
-      (users high_start low_start)))
+      (users high_start low_start))
+    (resource store_bus
+      (kind storage_port)
+      (arbiter priority)
+      (members slot shadow)
+      (users high_storage low_storage)))
   (transaction main
     (on start)
     (update out 0)
@@ -73,7 +83,11 @@ my $source = <<'ISF';
   (rule high_start high_start_req
     (trigger work))
   (rule low_start low_start_req
-    (trigger work)))
+    (trigger work))
+  (rule high_storage high_storage_req
+    (slot 1))
+  (rule low_storage low_storage_req
+    (shadow 1)))
 ISF
 
 subtest 'in-process report projects arbitration summaries' => sub {
@@ -122,7 +136,7 @@ sub assert_arbitration_projection {
 
     ok(exists $report->{resource_arbitration}, "$label exposes resource_arbitration");
     is(ref($report->{resource_arbitration}), 'ARRAY', "$label resource_arbitration is an array");
-    is(scalar(@{$report->{resource_arbitration}}), 6, "$label exposes rule_slot, output_bundle, and transaction_start resource users");
+    is(scalar(@{$report->{resource_arbitration}}), 8, "$label exposes rule_slot, output_bundle, transaction_start, and storage_port resource users");
 
     for my $entry (@{$report->{priority_resolutions}}) {
         is_deeply(
@@ -174,6 +188,18 @@ sub assert_arbitration_projection {
     my $low_start = find_resource_entry($report, user => 'low_start');
     is_deeply($low_start->{members}, [], "$label low transaction_start grant has no member list");
     is_deeply($low_start->{suppressed_by}, ['high_start'], "$label low transaction_start user records higher suppressor");
+
+    my $high_storage = find_resource_entry($report, user => 'high_storage');
+    is($high_storage->{resource}, 'store_bus', "$label high storage_port grant names resource");
+    is($high_storage->{kind}, 'storage_port', "$label high storage_port grant names resource kind");
+    is($high_storage->{arbiter}, 'priority', "$label high storage_port grant names arbiter");
+    is($high_storage->{user_kind}, 'rule', "$label high storage_port grant names user kind");
+    is_deeply($high_storage->{members}, ['slot', 'shadow'], "$label storage_port grant exposes explicit storage members");
+    is_deeply($high_storage->{suppressed_by}, [], "$label highest storage_port user has no suppressors");
+
+    my $low_storage = find_resource_entry($report, user => 'low_storage');
+    is_deeply($low_storage->{members}, ['slot', 'shadow'], "$label low storage_port grant exposes explicit storage members");
+    is_deeply($low_storage->{suppressed_by}, ['high_storage'], "$label low storage_port user records higher suppressor");
 }
 
 sub find_resource_entry {

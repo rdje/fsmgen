@@ -6698,7 +6698,7 @@ sub _parse_resources($self, $clause) {
             }
 
             if ($head eq 'members') {
-                confess "Error: resource '$name' members requires '(members output...)'\n"
+                confess "Error: resource '$name' members requires '(members name...)'\n"
                     unless @$form >= 2;
                 for my $member (@{$form}[1 .. $#$form]) {
                     confess "Error: resource '$name' members must be scalar names\n"
@@ -6715,10 +6715,12 @@ sub _parse_resources($self, $clause) {
 
         confess "Error: resource '$name' requires '(arbiter $RESOURCE_ARBITER_SYNTAX)'\n"
             unless defined($arbiter);
-        confess "Error: resource '$name' with users requires an enforced '(kind ...)' such as '(kind rule_slot)', '(kind output_bundle)', or '(kind transaction_start)'\n"
+        confess "Error: resource '$name' with users requires an enforced '(kind ...)' such as '(kind rule_slot)', '(kind output_bundle)', '(kind transaction_start)', or '(kind storage_port)'\n"
             if @users && !defined($kind);
-        confess "Error: resource '$name' members are supported only with '(kind output_bundle)'\n"
-            if @members && (($kind // '') ne 'output_bundle');
+        confess "Error: resource '$name' members are supported only with '(kind output_bundle)' or '(kind storage_port)'\n"
+            if @members && (($kind // '') ne 'output_bundle') && (($kind // '') ne 'storage_port');
+        confess "Error: storage_port resource '$name' with users requires explicit '(members storage_signal...)'\n"
+            if @users && (($kind // '') eq 'storage_port') && !@members;
 
         my %resource = (name => $name, arbiter => $arbiter);
         $resource{kind} = $kind if defined($kind);
@@ -6733,10 +6735,13 @@ sub _validate_resource_user_targets($self, $actor) {
     my $actor_name = $actor->{actor_name};
     my %rule_names = map { $_->{name} => 1 } @{$actor->{rules} || []};
     my %transaction_names = map { $_->{name} => 1 } @{$actor->{transactions} || []};
-    my %member_names = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
+    my %output_bundle_member_names = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
+    my %storage_member_names;
     for my $entry (@{$actor->{storage} || []}) {
         for my $signal (@{$entry->{signals} || []}) {
-            $member_names{$signal->{name}} = 1
+            $output_bundle_member_names{$signal->{name}} = 1
+                if defined($signal->{name}) && !ref($signal->{name});
+            $storage_member_names{$signal->{name}} = 1
                 if defined($signal->{name}) && !ref($signal->{name});
         }
     }
@@ -6744,13 +6749,19 @@ sub _validate_resource_user_targets($self, $actor) {
     for my $resource (@{$actor->{resources} || []}) {
         my $kind = $resource->{kind} // '';
         if (@{$resource->{members} || []}) {
-            confess "Error: resource '$resource->{name}' members are supported only with '(kind output_bundle)' in actor '$actor_name'\n"
-                unless $kind eq 'output_bundle';
+            confess "Error: resource '$resource->{name}' members are supported only with '(kind output_bundle)' or '(kind storage_port)' in actor '$actor_name'\n"
+                unless $kind eq 'output_bundle' || $kind eq 'storage_port';
             for my $member (@{$resource->{members} || []}) {
-                confess "Error: resource '$resource->{name}' member '$member' is not a declared actor output or actor-owned storage signal in actor '$actor_name'\n"
-                    unless defined($member)
-                        && !ref($member)
-                        && $member_names{$member};
+                my $ok = defined($member) && !ref($member)
+                    && (
+                        ($kind eq 'output_bundle' && $output_bundle_member_names{$member})
+                        || ($kind eq 'storage_port' && $storage_member_names{$member})
+                    );
+                my $expected = $kind eq 'storage_port'
+                    ? 'a declared actor-owned storage signal'
+                    : 'a declared actor output or actor-owned storage signal';
+                confess "Error: resource '$resource->{name}' member '$member' is not $expected in actor '$actor_name'\n"
+                    unless $ok;
             }
         }
 
@@ -6762,7 +6773,7 @@ sub _validate_resource_user_targets($self, $actor) {
                     && $transaction_names{$transaction};
         }
 
-        next unless $kind eq 'rule_slot' || $kind eq 'output_bundle' || $kind eq 'transaction_start';
+        next unless $kind eq 'rule_slot' || $kind eq 'output_bundle' || $kind eq 'transaction_start' || $kind eq 'storage_port';
         for my $user (@{$resource->{users} || []}) {
             confess "Error: resource '$resource->{name}' user '$user' is not a declared rule in actor '$actor_name'\n"
                 unless defined($user)

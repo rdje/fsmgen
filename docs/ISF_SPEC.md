@@ -452,8 +452,9 @@ Additional actor clauses with mixed parser/scheduler behavior:
   behavior.
 - `(resources ...)`, structurally validated as resource entries with
   `(arbiter priority|round_robin)` plus optional `(kind ...)` and
-  `(users ...)`/`(members ...)`; `rule_slot` + `priority` and
-  `output_bundle` + `priority` rule-user resources are scheduler-enforced.
+  `(users ...)`/`(members ...)`; `rule_slot`, `output_bundle`,
+  `transaction_start`, and `storage_port` + `priority` rule-user resources
+  are scheduler-enforced.
 - actor-level `(priority lhs over rhs)`
 
 Deprecated compatibility:
@@ -3453,10 +3454,10 @@ Current shareable resource registry:
 | `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
 | `output_bundle` | shipped for `priority` arbitration | A group of actor outputs or rule-written LHS targets with rule users. A grant enables the whole winning bound rule DT for that cycle; optional explicit members name declared actor output ports or concrete actor-owned storage signals. |
 | `transaction_start` | shipped for `priority` arbitration | One-cycle arbitration for rule-trigger request fan-in into one local transaction. The resource name must be the target transaction name. |
+| `storage_port` | shipped for `priority` arbitration | One-cycle arbitration for rule users that update explicit actor-owned storage signals. |
 | `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
 | `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
 | `child_instance` | backlog | A spawned child instance that must not be re-entered while busy. |
-| `storage_port` | backlog | A shared state, register, memory, or storage-port access path. |
 
 Backlog names are parser-recognized catalog entries, not shipped runtime
 behavior. A backlog kind with bound users must fail closed until its lowering
@@ -3464,11 +3465,13 @@ path, runtime semantics, diagnostics, report surface, and regression coverage
 ship.
 
 The shipped resource-arbitration implementation covers priority-arbitrated
-`rule_slot`, `output_bundle`, and `transaction_start` rule users. The source
+`rule_slot`, `output_bundle`, `transaction_start`, and `storage_port` rule
+users. The source
 shape keeps binding centralized under `(resources ...)` by extending a
 resource entry with `(kind rule_slot)`, `(kind output_bundle)`, or
-`(kind transaction_start)`, `(users rule_a rule_b ...)`, and for output
-bundles optionally `(members target_a target_b ...)` subclauses.
+`(kind transaction_start)`, `(kind storage_port)`,
+`(users rule_a rule_b ...)`, and for output bundles or storage ports
+`(members target_a target_b ...)` subclauses.
 For those covered cases, each bound rule requests the resource when its
 normalized rule guard is true. Rule-local `(priority over other_rule)` and
 actor-level `(priority lhs over rhs)` edges choose the active winner when the
@@ -3490,15 +3493,26 @@ non-generated rule-trigger surface. The resource does not replace the
 generated `{transaction}_trigger_fanin` DT; it suppresses lower-priority rule
 DTs before their per-rule trigger source pulses can feed that fan-in, so no
 extra cycle is added and the fan-in owner remains reviewable.
+For `storage_port`, an explicit member list is required when users are bound.
+Each member must be a concrete actor-owned storage signal: a scalar storage
+variable or a scalarized bank element signal. Bank roots, aggregate storage
+paths, inferred undeclared LHS targets, transaction ports, actor input ports,
+and arbitrary expressions remain outside the shipped member domain. Each
+listed storage member must be written by at least one bound rule user, and no
+bound rule user may write a concrete actor-owned storage signal outside the
+list. The grant still gates the whole bound rule DT for the cycle; it does
+not create route mux/storage, storage locks, fairness state, or hold/release
+ownership.
 Cycles, incomplete ordering among potentially simultaneous bound users,
 ambiguous future user namespaces, unsupported resource kinds, member/list
 mismatches, unwritten explicit members, and `round_robin` resources with bound
 users fail closed.
 Transaction users, named-drive users, output-target users, child-instance
-users, storage-port users, generated-child transaction-start resources,
-actor-network trigger resources, bank-root or aggregate output-bundle members,
-inferred undeclared member targets, multi-capacity resources, and transaction
-lifetime hold/release semantics remain deferred.
+users, generated-child transaction-start resources, generated-child storage
+arbitration, actor-network trigger resources, actor-network endpoint users,
+bank-root or aggregate output-bundle/storage-port members, inferred
+undeclared member targets, multi-capacity resources, storage lifetime
+ownership, and transaction lifetime hold/release semantics remain deferred.
 
 Actor-level `(phase name property...)` and `(stage name property...)` metadata
 is structurally validated by the parser and carried in the actor shell for
@@ -5216,12 +5230,14 @@ Focused tests:
   port-binding handoffs, named-drive handoff, and spawn/generated-`do`
   parameter overrides for the shipped fixture set.
 - Enforced resource arbitration beyond the shipped priority-arbitrated
-  `rule_slot`, `output_bundle`, and `transaction_start` rule-user cases:
+  `rule_slot`, `output_bundle`, `transaction_start`, and `storage_port`
+  rule-user cases:
   `round_robin`, `interface_bundle`, `named_drive`, `child_instance`,
-  `storage_port`, generated-child transaction starts, actor-network trigger
-  resources, output-target users, bank-root or aggregate output-bundle member
-  domains, inferred undeclared member targets, multi-capacity resources,
-  dynamic resource names, and transaction lifetime ownership remain deferred.
+  generated-child transaction starts, generated-child storage arbitration,
+  actor-network trigger resources, actor-network endpoint users, output-target
+  users, bank-root or aggregate output-bundle/storage-port member domains,
+  inferred undeclared member targets, multi-capacity resources, dynamic
+  resource names, and transaction/storage lifetime ownership remain deferred.
 - Priority resolution beyond the currently shipped same-target rule/rule,
   rule-over-transaction, and transaction-over-rule data-conflict cases, plus
   the resource-level bound-rule grant case.

@@ -744,9 +744,10 @@ The ISF-specific current limitations are:
   values/expression operands, or drive-call actual scalar values/expression
   operands, subaggregate operands/updates, and aggregate
   interface/transaction/bank carriers.
-- `(resources ...)` is structurally validated by the parser and now has three
+- `(resources ...)` is structurally validated by the parser and now has four
   enforced resource kinds for declared rule users under the `priority`
-  arbiter: `rule_slot`, `output_bundle`, and `transaction_start`.
+  arbiter: `rule_slot`, `output_bundle`, `transaction_start`, and
+  `storage_port`.
 
   `rule_slot` is a one-cycle mutual-exclusion slot. `output_bundle` owns a
   group of actor outputs or rule-written LHS targets and may carry explicit
@@ -754,9 +755,13 @@ The ISF-specific current limitations are:
   rule-trigger request fan-in into one local transaction, using the resource
   name as the transaction name and suppressing lower-priority rule DTs before
   their trigger source pulses feed the generated trigger fan-in DT.
+  `storage_port` protects explicit actor-owned storage signals, requires
+  storage member lists when users are bound, and uses the same one-cycle
+  rule-DT grant gating.
 
   Future kinds such as `interface_bundle`, `named_drive`, `child_instance`,
-  and `storage_port` remain backlog until their lowering contracts are
+  generated-child storage arbitration, route mux/storage, storage locks, and
+  lifetime ownership remain backlog until their lowering contracts are
   explicit.
 
   The accepted `round_robin` value remains parser metadata until round-robin
@@ -767,7 +772,8 @@ The ISF-specific current limitations are:
 
   `(priority ...)` is structurally validated and currently enforced for
   same-target rule/rule data conflicts, priority-arbitrated `rule_slot`,
-  `output_bundle`, and `transaction_start` resources, and the lowerable
+  `output_bundle`, `transaction_start`, and `storage_port` resources, and the
+  lowerable
   rule-over-transaction same-target data case.
 
   Transaction-over-rule priority remains deferred because scheduled `.fsm`

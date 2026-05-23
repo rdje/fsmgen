@@ -1747,11 +1747,11 @@ exclusion and arbiter behavior.
 Current boundary: resource metadata is structurally validated, including
 supported arbiter names, resource kinds, duplicate resource rejection, and
 resource-user validation for the enforced rule-user resource kinds. The
-scheduler now enforces `rule_slot`, `output_bundle`, and `transaction_start`
-under the static `priority` arbiter for declared rule users. Each bound rule
-requests when its guard is true, the priority graph chooses a unique active
-winner, and the generated grant gates the whole rule DT DTE without adding a
-cycle.
+scheduler now enforces `rule_slot`, `output_bundle`, `transaction_start`, and
+`storage_port` under the static `priority` arbiter for declared rule
+users. Each bound rule requests when its guard is true, the priority graph
+chooses a unique active winner, and the generated grant gates the whole rule
+DT DTE without adding a cycle.
 Unmembered `output_bundle` resources keep the implicit bound-rule surface: the
 bound rule users and the outputs or other LHS targets they drive describe the
 bundle intent. `output_bundle` resources may now carry explicit
@@ -1763,6 +1763,14 @@ transaction. Each bound rule user must trigger that transaction through the
 shipped non-generated rule-trigger surface. Priority suppression gates
 lower-priority rule DTs before their trigger source pulses feed the generated
 `{transaction}_trigger_fanin` DT.
+`storage_port` resources require explicit `(members name...)` metadata when
+users are bound. Members must name concrete actor-owned storage signals:
+scalar storage variables or scalarized bank element signals. Member lists
+validate against bound rule writes in that storage domain and report through
+`resource_arbitration[].members`. Bank roots, aggregate storage paths,
+inferred undeclared targets, transaction ports, actor input ports, route
+mux/storage, storage locks, fairness state, and hold/release ownership remain
+outside this shipped subset.
 
 The resource-kind catalog is owned in code by
 `FSM::Support::ISFResourceCatalog` and exposed through the machine-readable
@@ -1776,18 +1784,19 @@ Current shareable resource registry:
 | `rule_slot` | shipped for `priority` arbitration | One-cycle mutual exclusion for rule users under the `priority` arbiter. |
 | `output_bundle` | shipped for `priority` arbitration | One-cycle ownership of a group of actor outputs or rule-written LHS targets under the `priority` arbiter, with optional explicit declared-output/storage-signal member lists. |
 | `transaction_start` | shipped for `priority` arbitration | One-cycle arbitration for rule-trigger request fan-in into one local transaction. |
+| `storage_port` | shipped for `priority` arbitration | One-cycle arbitration for rule users that update explicit actor-owned storage signals. |
 | `interface_bundle` | backlog | Ownership of a protocol-facing interface or bus bundle. |
 | `named_drive` | backlog | Ownership of a reusable actor `(drive ...)` body or drive-call path. |
 | `child_instance` | backlog | Re-entry control for a spawned child instance. |
-| `storage_port` | backlog | Arbitration for shared state, register, memory, or storage-port access. |
 
 Remaining backlog: `interface_bundle`, `named_drive`, `child_instance`,
-`storage_port`, `round_robin`, generated-child transaction starts,
-actor-network trigger resources, transaction lifetime ownership,
-named-drive users, output-target users, bank-root/aggregate/inferred
-output-bundle member domains, multi-capacity resources, and dynamic resource
-names remain backlog until their reset, hold/release, fairness, and
-diagnostic contracts are explicit.
+`round_robin`, generated-child transaction starts, generated-child storage
+arbitration, actor-network trigger resources, actor-network endpoint users,
+transaction/storage lifetime ownership, named-drive users, output-target
+users, bank-root/aggregate/inferred output-bundle or storage-port member
+domains, multi-capacity resources, dynamic resource names, route mux/storage,
+storage locks, and broader memory-port protocols remain backlog until their
+reset, hold/release, fairness, and diagnostic contracts are explicit.
 
 ### Priority Resolution
 

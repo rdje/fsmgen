@@ -249,6 +249,82 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'transaction_start_priority');
 };
 
+subtest 'priority storage_port grant gates lower-priority storage writers' => sub {
+    my $source = <<'ISF';
+(actor storage_port_priority
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done)
+    (output valid))
+  (storage
+    (var slot (width 1))
+    (var shadow (width 1)))
+  (transaction main
+    (on start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter priority)
+      (members slot shadow)
+      (users high low)))
+  (rule high a
+    (slot 1))
+  (rule low b
+    (shadow 1)
+    (valid 1)))
+ISF
+
+    my $ir = lower_ir($source);
+    my $low_shadow = find_record($ir, owner => 'low', target => 'shadow');
+    my $low_valid = find_record($ir, owner => 'low', target => 'valid');
+    is_deeply(
+        $low_shadow->{resource_suppressed_by},
+        ['high'],
+        'low storage-port rule action records the higher resource requester',
+    );
+    is_deeply(
+        $low_valid->{resource_suppressed_by},
+        ['high'],
+        'storage-port grant still gates the whole bound rule DT',
+    );
+    is_deeply(
+        $ir->{resource_arbitration}{grants},
+        [
+            {
+                resource => 'store_bus',
+                kind     => 'storage_port',
+                arbiter  => 'priority',
+                user     => 'high',
+                higher   => [],
+                members  => ['slot', 'shadow'],
+            },
+            {
+                resource => 'store_bus',
+                kind     => 'storage_port',
+                arbiter  => 'priority',
+                user     => 'low',
+                higher   => ['high'],
+                members  => ['slot', 'shadow'],
+            },
+        ],
+        'storage_port grants preserve explicit storage member evidence',
+    );
+
+    my $fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($source))->{files}{'storage_port_priority.fsm'};
+    like(
+        $fsm,
+        qr/\(-low\s+<\(& b \(! a\)\)\s+\(<- \(shadow 1\)\)\s+\(<- \(valid> 1\)\)\s+\)/s,
+        'scheduled .fsm gates the whole low storage-port rule DT with the priority grant',
+    );
+    assert_fsm_reaches_hdl($fsm, 'storage_port_priority');
+};
+
 subtest 'explicit output_bundle members fail closed on rule output mismatch' => sub {
     assert_lower_rejected(<<'ISF', 'bound rule writes output outside members', qr/isf_output_bundle_member_mismatch/);
 (actor output_bundle_member_mismatch
@@ -358,6 +434,90 @@ ISF
     (valid 1))
   (rule low b
     (valid 0)))
+ISF
+};
+
+subtest 'explicit storage_port members fail closed on storage mismatch' => sub {
+    assert_lower_rejected(<<'ISF', 'storage_port requires explicit members with users', qr/storage_port resource 'store_bus' with users requires explicit/);
+(actor storage_port_missing_members
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done))
+  (storage
+    (var slot (width 1)))
+  (transaction main
+    (on start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter priority)
+      (users high low)))
+  (rule high a
+    (slot 1))
+  (rule low b
+    (slot 0)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'bound rule writes storage outside storage_port members', qr/isf_storage_port_member_mismatch/);
+(actor storage_port_member_mismatch
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done))
+  (storage
+    (var slot (width 1))
+    (var shadow (width 1)))
+  (transaction main
+    (on start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter priority)
+      (members slot)
+      (users high low)))
+  (rule high a
+    (slot 1))
+  (rule low b
+    (shadow 1)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'explicit storage_port member is not written by any user', qr/isf_storage_port_member_unwritten/);
+(actor storage_port_member_unwritten
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done))
+  (storage
+    (var slot (width 1))
+    (var shadow (width 1)))
+  (transaction main
+    (on start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter priority)
+      (members slot shadow)
+      (users high low)))
+  (rule high a
+    (slot 1))
+  (rule low b
+    (slot 0)))
 ISF
 };
 
@@ -535,6 +695,33 @@ ISF
     (trigger work))
   (rule low low_req
     (trigger work)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'round_robin storage_port with bound users', qr/isf_resource_unsupported_arbiter/);
+(actor unsupported_rr_storage_port_resource
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done))
+  (storage
+    (var slot (width 1)))
+  (transaction main
+    (on start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter round_robin)
+      (members slot)
+      (users high low)))
+  (rule high a
+    (slot 1))
+  (rule low b
+    (slot 0)))
 ISF
 
     assert_lower_rejected(<<'ISF', 'unsupported resource kind with bound users', qr/isf_resource_unsupported_kind/);

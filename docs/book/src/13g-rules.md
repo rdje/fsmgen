@@ -371,6 +371,11 @@ deferred. The remaining enforcement work is tracked in
     (kind transaction_start)
     (arbiter priority)
     (users fast_path slow_path))
+  (resource store_bus
+    (kind storage_port)
+    (arbiter priority)
+    (members slot shadow)
+    (users writer_a writer_b))
   (resource mem_port
     (arbiter round_robin)))
 ```
@@ -387,9 +392,9 @@ arbiter names, resource kinds, duplicate resource names, duplicate resource
 subclauses, duplicate users, duplicate members, known users for enforced
 resource kinds, declared local transaction names for bound
 `transaction_start` resources, and declared actor-output/storage-signal
-members for explicit `output_bundle` lists. `(resources ...)` is a singleton
-actor clause, so repeated resources blocks are rejected rather than merged or
-overwritten.
+members for explicit `output_bundle` lists plus storage-only members for
+explicit `storage_port` lists. `(resources ...)` is a singleton actor clause,
+so repeated resources blocks are rejected rather than merged or overwritten.
 
 The table below is the current public registry of things ISF can name as
 shareable resources. It deliberately starts small. A new kind should enter the
@@ -409,18 +414,18 @@ Current shareable resource registry:
 | `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
 | `output_bundle` | shipped for `priority` arbitration | A group of actor outputs or rule-written LHS targets with rule users. A grant enables the whole winning bound rule DT for that cycle; optional explicit members name declared actor output ports or concrete actor-owned storage signals. |
 | `transaction_start` | shipped for `priority` arbitration | The start/request fan-in for one local transaction. The resource name is the transaction name, and rule users must trigger it. |
+| `storage_port` | shipped for `priority` arbitration | Explicit actor-owned storage signals protected by a one-cycle rule-user grant. |
 | `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
 | `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
 | `child_instance` | backlog | A spawned child instance that must not be re-entered while busy. |
-| `storage_port` | backlog | A shared state, register, memory, or storage-port access path. |
 
-Today, `rule_slot`, `output_bundle`, and `transaction_start` with `priority`
-arbitration have shipped scheduler behavior for declared rule users. Each
-bound rule requests the resource when its normalized rule guard is true.
-Priority edges choose the active winner, and the generated grant gates the
-whole lowered rule DT DTE without adding a cycle. Backlog resource kinds are
-parser-recognized names, not runtime support claims; a backlog kind with bound
-users fails closed until its lowering contract ships. Without explicit
+Today, `rule_slot`, `output_bundle`, `transaction_start`, and `storage_port`
+with `priority` arbitration have shipped scheduler behavior for declared rule
+users. Each bound rule requests the resource when its normalized rule guard is
+true. Priority edges choose the active winner, and the generated grant gates
+the whole lowered rule DT DTE without adding a cycle. Backlog resource kinds
+are parser-recognized names, not runtime support claims; a backlog kind with
+bound users fails closed until its lowering contract ships. Without explicit
 members, `output_bundle` keeps the existing implicit surface: the bound rule
 users and the outputs or other LHS targets they drive describe the bundle
 intent. `output_bundle` may include an explicit `(members name...)` list.
@@ -433,7 +438,14 @@ member lists. `transaction_start` resources use the resource name as the
 target local transaction; each bound rule user must trigger that transaction.
 The grant suppresses lower-priority rule DTs before their trigger source
 pulses feed the generated `{transaction}_trigger_fanin` DT, preserving the
-existing fan-in owner and timing. Schedule reports expose output-bundle member
-names through `resource_arbitration[].members`; resources without explicit
-members use an empty array. The remaining resource work is tracked in
+existing fan-in owner and timing. `storage_port` requires an explicit
+`(members name...)` list when users are bound. Each member must be a concrete
+actor-owned storage signal: a scalar storage variable or scalarized bank
+element signal. Bound rule users may not write concrete actor-owned storage
+signals outside that list, and every listed member must be written by at least
+one bound rule user. The grant still gates the whole bound rule DT; it does
+not create route mux/storage, storage locks, fairness state, or hold/release
+ownership. Schedule reports expose output-bundle and storage-port member names
+through `resource_arbitration[].members`; resources without explicit members
+use an empty array. The remaining resource work is tracked in
 [Feature Backlog](14-feature-backlog.md).

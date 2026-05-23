@@ -2,6 +2,31 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Storage-port resource priority shipped
+- Completed `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` and closed the task tree.
+- `(kind storage_port)` resources now enforce static `priority` arbitration
+  for declared rule users.
+- Bound storage-port resources require explicit `(members ...)`, and each
+  member must name a concrete actor-owned storage signal: scalar storage
+  variables or scalarized bank element signals.
+- Parser validation rejects output ports, actor input ports, transaction
+  ports, bank roots, aggregate paths, inferred undeclared targets, and
+  arbitrary expressions as storage-port members.
+- Lowering gates losing rule DTs before their assignments can update the
+  protected storage signals. The shipped subset is whole-rule one-cycle
+  grant gating, not route mux/storage, storage locks, fairness state, or
+  hold/release ownership.
+- Schedule reports expose successful grants through
+  `resource_arbitration[]` with `kind: storage_port` and the explicit
+  `members` array.
+- Validation passed: syntax checks; focused resource/report tests with
+  `Files=3, Tests=20`; public/spec/book audits with `Files=8, Tests=344`;
+  `mdbook build docs/book`; broad `./bin/ci-regression isf --no-book` with
+  `Files=250, Tests=1665`; post-closure public/doc audits with
+  `Files=6, Tests=347`; and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Storage-port resource priority selected
 - Completed `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1`.
 - Activated the active R14 task tree for bounded `(kind storage_port)`

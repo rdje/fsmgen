@@ -1009,8 +1009,10 @@ author-defined instance handle; the resource kind is the public registry entry
 that says what type of shareable thing the instance represents. The enforced
 resource kinds are `rule_slot`, a one-cycle mutual-exclusion slot for rule
 users; `output_bundle`, a named bundle of actor outputs or rule-written LHS
-targets for rule users; and `transaction_start`, one-cycle arbitration for
-rule-trigger request fan-in into one local transaction. `output_bundle` may carry explicit
+targets for rule users; `transaction_start`, one-cycle arbitration for
+rule-trigger request fan-in into one local transaction; and `storage_port`,
+one-cycle arbitration for rule users that update explicit actor-owned storage
+signals. `output_bundle` may carry explicit
 `(members target...)` metadata naming declared actor output ports or concrete
 actor-owned storage signals. Explicit members are narrower than the unmembered
 implicit bundle surface: they validate/report declared outputs and storage
@@ -1019,12 +1021,18 @@ storage ownership, or route ownership. A `transaction_start` resource name
 must be the target local transaction name; every bound rule user must trigger
 that transaction through the shipped non-generated rule-trigger surface, and
 the grant suppresses lower-priority rule DTs before their trigger source
-pulses feed the generated `rule_trigger_fanin` DT. Shipped resource kinds use
+pulses feed the generated `rule_trigger_fanin` DT. A `storage_port` resource
+with bound users must carry explicit `(members target...)` metadata naming
+concrete actor-owned storage signals: scalar storage variables or scalarized
+bank element signals. Storage-port members do not include bank roots,
+aggregate paths, inferred LHS targets, transaction ports, actor input ports,
+or arbitrary expressions. Shipped resource kinds use
 the static `priority` arbiter today. The current shareable resource registry is:
 `rule_slot` (shipped for `priority` arbitration), `output_bundle` (shipped for
 `priority` arbitration), `transaction_start` (shipped for `priority`
-arbitration), `interface_bundle`, `named_drive`, `child_instance`, and
-`storage_port`. The non-shipped kinds are public catalog/backlog names, not
+arbitration), `storage_port` (shipped for `priority` arbitration),
+`interface_bundle`, `named_drive`, and `child_instance`. The non-shipped
+kinds are public catalog/backlog names, not
 public runtime behavior, until
 their lowering paths, runtime semantics, diagnostics, report surfaces, and
 regressions ship. The accepted `round_robin` string remains parser metadata
@@ -1037,10 +1045,11 @@ discover the current values through `resource_arbiter_values`,
 `backlog_resource_kind_values` on `embedding.isf_public_interface`.
 The first resource-arbitration path is checked by
 [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
-for parser metadata, `rule_slot`, `output_bundle`, and `transaction_start`
-scheduled `.fsm` DTE gating, output-bundle output/storage member-list
-coverage, transaction-start trigger-user validation, HDL handoff, and
-fail-closed unsupported arbitration cases.
+for parser metadata, `rule_slot`, `output_bundle`, `transaction_start`, and
+`storage_port` scheduled `.fsm` DTE gating, output-bundle output/storage
+member-list coverage, transaction-start trigger-user validation,
+storage-port storage-member validation, HDL handoff, and fail-closed
+unsupported arbitration cases.
 The first rule/transaction priority path is checked by
 [t/1219-isf-rule-transaction-priority.t](../t/1219-isf-rule-transaction-priority.t)
 for accepted rule-over-transaction suppression, accepted transaction-over-rule

@@ -1,5 +1,39 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Storage-port resource priority shipped
+- Completed `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` and closed the task tree.
+- `(kind storage_port)` resources are now enforced for declared rule users
+  under the static `priority` arbiter.
+- Bound storage-port resources require explicit `(members ...)`, and each
+  member must name a concrete actor-owned storage signal already recognized by
+  the scheduler: scalar storage variables or scalarized bank element signals.
+- Parser validation rejects storage-port members outside that concrete storage
+  domain. Lowering fails closed if a bound rule writes a concrete
+  actor-owned storage signal outside the explicit member list, or if a listed
+  member is not written by any bound rule user.
+- Lowering reuses the existing priority grant model to gate lower-priority
+  rule DTs before their assignments can update protected storage signals.
+  This remains whole-rule one-cycle gating; it does not add route
+  mux/storage, storage locks, fairness state, or hold/release ownership.
+- Schedule reports expose successful grants through
+  `resource_arbitration[]` with `kind: storage_port` and the explicit
+  `members` array.
+- `round_robin`, `interface_bundle`, `named_drive`, `child_instance`,
+  transaction users, named-drive users, output-target users,
+  child-instance users, actor-network endpoint users, generated-child storage
+  arbitration, bank-root/aggregate/inferred members, transaction ports, actor
+  input ports, multi-capacity resources, dynamic resource names, route
+  mux/storage, storage locks, and storage lifetime ownership remain deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused resource/report tests with
+  `Files=3, Tests=20`; public/spec/book audits with `Files=8, Tests=344`;
+  `mdbook build docs/book`; broad `./bin/ci-regression isf --no-book` with
+  `Files=250, Tests=1665`; post-closure public/doc audits with
+  `Files=6, Tests=347`; and `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Storage-port resource priority selected
 - Completed `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1`.
 - Activated the active R14 task tree for bounded `(kind storage_port)`

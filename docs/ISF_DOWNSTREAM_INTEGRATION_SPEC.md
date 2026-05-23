@@ -1743,6 +1743,11 @@ Resource arbitration:
     (kind transaction_start)
     (arbiter priority)
     (users high_pri low_pri))
+  (resource store_bus
+    (kind storage_port)
+    (arbiter priority)
+    (members slot shadow)
+    (users writer_a writer_b))
   (resource response_outputs
     (kind output_bundle)
     (arbiter priority)
@@ -1752,8 +1757,9 @@ Resource arbitration:
 
 Rules:
 
-- Current enforced resource kinds are `rule_slot`, `output_bundle`, and
-  `transaction_start` with `priority` arbitration for declared rule users.
+- Current enforced resource kinds are `rule_slot`, `output_bundle`,
+  `transaction_start`, and `storage_port` with `priority` arbitration for
+  declared rule users.
 - A `transaction_start` resource is named by the local transaction it
   arbitrates. Each listed rule user must trigger that transaction through the
   shipped non-generated rule-trigger surface. Priority suppression gates
@@ -1771,15 +1777,24 @@ Rules:
   explicit member domain. When members are explicit, every listed member must
   be written by at least one bound rule user, and no bound rule user may write
   a declared actor output or actor-owned storage signal outside the list.
+- `storage_port` resources with bound users require `(members name...)`; every
+  member must name a concrete actor-owned storage signal. Concrete storage
+  signals are scalar storage variables and scalarized bank element signals.
+  Bank roots, aggregate paths, inferred undeclared LHS targets, transaction
+  ports, actor input ports, and arbitrary expressions remain outside this
+  explicit member domain. Every listed member must be written by at least one
+  bound rule user, and no bound rule user may write a concrete actor-owned
+  storage signal outside the list.
 - Reports expose `resource_arbitration[]`.
 - Each `resource_arbitration[]` entry includes `resource`, `kind`, `arbiter`,
   `user`, `user_kind`, `members`, and `suppressed_by`. `members` is an array
   and is empty when the resource has no explicit member list.
 - Additional resource kinds may be cataloged as backlog but are not enforced
   unless listed as enforced by the public contract. Generated-child
-  transaction starts, actor-network triggers, transaction users, named-drive
-  users, output-target users, lifetime ownership, and `round_robin` remain
-  outside the shipped resource-arbitration subset.
+  transaction starts, generated-child storage arbitration, actor-network
+  triggers, actor-network endpoint users, transaction users, named-drive
+  users, output-target users, lifetime ownership, route mux/storage, and
+  `round_robin` remain outside the shipped resource-arbitration subset.
 
 ## 12.5. Static Actor Network Metadata
 
@@ -2998,11 +3013,13 @@ metadata, lower-priority rule gating by a higher-priority rule, and delayed
 completion pulse behavior.
 
 Dedicated resource arbitration tests now cover the shipped priority arbiter
-for `rule_slot`, `output_bundle`, and `transaction_start`, including explicit
-output-bundle member-list validation, transaction-start trigger-user
+for `rule_slot`, `output_bundle`, `transaction_start`, and `storage_port`,
+including explicit output-bundle member-list validation,
+transaction-start trigger-user validation, storage-port storage-member
 validation, and `resource_arbitration[].members` report evidence.
 The fixture above remains a `rule_slot` fixture; it does not claim
-round-robin, weighted, token bucket, or broader resource-kind support.
+round-robin, weighted, token bucket, interface-bundle, named-drive, or
+child-instance resource support.
 
 The stage/contract fixture is covered by
 `t/1317-isf-stage-contract-fixture-coverage.t`, which proves strict schedule

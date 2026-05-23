@@ -1,6 +1,41 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Storage-port resource priority shipped
+- Completed `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` and closed the task tree.
+- `storage_port` resources now enforce static `priority` arbitration for
+  declared rule users. Bound resources require explicit `(members ...)`, and
+  each member must name a concrete actor-owned storage signal: scalar storage
+  variables or scalarized bank element signals.
+- Parser validation rejects storage-port members outside the concrete
+  actor-owned storage signal domain. For enforced priority-arbitrated
+  `storage_port` resources, lowering fails closed if a bound rule writes a
+  concrete actor-owned storage signal outside the explicit member list, or if
+  a listed member is not written by any bound rule user.
+- Lowering reuses the existing priority grant model to gate lower-priority
+  rule DTs before their assignments can update protected storage signals. The
+  grant still gates the whole bound rule DT and does not add route
+  mux/storage, storage locks, fairness state, hold/release ownership, or
+  multi-capacity resources.
+- The resource catalog and public contract now list `storage_port` in the
+  enforced kind set. Schedule reports keep the existing
+  `resource_arbitration[]` key family and identify these grants with
+  `kind: storage_port` plus the explicit `members` array.
+- `round_robin`, `interface_bundle`, `named_drive`, `child_instance`,
+  transaction users, named-drive users, output-target users,
+  child-instance users, actor-network endpoint users, generated-child storage
+  arbitration, bank-root/aggregate/inferred members, transaction ports, actor
+  input ports, dynamic resource names, route mux/storage, storage locks, and
+  storage lifetime ownership remain deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused resource/report tests with
+  `Files=3, Tests=20`; public/spec/book audits with `Files=8, Tests=344`;
+  `mdbook build docs/book`; broad `./bin/ci-regression isf --no-book` with
+  `Files=250, Tests=1665`; post-closure public/doc audits with
+  `Files=6, Tests=347`; and `git diff --check`.
+
 ### R14 — Storage-port resource priority selected
 - Completed selection work for `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1`.
 - Activated a new R14 task tree for bounded `(kind storage_port)` priority

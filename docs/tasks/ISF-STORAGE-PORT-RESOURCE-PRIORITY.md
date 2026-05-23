@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-STORAGE-PORT-RESOURCE-PRIORITY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -54,7 +54,7 @@ actor-owned storage signals.
 ## Task Tree
 
 - ID: `ISF-STORAGE-PORT-RESOURCE-PRIORITY`
-  Status: `active`
+  Status: `done`
   Goal: `Enforce bounded storage_port priority arbitration for rule users`
   Children: `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1`,
   `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2`
@@ -67,22 +67,24 @@ actor-owned storage signals.
   behavior changed`
   Verification: `documentation-only selection review, live-doc audits,
   git diff check`
-  Commit: `pending this commit`
+  Commit: `8be2a572 ISF-STORAGE-PORT-RESOURCE-PRIORITY.1: select storage-port resources`
 
 - ID: `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement priority-arbitrated storage_port resources for rule users`
   Acceptance: `Parser and lowerer enforce the selected storage_port boundary,
   reports expose grants with explicit members, docs are synchronized, and
   focused plus broad checks pass`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused resource/report tests; public/spec/book
+  audits; mdBook build; broad ISF regression; post-closure audits; git diff
+  check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `pending` | `The selection leaf is complete; implementation can now proceed under this task-tree owner.` |
+| 1 | `closed` | `done` | `The bounded storage_port priority slice is implemented, documented, validated, and ready for commit.` |
 
 ## Decisions
 
@@ -116,14 +118,23 @@ actor-owned storage signals.
 | --- | --- | --- | --- |
 | `2026-05-23` | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t` | `passed: Files=2, Tests=25` |
 | `2026-05-23` | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1` | `git diff --check` | `passed` |
+| `2026-05-23` | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Support/ISFResourceCatalog.pm` | `passed` |
+| `2026-05-23` | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `prove -Iperl t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t t/1220-isf-arbitration-schedule-report.t` | `passed: Files=3, Tests=20` |
+| `2026-05-23` | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `prove -Iperl t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t t/1220-isf-arbitration-schedule-report.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=8, Tests=344` |
+| `2026-05-23` | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-23` | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `./bin/ci-regression isf --no-book` | `passed: Files=250, Tests=1665` |
+| `2026-05-23` | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t` | `passed: Files=6, Tests=347` |
+| `2026-05-23` | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1` | `pending this commit: ISF-STORAGE-PORT-RESOURCE-PRIORITY.1: select storage-port resources` | `selection slice` |
-| `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `pending` | `implementation slice` |
+| `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1` | `8be2a572 ISF-STORAGE-PORT-RESOURCE-PRIORITY.1: select storage-port resources` | `selection slice` |
+| `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `pending this commit: ISF-STORAGE-PORT-RESOURCE-PRIORITY.2: ship storage-port resources` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-23`: Created and activated the task tree.
+- `2026-05-23`: Shipped bounded `storage_port` priority arbitration for
+  declared rule users and closed the task tree.
