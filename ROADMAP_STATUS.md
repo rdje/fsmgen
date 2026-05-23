@@ -2,8 +2,18 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before code changes.
+- Active task tree: `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC`.
+- Current frontier: `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` will
+  make repeat counts that name generated child transaction parameters fail
+  closed with a targeted diagnostic before repeat counter emission. Full
+  actor/transaction parameter repeat-count specialization and generated-top
+  respecialization remain out of scope.
+- Recent R14 repeat transaction-parameter count diagnostic selection:
+  `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1` activated the repeat
+  count diagnostic hardening tree. The selected implementation will preserve
+  the accepted source domain while replacing the generic unknown-name
+  diagnostic for transaction-parameter repeat counts with an explicit deferred
+  transaction-parameter diagnostic. No compiler behavior changed.
 - Recent R14 backlog owner truth-sync completion:
   `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` synchronized the mdBook feature backlog and
   ATL design proposal so closed repeat-body activation and ATL task trees are

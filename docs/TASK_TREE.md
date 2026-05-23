@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC` | `active` | `R14` | `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` | [docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md](docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md) |
 
 ## Proposed Task Trees
 

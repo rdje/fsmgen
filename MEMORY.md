@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat transaction-parameter count diagnostic selected
+- Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1`.
+- Activated a new R14 task tree for targeted diagnostics when a repeat count
+  names a generated child transaction parameter.
+- The active frontier is `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2`.
+- Full actor/transaction parameter repeat-count specialization and
+  generated-top respecialization remain out of scope.
+- No compiler behavior changed.
+
 ## 2026-05-22: Backlog owner wording synced
 - Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` and closed the task tree.
 - The mdBook feature backlog now labels the closed repeat-body activation and

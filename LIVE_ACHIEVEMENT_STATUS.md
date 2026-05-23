@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat transaction-parameter count diagnostic selected
+- Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1`.
+- Activated the active R14 task tree for targeted transaction-parameter
+  repeat count diagnostics.
+- The active frontier is now
+  `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Backlog owner wording synced
 - Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` and closed the task tree.
 - The mdBook feature backlog and ATL design proposal now describe the closed

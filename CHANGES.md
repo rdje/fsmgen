@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat transaction-parameter count diagnostic selected
+- Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1`.
+- Activated a new R14 task tree for targeted repeat count diagnostics when
+  the count token names a generated child transaction parameter.
+- The selected implementation will preserve the shipped repeat count source
+  boundary while making transaction-parameter deferral explicit.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Backlog owner wording synced
 - Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` and closed the task tree.
 - The mdBook feature backlog now distinguishes historical task-tree records

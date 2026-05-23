@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Transaction repeat parameters stay deferred but explicit
+- `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1` selects a diagnostic
+  hardening slice rather than repeat-parameter specialization.
+- Supporting parameterized repeat counts safely still needs generated-top and
+  counter-width policy. The immediate quality gap is that generated child
+  transaction parameters can currently look like generic unknown names at the
+  repeat count boundary.
+- The implementation should classify that case explicitly and keep all
+  accepted repeat count sources unchanged.
+
 ## 2026-05-22: Backlog ownership wording is auditable
 - `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` changes ownership wording, not behavior.
 - Closed task trees are still linked as historical records because they
