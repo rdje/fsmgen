@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-START-RESOURCE-PRIORITY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -49,7 +49,7 @@ Ship a bounded `transaction_start` resource kind under the existing static
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-START-RESOURCE-PRIORITY`
-  Status: `active`
+  Status: `done`
   Goal: `Enforce bounded transaction_start priority arbitration for rule users`
   Children: `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1`,
   `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2`
@@ -62,22 +62,24 @@ Ship a bounded `transaction_start` resource kind under the existing static
   behavior changed`
   Verification: `documentation-only selection review, live-doc audits,
   git diff check`
-  Commit: `pending this commit`
+  Commit: `5840396e ISF-TRANSACTION-START-RESOURCE-PRIORITY.1: select transaction-start resources`
 
 - ID: `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement priority-arbitrated transaction_start resources for rule users`
   Acceptance: `Parser and lowerer enforce the selected transaction_start
   boundary, reports expose grants, docs are synchronized, and focused plus
   broad checks pass`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused resource/report tests; public/spec/book
+  audits; mdBook build; broad ISF regression; post-closure audits; git diff
+  check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `pending` | `The selection leaf is complete; implementation can now proceed under this task-tree owner.` |
+| 1 | `closed` | `done` | `The bounded transaction_start priority slice is implemented, documented, validated, and ready for commit.` |
 
 ## Decisions
 
@@ -107,14 +109,23 @@ Ship a bounded `transaction_start` resource kind under the existing static
 | --- | --- | --- | --- |
 | `2026-05-23` | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t` | `passed: Files=2, Tests=25` |
 | `2026-05-23` | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1` | `git diff --check` | `passed` |
+| `2026-05-23` | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Support/ISFResourceCatalog.pm` | `passed` |
+| `2026-05-23` | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `prove -Iperl t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t t/1220-isf-arbitration-schedule-report.t` | `passed: Files=3, Tests=17` |
+| `2026-05-23` | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `prove -Iperl t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t t/1220-isf-arbitration-schedule-report.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=8, Tests=341` |
+| `2026-05-23` | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-23` | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `./bin/ci-regression isf --no-book` | `passed: Files=250, Tests=1662` |
+| `2026-05-23` | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t` | `passed: Files=6, Tests=347` |
+| `2026-05-23` | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1` | `pending this commit: ISF-TRANSACTION-START-RESOURCE-PRIORITY.1: select transaction-start resources` | `selection slice` |
-| `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `pending` | `implementation slice` |
+| `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1` | `5840396e ISF-TRANSACTION-START-RESOURCE-PRIORITY.1: select transaction-start resources` | `selection slice` |
+| `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `pending this commit: ISF-TRANSACTION-START-RESOURCE-PRIORITY.2: ship transaction-start resources` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-23`: Created and activated the task tree.
+- `2026-05-23`: Shipped bounded `transaction_start` priority arbitration for
+  declared rule users and closed the task tree.

@@ -1,6 +1,35 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Transaction-start resource priority shipped
+- Completed `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` and closed the task
+  tree.
+- `transaction_start` resources now enforce static `priority` arbitration for
+  declared rule users. The resource name must be a declared local transaction,
+  and each bound rule user must trigger that transaction through the shipped
+  non-generated rule-trigger surface.
+- Lowering reuses the existing priority grant model to suppress
+  lower-priority rule DTs before their trigger source pulses feed the
+  generated `rule_trigger_fanin` DT. The fan-in owner, generated trigger
+  fan-in state, and one-cycle trigger timing are unchanged.
+- The resource catalog and public contract now list `transaction_start` in
+  the enforced kind set. Schedule reports keep the existing
+  `resource_arbitration[]` key family and identify these grants with
+  `kind: transaction_start` and an empty `members` array.
+- `round_robin`, `interface_bundle`, `named_drive`, `child_instance`,
+  `storage_port`, transaction users, named-drive users, output-target users,
+  generated-child transaction starts, actor-network triggers, lifetime
+  ownership, ready/backpressure, route mux/storage, multi-capacity resources,
+  and dynamic resource names remain deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused resource/report tests with
+  `Files=3, Tests=17`; public/spec/book audits with `Files=8, Tests=341`;
+  `mdbook build docs/book`; broad `./bin/ci-regression isf --no-book` with
+  `Files=250, Tests=1662`; post-closure public/doc audits with
+  `Files=6, Tests=347`; and `git diff --check`.
+
 ### R14 — Transaction-start resource priority selected
 - Completed selection work for
   `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1`.

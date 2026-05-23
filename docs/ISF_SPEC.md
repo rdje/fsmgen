@@ -3414,7 +3414,9 @@ metadata is enforced for same-target rule/rule data conflicts when both
 targets are rules, for priority-arbitrated `rule_slot` resources when the
 endpoints are bound rules of the same resource, for priority-arbitrated
 `output_bundle` resources when the endpoints are bound rules of the same
-resource, and for the lowerable rule-over-transaction and
+resource, for priority-arbitrated `transaction_start` resources when the
+endpoints are bound rules that trigger the named local transaction, and for
+the lowerable rule-over-transaction and
 transaction-over-rule same-target data cases.
 Transaction/transaction priority beyond ordinary state mutual exclusion and
 broader resource arbitration remain deferred.
@@ -3424,12 +3426,13 @@ non-empty scalar names, an `(arbiter priority|round_robin)` subclause, and
 optional `(kind ...)`, `(users ...)`, and `(members ...)` subclauses.
 Duplicate resource names, duplicate resource subclauses, duplicate users,
 duplicate members, malformed kinds, malformed users, malformed members,
-unknown `rule_slot` or `output_bundle` users, and output-bundle members that
-are not declared actor output ports or concrete actor-owned storage signals
-are rejected before scheduled `.fsm` emission. `(members ...)` is accepted
-only for `(kind output_bundle)` in the current shipped surface. `(resources
-...)` is an actor-level singleton clause, so repeated resources blocks are
-rejected instead of merged or overwritten.
+unknown enforced-kind users, bound `transaction_start` resource names that do
+not name declared local transactions, and output-bundle members that are not
+declared actor output ports or concrete actor-owned storage signals are
+rejected before scheduled `.fsm` emission. `(members ...)` is accepted only
+for `(kind output_bundle)` in the current shipped surface. `(resources ...)`
+is an actor-level singleton clause, so repeated resources blocks are rejected
+instead of merged or overwritten.
 Resource
 semantics use a growable catalog of shareable resource kinds. The resource name
 is the author-defined instance handle; the kind says what is being shared; the
@@ -3449,9 +3452,9 @@ Current shareable resource registry:
 | --- | --- | --- |
 | `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
 | `output_bundle` | shipped for `priority` arbitration | A group of actor outputs or rule-written LHS targets with rule users. A grant enables the whole winning bound rule DT for that cycle; optional explicit members name declared actor output ports or concrete actor-owned storage signals. |
+| `transaction_start` | shipped for `priority` arbitration | One-cycle arbitration for rule-trigger request fan-in into one local transaction. The resource name must be the target transaction name. |
 | `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
 | `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
-| `transaction_start` | backlog | The start/request fan-in for one transaction. |
 | `child_instance` | backlog | A spawned child instance that must not be re-entered while busy. |
 | `storage_port` | backlog | A shared state, register, memory, or storage-port access path. |
 
@@ -3461,10 +3464,11 @@ path, runtime semantics, diagnostics, report surface, and regression coverage
 ship.
 
 The shipped resource-arbitration implementation covers priority-arbitrated
-`rule_slot` and `output_bundle` rule users. The source shape keeps binding
-centralized under `(resources ...)` by extending a resource entry with
-`(kind rule_slot)` or `(kind output_bundle)`, `(users rule_a rule_b ...)`, and
-for output bundles optionally `(members target_a target_b ...)` subclauses.
+`rule_slot`, `output_bundle`, and `transaction_start` rule users. The source
+shape keeps binding centralized under `(resources ...)` by extending a
+resource entry with `(kind rule_slot)`, `(kind output_bundle)`, or
+`(kind transaction_start)`, `(users rule_a rule_b ...)`, and for output
+bundles optionally `(members target_a target_b ...)` subclauses.
 For those covered cases, each bound rule requests the resource when its
 normalized rule guard is true. Rule-local `(priority over other_rule)` and
 actor-level `(priority lhs over rhs)` edges choose the active winner when the
@@ -3480,14 +3484,21 @@ roots, aggregate paths, inferred undeclared LHS targets, and arbitrary
 expressions remain outside this explicit member domain. Each listed member
 must be written by at least one bound rule user, and no bound rule user may
 write a declared output or actor-owned storage signal outside the list.
+For `transaction_start`, the resource name is the target local transaction
+name. Every bound rule user must trigger that transaction through the shipped
+non-generated rule-trigger surface. The resource does not replace the
+generated `{transaction}_trigger_fanin` DT; it suppresses lower-priority rule
+DTs before their per-rule trigger source pulses can feed that fan-in, so no
+extra cycle is added and the fan-in owner remains reviewable.
 Cycles, incomplete ordering among potentially simultaneous bound users,
 ambiguous future user namespaces, unsupported resource kinds, member/list
 mismatches, unwritten explicit members, and `round_robin` resources with bound
 users fail closed.
 Transaction users, named-drive users, output-target users, child-instance
-users, storage-port users, bank-root or aggregate output-bundle members,
-inferred undeclared member targets, multi-capacity resources, and
-transaction-lifetime hold/release semantics remain deferred.
+users, storage-port users, generated-child transaction-start resources,
+actor-network trigger resources, bank-root or aggregate output-bundle members,
+inferred undeclared member targets, multi-capacity resources, and transaction
+lifetime hold/release semantics remain deferred.
 
 Actor-level `(phase name property...)` and `(stage name property...)` metadata
 is structurally validated by the parser and carried in the actor shell for
@@ -5205,12 +5216,12 @@ Focused tests:
   port-binding handoffs, named-drive handoff, and spawn/generated-`do`
   parameter overrides for the shipped fixture set.
 - Enforced resource arbitration beyond the shipped priority-arbitrated
-  `rule_slot` and `output_bundle` rule-user cases: `round_robin`,
-  `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
-  `storage_port`, output-target users, bank-root or aggregate output-bundle
-  member domains, inferred undeclared member targets, multi-capacity
-  resources, dynamic resource names, and transaction lifetime ownership remain
-  deferred.
+  `rule_slot`, `output_bundle`, and `transaction_start` rule-user cases:
+  `round_robin`, `interface_bundle`, `named_drive`, `child_instance`,
+  `storage_port`, generated-child transaction starts, actor-network trigger
+  resources, output-target users, bank-root or aggregate output-bundle member
+  domains, inferred undeclared member targets, multi-capacity resources,
+  dynamic resource names, and transaction lifetime ownership remain deferred.
 - Priority resolution beyond the currently shipped same-target rule/rule,
   rule-over-transaction, and transaction-over-rule data-conflict cases, plus
   the resource-level bound-rule grant case.

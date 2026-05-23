@@ -1739,6 +1739,10 @@ Resource arbitration:
 
 ```lisp
 (resources
+  (resource work
+    (kind transaction_start)
+    (arbiter priority)
+    (users high_pri low_pri))
   (resource response_outputs
     (kind output_bundle)
     (arbiter priority)
@@ -1748,8 +1752,14 @@ Resource arbitration:
 
 Rules:
 
-- Current enforced resource kinds are `rule_slot` and `output_bundle` with
-  `priority` arbitration for declared rule users.
+- Current enforced resource kinds are `rule_slot`, `output_bundle`, and
+  `transaction_start` with `priority` arbitration for declared rule users.
+- A `transaction_start` resource is named by the local transaction it
+  arbitrates. Each listed rule user must trigger that transaction through the
+  shipped non-generated rule-trigger surface. Priority suppression gates
+  lower-priority rule DTs before their per-rule trigger source pulses feed the
+  generated `{transaction}_trigger_fanin` DT; the fan-in owner and timing stay
+  unchanged.
 - An unmembered `output_bundle` keeps the historical implicit surface: the
   bound rule users and the outputs or other LHS targets they drive describe
   the bundle intent.
@@ -1766,7 +1776,10 @@ Rules:
   `user`, `user_kind`, `members`, and `suppressed_by`. `members` is an array
   and is empty when the resource has no explicit member list.
 - Additional resource kinds may be cataloged as backlog but are not enforced
-  unless listed as enforced by the public contract.
+  unless listed as enforced by the public contract. Generated-child
+  transaction starts, actor-network triggers, transaction users, named-drive
+  users, output-target users, lifetime ownership, and `round_robin` remain
+  outside the shipped resource-arbitration subset.
 
 ## 12.5. Static Actor Network Metadata
 
@@ -2985,8 +2998,9 @@ metadata, lower-priority rule gating by a higher-priority rule, and delayed
 completion pulse behavior.
 
 Dedicated resource arbitration tests now cover the shipped priority arbiter
-for both `rule_slot` and `output_bundle`, including explicit output-bundle
-member-list validation and `resource_arbitration[].members` report evidence.
+for `rule_slot`, `output_bundle`, and `transaction_start`, including explicit
+output-bundle member-list validation, transaction-start trigger-user
+validation, and `resource_arbitration[].members` report evidence.
 The fixture above remains a `rule_slot` fixture; it does not claim
 round-robin, weighted, token bucket, or broader resource-kind support.
 

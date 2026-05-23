@@ -1,5 +1,35 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Transaction-start resource priority shipped
+- Completed `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` and closed the task
+  tree.
+- `(kind transaction_start)` resources are now enforced for declared rule
+  users under the static `priority` arbiter.
+- The resource name must be a declared local transaction, and every bound rule
+  user must trigger that transaction through the shipped non-generated
+  rule-trigger surface.
+- Lowering reuses the existing priority grant model to gate lower-priority
+  rule DTs before their trigger source pulses feed the generated
+  `rule_trigger_fanin` DT. The fan-in owner and one-cycle trigger timing are
+  unchanged.
+- Schedule reports expose successful grants through
+  `resource_arbitration[]` with `kind: transaction_start` and an empty
+  `members` array.
+- `round_robin`, `interface_bundle`, `named_drive`, `child_instance`,
+  `storage_port`, transaction users, named-drive users, output-target users,
+  generated-child transaction starts, actor-network triggers, lifetime
+  ownership, ready/backpressure, route mux/storage, multi-capacity resources,
+  and dynamic resource names remain deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused resource/report tests with
+  `Files=3, Tests=17`; public/spec/book audits with `Files=8, Tests=341`;
+  `mdbook build docs/book`; broad `./bin/ci-regression isf --no-book` with
+  `Files=250, Tests=1662`; post-closure public/doc audits with
+  `Files=6, Tests=347`; and `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Transaction-start resource priority selected
 - Completed `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1`.
 - Activated the active R14 task tree for bounded `(kind transaction_start)`

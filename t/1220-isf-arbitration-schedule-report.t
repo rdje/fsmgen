@@ -24,6 +24,8 @@ my $source = <<'ISF';
     (input low_req)
     (input high_bundle_req)
     (input low_bundle_req)
+    (input high_start_req)
+    (input low_start_req)
     (output done)
     (output out)
     (output valid)
@@ -35,6 +37,7 @@ my $source = <<'ISF';
   (priority force_out over main)
   (priority high over low)
   (priority high_bundle over low_bundle)
+  (priority high_start over low_start)
   (resources
     (resource shared_slot
       (kind rule_slot)
@@ -44,10 +47,17 @@ my $source = <<'ISF';
       (kind output_bundle)
       (arbiter priority)
       (members flag warn status)
-      (users high_bundle low_bundle)))
+      (users high_bundle low_bundle))
+    (resource work
+      (kind transaction_start)
+      (arbiter priority)
+      (users high_start low_start)))
   (transaction main
     (on start)
     (update out 0)
+    (complete done))
+  (transaction work
+    (on work_start)
     (complete done))
   (rule force_out force
     (out 1))
@@ -59,7 +69,11 @@ my $source = <<'ISF';
     (flag 1))
   (rule low_bundle low_bundle_req
     (warn 1)
-    (status 1)))
+    (status 1))
+  (rule high_start high_start_req
+    (trigger work))
+  (rule low_start low_start_req
+    (trigger work)))
 ISF
 
 subtest 'in-process report projects arbitration summaries' => sub {
@@ -108,7 +122,7 @@ sub assert_arbitration_projection {
 
     ok(exists $report->{resource_arbitration}, "$label exposes resource_arbitration");
     is(ref($report->{resource_arbitration}), 'ARRAY', "$label resource_arbitration is an array");
-    is(scalar(@{$report->{resource_arbitration}}), 4, "$label exposes rule_slot and output_bundle resource users");
+    is(scalar(@{$report->{resource_arbitration}}), 6, "$label exposes rule_slot, output_bundle, and transaction_start resource users");
 
     for my $entry (@{$report->{priority_resolutions}}) {
         is_deeply(
@@ -148,6 +162,18 @@ sub assert_arbitration_projection {
     my $low_bundle = find_resource_entry($report, user => 'low_bundle');
     is_deeply($low_bundle->{members}, ['flag', 'warn', 'status'], "$label low output_bundle grant exposes output and storage members");
     is_deeply($low_bundle->{suppressed_by}, ['high_bundle'], "$label low output_bundle user records higher suppressor");
+
+    my $high_start = find_resource_entry($report, user => 'high_start');
+    is($high_start->{resource}, 'work', "$label high transaction_start grant names transaction resource");
+    is($high_start->{kind}, 'transaction_start', "$label high transaction_start grant names resource kind");
+    is($high_start->{arbiter}, 'priority', "$label high transaction_start grant names arbiter");
+    is($high_start->{user_kind}, 'rule', "$label high transaction_start grant names user kind");
+    is_deeply($high_start->{members}, [], "$label transaction_start grant has no member list");
+    is_deeply($high_start->{suppressed_by}, [], "$label highest transaction_start user has no suppressors");
+
+    my $low_start = find_resource_entry($report, user => 'low_start');
+    is_deeply($low_start->{members}, [], "$label low transaction_start grant has no member list");
+    is_deeply($low_start->{suppressed_by}, ['high_start'], "$label low transaction_start user records higher suppressor");
 }
 
 sub find_resource_entry {

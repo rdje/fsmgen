@@ -6882,6 +6882,8 @@ sub _apply_priority_rule_user_resource_arbitration {
     my %rule_dt = map {
         (($_->{kind} // '') eq 'rule') ? ($_->{name} => $_) : ()
     } @{$ir->{dt_blocks} || []};
+    my %transactions = map { $_->{name} => 1 } @{$actor->{transactions} || []};
+    my %generated_children = _generated_child_transaction_refs($actor);
     my %actor_member_targets = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
     for my $entry (@{$actor->{storage} || []}) {
         for my $signal (@{$entry->{signals} || []}) {
@@ -6922,6 +6924,14 @@ sub _apply_priority_rule_user_resource_arbitration {
                 "user '$user' is not a lowered rule",
             ) unless $rule_dt{$user};
         }
+
+        _validate_transaction_start_resource(
+            $resource,
+            \@users,
+            $actor,
+            \%transactions,
+            \%generated_children,
+        ) if $kind eq 'transaction_start';
 
         my @members = @{$resource->{members} || []};
         _validate_output_bundle_member_coverage(
@@ -6990,7 +7000,51 @@ sub _apply_priority_rule_user_resource_arbitration {
 
 sub _resource_kind_supports_priority_rule_users {
     my ($kind) = @_;
-    return defined($kind) && ($kind eq 'rule_slot' || $kind eq 'output_bundle');
+    return defined($kind) && ($kind eq 'rule_slot' || $kind eq 'output_bundle' || $kind eq 'transaction_start');
+}
+
+sub _validate_transaction_start_resource {
+    my ($resource, $users, $actor, $transactions, $generated_children) = @_;
+    my $resource_name = $resource->{name} // '<unnamed>';
+
+    _resource_arbitration_error(
+        'isf_transaction_start_unknown_transaction',
+        $resource_name,
+        "transaction_start resource '$resource_name' is not a declared local transaction",
+    ) unless $transactions->{$resource_name};
+
+    _resource_arbitration_error(
+        'isf_transaction_start_generated_child_unsupported',
+        $resource_name,
+        "transaction_start resource '$resource_name' targets a generated-child transaction start, which is not enforced yet",
+    ) if $generated_children->{$resource_name};
+
+    my %rules = map { $_->{name} => $_ } @{$actor->{rules} || []};
+    for my $user (@$users) {
+        _resource_arbitration_error(
+            'isf_transaction_start_user_without_trigger',
+            $resource_name,
+            "rule user '$user' does not trigger transaction_start resource '$resource_name'",
+        ) unless _rule_triggers_local_transaction($rules{$user}, $resource_name);
+    }
+
+    return 1;
+}
+
+sub _rule_triggers_local_transaction {
+    my ($rule, $transaction) = @_;
+    return 0 unless ref($rule) eq 'HASH';
+    for my $action (@{$rule->{actions} || []}) {
+        next unless ref($action) eq 'ARRAY'
+            && @$action >= 2
+            && defined($action->[0])
+            && !ref($action->[0])
+            && $action->[0] eq 'trigger';
+        return 1 if defined($action->[1])
+            && !ref($action->[1])
+            && $action->[1] eq $transaction;
+    }
+    return 0;
 }
 
 sub _validate_output_bundle_member_coverage {

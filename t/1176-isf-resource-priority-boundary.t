@@ -126,6 +126,43 @@ ISF
     );
 };
 
+subtest 'transaction_start resource metadata validates local transactions and rule users' => sub {
+    my $actor = parse_source(<<'ISF');
+(actor transaction_start_resource_metadata
+  (clock clk)
+  (interface
+    (input high_req)
+    (input low_req)
+    (output done))
+  (transaction work
+    (on work_start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource work
+      (kind transaction_start)
+      (arbiter priority)
+      (users high low)))
+  (rule high high_req
+    (trigger work))
+  (rule low low_req
+    (trigger work)))
+ISF
+
+    is_deeply(
+        $actor->{resources},
+        [
+            {
+                name    => 'work',
+                kind    => 'transaction_start',
+                arbiter => 'priority',
+                users   => ['high', 'low'],
+            },
+        ],
+        'transaction_start resource metadata is preserved',
+    );
+};
+
 subtest 'malformed resources are rejected before actor shell return' => sub {
     assert_parse_rejected(<<'ISF', 'malformed resource keyword', qr/resource entries require/);
 (actor bad_resource_keyword
@@ -215,6 +252,24 @@ ISF
       (kind output_bundle)
       (arbiter priority)
       (members missing))))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'transaction_start resource name must be a transaction', qr/transaction_start resource 'missing' is not a declared transaction/);
+(actor unknown_transaction_start_resource
+  (clock clk)
+  (interface
+    (input ready)
+    (output done))
+  (transaction work
+    (on work_start)
+    (complete done))
+  (resources
+    (resource missing
+      (kind transaction_start)
+      (arbiter priority)
+      (users high)))
+  (rule high ready
+    (trigger work)))
 ISF
 };
 

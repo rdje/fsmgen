@@ -744,13 +744,20 @@ The ISF-specific current limitations are:
   values/expression operands, or drive-call actual scalar values/expression
   operands, subaggregate operands/updates, and aggregate
   interface/transaction/bank carriers.
-- `(resources ...)` is structurally validated by the parser and now has one
-  enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for
-  rule users under the `priority` arbiter.
+- `(resources ...)` is structurally validated by the parser and now has three
+  enforced resource kinds for declared rule users under the `priority`
+  arbiter: `rule_slot`, `output_bundle`, and `transaction_start`.
 
-  Future kinds such as `output_bundle`, `interface_bundle`, `named_drive`,
-  `transaction_start`, `child_instance`, and `storage_port` remain backlog
-  until their lowering contracts are explicit.
+  `rule_slot` is a one-cycle mutual-exclusion slot. `output_bundle` owns a
+  group of actor outputs or rule-written LHS targets and may carry explicit
+  declared-output/storage-signal members. `transaction_start` arbitrates
+  rule-trigger request fan-in into one local transaction, using the resource
+  name as the transaction name and suppressing lower-priority rule DTs before
+  their trigger source pulses feed the generated trigger fan-in DT.
+
+  Future kinds such as `interface_bundle`, `named_drive`, `child_instance`,
+  and `storage_port` remain backlog until their lowering contracts are
+  explicit.
 
   The accepted `round_robin` value remains parser metadata until round-robin
   lowering ships.
@@ -759,8 +766,9 @@ The ISF-specific current limitations are:
   resource catalog, including the current status and meaning of each kind.
 
   `(priority ...)` is structurally validated and currently enforced for
-  same-target rule/rule data conflicts, priority-arbitrated `rule_slot`
-  resources, and the lowerable rule-over-transaction same-target data case.
+  same-target rule/rule data conflicts, priority-arbitrated `rule_slot`,
+  `output_bundle`, and `transaction_start` resources, and the lowerable
+  rule-over-transaction same-target data case.
 
   Transaction-over-rule priority remains deferred because scheduled `.fsm`
   review text does not yet expose a state-active predicate that can safely

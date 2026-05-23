@@ -181,6 +181,74 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'output_bundle_priority');
 };
 
+subtest 'priority transaction_start grant gates lower-priority rule triggers' => sub {
+    my $source = <<'ISF';
+(actor transaction_start_priority
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input high_req)
+    (input low_req)
+    (output done))
+  (transaction work
+    (on work_start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource work
+      (kind transaction_start)
+      (arbiter priority)
+      (users high low)))
+  (rule high high_req
+    (trigger work))
+  (rule low low_req
+    (trigger work)))
+ISF
+
+    my $ir = lower_ir($source);
+    my $low_start = find_record($ir, owner => 'low', target => 'low_work');
+    is_deeply(
+        $low_start->{resource_suppressed_by},
+        ['high'],
+        'low transaction_start trigger source records the higher resource requester',
+    );
+    is_deeply(
+        $ir->{resource_arbitration}{grants},
+        [
+            {
+                resource => 'work',
+                kind     => 'transaction_start',
+                arbiter  => 'priority',
+                user     => 'high',
+                higher   => [],
+                members  => [],
+            },
+            {
+                resource => 'work',
+                kind     => 'transaction_start',
+                arbiter  => 'priority',
+                user     => 'low',
+                higher   => ['high'],
+                members  => [],
+            },
+        ],
+        'transaction_start grants reuse the resource arbitration IR shape',
+    );
+
+    my $fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($source))->{files}{'transaction_start_priority.fsm'};
+    like(
+        $fsm,
+        qr/\(-low\s+<\(& low_req \(! high_req\)\)\s+\(<1 \(low_work 1\)\)\s+\)/s,
+        'scheduled .fsm gates the lower-priority trigger source before fan-in',
+    );
+    like(
+        $fsm,
+        qr/\(-work_trigger_fanin\s+\(= \(work_start \(\| high_work low_work\)\)\)\s+\)/s,
+        'transaction_start arbitration preserves the generated trigger fan-in DT owner',
+    );
+    assert_fsm_reaches_hdl($fsm, 'transaction_start_priority');
+};
+
 subtest 'explicit output_bundle members fail closed on rule output mismatch' => sub {
     assert_lower_rejected(<<'ISF', 'bound rule writes output outside members', qr/isf_output_bundle_member_mismatch/);
 (actor output_bundle_member_mismatch
@@ -293,6 +361,56 @@ ISF
 ISF
 };
 
+subtest 'transaction_start resources fail closed outside the bounded rule-trigger surface' => sub {
+    assert_lower_rejected(<<'ISF', 'rule user does not trigger transaction_start resource', qr/isf_transaction_start_user_without_trigger/);
+(actor transaction_start_user_without_trigger
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input high_req)
+    (input low_req)
+    (output done)
+    (output flag))
+  (transaction work
+    (on work_start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource work
+      (kind transaction_start)
+      (arbiter priority)
+      (users high low)))
+  (rule high high_req
+    (trigger work))
+  (rule low low_req
+    (flag 1)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'generated-child transaction_start resource remains unsupported', qr/isf_transaction_start_generated_child_unsupported/);
+(actor transaction_start_generated_child
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input high_req)
+    (input low_req)
+    (output done))
+  (transaction work
+    (params (LIMIT 4))
+    (on work_start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource work
+      (kind transaction_start)
+      (arbiter priority)
+      (users high low)))
+  (rule high high_req
+    (trigger work (params (LIMIT 2))))
+  (rule low low_req
+    (trigger work)))
+ISF
+};
+
 subtest 'resource priority rejects incomplete and cyclic orderings' => sub {
     assert_lower_rejected(<<'ISF', 'incomplete priority order', qr/isf_resource_priority_incomplete/);
 (actor incomplete_resource_priority
@@ -394,6 +512,29 @@ ISF
     (valid 1))
   (rule low b
     (valid 0)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'round_robin transaction_start with bound users', qr/isf_resource_unsupported_arbiter/);
+(actor unsupported_rr_transaction_start_resource
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input high_req)
+    (input low_req)
+    (output done))
+  (transaction work
+    (on work_start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource work
+      (kind transaction_start)
+      (arbiter round_robin)
+      (users high low)))
+  (rule high high_req
+    (trigger work))
+  (rule low low_req
+    (trigger work)))
 ISF
 
     assert_lower_rejected(<<'ISF', 'unsupported resource kind with bound users', qr/isf_resource_unsupported_kind/);

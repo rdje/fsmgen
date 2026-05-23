@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Transaction-start resources arbitrate requests, not ownership
+- `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` ships the selected
+  `transaction_start` resource subset as request suppression on declared rule
+  users.
+- The resource does not take ownership of the generated
+  `rule_trigger_fanin` DT, create a new transaction-start state element, or
+  add a cycle. It only prevents losing bound rules from emitting their
+  per-rule trigger source pulse in the arbitration cycle.
+- Generated-child transaction starts, actor-network triggers, transaction
+  lifetime ownership, ready/backpressure, and route mux/storage remain
+  separate contracts because each needs different ownership, timing, and
+  diagnostic rules.
+
 ## 2026-05-23: Transaction-start resources reuse trigger fan-in
 - `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1` selects a bounded resource slice
   that fits the existing rule-trigger lowering. Rules already emit per-rule

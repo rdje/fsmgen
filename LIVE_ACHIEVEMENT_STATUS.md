@@ -2,6 +2,32 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Transaction-start resource priority shipped
+- Completed `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` and closed the task
+  tree.
+- `(kind transaction_start)` resources now enforce static `priority`
+  arbitration for declared rule users.
+- The resource name must be a declared local transaction, and every bound rule
+  user must trigger that transaction through the shipped non-generated
+  rule-trigger surface.
+- Lowering gates losing rule DTs before their trigger source pulses feed the
+  generated `rule_trigger_fanin` DT, preserving the fan-in owner and one-cycle
+  trigger timing.
+- Schedule reports expose successful grants through
+  `resource_arbitration[]` with `kind: transaction_start` and an empty
+  `members` array.
+- Unsupported arbiters and broader resource ownership remain deferred:
+  `round_robin`, non-rule users, generated-child transaction starts,
+  actor-network triggers, transaction lifetime ownership, ready/backpressure,
+  route mux/storage, multi-capacity resources, and dynamic resource names.
+- Validation passed: syntax checks; focused resource/report tests with
+  `Files=3, Tests=17`; public/spec/book audits with `Files=8, Tests=341`;
+  `mdbook build docs/book`; broad `./bin/ci-regression isf --no-book` with
+  `Files=250, Tests=1662`; post-closure public/doc audits with
+  `Files=6, Tests=347`; and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Transaction-start resource priority selected
 - Completed `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1`.
 - Activated the active R14 task tree for bounded `(kind transaction_start)`

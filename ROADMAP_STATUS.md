@@ -2,24 +2,32 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-START-RESOURCE-PRIORITY`.
-- Current frontier: `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 transaction-start resource completion:
+  `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` shipped
+  `(kind transaction_start)` resources under the static `priority` arbiter
+  for declared rule users. The resource name must be a declared local
+  transaction, and every bound rule user must trigger that transaction
+  through the shipped non-generated rule-trigger surface. Lowering reuses the
+  existing priority grant model to suppress lower-priority rule DTs before
+  their trigger source pulses feed the generated `rule_trigger_fanin` DT,
+  without adding a cycle or changing the fan-in owner. Schedule reports expose
+  successful grants through `resource_arbitration[]` with
+  `kind: transaction_start` and an empty `members` array. The resource catalog
+  and public contract now include `transaction_start` in the enforced kind
+  set. `round_robin`, `interface_bundle`, `named_drive`, `child_instance`,
+  `storage_port`, transaction users, named-drive users, output-target users,
+  generated-child transaction starts, actor-network triggers, lifetime
+  ownership, ready/backpressure, route mux/storage, multi-capacity resources,
+  and dynamic resource names remain deferred. The ISF spec, downstream
+  integration handoff, public contract, mdBook, roadmap status, task tree, and
+  live docs were synchronized.
 - Recent R14 transaction-start resource selection:
-  `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1` activated the next bounded
-  resource-arbitration task tree. The selected implementation path enforces
-  `(kind transaction_start)` resources only when the resource name is a
-  declared local transaction, the arbiter is `priority`, and every declared
-  rule user triggers that transaction through the shipped non-generated
-  rule-trigger surface. The selected lowering reuses the existing static
-  priority grant model to suppress lower-priority rule DTs before their
-  trigger source pulses feed the generated `rule_trigger_fanin` DT, without
-  adding a cycle or changing the fan-in owner. `round_robin`,
-  `interface_bundle`, `named_drive`, `child_instance`, `storage_port`,
-  transaction users, named-drive users, output-target users, generated-child
-  transaction starts, actor-network triggers, lifetime ownership,
-  ready/backpressure, route mux/storage, multi-capacity resources, and
-  dynamic resource names remain deferred. No parser, scheduler, report,
-  generated artifact, HDL, CLI, or public ISF behavior changed in this
+  `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1` activated the bounded
+  resource-arbitration task tree that was later completed by
+  `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2`. No parser, scheduler, report,
+  generated artifact, HDL, CLI, or public ISF behavior changed in the
   selection.
 - Recent R14 roadmap wording cleanup:
   `ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1` repaired duplicated
@@ -110,14 +118,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `output_bundle` in `enforced_resource_kind_values`, and schedule reports use
   the existing `resource_arbitration[]` entry shape with `kind:
   output_bundle`. `rule_slot` behavior is unchanged. `interface_bundle`,
-  `named_drive`, `transaction_start`, `child_instance`, `storage_port`,
+  `named_drive`, `child_instance`, `storage_port`,
   `round_robin`, transaction users, named-drive users, output-target users,
   dynamic resource names, multi-capacity resources, fairness state,
   hold/release semantics, and route mux/storage remain deferred. Explicit
   declared-output member-list syntax later shipped in
-  `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2`. The ISF spec, downstream integration
-  handoff, public contract, mdBook, roadmap status, task tree, and live docs
-  were synchronized.
+  `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2`, and transaction-start resources later
+  shipped in `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2`. The ISF spec,
+  downstream integration handoff, public contract, mdBook, roadmap status,
+  task tree, and live docs were synchronized.
 - Recent R14 output-bundle resource priority selection:
   `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1` activated the next R14 resource
   arbitration task tree. The selected implementation path is intentionally
@@ -126,13 +135,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   shipped rule-DT grant-gating shape, preserve the existing
   `resource_arbitration[]` report key family, and update the resource catalog
   status when implementation lands. `interface_bundle`, `named_drive`,
-  `transaction_start`, `child_instance`, `storage_port`, `round_robin`,
+  `child_instance`, `storage_port`, `round_robin`,
   transaction users, named-drive users, output-target users, dynamic resource
   names, multi-capacity resources, fairness state, hold/release semantics,
   route mux/storage, and explicit output-bundle member-list syntax remained
   deferred for this selection. `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` later shipped
-  explicit declared-output members. No parser, scheduler, report, generated
-  artifact, HDL, CLI, or public ISF behavior changed in this selection.
+  explicit declared-output members, and
+  `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` later shipped transaction-start
+  resources. No parser, scheduler, report, generated artifact, HDL, CLI, or
+  public ISF behavior changed in this selection.
 - Recent R14 transaction-over-rule priority completion:
   `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` shipped the covered same-target data
   priority case where a transaction is declared higher priority than a rule.
@@ -4319,8 +4330,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `rule_slot`, a one-cycle mutual-exclusion slot for rule users, bound through
   planned resource-local `(kind rule_slot)` and `(users ...)` subclauses.
   `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` later shipped `output_bundle` for
-  declared rule users under `priority`; remaining planned but unshipped kinds
-  include `interface_bundle`, `named_drive`, `transaction_start`,
+  declared rule users under `priority`, and
+  `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` later shipped
+  `transaction_start` for declared rule users under `priority`. Remaining
+  planned but unshipped kinds include `interface_bundle`, `named_drive`,
   `child_instance`, and `storage_port`. `round_robin`, multi-capacity
   resources, dynamic resource names, and transaction lifetime ownership remain
   deferred.
@@ -4364,9 +4377,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   parser and the ISF public-interface contract. Downstream consumers can now
   discover resource arbiters, resource kinds, shipped/backlog status, meaning
   text, currently enforced kinds, and backlog kinds from
-  `embedding.isf_public_interface`. This preserves the current feature
-  boundary: `rule_slot` with `priority` is shipped; all non-`rule_slot` kinds
-  remain parser-recognized backlog names until their lowering contracts ship.
+  `embedding.isf_public_interface`. This catalog slice preserved the feature
+  boundary that existed when it landed: `rule_slot` with `priority` was
+  shipped, and all non-`rule_slot` kinds remained parser-recognized backlog
+  names until their lowering contracts shipped. Later R14 slices shipped
+  `output_bundle` and `transaction_start` for declared rule users under
+  `priority`.
 - `ISF-RULE-ACTIONS.1` is complete. The rule-action task tree now inventories
   the current scalar-only parser surface, malformed diagnostics, lowering
   behavior, schedule-report/storage metadata, and conflict touchpoints. The

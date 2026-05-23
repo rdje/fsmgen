@@ -6715,7 +6715,7 @@ sub _parse_resources($self, $clause) {
 
         confess "Error: resource '$name' requires '(arbiter $RESOURCE_ARBITER_SYNTAX)'\n"
             unless defined($arbiter);
-        confess "Error: resource '$name' with users requires an enforced '(kind ...)' such as '(kind rule_slot)' or '(kind output_bundle)'\n"
+        confess "Error: resource '$name' with users requires an enforced '(kind ...)' such as '(kind rule_slot)', '(kind output_bundle)', or '(kind transaction_start)'\n"
             if @users && !defined($kind);
         confess "Error: resource '$name' members are supported only with '(kind output_bundle)'\n"
             if @members && (($kind // '') ne 'output_bundle');
@@ -6732,6 +6732,7 @@ sub _parse_resources($self, $clause) {
 sub _validate_resource_user_targets($self, $actor) {
     my $actor_name = $actor->{actor_name};
     my %rule_names = map { $_->{name} => 1 } @{$actor->{rules} || []};
+    my %transaction_names = map { $_->{name} => 1 } @{$actor->{transactions} || []};
     my %member_names = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
     for my $entry (@{$actor->{storage} || []}) {
         for my $signal (@{$entry->{signals} || []}) {
@@ -6753,7 +6754,15 @@ sub _validate_resource_user_targets($self, $actor) {
             }
         }
 
-        next unless $kind eq 'rule_slot' || $kind eq 'output_bundle';
+        if ($kind eq 'transaction_start' && @{$resource->{users} || []}) {
+            my $transaction = $resource->{name};
+            confess "Error: transaction_start resource '$transaction' is not a declared transaction in actor '$actor_name'\n"
+                unless defined($transaction)
+                    && !ref($transaction)
+                    && $transaction_names{$transaction};
+        }
+
+        next unless $kind eq 'rule_slot' || $kind eq 'output_bundle' || $kind eq 'transaction_start';
         for my $user (@{$resource->{users} || []}) {
             confess "Error: resource '$resource->{name}' user '$user' is not a declared rule in actor '$actor_name'\n"
                 unless defined($user)
