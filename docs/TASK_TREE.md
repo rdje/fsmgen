@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS` | `active` | `R14` | `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2` | [docs/tasks/ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.md](docs/tasks/ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.md) |
 
 ## Proposed Task Trees
 
@@ -294,6 +295,7 @@ as done work unless a future task reopens them.
 | Actor top-level interface actor-scalar-parameter widths | `ISF-INTERFACE-ACTOR-PARAM-WIDTHS` |
 | Actor-owned scalar storage actor-constant widths | `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS` |
 | Actor-owned scalar storage actor-scalar-parameter widths | `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS` |
+| Actor-owned bank storage actor-constant widths | `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS` |
 | Actor-owned bank storage actor-scalar-parameter widths | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS` |
 | Actor-owned bank storage actor-scalar-parameter depths | `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS` |
 | Transaction-local port actor-scalar-parameter widths | `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS` |

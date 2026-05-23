@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Bank width constants are the next static-dimension slice
+- `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.1` selects actor-owned bank element
+  widths as the next actor-constant static-dimension surface.
+- The selection follows the shipped actor-parameter bank-width slice and the
+  actor-constant scalar-storage slice. It intentionally keeps bank depths out
+  of scope because depth changes scalarized storage family size and duplicate
+  lowered-name detection.
+- Only the owning actor shell's constant value is selected as bank element
+  width evidence. Runtime signals, expressions, use-site overrides, and
+  generated-top respecialization remain separate policies.
+
 ## 2026-05-23: Scalar storage constants reuse storage width finalization
 - `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2` widens scalar storage width
   finalization without widening bank width or depth policy.

@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Bank storage actor-constant widths selected
+- Completed selection work for
+  `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated the active R14 task tree for actor-owned bank storage
+  `(width CONST)` declarations backed by actor-local constants resolving to
+  positive integers.
+- The active frontier is now `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Scalar storage actor-constant widths shipped
 - Completed `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2` and closed the task
   tree.
