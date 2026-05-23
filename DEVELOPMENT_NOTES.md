@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Interface constants reuse interface width finalization
+- `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` widens only actor top-level
+  interface width finalization. The parser first preserves positive literal
+  widths, then resolves actor scalar parameters, then resolves declared actor
+  constants to positive integers before handing the actor shell to the
+  scheduler.
+- The scheduler, `.fsm` emitter, reports, and HDL backend still receive
+  concrete positive integer public port widths. Authored constants remain
+  reviewable through `actor_constants[]` and scheduled `+constants`.
+- Storage dimensions, transaction-local ports, use-site overrides,
+  generated-top respecialization, runtime signals, and arbitrary expressions
+  remain separate policies so this slice does not blur static actor-boundary
+  width evidence with activation-specialized or runtime data movement.
+
 ## 2026-05-23: Interface constants are the next static-dimension slice
 - `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1` selects actor top-level interface
   widths as the first actor-constant static-dimension surface.

@@ -14,11 +14,11 @@ use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 use FSM::Scheduler::ISF;
 
-subtest 'actor scalar parameter interface widths lower like literal widths' => sub {
+subtest 'actor constants interface widths lower like literal widths' => sub {
     my $source = <<'ISF';
-(actor parameter_interface_widths
+(actor constant_interface_widths
   (clock clk)
-  (params
+  (constants
     (DATA_W 8))
   (interface
     (input start)
@@ -29,15 +29,15 @@ subtest 'actor scalar parameter interface widths lower like literal widths' => s
     (set data_out data_in)))
 ISF
 
-    my $actor = parse_source($source, 'parameter-interface-widths.isf');
-    is(port_width($actor->{interface}{inputs}, 'data_in'), 8, 'input width resolves from actor parameter');
-    is(port_width($actor->{interface}{outputs}, 'data_out'), 8, 'output width resolves from actor parameter');
+    my $actor = parse_source($source, 'constant-interface-widths.isf');
+    is(port_width($actor->{interface}{inputs}, 'data_in'), 8, 'input width resolves from actor constant');
+    is(port_width($actor->{interface}{outputs}, 'data_out'), 8, 'output width resolves from actor constant');
 
     my $scheduler = FSM::Scheduler::ISF->new();
     my $lowered = $scheduler->lower($actor);
-    my $fsm = $lowered->{files}{'parameter_interface_widths.fsm'};
+    my $fsm = $lowered->{files}{'constant_interface_widths.fsm'};
 
-    like($fsm, qr/\(\+params\s+\(DATA_W 8\)\s+\)/s, 'scheduled .fsm preserves actor parameter declaration');
+    like($fsm, qr/\(\+constants\s+\(DATA_W 8\)\s+\)/s, 'scheduled .fsm preserves actor constant declaration');
     like($fsm, qr/\(\+size[\s\S]*\(data_in 8\)[\s\S]*\(data_out 8\)/, 'scheduled .fsm uses resolved interface widths');
     like($fsm, qr/\(<- \(data_out> data_in\)\)/, 'scheduled .fsm preserves data movement');
 
@@ -45,17 +45,17 @@ ISF
     is($report->{inputs}, 2, 'schedule report input count is unchanged');
     is($report->{outputs}, 1, 'schedule report output count is unchanged');
 
-    assert_fsm_reaches_hdl($fsm, 'parameter_interface_widths', qr/\binput\s+wire\s+\[7:0\]\s+data_in\b/, 'HDL input width is resolved');
-    assert_fsm_reaches_hdl($fsm, 'parameter_interface_widths', qr/\boutput\s+reg\s+\[7:0\]\s+data_out\b/, 'HDL output width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'constant_interface_widths', qr/\binput\s+wire\s+\[7:0\]\s+data_in\b/, 'HDL input width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'constant_interface_widths', qr/\boutput\s+reg\s+\[7:0\]\s+data_out\b/, 'HDL output width is resolved');
 };
 
-subtest 'enum-resolved actor scalar parameter interface width lowers' => sub {
-    my $actor = parse_source(<<'ISF', 'enum-parameter-interface-width.isf');
-(actor enum_parameter_interface_width
+subtest 'enum-resolved actor constant interface width lowers' => sub {
+    my $actor = parse_source(<<'ISF', 'enum-constant-interface-width.isf');
+(actor enum_constant_interface_width
   (clock clk)
   (enums
     (sizes (W 4)))
-  (params
+  (constants
     (DATA_W sizes.W))
   (interface
     (input start)
@@ -65,60 +65,58 @@ subtest 'enum-resolved actor scalar parameter interface width lowers' => sub {
     (set data_out 0)))
 ISF
 
-    is(port_width($actor->{interface}{outputs}, 'data_out'), 4, 'enum-resolved actor parameter becomes a positive width');
+    is(port_width($actor->{interface}{outputs}, 'data_out'), 4, 'enum-resolved actor constant becomes a positive width');
 
-    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_parameter_interface_width.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(data_out 4\)/, 'scheduled .fsm uses enum-resolved parameter width');
+    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_constant_interface_width.fsm'};
+    like($fsm, qr/\(\+size[\s\S]*\(data_out 4\)/, 'scheduled .fsm uses enum-resolved constant width');
 };
 
-subtest 'unsupported actor parameter interface width sources fail closed' => sub {
+subtest 'unsupported actor constant interface width sources fail closed' => sub {
     assert_parse_rejected(
         <<'ISF',
-(actor zero_parameter_width
+(actor zero_constant_width
   (clock clk)
-  (params
+  (constants
     (DATA_W 0))
   (interface
     (output data_out (width DATA_W))))
 ISF
-        qr/\AError: actor 'zero_parameter_width' interface port 'data_out' width parameter 'DATA_W' must resolve to a positive integer/,
-        'zero-valued actor parameter is rejected',
+        qr/\AError: actor 'zero_constant_width' interface port 'data_out' width constant 'DATA_W' must resolve to a positive integer/,
+        'zero-valued actor constant is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor aggregate_parameter_width
-  (clock clk)
-  (params
-    (DATA_W (4 4)))
-  (interface
-    (output data_out (width DATA_W))))
-ISF
-        qr/\AError: actor 'aggregate_parameter_width' interface port 'data_out' width parameter 'DATA_W' must resolve to a positive integer/,
-        'non-scalar actor parameter is rejected',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
-(actor unknown_parameter_width
+(actor unknown_constant_width
   (clock clk)
   (interface
     (output data_out (width DATA_W))))
 ISF
-        qr/\AError: actor 'unknown_parameter_width' interface port 'data_out' width token 'DATA_W' is not a declared actor scalar parameter or actor constant/,
+        qr/\AError: actor 'unknown_constant_width' interface port 'data_out' width token 'DATA_W' is not a declared actor scalar parameter or actor constant/,
         'unknown symbolic width is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor runtime_parameter_width
+(actor runtime_constant_width
   (clock clk)
   (interface
     (input DATA_W)
     (output data_out (width DATA_W))))
 ISF
-        qr/\AError: actor 'runtime_parameter_width' interface port 'data_out' width token 'DATA_W' is a runtime interface signal/,
+        qr/\AError: actor 'runtime_constant_width' interface port 'data_out' width token 'DATA_W' is a runtime interface signal/,
         'runtime interface signals are rejected as widths',
+    );
+
+    assert_parse_rejected(
+        <<'ISF',
+(actor expression_constant_width
+  (clock clk)
+  (interface
+    (output data_out (width (+ DATA_W 1)))))
+ISF
+        qr/\AError: interface port 'data_out' width must be a positive integer, actor constant, or actor scalar parameter/,
+        'width expressions are rejected at parse time',
     );
 };
 

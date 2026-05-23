@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS` | `active` | `R14` | `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` | [docs/tasks/ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.md](docs/tasks/ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.md](docs/tasks/ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.md) |
 | `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.md](docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.md) |
 | `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.md](docs/tasks/ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.md) |
 | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.md](docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.md) |

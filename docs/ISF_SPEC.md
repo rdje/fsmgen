@@ -168,10 +168,10 @@ It also publishes the shell value shapes: scalar `actor_name`, array
 The current bounded parser handoff also advertises the `interface` subshape:
 `inputs` and `outputs` are arrays, and each public port entry has unique
 non-empty scalar `name` plus positive integer `width`, with omitted source
-widths normalized to `1`. Actor top-level interface `(width PARAM)` entries
-are accepted when `PARAM` is an actor-local scalar parameter default that
-resolves to a positive integer; the parser handoff still exposes the resolved
-integer width.
+widths normalized to `1`. Actor top-level interface `(width PARAM)` and
+`(width CONST)` entries are accepted when the symbolic name is an actor-local
+scalar parameter default or declared actor constant that resolves to a positive
+integer; the parser handoff still exposes the resolved integer width.
 It also advertises the transaction-entry shell: `transactions` is an array of
 entries with scalar `name` and `clauses` array fields. Those shapes are
 live-contract metadata for scheduler-consumable actors, not a freeze of the
@@ -312,8 +312,10 @@ scheduled `.fsm` artifact so CLI HDL generation remains self-contained even
 when `bin/fsmgen` uses a temporary lowered `.fsm` path.
 
 Width-bearing actor interface ports, transaction-local ports, and actor-owned
-storage entries may use `(type NAME)` for a scalar alias and keep `(width N)`
-or `(width PARAM)` for raw positive integer widths; those options are mutually
+storage entries may use `(type NAME)` for a scalar alias. They keep
+`(width N)` or `(width PARAM)` for raw positive integer widths; actor interface
+ports may also use `(width CONST)` when `CONST` is a declared actor constant
+that resolves to a positive integer. Type and width options are mutually
 exclusive. `PARAM` may name an actor-local scalar parameter default that
 resolves to a positive integer on actor interface ports, transaction-local
 ports, actor-owned scalar storage, and actor-owned bank storage. `NAME` may be
@@ -1218,10 +1220,11 @@ register/holding element and would hide the real storage and concurrency
 requirements. The shipped reusable FIFO actor target is fixed-shape
 `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Those parameters
 are provenance and binding evidence in this fixture; actor top-level
-interface widths may use actor-local scalar parameter defaults that resolve
-to positive integers, actor-owned scalar storage widths may use the same
-positive actor-local scalar parameter defaults, and bank widths and depths may
-use the same positive actor-local scalar parameter defaults. The actor has
+interface widths may use actor-local scalar parameter defaults or declared
+actor constants that resolve to positive integers, actor-owned scalar storage
+widths may use the same positive actor-local scalar parameter defaults, and
+bank widths and depths may use the same positive actor-local scalar parameter
+defaults. The actor has
 actor-owned storage, read
 and write pointers, occupancy state, actor-maintained flags, reset ownership,
 and first-class handling of the four request cases every cycle: no request,
@@ -1252,12 +1255,13 @@ entry 0. The reusable FIFO fixture models the internal data bank through
 `(bank data (width 8) (depth 4))`, `(store data wr_ptr data_in)`, and
 `(load data rd_ptr as data_out)`.
 Actor top-level interface widths may now use actor-local scalar parameter
-defaults that resolve to positive integers. Actor-owned scalar storage widths
-may now use actor-local scalar parameter defaults that resolve to positive
-integers. Actor-owned bank storage widths may now use actor-local scalar
-parameter defaults that resolve to positive integers. Actor-owned bank storage
-depths may now use actor-local scalar parameter defaults that resolve to
-positive integers. Use-site FIFO interface shape, use-site bank-depth
+defaults or declared actor constants that resolve to positive integers.
+Actor-owned scalar storage widths may now use actor-local scalar parameter
+defaults that resolve to positive integers. Actor-owned bank storage widths may
+now use actor-local scalar parameter defaults that resolve to positive
+integers. Actor-owned bank storage depths may now use actor-local scalar
+parameter defaults that resolve to positive integers. Use-site FIFO interface
+shape, use-site bank-depth
 specialization, generated-top respecialization, arbitrary-depth
 memory-backed FIFO generation beyond the first `DEPTH=4` fixture, automatic
 non-zero reset values such as empty=1, standalone transaction/drive exports,
@@ -1517,9 +1521,11 @@ Watchdog rules:
   (input  name)
   (input  name (width N))
   (input  name (width PARAM))
+  (input  name (width CONST))
   (output name)
   (output name (width N))
-  (output name (width PARAM)))
+  (output name (width PARAM))
+  (output name (width CONST)))
 ```
 
 Default width is `1`. Interface entries lower into `.fsm` `+size` entries.
@@ -1529,11 +1535,15 @@ entries. `N` is a positive integer literal. `PARAM` may name an actor-local
 scalar parameter default that resolves to a positive integer, including an enum
 member reference that resolves to a positive integer; the parser lowers the
 public `width` field to the resolved integer and keeps the authored parameter
-visible through `actor_params[]`. Unknown symbolic width names, actor
-constants, runtime interface signals, zero-valued or non-scalar actor
-parameters, arbitrary expressions, nested names, malformed directions,
-duplicate names across either direction, and non-positive or non-integer
-literal widths are rejected before the parser returns an actor shell.
+visible through `actor_params[]`. `CONST` may name a declared actor constant
+that resolves to a positive integer, including an enum-backed constant; the
+parser lowers the public `width` field to the resolved integer and keeps the
+authored constant visible through `actor_constants[]` and scheduled
+`+constants`. Unknown symbolic width names, runtime interface signals,
+zero-valued or non-scalar actor parameters, zero-valued actor constants,
+arbitrary expressions, nested names, malformed directions, duplicate names
+across either direction, and non-positive or non-integer literal widths are
+rejected before the parser returns an actor shell.
 `(interface ...)` is an actor-level singleton clause; repeated interface blocks
 are rejected instead of merged or overwritten.
 If an inferred scheduler storage name matches a declared interface port, the
@@ -5032,6 +5042,7 @@ Focused tests:
 - [t/1335-isf-bank-storage-actor-param-widths.t](../t/1335-isf-bank-storage-actor-param-widths.t)
 - [t/1336-isf-transaction-port-actor-param-widths.t](../t/1336-isf-transaction-port-actor-param-widths.t)
 - [t/1337-isf-bank-storage-actor-param-depths.t](../t/1337-isf-bank-storage-actor-param-depths.t)
+- [t/1338-isf-interface-actor-constant-widths.t](../t/1338-isf-interface-actor-constant-widths.t)
 
 ## 12. Explicitly Deferred
 

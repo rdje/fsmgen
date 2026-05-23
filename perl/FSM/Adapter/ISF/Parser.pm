@@ -646,7 +646,7 @@ sub _finalize_actor_interface_widths($self, $actor) {
                     && $width =~ /\A[1-9][0-9]*\z/;
 
             my $port_name = $port->{name};
-            confess "Error: actor '$actor_name' interface port '$port_name' width must be a positive integer literal or actor scalar parameter\n"
+            confess "Error: actor '$actor_name' interface port '$port_name' width must be a positive integer literal, actor constant, or actor scalar parameter\n"
                 unless defined($width) && !ref($width) && _is_hdl_identifier($width);
 
             my $param = _actor_param_by_name($actor, $width);
@@ -658,13 +658,19 @@ sub _finalize_actor_interface_widths($self, $actor) {
                 next;
             }
 
-            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is an actor constant; actor interface widths accept positive integer literals, actor scalar parameters, or type aliases only\n"
-                if _actor_constant_by_name($actor, $width);
+            my $constant = _actor_constant_by_name($actor, $width);
+            if ($constant) {
+                my $constant_width = _positive_integer_from_literal_value(_constant_resolved_value($constant));
+                confess "Error: actor '$actor_name' interface port '$port_name' width constant '$width' must resolve to a positive integer\n"
+                    unless defined $constant_width;
+                $port->{width} = $constant_width;
+                next;
+            }
 
-            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is a runtime interface signal; actor interface widths accept positive integer literals, actor scalar parameters, or type aliases only\n"
+            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is a runtime interface signal; actor interface widths accept positive integer literals, actor constants, actor scalar parameters, or type aliases only\n"
                 if _actor_interface_signal_by_name($actor, $width);
 
-            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is not a declared actor scalar parameter\n";
+            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is not a declared actor scalar parameter or actor constant\n";
         }
     }
 
@@ -5943,7 +5949,7 @@ sub _parse_interface($self, $clause) {
             confess "Error: interface port '$name' has duplicate '$option_name' option\n"
                 if $seen_options{$option_name}++;
             if (ref($prop) eq 'ARRAY' && $prop->[0] eq 'width') {
-                confess "Error: interface port '$name' width must be a positive integer or actor scalar parameter\n"
+                confess "Error: interface port '$name' width must be a positive integer, actor constant, or actor scalar parameter\n"
                     unless @$prop == 2
                         && defined($prop->[1])
                         && !ref($prop->[1])

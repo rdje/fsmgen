@@ -216,10 +216,12 @@ General source rules:
   parameters, domains, and instances are scalar HDL identifiers. Current
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.
 - Widths and depths are positive integer literals unless a specific clause says
-  otherwise. Actor top-level interface port widths, transaction-local port
-  widths, actor-owned scalar storage widths, actor-owned bank storage widths,
-  and actor-owned bank storage depths also accept actor-local scalar parameter
-  defaults that resolve to positive integers.
+  otherwise. Actor top-level interface port widths also accept declared actor
+  constants and actor-local scalar parameter defaults that resolve to positive
+  integers. Transaction-local port widths, actor-owned scalar storage widths,
+  actor-owned bank storage widths, and actor-owned bank storage depths also
+  accept actor-local scalar parameter defaults that resolve to positive
+  integers.
 - Actor constants, scalar actor parameter defaults, and generated child
   transaction scalar parameter defaults use non-negative integer literals or
   enum member references that resolve to non-negative integers; static wait
@@ -398,9 +400,11 @@ Interface:
   (input  name)
   (input  name (width N))
   (input  name (width PARAM))
+  (input  name (width CONST))
   (output name)
   (output name (width N))
-  (output name (width PARAM)))
+  (output name (width PARAM))
+  (output name (width CONST)))
 ```
 
 Rules:
@@ -411,9 +415,13 @@ Rules:
   positive integer; accepted parser output and scheduled `.fsm` artifacts use
   the resolved integer width while `actor_params[]` preserves the authored
   parameter declaration.
-- Unknown symbolic width names, actor constants, runtime interface signals,
-  zero-valued or non-scalar actor parameters, arbitrary expressions, and
-  non-positive literals fail closed.
+- `CONST` may name a declared actor constant that resolves to a positive
+  integer; accepted parser output and scheduled `.fsm` artifacts use the
+  resolved integer width while `actor_constants[]` and scheduled `+constants`
+  preserve the authored constant declaration.
+- Unknown symbolic width names, runtime interface signals, zero-valued or
+  non-scalar actor parameters, zero-valued actor constants, arbitrary
+  expressions, and non-positive literals fail closed.
 - Directions are `input` or `output`.
 - Port names are unique across both directions.
 - `(domain NAME)` is accepted on interface entries when named domains are in
@@ -3355,7 +3363,9 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1333-isf-interface-actor-param-widths.t \
   t/1334-isf-scalar-storage-actor-param-widths.t \
   t/1335-isf-bank-storage-actor-param-widths.t \
-  t/1336-isf-transaction-port-actor-param-widths.t
+  t/1336-isf-transaction-port-actor-param-widths.t \
+  t/1337-isf-bank-storage-actor-param-depths.t \
+  t/1338-isf-interface-actor-constant-widths.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

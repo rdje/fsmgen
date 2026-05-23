@@ -2,20 +2,27 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS`.
-- Current frontier: `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2`.
-- Recent R14 interface actor-constant width selection:
-  `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1` activated the next static-dimension
-  tree. The selected first implementation slice is intentionally narrow: only
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 interface actor-constant width completion:
+  `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` shipped declared actor constants as
   actor top-level interface `(input NAME (width CONST))` and
-  `(output NAME (width CONST))` entries may use actor-local constants that
-  resolve to positive integers. Actor-constant-backed scalar storage widths,
-  bank widths, bank depths, transaction-local port widths, runtime interface
-  signals, transaction parameters, arbitrary expressions, unknown names,
-  zero-valued actor constants, use-site override specialization, and
-  generated-top respecialization remain deferred or fail-closed. No parser,
-  scheduler, report, generated artifact, HDL, CLI, or public ISF behavior
-  changed.
+  `(output NAME (width CONST))` sources when the constants resolve to positive
+  integers. Accepted constants lower like equivalent literal widths in the
+  public parser handoff, scheduled `.fsm` `+size` entries, schedule reports,
+  generated HDL port ranges, and public contract metadata while preserving
+  authored constants through `actor_constants[]` and scheduled `+constants`.
+  Unsupported sources fail closed: unknown symbols, runtime interface
+  signals, zero-valued constants, non-scalar values, arbitrary expressions,
+  actor-constant-backed scalar storage widths, bank widths, bank depths,
+  transaction-local port widths, use-site override specialization, and
+  generated-top respecialization remain deferred or rejected. The ISF spec,
+  downstream integration handoff, public contract, mdBook, roadmap status,
+  task tree, and live docs were synchronized.
+- Recent R14 interface actor-constant width selection:
+  `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1` activated the static-dimension
+  tree. No parser, scheduler, report, generated artifact, HDL, CLI, or public
+  ISF behavior changed in that selection slice.
 - Recent R14 bank storage actor-parameter depth completion:
   `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` shipped actor-local scalar
   parameter defaults as actor-owned bank storage `(depth PARAM)` sources when
@@ -5606,7 +5613,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - Active task tree: `none`.
 - Current frontier: `none`.
-- Completion status: `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` closed the
+- Completion status: `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` closed the
   previous active R14 task tree. The next PNT step must select or create the
   next roadmap-aligned task tree before any code changes.
 - Closed architecture backlog context:

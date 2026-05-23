@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Interface actor-constant widths shipped
+- Completed `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` and closed the task tree.
+- Actor top-level interface input/output entries now accept `(width CONST)`
+  when `CONST` names a declared actor constant that resolves to a positive
+  integer, including enum-backed constants that resolve positive.
+- Accepted constants lower like literal widths in the public parser handoff,
+  scheduled `.fsm` `+size` entries, schedule reports, and generated HDL port
+  ranges while preserving authored constants through `actor_constants[]` and
+  scheduled `+constants`.
+- Unsupported width sources fail closed: unknown names, runtime interface
+  signals, zero-valued constants, arbitrary expressions, actor constants for
+  scalar storage widths, bank widths, bank depths, transaction-local port
+  widths, use-site override specialization, and generated-top
+  respecialization remain outside this slice.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused public/interface tests with
+  `Files=9, Tests=336`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=244, Tests=1635`;
+  post-closure doc/public audits with `Files=6, Tests=348`;
+  `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Interface actor-constant widths selected
 - Completed selection work for `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1`.
 - Activated a new R14 task tree for actor top-level interface input/output

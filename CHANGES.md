@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Interface actor-constant widths shipped
+- Completed `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` and closed the task tree.
+- Actor top-level interface `(input NAME (width CONST))` and
+  `(output NAME (width CONST))` entries now accept declared actor constants
+  that resolve to positive integers. Enum-backed constants are accepted when
+  they resolve positive.
+- Accepted constants lower like literal widths in parser handoff, scheduled
+  `.fsm` `+size`, schedule reports, and generated HDL port ranges, while
+  authored constants remain visible through `actor_constants[]` and
+  scheduled `+constants`.
+- Unsupported width sources fail closed: unknown symbols, runtime interface
+  signals, zero-valued constants, arbitrary expressions, scalar storage
+  widths, bank widths, bank depths, transaction-local port widths, use-site
+  override specialization, and generated-top respecialization.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused public/interface tests with
+  `Files=9, Tests=336`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=244, Tests=1635`;
+  post-closure doc/public audits with `Files=6, Tests=348`;
+  `git diff --check`.
+
 ### R14 — Interface actor-constant widths selected
 - Completed selection work for `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1`.
 - Activated a new R14 task tree for accepting actor-local constants resolving

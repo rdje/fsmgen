@@ -273,12 +273,13 @@ storage is not emitted a second time when it shares a name with a declared port.
 Interface port names are unique across both input and output directions, and
 the interface block itself is a singleton actor clause.
 
-An interface `(width ...)` may be a positive integer literal or an actor-local
-scalar parameter default that resolves to a positive integer. The parser
-returns the resolved integer width, scheduled `.fsm` `+size` uses that integer,
-and `+params` still preserves the authored actor parameter for review. Unknown
-symbolic width names, actor constants, runtime interface signals, zero-valued
-or non-scalar actor parameters, and arbitrary expressions fail closed.
+An interface `(width ...)` may be a positive integer literal, an actor-local
+scalar parameter default, or a declared actor constant that resolves to a
+positive integer. The parser returns the resolved integer width, scheduled
+`.fsm` `+size` uses that integer, and `+params` or `+constants` still preserves
+the authored declaration for review. Unknown symbolic width names, runtime
+interface signals, zero-valued or non-scalar actor parameters, zero-valued
+actor constants, and arbitrary expressions fail closed.
 
 When an actor uses `(clock-domains ...)`, a port may add `(domain NAME)` to
 declare the owning domain; omitted port domains inherit the actor default

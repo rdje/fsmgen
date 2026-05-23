@@ -586,8 +586,15 @@ defaults are checked by
 [t/1333-isf-interface-actor-param-widths.t](../t/1333-isf-interface-actor-param-widths.t)
 so accepted `(width PARAM)` entries resolve to positive integer public port
 widths, scheduled `.fsm` `+size` declarations, and HDL port ranges while
-unknown symbolic names, actor constants, runtime interface signals, zero-valued
-or non-scalar actor parameters, and arbitrary expressions fail closed.
+unknown symbolic names, runtime interface signals, zero-valued or non-scalar
+actor parameters, and arbitrary expressions fail closed.
+Actor top-level interface widths backed by declared actor constants are checked
+by
+[t/1338-isf-interface-actor-constant-widths.t](../t/1338-isf-interface-actor-constant-widths.t)
+so accepted `(width CONST)` entries resolve to positive integer public port
+widths, scheduled `.fsm` `+size` declarations, and HDL port ranges while
+zero-valued actor constants, unknown symbolic names, runtime interface
+signals, and arbitrary expressions fail closed.
 The interface-port boundary is checked by
 [t/1188-isf-interface-port-boundary.t](../t/1188-isf-interface-port-boundary.t)
 so port names are unique across both input and output directions before an
@@ -2082,12 +2089,13 @@ ordinary rule assignment and transaction `update` surfaces.
 The current public parser handoff also advertises one bounded subshape inside
 that shell: `interface` contains `inputs` and `outputs` arrays, and each public
 port entry has unique non-empty scalar `name` plus positive integer `width`,
-with omitted source widths normalized to `1`. Source `(width PARAM)` is
-accepted only when `PARAM` names an actor-local scalar parameter default that
-resolves to a positive integer; the public port entry still carries the
-resolved integer width, not the authored token. Accepted clock-domain sources
-may carry scalar `domain` ownership metadata on those port entries. The
-machine-readable contract advertises this through
+with omitted source widths normalized to `1`. Source `(width PARAM)` and
+`(width CONST)` are accepted only when they name an actor-local scalar
+parameter default or declared actor constant that resolves to a positive
+integer; the public port entry still carries the resolved integer width, not
+the authored token. Accepted clock-domain sources may carry scalar `domain`
+ownership metadata on those port entries. The machine-readable contract
+advertises this through
 `actor_shell_interface_shape`.
 This is current live-contract metadata for scheduler-consumable parser output;
 it does not make actor fields outside the advertised shell public or freeze
