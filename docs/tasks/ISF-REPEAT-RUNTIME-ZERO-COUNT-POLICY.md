@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -47,7 +47,7 @@ instead of silently executing one iteration.
 ## Task Tree
 
 - ID: `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY`
-  Status: `active`
+  Status: `done`
   Goal: `Ship a bounded runtime zero-count skip policy for scalar repeat counts`
   Children: `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1`,
   `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2`
@@ -57,20 +57,20 @@ instead of silently executing one iteration.
   Goal: `Select the runtime repeat zero-count policy tree and define the first implementation boundary`
   Acceptance: `Task tree, roadmap status, and live docs identify the active frontier before implementation`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending`
+  Commit: `d8d11c7f`
 
 - ID: `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement runtime scalar repeat zero-count body bypass with focused tests and synchronized docs`
   Acceptance: `Runtime scalar zero counts skip body execution while nonzero counts preserve existing repeat behavior; docs and public contracts are synchronized`
-  Verification: `pending`
+  Verification: `syntax`; `focused repeat tests`; `public/doc audits`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book`
   Commit: `pending`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` | `pending` | This closes the dynamic zero-count policy explicitly left after the static zero-count slice. |
+| 1 | `closed` | `done` | Runtime scalar repeat zero-count bypass shipped and the tree is closed. |
 
 ## Decisions
 
@@ -95,15 +95,17 @@ instead of silently executing one iteration.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1` | `mdbook build docs/book`; `git diff --check` | `pass` |
-| `2026-05-22` | `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` | `pending` | `pending` |
+| `2026-05-22` | `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1202-isf-repeat-clause-boundary.t`; `prove -Iperl t/1202-isf-repeat-clause-boundary.t t/1102-isf-repeat-counter-widths.t t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `pass; broad gate Files=238, Tests=1592` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1` | `pending` | `pending` |
-| `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` | `pending` | `pending` |
+| `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1` | `d8d11c7f ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1: select runtime repeat zero policy` | Selection committed. |
+| `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` | `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2: ship runtime repeat zero policy` | Pending commit. |
 
 ## Changelog
 
 - `2026-05-22`: Created and activated task tree.
+- `2026-05-22`: Shipped runtime scalar repeat zero-count bypass and closed
+  task tree.

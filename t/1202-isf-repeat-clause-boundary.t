@@ -53,6 +53,33 @@ ISF
     like($fsm, qr/\(main_repeat_check_3\n\s+\(<- \(main_cnt \(- main_cnt 1\)\)\)/, 'repeat check decrements the counter');
 };
 
+subtest 'runtime scalar repeat counts zero-bypass the repeat body' => sub {
+    my $result = lower_source(<<'ISF');
+(actor repeat_runtime_zero
+  (clock clk)
+  (interface
+    (input start)
+    (input repeat_len (width 12))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start
+      (sample repeat_len as beats))
+    (repeat beats
+      (drive tick))
+    (complete done)))
+ISF
+
+    my $fsm = $result->{files}{'repeat_runtime_zero.fsm'};
+    like($fsm, qr/\(main_cnt 12\)/, 'runtime repeat count keeps the sampled source width');
+    like($fsm, qr/\(main_repeat_init_1\n\s+\(<= \(main_cnt beats\)\)\n\s+\(-> main_drive_2 <beats\)\n\s+\(-> main_done_4 <\(== beats 0\)\)/,
+        'runtime zero repeat count bypasses the body and repeat check');
+    like($fsm, qr/\(main_drive_2\n\s+\(= \(tick_start 1\)\)\n\s+\(-> main_repeat_check_3\)/,
+        'nonzero runtime repeat count still enters the existing body path');
+};
+
 subtest 'malformed repeat clauses fail before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'missing repeat count', qr/\ATransaction 'main': repeat requires '\(repeat count body\.\.\.\)' in transaction body/);
 (actor repeat_missing_count

@@ -2194,6 +2194,9 @@ Current lowering:
 - Repeat counts that are statically known to be zero, either as literal zero
   or as an actor constant resolving to zero, fail closed before scheduled
   `.fsm` emission.
+- Known-width runtime scalar repeat counts split the repeat init edge:
+  nonzero values enter the repeat body, while zero values bypass the body and
+  repeat check to the state after the repeat region.
 - Top-level repeats and switch-nested repeats register the shared transaction
   counter at the widest required width.
 - The shipped repeat-body clause surface is named drive calls, `await`,
@@ -2373,9 +2376,11 @@ constants resolving to positive integers are static width evidence for the
 repeat counter, but the scheduled `.fsm` still loads the authored constant
 token. Literal zero counts and actor constants resolving to zero fail closed
 under the bounded static zero-count policy. Named counts may be dynamic scalar
-signals when their width is known, but they make transaction latency
-data-dependent and still require a runtime zero-count policy before the loop
-can be treated as fully general. Repeat-body local `do` and repeat-body spawn
+signals when their width is known; those known-width runtime scalar counts
+skip the repeat body and repeat check when the runtime value is zero. Unknown
+count names, actor parameters, transaction parameters, expression-valued
+counts, and generated-top respecialization remain outside the shipped runtime
+zero-count policy. Repeat-body local `do` and repeat-body spawn
 support preserve the
 same runtime-counter rule: the loop reactivates a local child only after its
 fresh done pulse, or reactivates a lexically named static spawn child instance

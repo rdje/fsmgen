@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat runtime zero-count policy shipped
+- Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` and closed the task
+  tree.
+- Known-width runtime scalar repeat counts now bypass the repeat body and
+  repeat check when the runtime value is zero. Nonzero values preserve the
+  existing repeat body path.
+- Positive literal repeat counts, positive actor constants, existing positive
+  runtime repeat behavior, and static zero fail-closed diagnostics remain
+  preserved.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Validation passed: focused repeat tests, public/doc audits, broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1592`,
+  `mdbook build docs/book`, and `git diff --check`.
+
 ## 2026-05-22: R14 — Repeat runtime zero-count policy tree selected
 - Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1`.
 - Activated the active R14 task tree for runtime scalar repeat zero-count

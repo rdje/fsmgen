@@ -763,9 +763,12 @@ broader outstanding-child semantics remain backlog until their own leaves
 select and ship them.
 
 Dynamic repeat counts are compatible with this model because `count` is a
-runtime counter load value, not an elaboration count. They do make loop latency
-data-dependent, and the repeat contract still needs a runtime zero-count
-policy for the fully general dynamic case.
+runtime counter load value, not an elaboration count. Known-width runtime
+scalar counts now bypass the repeat body and repeat check when the runtime
+value is zero. Unknown count names, actor parameters, transaction parameters,
+expression-valued counts, and generated-top repeat-count respecialization
+remain backlog, so fully general dynamic repeat counts are still not a frozen
+public contract.
 Actor-constant repeat counts are now static width evidence only when they
 resolve to positive integers: the counter width uses the resolved constant
 value while scheduled `.fsm` still loads the authored constant token.

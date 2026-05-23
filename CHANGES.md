@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat runtime zero-count policy shipped
+- Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` and closed the task
+  tree.
+- Added runtime scalar repeat zero-count bypass for known-width sampled,
+  interface, or storage-backed repeat count names. Nonzero values enter the
+  existing repeat body path; zero values bypass the body and repeat check to
+  the state after the repeat region.
+- Positive literal repeat counts, positive actor constants, repeat-body
+  lowering, existing positive runtime repeat behavior, and static zero
+  fail-closed diagnostics remain preserved.
+- Unknown count names, actor/transaction parameter specialization,
+  expression-valued repeat counts, generated-top respecialization, and
+  cross-domain repeat behavior remain deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused repeat tests; public/doc audits;
+  broad `./bin/ci-regression isf --no-book` with `Files=238, Tests=1592`;
+  `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — Repeat runtime zero-count policy tree selected
 - Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1`.
 - Activated a new R14 task tree for runtime scalar repeat zero-count skip

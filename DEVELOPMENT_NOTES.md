@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Runtime repeat zero counts use source-value branching
+- `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` implements zero-count runtime
+  repeat behavior at the repeat init edge. The init state still loads the
+  authored count token into the transaction repeat counter, but known-width
+  runtime scalar counts also guard entry to the body on the source value.
+- The nonzero path preserves the existing body, check, counter, and loop
+  shape. The zero path targets the state after the repeat region, so a zero
+  count does not execute one body iteration or decrement the repeat counter.
+- The slice deliberately requires known width evidence for the runtime count.
+  Unknown names keep the prior fallback behavior, and actor/transaction
+  parameter specialization remains a separate generated-top policy.
+
 ## 2026-05-22: Runtime repeat zero counts need an entry bypass
 - `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1` selects the bounded dynamic repeat
   follow-up left by the static zero-count slice.

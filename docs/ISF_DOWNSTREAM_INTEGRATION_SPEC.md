@@ -890,9 +890,11 @@ Positive decimal literals infer the minimum counter width for that literal.
 Declared positive actor constants infer width from their resolved integer
 value while preserving the authored constant token in the scheduled `.fsm`
 load. Literal zero counts and actor constants resolving to zero fail closed
-before scheduled `.fsm` emission. Known-width sampled/interface names keep the
-dynamic-repeat behavior and use their known source width; unknown names fall
-back to the existing default.
+before scheduled `.fsm` emission. Known-width sampled/interface names use
+their known source width and now split the repeat init edge: nonzero values
+enter the repeat body, while zero values bypass the body and repeat check to
+the state after the repeat region. Unknown names fall back to the existing
+default width behavior and do not carry a public zero-bypass guarantee.
 
 Switch:
 

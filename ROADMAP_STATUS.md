@@ -2,8 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-  Active task tree: `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY`.
-  Current frontier: `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2`.
+- Active task tree: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Recent R14 repeat runtime zero-count policy completion:
+  `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` shipped runtime scalar repeat
+  zero-count bypass and closed the task tree. Known-width runtime scalar
+  repeat counts now split the repeat init edge: nonzero values enter the body,
+  while zero values bypass the body and repeat check to the state after the
+  repeat region. Positive literal repeat counts, positive actor constants,
+  repeat-body lowering, existing positive runtime repeat behavior, and static
+  zero fail-closed diagnostics remain preserved. Unknown count names,
+  actor/transaction parameter specialization, expression-valued repeat counts,
+  generated-top respecialization, repeat-body activation widening, and
+  cross-domain repeat behavior remain deferred.
 - Recent R14 repeat runtime zero-count policy selection:
   `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1` activated the runtime repeat
   zero-count tree. The selected implementation will make runtime scalar
@@ -5272,11 +5283,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY`.
-- Current frontier: `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2`.
-- Completion status: `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1` selected the
-  next active R14 task tree after `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2`
-  closed the static zero-count policy.
+- Active task tree: none.
+- Current frontier: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Completion status: `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` closed the
+  most recent active R14 task tree after shipping runtime scalar repeat
+  zero-count bypass.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8888,9 +8900,8 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Implement `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2`: runtime scalar repeat
-  counts that evaluate to zero must skip the repeat body while preserving
-  positive runtime repeat behavior and the static zero fail-closed policy.
+- Select or create the next roadmap-aligned task tree before any further code
+  changes. The repeat runtime zero-count policy tree is closed.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

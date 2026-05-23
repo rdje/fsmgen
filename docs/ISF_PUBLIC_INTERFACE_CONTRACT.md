@@ -1066,6 +1066,10 @@ while preserving the authored load token, and sampled/runtime names continue
 to use known source width or the existing fallback.
 The same boundary test also checks that literal zero repeat counts and actor
 constants resolving to zero fail closed before scheduled `.fsm` emission.
+Known-width runtime scalar repeat counts now split the repeat init edge:
+nonzero values enter the repeat body, while zero values bypass the body and
+repeat check to the state after the repeat region. Unknown names keep the
+existing fallback width behavior without a public zero-bypass guarantee.
 The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, the top-level

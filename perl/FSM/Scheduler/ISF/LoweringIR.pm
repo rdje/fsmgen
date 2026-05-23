@@ -3510,6 +3510,19 @@ sub _reject_static_zero_repeat_count {
     confess "Transaction '$tn': repeat count '$count' is statically zero; zero-count repeat semantics remain deferred\n";
 }
 
+sub _runtime_repeat_count_source {
+    my ($count, $widths, $actor) = @_;
+    return undef unless defined($count) && !ref($count) && _is_hdl_identifier($count);
+    return undef if defined _static_repeat_count_value($count, $actor);
+    return undef if _actor_param_by_name($actor, $count);
+    return undef unless ref($widths) eq 'HASH'
+        && exists($widths->{$count})
+        && defined($widths->{$count})
+        && $widths->{$count} > 0;
+
+    return $count;
+}
+
 sub _literal_repeat_count_width {
     my ($count) = @_;
     return undef unless defined($count) && !ref($count) && $count =~ /\A(?:\+)?([0-9]+)\z/;
@@ -6616,7 +6629,17 @@ sub _ir_repeat {
     my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters; my @spawn_done_ports;
     _reject_static_zero_repeat_count($cl->[1], $actor, $tn);
     my $width = _repeat_count_width($cl->[1], $widths, $actor);
-    push @s, {name=>"${tn}_repeat_init_".$$ir++,kind=>'sequential',assignments=>[{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],transitions=>[]};
+    my $runtime_count_source = _runtime_repeat_count_source($cl->[1], $widths, $actor);
+    push @s, {
+        name => "${tn}_repeat_init_".$$ir++,
+        kind => 'repeat_init',
+        assignments => [{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],
+        transitions => [],
+        repeat_counter => $ctr,
+        repeat_count_source => $cl->[1],
+        repeat_count_kind => defined($runtime_count_source) ? 'runtime_scalar' : 'static_or_unclassified',
+        repeat_runtime_count_source => $runtime_count_source,
+    };
     for my $bc(@{$cl}[2..$#$cl]){next unless ref($bc)eq'ARRAY';my $bk=$bc->[0];
         if($bk eq'drive'){push @s,_ir_transaction_drive_clause($bc,$tn,$$ir++,$drives,[splice @lp])}
         elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
@@ -6663,6 +6686,7 @@ sub _ir_repeat {
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
     my $fb=$s[0]{name};
     push @s, {name=>"${tn}_repeat_check_".$$ir++,kind=>'repeat_check',assignments=>[{lhs=>$ctr,rhs=>"(- $ctr 1)",op=>'<-'}],transitions=>[],loop_target=>$fb,counter=>$ctr};
+    $s[0]{repeat_state_names} = [map { $_->{name} } @s];
     return (\@s,$ctr,$width,\@dynamic_wait_counters);
 }
 
@@ -8075,6 +8099,7 @@ sub _link_states {
         my $next_state = $i < $#$st ? $st->[$i + 1] : undef;
         if($s->{dynamic_wait_entry}){_link_dynamic_wait_state($s)}
         elsif($s->{dynamic_wait_loop_for}){_link_dynamic_wait_loop_state($s)}
+        elsif($s->{kind}eq'repeat_init'){_link_repeat_init_state($s,\%idx_by_name,$st,$next_state,$next,$e)}
         elsif($s->{kind}eq'switch'){_link_switch_state($s,\%idx_by_name,$st,$n,$e)}
         elsif($s->{kind}eq'loop_while'||$s->{kind}eq'loop_until'){_link_loop_state($s,\%idx_by_name,$st)}
         elsif($next_state&&$next_state->{dynamic_wait_entry}){_link_dynamic_wait_predecessor($tn,$s,$next_state)}
@@ -8089,6 +8114,41 @@ sub _link_states {
         elsif($s->{kind}eq'terminal'){push @{$s->{transitions}},{target=>$e}}}
 
     _append_dynamic_wait_zero_sample_clones($st,\%idx_by_name);
+}
+
+sub _link_repeat_init_state {
+    my ($state, $idx_by_name, $states, $next_state, $next_target, $entry_target) = @_;
+    return unless defined($next_target) && length($next_target);
+
+    my $runtime_source = $state->{repeat_runtime_count_source};
+    if (!defined($runtime_source) || !length($runtime_source)) {
+        if ($next_state && $next_state->{dynamic_wait_entry}) {
+            _link_dynamic_wait_entry_edge($state, $next_state, '1');
+        } else {
+            push @{$state->{transitions}}, { target => $next_target };
+        }
+        return;
+    }
+
+    my $last_idx = _state_region_last_index($idx_by_name, $state->{repeat_state_names}, $idx_by_name->{$state->{name}} // 0);
+    my $exit_idx = $last_idx + 1;
+    my $exit_target = $exit_idx <= $#$states ? $states->[$exit_idx]{name} : $entry_target;
+    my $enter_condition = $runtime_source;
+    my $zero_condition = "(== $runtime_source 0)";
+
+    if ($next_state && $next_state->{dynamic_wait_entry}) {
+        _link_dynamic_wait_entry_edge($state, $next_state, $enter_condition);
+    } else {
+        push @{$state->{transitions}}, {
+            target    => $next_target,
+            condition => { expr => $enter_condition },
+        };
+    }
+
+    push @{$state->{transitions}}, {
+        target    => $exit_target,
+        condition => { expr => $zero_condition },
+    };
 }
 
 sub _state_region_last_index {

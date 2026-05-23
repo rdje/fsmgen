@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat runtime zero-count policy shipped
+- Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` and closed the task
+  tree.
+- FSMGen now splits the repeat init edge for known-width runtime scalar repeat
+  counts: nonzero values enter the existing repeat body path, while zero
+  values bypass the body and repeat check to the state after the repeat
+  region.
+- Positive literal repeat counts, positive actor constants, repeat-body
+  lowering, existing positive runtime repeat behavior, and static zero
+  fail-closed diagnostics remain preserved.
+- Unknown count names, actor/transaction parameter specialization,
+  expression-valued repeat counts, generated-top respecialization,
+  repeat-body activation widening, and cross-domain repeat behavior remain
+  deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/support-matrix/backlog chapters, roadmap status,
+  task-tree docs, and live docs.
+- Validation passed: LoweringIR/test syntax; focused repeat tests; public/doc
+  audits; broad `./bin/ci-regression isf --no-book` with `Files=238,
+  Tests=1592`; `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Repeat runtime zero-count policy tree selected
 - Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1`.
 - Activated the next R14 task tree for a bounded runtime scalar repeat
