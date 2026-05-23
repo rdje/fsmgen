@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Scalar storage constants reuse storage width finalization
+- `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2` widens scalar storage width
+  finalization without widening bank width or depth policy.
+- The parser still finalizes bank depths before storage widths so scalarized
+  bank families remain concrete. For scalar `var`/`variable` entries, the
+  width finalizer now resolves actor scalar parameters first, then declared
+  actor constants, and writes the resolved positive width onto both the
+  authored storage entry and its single generated storage signal.
+- Bank widths deliberately keep their previous fail-closed actor-constant
+  diagnostic, because actor-constant-backed bank widths/depths affect the
+  scalarized storage family and deserve separate task-tree ownership.
+
 ## 2026-05-23: Scalar storage constants are the next static-dimension slice
 - `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1` selects actor-owned scalar
   storage widths as the next actor-constant static-dimension surface.

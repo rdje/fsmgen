@@ -298,10 +298,12 @@ domain to sample or drive the port directly.
 
 The shipped actor-owned storage forms are fixed-width internal scalar
 variables and fixed-depth banks. The preferred scalar spelling is
-`(var name (width N|PARAM))`; `(variable ...)` is the verbose alias. When
-`PARAM` is used for scalar storage width, bank width, or bank depth, it must
-name an actor-local scalar parameter default that resolves to a positive
-integer. A scalar entry lowers to one internal storage signal with the
+`(var name (width N|PARAM|CONST))`; `(variable ...)` is the verbose alias.
+When `PARAM` is used for scalar storage width, bank width, or bank depth, it
+must name an actor-local scalar parameter default that resolves to a positive
+integer. When `CONST` is used for scalar storage width, it must name a declared
+actor constant that resolves to a positive integer. A scalar entry lowers to
+one internal storage signal with the
 authored name. A bank lowers to deterministic scalar element names in the
 scheduled `.fsm` review artifact: `data_0`, `data_1`, `data_2`, and so on up
 to the resolved depth.
@@ -310,10 +312,12 @@ This scalarized representation is deliberate for the first reusable FIFO work.
 
 It lets the `DEPTH=4` fixture use four concrete storage entries, 2-bit
 pointers, and 3-bit occupancy state while staying on the existing scalar
-signal/flop backend path. Actor-owned scalar storage widths, bank widths, and
-bank depths may use actor-local scalar parameter defaults that resolve to
-positive integers; dynamic storage depth, arbitrary storage dimension
-expressions, and memory-array backend emission remain future generalizations.
+signal/flop backend path. Actor-owned scalar storage widths may use
+actor-local scalar parameter defaults or declared actor constants that resolve
+to positive integers. Bank widths and bank depths may use actor-local scalar
+parameter defaults that resolve to positive integers. Dynamic storage depth,
+arbitrary storage dimension expressions, and memory-array backend emission
+remain future generalizations.
 
 Pointer-selected access is available through explicit action forms such as
 `(store data wr_ptr data_in)` and `(load data rd_ptr as data_out)`, which
@@ -322,9 +326,10 @@ lower through guarded scalarized entries.
 `(storage ...)` is a singleton actor clause. Storage names and scalarized
 element names must not collide with interface ports, actor clock/reset signals,
 or generated scheduler signals such as `can_accept`. Missing scalar storage
-`(width N|PARAM)`, missing bank `(depth N)`, duplicate storage names,
-duplicate scalarized element names, unknown parameter names, actor constants,
+`(width N|PARAM|CONST)`, missing bank `(depth N)`, duplicate storage names,
+duplicate scalarized element names, unknown parameter or constant names,
 runtime interface signals, zero-valued or non-scalar actor parameters,
+zero-valued actor constants, actor constants on bank widths or depths,
 arbitrary width/depth expressions, and repeated storage clauses fail closed
 before scheduler handoff.
 

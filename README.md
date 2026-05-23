@@ -137,7 +137,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-LATENCY-ACTOR-PARAM-BOUNDS.md` — completed `R14` task tree for actor-parameter-backed transaction latency bounds.
 - `docs/tasks/ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.md` — completed `R14` task tree for actor-constant-backed actor interface port widths.
 - `docs/tasks/ISF-INTERFACE-ACTOR-PARAM-WIDTHS.md` — completed `R14` task tree for actor-parameter-backed actor interface port widths.
-- `docs/tasks/ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.md` — active `R14` task tree for actor-constant-backed actor-owned scalar storage widths.
+- `docs/tasks/ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.md` — completed `R14` task tree for actor-constant-backed actor-owned scalar storage widths.
 - `docs/tasks/ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.md` — completed `R14` task tree for actor-parameter-backed actor-owned scalar storage widths.
 - `docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.md` — completed `R14` task tree for actor-parameter-backed actor-owned bank storage widths.
 - `docs/tasks/ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.md` — completed `R14` task tree for actor-parameter-backed transaction-local port widths.

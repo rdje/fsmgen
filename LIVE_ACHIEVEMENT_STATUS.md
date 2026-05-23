@@ -2,6 +2,27 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Scalar storage actor-constant widths shipped
+- Completed `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2` and closed the task
+  tree.
+- Actor-owned scalar storage `(width CONST)` declarations now accept declared
+  actor constants resolving to positive integers.
+- Accepted constant-backed widths lower like literal widths in public parser
+  handoff, scheduled `.fsm` `+size`, schedule-report `actor_storage` widths,
+  and generated HDL, while authored constants remain visible through
+  `actor_constants[]` and scheduled `+constants`.
+- Unsupported sources fail closed: unknown symbols, runtime interface signals,
+  zero-valued constants, arbitrary expressions, bank widths, bank depths,
+  transaction-local port widths, use-site override specialization, and
+  generated-top respecialization.
+- Validation passed: syntax checks; focused storage/public tests with
+  `Files=10, Tests=339`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=245, Tests=1638`;
+  post-closure doc/public audits with `Files=6, Tests=348`;
+  `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Scalar storage actor-constant widths selected
 - Completed selection work for
   `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1`.

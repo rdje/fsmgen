@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Scalar storage actor-constant widths shipped
+- Completed `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2` and closed the task
+  tree.
+- Actor-owned scalar storage `(var NAME (width CONST))` and
+  `(variable NAME (width CONST))` entries now accept declared actor constants
+  that resolve to positive integers. Enum-backed constants are accepted when
+  they resolve positive.
+- Accepted constants lower like literal widths in parser handoff, scheduled
+  `.fsm` `+size`, schedule-report `actor_storage` widths, and generated HDL
+  register ranges, while authored constants remain visible through
+  `actor_constants[]` and scheduled `+constants`.
+- Unsupported width sources fail closed: unknown symbols, runtime interface
+  signals, zero-valued constants, arbitrary expressions, bank widths, bank
+  depths, transaction-local port widths, use-site override specialization, and
+  generated-top respecialization.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused storage/public tests with
+  `Files=10, Tests=339`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=245, Tests=1638`;
+  post-closure doc/public audits with `Files=6, Tests=348`;
+  `git diff --check`.
+
 ### R14 — Scalar storage actor-constant widths selected
 - Completed selection work for
   `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1`.

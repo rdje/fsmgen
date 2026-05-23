@@ -2,20 +2,27 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS`.
-- Current frontier: `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 scalar storage actor-constant width completion:
+  `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2` shipped declared actor constants
+  as actor-owned scalar storage `(var NAME (width CONST))` and
+  `(variable NAME (width CONST))` sources when the constants resolve to
+  positive integers. Accepted constants lower like equivalent literal widths
+  in the public parser handoff, scheduled `.fsm` `+size` entries,
+  schedule-report `actor_storage` entries, generated HDL register ranges, and
+  public contract metadata while preserving authored constants through
+  `actor_constants[]` and scheduled `+constants`. Unsupported sources fail
+  closed: unknown symbols, runtime interface signals, zero-valued constants,
+  non-scalar values, arbitrary expressions, actor-constant-backed bank widths,
+  bank depths, transaction-local port widths, use-site override
+  specialization, and generated-top respecialization remain deferred or
+  rejected. The ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task tree, and live docs were synchronized.
 - Recent R14 scalar storage actor-constant width selection:
-  `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1` activated the next
-  static-dimension tree. The selected first implementation slice is
-  intentionally narrow: only actor-owned scalar storage
-  `(var NAME (width CONST))` and `(variable NAME (width CONST))` entries may
-  use actor-local constants that resolve to positive integers.
-  Actor-constant-backed bank widths, bank depths, transaction-local port
-  widths, runtime interface signals, transaction parameters, arbitrary
-  expressions, unknown names, zero-valued actor constants, aggregate values,
-  use-site override specialization, and generated-top respecialization remain
-  deferred or fail-closed. No parser, scheduler, report, generated artifact,
-  HDL, CLI, or public ISF behavior changed.
+  `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1` activated the static-dimension
+  tree. No parser, scheduler, report, generated artifact, HDL, CLI, or public
+  ISF behavior changed in that selection slice.
 - Recent R14 interface actor-constant width completion:
   `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` shipped declared actor constants as
   actor top-level interface `(input NAME (width CONST))` and
@@ -5623,11 +5630,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS`.
-- Current frontier: `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2`.
-- Completion status: `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1` selected
-  the next active R14 static-dimension tree. No behavior changes are included
-  in the selection leaf.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2` closed the
+  previous active R14 task tree. The next PNT step must select or create the
+  next roadmap-aligned task tree before any code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

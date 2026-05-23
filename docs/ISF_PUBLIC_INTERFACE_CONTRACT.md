@@ -365,9 +365,18 @@ defaults are checked by
 so accepted `(var NAME (width PARAM))` and
 `(variable NAME (width PARAM))` entries resolve to positive integer storage
 widths, scheduled `.fsm` `+size` declarations, schedule-report widths, and HDL
-register ranges while unknown symbolic names, actor constants, runtime
-interface signals, zero-valued or non-scalar actor parameters, and arbitrary
-expressions fail closed.
+register ranges while unknown symbolic names, runtime interface signals,
+zero-valued or non-scalar actor parameters, and arbitrary expressions fail
+closed.
+Actor-owned scalar storage widths backed by declared actor constants are
+checked by
+[t/1339-isf-scalar-storage-actor-constant-widths.t](../t/1339-isf-scalar-storage-actor-constant-widths.t)
+so accepted `(var NAME (width CONST))` and
+`(variable NAME (width CONST))` entries resolve to positive integer storage
+widths, scheduled `.fsm` `+size` declarations, schedule-report widths, and HDL
+register ranges while zero-valued actor constants, unknown symbolic names,
+runtime interface signals, arbitrary expressions, and actor-constant bank
+widths fail closed.
 Actor-owned bank storage widths backed by actor-local scalar parameter
 defaults are checked by
 [t/1335-isf-bank-storage-actor-param-widths.t](../t/1335-isf-bank-storage-actor-param-widths.t)

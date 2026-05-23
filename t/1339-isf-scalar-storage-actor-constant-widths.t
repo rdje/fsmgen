@@ -14,11 +14,11 @@ use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 use FSM::Scheduler::ISF;
 
-subtest 'actor scalar parameter storage widths lower like literal widths' => sub {
+subtest 'actor constants scalar storage widths lower like literal widths' => sub {
     my $source = <<'ISF';
-(actor parameter_scalar_storage_widths
+(actor constant_scalar_storage_widths
   (clock clk)
-  (params
+  (constants
     (STATE_W 5))
   (interface
     (input start)
@@ -33,17 +33,17 @@ subtest 'actor scalar parameter storage widths lower like literal widths' => sub
     (complete done)))
 ISF
 
-    my $actor = parse_source($source, 'parameter-scalar-storage-widths.isf');
-    is(storage_width($actor, 'counter'), 5, 'var width resolves from actor parameter');
-    is(storage_width($actor, 'shadow'), 5, 'variable alias width resolves from actor parameter');
+    my $actor = parse_source($source, 'constant-scalar-storage-widths.isf');
+    is(storage_width($actor, 'counter'), 5, 'var width resolves from actor constant');
+    is(storage_width($actor, 'shadow'), 5, 'variable alias width resolves from actor constant');
     is(storage_signal_width($actor, 'counter'), 5, 'var signal width is finalized');
     is(storage_signal_width($actor, 'shadow'), 5, 'variable alias signal width is finalized');
 
     my $scheduler = FSM::Scheduler::ISF->new();
     my $lowered = $scheduler->lower($actor);
-    my $fsm = $lowered->{files}{'parameter_scalar_storage_widths.fsm'};
+    my $fsm = $lowered->{files}{'constant_scalar_storage_widths.fsm'};
 
-    like($fsm, qr/\(\+params\s+\(STATE_W 5\)\s+\)/s, 'scheduled .fsm preserves actor parameter declaration');
+    like($fsm, qr/\(\+constants\s+\(STATE_W 5\)\s+\)/s, 'scheduled .fsm preserves actor constant declaration');
     like($fsm, qr/\(\+size[\s\S]*\(counter 5\)[\s\S]*\(shadow 5\)/, 'scheduled .fsm uses resolved storage widths');
     like($fsm, qr/\(<- \(counter \(\+ counter 1\)\)\)/, 'scheduled .fsm preserves counter update');
     like($fsm, qr/\(<- \(shadow counter\)\)/, 'scheduled .fsm preserves shadow update');
@@ -52,17 +52,17 @@ ISF
     assert_actor_storage($report, 'counter', 5);
     assert_actor_storage($report, 'shadow', 5);
 
-    assert_fsm_reaches_hdl($fsm, 'parameter_scalar_storage_widths', qr/\breg\s+\[4:0\]\s+counter\b/, 'HDL counter width is resolved');
-    assert_fsm_reaches_hdl($fsm, 'parameter_scalar_storage_widths', qr/\breg\s+\[4:0\]\s+shadow\b/, 'HDL shadow width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'constant_scalar_storage_widths', qr/\breg\s+\[4:0\]\s+counter\b/, 'HDL counter width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'constant_scalar_storage_widths', qr/\breg\s+\[4:0\]\s+shadow\b/, 'HDL shadow width is resolved');
 };
 
-subtest 'enum-resolved actor scalar parameter storage width lowers' => sub {
-    my $actor = parse_source(<<'ISF', 'enum-parameter-storage-width.isf');
-(actor enum_parameter_storage_width
+subtest 'enum-resolved actor constant scalar storage width lowers' => sub {
+    my $actor = parse_source(<<'ISF', 'enum-constant-storage-width.isf');
+(actor enum_constant_storage_width
   (clock clk)
   (enums
     (sizes (W 6)))
-  (params
+  (constants
     (STATE_W sizes.W))
   (interface
     (input start)
@@ -75,18 +75,18 @@ subtest 'enum-resolved actor scalar parameter storage width lowers' => sub {
     (complete done)))
 ISF
 
-    is(storage_width($actor, 'counter'), 6, 'enum-resolved actor parameter becomes a positive storage width');
+    is(storage_width($actor, 'counter'), 6, 'enum-resolved actor constant becomes a positive storage width');
 
-    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_parameter_storage_width.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(counter 6\)/, 'scheduled .fsm uses enum-resolved storage parameter width');
+    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_constant_storage_width.fsm'};
+    like($fsm, qr/\(\+size[\s\S]*\(counter 6\)/, 'scheduled .fsm uses enum-resolved storage constant width');
 };
 
-subtest 'unsupported actor parameter storage width sources fail closed' => sub {
+subtest 'unsupported actor constant scalar storage width sources fail closed' => sub {
     assert_parse_rejected(
         <<'ISF',
-(actor zero_parameter_storage_width
+(actor zero_constant_storage_width
   (clock clk)
-  (params
+  (constants
     (STATE_W 0))
   (interface
     (input start)
@@ -94,29 +94,13 @@ subtest 'unsupported actor parameter storage width sources fail closed' => sub {
   (storage
     (var counter (width STATE_W))))
 ISF
-        qr/\AError: actor 'zero_parameter_storage_width' storage 'counter' width parameter 'STATE_W' must resolve to a positive integer/,
-        'zero-valued actor parameter is rejected',
+        qr/\AError: actor 'zero_constant_storage_width' storage 'counter' width constant 'STATE_W' must resolve to a positive integer/,
+        'zero-valued actor constant is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor aggregate_parameter_storage_width
-  (clock clk)
-  (params
-    (STATE_W (4 4)))
-  (interface
-    (input start)
-    (output done))
-  (storage
-    (var counter (width STATE_W))))
-ISF
-        qr/\AError: actor 'aggregate_parameter_storage_width' storage 'counter' width parameter 'STATE_W' must resolve to a positive integer/,
-        'non-scalar actor parameter is rejected',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
-(actor unknown_parameter_storage_width
+(actor unknown_constant_storage_width
   (clock clk)
   (interface
     (input start)
@@ -124,13 +108,13 @@ ISF
   (storage
     (var counter (width STATE_W))))
 ISF
-        qr/\AError: actor 'unknown_parameter_storage_width' storage 'counter' width token 'STATE_W' is not a declared actor scalar parameter or actor constant/,
+        qr/\AError: actor 'unknown_constant_storage_width' storage 'counter' width token 'STATE_W' is not a declared actor scalar parameter or actor constant/,
         'unknown symbolic width is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor runtime_parameter_storage_width
+(actor runtime_constant_storage_width
   (clock clk)
   (interface
     (input start)
@@ -139,13 +123,13 @@ ISF
   (storage
     (var counter (width STATE_W))))
 ISF
-        qr/\AError: actor 'runtime_parameter_storage_width' storage 'counter' width token 'STATE_W' is a runtime interface signal/,
+        qr/\AError: actor 'runtime_constant_storage_width' storage 'counter' width token 'STATE_W' is a runtime interface signal/,
         'runtime interface signals are rejected as widths',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor expression_parameter_storage_width
+(actor expression_constant_storage_width
   (clock clk)
   (interface
     (input start)
@@ -153,8 +137,24 @@ ISF
   (storage
     (var counter (width (+ STATE_W 1)))))
 ISF
-        qr/\AError: actor 'expression_parameter_storage_width' storage 'counter' width requires '\(width positive_integer_or_actor_scalar_parameter_or_actor_constant\)'/,
+        qr/\AError: actor 'expression_constant_storage_width' storage 'counter' width requires '\(width positive_integer_or_actor_scalar_parameter_or_actor_constant\)'/,
         'width expressions are rejected at parse time',
+    );
+
+    assert_parse_rejected(
+        <<'ISF',
+(actor bank_constant_width
+  (clock clk)
+  (constants
+    (DATA_W 5))
+  (interface
+    (input start)
+    (output done))
+  (storage
+    (bank data (width DATA_W) (depth 2))))
+ISF
+        qr/\AError: actor 'bank_constant_width' storage bank 'data' width token 'DATA_W' is an actor constant/,
+        'bank widths remain outside this scalar-storage slice',
     );
 };
 

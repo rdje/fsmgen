@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Scalar storage actor-constant widths shipped
+- Completed `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2` and closed the task
+  tree.
+- Actor-owned scalar storage entries now accept `(width CONST)` when `CONST`
+  names a declared actor constant that resolves to a positive integer,
+  including enum-backed constants that resolve positive.
+- Accepted constants lower like literal widths in the public parser handoff,
+  scheduled `.fsm` `+size` entries, schedule-report `actor_storage` widths,
+  and generated HDL register ranges while preserving authored constants
+  through `actor_constants[]` and scheduled `+constants`.
+- Unsupported width sources fail closed: unknown names, runtime interface
+  signals, zero-valued constants, arbitrary expressions, actor constants for
+  bank widths, bank depths, transaction-local port widths, use-site override
+  specialization, and generated-top respecialization remain outside this
+  slice.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused storage/public tests with
+  `Files=10, Tests=339`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=245, Tests=1638`;
+  post-closure doc/public audits with `Files=6, Tests=348`;
+  `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Scalar storage actor-constant widths selected
 - Completed selection work for
   `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1`.
