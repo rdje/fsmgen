@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ATL-FRONTIER-TRUTH-SYNC` | `active` | `R14 roadmap maintenance` | `ISF-ATL-FRONTIER-TRUTH-SYNC.2` | [docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md](docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md) |
 
 ## Proposed Task Trees
 

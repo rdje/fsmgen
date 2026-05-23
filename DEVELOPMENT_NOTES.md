@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Closed ATL frontier truth is task-tree state
+- `ISF-ATL-FRONTIER-TRUTH-SYNC.1` selects a documentation-truth slice because
+  the global task index says the ATL tree is done while the ATL task file's
+  current-frontier table still lists completed leaves.
+- The fix should update task tracking truth only. It must not reopen ATL route
+  mux/storage, fan-in/fan-out, ready/backpressure, payload, CDC, recursive
+  network, or permanent-group behavior.
+
 ## 2026-05-22: Control/bank divisor coverage stays behavior-neutral
 - `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` adds regression coverage for
   parser paths that were already implemented and documented: transaction

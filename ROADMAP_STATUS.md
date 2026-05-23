@@ -2,8 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before code changes.
+- Active task tree: `ISF-ATL-FRONTIER-TRUTH-SYNC`.
+- Current frontier: `ISF-ATL-FRONTIER-TRUTH-SYNC.2` will synchronize the
+  exhausted ATL task tree's stale current-frontier table so completed leaves
+  are not presented as selectable work. No parser, scheduler, report,
+  generated artifact, HDL, CLI, or public ISF behavior change is selected.
+- Recent R14 ATL frontier truth-sync selection:
+  `ISF-ATL-FRONTIER-TRUTH-SYNC.1` activated a roadmap-maintenance tree for
+  stale closed-frontier wording in `ISF-ACTOR-NETWORK-ORCHESTRATION`. The
+  selected implementation will align the ATL task file with the global task
+  index and roadmap without reopening deferred ATL behavior.
 - Recent R14 dynamic-divisor control/bank coverage completion:
   `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` added focused coverage for
   the already documented literal-zero and actor-constant-zero divisor guards

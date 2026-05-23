@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: ATL frontier truth sync selected
+- Completed `ISF-ATL-FRONTIER-TRUTH-SYNC.1`.
+- Activated a new R14 roadmap-maintenance task tree for stale closed-frontier
+  wording in `ISF-ACTOR-NETWORK-ORCHESTRATION`.
+- The active frontier is `ISF-ATL-FRONTIER-TRUTH-SYNC.2`.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-22: Dynamic-divisor control/bank coverage shipped
 - Completed `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` and closed the task
   tree.

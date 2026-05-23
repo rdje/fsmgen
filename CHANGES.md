@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — ATL frontier truth sync selected
+- Completed `ISF-ATL-FRONTIER-TRUTH-SYNC.1`.
+- Activated a new R14 roadmap-maintenance task tree to synchronize stale
+  closed-frontier wording in the exhausted ATL implementation tree.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Dynamic-divisor control/bank coverage shipped
 - Completed `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` and closed the task
   tree.

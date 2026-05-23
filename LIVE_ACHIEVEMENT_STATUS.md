@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — ATL frontier truth sync selected
+- Completed `ISF-ATL-FRONTIER-TRUTH-SYNC.1`.
+- Activated the active R14 roadmap-maintenance task tree for stale
+  closed-frontier wording in `ISF-ACTOR-NETWORK-ORCHESTRATION`.
+- The active frontier is now `ISF-ATL-FRONTIER-TRUTH-SYNC.2`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Dynamic-divisor control/bank coverage shipped
 - Completed `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` and closed the task
   tree.
