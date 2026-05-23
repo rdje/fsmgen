@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Output-bundle resource priority selected
+- Completed selection work for `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1`.
+- Activated a new R14 task tree for the first non-`rule_slot` resource kind.
+- The active frontier is `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2`.
+- The selected implementation path is narrow: enforce `output_bundle`
+  resources only for declared rule users under the existing static `priority`
+  arbiter, reuse the shipped rule-DT grant-gating shape, preserve the existing
+  `resource_arbitration[]` report key family, and update the resource catalog
+  status when implementation lands.
+- `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
+  `storage_port`, `round_robin`, transaction users, named-drive users,
+  output-target users, dynamic resource names, multi-capacity resources,
+  fairness state, hold/release semantics, route mux/storage, and explicit
+  output-bundle member-list syntax remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-23: Transaction-over-rule priority shipped
 - Completed `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` and closed the task tree.
 - Scheduled `.fsm` now accepts a bounded `(state_active STATE)` expression for

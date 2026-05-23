@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Output-bundle resource priority selected
+- Completed selection work for `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1`.
+- Activated the active R14 task tree for bounded `output_bundle` resource
+  enforcement.
+- The selected path enforces `output_bundle` resources only for declared rule
+  users under the existing static `priority` arbiter, reusing the shipped
+  rule-DT grant-gating shape and preserving `resource_arbitration[]` report
+  keys.
+- The active frontier is now `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Transaction-over-rule priority shipped
 - Completed `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` and closed the task tree.
 - Scheduled `.fsm` now accepts bounded `(state_active STATE)` guard

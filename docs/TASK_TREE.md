@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY` | `active` | `R14` | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | [docs/tasks/ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.md](docs/tasks/ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.md) |
 
 ## Proposed Task Trees
 

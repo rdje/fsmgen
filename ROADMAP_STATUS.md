@@ -2,8 +2,22 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY`.
+- Current frontier: `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2`.
+- Recent R14 output-bundle resource priority selection:
+  `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1` activated the next R14 resource
+  arbitration task tree. The selected implementation path is intentionally
+  narrow: enforce parser-recognized `output_bundle` resources only for
+  declared rule users under the existing static `priority` arbiter, reuse the
+  shipped rule-DT grant-gating shape, preserve the existing
+  `resource_arbitration[]` report key family, and update the resource catalog
+  status when implementation lands. `interface_bundle`, `named_drive`,
+  `transaction_start`, `child_instance`, `storage_port`, `round_robin`,
+  transaction users, named-drive users, output-target users, dynamic resource
+  names, multi-capacity resources, fairness state, hold/release semantics,
+  route mux/storage, and explicit output-bundle member-list syntax remain
+  deferred. No parser, scheduler, report, generated artifact, HDL, CLI, or
+  public ISF behavior changed.
 - Recent R14 transaction-over-rule priority completion:
   `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` shipped the covered same-target data
   priority case where a transaction is declared higher priority than a rule.
@@ -5812,10 +5826,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - Active task tree: `none`.
 - Current frontier: `none`.
-- Completion status: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` shipped
-  actor-constant-backed transaction-local port widths and closed the active
-  tree. The next PNT step must select or create the next roadmap-aligned task
-  tree before any code changes.
+- Completion status: `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1` selected the next
+  bounded R14 scheduler limitation. The active frontier is
+  `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2`, which must enforce
+  `output_bundle` resources only for declared rule users under the existing
+  static `priority` arbiter.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

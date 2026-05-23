@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Output-bundle resource priority selected
+- Completed selection work for `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1`.
+- Activated a new R14 task tree for enforcing the first non-`rule_slot`
+  resource kind.
+- The selected implementation path is the bounded `output_bundle` subset for
+  declared rule users under the existing static `priority` arbiter.
+- The implementation slice must reuse the shipped rule-DT grant-gating shape,
+  preserve the existing `resource_arbitration[]` report key family, and update
+  resource catalog status only when behavior lands.
+- `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
+  `storage_port`, `round_robin`, transaction users, named-drive users,
+  output-target users, dynamic resource names, multi-capacity resources,
+  fairness state, hold/release semantics, route mux/storage, and explicit
+  output-bundle member-list syntax remain deferred.
+- No compiler behavior changed.
+
 ### R14 — Transaction-over-rule priority shipped
 - Completed `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` and closed the task tree.
 - Scheduled `.fsm` now accepts bounded `(state_active STATE)` guard

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Output-bundle priority should reuse static grant gating first
+- `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.1` selects the next resource
+  arbitration slice after the shipped `rule_slot`/`priority` path.
+- The first `output_bundle` subset should be rule-user-only because the
+  current resource grammar names resources and users, but not separate bundle
+  members. Rule users already have concrete DTE guards and assignments, so the
+  existing static priority grant gate can represent "this rule owns the named
+  output bundle for this cycle" without adding route muxes or storage.
+- Broader output-target users, explicit bundle member lists, transaction
+  users, round-robin fairness, and hold/release behavior need their own
+  ownership contracts before they can be signoff-level code.
+
 ## 2026-05-23: State-active guards keep priority suppression explicit
 - `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` introduces `(state_active STATE)` as
   the smallest scheduled `.fsm` surface needed for generated
