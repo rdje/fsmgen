@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Bank widths are the next static parameter slice
+- `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1` selects actor-owned bank element
+  widths as the next bounded actor-parameter elaboration surface.
+- The selection intentionally excludes bank depth. Width parameters preserve
+  the existing scalarized element count and bank-access metadata shape, while
+  depth parameters would change generated signal families, memory-array policy,
+  schedule-report bank metadata, and generated-top specialization boundaries.
+- Only the owning actor shell's scalar parameter default is selected as bank
+  width evidence. Use-site overrides, generated-top respecialization, actor
+  constants, runtime signals, and arbitrary expressions remain separate policy
+  work.
+
 ## 2026-05-23: Scalar storage width parameters resolve before type handoff
 - `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` resolves actor-owned scalar
   storage `(width PARAM)` tokens in the parser after actor parameter values

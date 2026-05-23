@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS` | `active` | `R14` | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` | [docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.md](docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.md) |
 
 ## Proposed Task Trees
 
@@ -287,6 +288,7 @@ as done work unless a future task reopens them.
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
 | Actor top-level interface actor-scalar-parameter widths | `ISF-INTERFACE-ACTOR-PARAM-WIDTHS` |
 | Actor-owned scalar storage actor-scalar-parameter widths | `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS` |
+| Actor-owned bank storage actor-scalar-parameter widths | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS` |
 | Actor-level and await-local watchdog actor-scalar-parameter limits | `ISF-WATCHDOG-ACTOR-PARAM-LIMITS` |
 | Transaction repeat actor-scalar-parameter counts | `ISF-REPEAT-ACTOR-PARAM-COUNTS` |
 | Temporal-contract monitor storage schedule-report roles | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` |
