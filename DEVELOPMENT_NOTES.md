@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Output-bundle member wording preserves implicit LHS intent
+- `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1` is documentation-only. It corrects
+  the wording after explicit member lists shipped so public docs do not imply
+  that unmembered `output_bundle` resources are actor-output-only.
+- The shipped behavior remains: an unmembered `output_bundle` gates whole
+  bound rule DTs and therefore represents the outputs or other LHS targets
+  those rules drive. Explicit `(members output...)` is the narrower declared
+  actor-output validation/reporting surface.
+
 ## 2026-05-23: Output-bundle members validate intent, not routing
 - `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` implements explicit `(members output...)`
   for `output_bundle` resources as a validation/reporting surface over the

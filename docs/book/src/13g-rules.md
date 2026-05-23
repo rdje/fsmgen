@@ -401,7 +401,7 @@ Current shareable resource registry:
 | Kind | Status | Meaning |
 | --- | --- | --- |
 | `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
-| `output_bundle` | shipped for `priority` arbitration | A group of actor outputs with rule users. A grant enables the whole winning bound rule DT for that cycle; optional explicit members name declared actor output ports. |
+| `output_bundle` | shipped for `priority` arbitration | A group of actor outputs or rule-written LHS targets with rule users. A grant enables the whole winning bound rule DT for that cycle; optional explicit members name declared actor output ports. |
 | `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
 | `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
 | `transaction_start` | backlog | The start/request fan-in for one transaction. |
@@ -414,9 +414,12 @@ the resource when its normalized rule guard is true. Priority edges choose the
 active winner, and the generated grant gates the whole lowered rule DT DTE
 without adding a cycle. Backlog resource kinds are parser-recognized names,
 not runtime support claims; a backlog kind with bound users fails closed until
-its lowering contract ships. `output_bundle` may include an explicit
-`(members output...)` list. Each member must be a declared actor output; when
-members are explicit, every listed output must be written by a bound rule user,
-and no bound rule user may write a declared output outside the list. Schedule
-reports expose those names through `resource_arbitration[].members`. The
-remaining resource work is tracked in [Feature Backlog](14-feature-backlog.md).
+its lowering contract ships. Without explicit members, `output_bundle` keeps
+the existing implicit surface: the bound rule users and the outputs or other
+LHS targets they drive describe the bundle intent. `output_bundle` may include
+an explicit `(members output...)` list. Each member must be a declared actor
+output; when members are explicit, every listed output must be written by a
+bound rule user, and no bound rule user may write a declared output outside
+the list. Schedule reports expose those names through
+`resource_arbitration[].members`. The remaining resource work is tracked in
+[Feature Backlog](14-feature-backlog.md).

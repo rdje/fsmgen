@@ -1,10 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Output-bundle wording truth sync
+- Completed `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1`.
+- Clarified the ISF spec, downstream integration spec, public contract prose,
+  mdBook, roadmap status, memory, change history, and development notes after
+  explicit output-bundle member lists shipped.
+- Public docs now consistently distinguish unmembered `output_bundle`
+  resources, which keep the historical implicit bound-rule output/LHS-target
+  surface, from explicit `(members output...)`, which is intentionally limited
+  to declared actor outputs for validation and report evidence.
+- No parser, scheduler, emitter, HDL, CLI, report schema, or public resource
+  catalog behavior changed.
+- Validation passed: focused public-doc audits with `Files=6, Tests=347`;
+  `mdbook build docs/book`; stale-wording search; and `git diff --check`.
+
 ### R14 — Output-bundle member list shipped
 - Completed `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` and closed the task tree.
 - `output_bundle` resources now accept explicit `(members output...)`
   subclauses for declared actor output ports.
+- Unmembered output bundles still represent the historical implicit
+  bound-rule driven output/LHS-target surface; explicit members are the
+  narrower declared-output validation/reporting surface.
 - The parser rejects malformed members, duplicate members, member lists on
   non-`output_bundle` resources, and members that are not declared actor
   outputs.
@@ -19,7 +36,7 @@ This is the persistent technical change history for FSMGen.
 - Input ports, internal storage, aggregate paths, actor-network endpoints,
   output-target users, transaction users, named-drive users, route mux/storage,
   fairness, hold/release, multi-capacity resources, and `round_robin` remain
-  deferred.
+  deferred as explicit member or routing surfaces.
 - Synchronized the ISF spec, downstream integration spec, public contract,
   mdBook, roadmap status, task-tree docs, live achievement status, memory, and
   development notes.

@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.md](docs/tasks/ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.md) |
 | `ISF-OUTPUT-BUNDLE-MEMBER-LIST` | `done` | `R14` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-MEMBER-LIST.md](docs/tasks/ISF-OUTPUT-BUNDLE-MEMBER-LIST.md) |
 | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.md](docs/tasks/ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.md) |
 | `ISF-TRANSACTION-OVER-RULE-PRIORITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md](docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md) |

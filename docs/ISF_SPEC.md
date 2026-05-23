@@ -3447,7 +3447,7 @@ Current shareable resource registry:
 | Kind | Status | Meaning |
 | --- | --- | --- |
 | `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
-| `output_bundle` | shipped for `priority` arbitration | A group of actor outputs with rule users. A grant enables the whole winning bound rule DT for that cycle; optional explicit members name declared actor output ports. |
+| `output_bundle` | shipped for `priority` arbitration | A group of actor outputs or rule-written LHS targets with rule users. A grant enables the whole winning bound rule DT for that cycle; optional explicit members name declared actor output ports. |
 | `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
 | `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
 | `transaction_start` | backlog | The start/request fan-in for one transaction. |
@@ -3469,13 +3469,16 @@ normalized rule guard is true. Rule-local `(priority over other_rule)` and
 actor-level `(priority lhs over rhs)` edges choose the active winner when the
 endpoints are bound rules of the same resource. The generated grant gates the
 whole lowered rule DT DTE, while existing same-target priority suppression
-remains assignment-local. If an explicit output-bundle member list is present,
-each member must be a declared actor output port, each listed member must be
-written by at least one bound rule user, and no bound rule user may write a
-declared output outside the list. Cycles, incomplete ordering among
-potentially simultaneous bound users, ambiguous future user namespaces,
-unsupported resource kinds, member/list mismatches, unwritten explicit
-members, and `round_robin` resources with bound users fail closed.
+remains assignment-local. Without an explicit member list, the bundle remains
+the historical implicit bound-rule surface: the bound users and their driven
+outputs or other LHS targets describe the author intent. If an explicit
+output-bundle member list is present, each member must be a declared actor
+output port, each listed member must be written by at least one bound rule
+user, and no bound rule user may write a declared output outside the list.
+Cycles, incomplete ordering among potentially simultaneous bound users,
+ambiguous future user namespaces, unsupported resource kinds, member/list
+mismatches, unwritten explicit members, and `round_robin` resources with bound
+users fail closed.
 Transaction users, named-drive users, output-target users, child-instance
 users, storage-port users, non-output output-bundle member domains,
 multi-capacity resources, and transaction-lifetime hold/release semantics

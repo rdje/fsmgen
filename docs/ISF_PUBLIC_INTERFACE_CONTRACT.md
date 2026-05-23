@@ -1008,10 +1008,13 @@ strings, and optional resource-kind/user/member metadata. A resource name is the
 author-defined instance handle; the resource kind is the public registry entry
 that says what type of shareable thing the instance represents. The enforced
 resource kinds are `rule_slot`, a one-cycle mutual-exclusion slot for rule
-users, and `output_bundle`, a named bundle of actor outputs for rule users.
-`output_bundle` may carry explicit `(members output...)` metadata naming
-declared actor output ports. Both shipped kinds use the static `priority`
-arbiter today. The current shareable resource registry is:
+users, and `output_bundle`, a named bundle of actor outputs or rule-written
+LHS targets for rule users. `output_bundle` may carry explicit
+`(members output...)` metadata naming declared actor output ports. Explicit
+members are narrower than the unmembered implicit bundle surface: they
+validate/report declared outputs, not arbitrary storage or route ownership.
+Both shipped kinds use the static `priority` arbiter today. The current
+shareable resource registry is:
 `rule_slot` (shipped for `priority` arbitration), `output_bundle` (shipped for
 `priority` arbitration), `interface_bundle`, `named_drive`,
 `transaction_start`, `child_instance`, and `storage_port`. The non-shipped

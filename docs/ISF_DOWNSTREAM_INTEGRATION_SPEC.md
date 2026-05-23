@@ -1750,6 +1750,9 @@ Rules:
 
 - Current enforced resource kinds are `rule_slot` and `output_bundle` with
   `priority` arbitration for declared rule users.
+- An unmembered `output_bundle` keeps the historical implicit surface: the
+  bound rule users and the outputs or other LHS targets they drive describe
+  the bundle intent.
 - `output_bundle` resources may include `(members output...)`; every member
   must name a declared actor output port. When members are explicit, every
   listed member must be written by at least one bound rule user, and no bound

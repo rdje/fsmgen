@@ -2,10 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Output-bundle wording truth sync
+- Completed `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1`.
+- Public docs now distinguish unmembered `output_bundle` resources, which keep
+  the historical implicit bound-rule output/LHS-target surface, from explicit
+  `(members output...)`, which is intentionally limited to declared actor
+  outputs for validation and report evidence.
+- No parser, scheduler, emitter, HDL, CLI, report schema, or public resource
+  catalog behavior changed.
+- Validation passed: focused public-doc audits with `Files=6, Tests=347`;
+  `mdbook build docs/book`; stale-wording search; and `git diff --check`.
+
 ## 2026-05-23: R14 — Output-bundle member list shipped
 - Completed `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` and closed the task tree.
 - `output_bundle` resources now accept explicit `(members output...)`
   subclauses naming declared actor output ports.
+- Unmembered output bundles still represent the historical implicit
+  bound-rule driven output/LHS-target surface; explicit members are the
+  narrower declared-output validation/reporting surface.
 - Parser validation rejects malformed, duplicate, non-output, and
   wrong-kind member lists before actor-shell handoff.
 - Lowering keeps the existing one-cycle static priority grant model and fails
@@ -15,7 +29,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Input ports, internal storage, aggregate paths, actor-network endpoints,
   output-target users, transaction users, named-drive users, route mux/storage,
   fairness, hold/release, multi-capacity resources, and `round_robin` remain
-  deferred.
+  deferred as explicit member or routing surfaces.
 - Validation passed: syntax checks; focused resource/public/spec/book tests
   with `Files=10, Tests=342`; `mdbook build docs/book`; fixture expectation
   sync checks with `Files=3, Tests=7`; broad

@@ -4,22 +4,34 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Recent R14 output-bundle wording truth sync:
+  `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1` aligned the public docs after
+  explicit member lists shipped. The synchronized wording now distinguishes
+  unmembered `output_bundle` resources, which keep the historical implicit
+  bound-rule output/LHS-target surface, from explicit `(members output...)`,
+  which is intentionally limited to declared actor outputs for validation and
+  report evidence. No parser, scheduler, emitter, HDL, CLI, report schema, or
+  public catalog behavior changed.
 - Recent R14 output-bundle member-list completion:
   `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` shipped explicit `(members output...)`
   syntax for `(kind output_bundle)` resources. Members must be unique scalar
-  declared actor output ports. When a priority-arbitrated `output_bundle` has
-  both members and declared rule users, lowering fails closed if a bound rule
-  writes a declared output outside the member list or if a listed member is
-  not written by any bound rule. The existing one-cycle static `priority`
-  grant model is unchanged, and schedule reports now include a bounded
-  `members` array on every `resource_arbitration[]` entry. `members` is empty
-  for resources without explicit members and carries declared output names for
-  explicit output bundles. Input ports, internal storage, aggregate paths,
-  actor-network endpoints, output-target users, transaction users,
-  named-drive users, route mux/storage, fan-in/fan-out, fairness state,
-  hold/release semantics, multi-capacity resources, and `round_robin` remain
-  deferred. The ISF spec, downstream integration handoff, public contract,
-  mdBook, roadmap status, task tree, and live docs were synchronized.
+  declared actor output ports. Unmembered output bundles keep the historical
+  implicit bound-rule output/LHS-target surface; explicit member lists are
+  the narrower declared-output validation/reporting surface. When a
+  priority-arbitrated `output_bundle` has both members and declared rule
+  users, lowering fails closed if a bound rule writes a declared output
+  outside the member list or if a listed member is not written by any bound
+  rule. The existing one-cycle static `priority` grant model is unchanged,
+  and schedule reports now include a bounded `members` array on every
+  `resource_arbitration[]` entry. `members` is empty for resources without
+  explicit members and carries declared output names for explicit output
+  bundles. Input ports, internal storage, aggregate paths, actor-network
+  endpoints, output-target users, transaction users, named-drive users, route
+  mux/storage, fan-in/fan-out, fairness state, hold/release semantics,
+  multi-capacity resources, and `round_robin` remain deferred as explicit
+  member or routing surfaces. The ISF spec, downstream integration handoff,
+  public contract, mdBook, roadmap status, task tree, and live docs were
+  synchronized.
 - Recent R14 output-bundle member-list selection:
   `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1` activated the next bounded R14 resource
   slice. The selected implementation path adds explicit

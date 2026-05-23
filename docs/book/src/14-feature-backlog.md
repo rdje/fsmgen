@@ -1751,9 +1751,12 @@ scheduler now enforces `rule_slot` and `output_bundle` under the static
 `priority` arbiter for declared rule users. Each bound rule requests when its
 guard is true, the priority graph chooses a unique active winner, and the
 generated grant gates the whole rule DT DTE without adding a cycle.
-`output_bundle` resources may now carry explicit `(members output...)`
-metadata for declared actor output ports; member lists validate against bound
-rule output writes and report through `resource_arbitration[].members`.
+Unmembered `output_bundle` resources keep the implicit bound-rule surface: the
+bound rule users and the outputs or other LHS targets they drive describe the
+bundle intent. `output_bundle` resources may now carry explicit
+`(members output...)` metadata for declared actor output ports; member lists
+validate against bound rule output writes and report through
+`resource_arbitration[].members`.
 
 The resource-kind catalog is owned in code by
 `FSM::Support::ISFResourceCatalog` and exposed through the machine-readable
@@ -1765,7 +1768,7 @@ Current shareable resource registry:
 | Kind | Status | Meaning |
 | --- | --- | --- |
 | `rule_slot` | shipped for `priority` arbitration | One-cycle mutual exclusion for rule users under the `priority` arbiter. |
-| `output_bundle` | shipped for `priority` arbitration | One-cycle ownership of a group of actor outputs for rule users under the `priority` arbiter, with optional explicit declared-output member lists. |
+| `output_bundle` | shipped for `priority` arbitration | One-cycle ownership of a group of actor outputs or rule-written LHS targets under the `priority` arbiter, with optional explicit declared-output member lists. |
 | `interface_bundle` | backlog | Ownership of a protocol-facing interface or bus bundle. |
 | `named_drive` | backlog | Ownership of a reusable actor `(drive ...)` body or drive-call path. |
 | `transaction_start` | backlog | Arbitration for start/request fan-in into one transaction. |
