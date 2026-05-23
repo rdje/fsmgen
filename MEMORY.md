@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Transaction-start resource priority selected
+- Completed `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1`.
+- Activated the active R14 task tree for bounded `(kind transaction_start)`
+  priority arbitration over declared rule users.
+- The selected implementation resource name must be a declared local
+  transaction, each bound rule user must trigger that transaction through the
+  shipped non-generated rule-trigger surface, and priority suppression must
+  gate lower-priority rule DTs before their trigger source pulses feed the
+  generated `rule_trigger_fanin` DT.
+- `round_robin`, `interface_bundle`, `named_drive`, `child_instance`,
+  `storage_port`, transaction users, named-drive users, output-target users,
+  generated-child transaction starts, actor-network triggers, lifetime
+  ownership, ready/backpressure, route mux/storage, multi-capacity resources,
+  and dynamic resource names remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+- Validation passed: live-doc/spec index audits with `Files=2, Tests=25`;
+  `git diff --check`.
+
 ## 2026-05-23: R14 output-bundle roadmap wording cleanup
 - Completed `ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1` and closed the
   one-leaf roadmap-maintenance task tree.

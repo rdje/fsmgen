@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Transaction-start resources reuse trigger fan-in
+- `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1` selects a bounded resource slice
+  that fits the existing rule-trigger lowering. Rules already emit per-rule
+  trigger source pulses and a generated `rule_trigger_fanin` DT owns the
+  transaction start signal.
+- The implementation should not move the fan-in owner or add a cycle. It
+  should reuse static priority grant gating on bound rule DTs so suppressed
+  rules never emit their trigger source pulse for that cycle.
+
 ## 2026-05-23: Roadmap wording stays maintenance-scoped
 - `ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1` is intentionally
   documentation-only. It repairs duplicated wording in the live status board

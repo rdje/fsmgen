@@ -2,8 +2,25 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-TRANSACTION-START-RESOURCE-PRIORITY`.
+- Current frontier: `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2`.
+- Recent R14 transaction-start resource selection:
+  `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1` activated the next bounded
+  resource-arbitration task tree. The selected implementation path enforces
+  `(kind transaction_start)` resources only when the resource name is a
+  declared local transaction, the arbiter is `priority`, and every declared
+  rule user triggers that transaction through the shipped non-generated
+  rule-trigger surface. The selected lowering reuses the existing static
+  priority grant model to suppress lower-priority rule DTs before their
+  trigger source pulses feed the generated `rule_trigger_fanin` DT, without
+  adding a cycle or changing the fan-in owner. `round_robin`,
+  `interface_bundle`, `named_drive`, `child_instance`, `storage_port`,
+  transaction users, named-drive users, output-target users, generated-child
+  transaction starts, actor-network triggers, lifetime ownership,
+  ready/backpressure, route mux/storage, multi-capacity resources, and
+  dynamic resource names remain deferred. No parser, scheduler, report,
+  generated artifact, HDL, CLI, or public ISF behavior changed in this
+  selection.
 - Recent R14 roadmap wording cleanup:
   `ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1` repaired duplicated
   output-bundle member-list wording in this live status board after the

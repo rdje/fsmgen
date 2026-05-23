@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Transaction-start resource priority selected
+- Completed `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1`.
+- Activated the active R14 task tree for bounded `(kind transaction_start)`
+  priority arbitration over declared rule users.
+- The active implementation frontier is
+  `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2`.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+- Validation passed: live-doc/spec index audits with `Files=2, Tests=25`;
+  `git diff --check`.
+
 ## 2026-05-23: R14 — Output-bundle roadmap wording cleanup
 - Completed `ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1` and closed the
   one-leaf roadmap-maintenance task tree.

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TRANSACTION-START-RESOURCE-PRIORITY` | `active` | `R14` | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | [docs/tasks/ISF-TRANSACTION-START-RESOURCE-PRIORITY.md](docs/tasks/ISF-TRANSACTION-START-RESOURCE-PRIORITY.md) |
 
 ## Proposed Task Trees
 
