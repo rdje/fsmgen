@@ -255,8 +255,8 @@ surface.
 
 | Kind | Status | Meaning |
 | --- | --- | --- |
-| `rule_slot` | first implementation target | One-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
-| `output_bundle` | backlog | A group of actor outputs or LHS targets that must have one owner for a cycle. |
+| `rule_slot` | first implementation target; shipped by this tree | One-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
+| `output_bundle` | shipped later by `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` | A group of actor outputs or LHS targets that must have one owner for a cycle. |
 | `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
 | `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
 | `transaction_start` | backlog | The start/request fan-in for one transaction. |
@@ -424,7 +424,8 @@ Allowed no-op metadata:
 ## ISF-RESOURCE-PRIORITY.3 Implementation
 
 This slice ships the first enforceable resource kind: priority-arbitrated
-`rule_slot`.
+`rule_slot`. `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` later extended the same
+priority-arbitrated rule-user grant model to `output_bundle`.
 
 ### Parser Surface
 
@@ -437,13 +438,18 @@ This slice ships the first enforceable resource kind: priority-arbitrated
   `transaction_start`, `child_instance`, and `storage_port`.
 - Duplicate resource names, duplicate subclauses, duplicate users, malformed
   arbiter/kind/users clauses, and unknown `rule_slot` users fail before
-  scheduler handoff.
-- Unsupported resource kinds remain metadata only until used. If a resource
-  with bound users uses a non-`rule_slot` kind, lowering fails closed.
+  scheduler handoff. `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` later added the
+  same declared-rule user validation for `output_bundle`.
+- Unsupported resource kinds remain metadata only until used. At the time this
+  tree landed, any resource with bound users using a non-`rule_slot` kind
+  failed closed; `output_bundle` is now the one later-shipped exception for
+  declared rule users under `priority`.
 
 ### Lowering Surface
 
-- `rule_slot` + `priority` is the only enforced resource/arbitration pair.
+- `rule_slot` + `priority` was the only enforced resource/arbitration pair for
+  this tree. `output_bundle` + `priority` rule-user arbitration was shipped
+  later by `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2`.
 - Each bound rule requests the slot when its normalized rule guard is true.
 - Actor-level and rule-local priority edges are reused to build the resource
   ordering graph.
@@ -502,13 +508,18 @@ data assignments with matching timing operators.
   review artifact does not expose a state-active predicate that can safely
   guard a non-state rule DT assignment. That direction needs an explicit
   public lowering contract before it can ship.
+  `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` later shipped that missing bounded
+  `state_active` guard contract and the covered transaction-over-rule
+  same-target data case.
 
 ### Regression Evidence
 
 - [t/1219-isf-rule-transaction-priority.t](../../t/1219-isf-rule-transaction-priority.t)
   covers accepted rule-over-transaction suppression, scheduled `.fsm` guard
   output, HDL handoff, unordered conflict rejection, cycle rejection, and
-  transaction-over-rule fail-closed diagnostics.
+  transaction-over-rule fail-closed diagnostics for this tree. The same test
+  was later extended by `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` to cover the
+  shipped transaction-over-rule path.
 - [t/1144-isf-public-tested-by-metadata-audit.t](../../t/1144-isf-public-tested-by-metadata-audit.t)
   now includes the rule/transaction priority regression in the ISF
   public-interface contract's live `tested_by` list.
@@ -559,8 +570,10 @@ open leaf work.
   complete acyclic rule ordering, whole-rule DT DTE gating, and fail-closed
   diagnostics for unsupported or incomplete cases.
 - Target-local priority covers same-target rule/rule data conflicts and the
-  lowerable rule-over-transaction data case. Mixed timing, cycles,
-  incomparable/unordered cases, and transaction-over-rule priority fail closed.
+  lowerable rule-over-transaction data case for this tree. Mixed timing,
+  cycles, and incomparable/unordered cases fail closed. Transaction-over-rule
+  priority failed closed for this tree, then later shipped for the covered
+  same-target data case in `ISF-TRANSACTION-OVER-RULE-PRIORITY.2`.
 - Successful schedule reports expose bounded `priority_resolutions` and
   `resource_arbitration` summaries.
 - The ISF spec, public contract, mdBook, roadmap, task-tree index, MEMORY,
@@ -571,11 +584,13 @@ open leaf work.
 
 - `round_robin` resources with users still fail closed until stateful arbiter
   semantics ship.
-- Resource kinds beyond `rule_slot` remain backlog: `output_bundle`,
-  `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
-  and `storage_port`.
-- Transaction-over-rule priority remains deferred until state-active guards
-  have an explicit public lowering contract for non-state rule DTs.
+- Resource kinds beyond the shipped `rule_slot` and later-shipped
+  `output_bundle` remain backlog: `interface_bundle`, `named_drive`,
+  `transaction_start`, `child_instance`, and `storage_port`.
+- Transaction-over-rule priority was deferred outside this tree until
+  state-active guards had an explicit public lowering contract for non-state
+  rule DTs. `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` later shipped that covered
+  same-target data case.
 - Per-cycle runtime grant tracing remains outside the current schedule-report
   surface.
 
@@ -595,8 +610,10 @@ open leaf work.
   resource kinds. The first implementation target is `rule_slot`, a
   one-cycle mutual-exclusion slot that gates bound rule DTs. Additional kinds
   such as `output_bundle`, `interface_bundle`, `named_drive`,
-  `transaction_start`, `child_instance`, and `storage_port` remain backlog
-  until their lowering and diagnostics are explicit.
+  `transaction_start`, `child_instance`, and `storage_port` remained backlog
+  for this tree until their lowering and diagnostics became explicit.
+  `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` later shipped `output_bundle` for
+  declared rule users under `priority`.
 - `2026-05-14`: First-pass resource enforcement should use centralized
   resource user binding through explicit `(kind rule_slot)` and optional
   `(users ...)` resource subclauses, and should cover only
@@ -606,6 +623,10 @@ open leaf work.
 - `2026-05-14`: `ISF-RESOURCE-PRIORITY.3` ships the `rule_slot`/`priority`
   case exactly. Other resource kinds stay accepted catalog metadata but fail
   closed when bound users attempt to use them for enforced arbitration.
+- `2026-05-23`: `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` later ships the
+  `output_bundle`/`priority` rule-user case. The remaining catalog kinds,
+  non-rule users, `round_robin`, and output-bundle member-list syntax remain
+  backlog.
 - `2026-05-14`: Resource grant provenance remains internal for now.
   Successful schedule-report projection is left to `ISF-RESOURCE-PRIORITY.5`
   so the public JSON surface can be specified and audited as its own slice.
@@ -614,6 +635,9 @@ open leaf work.
   assignment guard on the transaction-state assignment; transaction-over-rule
   remains fail-closed until state-active predicates have a documented lowering
   surface for non-state rule DT guards.
+- `2026-05-23`: `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` later ships the
+  covered transaction-over-rule same-target data case by adding the bounded
+  scheduled `.fsm` `(state_active STATE)` guard surface.
 - `2026-05-14`: Successful arbitration report metadata is bounded to static
   lowering decisions: `priority_resolutions` for target-local suppression and
   `resource_arbitration` for enforced resource grant shaping. Per-cycle grant
