@@ -14,11 +14,11 @@ use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 use FSM::Scheduler::ISF;
 
-subtest 'actor scalar parameter bank widths lower like literal widths' => sub {
+subtest 'actor constants bank widths lower like literal widths' => sub {
     my $source = <<'ISF';
-(actor parameter_bank_storage_widths
+(actor constant_bank_storage_widths
   (clock clk)
-  (params
+  (constants
     (DATA_W 7))
   (interface
     (input start)
@@ -35,15 +35,15 @@ subtest 'actor scalar parameter bank widths lower like literal widths' => sub {
     (complete done)))
 ISF
 
-    my $actor = parse_source($source, 'parameter-bank-storage-widths.isf');
-    is(storage_width($actor, 'data'), 7, 'bank width resolves from actor parameter');
+    my $actor = parse_source($source, 'constant-bank-storage-widths.isf');
+    is(storage_width($actor, 'data'), 7, 'bank width resolves from actor constant');
     is_deeply(storage_signal_widths($actor, 'data'), [7, 7], 'bank signal widths are finalized');
 
     my $scheduler = FSM::Scheduler::ISF->new();
     my $lowered = $scheduler->lower($actor);
-    my $fsm = $lowered->{files}{'parameter_bank_storage_widths.fsm'};
+    my $fsm = $lowered->{files}{'constant_bank_storage_widths.fsm'};
 
-    like($fsm, qr/\(\+params\s+\(DATA_W 7\)\s+\)/s, 'scheduled .fsm preserves actor parameter declaration');
+    like($fsm, qr/\(\+constants\s+\(DATA_W 7\)\s+\)/s, 'scheduled .fsm preserves actor constant declaration');
     like($fsm, qr/\(\+size[\s\S]*\(data_0 7\)[\s\S]*\(data_1 7\)/, 'scheduled .fsm uses resolved bank widths');
     like($fsm, qr/\(<- \(data_0 wdata\) <\(== idx 0\)\)/, 'store uses resolved scalarized bank entry');
     like($fsm, qr/\(<- \(rdata> data_0\) <\(== idx 0\)\)/, 'load uses resolved scalarized bank entry');
@@ -53,17 +53,17 @@ ISF
     assert_actor_storage($report, 'data_1', 7);
     assert_bank_accesses($report);
 
-    assert_fsm_reaches_hdl($fsm, 'parameter_bank_storage_widths', qr/\breg\s+\[6:0\]\s+data_0\b/, 'HDL data_0 width is resolved');
-    assert_fsm_reaches_hdl($fsm, 'parameter_bank_storage_widths', qr/\breg\s+\[6:0\]\s+data_1\b/, 'HDL data_1 width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'constant_bank_storage_widths', qr/\breg\s+\[6:0\]\s+data_0\b/, 'HDL data_0 width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'constant_bank_storage_widths', qr/\breg\s+\[6:0\]\s+data_1\b/, 'HDL data_1 width is resolved');
 };
 
-subtest 'enum-resolved actor scalar parameter bank width lowers' => sub {
-    my $actor = parse_source(<<'ISF', 'enum-parameter-bank-width.isf');
-(actor enum_parameter_bank_width
+subtest 'enum-resolved actor constant bank width lowers' => sub {
+    my $actor = parse_source(<<'ISF', 'enum-constant-bank-width.isf');
+(actor enum_constant_bank_width
   (clock clk)
   (enums
     (sizes (W 6)))
-  (params
+  (constants
     (DATA_W sizes.W))
   (interface
     (input start)
@@ -75,18 +75,18 @@ subtest 'enum-resolved actor scalar parameter bank width lowers' => sub {
     (complete done)))
 ISF
 
-    is(storage_width($actor, 'data'), 6, 'enum-resolved actor parameter becomes a positive bank width');
+    is(storage_width($actor, 'data'), 6, 'enum-resolved actor constant becomes a positive bank width');
 
-    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_parameter_bank_width.fsm'};
+    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_constant_bank_width.fsm'};
     like($fsm, qr/\(\+size[\s\S]*\(data_0 6\)[\s\S]*\(data_1 6\)/, 'scheduled .fsm uses enum-resolved bank width');
 };
 
-subtest 'unsupported actor parameter bank width sources fail closed' => sub {
+subtest 'unsupported actor constant bank width sources fail closed' => sub {
     assert_parse_rejected(
         <<'ISF',
-(actor zero_parameter_bank_width
+(actor zero_constant_bank_width
   (clock clk)
-  (params
+  (constants
     (DATA_W 0))
   (interface
     (input start)
@@ -94,29 +94,13 @@ subtest 'unsupported actor parameter bank width sources fail closed' => sub {
   (storage
     (bank data (width DATA_W) (depth 2))))
 ISF
-        qr/\AError: actor 'zero_parameter_bank_width' storage bank 'data' width parameter 'DATA_W' must resolve to a positive integer/,
-        'zero-valued actor parameter is rejected',
+        qr/\AError: actor 'zero_constant_bank_width' storage bank 'data' width constant 'DATA_W' must resolve to a positive integer/,
+        'zero-valued actor constant is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor aggregate_parameter_bank_width
-  (clock clk)
-  (params
-    (DATA_W (4 4)))
-  (interface
-    (input start)
-    (output done))
-  (storage
-    (bank data (width DATA_W) (depth 2))))
-ISF
-        qr/\AError: actor 'aggregate_parameter_bank_width' storage bank 'data' width parameter 'DATA_W' must resolve to a positive integer/,
-        'non-scalar actor parameter is rejected',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
-(actor unknown_parameter_bank_width
+(actor unknown_constant_bank_width
   (clock clk)
   (interface
     (input start)
@@ -124,13 +108,13 @@ ISF
   (storage
     (bank data (width DATA_W) (depth 2))))
 ISF
-        qr/\AError: actor 'unknown_parameter_bank_width' storage bank 'data' width token 'DATA_W' is not a declared actor scalar parameter or actor constant/,
+        qr/\AError: actor 'unknown_constant_bank_width' storage bank 'data' width token 'DATA_W' is not a declared actor scalar parameter or actor constant/,
         'unknown symbolic width is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor runtime_parameter_bank_width
+(actor runtime_constant_bank_width
   (clock clk)
   (interface
     (input start)
@@ -139,13 +123,13 @@ ISF
   (storage
     (bank data (width DATA_W) (depth 2))))
 ISF
-        qr/\AError: actor 'runtime_parameter_bank_width' storage bank 'data' width token 'DATA_W' is a runtime interface signal/,
+        qr/\AError: actor 'runtime_constant_bank_width' storage bank 'data' width token 'DATA_W' is a runtime interface signal/,
         'runtime interface signals are rejected as widths',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor expression_parameter_bank_width
+(actor expression_constant_bank_width
   (clock clk)
   (interface
     (input start)
@@ -153,10 +137,25 @@ ISF
   (storage
     (bank data (width (+ DATA_W 1)) (depth 2))))
 ISF
-        qr/\AError: actor 'expression_parameter_bank_width' storage 'data' width requires '\(width positive_integer_or_actor_scalar_parameter_or_actor_constant\)'/,
+        qr/\AError: actor 'expression_constant_bank_width' storage 'data' width requires '\(width positive_integer_or_actor_scalar_parameter_or_actor_constant\)'/,
         'width expressions are rejected at parse time',
     );
 
+    assert_parse_rejected(
+        <<'ISF',
+(actor constant_bank_depth
+  (clock clk)
+  (constants
+    (DEPTH 2))
+  (interface
+    (input start)
+    (output done))
+  (storage
+    (bank data (width 7) (depth DEPTH))))
+ISF
+        qr/\AError: actor 'constant_bank_depth' storage bank 'data' depth token 'DEPTH' is an actor constant/,
+        'bank depths remain outside this bank-width slice',
+    );
 };
 
 done_testing();

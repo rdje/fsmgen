@@ -216,10 +216,10 @@ General source rules:
   parameters, domains, and instances are scalar HDL identifiers. Current
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.
 - Widths and depths are positive integer literals unless a specific clause says
-  otherwise. Actor top-level interface port widths and actor-owned scalar
-  storage widths also accept declared actor constants and actor-local scalar
-  parameter defaults that resolve to positive integers. Transaction-local port
-  widths, actor-owned bank storage widths, and actor-owned bank storage depths
+  otherwise. Actor top-level interface port widths, actor-owned scalar storage
+  widths, and actor-owned bank storage widths also accept declared actor
+  constants and actor-local scalar parameter defaults that resolve to positive
+  integers. Transaction-local port widths and actor-owned bank storage depths
   also accept actor-local scalar parameter defaults that resolve to positive
   integers.
 - Actor constants, scalar actor parameter defaults, and generated child
@@ -466,10 +466,10 @@ Actor-owned storage:
   (bank data (width DATA_W) (depth DEPTH)))
 ```
 
-Here scalar `PTR_W` may be an actor-local scalar parameter default or declared
-actor constant that resolves to a positive integer. Bank `DATA_W` and bank
-`(depth PARAM)` must use actor-local scalar parameter defaults when symbolic
-dimension sources are present.
+Here scalar `PTR_W` and bank width `DATA_W` may be actor-local scalar
+parameter defaults or declared actor constants that resolve to positive
+integers. Bank `(depth PARAM)` must use an actor-local scalar parameter
+default when a symbolic depth source is present.
 
 Rules:
 
@@ -482,10 +482,11 @@ Rules:
   signals, zero-valued or non-scalar actor parameters, zero-valued actor
   constants, and arbitrary expressions fail closed. Type aliases remain
   spelled as `(type NAME)`.
-- Bank widths are positive integer literals or actor-local scalar parameter
-  defaults that resolve to positive integers. Unknown symbolic names, actor
-  constants, runtime interface signals, zero-valued or non-scalar actor
-  parameters, and arbitrary expressions fail closed.
+- Bank widths are positive integer literals, actor-local scalar parameter
+  defaults, or declared actor constants that resolve to positive integers.
+  Unknown symbolic names, runtime interface signals, zero-valued or non-scalar
+  actor parameters, zero-valued actor constants, and arbitrary expressions
+  fail closed.
 - Bank depths are positive integer literals or actor-local scalar parameter
   defaults that resolve to positive integers. Unknown symbolic names, actor
   constants, runtime interface signals, zero-valued or non-scalar actor
@@ -3372,7 +3373,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1336-isf-transaction-port-actor-param-widths.t \
   t/1337-isf-bank-storage-actor-param-depths.t \
   t/1338-isf-interface-actor-constant-widths.t \
-  t/1339-isf-scalar-storage-actor-constant-widths.t
+  t/1339-isf-scalar-storage-actor-constant-widths.t \
+  t/1340-isf-bank-storage-actor-constant-widths.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

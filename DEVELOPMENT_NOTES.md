@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Bank width constants reuse storage width finalization
+- `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2` widens bank element width
+  finalization while leaving bank depth finalization unchanged.
+- Bank depth still resolves before width, so scalarized storage entries are
+  generated from literal or actor-parameter depths. The width finalizer then
+  resolves each bank element width from literals, actor scalar parameters, or
+  declared actor constants and writes the resolved width onto the bank entry
+  plus every scalarized storage signal.
+- Bank depths remain outside this slice because they affect scalarized family
+  cardinality and duplicate lowered-name detection, unlike element width
+  evidence.
+
 ## 2026-05-23: Bank width constants are the next static-dimension slice
 - `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.1` selects actor-owned bank element
   widths as the next actor-constant static-dimension surface.

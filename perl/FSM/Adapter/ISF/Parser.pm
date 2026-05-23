@@ -696,9 +696,7 @@ sub _finalize_actor_storage_widths($self, $actor) {
             ? "storage bank '$storage_name'"
             : "storage '$storage_name'";
 
-        my $accepted_sources = $is_bank
-            ? 'a positive integer literal or actor scalar parameter'
-            : 'a positive integer literal, actor constant, or actor scalar parameter';
+        my $accepted_sources = 'a positive integer literal, actor constant, or actor scalar parameter';
 
         confess "Error: actor '$actor_name' $context width must be $accepted_sources\n"
             unless defined($width) && !ref($width) && _is_hdl_identifier($width);
@@ -715,9 +713,6 @@ sub _finalize_actor_storage_widths($self, $actor) {
 
         my $constant = _actor_constant_by_name($actor, $width);
         if ($constant) {
-            if ($is_bank) {
-                confess "Error: actor '$actor_name' $context width token '$width' is an actor constant; storage bank widths accept positive integer literals or actor scalar parameters only; use '(type NAME)' for type aliases\n";
-            }
             my $constant_width = _positive_integer_from_literal_value(_constant_resolved_value($constant));
             confess "Error: actor '$actor_name' $context width constant '$width' must resolve to a positive integer\n"
                 unless defined $constant_width;
@@ -729,10 +724,7 @@ sub _finalize_actor_storage_widths($self, $actor) {
         confess "Error: actor '$actor_name' $context width token '$width' is a runtime interface signal; storage widths accept $accepted_sources only; use '(type NAME)' for type aliases\n"
             if _actor_interface_signal_by_name($actor, $width);
 
-        my $unknown_source_detail = $is_bank
-            ? 'a declared actor scalar parameter'
-            : 'a declared actor scalar parameter or actor constant';
-        confess "Error: actor '$actor_name' $context width token '$width' is not $unknown_source_detail; use '(type NAME)' for type aliases\n";
+        confess "Error: actor '$actor_name' $context width token '$width' is not a declared actor scalar parameter or actor constant; use '(type NAME)' for type aliases\n";
     }
 
     return 1;
@@ -6032,15 +6024,10 @@ sub _parse_storage($self, $clause, $actor_name) {
                 if $parsed_options{$option_name}++;
 
             if ($option_name eq 'width') {
-                $parsed_options{width_value} = $kind eq 'var'
-                    ? _parse_positive_integer_or_actor_scalar_parameter_or_actor_constant_width_option(
-                        $option,
-                        "Error: actor '$actor_name' storage '$name' width",
-                    )
-                    : _parse_positive_integer_or_actor_scalar_parameter_width_option(
-                        $option,
-                        "Error: actor '$actor_name' storage '$name' width",
-                    );
+                $parsed_options{width_value} = _parse_positive_integer_or_actor_scalar_parameter_or_actor_constant_width_option(
+                    $option,
+                    "Error: actor '$actor_name' storage '$name' width",
+                );
                 next;
             }
             if ($option_name eq 'type') {

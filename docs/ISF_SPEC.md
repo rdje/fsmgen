@@ -313,11 +313,11 @@ when `bin/fsmgen` uses a temporary lowered `.fsm` path.
 
 Width-bearing actor interface ports, transaction-local ports, and actor-owned
 storage entries may use `(type NAME)` for a scalar alias. They keep
-`(width N)` or `(width PARAM)` for raw positive integer widths; actor interface
-ports and actor-owned scalar storage variables may also use `(width CONST)`
-when `CONST` is a declared actor constant that resolves to a positive integer.
-Type and width options are mutually exclusive. `PARAM` may name an actor-local
-scalar parameter default that
+`(width N)` or `(width PARAM)` for raw positive integer widths; actor
+interface ports, actor-owned scalar storage variables, and actor-owned bank
+widths may also use `(width CONST)` when `CONST` is a declared actor constant
+that resolves to a positive integer. Type and width options are mutually
+exclusive. `PARAM` may name an actor-local scalar parameter default that
 resolves to a positive integer on actor interface ports, transaction-local
 ports, actor-owned scalar storage, and actor-owned bank storage. `NAME` may be
 local, such as `byte`, or package-qualified, such as `shared.byte`.
@@ -1223,9 +1223,9 @@ requirements. The shipped reusable FIFO actor target is fixed-shape
 are provenance and binding evidence in this fixture; actor top-level
 interface widths may use actor-local scalar parameter defaults or declared
 actor constants that resolve to positive integers, actor-owned scalar storage
-widths may use the same positive actor-local scalar parameter defaults, and
-bank widths and depths may use the same positive actor-local scalar parameter
-defaults. The actor has
+widths and bank widths may use the same positive actor-local scalar parameter
+defaults or declared actor constants, and bank depths may use positive
+actor-local scalar parameter defaults. The actor has
 actor-owned storage, read
 and write pointers, occupancy state, actor-maintained flags, reset ownership,
 and first-class handling of the four request cases every cycle: no request,
@@ -1260,9 +1260,10 @@ defaults or declared actor constants that resolve to positive integers.
 Actor-owned scalar storage widths may now use actor-local scalar parameter
 defaults or declared actor constants that resolve to positive integers.
 Actor-owned bank storage widths may now use actor-local scalar parameter
-defaults that resolve to positive integers. Actor-owned bank storage depths may
-now use actor-local scalar parameter defaults that resolve to positive
-integers. Use-site FIFO interface shape, use-site bank-depth
+defaults or declared actor constants that resolve to positive integers.
+Actor-owned bank storage depths may now use actor-local scalar parameter
+defaults that resolve to positive integers. Use-site FIFO interface shape,
+use-site bank-depth
 specialization, generated-top respecialization, arbitrary-depth
 memory-backed FIFO generation beyond the first `DEPTH=4` fixture, automatic
 non-zero reset values such as empty=1, standalone transaction/drive exports,
@@ -1567,16 +1568,17 @@ clause:
 
 In this example scalar `PTR_W` may be declared in the same actor's
 `(params ...)` or `(constants ...)` block with a value that resolves to a
-positive integer. Bank `DATA_W` and `DEPTH` must be declared in the same
-actor's `(params ...)` block as scalar defaults that resolve to positive
-integers when symbolic dimension sources are used.
+positive integer. Bank width `DATA_W` may likewise be an actor scalar
+parameter or actor constant resolving positive. Bank depth `DEPTH` must be an
+actor scalar parameter default resolving positive when a symbolic depth source
+is used.
 
 The first shipped storage forms are:
 
 - `(var name (width N|PARAM|CONST))`: an actor-owned internal scalar variable.
 - `(variable name (width N|PARAM|CONST))`: verbose alias for `(var ...)`.
-- `(bank name (width N|PARAM) (depth N|PARAM))`: a fixed-depth actor-owned storage
-  bank.
+- `(bank name (width N|PARAM|CONST) (depth N|PARAM))`: a fixed-depth
+  actor-owned storage bank.
 
 Actor-owned scalar storage widths may be positive integer literals,
 actor-local scalar parameter defaults, or declared actor constants that resolve
@@ -1589,15 +1591,17 @@ zero-valued or non-scalar actor parameters, zero-valued actor constants, and
 arbitrary expressions fail closed. Type aliases remain spelled with
 `(type NAME)`, not `(width NAME)`.
 
-Storage bank widths and depths may also be positive integer literals or
+Storage bank widths may be positive integer literals, actor-local scalar
+parameter defaults, or declared actor constants that resolve to positive
+integer literals. Storage bank depths may be positive integer literals or
 actor-local scalar parameter defaults that resolve to positive integer
 literals. The parser returns the resolved integer width and depth; scheduled
-`.fsm`, schedule reports, bank access metadata, and generated HDL see the
-same scalarized storage family they would see for equivalent literal values.
-Unknown symbolic names, actor constants as storage dimension symbols, runtime
-interface signals, zero-valued or non-scalar actor parameters, arbitrary
-storage dimension expressions, dynamic storage depth, and memory-array backend
-emission remain deferred or fail closed.
+`.fsm`, schedule reports, bank access metadata, and generated HDL see the same
+scalarized storage family they would see for equivalent literal values.
+Unknown symbolic names, actor constants as bank depth symbols, runtime
+interface signals, zero-valued or non-scalar actor parameters, zero-valued
+actor constants, arbitrary storage dimension expressions, dynamic storage
+depth, and memory-array backend emission remain deferred or fail closed.
 
 Storage banks lower to deterministic scalar storage element names in the
 scheduled `.fsm` review artifact. For example,
@@ -5049,6 +5053,7 @@ Focused tests:
 - [t/1337-isf-bank-storage-actor-param-depths.t](../t/1337-isf-bank-storage-actor-param-depths.t)
 - [t/1338-isf-interface-actor-constant-widths.t](../t/1338-isf-interface-actor-constant-widths.t)
 - [t/1339-isf-scalar-storage-actor-constant-widths.t](../t/1339-isf-scalar-storage-actor-constant-widths.t)
+- [t/1340-isf-bank-storage-actor-constant-widths.t](../t/1340-isf-bank-storage-actor-constant-widths.t)
 
 ## 12. Explicitly Deferred
 

@@ -375,8 +375,7 @@ so accepted `(var NAME (width CONST))` and
 `(variable NAME (width CONST))` entries resolve to positive integer storage
 widths, scheduled `.fsm` `+size` declarations, schedule-report widths, and HDL
 register ranges while zero-valued actor constants, unknown symbolic names,
-runtime interface signals, arbitrary expressions, and actor-constant bank
-widths fail closed.
+runtime interface signals, and arbitrary expressions fail closed.
 Actor-owned bank storage widths backed by actor-local scalar parameter
 defaults are checked by
 [t/1335-isf-bank-storage-actor-param-widths.t](../t/1335-isf-bank-storage-actor-param-widths.t)
@@ -384,6 +383,14 @@ so accepted `(bank NAME (width PARAM) (depth N))` entries resolve to positive
 integer bank element widths, scheduled `.fsm` `+size` declarations,
 schedule-report storage and `bank_accesses[]` widths, and HDL register ranges
 while unsupported width sources fail closed.
+Actor-owned bank storage widths backed by declared actor constants are checked
+by
+[t/1340-isf-bank-storage-actor-constant-widths.t](../t/1340-isf-bank-storage-actor-constant-widths.t)
+so accepted `(bank NAME (width CONST) (depth N))` entries resolve to positive
+integer bank element widths, scheduled `.fsm` `+size` declarations,
+schedule-report storage and `bank_accesses[]` widths, and HDL register ranges
+while zero-valued actor constants, unknown symbolic names, runtime interface
+signals, arbitrary expressions, and actor-constant bank depths fail closed.
 Actor-owned bank storage depths backed by actor-local scalar parameter
 defaults are checked by
 [t/1337-isf-bank-storage-actor-param-depths.t](../t/1337-isf-bank-storage-actor-param-depths.t)
