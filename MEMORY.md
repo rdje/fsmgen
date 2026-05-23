@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Bank storage actor-constant depths selected
+- Completed selection work for
+  `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.1`.
+- Activated a new R14 task tree for actor-owned bank storage
+  `(bank NAME (width W) (depth CONST))` declarations backed by actor-local
+  constants resolving to positive integers.
+- The active frontier is `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2`.
+- The selected boundary is narrow: transaction-local port widths, runtime
+  interface signals, transaction parameters, arbitrary expressions, unknown
+  names, zero-valued actor constants, aggregate values, use-site override
+  specialization, generated-top respecialization, memory-array backend
+  emission, dynamic storage depth, pointer-index semantic changes, and
+  same-cycle bank policy changes remain deferred or fail-closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-23: Bank storage actor-constant widths shipped
 - Completed `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2` and closed the task
   tree.

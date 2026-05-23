@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Bank depth constants are the next static-dimension slice
+- `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.1` selects actor-owned bank depths
+  as the next actor-constant static-dimension surface.
+- This slice is separate from bank element width because depth changes the
+  number of scalarized storage entries, duplicate lowered-name detection, and
+  bank access metadata cardinality.
+- Only the owning actor shell's constant value is selected as bank depth
+  evidence. Runtime signals, expressions, use-site overrides, generated-top
+  respecialization, and memory-array backend emission remain separate
+  policies.
+
 ## 2026-05-23: Bank width constants reuse storage width finalization
 - `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2` widens bank element width
   finalization while leaving bank depth finalization unchanged.

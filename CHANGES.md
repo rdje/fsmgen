@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Bank storage actor-constant depths selected
+- Completed selection work for
+  `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.1`.
+- Activated a new R14 task tree for accepting actor-local constants resolving
+  to positive integers as actor-owned bank storage
+  `(bank NAME (width W) (depth CONST))` depths.
+- The selected first implementation slice deliberately excludes
+  transaction-local port widths, runtime interface signals, transaction
+  parameters, arbitrary expressions, unknown names, zero-valued actor
+  constants, aggregate values, use-site override specialization,
+  generated-top respecialization, memory-array backend emission, dynamic
+  storage depth, pointer-index semantic changes, and same-cycle bank policy
+  changes.
+- No compiler behavior changed.
+
 ### R14 — Bank storage actor-constant widths shipped
 - Completed `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2` and closed the task
   tree.
