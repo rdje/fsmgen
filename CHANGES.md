@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Scalar storage actor-parameter widths selected
+- Completed selection work for
+  `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1`.
+- Activated a new R14 task tree for accepting actor-local scalar parameter
+  defaults resolving to positive integers as actor-owned scalar storage
+  `(var NAME (width PARAM))` and `(variable NAME (width PARAM))` values.
+- The selected first slice deliberately excludes actor-owned bank widths, bank
+  depths, transaction-local port widths, actor constants, use-site override
+  specialization, generated-top respecialization, transaction parameters,
+  runtime signals, arbitrary expressions, zero-valued actor parameters, and
+  non-scalar actor parameters.
+- No compiler behavior changed.
+
 ### R14 — Interface actor-parameter widths shipped
 - Completed `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` and closed the task tree.
 - Actor top-level interface ports now accept `(width PARAM)` when `PARAM`

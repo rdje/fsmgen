@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Scalar storage actor-parameter widths selected
+- Completed selection work for
+  `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1`.
+- Activated the active R14 task tree for actor-owned scalar storage
+  `(width PARAM)` declarations backed by actor-local scalar parameter defaults
+  resolving to positive integers.
+- The active frontier is now
+  `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Interface actor-parameter widths shipped
 - Completed `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` and closed the task tree.
 - Actor top-level interface ports now accept `(width PARAM)` when `PARAM`

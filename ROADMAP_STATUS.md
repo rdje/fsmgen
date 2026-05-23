@@ -2,9 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`; the last active R14 tree is closed and the next
-  PNT selection should choose a fresh roadmap-aligned task tree before code.
+- Active task tree: `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS`.
+- Current frontier: `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` will implement
+  the bounded actor-owned scalar storage `(width PARAM)` slice.
+- Recent R14 scalar storage actor-parameter width selection:
+  `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1` activated the next
+  parameter-driven storage tree. The selected first slice is intentionally
+  narrow: only actor-owned scalar storage `(var NAME (width PARAM))` and
+  `(variable NAME (width PARAM))` entries may use actor-local scalar parameter
+  defaults that resolve to positive integers. Actor-owned bank widths, bank
+  depths, transaction-local port widths, actor constants, use-site override
+  specialization, generated-top respecialization, transaction parameters,
+  runtime signals, arbitrary expressions, zero-valued actor parameters, and
+  non-scalar actor parameters remain deferred or fail-closed.
 - Recent R14 interface actor-parameter width completion:
   `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` shipped actor-local scalar parameter
   defaults as actor top-level interface port `(width PARAM)` sources when the
@@ -5495,12 +5505,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS`.
+- Current frontier: `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2`.
 - Completion status: `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` closed the
-  previous active R14 task tree. The next PNT selection must create or
-  activate a task-tree owner before any further code, test, source,
-  generated-artifact, or config change.
+  previous active R14 task tree. `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1`
+  now selects the next bounded parameter-driven storage slice before any code
+  changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

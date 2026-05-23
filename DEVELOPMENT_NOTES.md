@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Scalar storage widths are the next static parameter slice
+- `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1` selects actor-owned scalar
+  storage widths as the next bounded actor-parameter elaboration surface.
+- The selection starts with `(var ...)` / `(variable ...)` because those entries
+  already lower to one scalar storage signal and one schedule-report storage
+  role. That keeps the first storage slice away from bank scalarization count,
+  bank access metadata, generated memory-array policy, and transaction-port
+  binding semantics.
+- Only the owning actor shell's scalar parameter default is selected as width
+  evidence. Treating use-site overrides as elaboration drivers would need a
+  separate generated-top respecialization policy, and actor constants would
+  turn this into a general symbolic dimension system rather than a parameter
+  elaboration slice.
+
 ## 2026-05-23: Interface width parameters resolve before scheduler handoff
 - `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` resolves actor top-level interface
   `(width PARAM)` tokens in the parser after the actor parameter table is
