@@ -229,11 +229,12 @@ General source rules:
   Lisp-like operator-first shape consumed by the scheduled `.fsm` expression
   formatter.
 - Runtime division and modulo expressions fail closed before scheduled `.fsm`
-  emission when any divisor operand is a numeric/exact-width literal zero or
-  an actor-level constant that resolves to zero, including nested expression
-  operands. Nonzero literal divisors, nonzero actor-constant divisors, and
-  dynamic scalar divisors remain accepted; FSMGen does not yet prove arbitrary
-  dynamic divisors nonzero.
+  emission when any divisor operand is a numeric/exact-width literal zero, an
+  actor-level constant that resolves to zero, or an actor-local scalar
+  parameter default that resolves to zero, including nested expression
+  operands. Nonzero literal divisors, nonzero actor-constant divisors, nonzero
+  actor-parameter divisors, and dynamic scalar divisors remain accepted;
+  FSMGen does not yet prove arbitrary dynamic divisors nonzero.
 - Singleton actor clauses are not mergeable. Repeating one fails closed rather
   than letting later clauses overwrite earlier fields.
 
@@ -845,9 +846,10 @@ Rules:
   Repeat, while, and until body waits can zero-bypass into independent loop
   decision/check clones that preserve the original repeat counter decrement
   or while/until condition branch behavior.
-- Wait-count division and modulo expressions reject literal-zero and
-  actor-constant-zero divisors before scheduled `.fsm` emission. Dynamic
-  divisor nonzero proof remains outside the shipped wait contract.
+- Wait-count division and modulo expressions reject literal-zero,
+  actor-constant-zero, and actor-parameter-zero divisors before scheduled
+  `.fsm` emission. Dynamic divisor nonzero proof remains outside the shipped
+  wait contract.
 - Transaction `params` and generated activation use-site overrides are not
   wait-count constants.
 - Reports expose `transaction_waits[]`.
@@ -2743,8 +2745,8 @@ Required fail-closed examples:
 - Unsupported `(on ...)` body forms such as `(params ...)`.
 - Rule triggers targeting unknown transactions.
 - Rule-trigger output bindings.
-- Literal-zero and actor-constant-zero divisor operands in shipped runtime
-  division/modulo expression contexts.
+- Literal-zero, actor-constant-zero, and actor-parameter-zero divisor operands
+  in shipped runtime division/modulo expression contexts.
 - Watchdog limits that name transaction parameters, runtime interface signals,
   unknown symbolic names, arbitrary expressions, constants that resolve to
   zero, actor parameters that resolve to zero or non-scalar values, or distinct
@@ -3377,9 +3379,9 @@ The following are not public shipped integration surfaces today:
 - Rule-trigger output bindings.
 - Direct `(on ...)` activation parameter overrides.
 - Snapshot-vs-live binding timing selection beyond the shipped binding timing.
-- Proof that every dynamic division/modulo divisor is nonzero. Literal-zero
-  and actor-constant-zero divisors are rejected, but arbitrary runtime scalar
-  nonzero proof is not a public shipped surface yet.
+- Proof that every dynamic division/modulo divisor is nonzero. Literal-zero,
+  actor-constant-zero, and actor-parameter-zero divisors are rejected, but
+  arbitrary runtime scalar nonzero proof is not a public shipped surface yet.
 - A formal frozen EBNF grammar artifact or JSON Schema artifact. This document
   and the manifest are the current integration contract; a machine grammar or
   schema should be produced by a future task if required.

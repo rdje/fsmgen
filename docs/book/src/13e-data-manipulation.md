@@ -17,13 +17,16 @@ exact: `(update var expr)`, with scalar `var`. Missing expressions, nested
 targets, and extra operands are rejected before scheduled `.fsm` emission.
 
 Division and modulo RHS expressions also fail closed when a divisor operand is
-a numeric/exact-width literal zero or an actor-level constant that resolves to
-zero, including nested expressions such as
-`(update out (+ mask (% numerator 8'd0)))` or `(set out (/ numerator ZERO))`.
+a numeric/exact-width literal zero, an actor-level constant that resolves to
+zero, or an actor-local scalar parameter default that resolves to zero,
+including nested expressions such as
+`(update out (+ mask (% numerator 8'd0)))`, `(set out (/ numerator ZERO))`,
+or `(set out (/ numerator ZERO_PARAM))`.
 
-Nonzero literal divisors, nonzero actor-constant divisors, and dynamic scalar
-divisors are preserved in the scheduled `.fsm`; FSMGen does not yet prove
-arbitrary dynamic divisors nonzero.
+Nonzero literal divisors, nonzero actor-constant divisors, nonzero
+actor-parameter divisors, and dynamic scalar divisors are preserved in the
+scheduled `.fsm`; FSMGen does not yet prove arbitrary dynamic divisors
+nonzero.
 
 **Lowering**: `(<- (var expr))` — sequential Q-named assignment.
 

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -39,7 +39,7 @@ actor-local scalar parameter default that resolves to zero.
 ## Task Tree
 
 - ID: `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO`
-  Status: `active`
+  Status: `done`
   Goal: `Close actor-parameter-zero divisor safety inside shipped ISF runtime expressions.`
   Children: `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1`,
   `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2`
@@ -51,23 +51,25 @@ actor-local scalar parameter default that resolves to zero.
   boundary, preserve non-goals, and update roadmap/live docs without behavior
   changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit`
+  Commit: `f7cd9c76`
 
 - ID: `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document actor-parameter-zero divisor rejection.`
   Acceptance: `Zero-valued actor scalar parameters fail closed as runtime
   division/modulo divisors; nonzero actor parameters and dynamic divisors keep
   shipped behavior; specs, book, public contract, downstream handoff, and
   focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax`; `focused dynamic-divisor/public/doc tests`;
+  `mdbook build docs/book`; `git diff --check`;
+  `./bin/ci-regression isf --no-book`
+  Commit: `this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` | `pending` | The source boundary is selected; implementation can extend the shipped literal-zero and actor-constant-zero divisor validation path with actor-parameter-zero rejection only. |
+| | | | No remaining frontier; tree is closed. |
 
 ## Decisions
 
@@ -92,15 +94,20 @@ actor-local scalar parameter default that resolves to zero.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-23` | `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-23` | `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c t/1308-isf-dynamic-divisor-safety.t`; `prove -Iperl t/1308-isf-dynamic-divisor-safety.t`; `prove -Iperl t/1308-isf-dynamic-divisor-safety.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `passed; broad gate Files=238, Tests=1615` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1` | `this commit: ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1: select actor-param zero divisors` | `selects actor-parameter-zero dynamic-divisor safety` |
-| `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` | `pending` | `pending` |
+| `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1` | `f7cd9c76 ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1: select actor-param zero divisors` | `selects actor-parameter-zero dynamic-divisor safety` |
+| `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` | `this commit: ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2: ship actor-param zero divisors` | `ships actor-parameter-zero dynamic-divisor safety` |
 
 ## Changelog
 
 - `2026-05-23`: Created task tree and selected actor-parameter-zero divisor
   rejection.
+- `2026-05-23`: Shipped actor-local scalar parameter defaults resolving to
+  zero as fail-closed runtime division/modulo divisor facts, preserved nonzero
+  actor-parameter divisor behavior, synchronized specs/book/live docs, and
+  closed the task tree.

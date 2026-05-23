@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Actor-parameter-zero divisors reuse parser validation
+- `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` extends the parser-side
+  runtime-expression divisor validation from literal-zero and actor-constant
+  zero facts to actor-local scalar parameter defaults resolving to zero.
+- The implementation deliberately treats zero actor parameters as unsafe facts
+  only. Nonzero actor-parameter defaults remain normal symbolic divisors
+  rather than compile-time proof, because future use-site parameter override
+  specialization can change the effective value.
+- Diagnostics share the existing expression-context traversal and now report
+  whether the zero fact came from an actor constant or actor parameter. This
+  keeps dynamic-wait, rule, transaction, drive, and data-operation expression
+  surfaces aligned without adding generated runtime guards or rewriting
+  authored expressions.
+
 ## 2026-05-23: Actor-parameter-zero divisors are a fail-closed fact
 - `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1` selects a conservative
   dynamic-divisor safety slice: actor-local scalar parameter defaults that

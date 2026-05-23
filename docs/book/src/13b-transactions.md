@@ -302,8 +302,9 @@ iterate any authored actions.
   snapshot contract as scalar runtime waits when every referenced signal has
   known width and the expression-width helper derives a positive result width.
   Division and modulo count expressions reject numeric or exact-width literal
-  zero divisors before scheduled `.fsm` emission; dynamic scalar divisors are
-  accepted but are not proven nonzero yet.
+  zero, actor-constant-zero, and actor-parameter-zero divisors before
+  scheduled `.fsm` emission; dynamic scalar divisors are accepted but are not
+  proven nonzero yet.
 
 Pending samples immediately before a positive static wait piggyback onto the
 first wait state, using the same sample materialization rule as drive/await
@@ -1518,9 +1519,10 @@ when it does, the scheduler does not add an extra implicit fallthrough branch.
 a scalar target and `expr` is one scalar or list expression payload. In a
 transaction it lowers as one ordered flopped assignment state. `(update var
 expr)` remains supported as the older transaction-local spelling for the same
-behavior. Division and modulo inside the RHS reject literal-zero divisor
-operands before scheduled `.fsm` emission. Dynamic scalar divisors lower
-unchanged; full runtime nonzero proof is still backlog.
+behavior. Division and modulo inside the RHS reject literal-zero,
+actor-constant-zero, and actor-parameter-zero divisor operands before
+scheduled `.fsm` emission. Dynamic scalar divisors lower unchanged; full
+runtime nonzero proof is still backlog.
 
 Shift operations are also exact scalar forms:
 `(shift_left reg bit [(width N)])` and

@@ -416,18 +416,19 @@ ambiguous partial-update behavior. Those items are not part of the closed
 
 Runtime expression positions use the scheduled `.fsm` operator-first
 expression surface. Division and modulo expressions now fail closed when any
-divisor operand is a numeric/exact-width literal zero or an actor-level
-constant that resolves to zero, including nested expressions such as
-`(+ mask (% numerator 8'd0))` or `(/ numerator ZERO_DIVISOR)`. The guard
-applies before scheduled `.fsm` emission across the shipped
-expression-bearing surfaces:
+divisor operand is a numeric/exact-width literal zero, an actor-level constant
+that resolves to zero, or an actor-local scalar parameter default that
+resolves to zero, including nested expressions such as
+`(+ mask (% numerator 8'd0))`, `(/ numerator ZERO_DIVISOR)`, or
+`(/ numerator ZERO_PARAM)`. The guard applies before scheduled `.fsm`
+emission across the shipped expression-bearing surfaces:
 transaction `set`/`update` RHS values, transaction wait-count expressions,
 transaction conditions, activation input bindings, drive-call actual
 expressions, inline and named drive RHS expressions, rule guards, rule
 assignments, and actor-owned bank access index/value expressions. Nonzero
-literal divisors, nonzero actor-constant divisors, and dynamic scalar divisors
-still lower unchanged; proving that every dynamic divisor is nonzero remains
-deferred.
+literal divisors, nonzero actor-constant divisors, nonzero actor-parameter
+divisors, and dynamic scalar divisors still lower unchanged; proving that
+every dynamic divisor is nonzero remains deferred.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -2023,8 +2024,9 @@ scalar signal reference that the lowerer can identify in an input-binding
 expression must be a known readable actor input, declared actor-owned storage
 signal, or known transaction variable in the caller's scope; actor output
 readback is rejected. Division and modulo in input-binding expressions reject
-literal-zero and actor-constant-zero divisor operands before scheduled `.fsm`
-emission. Transaction output bindings remain scalar-only because the
+literal-zero, actor-constant-zero, and actor-parameter-zero divisor operands
+before scheduled `.fsm` emission. Transaction output bindings remain
+scalar-only because the
 actor-side endpoint is the writable destination.
 
 Local `(do ...)` bindings lower into the scheduled parent `.fsm` state that
@@ -5008,9 +5010,10 @@ Focused tests:
   distinct per-await limits in one transaction, cross-domain watchdog policy,
   dynamic watchdog limits, and parameter-specialized watchdog counter sizing
   remain deferred.
-- Runtime division/modulo safety beyond literal-zero and actor-constant-zero
-  divisor rejection: proving arbitrary dynamic scalar divisor expressions
-  nonzero remains deferred until range/dataflow evidence is specified.
+- Runtime division/modulo safety beyond literal-zero, actor-constant-zero, and
+  actor-parameter-zero divisor rejection: proving arbitrary dynamic scalar
+  divisor expressions nonzero remains deferred until range/dataflow evidence
+  is specified.
 - Transaction binding surfaces beyond scalar and expression-valued `do`,
   `spawn`, and rule-trigger input bindings. Rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict

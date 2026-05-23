@@ -76,8 +76,9 @@ The shorter `(port expr)` action remains supported shorthand. Both accept a
 scalar RHS or one list expression using the same `.fsm` RHS expression domain
 as transaction `(set var expr)` and `(update var expr)`, while keeping rule
 assignments flopped with `<-`. Rule guard and assignment expressions reject
-literal-zero division/modulo divisor operands before scheduled `.fsm` emission;
-dynamic scalar divisors lower unchanged and are not yet proven nonzero.
+literal-zero, actor-constant-zero, and actor-parameter-zero division/modulo
+divisor operands before scheduled `.fsm` emission; dynamic scalar divisors
+lower unchanged and are not yet proven nonzero.
 
 `(trigger transaction)` must name a declared transaction in the same actor;
 forward references are accepted because validation happens after the full actor

@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Dynamic-divisor actor-parameter-zero safety shipped
+- Completed `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` and closed the task
+  tree.
+- Runtime division and modulo expressions now reject divisors that name
+  actor-local scalar parameter defaults resolving to zero, extending the
+  shipped literal-zero and actor-constant-zero validation path.
+- Diagnostics identify the owning runtime expression context, authored
+  divisor token, and division/modulo operator family.
+- Nonzero actor parameters, transaction parameters, dynamic scalar divisors,
+  nonzero literals, and nonzero actor constants keep their shipped behavior;
+  this slice does not add use-site override specialization, runtime guards, or
+  expression rewrites.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused dynamic-divisor/public/doc tests;
+  broad `./bin/ci-regression isf --no-book` with `Files=238, Tests=1615`;
+  `mdbook build docs/book`; `git diff --check`.
+
 ### R14 — Dynamic-divisor actor-parameter-zero safety selected
 - Completed selection work for
   `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1`.

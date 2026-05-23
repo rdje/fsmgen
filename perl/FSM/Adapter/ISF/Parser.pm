@@ -2610,73 +2610,81 @@ sub _validate_actor_enum_member_value_contexts($self, $actor) {
 }
 
 sub _validate_actor_literal_zero_divisors($self, $actor) {
-    my $zero_constants = _actor_zero_constant_names($actor);
+    my $zero_divisors = _actor_zero_divisor_names($actor);
 
     for my $tx (@{$actor->{transactions} || []}) {
         _validate_transaction_literal_zero_divisors(
             $tx->{clauses},
             $actor,
             "transaction '$tx->{name}'",
-            $zero_constants,
+            $zero_divisors,
         );
     }
 
     for my $rule (@{$actor->{rules} || []}) {
-        _validate_rule_literal_zero_divisors($rule, $zero_constants);
+        _validate_rule_literal_zero_divisors($rule, $zero_divisors);
     }
 
     for my $drive_name (sort keys %{$actor->{drives} || {}}) {
         _validate_drive_literal_zero_divisors(
             $drive_name,
             $actor->{drives}{$drive_name},
-            $zero_constants,
+            $zero_divisors,
         );
     }
 
     return 1;
 }
 
-sub _actor_zero_constant_names {
+sub _actor_zero_divisor_names {
     my ($actor) = @_;
-    my %zero_constants;
+    my %zero_divisors;
 
     for my $constant (@{($actor || {})->{constants} || []}) {
         my $value = exists($constant->{resolved_value})
             ? $constant->{resolved_value}
             : $constant->{value};
         next unless _is_literal_zero_value($value);
-        $zero_constants{$constant->{name}} = 1 if defined($constant->{name});
+        $zero_divisors{$constant->{name}} = 'actor constant'
+            if defined($constant->{name});
     }
 
-    return \%zero_constants;
+    for my $param (@{($actor || {})->{params} || []}) {
+        my $value = _param_resolved_value($param);
+        next unless _is_literal_zero_value($value);
+        $zero_divisors{$param->{name}} ||= 'actor parameter'
+            if defined($param->{name});
+    }
+
+    return \%zero_divisors;
 }
 
 sub _validate_transaction_literal_zero_divisors {
-    my ($clauses, $actor, $context, $zero_constants) = @_;
+    my ($clauses, $actor, $context, $zero_divisors) = @_;
     return 1 unless ref($clauses) eq 'ARRAY';
 
     for my $clause (@$clauses) {
-        _validate_transaction_literal_zero_divisor_clause($clause, $actor, $context, $zero_constants);
+        _validate_transaction_literal_zero_divisor_clause($clause, $actor, $context, $zero_divisors);
     }
 
     return 1;
 }
 
 sub _validate_transaction_literal_zero_divisor_clause {
-    my ($clause, $actor, $context, $zero_constants) = @_;
+    my ($clause, $actor, $context, $zero_divisors) = @_;
     return 1 unless ref($clause) eq 'ARRAY' && @$clause;
 
     my $head = $clause->[0];
     return 1 unless defined($head) && !ref($head);
 
     if ($head eq 'wait') {
-        _validate_no_literal_zero_divisors($clause->[1], "$context wait count", $zero_constants)
+        _validate_no_literal_zero_divisors($clause->[1], "$context wait count", $zero_divisors)
             if @$clause >= 2;
         return 1;
     }
 
     if ($head eq 'set' || $head eq 'update') {
-        _validate_no_literal_zero_divisors($clause->[2], "$context $head RHS", $zero_constants)
+        _validate_no_literal_zero_divisors($clause->[2], "$context $head RHS", $zero_divisors)
             if @$clause >= 3;
         return 1;
     }
@@ -2684,22 +2692,22 @@ sub _validate_transaction_literal_zero_divisor_clause {
     if ($head eq 'assemble') {
         if (my $as_index = _isf_as_index($clause)) {
             for my $part (@{$clause}[1 .. $as_index - 1]) {
-                _validate_no_literal_zero_divisors($part, "$context assemble part", $zero_constants);
+                _validate_no_literal_zero_divisors($part, "$context assemble part", $zero_divisors);
             }
         }
         return 1;
     }
 
     if ($head eq 'store') {
-        _validate_no_literal_zero_divisors($clause->[2], "$context store index", $zero_constants)
+        _validate_no_literal_zero_divisors($clause->[2], "$context store index", $zero_divisors)
             if @$clause >= 3;
-        _validate_no_literal_zero_divisors($clause->[3], "$context store value", $zero_constants)
+        _validate_no_literal_zero_divisors($clause->[3], "$context store value", $zero_divisors)
             if @$clause >= 4;
         return 1;
     }
 
     if ($head eq 'load') {
-        _validate_no_literal_zero_divisors($clause->[2], "$context load index", $zero_constants)
+        _validate_no_literal_zero_divisors($clause->[2], "$context load index", $zero_divisors)
             if @$clause >= 3;
         return 1;
     }
@@ -2714,29 +2722,29 @@ sub _validate_transaction_literal_zero_divisor_clause {
                 _validate_no_literal_zero_divisors(
                     $actual,
                     "$context drive '$drive_name' actual",
-                    $zero_constants,
+                    $zero_divisors,
                 );
             }
             return 1;
         }
 
-        _validate_inline_drive_literal_zero_divisors($clause, "$context inline drive", $zero_constants);
+        _validate_inline_drive_literal_zero_divisors($clause, "$context inline drive", $zero_divisors);
         return 1;
     }
 
     if ($head eq 'do' || $head eq 'spawn') {
-        _validate_activation_bind_literal_zero_divisors($clause, "$context $head", $zero_constants);
+        _validate_activation_bind_literal_zero_divisors($clause, "$context $head", $zero_divisors);
         return 1;
     }
 
     if ($head eq 'when' || $head eq 'while' || $head eq 'until') {
-        _validate_no_literal_zero_divisors($clause->[1], "$context $head condition", $zero_constants)
+        _validate_no_literal_zero_divisors($clause->[1], "$context $head condition", $zero_divisors)
             if @$clause >= 2;
         _validate_transaction_literal_zero_divisors(
             [ @{$clause}[2 .. $#$clause] ],
             $actor,
             "$context $head body",
-            $zero_constants,
+            $zero_divisors,
         );
         return 1;
     }
@@ -2746,7 +2754,7 @@ sub _validate_transaction_literal_zero_divisor_clause {
             [ @{$clause}[2 .. $#$clause] ],
             $actor,
             "$context repeat body",
-            $zero_constants,
+            $zero_divisors,
         );
         return 1;
     }
@@ -2758,7 +2766,7 @@ sub _validate_transaction_literal_zero_divisor_clause {
                 [ @{$branch}[1 .. $#$branch] ],
                 $actor,
                 "$context switch branch",
-                $zero_constants,
+                $zero_divisors,
             );
         }
         return 1;
@@ -2768,14 +2776,14 @@ sub _validate_transaction_literal_zero_divisor_clause {
 }
 
 sub _validate_rule_literal_zero_divisors {
-    my ($rule, $zero_constants) = @_;
+    my ($rule, $zero_divisors) = @_;
     my $rule_name = $rule->{name};
 
     if (my $when = $rule->{when}) {
         _validate_no_literal_zero_divisors(
             $when->[1],
             "rule '$rule_name' guard",
-            $zero_constants,
+            $zero_divisors,
         ) if ref($when) eq 'ARRAY' && @$when >= 2;
     }
 
@@ -2788,7 +2796,7 @@ sub _validate_rule_literal_zero_divisors {
             _validate_activation_bind_literal_zero_divisors(
                 $action,
                 "rule '$rule_name' trigger",
-                $zero_constants,
+                $zero_divisors,
             );
             next;
         }
@@ -2798,7 +2806,7 @@ sub _validate_rule_literal_zero_divisors {
             _validate_no_literal_zero_divisors(
                 $action->[2],
                 "rule '$rule_name' set RHS",
-                $zero_constants,
+                $zero_divisors,
             ) if @$action >= 3;
             next;
         }
@@ -2807,12 +2815,12 @@ sub _validate_rule_literal_zero_divisors {
             _validate_no_literal_zero_divisors(
                 $action->[2],
                 "rule '$rule_name' store index",
-                $zero_constants,
+                $zero_divisors,
             ) if @$action >= 3;
             _validate_no_literal_zero_divisors(
                 $action->[3],
                 "rule '$rule_name' store value",
-                $zero_constants,
+                $zero_divisors,
             ) if @$action >= 4;
             next;
         }
@@ -2821,7 +2829,7 @@ sub _validate_rule_literal_zero_divisors {
             _validate_no_literal_zero_divisors(
                 $action->[2],
                 "rule '$rule_name' load index",
-                $zero_constants,
+                $zero_divisors,
             ) if @$action >= 3;
             next;
         }
@@ -2829,7 +2837,7 @@ sub _validate_rule_literal_zero_divisors {
         _validate_no_literal_zero_divisors(
             $action->[1],
             "rule '$rule_name' assignment RHS",
-            $zero_constants,
+            $zero_divisors,
         ) if @$action >= 2;
     }
 
@@ -2837,34 +2845,34 @@ sub _validate_rule_literal_zero_divisors {
 }
 
 sub _validate_drive_literal_zero_divisors {
-    my ($drive_name, $drive, $zero_constants) = @_;
+    my ($drive_name, $drive, $zero_divisors) = @_;
     for my $entry (@{$drive->{body} || []}) {
         next unless ref($entry) eq 'ARRAY' && @$entry >= 2;
         _validate_no_literal_zero_divisors(
             $entry->[1],
             "drive '$drive_name' RHS",
-            $zero_constants,
+            $zero_divisors,
         );
     }
     return 1;
 }
 
 sub _validate_inline_drive_literal_zero_divisors {
-    my ($clause, $context, $zero_constants) = @_;
+    my ($clause, $context, $zero_divisors) = @_;
 
     my $first_assignment = (ref($clause->[1]) eq 'ARRAY') ? 1 : 2;
     return 1 if $first_assignment > $#$clause;
 
     for my $entry (@{$clause}[$first_assignment .. $#$clause]) {
         next unless ref($entry) eq 'ARRAY' && @$entry >= 2;
-        _validate_no_literal_zero_divisors($entry->[1], "$context RHS", $zero_constants);
+        _validate_no_literal_zero_divisors($entry->[1], "$context RHS", $zero_divisors);
     }
 
     return 1;
 }
 
 sub _validate_activation_bind_literal_zero_divisors {
-    my ($clause, $context, $zero_constants) = @_;
+    my ($clause, $context, $zero_divisors) = @_;
 
     for my $subclause (@{$clause}[2 .. $#$clause]) {
         next unless ref($subclause) eq 'ARRAY'
@@ -2881,7 +2889,7 @@ sub _validate_activation_bind_literal_zero_divisors {
             _validate_no_literal_zero_divisors(
                 $expr,
                 "$context input binding '$port_name'",
-                $zero_constants,
+                $zero_divisors,
             );
         }
     }
@@ -2890,9 +2898,9 @@ sub _validate_activation_bind_literal_zero_divisors {
 }
 
 sub _validate_no_literal_zero_divisors {
-    my ($expr, $context, $zero_constants) = @_;
+    my ($expr, $context, $zero_divisors) = @_;
     return 1 unless ref($expr) eq 'ARRAY' && @$expr;
-    $zero_constants ||= {};
+    $zero_divisors ||= {};
 
     my $head = $expr->[0];
     if (defined($head) && !ref($head) && ($head eq '/' || $head eq '%')) {
@@ -2905,26 +2913,26 @@ sub _validate_no_literal_zero_divisors {
                     . "' in $operation\n";
             }
 
-            if (_is_actor_zero_constant_divisor($operand, $zero_constants)) {
+            if (my $actor_zero_kind = _actor_zero_divisor_kind($operand, $zero_divisors)) {
                 confess "Error: $context expression '" . _format_isf_expr($expr)
-                    . "' uses actor constant zero divisor '" . _format_isf_expr($operand)
+                    . "' uses $actor_zero_kind zero divisor '" . _format_isf_expr($operand)
                     . "' in $operation\n";
             }
         }
     }
 
     for my $index (1 .. $#$expr) {
-        _validate_no_literal_zero_divisors($expr->[$index], $context, $zero_constants);
+        _validate_no_literal_zero_divisors($expr->[$index], $context, $zero_divisors);
     }
 
     return 1;
 }
 
-sub _is_actor_zero_constant_divisor {
-    my ($operand, $zero_constants) = @_;
-    return 0 unless defined($operand) && !ref($operand);
-    return 0 unless ref($zero_constants) eq 'HASH';
-    return $zero_constants->{$operand} ? 1 : 0;
+sub _actor_zero_divisor_kind {
+    my ($operand, $zero_divisors) = @_;
+    return undef unless defined($operand) && !ref($operand);
+    return undef unless ref($zero_divisors) eq 'HASH';
+    return $zero_divisors->{$operand};
 }
 
 sub _is_literal_zero_value {

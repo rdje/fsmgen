@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Dynamic-divisor actor-parameter-zero safety shipped
+- Completed `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` and closed the task
+  tree.
+- Runtime division and modulo expressions now fail closed when the divisor
+  names an actor-local scalar parameter default that resolves to zero.
+- Diagnostics identify the owning expression context, authored divisor token,
+  and division/modulo operator family. Nonzero actor parameters, transaction
+  parameters, dynamic scalar divisors, nonzero literals, and nonzero actor
+  constants keep their shipped behavior.
+- Validation passed: focused dynamic-divisor/public/doc tests, broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1615`,
+  `mdbook build docs/book`, and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Dynamic-divisor actor-parameter-zero safety selected
 - Completed selection work for
   `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1`.

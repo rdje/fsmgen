@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Dynamic-divisor actor-parameter-zero safety shipped
+- Completed `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` and closed the task
+  tree.
+- Runtime division and modulo expressions now fail closed when the divisor
+  names an actor-local scalar parameter default that resolves to zero.
+- Diagnostics identify the owning expression context, authored divisor token,
+  and division/modulo operator family. Nonzero actor parameters, transaction
+  parameters, dynamic scalar divisors, nonzero literals, and nonzero actor
+  constants keep their shipped behavior.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused dynamic-divisor/public/doc tests;
+  broad `./bin/ci-regression isf --no-book` with `Files=238, Tests=1615`;
+  `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Dynamic-divisor actor-parameter-zero safety selected
 - Completed selection work for
   `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1`.
