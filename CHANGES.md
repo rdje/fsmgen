@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Watchdog actor-parameter limits shipped
+- Completed `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` and closed the task tree.
+- Actor-level and await-local watchdog limits now accept actor-local scalar
+  parameter defaults that resolve to positive integers.
+- Accepted actor parameters lower exactly like equivalent positive
+  literal/static actor-constant watchdog limits: actor-level limits report as
+  the resolved public `watchdog` scalar, and await-local limits drive the same
+  watchdog counter-width and initialization path.
+- Transaction parameters, runtime signals, arbitrary expressions, unknown
+  names, zero-valued constants, zero-valued or non-scalar actor parameters,
+  use-site override specialization, distinct per-await limits in one
+  transaction, cross-domain watchdog policy, dynamic watchdog limits, and
+  parameter-specialized generated-top watchdog counter sizing remain
+  fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused watchdog/public/doc tests; broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1611`;
+  `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — Watchdog actor-parameter limits selected
 - Completed selection work for `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1`.
 - Activated a new R14 task tree for static actor-parameter-backed actor-level

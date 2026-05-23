@@ -129,6 +129,54 @@ ISF
     is($report->{watchdog}, '65535', 'actor-level default watchdog remains report-visible');
 };
 
+subtest 'actor scalar parameters can name watchdog limits' => sub {
+    my $actor = parse_source(<<'ISF', 'parameter-watchdog.isf');
+(actor parameter_watchdog
+  (clock clk)
+  (params
+    (WD_LIMIT 17)
+    (AWAIT_LIMIT 4'd9))
+  (watchdog WD_LIMIT)
+  (interface
+    (input start)
+    (input ready)
+    (output done))
+  (transaction main
+    (on start)
+    (await ready)
+    (complete done)))
+ISF
+
+    is($actor->{watchdog}, '17', 'actor-level watchdog parameter resolves in the public actor shell');
+
+    my ($fsm, $report) = lower_and_report($actor, 'parameter_watchdog.fsm');
+    like($fsm, qr/\(main_wd 5\)/, 'actor-level watchdog parameter drives the inferred counter width');
+    like($fsm, qr/\(<= \(main_wd \(- 17 1\)\)\)/, 'actor-level watchdog parameter drives the init value');
+    is($report->{watchdog}, '17', 'report exposes the resolved actor-level watchdog limit');
+    is($report->{actor_params}[0]{name}, 'WD_LIMIT', 'actor parameter declaration remains report-visible');
+
+    my $await_actor = parse_source(<<'ISF', 'parameter-await-watchdog.isf');
+(actor parameter_await_watchdog
+  (clock clk)
+  (params
+    (WD_LIMIT 17)
+    (AWAIT_LIMIT 4'd9))
+  (interface
+    (input start)
+    (input ready)
+    (output done))
+  (transaction main
+    (on start)
+    (await ready (watchdog AWAIT_LIMIT))
+    (complete done)))
+ISF
+
+    my ($await_fsm, $await_report) = lower_and_report($await_actor, 'parameter_await_watchdog.fsm');
+    like($await_fsm, qr/\(main_wd 4\)/, 'await-local watchdog parameter drives the inferred counter width');
+    like($await_fsm, qr/\(<= \(main_wd \(- 9 1\)\)\)/, 'await-local watchdog parameter drives the init value');
+    is($await_report->{watchdog}, '65535', 'actor-level default watchdog remains report-visible for await-local parameter override');
+};
+
 subtest 'unsupported actor-level watchdog tokens fail closed' => sub {
     assert_parse_rejected(<<'ISF', 'zero-valued watchdog constant', qr/\AError: actor 'zero_watchdog' watchdog constant 'WD_LIMIT' must resolve to a positive integer/);
 (actor zero_watchdog
@@ -139,29 +187,45 @@ subtest 'unsupported actor-level watchdog tokens fail closed' => sub {
   (interface (input start)))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'actor parameter watchdog token', qr/\AError: actor 'parameter_watchdog' watchdog token 'WD_LIMIT' is an actor parameter; watchdog limits accept positive integer literals or actor constants only/);
-(actor parameter_watchdog
+    assert_parse_rejected(<<'ISF', 'zero-valued actor parameter watchdog token', qr/\AError: actor 'zero_parameter_watchdog' watchdog parameter 'WD_LIMIT' must resolve to a positive integer/);
+(actor zero_parameter_watchdog
   (clock clk)
   (params
-    (WD_LIMIT 17))
+    (WD_LIMIT 0))
   (watchdog WD_LIMIT)
   (interface (input start)))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'runtime interface watchdog token', qr/\AError: actor 'runtime_watchdog' watchdog token 'limit' is a runtime interface signal; watchdog limits accept positive integer literals or actor constants only/);
+    assert_parse_rejected(<<'ISF', 'non-scalar actor parameter watchdog token', qr/\AError: actor 'nonscalar_parameter_watchdog' watchdog parameter 'WD_LIMIT' must resolve to a positive integer/);
+(actor nonscalar_parameter_watchdog
+  (clock clk)
+  (params
+    (WD_LIMIT (9 10)))
+  (watchdog WD_LIMIT)
+  (interface (input start)))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'runtime interface watchdog token', qr/\AError: actor 'runtime_watchdog' watchdog token 'limit' is a runtime interface signal; watchdog limits accept positive integer literals, actor constants, or actor scalar parameters only/);
 (actor runtime_watchdog
   (clock clk)
   (watchdog limit)
   (interface (input start) (input limit)))
 ISF
+
+    assert_parse_rejected(<<'ISF', 'unknown symbolic watchdog token', qr/\AError: actor 'unknown_watchdog' watchdog token 'WD_LIMIT' is not a declared actor constant or actor scalar parameter/);
+(actor unknown_watchdog
+  (clock clk)
+  (watchdog WD_LIMIT)
+  (interface (input start)))
+ISF
 };
 
 subtest 'unsupported await-local watchdog tokens fail closed' => sub {
-    assert_lower_rejected(<<'ISF', 'await watchdog actor parameter', qr/\ATransaction 'main': watchdog token 'WD_LIMIT' is an actor parameter; watchdog limits accept positive integer literals or actor constants only in await watchdog override/);
-(actor await_parameter_watchdog
+    assert_lower_rejected(<<'ISF', 'await watchdog zero-valued actor parameter', qr/\ATransaction 'main': watchdog parameter 'WD_LIMIT' must resolve to a positive cycle count in await watchdog override/);
+(actor await_zero_parameter_watchdog
   (clock clk)
   (params
-    (WD_LIMIT 9))
+    (WD_LIMIT 0))
   (interface (input start) (input ready) (output done))
   (transaction main
     (on start)
@@ -169,13 +233,67 @@ subtest 'unsupported await-local watchdog tokens fail closed' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'await watchdog runtime signal', qr/\ATransaction 'main': watchdog token 'limit' is a runtime interface signal; watchdog limits accept positive integer literals or actor constants only in await watchdog override/);
+    assert_lower_rejected(<<'ISF', 'await watchdog non-scalar actor parameter', qr/\ATransaction 'main': watchdog parameter 'WD_LIMIT' must resolve to a positive cycle count in await watchdog override/);
+(actor await_nonscalar_parameter_watchdog
+  (clock clk)
+  (params
+    (WD_LIMIT (9 10)))
+  (interface (input start) (input ready) (output done))
+  (transaction main
+    (on start)
+    (await ready (watchdog WD_LIMIT))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'await watchdog transaction parameter', qr/\ATransaction 'child': watchdog token 'WD_LIMIT' is a transaction parameter; watchdog limits accept positive integer literals, actor constants, or actor scalar parameters only in await watchdog override/);
+(actor await_transaction_parameter_watchdog
+  (clock clk)
+  (interface (input start) (input ready) (output done))
+  (transaction parent
+    (on start)
+    (spawn child as c0)
+    (complete done))
+  (transaction child
+    (params
+      (WD_LIMIT 9))
+    (await ready (watchdog WD_LIMIT))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'await watchdog transaction parameter shadows actor parameter', qr/\ATransaction 'child': watchdog token 'WD_LIMIT' is a transaction parameter; watchdog limits accept positive integer literals, actor constants, or actor scalar parameters only in await watchdog override/);
+(actor await_transaction_parameter_shadow_watchdog
+  (clock clk)
+  (params
+    (WD_LIMIT 9))
+  (interface (input start) (input ready) (output done))
+  (transaction parent
+    (on start)
+    (spawn child as c0)
+    (complete done))
+  (transaction child
+    (params
+      (WD_LIMIT 10))
+    (await ready (watchdog WD_LIMIT))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'await watchdog runtime signal', qr/\ATransaction 'main': watchdog token 'limit' is a runtime interface signal; watchdog limits accept positive integer literals, actor constants, or actor scalar parameters only in await watchdog override/);
 (actor await_runtime_watchdog
   (clock clk)
   (interface (input start) (input ready) (input limit) (output done))
   (transaction main
     (on start)
     (await ready (watchdog limit))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'await watchdog unknown symbolic token', qr/\ATransaction 'main': watchdog token 'WD_LIMIT' is not a declared actor constant or actor scalar parameter in await watchdog override/);
+(actor await_unknown_watchdog
+  (clock clk)
+  (interface (input start) (input ready) (output done))
+  (transaction main
+    (on start)
+    (await ready (watchdog WD_LIMIT))
     (complete done)))
 ISF
 

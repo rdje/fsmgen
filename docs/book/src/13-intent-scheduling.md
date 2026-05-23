@@ -460,8 +460,9 @@ Report `source` and
 `scheduled_fsm` are actor-derived basenames, `clock` is the actor clock signal
 or selected default-domain clock, and omitted legacy single-clock clocks report
 as `clk`. `watchdog` is scalar after parser defaults; omitted watchdog clauses
-report as `65535`, and actor-level watchdog constants report as their resolved
-positive integer while the declaration remains visible in `actor_constants[]`.
+report as `65535`, and actor-level watchdog constants or actor scalar
+parameters report as their resolved positive integer while the declaration
+remains visible in `actor_constants[]` or `actor_params[]`.
 
 The ISF live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local

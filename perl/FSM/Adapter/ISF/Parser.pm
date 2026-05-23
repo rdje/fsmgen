@@ -610,16 +610,22 @@ sub _finalize_actor_watchdog_limit($self, $actor) {
             return 1;
         }
 
-        confess "Error: actor '$actor_name' watchdog token '$token' is an actor parameter; watchdog limits accept positive integer literals or actor constants only\n"
-            if _actor_param_by_name($actor, $token);
+        my $param = _actor_param_by_name($actor, $token);
+        if ($param) {
+            my $param_value = _positive_integer_from_literal_value(_param_resolved_value($param));
+            confess "Error: actor '$actor_name' watchdog parameter '$token' must resolve to a positive integer\n"
+                unless defined $param_value;
+            $actor->{watchdog} = "$param_value";
+            return 1;
+        }
 
-        confess "Error: actor '$actor_name' watchdog token '$token' is a runtime interface signal; watchdog limits accept positive integer literals or actor constants only\n"
+        confess "Error: actor '$actor_name' watchdog token '$token' is a runtime interface signal; watchdog limits accept positive integer literals, actor constants, or actor scalar parameters only\n"
             if _actor_interface_signal_by_name($actor, $token);
 
-        confess "Error: actor '$actor_name' watchdog token '$token' is not a declared actor constant\n";
+        confess "Error: actor '$actor_name' watchdog token '$token' is not a declared actor constant or actor scalar parameter\n";
     }
 
-    confess "Error: (watchdog ...) requires a positive integer literal or actor constant\n";
+    confess "Error: (watchdog ...) requires a positive integer literal, actor constant, or actor scalar parameter\n";
 }
 
 sub _resolve_actor_param_enum_leaf_values($self, $actor, $value, $context) {
@@ -5384,6 +5390,14 @@ sub _constant_resolved_value {
     return exists($constant->{resolved_value})
         ? $constant->{resolved_value}
         : $constant->{value};
+}
+
+sub _param_resolved_value {
+    my ($param) = @_;
+    return undef unless ref($param) eq 'HASH';
+    return exists($param->{resolved_value})
+        ? $param->{resolved_value}
+        : $param->{value};
 }
 
 sub _param_values_shape_compatible {

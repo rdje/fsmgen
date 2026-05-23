@@ -69,6 +69,18 @@ ISF
         'minimal actor defaults omitted reset to async active-low rst_n',
     );
     is($minimal->{watchdog}, '65535', 'minimal actor defaults omitted watchdog to 65535');
+
+    my $parameter_watchdog = $adapter->parse_source(<<'ISF', 'parameter-watchdog-timing.isf');
+(actor parameter_watchdog_timing
+  (clock clk)
+  (params
+    (WD_LIMIT 17))
+  (watchdog WD_LIMIT)
+  (interface
+    (input start)))
+ISF
+
+    is($parameter_watchdog->{watchdog}, '17', 'actor parameter watchdog limit resolves to public scalar timing metadata');
 };
 
 subtest 'public parser rejects timing declarations that cannot satisfy the advertised shape' => sub {
@@ -105,7 +117,7 @@ ISF
   (interface
     (input start)))
 ISF
-            qr/\AError: actor 'bad_watchdog' watchdog token 'slow' is not a declared actor constant/,
+            qr/\AError: actor 'bad_watchdog' watchdog token 'slow' is not a declared actor constant or actor scalar parameter/,
         ],
     ) {
         my ($label, $source, $pattern) = @$case;

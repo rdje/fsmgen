@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Watchdog actor-parameter limits shipped
+- Completed `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` and closed the task tree.
+- Actor-level and await-local watchdog limits now accept actor-local scalar
+  parameter defaults that resolve to positive integers.
+- Actor-level parameter watchdogs resolve in the parser-visible public
+  `watchdog` scalar and still leave the authored declaration visible through
+  `actor_params[]`; await-local parameter watchdogs resolve before existing
+  watchdog counter-width inference and counter initialization.
+- Transaction parameters, runtime signals, arbitrary expressions, unknown
+  names, zero-valued constants, zero-valued or non-scalar actor parameters,
+  use-site override specialization, distinct per-await limits in one
+  transaction, cross-domain watchdog policy, dynamic watchdog limits, and
+  parameter-specialized generated-top watchdog counter sizing remain
+  fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused watchdog/public/doc tests; broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1611`;
+  `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Watchdog actor-parameter limits selected
 - Completed selection work for `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1`.
 - Activated a new R14 task tree for static actor-parameter-backed actor-level

@@ -391,6 +391,11 @@ current-Q test.
 **Cycles**: 1 to watchdog_limit cycles (variable).
 **Implicit signals**: `{tx}_wd` (log2(N) bits), plus timeout state.
 
+The actor-level watchdog default and an await-local `(watchdog N)` override can
+use a positive literal, declared positive actor constant, or actor-local scalar
+parameter default that resolves to a positive integer. The scheduler resolves
+the static value before counter-width inference and counter initialization.
+
 Timeout state:
 ```lisp
 (apb_transfer_timeout

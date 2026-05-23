@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Watchdog actor-parameter limits shipped
+- Completed `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` and closed the task tree.
+- Actor-level and await-local watchdog limits now accept actor-local scalar
+  parameter defaults that resolve to positive integers and lower to the same
+  watchdog counter/report shape as equivalent positive literal or
+  actor-constant watchdog limits.
+- Transaction parameters, runtime signals, expressions, unknown names,
+  zero-valued constants, zero-valued or non-scalar actor parameters, use-site
+  specialization, distinct per-await limits, cross-domain watchdog policy,
+  dynamic watchdog limits, and parameter-specialized generated-top watchdog
+  counter sizing remain fail-closed or deferred.
+- Validation passed: focused watchdog/public/doc tests, broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1611`,
+  `mdbook build docs/book`, and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-22: R14 — Watchdog actor-parameter limits selected
 - Completed selection work for `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1`.
 - Activated the active R14 task tree for static actor-parameter-backed

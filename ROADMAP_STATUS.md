@@ -2,22 +2,30 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-WATCHDOG-ACTOR-PARAM-LIMITS`.
-- Current frontier: `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` will implement
-  static actor-parameter-backed watchdog limits. The selected boundary accepts
-  actor-local scalar parameter defaults that resolve to positive integer
-  literals for actor-level and await-local watchdog limits and keeps
-  transaction parameters, runtime signals, arbitrary expressions, use-site
-  override specialization, distinct per-await limits in one transaction,
-  cross-domain watchdog policy, dynamic watchdog limits, and
-  parameter-specialized generated-top watchdog counter sizing deferred.
+- Active task tree: `none`.
+- Current frontier: `none`; the next PNT step must select or create the next
+  roadmap-aligned task tree before any further code changes.
+- Recent R14 watchdog actor-parameter limit completion:
+  `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` shipped actor-local scalar parameter
+  defaults that resolve to positive integers as actor-level and await-local
+  watchdog limits. The parser resolves actor-level parameter watchdogs into
+  the public `watchdog` scalar while the declaration remains visible through
+  `actor_params[]`; the lowerer resolves await-local parameter watchdogs
+  before existing watchdog counter injection. Transaction parameters, runtime
+  signals, arbitrary expressions, unknown names, zero-valued constants,
+  zero-valued or non-scalar actor parameters, use-site override
+  specialization, distinct per-await limits in one transaction, cross-domain
+  watchdog policy, dynamic watchdog limits, and parameter-specialized
+  generated-top watchdog counter sizing remain fail-closed or deferred. The
+  ISF spec, downstream integration handoff, public contract, mdBook, roadmap,
+  task tree, and live docs were synchronized.
 - Recent R14 watchdog actor-parameter limit selection:
   `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1` activates the watchdog
-  actor-parameter limit tree. The selected implementation will reuse the
-  static actor-parameter default model already shipped for wait counts,
-  latency bounds, and temporal-contract windows without changing omitted
-  watchdog defaults, watchdog counter timing, reset behavior, generated HDL
-  shape, or public schedule-report key families.
+  actor-parameter limit tree. The selected implementation reused the static
+  actor-parameter default model already shipped for wait counts, latency
+  bounds, and temporal-contract windows without changing omitted watchdog
+  defaults, watchdog counter timing, reset behavior, generated HDL shape, or
+  public schedule-report key families.
 - Recent R14 temporal-contract actor-parameter window completion:
   `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` shipped actor-local scalar parameter
   defaults that resolve to positive integers as bounded eventual
@@ -5427,12 +5435,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-WATCHDOG-ACTOR-PARAM-LIMITS`.
-- Current frontier: `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` will implement the
-  static actor-parameter watchdog limit boundary.
-- Completion status: `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1` opened the active
-  R14 task tree after selecting actor-local scalar parameter defaults as
-  static watchdog limit sources.
+- Active task tree: `none`.
+- Current frontier: `none`; the next PNT step must select or create the next
+  roadmap-aligned task tree before any further code changes.
+- Completion status: `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` closed the previous
+  active R14 task tree after shipping actor-local scalar parameter defaults as
+  static actor-level and await-local watchdog limits.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8943,6 +8951,12 @@ Done:
   [t/1192-isf-singleton-actor-clause-boundary.t](t/1192-isf-singleton-actor-clause-boundary.t),
   covering duplicate `(clock ...)`, `(reset ...)`, `(watchdog ...)`,
   `(interface ...)`, and `(resources ...)` rejection before parser return.
+- Actor-level and await-local watchdog limit validation is now
+  regression-backed by
+  [t/1331-isf-timing-conventions.t](t/1331-isf-timing-conventions.t),
+  covering positive-integer literal, actor-constant, and actor-local scalar
+  parameter watchdog limits plus unsupported source diagnostics before
+  watchdog counter emission.
 - Known drive-call arity validation is now regression-backed by
   [t/1193-isf-drive-call-arity-boundary.t](t/1193-isf-drive-call-arity-boundary.t),
   covering exact positional arity for parameterized and simple drive calls

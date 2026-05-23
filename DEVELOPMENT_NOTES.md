@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Watchdog actor-parameter limits stay static
+- `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` reuses the actor-local static parameter
+  default model already accepted for wait counts, latency bounds, and
+  temporal-contract windows, but only for positive scalar defaults at the
+  watchdog boundary.
+- Actor-level watchdogs resolve in the parser because the public actor shell
+  already exposes `watchdog` as a resolved scalar. Await-local watchdog
+  overrides resolve in `LoweringIR` immediately before the existing watchdog
+  counter path, deliberately avoiding runtime parameter reads, generated-top
+  respecialization, schedule-report key-family changes, or HDL shape changes
+  beyond substituting the resolved integer into existing counter sizing and
+  initialization.
+- Transaction-local parameters remain rejected at the await-local watchdog
+  boundary even when the transaction is a generated child. Supporting them
+  safely would require generated-top watchdog counter sizing and
+  specialization policy, which remains deferred.
+- Non-scalar actor parameters, zero-valued actor parameters, runtime signals,
+  arbitrary expressions, and use-site overrides also remain outside the
+  accepted watchdog limit source domain.
+
 ## 2026-05-22: Watchdog actor-parameter limits reuse static defaults
 - `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1` selects actor-local scalar parameter
   defaults as actor-level and await-local watchdog limit sources, mirroring the

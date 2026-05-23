@@ -181,10 +181,11 @@ clk`, `reset = { name: rst_n, kind: async, polarity: active_low }`, and
 `watchdog = 65535` exactly `(2^16 - 1)`. With `(clock-domains ...)`,
 `clock` and `reset` expose the selected default-domain timing, and `reset`
 is null only when that default domain omits reset ownership.
-Explicit actor-level watchdogs may use a positive decimal literal or a
-declared actor constant that resolves to a positive integer. The parser
-returns the resolved integer in the public `watchdog` scalar; the authored
-constant remains visible through `actor_constants[]`.
+Explicit actor-level watchdogs may use a positive decimal literal, a declared
+actor constant, or an actor-local scalar parameter default that resolves to a
+positive integer. The parser returns the resolved integer in the public
+`watchdog` scalar; the authored declaration remains visible through
+`actor_constants[]` or `actor_params[]`.
 Current rule entries are advertised as a bounded shell: `rules` is an array of
 entries with scalar `name`, optional `when`, and `actions` array fields. Rule
 condition/action payload contents remain private scheduler input.
@@ -1478,14 +1479,14 @@ Selected lowering artifact strategy and current implementation status:
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.
-- `N` must be a positive integer literal or a declared actor constant that
-  resolves to a positive integer.
+- `N` must be a positive integer literal, a declared actor constant, or an
+  actor-local scalar parameter default that resolves to a positive integer.
 - `(await port (watchdog M))` overrides the default for that wait.
-- Await-local `M` may also be a positive actor constant. The current scheduled
-  `.fsm` model has one watchdog counter per transaction, so one transaction
-  must have a single effective watchdog limit; distinct per-await limits in
-  the same transaction fail closed until per-await counter reset semantics are
-  selected.
+- Await-local `M` may also be a positive actor constant or actor-local scalar
+  parameter default. The current scheduled `.fsm` model has one watchdog
+  counter per transaction, so one transaction must have a single effective
+  watchdog limit; distinct per-await limits in the same transaction fail
+  closed until per-await counter reset semantics are selected.
 - Await states decrement an inferred watchdog counter and transition to a
   timeout state at zero.
 
@@ -4144,9 +4145,10 @@ The top-level `source` and `scheduled_fsm` values are actor-derived `.isf` and
 actor clock signal name, or `clk` when a legacy single-clock actor omits
 `(clock ...)`; with `clock-domains`, it is the selected default-domain clock.
 `watchdog` is always a scalar resolved limit after parser defaults, with
-omitted `(watchdog ...)` normalized to `65535` and actor-constant watchdogs
-reported as the resolved integer. The capability-manifest ISF public contract
-advertises this through `schedule_report_source_shape`,
+omitted `(watchdog ...)` normalized to `65535` and actor-constant or actor
+scalar parameter watchdogs reported as the resolved integer. The
+capability-manifest ISF public contract advertises this through
+`schedule_report_source_shape`,
 `schedule_report_scheduled_fsm_shape`, `schedule_report_clock_shape`, and
 `schedule_report_watchdog_shape`.
 Successful reports keep `compile_issues` present as an array. Reports with no
@@ -4991,11 +4993,12 @@ Focused tests:
   arbitrary expressions, stage-local latency, non-scalar actor parameters, and
   use-site parameter-specialized counter sizing remain deferred until a
   separate specialization/scheduling policy is selected.
-- Watchdog limits beyond the shipped positive decimal literal and positive
-  actor-constant actor-level/await-local shapes: actor parameters,
-  transaction parameters, runtime signals, arbitrary expressions, distinct
-  per-await limits in one transaction, cross-domain watchdog policy, and
-  parameter-specialized watchdog counter sizing remain deferred.
+- Watchdog limits beyond the shipped positive decimal literal, positive
+  actor-constant, and positive actor-scalar-parameter actor-level/await-local
+  shapes: transaction parameters, runtime signals, arbitrary expressions,
+  distinct per-await limits in one transaction, cross-domain watchdog policy,
+  dynamic watchdog limits, and parameter-specialized watchdog counter sizing
+  remain deferred.
 - Runtime division/modulo safety beyond literal-zero and actor-constant-zero
   divisor rejection: proving arbitrary dynamic scalar divisor expressions
   nonzero remains deferred until range/dataflow evidence is specified.

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-WATCHDOG-ACTOR-PARAM-LIMITS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -51,7 +51,7 @@ accepted.
 ## Task Tree
 
 - ID: `ISF-WATCHDOG-ACTOR-PARAM-LIMITS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship actor-parameter-backed static watchdog limits.`
   Children: `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1`,
   `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2`
@@ -63,22 +63,24 @@ accepted.
   source boundary, preserve non-goals, and update roadmap/live docs without
   behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending commit`
+  Commit: `9a126d5a`
 
 - ID: `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document actor-parameter watchdog limits.`
   Acceptance: `Positive actor scalar parameters lower as literal watchdog
   limits; unsupported watchdog tokens fail closed; specs, book, public
   contract, downstream handoff, and focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused watchdog/public/doc tests; broad
+  ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff
+  --check`
+  Commit: `pending commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` | `pending` | The source boundary is selected; implementation can reuse the existing static actor-parameter default model from waits, latency bounds, and contract windows. |
+| 1 | `none` | `closed` | All planned leaves are complete. |
 
 ## Decisions
 
@@ -101,15 +103,18 @@ accepted.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-22` | `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1331-isf-timing-conventions.t`; `perl -Iperl -c t/1165-isf-public-actor-shell-timing-shape-audit.t`; `prove -Iperl t/1331-isf-timing-conventions.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1095-isf-scheduler-burst-reader.t t/1106-isf-schedule-json-counter-storage.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `passed; broad gate Files=238, Tests=1611` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1` | `this commit: ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1: select watchdog actor-param limits` | `selects static actor-parameter watchdog limit support` |
-| `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` | `pending` | `pending` |
+| `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1` | `9a126d5a ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1: select watchdog actor-param limits` | `selects static actor-parameter watchdog limit support` |
+| `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` | `this commit: ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2: ship watchdog actor-param limits` | `ships actor-parameter-backed watchdog limits and closes the tree` |
 
 ## Changelog
 
 - `2026-05-22`: Created task tree and selected static actor-parameter
   watchdog limits.
+- `2026-05-22`: Shipped actor-local scalar parameter defaults as actor-level
+  and await-local watchdog limit sources and closed the task tree.
