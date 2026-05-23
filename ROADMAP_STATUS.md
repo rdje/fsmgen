@@ -2,8 +2,26 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-STORAGE-PORT-RESOURCE-PRIORITY`.
+- Current frontier: `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2`.
+- Recent R14 storage-port resource selection:
+  `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1` activated the next bounded
+  resource-arbitration task tree. The selected implementation path enforces
+  `(kind storage_port)` resources only for declared rule users under the
+  static `priority` arbiter, requires an explicit `(members ...)` list, and
+  limits members to concrete actor-owned storage signals already recognized
+  by the scheduler: scalar storage variables and scalarized bank element
+  signals. The selected lowering reuses the existing priority grant model to
+  suppress lower-priority rule DTs before their assignments can update the
+  protected storage signals, without adding route mux/storage, storage locks,
+  fairness state, or hold/release ownership. `round_robin`,
+  `interface_bundle`, `named_drive`, `child_instance`, transaction users,
+  named-drive users, output-target users, child-instance users,
+  actor-network endpoint users, generated-child storage arbitration,
+  bank-root/aggregate/inferred members, transaction ports, actor input ports,
+  multi-capacity resources, dynamic resource names, and storage lifetime
+  ownership remain deferred. No parser, scheduler, report, generated
+  artifact, HDL, CLI, or public ISF behavior changed in this selection.
 - Recent R14 transaction-start resource completion:
   `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` shipped
   `(kind transaction_start)` resources under the static `priority` arbiter

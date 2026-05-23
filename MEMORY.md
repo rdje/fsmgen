@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Storage-port resource priority selected
+- Completed `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1`.
+- Activated the active R14 task tree for bounded `(kind storage_port)`
+  priority arbitration over declared rule users with explicit actor-owned
+  storage members.
+- The selected implementation resource must declare `(members ...)`, and each
+  member must be a concrete actor-owned storage signal already recognized by
+  the scheduler: scalar storage variables or scalarized bank element signals.
+- The selected lowering reuses the existing static priority grant model to
+  gate lower-priority rule DTs before their assignments can update the
+  protected storage signals, without adding route mux/storage, storage locks,
+  fairness state, or hold/release ownership.
+- `round_robin`, `interface_bundle`, `named_drive`, `child_instance`,
+  transaction users, named-drive users, output-target users,
+  child-instance users, actor-network endpoint users, generated-child storage
+  arbitration, bank-root/aggregate/inferred members, transaction ports, actor
+  input ports, multi-capacity resources, dynamic resource names, and storage
+  lifetime ownership remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+- Validation passed: live-doc/spec index audits with `Files=2, Tests=25`;
+  `git diff --check`.
+
 ## 2026-05-23: Transaction-start resource priority shipped
 - Completed `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` and closed the task
   tree.

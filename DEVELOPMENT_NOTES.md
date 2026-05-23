@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Storage-port resources should be explicit storage evidence
+- `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1` selects the concrete actor-owned
+  storage signal domain before broader protocol or lifetime semantics.
+- The first storage-port slice should require explicit members because a
+  storage-port resource name alone does not identify which registers, scalar
+  variables, or scalarized bank elements are protected.
+- The grant should gate the whole bound rule DT, matching the current
+  one-cycle priority resource model. It should not invent route mux/storage,
+  memory-port protocols, hold/release locks, or fairness state under the name
+  of `storage_port`.
+
 ## 2026-05-23: Transaction-start resources arbitrate requests, not ownership
 - `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` ships the selected
   `transaction_start` resource subset as request suppression on declared rule

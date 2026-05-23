@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Storage-port resource priority selected
+- Completed `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1`.
+- Activated the active R14 task tree for bounded `(kind storage_port)`
+  priority arbitration over declared rule users with explicit actor-owned
+  storage members.
+- The active implementation frontier is
+  `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2`.
+- The selected path requires an explicit `(members ...)` list and limits those
+  members to concrete actor-owned storage signals: scalar storage variables
+  and scalarized bank element signals.
+- The implementation slice must reuse static priority grant gating on bound
+  rule DTs and must not add route mux/storage, storage locks, fairness state,
+  hold/release ownership, or broader member domains.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+- Validation passed: live-doc/spec index audits with `Files=2, Tests=25`;
+  `git diff --check`.
+
 ## 2026-05-23: R14 — Transaction-start resource priority shipped
 - Completed `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` and closed the task
   tree.

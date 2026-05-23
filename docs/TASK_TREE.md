@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-STORAGE-PORT-RESOURCE-PRIORITY` | `active` | `R14` | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | [docs/tasks/ISF-STORAGE-PORT-RESOURCE-PRIORITY.md](docs/tasks/ISF-STORAGE-PORT-RESOURCE-PRIORITY.md) |
 
 ## Proposed Task Trees
 
