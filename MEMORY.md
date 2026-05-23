@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Transaction port actor-constant widths selected
+- Completed selection work for
+  `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated a new R14 task tree for transaction-local `(ports ...)`
+  `(input NAME (width CONST))` and `(output NAME (width CONST))` declarations
+  backed by actor-local constants resolving to positive integers.
+- The active frontier is
+  `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2`.
+- The selected boundary is narrow: transaction parameters, runtime interface
+  signals, arbitrary expressions, unknown names, zero-valued actor constants,
+  aggregate values, use-site override specialization, generated-top
+  respecialization, activation binding semantics changes, binding timing
+  changes, output binding shape changes, and schedule-report
+  `transaction_port_bindings[]` key-family changes remain deferred or
+  fail-closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-23: Bank storage actor-constant depths shipped
 - Completed `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` and closed the task
   tree.

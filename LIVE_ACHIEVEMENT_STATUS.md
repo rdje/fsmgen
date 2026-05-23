@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Transaction port actor-constant widths selected
+- Completed selection work for
+  `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated the active R14 task tree for transaction-local `(ports ...)`
+  `(width CONST)` declarations backed by actor-local constants resolving to
+  positive integers.
+- The active frontier is now
+  `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Bank storage actor-constant depths shipped
 - Completed `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` and closed the task
   tree.

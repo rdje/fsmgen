@@ -2,8 +2,21 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS`.
+- Current frontier: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2`.
+- Recent R14 transaction port actor-constant width selection:
+  `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1` activated the next
+  static-dimension tree. The selected first implementation slice is
+  intentionally narrow: only transaction-local `(ports ...)`
+  `(input NAME (width CONST))` and `(output NAME (width CONST))` entries may
+  use actor-local constants that resolve to positive integers. Transaction
+  parameters, runtime interface signals, arbitrary expressions, unknown names,
+  zero-valued actor constants, aggregate values, use-site override
+  specialization, generated-top respecialization, activation binding
+  semantics changes, binding timing changes, output binding shape changes, and
+  schedule-report `transaction_port_bindings[]` key-family changes remain
+  deferred or fail-closed. No parser, scheduler, report, generated artifact,
+  HDL, CLI, or public ISF behavior changed.
 - Recent R14 bank storage actor-constant depth completion:
   `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` shipped declared actor constants
   as actor-owned bank storage `(bank NAME (width W) (depth CONST))` depth
@@ -5681,12 +5694,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` shipped
-  actor-constant-backed actor-owned bank storage depths and closed the active
-  tree. The next PNT step must select or create the next roadmap-aligned task
-  tree before any code changes.
+- Active task tree: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS`.
+- Current frontier: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2`.
+- Completion status: `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1` selected
+  the next active R14 static-dimension tree. No behavior changes are included
+  in the selection leaf.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -9316,9 +9328,9 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Select or create the next roadmap-aligned task tree before any further code
-  changes. Use the active-task pointer at the top of this board as the
-  authoritative current frontier.
+- Use the active-task pointer at the top of this board as the authoritative
+  current frontier. When it is `none`, select or create the next
+  roadmap-aligned task tree before any further code changes.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

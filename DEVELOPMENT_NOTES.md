@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Transaction port constants are the next static-dimension slice
+- `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1` selects transaction-local
+  `(ports ...)` widths as the remaining actor-constant static-dimension
+  surface after actor interface widths, scalar storage widths, bank widths,
+  and bank depths.
+- The selection mirrors the actor-parameter transaction-port slice but keeps
+  transaction parameters out of scope because transaction parameters are
+  activation-specialized values, not actor-shell compile-time width evidence.
+- Only the owning actor shell's constant value is selected as transaction port
+  width evidence. Use-site overrides, generated-top respecialization, runtime
+  signals, expressions, and binding/report shape changes remain separate
+  policies.
+
 ## 2026-05-23: Bank depth constants resolve before scalarization
 - `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` widens bank depth finalization to
   resolve declared actor constants after actor scalar parameters and before

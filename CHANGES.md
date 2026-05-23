@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Transaction port actor-constant widths selected
+- Completed selection work for
+  `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated a new R14 task tree for accepting actor-local constants resolving
+  to positive integers as transaction-local `(ports ...)`
+  `(input NAME (width CONST))` and `(output NAME (width CONST))` widths.
+- The selected first implementation slice deliberately excludes transaction
+  parameters, runtime interface signals, arbitrary expressions, unknown names,
+  zero-valued actor constants, aggregate values, use-site override
+  specialization, generated-top respecialization, activation binding
+  semantics changes, binding timing changes, output binding shape changes, and
+  schedule-report `transaction_port_bindings[]` key-family changes.
+- No compiler behavior changed.
+
 ### R14 — Bank storage actor-constant depths shipped
 - Completed `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` and closed the task
   tree.
