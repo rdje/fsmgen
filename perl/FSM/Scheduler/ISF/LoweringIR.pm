@@ -3520,6 +3520,9 @@ sub _validate_repeat_count_source {
         if (_actor_constant_by_name($actor, $count)) {
             confess "Transaction '$tn': repeat count actor constant '$count' must resolve to a positive integer literal\n";
         }
+        if (_transaction_param_by_name($actor, $tn, $count)) {
+            confess "Transaction '$tn': repeat count transaction parameter '$count' remains deferred; use a known-width runtime scalar or positive actor constant\n";
+        }
         if (_actor_param_by_name($actor, $count)) {
             confess "Transaction '$tn': repeat count actor parameter '$count' remains deferred; use a known-width runtime scalar or positive actor constant\n";
         }
@@ -3542,6 +3545,25 @@ sub _runtime_repeat_count_source {
         && $widths->{$count} > 0;
 
     return $count;
+}
+
+sub _transaction_param_by_name {
+    my ($actor, $tx_name, $name) = @_;
+    return undef unless defined($name) && !ref($name) && _is_hdl_identifier($name);
+
+    my ($tx) = grep {
+        ref($_) eq 'HASH'
+            && defined($_->{name})
+            && !ref($_->{name})
+            && $_->{name} eq $tx_name
+    } @{$actor->{transactions} || []};
+    return undef unless $tx;
+
+    for my $param (@{_transaction_param_declarations($tx, $actor)}) {
+        return $param if ($param->{name} // '') eq $name;
+    }
+
+    return undef;
 }
 
 sub _literal_repeat_count_width {

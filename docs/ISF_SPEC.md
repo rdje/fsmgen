@@ -2191,8 +2191,8 @@ Current lowering:
   use their resolved integer value as width evidence while preserving the
   authored load token; known-width runtime scalar names use their known
   interface, storage, or sample-derived width. Unknown names, actor
-  parameters, malformed scalar tokens, and expression-valued counts fail
-  closed before counter emission.
+  parameters, transaction parameters, malformed scalar tokens, and
+  expression-valued counts fail closed before counter emission.
 - Repeat counts that are statically known to be zero, either as literal zero
   or as an actor constant resolving to zero, fail closed before scheduled
   `.fsm` emission.

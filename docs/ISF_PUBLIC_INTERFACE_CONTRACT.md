@@ -1069,8 +1069,8 @@ constants resolving to zero fail closed before scheduled `.fsm` emission.
 Known-width runtime scalar repeat counts now split the repeat init edge:
 nonzero values enter the repeat body, while zero values bypass the body and
 repeat check to the state after the repeat region. Unknown names, actor
-parameters, malformed scalar tokens, and expression-valued counts fail closed
-before scheduled `.fsm` emission.
+parameters, transaction parameters, malformed scalar tokens, and
+expression-valued counts fail closed before scheduled `.fsm` emission.
 The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, the top-level

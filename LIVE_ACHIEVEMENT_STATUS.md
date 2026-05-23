@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat transaction-parameter count diagnostic shipped
+- Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` and closed the
+  task tree.
+- Repeat counts that name generated child transaction parameters now fail
+  closed with a targeted deferred-transaction-parameter diagnostic.
+- Existing accepted repeat count behavior remains preserved.
+- Validation passed: focused repeat/public/doc tests, broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1601`,
+  `mdbook build docs/book`, and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-22: R14 — Repeat transaction-parameter count diagnostic selected
 - Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1`.
 - Activated the active R14 task tree for targeted transaction-parameter

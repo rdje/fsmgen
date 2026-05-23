@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC` | `active` | `R14` | `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` | [docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md](docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md](docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md) |
 | `ISF-BACKLOG-OWNER-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-BACKLOG-OWNER-TRUTH-SYNC.md](docs/tasks/ISF-BACKLOG-OWNER-TRUTH-SYNC.md) |
 | `ISF-REPEAT-COUNT-SOURCE-BOUNDARY` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-COUNT-SOURCE-BOUNDARY.md](docs/tasks/ISF-REPEAT-COUNT-SOURCE-BOUNDARY.md) |
 | `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.md](docs/tasks/ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.md) |

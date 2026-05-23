@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat transaction-parameter count diagnostic shipped
+- Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` and closed the
+  task tree.
+- Repeat counts that name generated child transaction parameters now fail
+  closed with a targeted diagnostic before scheduled `.fsm` emission:
+  transaction-parameter repeat-count specialization remains deferred.
+- Positive literals, positive actor constants, known-width runtime scalar
+  names, static zero diagnostics, runtime scalar zero-bypass behavior,
+  actor-parameter diagnostics, and malformed-token diagnostics remain
+  preserved.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/support-matrix chapters, roadmap status, task-tree docs,
+  and live docs.
+- Validation passed: LoweringIR/test syntax; focused repeat/public/doc tests
+  with `Files=6, Tests=366`; broad `./bin/ci-regression isf --no-book` with
+  `Files=238, Tests=1601`; `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Repeat transaction-parameter count diagnostic selected
 - Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1`.
 - Activated a new R14 task tree for targeted diagnostics when a repeat count

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Transaction repeat parameter diagnostics use local scope
+- `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` adds a local
+  transaction-parameter lookup to the repeat count source validator.
+- The lookup is used only for diagnostics. It does not treat transaction
+  parameter values as width evidence, runtime scalars, or generated-top
+  specialization values.
+- Checking this before the actor-parameter path makes generated child
+  transaction parameters explicit at their local repeat-count site while
+  preserving the existing actor-parameter diagnostic for actor-level names.
+
 ## 2026-05-22: Transaction repeat parameters stay deferred but explicit
 - `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1` selects a diagnostic
   hardening slice rather than repeat-parameter specialization.

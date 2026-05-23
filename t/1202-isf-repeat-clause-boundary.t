@@ -154,6 +154,25 @@ ISF
     (complete done)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'transaction parameter repeat count', qr/\ATransaction 'worker': repeat count transaction parameter 'COUNT' remains deferred; use a known-width runtime scalar or positive actor constant/);
+(actor repeat_transaction_param_count
+  (clock clk)
+  (interface (input start) (output flag) (output done))
+  (drive tick
+    (flag 1))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (await_all done)
+    (complete done))
+  (transaction worker
+    (params
+      (COUNT 3))
+    (repeat COUNT
+      (drive tick))
+    (complete done)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'negative repeat count literal', qr/\ATransaction 'main': repeat count '-1' must be a positive decimal literal, declared positive actor constant, or known-width runtime scalar name/);
 (actor repeat_negative_count
   (clock clk)

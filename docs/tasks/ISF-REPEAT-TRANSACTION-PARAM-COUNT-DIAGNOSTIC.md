@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -39,7 +39,7 @@ diagnostic before scheduled `.fsm` emission.
 ## Task Tree
 
 - ID: `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC`
-  Status: `active`
+  Status: `done`
   Goal: `Harden the repeat count source boundary for transaction parameters.`
   Children: `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1`,
   `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2`
@@ -54,19 +54,21 @@ diagnostic before scheduled `.fsm` emission.
   Commit: `pending commit`
 
 - ID: `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the transaction-parameter repeat count diagnostic.`
   Acceptance: `Lowering rejects transaction-parameter repeat counts with a
   targeted diagnostic before counter emission; focused tests and live docs
   prove the boundary while existing repeat count behavior is preserved.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: LoweringIR/test syntax; focused repeat/public/doc tests;
+  broad `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
+  `git diff --check`
+  Commit: `pending commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` | `pending` | The selected diagnostic hardening is the next bounded repeat-count source boundary leaf. |
+| | | | No remaining frontier; tree is closed. |
 
 ## Decisions
 
@@ -88,15 +90,18 @@ diagnostic before scheduled `.fsm` emission.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-22` | `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1202-isf-repeat-clause-boundary.t`; `prove -Iperl t/1202-isf-repeat-clause-boundary.t t/1102-isf-repeat-counter-widths.t t/1244-isf-wait-clause-lowering.t t/1112-isf-public-interface-contract.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `focused checks passed with Files=6, Tests=366; broad ISF gate passed with Files=238, Tests=1601; final public/doc audits and mdBook/diff checks passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1` | `this commit: ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1: select repeat transaction parameter diagnostic` | `selects targeted transaction-parameter repeat-count diagnostic hardening` |
-| `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` | `pending` | `pending` |
+| `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` | `this commit: ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2: harden repeat transaction parameter diagnostic` | `ships the targeted generated child transaction-parameter repeat-count diagnostic` |
 
 ## Changelog
 
 - `2026-05-22`: Created task tree and selected the transaction-parameter
   repeat count diagnostic frontier.
+- `2026-05-22`: Shipped the targeted transaction-parameter repeat-count
+  diagnostic and closed the tree.

@@ -893,9 +893,9 @@ load. Literal zero counts and actor constants resolving to zero fail closed
 before scheduled `.fsm` emission. Known-width sampled/interface names use
 their known source width and now split the repeat init edge: nonzero values
 enter the repeat body, while zero values bypass the body and repeat check to
-the state after the repeat region. Unknown names, actor parameters, malformed
-scalar tokens, and expression-valued counts fail closed before scheduled
-`.fsm` emission.
+the state after the repeat region. Unknown names, actor parameters,
+transaction parameters, malformed scalar tokens, and expression-valued counts
+fail closed before scheduled `.fsm` emission.
 
 Switch:
 

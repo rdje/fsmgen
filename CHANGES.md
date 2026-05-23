@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat transaction-parameter count diagnostic shipped
+- Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` and closed the
+  task tree.
+- Repeat counts that name generated child transaction parameters now fail
+  closed with a targeted deferred-transaction-parameter diagnostic before
+  scheduled `.fsm` emission.
+- Existing accepted repeat count sources and existing actor-parameter,
+  malformed-token, static-zero, and runtime-scalar zero-bypass behavior remain
+  preserved.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused repeat/public/doc tests with
+  `Files=6, Tests=366`; broad `./bin/ci-regression isf --no-book` with
+  `Files=238, Tests=1601`; `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — Repeat transaction-parameter count diagnostic selected
 - Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1`.
 - Activated a new R14 task tree for targeted repeat count diagnostics when

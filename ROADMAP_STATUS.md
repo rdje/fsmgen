@@ -2,12 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC`.
-- Current frontier: `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` will
-  make repeat counts that name generated child transaction parameters fail
-  closed with a targeted diagnostic before repeat counter emission. Full
-  actor/transaction parameter repeat-count specialization and generated-top
-  respecialization remain out of scope.
+- Active task tree: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Recent R14 repeat transaction-parameter count diagnostic completion:
+  `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` shipped a targeted
+  fail-closed diagnostic for repeat counts that name generated child
+  transaction parameters. Such counts now report that transaction-parameter
+  repeat counts remain deferred instead of falling through to the generic
+  unknown-name diagnostic. Positive literals, positive actor constants,
+  known-width runtime scalar names, static zero diagnostics, runtime scalar
+  zero-bypass behavior, actor-parameter diagnostics, and malformed-token
+  diagnostics remain preserved. Full actor/transaction parameter
+  repeat-count specialization and generated-top respecialization remain
+  deferred.
 - Recent R14 repeat transaction-parameter count diagnostic selection:
   `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1` activated the repeat
   count diagnostic hardening tree. The selected implementation will preserve
@@ -34,11 +41,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   only as positive decimal literals, declared actor constants resolving to
   positive integers, or known-width runtime scalar names. Literal zero and
   actor-constant zero counts keep the static zero diagnostic; unknown names,
-  actor parameters, malformed scalar tokens, and expression-valued counts fail
-  closed before scheduled `.fsm` emission. Actor/transaction parameter
-  specialization, expression-valued repeat counts, generated-top
-  respecialization, repeat-body activation widening, and cross-domain repeat
-  behavior remain deferred.
+  actor parameters, transaction parameters, malformed scalar tokens, and
+  expression-valued counts fail closed before scheduled `.fsm` emission.
+  Actor/transaction parameter specialization, expression-valued repeat
+  counts, generated-top respecialization, repeat-body activation widening,
+  and cross-domain repeat behavior remain deferred.
 - Recent R14 repeat count source boundary selection:
   `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1` activated the repeat count source
   boundary tree. The selected implementation will fail closed unsupported
