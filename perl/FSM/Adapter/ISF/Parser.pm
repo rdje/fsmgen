@@ -292,6 +292,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_param_values($result);
     $self->_finalize_actor_watchdog_limit($result)
         if $singleton_actor_clauses{watchdog};
+    $self->_finalize_actor_interface_widths($result);
     $self->_finalize_actor_type_references($result);
     $self->_validate_deferred_atl_drive_sink_expression_candidates($result);
     $self->_validate_actor_aggregate_storage_paths($result);
@@ -626,6 +627,45 @@ sub _finalize_actor_watchdog_limit($self, $actor) {
     }
 
     confess "Error: (watchdog ...) requires a positive integer literal, actor constant, or actor scalar parameter\n";
+}
+
+sub _finalize_actor_interface_widths($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+
+    for my $direction (qw(inputs outputs)) {
+        for my $port (@{$actor->{interface}{$direction} || []}) {
+            next if exists $port->{type};
+
+            my $width = $port->{width};
+            next
+                if defined($width)
+                    && !ref($width)
+                    && $width =~ /\A[1-9][0-9]*\z/;
+
+            my $port_name = $port->{name};
+            confess "Error: actor '$actor_name' interface port '$port_name' width must be a positive integer literal or actor scalar parameter\n"
+                unless defined($width) && !ref($width) && _is_hdl_identifier($width);
+
+            my $param = _actor_param_by_name($actor, $width);
+            if ($param) {
+                my $param_width = _positive_integer_from_literal_value(_param_resolved_value($param));
+                confess "Error: actor '$actor_name' interface port '$port_name' width parameter '$width' must resolve to a positive integer\n"
+                    unless defined $param_width;
+                $port->{width} = $param_width;
+                next;
+            }
+
+            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is an actor constant; actor interface widths accept positive integer literals, actor scalar parameters, or type aliases only\n"
+                if _actor_constant_by_name($actor, $width);
+
+            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is a runtime interface signal; actor interface widths accept positive integer literals, actor scalar parameters, or type aliases only\n"
+                if _actor_interface_signal_by_name($actor, $width);
+
+            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is not a declared actor scalar parameter\n";
+        }
+    }
+
+    return 1;
 }
 
 sub _resolve_actor_param_enum_leaf_values($self, $actor, $value, $context) {
@@ -5725,11 +5765,11 @@ sub _parse_interface($self, $clause) {
             confess "Error: interface port '$name' has duplicate '$option_name' option\n"
                 if $seen_options{$option_name}++;
             if (ref($prop) eq 'ARRAY' && $prop->[0] eq 'width') {
-                confess "Error: interface port '$name' width must be a positive integer\n"
+                confess "Error: interface port '$name' width must be a positive integer or actor scalar parameter\n"
                     unless @$prop == 2
                         && defined($prop->[1])
                         && !ref($prop->[1])
-                        && $prop->[1] =~ /\A[1-9][0-9]*\z/;
+                        && ($prop->[1] =~ /\A[1-9][0-9]*\z/ || _is_hdl_identifier($prop->[1]));
                 $width = $prop->[1];
                 next;
             }

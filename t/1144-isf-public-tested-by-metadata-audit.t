@@ -224,6 +224,7 @@ my $expected_tested_by = [
     't/1329-isf-atl-trigger-batch-wait-fixture-coverage.t',
     't/1330-isf-atl-resolved-child-fixture-coverage.t',
     't/1331-isf-timing-conventions.t',
+    't/1333-isf-interface-actor-param-widths.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Interface actor-parameter widths shipped
+- Completed `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` and closed the task tree.
+- Actor top-level interface ports now accept `(width PARAM)` when `PARAM`
+  names an actor-local scalar parameter default that resolves to a positive
+  integer. Enum-member-backed scalar defaults are accepted when they resolve
+  to a positive integer.
+- Accepted widths lower like literal widths in parser handoff, scheduled
+  `.fsm` `+size`, schedule/report behavior, and generated HDL port ranges,
+  while authored actor parameters remain visible through `+params` and
+  `actor_params[]`.
+- Unsupported width sources fail closed: unknown symbolic names, actor
+  constants, runtime interface signals, zero-valued or non-scalar actor
+  parameters, transaction parameters, arbitrary expressions, storage
+  dimensions, bank depths, transaction-local port widths, and use-site or
+  generated-top respecialization.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused interface/public/spec/book tests
+  with `Files=7, Tests=331`; broad `./bin/ci-regression isf --no-book` with
+  `Files=239, Tests=1618`; post-closure doc audits with `Files=3,
+  Tests=339`; `mdbook build docs/book`; `git diff --check`.
+
 ### R14 — Interface actor-parameter widths selected
 - Completed selection work for `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1`.
 - Activated a new R14 task tree for accepting actor-local scalar parameter
@@ -6860,8 +6883,8 @@ This is the persistent technical change history for FSMGen.
   use-site bindings, scalarized FIFO data entries, generated top wiring, and
   plain plus strict generated-top HDL generation for
   `isf/fifo_library_use.isf`.
-- Kept the fixture boundary fixed-shape: it does not claim
-  parameter-driven interface/storage elaboration, nested imports, standalone
+- Kept the fixture boundary fixed-shape: it does not claim use-site FIFO
+  interface/storage shape elaboration, nested imports, standalone
   transaction/drive exports, arbitrary-depth generated FIFOs, memory-array
   backend emission, or automatic non-zero reset values.
 - Added the test to public `tested_by` metadata and the ISF regression tier

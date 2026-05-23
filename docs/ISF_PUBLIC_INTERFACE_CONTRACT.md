@@ -173,7 +173,7 @@ to keep file-backed strict schedule JSON, generated importer/child/top
 scheduled `.fsm` artifacts, strict `--outdir` emission, fixed parameter
 overrides, use-site bindings, scalarized FIFO data entries, and plain plus
 strict generated-top HDL generation covered without claiming parameter-driven
-interface/storage elaboration or nested library imports.
+FIFO interface/storage shape elaboration or nested library imports.
 The ATL temporary trigger-batch fixture is checked by
 [t/1324-isf-atl-fixture-coverage.t](../t/1324-isf-atl-fixture-coverage.t)
 to keep file-backed static actor instances, one task-scoped same-cycle
@@ -544,6 +544,13 @@ The actor-shell interface subshape is checked by
 to keep the parser-returned `interface` inputs/outputs arrays and public port
 entry `name`/`width` shape exact across direct and manifest views without
 freezing the rest of the raw actor hash.
+Actor top-level interface widths backed by actor-local scalar parameter
+defaults are checked by
+[t/1333-isf-interface-actor-param-widths.t](../t/1333-isf-interface-actor-param-widths.t)
+so accepted `(width PARAM)` entries resolve to positive integer public port
+widths, scheduled `.fsm` `+size` declarations, and HDL port ranges while
+unknown symbolic names, actor constants, runtime interface signals, zero-valued
+or non-scalar actor parameters, and arbitrary expressions fail closed.
 The interface-port boundary is checked by
 [t/1188-isf-interface-port-boundary.t](../t/1188-isf-interface-port-boundary.t)
 so port names are unique across both input and output directions before an
@@ -2030,8 +2037,11 @@ ordinary rule assignment and transaction `update` surfaces.
 The current public parser handoff also advertises one bounded subshape inside
 that shell: `interface` contains `inputs` and `outputs` arrays, and each public
 port entry has unique non-empty scalar `name` plus positive integer `width`,
-with omitted source widths normalized to `1`. Accepted clock-domain sources may
-carry scalar `domain` ownership metadata on those port entries. The
+with omitted source widths normalized to `1`. Source `(width PARAM)` is
+accepted only when `PARAM` names an actor-local scalar parameter default that
+resolves to a positive integer; the public port entry still carries the
+resolved integer width, not the authored token. Accepted clock-domain sources
+may carry scalar `domain` ownership metadata on those port entries. The
 machine-readable contract advertises this through
 `actor_shell_interface_shape`.
 This is current live-contract metadata for scheduler-consumable parser output;

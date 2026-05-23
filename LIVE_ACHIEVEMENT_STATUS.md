@@ -2,6 +2,27 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Interface actor-parameter widths shipped
+- Completed `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` and closed the task tree.
+- Actor top-level interface ports now accept `(width PARAM)` when `PARAM`
+  names an actor-local scalar parameter default resolving to a positive
+  integer.
+- Accepted parameter-backed widths lower like literal widths in public parser
+  handoff, scheduled `.fsm` `+size`, schedule reports, and generated HDL,
+  while authored parameters remain visible through `+params` and
+  `actor_params[]`.
+- Unsupported width sources fail closed: unknown symbolic names, actor
+  constants, runtime interface signals, zero-valued or non-scalar actor
+  parameters, transaction parameters, arbitrary expressions, storage
+  dimensions, bank depths, transaction-local port widths, use-site override
+  specialization, and generated-top respecialization.
+- Validation passed: syntax checks, focused interface/public/spec/book tests
+  with `Files=7, Tests=331`, broad `./bin/ci-regression isf --no-book` with
+  `Files=239, Tests=1618`, post-closure doc audits with `Files=3,
+  Tests=339`, `mdbook build docs/book`, and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Interface actor-parameter widths selected
 - Completed selection work for `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1`.
 - Activated the active R14 task tree for actor top-level interface port

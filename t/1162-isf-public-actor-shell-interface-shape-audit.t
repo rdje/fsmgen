@@ -89,17 +89,17 @@ ISF
   (interface
     (output data (width 0))))
 ISF
-            qr/\AError: interface port 'data' width must be a positive integer/,
+            qr/\AError: interface port 'data' width must be a positive integer or actor scalar parameter/,
         ],
         [
-            'non-integer port width',
+            'unknown symbolic port width',
             <<'ISF',
 (actor symbolic_width
   (clock clk)
   (interface
     (output data (width WIDTH))))
 ISF
-            qr/\AError: interface port 'data' width must be a positive integer/,
+            qr/\AError: actor 'symbolic_width' interface port 'data' width token 'WIDTH' is not a declared actor scalar parameter/,
         ],
     ) {
         my ($label, $source, $pattern) = @$case;

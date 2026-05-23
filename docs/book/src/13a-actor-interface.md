@@ -255,11 +255,15 @@ See [Transactions](13b-transactions.md) for per-await semantics.
 ## Interface
 
 ```lisp
+(params
+  (DATA_W 32))
+
 (interface
   (input  start)                  ;; default width 1
   (input  addr  (width 32))       ;; explicit width
+  (input  wdata (width DATA_W))   ;; actor scalar parameter width
   (output done)                   ;; default width 1
-  (output rdata (width 32))
+  (output rdata (width DATA_W))
   (output PADDR (width 32)))
 ```
 
@@ -268,6 +272,13 @@ storage is not emitted a second time when it shares a name with a declared port.
 
 Interface port names are unique across both input and output directions, and
 the interface block itself is a singleton actor clause.
+
+An interface `(width ...)` may be a positive integer literal or an actor-local
+scalar parameter default that resolves to a positive integer. The parser
+returns the resolved integer width, scheduled `.fsm` `+size` uses that integer,
+and `+params` still preserves the authored actor parameter for review. Unknown
+symbolic width names, actor constants, runtime interface signals, zero-valued
+or non-scalar actor parameters, and arbitrary expressions fail closed.
 
 When an actor uses `(clock-domains ...)`, a port may add `(domain NAME)` to
 declare the owning domain; omitted port domains inherit the actor default
@@ -296,7 +307,8 @@ This scalarized representation is deliberate for the first reusable FIFO work.
 It lets the `DEPTH=4` fixture use four concrete storage entries, 2-bit
 pointers, and 3-bit occupancy state while staying on the existing scalar
 signal/flop backend path. Parameter-derived widths/depths, symbolic
-dimensions, and memory-array backend emission are future generalizations.
+storage dimensions, and memory-array backend emission are future
+generalizations.
 
 Pointer-selected access is available through explicit action forms such as
 `(store data wr_ptr data_in)` and `(load data rd_ptr as data_out)`, which

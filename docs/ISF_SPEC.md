@@ -168,7 +168,10 @@ It also publishes the shell value shapes: scalar `actor_name`, array
 The current bounded parser handoff also advertises the `interface` subshape:
 `inputs` and `outputs` are arrays, and each public port entry has unique
 non-empty scalar `name` plus positive integer `width`, with omitted source
-widths normalized to `1`.
+widths normalized to `1`. Actor top-level interface `(width PARAM)` entries
+are accepted when `PARAM` is an actor-local scalar parameter default that
+resolves to a positive integer; the parser handoff still exposes the resolved
+integer width.
 It also advertises the transaction-entry shell: `transactions` is an array of
 entries with scalar `name` and `clauses` array fields. Those shapes are
 live-contract metadata for scheduler-consumable actors, not a freeze of the
@@ -1211,8 +1214,10 @@ A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
 requirements. The shipped reusable FIFO actor target is fixed-shape
 `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Those parameters
-are provenance and binding evidence in this fixture; the current parser still
-requires concrete integer interface widths and storage widths/depths. The
+are provenance and binding evidence in this fixture; actor top-level
+interface widths may use actor-local scalar parameter defaults that resolve
+to positive integers, while the reusable FIFO fixture still uses fixed shape
+and storage widths/depths still require concrete positive integer literals. The
 actor has actor-owned storage, read and write pointers, occupancy state,
 actor-maintained flags, reset ownership, and first-class handling of the four
 request cases every cycle: no request, push without pop, pop without push,
@@ -1241,11 +1246,13 @@ pop; for the first depth-4 target both pointers wrap from entry 3 back to
 entry 0. The reusable FIFO fixture models the internal data bank through
 `(bank data (width 8) (depth 4))`, `(store data wr_ptr data_in)`, and
 `(load data rd_ptr as data_out)`.
-Parameter-driven interface widths, arbitrary-depth memory-backed FIFO
-generation beyond the first `DEPTH=4` fixture, automatic non-zero reset values
-such as empty=1, standalone transaction/drive exports, package/imported
-constants beyond actor-local constants, derived parameter expressions, and
-library actors that import other libraries remain deferred.
+Actor top-level interface widths may now use actor-local scalar parameter
+defaults that resolve to positive integers. Use-site FIFO interface shape
+specialization, parameter-driven storage dimensions, arbitrary-depth
+memory-backed FIFO generation beyond the first `DEPTH=4` fixture, automatic
+non-zero reset values such as empty=1, standalone transaction/drive exports,
+package/imported constants beyond actor-local constants, derived parameter
+expressions, and library actors that import other libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -1499,16 +1506,24 @@ Watchdog rules:
 (interface
   (input  name)
   (input  name (width N))
+  (input  name (width PARAM))
   (output name)
-  (output name (width N)))
+  (output name (width N))
+  (output name (width PARAM)))
 ```
 
 Default width is `1`. Interface entries lower into `.fsm` `+size` entries.
 Accepted parser output exposes the interface handoff as `inputs` and `outputs`
 arrays with unique non-empty scalar port `name` and positive integer `width`
-entries. Malformed directions, duplicate names across either direction, nested
-names, and non-positive or non-integer widths are rejected before the parser
-returns an actor shell.
+entries. `N` is a positive integer literal. `PARAM` may name an actor-local
+scalar parameter default that resolves to a positive integer, including an enum
+member reference that resolves to a positive integer; the parser lowers the
+public `width` field to the resolved integer and keeps the authored parameter
+visible through `actor_params[]`. Unknown symbolic width names, actor
+constants, runtime interface signals, zero-valued or non-scalar actor
+parameters, arbitrary expressions, nested names, malformed directions,
+duplicate names across either direction, and non-positive or non-integer
+literal widths are rejected before the parser returns an actor shell.
 `(interface ...)` is an actor-level singleton clause; repeated interface blocks
 are rejected instead of merged or overwritten.
 If an inferred scheduler storage name matches a declared interface port, the
@@ -1535,10 +1550,10 @@ The first shipped storage forms are:
 - `(variable name (width N))`: verbose alias for `(var ...)`.
 - `(bank name (width N) (depth N))`: a fixed-depth actor-owned storage bank.
 
-All widths and depths are positive integer literals in the current shipped
-surface. Parameter-derived widths/depths, actor constants as storage dimension
-symbols, dynamic storage depth, and memory-array backend emission remain
-deferred.
+All storage widths and depths are positive integer literals in the current
+shipped surface. Parameter-derived storage widths/depths, actor constants as
+storage dimension symbols, dynamic storage depth, and memory-array backend
+emission remain deferred.
 
 Storage banks lower to deterministic scalar storage element names in the
 scheduled `.fsm` review artifact. For example,
@@ -1662,10 +1677,10 @@ binds instance `u_fifo`, emits the importing actor, specialized child, and
 generated top scheduled `.fsm` files, records fixed parameter overrides and
 use-site bindings in `library_uses[]`, and reaches plain plus strict generated
 top SystemVerilog. This fixture is deliberately fixed to `DATA_WIDTH=8`,
-`DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`; it does not claim
-parameter-driven interface/storage elaboration, nested library imports,
-standalone exported transactions or drives, memory-array backend emission, or
-automatic non-zero reset values.
+`DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`; it does not claim use-site
+parameter-driven FIFO interface or storage shape elaboration, nested library
+imports, standalone exported transactions or drives, memory-array backend
+emission, or automatic non-zero reset values.
 
 ## 6. Drive Definitions and Calls
 
@@ -4977,6 +4992,7 @@ Focused tests:
 - [t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t)
 - [t/1331-isf-timing-conventions.t](../t/1331-isf-timing-conventions.t)
 - [t/1332-isf-atl-doc-status-audit.t](../t/1332-isf-atl-doc-status-audit.t)
+- [t/1333-isf-interface-actor-param-widths.t](../t/1333-isf-interface-actor-param-widths.t)
 
 ## 12. Explicitly Deferred
 

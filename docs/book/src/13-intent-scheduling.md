@@ -590,11 +590,13 @@ The ISF-specific current limitations are:
 
   That remapping is a single-clock-domain name binding only.
 
-  Parameter-driven interface/storage widths, arbitrary-depth generation
-  beyond the first `DEPTH=4` fixture, automatic non-zero reset values,
-  standalone transaction/drive exports, package/imported constants beyond
-  actor-local constants, derived parameter expressions, and nested library
-  imports remain backlog work.
+  Actor top-level interface widths may use actor-local scalar parameter
+  defaults that resolve to positive integers. Use-site FIFO interface/storage
+  shape specialization, parameter-driven storage dimensions, arbitrary-depth
+  generation beyond the first `DEPTH=4` fixture, automatic non-zero reset
+  values, standalone transaction/drive exports, package/imported constants
+  beyond actor-local constants, derived parameter expressions, and nested
+  library imports remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn and blocking `do` parameter declaration,

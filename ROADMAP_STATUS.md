@@ -2,9 +2,21 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-INTERFACE-ACTOR-PARAM-WIDTHS`.
-- Current frontier: `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` will implement the
-  bounded actor top-level interface port `(width PARAM)` slice.
+- Active task tree: `none`.
+- Current frontier: `none`; the last active R14 tree is closed and the next
+  PNT selection should choose a fresh roadmap-aligned task tree before code.
+- Recent R14 interface actor-parameter width completion:
+  `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` shipped actor-local scalar parameter
+  defaults as actor top-level interface port `(width PARAM)` sources when the
+  defaults resolve to positive integers. Accepted widths lower like equivalent
+  literal widths in the public parser handoff, scheduled `.fsm` `+size`,
+  schedule reports, and generated HDL. Unknown symbolic width names, actor
+  constants, runtime interface signals, zero-valued or non-scalar actor
+  parameters, transaction parameters, arbitrary expressions, use-site
+  override specialization, generated-top respecialization, storage widths,
+  bank depths, and transaction-local port widths remain fail-closed or
+  deferred. The ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap, task tree, and live docs were synchronized.
 - Recent R14 interface actor-parameter width selection:
   `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1` activated the next parameter-driven
   interface elaboration tree. The selected first slice is intentionally
@@ -3786,8 +3798,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   through the shipped library-use surface. The reusable actor combines the
   same-cycle controller matrix with actor-owned bank `store`/`load` data
   movement for `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`.
-  Those parameters are provenance for this fixed fixture; parameter-driven
-  interface/storage elaboration remains deferred. The active frontier
+  Those parameters are provenance for this fixed fixture; use-site FIFO
+  interface/storage shape elaboration remains deferred. The active frontier
   advances to `ISF-LIBRARIES.4.6`, proving the reusable FIFO fixture through
   generated top HDL and focused generated-artifact checks.
 - `ISF-LIBRARIES.4.6` is complete. The fixed FIFO library fixture now reaches
@@ -5483,12 +5495,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-INTERFACE-ACTOR-PARAM-WIDTHS`.
-- Current frontier: `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2`.
-- Completion status: `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` closed the
-  previous active R14 task tree. `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1` now
-  selects the next bounded parameter-driven interface slice before any code
-  changes.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` closed the
+  previous active R14 task tree. The next PNT selection must create or
+  activate a task-tree owner before any further code, test, source,
+  generated-artifact, or config change.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

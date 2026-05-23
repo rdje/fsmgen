@@ -37,7 +37,7 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 | Single-clock timing | shipped | `(clock clk)` plus optional `(reset ...)` and `(watchdog N)`, where `N` is a positive decimal literal, declared actor constant, or actor-local scalar parameter default that resolves to a positive integer. Omitted legacy single-clock timing defaults to `(clock clk)`, `(reset (rst_n async active_low))`, and `(watchdog 65535)`. | The actor has one clock domain. Resets lower to the matching `.fsm` system reset form. Watchdogs create inferred counters for accepted awaits, with omitted watchdogs normalized to `65535` exactly `(2^16 - 1)` and actor-constant or actor-scalar-parameter watchdogs reported as resolved integers. |
 | Multi-clock domains | shipped bounded surface | Actor-level `(clock-domains ...)` with named domains, one default domain, optional per-domain resets, and `(domain NAME)` ownership annotations. | Lowering partitions the actor into one scheduled `.fsm` per domain plus a generated top. Direct cross-domain reads, writes, activations, and bindings fail closed unless a shipped crossing primitive owns the path. |
 | Acknowledged event CDC | shipped bounded surface | `(crossings (event NAME (from SRC SRC_REQ) (to DST DST_PULSE) (ready SRC_READY)))`. | The generated top wires a concrete acknowledged-event CDC child. The source side sees `ready`; the destination side receives a one-cycle pulse. No data payload or same-cycle delivery is promised. |
-| Interface ports | shipped | `(interface (input NAME [(width N)|(type T)] [(domain D)]) (output NAME ...))`. | Ports become scheduled `.fsm` `+size` entries and module ports. Names are unique across input and output directions. |
+| Interface ports | shipped | `(interface (input NAME [(width N\|PARAM)|(type T)] [(domain D)]) (output NAME ...))`, where `PARAM` is an actor-local scalar parameter default that resolves to a positive integer. | Ports become scheduled `.fsm` `+size` entries and module ports with resolved positive integer widths. Names are unique across input and output directions. Unknown symbolic width names, actor constants, runtime interface signals, zero/non-scalar params, and arbitrary width expressions fail closed. |
 | Actor-owned scalar storage | shipped | `(storage (var NAME (width N)) ...)` and `(variable NAME (width N))`. | Storage lowers to internal scalar registers, contributes width evidence, and appears in reports with role `actor_storage`. |
 | Actor-owned banks | shipped bounded surface | `(storage (bank NAME (width N) (depth N)))` with pointer-selected `(store BANK IDX VALUE)` and `(load BANK IDX as TARGET)`. | Banks lower to deterministic scalarized entries such as `data_0`, `data_1`, and so on. Same-cycle read/write behavior follows the documented scalarized FIFO path. |
 | Type aliases and package imports | shipped bounded surface | Actor-local `(types ...)`, actor-local `(enums ...)`, `.fsm` package imports, scalar `(type NAME)` declarations, and actor-owned aggregate storage aliases. | Scheduled `.fsm` preserves `+types`, `+enums`, and `+import` review artifacts. Imported package roots are embedded for CLI HDL generation. |
@@ -326,9 +326,9 @@ specialized child, and generated top scheduled `.fsm` artifacts, records fixed
 parameter overrides and use-site bindings in `library_uses[]`, and reaches
 plain plus strict generated-top HDL generation. It is fixed to
 `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`; it does not claim
-parameter-driven interface/storage elaboration, nested imports, standalone
-exported transactions or drives, arbitrary-depth generated FIFOs,
-memory-array backend emission, or automatic non-zero reset values.
+use-site parameter-driven FIFO interface/storage shape elaboration, nested
+imports, standalone exported transactions or drives, arbitrary-depth generated
+FIFOs, memory-array backend emission, or automatic non-zero reset values.
 
 The ATL temporary trigger-batch fixture is file-backed in the `isf`
 regression tier for task-scoped actor orchestration. It uses

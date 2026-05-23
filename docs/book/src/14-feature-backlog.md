@@ -2515,10 +2515,10 @@ specialized child, and top scheduled `.fsm` artifacts, fixed FIFO parameter
 overrides, use-site bindings, scalarized FIFO data entries, generated-top
 wiring, and plain plus strict generated-top HDL generation. It is the fixed
 `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, `OCC_WIDTH=3` reusable FIFO handoff
-fixture, not a claim for parameter-driven interface/storage elaboration,
-nested imports, standalone transaction/drive exports, arbitrary-depth
-generated FIFOs, memory-array backend emission, or automatic non-zero reset
-values.
+fixture, not a claim for use-site parameter-driven FIFO interface/storage
+shape elaboration, nested imports, standalone transaction/drive exports,
+arbitrary-depth generated FIFOs, memory-array backend emission, or automatic
+non-zero reset values.
 
 The ATL scalar data-route fixture is now promoted in the `isf` tier for
 file-backed strict schedule JSON parity, scheduled `.fsm` structure, generated
@@ -2841,7 +2841,10 @@ depth-1 element may be useful as a register slice or holding element, but it
 does not exercise FIFO depth, pointers, or occupancy semantics. The first
 fixture is fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and
 `OCC_WIDTH=3`. Those parameters are emitted as provenance and use-site binding
-evidence; parameter-driven interface/storage elaboration remains future work.
+evidence. Actor top-level interface port widths may use actor-local scalar
+parameter defaults when they resolve to positive integers, but FIFO use-site
+interface shape specialization, storage dimensions, bank depths, and
+transaction port widths remain future work.
 
 The fixture explicitly models the four request cases: no request, push without
 pop, pop without push, and push with pop. Push-only updates occupancy and the

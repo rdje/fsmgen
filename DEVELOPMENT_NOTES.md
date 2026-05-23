@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Interface width parameters resolve before scheduler handoff
+- `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` resolves actor top-level interface
+  `(width PARAM)` tokens in the parser after the actor parameter table is
+  finalized and before the public actor shell is returned.
+- The public handoff deliberately keeps `interface.inputs[]` and
+  `interface.outputs[]` as resolved positive integer widths. That avoids
+  leaking a second symbolic-width API into scheduler callers, preserves the
+  existing `.fsm` `+size` and HDL generation path, and keeps authored
+  parameter provenance in `+params` / `actor_params[]` instead.
+- Actor constants and runtime interface signals are rejected as symbolic width
+  sources for this slice even when they are otherwise meaningful ISF symbols.
+  The point of this slice is actor-parameter elaboration, not a general
+  symbolic dimension system. Storage dimensions, bank depths, transaction port
+  widths, use-site overrides, and generated-top respecialization still need
+  separate policies before they can be accepted.
+
 ## 2026-05-23: Interface parameter widths are the first elaboration slice
 - `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1` selects actor top-level interface port
   widths as the next bounded actor-parameter elaboration surface.
@@ -5737,10 +5753,10 @@ This document captures engineering rationale, design constraints, and working de
   pointer-gated accepted push/pop paths, and plain plus strict generated-top
   HDL generation.
 - The fixture remains deliberately fixed to `DATA_WIDTH=8`, `DEPTH=4`,
-  `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Generic parameter-driven storage/interface
-  elaboration, nested library imports, standalone transaction/drive exports,
-  memory-array backend emission, and automatic non-zero reset values remain
-  explicit future work.
+  `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Use-site FIFO interface/storage shape
+  elaboration, parameter-driven storage dimensions, nested library imports,
+  standalone transaction/drive exports, memory-array backend emission, and
+  automatic non-zero reset values remain explicit future work.
 ## 2026-05-16: FIFO controller fixture promotion keeps controller and datapath claims separate
 - `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.1` promotes
   `isf/fifo_controller.isf` as a file-backed strict fixture for the existing
@@ -7762,10 +7778,11 @@ This document captures engineering rationale, design constraints, and working de
 - The simultaneous full push+pop case intentionally uses read-before-write
   data semantics: the accepted pop reads the old entry selected by `rd_ptr`,
   while the accepted push writes the selected entry for the next cycle.
-- Automatic non-zero reset values and parameter-driven storage/interface
-  elaboration remain future features. Until they ship, the fixture documents
-  the fixed reset/shape boundary instead of pretending the parameter values
-  specialize widths or depths.
+- Automatic non-zero reset values, use-site FIFO interface/storage shape
+  elaboration, and parameter-driven storage dimensions remain future features.
+  Until they ship, the fixture documents the fixed reset/shape boundary
+  instead of pretending the parameter values specialize storage widths or
+  depths.
 ## 2026-05-15: ISF FIFO data-buffer access implementation
 - Store/load bank access is implemented as ordinary lowering into the same IR
   assignment model used by rules and transaction states. There is no special

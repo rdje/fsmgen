@@ -216,7 +216,9 @@ General source rules:
   parameters, domains, and instances are scalar HDL identifiers. Current
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.
 - Widths and depths are positive integer literals unless a specific clause says
-  otherwise.
+  otherwise. Actor top-level interface port widths also accept actor-local
+  scalar parameter defaults that resolve to positive integers; storage
+  dimensions and transaction port widths remain literal-only.
 - Actor constants, scalar actor parameter defaults, and generated child
   transaction scalar parameter defaults use non-negative integer literals or
   enum member references that resolve to non-negative integers; static wait
@@ -394,18 +396,28 @@ Interface:
 (interface
   (input  name)
   (input  name (width N))
+  (input  name (width PARAM))
   (output name)
-  (output name (width N)))
+  (output name (width N))
+  (output name (width PARAM)))
 ```
 
 Rules:
 
 - Width defaults to `1`.
+- `N` is a positive integer literal.
+- `PARAM` may name an actor-local scalar parameter default that resolves to a
+  positive integer; accepted parser output and scheduled `.fsm` artifacts use
+  the resolved integer width while `actor_params[]` preserves the authored
+  parameter declaration.
+- Unknown symbolic width names, actor constants, runtime interface signals,
+  zero-valued or non-scalar actor parameters, arbitrary expressions, and
+  non-positive literals fail closed.
 - Directions are `input` or `output`.
 - Port names are unique across both directions.
 - `(domain NAME)` is accepted on interface entries when named domains are in
   use.
-- Malformed directions, duplicate names, nested names, and non-positive widths
+- Malformed directions, duplicate names, nested names, and unsupported widths
   fail closed.
 
 Constants:
@@ -560,7 +572,7 @@ storage: wr_ptr[2], rd_ptr[2], occupancy[3], data bank width 8 depth 4
 Known FIFO library limitations:
 
 - Fixed-shape `DATA_WIDTH=8`, `DEPTH=4` fixture.
-- No parameter-driven interface/storage elaboration yet.
+- No use-site parameter-driven FIFO interface or storage shape elaboration yet.
 - No memory-array backend emission yet.
 - No automatic non-zero reset values yet.
 - No standalone transaction or drive exports yet.
@@ -574,9 +586,10 @@ specialized child, and top `.fsm` artifacts in `--outdir`, fixed
 bindings, use-site clock/reset/input/output bindings, scalarized bank entries,
 pointer-gated accepted push/pop datapath paths, and plain plus strict
 generated-top HDL generation. It is a fixed-shape reusable-library fixture,
-not a claim for parameter-derived interface/storage elaboration, nested
-imports, standalone transaction/drive exports, arbitrary-depth generated
-FIFOs, memory-array backend emission, or automatic non-zero reset values.
+not a claim for use-site parameter-derived FIFO interface/storage shape
+elaboration, nested imports, standalone transaction/drive exports,
+arbitrary-depth generated FIFOs, memory-array backend emission, or automatic
+non-zero reset values.
 
 ## 10. Drive Definitions And Calls
 
@@ -3369,7 +3382,8 @@ The following are not public shipped integration surfaces today:
 - Full schedule JSON schema beyond the advertised key families.
 - Textual include semantics for libraries.
 - Standalone transaction or drive library exports.
-- Parameter-driven interface widths or storage dimensions.
+- Parameter-driven storage dimensions, transaction port widths, and broader
+  interface-width expressions beyond actor-local scalar parameter defaults.
 - Derived parameter expressions and package/imported constants beyond current
   actor-local constants.
 - General memory-array HDL emission for actor-owned banks.

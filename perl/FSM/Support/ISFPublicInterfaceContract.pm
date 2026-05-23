@@ -517,6 +517,7 @@ sub build_isf_public_interface_contract {
             't/1329-isf-atl-trigger-batch-wait-fixture-coverage.t',
             't/1330-isf-atl-resolved-child-fixture-coverage.t',
             't/1331-isf-timing-conventions.t',
+            't/1333-isf-interface-actor-param-widths.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -781,7 +782,7 @@ sub isf_public_interface_shipped_library_definitions {
             ],
             limitations => [
                 'fixed-shape DATA_WIDTH=8 DEPTH=4 fixture',
-                'no parameter-driven interface or storage elaboration yet',
+                'no use-site parameter-driven FIFO interface or storage shape elaboration yet',
                 'no memory-array backend emission yet',
                 'no automatic non-zero reset values yet',
                 'no standalone transaction or drive library exports yet',
@@ -869,7 +870,7 @@ sub isf_public_interface_actor_shell_timing_shape {
 }
 
 sub isf_public_interface_actor_shell_interface_shape {
-    return 'interface has inputs and outputs arrays; each public port entry has unique non-empty scalar name and positive integer width, defaulting omitted source widths to 1; accepted clock-domain sources may include scalar domain ownership metadata on port entries';
+    return 'interface has inputs and outputs arrays; each public port entry has unique non-empty scalar name and positive integer width, defaulting omitted source widths to 1; actor top-level interface width parameters are accepted when they name actor-local scalar parameter defaults that resolve to positive integers, and the public port entry carries the resolved integer width; accepted clock-domain sources may include scalar domain ownership metadata on port entries';
 }
 
 sub isf_public_interface_actor_shell_transaction_shape {
