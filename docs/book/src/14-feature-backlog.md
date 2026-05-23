@@ -1754,9 +1754,9 @@ generated grant gates the whole rule DT DTE without adding a cycle.
 Unmembered `output_bundle` resources keep the implicit bound-rule surface: the
 bound rule users and the outputs or other LHS targets they drive describe the
 bundle intent. `output_bundle` resources may now carry explicit
-`(members output...)` metadata for declared actor output ports; member lists
-validate against bound rule output writes and report through
-`resource_arbitration[].members`.
+`(members name...)` metadata for declared actor output ports or concrete
+actor-owned storage signals; member lists validate against bound rule writes
+in those declared domains and report through `resource_arbitration[].members`.
 
 The resource-kind catalog is owned in code by
 `FSM::Support::ISFResourceCatalog` and exposed through the machine-readable
@@ -1768,7 +1768,7 @@ Current shareable resource registry:
 | Kind | Status | Meaning |
 | --- | --- | --- |
 | `rule_slot` | shipped for `priority` arbitration | One-cycle mutual exclusion for rule users under the `priority` arbiter. |
-| `output_bundle` | shipped for `priority` arbitration | One-cycle ownership of a group of actor outputs or rule-written LHS targets under the `priority` arbiter, with optional explicit declared-output member lists. |
+| `output_bundle` | shipped for `priority` arbitration | One-cycle ownership of a group of actor outputs or rule-written LHS targets under the `priority` arbiter, with optional explicit declared-output/storage-signal member lists. |
 | `interface_bundle` | backlog | Ownership of a protocol-facing interface or bus bundle. |
 | `named_drive` | backlog | Ownership of a reusable actor `(drive ...)` body or drive-call path. |
 | `transaction_start` | backlog | Arbitration for start/request fan-in into one transaction. |
@@ -1777,9 +1777,10 @@ Current shareable resource registry:
 
 Remaining backlog: non-`rule_slot`/`output_bundle` resource kinds,
 `round_robin`, transaction lifetime ownership, named-drive users,
-output-target users, non-output output-bundle member domains, multi-capacity
-resources, and dynamic resource names remain backlog until their reset,
-hold/release, fairness, and diagnostic contracts are explicit.
+output-target users, bank-root/aggregate/inferred output-bundle member
+domains, multi-capacity resources, and dynamic resource names remain backlog
+until their reset, hold/release, fairness, and diagnostic contracts are
+explicit.
 
 ### Priority Resolution
 

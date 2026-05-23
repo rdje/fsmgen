@@ -84,7 +84,7 @@ subtest 'resource parser accepts the shared resource catalog values' => sub {
     );
 };
 
-subtest 'output_bundle members survive parsing and validate declared outputs' => sub {
+subtest 'output_bundle members survive parsing and validate declared outputs and storage' => sub {
     my $actor = parse_source(<<'ISF');
 (actor output_bundle_member_metadata
   (clock clk)
@@ -95,17 +95,20 @@ subtest 'output_bundle members survive parsing and validate declared outputs' =>
     (output done)
     (output valid)
     (output err))
+  (storage
+    (var status (width 1)))
   (transaction main (on start) (complete done))
   (resources
     (resource response_outputs
       (kind output_bundle)
       (arbiter priority)
-      (members valid err)
+      (members valid err status)
       (users high low)))
   (rule high a
     (valid 1))
   (rule low b
-    (err 1)))
+    (err 1)
+    (status 1)))
 ISF
 
     is_deeply(
@@ -115,7 +118,7 @@ ISF
                 name    => 'response_outputs',
                 kind    => 'output_bundle',
                 arbiter => 'priority',
-                members => ['valid', 'err'],
+                members => ['valid', 'err', 'status'],
                 users   => ['high', 'low'],
             },
         ],
@@ -176,7 +179,7 @@ ISF
       (members done done))))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'input cannot be output_bundle member', qr/resource 'response_outputs' member 'start' is not a declared actor output/);
+    assert_parse_rejected(<<'ISF', 'input cannot be output_bundle member', qr/resource 'response_outputs' member 'start' is not a declared actor output or actor-owned storage signal/);
 (actor input_output_bundle_member
   (clock clk)
   (interface (input start) (output done))
@@ -188,7 +191,21 @@ ISF
       (members start))))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'unknown output_bundle member', qr/resource 'response_outputs' member 'missing' is not a declared actor output/);
+    assert_parse_rejected(<<'ISF', 'bank root cannot be output_bundle member', qr/resource 'response_outputs' member 'data' is not a declared actor output or actor-owned storage signal/);
+(actor bank_root_output_bundle_member
+  (clock clk)
+  (interface (input start) (output done))
+  (storage
+    (bank data (width 8) (depth 2)))
+  (transaction main (on start) (complete done))
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter priority)
+      (members data))))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'unknown output_bundle member', qr/resource 'response_outputs' member 'missing' is not a declared actor output or actor-owned storage signal/);
 (actor unknown_output_bundle_member
   (clock clk)
   (interface (input start) (output done))

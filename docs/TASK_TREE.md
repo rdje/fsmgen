@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS` | `active` | `R14` | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | [docs/tasks/ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.md](docs/tasks/ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS` | `done` | `R14` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.md](docs/tasks/ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.md) |
 | `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.md](docs/tasks/ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.md) |
 | `ISF-OUTPUT-BUNDLE-MEMBER-LIST` | `done` | `R14` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-MEMBER-LIST.md](docs/tasks/ISF-OUTPUT-BUNDLE-MEMBER-LIST.md) |
 | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.md](docs/tasks/ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.md) |

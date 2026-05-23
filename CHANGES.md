@@ -1,6 +1,36 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Output-bundle storage members shipped
+- Completed `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` and closed the task tree.
+- Explicit `(members name...)` lists for `output_bundle` resources may now
+  name declared actor output ports or concrete actor-owned storage signals.
+  Concrete storage signals include scalar storage variables and scalarized
+  bank element signals; bank roots, aggregate paths, inferred undeclared LHS
+  targets, actor-network endpoints, and arbitrary expressions remain
+  deferred.
+- Parser validation now rejects explicit members that are not declared actor
+  outputs or actor-owned storage signals.
+- For enforced priority-arbitrated `output_bundle` resources with members and
+  rule users, lowering fails closed if a bound rule writes a declared output
+  or actor-owned storage signal outside the member list, or if a listed member
+  is not written by any bound rule.
+- The existing one-cycle static priority grant model is unchanged.
+  `resource_arbitration[].members` continues to carry the explicit member
+  names and remains empty when no explicit member list is present.
+- Output-target users, transaction users, named-drive users, child-instance
+  users, storage-port resources, route mux/storage, fairness, hold/release,
+  multi-capacity resources, `round_robin`, bank-root members, aggregate
+  members, and inferred undeclared members remain deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused resource/public/spec/book tests
+  with `Files=10, Tests=342`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1659`;
+  post-closure public/doc audits with `Files=6, Tests=347`; and
+  `git diff --check`.
+
 ### R14 — Output-bundle storage members selected
 - Completed selection work for `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1`.
 - Activated a new R14 task tree for widening explicit `output_bundle`
@@ -24,8 +54,10 @@ This is the persistent technical change history for FSMGen.
   explicit output-bundle member lists shipped.
 - Public docs now consistently distinguish unmembered `output_bundle`
   resources, which keep the historical implicit bound-rule output/LHS-target
-  surface, from explicit `(members output...)`, which is intentionally limited
-  to declared actor outputs for validation and report evidence.
+  surface, from the explicit member list shipped in the previous slice. That
+  slice initially limited explicit members to declared actor outputs; the
+  later `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` slice widened the same surface
+  to concrete actor-owned storage signals.
 - No parser, scheduler, emitter, HDL, CLI, report schema, or public resource
   catalog behavior changed.
 - Validation passed: focused public-doc audits with `Files=6, Tests=347`;
@@ -33,8 +65,10 @@ This is the persistent technical change history for FSMGen.
 
 ### R14 — Output-bundle member list shipped
 - Completed `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` and closed the task tree.
-- `output_bundle` resources now accept explicit `(members output...)`
-  subclauses for declared actor output ports.
+- `output_bundle` resources initially accepted explicit member-list
+  subclauses for declared actor output ports. The later
+  `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` slice widened explicit members to
+  concrete actor-owned storage signals as well.
 - Unmembered output bundles still represent the historical implicit
   bound-rule driven output/LHS-target surface; explicit members are the
   narrower declared-output validation/reporting surface.
@@ -49,8 +83,8 @@ This is the persistent technical change history for FSMGen.
   `resource_arbitration[]` entries now include `members`; the array is empty
   when no explicit member list is present and contains declared output names
   for explicit output bundles.
-- Input ports, internal storage, aggregate paths, actor-network endpoints,
-  output-target users, transaction users, named-drive users, route mux/storage,
+- Input ports, aggregate paths, actor-network endpoints, output-target users,
+  transaction users, named-drive users, route mux/storage,
   fairness, hold/release, multi-capacity resources, and `round_robin` remain
   deferred as explicit member or routing surfaces.
 - Synchronized the ISF spec, downstream integration spec, public contract,
@@ -67,14 +101,15 @@ This is the persistent technical change history for FSMGen.
 - Completed selection work for `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1`.
 - Activated a new R14 task tree for explicit `output_bundle` member-list
   syntax on the already enforced priority-arbitrated rule-user path.
-- The selected implementation path accepts `(members output...)` only on
-  `(kind output_bundle)` resources, validates members as declared actor output
-  ports, and projects member evidence through the bounded public report
-  surface.
-- The slice must preserve existing `output_bundle` priority grant timing and
-  fail closed for input ports, internal storage, aggregate paths,
-  actor-network endpoints, output-target users, transaction users,
-  named-drive users, route mux/storage, fairness, hold/release,
+- The selected implementation path initially accepted explicit member lists
+  only on `(kind output_bundle)` resources, validated members as declared
+  actor output ports, and projected member evidence through the bounded public
+  report surface. The later storage-member slice widened the explicit member
+  domain to concrete actor-owned storage signals.
+- The slice had to preserve existing `output_bundle` priority grant timing and
+  fail closed for input ports, aggregate paths, actor-network endpoints,
+  output-target users, transaction users, named-drive users,
+  route mux/storage, fairness, hold/release,
   multi-capacity resources, and `round_robin`.
 - No compiler behavior changed.
 

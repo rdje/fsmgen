@@ -3425,10 +3425,11 @@ optional `(kind ...)`, `(users ...)`, and `(members ...)` subclauses.
 Duplicate resource names, duplicate resource subclauses, duplicate users,
 duplicate members, malformed kinds, malformed users, malformed members,
 unknown `rule_slot` or `output_bundle` users, and output-bundle members that
-are not declared actor output ports are rejected before scheduled `.fsm`
-emission. `(members ...)` is accepted only for `(kind output_bundle)` in the
-current shipped surface. `(resources ...)` is an actor-level singleton clause,
-so repeated resources blocks are rejected instead of merged or overwritten.
+are not declared actor output ports or concrete actor-owned storage signals
+are rejected before scheduled `.fsm` emission. `(members ...)` is accepted
+only for `(kind output_bundle)` in the current shipped surface. `(resources
+...)` is an actor-level singleton clause, so repeated resources blocks are
+rejected instead of merged or overwritten.
 Resource
 semantics use a growable catalog of shareable resource kinds. The resource name
 is the author-defined instance handle; the kind says what is being shared; the
@@ -3447,7 +3448,7 @@ Current shareable resource registry:
 | Kind | Status | Meaning |
 | --- | --- | --- |
 | `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
-| `output_bundle` | shipped for `priority` arbitration | A group of actor outputs or rule-written LHS targets with rule users. A grant enables the whole winning bound rule DT for that cycle; optional explicit members name declared actor output ports. |
+| `output_bundle` | shipped for `priority` arbitration | A group of actor outputs or rule-written LHS targets with rule users. A grant enables the whole winning bound rule DT for that cycle; optional explicit members name declared actor output ports or concrete actor-owned storage signals. |
 | `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
 | `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
 | `transaction_start` | backlog | The start/request fan-in for one transaction. |
@@ -3463,7 +3464,7 @@ The shipped resource-arbitration implementation covers priority-arbitrated
 `rule_slot` and `output_bundle` rule users. The source shape keeps binding
 centralized under `(resources ...)` by extending a resource entry with
 `(kind rule_slot)` or `(kind output_bundle)`, `(users rule_a rule_b ...)`, and
-for output bundles optionally `(members output_a output_b ...)` subclauses.
+for output bundles optionally `(members target_a target_b ...)` subclauses.
 For those covered cases, each bound rule requests the resource when its
 normalized rule guard is true. Rule-local `(priority over other_rule)` and
 actor-level `(priority lhs over rhs)` edges choose the active winner when the
@@ -3473,16 +3474,20 @@ remains assignment-local. Without an explicit member list, the bundle remains
 the historical implicit bound-rule surface: the bound users and their driven
 outputs or other LHS targets describe the author intent. If an explicit
 output-bundle member list is present, each member must be a declared actor
-output port, each listed member must be written by at least one bound rule
-user, and no bound rule user may write a declared output outside the list.
+output port or a concrete actor-owned storage signal. Concrete storage signals
+include scalar storage variables and scalarized bank element signals; bank
+roots, aggregate paths, inferred undeclared LHS targets, and arbitrary
+expressions remain outside this explicit member domain. Each listed member
+must be written by at least one bound rule user, and no bound rule user may
+write a declared output or actor-owned storage signal outside the list.
 Cycles, incomplete ordering among potentially simultaneous bound users,
 ambiguous future user namespaces, unsupported resource kinds, member/list
 mismatches, unwritten explicit members, and `round_robin` resources with bound
 users fail closed.
 Transaction users, named-drive users, output-target users, child-instance
-users, storage-port users, non-output output-bundle member domains,
-multi-capacity resources, and transaction-lifetime hold/release semantics
-remain deferred.
+users, storage-port users, bank-root or aggregate output-bundle members,
+inferred undeclared member targets, multi-capacity resources, and
+transaction-lifetime hold/release semantics remain deferred.
 
 Actor-level `(phase name property...)` and `(stage name property...)` metadata
 is structurally validated by the parser and carried in the actor shell for
@@ -4311,9 +4316,10 @@ names and owner kinds for target-local suppression. A `resource_arbitration`
 entry records an enforced resource's name, kind, arbiter, bound rule user,
 explicit member list, and the higher-priority rule users that can suppress
 that user's grant. The `members` array is empty for resources without an
-explicit member list and contains declared actor output names for explicit
-output bundles. These entries describe the static lowering decision; they are
-not per-cycle runtime grant traces.
+explicit member list and contains declared actor output or concrete
+actor-owned storage signal names for explicit output bundles. These entries
+describe the static lowering decision; they are not per-cycle runtime grant
+traces.
 Raw assignment provenance remains a private `LoweringIR` implementation
 detail. Public reports expose only bounded substitutes: capped source
 summaries in `compile_issues[]`, compatible fan-in facts in
@@ -5201,9 +5207,10 @@ Focused tests:
 - Enforced resource arbitration beyond the shipped priority-arbitrated
   `rule_slot` and `output_bundle` rule-user cases: `round_robin`,
   `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
-  `storage_port`, output-target users, broader output-bundle member domains,
-  multi-capacity resources, dynamic resource names, and transaction lifetime
-  ownership remain deferred.
+  `storage_port`, output-target users, bank-root or aggregate output-bundle
+  member domains, inferred undeclared member targets, multi-capacity
+  resources, dynamic resource names, and transaction lifetime ownership remain
+  deferred.
 - Priority resolution beyond the currently shipped same-target rule/rule,
   rule-over-transaction, and transaction-over-rule data-conflict cases, plus
   the resource-level bound-rule grant case.

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -53,7 +53,7 @@ rule users may write.
 ## Task Tree
 
 - ID: `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS`
-  Status: `active`
+  Status: `done`
   Goal: `Allow output_bundle members to name declared actor-owned storage signals`
   Children: `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1`,
   `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2`
@@ -65,22 +65,23 @@ rule users may write.
   slice, document the exact boundary, and confirm no compiler behavior changed`
   Verification: `documentation-only selection review, live-doc audits,
   git diff check`
-  Commit: `pending this commit`
+  Commit: `3c1c656c`
 
 - ID: `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement actor-owned storage signals in output_bundle member lists`
   Acceptance: `The parser accepts and validates storage-signal members,
   lowering enforces declared-output/storage coverage for rule users, docs are
   synchronized, and focused plus broad checks pass`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax, focused resource/public/spec/book checks,
+  mdBook build, broad ISF regression, post-closure audits, git diff check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `pending` | Implement the selected bounded member-domain widening after the selection leaf is committed. |
+| 1 | `closed` | `done` | `The selected storage-member widening slice is implemented, documented, validated, and ready for commit.` |
 
 ## Decisions
 
@@ -112,14 +113,23 @@ rule users may write.
 | --- | --- | --- | --- |
 | `2026-05-23` | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t` | `passed: Files=2, Tests=25` |
 | `2026-05-23` | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1` | `git diff --check` | `passed` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm` | `passed` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `prove -Iperl t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t t/1220-isf-arbitration-schedule-report.t` | `passed: Files=3, Tests=14` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `prove -Iperl t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t t/1220-isf-arbitration-schedule-report.t t/1140-isf-public-schedule-report-metadata-audit.t t/1255-isf-schedule-report-golden-matrix.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=10, Tests=342` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `./bin/ci-regression isf --no-book` | `passed: Files=250, Tests=1659` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t` | `passed: Files=6, Tests=347` |
+| `2026-05-23` | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1` | `pending this commit: ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1: select storage members` | `selection slice` |
-| `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `pending` | `implementation slice` |
+| `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1` | `3c1c656c ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1: select storage members` | `selection slice` |
+| `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `pending this commit: ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2: ship storage members` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-23`: Created and activated the task tree.
+- `2026-05-23`: Implemented explicit actor-owned storage signal members for
+  `output_bundle` resources and synchronized public docs.

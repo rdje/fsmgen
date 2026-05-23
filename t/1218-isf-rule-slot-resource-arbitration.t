@@ -117,6 +117,8 @@ subtest 'priority output_bundle grant gates the lower-priority rule DT' => sub {
     (output done)
     (output valid)
     (output err))
+  (storage
+    (var status (width 1)))
   (transaction main
     (on start)
     (complete done))
@@ -125,20 +127,27 @@ subtest 'priority output_bundle grant gates the lower-priority rule DT' => sub {
     (resource response_outputs
       (kind output_bundle)
       (arbiter priority)
-      (members valid err)
+      (members valid err status)
       (users high low)))
   (rule high a
     (valid 1))
   (rule low b
-    (err 1)))
+    (err 1)
+    (status 1)))
 ISF
 
     my $ir = lower_ir($source);
     my $low_err = find_record($ir, owner => 'low', target => 'err');
+    my $low_status = find_record($ir, owner => 'low', target => 'status');
     is_deeply(
         $low_err->{resource_suppressed_by},
         ['high'],
         'low output-bundle rule action records the higher resource requester',
+    );
+    is_deeply(
+        $low_status->{resource_suppressed_by},
+        ['high'],
+        'low output-bundle storage action records the higher resource requester',
     );
     is_deeply(
         $ir->{resource_arbitration}{grants},
@@ -149,7 +158,7 @@ ISF
                 arbiter  => 'priority',
                 user     => 'high',
                 higher   => [],
-                members  => ['valid', 'err'],
+                members  => ['valid', 'err', 'status'],
             },
             {
                 resource => 'response_outputs',
@@ -157,7 +166,7 @@ ISF
                 arbiter  => 'priority',
                 user     => 'low',
                 higher   => ['high'],
-                members  => ['valid', 'err'],
+                members  => ['valid', 'err', 'status'],
             },
         ],
         'output_bundle grants preserve member evidence in the resource arbitration IR shape',
@@ -166,7 +175,7 @@ ISF
     my $fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($source))->{files}{'output_bundle_priority.fsm'};
     like(
         $fsm,
-        qr/\(-low\s+<\(& b \(! a\)\)\s+\(<- \(err> 1\)\)\s+\)/s,
+        qr/\(-low\s+<\(& b \(! a\)\)\s+\(<- \(err> 1\)\)\s+\(<- \(status 1\)\)\s+\)/s,
         'scheduled .fsm gates the whole low output-bundle rule DT with the priority grant',
     );
     assert_fsm_reaches_hdl($fsm, 'output_bundle_priority');
@@ -220,6 +229,62 @@ ISF
       (kind output_bundle)
       (arbiter priority)
       (members valid err)
+      (users high low)))
+  (rule high a
+    (valid 1))
+  (rule low b
+    (valid 0)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'bound rule writes storage outside members', qr/isf_output_bundle_member_mismatch/);
+(actor output_bundle_storage_member_mismatch
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done)
+    (output valid))
+  (storage
+    (var status (width 1)))
+  (transaction main
+    (on start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter priority)
+      (members valid)
+      (users high low)))
+  (rule high a
+    (valid 1))
+  (rule low b
+    (status 1)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'explicit storage member is not written by any user', qr/isf_output_bundle_member_unwritten/);
+(actor output_bundle_storage_member_unwritten
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done)
+    (output valid))
+  (storage
+    (var status (width 1)))
+  (transaction main
+    (on start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter priority)
+      (members valid status)
       (users high low)))
   (rule high a
     (valid 1))

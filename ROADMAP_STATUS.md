@@ -2,8 +2,23 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS`.
-- Current frontier: `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 output-bundle storage-member completion:
+  `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` shipped explicit actor-owned storage
+  signal members for `(kind output_bundle)` resources. Explicit members may
+  now name declared actor output ports or concrete actor-owned storage
+  signals, including scalar storage variables and scalarized bank element
+  signals. Lowering fails closed if a bound rule user writes a declared output
+  or actor-owned storage signal outside the explicit member list, or if a
+  listed member is not written by any bound rule user. The existing one-cycle
+  static `priority` grant model and `resource_arbitration[].members` report
+  shape are unchanged. Actor input ports, transaction ports, bank roots,
+  aggregate paths, actor-network endpoints, inferred undeclared LHS targets,
+  output-target users, transaction users, named-drive users,
+  child-instance users, storage-port resources, route mux/storage,
+  fan-in/fan-out, fairness, hold/release semantics, multi-capacity resources,
+  and `round_robin` remain deferred.
 - Recent R14 output-bundle storage-member selection:
   `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1` activated the next bounded member-list
   widening. The selected implementation path allows explicit
@@ -21,25 +36,30 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1` aligned the public docs after
   explicit member lists shipped. The synchronized wording now distinguishes
   unmembered `output_bundle` resources, which keep the historical implicit
-  bound-rule output/LHS-target surface, from explicit `(members output...)`,
-  which is intentionally limited to declared actor outputs for validation and
-  report evidence. No parser, scheduler, emitter, HDL, CLI, report schema, or
-  public catalog behavior changed.
+  bound-rule output/LHS-target surface, from the explicit member-list surface.
+  The previous slice initially limited explicit members to declared actor
+  outputs; `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` later widened the same
+  surface to concrete actor-owned storage signals. No parser, scheduler,
+  emitter, HDL, CLI, report schema, or public catalog behavior changed in
+  the wording-only slice.
 - Recent R14 output-bundle member-list completion:
-  `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` shipped explicit `(members output...)`
-  syntax for `(kind output_bundle)` resources. Members must be unique scalar
-  declared actor output ports. Unmembered output bundles keep the historical
-  implicit bound-rule output/LHS-target surface; explicit member lists are
-  the narrower declared-output validation/reporting surface. When a
+  `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` initially shipped explicit
+  explicit member-list syntax for `(kind output_bundle)` resources. Members
+  had to be unique scalar declared actor output ports in that first slice; the
+  later storage-member slice widened explicit members to concrete
+  actor-owned storage signals. Unmembered output bundles keep the historical
+  implicit bound-rule output/LHS-target surface. When a
   priority-arbitrated `output_bundle` has both members and declared rule
   users, lowering fails closed if a bound rule writes a declared output
   outside the member list or if a listed member is not written by any bound
-  rule. The existing one-cycle static `priority` grant model is unchanged,
-  and schedule reports now include a bounded `members` array on every
-  `resource_arbitration[]` entry. `members` is empty for resources without
-  explicit members and carries declared output names for explicit output
-  bundles. Input ports, internal storage, aggregate paths, actor-network
-  endpoints, output-target users, transaction users, named-drive users, route
+  rule. The current widened behavior applies the same fail-closed check to
+  concrete actor-owned storage signal members. The existing one-cycle static
+  `priority` grant model is unchanged, and schedule reports now include a
+  bounded `members` array on every `resource_arbitration[]` entry. `members`
+  is empty for resources without explicit members and carries explicit
+  output/storage names for explicit output bundles. Input ports, aggregate
+  paths, actor-network endpoints, output-target users, transaction users,
+  named-drive users, route
   mux/storage, fan-in/fan-out, fairness state, hold/release semantics,
   multi-capacity resources, and `round_robin` remain deferred as explicit
   member or routing surfaces. The ISF spec, downstream integration handoff,
@@ -48,15 +68,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Recent R14 output-bundle member-list selection:
   `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1` activated the next bounded R14 resource
   slice. The selected implementation path adds explicit
-  `(members output...)` syntax for `(kind output_bundle)` resources while
+  explicit member-list syntax for `(kind output_bundle)` resources while
   keeping the already shipped one-cycle static `priority` grant model for
-  declared rule users. Members are intentionally declared actor output ports
-  only in this first slice; input ports, internal storage, aggregate paths,
-  pin paths, actor-network endpoints, output-target users, transaction users,
-  named-drive users, route mux/storage, fan-in/fan-out, fairness state,
-  hold/release semantics, multi-capacity resources, and `round_robin` remain
-  deferred. No parser, scheduler, report, generated artifact, HDL, CLI, or
-  public ISF behavior changed yet.
+  declared rule users. Members were intentionally declared actor output ports
+  only in this first slice; the later storage-member slice widened explicit
+  members to concrete actor-owned storage signals. Input ports, aggregate
+  paths, pin paths, actor-network endpoints, output-target users,
+  transaction users, named-drive users, route mux/storage, fan-in/fan-out,
+  fairness state, hold/release semantics, multi-capacity resources, and
+  `round_robin` remain deferred. No parser, scheduler, report, generated
+  artifact, HDL, CLI, or public ISF behavior changed in the selection slice.
 - Recent R14 output-bundle resource priority completion:
   `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` shipped the first non-`rule_slot`
   enforced resource kind. `output_bundle` resources are now enforced for

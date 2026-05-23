@@ -6882,7 +6882,13 @@ sub _apply_priority_rule_user_resource_arbitration {
     my %rule_dt = map {
         (($_->{kind} // '') eq 'rule') ? ($_->{name} => $_) : ()
     } @{$ir->{dt_blocks} || []};
-    my %actor_outputs = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
+    my %actor_member_targets = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
+    for my $entry (@{$actor->{storage} || []}) {
+        for my $signal (@{$entry->{signals} || []}) {
+            $actor_member_targets{$signal->{name}} = 1
+                if defined($signal->{name}) && !ref($signal->{name});
+        }
+    }
     my %original_guard = map {
         $_ => (_guard_condition_expr($rule_dt{$_}{dte_guard}) // '1')
     } keys %rule_dt;
@@ -6922,7 +6928,7 @@ sub _apply_priority_rule_user_resource_arbitration {
             $resource,
             \@users,
             \%rule_dt,
-            \%actor_outputs,
+            \%actor_member_targets,
         ) if $kind eq 'output_bundle' && @members;
 
         for my $left_idx (0 .. $#users) {
@@ -6988,7 +6994,7 @@ sub _resource_kind_supports_priority_rule_users {
 }
 
 sub _validate_output_bundle_member_coverage {
-    my ($resource, $users, $rule_dt, $actor_outputs) = @_;
+    my ($resource, $users, $rule_dt, $actor_member_targets) = @_;
     my $resource_name = $resource->{name} // '<unnamed>';
     my @members = @{$resource->{members} || []};
     my %members = map { $_ => 1 } @members;
@@ -6999,11 +7005,11 @@ sub _validate_output_bundle_member_coverage {
         for my $assignment (@{$dt->{assignments} || []}) {
             my $target = $assignment->{lhs};
             next unless defined($target) && length($target);
-            next unless $actor_outputs->{$target};
+            next unless $actor_member_targets->{$target};
             _resource_arbitration_error(
                 'isf_output_bundle_member_mismatch',
                 $resource_name,
-                "rule user '$user' writes declared output '$target' outside explicit output_bundle members",
+                "rule user '$user' writes declared output/storage member '$target' outside explicit output_bundle members",
             ) unless $members{$target};
             $written_members{$target} = 1;
         }

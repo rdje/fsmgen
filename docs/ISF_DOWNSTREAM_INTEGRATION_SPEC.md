@@ -1742,7 +1742,7 @@ Resource arbitration:
   (resource response_outputs
     (kind output_bundle)
     (arbiter priority)
-    (members valid ready)
+    (members valid ready status)
     (users rule_a rule_b)))
 ```
 
@@ -1753,10 +1753,14 @@ Rules:
 - An unmembered `output_bundle` keeps the historical implicit surface: the
   bound rule users and the outputs or other LHS targets they drive describe
   the bundle intent.
-- `output_bundle` resources may include `(members output...)`; every member
-  must name a declared actor output port. When members are explicit, every
-  listed member must be written by at least one bound rule user, and no bound
-  rule user may write a declared output outside the list.
+- `output_bundle` resources may include `(members name...)`; every member
+  must name a declared actor output port or concrete actor-owned storage
+  signal. Concrete storage signals include scalar storage variables and
+  scalarized bank element signals; bank roots, aggregate paths, inferred
+  undeclared LHS targets, and arbitrary expressions remain outside this
+  explicit member domain. When members are explicit, every listed member must
+  be written by at least one bound rule user, and no bound rule user may write
+  a declared actor output or actor-owned storage signal outside the list.
 - Reports expose `resource_arbitration[]`.
 - Each `resource_arbitration[]` entry includes `resource`, `kind`, `arbiter`,
   `user`, `user_kind`, `members`, and `suppressed_by`. `members` is an array

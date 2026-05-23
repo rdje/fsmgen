@@ -6732,7 +6732,13 @@ sub _parse_resources($self, $clause) {
 sub _validate_resource_user_targets($self, $actor) {
     my $actor_name = $actor->{actor_name};
     my %rule_names = map { $_->{name} => 1 } @{$actor->{rules} || []};
-    my %output_names = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
+    my %member_names = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
+    for my $entry (@{$actor->{storage} || []}) {
+        for my $signal (@{$entry->{signals} || []}) {
+            $member_names{$signal->{name}} = 1
+                if defined($signal->{name}) && !ref($signal->{name});
+        }
+    }
 
     for my $resource (@{$actor->{resources} || []}) {
         my $kind = $resource->{kind} // '';
@@ -6740,10 +6746,10 @@ sub _validate_resource_user_targets($self, $actor) {
             confess "Error: resource '$resource->{name}' members are supported only with '(kind output_bundle)' in actor '$actor_name'\n"
                 unless $kind eq 'output_bundle';
             for my $member (@{$resource->{members} || []}) {
-                confess "Error: resource '$resource->{name}' member '$member' is not a declared actor output in actor '$actor_name'\n"
+                confess "Error: resource '$resource->{name}' member '$member' is not a declared actor output or actor-owned storage signal in actor '$actor_name'\n"
                     unless defined($member)
                         && !ref($member)
-                        && $output_names{$member};
+                        && $member_names{$member};
             }
         }
 

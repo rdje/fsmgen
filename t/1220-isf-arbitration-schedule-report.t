@@ -30,6 +30,8 @@ my $source = <<'ISF';
     (output err)
     (output flag)
     (output warn))
+  (storage
+    (var status (width 1)))
   (priority force_out over main)
   (priority high over low)
   (priority high_bundle over low_bundle)
@@ -41,7 +43,7 @@ my $source = <<'ISF';
     (resource response_outputs
       (kind output_bundle)
       (arbiter priority)
-      (members flag warn)
+      (members flag warn status)
       (users high_bundle low_bundle)))
   (transaction main
     (on start)
@@ -56,7 +58,8 @@ my $source = <<'ISF';
   (rule high_bundle high_bundle_req
     (flag 1))
   (rule low_bundle low_bundle_req
-    (warn 1)))
+    (warn 1)
+    (status 1)))
 ISF
 
 subtest 'in-process report projects arbitration summaries' => sub {
@@ -139,11 +142,11 @@ sub assert_arbitration_projection {
     is($high_bundle->{kind}, 'output_bundle', "$label high output_bundle grant names resource kind");
     is($high_bundle->{arbiter}, 'priority', "$label high output_bundle grant names arbiter");
     is($high_bundle->{user_kind}, 'rule', "$label high output_bundle grant names user kind");
-    is_deeply($high_bundle->{members}, ['flag', 'warn'], "$label high output_bundle grant exposes members");
+    is_deeply($high_bundle->{members}, ['flag', 'warn', 'status'], "$label high output_bundle grant exposes output and storage members");
     is_deeply($high_bundle->{suppressed_by}, [], "$label highest output_bundle user has no suppressors");
 
     my $low_bundle = find_resource_entry($report, user => 'low_bundle');
-    is_deeply($low_bundle->{members}, ['flag', 'warn'], "$label low output_bundle grant exposes members");
+    is_deeply($low_bundle->{members}, ['flag', 'warn', 'status'], "$label low output_bundle grant exposes output and storage members");
     is_deeply($low_bundle->{suppressed_by}, ['high_bundle'], "$label low output_bundle user records higher suppressor");
 }
 

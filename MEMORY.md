@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Output-bundle storage members shipped
+- Completed `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` and closed the task tree.
+- Explicit `(members name...)` lists for `output_bundle` resources may now
+  name declared actor output ports or concrete actor-owned storage signals.
+- Parser validation rejects explicit members that are not declared actor
+  outputs or actor-owned storage signals.
+- Lowering keeps the existing one-cycle static priority grant model and fails
+  closed when explicit members do not match bound rule writes in those
+  declared domains.
+- Schedule reports keep the existing `resource_arbitration[].members` array;
+  it now may contain declared output names or actor-owned storage signal names.
+- Bank roots, aggregate paths, inferred undeclared LHS targets,
+  actor-network endpoints, output-target users, transaction users,
+  named-drive users, child-instance users, storage-port resources, route
+  mux/storage, fairness, hold/release, multi-capacity resources, and
+  `round_robin` remain deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused resource/public/spec/book tests
+  with `Files=10, Tests=342`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1659`;
+  post-closure public/doc audits with `Files=6, Tests=347`; and
+  `git diff --check`.
+
 ## 2026-05-23: Output-bundle storage members selected
 - Completed selection work for `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1`.
 - Activated the active R14 task tree for widening explicit `output_bundle`
@@ -18,9 +42,11 @@ This is the live continuity document for fast session recovery after crashes, re
 ## 2026-05-23: Output-bundle wording truth sync
 - Completed `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1`.
 - Public docs now distinguish unmembered `output_bundle` resources, which keep
-  the historical implicit bound-rule output/LHS-target surface, from explicit
-  `(members output...)`, which is intentionally limited to declared actor
-  outputs for validation and report evidence.
+  the historical implicit bound-rule output/LHS-target surface, from the
+  explicit member-list surface shipped in the previous slice. That slice
+  initially limited explicit members to declared actor outputs; the later
+  `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` slice widened explicit members to
+  concrete actor-owned storage signals.
 - No parser, scheduler, emitter, HDL, CLI, report schema, or public resource
   catalog behavior changed.
 - Validation passed: focused public-doc audits with `Files=6, Tests=347`;
@@ -28,8 +54,10 @@ This is the live continuity document for fast session recovery after crashes, re
 
 ## 2026-05-23: Output-bundle member list shipped
 - Completed `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` and closed the task tree.
-- `output_bundle` resources now accept explicit `(members output...)`
-  subclauses naming declared actor output ports.
+- `output_bundle` resources initially accepted explicit member-list
+  subclauses naming declared actor output ports. The later
+  `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` slice widened explicit members to
+  concrete actor-owned storage signals as well.
 - Unmembered output bundles still represent the historical implicit
   bound-rule driven output/LHS-target surface; explicit members are the
   narrower declared-output validation/reporting surface.
@@ -43,8 +71,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - Schedule reports now include `members` on every `resource_arbitration[]`
   entry. The array is empty when there is no explicit member list and carries
   declared output names for explicit output bundles.
-- Input ports, internal storage, aggregate paths, actor-network endpoints,
-  output-target users, transaction users, named-drive users, route mux/storage,
+- Input ports, aggregate paths, actor-network endpoints, output-target users,
+  transaction users, named-drive users, route mux/storage,
   fairness, hold/release, multi-capacity resources, and `round_robin` remain
   deferred as explicit member or routing surfaces.
 - Synchronized the ISF spec, downstream integration handoff, public contract,
@@ -62,12 +90,14 @@ This is the live continuity document for fast session recovery after crashes, re
   syntax.
 - The active frontier is `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` after the
   selection commit.
-- The selected implementation path is narrow: accept `(members output...)`
+- The selected implementation path was narrow: accept explicit member lists
   only on `(kind output_bundle)` resources, require members to be declared
   actor output ports, preserve existing priority grant timing for declared
   rule users, and add bounded schedule-report/public-contract member evidence.
-- Input ports, internal storage, aggregate paths, actor-network endpoints,
-  output-target users, transaction users, named-drive users, route mux/storage,
+  The later storage-member slice widened the explicit member domain to
+  concrete actor-owned storage signals.
+- Input ports, aggregate paths, actor-network endpoints, output-target users,
+  transaction users, named-drive users, route mux/storage,
   fairness, hold/release, multi-capacity resources, and `round_robin` remain
   deferred.
 - No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF

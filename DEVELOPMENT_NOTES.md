@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Output-bundle storage members remain validation evidence
+- `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` widens explicit member validation from
+  declared actor outputs to declared actor outputs plus concrete actor-owned
+  storage signals.
+- The lowerer still gates the whole bound rule DT. Storage members do not
+  create route mux/storage, storage-port resources, or per-member scheduling;
+  they make the intended LHS set reviewable and fail closed when bound rules
+  write outside that declared set.
+- Bank roots and aggregate paths remain deferred because they need ownership
+  and report semantics for a family of generated scalar targets rather than
+  one concrete scheduled signal.
+
 ## 2026-05-23: Output-bundle storage-member widening boundary
 - `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1` selects the next explicit member
   domain for `output_bundle`: actor-owned storage signals.
@@ -13,16 +25,20 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-05-23: Output-bundle member wording preserves implicit LHS intent
 - `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1` is documentation-only. It corrects
   the wording after explicit member lists shipped so public docs do not imply
-  that unmembered `output_bundle` resources are actor-output-only.
+  that unmembered `output_bundle` resources are limited to actor outputs.
 - The shipped behavior remains: an unmembered `output_bundle` gates whole
   bound rule DTs and therefore represents the outputs or other LHS targets
-  those rules drive. Explicit `(members output...)` is the narrower declared
-  actor-output validation/reporting surface.
+  those rules drive. Explicit member lists started as the narrower
+  declared actor-output validation/reporting surface; the later
+  `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` slice widened that surface to
+  concrete actor-owned storage signals.
 
 ## 2026-05-23: Output-bundle members validate intent, not routing
-- `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` implements explicit `(members output...)`
-  for `output_bundle` resources as a validation/reporting surface over the
-  already shipped priority rule-user grant.
+- `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` implemented explicit
+  explicit member lists for `output_bundle` resources as a
+  validation/reporting surface over the already shipped priority rule-user
+  grant. The later storage-member slice widened explicit members to concrete
+  actor-owned storage signals.
 - The lowerer deliberately checks only declared actor output writes. If a
   bound rule writes a declared output outside the list, or a listed output is
   never written by any bound rule, the resource fails closed instead of
@@ -35,12 +51,16 @@ This document captures engineering rationale, design constraints, and working de
 - `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1` selects explicit member-list syntax as the
   next resource slice because `output_bundle` arbitration now exists but the
   named resource still lacks a reviewable list of outputs it represents.
-- The first implementation should treat `(members output...)` as validation
-  and report evidence for the already shipped rule-user priority grant model,
-  not as a new routing or muxing mechanism.
-- Keeping members declared-output-only avoids quietly defining storage-port,
-  aggregate-path, actor-network endpoint, or output-target ownership semantics
-  before those have their own scheduling and diagnostic contracts.
+- The first implementation treated explicit member lists as validation and
+  report evidence for the already shipped rule-user priority grant model, not
+  as a new routing or muxing mechanism.
+- Keeping members declared-output-limited in that first slice avoided quietly
+  defining storage-port, aggregate-path, actor-network endpoint, or
+  output-target ownership semantics before those had their own scheduling and
+  diagnostic contracts. The follow-on storage-member slice widened only the
+  concrete actor-owned storage signal domain; storage-port, aggregate-path,
+  actor-network endpoint, and output-target ownership semantics remain
+  deferred.
 
 ## 2026-05-23: Output-bundle enforcement is a typed rule-user grant
 - `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` deliberately implements

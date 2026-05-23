@@ -1010,11 +1010,12 @@ that says what type of shareable thing the instance represents. The enforced
 resource kinds are `rule_slot`, a one-cycle mutual-exclusion slot for rule
 users, and `output_bundle`, a named bundle of actor outputs or rule-written
 LHS targets for rule users. `output_bundle` may carry explicit
-`(members output...)` metadata naming declared actor output ports. Explicit
-members are narrower than the unmembered implicit bundle surface: they
-validate/report declared outputs, not arbitrary storage or route ownership.
-Both shipped kinds use the static `priority` arbiter today. The current
-shareable resource registry is:
+`(members target...)` metadata naming declared actor output ports or concrete
+actor-owned storage signals. Explicit members are narrower than the unmembered
+implicit bundle surface: they validate/report declared outputs and storage
+signals, not bank roots, aggregate paths, inferred LHS targets, arbitrary
+storage ownership, or route ownership. Both shipped kinds use the static
+`priority` arbiter today. The current shareable resource registry is:
 `rule_slot` (shipped for `priority` arbitration), `output_bundle` (shipped for
 `priority` arbitration), `interface_bundle`, `named_drive`,
 `transaction_start`, `child_instance`, and `storage_port`. The non-shipped
@@ -1031,8 +1032,8 @@ discover the current values through `resource_arbiter_values`,
 The first resource-arbitration path is checked by
 [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
 for parser metadata, `rule_slot` and `output_bundle` scheduled `.fsm` DTE
-gating, output-bundle member-list coverage, HDL handoff, and fail-closed
-unsupported arbitration cases.
+gating, output-bundle output/storage member-list coverage, HDL handoff, and
+fail-closed unsupported arbitration cases.
 The first rule/transaction priority path is checked by
 [t/1219-isf-rule-transaction-priority.t](../t/1219-isf-rule-transaction-priority.t)
 for accepted rule-over-transaction suppression, accepted transaction-over-rule
@@ -2765,9 +2766,9 @@ kinds. `resource_arbitration` records static resource grant-shaping decisions
 for enforced resources, including the resource name, resource kind, arbiter,
 rule user, explicit member list, and higher-priority users that can suppress
 that user's grant. `members` is an array; it is empty when the resource has no
-explicit member list and contains declared actor output names for explicit
-output-bundle members. These entries describe the lowering decision, not
-per-cycle runtime grant values.
+explicit member list and contains declared actor output or concrete
+actor-owned storage signal names for explicit output-bundle members. These
+entries describe the lowering decision, not per-cycle runtime grant values.
 Raw `assignment_provenance`, activation context, assignment indexes, and
 priority/resource suppression bookkeeping remain non-public `LoweringIR`
 internals unless a later slice deliberately advertises a narrower field.
