@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Dynamic-divisor control/bank coverage selected
+- Completed `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1`.
+- Activated the active R14 task tree for dynamic-divisor control-flow and bank
+  expression coverage hardening.
+- The active frontier is now
+  `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Dynamic-divisor drive coverage shipped
 - Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` and closed the task tree.
 - Focused dynamic-divisor tests now cover named drive-call actual expressions

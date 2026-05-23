@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Dynamic-divisor control/bank coverage selected
+- Completed `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1`.
+- Activated a new R14 task tree for focused coverage of documented
+  literal-zero and actor-constant-zero divisor guards on transaction
+  conditions, rule guards, and actor-owned bank access expressions.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Dynamic-divisor drive coverage shipped
 - Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` and closed the task tree.
 - Added focused tests proving literal-zero divisor rejection for named

@@ -2,8 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: none. The next PNT step must select or create the next
-  roadmap-aligned task tree before code changes.
+- Active task tree: `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE`.
+- Current frontier: `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` will add
+  focused coverage for the already documented literal-zero and
+  actor-constant-zero divisor guards on transaction conditions, rule guards,
+  and actor-owned bank access expressions. No parser, scheduler, report,
+  generated artifact, or HDL behavior change is selected.
+- Recent R14 dynamic-divisor control/bank coverage selection:
+  `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1` activated a
+  coverage-hardening tree for documented control-flow and bank access
+  expression divisor guards. The selected implementation will prove existing
+  behavior without widening the dynamic-divisor proof boundary.
 - Recent R14 dynamic-divisor drive coverage completion:
   `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` added focused coverage for the
   already documented literal-zero and actor-constant-zero divisor guards on

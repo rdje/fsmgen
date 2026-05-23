@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Dynamic-divisor control/bank coverage is a proof slice
+- `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1` selects coverage hardening for
+  documented parser paths, not behavior changes.
+- The implementation should prove transaction condition, rule guard, and bank
+  access expression coverage with focused tests only.
+
 ## 2026-05-22: Drive divisor coverage stays behavior-neutral
 - `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` adds regression coverage for two
   parser paths that were already implemented and documented: named drive-call

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE` | `active` | `R14` | `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` | [docs/tasks/ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.md](docs/tasks/ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.md) |
 
 ## Proposed Task Trees
 

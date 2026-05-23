@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Dynamic-divisor control/bank coverage selected
+- Completed `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1`.
+- Activated a new R14 task tree for focused coverage of documented
+  dynamic-divisor guards in transaction conditions, rule guards, and
+  actor-owned bank access expressions.
+- The active frontier is `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2`.
+- No parser, scheduler, report, generated artifact, or HDL behavior changed.
+
 ## 2026-05-22: Dynamic-divisor drive coverage shipped
 - Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` and closed the task tree.
 - Focused tests now prove literal-zero divisor rejection in named drive-call
