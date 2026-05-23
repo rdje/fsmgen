@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Repeat actor-parameter counts reuse static defaults
+- `ISF-REPEAT-ACTOR-PARAM-COUNTS.1` selects actor-local scalar parameter
+  defaults as transaction repeat count sources, mirroring the shipped static
+  parameter-backed wait-count, latency-bound, temporal-contract window, and
+  watchdog limit behavior.
+- The selected implementation should resolve only the actor shell's own
+  default value for repeat-counter width evidence and static-zero rejection,
+  but keep the authored count token in the scheduled repeat load like the
+  shipped actor-constant repeat count path.
+- Use-site override specialization, generated-top respecialization,
+  transaction parameters, expression-valued actor parameters, aggregate/list
+  actor parameters, arbitrary expressions, cross-domain repeat behavior,
+  repeat-body child activation widening, and repeat-body clause widening remain
+  deferred.
+
 ## 2026-05-22: Watchdog actor-parameter limits stay static
 - `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` reuses the actor-local static parameter
   default model already accepted for wait counts, latency bounds, and

@@ -2,9 +2,24 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`; the next PNT step must select or create the next
-  roadmap-aligned task tree before any further code changes.
+- Active task tree: `ISF-REPEAT-ACTOR-PARAM-COUNTS`.
+- Current frontier: `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` will implement static
+  actor-parameter-backed repeat counts. The selected boundary accepts
+  actor-local scalar parameter defaults that resolve to positive integer
+  literals for transaction `(repeat COUNT body...)` counts, uses the resolved
+  value as repeat-counter width evidence, preserves the authored count token
+  in the scheduled repeat-counter load, and keeps transaction parameters,
+  expression-valued actor parameters, aggregate/list parameters, unknown names,
+  arbitrary expressions, use-site override specialization, generated-top
+  respecialization, repeat-body child activation widening, cross-domain repeat
+  behavior, and repeat-body clause widening deferred.
+- Recent R14 repeat actor-parameter count selection:
+  `ISF-REPEAT-ACTOR-PARAM-COUNTS.1` activates the repeat actor-parameter count
+  tree. The selected implementation will reuse the static actor-parameter
+  default model already shipped for waits, latency bounds, temporal-contract
+  windows, and watchdog limits, while matching the shipped actor-constant
+  repeat behavior of resolving width evidence without changing the authored
+  repeat-counter load token.
 - Recent R14 watchdog actor-parameter limit completion:
   `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` shipped actor-local scalar parameter
   defaults that resolve to positive integers as actor-level and await-local
@@ -5435,12 +5450,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`; the next PNT step must select or create the next
-  roadmap-aligned task tree before any further code changes.
-- Completion status: `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` closed the previous
-  active R14 task tree after shipping actor-local scalar parameter defaults as
-  static actor-level and await-local watchdog limits.
+- Active task tree: `ISF-REPEAT-ACTOR-PARAM-COUNTS`.
+- Current frontier: `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` will implement the
+  static actor-parameter repeat count boundary.
+- Completion status: `ISF-REPEAT-ACTOR-PARAM-COUNTS.1` opened the active R14
+  task tree after selecting actor-local scalar parameter defaults as static
+  repeat count sources.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

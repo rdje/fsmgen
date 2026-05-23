@@ -138,6 +138,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.md` — completed `R14` task tree for positive actor constants in watchdog limits.
 - `docs/tasks/ISF-WATCHDOG-ACTOR-PARAM-LIMITS.md` — completed `R14` task tree for actor-parameter-backed watchdog limits.
 - `docs/tasks/ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.md` — completed `R14` task tree for actor constants as repeat counter width evidence.
+- `docs/tasks/ISF-REPEAT-ACTOR-PARAM-COUNTS.md` — active `R14` task tree for actor-parameter-backed repeat counts.
 - `docs/tasks/ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.md` — completed `R14` task tree for a bounded static zero-count repeat policy.
 - `docs/tasks/ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.md` — completed `R14` task tree for runtime scalar repeat zero-count skip policy.
 - `docs/tasks/ISF-REPEAT-COUNT-SOURCE-BOUNDARY.md` — completed `R14` task tree for the accepted repeat count source boundary.

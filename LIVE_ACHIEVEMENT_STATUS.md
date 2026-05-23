@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat actor-parameter counts selected
+- Completed selection work for `ISF-REPEAT-ACTOR-PARAM-COUNTS.1`.
+- Activated the active R14 task tree for static actor-parameter-backed
+  transaction repeat counts.
+- The active frontier is now `ISF-REPEAT-ACTOR-PARAM-COUNTS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Watchdog actor-parameter limits shipped
 - Completed `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` and closed the task tree.
 - Actor-level and await-local watchdog limits now accept actor-local scalar

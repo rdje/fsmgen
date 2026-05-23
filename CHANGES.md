@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat actor-parameter counts selected
+- Completed selection work for `ISF-REPEAT-ACTOR-PARAM-COUNTS.1`.
+- Activated a new R14 task tree for static actor-parameter-backed transaction
+  repeat counts.
+- The selected source boundary accepts actor-local scalar parameter defaults
+  resolving to positive integers, matching the shipped static parameter models
+  for waits, latency bounds, temporal-contract windows, and watchdog limits.
+- The selected lowering behavior will use the resolved positive value for
+  repeat-counter width evidence while preserving the authored count token in
+  the scheduled repeat load, matching actor-constant repeat counts.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Watchdog actor-parameter limits shipped
 - Completed `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` and closed the task tree.
 - Actor-level and await-local watchdog limits now accept actor-local scalar

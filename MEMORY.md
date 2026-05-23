@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat actor-parameter counts selected
+- Completed selection work for `ISF-REPEAT-ACTOR-PARAM-COUNTS.1`.
+- Activated a new R14 task tree for static actor-parameter-backed transaction
+  repeat counts.
+- The active frontier is `ISF-REPEAT-ACTOR-PARAM-COUNTS.2`.
+- The selected boundary accepts actor-local scalar parameter defaults resolving
+  to positive integers, uses the resolved value as repeat-counter width
+  evidence, and preserves the authored count token in the scheduled repeat
+  load, matching actor-constant repeat counts.
+- Transaction parameters, expression-valued actor parameters, aggregate/list
+  parameters, unknown names, arbitrary expressions, use-site override
+  specialization, generated-top repeat-count respecialization, repeat-body
+  child activation widening, cross-domain repeat behavior, and repeat-body
+  clause widening remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-22: Watchdog actor-parameter limits shipped
 - Completed `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` and closed the task tree.
 - Actor-level and await-local watchdog limits now accept actor-local scalar
