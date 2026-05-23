@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Backlog owner truth-sync tree selected
+- Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.1`.
+- Activated a new R14 documentation-maintenance task tree for mdBook feature
+  backlog wording that still points at closed task trees as if they owned
+  remaining backlog behavior.
+- The active frontier is `ISF-BACKLOG-OWNER-TRUTH-SYNC.2`: keep the
+  historical repeat-body activation and ATL task-tree links, clarify that
+  future behavior needs new task-tree leaves, and add focused audit coverage.
+- No compiler behavior changed.
+
 ## 2026-05-22: Repeat count source boundary shipped
 - Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` and closed the task tree.
 - Repeat counts are now accepted only as positive decimal literals, declared

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Closed task trees are historical evidence
+- `ISF-BACKLOG-OWNER-TRUTH-SYNC.1` selects a documentation-maintenance slice
+  before the next behavior implementation.
+- The repeat-body activation and ATL task trees are closed, but the book still
+  has wording that can read as if those closed trees own remaining backlog
+  behavior.
+- The implementation should keep links to the closed trees for review history,
+  but state that any new repeat-body or ATL behavior needs a new task-tree
+  leaf before code changes.
+
 ## 2026-05-22: Unsupported repeat counts fail before counter emission
 - `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` makes repeat count source validation
   explicit in the lowerer before counter width selection or scheduled `.fsm`

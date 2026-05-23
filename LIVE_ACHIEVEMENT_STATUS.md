@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Backlog owner truth-sync tree selected
+- Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.1`.
+- Activated the active R14 task tree for mdBook backlog owner truth
+  synchronization.
+- The active frontier is now `ISF-BACKLOG-OWNER-TRUTH-SYNC.2`.
+- The selected implementation will clarify that closed repeat-body activation
+  and ATL task trees are historical evidence, while future behavior changes
+  need new task-tree leaves before code.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Repeat count source boundary shipped
 - Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` and closed the task tree.
 - Repeat counts are now accepted only as positive decimal literals, declared

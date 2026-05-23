@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-BACKLOG-OWNER-TRUTH-SYNC` | `active` | `R14` | `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` | [docs/tasks/ISF-BACKLOG-OWNER-TRUTH-SYNC.md](docs/tasks/ISF-BACKLOG-OWNER-TRUTH-SYNC.md) |
 
 ## Proposed Task Trees
 

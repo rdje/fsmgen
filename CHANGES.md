@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Backlog owner truth-sync tree selected
+- Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.1`.
+- Activated a new R14 task tree for mdBook feature-backlog wording that still
+  treats closed repeat-body activation and ATL task trees as current owners
+  for remaining backlog behavior.
+- The selected implementation will preserve historical task-tree links,
+  clarify that future behavior needs new task-tree leaves, and add focused
+  audit coverage.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Repeat count source boundary shipped
 - Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` and closed the task tree.
 - Repeat count sources now fail closed unless they are positive decimal
