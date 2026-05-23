@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-23`
 - Last updated: `2026-05-23`
@@ -58,7 +58,7 @@ those defaults resolve to positive integer literals.
 ## Task Tree
 
 - ID: `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship actor-parameter-backed actor-owned bank storage depths.`
   Children: `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1`,
   `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2`
@@ -70,23 +70,42 @@ those defaults resolve to positive integer literals.
   actor-parameter source boundary, preserve non-goals, and update
   roadmap/live docs without behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit`
+  Commit: `eafafdb1`
 
 - ID: `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document actor-parameter bank storage depths.`
   Acceptance: `Positive actor scalar parameters lower as actor-owned bank
   depths; unsupported depth sources fail closed; duplicate scalarized bank
   signal names remain rejected; specs, book, public contract, downstream
   handoff, and focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`;
+  `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
+  `perl -Iperl -c t/1337-isf-bank-storage-actor-param-depths.t`;
+  `perl -Iperl -c t/1144-isf-public-tested-by-metadata-audit.t`;
+  `prove -Iperl t/1337-isf-bank-storage-actor-param-depths.t
+  t/1335-isf-bank-storage-actor-param-widths.t
+  t/1334-isf-scalar-storage-actor-param-widths.t
+  t/1232-isf-actor-storage-declarations.t
+  t/1236-isf-bank-access-lowering.t
+  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1112-isf-public-interface-contract.t
+  t/1115-isf-public-interface-cli-manifest-audit.t
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1305-isf-book-feature-matrix-audit.t`;
+  `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`;
+  `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t
+  t/1303-isf-public-live-book-paths-audit.t
+  t/1305-isf-book-feature-matrix-audit.t`;
+  `git diff --check`;
+  Commit: `this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` | `pending` | `The selection leaf is complete; implementation can now widen bank depth elaboration under task-tree ownership.` |
+| _none_ | _none_ | _closed_ | `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` completed and the tree is closed. |
 
 ## Decisions
 
@@ -114,16 +133,21 @@ those defaults resolve to positive integer literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-23` | `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-23` | `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1337-isf-bank-storage-actor-param-depths.t`; `perl -Iperl -c t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1337-isf-bank-storage-actor-param-depths.t t/1335-isf-bank-storage-actor-param-widths.t t/1334-isf-scalar-storage-actor-param-widths.t t/1232-isf-actor-storage-declarations.t t/1236-isf-bank-access-lowering.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `passed; focused Files=10, Tests=340; broad Files=243, Tests=1632; post-doc Files=3, Tests=339; diff clean` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1` | `this commit: ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1: select bank storage actor-param depths` | `selects static actor-parameter bank depth support` |
-| `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` | `pending` | `pending` |
+| `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1` | `eafafdb1: ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1: select bank storage actor-param depths` | `selects static actor-parameter bank depth support` |
+| `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` | `this commit: ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2: ship bank storage actor-param depths` | `ships actor-parameter bank depth support` |
 
 ## Changelog
 
 - `2026-05-23`: Created task tree and selected actor-parameter-backed
   actor-owned bank storage depths as the next bounded parameter-driven storage
   slice.
+- `2026-05-23`: Shipped actor-parameter-backed actor-owned bank storage
+  depths, fail-closed unsupported symbolic depth sources, duplicate
+  scalarized-signal rejection after depth resolution, synchronized specs/book
+  and public/downstream contracts, and closed the tree.

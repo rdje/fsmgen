@@ -590,10 +590,10 @@ The ISF-specific current limitations are:
 
   That remapping is a single-clock-domain name binding only.
 
-  Actor top-level interface widths, actor-owned scalar storage widths, and
-  actor-owned bank widths may use actor-local scalar parameter defaults that
-  resolve to positive integers. Use-site FIFO interface shape, bank depth,
-  generated-top respecialization, arbitrary-depth generation beyond the first
+  Actor top-level interface widths, actor-owned scalar storage widths,
+  actor-owned bank widths, and actor-owned bank depths may use actor-local
+  scalar parameter defaults that resolve to positive integers. Use-site FIFO
+  interface shape, generated-top respecialization, arbitrary-depth generation beyond the first
   `DEPTH=4` fixture, automatic non-zero reset values, standalone
   transaction/drive exports, package/imported constants beyond actor-local
   constants, derived parameter expressions, and nested library imports remain

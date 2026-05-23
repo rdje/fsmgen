@@ -1,9 +1,10 @@
 ;; Common fixed-shape FIFO library fixture.
 ;;
 ;; This first reusable FIFO actor deliberately targets DATA_WIDTH=8 and
-;; DEPTH=4 with concrete storage widths. The params are emitted as library
-;; provenance, but parameter-driven interface/storage elaboration remains a
-;; separate feature.
+;; DEPTH=4 with concrete declarations. The params are emitted as library
+;; provenance; actor-local parameter-backed interface/storage elaboration is
+;; tested separately, while use-site respecialization remains a separate
+;; feature.
 (library common.fifo
   (exports
     (actor fifo))

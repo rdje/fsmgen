@@ -293,6 +293,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_watchdog_limit($result)
         if $singleton_actor_clauses{watchdog};
     $self->_finalize_actor_interface_widths($result);
+    $self->_finalize_actor_storage_depths($result);
     $self->_finalize_actor_storage_widths($result);
     $self->_finalize_actor_transaction_port_widths($result);
     $self->_finalize_actor_type_references($result);
@@ -709,6 +710,69 @@ sub _finalize_actor_storage_widths($self, $actor) {
             if _actor_interface_signal_by_name($actor, $width);
 
         confess "Error: actor '$actor_name' $context width token '$width' is not a declared actor scalar parameter; use '(type NAME)' for type aliases\n";
+    }
+
+    return 1;
+}
+
+sub _finalize_actor_storage_depths($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+
+    for my $entry (@{$actor->{storage} || []}) {
+        if (($entry->{kind} // '') eq 'var') {
+            $entry->{signals} = [
+                {
+                    name  => $entry->{name},
+                    width => $entry->{width},
+                },
+            ];
+            next;
+        }
+
+        next unless ($entry->{kind} // '') eq 'bank';
+
+        my $storage_name = $entry->{name};
+        my $depth = $entry->{depth};
+        my $resolved_depth;
+        if (defined($depth) && !ref($depth) && $depth =~ /\A[1-9][0-9]*\z/) {
+            $resolved_depth = 0 + $depth;
+        } elsif (defined($depth) && !ref($depth) && _is_hdl_identifier($depth)) {
+            my $param = _actor_param_by_name($actor, $depth);
+            if ($param) {
+                $resolved_depth = _positive_integer_from_literal_value(_param_resolved_value($param));
+                confess "Error: actor '$actor_name' storage bank '$storage_name' depth parameter '$depth' must resolve to a positive integer\n"
+                    unless defined $resolved_depth;
+            } elsif (_actor_constant_by_name($actor, $depth)) {
+                confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is an actor constant; storage bank depths accept positive integer literals or actor scalar parameters only\n";
+            } elsif (_actor_interface_signal_by_name($actor, $depth)) {
+                confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is a runtime interface signal; storage bank depths accept positive integer literals or actor scalar parameters only\n";
+            } else {
+                confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is not a declared actor scalar parameter\n";
+            }
+        } else {
+            confess "Error: actor '$actor_name' storage bank '$storage_name' depth must be a positive integer literal or actor scalar parameter\n";
+        }
+
+        $entry->{depth} = $resolved_depth;
+        $entry->{signals} = [
+            map {
+                +{
+                    name  => "${storage_name}_$_",
+                    width => $entry->{width},
+                    index => $_,
+                }
+            } 0 .. $resolved_depth - 1
+        ];
+    }
+
+    my %seen_signal_name;
+    for my $entry (@{$actor->{storage} || []}) {
+        my $storage_name = $entry->{name};
+        for my $signal (@{$entry->{signals} || []}) {
+            my $signal_name = $signal->{name};
+            confess "Error: actor '$actor_name' storage '$storage_name' lowers to duplicate signal '$signal_name'\n"
+                if $seen_signal_name{$signal_name}++;
+        }
     }
 
     return 1;
@@ -5920,7 +5984,6 @@ sub _parse_storage($self, $clause, $actor_name) {
 
     my @entries;
     my %seen_logical_name;
-    my %seen_signal_name;
 
     for my $entry (@{$clause}[1 .. $#$clause]) {
         confess "Error: actor '$actor_name' storage entries must be list forms\n"
@@ -5959,7 +6022,7 @@ sub _parse_storage($self, $clause, $actor_name) {
                 next;
             }
             if ($option_name eq 'depth') {
-                $parsed_options{depth_value} = _parse_storage_positive_integer_option(
+                $parsed_options{depth_value} = _parse_positive_integer_or_actor_scalar_parameter_depth_option(
                     $option,
                     "Error: actor '$actor_name' storage '$name' depth",
                 );
@@ -5992,13 +6055,8 @@ sub _parse_storage($self, $clause, $actor_name) {
             my $depth = $parsed_options{depth_value};
             confess "Error: actor '$actor_name' storage bank '$name' requires '(depth N)'\n"
                 unless defined($depth);
-            @signals = map { +{ name => "${name}_$_", width => $width, index => $_ } } 0 .. $depth - 1;
-        }
-
-        for my $signal (@signals) {
-            my $signal_name = $signal->{name};
-            confess "Error: actor '$actor_name' storage '$name' lowers to duplicate signal '$signal_name'\n"
-                if $seen_signal_name{$signal_name}++;
+            @signals = map { +{ name => "${name}_$_", width => $width, index => $_ } } 0 .. $depth - 1
+                if !ref($depth) && $depth =~ /\A[1-9][0-9]*\z/;
         }
 
         push @entries, {
@@ -6024,17 +6082,19 @@ sub _normalize_storage_kind {
     return undef;
 }
 
-sub _parse_storage_positive_integer_option {
+sub _parse_positive_integer_or_actor_scalar_parameter_depth_option {
     my ($option, $context) = @_;
 
-    confess "$context requires '(name positive_integer)'\n"
+    confess "$context requires '(depth positive_integer_or_actor_scalar_parameter)'\n"
         unless ref($option) eq 'ARRAY'
             && @$option == 2
             && defined($option->[1])
             && !ref($option->[1])
-            && $option->[1] =~ /\A[1-9][0-9]*\z/;
+            && ($option->[1] =~ /\A[1-9][0-9]*\z/ || _is_hdl_identifier($option->[1]));
 
-    return 0 + $option->[1];
+    return $option->[1] =~ /\A[1-9][0-9]*\z/
+        ? 0 + $option->[1]
+        : $option->[1];
 }
 
 sub _parse_positive_integer_or_actor_scalar_parameter_width_option {

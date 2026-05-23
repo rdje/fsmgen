@@ -2,8 +2,25 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS`.
-- Current frontier: `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`; the next PNT step must select or create the next
+  roadmap-aligned task tree before any code changes.
+- Recent R14 bank storage actor-parameter depth completion:
+  `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` shipped actor-local scalar
+  parameter defaults as actor-owned bank storage `(depth PARAM)` sources when
+  the defaults resolve to positive integers. Accepted bank depths lower like
+  equivalent literal depths in the public parser handoff, deterministic
+  scalarized storage families, scheduled `.fsm` `+size`, schedule-report
+  `actor_storage` entries, `bank_accesses[]` depth/scalar-entry metadata, and
+  generated HDL. Unsupported sources fail closed: actor constants, runtime
+  interface signals, unknown names, zero-valued or non-scalar actor
+  parameters, arbitrary expressions, use-site override specialization,
+  generated-top respecialization, memory-array backend emission, dynamic
+  storage depth, and transaction-parameter-like activation-specialized
+  dimensions remain deferred or rejected. Duplicate scalarized storage signal
+  names remain rejected after parameter depth resolution. The ISF spec,
+  downstream integration handoff, public contract, mdBook, roadmap, task tree,
+  source comments, and live docs were synchronized.
 - Recent R14 bank storage actor-parameter depth selection:
   `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1` activated the next
   parameter-driven storage tree. The selected first implementation slice is

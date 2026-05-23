@@ -173,7 +173,7 @@ to keep file-backed strict schedule JSON, generated importer/child/top
 scheduled `.fsm` artifacts, strict `--outdir` emission, fixed parameter
 overrides, use-site bindings, scalarized FIFO data entries, and plain plus
 strict generated-top HDL generation covered without claiming use-site
-parameter-driven FIFO interface shape, bank depth, generated-top
+parameter-driven FIFO interface shape, bank-depth specialization, generated-top
 respecialization, or nested library imports.
 The ATL temporary trigger-batch fixture is checked by
 [t/1324-isf-atl-fixture-coverage.t](../t/1324-isf-atl-fixture-coverage.t)
@@ -374,9 +374,17 @@ defaults are checked by
 so accepted `(bank NAME (width PARAM) (depth N))` entries resolve to positive
 integer bank element widths, scheduled `.fsm` `+size` declarations,
 schedule-report storage and `bank_accesses[]` widths, and HDL register ranges
-while bank depths, unknown symbolic names, actor constants, runtime interface
-signals, zero-valued or non-scalar actor parameters, and arbitrary expressions
-fail closed.
+while unsupported width sources fail closed.
+Actor-owned bank storage depths backed by actor-local scalar parameter
+defaults are checked by
+[t/1337-isf-bank-storage-actor-param-depths.t](../t/1337-isf-bank-storage-actor-param-depths.t)
+so accepted `(bank NAME (width W) (depth PARAM))` entries resolve to positive
+integer bank depths, deterministic scalarized storage families, scheduled
+`.fsm` `+size` declarations, schedule-report storage and `bank_accesses[]`
+depth/scalar-entry metadata, and HDL register declarations while unknown
+symbolic names, actor constants, runtime interface signals, zero-valued or
+non-scalar actor parameters, arbitrary expressions, and duplicate scalarized
+signal names fail closed.
 Transaction-local port widths backed by actor-local scalar parameter defaults
 are checked by
 [t/1336-isf-transaction-port-actor-param-widths.t](../t/1336-isf-transaction-port-actor-param-widths.t)
@@ -1869,9 +1877,9 @@ optional array reference when present. The shipped storage entries include
 scalar declarations authored with preferred `(var ...)` or verbose
 `(variable ...)`, where widths may be positive integer literals or
 actor-local scalar parameters that resolve to positive integers, plus
-fixed-depth `bank` declarations whose widths may use the same actor-local
-scalar parameter source while depths remain literal-only and whose scalarized
-element names are scheduler input.
+fixed-depth `bank` declarations whose widths and depths may use the same
+actor-local scalar parameter source and whose scalarized element names are
+scheduler input.
 Schedule reports still use coarse `kind: register` for generated storage
 class; that report value is not the source vocabulary.
 Actor roots may also carry parser-validated actor-local constants through a

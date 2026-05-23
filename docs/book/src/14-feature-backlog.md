@@ -2767,9 +2767,9 @@ and the current directory. For a dotted namespace such as `common.fifo`, both
 `common.fifo.isf` and `common/fifo.isf` are candidate file names. `parse_source`
 can use same-source library roots but cannot resolve external files without a
 real source path. Standalone transaction/drive exports, symbolic parameter
-values beyond the shipped actor-local scalar width defaults, derived parameter
-expressions, parameter-derived bank depths, transaction-port dimensions beyond
-positive literals, actor-local scalar parameters, and scalar type aliases,
+values beyond the shipped actor-local scalar static-dimension defaults,
+derived parameter expressions, transaction-port dimensions beyond positive
+literals, actor-local scalar parameters, and scalar type aliases,
 memory-array backend emission, nested library imports, and multi-clock-domain
 ISF semantics are still deferred.
 
@@ -2797,12 +2797,12 @@ Shipped actor-owned storage model:
 
 `(var name (width N|PARAM))` declares one internal actor scalar storage value.
 `(variable ...)` is the verbose scalar-storage alias. Bank width uses
-`(bank name (width N|PARAM) (depth N))`. `PARAM` must be an actor-local scalar
-parameter default that resolves to a positive integer.
+`(bank name (width N|PARAM) (depth N|PARAM))`. `PARAM` must be an actor-local
+scalar parameter default that resolves to a positive integer.
 
-`(bank name (width N) (depth N))` remains the fixed-depth actor-owned storage
-form. The FIFO-controller matrix does not use an internal bank, but the
-shipped data-path probe now exercises a depth-4 bank through explicit
+`(bank name (width N|PARAM) (depth N|PARAM))` remains the fixed-depth
+actor-owned storage form. The FIFO-controller matrix does not use an internal
+bank, but the shipped data-path probe now exercises a depth-4 bank through explicit
 store/load access.
 
 Selected data-buffer access surface:
@@ -2849,9 +2849,9 @@ does not exercise FIFO depth, pointers, or occupancy semantics. The first
 fixture is fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and
 `OCC_WIDTH=3`. Those parameters are emitted as provenance and use-site binding
 evidence. Actor top-level interface port widths, transaction-local port
-widths, actor-owned scalar storage widths, and bank widths may use actor-local
-scalar parameter defaults when they resolve to positive integers. FIFO use-site
-interface shape specialization, bank depths, and generated-top
+widths, actor-owned scalar storage widths, and bank widths/depths may use
+actor-local scalar parameter defaults when they resolve to positive integers.
+FIFO use-site interface shape specialization and generated-top
 respecialization remain future work.
 
 The fixture explicitly models the four request cases: no request, push without

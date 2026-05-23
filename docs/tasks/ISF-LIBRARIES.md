@@ -345,16 +345,16 @@ reusable ISF design intent, not only scalar constants or types.
   `rd_ptr` names the storage entry that the next accepted pop reads. For the
   depth-4 fixture both are 2-bit pointers and wrap from entry 3 back to entry
   0.
-- The first actor-owned storage surface is shipped as a singleton
-  `(storage ...)` actor clause. The current preferred scalar spelling is
-  `(var name (width N))`; `(variable ...)` is the verbose spelling for the
-  same fixed internal scalar storage such as `rd_ptr`, `wr_ptr`, or
+- The actor-owned storage surface is shipped as a singleton `(storage ...)`
+  actor clause. The current preferred scalar spelling is
+  `(var name (width N|PARAM))`; `(variable ...)` is the verbose spelling for
+  the same fixed internal scalar storage such as `rd_ptr`, `wr_ptr`, or
   `occupancy`.
-  `(bank name (width N) (depth N))` declares fixed-depth actor-owned storage
-  and currently scalarizes to `<name>_0` through `<name>_<depth-1>` in the
-  scheduled `.fsm` review artifact. The first FIFO target uses this to model
-  four concrete entries before arbitrary-depth memory-array generation is
-  generalized.
+  `(bank name (width N|PARAM) (depth N|PARAM))` declares fixed-depth
+  actor-owned storage and scalarizes to `<name>_0` through
+  `<name>_<depth-1>` in the scheduled `.fsm` review artifact. The first FIFO
+  target uses concrete values to model four entries before memory-array
+  generation is generalized.
 - Declared actor-owned storage is internal to the actor. Storage signals must
   not collide with interface ports, actor clock/reset signals, or generated
   scheduler signals such as `can_accept`. Unsupported shapes fail closed
@@ -418,9 +418,9 @@ reusable ISF design intent, not only scalar constants or types.
   shape, parameter contract, lowering semantics, tests, and known limitations.
 - The first reusable FIFO fixture is fixed-shape by design:
   `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Those
-  parameters are emitted as provenance and use-site binding evidence, but
-  parser/lowerer support for parameter-driven interface widths and storage
-  depths remains deferred.
+  parameters are emitted as provenance and use-site binding evidence. Bounded
+  actor-local parameter-backed interface/storage dimensions are now tested in
+  focused slices; use-site respecialization remains deferred.
 - [isf/common/fifo.isf](../../isf/common/fifo.isf) is the first importable
   reusable FIFO actor source. It exports `common.fifo.fifo` and combines the
   same-cycle FIFO controller matrix with actor-owned bank `store`/`load`
@@ -769,9 +769,10 @@ Remaining boundary:
   bounded `library_uses` provenance.
 - `2026-05-14`: The FIFO fixture must be a real multi-entry FIFO. A depth-1
   element is not acceptable as the reusable FIFO fixture in this project.
-- `2026-05-14`: The first real FIFO fixture will use `DEPTH=4`. Arbitrary
-  depth remains a later generalization; depth 4 is the concrete target for the
-  first storage/concurrency implementation and regression fixture.
+- `2026-05-14`: The first real FIFO fixture will use `DEPTH=4`. Depth 4 is
+  the concrete target for the first storage/concurrency implementation and
+  regression fixture; later slices may broaden how authored actors express the
+  same fixed-depth scalarized bank shape.
 - `2026-05-14`: Transaction `(when condition body...)` is a control-flow
   branch. It schedules a decision state and, when true, enters body states
   before continuing. That is useful for ordered transaction flow, but it is not
@@ -909,8 +910,9 @@ Remaining boundary:
   rules and supported transaction contexts, with depth-4 FIFO data-path
   coverage through scheduled `.fsm`, schedule reports, and HDL generation.
 - `2026-05-15`: Added the first importable FIFO actor library fixture and
-  top-level library-use source. The fixture is fixed-shape and documents that
-  parameter-driven widths/depths remain a later feature.
+  top-level library-use source. The fixture is fixed-shape; later focused
+  slices broadened actor-local parameter-backed widths/depths without changing
+  this fixed FIFO fixture target.
 - `2026-05-15`: Proved the FIFO library fixture through generated-top
   SystemVerilog and fixed AST factorization structural identity so `CoreAST`
   signal references keep distinct concrete names.

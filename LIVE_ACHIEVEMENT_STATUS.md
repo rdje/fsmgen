@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Bank storage actor-parameter depths shipped
+- Completed `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` and closed the task tree.
+- Actor-owned bank storage entries now accept `(depth PARAM)` when `PARAM`
+  names an actor-local scalar parameter default resolving to a positive
+  integer.
+- Accepted parameter-backed depths lower like literal depths in public parser
+  handoff, deterministic scalarized storage family generation, scheduled
+  `.fsm` `+size`, schedule reports, `bank_accesses[]` metadata, and generated
+  HDL.
+- Unsupported depth sources fail closed: actor constants, runtime interface
+  signals, unknown names, zero-valued or non-scalar actor parameters,
+  arbitrary expressions, use-site override specialization, generated-top
+  respecialization, memory-array backend emission, dynamic storage depth, and
+  activation-specialized transaction-parameter-like dimensions.
+- Validation passed: syntax checks; focused bank depth/width, scalar storage,
+  bank-access, public, spec, and book tests with `Files=10, Tests=340`;
+  `mdbook build docs/book`; broad `./bin/ci-regression isf --no-book` with
+  `Files=243, Tests=1632`; post-closure doc audits with `Files=3,
+  Tests=339`; `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Bank storage actor-parameter depths selected
 - Completed selection work for
   `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1`.

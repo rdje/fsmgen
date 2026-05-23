@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Bank storage actor-parameter depths shipped
+- Completed `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` and closed the task tree.
+- Actor-owned bank storage entries now accept `(depth PARAM)` when `PARAM`
+  names an actor-local scalar parameter default that resolves to a positive
+  integer, including enum-member-backed defaults that resolve positive.
+- Accepted parameter-backed bank depths lower like equivalent literals: the
+  public parser handoff exposes resolved integer `depth`, scalarized bank
+  elements are generated deterministically through the resolved depth,
+  scheduled `.fsm` `+size` and generated HDL include that storage family, and
+  schedule reports expose `actor_storage` plus `bank_accesses[]`
+  depth/scalar-entry metadata for the resolved bank.
+- Unsupported depth sources fail closed: actor constants, runtime interface
+  signals, unknown names, zero-valued or non-scalar actor parameters,
+  arbitrary expressions, use-site override specialization, generated-top
+  respecialization, memory-array backend emission, dynamic storage depth, and
+  activation-specialized transaction-parameter-like dimensions remain outside
+  this slice.
+- Duplicate scalarized storage signal names remain rejected after parameter
+  depth resolution.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, source comments, and live docs.
+- Validation passed: syntax checks; focused bank depth/width, scalar storage,
+  bank-access, public, spec, and book tests with `Files=10, Tests=340`;
+  `mdbook build docs/book`; broad `./bin/ci-regression isf --no-book` with
+  `Files=243, Tests=1632`; post-closure doc audits with `Files=3,
+  Tests=339`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: Bank storage actor-parameter depths selected
 - Completed selection work for
   `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1`.

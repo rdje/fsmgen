@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Bank depth parameters resolve before storage width finalization
+- `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` moves bank scalarization into actor
+  finalization so actor-local scalar parameter defaults can resolve before the
+  concrete `NAME_0` through `NAME_N-1` storage family is generated.
+- Width finalization still runs after depth finalization. That lets bank
+  width parameters and depth parameters compose while the scheduler, schedule
+  reports, `.fsm` emitter, and HDL backend continue to see concrete positive
+  integer storage entries.
+- Duplicate lowered storage signal checks now run after bank depth
+  resolution, preserving the existing fail-closed duplicate behavior for both
+  literal and parameter-backed depths. Use-site overrides, generated-top
+  respecialization, memory-array backend emission, runtime depth, and actor
+  constants remain separate policy work.
+
 ## 2026-05-23: Bank depths are the next static parameter slice
 - `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1` selects actor-owned bank storage
   depths as the next bounded actor-parameter elaboration surface.

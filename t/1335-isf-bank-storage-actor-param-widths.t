@@ -173,21 +173,6 @@ ISF
         'width expressions are rejected at parse time',
     );
 
-    assert_parse_rejected(
-        <<'ISF',
-(actor parameter_bank_depth
-  (clock clk)
-  (params
-    (DEPTH 2))
-  (interface
-    (input start)
-    (output done))
-  (storage
-    (bank data (width 7) (depth DEPTH))))
-ISF
-        qr/\AError: actor 'parameter_bank_depth' storage 'data' depth requires '\(name positive_integer\)'/,
-        'bank depths stay literal-only in this slice',
-    );
 };
 
 done_testing();
@@ -248,7 +233,7 @@ sub assert_bank_accesses {
     for my $entry (@{$report->{bank_accesses} || []}) {
         is($entry->{bank}, 'data', 'bank access records bank name');
         is($entry->{width}, 7, 'bank access records resolved bank width');
-        is($entry->{depth}, 2, 'bank access records literal bank depth');
+        is($entry->{depth}, 2, 'bank access records bank depth');
         is_deeply($entry->{scalar_entries}, [qw(data_0 data_1)], 'bank access records scalarized entries');
     }
 }
