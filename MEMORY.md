@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat count source boundary shipped
+- Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` and closed the task tree.
+- Repeat counts are now accepted only as positive decimal literals, declared
+  actor constants resolving to positive integers, or known-width runtime
+  scalar names.
+- Literal zero and actor constants resolving to zero keep the existing static
+  zero fail-closed diagnostic. Unknown names, actor parameters, malformed
+  scalar tokens, and expression-valued counts now fail closed before scheduled
+  `.fsm` emission instead of falling through to an implicit 8-bit counter.
+- Actor/transaction parameter specialization, expression-valued repeat counts,
+  generated-top respecialization, repeat-body activation widening, and
+  cross-domain repeat behavior remain deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/support-matrix/backlog chapters, roadmap status,
+  task-tree docs, and live docs.
+- Validation passed: LoweringIR/test syntax; focused repeat tests; public/doc
+  audits; broad `./bin/ci-regression isf --no-book` with `Files=238,
+  Tests=1593`; `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Repeat count source boundary tree selected
 - Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1`.
 - Activated the next R14 task tree for the accepted repeat count source

@@ -489,8 +489,8 @@ evidence while preserving the authored constant token in the scheduled `.fsm`
 load. Literal zero counts and actor constants resolving to zero fail closed
 before scheduled `.fsm` emission. Named dynamic counts use their known
 interface or sample-derived width and bypass the body when the runtime value
-is zero. Unknown forms fall back to 8 bits and do not have a public
-zero-bypass guarantee.
+is zero. Unknown names, actor parameters, malformed scalar tokens, and
+expression-valued counts fail closed before scheduled `.fsm` emission.
 Repeats nested in switch branches declare the same transaction counter,
 widened to the largest branch requirement.
 
@@ -1209,10 +1209,10 @@ Static zero counts fail closed rather than silently running the body once. A
 named count may be a dynamic scalar signal when its width is known. Dynamic
 counts make latency data-dependent rather than statically fixed; verification
 and reports need either a known width-derived bound or an explicit future bound
-if tighter proof is required. Dynamic counts still make runtime zero-count
-semantics important: a fully general repeat contract must either define
-zero-count as "skip the body" or reject zero as an illegal count before the
-loop body can run.
+if tighter proof is required. Known-width runtime scalar counts skip the body
+when the runtime value is zero. Unknown names, actor parameters,
+expression-valued counts, and generated-top repeat-count specialization remain
+deferred and fail closed rather than falling back to an implicit counter.
 
 For the shipped repeat-body spawn subset, `(spawn child as name)` may add
 optional `(params ...)`, `(bind ...)`, and `(domain NAME)` subclauses while

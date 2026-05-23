@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Unsupported repeat counts fail before counter emission
+- `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` makes repeat count source validation
+  explicit in the lowerer before counter width selection or scheduled `.fsm`
+  emission.
+- This removes the implicit fallback path for unknown names. A repeat count
+  now has to be statically reviewable as a positive literal or positive actor
+  constant, or dynamically reviewable as a known-width scalar.
+- Actor parameters remain deferred because they are overrideable
+  specialization values; accepting them safely needs a generated-top policy
+  for counter width and zero-count branching.
+
 ## 2026-05-22: Repeat count sources need a closed domain
 - `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1` selects a narrow follow-up to the
   runtime zero-count policy: repeat counts should come from a known accepted

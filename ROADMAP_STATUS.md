@@ -2,8 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-REPEAT-COUNT-SOURCE-BOUNDARY`.
-  Current frontier: `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2`.
+- Active task tree: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Recent R14 repeat count source boundary completion:
+  `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` shipped the accepted repeat count
+  source boundary and closed the task tree. Repeat counts are now accepted
+  only as positive decimal literals, declared actor constants resolving to
+  positive integers, or known-width runtime scalar names. Literal zero and
+  actor-constant zero counts keep the static zero diagnostic; unknown names,
+  actor parameters, malformed scalar tokens, and expression-valued counts fail
+  closed before scheduled `.fsm` emission. Actor/transaction parameter
+  specialization, expression-valued repeat counts, generated-top
+  respecialization, repeat-body activation widening, and cross-domain repeat
+  behavior remain deferred.
 - Recent R14 repeat count source boundary selection:
   `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1` activated the repeat count source
   boundary tree. The selected implementation will fail closed unsupported
@@ -5292,11 +5303,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-REPEAT-COUNT-SOURCE-BOUNDARY`.
-- Current frontier: `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2`.
-- Completion status: `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1` selected the next
-  active R14 task tree after `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` closed
-  the runtime scalar zero-count policy.
+- Active task tree: none.
+- Current frontier: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Completion status: `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` closed the most
+  recent active R14 task tree after shipping the accepted repeat count source
+  boundary.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8908,9 +8920,8 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Implement `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2`: unsupported repeat count
-  sources must fail closed while positive literals, positive actor constants,
-  and known-width runtime scalar names remain accepted.
+- Select or create the next roadmap-aligned task tree before any further code
+  changes. The repeat count source boundary tree is closed.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

@@ -2189,8 +2189,10 @@ Current lowering:
 - Repeat counter width is inferred. Positive decimal literal counts use the
   minimum width that can represent the loaded count; positive actor constants
   use their resolved integer value as width evidence while preserving the
-  authored load token; named dynamic counts use the known interface/sample
-  width; unknown count forms fall back to `8`.
+  authored load token; known-width runtime scalar names use their known
+  interface, storage, or sample-derived width. Unknown names, actor
+  parameters, malformed scalar tokens, and expression-valued counts fail
+  closed before counter emission.
 - Repeat counts that are statically known to be zero, either as literal zero
   or as an actor constant resolving to zero, fail closed before scheduled
   `.fsm` emission.
@@ -2379,8 +2381,8 @@ under the bounded static zero-count policy. Named counts may be dynamic scalar
 signals when their width is known; those known-width runtime scalar counts
 skip the repeat body and repeat check when the runtime value is zero. Unknown
 count names, actor parameters, transaction parameters, expression-valued
-counts, and generated-top respecialization remain outside the shipped runtime
-zero-count policy. Repeat-body local `do` and repeat-body spawn
+counts, and generated-top respecialization fail closed or remain deferred
+outside the shipped repeat count-source policy. Repeat-body local `do` and repeat-body spawn
 support preserve the
 same runtime-counter rule: the loop reactivates a local child only after its
 fresh done pulse, or reactivates a lexically named static spawn child instance

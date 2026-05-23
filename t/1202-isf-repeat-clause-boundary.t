@@ -125,6 +125,50 @@ ISF
 ISF
 };
 
+subtest 'unsupported repeat count sources fail before counter emission' => sub {
+    assert_lower_rejected(<<'ISF', 'unknown repeat count name', qr/\ATransaction 'main': repeat count 'beats' is neither a declared positive actor constant nor a known-width runtime scalar/);
+(actor repeat_unknown_count
+  (clock clk)
+  (interface (input start) (output flag) (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (repeat beats
+      (drive tick))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'actor parameter repeat count', qr/\ATransaction 'main': repeat count actor parameter 'COUNT' remains deferred; use a known-width runtime scalar or positive actor constant/);
+(actor repeat_actor_param_count
+  (clock clk)
+  (params
+    (COUNT 3))
+  (interface (input start) (output flag) (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (repeat COUNT
+      (drive tick))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'negative repeat count literal', qr/\ATransaction 'main': repeat count '-1' must be a positive decimal literal, declared positive actor constant, or known-width runtime scalar name/);
+(actor repeat_negative_count
+  (clock clk)
+  (interface (input start) (output flag) (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (repeat -1
+      (drive tick))
+    (complete done)))
+ISF
+
+};
+
 subtest 'statically zero repeat counts fail closed before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'literal zero repeat count', qr/\ATransaction 'main': repeat count '0' is statically zero; zero-count repeat semantics remain deferred/);
 (actor repeat_literal_zero

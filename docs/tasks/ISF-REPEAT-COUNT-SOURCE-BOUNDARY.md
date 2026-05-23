@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-REPEAT-COUNT-SOURCE-BOUNDARY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -45,7 +45,7 @@ emission.
 ## Task Tree
 
 - ID: `ISF-REPEAT-COUNT-SOURCE-BOUNDARY`
-  Status: `active`
+  Status: `done`
   Goal: `Fail closed unsupported repeat count sources`
   Children: `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1`,
   `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2`
@@ -55,20 +55,20 @@ emission.
   Goal: `Select the repeat count source boundary and define the first implementation leaf`
   Acceptance: `Task tree, roadmap status, and live docs identify the active frontier before implementation`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending`
+  Commit: `e2fa900b`
 
 - ID: `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Reject unsupported repeat count sources with focused tests and synchronized docs`
   Acceptance: `Only positive literals, positive actor constants, and known-width runtime scalar names are accepted repeat count sources`
-  Verification: `pending`
+  Verification: `syntax`; `focused repeat tests`; `public/doc audits`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book`
   Commit: `pending`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` | `pending` | This closes the unsafe fallback left after runtime scalar zero-count bypass. |
+| 1 | `closed` | `done` | Unsupported repeat count sources now fail closed and the tree is closed. |
 
 ## Decisions
 
@@ -93,15 +93,17 @@ emission.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1` | `mdbook build docs/book`; `git diff --check` | `pass` |
-| `2026-05-22` | `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` | `pending` | `pending` |
+| `2026-05-22` | `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1202-isf-repeat-clause-boundary.t`; `prove -Iperl t/1202-isf-repeat-clause-boundary.t t/1102-isf-repeat-counter-widths.t t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `pass; broad gate Files=238, Tests=1593` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1` | `pending` | `pending` |
-| `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` | `pending` | `pending` |
+| `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1` | `e2fa900b ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1: select repeat count source boundary` | Selection committed. |
+| `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` | `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2: ship repeat count source boundary` | Pending commit. |
 
 ## Changelog
 
 - `2026-05-22`: Created and activated task tree.
+- `2026-05-22`: Shipped unsupported repeat count source fail-closed boundary
+  and closed task tree.

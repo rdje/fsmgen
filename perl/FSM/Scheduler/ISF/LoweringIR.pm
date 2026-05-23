@@ -3510,6 +3510,27 @@ sub _reject_static_zero_repeat_count {
     confess "Transaction '$tn': repeat count '$count' is statically zero; zero-count repeat semantics remain deferred\n";
 }
 
+sub _validate_repeat_count_source {
+    my ($count, $widths, $actor, $tn) = @_;
+
+    my $static_value = _static_repeat_count_value($count, $actor);
+    return 1 if defined($static_value) && $static_value > 0;
+
+    if (defined($count) && !ref($count) && _is_hdl_identifier($count)) {
+        if (_actor_constant_by_name($actor, $count)) {
+            confess "Transaction '$tn': repeat count actor constant '$count' must resolve to a positive integer literal\n";
+        }
+        if (_actor_param_by_name($actor, $count)) {
+            confess "Transaction '$tn': repeat count actor parameter '$count' remains deferred; use a known-width runtime scalar or positive actor constant\n";
+        }
+        return 1 if defined _runtime_repeat_count_source($count, $widths, $actor);
+
+        confess "Transaction '$tn': repeat count '$count' is neither a declared positive actor constant nor a known-width runtime scalar\n";
+    }
+
+    confess "Transaction '$tn': repeat count '$count' must be a positive decimal literal, declared positive actor constant, or known-width runtime scalar name\n";
+}
+
 sub _runtime_repeat_count_source {
     my ($count, $widths, $actor) = @_;
     return undef unless defined($count) && !ref($count) && _is_hdl_identifier($count);
@@ -6628,6 +6649,7 @@ sub _expand_loop_body {
 sub _ir_repeat {
     my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters; my @spawn_done_ports;
     _reject_static_zero_repeat_count($cl->[1], $actor, $tn);
+    _validate_repeat_count_source($cl->[1], $widths, $actor, $tn);
     my $width = _repeat_count_width($cl->[1], $widths, $actor);
     my $runtime_count_source = _runtime_repeat_count_source($cl->[1], $widths, $actor);
     push @s, {

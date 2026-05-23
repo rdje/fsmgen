@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat count source boundary shipped
+- Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` and closed the task tree.
+- Repeat count sources now fail closed unless they are positive decimal
+  literals, declared actor constants resolving to positive integers, or
+  known-width runtime scalar names.
+- Literal zero and actor-constant zero counts keep the existing targeted
+  static zero diagnostic. Unknown names, actor parameters, malformed scalar
+  tokens, and expression-valued counts now fail before scheduled `.fsm`
+  emission instead of falling through to an implicit 8-bit counter.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused repeat tests; public/doc audits;
+  broad `./bin/ci-regression isf --no-book` with `Files=238, Tests=1593`;
+  `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — Repeat count source boundary tree selected
 - Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1`.
 - Activated a new R14 task tree for failing closed unsupported repeat count

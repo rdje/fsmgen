@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat count source boundary shipped
+- Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` and closed the task tree.
+- Repeat counts are now accepted only as positive decimal literals, declared
+  actor constants resolving to positive integers, or known-width runtime
+  scalar names.
+- Unknown names, actor parameters, malformed scalar tokens, and
+  expression-valued counts fail closed before scheduled `.fsm` emission.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+- Validation passed: focused repeat tests, public/doc audits, broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1593`,
+  `mdbook build docs/book`, and `git diff --check`.
+
 ## 2026-05-22: R14 — Repeat count source boundary tree selected
 - Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1`.
 - Activated the active R14 task tree for the accepted repeat count source
