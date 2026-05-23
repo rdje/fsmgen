@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat runtime zero-count policy tree selected
+- Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1`.
+- Activated the active R14 task tree for runtime scalar repeat zero-count
+  skip semantics.
+- The active R14 frontier is now
+  `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2`.
+- The selected implementation will bypass the repeat body when a runtime
+  scalar repeat count is zero while preserving positive runtime repeat
+  behavior and the already shipped static zero fail-closed policy.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Repeat static zero-count policy shipped
 - Completed `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` and closed the task tree.
 - FSMGen now fails closed for repeat counts that are statically known to be

@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat runtime zero-count policy tree selected
+- Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1`.
+- Activated the next R14 task tree for a bounded runtime scalar repeat
+  zero-count policy.
+- The next frontier is `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2`: make runtime
+  scalar repeat counts that evaluate to zero skip the repeat body rather than
+  execute one body iteration.
+- Existing positive runtime repeat behavior, the static zero fail-closed
+  policy, actor/transaction parameter specialization, expression-valued repeat
+  counts, generated-top respecialization, repeat-body activation widening, and
+  cross-domain repeat behavior remain out of scope.
+- No compiler behavior changed.
+
 ## 2026-05-22: Repeat static zero-count policy shipped
 - Completed `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` and closed the task tree.
 - FSMGen now rejects repeat counts that are statically known to be zero before

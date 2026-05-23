@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY` | `active` | `R14` | `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` | [docs/tasks/ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.md](docs/tasks/ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.md) |
 
 ## Proposed Task Trees
 

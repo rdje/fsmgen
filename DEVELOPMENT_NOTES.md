@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Runtime repeat zero counts need an entry bypass
+- `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1` selects the bounded dynamic repeat
+  follow-up left by the static zero-count slice.
+- Runtime scalar repeat counts are already treated as counter load values, not
+  elaboration counts. A zero runtime value therefore needs an entry-side
+  bypass around the body and repeat check; executing the body once is not an
+  acceptable interpretation.
+- Static zero counts stay fail-closed because the author gave FSMGen enough
+  information to prove the repeat has no useful iterations before lowering.
+
 ## 2026-05-22: Static repeat zero counts are rejected
 - `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` rejects repeat counts that resolve
   to zero before scheduled `.fsm` emission when the zero is statically visible

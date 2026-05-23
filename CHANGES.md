@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat runtime zero-count policy tree selected
+- Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1`.
+- Activated a new R14 task tree for runtime scalar repeat zero-count skip
+  semantics.
+- The selected implementation will make runtime scalar repeat counts that
+  evaluate to zero bypass the repeat body while preserving positive runtime
+  repeat behavior and the already shipped static zero fail-closed policy.
+- Actor/transaction parameter specialization, expression-valued repeat counts,
+  generated-top respecialization, repeat-body activation widening, and
+  cross-domain repeat behavior remain out of scope.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Repeat static zero-count policy shipped
 - Completed `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` and closed the task tree.
 - Added targeted fail-closed handling for repeat counts that are statically
