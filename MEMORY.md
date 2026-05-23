@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: R14 next-PNT text truth sync shipped
+- Completed `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` and closed the
+  maintenance tree.
+- The current R14 `Left` section no longer names an old closed task tree as
+  the current next-PNT context; it points to the active-task pointer at the
+  top of `ROADMAP_STATUS.md`.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: ATL frontier truth sync shipped
 - Completed `ISF-ATL-FRONTIER-TRUTH-SYNC.2` and closed the maintenance tree.
 - The exhausted `ISF-ACTOR-NETWORK-ORCHESTRATION` task tree now reports a

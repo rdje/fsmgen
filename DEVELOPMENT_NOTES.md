@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: R14 next-PNT text should not name a closed tree
+- `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` keeps the active R14 `Left`
+  section from drifting by pointing to the live active-task pointer instead of
+  naming a specific closed tree.
+- This is roadmap wording only; it does not change feature priority,
+  implementation behavior, public contracts, or deferred R14 boundaries.
+
 ## 2026-05-22: ATL tree closure must be local and global
 - `ISF-ATL-FRONTIER-TRUTH-SYNC.2` fixes local task-tree drift only: the global
   task index already marked the ATL tree done, and the ATL task file now does

@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.md) |
 | `ISF-ATL-FRONTIER-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md](docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md) |
 | `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.md](docs/tasks/ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.md) |
 | `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.md](docs/tasks/ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.md) |

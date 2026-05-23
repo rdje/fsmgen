@@ -4,6 +4,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: none. The next PNT step must select or create the next
   roadmap-aligned task tree before code changes.
+- Recent R14 next-PNT text truth-sync completion:
+  `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` replaced stale R14 `Left`
+  wording that named an old closed tree with wording that points to the live
+  active-task pointer at the top of this board. No parser, scheduler, report,
+  generated artifact, HDL, CLI, or public ISF behavior changed.
 - Recent R14 ATL frontier truth-sync completion:
   `ISF-ATL-FRONTIER-TRUTH-SYNC.2` synchronized the exhausted
   `ISF-ACTOR-NETWORK-ORCHESTRATION` task tree so its current-frontier table
@@ -8984,7 +8989,8 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Select or create the next roadmap-aligned task tree before any further code
-  changes. The repeat count source boundary tree is closed.
+  changes. Use the active-task pointer at the top of this board as the
+  authoritative current frontier.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

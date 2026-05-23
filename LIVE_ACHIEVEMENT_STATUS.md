@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Next-PNT roadmap wording synced
+- Completed `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` and closed the
+  maintenance tree.
+- The current R14 `Left` section now points to the live active-task pointer
+  instead of naming an old closed tree.
+- No compiler behavior changed.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-22: R14 — ATL frontier truth sync shipped
 - Completed `ISF-ATL-FRONTIER-TRUTH-SYNC.2` and closed the maintenance tree.
 - The exhausted ATL implementation tree now reports `none` / `closed` in its

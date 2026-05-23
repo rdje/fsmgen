@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Next-PNT roadmap wording synced
+- Completed `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` and closed the
+  maintenance tree.
+- Replaced stale R14 `Left` wording that named an old closed task tree with
+  live-pointer wording.
+- No compiler behavior changed.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
+
+## 2026-05-22
 ### R14 — ATL frontier truth sync shipped
 - Completed `ISF-ATL-FRONTIER-TRUTH-SYNC.2` and closed the maintenance tree.
 - Synchronized the exhausted `ISF-ACTOR-NETWORK-ORCHESTRATION` task tree so
