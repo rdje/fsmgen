@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat count source boundary tree selected
+- Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1`.
+- Activated the next R14 task tree for the accepted repeat count source
+  boundary.
+- The next frontier is `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2`: reject
+  unsupported repeat count sources before scheduled `.fsm` emission while
+  preserving positive literal, positive actor-constant, and known-width
+  runtime scalar repeat counts.
+- Actor/transaction parameter specialization, expression-valued repeat counts,
+  generated-top respecialization, repeat-body activation widening, and
+  cross-domain repeat behavior remain out of scope.
+- No compiler behavior changed.
+
 ## 2026-05-22: Repeat runtime zero-count policy shipped
 - Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` and closed the task
   tree.

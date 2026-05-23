@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat count source boundary tree selected
+- Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1`.
+- Activated the active R14 task tree for the accepted repeat count source
+  boundary.
+- The active R14 frontier is now `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2`.
+- The selected implementation will reject unsupported repeat count sources
+  while preserving positive literal, positive actor-constant, and known-width
+  runtime scalar repeat counts.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Repeat runtime zero-count policy shipped
 - Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` and closed the task
   tree.

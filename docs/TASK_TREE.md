@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-COUNT-SOURCE-BOUNDARY` | `active` | `R14` | `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` | [docs/tasks/ISF-REPEAT-COUNT-SOURCE-BOUNDARY.md](docs/tasks/ISF-REPEAT-COUNT-SOURCE-BOUNDARY.md) |
 
 ## Proposed Task Trees
 

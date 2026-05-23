@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat count source boundary tree selected
+- Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1`.
+- Activated a new R14 task tree for failing closed unsupported repeat count
+  sources.
+- The selected implementation preserves positive literal counts, positive
+  actor constants, and known-width runtime scalar count names while rejecting
+  unknown names, actor/transaction parameters, malformed scalar tokens, and
+  expression-valued counts.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Repeat runtime zero-count policy shipped
 - Completed `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` and closed the task
   tree.

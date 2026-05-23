@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Repeat count sources need a closed domain
+- `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1` selects a narrow follow-up to the
+  runtime zero-count policy: repeat counts should come from a known accepted
+  source class rather than falling through to a silent default.
+- The accepted source classes are positive decimal literals, positive actor
+  constants, and known-width runtime scalar names. Everything else needs an
+  explicit policy before it can safely affect counter width, init branching,
+  and generated-top specialization.
+
 ## 2026-05-22: Runtime repeat zero counts use source-value branching
 - `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` implements zero-count runtime
   repeat behavior at the repeat init edge. The init state still loads the
