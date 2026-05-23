@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Scalar storage actor-constant widths selected
+- Completed selection work for
+  `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated a new R14 task tree for actor-owned scalar storage
+  `(var NAME (width CONST))` and `(variable NAME (width CONST))`
+  declarations backed by actor-local constants resolving to positive
+  integers.
+- The active frontier is `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2`.
+- The selected boundary is narrow: actor-constant-backed bank widths, bank
+  depths, transaction-local port widths, runtime interface signals,
+  transaction parameters, arbitrary expressions, unknown names, zero-valued
+  actor constants, aggregate values, use-site override specialization, and
+  generated-top respecialization remain deferred or fail-closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-23: Interface actor-constant widths shipped
 - Completed `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` and closed the task tree.
 - Actor top-level interface input/output entries now accept `(width CONST)`

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS` | `active` | `R14` | `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2` | [docs/tasks/ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.md](docs/tasks/ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.md) |
 
 ## Proposed Task Trees
 
@@ -291,6 +292,7 @@ as done work unless a future task reopens them.
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
 | Actor top-level interface actor-constant widths | `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS` |
 | Actor top-level interface actor-scalar-parameter widths | `ISF-INTERFACE-ACTOR-PARAM-WIDTHS` |
+| Actor-owned scalar storage actor-constant widths | `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS` |
 | Actor-owned scalar storage actor-scalar-parameter widths | `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS` |
 | Actor-owned bank storage actor-scalar-parameter widths | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS` |
 | Actor-owned bank storage actor-scalar-parameter depths | `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS` |

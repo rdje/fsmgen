@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Scalar storage constants are the next static-dimension slice
+- `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1` selects actor-owned scalar
+  storage widths as the next actor-constant static-dimension surface.
+- The selection mirrors the actor-parameter storage-width slice and follows
+  the actor-constant interface-width slice, but it keeps bank scalarization,
+  transaction-local port handoff, use-site overrides, and generated-top
+  respecialization as separate policies.
+- Only the owning actor shell's constant value is selected as scalar storage
+  width evidence. Runtime signals and expressions remain runtime data, not
+  static dimension evidence.
+
 ## 2026-05-23: Interface constants reuse interface width finalization
 - `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` widens only actor top-level
   interface width finalization. The parser first preserves positive literal

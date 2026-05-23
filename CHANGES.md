@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Scalar storage actor-constant widths selected
+- Completed selection work for
+  `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated a new R14 task tree for accepting actor-local constants resolving
+  to positive integers as actor-owned scalar storage `(var NAME (width CONST))`
+  and `(variable NAME (width CONST))` values.
+- The selected first implementation slice deliberately excludes
+  actor-constant-backed bank widths, bank depths, transaction-local port
+  widths, runtime interface signals, transaction parameters, arbitrary
+  expressions, unknown names, zero-valued actor constants, aggregate values,
+  use-site override specialization, and generated-top respecialization.
+- No compiler behavior changed.
+
 ### R14 — Interface actor-constant widths shipped
 - Completed `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` and closed the task tree.
 - Actor top-level interface `(input NAME (width CONST))` and

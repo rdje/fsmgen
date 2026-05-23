@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Scalar storage actor-constant widths selected
+- Completed selection work for
+  `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1`.
+- Activated the active R14 task tree for actor-owned scalar storage
+  `(width CONST)` declarations backed by actor-local constants resolving to
+  positive integers.
+- The active frontier is now `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Interface actor-constant widths shipped
 - Completed `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` and closed the task tree.
 - Actor top-level interface `(width CONST)` declarations now accept declared
