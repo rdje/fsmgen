@@ -2,8 +2,21 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS`.
+- Current frontier: `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2`.
+- Recent R14 output-bundle storage-member selection:
+  `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1` activated the next bounded member-list
+  widening. The selected implementation path allows explicit
+  `(members name...)` on `(kind output_bundle)` resources to name actor-owned
+  storage signals in addition to declared actor output ports. The selected
+  storage domain is concrete scalar storage signals only: scalar vars and
+  already scalarized bank element signals. Actor input ports, transaction
+  ports, bank roots, aggregate paths, actor-network endpoints, inferred
+  undeclared LHS targets, output-target users, transaction users, named-drive
+  users, child-instance users, storage-port resources, route mux/storage,
+  fan-in/fan-out, fairness, hold/release semantics, multi-capacity resources,
+  and `round_robin` remain deferred. No parser, scheduler, report, generated
+  artifact, HDL, CLI, or public ISF behavior changed in this selection.
 - Recent R14 output-bundle wording truth sync:
   `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1` aligned the public docs after
   explicit member lists shipped. The synchronized wording now distinguishes

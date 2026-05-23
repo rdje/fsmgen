@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Output-bundle storage members selected
+- Completed selection work for `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1`.
+- Activated the active R14 task tree for widening explicit `output_bundle`
+  members to actor-owned storage signals.
+- The selected implementation is intentionally bounded to concrete scalar
+  storage signals: scalar vars and scalarized bank element signals. Bank
+  roots, aggregate paths, inferred undeclared LHS targets, actor-network
+  endpoints, output-target users, transaction users, named-drive users,
+  child-instance users, storage-port resources, route mux/storage, fairness,
+  hold/release, multi-capacity resources, and `round_robin` remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+- Validation passed: live-doc/spec index audits with `Files=2, Tests=25`;
+  `git diff --check`.
+
 ## 2026-05-23: Output-bundle wording truth sync
 - Completed `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1`.
 - Public docs now distinguish unmembered `output_bundle` resources, which keep

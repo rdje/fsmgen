@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Output-bundle storage-member widening boundary
+- `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1` selects the next explicit member
+  domain for `output_bundle`: actor-owned storage signals.
+- The implementation should use concrete scheduled signal names only. Scalar
+  storage vars and scalarized bank element signals are reviewable LHS targets;
+  bank roots, aggregate paths, inferred undeclared targets, and route/storage
+  ownership remain separate semantics.
+- The grant should continue to gate the whole bound rule DT. Member widening
+  is validation and reporting evidence, not route mux/storage scheduling.
+
 ## 2026-05-23: Output-bundle member wording preserves implicit LHS intent
 - `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1` is documentation-only. It corrects
   the wording after explicit member lists shipped so public docs do not imply

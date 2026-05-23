@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Output-bundle storage members selected
+- Completed selection work for `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1`.
+- Activated a new R14 task tree for widening explicit `output_bundle`
+  members from declared actor outputs to declared actor-owned storage signals.
+- The selected implementation is intentionally bounded: storage members are
+  concrete scalar storage signals, including scalar vars and scalarized bank
+  element signals. Bank roots, aggregate paths, inferred undeclared LHS
+  targets, actor-network endpoints, output-target users, transaction users,
+  named-drive users, child-instance users, storage-port resources, route
+  mux/storage, fairness, hold/release, multi-capacity resources, and
+  `round_robin` remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+- Validation passed: live-doc/spec index audits with `Files=2, Tests=25`;
+  `git diff --check`.
+
 ### R14 — Output-bundle wording truth sync
 - Completed `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1`.
 - Clarified the ISF spec, downstream integration spec, public contract prose,
