@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Output-bundle members are review evidence first
+- `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1` selects explicit member-list syntax as the
+  next resource slice because `output_bundle` arbitration now exists but the
+  named resource still lacks a reviewable list of outputs it represents.
+- The first implementation should treat `(members output...)` as validation
+  and report evidence for the already shipped rule-user priority grant model,
+  not as a new routing or muxing mechanism.
+- Keeping members declared-output-only avoids quietly defining storage-port,
+  aggregate-path, actor-network endpoint, or output-target ownership semantics
+  before those have their own scheduling and diagnostic contracts.
+
 ## 2026-05-23: Output-bundle enforcement is a typed rule-user grant
 - `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` deliberately implements
   `output_bundle` with the same static priority grant mechanics as

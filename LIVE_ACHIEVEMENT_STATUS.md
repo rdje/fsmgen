@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Output-bundle member list selected
+- Completed selection work for `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1`.
+- Activated the active R14 task tree for explicit `output_bundle`
+  member-list syntax.
+- The selected path accepts `(members output...)` only on
+  `(kind output_bundle)` resources, validates members as declared actor output
+  ports, preserves the existing static priority grant model for declared rule
+  users, and adds bounded member evidence to the public report surface when
+  implementation lands.
+- The active frontier is now `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Output-bundle resource priority shipped
 - Completed `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` and closed the task tree.
 - `output_bundle` resources now enforce static `priority` arbitration for

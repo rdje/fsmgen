@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Output-bundle member list selected
+- Completed selection work for `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1`.
+- Activated a new R14 task tree for explicit `output_bundle` member-list
+  syntax.
+- The active frontier is `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` after the
+  selection commit.
+- The selected implementation path is narrow: accept `(members output...)`
+  only on `(kind output_bundle)` resources, require members to be declared
+  actor output ports, preserve existing priority grant timing for declared
+  rule users, and add bounded schedule-report/public-contract member evidence.
+- Input ports, internal storage, aggregate paths, actor-network endpoints,
+  output-target users, transaction users, named-drive users, route mux/storage,
+  fairness, hold/release, multi-capacity resources, and `round_robin` remain
+  deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed in the selection slice.
+
 ## 2026-05-23: Output-bundle resource priority shipped
 - Completed `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` and closed the task tree.
 - `output_bundle` resources are now enforced for declared rule users under the

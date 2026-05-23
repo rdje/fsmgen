@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Output-bundle member list selected
+- Completed selection work for `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1`.
+- Activated a new R14 task tree for explicit `output_bundle` member-list
+  syntax on the already enforced priority-arbitrated rule-user path.
+- The selected implementation path accepts `(members output...)` only on
+  `(kind output_bundle)` resources, validates members as declared actor output
+  ports, and projects member evidence through the bounded public report
+  surface.
+- The slice must preserve existing `output_bundle` priority grant timing and
+  fail closed for input ports, internal storage, aggregate paths,
+  actor-network endpoints, output-target users, transaction users,
+  named-drive users, route mux/storage, fairness, hold/release,
+  multi-capacity resources, and `round_robin`.
+- No compiler behavior changed.
+
 ### R14 — Output-bundle resource priority shipped
 - Completed `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` and closed the task tree.
 - `output_bundle` resources now enforce static `priority` arbitration for

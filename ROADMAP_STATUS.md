@@ -2,8 +2,20 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-OUTPUT-BUNDLE-MEMBER-LIST`.
+- Current frontier: `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2`.
+- Recent R14 output-bundle member-list selection:
+  `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1` activated the next bounded R14 resource
+  slice. The selected implementation path adds explicit
+  `(members output...)` syntax for `(kind output_bundle)` resources while
+  keeping the already shipped one-cycle static `priority` grant model for
+  declared rule users. Members are intentionally declared actor output ports
+  only in this first slice; input ports, internal storage, aggregate paths,
+  pin paths, actor-network endpoints, output-target users, transaction users,
+  named-drive users, route mux/storage, fan-in/fan-out, fairness state,
+  hold/release semantics, multi-capacity resources, and `round_robin` remain
+  deferred. No parser, scheduler, report, generated artifact, HDL, CLI, or
+  public ISF behavior changed yet.
 - Recent R14 output-bundle resource priority completion:
   `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` shipped the first non-`rule_slot`
   enforced resource kind. `output_bundle` resources are now enforced for
