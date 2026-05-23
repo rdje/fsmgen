@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Watchdog actor-parameter limits selected
+- Completed selection work for `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1`.
+- Activated a new R14 task tree for static actor-parameter-backed actor-level
+  and await-local watchdog limits.
+- The selected source boundary accepts actor-local scalar parameter defaults
+  resolving to positive integers, matching the static wait-count,
+  latency-bound, and temporal-contract window parameter models.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Temporal contract actor-parameter windows shipped
 - Completed `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` and closed the task tree.
 - Bounded eventual temporal-contract `within` windows now accept actor-local

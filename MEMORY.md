@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Watchdog actor-parameter limits selected
+- Completed selection work for `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1`.
+- Activated a new R14 task tree for static actor-parameter-backed actor-level
+  and await-local watchdog limits.
+- The active frontier is `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2`.
+- The selected boundary accepts actor-local scalar parameter defaults resolving
+  to positive integers and keeps transaction parameters, runtime signals,
+  arbitrary expressions, use-site override specialization, distinct per-await
+  limits in one transaction, cross-domain watchdog policy, dynamic watchdog
+  limits, and parameter-specialized generated-top watchdog counter sizing
+  deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-22: Temporal contract actor-parameter windows shipped
 - Completed `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` and closed the task tree.
 - Bounded eventual temporal contracts now accept actor-local scalar parameter

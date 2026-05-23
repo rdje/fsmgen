@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Watchdog actor-parameter limits selected
+- Completed selection work for `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1`.
+- Activated the active R14 task tree for static actor-parameter-backed
+  actor-level and await-local watchdog limits.
+- The active frontier is now `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Temporal contract actor-parameter windows shipped
 - Completed `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` and closed the task tree.
 - Bounded eventual temporal-contract windows now accept actor-local scalar

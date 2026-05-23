@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-WATCHDOG-ACTOR-PARAM-LIMITS` | `active` | `R14` | `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` | [docs/tasks/ISF-WATCHDOG-ACTOR-PARAM-LIMITS.md](docs/tasks/ISF-WATCHDOG-ACTOR-PARAM-LIMITS.md) |
 
 ## Proposed Task Trees
 
@@ -280,6 +281,7 @@ as done work unless a future task reopens them.
 | Temporal-contract actor-scalar-parameter window counts | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS` |
 | Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
+| Actor-level and await-local watchdog actor-scalar-parameter limits | `ISF-WATCHDOG-ACTOR-PARAM-LIMITS` |
 | Temporal-contract monitor storage schedule-report roles | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` |
 | Temporal-contract SystemVerilog assertion projection | `ISF-TEMPORAL-CONTRACT-ASSERTIONS` |
 | Actor-level phase/stage schedule-report metadata | `ISF-ACTOR-PHASE-STAGE-REPORTS` |

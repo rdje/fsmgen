@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Watchdog actor-parameter limits reuse static defaults
+- `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1` selects actor-local scalar parameter
+  defaults as actor-level and await-local watchdog limit sources, mirroring the
+  shipped static parameter-backed wait-count, latency-bound, and
+  temporal-contract window behavior.
+- The selected implementation should resolve only the actor shell's own
+  default value. Use-site override specialization, transaction parameters,
+  runtime values, expressions, distinct per-await limits in one transaction,
+  cross-domain watchdog policy, dynamic watchdog limits, and generated-top
+  watchdog counter sizing remain deferred.
+
 ## 2026-05-22: Contract actor-parameter windows stay static
 - `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` reuses the actor-local static
   parameter default model already accepted for wait counts and latency bounds,
