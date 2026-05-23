@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Bank depth constants resolve before scalarization
+- `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` widens bank depth finalization to
+  resolve declared actor constants after actor scalar parameters and before
+  scalarized bank storage entries are generated.
+- Depth constants deliberately share the same positive-integer requirement as
+  literal and actor-parameter depths because the resolved value controls
+  scalarized storage family cardinality, `bank_accesses[]` metadata, duplicate
+  lowered-name detection, scheduled `.fsm` `+size`, and generated HDL
+  register declarations.
+- Use-site overrides, generated-top respecialization, memory-array backend
+  emission, dynamic storage depth, runtime signals, and arbitrary expressions
+  remain separate policies; this slice only consumes the owning actor shell's
+  already-resolved constant value.
+
 ## 2026-05-23: Bank depth constants are the next static-dimension slice
 - `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.1` selects actor-owned bank depths
   as the next actor-constant static-dimension surface.

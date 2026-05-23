@@ -757,15 +757,17 @@ sub _finalize_actor_storage_depths($self, $actor) {
                 $resolved_depth = _positive_integer_from_literal_value(_param_resolved_value($param));
                 confess "Error: actor '$actor_name' storage bank '$storage_name' depth parameter '$depth' must resolve to a positive integer\n"
                     unless defined $resolved_depth;
-            } elsif (_actor_constant_by_name($actor, $depth)) {
-                confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is an actor constant; storage bank depths accept positive integer literals or actor scalar parameters only\n";
+            } elsif (my $constant = _actor_constant_by_name($actor, $depth)) {
+                $resolved_depth = _positive_integer_from_literal_value(_constant_resolved_value($constant));
+                confess "Error: actor '$actor_name' storage bank '$storage_name' depth constant '$depth' must resolve to a positive integer\n"
+                    unless defined $resolved_depth;
             } elsif (_actor_interface_signal_by_name($actor, $depth)) {
-                confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is a runtime interface signal; storage bank depths accept positive integer literals or actor scalar parameters only\n";
+                confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is a runtime interface signal; storage bank depths accept positive integer literals, actor constants, or actor scalar parameters only\n";
             } else {
-                confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is not a declared actor scalar parameter\n";
+                confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is not a declared actor scalar parameter or actor constant\n";
             }
         } else {
-            confess "Error: actor '$actor_name' storage bank '$storage_name' depth must be a positive integer literal or actor scalar parameter\n";
+            confess "Error: actor '$actor_name' storage bank '$storage_name' depth must be a positive integer literal, actor constant, or actor scalar parameter\n";
         }
 
         $entry->{depth} = $resolved_depth;
@@ -6100,7 +6102,7 @@ sub _normalize_storage_kind {
 sub _parse_positive_integer_or_actor_scalar_parameter_depth_option {
     my ($option, $context) = @_;
 
-    confess "$context requires '(depth positive_integer_or_actor_scalar_parameter)'\n"
+    confess "$context requires '(depth positive_integer_or_actor_scalar_parameter_or_actor_constant)'\n"
         unless ref($option) eq 'ARRAY'
             && @$option == 2
             && defined($option->[1])

@@ -390,7 +390,7 @@ so accepted `(bank NAME (width CONST) (depth N))` entries resolve to positive
 integer bank element widths, scheduled `.fsm` `+size` declarations,
 schedule-report storage and `bank_accesses[]` widths, and HDL register ranges
 while zero-valued actor constants, unknown symbolic names, runtime interface
-signals, arbitrary expressions, and actor-constant bank depths fail closed.
+signals, and arbitrary expressions fail closed.
 Actor-owned bank storage depths backed by actor-local scalar parameter
 defaults are checked by
 [t/1337-isf-bank-storage-actor-param-depths.t](../t/1337-isf-bank-storage-actor-param-depths.t)
@@ -398,9 +398,18 @@ so accepted `(bank NAME (width W) (depth PARAM))` entries resolve to positive
 integer bank depths, deterministic scalarized storage families, scheduled
 `.fsm` `+size` declarations, schedule-report storage and `bank_accesses[]`
 depth/scalar-entry metadata, and HDL register declarations while unknown
-symbolic names, actor constants, runtime interface signals, zero-valued or
-non-scalar actor parameters, arbitrary expressions, and duplicate scalarized
-signal names fail closed.
+symbolic names, runtime interface signals, zero-valued or non-scalar actor
+parameters, arbitrary expressions, and duplicate scalarized signal names fail
+closed.
+Actor-owned bank storage depths backed by declared actor constants are checked
+by
+[t/1341-isf-bank-storage-actor-constant-depths.t](../t/1341-isf-bank-storage-actor-constant-depths.t)
+so accepted `(bank NAME (width W) (depth CONST))` entries resolve to positive
+integer bank depths, deterministic scalarized storage families, scheduled
+`.fsm` `+size` declarations, schedule-report storage and `bank_accesses[]`
+depth/scalar-entry metadata, and HDL register declarations while zero-valued
+actor constants, unknown symbolic names, runtime interface signals, arbitrary
+expressions, and duplicate scalarized signal names fail closed.
 Transaction-local port widths backed by actor-local scalar parameter defaults
 are checked by
 [t/1336-isf-transaction-port-actor-param-widths.t](../t/1336-isf-transaction-port-actor-param-widths.t)

@@ -2,8 +2,25 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS`.
-- Current frontier: `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 bank storage actor-constant depth completion:
+  `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` shipped declared actor constants
+  as actor-owned bank storage `(bank NAME (width W) (depth CONST))` depth
+  sources when the constants resolve to positive integers. Accepted constants
+  lower like equivalent literal depths in the public parser handoff,
+  deterministic scalarized storage family generation, scheduled `.fsm`
+  `+size`, schedule-report `actor_storage` entries, `bank_accesses[]`
+  depth/scalar-entry metadata, and generated HDL while preserving authored
+  constants through `actor_constants[]` and scheduled `+constants`.
+  Unsupported sources fail closed: unknown symbols, runtime interface
+  signals, zero-valued constants, non-scalar values, arbitrary expressions,
+  transaction-local port widths, use-site override specialization,
+  generated-top respecialization, memory-array backend emission, dynamic
+  storage depth, pointer-index semantic changes, and same-cycle bank policy
+  changes remain deferred or rejected. The ISF spec, downstream integration
+  handoff, public contract, mdBook, roadmap status, task tree, and live docs
+  were synchronized.
 - Recent R14 bank storage actor-constant depth selection:
   `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.1` activated the next
   static-dimension tree. The selected first implementation slice is
@@ -5664,11 +5681,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS`.
-- Current frontier: `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2`.
-- Completion status: `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.1` selected the
-  next active R14 static-dimension tree. No behavior changes are included in
-  the selection leaf.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` shipped
+  actor-constant-backed actor-owned bank storage depths and closed the active
+  tree. The next PNT step must select or create the next roadmap-aligned task
+  tree before any code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8825,6 +8843,12 @@ Done:
   `(await_all ...)`, `(await_any ...)`, rules, trigger actions, latency checks,
   and data-manipulation constructs such as `shift_left`, `shift_right`,
   `assemble`, and `extract`.
+- Actor top-level interface widths, actor-owned scalar storage widths,
+  actor-owned bank storage widths, and actor-owned bank storage depths now
+  accept positive actor-local literals, declared actor constants, or
+  actor-local scalar parameter defaults. Transaction-local port widths accept
+  positive literals or actor-local scalar parameter defaults; actor-constant
+  transaction-local port widths remain the next static-dimension frontier.
 - The mdBook now carries the R14 ISF chapter split, including the lowering
   reference.
 - The mdBook now also carries

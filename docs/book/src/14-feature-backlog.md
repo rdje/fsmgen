@@ -2797,12 +2797,12 @@ Shipped actor-owned storage model:
 
 `(var name (width N|PARAM|CONST))` declares one internal actor scalar storage
 value. `(variable ...)` is the verbose scalar-storage alias. Bank width uses
-`(bank name (width N|PARAM|CONST) (depth N|PARAM))`. `PARAM` must be an
+`(bank name (width N|PARAM|CONST) (depth N|PARAM|CONST))`. `PARAM` must be an
 actor-local scalar parameter default that resolves to a positive integer.
-`CONST` on scalar storage or bank width must be a declared actor constant that
-resolves to a positive integer.
+`CONST` on scalar storage, bank width, or bank depth must be a declared actor
+constant that resolves to a positive integer.
 
-`(bank name (width N|PARAM|CONST) (depth N|PARAM))` remains the fixed-depth
+`(bank name (width N|PARAM|CONST) (depth N|PARAM|CONST))` remains the fixed-depth
 actor-owned storage form. The FIFO-controller matrix does not use an internal
 bank, but the shipped data-path probe now exercises a depth-4 bank through explicit
 store/load access.
@@ -2851,10 +2851,11 @@ does not exercise FIFO depth, pointers, or occupancy semantics. The first
 fixture is fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and
 `OCC_WIDTH=3`. Those parameters are emitted as provenance and use-site binding
 evidence. Actor top-level interface port widths, actor-owned scalar storage
-widths, and actor-owned bank widths may use declared actor constants or
-actor-local scalar parameter defaults when they resolve to positive integers.
-Transaction-local port widths and bank depths may use actor-local scalar
-parameter defaults when they resolve to positive integers.
+widths, actor-owned bank widths, and actor-owned bank depths may use declared
+actor constants or actor-local scalar parameter defaults when they resolve to
+positive integers.
+Transaction-local port widths may use actor-local scalar parameter defaults
+when they resolve to positive integers.
 FIFO use-site interface shape specialization and generated-top
 respecialization remain future work.
 

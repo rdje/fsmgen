@@ -14,11 +14,11 @@ use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 use FSM::Scheduler::ISF;
 
-subtest 'actor scalar parameter bank depths lower like literal depths' => sub {
+subtest 'actor constants bank depths lower like literal depths' => sub {
     my $source = <<'ISF';
-(actor parameter_bank_storage_depths
+(actor constant_bank_storage_depths
   (clock clk)
-  (params
+  (constants
     (DEPTH 3))
   (interface
     (input start)
@@ -35,16 +35,16 @@ subtest 'actor scalar parameter bank depths lower like literal depths' => sub {
     (complete done)))
 ISF
 
-    my $actor = parse_source($source, 'parameter-bank-storage-depths.isf');
-    is(storage_depth($actor, 'data'), 3, 'bank depth resolves from actor parameter');
+    my $actor = parse_source($source, 'constant-bank-storage-depths.isf');
+    is(storage_depth($actor, 'data'), 3, 'bank depth resolves from actor constant');
     is_deeply(storage_signal_names($actor, 'data'), [qw(data_0 data_1 data_2)], 'bank signal family is finalized');
     is_deeply(storage_signal_widths($actor, 'data'), [7, 7, 7], 'bank signal widths remain finalized');
 
     my $scheduler = FSM::Scheduler::ISF->new();
     my $lowered = $scheduler->lower($actor);
-    my $fsm = $lowered->{files}{'parameter_bank_storage_depths.fsm'};
+    my $fsm = $lowered->{files}{'constant_bank_storage_depths.fsm'};
 
-    like($fsm, qr/\(\+params\s+\(DEPTH 3\)\s+\)/s, 'scheduled .fsm preserves actor parameter declaration');
+    like($fsm, qr/\(\+constants\s+\(DEPTH 3\)\s+\)/s, 'scheduled .fsm preserves actor constant declaration');
     like($fsm, qr/\(\+size[\s\S]*\(data_0 7\)[\s\S]*\(data_2 7\)/, 'scheduled .fsm uses resolved bank depth');
     like($fsm, qr/\(<- \(data_2 wdata\) <\(== idx 2\)\)/, 'store includes the resolved final bank entry');
     like($fsm, qr/\(<- \(rdata> data_2\) <\(== idx 2\)\)/, 'load includes the resolved final bank entry');
@@ -55,14 +55,14 @@ ISF
     assert_actor_storage($report, 'data_2', 7);
     assert_bank_accesses($report, 3, [qw(data_0 data_1 data_2)]);
 
-    assert_fsm_reaches_hdl($fsm, 'parameter_bank_storage_depths', qr/\breg\s+\[6:0\]\s+data_2\b/, 'HDL final bank entry width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'constant_bank_storage_depths', qr/\breg\s+\[6:0\]\s+data_2\b/, 'HDL final bank entry width is resolved');
 };
 
-subtest 'actor scalar parameters compose for bank width and depth' => sub {
-    my $actor = parse_source(<<'ISF', 'parameter-bank-width-and-depth.isf');
-(actor parameter_bank_width_and_depth
+subtest 'actor constants compose for bank width and depth' => sub {
+    my $actor = parse_source(<<'ISF', 'constant-bank-width-and-depth.isf');
+(actor constant_bank_width_and_depth
   (clock clk)
-  (params
+  (constants
     (DATA_W 6)
     (DEPTH 2))
   (interface
@@ -75,21 +75,21 @@ subtest 'actor scalar parameters compose for bank width and depth' => sub {
     (complete done)))
 ISF
 
-    is(storage_width($actor, 'data'), 6, 'bank width resolves from actor parameter');
-    is(storage_depth($actor, 'data'), 2, 'bank depth resolves from actor parameter');
-    is_deeply(storage_signal_widths($actor, 'data'), [6, 6], 'bank signal widths compose with parameter depth');
+    is(storage_width($actor, 'data'), 6, 'bank width resolves from actor constant');
+    is(storage_depth($actor, 'data'), 2, 'bank depth resolves from actor constant');
+    is_deeply(storage_signal_widths($actor, 'data'), [6, 6], 'bank signal widths compose with constant depth');
 
-    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'parameter_bank_width_and_depth.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(data_0 6\)[\s\S]*\(data_1 6\)/, 'scheduled .fsm uses composed width and depth');
+    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'constant_bank_width_and_depth.fsm'};
+    like($fsm, qr/\(\+size[\s\S]*\(data_0 6\)[\s\S]*\(data_1 6\)/, 'scheduled .fsm uses composed constant width and depth');
 };
 
-subtest 'enum-resolved actor scalar parameter bank depth lowers' => sub {
-    my $actor = parse_source(<<'ISF', 'enum-parameter-bank-depth.isf');
-(actor enum_parameter_bank_depth
+subtest 'enum-resolved actor constant bank depth lowers' => sub {
+    my $actor = parse_source(<<'ISF', 'enum-constant-bank-depth.isf');
+(actor enum_constant_bank_depth
   (clock clk)
   (enums
     (sizes (DEPTH 3)))
-  (params
+  (constants
     (BANK_DEPTH sizes.DEPTH))
   (interface
     (input start)
@@ -101,19 +101,19 @@ subtest 'enum-resolved actor scalar parameter bank depth lowers' => sub {
     (complete done)))
 ISF
 
-    is(storage_depth($actor, 'data'), 3, 'enum-resolved actor parameter becomes a positive bank depth');
+    is(storage_depth($actor, 'data'), 3, 'enum-resolved actor constant becomes a positive bank depth');
     is_deeply(storage_signal_names($actor, 'data'), [qw(data_0 data_1 data_2)], 'enum-resolved depth scalarizes the bank');
 
-    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_parameter_bank_depth.fsm'};
+    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_constant_bank_depth.fsm'};
     like($fsm, qr/\(\+size[\s\S]*\(data_0 7\)[\s\S]*\(data_2 7\)/, 'scheduled .fsm uses enum-resolved bank depth');
 };
 
-subtest 'unsupported actor parameter bank depth sources fail closed' => sub {
+subtest 'unsupported actor constant bank depth sources fail closed' => sub {
     assert_parse_rejected(
         <<'ISF',
-(actor zero_parameter_bank_depth
+(actor zero_constant_bank_depth
   (clock clk)
-  (params
+  (constants
     (DEPTH 0))
   (interface
     (input start)
@@ -121,29 +121,13 @@ subtest 'unsupported actor parameter bank depth sources fail closed' => sub {
   (storage
     (bank data (width 7) (depth DEPTH))))
 ISF
-        qr/\AError: actor 'zero_parameter_bank_depth' storage bank 'data' depth parameter 'DEPTH' must resolve to a positive integer/,
-        'zero-valued actor parameter is rejected',
+        qr/\AError: actor 'zero_constant_bank_depth' storage bank 'data' depth constant 'DEPTH' must resolve to a positive integer/,
+        'zero-valued actor constant is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor aggregate_parameter_bank_depth
-  (clock clk)
-  (params
-    (DEPTH (2 2)))
-  (interface
-    (input start)
-    (output done))
-  (storage
-    (bank data (width 7) (depth DEPTH))))
-ISF
-        qr/\AError: actor 'aggregate_parameter_bank_depth' storage bank 'data' depth parameter 'DEPTH' must resolve to a positive integer/,
-        'non-scalar actor parameter is rejected',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
-(actor unknown_parameter_bank_depth
+(actor unknown_constant_bank_depth
   (clock clk)
   (interface
     (input start)
@@ -151,13 +135,13 @@ ISF
   (storage
     (bank data (width 7) (depth DEPTH))))
 ISF
-        qr/\AError: actor 'unknown_parameter_bank_depth' storage bank 'data' depth token 'DEPTH' is not a declared actor scalar parameter or actor constant/,
+        qr/\AError: actor 'unknown_constant_bank_depth' storage bank 'data' depth token 'DEPTH' is not a declared actor scalar parameter or actor constant/,
         'unknown symbolic depth is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor runtime_parameter_bank_depth
+(actor runtime_constant_bank_depth
   (clock clk)
   (interface
     (input start)
@@ -166,13 +150,13 @@ ISF
   (storage
     (bank data (width 7) (depth DEPTH))))
 ISF
-        qr/\AError: actor 'runtime_parameter_bank_depth' storage bank 'data' depth token 'DEPTH' is a runtime interface signal/,
+        qr/\AError: actor 'runtime_constant_bank_depth' storage bank 'data' depth token 'DEPTH' is a runtime interface signal/,
         'runtime interface signals are rejected as depths',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor expression_parameter_bank_depth
+(actor expression_constant_bank_depth
   (clock clk)
   (interface
     (input start)
@@ -180,17 +164,17 @@ ISF
   (storage
     (bank data (width 7) (depth (+ DEPTH 1)))))
 ISF
-        qr/\AError: actor 'expression_parameter_bank_depth' storage 'data' depth requires '\(depth positive_integer_or_actor_scalar_parameter_or_actor_constant\)'/,
+        qr/\AError: actor 'expression_constant_bank_depth' storage 'data' depth requires '\(depth positive_integer_or_actor_scalar_parameter_or_actor_constant\)'/,
         'depth expressions are rejected at parse time',
     );
 };
 
-subtest 'parameter bank depths preserve duplicate scalarized signal rejection' => sub {
+subtest 'constant bank depths preserve duplicate scalarized signal rejection' => sub {
     assert_parse_rejected(
         <<'ISF',
-(actor duplicate_parameter_bank_depth
+(actor duplicate_constant_bank_depth
   (clock clk)
-  (params
+  (constants
     (DEPTH 2))
   (interface
     (input start)
@@ -199,8 +183,8 @@ subtest 'parameter bank depths preserve duplicate scalarized signal rejection' =
     (var data_1 (width 7))
     (bank data (width 7) (depth DEPTH))))
 ISF
-        qr/\AError: actor 'duplicate_parameter_bank_depth' storage 'data' lowers to duplicate signal 'data_1'/,
-        'parameter depth scalarization still rejects duplicate lowered signals',
+        qr/\AError: actor 'duplicate_constant_bank_depth' storage 'data' lowers to duplicate signal 'data_1'/,
+        'constant depth scalarization still rejects duplicate lowered signals',
     );
 };
 

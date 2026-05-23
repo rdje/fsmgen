@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS` | `active` | `R14` | `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` | [docs/tasks/ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.md](docs/tasks/ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.md](docs/tasks/ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.md) |
 | `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.md](docs/tasks/ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.md) |
 | `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.md](docs/tasks/ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.md) |
 | `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.md](docs/tasks/ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.md) |

@@ -2,6 +2,31 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Bank storage actor-constant depths shipped
+- Completed `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` and closed the task
+  tree.
+- Actor-owned bank storage `(depth CONST)` declarations now accept declared
+  actor constants resolving to positive integers.
+- Accepted constant-backed depths lower like literal depths in public parser
+  handoff, deterministic scalarized storage family generation, scheduled
+  `.fsm` `+size`, schedule-report `actor_storage` entries,
+  `bank_accesses[]` depth/scalar-entry metadata, and generated HDL, while
+  authored constants remain visible through `actor_constants[]` and scheduled
+  `+constants`.
+- Unsupported sources fail closed: unknown symbols, runtime interface signals,
+  zero-valued constants, non-scalar values, arbitrary expressions,
+  transaction-local port widths, use-site override specialization,
+  generated-top respecialization, memory-array backend emission, dynamic
+  storage depth, pointer-index semantic changes, and same-cycle bank policy
+  changes.
+- Validation passed: syntax checks; focused bank/public/spec/book tests with
+  `Files=11, Tests=345`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=247, Tests=1646`;
+  post-closure doc/public audits with `Files=6, Tests=348`;
+  `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Bank storage actor-constant depths selected
 - Completed selection work for
   `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.1`.

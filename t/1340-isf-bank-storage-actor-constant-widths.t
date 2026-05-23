@@ -141,21 +141,6 @@ ISF
         'width expressions are rejected at parse time',
     );
 
-    assert_parse_rejected(
-        <<'ISF',
-(actor constant_bank_depth
-  (clock clk)
-  (constants
-    (DEPTH 2))
-  (interface
-    (input start)
-    (output done))
-  (storage
-    (bank data (width 7) (depth DEPTH))))
-ISF
-        qr/\AError: actor 'constant_bank_depth' storage bank 'data' depth token 'DEPTH' is an actor constant/,
-        'bank depths remain outside this bank-width slice',
-    );
 };
 
 done_testing();

@@ -217,9 +217,9 @@ General source rules:
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.
 - Widths and depths are positive integer literals unless a specific clause says
   otherwise. Actor top-level interface port widths, actor-owned scalar storage
-  widths, and actor-owned bank storage widths also accept declared actor
-  constants and actor-local scalar parameter defaults that resolve to positive
-  integers. Transaction-local port widths and actor-owned bank storage depths
+  widths, actor-owned bank storage widths, and actor-owned bank storage depths
+  also accept declared actor constants and actor-local scalar parameter
+  defaults that resolve to positive integers. Transaction-local port widths
   also accept actor-local scalar parameter defaults that resolve to positive
   integers.
 - Actor constants, scalar actor parameter defaults, and generated child
@@ -466,10 +466,9 @@ Actor-owned storage:
   (bank data (width DATA_W) (depth DEPTH)))
 ```
 
-Here scalar `PTR_W` and bank width `DATA_W` may be actor-local scalar
-parameter defaults or declared actor constants that resolve to positive
-integers. Bank `(depth PARAM)` must use an actor-local scalar parameter
-default when a symbolic depth source is present.
+Here scalar `PTR_W`, bank width `DATA_W`, and bank `DEPTH` may be actor-local
+scalar parameter defaults or declared actor constants that resolve to positive
+integers.
 
 Rules:
 
@@ -487,10 +486,11 @@ Rules:
   Unknown symbolic names, runtime interface signals, zero-valued or non-scalar
   actor parameters, zero-valued actor constants, and arbitrary expressions
   fail closed.
-- Bank depths are positive integer literals or actor-local scalar parameter
-  defaults that resolve to positive integers. Unknown symbolic names, actor
-  constants, runtime interface signals, zero-valued or non-scalar actor
-  parameters, and arbitrary expressions fail closed.
+- Bank depths are positive integer literals, actor-local scalar parameter
+  defaults, or declared actor constants that resolve to positive integers.
+  Unknown symbolic names, runtime interface signals, zero-valued or non-scalar
+  actor parameters, zero-valued actor constants, and arbitrary expressions
+  fail closed.
 - Storage names must not collide with interface ports, clock/reset names, or
   generated scheduler names.
 - Banks lower to deterministic scalar storage entries such as `data_0`,
@@ -3374,7 +3374,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1337-isf-bank-storage-actor-param-depths.t \
   t/1338-isf-interface-actor-constant-widths.t \
   t/1339-isf-scalar-storage-actor-constant-widths.t \
-  t/1340-isf-bank-storage-actor-constant-widths.t
+  t/1340-isf-bank-storage-actor-constant-widths.t \
+  t/1341-isf-bank-storage-actor-constant-depths.t
 
 ./bin/ci-regression isf
 mdbook build docs/book
