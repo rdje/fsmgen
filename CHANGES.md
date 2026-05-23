@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Transaction port actor-parameter widths selected
+- Completed selection work for
+  `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1`.
+- Activated a new R14 task tree for accepting actor-local scalar parameter
+  defaults resolving to positive integers as transaction-local `(ports ...)`
+  input/output `(width PARAM)` values.
+- The selected first slice deliberately excludes transaction-parameter-backed
+  port widths, bank depths, actor constants, use-site override
+  specialization, generated-top respecialization, runtime signals, arbitrary
+  expressions, zero-valued actor parameters, and non-scalar actor parameters.
+- No compiler behavior changed.
+
 ### R14 — Bank storage actor-parameter widths shipped
 - Completed `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` and closed the task
   tree.

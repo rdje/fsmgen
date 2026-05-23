@@ -2,9 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`; the next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+- Active task tree: `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS`.
+- Current frontier: `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2`;
+  implement the selected transaction-local port actor-parameter width slice.
+- Recent R14 transaction port actor-parameter width selection:
+  `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1` activated the next
+  parameter-driven transaction-boundary tree. The selected first slice is
+  intentionally narrow: only transaction-local `(ports ...)` input/output
+  `(width PARAM)` entries may use actor-local scalar parameter defaults that
+  resolve to positive integers. Transaction-parameter-backed port widths,
+  bank depths, actor constants, use-site override specialization,
+  generated-top respecialization, runtime signals, arbitrary expressions,
+  zero-valued actor parameters, and non-scalar actor parameters remain
+  deferred or fail-closed.
 - Recent R14 bank storage actor-parameter width completion:
   `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` shipped actor-local scalar
   parameter defaults as actor-owned bank storage `(width PARAM)` sources when

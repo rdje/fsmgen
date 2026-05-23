@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Transaction port actor-parameter widths selected
+- Completed selection work for
+  `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1`.
+- Activated the active R14 task tree for transaction-local `(ports ...)`
+  `(width PARAM)` declarations backed by actor-local scalar parameter defaults
+  resolving to positive integers.
+- The active frontier is now
+  `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Bank storage actor-parameter widths shipped
 - Completed `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` and closed the task tree.
 - Actor-owned bank storage entries now accept `(width PARAM)` when `PARAM`

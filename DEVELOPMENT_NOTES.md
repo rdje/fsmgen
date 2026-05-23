@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Transaction port widths are the next static parameter slice
+- `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1` selects transaction-local
+  `(ports ...)` widths as the next bounded actor-parameter elaboration
+  surface.
+- The selection follows the already shipped actor interface, actor-owned
+  scalar storage, and actor-owned bank element width slices, while preserving
+  transaction activation binding semantics and generated-top handoff behavior.
+- Only the owning actor shell's scalar parameter default is selected as width
+  evidence. Transaction parameters, use-site overrides, generated-top
+  respecialization, actor constants, runtime signals, and arbitrary
+  expressions remain separate policy work.
+
 ## 2026-05-23: Bank width parameters reuse storage width finalization
 - `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` widens the storage width
   finalization path so actor-owned scalar storage and actor-owned bank widths
