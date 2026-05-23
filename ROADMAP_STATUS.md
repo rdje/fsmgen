@@ -2,11 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-BACKLOG-OWNER-TRUTH-SYNC`.
-- Current frontier: `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` will synchronize the
-  mdBook feature backlog so closed repeat-body activation and ATL task trees
-  remain historical evidence, not current owners for future backlog behavior,
-  and will add focused audit coverage. No compiler behavior is selected.
+- Active task tree: none. The next PNT step must select or create the next
+  roadmap-aligned task tree before code changes.
+- Recent R14 backlog owner truth-sync completion:
+  `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` synchronized the mdBook feature backlog and
+  ATL design proposal so closed repeat-body activation and ATL task trees are
+  historical records rather than current owners for future backlog behavior.
+  Future repeat-body child-activation and ATL behavior changes now explicitly
+  require new task-tree leaves before implementation. The book audit rejects
+  stale current-owner wording. No parser, scheduler, report, generated
+  artifact, or HDL behavior changed.
 - Recent R14 backlog owner truth-sync selection:
   `ISF-BACKLOG-OWNER-TRUTH-SYNC.1` activated the mdBook backlog owner
   truth-sync tree. The selected implementation will keep historical links to

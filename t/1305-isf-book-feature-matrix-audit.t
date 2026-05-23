@@ -505,6 +505,45 @@ for my $marker (@required_route_term_markers) {
     );
 }
 
+unlike(
+    $backlog,
+    qr/Task-tree owner(?: for the remaining backlog)?:/,
+    'feature backlog does not present closed task trees as current owners',
+);
+
+my @required_backlog_owner_markers = (
+    'Historical task-tree record:',
+    'That tree is closed; future repeat-body child-activation behavior needs a new',
+    'task-tree leaf before implementation.',
+    'That tree is closed; future ATL behavior changes need a new task-tree leaf',
+);
+
+for my $marker (@required_backlog_owner_markers) {
+    like(
+        $backlog,
+        qr{\Q$marker\E},
+        "feature backlog keeps owner-truth marker: $marker",
+    );
+}
+
+unlike(
+    $design,
+    qr/Task-tree owner:/,
+    'ATL design proposal does not present the closed ATL tree as a current owner',
+);
+
+like(
+    $design,
+    qr{\QHistorical task-tree record:\E},
+    'ATL design proposal keeps the historical task-tree label',
+);
+
+like(
+    $design,
+    qr{\QThat tree is closed; future ATL behavior changes need new task-tree leaves\E},
+    'ATL design proposal states future ATL changes need new task-tree leaves',
+);
+
 done_testing();
 
 sub read_repo_file {

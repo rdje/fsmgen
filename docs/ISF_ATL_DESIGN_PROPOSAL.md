@@ -2,8 +2,10 @@
 
 Status: closed ATL v0 design tree; bounded public contract partially implemented.
 
-Task-tree owner:
+Historical task-tree record:
 [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
+That tree is closed; future ATL behavior changes need new task-tree leaves
+before implementation.
 
 ## Purpose
 

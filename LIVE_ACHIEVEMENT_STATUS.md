@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Backlog owner wording synced
+- Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` and closed the task tree.
+- The mdBook feature backlog and ATL design proposal now describe the closed
+  repeat-body activation and ATL trees as historical records, while future
+  behavior needs new task-tree leaves before code.
+- Added focused audit coverage for that wording.
+- No compiler behavior changed.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-22: R14 — Backlog owner truth-sync tree selected
 - Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.1`.
 - Activated the active R14 task tree for mdBook backlog owner truth

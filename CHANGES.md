@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Backlog owner wording synced
+- Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` and closed the task tree.
+- The mdBook feature backlog now distinguishes historical task-tree records
+  from current ownership for remaining repeat-body activation and ATL backlog.
+- The ATL design proposal uses the same historical-record wording and points
+  future ATL behavior changes at new task-tree leaves.
+- Added audit coverage so the book-facing backlog cannot reintroduce closed
+  task trees as current owners.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Backlog owner truth-sync tree selected
 - Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.1`.
 - Activated a new R14 task tree for mdBook feature-backlog wording that still

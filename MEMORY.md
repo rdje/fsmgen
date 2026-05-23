@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Backlog owner wording synced
+- Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` and closed the task tree.
+- The mdBook feature backlog now labels the closed repeat-body activation and
+  ATL task trees as historical task-tree records, not current owners for
+  remaining backlog behavior.
+- The ATL design proposal now uses the same historical-record wording and
+  states that future ATL behavior changes need new task-tree leaves.
+- Added focused audit coverage in `t/1305-isf-book-feature-matrix-audit.t`
+  to reject stale current-owner wording.
+- No parser, scheduler, report, generated artifact, or HDL behavior changed.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Backlog owner truth-sync tree selected
 - Completed `ISF-BACKLOG-OWNER-TRUTH-SYNC.1`.
 - Activated a new R14 documentation-maintenance task tree for mdBook feature

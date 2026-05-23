@@ -250,8 +250,10 @@ value to a transaction input port and `(bind ...)` it as runtime data.
 
 Status: partially shipped; broader repeat-body child activation remains backlog.
 
-Task-tree owner for the remaining backlog:
+Historical task-tree record:
 [`ISF-REPEAT-BODY-CHILD-ACTIVATION`](../../tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
+That tree is closed; future repeat-body child-activation behavior needs a new
+task-tree leaf before implementation.
 
 Repeat-body local `(do child)`, top-level when-body nested repeat local or
 generated-child `(do child)`, top-level when-body nested repeat
@@ -788,8 +790,10 @@ under the selected ATL v0 public contract. The owning task tree is closed;
 remaining ATL behavior changes need a new task-tree leaf before
 implementation.
 
-Task-tree owner:
+Historical task-tree record:
 [ISF-ACTOR-NETWORK-ORCHESTRATION](../../tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
+That tree is closed; future ATL behavior changes need a new task-tree leaf
+before implementation.
 
 Concrete design proposal:
 [ISF_ATL_DESIGN_PROPOSAL](../../ISF_ATL_DESIGN_PROPOSAL.md).

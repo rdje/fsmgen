@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Backlog ownership wording is auditable
+- `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` changes ownership wording, not behavior.
+- Closed task trees are still linked as historical records because they
+  contain useful shipped-slice decisions and verification evidence.
+- Current ownership for future behavior is deliberately not assigned to closed
+  trees. Future repeat-body activation or ATL behavior still needs a new
+  task-tree leaf before implementation.
+- `t/1305-isf-book-feature-matrix-audit.t` now rejects the stale
+  `Task-tree owner:` label in the book backlog and ATL design proposal.
+
 ## 2026-05-22: Closed task trees are historical evidence
 - `ISF-BACKLOG-OWNER-TRUTH-SYNC.1` selects a documentation-maintenance slice
   before the next behavior implementation.

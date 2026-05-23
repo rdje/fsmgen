@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-BACKLOG-OWNER-TRUTH-SYNC` | `active` | `R14` | `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` | [docs/tasks/ISF-BACKLOG-OWNER-TRUTH-SYNC.md](docs/tasks/ISF-BACKLOG-OWNER-TRUTH-SYNC.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-BACKLOG-OWNER-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-BACKLOG-OWNER-TRUTH-SYNC.md](docs/tasks/ISF-BACKLOG-OWNER-TRUTH-SYNC.md) |
 | `ISF-REPEAT-COUNT-SOURCE-BOUNDARY` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-COUNT-SOURCE-BOUNDARY.md](docs/tasks/ISF-REPEAT-COUNT-SOURCE-BOUNDARY.md) |
 | `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.md](docs/tasks/ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.md) |
 | `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.md](docs/tasks/ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.md) |

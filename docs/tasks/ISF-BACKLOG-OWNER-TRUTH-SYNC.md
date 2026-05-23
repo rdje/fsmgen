@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-BACKLOG-OWNER-TRUTH-SYNC`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -38,7 +38,7 @@ task trees have closed.
 ## Task Tree
 
 - ID: `ISF-BACKLOG-OWNER-TRUTH-SYNC`
-  Status: `active`
+  Status: `done`
   Goal: `Synchronize book-facing backlog task-tree ownership wording.`
   Children: `ISF-BACKLOG-OWNER-TRUTH-SYNC.1`,
   `ISF-BACKLOG-OWNER-TRUTH-SYNC.2`
@@ -53,20 +53,22 @@ task trees have closed.
   Commit: `pending commit`
 
 - ID: `ISF-BACKLOG-OWNER-TRUTH-SYNC.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Sync the mdBook backlog owner wording and add audit coverage.`
   Acceptance: `The repeat-body child activation and ATL backlog sections keep
   historical links but say future behavior changes need new task-tree leaves;
   the focused book audit rejects current-owner wording that points at closed
   task trees; mdBook, focused audits, and diff checks pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`;
+  `prove -Iperl t/1305-isf-book-feature-matrix-audit.t`; `mdbook build
+  docs/book`; `git diff --check`; public/doc audits
+  Commit: `pending commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` | `pending` | The selection leaf is complete; the book/audit truth sync is the executable frontier. |
+| | | | No remaining frontier; tree is closed. |
 
 ## Decisions
 
@@ -90,15 +92,18 @@ task trees have closed.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-BACKLOG-OWNER-TRUTH-SYNC.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-22` | `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` | `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `book/design wording and audit checks passed; no behavior changed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-BACKLOG-OWNER-TRUTH-SYNC.1` | `this commit: ISF-BACKLOG-OWNER-TRUTH-SYNC.1: select backlog owner truth sync` | `selects the book-facing backlog owner wording sync` |
-| `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` | `pending` | `pending` |
+| `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` | `this commit: ISF-BACKLOG-OWNER-TRUTH-SYNC.2: sync backlog owner wording` | `syncs book/design wording and adds audit coverage` |
 
 ## Changelog
 
 - `2026-05-22`: Created task tree and selected the book-facing backlog owner
   truth-sync frontier.
+- `2026-05-22`: Synchronized book/design ownership wording, added audit
+  coverage, and closed the tree.
