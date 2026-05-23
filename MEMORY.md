@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Output-bundle member list shipped
+- Completed `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` and closed the task tree.
+- `output_bundle` resources now accept explicit `(members output...)`
+  subclauses naming declared actor output ports.
+- Parser validation rejects malformed members, duplicate members, member lists
+  on non-`output_bundle` resources, and members that do not name declared actor
+  outputs.
+- Lowering preserves the existing one-cycle static `priority` grant model for
+  declared rule users. When an explicit member list is present, each listed
+  output must be written by at least one bound rule user, and bound rule users
+  may not write declared outputs outside the list.
+- Schedule reports now include `members` on every `resource_arbitration[]`
+  entry. The array is empty when there is no explicit member list and carries
+  declared output names for explicit output bundles.
+- Input ports, internal storage, aggregate paths, actor-network endpoints,
+  output-target users, transaction users, named-drive users, route mux/storage,
+  fairness, hold/release, multi-capacity resources, and `round_robin` remain
+  deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused resource/public/spec/book tests
+  with `Files=10, Tests=342`; `mdbook build docs/book`; fixture expectation
+  sync checks with `Files=3, Tests=7`; broad
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1659`;
+  post-closure public/doc audits with `Files=6, Tests=347`; and
+  `git diff --check`.
+
 ## 2026-05-23: Output-bundle member list selected
 - Completed selection work for `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1`.
 - Activated a new R14 task tree for explicit `output_bundle` member-list
@@ -31,8 +58,8 @@ This is the live continuity document for fast session recovery after crashes, re
   `transaction_start`, `child_instance`, `storage_port`, `round_robin`,
   transaction users, named-drive users, output-target users, dynamic resource
   names, multi-capacity resources, fairness state, hold/release semantics,
-  route mux/storage, and explicit output-bundle member-list syntax remain
-  deferred.
+  and route mux/storage remain deferred. Explicit output-bundle member-list
+  syntax later shipped in `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2`.
 - Synchronized the ISF spec, downstream integration handoff, public contract,
   mdBook, roadmap status, task index, and live docs.
 - Validation passed: syntax checks; focused resource/public/spec/book tests
@@ -55,8 +82,9 @@ This is the live continuity document for fast session recovery after crashes, re
 - `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
   `storage_port`, `round_robin`, transaction users, named-drive users,
   output-target users, dynamic resource names, multi-capacity resources,
-  fairness state, hold/release semantics, route mux/storage, and explicit
-  output-bundle member-list syntax remain deferred.
+  fairness state, hold/release semantics, and route mux/storage remain
+  deferred. Explicit output-bundle member-list syntax later shipped in
+  `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2`.
 - No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
   behavior changed.
 

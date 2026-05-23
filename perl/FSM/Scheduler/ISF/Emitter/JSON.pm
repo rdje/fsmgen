@@ -965,6 +965,7 @@ sub _resource_arbitration_summary($self, $ir) {
                 arbiter       => $_->{arbiter},
                 user          => $_->{user},
                 user_kind     => 'rule',
+                members       => [@{$_->{members} || []}],
                 suppressed_by => [@{$_->{higher} || []}],
             }
         } @{$ir->{resource_arbitration}{grants} || []}

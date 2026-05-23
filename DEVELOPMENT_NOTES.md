@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Output-bundle members validate intent, not routing
+- `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` implements explicit `(members output...)`
+  for `output_bundle` resources as a validation/reporting surface over the
+  already shipped priority rule-user grant.
+- The lowerer deliberately checks only declared actor output writes. If a
+  bound rule writes a declared output outside the list, or a listed output is
+  never written by any bound rule, the resource fails closed instead of
+  silently advertising inaccurate bundle ownership.
+- The grant still gates the whole bound rule DT. That keeps timing stable and
+  avoids inventing route mux/storage or output-target-user semantics under the
+  name of a member list.
+
 ## 2026-05-23: Output-bundle members are review evidence first
 - `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1` selects explicit member-list syntax as the
   next resource slice because `output_bundle` arbitration now exists but the

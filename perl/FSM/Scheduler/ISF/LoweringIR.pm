@@ -6882,6 +6882,7 @@ sub _apply_priority_rule_user_resource_arbitration {
     my %rule_dt = map {
         (($_->{kind} // '') eq 'rule') ? ($_->{name} => $_) : ()
     } @{$ir->{dt_blocks} || []};
+    my %actor_outputs = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
     my %original_guard = map {
         $_ => (_guard_condition_expr($rule_dt{$_}{dte_guard}) // '1')
     } keys %rule_dt;
@@ -6915,6 +6916,14 @@ sub _apply_priority_rule_user_resource_arbitration {
                 "user '$user' is not a lowered rule",
             ) unless $rule_dt{$user};
         }
+
+        my @members = @{$resource->{members} || []};
+        _validate_output_bundle_member_coverage(
+            $resource,
+            \@users,
+            \%rule_dt,
+            \%actor_outputs,
+        ) if $kind eq 'output_bundle' && @members;
 
         for my $left_idx (0 .. $#users) {
             my $left = $users[$left_idx];
@@ -6954,6 +6963,7 @@ sub _apply_priority_rule_user_resource_arbitration {
                 arbiter  => $arbiter,
                 user     => $user,
                 higher   => [@higher],
+                members  => [@members],
             };
             push @{$dt->{resource_grants}}, {
                 resource => $resource_name,
@@ -6975,6 +6985,39 @@ sub _apply_priority_rule_user_resource_arbitration {
 sub _resource_kind_supports_priority_rule_users {
     my ($kind) = @_;
     return defined($kind) && ($kind eq 'rule_slot' || $kind eq 'output_bundle');
+}
+
+sub _validate_output_bundle_member_coverage {
+    my ($resource, $users, $rule_dt, $actor_outputs) = @_;
+    my $resource_name = $resource->{name} // '<unnamed>';
+    my @members = @{$resource->{members} || []};
+    my %members = map { $_ => 1 } @members;
+    my %written_members;
+
+    for my $user (@$users) {
+        my $dt = $rule_dt->{$user} || next;
+        for my $assignment (@{$dt->{assignments} || []}) {
+            my $target = $assignment->{lhs};
+            next unless defined($target) && length($target);
+            next unless $actor_outputs->{$target};
+            _resource_arbitration_error(
+                'isf_output_bundle_member_mismatch',
+                $resource_name,
+                "rule user '$user' writes declared output '$target' outside explicit output_bundle members",
+            ) unless $members{$target};
+            $written_members{$target} = 1;
+        }
+    }
+
+    for my $member (@members) {
+        _resource_arbitration_error(
+            'isf_output_bundle_member_unwritten',
+            $resource_name,
+            "explicit output_bundle member '$member' is not written by any bound rule user",
+        ) unless $written_members{$member};
+    }
+
+    return 1;
 }
 
 sub _combine_rule_dte_with_resource_suppressors {

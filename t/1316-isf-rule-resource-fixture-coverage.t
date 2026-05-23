@@ -88,6 +88,7 @@ subtest 'rule/resource fixture lowers to expected scheduled FSM and report struc
                 arbiter => 'priority',
                 user => 'high',
                 user_kind => 'rule',
+                members => [],
                 suppressed_by => [],
             },
             {
@@ -96,6 +97,7 @@ subtest 'rule/resource fixture lowers to expected scheduled FSM and report struc
                 arbiter => 'priority',
                 user => 'low',
                 user_kind => 'rule',
+                members => [],
                 suppressed_by => ['high'],
             },
         ],

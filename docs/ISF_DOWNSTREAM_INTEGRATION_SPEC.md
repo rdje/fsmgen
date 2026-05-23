@@ -1,7 +1,7 @@
 # ISF Downstream Integration Specification
 
 Status: `bounded_public`
-Document version: `2026-05-18`
+Document version: `2026-05-23`
 ISF source specification: `.isf` specification v0.6
 Primary audience: SPECFORGE and other tools that emit, validate, inspect, or
 consume FSMGen Intent Scheduling Format sources and reports.
@@ -1742,6 +1742,7 @@ Resource arbitration:
   (resource response_outputs
     (kind output_bundle)
     (arbiter priority)
+    (members valid ready)
     (users rule_a rule_b)))
 ```
 
@@ -1749,7 +1750,14 @@ Rules:
 
 - Current enforced resource kinds are `rule_slot` and `output_bundle` with
   `priority` arbitration for declared rule users.
+- `output_bundle` resources may include `(members output...)`; every member
+  must name a declared actor output port. When members are explicit, every
+  listed member must be written by at least one bound rule user, and no bound
+  rule user may write a declared output outside the list.
 - Reports expose `resource_arbitration[]`.
+- Each `resource_arbitration[]` entry includes `resource`, `kind`, `arbiter`,
+  `user`, `user_kind`, `members`, and `suppressed_by`. `members` is an array
+  and is empty when the resource has no explicit member list.
 - Additional resource kinds may be cataloged as backlog but are not enforced
   unless listed as enforced by the public contract.
 
@@ -2970,9 +2978,10 @@ metadata, lower-priority rule gating by a higher-priority rule, and delayed
 completion pulse behavior.
 
 Dedicated resource arbitration tests now cover the shipped priority arbiter
-for both `rule_slot` and `output_bundle`. The fixture above remains a
-`rule_slot` fixture; it does not claim round-robin, weighted, token bucket, or
-broader resource-kind support.
+for both `rule_slot` and `output_bundle`, including explicit output-bundle
+member-list validation and `resource_arbitration[].members` report evidence.
+The fixture above remains a `rule_slot` fixture; it does not claim
+round-robin, weighted, token bucket, or broader resource-kind support.
 
 The stage/contract fixture is covered by
 `t/1317-isf-stage-contract-fixture-coverage.t`, which proves strict schedule

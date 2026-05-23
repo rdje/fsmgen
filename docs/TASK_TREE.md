@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-OUTPUT-BUNDLE-MEMBER-LIST` | `active` | `R14` | `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` | [docs/tasks/ISF-OUTPUT-BUNDLE-MEMBER-LIST.md](docs/tasks/ISF-OUTPUT-BUNDLE-MEMBER-LIST.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-OUTPUT-BUNDLE-MEMBER-LIST` | `done` | `R14` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-MEMBER-LIST.md](docs/tasks/ISF-OUTPUT-BUNDLE-MEMBER-LIST.md) |
 | `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.md](docs/tasks/ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.md) |
 | `ISF-TRANSACTION-OVER-RULE-PRIORITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md](docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md) |
 | `ISF-ASSEMBLE-STATIC-PART-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ASSEMBLE-STATIC-PART-WIDTHS.md](docs/tasks/ISF-ASSEMBLE-STATIC-PART-WIDTHS.md) |

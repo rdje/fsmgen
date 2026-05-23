@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Output-bundle member list shipped
+- Completed `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` and closed the task tree.
+- `output_bundle` resources now accept explicit `(members output...)`
+  subclauses naming declared actor output ports.
+- Parser validation rejects malformed, duplicate, non-output, and
+  wrong-kind member lists before actor-shell handoff.
+- Lowering keeps the existing one-cycle static priority grant model and fails
+  closed when an explicit member list does not match bound rule output writes.
+- Schedule reports now include `members` on `resource_arbitration[]` entries;
+  the array is empty unless an explicit output-bundle member list is present.
+- Input ports, internal storage, aggregate paths, actor-network endpoints,
+  output-target users, transaction users, named-drive users, route mux/storage,
+  fairness, hold/release, multi-capacity resources, and `round_robin` remain
+  deferred.
+- Validation passed: syntax checks; focused resource/public/spec/book tests
+  with `Files=10, Tests=342`; `mdbook build docs/book`; fixture expectation
+  sync checks with `Files=3, Tests=7`; broad
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1659`;
+  post-closure public/doc audits with `Files=6, Tests=347`; and
+  `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-23: R14 — Output-bundle member list selected
 - Completed selection work for `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1`.
 - Activated the active R14 task tree for explicit `output_bundle`

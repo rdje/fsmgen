@@ -1004,13 +1004,14 @@ The parser boundary for resource and priority metadata is checked by
 so malformed `(resources ...)`, actor-level `(priority lhs over rhs)`, and
 rule-local `(priority over other_rule)` forms are rejected before an actor
 shell is returned. Current parser metadata carries resource names, arbiter
-strings, and optional resource-kind/user metadata. A resource name is the
+strings, and optional resource-kind/user/member metadata. A resource name is the
 author-defined instance handle; the resource kind is the public registry entry
 that says what type of shareable thing the instance represents. The enforced
 resource kinds are `rule_slot`, a one-cycle mutual-exclusion slot for rule
-users, and `output_bundle`, a named bundle of actor outputs or LHS targets for
-rule users. Both shipped kinds use the static `priority` arbiter today. The
-current shareable resource registry is:
+users, and `output_bundle`, a named bundle of actor outputs for rule users.
+`output_bundle` may carry explicit `(members output...)` metadata naming
+declared actor output ports. Both shipped kinds use the static `priority`
+arbiter today. The current shareable resource registry is:
 `rule_slot` (shipped for `priority` arbitration), `output_bundle` (shipped for
 `priority` arbitration), `interface_bundle`, `named_drive`,
 `transaction_start`, `child_instance`, and `storage_port`. The non-shipped
@@ -1027,7 +1028,8 @@ discover the current values through `resource_arbiter_values`,
 The first resource-arbitration path is checked by
 [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
 for parser metadata, `rule_slot` and `output_bundle` scheduled `.fsm` DTE
-gating, HDL handoff, and fail-closed unsupported arbitration cases.
+gating, output-bundle member-list coverage, HDL handoff, and fail-closed
+unsupported arbitration cases.
 The first rule/transaction priority path is checked by
 [t/1219-isf-rule-transaction-priority.t](../t/1219-isf-rule-transaction-priority.t)
 for accepted rule-over-transaction suppression, accepted transaction-over-rule
@@ -2483,7 +2485,7 @@ compile_issues with no nonfatal issues: empty array
 compatible_fanin_groups entries: kind, domain, sources, optional target/value keys
 compatible_fanin_groups source entries: same bounded source keys as compile_issues
 priority_resolutions entries: target, winner, winner_kind, loser, loser_kind
-resource_arbitration entries: resource, kind, arbiter, user, user_kind, suppressed_by
+resource_arbitration entries: resource, kind, arbiter, user, user_kind, members, suppressed_by
 library_uses entries: library, alias, export, kind, instance, module, scheduled_fsm, parameters, bindings
 library_uses parameter entries: name, source, value
 library_uses binding entries: role, library_name, parent_name, width
@@ -2758,8 +2760,11 @@ Successful arbitration metadata uses top-level `priority_resolutions` and
 target-local suppressions with bounded winner/loser owner names and owner
 kinds. `resource_arbitration` records static resource grant-shaping decisions
 for enforced resources, including the resource name, resource kind, arbiter,
-rule user, and higher-priority users that can suppress that user's grant. These
-entries describe the lowering decision, not per-cycle runtime grant values.
+rule user, explicit member list, and higher-priority users that can suppress
+that user's grant. `members` is an array; it is empty when the resource has no
+explicit member list and contains declared actor output names for explicit
+output-bundle members. These entries describe the lowering decision, not
+per-cycle runtime grant values.
 Raw `assignment_provenance`, activation context, assignment indexes, and
 priority/resource suppression bookkeeping remain non-public `LoweringIR`
 internals unless a later slice deliberately advertises a narrower field.

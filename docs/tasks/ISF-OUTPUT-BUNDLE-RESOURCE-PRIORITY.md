@@ -32,6 +32,8 @@ current report key family.
   dynamic resource names, multi-capacity resources, fairness state, hold/release
   semantics, or per-resource route mux/storage.
 - Do not add a new output-bundle member-list syntax in this tree.
+  `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` later ships declared-output member lists
+  as a separate task tree.
 - Do not change shipped `rule_slot` behavior, priority declarations, or
   rule/transaction priority conflict handling.
 
@@ -102,12 +104,17 @@ current report key family.
 - `2026-05-23`: Keep the first `output_bundle` surface rule-user-only. The
   current grammar names a resource and its users, but it does not name bundle
   members separately. Broader target-member syntax and output-target users
-  remain deferred until their ownership and diagnostics are explicit.
+  remain deferred for this tree until their ownership and diagnostics are
+  explicit. `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` later ships explicit
+  declared-output member lists.
 - `2026-05-23`: Ship `output_bundle` by reusing the existing static
   priority grant shape for declared rule users. This intentionally gates the
   whole losing rule DT, just like `rule_slot`, and keeps explicit bundle member
   lists, output-target users, route mux/storage, and hold/release semantics
   deferred.
+- `2026-05-23`: `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` later ships the explicit
+  declared-output member list and adds `members` to
+  `resource_arbitration[]`, while preserving this tree's grant timing.
 
 ## Open Questions
 

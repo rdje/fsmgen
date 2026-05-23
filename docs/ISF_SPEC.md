@@ -452,7 +452,8 @@ Additional actor clauses with mixed parser/scheduler behavior:
   behavior.
 - `(resources ...)`, structurally validated as resource entries with
   `(arbiter priority|round_robin)` plus optional `(kind ...)` and
-  `(users ...)`; `rule_slot` + `priority` resources are scheduler-enforced.
+  `(users ...)`/`(members ...)`; `rule_slot` + `priority` and
+  `output_bundle` + `priority` rule-user resources are scheduler-enforced.
 - actor-level `(priority lhs over rhs)`
 
 Deprecated compatibility:
@@ -3420,12 +3421,15 @@ broader resource arbitration remain deferred.
 
 `(resources ...)` entries are structurally validated as resource entries with
 non-empty scalar names, an `(arbiter priority|round_robin)` subclause, and
-optional `(kind ...)` and `(users ...)` subclauses. Duplicate resource names,
-duplicate resource subclauses, duplicate users, malformed kinds, malformed
-users, and unknown `rule_slot` or `output_bundle` users are rejected before
-scheduled `.fsm` emission. `(resources ...)` is an actor-level singleton
-clause, so repeated resources blocks are rejected instead of merged or
-overwritten. Resource
+optional `(kind ...)`, `(users ...)`, and `(members ...)` subclauses.
+Duplicate resource names, duplicate resource subclauses, duplicate users,
+duplicate members, malformed kinds, malformed users, malformed members,
+unknown `rule_slot` or `output_bundle` users, and output-bundle members that
+are not declared actor output ports are rejected before scheduled `.fsm`
+emission. `(members ...)` is accepted only for `(kind output_bundle)` in the
+current shipped surface. `(resources ...)` is an actor-level singleton clause,
+so repeated resources blocks are rejected instead of merged or overwritten.
+Resource
 semantics use a growable catalog of shareable resource kinds. The resource name
 is the author-defined instance handle; the kind says what is being shared; the
 `arbiter` says how requesters are selected. The table below is the current
@@ -3443,7 +3447,7 @@ Current shareable resource registry:
 | Kind | Status | Meaning |
 | --- | --- | --- |
 | `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
-| `output_bundle` | shipped for `priority` arbitration | A group of actor outputs or LHS targets with rule users. A grant enables the whole winning bound rule DT for that cycle. |
+| `output_bundle` | shipped for `priority` arbitration | A group of actor outputs with rule users. A grant enables the whole winning bound rule DT for that cycle; optional explicit members name declared actor output ports. |
 | `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
 | `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
 | `transaction_start` | backlog | The start/request fan-in for one transaction. |
@@ -3458,17 +3462,22 @@ ship.
 The shipped resource-arbitration implementation covers priority-arbitrated
 `rule_slot` and `output_bundle` rule users. The source shape keeps binding
 centralized under `(resources ...)` by extending a resource entry with
-`(kind rule_slot)` or `(kind output_bundle)` and `(users rule_a rule_b ...)`
-subclauses. For those covered cases, each bound rule requests the resource
-when its normalized rule guard is true. Rule-local `(priority over other_rule)`
-and actor-level `(priority lhs over rhs)` edges choose the active winner when
-the endpoints are bound rules of the same resource. The generated grant gates
-the whole lowered rule DT DTE, while existing same-target priority suppression
-remains assignment-local. Cycles, incomplete ordering among potentially
-simultaneous bound users, ambiguous future user namespaces, unsupported
-resource kinds, and `round_robin` resources with bound users fail closed.
+`(kind rule_slot)` or `(kind output_bundle)`, `(users rule_a rule_b ...)`, and
+for output bundles optionally `(members output_a output_b ...)` subclauses.
+For those covered cases, each bound rule requests the resource when its
+normalized rule guard is true. Rule-local `(priority over other_rule)` and
+actor-level `(priority lhs over rhs)` edges choose the active winner when the
+endpoints are bound rules of the same resource. The generated grant gates the
+whole lowered rule DT DTE, while existing same-target priority suppression
+remains assignment-local. If an explicit output-bundle member list is present,
+each member must be a declared actor output port, each listed member must be
+written by at least one bound rule user, and no bound rule user may write a
+declared output outside the list. Cycles, incomplete ordering among
+potentially simultaneous bound users, ambiguous future user namespaces,
+unsupported resource kinds, member/list mismatches, unwritten explicit
+members, and `round_robin` resources with bound users fail closed.
 Transaction users, named-drive users, output-target users, child-instance
-users, storage-port users, explicit output-bundle member-list syntax,
+users, storage-port users, non-output output-bundle member domains,
 multi-capacity resources, and transaction-lifetime hold/release semantics
 remain deferred.
 
@@ -4296,10 +4305,12 @@ Successful priority/resource decisions are emitted as top-level
 `priority_resolutions` and `resource_arbitration` arrays. A
 `priority_resolutions` entry records the target plus bounded winner/loser owner
 names and owner kinds for target-local suppression. A `resource_arbitration`
-entry records an enforced resource's name, kind, arbiter, bound rule user, and
-the higher-priority rule users that can suppress that user's grant. These
-entries describe the static lowering decision; they are not per-cycle runtime
-grant traces.
+entry records an enforced resource's name, kind, arbiter, bound rule user,
+explicit member list, and the higher-priority rule users that can suppress
+that user's grant. The `members` array is empty for resources without an
+explicit member list and contains declared actor output names for explicit
+output bundles. These entries describe the static lowering decision; they are
+not per-cycle runtime grant traces.
 Raw assignment provenance remains a private `LoweringIR` implementation
 detail. Public reports expose only bounded substitutes: capped source
 summaries in `compile_issues[]`, compatible fan-in facts in
@@ -5185,8 +5196,9 @@ Focused tests:
   port-binding handoffs, named-drive handoff, and spawn/generated-`do`
   parameter overrides for the shipped fixture set.
 - Enforced resource arbitration beyond the shipped priority-arbitrated
-  `rule_slot` case: `round_robin`, `output_bundle`, `interface_bundle`,
-  `named_drive`, `transaction_start`, `child_instance`, `storage_port`,
+  `rule_slot` and `output_bundle` rule-user cases: `round_robin`,
+  `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
+  `storage_port`, output-target users, broader output-bundle member domains,
   multi-capacity resources, dynamic resource names, and transaction lifetime
   ownership remain deferred.
 - Priority resolution beyond the currently shipped same-target rule/rule,

@@ -61,7 +61,7 @@ use constant {
 #                          # handshake clauses are validated then ignored
 #     transactions  => [ { name => ..., ports => { inputs => [...], outputs => [...] }, clauses => [...] }, ... ],
 #     rules         => [ { name => ..., when => ..., actions => [...] }, ... ],
-#     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...] }, ... ],
+#     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...], members => [...] }, ... ],
 #     storage       => [ { kind => "var"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
 #     constants     => [ { name => ..., value => ... }, ... ],
 #     type_declarations => [ ... ],
@@ -6637,7 +6637,7 @@ sub _parse_resources($self, $clause) {
         my $res = $clause->[$i];
         confess "Error: resource must be a list\n" unless ref($res) eq 'ARRAY';
         my ($kw, $name, @forms) = @$res;
-        confess "Error: resource entries require '(resource name (arbiter $RESOURCE_ARBITER_SYNTAX) [(kind kind)] [(users rule...)])'\n"
+        confess "Error: resource entries require '(resource name (arbiter $RESOURCE_ARBITER_SYNTAX) [(kind kind)] [(users rule...)] [(members output...)])'\n"
             unless @$res >= 3
                 && defined($kw)
                 && !ref($kw)
@@ -6651,7 +6651,9 @@ sub _parse_resources($self, $clause) {
         my %seen_subclause;
         my ($arbiter, $kind);
         my @users;
+        my @members;
         my %seen_users;
+        my %seen_members;
 
         for my $form (@forms) {
             confess "Error: resource '$name' subclauses must be list forms\n"
@@ -6695,6 +6697,19 @@ sub _parse_resources($self, $clause) {
                 next;
             }
 
+            if ($head eq 'members') {
+                confess "Error: resource '$name' members requires '(members output...)'\n"
+                    unless @$form >= 2;
+                for my $member (@{$form}[1 .. $#$form]) {
+                    confess "Error: resource '$name' members must be scalar names\n"
+                        unless defined($member) && !ref($member) && length($member);
+                    confess "Error: duplicate resource '$name' member '$member'\n"
+                        if $seen_members{$member}++;
+                    push @members, $member;
+                }
+                next;
+            }
+
             confess "Error: resource '$name' has unsupported subclause '$head'\n";
         }
 
@@ -6702,10 +6717,13 @@ sub _parse_resources($self, $clause) {
             unless defined($arbiter);
         confess "Error: resource '$name' with users requires an enforced '(kind ...)' such as '(kind rule_slot)' or '(kind output_bundle)'\n"
             if @users && !defined($kind);
+        confess "Error: resource '$name' members are supported only with '(kind output_bundle)'\n"
+            if @members && (($kind // '') ne 'output_bundle');
 
         my %resource = (name => $name, arbiter => $arbiter);
         $resource{kind} = $kind if defined($kind);
         $resource{users} = \@users if @users;
+        $resource{members} = \@members if @members;
         push @resources, \%resource;
     }
     return \@resources;
@@ -6714,9 +6732,21 @@ sub _parse_resources($self, $clause) {
 sub _validate_resource_user_targets($self, $actor) {
     my $actor_name = $actor->{actor_name};
     my %rule_names = map { $_->{name} => 1 } @{$actor->{rules} || []};
+    my %output_names = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
 
     for my $resource (@{$actor->{resources} || []}) {
         my $kind = $resource->{kind} // '';
+        if (@{$resource->{members} || []}) {
+            confess "Error: resource '$resource->{name}' members are supported only with '(kind output_bundle)' in actor '$actor_name'\n"
+                unless $kind eq 'output_bundle';
+            for my $member (@{$resource->{members} || []}) {
+                confess "Error: resource '$resource->{name}' member '$member' is not a declared actor output in actor '$actor_name'\n"
+                    unless defined($member)
+                        && !ref($member)
+                        && $output_names{$member};
+            }
+        }
+
         next unless $kind eq 'rule_slot' || $kind eq 'output_bundle';
         for my $user (@{$resource->{users} || []}) {
             confess "Error: resource '$resource->{name}' user '$user' is not a declared rule in actor '$actor_name'\n"

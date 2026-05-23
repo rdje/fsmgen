@@ -1,6 +1,35 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Output-bundle member list shipped
+- Completed `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` and closed the task tree.
+- `output_bundle` resources now accept explicit `(members output...)`
+  subclauses for declared actor output ports.
+- The parser rejects malformed members, duplicate members, member lists on
+  non-`output_bundle` resources, and members that are not declared actor
+  outputs.
+- For an enforced priority-arbitrated `output_bundle` with members and rule
+  users, the lowerer fails closed if a bound rule writes a declared output
+  outside the member list or if a listed member is not written by any bound
+  rule.
+- The existing one-cycle static priority grant timing is unchanged.
+  `resource_arbitration[]` entries now include `members`; the array is empty
+  when no explicit member list is present and contains declared output names
+  for explicit output bundles.
+- Input ports, internal storage, aggregate paths, actor-network endpoints,
+  output-target users, transaction users, named-drive users, route mux/storage,
+  fairness, hold/release, multi-capacity resources, and `round_robin` remain
+  deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused resource/public/spec/book tests
+  with `Files=10, Tests=342`; `mdbook build docs/book`; fixture expectation
+  sync checks with `Files=3, Tests=7`; broad
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1659`;
+  post-closure public/doc audits with `Files=6, Tests=347`; and
+  `git diff --check`.
+
 ### R14 — Output-bundle member list selected
 - Completed selection work for `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1`.
 - Activated a new R14 task tree for explicit `output_bundle` member-list
@@ -30,8 +59,8 @@ This is the persistent technical change history for FSMGen.
   `transaction_start`, `child_instance`, `storage_port`, `round_robin`,
   transaction users, named-drive users, output-target users, dynamic resource
   names, multi-capacity resources, fairness state, hold/release semantics,
-  route mux/storage, and explicit output-bundle member-list syntax remain
-  deferred.
+  and route mux/storage remain deferred. Explicit output-bundle member-list
+  syntax later shipped in `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2`.
 - Synchronized the ISF spec, downstream integration spec, public contract,
   mdBook, roadmap status, task-tree docs, live achievement status, memory, and
   development notes.
@@ -53,8 +82,9 @@ This is the persistent technical change history for FSMGen.
 - `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
   `storage_port`, `round_robin`, transaction users, named-drive users,
   output-target users, dynamic resource names, multi-capacity resources,
-  fairness state, hold/release semantics, route mux/storage, and explicit
-  output-bundle member-list syntax remain deferred.
+  fairness state, hold/release semantics, and route mux/storage remain
+  deferred. Explicit output-bundle member-list syntax later shipped in
+  `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2`.
 - No compiler behavior changed.
 
 ### R14 — Transaction-over-rule priority shipped

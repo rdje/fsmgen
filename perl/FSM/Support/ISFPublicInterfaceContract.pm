@@ -1159,6 +1159,7 @@ sub isf_public_interface_schedule_report_resource_arbitration_keys {
             arbiter
             user
             user_kind
+            members
             suppressed_by
         ),
     ];

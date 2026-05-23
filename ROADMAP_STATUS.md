@@ -2,8 +2,24 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-OUTPUT-BUNDLE-MEMBER-LIST`.
-- Current frontier: `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 output-bundle member-list completion:
+  `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` shipped explicit `(members output...)`
+  syntax for `(kind output_bundle)` resources. Members must be unique scalar
+  declared actor output ports. When a priority-arbitrated `output_bundle` has
+  both members and declared rule users, lowering fails closed if a bound rule
+  writes a declared output outside the member list or if a listed member is
+  not written by any bound rule. The existing one-cycle static `priority`
+  grant model is unchanged, and schedule reports now include a bounded
+  `members` array on every `resource_arbitration[]` entry. `members` is empty
+  for resources without explicit members and carries declared output names for
+  explicit output bundles. Input ports, internal storage, aggregate paths,
+  actor-network endpoints, output-target users, transaction users,
+  named-drive users, route mux/storage, fan-in/fan-out, fairness state,
+  hold/release semantics, multi-capacity resources, and `round_robin` remain
+  deferred. The ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task tree, and live docs were synchronized.
 - Recent R14 output-bundle member-list selection:
   `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1` activated the next bounded R14 resource
   slice. The selected implementation path adds explicit
@@ -30,8 +46,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `named_drive`, `transaction_start`, `child_instance`, `storage_port`,
   `round_robin`, transaction users, named-drive users, output-target users,
   dynamic resource names, multi-capacity resources, fairness state,
-  hold/release semantics, route mux/storage, and explicit output-bundle
-  member-list syntax remain deferred. The ISF spec, downstream integration
+  hold/release semantics, and route mux/storage remain deferred. Explicit
+  declared-output member-list syntax later shipped in
+  `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2`. The ISF spec, downstream integration
   handoff, public contract, mdBook, roadmap status, task tree, and live docs
   were synchronized.
 - Recent R14 output-bundle resource priority selection:
@@ -45,9 +62,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `transaction_start`, `child_instance`, `storage_port`, `round_robin`,
   transaction users, named-drive users, output-target users, dynamic resource
   names, multi-capacity resources, fairness state, hold/release semantics,
-  route mux/storage, and explicit output-bundle member-list syntax remain
-  deferred. No parser, scheduler, report, generated artifact, HDL, CLI, or
-  public ISF behavior changed.
+  route mux/storage, and explicit output-bundle member-list syntax remained
+  deferred for this selection. `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` later shipped
+  explicit declared-output members. No parser, scheduler, report, generated
+  artifact, HDL, CLI, or public ISF behavior changed in this selection.
 - Recent R14 transaction-over-rule priority completion:
   `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` shipped the covered same-target data
   priority case where a transaction is declared higher priority than a rule.

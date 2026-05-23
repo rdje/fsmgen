@@ -84,6 +84,45 @@ subtest 'resource parser accepts the shared resource catalog values' => sub {
     );
 };
 
+subtest 'output_bundle members survive parsing and validate declared outputs' => sub {
+    my $actor = parse_source(<<'ISF');
+(actor output_bundle_member_metadata
+  (clock clk)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done)
+    (output valid)
+    (output err))
+  (transaction main (on start) (complete done))
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter priority)
+      (members valid err)
+      (users high low)))
+  (rule high a
+    (valid 1))
+  (rule low b
+    (err 1)))
+ISF
+
+    is_deeply(
+        $actor->{resources},
+        [
+            {
+                name    => 'response_outputs',
+                kind    => 'output_bundle',
+                arbiter => 'priority',
+                members => ['valid', 'err'],
+                users   => ['high', 'low'],
+            },
+        ],
+        'output_bundle member metadata is preserved',
+    );
+};
+
 subtest 'malformed resources are rejected before actor shell return' => sub {
     assert_parse_rejected(<<'ISF', 'malformed resource keyword', qr/resource entries require/);
 (actor bad_resource_keyword
@@ -111,6 +150,54 @@ ISF
   (resources
     (resource shared_bus (arbiter priority))
     (resource shared_bus (arbiter round_robin))))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'members require output_bundle kind', qr/resource 'shared_bus' members are supported only with '\(kind output_bundle\)'/);
+(actor members_on_rule_slot
+  (clock clk)
+  (interface (input start) (output done))
+  (transaction main (on start) (complete done))
+  (resources
+    (resource shared_bus
+      (kind rule_slot)
+      (arbiter priority)
+      (members done))))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'duplicate output_bundle member', qr/duplicate resource 'response_outputs' member 'done'/);
+(actor duplicate_output_bundle_member
+  (clock clk)
+  (interface (input start) (output done))
+  (transaction main (on start) (complete done))
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter priority)
+      (members done done))))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'input cannot be output_bundle member', qr/resource 'response_outputs' member 'start' is not a declared actor output/);
+(actor input_output_bundle_member
+  (clock clk)
+  (interface (input start) (output done))
+  (transaction main (on start) (complete done))
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter priority)
+      (members start))))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'unknown output_bundle member', qr/resource 'response_outputs' member 'missing' is not a declared actor output/);
+(actor unknown_output_bundle_member
+  (clock clk)
+  (interface (input start) (output done))
+  (transaction main (on start) (complete done))
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter priority)
+      (members missing))))
 ISF
 };
 

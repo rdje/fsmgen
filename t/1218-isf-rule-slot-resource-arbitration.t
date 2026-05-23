@@ -125,6 +125,7 @@ subtest 'priority output_bundle grant gates the lower-priority rule DT' => sub {
     (resource response_outputs
       (kind output_bundle)
       (arbiter priority)
+      (members valid err)
       (users high low)))
   (rule high a
     (valid 1))
@@ -148,6 +149,7 @@ ISF
                 arbiter  => 'priority',
                 user     => 'high',
                 higher   => [],
+                members  => ['valid', 'err'],
             },
             {
                 resource => 'response_outputs',
@@ -155,9 +157,10 @@ ISF
                 arbiter  => 'priority',
                 user     => 'low',
                 higher   => ['high'],
+                members  => ['valid', 'err'],
             },
         ],
-        'output_bundle grants preserve the existing resource arbitration IR shape',
+        'output_bundle grants preserve member evidence in the resource arbitration IR shape',
     );
 
     my $fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($source))->{files}{'output_bundle_priority.fsm'};
@@ -167,6 +170,62 @@ ISF
         'scheduled .fsm gates the whole low output-bundle rule DT with the priority grant',
     );
     assert_fsm_reaches_hdl($fsm, 'output_bundle_priority');
+};
+
+subtest 'explicit output_bundle members fail closed on rule output mismatch' => sub {
+    assert_lower_rejected(<<'ISF', 'bound rule writes output outside members', qr/isf_output_bundle_member_mismatch/);
+(actor output_bundle_member_mismatch
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done)
+    (output valid)
+    (output err))
+  (transaction main
+    (on start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter priority)
+      (members valid)
+      (users high low)))
+  (rule high a
+    (valid 1))
+  (rule low b
+    (err 1)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'explicit member is not written by any user', qr/isf_output_bundle_member_unwritten/);
+(actor output_bundle_member_unwritten
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input a)
+    (input b)
+    (output done)
+    (output valid)
+    (output err))
+  (transaction main
+    (on start)
+    (complete done))
+  (priority high over low)
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter priority)
+      (members valid err)
+      (users high low)))
+  (rule high a
+    (valid 1))
+  (rule low b
+    (valid 0)))
+ISF
 };
 
 subtest 'resource priority rejects incomplete and cyclic orderings' => sub {

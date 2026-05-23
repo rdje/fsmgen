@@ -41,6 +41,7 @@ my $source = <<'ISF';
     (resource response_outputs
       (kind output_bundle)
       (arbiter priority)
+      (members flag warn)
       (users high_bundle low_bundle)))
   (transaction main
     (on start)
@@ -116,7 +117,7 @@ sub assert_arbitration_projection {
     for my $entry (@{$report->{resource_arbitration}}) {
         is_deeply(
             [sort keys %$entry],
-            [sort qw(resource kind arbiter user user_kind suppressed_by)],
+            [sort qw(resource kind arbiter user user_kind members suppressed_by)],
             "$label resource arbitration entry is bounded",
         );
     }
@@ -126,9 +127,11 @@ sub assert_arbitration_projection {
     is($high->{kind}, 'rule_slot', "$label high grant names resource kind");
     is($high->{arbiter}, 'priority', "$label high grant names arbiter");
     is($high->{user_kind}, 'rule', "$label high grant names user kind");
+    is_deeply($high->{members}, [], "$label rule_slot grant has no member list");
     is_deeply($high->{suppressed_by}, [], "$label highest user has no suppressors");
 
     my $low = find_resource_entry($report, user => 'low');
+    is_deeply($low->{members}, [], "$label low rule_slot grant has no member list");
     is_deeply($low->{suppressed_by}, ['high'], "$label low user records higher suppressor");
 
     my $high_bundle = find_resource_entry($report, user => 'high_bundle');
@@ -136,9 +139,11 @@ sub assert_arbitration_projection {
     is($high_bundle->{kind}, 'output_bundle', "$label high output_bundle grant names resource kind");
     is($high_bundle->{arbiter}, 'priority', "$label high output_bundle grant names arbiter");
     is($high_bundle->{user_kind}, 'rule', "$label high output_bundle grant names user kind");
+    is_deeply($high_bundle->{members}, ['flag', 'warn'], "$label high output_bundle grant exposes members");
     is_deeply($high_bundle->{suppressed_by}, [], "$label highest output_bundle user has no suppressors");
 
     my $low_bundle = find_resource_entry($report, user => 'low_bundle');
+    is_deeply($low_bundle->{members}, ['flag', 'warn'], "$label low output_bundle grant exposes members");
     is_deeply($low_bundle->{suppressed_by}, ['high_bundle'], "$label low output_bundle user records higher suppressor");
 }
 
