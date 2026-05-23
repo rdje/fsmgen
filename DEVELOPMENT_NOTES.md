@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Actor-parameter-zero divisors are a fail-closed fact
+- `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1` selects a conservative
+  dynamic-divisor safety slice: actor-local scalar parameter defaults that
+  resolve to zero should be rejected when used as runtime division/modulo
+  divisors.
+- This is intentionally narrower than treating actor parameters as general
+  compile-time divisor proof. Rejecting zero defaults is safe even though
+  future generated-top or reusable-library use-site specialization may
+  override parameters; accepting nonzero defaults as proof would need a
+  separate specialization/range policy.
+- The implementation should reuse the existing parser-side runtime-expression
+  validation used for literal-zero and actor-constant-zero divisors so
+  diagnostics remain early and context-rich.
+
 ## 2026-05-22: Repeat actor-parameter counts are static width evidence
 - `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` ships actor-local scalar parameter
   defaults as transaction repeat count sources only when they resolve to

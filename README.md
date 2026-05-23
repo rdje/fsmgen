@@ -146,6 +146,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md` — completed `R14` task tree for targeted transaction-parameter repeat count diagnostics.
 - `docs/tasks/ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.md` — completed `R14` task tree for dynamic-divisor drive-expression coverage hardening.
 - `docs/tasks/ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.md` — completed `R14` task tree for dynamic-divisor control and bank expression coverage hardening.
+- `docs/tasks/ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.md` — active `R14` task tree for actor-parameter-zero dynamic-divisor safety.
 - `docs/tasks/ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.md` — completed `R14` roadmap-maintenance task tree for synchronizing stale next-PNT roadmap wording.
 - `docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md` — completed `R14` roadmap-maintenance task tree for synchronizing stale closed ATL frontier wording.
 - `docs/tasks/ISF-ATL-BACKLOG-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing stale ATL backlog prose.

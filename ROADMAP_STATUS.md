@@ -2,9 +2,20 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`; the next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+- Active task tree: `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO`.
+- Current frontier: `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` will implement
+  fail-closed dynamic-divisor safety for actor-local scalar parameter defaults
+  that resolve to zero. The selected boundary rejects only zero-valued actor
+  parameters used as runtime division/modulo divisors, while preserving
+  nonzero actor parameters, transaction parameters, dynamic scalar divisors,
+  nonzero literals, and nonzero actor constants under their shipped behavior.
+- Recent R14 dynamic-divisor actor-parameter-zero selection:
+  `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1` activates the dynamic-divisor
+  actor-parameter-zero safety tree. The selected implementation will extend
+  the shipped literal-zero and actor-constant-zero divisor validation path
+  only to actor-local scalar parameter defaults that resolve to zero; it does
+  not claim nonzero actor parameters prove every use-site specialization
+  nonzero, and it does not add runtime guards or expression rewrites.
 - Recent R14 repeat actor-parameter count completion:
   `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` shipped actor-local scalar parameter
   defaults that resolve to positive integers as transaction
@@ -5455,12 +5466,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`; the next PNT step must select or create the next
-  roadmap-aligned task tree before implementation.
-- Completion status: `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` closed the repeat
-  actor-parameter count tree after shipping actor-local scalar parameter
-  defaults as static transaction repeat count sources.
+- Active task tree: `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO`.
+- Current frontier: `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` will implement
+  the selected actor-parameter-zero divisor rejection.
+- Completion status: `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1` opened the
+  active R14 task tree after selecting zero-valued actor scalar parameters as
+  conservative fail-closed runtime division/modulo divisor facts.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

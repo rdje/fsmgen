@@ -1,5 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-23
+### R14 — Dynamic-divisor actor-parameter-zero safety selected
+- Completed selection work for
+  `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1`.
+- Activated a new R14 task tree for rejecting runtime division/modulo
+  divisors that name actor-local scalar parameter defaults resolving to zero.
+- The selected implementation will extend the shipped literal-zero and
+  actor-constant-zero divisor validation path only for zero-valued actor
+  parameters. Nonzero actor parameters, transaction parameters, dynamic scalar
+  divisors, nonzero literals, and nonzero actor constants keep their shipped
+  behavior.
+- No compiler behavior changed.
+
 ## 2026-05-22
 ### R14 — Repeat actor-parameter counts shipped
 - Completed `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` and closed the task tree.

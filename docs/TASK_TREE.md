@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO` | `active` | `R14` | `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` | [docs/tasks/ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.md](docs/tasks/ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.md) |
 
 ## Proposed Task Trees
 
@@ -353,6 +354,7 @@ as done work unless a future task reopens them.
 | Independent bank-store zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE` |
 | Dynamic divisor safety for runtime expression surfaces | `ISF-DYNAMIC-DIVISOR-SAFETY` |
 | Actor-constant zero divisor safety for runtime expression surfaces | `ISF-DYNAMIC-DIVISOR-CONSTANTS` |
+| Actor-parameter-zero divisor safety for runtime expression surfaces | `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO` |
 | Runtime dynamic-wait counter storage schedule-report roles | `ISF-DYNAMIC-WAIT-STORAGE-REPORTS` |
 | Generated activation handoff storage schedule-report roles | `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS` |
 | Generated activation start/done handoff storage schedule-report roles | `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS` |

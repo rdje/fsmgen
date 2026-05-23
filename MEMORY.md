@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Dynamic-divisor actor-parameter-zero safety selected
+- Completed selection work for
+  `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1`.
+- Activated a new R14 task tree for rejecting runtime division/modulo
+  divisors that name actor-local scalar parameter defaults resolving to zero.
+- The active frontier is `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2`.
+- The selected boundary is conservative: zero-valued actor parameters fail
+  closed as unsafe divisor facts, while nonzero actor parameters do not become
+  proof that every use-site specialization is nonzero.
+- Transaction parameters, arbitrary dynamic divisor proofs, generated runtime
+  divide guards, expression rewrites, and validation outside shipped ISF
+  runtime expression contexts remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-22: Repeat actor-parameter counts shipped
 - Completed `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` and closed the task tree.
 - Transaction repeat counts now accept actor-local scalar parameter defaults

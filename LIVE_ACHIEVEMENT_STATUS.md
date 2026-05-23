@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Dynamic-divisor actor-parameter-zero safety selected
+- Completed selection work for
+  `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1`.
+- Activated the active R14 task tree for rejecting runtime division/modulo
+  divisors that name actor-local scalar parameter defaults resolving to zero.
+- The active frontier is now `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Repeat actor-parameter counts shipped
 - Completed `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` and closed the task tree.
 - Transaction repeat counts now accept actor-local scalar parameter defaults
