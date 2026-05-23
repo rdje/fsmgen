@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Bank depths are the next static parameter slice
+- `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1` selects actor-owned bank storage
+  depths as the next bounded actor-parameter elaboration surface.
+- The selection follows the already shipped actor interface width, scalar
+  storage width, bank element width, and transaction-local port width slices,
+  while keeping the implementation boundary explicit because bank depth
+  changes the scalarized storage family and duplicate-name surface.
+- Only the owning actor shell's scalar parameter default is selected as depth
+  evidence. Use-site override specialization, generated-top
+  respecialization, actor constants, runtime signals, dynamic storage depth,
+  and arbitrary expressions remain separate policy work.
+
 ## 2026-05-23: Transaction port width parameters resolve before binding handoff
 - `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` resolves transaction-local
   `(ports ...)` `(width PARAM)` tokens in the parser after actor parameter

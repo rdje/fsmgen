@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS` | `active` | `R14` | `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` | [docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.md](docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.md) |
 
 ## Proposed Task Trees
 
@@ -290,6 +291,7 @@ as done work unless a future task reopens them.
 | Actor top-level interface actor-scalar-parameter widths | `ISF-INTERFACE-ACTOR-PARAM-WIDTHS` |
 | Actor-owned scalar storage actor-scalar-parameter widths | `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS` |
 | Actor-owned bank storage actor-scalar-parameter widths | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS` |
+| Actor-owned bank storage actor-scalar-parameter depths | `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS` |
 | Transaction-local port actor-scalar-parameter widths | `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS` |
 | Actor-level and await-local watchdog actor-scalar-parameter limits | `ISF-WATCHDOG-ACTOR-PARAM-LIMITS` |
 | Transaction repeat actor-scalar-parameter counts | `ISF-REPEAT-ACTOR-PARAM-COUNTS` |

@@ -2,9 +2,22 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`; the next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+- Active task tree: `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS`.
+- Current frontier: `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2`.
+- Recent R14 bank storage actor-parameter depth selection:
+  `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1` activated the next
+  parameter-driven storage tree. The selected first implementation slice is
+  intentionally narrow: only actor-owned storage bank
+  `(bank NAME (width W) (depth PARAM))` entries may use actor-local scalar
+  parameter defaults that resolve to positive integers. Transaction
+  parameters, actor constants, runtime interface signals, arbitrary
+  expressions, unknown names, zero-valued actor parameters, non-scalar actor
+  parameters, use-site override specialization, generated-top
+  respecialization, memory-array backend emission, dynamic storage depth,
+  bank access same-cycle policy changes, pointer-index semantic changes, and
+  ATL route mux/storage behavior remain deferred or fail-closed. No parser,
+  scheduler, report, generated artifact, HDL, CLI, or public ISF behavior
+  changed.
 - Recent R14 transaction port actor-parameter width completion:
   `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` shipped actor-local scalar
   parameter defaults as transaction-local `(ports ...)` input/output

@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Bank storage actor-parameter depths selected
+- Completed selection work for
+  `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1`.
+- Activated the active R14 task tree for actor-owned bank storage
+  `(depth PARAM)` declarations backed by actor-local scalar parameter defaults
+  resolving to positive integers.
+- The active frontier is now `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Transaction port actor-parameter widths shipped
 - Completed `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` and closed the task
   tree.

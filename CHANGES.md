@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Bank storage actor-parameter depths selected
+- Completed selection work for
+  `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1`.
+- Activated a new R14 task tree for accepting actor-local scalar parameter
+  defaults resolving to positive integers as actor-owned bank storage
+  `(bank NAME (width W) (depth PARAM))` depths.
+- The selected first implementation slice deliberately excludes
+  transaction-parameter-backed bank depths, actor constants, runtime interface
+  signals, arbitrary expressions, unknown names, zero-valued actor parameters,
+  non-scalar actor parameters, use-site override specialization,
+  generated-top respecialization, memory-array backend emission, dynamic
+  storage depth, bank access same-cycle policy changes, pointer-index
+  semantic changes, and ATL route mux/storage behavior.
+- No compiler behavior changed.
+
 ### R14 — Transaction port actor-parameter widths shipped
 - Completed `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` and closed the task
   tree.

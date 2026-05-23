@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Bank storage actor-parameter depths selected
+- Completed selection work for
+  `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1`.
+- Activated a new R14 task tree for actor-owned bank storage
+  `(bank NAME (width W) (depth PARAM))` declarations backed by actor-local
+  scalar parameter defaults resolving to positive integers.
+- The active frontier is `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2`.
+- The selected boundary is narrow: transaction-parameter-backed bank depths,
+  actor constants, runtime interface signals, arbitrary expressions, unknown
+  names, zero-valued actor parameters, non-scalar actor parameters, use-site
+  override specialization, generated-top respecialization, memory-array
+  backend emission, dynamic storage depth, bank access same-cycle policy
+  changes, pointer-index semantic changes, and ATL route mux/storage behavior
+  remain deferred or fail-closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-23: Transaction port actor-parameter widths shipped
 - Completed `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` and closed the task
   tree.
