@@ -14,6 +14,16 @@
 Make transaction-parameter repeat counts fail closed with a targeted
 diagnostic before scheduled `.fsm` emission.
 
+## Current Supersession Note
+
+This closed tree records the transaction-parameter diagnostic as shipped
+before actor-parameter repeat counts. The current public surface additionally
+accepts actor-local scalar parameter defaults that resolve to positive integer
+literals, as shipped by
+[ISF-REPEAT-ACTOR-PARAM-COUNTS](ISF-REPEAT-ACTOR-PARAM-COUNTS.md).
+Transaction parameters remain deferred and keep the targeted diagnostic,
+including when they shadow an actor parameter of the same name.
+
 ## Non-Goals
 
 - Do not implement actor-parameter or transaction-parameter repeat-count

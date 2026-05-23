@@ -290,11 +290,13 @@ activation-parameter override path. Actor-local scalar parameter defaults that
 resolve to non-negative integer literals are also legal static wait sources in
 the actor's own schedule. Actor-local scalar parameter defaults that resolve
 to positive integer literals are legal static transaction latency min/max
-sources and bounded eventual temporal-contract window sources in the actor's
-own schedule. Transaction parameters, non-scalar actor parameters, and
-use-site activation overrides are not latency-bound or contract-window
-constants and do not respecialize already-emitted fixed latency counter or
-temporal monitor logic.
+sources, bounded eventual temporal-contract window sources, actor-level and
+await-local watchdog limit sources, and transaction repeat count sources in
+the actor's own schedule. Transaction parameters, non-scalar actor parameters,
+and use-site activation overrides are not latency-bound, contract-window,
+watchdog-limit, or repeat-count constants and do not respecialize
+already-emitted fixed latency counter, temporal monitor, watchdog counter, or
+repeat counter logic.
 
 ISF scalar type-alias references are shipped for width-bearing declarations.
 Actor bodies may declare local `(types ...)` clauses whose payloads map
@@ -2195,14 +2197,15 @@ Current lowering:
   nonzero.
 - Repeat counter width is inferred. Positive decimal literal counts use the
   minimum width that can represent the loaded count; positive actor constants
-  use their resolved integer value as width evidence while preserving the
-  authored load token; known-width runtime scalar names use their known
-  interface, storage, or sample-derived width. Unknown names, actor
-  parameters, transaction parameters, malformed scalar tokens, and
-  expression-valued counts fail closed before counter emission.
+  and actor scalar parameter defaults use their resolved integer value as
+  width evidence while preserving the authored load token; known-width runtime
+  scalar names use their known interface, storage, or sample-derived width.
+  Unknown names, non-scalar or zero-valued actor parameters, transaction
+  parameters, malformed scalar tokens, and expression-valued counts fail
+  closed before counter emission.
 - Repeat counts that are statically known to be zero, either as literal zero
-  or as an actor constant resolving to zero, fail closed before scheduled
-  `.fsm` emission.
+  or as an actor constant or actor scalar parameter resolving to zero, fail
+  closed before scheduled `.fsm` emission.
 - Known-width runtime scalar repeat counts split the repeat init edge:
   nonzero values enter the repeat body, while zero values bypass the body and
   repeat check to the state after the repeat region.
@@ -2381,15 +2384,16 @@ Current lowering:
 
 The repeat count is a runtime counter load value, not an elaboration count.
 Positive literal counts give statically reviewable loop bounds. Actor
-constants resolving to positive integers are static width evidence for the
-repeat counter, but the scheduled `.fsm` still loads the authored constant
-token. Literal zero counts and actor constants resolving to zero fail closed
-under the bounded static zero-count policy. Named counts may be dynamic scalar
-signals when their width is known; those known-width runtime scalar counts
-skip the repeat body and repeat check when the runtime value is zero. Unknown
-count names, actor parameters, transaction parameters, expression-valued
-counts, and generated-top respecialization fail closed or remain deferred
-outside the shipped repeat count-source policy. Repeat-body local `do` and repeat-body spawn
+constants and actor scalar parameter defaults resolving to positive integers
+are static width evidence for the repeat counter, but the scheduled `.fsm`
+still loads the authored count token. Literal zero counts and actor constants
+or actor scalar parameters resolving to zero fail closed under the bounded
+static zero-count policy. Named counts may be dynamic scalar signals when
+their width is known; those known-width runtime scalar counts skip the repeat
+body and repeat check when the runtime value is zero. Unknown count names,
+non-scalar actor parameters, transaction parameters, expression-valued counts,
+and generated-top respecialization fail closed or remain deferred outside the
+shipped repeat count-source policy. Repeat-body local `do` and repeat-body spawn
 support preserve the
 same runtime-counter rule: the loop reactivates a local child only after its
 fresh done pulse, or reactivates a lexically named static spawn child instance
@@ -4987,6 +4991,11 @@ Focused tests:
   expression `(wait N)` shapes: unknown-width expressions and any remaining
   predecessor-edge or sample-incompatible successor splits remain deferred
   until their timing and diagnostics are implemented.
+- Transaction repeat counts beyond the shipped positive decimal literal,
+  positive actor-constant, positive actor-scalar-parameter, and known-width
+  runtime scalar shapes: transaction parameters, arbitrary expressions,
+  non-scalar actor parameters, use-site parameter-specialized counter sizing,
+  generated-top respecialization, and repeat-body widening remain deferred.
 - Transaction latency bounds beyond the shipped positive decimal literal,
   positive actor-constant, and positive actor-scalar-parameter
   `(min ...)`/`(max ...)` shapes: transaction parameters, runtime signals,

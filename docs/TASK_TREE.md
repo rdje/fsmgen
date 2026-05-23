@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-REPEAT-ACTOR-PARAM-COUNTS` | `active` | `R14` | `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` | [docs/tasks/ISF-REPEAT-ACTOR-PARAM-COUNTS.md](docs/tasks/ISF-REPEAT-ACTOR-PARAM-COUNTS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-ACTOR-PARAM-COUNTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-ACTOR-PARAM-COUNTS.md](docs/tasks/ISF-REPEAT-ACTOR-PARAM-COUNTS.md) |
 | `ISF-WATCHDOG-ACTOR-PARAM-LIMITS` | `done` | `R14` | `closed` | [docs/tasks/ISF-WATCHDOG-ACTOR-PARAM-LIMITS.md](docs/tasks/ISF-WATCHDOG-ACTOR-PARAM-LIMITS.md) |
 | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-ACTOR-PARAM-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTOR-PARAM-WINDOWS.md) |
 | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LATENCY-ACTOR-PARAM-BOUNDS.md](docs/tasks/ISF-LATENCY-ACTOR-PARAM-BOUNDS.md) |

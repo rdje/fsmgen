@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Repeat actor-parameter counts shipped
+- Completed `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` and closed the task tree.
+- Transaction `(repeat COUNT body...)` counts now accept actor-local scalar
+  parameter defaults that resolve to positive integer literals.
+- Accepted actor parameters lower like equivalent positive actor constants for
+  repeat-counter sizing: the resolved value is used as width evidence, while
+  the scheduled `.fsm` repeat load preserves the authored count token.
+- Statically zero actor-parameter repeat counts fail closed under the shipped
+  zero-count policy. Transaction parameters, expression-valued or non-scalar
+  actor parameters, unknown names, arbitrary expressions, use-site override
+  specialization, generated-top repeat-count respecialization, repeat-body
+  child activation widening, cross-domain repeat behavior, and repeat-body
+  clause widening remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  mdBook, roadmap status, task-tree docs, live achievement status, memory, and
+  development notes.
+- Validation passed: syntax checks; focused repeat/public/doc tests; broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1612`;
+  `mdbook build docs/book`; `git diff --check`.
+
+## 2026-05-22
 ### R14 — Repeat actor-parameter counts selected
 - Completed selection work for `ISF-REPEAT-ACTOR-PARAM-COUNTS.1`.
 - Activated a new R14 task tree for static actor-parameter-backed transaction
@@ -220,13 +241,15 @@ This is the persistent technical change history for FSMGen.
 ## 2026-05-22
 ### R14 — Repeat count source boundary shipped
 - Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` and closed the task tree.
-- Repeat count sources now fail closed unless they are positive decimal
-  literals, declared actor constants resolving to positive integers, or
-  known-width runtime scalar names.
+- At that point, repeat count sources failed closed unless they were positive
+  decimal literals, declared actor constants resolving to positive integers,
+  or known-width runtime scalar names; current support later added
+  actor-local scalar parameter defaults through
+  `ISF-REPEAT-ACTOR-PARAM-COUNTS`.
 - Literal zero and actor-constant zero counts keep the existing targeted
-  static zero diagnostic. Unknown names, actor parameters, malformed scalar
-  tokens, and expression-valued counts now fail before scheduled `.fsm`
-  emission instead of falling through to an implicit 8-bit counter.
+  static zero diagnostic. Unknown names, non-scalar actor parameters,
+  malformed scalar tokens, and expression-valued counts fail before scheduled
+  `.fsm` emission instead of falling through to an implicit 8-bit counter.
 - Synchronized the ISF spec, downstream integration spec, public contract,
   mdBook, roadmap status, task-tree docs, live achievement status, memory, and
   development notes.

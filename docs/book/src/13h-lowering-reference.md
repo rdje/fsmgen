@@ -1038,10 +1038,14 @@ states.
 
 **Timing**: `N × (body_cycles) + 2` (init + check). For `N=8` with 2 drives: `8×2+2=18` cycles.
 **Implicit signals**: `{tx}_cnt` (inferred width). Decimal literal counts use
-the minimum width that can represent the loaded count, named counts use their
-known interface or sample-derived width, and unknown count forms fall back to
-8 bits. Switch-nested repeats register the same transaction counter at the
-widest required branch width.
+the minimum width that can represent the loaded count. Declared positive actor
+constants and actor-local scalar parameter defaults use their resolved value
+as width evidence while preserving the authored count token in the scheduled
+load. Named dynamic counts use their known interface, storage, or
+sample-derived width. Unknown names, non-scalar actor parameters, transaction
+parameters, malformed scalar tokens, and expression-valued counts fail closed
+before counter emission. Switch-nested repeats register the same transaction
+counter at the widest required branch width.
 
 Repeat bodies lower named drive calls, awaits, samples, updates, the current
 data operations, local blocking `(do child)`, top-level when-body nested repeat
@@ -1056,7 +1060,10 @@ same-body `await_any` when exactly one spawn is pending.
 
 A dynamic scalar count is therefore compatible with the hardware model when
 its width is known, but it makes loop latency runtime-dependent and forces
-the zero-count policy to be explicit.
+the zero-count policy to be explicit. Literal zero repeat counts and actor
+constants or actor scalar parameters resolving to zero fail closed before
+scheduled `.fsm` emission. Known-width runtime scalar counts bypass the body
+and repeat check when the runtime value is zero.
 
 For repeat-body spawn, the generated top still instantiates one static child
 instance for the lexical spawn name.

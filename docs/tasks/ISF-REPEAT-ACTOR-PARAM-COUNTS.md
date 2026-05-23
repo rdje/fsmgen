@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-REPEAT-ACTOR-PARAM-COUNTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-22`
 - Last updated: `2026-05-22`
@@ -47,7 +47,7 @@ parameter defaults when those defaults resolve to positive integer literals.
 ## Task Tree
 
 - ID: `ISF-REPEAT-ACTOR-PARAM-COUNTS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship actor-parameter-backed static repeat counts.`
   Children: `ISF-REPEAT-ACTOR-PARAM-COUNTS.1`,
   `ISF-REPEAT-ACTOR-PARAM-COUNTS.2`
@@ -59,22 +59,24 @@ parameter defaults when those defaults resolve to positive integer literals.
   source boundary, preserve non-goals, and update roadmap/live docs without
   behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending commit`
+  Commit: `6e51a0ba`
 
 - ID: `ISF-REPEAT-ACTOR-PARAM-COUNTS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document actor-parameter repeat counts.`
   Acceptance: `Positive actor scalar parameters lower as static repeat counts;
   unsupported repeat count sources fail closed; specs, book, public contract,
   downstream handoff, and focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax`; `focused repeat/public/doc tests`;
+  `mdbook build docs/book`; `git diff --check`;
+  `./bin/ci-regression isf --no-book`
+  Commit: `this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` | `pending` | The source boundary is selected; implementation can reuse the existing static actor-parameter default model and the shipped actor-constant repeat width path. |
+| | | | No remaining frontier; tree is closed. |
 
 ## Decisions
 
@@ -100,15 +102,19 @@ parameter defaults when those defaults resolve to positive integer literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-22` | `ISF-REPEAT-ACTOR-PARAM-COUNTS.1` | `mdbook build docs/book`; `git diff --check` | `selection docs passed; no behavior changed` |
+| `2026-05-22` | `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1102-isf-repeat-counter-widths.t`; `perl -Iperl -c t/1202-isf-repeat-clause-boundary.t`; `prove -Iperl t/1102-isf-repeat-counter-widths.t t/1202-isf-repeat-clause-boundary.t t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `passed; broad gate Files=238, Tests=1612` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-REPEAT-ACTOR-PARAM-COUNTS.1` | `this commit: ISF-REPEAT-ACTOR-PARAM-COUNTS.1: select repeat actor-param counts` | `selects static actor-parameter repeat count support` |
-| `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` | `pending` | `pending` |
+| `ISF-REPEAT-ACTOR-PARAM-COUNTS.1` | `6e51a0ba ISF-REPEAT-ACTOR-PARAM-COUNTS.1: select repeat actor-param counts` | `selects static actor-parameter repeat count support` |
+| `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` | `this commit: ISF-REPEAT-ACTOR-PARAM-COUNTS.2: ship repeat actor-param counts` | `ships static actor-parameter repeat count support` |
 
 ## Changelog
 
 - `2026-05-22`: Created task tree and selected static actor-parameter repeat
   counts.
+- `2026-05-22`: Shipped actor-local scalar parameter defaults as positive
+  static repeat counts, closed unsupported count sources with targeted
+  diagnostics, synchronized specs/book/live docs, and closed the task tree.

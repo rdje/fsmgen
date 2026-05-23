@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Repeat actor-parameter counts shipped
+- Completed `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` and closed the task tree.
+- Transaction repeat counts now accept actor-local scalar parameter defaults
+  that resolve to positive integer literals.
+- Parameter-backed repeat counts use the resolved positive value as
+  repeat-counter width evidence and preserve the authored count token in the
+  scheduled repeat-counter load, matching actor-constant repeat counts.
+- Static zero actor-parameter repeat counts fail closed under the existing
+  zero-count policy. Transaction parameters, expression-valued or non-scalar
+  actor parameters, unknown names, arbitrary expressions, use-site override
+  specialization, generated-top repeat-count respecialization, repeat-body
+  child activation widening, cross-domain repeat behavior, and repeat-body
+  clause widening remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, roadmap status, task index, and live docs.
+- Validation passed: syntax checks; focused repeat/public/doc tests; broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1612`;
+  `mdbook build docs/book`; `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-22: Repeat actor-parameter counts selected
 - Completed selection work for `ISF-REPEAT-ACTOR-PARAM-COUNTS.1`.
 - Activated a new R14 task tree for static actor-parameter-backed transaction
@@ -245,13 +266,15 @@ This is the live continuity document for fast session recovery after crashes, re
 
 ## 2026-05-22: Repeat count source boundary shipped
 - Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` and closed the task tree.
-- Repeat counts are now accepted only as positive decimal literals, declared
-  actor constants resolving to positive integers, or known-width runtime
-  scalar names.
+- At that point, repeat counts were accepted only as positive decimal
+  literals, declared actor constants resolving to positive integers, or
+  known-width runtime scalar names; current support later added actor-local
+  scalar parameter defaults through `ISF-REPEAT-ACTOR-PARAM-COUNTS`.
 - Literal zero and actor constants resolving to zero keep the existing static
-  zero fail-closed diagnostic. Unknown names, actor parameters, malformed
-  scalar tokens, and expression-valued counts now fail closed before scheduled
-  `.fsm` emission instead of falling through to an implicit 8-bit counter.
+  zero fail-closed diagnostic. Unknown names, non-scalar actor parameters,
+  malformed scalar tokens, and expression-valued counts fail closed before
+  scheduled `.fsm` emission instead of falling through to an implicit 8-bit
+  counter.
 - Actor/transaction parameter specialization, expression-valued repeat counts,
   generated-top respecialization, repeat-body activation widening, and
   cross-domain repeat behavior remain deferred.

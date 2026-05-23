@@ -15,6 +15,17 @@ Make the accepted ISF `(repeat count body...)` count-source domain explicit
 and fail closed for unsupported count sources before scheduled `.fsm`
 emission.
 
+## Current Supersession Note
+
+This closed tree records the count-source boundary as it was shipped before
+actor-parameter repeat counts. The current public surface additionally accepts
+actor-local scalar parameter defaults that resolve to positive integer
+literals, as shipped by
+[ISF-REPEAT-ACTOR-PARAM-COUNTS](ISF-REPEAT-ACTOR-PARAM-COUNTS.md).
+Transaction parameters, non-scalar actor parameters, arbitrary expressions,
+unknown names, and generated-top repeat-count respecialization remain
+fail-closed or deferred.
+
 ## Non-Goals
 
 - Do not add actor-parameter or transaction-parameter repeat-count

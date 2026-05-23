@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Repeat actor-parameter counts are static width evidence
+- `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` ships actor-local scalar parameter
+  defaults as transaction repeat count sources only when they resolve to
+  positive integer literals in the owning actor shell.
+- The lowerer uses the resolved positive value for repeat-counter width
+  inference and static-zero rejection, but leaves the scheduled repeat-counter
+  load authored as the original count token. That keeps the review surface
+  aligned with actor-constant repeat counts and avoids silently rewriting
+  source intent in scheduled `.fsm`.
+- Transaction parameters keep their targeted deferred diagnostic even when
+  they shadow an actor parameter. Use-site override specialization,
+  generated-top repeat-count respecialization, expression-valued or non-scalar
+  actor parameters, arbitrary expressions, cross-domain repeat behavior,
+  repeat-body child activation widening, and repeat-body clause widening
+  remain separate policies.
+
 ## 2026-05-22: Repeat actor-parameter counts reuse static defaults
 - `ISF-REPEAT-ACTOR-PARAM-COUNTS.1` selects actor-local scalar parameter
   defaults as transaction repeat count sources, mirroring the shipped static
@@ -195,21 +211,25 @@ This document captures engineering rationale, design constraints, and working de
 - `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` makes repeat count source validation
   explicit in the lowerer before counter width selection or scheduled `.fsm`
   emission.
-- This removes the implicit fallback path for unknown names. A repeat count
-  now has to be statically reviewable as a positive literal or positive actor
-  constant, or dynamically reviewable as a known-width scalar.
-- Actor parameters remain deferred because they are overrideable
-  specialization values; accepting them safely needs a generated-top policy
-  for counter width and zero-count branching.
+- This removed the implicit fallback path for unknown names. At that point, a
+  repeat count had to be statically reviewable as a positive literal or
+  positive actor constant, or dynamically reviewable as a known-width scalar;
+  current support later added actor-local scalar parameter defaults through
+  `ISF-REPEAT-ACTOR-PARAM-COUNTS`.
+- Transaction parameters, non-scalar actor parameters, use-site override
+  specialization, generated-top counter respecialization, and arbitrary
+  expressions remain deferred.
 
 ## 2026-05-22: Repeat count sources need a closed domain
 - `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.1` selects a narrow follow-up to the
   runtime zero-count policy: repeat counts should come from a known accepted
   source class rather than falling through to a silent default.
-- The accepted source classes are positive decimal literals, positive actor
-  constants, and known-width runtime scalar names. Everything else needs an
-  explicit policy before it can safely affect counter width, init branching,
-  and generated-top specialization.
+- The accepted source classes selected at that time were positive decimal
+  literals, positive actor constants, and known-width runtime scalar names.
+  Actor-local scalar parameter defaults were added later by
+  `ISF-REPEAT-ACTOR-PARAM-COUNTS`; the remaining unsupported source classes
+  still need explicit policy before they can safely affect counter width, init
+  branching, and generated-top specialization.
 
 ## 2026-05-22: Runtime repeat zero counts use source-value branching
 - `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2` implements zero-count runtime

@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Repeat actor-parameter counts shipped
+- Completed `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` and closed the task tree.
+- Transaction repeat counts now accept actor-local scalar parameter defaults
+  that resolve to positive integers and lower to the same counter-width
+  evidence model as equivalent positive actor-constant repeat counts, while
+  preserving the authored count token in scheduled `.fsm` loads.
+- Static zero actor-parameter repeat counts fail closed. Transaction
+  parameters, expression-valued or non-scalar actor parameters, unknown names,
+  arbitrary expressions, use-site specialization, generated-top repeat-count
+  respecialization, repeat-body child activation widening, cross-domain repeat
+  behavior, and repeat-body clause widening remain fail-closed or deferred.
+- Validation passed: focused repeat/public/doc tests, broad
+  `./bin/ci-regression isf --no-book` with `Files=238, Tests=1612`,
+  `mdbook build docs/book`, and `git diff --check`.
+- `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` agree that no task tree is
+  active before the next PNT selection.
+
 ## 2026-05-22: R14 — Repeat actor-parameter counts selected
 - Completed selection work for `ISF-REPEAT-ACTOR-PARAM-COUNTS.1`.
 - Activated the active R14 task tree for static actor-parameter-backed
@@ -184,10 +201,11 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-22: R14 — Repeat count source boundary shipped
 - Completed `ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2` and closed the task tree.
-- Repeat counts are now accepted only as positive decimal literals, declared
-  actor constants resolving to positive integers, or known-width runtime
-  scalar names.
-- Unknown names, actor parameters, malformed scalar tokens, and
+- At that point, repeat counts were accepted only as positive decimal
+  literals, declared actor constants resolving to positive integers, or
+  known-width runtime scalar names; current support later added actor-local
+  scalar parameter defaults through `ISF-REPEAT-ACTOR-PARAM-COUNTS`.
+- Unknown names, non-scalar actor parameters, malformed scalar tokens, and
   expression-valued counts fail closed before scheduled `.fsm` emission.
 - `docs/TASK_TREE.md` and `ROADMAP_STATUS.md` now agree that no task tree is
   active before the next PNT selection.

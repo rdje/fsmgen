@@ -674,7 +674,7 @@ Transaction clauses currently supported:
 (wait count)
 (while condition body...)
 (until condition body...)
-(repeat count body...)          ;; count may be literal, actor constant, or known-width runtime name
+(repeat count body...)          ;; count may be literal, actor constant, actor scalar parameter, or known-width runtime name
 (switch selector branch...)
 (set target expr)
 (update target expr)
@@ -888,13 +888,14 @@ Repeat:
 
 Repeat counts are runtime counter load values, not elaboration directives.
 Positive decimal literals infer the minimum counter width for that literal.
-Declared positive actor constants infer width from their resolved integer
-value while preserving the authored constant token in the scheduled `.fsm`
-load. Literal zero counts and actor constants resolving to zero fail closed
-before scheduled `.fsm` emission. Known-width sampled/interface names use
-their known source width and now split the repeat init edge: nonzero values
-enter the repeat body, while zero values bypass the body and repeat check to
-the state after the repeat region. Unknown names, actor parameters,
+Declared positive actor constants and actor-local scalar parameter defaults
+infer width from their resolved integer value while preserving the authored
+count token in the scheduled `.fsm` load. Literal zero counts and actor
+constants or actor scalar parameters resolving to zero fail closed before
+scheduled `.fsm` emission. Known-width sampled/interface names use their known
+source width and now split the repeat init edge: nonzero values enter the
+repeat body, while zero values bypass the body and repeat check to the state
+after the repeat region. Unknown names, non-scalar actor parameters,
 transaction parameters, malformed scalar tokens, and expression-valued counts
 fail closed before scheduled `.fsm` emission.
 
@@ -2748,6 +2749,9 @@ Required fail-closed examples:
   unknown symbolic names, arbitrary expressions, constants that resolve to
   zero, actor parameters that resolve to zero or non-scalar values, or distinct
   per-await limits in one transaction.
+- Repeat counts that name transaction parameters, unknown symbolic names,
+  arbitrary expressions, malformed scalar tokens, actor parameters that resolve
+  to zero or non-scalar values, or runtime names without width evidence.
 - Latency min/max bounds that name transaction parameters, runtime interface
   signals, unknown symbolic names, arbitrary expressions, constants that
   resolve to zero, or actor parameters that resolve to zero or non-scalar

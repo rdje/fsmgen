@@ -3470,6 +3470,9 @@ sub _repeat_count_width {
     my $constant_value = _actor_constant_repeat_count_value($count, $actor);
     return _repeat_count_width_for_integer($constant_value)
         if defined $constant_value;
+    my $param_value = _actor_param_repeat_count_value($count, $actor);
+    return _repeat_count_width_for_integer($param_value)
+        if defined $param_value;
     if (defined($count)) {
         my $literal_width = _literal_repeat_count_width($count);
         return $literal_width if defined $literal_width;
@@ -3484,7 +3487,10 @@ sub _static_repeat_count_value {
     my $literal_value = _non_negative_integer_from_literal($count);
     return $literal_value if defined $literal_value;
 
-    return _actor_constant_repeat_count_value($count, $actor);
+    my $constant_value = _actor_constant_repeat_count_value($count, $actor);
+    return $constant_value if defined $constant_value;
+
+    return _actor_param_repeat_count_value($count, $actor);
 }
 
 sub _actor_constant_repeat_count_value {
@@ -3502,8 +3508,27 @@ sub _actor_constant_repeat_count_value {
     return undef;
 }
 
+sub _actor_param_repeat_count_value {
+    my ($count, $actor) = @_;
+    return undef unless defined($count) && !ref($count);
+
+    if (_is_hdl_identifier($count)) {
+        my $param = _actor_param_by_name($actor, $count);
+        if ($param) {
+            my $param_value = _non_negative_integer_from_literal(_param_resolved_value($param));
+            return $param_value if defined $param_value;
+        }
+    }
+
+    return undef;
+}
+
 sub _reject_static_zero_repeat_count {
     my ($count, $actor, $tn) = @_;
+    return 1
+        if defined($count) && !ref($count) && _is_hdl_identifier($count)
+            && _transaction_param_by_name($actor, $tn, $count);
+
     my $static_value = _static_repeat_count_value($count, $actor);
     return 1 unless defined($static_value) && $static_value == 0;
 
@@ -3513,6 +3538,11 @@ sub _reject_static_zero_repeat_count {
 sub _validate_repeat_count_source {
     my ($count, $widths, $actor, $tn) = @_;
 
+    if (defined($count) && !ref($count) && _is_hdl_identifier($count)
+        && _transaction_param_by_name($actor, $tn, $count)) {
+        confess "Transaction '$tn': repeat count transaction parameter '$count' remains deferred; use a known-width runtime scalar, positive actor constant, or actor scalar parameter\n";
+    }
+
     my $static_value = _static_repeat_count_value($count, $actor);
     return 1 if defined($static_value) && $static_value > 0;
 
@@ -3520,18 +3550,15 @@ sub _validate_repeat_count_source {
         if (_actor_constant_by_name($actor, $count)) {
             confess "Transaction '$tn': repeat count actor constant '$count' must resolve to a positive integer literal\n";
         }
-        if (_transaction_param_by_name($actor, $tn, $count)) {
-            confess "Transaction '$tn': repeat count transaction parameter '$count' remains deferred; use a known-width runtime scalar or positive actor constant\n";
-        }
         if (_actor_param_by_name($actor, $count)) {
-            confess "Transaction '$tn': repeat count actor parameter '$count' remains deferred; use a known-width runtime scalar or positive actor constant\n";
+            confess "Transaction '$tn': repeat count actor parameter '$count' must resolve to a positive integer literal\n";
         }
         return 1 if defined _runtime_repeat_count_source($count, $widths, $actor);
 
-        confess "Transaction '$tn': repeat count '$count' is neither a declared positive actor constant nor a known-width runtime scalar\n";
+        confess "Transaction '$tn': repeat count '$count' is neither a declared positive actor constant, actor scalar parameter, nor a known-width runtime scalar\n";
     }
 
-    confess "Transaction '$tn': repeat count '$count' must be a positive decimal literal, declared positive actor constant, or known-width runtime scalar name\n";
+    confess "Transaction '$tn': repeat count '$count' must be a positive decimal literal, declared positive actor constant, actor scalar parameter, or known-width runtime scalar name\n";
 }
 
 sub _runtime_repeat_count_source {

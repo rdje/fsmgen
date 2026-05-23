@@ -92,6 +92,33 @@ ISF
     like($fsm, qr/\(<= \(main_cnt COUNT\)\)/, 'repeat init preserves the authored constant token');
 };
 
+subtest 'actor scalar parameter repeat counts use the resolved parameter width' => sub {
+    my $source = <<'ISF';
+(actor repeat_parameter
+  (clock clk)
+  (reset (rst_n async active_low))
+  (params
+    (COUNT 4'd9))
+  (interface
+    (input start)
+    (output done)
+    (output flag))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (repeat COUNT
+      (drive tick))
+    (complete done)))
+ISF
+
+    my $fsm = lower_source($source, 'repeat_parameter.fsm');
+
+    like($fsm, qr/\(main_cnt 4\)/, 'actor parameter repeat count drives the resolved counter width');
+    like($fsm, qr/\(<= \(main_cnt COUNT\)\)/, 'repeat init preserves the authored parameter token');
+    like($fsm, qr/\(\+params[\s\S]*\(COUNT 4'd9\)/, 'actor parameter declaration remains review-visible');
+};
+
 subtest 'switch-nested repeats declare the shared transaction counter width' => sub {
     my $source = <<'ISF';
 (actor repeat_nested
