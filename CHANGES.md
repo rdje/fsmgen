@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### R14 — Interface actor-parameter widths selected
+- Completed selection work for `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1`.
+- Activated a new R14 task tree for accepting actor-local scalar parameter
+  defaults resolving to positive integers as actor top-level interface port
+  `(width PARAM)` values.
+- The selected first slice deliberately excludes actor-owned storage widths,
+  bank depths, transaction-local port widths, use-site override
+  specialization, generated-top respecialization, transaction parameters,
+  runtime signals, arbitrary expressions, zero-valued actor parameters, and
+  non-scalar actor parameters.
+- No compiler behavior changed.
+
 ### R14 — Dynamic-divisor actor-parameter-zero safety shipped
 - Completed `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` and closed the task
   tree.

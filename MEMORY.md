@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: Interface actor-parameter widths selected
+- Completed selection work for `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1`.
+- Activated a new R14 task tree for actor top-level interface port
+  `(width PARAM)` declarations backed by actor-local scalar parameter defaults
+  resolving to positive integers.
+- The active frontier is `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2`.
+- The selected boundary is narrow: actor-owned storage widths, bank depths,
+  transaction-local port widths, use-site override specialization,
+  generated-top respecialization, transaction parameters, runtime signals,
+  arbitrary expressions, zero-valued actor parameters, and non-scalar actor
+  parameters remain deferred or fail-closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-23: Dynamic-divisor actor-parameter-zero safety shipped
 - Completed `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` and closed the task
   tree.

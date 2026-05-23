@@ -2,9 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`; the next PNT step must select or create the next
-  roadmap-aligned task tree before any code changes.
+- Active task tree: `ISF-INTERFACE-ACTOR-PARAM-WIDTHS`.
+- Current frontier: `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` will implement the
+  bounded actor top-level interface port `(width PARAM)` slice.
+- Recent R14 interface actor-parameter width selection:
+  `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1` activated the next parameter-driven
+  interface elaboration tree. The selected first slice is intentionally
+  narrow: only actor top-level interface input/output `(width PARAM)` entries
+  may use actor-local scalar parameter defaults that resolve to positive
+  integers. Actor-owned storage widths, bank depths, transaction-local port
+  widths, use-site override specialization, generated-top
+  respecialization, transaction parameters, runtime signals, arbitrary
+  expressions, zero-valued actor parameters, and non-scalar actor parameters
+  remain deferred or fail-closed.
 - Recent R14 dynamic-divisor actor-parameter-zero completion:
   `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` shipped fail-closed
   dynamic-divisor safety for actor-local scalar parameter defaults that
@@ -5473,13 +5483,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-INTERFACE-ACTOR-PARAM-WIDTHS`.
+- Current frontier: `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2`.
 - Completion status: `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` closed the
-  previous active R14 task tree after shipping zero-valued actor scalar
-  parameters as conservative fail-closed runtime division/modulo divisor
-  facts. The next PNT step must select or create the next roadmap-aligned
-  task tree before code changes.
+  previous active R14 task tree. `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1` now
+  selects the next bounded parameter-driven interface slice before any code
+  changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: R14 — Interface actor-parameter widths selected
+- Completed selection work for `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1`.
+- Activated the active R14 task tree for actor top-level interface port
+  `(width PARAM)` declarations backed by actor-local scalar parameter defaults
+  resolving to positive integers.
+- The active frontier is now `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2`.
+- No compiler behavior changed.
+
 ## 2026-05-23: R14 — Dynamic-divisor actor-parameter-zero safety shipped
 - Completed `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` and closed the task
   tree.

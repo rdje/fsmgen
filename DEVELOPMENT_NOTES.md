@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: Interface parameter widths are the first elaboration slice
+- `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1` selects actor top-level interface port
+  widths as the next bounded actor-parameter elaboration surface.
+- The selection intentionally starts at the interface boundary because it
+  improves reusable actor authoring while keeping storage scalarization, bank
+  depth expansion, transaction-port binding semantics, and generated-top
+  specialization out of the first slice.
+- Only the owning actor shell's scalar parameter default is selected as width
+  evidence. Treating use-site overrides as elaboration drivers would need a
+  separate generated-top respecialization policy.
+
 ## 2026-05-23: Actor-parameter-zero divisors reuse parser validation
 - `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` extends the parser-side
   runtime-expression divisor validation from literal-zero and actor-constant
