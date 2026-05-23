@@ -140,6 +140,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-REPEAT-COUNT-SOURCE-BOUNDARY.md` — completed `R14` task tree for the accepted repeat count source boundary.
 - `docs/tasks/ISF-BACKLOG-OWNER-TRUTH-SYNC.md` — completed `R14` task tree for mdBook backlog task-tree owner truth synchronization.
 - `docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.md` — completed `R14` task tree for targeted transaction-parameter repeat count diagnostics.
+- `docs/tasks/ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.md` — active `R14` task tree for dynamic-divisor drive-expression coverage hardening.
 - `docs/tasks/ISF-ATL-BACKLOG-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing stale ATL backlog prose.
 - `docs/tasks/ISF-ATL-COMPACT-INSTANCE-ALIAS.md` — completed `R14` task tree for the compact ATL static instance alias.
 - `docs/tasks/ISF-ATL-COMPACT-GROUP-ALIAS.md` — completed `R14` task tree for the compact ATL concurrent group alias.

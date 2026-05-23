@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-22: Dynamic-divisor drive coverage is a proof slice
+- `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1` selects coverage hardening for an
+  already documented parser boundary.
+- The implementation should add tests for named drive-call actual expressions
+  and inline drive RHS expressions without changing the accepted divisor
+  domain.
+
 ## 2026-05-22: Transaction repeat parameter diagnostics use local scope
 - `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` adds a local
   transaction-parameter lookup to the repeat count source validator.

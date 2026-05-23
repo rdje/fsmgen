@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-22: R14 — Dynamic-divisor drive coverage selected
+- Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1`.
+- Activated the active R14 task tree for dynamic-divisor drive expression
+  coverage hardening.
+- The active frontier is now `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2`.
+- No compiler behavior changed.
+
 ## 2026-05-22: R14 — Repeat transaction-parameter count diagnostic shipped
 - Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` and closed the
   task tree.

@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-22
+### R14 — Dynamic-divisor drive coverage selected
+- Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1`.
+- Activated a new R14 task tree for focused coverage of documented
+  literal-zero and actor-constant-zero divisor guards on drive expression
+  surfaces.
+- No compiler behavior changed.
+
+## 2026-05-22
 ### R14 — Repeat transaction-parameter count diagnostic shipped
 - Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` and closed the
   task tree.

@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-22: Dynamic-divisor drive coverage selected
+- Completed `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1`.
+- Activated a new R14 task tree for focused coverage of documented
+  dynamic-divisor guards in named drive-call actual expressions and inline
+  drive RHS expressions.
+- The active frontier is `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2`.
+- No parser, scheduler, report, generated artifact, or HDL behavior changed.
+
 ## 2026-05-22: Repeat transaction-parameter count diagnostic shipped
 - Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` and closed the
   task tree.
