@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R11 `.rtlif` interface-source direction selected
+- Created active task tree `R11-RTLIF-INTERFACE-SOURCE-DIRECTION`.
+- Purpose: decide whether the shipped `.rtlif` family remains embedded-root
+  plus sidecar metadata, or whether a stronger interface-source contract
+  should sit above it before implementation.
+- The next frontier is `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2`.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R11-RTLIF-INTERFACE-SOURCE-DIRECTION`.
+- Current frontier: `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2`.
+
 ## 2026-05-24: R11 composition-contract frontier audited
 - Completed `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2` and closed the task
   tree.

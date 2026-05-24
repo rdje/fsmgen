@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: `.rtlif` direction work should start as a decision tree
+- The existing `.rtlif` behavior is useful and covered, but it is still
+  positioned as interface metadata rather than a fully separate public
+  interface language.
+- The next leaf should audit what downstream and composition users can rely on
+  today, then decide whether FSMGen needs a stronger contract now or whether
+  that stronger layer should wait for portable type/package work.
+
 ## 2026-05-24: R11 should settle `.rtlif` direction before widening behavior
 - The R11 evidence sweep shows a large amount of shipped composition coverage:
   explicit wiring, generated and external RTL children, connect-by-name,

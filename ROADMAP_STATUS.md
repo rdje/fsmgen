@@ -1,9 +1,19 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `R11`.
+- Active task tree: `R11-RTLIF-INTERFACE-SOURCE-DIRECTION`.
+- Current frontier: `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2`.
+- Recent R11 `.rtlif` interface-source direction selection:
+  `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.1` activated the decision tree
+  selected by the R11 composition-contract frontier audit. The next frontier
+  is `.2`, which must audit shipped `.rtlif` behavior and decide whether the
+  family remains embedded-root plus sidecar metadata or whether a stronger
+  interface-source contract is needed now before any `.rtlif` behavior
+  change. No parser, scheduler, report, generated artifact, HDL, CLI, public
+  API, source, test, or generated behavior changed in this selection.
+  Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R11 composition-contract frontier audit:
   `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2` audited the shipped R11
   composition evidence and closed the task tree. The focused sweep passed
@@ -6631,12 +6641,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2` completed
-  the evidence-gathering audit and closed the tree. The next PNT-eligible
-  R11 step is to create/select `R11-RTLIF-INTERFACE-SOURCE-DIRECTION` before
-  any `.rtlif` behavior-bearing implementation.
+- Active task tree: `R11-RTLIF-INTERFACE-SOURCE-DIRECTION`.
+- Current frontier: `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2`.
+- Completion status: `.1` selected the active tree with no behavior change.
+  `.2` owns the evidence-gathering decision over the `.rtlif`
+  interface-source direction before any `.rtlif` behavior-bearing
+  implementation.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8447,6 +8457,13 @@ Done:
   - and the next bounded R11 frontier should be the
     `R11-RTLIF-INTERFACE-SOURCE-DIRECTION` decision tree before any `.rtlif`
     behavior change.
+- `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.1` selected the active `.rtlif`
+  interface-source direction decision tree before implementation:
+  - the next frontier is `.2`,
+  - `.2` must audit shipped `.rtlif` behavior, documentation truth, public
+    contract surfaces, and R11 roadmap goals,
+  - and no parser, scheduler, report, generated artifact, HDL, CLI, public
+    API, source, test, or generated behavior changed in the selection slice.
 - Explicit composition `?wiring` blocks now accept canonical Lisp-ish list
   links:
   - `(source target)` is the compact directed-link spelling,
@@ -9206,11 +9223,10 @@ Done:
   - top-input fanout success across multiple same-name child inputs,
   - and mixed-direction same-name rejection for declared top-input connect-by-name.
 Left:
-- Create/select `R11-RTLIF-INTERFACE-SOURCE-DIRECTION` as the next bounded
-  R11 decision tree before any `.rtlif` behavior change. It should decide
-  whether the now-formalized `.rtlif` interface-source family stays
-  embedded-root plus sidecar metadata, or whether a stronger interface-source
-  contract sits above it.
+- Complete `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2`: audit shipped `.rtlif`
+  behavior and decide whether the now-formalized `.rtlif` interface-source
+  family stays embedded-root plus sidecar metadata, or whether a stronger
+  interface-source contract sits above it.
 - Extend the now-shipped semantic parameter/generic contract beyond direct-root metadata, external `?rtl` SystemVerilog instance emission, generated `?fsmc` / `?dtc` SystemVerilog instance emission, direct param-to-param default reuse, the first bounded scalar operator-expression value slice, and the first bounded leafwise aggregate operator slice: VHDL generic-map lowering plus richer expression-valued semantic parameter domains remain follow-up work, including non-leafwise typed aggregate-to-aggregate operator expressions where the operator is explicitly valid for the operand types/shapes.
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime/assertion slices,

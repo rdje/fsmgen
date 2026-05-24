@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R11 — `.rtlif` interface-source direction selected
+- Created active task tree `R11-RTLIF-INTERFACE-SOURCE-DIRECTION`.
+- The tree owns the evidence-gathering decision over whether `.rtlif` remains
+  embedded-root plus sidecar metadata or whether a stronger interface-source
+  contract should sit above it before implementation.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R11 — Composition-contract frontier audited
 - Completed `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2` and closed the task
   tree.
