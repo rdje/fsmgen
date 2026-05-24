@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Parameter/generic widening needs an audit before code
+- The shipped parameter/generic surface already spans direct roots, `.rtlif`,
+  external `?rtl`, generated children, package-qualified defaults, scalar
+  expressions, aggregate values, leafwise aggregate operators, and
+  SystemVerilog instance emission.
+- The remaining roadmap text mixes at least three concerns: VHDL generic-map
+  lowering, richer expression-valued semantic domains, and non-leafwise typed
+  aggregate operations. Those should not be collapsed into one slice. The
+  next step is an audit that selects one bounded implementation lane or
+  records a prerequisite deferral.
+
 ## 2026-05-24: Keep `.rtlif` low-level until a stronger layer is justified
 - The shipped `.rtlif` contract already covers the composition needs that have
   concrete tests today: external RTL port metadata, roles, widths, sidecar and

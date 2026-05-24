@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R11 — Parameter/generic frontier audit selected
+- Created active task tree `R11-PARAMETER-GENERIC-FRONTIER-AUDIT`.
+- The tree owns an evidence-gathering audit over the remaining semantic
+  parameter/generic frontier before any behavior-bearing widening.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R11 — `.rtlif` interface-source direction decided
 - Completed `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2` and closed the task
   tree.

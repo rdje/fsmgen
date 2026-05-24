@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R11-PARAMETER-GENERIC-FRONTIER-AUDIT` | `active` | `R11` | `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.2` | [docs/tasks/R11-PARAMETER-GENERIC-FRONTIER-AUDIT.md](docs/tasks/R11-PARAMETER-GENERIC-FRONTIER-AUDIT.md) |
 
 ## Proposed Task Trees
 
