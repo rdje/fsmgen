@@ -3,13 +3,31 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R10`.
 - Active task tree: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
-- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`.
+- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3`.
+- Recent R10 diagnostic/provenance frontier audit:
+  `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2` audited the current
+  source-provenance and diagnostic frontier and selected one bounded
+  implementation leaf. Existing `R10` coverage already locks source-file
+  context for top-level parse and strict failures, generated-child parse and
+  resolution context, RTL metadata and missing `.rtlif` context, missing child
+  artifacts and search roots, pre-pipeline CLI missing-input/output-open
+  context, and typed-extension hook/loading context. The selected gap is empty
+  direct `.fsm` source-file diagnostics: a fresh CLI probe still reports the
+  raw Lispish fallback text `File ... is either empty or does not exit` and
+  leaks Perl call-stack frames. The next frontier is `.3`, which must replace
+  that with a targeted source-local diagnostic through pipeline, CLI,
+  check-JSON, and normalized semantic JSON, plus mdBook/live-doc sync. No
+  parser, scheduler, report, generated artifact, HDL, CLI, public API, source,
+  test, or generated behavior changed in this audit slice. Validation passed:
+  focused diagnostic context tests with `Files=13, Tests=172`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent R10 diagnostic/provenance frontier selection:
   `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.1` activated the next
   source-provenance and diagnostics task tree after `R9` handed active
   implementation focus to `R10`. No parser, scheduler, report, generated
   artifact, HDL, CLI, public API, source, test, or generated behavior changed
-  in this selection. The follow-up frontier is `.2`, an audit-only leaf that
+  in this selection. The follow-up frontier was `.2`, an audit-only leaf that
   must inspect current source-local and construct-local diagnostic coverage,
   tests, public metadata, mdBook coverage, and remaining gaps before selecting
   another diagnostic/provenance implementation cut, a documentation truth-sync,
@@ -6478,11 +6496,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - Active task tree: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
-- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`.
-- Completion status: `.1` selected the active tree with no behavior change.
-  `.2` is the audit/design frontier for deciding whether `R10` needs another
-  bounded source-local diagnostic/provenance cut, a documentation truth-sync,
-  a handoff, or close-out.
+- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3`.
+- Completion status: `.2` audited the current diagnostic/provenance surface
+  and selected `.3` as the next bounded implementation cut: targeted empty
+  source-file diagnostics without raw Lispish fallback text or Perl stack
+  frames.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8050,6 +8068,17 @@ Deliverables:
 - Clear remediation guidance for common construct-family failures.
 Status: `in progress`
 Done:
+- `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2` audited the current
+  source-provenance and diagnostics frontier:
+  - shipped `R10` coverage already spans top-level parse/strict failures,
+    generated-child failures, RTL metadata failures, missing child and missing
+    `.rtlif` artifacts, search roots, pre-pipeline CLI file context, and typed
+    extension hook/loading context,
+  - the selected next implementation cut is empty direct `.fsm` source-file
+    diagnostics,
+  - and `.3` must remove the raw Lispish fallback wording plus CLI stack-frame
+    leakage while preserving source-local context across pipeline, CLI,
+    check-JSON, and normalized semantic JSON.
 - `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.1` selected the next
   source-provenance and diagnostics task tree before code:
   - the next frontier is audit-only,
@@ -8106,6 +8135,9 @@ Done:
   - [bin/fsmgen](bin/fsmgen) now also wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path instead of letting constructor failures dump a raw script line,
   - and [t/253-extension-loader-diagnostic-context.t](t/253-extension-loader-diagnostic-context.t) now locks both the pipeline and CLI constructor-failure shapes for malformed config input and constructor-failing extension modules.
 Left:
+- Implement `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3`: targeted empty
+  source-file diagnostics without raw Lispish fallback text or Perl stack
+  frames.
 - Define the next provenance-carrying boundaries and upgrade key diagnostics.
 - Add regression coverage for error shape and location reporting.
 Exit criteria:

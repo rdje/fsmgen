@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R10 diagnostic/provenance frontier audited
+- Completed `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`.
+- The audit mapped shipped `R10` diagnostic context coverage: top-level
+  source-file context, generated-child context, RTL metadata context, missing
+  child and missing `.rtlif` artifacts, lookup search roots, pre-pipeline CLI
+  missing-input/output-open context, and typed-extension hook/loading context.
+- Selected `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` as the next bounded
+  implementation leaf: clean up empty direct `.fsm` source-file diagnostics so
+  pipeline, CLI, check JSON, and normalized semantic JSON get a targeted
+  source-local message without the raw Lispish fallback text, the legacy
+  `does not exit` typo, or Perl call-stack frames.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused diagnostic context tests with `Files=13,
+  Tests=172`; feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
+- Active task tree: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
+- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3`.
+
 ## 2026-05-24: R10 diagnostic/provenance frontier audit selected
 - Created active task tree `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
 - Purpose: audit source-provenance and diagnostic coverage after the `R9`

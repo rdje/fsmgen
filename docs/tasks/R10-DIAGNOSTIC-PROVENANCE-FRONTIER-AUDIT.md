@@ -42,7 +42,8 @@ next bounded `R10` slice from evidence.
   Status: `active`
   Goal: `Resolve the next source-provenance and diagnostics decision from evidence.`
   Children: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.1`,
-    `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`
+    `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`,
+    `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3`
 
 - ID: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.1`
   Status: `done`
@@ -52,9 +53,16 @@ next bounded `R10` slice from evidence.
   Commit: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.1: select diagnostic provenance frontier`
 
 - ID: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit the current source-provenance and diagnostic frontier and select close-out, documentation truth sync, or one bounded implementation cut.`
   Acceptance: `The audit identifies current source-local and construct-local diagnostic coverage, tests, public metadata, mdBook coverage, and remaining gaps; it records whether the next safe step is implementation, documentation truth sync, roadmap handoff, or R10 close-out. No behavior changes are made in this audit leaf.`
+  Verification: `passed: focused diagnostic context tests, feature-backlog audit, mdBook build, and diff check`
+  Commit: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2: audit diagnostic provenance frontier`
+
+- ID: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3`
+  Status: `pending`
+  Goal: `Clean up empty source-file diagnostics without leaking Perl call-stack frames.`
+  Acceptance: `Empty direct .fsm source files fail with a targeted source-local diagnostic through pipeline, CLI, check JSON, and normalized semantic JSON; the message does not contain the legacy "does not exit" typo, raw Lispish fallback text, or Perl stack frames; mdBook/live docs describe the user-facing behavior.`
   Verification: `pending`
   Commit: `pending`
 
@@ -62,7 +70,7 @@ next bounded `R10` slice from evidence.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2` | `pending` | `R9` handed active implementation focus to `R10`; the next safe diagnostics/provenance step is an evidence audit before another source-local diagnostic change. |
+| 1 | `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` | `pending` | `.2` found that empty source files still leak a raw Lispish/Carp diagnostic and CLI stack frames; this is a bounded source-local diagnostics cut. |
 
 ## Decisions
 
@@ -72,6 +80,16 @@ next bounded `R10` slice from evidence.
   provenance-carrying boundaries and add regression coverage for error shape
   and location reporting, so PNT should inspect the current diagnostic surface
   before adding another behavior-bearing boundary.
+- `2026-05-24`: Select empty direct `.fsm` source-file diagnostics as the next
+  bounded implementation leaf. Existing `R10` slices already cover top-level
+  source context, generated-child context, RTL metadata context, missing child
+  and missing `.rtlif` artifacts, lookup search roots, pre-pipeline CLI
+  missing-input/output-open context, and typed-extension hook/loading context.
+  A fresh empty-file probe still reports the raw Lispish fallback text
+  `File ... is either empty or does not exit` and leaks Perl call-stack frames
+  through `bin/fsmgen --quiet`, so `.3` should replace that with a targeted
+  source-local diagnostic and lock the pipeline, CLI, check-JSON, and
+  normalized semantic JSON surfaces.
 
 ## Open Questions
 
@@ -87,14 +105,19 @@ next bounded `R10` slice from evidence.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: feature-backlog audit Files=1, Tests=15` |
+| `2026-05-24` | `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2` | `prove -Iperl t/241-top-level-source-file-diagnostic-boundary.t t/242-composition-child-source-file-diagnostic-boundary.t t/243-composition-rtl-child-diagnostic-context.t t/244-composition-child-resolution-diagnostic-context.t t/246-cli-error-output-cleanup.t t/250-cli-entrypoint-file-context.t t/252-extension-diagnostic-context.t t/253-extension-loader-diagnostic-context.t t/255-composition-missing-rtl-metadata-diagnostic-context.t t/256-composition-missing-child-source-artifact-context.t t/115-composition-child-source-diagnostics.t t/117-composition-rtlif-metadata-diagnostics.t t/131-composition-failure-summary-reporting.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: focused diagnostic context tests Files=13, Tests=172; feature-backlog audit Files=1, Tests=15` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.1` | `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.1: select diagnostic provenance frontier` | `selection slice` |
+| `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2` | `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2: audit diagnostic provenance frontier` | `audit/design slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created active `R10` diagnostic/provenance frontier audit tree
   and selected `.2` as the audit/design frontier.
+- `2026-05-24`: Completed `.2` and selected `.3` for empty source-file
+  diagnostic cleanup across pipeline, CLI, check JSON, and normalized semantic
+  JSON.

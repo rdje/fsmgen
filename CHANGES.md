@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R10 — Diagnostic/provenance frontier audited
+- Completed `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`.
+- Audited shipped source-local diagnostic coverage across top-level
+  parse/strict failures, generated-child failures, RTL metadata failures,
+  missing child and `.rtlif` artifacts, lookup search roots, pre-pipeline CLI
+  file context, and typed-extension hook/loading context.
+- Selected `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` as the next bounded
+  implementation leaf: targeted empty direct `.fsm` source-file diagnostics
+  without raw Lispish fallback text, the legacy `does not exit` typo, or Perl
+  stack-frame leakage across pipeline, CLI, check JSON, and normalized
+  semantic JSON.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused diagnostic context tests with `Files=13,
+  Tests=172`; feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
+
 ### R10 — Diagnostic/provenance frontier audit selected
 - Created active task tree `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
 - The tree owns the next roadmap-aligned `R10` activity: audit current

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Empty source files are the next bounded R10 diagnostic cut
+- The existing `R10` context work covers many higher-value source and artifact
+  boundaries, but empty direct `.fsm` files still escape through a low-level
+  source-read branch.
+- The current CLI output for an empty source contains a raw Lispish fallback
+  message, the typo `does not exit`, and Perl call-stack frames. That makes it
+  a good bounded diagnostic/provenance cut: the correct user-facing answer is
+  simply that the named source file is empty and cannot be parsed as an FSMGen
+  source.
+- The implementation should keep the existing `Source file: '...'` wrapper,
+  but replace the low-level `confess` path with a targeted diagnostic that is
+  also clean in check JSON and normalized semantic JSON.
+
 ## 2026-05-24: R10 resumes through a frontier audit
 - `R9-STRICT-MODE-FRONTIER-AUDIT.2` handed active focus to `R10`, but the
   diagnostics/provenance lane already has many shipped context boundaries. The
