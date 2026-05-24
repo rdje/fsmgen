@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Aggregate constant roots are the first safe autogrowth source
+- `AGGREGATE-AUTOGROWTH-FROM-USAGE.2` found that broad member/index
+  autovivification is still too wide for a first code slice: it would need a
+  conflict model for partial paths, an anonymous type naming policy, backend
+  guarantees, and careful interaction with explicit declarations.
+- Whole aggregate RHS constants are narrower. The constant resolver already
+  canonicalizes one complete list/record payload, computes a packed width, and
+  exposes a type-shape contract for validation against declared targets. If
+  the assignment target is a whole signal with no declared aggregate type,
+  inheriting that contract is a shape-preserving refinement rather than a
+  guess.
+- The implementation should record the inferred contract on the existing
+  target signal before HDL planning. Explicit target declarations must remain
+  authoritative, and width equality alone must not create an aggregate
+  contract.
+
 ## 2026-05-24: Aggregate autogrowth needs a source-position audit first
 - `AGGREGATE-AUTOGROWTH-FROM-USAGE.1` selects the next aggregate-types backlog
   tree after the dynamic-divisor safety frontier closed.

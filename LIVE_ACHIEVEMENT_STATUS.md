@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Aggregate types — Aggregate autogrowth frontier audited
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
+- Audited shipped aggregate-growth behavior across direct `.fsm`,
+  composition, ISF lowering, tests, corpus accounting, mdBook, and live docs.
+- The current frontier is `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`.
+- The selected implementation surface is direct whole-signal LHS aggregate
+  contract inference from a whole aggregate RHS constant root.
+- Direct `.fsm` declared aggregate anchors, aggregate constants, typed
+  member/item paths, partial aggregate LHS writes, whole aggregate RHS shape
+  checks, concat/deconstruct aggregate source contracts, and bounded
+  composition aggregate top-port inference are already shipped on their
+  documented surfaces.
+- Direct RHS concat autogrowth, arbitrary member/index root autogrowth, child
+  endpoint inference, VHDL aggregate lowering, backend-owned struct lowering
+  policy, and width-only aggregate compatibility remain out of scope.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in the audit slice.
+- Validation passed: focused aggregate/corpus tests with `Files=6,
+  Tests=3085`; `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24: Aggregate types — Aggregate autogrowth frontier selected
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.1`.
 - Activated the active aggregate-types task tree for the mdBook

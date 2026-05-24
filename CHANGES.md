@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Aggregate types — Aggregate autogrowth frontier audited
+- Completed audit work for `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
+- Audited shipped aggregate-growth behavior across direct `.fsm`,
+  composition, ISF lowering, tests, corpus accounting, mdBook, and live docs.
+- Confirmed that the current direct `.fsm` aggregate surfaces are anchored by
+  explicit `+types`/`+size` declarations, aggregate constants, package
+  aggregate values, typed member/item paths, partial aggregate LHS writes,
+  whole aggregate RHS shape checks, and concat/deconstruct aggregate source
+  contracts.
+- Confirmed that composition already has bounded aggregate top-port inference
+  from declared roots, whole-root links to typed child inputs, and uniform
+  unlinked same-name child inputs.
+- Selected `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` as the next bounded
+  implementation leaf: infer a direct whole-signal LHS aggregate type contract
+  from a whole aggregate RHS constant root.
+- Direct RHS concat autogrowth, arbitrary member/index root autogrowth, child
+  endpoint inference, VHDL aggregate lowering, backend-owned struct lowering
+  policy, and width-only aggregate compatibility remain out of scope.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in the audit slice.
+- Validation passed: focused aggregate/corpus tests with `Files=6,
+  Tests=3085`; `mdbook build docs/book`; and `git diff --check`.
+
 ### Aggregate types — Aggregate autogrowth frontier selected
 - Completed selection work for `AGGREGATE-AUTOGROWTH-FROM-USAGE.1`.
 - Activated an aggregate-types task tree for the mdBook feature-backlog item

@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `AGGREGATE-AUTOGROWTH-FROM-USAGE` | `active` | `aggregate types and data` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.2` | [docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md](docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md) |
+| `AGGREGATE-AUTOGROWTH-FROM-USAGE` | `active` | `aggregate types and data` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` | [docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md](docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md) |
 
 ## Proposed Task Trees
 

@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Aggregate autogrowth frontier audited
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
+- Audited shipped aggregate-growth behavior across direct `.fsm`,
+  composition, ISF lowering, tests, corpus accounting, mdBook, and live docs.
+- Confirmed that declared `+types`/`+size` anchors, aggregate constants,
+  package aggregate values, typed member/item paths, partial aggregate LHS
+  writes, whole aggregate RHS shape checks, and concat/deconstruct aggregate
+  source contracts already cover the current shipped direct `.fsm` aggregate
+  surfaces.
+- Confirmed that composition already has bounded aggregate top-port inference
+  from declared roots, whole-root links to typed child inputs, and uniform
+  unlinked same-name child inputs, while child endpoint member/item access
+  without a declared aggregate endpoint still fails closed.
+- The selected follow-up leaf is `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`, which
+  will infer a direct whole-signal LHS aggregate type contract from a whole
+  aggregate RHS constant root.
+- The selected scope is intentionally narrow: direct RHS concat autogrowth,
+  arbitrary member/index root autogrowth, child endpoint inference, VHDL
+  aggregate lowering, backend-owned struct lowering policy, and width-only
+  aggregate compatibility remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in the audit slice.
+- Validation passed: focused aggregate/corpus tests with `Files=6,
+  Tests=3085`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`.
+
 ## 2026-05-24: Aggregate autogrowth frontier selected
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.1`.
 - Activated the active aggregate-types task tree for the mdBook

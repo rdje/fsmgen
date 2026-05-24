@@ -3,7 +3,31 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `aggregate types and data`.
 - Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
-- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`.
+- Recent aggregate autogrowth audit:
+  `AGGREGATE-AUTOGROWTH-FROM-USAGE.2` audited shipped aggregate-growth
+  behavior across direct `.fsm`, composition, ISF lowering, tests, corpus
+  accounting, mdBook, and live docs. Direct `.fsm` already preserves aggregate
+  contracts from explicit `+types`/`+size` anchors; aggregate constants and
+  package aggregate values already carry canonical list/record payload shapes;
+  partial aggregate LHS writes, typed member/item paths, whole aggregate RHS
+  shape checks, and concat/deconstruct aggregate source contracts are covered
+  when a declared aggregate anchor exists. Composition already supports a
+  bounded aggregate top-port inference path through declared roots, whole-root
+  links to typed child inputs, and uniform unlinked same-name child inputs.
+  The smallest safe implementation gap is direct whole-signal LHS aggregate
+  contract inference from a whole aggregate RHS constant root: today
+  `(OUT> = FRAME)` where `FRAME` is a record/list constant lowers only as a
+  packed vector and loses the known shape. The selected next leaf is
+  `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`, limited to that direct `.fsm` whole
+  aggregate constant-root source position. Direct RHS concat autogrowth,
+  arbitrary member/index root autogrowth, child endpoint inference, VHDL
+  aggregate lowering, backend-owned struct lowering policy, and width-only
+  aggregate compatibility remain deferred. No parser, scheduler, report,
+  generated artifact, HDL, CLI, public API, or public language behavior
+  changed in the audit slice. Validation passed: focused aggregate/corpus
+  tests with `Files=6, Tests=3085`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent aggregate autogrowth selection:
   `AGGREGATE-AUTOGROWTH-FROM-USAGE.1` activated the task tree for the mdBook
   feature-backlog item "Automatic Aggregate Growth From Usage". The next
