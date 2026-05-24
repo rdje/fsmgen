@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R8 — Strict support-tier frontier selected
+- Completed `R8-STRICT-SUPPORT-TIER-CUTS.1`.
+- Activated the R8 task tree for the next strict-mode support-tier cuts.
+- The selected follow-up leaf will audit current strict-mode enforcement
+  across direct `.fsm`, standalone `.dt`, composition child sources,
+  regression corpus support accounting, diagnostics, mdBook guidance, and
+  live docs before selecting any behavior-bearing compatibility rejection.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in this selection.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Roadmap maintenance — Current active lane truth sync
 - Corrected the secondary `ROADMAP_STATUS.md` current active lane block after
   `RICHER-AGGREGATE-OPERATORS.3` closed, so it matches the top live snapshot.

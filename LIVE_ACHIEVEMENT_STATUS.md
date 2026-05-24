@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R8 — Strict support-tier frontier selected
+- Completed `R8-STRICT-SUPPORT-TIER-CUTS.1`.
+- Activated the R8 task tree for the next strict-mode support-tier cuts.
+- The current frontier is `R8-STRICT-SUPPORT-TIER-CUTS.2`, an audit of the
+  current strict-mode enforcement boundary and next bounded compatibility cut.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R8-STRICT-SUPPORT-TIER-CUTS`.
+- Current frontier: `R8-STRICT-SUPPORT-TIER-CUTS.2`.
+
 ## 2026-05-24: Roadmap maintenance — Current active lane truth sync
 - Corrected the secondary `ROADMAP_STATUS.md` current active lane block so it
   matches the top live snapshot after `RICHER-AGGREGATE-OPERATORS.3` closed.

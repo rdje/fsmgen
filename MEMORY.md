@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R8 strict support-tier frontier selected
+- Completed `R8-STRICT-SUPPORT-TIER-CUTS.1`.
+- Activated the R8 task tree for the next strict-mode support-tier cuts.
+- The current frontier is `R8-STRICT-SUPPORT-TIER-CUTS.2`, an audit/design
+  leaf that must inspect direct `.fsm`, standalone `.dt`, composition child
+  sources, regression corpus support accounting, diagnostics, mdBook guidance,
+  and live docs before selecting any behavior-bearing strict-mode rejection.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in this selection.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R8-STRICT-SUPPORT-TIER-CUTS`.
+- Current frontier: `R8-STRICT-SUPPORT-TIER-CUTS.2`.
+
 ## 2026-05-24: Current active lane truth sync
 - Corrected the secondary `ROADMAP_STATUS.md` current active lane block to
   match the top live snapshot after `RICHER-AGGREGATE-OPERATORS.3` closed.

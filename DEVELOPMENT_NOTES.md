@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Strict-mode cuts still need selection audits
+- `R8-STRICT-SUPPORT-TIER-CUTS.1` reopens R8 strict-mode widening through a
+  task tree rather than making an opportunistic frontend rejection.
+- Strict mode is a support-tier contract, so each new rejection must name the
+  compatibility construct, the canonical replacement, the affected source
+  kinds, the corpus classification impact, and the user-facing diagnostic
+  before code changes begin.
+- The next leaf is therefore an audit/design slice. It should choose a small
+  construct family or close the tree if no safe cut is justified.
+
 ## 2026-05-24: Roadmap live status has one current truth
 - `ROADMAP_STATUS.md` has both a top snapshot and a lower "Current active
   lane" section used during recovery. After closing a task tree, both must be
