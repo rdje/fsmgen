@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R11 — Shared-datapath contract frontier audited
+- Completed `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.2` and closed the
+  task tree.
+- Decided not to select a new shared-datapath implementation slice now: the
+  shipped bounded contract already covers compatible same-name generated-FSM
+  output families, contributor and peer-read metadata, helper wiring,
+  SystemVerilog assertion hooks, registered lifted runtimes, combinational
+  lifted carriers, public fanout, typed structural nets, CLI summaries, and
+  forward-IR export surfaces.
+- Deferred broader route mux/storage, arbitrary fan-in/fan-out protocols,
+  ready/backpressure, payload protocols, dynamic scheduling, external-RTL or
+  standalone-DT contributors, mixed storage-class lifting, and wider
+  shared-data movement until a precise prerequisite contract exists.
+- Synchronized the mdBook composition chapter, mdBook feature backlog,
+  roadmap, task-tree, README, and live docs.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused shared-datapath evidence with `Files=18,
+  Tests=36`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R11 — Shared-datapath contract frontier audit selected
 - Created active task tree `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT`.
 - The tree owns an evidence-gathering audit over the remaining

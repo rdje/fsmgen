@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Defer broader shared-datapath growth until route semantics are explicit
+- The shipped shared-datapath contract is now broad enough to be considered a
+  bounded contract for same-name generated-FSM output families: it has
+  metadata, helper wiring, assertion hooks, registered and combinational
+  lifted runtimes, public fanout handling, typed structural nets, CLI
+  summaries, and forward-IR exports.
+- The remaining interesting work is not a small continuation of that same
+  slice. Arbitrary route mux/storage, ready/backpressure, payload protocols,
+  dynamic scheduling, external-RTL or standalone-DT contributors, and mixed
+  storage-class lifting all need a stronger contract before code, otherwise
+  the composition layer would guess at route semantics that belong to a
+  reusable-module, portable-type, ATL, or architecture decision.
+
 ## 2026-05-24: Shared-datapath contract work needs an audit before code
 - The shipped shared-datapath surface already spans discovery, contributor
   metadata, helper/runtime HDL, assertion HDL, visibility policy, registered

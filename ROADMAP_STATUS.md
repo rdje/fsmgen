@@ -1,9 +1,27 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R11`.
-- Active task tree: `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT`.
-- Current frontier: `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R11 shared-datapath contract frontier audit:
+  `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.2` audited the shipped
+  shared-datapath contract and closed the task tree. No new shared-datapath
+  implementation slice is selected now. The shipped bounded contract is
+  regression-backed across compatible same-name generated-FSM output families,
+  contributor and peer-read metadata, helper source-enable and aggregate
+  wiring, SystemVerilog assertion hooks, registered lifted runtimes,
+  combinational lifted carriers, public fanout, typed structural nets, CLI
+  summaries, and forward-IR export surfaces. Broader route mux/storage,
+  arbitrary fan-in/fan-out protocols, ready/backpressure, payload protocols,
+  dynamic scheduling, external-RTL or standalone-DT contributors, mixed
+  storage-class lifting, and wider shared-data movement remain deferred until
+  their route/storage/protocol, reusable-module, portable-type, or architecture
+  contract is explicit. The mdBook composition chapter and feature backlog now
+  document the shipped contract and backlog boundary. Validation passed:
+  focused shared-datapath evidence with `Files=18, Tests=36`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent R11 shared-datapath contract frontier audit selection:
   `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.1` activated an
   evidence-gathering audit over the remaining shared-datapath contract
@@ -8558,6 +8576,24 @@ Done:
     API, source, test, or generated behavior changed in the selection slice.
   - Validation passed: feature-backlog audit with `Files=1, Tests=15`;
     `mdbook build docs/book`; and `git diff --check`.
+- `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.2` audited the shipped
+  shared-datapath contract and closed the task tree:
+  - no immediate shared-datapath implementation slice is selected,
+  - the shipped bounded contract covers compatible same-name generated-FSM
+    output families, contributor and peer-read metadata, helper wires,
+    SystemVerilog assertion hooks, registered lifted runtimes,
+    combinational lifted carriers, public fanout, typed structural nets, CLI
+    summaries, and forward-IR exports,
+  - broader route mux/storage, arbitrary fan-in/fan-out protocols,
+    ready/backpressure, payload protocols, dynamic scheduling, external-RTL or
+    standalone-DT contributors, mixed storage-class lifting, and wider shared
+    data movement remain deferred until a precise prerequisite contract
+    exists,
+  - and the mdBook composition chapter plus feature backlog now document the
+    shipped contract and backlog boundary.
+  - Validation passed: focused shared-datapath evidence with `Files=18,
+    Tests=36`; feature-backlog audit with `Files=1, Tests=15`;
+    `mdbook build docs/book`; and `git diff --check`.
 - Explicit composition `?wiring` blocks now accept canonical Lisp-ish list
   links:
   - `(source target)` is the compact directed-link spelling,
@@ -9318,14 +9354,15 @@ Done:
   - and mixed-direction same-name rejection for declared top-input connect-by-name.
 Left:
 - Extend the now-shipped semantic parameter/generic contract beyond direct-root metadata, external `?rtl` SystemVerilog instance emission, generated `?fsmc` / `?dtc` SystemVerilog instance emission, direct param-to-param default reuse, the first bounded scalar operator-expression value slice, and the first bounded leafwise aggregate operator slice: VHDL generic-map lowering plus richer expression-valued semantic parameter domains remain follow-up work, including non-leafwise typed aggregate-to-aggregate operator expressions where the operator is explicitly valid for the operand types/shapes.
-- Complete `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.2` by auditing the
-  shipped shared-datapath surface and selecting one bounded implementation
-  slice or prerequisite deferral before any shared-datapath behavior change.
-- Turn the new shared-datapath extraction direction into a real contract:
-  - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime/assertion slices,
-  - lifted shared-target mux/register ownership beyond the now-shipped registered peer-read public-preserving, mixed-boundary, internal-only, and public-fanout slices,
-  - public re-export/default-visibility policy beyond the now-shipped bounded registered peer-read/public-fanout cases and combinational peer-read/public-fanout cases,
-  - and realized combinational behavior beyond the now-shipped bounded peer-read public-preserving, internal-only, and public-fanout slices.
+- Defer broader shared-datapath growth beyond the documented bounded contract
+  until one exact prerequisite contract is selected:
+  - arbitrary route mux/storage and general fan-in/fan-out protocols,
+  - ready/backpressure and payload protocols,
+  - dynamic scheduling or route activation semantics,
+  - external-RTL or standalone-DT contributors as shared datapath sources,
+  - mixed registered/combinational runtime lifting,
+  - and wider shared-data movement that needs a reusable-module,
+    portable-type, or architecture contract first.
 - Turn the reusable standalone-DT/module-library direction into a real contract:
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
   - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract beyond the now-shipped multi-block enable, grouped shared-target, assertion, and composition-facing child-export metadata surfaces,

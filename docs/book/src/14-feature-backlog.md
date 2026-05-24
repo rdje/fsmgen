@@ -131,6 +131,43 @@ public type/export APIs remain under the broader public embedding/API lane.
 
 ## Composition
 
+### Shared-Datapath Contract
+
+Status: shipped for bounded generated-FSM same-name families; broader
+route/storage/protocol surfaces remain backlog.
+
+Goal: turn compatible same-name generated-child output families into a clearly
+bounded shared datapath with explicit contributor metadata, helper signals,
+assertion hooks, and deterministic lifted runtime carriers where the current
+contract can prove them.
+
+Current boundary: FSMGen can infer shared-datapath candidates across multiple
+realized `?fsmc` children when their output families have the same name,
+width, interface type, and compatible declared type identity. The shipped
+surface reports contributor identity, bound connection expressions,
+contributor forward IR, selected output-drive families, peer-read endpoints,
+top-output bindings, storage class, default lifted visibility, aggregate
+enable families, conflict signals, and assertion metadata.
+
+SystemVerilog generated composition tops emit helper source-enable,
+aggregate-enable, same-value conflict, and multi-value conflict wiring, plus
+verification-only shared-datapath guard assertions. Verilog targets keep the
+metadata but do not emit SystemVerilog assertion syntax.
+
+Registered families with a consistent reset value and usable composition
+clock/reset can lift into `*_shared_next` and `*_shared_q` carriers for the
+covered public-preserving peer-read, internal-only peer-read, mixed
+public/internal, and public-fanout cases. Combinational families can lift into
+`*_shared_comb` carriers for the covered public-preserving peer-read,
+internal-only peer-read, and public-fanout cases without inventing state.
+
+Remaining backlog: arbitrary route mux/storage, general fan-in/fan-out
+protocols, ready/backpressure, payload protocols, dynamic scheduling,
+external-RTL or standalone-DT contributors as shared datapath sources, mixed
+registered/combinational runtime lifting, and broader shared-data movement
+remain deferred until their route/storage/protocol, reusable-module,
+portable-type, or architecture contract is explicit.
+
 ### VHDL Generic-Map Lowering
 
 Status: backlog, behind active VHDL backend work.

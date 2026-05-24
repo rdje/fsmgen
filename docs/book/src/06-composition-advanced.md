@@ -294,32 +294,178 @@ packed typedef for it instead of flattening everything back to raw vectors.
 - imported aliases are sanitized into local emitted typedef identifiers such as
   `shared_types__frame_t__fsmgen_t`
 
-## Typed Shared-Datapath Families
+## Shared-Datapath Families
+
+FSMGen can recognize a bounded shared-datapath family when a composition top
+contains multiple realized generated FSM children (`?fsmc`) that expose an
+output with the same name, width, interface type, and compatible declared type
+identity.
+
+The feature is inferred from the child interfaces and wiring. There is no
+separate user syntax that asks for a shared datapath. A family such as
+`status_bus` forms only when the contributors are compatible enough for FSMGen
+to build one deterministic shared carrier.
+
+Example:
+
+```lisp
+(?top:shared_status_top
+  (?ports:public_io
+    clk
+    rstn
+    select
+    left_status>8
+    right_status>8
+    result_data>8
+  )
+  (?fsmc:left left_src)
+  (?fsmc:right right_src)
+  (?fsmc:consumer consumer_src)
+  (?wiring:wiring
+    /select/left.select/
+    /select/right.select/
+    /select/consumer.select/
+    /left.status_bus/left_status/
+    /left.status_bus/consumer.status_bus/
+    /right.status_bus/right_status/
+    /consumer.result_data/result_data/
+  )
+)
+```
+
+If both `left_src` and `right_src` drive an output named `status_bus` with the
+same width and type, FSMGen records one shared-datapath candidate for that
+family.
+
+### Candidate Metadata
+
+Each candidate is reported through the composition result metadata and the
+normalized semantic surfaces as `composition_shared_datapath_candidates`.
+
+The shipped candidate surface includes:
+
+- shared signal name, width, interface type, and optional declared type
+  contract
+- contributor instance/module/endpoint identity
+- contributor binding information from the structural connection-expression
+  surface
+- each contributor's `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir`, and
+  selected output-drive-family summary
+- top outputs that currently expose the family
+- peer child inputs that read the family
+- storage class: `registered`, `combinational`, `mixed`, or `unknown`
+- default lifted-visibility planning
+- aggregate enable, same-value conflict, and multi-value conflict signals
+- bounded assertion metadata for same-value and multi-value conflicts
+
+The non-quiet CLI also prints a concise `Shared-Datapath Candidates` summary
+from that same metadata.
+
+### Typed Compatibility
 
 The shared-datapath lane is conservative when typed child outputs are involved.
 
-- same-name child-output families still need exact name, width, and interface
-  agreement
-- and when those child outputs also preserve declared type identity from named
-  aliases, the shared-datapath family only forms when that typed contributor
-  evidence remains compatible too
+Same-name child-output families still need exact name, width, and interface
+agreement. When those child outputs also preserve declared type identity from
+named aliases, the family only forms when that typed contributor evidence is
+compatible too.
 
 That means width-equal but declared-type-incompatible outputs do not collapse
 into one shared-datapath family just because they are both called `status_bus`.
 
 When the typed contributor evidence is uniform, the candidate metadata keeps
-that declared type contract and the private raw contributor nets synthesized by
-shared-datapath lifting preserve the same contributor-side type identity in the
+that declared type contract. Private raw contributor nets synthesized by
+shared-datapath lifting preserve the contributor-side type identity in the
 structural export.
 
-The lifted runtime carriers now follow that same rule too:
+The lifted runtime carriers follow the same rule:
 
 - `*_shared_q`
 - `*_shared_next`
 - `*_shared_comb`
 
-They are now explicit structural nets with a real declaration kind instead of
+They are explicit structural nets with a real declaration kind instead of
 existing only as declaration text hidden in auxiliary HDL sections.
+
+### Enable And Conflict Signals
+
+For each RHS value in a shared family, FSMGen builds per-contributor
+source-enable aliases and one aggregate value-enable signal.
+
+For the whole family, FSMGen also builds one aggregate target-enable signal
+and one multi-value conflict signal.
+
+SystemVerilog composition tops emit verification-only guard assertions under
+`` `ifndef SYNTHESIS``:
+
+- same-value assertions detect more than one contributor selecting the same
+  value family in the same cycle
+- multi-value assertions detect more than one value family becoming active in
+  the same cycle
+
+Verilog targets keep the assertion metadata, but they do not emit
+SystemVerilog assertion syntax.
+
+### Registered Runtime
+
+When a shared family is registered, has a consistent reset value, and the
+composition top has usable clock/reset system signals, FSMGen can lift the
+family into one top-level shared register.
+
+For a peer-read public-preserving case, the generated top emits:
+
+- one `*_shared_next` signal
+- one `*_shared_q` register
+- next-value mux logic driven by the aggregate value enables
+- an `always_ff` block with the recovered reset value
+- private `shared_dp_raw_*` nets for each child contributor output
+- peer child inputs rebound to `*_shared_q`
+- public top outputs assigned from `*_shared_q`
+
+Registered internal-only peer-read families use the same lifted register and
+peer-input rebinding, but FSMGen does not invent public re-export assignments.
+
+Registered public-fanout families with no peer-read child inputs also lift to
+one shared register and assign each preserved public top output from it.
+
+Mixed public/internal registered families preserve public top re-exports and
+avoid invented internal-carrier publication.
+
+### Combinational Runtime
+
+Combinational shared families never become lifted state.
+
+When the family has public top outputs or top-local peer reads, FSMGen can
+lift it into one `*_shared_comb` carrier. The generated top emits
+`always_comb` value-family mux logic, private raw contributor nets, and the
+appropriate rebinding:
+
+- public-preserving peer-read families rebind peer child inputs to
+  `*_shared_comb` and assign public top outputs from it
+- internal-only peer-read families rebind peer child inputs to a top-local
+  `*_shared_comb` carrier without inventing public top outputs
+- public-fanout families with no peer-read child inputs assign each preserved
+  public top output from `*_shared_comb`
+
+This is still combinational routing, not storage. FSMGen does not silently add
+state for a combinational shared family.
+
+### Current Boundary
+
+The shipped shared-datapath contract is bounded to compatible same-name output
+families across multiple realized generated FSM children.
+
+The current implementation does not promise arbitrary route mux/storage,
+general fan-in/fan-out protocols, ready/backpressure, payload protocols,
+dynamic scheduling, or external-RTL/standalone-DT contributors as shared
+datapath sources.
+
+Mixed registered/combinational contributor families are reported as mixed or
+unknown metadata, but they are not lifted into one runtime carrier.
+
+Broader shared-data movement should be selected as a separate task-tree slice
+only after the route/storage/protocol, reusable-module, portable-type, or
+architecture contract is explicit.
 
 ## Whole Aggregate Actuals
 

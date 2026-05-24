@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R11 — Shared-datapath contract frontier audited
+- Completed `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.2` and closed the
+  task tree.
+- Decision: no new shared-datapath implementation slice is selected now.
+  Broader route mux/storage, arbitrary fan-in/fan-out protocols,
+  ready/backpressure, payload protocols, dynamic scheduling, external-RTL or
+  standalone-DT contributors, mixed storage-class lifting, and wider
+  shared-data movement remain deferred until a precise prerequisite contract
+  exists.
+- The mdBook composition chapter and feature backlog now document the shipped
+  bounded shared-datapath contract and backlog boundary.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused shared-datapath evidence with `Files=18,
+  Tests=36`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R11 — Shared-datapath contract frontier audit selected
 - Created active task tree `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT`.
 - Completed `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.1`.

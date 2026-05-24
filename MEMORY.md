@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R11 shared-datapath contract frontier audited
+- Completed `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.2` and closed the
+  task tree.
+- Decision: no new shared-datapath implementation slice is selected now. The
+  shipped bounded contract already covers compatible same-name generated-FSM
+  output families, contributor and peer-read metadata, helper source-enable
+  and aggregate wiring, SystemVerilog assertion hooks, registered lifted
+  runtimes, combinational lifted carriers, public fanout, typed structural
+  nets, CLI summaries, and forward-IR export surfaces.
+- Broader route mux/storage, arbitrary fan-in/fan-out protocols,
+  ready/backpressure, payload protocols, dynamic scheduling, external-RTL or
+  standalone-DT contributors, mixed storage-class lifting, and wider
+  shared-data movement remain deferred until a precise prerequisite contract
+  exists.
+- Synchronized the mdBook composition chapter, mdBook feature backlog,
+  roadmap, task-tree, README, and live docs.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused shared-datapath evidence with `Files=18,
+  Tests=36`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R11 shared-datapath contract frontier audit selected
 - Created active task tree `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT`.
 - Purpose: audit the shipped shared-datapath extraction surface and select one
