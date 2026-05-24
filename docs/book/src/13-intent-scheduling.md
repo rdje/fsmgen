@@ -65,8 +65,8 @@ clear lower-layer mapping, and clear runtime behavior.
   transaction dependency tokens, enum tokens, and qualified package-constant
   tokens remain authored review tokens. Generated
   activation-site scalar parameter overrides and aggregate/list override leaves
-  may use actor-local constants, actor-local scalar parameter defaults, and
-  enum members, which
+  may use actor-local constants, actor-local scalar parameter defaults,
+  enum members, and qualified imported package scalar constants, which
   resolve to literal generated-top bindings.
   Actor-local scalar parameter defaults that resolve to non-negative integer
   literals may also be used as static `(wait NAME)` counts in the owning
@@ -607,9 +607,9 @@ The ISF-specific current limitations are:
   interface shape, generated-top respecialization, arbitrary-depth generation beyond the first
   `DEPTH=4` fixture, automatic non-zero reset values, standalone
   transaction/drive exports, package/imported constants outside the shipped
-  qualified actor parameter and generated-child transaction parameter default
-  scalar-constant subsets, derived parameter expressions, and nested library
-  imports remain backlog work.
+  qualified actor parameter, generated-child transaction parameter default,
+  and generated activation override scalar-constant subsets, derived parameter
+  expressions, and nested library imports remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn and blocking `do` parameter declaration,
@@ -703,7 +703,11 @@ The ISF-specific current limitations are:
   member/item paths, and arbitrary expressions fail closed.
 
   Scalar leaves inside those activation aggregate/list parameter override
-  values may use actor-local scalar parameter defaults and enum members too.
+  values may use actor-local scalar parameter defaults, enum members, and
+  qualified imported package scalar constants too. Package constants in
+  activation overrides resolve to literal generated-top bindings and
+  generated-composition report values; unqualified package constants,
+  aggregate package constants, and package member/item paths fail closed.
 
   Reusable-library use-site parameter overrides may also use importing-actor
   constants, importing-actor scalar parameter defaults, and enum members as

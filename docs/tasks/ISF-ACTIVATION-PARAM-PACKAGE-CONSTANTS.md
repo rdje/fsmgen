@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -53,7 +53,7 @@ scalar constants by qualified name, for example `shared.DEFAULT_WIDTH`.
 ## Task Tree
 
 - ID: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship bounded package scalar constants in generated activation parameter overrides.`
   Children: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1`,
     `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2`
@@ -67,18 +67,18 @@ scalar constants by qualified name, for example `shared.DEFAULT_WIDTH`.
   Commit: `this commit: ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1: select activation package constants`
 
 - ID: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement package scalar constants as generated activation parameter override values.`
   Acceptance: `Lowering behavior, diagnostics, public contracts, focused
   tests, mdBook, downstream handoff, and broader ISF gate are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `this commit: ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2: ship activation package constants`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` | `pending` | The package-constant generated activation override boundary is selected and ready for implementation. |
+| 1 | `closed` | `done` | The package-constant generated activation override boundary shipped and the tree is complete. |
 
 ## Decisions
 
@@ -104,6 +104,7 @@ scalar constants by qualified name, for example `shared.DEFAULT_WIDTH`.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-05-24` | `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` | syntax checks; `prove -Iperl t/1351-isf-activation-param-package-constants.t t/1249-isf-activation-parameter-constants.t t/1271-isf-enum-member-activation-params.t t/1276-isf-enum-member-activation-aggregate-params.t t/1350-isf-transaction-param-package-constants.t t/1349-isf-actor-param-package-constants.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1113-isf-public-interface-contract-json-roundtrip-audit.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1256-feature-backlog-status-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed: focused Files=6 Tests=18; audits Files=7 Tests=352; ISF gate Files=257 Tests=1699` |
 | `2026-05-24` | `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
@@ -111,10 +112,14 @@ scalar constants by qualified name, for example `shared.DEFAULT_WIDTH`.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1` | `this commit: ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1: select activation package constants` | `selection slice` |
-| `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` | `pending` | `implementation slice` |
+| `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` | `this commit: ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2: ship activation package constants` | `implementation slice` |
 
 ## Changelog
 
+- `2026-05-24`: Shipped qualified imported package scalar constants in
+  generated activation parameter overrides; spawn, generated blocking `do`,
+  and rule-trigger activation sites resolve those constants to literal
+  generated-top bindings and generated-composition report values.
 - `2026-05-24`: Created task tree and selected the bounded package scalar
   constants in generated activation parameter overrides implementation
   frontier.

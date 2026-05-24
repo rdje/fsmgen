@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS` | `active` | `R14` | `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` | [docs/tasks/ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.md](docs/tasks/ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.md](docs/tasks/ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.md) |
 | `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.md](docs/tasks/ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.md) |
 | `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.md](docs/tasks/ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.md) |
 | `ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.md](docs/tasks/ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.md) |

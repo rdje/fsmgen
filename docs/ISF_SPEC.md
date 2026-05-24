@@ -588,7 +588,12 @@ package constants, unqualified package constants, package aggregate constants,
 and package aggregate member/item paths remain fail-closed. Scalar activation
 parameter overrides and scalar leaves inside activation aggregate/list
 parameter override values may use actor-local constants, actor-local scalar
-parameter defaults, and local or package-qualified enum members.
+parameter defaults, local or package-qualified enum members, and qualified
+imported package scalar constants. Activation override package constants are
+resolved to literal generated-top bindings and generated-composition report
+values. Unknown package constants, unqualified package constants, package
+aggregate constants, and package aggregate member/item paths remain
+fail-closed in activation overrides.
 Reusable-library use-site parameter overrides may use importing-actor
 constants, importing-actor scalar parameter defaults, and local or
 package-qualified enum members as scalar override values or as scalar leaves
@@ -596,7 +601,9 @@ inside compatible aggregate/list override values. Actor constants and earlier
 scalar actor parameters used as actor parameter defaults resolve internally
 before scalar actor-parameter consumers run while preserving the authored
 token in scheduled `.fsm` and `actor_params[]`. Actor constants, actor scalar
-parameters, and enum members used by activation and reusable-library use sites resolve to
+parameters, enum members, and qualified package constants used by activation
+sites resolve to literal values before generated-top emission. Actor constants,
+actor scalar parameters, and enum members used by reusable-library use sites resolve to
 literal values before generated-top emission and `library_uses[]`
 schedule-report publication where that report surface exists. Schedule
 reports expose actor parameter defaults through `actor_params[]` entries with
@@ -1331,8 +1338,8 @@ specialization, generated-top respecialization, arbitrary-depth
 memory-backed FIFO generation beyond the first `DEPTH=4` fixture, automatic
 non-zero reset values such as empty=1, standalone transaction/drive exports,
 package/imported constants outside the shipped qualified actor parameter and
-generated-child transaction parameter default scalar-constant subsets, derived
-parameter expressions, and library
+generated-child transaction parameter default, and generated activation
+override scalar-constant subsets, derived parameter expressions, and library
 actors that import other libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
@@ -1973,17 +1980,20 @@ values, the implementation must specialize distinct logical child instances or
 cloned scheduled regions. It must not lower the parameter as a mutable runtime
 signal shared by every activation of the transaction.
 
-Actor-local constants, actor-local scalar parameter defaults, and enum members
-are accepted as static activation parameter override values. A constant or
-actor-scalar-parameter name may appear as a scalar override value, or as a
-scalar leaf inside an aggregate/list override value, for generated activation
-forms that already support `(params ...)`: spawn, parameterized blocking `do`,
-and parameterized rule `trigger`. A local enum member such as `mode.BUSY` or
+Actor-local constants, actor-local scalar parameter defaults, enum members,
+and qualified imported package scalar constants are accepted as static
+activation parameter override values. A constant, actor-scalar-parameter, or
+`PACKAGE.CONSTANT` name may appear as a scalar override value, or as a scalar
+leaf inside an aggregate/list override value, for generated activation forms
+that already support `(params ...)`: spawn, parameterized blocking `do`, and
+parameterized rule `trigger`. A local enum member such as `mode.BUSY` or
 package enum member such as `shared.mode.BUSY` may appear as either a scalar
 override value or a scalar leaf inside an aggregate/list override value. The
-lowerer resolves constants, actor scalar parameters, and enum members to
-literal values before generated-top emission, so generated `?fsmc` parameter
-overrides remain self-contained. Reusable-library use-site parameter overrides
+lowerer resolves constants, actor scalar parameters, enum members, and
+qualified package scalar constants to literal values before generated-top
+emission, so generated `?fsmc` parameter overrides remain self-contained.
+Unqualified package constants, package aggregate constants, and package
+member/item paths remain fail-closed. Reusable-library use-site parameter overrides
 follow the same static value rule for scalar values and aggregate/list leaves:
 numeric/exact-width literals, importing-actor constants, importing-actor
 scalar parameter defaults, and local/package enum members resolve before
@@ -3236,9 +3246,9 @@ HDL-identifier-compatible names. Overrides must use unique names declared by
 the child transaction; missing overrides use child defaults. Scalar numeric
 and exact-width literal overrides are width-flexible. Aggregate/list defaults
 require compatible aggregate/list override shape. Actor-local constants,
-actor-local scalar parameter defaults, and enum members may supply static
-activation override scalar values or scalar leaves inside activation
-aggregate/list override values. Malformed
+actor-local scalar parameter defaults, enum members, and qualified imported
+package scalar constants may supply static activation override scalar values
+or scalar leaves inside activation aggregate/list override values. Malformed
 forms, duplicate generated instance names, duplicate parameters, unknown
 targets, unknown override names, unsupported value shapes, unresolved enum
 members, and parameter declarations on non-generated transactions fail before
@@ -5253,6 +5263,7 @@ Focused tests:
 - [t/1348-isf-transaction-param-transaction-params.t](../t/1348-isf-transaction-param-transaction-params.t)
 - [t/1349-isf-actor-param-package-constants.t](../t/1349-isf-actor-param-package-constants.t)
 - [t/1350-isf-transaction-param-package-constants.t](../t/1350-isf-transaction-param-package-constants.t)
+- [t/1351-isf-activation-param-package-constants.t](../t/1351-isf-activation-param-package-constants.t)
 
 ## 12. Explicitly Deferred
 
@@ -5262,7 +5273,8 @@ Focused tests:
   library fixture/catalog slices:
   standalone transaction/drive exports,
   package/imported constants outside the shipped qualified actor parameter and
-  generated-child transaction parameter default scalar-constant subsets,
+  generated-child transaction parameter default, and generated activation
+  override scalar-constant subsets,
   derived parameter expressions,
   transaction-port dimensions beyond positive literals, actor-local scalar
   parameters, and scalar type aliases,
@@ -5394,7 +5406,9 @@ Focused tests:
   defaults, earlier scalar transaction parameter defaults, or qualified
   imported package scalar constants, scalar
   activation parameter override enum member values, activation aggregate/list
-  override enum member leaves, reusable-library use-site parameter override
+  override enum member leaves, activation parameter override scalar and
+  aggregate/list leaves backed by qualified imported package scalar constants,
+  reusable-library use-site parameter override
   enum member values and leaves plus importing-actor constant/scalar-parameter
   values and leaves, inline drive assignment RHS enum member
   values and expression operands, actor-owned aggregate storage variable carriers,

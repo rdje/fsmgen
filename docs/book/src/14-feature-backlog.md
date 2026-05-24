@@ -321,9 +321,14 @@ and applies those overrides through the generated top.
 
 The shipped activation override value domain is scalar/exact-width literals,
 actor-local constants, actor-local scalar parameter defaults, scalar local or
-package-qualified enum members, and compatible aggregate/list literals whose
-scalar leaves are literals, actor-local constants, actor-local scalar
-parameter defaults, or enum members.
+package-qualified enum members, qualified imported package scalar constants,
+and compatible aggregate/list literals whose scalar leaves are literals,
+actor-local constants, actor-local scalar parameter defaults, enum members, or
+qualified imported package scalar constants. Package-constant-backed
+activation overrides resolve to literal generated-top bindings and
+generated-composition report values; unqualified package constants, aggregate
+package constants, package member/item paths, and ambiguous
+local-enum/package-constant spellings remain fail-closed.
 
 Actor parameter defaults accept enum members, declared actor constants, earlier
 scalar actor parameter defaults, and qualified imported package scalar
@@ -355,10 +360,10 @@ constants, importing-actor scalar parameter defaults, and enum members as
 scalar values or scalar leaves inside compatible aggregate/list override
 values.
 
-Actor constant names, actor-local scalar parameter default names, and scalar
-enum members on activation sites and reusable-library use sites are resolved
-to literal values before generated-top emission. Reusable-library use-site
-values also resolve before `library_uses[]` report publication.
+Actor constant names, actor-local scalar parameter default names, scalar enum
+members, and qualified imported package scalar constants on activation sites
+are resolved to literal values before generated-top emission. Reusable-library
+use-site values also resolve before `library_uses[]` report publication.
 
 Runtime signals and arbitrary expressions remain outside the shipped value
 domain.
@@ -1804,8 +1809,8 @@ parameter values.
 
 Scalar activation parameter overrides and scalar leaves inside activation
 aggregate/list parameter override values may now also consume actor-local
-scalar parameter defaults, local enum members, and package-qualified enum
-members.
+scalar parameter defaults, local enum members, package-qualified enum members,
+and qualified imported package scalar constants.
 
 Direct transaction `set` RHS scalar values and scalar operands inside
 transaction `set` RHS expressions may consume local and package-qualified

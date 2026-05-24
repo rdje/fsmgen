@@ -242,6 +242,7 @@ my $expected_tested_by = [
     't/1348-isf-transaction-param-transaction-params.t',
     't/1349-isf-actor-param-package-constants.t',
     't/1350-isf-transaction-param-package-constants.t',
+    't/1351-isf-activation-param-package-constants.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

@@ -5217,7 +5217,7 @@ sub _resolve_activation_param_value {
     $allow_enum_member //= 0;
 
     if (!ref($value)) {
-        confess "$context uses undefined parameter value; activation parameter values accept numeric, exact-width, actor-constant, actor scalar parameter, scalar enum member, and aggregate/list literal values only\n"
+        confess "$context uses undefined parameter value; activation parameter values accept numeric, exact-width, actor-constant, actor scalar parameter, scalar enum member, qualified package scalar constant, and aggregate/list literal values only\n"
             unless defined($value);
         return _clone_isf_value($value)
             if _is_numeric_or_exact_width_literal($value);
@@ -5234,8 +5234,27 @@ sub _resolve_activation_param_value {
                 return _clone_isf_value($resolved_value);
             }
         }
+        if (my $package_constant = _actor_package_constant_reference($actor, $value)) {
+            my ($package_name, $constant_name, $suffix) = @$package_constant;
+            my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+            if (defined $constant_payload) {
+                confess "$context token '$value' is ambiguous: it matches local enum member '$value' and imported package constant '$value'\n"
+                    if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
+                confess "$context package constant '$package_name.$constant_name' aggregate/member path '$value' remains deferred; activation parameter overrides accept only qualified package scalar constants in this slice\n"
+                    if $suffix ne '';
+                my $resolved_value = _package_constant_scalar_value($constant_payload);
+                confess "$context package constant '$package_name.$constant_name' must resolve to a scalar numeric or exact-width literal value\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return _clone_isf_value($resolved_value);
+            }
+
+            confess "$context references unknown package constant '$value'\n"
+                if $suffix eq '' && !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
+        }
         if (_is_enum_member_reference($value)) {
-            confess "$context uses unsupported aggregate/list override leaf '$value'; activation parameter aggregate/list overrides accept numeric, exact-width, actor-constant, actor scalar parameter, and enum member leaves only when enum members resolve to non-negative integer literal values\n"
+            confess "$context uses unsupported aggregate/list override leaf '$value'; activation parameter aggregate/list overrides accept numeric, exact-width, actor-constant, actor scalar parameter, enum member, and qualified package scalar constant leaves only when enum members resolve to non-negative integer literal values\n"
                 unless $allow_enum_member;
             my $resolved_value = _resolve_actor_enum_member_value($actor, $value);
             confess "$context references unknown enum member '$value'\n"
@@ -5245,7 +5264,7 @@ sub _resolve_activation_param_value {
             return _clone_isf_value($resolved_value);
         }
 
-        confess "$context uses unsupported parameter value '$value'; activation parameter values accept numeric, exact-width, actor-constant, actor scalar parameter, scalar enum member, and aggregate/list literal values only\n";
+        confess "$context uses unsupported parameter value '$value'; activation parameter values accept numeric, exact-width, actor-constant, actor scalar parameter, scalar enum member, qualified package scalar constant, and aggregate/list literal values only\n";
     }
 
     confess "$context uses unsupported parameter value shape; activation parameter values accept non-empty aggregate/list literal values only\n"

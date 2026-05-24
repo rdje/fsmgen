@@ -210,10 +210,13 @@ The shipped activation-parameter surface covers spawned child instances and
 blocking `do` generated child activations. Override names must match child
 transaction parameters, duplicate instance/parameter names fail, scalar
 literal overrides are width-flexible, and aggregate defaults require
-compatible aggregate overrides. Actor-local constants may be used as scalar
-override values, or as scalar leaves inside aggregate/list override values;
-actor-local scalar parameter defaults may be used in the same override value
-positions. Both resolve to literal values before generated-top emission.
+compatible aggregate overrides. Actor-local constants, actor-local scalar
+parameter defaults, local or package-qualified enum members, and qualified
+imported package scalar constants may be used as scalar override values, or as
+scalar leaves inside aggregate/list override values. These static override
+sources resolve to literal values before generated-top emission; package
+constants must be qualified scalar package `+constants` entries, and
+unqualified, aggregate, or package member/item paths fail closed.
 
 A generated child `.fsm` emits the child transaction defaults in `+params`;
 parameter declarations on non-generated transactions fail closed; the parent

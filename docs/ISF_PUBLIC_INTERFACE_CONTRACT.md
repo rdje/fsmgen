@@ -1558,6 +1558,11 @@ Those defaults preserve the authored `PACKAGE.CONSTANT` token in scheduled
 internally for scalar parameter consumers. Unqualified imported package
 constants, aggregate package constants, package constant member/item paths, and
 ambiguous local-enum/package-constant spellings remain fail-closed.
+Qualified imported package scalar constants are also public as generated
+activation parameter override scalar values or scalar leaves inside compatible
+aggregate/list override values. Those overrides resolve to literal generated-top
+bindings and generated-composition report values; authored package-constant
+tokens are not published in activation override bindings.
 Earlier actor-local scalar parameter defaults are public as scalar actor
 parameter defaults or scalar leaves inside actor aggregate/list parameter
 defaults. Source order is the only dependency model: the referenced actor
@@ -1718,6 +1723,14 @@ Aggregate/list activation parameter override enum member leaves are checked by
 covering local and package enum member leaves on generated activation sites,
 literal generated-top bindings, generated-composition schedule-report bindings,
 strict CLI HDL generation, and unknown-member diagnostics.
+Package-constant-backed generated activation parameter overrides are checked by
+[t/1351-isf-activation-param-package-constants.t](../t/1351-isf-activation-param-package-constants.t),
+covering qualified imported package scalar constants and aggregate/list leaves
+on spawn, generated blocking `do`, and rule-trigger activation sites, literal
+generated-top bindings, generated-composition report bindings, strict CLI HDL
+generation for the spawn/do path, and fail-closed diagnostics for unknown
+package constants, unqualified package constants, aggregate package constants,
+package member/item paths, and ambiguous local-enum/package-constant spellings.
 Reusable-library use-site parameter override actor-static and enum values and leaves are
 checked by
 [t/1281-isf-enum-member-library-use-params.t](../t/1281-isf-enum-member-library-use-params.t),
@@ -2722,11 +2735,11 @@ Actor constants and actor-local scalar parameter defaults used by generated
 child transaction parameter defaults are literalized before child `+params`
 emission and report publication, so generated-composition child defaults and
 default instance bindings stay self-contained. Actor constants, actor-local
-scalar parameter defaults, scalar enum member values, and matching leaves
-inside activation aggregate/list override values are resolved to literal values
-before generated-top emission, so generated-composition instance
-`parameter_bindings[]` entries carry the emitted literal override value for
-those use sites.
+scalar parameter defaults, scalar enum member values, qualified package scalar
+constants, and matching leaves inside activation aggregate/list override
+values are resolved to literal values before generated-top emission, so
+generated-composition instance `parameter_bindings[]` entries carry the
+emitted literal override value for those use sites.
 
 For each `actor_phases` or `actor_stages` entry, `name` is the authored
 actor-level metadata name and `body` is the JSON-safe copy of the

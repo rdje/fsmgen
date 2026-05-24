@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Activation package constants publish as literals
+- `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` keeps package-constant
+  activation overrides on the generated-top side of the boundary. The lowerer
+  resolves `PACKAGE.CONSTANT` to the scalar numeric or exact-width literal
+  before emitting generated-top `?fsmc` bindings and generated-composition
+  report values.
+- Parser enum-member validation now recognizes imported package-constant
+  shaped activation override tokens and lets LoweringIR decide the package
+  specific diagnostics. This matches the transaction-default package-constant
+  pattern without widening unrelated enum validation contexts.
+- The shipped surface remains qualified and scalar only. Unknown package
+  constants, unqualified package constants, aggregate constants, package
+  member/item paths, local-enum/package-constant ambiguity, runtime signals,
+  and arbitrary expressions continue to fail closed or stay deferred.
+
 ## 2026-05-24: Activation package constants should literalize at the top
 - `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1` selects qualified imported
   package scalar constants for generated activation parameter overrides as the

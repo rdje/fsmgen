@@ -598,10 +598,14 @@ Rules:
   Scalar activation
   parameter overrides and scalar leaves inside activation aggregate/list
   parameter override values may also use local or package-qualified enum member
-  references on generated activation sites. Reusable-library use-site parameter
-  overrides may also use local or package-qualified enum members as scalar
-  values or scalar leaves inside compatible aggregate/list override values.
-  Duplicate overrides, unknown overrides, and shape mismatches fail closed.
+  references or qualified imported package scalar constants on generated
+  activation sites. Package-constant-backed activation overrides resolve to
+  literal generated-top bindings and generated-composition report values;
+  unqualified package constants, aggregate package constants, and package
+  member/item paths fail closed. Reusable-library use-site parameter overrides
+  may also use local or package-qualified enum members as scalar values or
+  scalar leaves inside compatible aggregate/list override values. Duplicate
+  overrides, unknown overrides, and shape mismatches fail closed.
 - Schedule reports expose actor parameter defaults through `actor_params[]`
   entries with `name` and JSON-safe default `value`, preserving authored actor
   constant tokens, earlier actor-parameter tokens, enum tokens, and qualified
@@ -3536,7 +3540,14 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1341-isf-bank-storage-actor-constant-depths.t \
   t/1342-isf-transaction-port-actor-constant-widths.t \
   t/1343-isf-data-op-static-width-sources.t \
-  t/1344-isf-assemble-static-part-widths.t
+  t/1344-isf-assemble-static-part-widths.t \
+  t/1345-isf-actor-param-actor-constants.t \
+  t/1346-isf-actor-param-actor-params.t \
+  t/1347-isf-transaction-param-actor-static-defaults.t \
+  t/1348-isf-transaction-param-transaction-params.t \
+  t/1349-isf-actor-param-package-constants.t \
+  t/1350-isf-transaction-param-package-constants.t \
+  t/1351-isf-activation-param-package-constants.t
 
 ./bin/ci-regression isf
 mdbook build docs/book
@@ -3589,8 +3600,8 @@ The following are not public shipped integration surfaces today:
 - Broader interface, transaction-port, storage width, or bank-depth
   expressions beyond actor-local scalar parameter defaults.
 - Derived parameter expressions and package/imported constants outside the
-  shipped qualified actor parameter and generated-child transaction parameter
-  default scalar-constant subsets.
+  shipped qualified actor parameter, generated-child transaction parameter
+  default, and generated activation override scalar-constant subsets.
 - General memory-array HDL emission for actor-owned banks.
 - Arbitrary CDC, payload CDC, reset CDC, level sampling across domains, or
   FIFO-like cross-domain storage.

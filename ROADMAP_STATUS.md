@@ -2,8 +2,30 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS`.
-- Current frontier: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 activation package-constant override implementation:
+  `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` shipped the bounded imported
+  package scalar-constant widening for generated activation parameter
+  overrides and closed the task tree. Generated activation parameter override
+  scalar values and scalar leaves inside compatible aggregate/list override
+  values may now reference qualified imported package scalar constants such as
+  `shared.DEFAULT_WIDTH`. Parser enum-member validation now defers imported
+  package-constant-shaped activation override tokens to LoweringIR for
+  activation parameter scalar values and aggregate/list leaves, while keeping
+  unrelated enum validation surfaces unchanged. Lowering resolves activation
+  override package constants to literal generated-top `?fsmc` parameter
+  bindings and generated-composition report values, matching the existing
+  activation specialization boundary. Unknown package constants, unqualified
+  package constants, aggregate package constants, package member/item paths,
+  ambiguous local-enum versus package-constant spellings, runtime signals, and
+  arbitrary expressions remain fail-closed or deferred. The ISF spec,
+  downstream handoff, public contract, mdBook, task tree, README index,
+  roadmap, and live docs are synchronized. Validation passed with syntax
+  checks; focused activation/package tests (`Files=6, Tests=18`);
+  public/spec/book/backlog audits (`Files=7, Tests=352`);
+  `./bin/ci-regression isf --no-book` (`Files=257, Tests=1699`);
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 activation package-constant override selection:
   `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1` created the active task tree and
   selected the next bounded implementation leaf. Generated activation
@@ -7223,13 +7245,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS`.
-- Current frontier: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2`.
-- Completion status: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1`
-  selected the next bounded R14 implementation tree. The next leaf will allow
-  generated activation parameter overrides to use qualified imported package
-  scalar constants while publishing resolved literal generated-top bindings
-  and generated-composition report values.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2`
+  shipped bounded qualified imported package scalar constants for generated
+  activation parameter overrides, publishes literal generated-top bindings and
+  generated-composition report values, and closed its task tree. PNT should
+  select or create the next task-tree owner before any further code, test,
+  source, generated-artifact, or config change.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

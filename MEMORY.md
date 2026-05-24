@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 activation package-constant overrides shipped
+- Completed `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` and closed the task
+  tree.
+- Generated activation parameter override scalar values and scalar leaves
+  inside compatible aggregate/list override values now accept qualified
+  imported package scalar constants such as `shared.DEFAULT_WIDTH`.
+- Parser enum-member validation now defers imported package-constant-shaped
+  activation override tokens to LoweringIR for activation parameter scalar
+  values and aggregate/list leaves, while keeping unrelated enum validation
+  surfaces unchanged.
+- Lowering resolves activation override package constants to literal
+  generated-top `?fsmc` parameter bindings and generated-composition report
+  values, matching the existing activation specialization boundary.
+- Unknown package constants, unqualified package constants, aggregate package
+  constants, package member/item paths, ambiguous local-enum versus
+  package-constant spellings, runtime signals, and arbitrary expressions
+  remain fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused activation/package tests with
+  `Files=6, Tests=18`; public/spec/book/backlog audits with `Files=7,
+  Tests=352`; `./bin/ci-regression isf --no-book` with `Files=257,
+  Tests=1699`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 activation package-constant overrides selected
 - Created active task tree `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS`.
 - Completed `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1`; the selected
