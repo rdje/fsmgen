@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Roadmap — Current-active-lane truth sync
+- Completed `ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1` and closed the task
+  tree.
+- Updated the lower `ROADMAP_STATUS.md` current-active-lane summary so it
+  matches the top live-status pointer after the transaction parameter
+  dependency defaults tree closed.
+- Both live-roadmap surfaces now report no active task tree/frontier and keep
+  the task-tree gate explicit for the next behavior-bearing implementation
+  slice.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed.
+- Validation passed: focused book/spec/backlog audits with
+  `Files=3, Tests=343`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Transaction parameter dependency defaults shipped
 - Completed `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` and closed the task
   tree.

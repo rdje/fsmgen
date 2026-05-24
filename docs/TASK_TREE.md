@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.md](docs/tasks/ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.md) |
 | `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.md](docs/tasks/ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.md) |
 | `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.md](docs/tasks/ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.md) |
 | `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.md](docs/tasks/ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.md) |

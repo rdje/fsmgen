@@ -4,6 +4,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Recent roadmap current-active-lane truth sync:
+  `ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1` synchronized the lower
+  `Current active lane` section after it still named the already-closed
+  generated-child transaction static-default tree. Both live-roadmap surfaces
+  now report no active task tree/frontier and preserve the task-tree gate for
+  the next behavior-bearing implementation slice. No parser, scheduler,
+  report, generated artifact, HDL, CLI behavior, public API, source, test, or
+  generated behavior changed. Validation passed: focused book/spec/backlog
+  audits with `Files=3, Tests=343`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R14 generated-child transaction parameter dependency default implementation:
   `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` shipped the bounded
   child-local transaction parameter dependency widening and closed the task
@@ -7122,13 +7132,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS`.
-- Current frontier: `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2`.
-- Completion status: `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1` selected
-  the next bounded R14 implementation tree. The next leaf will allow generated
-  child transaction parameter defaults to use actor-local constants and scalar
-  parameter defaults by name while literalizing those actor-static values for
-  child/report publication.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` shipped
+  generated-child transaction parameter defaults that can reference earlier
+  scalar transaction parameter defaults by name and closed the task tree. The
+  next behavior-bearing implementation slice must create or select a task tree
+  before code, tests, source artifacts, generated artifacts, config, or public
+  behavior changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

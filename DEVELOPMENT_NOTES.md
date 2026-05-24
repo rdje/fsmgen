@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Current-active-lane status should use the live pointer
+- `ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1` keeps the lower
+  `ROADMAP_STATUS.md` current-active-lane section aligned with the top
+  live-status pointer instead of letting it retain a recently closed task tree.
+- The next implementation decision should still come from an explicitly
+  created or selected task tree. This maintenance slice does not change R14
+  feature priority, public behavior, or deferred ISF boundaries.
+
 ## 2026-05-24: Transaction parameter dependency defaults preserve child-local tokens
 - The shipped implementation tracks earlier scalar transaction parameter
   defaults while lowering one generated child transaction. A later default can
