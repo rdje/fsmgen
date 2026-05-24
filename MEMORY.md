@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R8 exit criteria audited and handed to R9
+- Completed `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` and closed the task tree.
+- The audit found no concrete unclassified parser-visible legacy family for a
+  new behavior-bearing `R8` leaf. Known default-mode compatibility residue is
+  named in the language-surface manifest, paired in the regression corpus, and
+  documented in the mdBook strict-mode/language chapters.
+- `ROADMAP_STATUS.md` now marks `R8` as `mostly done`. Ongoing support-claim
+  maintenance remains required as future features land, but active
+  implementation focus can move to `R9` strict-mode widening.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this audit slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R8 language-contract exit audit selected
 - Created active task tree `R8-LANGUAGE-CONTRACT-EXIT-AUDIT`.
 - Purpose: audit the remaining `R8` language-contract exit criteria before

@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R8 — Exit criteria audited and handed to R9
+- Completed `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` and closed the task tree.
+- Audited the `R8` language-contract exit criteria against the mdBook
+  language/strict-mode chapters, feature backlog, language-surface manifest,
+  regression corpus accounting, and strict-mode compatibility cuts.
+- No concrete unclassified parser-visible legacy construct family was selected
+  for another behavior-bearing `R8` leaf. Known default-mode compatibility
+  residue is now named in public metadata, paired in the corpus, and documented.
+- Updated `ROADMAP_STATUS.md` so `R8` is `mostly done` and active
+  implementation focus can move to `R9` strict-mode widening.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this audit slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R8 — Language-contract exit audit selected
 - Created active task tree `R8-LANGUAGE-CONTRACT-EXIT-AUDIT`.
 - The tree owns the next roadmap-aligned `R8` activity: audit whether the

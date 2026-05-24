@@ -1,9 +1,25 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R8`.
-- Active task tree: `R8-LANGUAGE-CONTRACT-EXIT-AUDIT`.
-- Current frontier: `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R8 language-contract exit audit:
+  `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` audited the `R8` exit criteria and
+  closed the task tree without selecting another behavior-bearing `R8` leaf.
+  The known default-mode compatibility residue is now named in the
+  `language_surface` manifest, paired in the regression corpus, and described
+  in the mdBook strict-mode/language chapters: legacy `+fsm`, `?module`,
+  empty `(+size)`, misleading reset spellings, compact `:=`, infix
+  assignments, legacy `<=+`, generated-child legacy roots, and composition
+  slash-link wiring. Broader partially shipped or deferred feature families
+  remain tracked in the mdBook feature backlog and their own later roadmap
+  lanes. `R8` is therefore marked `mostly done`: no concrete unclassified
+  parser-visible construct family is selected for immediate implementation,
+  while support-claim maintenance continues as future feature slices land.
+  Active implementation focus can move to `R9` strict-mode widening.
+  Validation passed: feature-backlog audit with `Files=1, Tests=15`; `mdbook
+  build docs/book`; and `git diff --check`.
 - Recent R8 language-contract exit audit selection:
   `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.1` activated a final evidence-gathering
   tree for the remaining `R8` exit criteria. No parser, scheduler, report,
@@ -6419,11 +6435,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `R8-LANGUAGE-CONTRACT-EXIT-AUDIT`.
-- Current frontier: `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2`.
-- Completion status: `.1` selected the active tree with no behavior change.
-  `.2` is the audit/design frontier for deciding whether `R8` can close, must
-  hand off work to a later lane, or needs one more bounded follow-up.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `R8-LANGUAGE-CONTRACT-EXIT-AUDIT` closed after marking
+  `R8` mostly done and handing active implementation focus to `R9`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -7563,7 +7578,7 @@ Deliverables:
   - intentionally experimental/deferred,
   - or explicitly rejected.
 - Focused regression coverage that locks the adopted construct families and their intended semantics.
-Status: `in progress`
+Status: `mostly done`
 Done:
 - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) already contains a live “currently supported `.fsm` constructs” section, which is the right foundation for a normative contract.
 - [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) now preserves concrete semantic agreements for:
@@ -7842,9 +7857,11 @@ Done:
   now closes the delayed-pulse partial-LHS boundary. Indexed, sliced,
   aggregate, and deconstruct `<N` targets fail closed before HDL generation.
 Left:
-- Resolve the remaining gray-zone families, especially:
-  - any remaining parser-accepted legacy constructs not yet cleanly bucketed.
-- Continue adding focused regression coverage per adopted construct family so support claims are continuously provable.
+- No concrete unclassified parser-accepted legacy construct family is known
+  after `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2`.
+- Continue adding focused regression coverage per adopted construct family so
+  support claims remain continuously provable as future feature slices land.
+- Hand active support-tier enforcement work to `R9`.
 - Vector-pulse semantics remain deferred until a real source construct exists.
 Exit criteria:
 - Every parser-visible active-language construct is bucketed clearly and documented normatively, with matching regression coverage for the supported tier.

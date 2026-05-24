@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R8 — Exit criteria audited and handed to R9
+- Completed `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` and closed the task tree.
+- The audit found no concrete unclassified parser-visible legacy family for
+  another immediate `R8` implementation leaf.
+- `R8` is now marked `mostly done` in `ROADMAP_STATUS.md`: known compatibility
+  residue is named in public metadata, paired in the regression corpus, and
+  documented in the mdBook; ongoing support-claim maintenance remains required
+  as future features land.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R8 — Language-contract exit audit selected
 - Created active task tree `R8-LANGUAGE-CONTRACT-EXIT-AUDIT`.
 - Completed `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.1`.

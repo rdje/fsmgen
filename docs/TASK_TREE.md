@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R8-LANGUAGE-CONTRACT-EXIT-AUDIT` | `active` | `R8` | `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` | [docs/tasks/R8-LANGUAGE-CONTRACT-EXIT-AUDIT.md](docs/tasks/R8-LANGUAGE-CONTRACT-EXIT-AUDIT.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R8-LANGUAGE-CONTRACT-EXIT-AUDIT` | `done` | `R8` | `closed` | [docs/tasks/R8-LANGUAGE-CONTRACT-EXIT-AUDIT.md](docs/tasks/R8-LANGUAGE-CONTRACT-EXIT-AUDIT.md) |
 | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT` | `done` | `R8` | `closed` | [docs/tasks/R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.md](docs/tasks/R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.md) |
 | `R8-STRICT-SUPPORT-TIER-CUTS` | `done` | `R8` | `closed` | [docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md](docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md) |
 | `RICHER-AGGREGATE-OPERATORS` | `done` | `aggregate types and data` | `closed` | [docs/tasks/RICHER-AGGREGATE-OPERATORS.md](docs/tasks/RICHER-AGGREGATE-OPERATORS.md) |
