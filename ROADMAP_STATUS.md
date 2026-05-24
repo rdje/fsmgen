@@ -2,8 +2,28 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS`.
-- Current frontier: `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 generated-child transaction parameter static-default implementation:
+  `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2` shipped the bounded
+  generated-child transaction parameter default value-domain widening and
+  closed the task tree. Generated child transaction scalar defaults and scalar
+  leaves inside compatible aggregate/list defaults may now use declared actor
+  constants and actor-local scalar parameter defaults by name. Actor-static
+  names resolve to literals before generated child `.fsm` `+params`,
+  generated-composition child parameter summaries, and default instance
+  bindings are published, so downstream child artifacts stay self-contained.
+  Enum member defaults keep the existing authored-token review behavior.
+  Transaction-parameter dependencies, non-scalar actor parameters, runtime
+  interface signals, unknown symbols, arbitrary expressions, package/imported
+  constants beyond shipped enum members, and malformed shapes remain
+  fail-closed or deferred. The ISF spec, downstream handoff, public contract,
+  mdBook, task tree, README index, roadmap, and live docs are synchronized.
+  Validation passed with syntax checks; focused transaction/default and
+  static-value tests (`Files=7, Tests=73`); public/spec/book/backlog audits
+  (`Files=6, Tests=351`);
+  `./bin/ci-regression isf --no-book` (`Files=253, Tests=1690`);
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 generated-child transaction parameter static-default selection:
   `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1` created the active task tree
   and selected a bounded static value-domain widening for generated child

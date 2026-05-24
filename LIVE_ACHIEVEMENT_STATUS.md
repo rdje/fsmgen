@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Generated-child transaction static defaults shipped
+- Completed `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2` and closed the
+  task tree.
+- Generated child transaction scalar defaults and scalar leaves inside
+  compatible aggregate/list defaults may now use declared actor constants and
+  actor-local scalar parameter defaults by name.
+- Actor-static transaction defaults are literalized before generated child
+  `.fsm` `+params`, generated-composition child summaries, and default
+  instance bindings are published; enum-backed defaults preserve authored enum
+  tokens.
+- Unsupported transaction-parameter dependencies, non-scalar actor parameters,
+  runtime interface signals, unknown symbols, arbitrary expressions,
+  package/imported constants beyond shipped enum members, and malformed shapes
+  remain fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused transaction/default and
+  static-value tests with `Files=7, Tests=73`; public/spec/book/backlog
+  audits with `Files=6, Tests=351`; `./bin/ci-regression isf --no-book` with
+  `Files=253, Tests=1690`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Generated-child transaction static defaults selected
 - Created active task tree `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS`.
 - Completed `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1`; the selected

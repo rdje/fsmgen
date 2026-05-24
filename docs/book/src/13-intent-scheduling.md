@@ -55,7 +55,11 @@ clear lower-layer mapping, and clear runtime behavior.
   values emit as scheduled `.fsm` `+params` and schedule-report
   `actor_params[]`; scalar defaults and aggregate/list default leaves may use
   declared actor constants, earlier scalar actor parameter defaults, or enum
-  members, and they are not runtime payload wires. Generated
+  members, and they are not runtime payload wires. Generated child transaction
+  parameter defaults may use declared actor constants, actor-local scalar
+  parameter defaults, or enum members in scalar positions and scalar
+  aggregate/list leaves; actor-static names are published as literal child
+  defaults while enum tokens remain authored review tokens. Generated
   activation-site scalar parameter overrides and aggregate/list override leaves
   may use actor-local constants, actor-local scalar parameter defaults, and
   enum members, which
@@ -672,6 +676,15 @@ The ISF-specific current limitations are:
   width/count consumers. Actor-parameter references are source-order
   dependencies only; forward, self, cyclic, and non-scalar actor-parameter
   references fail closed.
+
+  Generated child transaction parameter defaults may also use declared actor
+  constants or actor-local scalar parameter defaults by name:
+  `(transaction worker (params (WIDTH DEFAULT_WIDTH) (LANES (LANE0 BASE_W))) ...)`
+  publishes literal child `+params` and generated-composition defaults for
+  those actor-static leaves. Enum-backed transaction defaults keep the authored
+  enum token because the generated child artifact carries the enum declaration.
+  Transaction-parameter dependencies, runtime signals, unknown symbols,
+  non-scalar actor parameters, and arbitrary expressions fail closed.
 
   Scalar leaves inside those activation aggregate/list parameter override
   values may use actor-local scalar parameter defaults and enum members too.

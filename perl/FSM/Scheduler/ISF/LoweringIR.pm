@@ -4453,6 +4453,14 @@ sub _transaction_param_declarations {
 
     my @params;
     my %seen;
+    my %declared_transaction_params;
+    for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
+        next unless ref($entry) eq 'ARRAY' && @$entry >= 1;
+        my $declared_name = $entry->[0];
+        next unless defined($declared_name) && !ref($declared_name);
+        $declared_transaction_params{$declared_name}++;
+    }
+
     for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
         confess "Transaction '$tx_name': params entries require '(NAME value)'\n"
             unless ref($entry) eq 'ARRAY' && @$entry == 2;
@@ -4461,26 +4469,18 @@ sub _transaction_param_declarations {
             unless _is_hdl_identifier($name);
         confess "Transaction '$tx_name': duplicate parameter '$name'\n"
             if $seen{$name}++;
-        _validate_transaction_param_value(
+        my ($published_value, $resolved_value, $has_resolved_value) = _resolve_transaction_param_default_value(
             $value,
             "Transaction '$tx_name': parameter '$name'",
             $actor,
+            \%declared_transaction_params,
         );
         my %param = (
             name  => $name,
-            value => _clone_isf_value($value),
+            value => _clone_isf_value($published_value),
         );
-        $param{resolved_value} = _clone_isf_value(_resolve_actor_enum_member_value($actor, $value))
-            if _is_enum_member_reference($value);
-        if (ref($value)) {
-            my ($resolved_value, $has_enum_leaf) = _resolve_transaction_param_default_value(
-                $value,
-                "Transaction '$tx_name': parameter '$name'",
-                $actor,
-            );
-            $param{resolved_value} = _clone_isf_value($resolved_value)
-                if $has_enum_leaf;
-        }
+        $param{resolved_value} = _clone_isf_value($resolved_value)
+            if $has_resolved_value;
         push @params, \%param;
     }
 
@@ -5051,62 +5051,83 @@ sub _validate_isf_param_value {
 }
 
 sub _validate_transaction_param_value {
-    my ($value, $context, $actor) = @_;
+    my ($value, $context, $actor, $transaction_param_names) = @_;
 
-    if (!ref($value)) {
-        confess "$context uses undefined parameter value; transaction parameter defaults accept numeric, exact-width, aggregate/list, and scalar enum member literals only\n"
-            unless defined($value);
-        return 1 if _is_numeric_or_exact_width_literal($value);
-        if (_is_enum_member_reference($value)) {
-            my $resolved_value = _resolve_actor_enum_member_value($actor, $value);
-            confess "$context references unknown enum member '$value'\n"
-                unless defined($resolved_value) && !ref($resolved_value);
-            confess "$context enum member '$value' must resolve to a non-negative integer literal value\n"
-                unless defined _non_negative_integer_from_literal($resolved_value);
-            return 1;
-        }
-
-        confess "$context uses unsupported parameter value '$value'; transaction parameter defaults accept numeric, exact-width, aggregate/list, and scalar enum member literals only\n";
-    }
-
-    confess "$context uses unsupported parameter value shape; transaction parameter defaults accept non-empty aggregate/list literals\n"
-        unless ref($value) eq 'ARRAY' && @$value;
-
-    _resolve_transaction_param_default_value($value, $context, $actor);
-
+    _resolve_transaction_param_default_value($value, $context, $actor, $transaction_param_names || {});
     return 1;
 }
 
 sub _resolve_transaction_param_default_value {
-    my ($value, $context, $actor) = @_;
+    my ($value, $context, $actor, $transaction_param_names) = @_;
+    $transaction_param_names ||= {};
 
     if (!ref($value)) {
-        return (_clone_isf_value($value), 0)
+        confess "$context uses undefined parameter value; transaction parameter defaults accept numeric, exact-width, aggregate/list, actor constant, actor scalar parameter, and scalar enum member literals only\n"
+            unless defined($value);
+
+        return (_clone_isf_value($value), _clone_isf_value($value), 0)
             if defined($value) && _is_numeric_or_exact_width_literal($value);
+
         if (_is_enum_member_reference($value)) {
             my $resolved_value = _resolve_actor_enum_member_value($actor, $value);
             confess "$context references unknown enum member '$value'\n"
                 unless defined($resolved_value) && !ref($resolved_value);
             confess "$context enum member '$value' must resolve to a non-negative integer literal value\n"
                 unless defined _non_negative_integer_from_literal($resolved_value);
-            return (_clone_isf_value($resolved_value), 1);
+            return (_clone_isf_value($value), _clone_isf_value($resolved_value), 1);
         }
 
-        confess "$context uses unsupported parameter value '$value'; transaction parameter aggregate/list defaults accept numeric, exact-width, and enum member literal leaves only\n";
+        if (_is_hdl_identifier($value)) {
+            confess "$context transaction parameter '$value' cannot be used as a transaction parameter default; transaction-parameter dependency ordering remains deferred\n"
+                if $transaction_param_names->{$value};
+
+            if (my $constant = _actor_constant_by_name($actor, $value)) {
+                my $resolved_value = _constant_resolved_value($constant);
+                confess "$context actor constant '$value' must resolve to a scalar numeric or exact-width literal value\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return (_clone_isf_value($resolved_value), _clone_isf_value($resolved_value), 1);
+            }
+
+            if (my $param = _actor_param_by_name($actor, $value)) {
+                my $resolved_value = _param_resolved_value($param);
+                confess "$context actor parameter '$value' must resolve to a scalar numeric or exact-width literal value\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return (_clone_isf_value($resolved_value), _clone_isf_value($resolved_value), 1);
+            }
+
+            confess "$context token '$value' is a runtime interface signal; transaction parameter defaults accept literals, declared actor constants, actor scalar parameters, and enum members only\n"
+                if _actor_interface_signal_by_name($actor, $value);
+
+            confess "$context token '$value' is not a declared actor constant, actor scalar parameter, or enum member\n";
+        }
+
+        confess "$context uses unsupported parameter value '$value'; transaction parameter defaults accept numeric, exact-width, aggregate/list, actor constant, actor scalar parameter, and scalar enum member literals only\n";
     }
 
     confess "$context uses unsupported parameter value shape; transaction parameter defaults accept non-empty aggregate/list literals\n"
         unless ref($value) eq 'ARRAY' && @$value;
 
+    my @published;
     my @resolved;
-    my $has_enum_leaf = 0;
+    my $has_resolved_leaf = 0;
     for my $item (@$value) {
-        my ($resolved_item, $item_has_enum_leaf) = _resolve_transaction_param_default_value($item, $context, $actor);
+        my ($published_item, $resolved_item, $item_has_resolved_leaf) =
+            _resolve_transaction_param_default_value(
+                $item,
+                $context,
+                $actor,
+                $transaction_param_names,
+            );
+        push @published, $published_item;
         push @resolved, $resolved_item;
-        $has_enum_leaf ||= $item_has_enum_leaf;
+        $has_resolved_leaf ||= $item_has_resolved_leaf;
     }
 
-    return (\@resolved, $has_enum_leaf);
+    return (\@published, \@resolved, $has_resolved_leaf);
 }
 
 sub _resolve_activation_param_value {

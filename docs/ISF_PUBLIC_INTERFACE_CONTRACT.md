@@ -1666,6 +1666,14 @@ aggregate/list parameter defaults, generated child `.fsm` `+params` review
 artifacts, generated-composition child parameter summaries and default
 instance bindings, strict CLI HDL generation, and fail-closed diagnostics for
 unknown leaves.
+Actor-static generated child transaction parameter defaults are checked by
+[t/1347-isf-transaction-param-actor-static-defaults.t](../t/1347-isf-transaction-param-actor-static-defaults.t),
+covering actor constants and actor-local scalar parameter defaults in scalar
+transaction defaults and aggregate/list leaves, literalized generated child
+`.fsm` `+params`, generated-composition child summaries and default instance
+bindings, enum-token preservation, strict CLI HDL generation, and fail-closed
+diagnostics for transaction-parameter dependencies, non-scalar actor
+parameters, runtime interface signals, and unknown symbols.
 Scalar activation parameter override enum member values are checked by
 [t/1271-isf-enum-member-activation-params.t](../t/1271-isf-enum-member-activation-params.t),
 covering local and package enum member overrides on spawn, generated blocking
@@ -2658,9 +2666,10 @@ runtime ports, not overrideable params, and not inferred storage.
 For each `actor_params` entry, `name` is the actor-level parameter name and
 `value` is the JSON-safe default value emitted into scheduled `.fsm`
 `+params`; scalar enum member defaults, actor-constant-backed scalar defaults,
-and enum or actor-constant leaves inside aggregate/list defaults preserve the
-authored tokens. Actor-constant-backed defaults carry resolved literals
-internally for scalar actor-parameter consumers such as widths and counts.
+actor-parameter-backed scalar defaults, and enum, actor-constant, or earlier
+actor-parameter leaves inside aggregate/list defaults preserve the authored
+tokens. Actor-static-backed defaults carry resolved literals internally for
+scalar actor-parameter consumers such as widths and counts.
 These are static specialization defaults, not runtime ports, and do not
 replace the generated-composition or reusable-library parameter binding
 reports for use sites. The
@@ -2668,13 +2677,17 @@ machine-readable contract advertises these through
 `schedule_report_actor_param_keys`.
 
 Generated-composition child `parameters[]` and instance
-`parameter_bindings[]` entries also preserve authored scalar enum member
-tokens and aggregate/list enum leaves for generated child transaction parameter
-defaults. Actor constants, actor-local scalar parameter defaults, scalar enum
-member values, and matching leaves inside activation aggregate/list override
-values are resolved to literal values before generated-top emission, so
-generated-composition instance `parameter_bindings[]` entries carry the
-emitted literal override value for those use sites.
+`parameter_bindings[]` entries preserve authored scalar enum member tokens and
+aggregate/list enum leaves for generated child transaction parameter defaults.
+Actor constants and actor-local scalar parameter defaults used by generated
+child transaction parameter defaults are literalized before child `+params`
+emission and report publication, so generated-composition child defaults and
+default instance bindings stay self-contained. Actor constants, actor-local
+scalar parameter defaults, scalar enum member values, and matching leaves
+inside activation aggregate/list override values are resolved to literal values
+before generated-top emission, so generated-composition instance
+`parameter_bindings[]` entries carry the emitted literal override value for
+those use sites.
 
 For each `actor_phases` or `actor_stages` entry, `name` is the authored
 actor-level metadata name and `body` is the JSON-safe copy of the

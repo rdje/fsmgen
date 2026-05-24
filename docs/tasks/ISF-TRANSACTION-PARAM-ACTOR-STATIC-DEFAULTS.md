@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -46,7 +46,7 @@ resolution state.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship actor-static generated-child transaction parameter defaults.`
   Children: `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1`,
   `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2`
@@ -58,22 +58,22 @@ resolution state.
   boundary, publication rule, non-goals, and validation scope are recorded
   before code changes.`
   Verification: `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `4774a53c ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1: select transaction static defaults`
 
 - ID: `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement actor constants and actor scalar parameters in generated-child transaction parameter defaults.`
   Acceptance: `Lowering resolves actor-static transaction parameter defaults,
   literalizes them for child/report publication, preserves enum-token review
   behavior, rejects unsupported sources, and updates public docs/tests.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused transaction/static-value tests; public/spec/book/backlog audits; full ISF regression gate; mdBook build; diff whitespace check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2` | `pending` | This is the selected implementation leaf after the documentation-only tree selection. |
+| 1 | `closed` | `done` | Actor-static generated-child transaction parameter defaults are shipped and the tree is closed. |
 
 ## Decisions
 
@@ -83,6 +83,9 @@ resolution state.
   generated-composition report publication.
 - `2026-05-24`: Enum member defaults keep the existing authored-token review
   behavior because child artifacts already carry the needed enum declarations.
+- `2026-05-24`: Transaction-parameter names are rejected before actor-static
+  lookup, so ambiguous sibling/default dependencies fail closed even if an
+  actor static happens to have the same name.
 
 ## Open Questions
 
@@ -97,15 +100,18 @@ resolution state.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-24` | `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1347-isf-transaction-param-actor-static-defaults.t`; `perl -Iperl -c t/1144-isf-public-tested-by-metadata-audit.t`; focused `prove` over transaction/default and static-value tests (`Files=7, Tests=73`); public/spec/book/backlog audits (`Files=6, Tests=351`); `./bin/ci-regression isf --no-book` (`Files=253, Tests=1690`); `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1` | `pending this commit: ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1: select transaction static defaults` | Selection commit. |
-| `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2` | `pending` | Implementation leaf. |
+| `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1` | `4774a53c ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1: select transaction static defaults` | Selection commit. |
+| `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2` | `pending this commit: ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2: ship transaction static defaults` | Implementation leaf. |
 
 ## Changelog
 
 - `2026-05-24`: Created the active R14 task tree for actor-static generated
   child transaction parameter defaults.
+- `2026-05-24`: Shipped actor-static generated-child transaction parameter
+  defaults and closed the tree.

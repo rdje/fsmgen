@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Transaction parameter static names publish self-contained child defaults
+- The shipped lowerer resolves actor constants and actor-local scalar parameter
+  defaults while building generated child transaction parameter declarations.
+  The published child value is the resolved literal, not the parent actor name,
+  so generated child `.fsm` files and generated-composition reports do not
+  require downstream consumers to re-run parent actor symbol resolution.
+- Enum member transaction defaults intentionally keep authored enum tokens
+  because generated child artifacts already carry local enum declarations or
+  package imports. The IR still records the resolved enum value for consumers
+  that need a literal.
+- Transaction-parameter names are rejected before actor-static lookup. This
+  keeps sibling/default dependencies fail-closed and avoids ambiguity when an
+  actor static and a transaction parameter share a name.
+
 ## 2026-05-24: Generated child transaction defaults must publish literals for actor-static names
 - Generated child transaction parameters are child-local specialization
   defaults. When those defaults refer to parent actor constants or parent actor

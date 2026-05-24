@@ -220,12 +220,17 @@ General source rules:
   widths, actor-owned bank storage widths, actor-owned bank storage depths,
   and transaction-local port widths also accept declared actor constants and
   actor-local scalar parameter defaults that resolve to positive integers.
-- Actor constants and generated child transaction scalar parameter defaults
-  use non-negative integer literals or enum member references that resolve to
-  non-negative integers. Actor parameter scalar defaults may also use earlier
-  actor-local scalar parameter defaults by name, preserving authored tokens
-  while resolving those names internally. Static wait counts use non-negative
-  integer literals, actor constants, or actor-local scalar parameter defaults.
+- Actor constants use non-negative integer literals or enum member references
+  that resolve to non-negative integers. Actor parameter scalar defaults may
+  also use earlier actor-local scalar parameter defaults by name, preserving
+  authored tokens while resolving those names internally. Generated child
+  transaction parameter defaults may use numeric/exact-width literals,
+  declared actor constants, actor-local scalar parameter defaults, enum
+  members, or compatible aggregate/list literals with those scalar leaf
+  sources; actor-static names are published as literal child/report defaults
+  while enum tokens stay authored in child review artifacts. Static wait
+  counts use non-negative integer literals, actor constants, or actor-local
+  scalar parameter defaults.
 - Numeric and exact-width integer literals are accepted where this document
   says scalar numeric literals are accepted.
 - Runtime expression positions may use scalar tokens, numeric/exact-width
@@ -566,8 +571,13 @@ Rules:
   Forward, self, cyclic, and non-scalar actor-parameter references fail
   closed.
   Generated child transaction scalar parameter defaults and scalar leaves
-  inside generated child transaction aggregate/list parameter defaults may also
-  use local or package-qualified enum member references. Scalar activation
+  inside generated child transaction aggregate/list parameter defaults may use
+  declared actor constants, actor-local scalar parameter defaults, or local or
+  package-qualified enum member references. Actor-static generated child
+  transaction defaults are resolved to literal generated child `.fsm`
+  `+params`, generated-composition child summaries, and default instance
+  bindings; enum references preserve authored tokens in those review surfaces.
+  Scalar activation
   parameter overrides and scalar leaves inside activation aggregate/list
   parameter override values may also use local or package-qualified enum member
   references on generated activation sites. Reusable-library use-site parameter
@@ -1276,9 +1286,12 @@ Rules:
   or package-qualified enum members, or compatible aggregate/list literals
   whose scalar leaves are literals, actor-local constants, actor-local scalar
   parameter defaults, or local/package-qualified enum members.
-- Transaction-local scalar parameter defaults may use local or
-  package-qualified enum members; generated child `.fsm` `+params` and
-  generated-composition schedule reports preserve the authored enum token.
+- Transaction-local scalar parameter defaults and scalar leaves inside
+  compatible aggregate/list defaults may use actor-local constants,
+  actor-local scalar parameter defaults, or local/package-qualified enum
+  members. Actor-static names resolve to literal generated child `.fsm`
+  `+params`, generated-composition child summaries, and default instance
+  bindings; enum member defaults preserve the authored enum token.
 - Actor constants, actor-local scalar parameter defaults, and scalar enum
   members resolve to literal values before generated-top emission, including
   matching scalar leaves inside activation aggregate/list override values.
@@ -1434,11 +1447,12 @@ Rules:
   Named drive-call scalar actual values may also consume local or package
   enum members, drive-call actual expressions may use enum members as scalar
   operands, scalar actor parameter defaults and scalar leaves inside actor
-  aggregate/list parameter defaults may consume declared actor constants and
-  local or package enum members, generated child transaction scalar parameter
-  defaults and scalar
-  leaves inside generated child transaction aggregate/list parameter defaults
-  may consume local or package enum members, scalar activation parameter
+  aggregate/list parameter defaults may consume declared actor constants,
+  earlier scalar actor parameters, and local or package enum members,
+  generated child transaction scalar parameter defaults and scalar leaves
+  inside generated child transaction aggregate/list parameter defaults may
+  consume declared actor constants, actor-local scalar parameter defaults, and
+  local or package enum members, scalar activation parameter
   overrides may consume local or package enum members, scalar leaves inside
   activation aggregate/list parameter override values may consume local or
   package enum members, reusable-library use-site parameter override values
