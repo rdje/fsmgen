@@ -1,9 +1,20 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `R11`.
+- Active task tree: `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT`.
+- Current frontier: `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.2`.
+- Recent R11 portable-type contract frontier audit selection:
+  `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.1` activated an
+  evidence-gathering audit over the remaining portable synthesizable-type
+  frontier. The roadmap mixes type-core settlement, `+types` coexistence with
+  enums, inference extent, inferred declaration surfacing, member/field and
+  fixed-size array access, explicit type overrides, SystemVerilog lowering,
+  and future VHDL lowering, so `.2` must select one bounded implementation
+  slice or record a prerequisite deferral before code. No parser, scheduler,
+  report, generated artifact, HDL, CLI, public API, source, test, or generated
+  behavior changed in this selection. Validation passed: feature-backlog audit
+  with `Files=1, Tests=15`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R11 reusable-module contract frontier audit:
   `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.2` audited the shipped reusable
   standalone-DT/module-library contract and closed the task tree. No new

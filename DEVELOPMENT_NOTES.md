@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Portable-type work needs an audit before code
+- The shipped type surface already spans scalar width evidence, enums,
+  aggregate values, declared aggregate aliases, composition declared-type
+  compatibility, structural type metadata, and backend-owned SystemVerilog
+  typedef emission for bounded surfaces.
+- The remaining roadmap text mixes frontend type-core policy, inference,
+  member/index access, backend lowering, and future VHDL portability. The
+  next step is an audit that selects one bounded implementation lane or
+  records a prerequisite deferral.
+
 ## 2026-05-24: Defer broader reusable-module growth until one surface is explicit
 - The shipped reusable standalone-DT/module-library contract is now broad
   enough to document as a bounded contract: canonical `?dt:name` roots,
