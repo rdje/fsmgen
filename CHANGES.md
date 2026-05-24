@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Reusable-library actor-static use-site overrides shipped
+- Completed `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2` and closed the task tree.
+- Reusable-library use-site `(params ...)` override values now accept
+  importing-actor constants and actor-local scalar parameter defaults by name.
+- Scalar leaves inside compatible aggregate/list use-site override values may
+  also use importing-actor constants, actor-local scalar parameter defaults,
+  and enum members.
+- The parser resolves actor-static use-site values before `library_uses[]`
+  metadata publication, generated-top `?fsmc` parameter emission, and
+  schedule-report publication, so downstream artifacts stay literal and
+  self-contained.
+- Unknown symbolic names, runtime interface signals, non-scalar actor
+  parameters as scalar values, unknown enum members, transaction parameters,
+  arbitrary expressions, and use-site parameter-driven interface/storage shape
+  inference remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook, task
+  tree, README index, roadmap, and live docs.
+- Validation passed: syntax checks; focused library-use tests with `Files=4,
+  Tests=11`; public/spec/book/backlog audits with `Files=6, Tests=351`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1684`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Reusable-library actor-static use-site override selected
 - Created active task tree `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES`.
 - Completed `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.1`; the current

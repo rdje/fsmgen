@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -24,8 +24,6 @@ and scalar enum members.
   route signals as use-site parameter override values.
 - Do not accept arbitrary override expressions.
 - Do not accept non-scalar actor parameters as scalar override values.
-  Aggregate/list override values may use actor-local scalar parameters as
-  leaves only through the selected implementation leaf.
 - Do not change library actor defaults or generated child transaction
   parameter defaults beyond their existing value domains.
 - Do not infer use-site parameter-driven interface shape, storage/bank shape,
@@ -52,7 +50,7 @@ and scalar enum members.
 ## Task Tree
 
 - ID: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES`
-  Status: `active`
+  Status: `done`
   Goal: `Track actor static values as reusable-library use-site parameter override values`
   Children: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.1`,
   `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2`
@@ -65,17 +63,17 @@ and scalar enum members.
   Commit: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.1: select library use actor static values`
 
 - ID: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement actor constants and actor-local scalar parameter defaults as reusable-library use-site override values`
   Acceptance: `Reusable-library use-site overrides accept importing-actor constants and actor-local scalar parameter defaults for scalar values and compatible aggregate/list leaves; malformed or runtime-looking names fail closed; focused tests and synchronized public docs pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2: ship library use actor static values`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2` | `pending` | Implement the selected bounded contract now that `.1` has recorded the review boundary. |
+| 1 | `closed` | `done` | All planned leaves are complete. |
 
 ## Decisions
 
@@ -102,13 +100,14 @@ and scalar enum members.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-24` | `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c t/1281-isf-enum-member-library-use-params.t`; `prove -Iperl t/1281-isf-enum-member-library-use-params.t t/1230-isf-library-import-resolution.t t/1231-isf-library-generated-top.t t/1237-isf-fifo-library-fixture.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1256-feature-backlog-status-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.1` | `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.1: select library use actor static values` | `contract-selection slice` |
-| `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2` | `pending` | `implementation slice` |
+| `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2` | `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2: ship library use actor static values` | `implementation slice` |
 
 ## Changelog
 
@@ -116,3 +115,7 @@ and scalar enum members.
   reusable-library use-site override contract.
 - `2026-05-24`: Completed the selection leaf and advanced the frontier to
   `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2`.
+- `2026-05-24`: Completed the implementation leaf and closed the task tree.
+  Reusable-library use-site `(params ...)` override values now accept
+  importing-actor constants and actor-local scalar parameter defaults for
+  scalar values and compatible aggregate/list leaves.

@@ -1274,10 +1274,12 @@ Rules:
 - Actor constants, actor-local scalar parameter defaults, and scalar enum
   members resolve to literal values before generated-top emission, including
   matching scalar leaves inside activation aggregate/list override values.
-- Reusable-library use-site enum member overrides resolve to literal values
-  before generated-top emission and before `library_uses[]` report
-  publication. Use-site overrides do not accept actor constants or actor
-  parameters yet.
+- Reusable-library use-site overrides may use numeric/exact-width literals,
+  importing-actor constants, importing-actor scalar parameter defaults, local
+  enum members, package-qualified enum members, and compatible aggregate/list
+  literals with those scalar leaves. All non-literal leaves resolve to literal
+  values before generated-top emission and before `library_uses[]` report
+  publication.
 - Spawned children and parameterized/generated blocking `do` activations lower
   through generated composition.
 - Parameterized rule triggers lower through generated child activation
@@ -1431,7 +1433,8 @@ Rules:
   overrides may consume local or package enum members, scalar leaves inside
   activation aggregate/list parameter override values may consume local or
   package enum members, reusable-library use-site parameter override values
-  or leaves may consume local or package enum members, and scalar rule
+  or leaves may consume importing-actor constants, importing-actor scalar
+  parameter defaults, and local or package enum members, and scalar rule
   assignment RHS values or expression operands may consume local or package
   enum members.
 
@@ -2930,7 +2933,8 @@ Required fail-closed examples:
   scalar default or aggregate/list default leaf, generated child transaction
   scalar parameter default or aggregate/list default leaf, scalar activation
   parameter override, activation aggregate/list override leaf,
-  reusable-library use-site parameter override value or leaf, transaction
+  reusable-library use-site parameter override value or leaf, actor-static
+  library use-site override value or leaf, transaction
   condition scalar value or expression operand, transaction `set` RHS
   scalar/expression operand, transaction `switch` selector/branch-value, rule
   guard scalar/expression operand, rule assignment RHS scalar/expression

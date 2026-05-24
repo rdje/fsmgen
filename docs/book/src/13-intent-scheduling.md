@@ -665,10 +665,41 @@ The ISF-specific current limitations are:
   Scalar leaves inside those activation aggregate/list parameter override
   values may use actor-local scalar parameter defaults and enum members too.
 
-  Reusable-library use-site parameter overrides may also use enum members as
+  Reusable-library use-site parameter overrides may also use importing-actor
+  constants, importing-actor scalar parameter defaults, and enum members as
   scalar values or scalar leaves inside compatible aggregate/list override
-  values; those use-site enum members resolve to literal generated-top
-  bindings and `library_uses[]` report values.
+  values; those static names resolve to literal generated-top bindings and
+  `library_uses[]` report values.
+
+  Example use-site specialization:
+
+  ```lisp
+  (actor top
+    (params
+      (MODE_BUSY 1))
+    (constants
+      (MODE_IDLE 0))
+    (clock clk)
+    (reset rst_n)
+    (interface
+      (input trigger)
+      (output fired))
+    (imports
+      (library common.pulse as pulse_lib))
+    (use pulse_lib.pulse_actor as rx
+      (params
+        (MODE MODE_BUSY)
+        (MODES (MODE_BUSY MODE_IDLE)))
+      (bind
+        (clock clk)
+        (reset rst_n)
+        (input trigger trigger)
+        (output fired fired))))
+  ```
+
+  The generated top emits literal use-site bindings such as `(MODE 1)` and
+  `(MODES (1 0))`; it does not publish `MODE_BUSY` or `MODE_IDLE` as private
+  name-resolution obligations for downstream consumers.
 
   Transaction `switch` selectors and branch values may use enum members;
   dotted enum selectors lower through computed `.fsm` selector syntax such as

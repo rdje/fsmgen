@@ -538,14 +538,14 @@ leaves are numeric, exact-width, or local/package enum member literals for
 actor and generated child transaction parameter defaults. Scalar activation
 parameter overrides and scalar leaves inside activation aggregate/list
 parameter override values may use actor-local constants, actor-local scalar
-parameter defaults, and local or package-qualified enum members. Actor
-constants, actor scalar parameters, and enum members resolve to literal values
-before generated-top emission.
-Reusable-library use-site parameter overrides may use local or
+parameter defaults, and local or package-qualified enum members.
+Reusable-library use-site parameter overrides may use importing-actor
+constants, importing-actor scalar parameter defaults, and local or
 package-qualified enum members as scalar override values or as scalar leaves
-inside compatible aggregate/list override values. Library use-site enum
-overrides resolve to literal values before generated-top `?fsmc` parameter
-emission and `library_uses[]` schedule-report publication. Schedule
+inside compatible aggregate/list override values. Actor constants, actor scalar
+parameters, and enum members resolve to literal values before generated-top
+emission and `library_uses[]` schedule-report publication where that report
+surface exists. Schedule
 reports expose actor parameter defaults through `actor_params[]` entries with
 each authored parameter `name` and
 JSON-safe default `value`, preserving authored enum tokens such as `mode.BUSY`
@@ -1923,11 +1923,12 @@ override value or a scalar leaf inside an aggregate/list override value. The
 lowerer resolves constants, actor scalar parameters, and enum members to
 literal values before generated-top emission, so generated `?fsmc` parameter
 overrides remain self-contained. Reusable-library use-site parameter overrides
-follow the same enum-member rule for scalar values and aggregate/list leaves,
-but do not accept actor constants or actor parameters. Unknown names, unknown
-enum members, non-scalar actor parameters, transaction parameters, runtime
-signals, and arbitrary expressions remain fail-closed until a later task
-explicitly ships a wider value source.
+follow the same static value rule for scalar values and aggregate/list leaves:
+numeric/exact-width literals, importing-actor constants, importing-actor
+scalar parameter defaults, and local/package enum members resolve before
+generated-top `?fsmc` emission and `library_uses[]` report publication.
+Unknown names, unknown enum members, non-scalar actor parameters, transaction
+parameters, runtime signals, and arbitrary expressions remain fail-closed.
 
 The parameterized rule-trigger contract follows the same specialization rule.
 It elaborates a generated child activation instance named
@@ -5313,7 +5314,8 @@ Focused tests:
   child transaction aggregate/list parameter default enum member leaves, scalar
   activation parameter override enum member values, activation aggregate/list
   override enum member leaves, reusable-library use-site parameter override
-  enum member values and leaves, inline drive assignment RHS enum member
+  enum member values and leaves plus importing-actor constant/scalar-parameter
+  values and leaves, inline drive assignment RHS enum member
   values and expression operands, actor-owned aggregate storage variable carriers,
   transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
   aggregate leaf operands, transaction condition aggregate leaf values and

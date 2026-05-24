@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Reusable-library actor-static use-site overrides shipped
+- Completed `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2` and closed the task tree.
+- Reusable-library use-site `(params ...)` override values now accept
+  importing-actor constants and actor-local scalar parameter defaults by name,
+  including scalar leaves inside compatible aggregate/list override values.
+- The parser resolves those static names to literals before generated-top
+  `?fsmc` emission and `library_uses[]` schedule-report publication.
+- Unknown symbolic names, runtime interface signals, non-scalar actor
+  parameters as scalar values, transaction parameters, arbitrary expressions,
+  and use-site parameter-driven interface/storage shape inference remain
+  fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused library-use tests with `Files=4,
+  Tests=11`; public/spec/book/backlog audits with `Files=6, Tests=351`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1684`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Activation parameter value-domain docs synchronized
 - Completed `ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.1` and closed
   the task tree.

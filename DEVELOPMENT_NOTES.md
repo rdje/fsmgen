@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Library use-site static values resolve in the parser
+- Reusable-library use-site parameter overrides are validated while resolving
+  imported actors, before lowerer IR publication. Resolving importing-actor
+  constants and scalar parameter defaults there keeps generated tops and
+  `library_uses[]` reports literal-only, matching the existing downstream
+  handoff contract.
+- Unknown plain symbols still fail closed at that same boundary. The parser
+  now distinguishes runtime interface signals and non-scalar actor parameters
+  from valid static values, which keeps use-site specialization separate from
+  runtime payload routing or shape elaboration.
+
 ## 2026-05-24: Library use-site static values should match importer intent
 - Reusable-library use-site parameter overrides specialize the imported child
   instance from the importing actor. Actor constants and actor-local scalar

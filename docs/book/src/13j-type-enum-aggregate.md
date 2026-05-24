@@ -110,7 +110,7 @@ the scheduled `.fsm` can carry them directly.
 | Generated child transaction aggregate/list parameter default leaf | `(transaction worker (params (MODES (mode.BUSY mode.IDLE))) ...)` | Scalar enum leaves are preserved in compatible child parameter defaults. |
 | Spawn, blocking `do`, and rule-trigger scalar parameter override | `(spawn worker as w0 (params (MODE mode.BUSY)))` | Resolved to a literal value in the generated top `?fsmc` parameter block and generated-composition report. |
 | Activation aggregate/list override leaf | `(spawn worker as w0 (params (MODES (mode.BUSY mode.IDLE))))` | Scalar enum leaves resolve to literal aggregate/list override values. |
-| Reusable-library use-site override | `(use lib.actor as u0 (params (MODE mode.BUSY)) ...)` | Resolved to literal generated-top bindings and `library_uses[]` report values. |
+| Reusable-library use-site override | `(use lib.actor as u0 (params (MODE mode.BUSY)) ...)` or `(use lib.actor as u0 (params (MODE MODE_PARAM)) ...)` | Enum members, importing-actor constants, and importing-actor scalar parameter defaults resolve to literal generated-top bindings and `library_uses[]` report values. |
 | Transaction `set` RHS scalar value | `(set mode_out mode.BUSY)` | Authored token is preserved in the scheduled `.fsm` assignment. |
 | Transaction `set` RHS expression operand | `(set mode_out (| mode_in mode.BUSY))` | Enum member is valid as a scalar operand; enum member in operator position fails closed. |
 | Transaction condition expression operand | `(when (== mode_in mode.BUSY) (set fire 1))` | Enum member is valid as a scalar operand. |

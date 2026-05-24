@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 reusable-library actor-static use-site overrides shipped
+- Completed `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2` and closed the task tree.
+- Reusable-library use-site `(params ...)` override values now accept
+  importing-actor constants and actor-local scalar parameter defaults by name.
+- Scalar leaves inside compatible aggregate/list use-site override values may
+  also use importing-actor constants, actor-local scalar parameter defaults,
+  and enum members.
+- The parser resolves those static values before publishing
+  `library_uses[]`, before generated-top `?fsmc` parameter emission, and
+  before schedule-report publication, preserving literal downstream artifacts.
+- Unknown symbolic names, runtime interface signals, non-scalar actor
+  parameters as scalar values, unknown enum members, transaction parameters,
+  arbitrary expressions, library actor defaults, generated child transaction
+  parameter defaults, and use-site parameter-driven interface/storage shape
+  inference remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, README index, roadmap, and live docs.
+- Validation passed: syntax checks; focused library-use tests with `Files=4,
+  Tests=11`; public/spec/book/backlog audits with `Files=6, Tests=351`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1684`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 reusable-library actor-static use-site override selected
 - Created active task tree `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES`.
 - Completed `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.1`.

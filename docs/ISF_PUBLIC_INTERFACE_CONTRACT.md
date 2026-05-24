@@ -1651,13 +1651,15 @@ Aggregate/list activation parameter override enum member leaves are checked by
 covering local and package enum member leaves on generated activation sites,
 literal generated-top bindings, generated-composition schedule-report bindings,
 strict CLI HDL generation, and unknown-member diagnostics.
-Reusable-library use-site parameter override enum member values and leaves are
+Reusable-library use-site parameter override actor-static and enum values and leaves are
 checked by
 [t/1281-isf-enum-member-library-use-params.t](../t/1281-isf-enum-member-library-use-params.t),
-covering local and package enum members in scalar and aggregate/list use-site
+covering importing-actor constants, importing-actor scalar parameter defaults,
+local and package enum members in scalar and aggregate/list use-site
 overrides, literal generated-top bindings, `library_uses[]` schedule-report
-values, strict CLI HDL generation, unknown-member diagnostics, and the
-plain-symbolic use-site boundary.
+values, strict CLI HDL generation, unknown-member diagnostics, runtime-signal
+rejection, non-scalar actor-parameter rejection, and the unknown-symbolic
+use-site boundary.
 Scalar rule assignment RHS enum member values are checked by
 [t/1272-isf-enum-member-rule-values.t](../t/1272-isf-enum-member-rule-values.t),
 covering local and package enum member explicit `(set port value)` and shorthand
