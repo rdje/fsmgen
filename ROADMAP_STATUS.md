@@ -2,8 +2,28 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-STORAGE-PORT-ROUND-ROBIN`.
+- Current frontier: `ISF-STORAGE-PORT-ROUND-ROBIN.2`.
+- Recent R14 storage-port round-robin resource selection:
+  `ISF-STORAGE-PORT-ROUND-ROBIN.1` activated the next public-facing ISF
+  feature tree. The selected implementation frontier is
+  `ISF-STORAGE-PORT-ROUND-ROBIN.2`, a bounded widening of resource
+  arbitration:
+  `(resource NAME (kind storage_port) (arbiter round_robin) (members STORAGE_SIGNAL...) (users RULE...))`
+  for declared rule users. The implementation leaf must keep explicit
+  storage members mandatory, keep members limited to concrete actor-owned
+  storage signals, preserve member validation/reporting through
+  `resource_arbitration[].members`, reuse the existing round-robin
+  grant/pointer model, report grants through `resource_arbitration[]` with
+  `kind: storage_port` and `arbiter: round_robin`, report the generated
+  pointer with role `resource_round_robin_pointer`, and keep backlog resource
+  kinds, generated-child resources, actor-network endpoints,
+  ready/backpressure, payload protocols, route mux/storage, storage locks, and
+  lifetime ownership deferred. No parser, scheduler, report, generated
+  artifact, HDL, CLI behavior, public API, source, test, or generated behavior
+  changed in the selection slice. Validation passed: feature-backlog audit
+  with `Files=1, Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R14 output-bundle round-robin resource implementation:
   `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` shipped bounded
   `(resource NAME (kind output_bundle) (arbiter round_robin) (users RULE...))`
@@ -6869,12 +6889,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` shipped bounded
-  `output_bundle` + `round_robin` arbitration for declared rule users, then
-  closed the task tree. The next PNT implementation slice must select or
-  create a task tree before changing code.
+- Active task tree: `ISF-STORAGE-PORT-ROUND-ROBIN`.
+- Current frontier: `ISF-STORAGE-PORT-ROUND-ROBIN.2`.
+- Completion status: `ISF-STORAGE-PORT-ROUND-ROBIN.1` selected the bounded
+  storage-port round-robin implementation slice. No compiler behavior changed
+  in the selection slice; implementation starts only under the active `.2`
+  frontier.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -10332,6 +10352,23 @@ Status: `in progress`
 Done:
 - R14 is active; the former VHDL backend lane is preserved as horizon `H5` in
   [ROADMAP_V2.md](ROADMAP_V2.md) and [docs/VHDL_SCOPE.md](docs/VHDL_SCOPE.md).
+- `ISF-STORAGE-PORT-ROUND-ROBIN.1` selected the next public-facing R14
+  feature tree before implementation:
+  - the implementation frontier is `ISF-STORAGE-PORT-ROUND-ROBIN.2`,
+  - the selected source shape is bounded to
+    `(resource NAME (kind storage_port) (arbiter round_robin) (members STORAGE_SIGNAL...) (users RULE...))`,
+  - explicit storage members remain mandatory and must name concrete
+    actor-owned storage signals,
+  - member validation and `resource_arbitration[].members` reporting must
+    stay intact,
+  - backlog resource kinds, generated-child resources, actor-network
+    endpoints, ready/backpressure, payload protocols, route mux/storage,
+    storage locks, and lifetime ownership remain deferred,
+  - and no parser, scheduler, report, generated artifact, HDL, CLI behavior,
+    public API, source, test, or generated behavior changed in this selection
+    slice.
+  - Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+    `mdbook build docs/book`; and `git diff --check`.
 - `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1` selected the next public-facing R14
   feature tree before implementation:
   - the implementation frontier is `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2`,

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Storage-port round-robin is the remaining bounded resource widening
+- `storage_port` is the remaining priority-enforced, parser-recognized
+  resource kind whose first fair-arbitration slice can still use declared
+  rule users and whole-rule-DT grants.
+- The selected slice deliberately keeps explicit member lists mandatory and
+  concrete: scalar actor-owned storage variables and scalarized bank element
+  signals only. This makes round-robin fairness a scheduling decision over
+  already declared storage ownership, not an implicit route, lock, memory-port,
+  or lifetime-ownership feature.
+
 ## 2026-05-24: Output-bundle round-robin preserves member ownership
 - The shipped output-bundle round-robin path deliberately reuses the existing
   whole-rule-DT grant machinery instead of adding output-specific muxing or

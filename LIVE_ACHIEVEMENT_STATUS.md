@@ -2,6 +2,27 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Storage-port round-robin resource selected
+- Created active task tree `ISF-STORAGE-PORT-ROUND-ROBIN`.
+- Completed `ISF-STORAGE-PORT-ROUND-ROBIN.1`.
+- The current frontier is `ISF-STORAGE-PORT-ROUND-ROBIN.2`, the
+  implementation leaf.
+- The selected source shape is bounded to
+  `(resource NAME (kind storage_port) (arbiter round_robin) (members STORAGE_SIGNAL...) (users RULE...))`
+  for declared rule users.
+- Explicit storage members remain mandatory, must name concrete actor-owned
+  storage signals, and must keep current validation/reporting through
+  `resource_arbitration[].members`.
+- Backlog resource kinds, generated-child resources, route mux/storage,
+  ready/backpressure, payload protocols, storage locks, and lifetime ownership
+  remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-STORAGE-PORT-ROUND-ROBIN`.
+- Current frontier: `ISF-STORAGE-PORT-ROUND-ROBIN.2`.
+
 ## 2026-05-24: R14 — Output-bundle round-robin resource shipped
 - Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` and closed the task tree.
 - FSMGen now supports bounded

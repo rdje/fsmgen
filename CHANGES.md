@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Storage-port round-robin resource selected
+- Created active task tree `ISF-STORAGE-PORT-ROUND-ROBIN`.
+- Completed `ISF-STORAGE-PORT-ROUND-ROBIN.1`; the next implementation
+  frontier is `ISF-STORAGE-PORT-ROUND-ROBIN.2`.
+- Selected the next bounded resource-arbitration widening:
+  `(resource NAME (kind storage_port) (arbiter round_robin) (members STORAGE_SIGNAL...) (users RULE...))`
+  for declared rule users.
+- The implementation leaf must keep explicit storage members mandatory, keep
+  members limited to concrete actor-owned storage signals, preserve
+  `resource_arbitration[].members` reporting, reuse the shipped round-robin
+  pointer/grant machinery, report grants with `kind: storage_port` and
+  `arbiter: round_robin`, and keep broader storage lifetime, locks,
+  route mux/storage, generated-child resources, and backlog resource kinds
+  deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Output-bundle round-robin resource shipped
 - Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` and closed the task tree.
 - `output_bundle` resources now support the bounded `round_robin` arbiter for

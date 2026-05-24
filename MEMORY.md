@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 storage-port round-robin resource selected
+- Created active task tree `ISF-STORAGE-PORT-ROUND-ROBIN`.
+- Completed `ISF-STORAGE-PORT-ROUND-ROBIN.1`.
+- The current frontier is `ISF-STORAGE-PORT-ROUND-ROBIN.2`, which is
+  intended to ship bounded
+  `(resource NAME (kind storage_port) (arbiter round_robin) (members STORAGE_SIGNAL...) (users RULE...))`
+  arbitration for declared rule users.
+- The selected implementation must keep explicit storage members mandatory,
+  keep members limited to concrete actor-owned storage signals, preserve
+  validation/reporting through `resource_arbitration[].members`, reuse the
+  shipped round-robin pointer/grant model, report grants with
+  `kind: storage_port` and `arbiter: round_robin`, and report the pointer with
+  role `resource_round_robin_pointer`.
+- Backlog resource kinds, generated-child resources, actor-network endpoints,
+  ready/backpressure, payload protocols, route mux/storage, storage locks, and
+  lifetime ownership remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-STORAGE-PORT-ROUND-ROBIN`.
+- Current frontier: `ISF-STORAGE-PORT-ROUND-ROBIN.2`.
+
 ## 2026-05-24: R14 output-bundle round-robin resource shipped
 - Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` and closed the task tree.
 - FSMGen now accepts bounded
