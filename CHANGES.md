@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Aggregate types — Backend-owned struct lowering frontier selected
+- Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.1`.
+- Activated an aggregate-types task tree for the mdBook feature-backlog item
+  "Backend-Owned Struct/Record Default Lowering".
+- The selected follow-up leaf will audit current structured typedef and
+  declaration emission across direct `.fsm`, composition, ISF lowering,
+  generated SystemVerilog, tests, corpus accounting, mdBook, and live docs
+  before selecting any behavior-bearing default-lowering surface.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Aggregate types — Member/index-root autogrowth audited and tree closed
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` and closed the task tree.
 - Audited member/index-root aggregate autogrowth and left that surface in

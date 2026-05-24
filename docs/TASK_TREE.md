@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING` | `active` | `aggregate types and data` | `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2` | [docs/tasks/BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.md](docs/tasks/BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.md) |
 
 ## Proposed Task Trees
 

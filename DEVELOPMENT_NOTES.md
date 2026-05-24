@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Backend-owned structured lowering needs an audit first
+- `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.1` selects the next
+  aggregate-types backlog item after closing aggregate autogrowth.
+- The first executable leaf is an audit because default structured lowering is
+  a backend policy question, not only a type-inference question. It can affect
+  typedef naming, generated port declarations, internal declarations,
+  assignment rendering, corpus snapshots, and future VHDL portability.
+- Any implementation must be limited to a surface whose aggregate contract is
+  already exact. This tree should not turn incomplete or partial aggregate
+  evidence into a backend-owned struct by default.
+
 ## 2026-05-24: Member/index-root autogrowth is not Perl autovivification
 - `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` closes the current aggregate autogrowth
   tree by declining to implement member/index-root growth from partial usage.

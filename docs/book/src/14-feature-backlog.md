@@ -76,7 +76,9 @@ lowering where it is portable and synthesizable.
 
 Current boundary: generated-module and composition-top packed typedef emission
 exists for aggregate aliases on the current SystemVerilog path. Structured
-record lowering is not the default for all aggregate data.
+record lowering is not the default for all aggregate data. The active
+task-tree frontier is auditing the exact contract-backed surfaces before any
+default-lowering policy change.
 
 ### Richer Aggregate Operators
 

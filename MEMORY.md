@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Backend-owned struct lowering frontier selected
+- Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.1`.
+- Activated the aggregate-types task tree for the mdBook feature-backlog item
+  "Backend-Owned Struct/Record Default Lowering".
+- The selected follow-up leaf is
+  `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2`, which must audit current
+  structured typedef/declaration emission across direct `.fsm`, composition,
+  ISF lowering, generated SystemVerilog, tests, corpus accounting, mdBook, and
+  live docs before any behavior-bearing default-lowering change.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING`.
+- Current frontier: `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2`.
+
 ## 2026-05-24: Member/index-root aggregate autogrowth audited and tree closed
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` and closed the task tree.
 - Audited member/index-root aggregate autogrowth across direct `.fsm`,

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Aggregate types — Backend-owned struct lowering frontier selected
+- Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.1`.
+- Activated the task tree for the mdBook feature-backlog item
+  "Backend-Owned Struct/Record Default Lowering".
+- The current frontier is
+  `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2`, an audit of shipped
+  structured typedef/declaration emission and safe next surfaces.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24: Aggregate types — Member/index-root autogrowth audited and tree closed
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` and closed the task tree.
 - Member/index-root aggregate autogrowth remains backlog for RTL safety:
