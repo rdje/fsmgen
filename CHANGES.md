@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Reusable-library use-site package constants selected
+- Created active task tree `ISF-LIBRARY-USE-PACKAGE-CONSTANTS`.
+- Completed `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1`; the selected
+  implementation frontier is `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2`.
+- Selected a bounded reusable-library use-site parameter override value-domain
+  widening: scalar override values and scalar leaves inside compatible
+  aggregate/list override values may reference qualified imported package
+  scalar constants such as `shared.DEFAULT_WIDTH`.
+- Use-site override publication should resolve package constants to literal
+  generated-top/generated-composition bindings and `library_uses[]` report
+  values because reusable-library overrides specialize values at the importing
+  actor boundary.
+- Unqualified package constants, package aggregate constants and aggregate
+  scalar-leaf paths, package constants in other value domains, arbitrary
+  expressions, runtime signals, and package namespace pollution remain
+  deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book audits with `Files=2,
+  Tests=38`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Activation package-constant overrides shipped
 - Completed `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` and closed the task
   tree.

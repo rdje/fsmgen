@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Library use package constants should specialize at the importer
+- `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1` selects qualified imported package
+  scalar constants for reusable-library use-site parameter overrides as the
+  next narrow static value-domain widening.
+- Reusable-library use-site overrides already resolve importing-actor
+  constants, importing-actor scalar parameters, and enum members before
+  generated-top and `library_uses[]` publication. Package constants should
+  follow that same specialization boundary rather than adding generated-top
+  package-import requirements.
+- The selected boundary remains qualified and scalar only: unqualified package
+  constants, aggregate package constants, package member/item paths,
+  unrelated value domains, and package namespace pollution stay fail-closed or
+  deferred.
+
 ## 2026-05-24: Activation package constants publish as literals
 - `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` keeps package-constant
   activation overrides on the generated-top side of the boundary. The lowerer
