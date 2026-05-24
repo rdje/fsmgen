@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Language ergonomics — Dynamic divisor safety frontier selected
+- Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1`.
+- Activated the active language-ergonomics task tree for the mdBook
+  feature-backlog item "Dynamic Divisor Safety Proofs".
+- The current frontier is `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2`.
+- The follow-up leaf must audit shipped divide/modulo safety across direct
+  `.fsm`, composition, ISF lowering, tests, corpus accounting, mdBook, and
+  live docs before selecting one bounded behavior-bearing proof surface.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: live-book, spec-index, and feature-backlog audits with
+  `Files=3, Tests=351`; `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24: Language ergonomics — Symbolic scalar type widths shipped
 - Completed `INFERENCE-FIRST-SCALAR-AUTHORING.3` and closed the task tree.
 - Scalar `+types` now accept `(bits WIDTH_SYMBOL)` across direct-root,

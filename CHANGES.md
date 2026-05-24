@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Language ergonomics — Dynamic divisor safety frontier selected
+- Completed selection work for `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1`.
+- Activated a language-ergonomics task tree for the mdBook feature-backlog
+  item "Dynamic Divisor Safety Proofs".
+- The selected follow-up leaf will audit shipped divide/modulo safety across
+  direct `.fsm`, composition, ISF lowering, tests, corpus accounting, mdBook,
+  and live docs before selecting one bounded behavior-bearing proof surface.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: live-book, spec-index, and feature-backlog audits with
+  `Files=3, Tests=351`; `mdbook build docs/book`; and `git diff --check`.
+
 ### Language ergonomics — Symbolic scalar type widths shipped
 - Completed `INFERENCE-FIRST-SCALAR-AUTHORING.3` and closed the task tree.
 - Updated the shared declarative type canonicalizer plus direct-root,

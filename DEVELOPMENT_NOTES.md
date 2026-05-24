@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Dynamic divisor safety needs a proof-source audit first
+- `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1` selects the next concrete
+  language-ergonomics backlog tree after symbolic scalar type widths shipped.
+- The first executable leaf is intentionally an audit/design slice.
+  Divide/modulo safety crosses constant evaluation, runtime expression
+  handling, ISF scheduled `.fsm` emission, and generated HDL, so the next
+  behavior-bearing slice should name one proof source and one source position
+  before code changes begin.
+- The tree preserves the current safety stance: known-zero divisors must fail
+  closed, nonzero or dynamic divisors must not be silently rewritten, and any
+  new nonzero proof must be explicit enough to document and test.
+
 ## 2026-05-24: symbolic `(bits WIDTH_SYMBOL)` uses a deliberately narrow resolver
 - `INFERENCE-FIRST-SCALAR-AUTHORING.3` resolves type-width symbols from the
   declarative symbol table instead of reusing the full `+size` expression

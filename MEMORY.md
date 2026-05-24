@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Dynamic divisor safety proof frontier selected
+- Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1`.
+- Activated the active language-ergonomics task tree for the mdBook
+  feature-backlog item "Dynamic Divisor Safety Proofs".
+- The selected follow-up leaf is `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2`, which
+  must audit shipped divide/modulo safety across direct `.fsm`, composition,
+  ISF lowering, tests, corpus accounting, mdBook, and live docs before
+  selecting one bounded behavior-bearing proof surface.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: live-book, spec-index, and feature-backlog audits with
+  `Files=3, Tests=351`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `DYNAMIC-DIVISOR-SAFETY-FRONTIER`.
+- Current frontier: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2`.
+
 ## 2026-05-24: Symbolic scalar type widths shipped
 - Completed `INFERENCE-FIRST-SCALAR-AUTHORING.3` and closed the task tree.
 - Direct-root, package, and composition-top `+types` now accept

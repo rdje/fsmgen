@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `DYNAMIC-DIVISOR-SAFETY-FRONTIER` | `active` | `language ergonomics` | `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` | [docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md](docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md) |
 
 ## Proposed Task Trees
 
@@ -418,7 +419,7 @@ criteria.
 
 | mdBook backlog category | Current tracking stance |
 | --- | --- |
-| `Language Ergonomics` | `completed INFERENCE-FIRST-SCALAR-AUTHORING tree for symbolic scalar type widths; future task tree required for broader language ergonomics behavior` |
+| `Language Ergonomics` | `active DYNAMIC-DIVISOR-SAFETY-FRONTIER tree for dynamic divisor safety proof selection; completed INFERENCE-FIRST-SCALAR-AUTHORING tree for symbolic scalar type widths; future task tree required for broader language ergonomics behavior outside those trees` |
 | `Aggregate Types And Data` | `future task tree required for broader aggregate lowering, operators, VHDL aggregate support, or public type/export APIs beyond shipped bounded surfaces` |
 | `Composition` | `covered by completed composition task trees for shipped surfaces; future task tree required for broader generated-child, VHDL generic-map, and generalized composition behavior` |
 | `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces; future task tree required for remaining deferred ISF behavior` |
