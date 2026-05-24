@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT` | `active` | `R10` | `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` | [docs/tasks/R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.md](docs/tasks/R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT` | `done` | `R10` | `closed` | [docs/tasks/R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.md](docs/tasks/R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.md) |
 | `R9-STRICT-MODE-FRONTIER-AUDIT` | `done` | `R9` | `closed` | [docs/tasks/R9-STRICT-MODE-FRONTIER-AUDIT.md](docs/tasks/R9-STRICT-MODE-FRONTIER-AUDIT.md) |
 | `R8-LANGUAGE-CONTRACT-EXIT-AUDIT` | `done` | `R8` | `closed` | [docs/tasks/R8-LANGUAGE-CONTRACT-EXIT-AUDIT.md](docs/tasks/R8-LANGUAGE-CONTRACT-EXIT-AUDIT.md) |
 | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT` | `done` | `R8` | `closed` | [docs/tasks/R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.md](docs/tasks/R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.md) |

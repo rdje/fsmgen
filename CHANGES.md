@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R10 — Empty source-file diagnostics cleaned
+- Completed `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` and closed the task
+  tree.
+- Updated [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm)
+  so empty direct `.fsm` source files fail with a targeted source-local
+  diagnostic instead of the raw Lispish fallback text.
+- Added [t/1346-empty-source-file-diagnostic-boundary.t](t/1346-empty-source-file-diagnostic-boundary.t)
+  to lock pipeline, CLI, check-JSON, and normalized semantic JSON behavior.
+- The old `does not exit` typo and Perl stack-frame leakage no longer appear
+  for this failure path.
+- Synchronized the mdBook troubleshooting chapter and live docs.
+- Validation passed: focused empty-source/diagnostic JSON tests with
+  `Files=8, Tests=19`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R10 — Diagnostic/provenance frontier audited
 - Completed `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`.
 - Audited shipped source-local diagnostic coverage across top-level

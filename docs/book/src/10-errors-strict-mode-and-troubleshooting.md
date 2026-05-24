@@ -21,6 +21,12 @@ Typical causes:
 
 These should now fail explicitly instead of falling through to vague behavior.
 
+An empty source file is a source-read failure, not a Lisp parser failure. FSMGen
+reports the source path, says that the file is empty, and tells the user to
+provide a non-empty FSMGen source file. The pipeline, CLI, check JSON, and
+normalized semantic JSON surfaces all use that targeted message instead of
+leaking raw Lispish fallback text or Perl stack frames.
+
 ### Composition Planning Errors
 
 Typical causes:

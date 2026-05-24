@@ -1,9 +1,20 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R10`.
-- Active task tree: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
-- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R10 empty source-file diagnostic implementation:
+  `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` cleaned up empty direct `.fsm`
+  source-file diagnostics and closed the task tree. Empty sources now fail
+  with a targeted source-local message across pipeline, CLI, check-JSON, and
+  normalized semantic JSON: FSMGen reports the source path, says the file is
+  empty, and tells the user to provide a non-empty FSMGen source file. The old
+  raw Lispish fallback text, `does not exit` typo, and Perl stack-frame leakage
+  are gone. The mdBook troubleshooting chapter now documents this behavior.
+  Validation passed: focused empty-source/diagnostic JSON tests with `Files=8,
+  Tests=19`; feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
 - Recent R10 diagnostic/provenance frontier audit:
   `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2` audited the current
   source-provenance and diagnostic frontier and selected one bounded
@@ -6495,12 +6506,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
-- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3`.
-- Completion status: `.2` audited the current diagnostic/provenance surface
-  and selected `.3` as the next bounded implementation cut: targeted empty
-  source-file diagnostics without raw Lispish fallback text or Perl stack
-  frames.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` cleaned
+  empty source-file diagnostics across pipeline, CLI, check-JSON, and
+  normalized semantic JSON, then closed the tree. The next PNT step should
+  select a fresh roadmap-aligned task tree before any further code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8068,6 +8079,16 @@ Deliverables:
 - Clear remediation guidance for common construct-family failures.
 Status: `in progress`
 Done:
+- `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` shipped a targeted empty
+  source-file diagnostic and closed the tree:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm)
+    now reports empty source files through a clean user-facing source-read
+    diagnostic,
+  - [t/1346-empty-source-file-diagnostic-boundary.t](t/1346-empty-source-file-diagnostic-boundary.t)
+    locks pipeline, CLI, check-JSON, and normalized semantic JSON behavior,
+  - the raw Lispish fallback text, `does not exit` typo, and Perl stack frames
+    no longer leak for empty direct `.fsm` sources,
+  - and the mdBook troubleshooting chapter documents the user-facing behavior.
 - `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2` audited the current
   source-provenance and diagnostics frontier:
   - shipped `R10` coverage already spans top-level parse/strict failures,
@@ -8135,9 +8156,6 @@ Done:
   - [bin/fsmgen](bin/fsmgen) now also wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path instead of letting constructor failures dump a raw script line,
   - and [t/253-extension-loader-diagnostic-context.t](t/253-extension-loader-diagnostic-context.t) now locks both the pipeline and CLI constructor-failure shapes for malformed config input and constructor-failing extension modules.
 Left:
-- Implement `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3`: targeted empty
-  source-file diagnostics without raw Lispish fallback text or Perl stack
-  frames.
 - Define the next provenance-carrying boundaries and upgrade key diagnostics.
 - Add regression coverage for error shape and location reporting.
 Exit criteria:

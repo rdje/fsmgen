@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R10 — Empty source-file diagnostics cleaned
+- Completed `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` and closed the task
+  tree.
+- Empty direct `.fsm` source files now fail with a targeted source-local
+  diagnostic across pipeline, CLI, check-JSON, and normalized semantic JSON.
+- The failure message reports the source path, says the file is empty, and
+  tells the user to provide a non-empty FSMGen source file.
+- The raw Lispish fallback text, the `does not exit` typo, and Perl stack
+  frames no longer leak for this failure path.
+- The mdBook troubleshooting chapter documents the behavior.
+- Validation passed: focused empty-source/diagnostic JSON tests with
+  `Files=8, Tests=19`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R10 — Diagnostic/provenance frontier audited
 - Completed `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`.
 - The audit found that shipped `R10` coverage already handles top-level

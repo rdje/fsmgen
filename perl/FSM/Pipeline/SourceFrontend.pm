@@ -82,7 +82,7 @@ sub _slurp_fsm_file ($class, $fsm_file) {
         or confess "Error: Failed to close FSM file '$fsm_file': $!";
 
     unless (defined $source_text && length $source_text) {
-        confess "(Lispish::multi) -E- File '$fsm_file' is either empty or does not exit,";
+        die "Error: Source file '$fsm_file' is empty. Provide a non-empty FSMGen source file.\n";
     }
 
     return $source_text;
