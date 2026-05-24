@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Actor parameter dependency defaults should be ordered only
+- Actor-parameter-backed actor parameter defaults are useful only if they stay
+  reviewable and deterministic. The selected model is therefore source-order
+  based: a parameter may reference an earlier scalar parameter default that
+  already resolves to a numeric or exact-width literal.
+- This deliberately avoids a general dependency graph, cycle solver, or
+  expression evaluator. Non-scalar parameters, later parameters, self
+  references, transaction parameters, runtime signals, and arbitrary
+  expressions remain outside the static actor parameter default value domain.
+- The implementation leaf should preserve authored parameter names in
+  scheduled `.fsm` `+params` and `actor_params[]`, using resolved literals
+  only as internal metadata for existing scalar consumers.
+
 ## 2026-05-24: Actor parameter defaults can inherit constant intent safely
 - Actor constants are already static, actor-local, and resolved before actor
   parameter consumers such as widths, counts, activation overrides, and

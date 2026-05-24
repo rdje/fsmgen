@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Actor-parameter dependency defaults selected
+- Created active task tree `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS`.
+- Completed `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1`; the selected
+  implementation frontier is `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2`.
+- The next implementation leaf will allow actor-level scalar parameter
+  defaults and scalar leaves inside compatible aggregate/list defaults to
+  reference earlier actor-local scalar parameter defaults by name.
+- Source order is the only dependency model; forward/self/cyclic/non-scalar
+  dependencies, transaction parameters, runtime signals, arbitrary
+  expressions, package/imported constants beyond shipped enum members, and
+  generated child transaction parameter defaults remain deferred or fail
+  closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS`.
+- Current frontier: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2`.
+
 ## 2026-05-24: R14 — Actor-constant actor-parameter defaults shipped
 - Completed `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.2` and closed the task
   tree.

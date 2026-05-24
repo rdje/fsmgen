@@ -2,8 +2,22 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS`.
+- Current frontier: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2`.
+- Recent R14 actor-parameter dependency default selection:
+  `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1` created the active task tree and
+  selected a bounded static value-domain widening for the next implementation
+  leaf. Actor-level `(params ...)` defaults may next reference earlier
+  actor-local scalar parameter defaults by name, including scalar leaves inside
+  compatible aggregate/list defaults. Source order is the only dependency
+  model: forward references, self references, cycles, non-scalar actor
+  parameters, transaction parameters, runtime interface signals, arbitrary
+  expressions, package/imported constants beyond shipped enum members, and
+  generated child transaction parameter defaults remain deferred or
+  fail-closed. No parser, scheduler, report, generated artifact, HDL, CLI
+  behavior, public API, source, test, or generated behavior changed in this
+  selection slice. Validation passed: feature-backlog audit with `Files=1,
+  Tests=15`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 actor-constant actor-parameter default implementation:
   `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.2` shipped the bounded actor
   parameter value-domain widening and closed the task tree. Actor-level
@@ -7014,13 +7028,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.2` shipped the
-  bounded R14 actor-constant actor-parameter default widening and closed the
-  task tree. Actor-level scalar and aggregate/list parameter defaults now
-  accept declared actor constants while preserving authored review tokens and
-  recording resolved literals for scalar parameter consumers.
+- Active task tree: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS`.
+- Current frontier: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2`.
+- Completion status: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1` selected the
+  next bounded R14 implementation tree. The next leaf will allow actor-level
+  parameter defaults to reference earlier actor-local scalar parameter
+  defaults by name while keeping forward/self/cyclic/non-scalar dependencies
+  and runtime/expression surfaces deferred.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
