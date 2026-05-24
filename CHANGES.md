@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R10 — Self-dependency diagnostics cleaned
+- Completed `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` and closed the task
+  tree.
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  so illegal combinational self-dependency failures raise a plain
+  source-facing error instead of a Perl `confess` exception.
+- Added [t/1348-self-dependency-diagnostic-cleanup.t](t/1348-self-dependency-diagnostic-cleanup.t)
+  to lock quiet CLI, check-JSON, and normalized semantic JSON behavior for
+  the regression-corpus fixture.
+- The rejection semantics, dependency path, stable diagnostic code, and
+  remediation hint are preserved; parser filenames, parser routine names, and
+  Perl stack frames no longer leak through the covered public surfaces.
+- Synchronized the mdBook troubleshooting chapter and live docs.
+- Validation passed: focused diagnostics tests with `Files=6, Tests=26`;
+  regression-corpus accounting with `Files=1, Tests=3149`; feature-backlog
+  audit with `Files=1, Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ### R10 — Self-dependency diagnostic cleanup selected
 - Created active task tree `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
 - The tree owns a bounded direct diagnostics cleanup: preserve illegal

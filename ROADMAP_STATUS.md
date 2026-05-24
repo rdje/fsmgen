@@ -1,19 +1,31 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R10`.
-- Active task tree: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
-- Current frontier: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R10 self-dependency diagnostic implementation:
+  `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` cleaned the selected illegal
+  combinational self-dependency diagnostic and closed the task tree. The
+  rejection still happens before HDL emission and still reports the source
+  context, rejected `=` assignment family, dependency path, stable diagnostic
+  code, and remediation hint, but quiet CLI, `--check-json`, and
+  `--emit-semantic-json` no longer expose parser filenames, parser routine
+  names, or Perl `called at` stack frames. The mdBook troubleshooting chapter
+  now documents the stack-free public behavior. Validation passed: focused
+  diagnostics tests with `Files=6, Tests=26`; regression-corpus accounting
+  with `Files=1, Tests=3149`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R10 self-dependency diagnostic cleanup selection:
   `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1` activated a bounded direct
   self-dependency diagnostic cleanup after a corpus probe found that
   `assignment_comb_self_dependency.fsm` still leaks `Parser.pm line ...` and
   `called at` frames through quiet CLI failure output. No parser, scheduler,
   report, generated artifact, HDL, CLI, public API, source, test, or generated
-  behavior changed in this selection. The follow-up frontier is `.2`, which
-  must preserve the illegal combinational self-dependency rejection while
-  removing parser implementation frames from CLI, check-JSON, and normalized
-  semantic JSON diagnostics. Validation passed: feature-backlog audit with
+  behavior changed in this selection. The follow-up frontier was `.2`, which
+  preserved the illegal combinational self-dependency rejection while removing
+  parser implementation frames from CLI, check-JSON, and normalized semantic
+  JSON diagnostics. Validation passed: feature-backlog audit with
   `Files=1, Tests=15`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R10 quiet-banner implementation:
   `R10-CLI-QUIET-BANNER-CLEANUP.2` aligned `bin/fsmgen --quiet` with its
@@ -6536,11 +6548,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
-- Current frontier: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`.
-- Completion status: `.1` selected the active tree with no behavior change.
-  `.2` owns stack-frame cleanup for the selected illegal combinational
-  self-dependency diagnostic.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP` is closed after
+  `.2`. The next PNT cycle must select a new active task tree or leaf before
+  any code, test, source, generated-artifact, or config change.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8108,12 +8120,25 @@ Deliverables:
 - Clear remediation guidance for common construct-family failures.
 Status: `in progress`
 Done:
+- `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` cleaned the selected illegal
+  combinational self-dependency diagnostic and closed the tree:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
+    now raises the combinational self-dependency failure as a plain
+    source-facing error instead of a Perl `confess` exception,
+  - [t/1348-self-dependency-diagnostic-cleanup.t](t/1348-self-dependency-diagnostic-cleanup.t)
+    locks quiet CLI, check-JSON, and normalized semantic JSON behavior for the
+    regression-corpus fixture,
+  - the diagnostic keeps source context, the rejected `=` assignment family,
+    dependency path, stable diagnostic code, and remediation hint,
+  - and parser filenames, parser routine names, and Perl stack frames no
+    longer leak through the covered public surfaces.
 - `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1` selected the next bounded direct
   diagnostics cleanup before code:
   - illegal combinational self-dependency remains a rejected direct-generation
     failure,
-  - the current quiet CLI output still leaks parser implementation frames,
-  - and `.2` must preserve the actionable message while cleaning CLI and
+  - the selected corpus probe showed quiet CLI output still leaked parser
+    implementation frames before `.2`,
+  - and `.2` had to preserve the actionable message while cleaning CLI and
     machine JSON diagnostics.
 - `R10-CLI-QUIET-BANNER-CLEANUP.2` suppressed informational banner text in
   quiet CLI runs and closed the tree:
@@ -8206,10 +8231,9 @@ Done:
   - [bin/fsmgen](bin/fsmgen) now also wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path instead of letting constructor failures dump a raw script line,
   - and [t/253-extension-loader-diagnostic-context.t](t/253-extension-loader-diagnostic-context.t) now locks both the pipeline and CLI constructor-failure shapes for malformed config input and constructor-failing extension modules.
 Left:
-- Implement `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`: remove parser stack
-  leakage from the selected self-dependency diagnostic without changing
-  rejection semantics.
-- Define the next provenance-carrying boundaries and upgrade key diagnostics.
+- Select the next bounded provenance-carrying boundary or diagnostic cleanup
+  under a task tree before any code.
+- Upgrade key diagnostics from the selected next frontier.
 - Add regression coverage for error shape and location reporting.
 Exit criteria:
 - Major parser/generator failures identify the offending source construct precisely and explain the intended fix path clearly.

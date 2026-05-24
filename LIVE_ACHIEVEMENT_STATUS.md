@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R10 — Self-dependency diagnostics cleaned
+- Completed `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` and closed the task
+  tree.
+- Illegal combinational self-dependency still rejects before HDL emission, but
+  quiet CLI, check-JSON, and normalized semantic JSON diagnostics no longer
+  expose parser filenames, parser routine names, or Perl stack frames.
+- The diagnostic keeps the source context, rejected assignment family,
+  dependency path, stable diagnostic code, and remediation hint.
+- The mdBook troubleshooting chapter documents the user-facing behavior.
+- Validation passed: focused diagnostics tests with `Files=6, Tests=26`;
+  regression-corpus accounting with `Files=1, Tests=3149`; feature-backlog
+  audit with `Files=1, Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R10 — Self-dependency diagnostic cleanup selected
 - Created active task tree `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
 - Completed `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1`.

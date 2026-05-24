@@ -402,6 +402,14 @@ follows the same rule; in strict mode, `<=+` is rejected with a migration hint
 toward preferred `<=-`. Q/output-named `<-` loopback remains supported for
 ordinary register feedback.
 
+[t/1348-self-dependency-diagnostic-cleanup.t](t/1348-self-dependency-diagnostic-cleanup.t)
+locks the user-facing diagnostic shape for
+[t/corpus/assignment_comb_self_dependency.fsm](t/corpus/assignment_comb_self_dependency.fsm):
+quiet CLI, check JSON, and normalized semantic JSON must reject before HDL
+emission while preserving source context, the dependency path, the stable
+`FSMGEN_LANGUAGE_COMBINATIONAL_SELF_DEPENDENCY` code, and the remediation hint
+without exposing parser implementation names or Perl stack frames.
+
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces

@@ -64,6 +64,13 @@ Typical causes:
 The pre-generation validation path exists specifically to catch these before
 emission.
 
+Illegal combinational self-dependency failures are reported as source-local
+diagnostics before HDL emission. The CLI, `--check-json`, and
+`--emit-semantic-json` surfaces keep the source context, the rejected `=`
+assignment family, the discovered dependency path, and the remediation hint to
+use `<-` or rewrite the expression; they do not expose parser implementation
+filenames, parser routine names, or Perl call-stack frames.
+
 If a normal register update reads its previous value, prefer the Q/output-named
 form, for example `(<- (COUNT (+ COUNT 1)))`. The D-input-named forms `<=` and
 `<=-` are stricter: their RHS and assignment guard may not read the same LHS

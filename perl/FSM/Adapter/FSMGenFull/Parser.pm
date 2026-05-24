@@ -1745,9 +1745,9 @@ sub validate_no_combinational_self_dependency($self) {
             "[Parser.pm][validate_no_combinational_self_dependency()] Illegal combinational cycle detected: $path_str",
             3
         );
-        Carp::confess(
-            "[Parser.pm][validate_no_combinational_self_dependency()] Illegal combinational self-dependency for '$target_signal_name' using '='. "
-            . "RHS depends on LHS through combinational chain ($path_str); use '<-' or rewrite expression."
+        die(
+            "Error: Illegal combinational self-dependency for '$target_signal_name' using '='. "
+            . "RHS depends on LHS through combinational chain ($path_str); use '<-' or rewrite expression.\n"
         );
     }
 }

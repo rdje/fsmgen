@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Self-dependency cleanup should keep semantics and remove implementation leakage
+- The illegal combinational self-dependency diagnostic is a language-contract
+  rejection, not a parser crash. Raising it with `die` and a trailing newline
+  preserves the rejection while avoiding Perl's `confess` stack capture.
+- The public message should keep the actionable details users need: rejected
+  `=` assignment, LHS/RHS dependency path, and the `<-` or rewrite
+  remediation. Parser filenames and validator routine names are internal
+  implementation details and should stay out of CLI and machine JSON output.
+
 ## 2026-05-24: Self-dependency diagnostics need cleanup without semantic drift
 - Illegal combinational self-dependency is already the correct semantic
   failure: `=` cannot read its own LHS through a combinational chain. The
