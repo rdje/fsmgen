@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT` | `active` | `R10` | `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2` | [docs/tasks/R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.md](docs/tasks/R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.md) |
 
 ## Proposed Task Trees
 

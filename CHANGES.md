@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R10 — Diagnostic/provenance exit audit selected
+- Created active task tree `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT`.
+- The tree owns an evidence-gathering audit after the recent diagnostic
+  presentation cleanup slices.
+- A fresh expected-failure `.fsm` corpus probe checked 106 entries and found no
+  remaining quiet CLI `Parser.pm`, `SourceFrontend.pm`, `Lispish::`,
+  `called at`, or generic Perl script-line leakage.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R10 — D-input self-dependency diagnostics cleaned
 - Completed `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` and closed the
   task tree.

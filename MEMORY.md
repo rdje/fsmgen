@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R10 diagnostic/provenance exit audit selected
+- Created active task tree `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT`.
+- Purpose: audit current `R10` source-provenance and diagnostic evidence after
+  the recent cleanup slices, then decide whether to select another bounded
+  implementation slice or close/handoff.
+- A fresh expected-failure `.fsm` corpus probe checked 106 entries and found no
+  remaining quiet CLI `Parser.pm`, `SourceFrontend.pm`, `Lispish::`,
+  `called at`, or generic Perl script-line leakage.
+- The next frontier is `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2`.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT`.
+- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2`.
+
 ## 2026-05-24: D-input self-dependency diagnostics cleaned
 - Completed `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` and closed the
   task tree.

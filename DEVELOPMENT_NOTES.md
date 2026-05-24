@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: R10 exit audit should be evidence-led
+- After the direct cleanup slices, the next diagnostic/provenance step should
+  not be selected by scanning for isolated `confess` calls alone. Some
+  `confess` uses are internal invariants, and the immediate expected-failure
+  `.fsm` corpus probe did not find public quiet CLI stack/parser leakage.
+- The audit should compare shipped coverage to the roadmap exit criteria and
+  decide whether another user-facing slice is justified now.
+
 ## 2026-05-24: D-input cleanup should cover both RHS and guard roles
 - The same validator rejects self-dependency from either the assigned RHS or
   the assignment guard condition. Coverage needs both roles because the message
