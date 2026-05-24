@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R10 — Self-dependency diagnostic cleanup selected
+- Created active task tree `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
+- The tree owns a bounded direct diagnostics cleanup: preserve illegal
+  combinational self-dependency rejection while removing parser
+  implementation-frame leakage from CLI and machine JSON diagnostics.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R10 — Quiet CLI banner suppressed
 - Completed `R10-CLI-QUIET-BANNER-CLEANUP.2` and closed the task tree.
 - Updated [bin/fsmgen](bin/fsmgen) so `--quiet` suppresses the interactive

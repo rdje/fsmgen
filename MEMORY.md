@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R10 self-dependency diagnostic cleanup selected
+- Created active task tree `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
+- Purpose: remove parser implementation-frame leakage from the selected direct
+  illegal combinational self-dependency diagnostic while preserving rejection
+  semantics.
+- The next frontier is `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
+- Current frontier: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`.
+
 ## 2026-05-24: Quiet CLI banner suppressed
 - Completed `R10-CLI-QUIET-BANNER-CLEANUP.2` and closed the task tree.
 - `bin/fsmgen --quiet` now suppresses the interactive

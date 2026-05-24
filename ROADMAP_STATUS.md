@@ -1,9 +1,20 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `R10`.
+- Active task tree: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
+- Current frontier: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`.
+- Recent R10 self-dependency diagnostic cleanup selection:
+  `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1` activated a bounded direct
+  self-dependency diagnostic cleanup after a corpus probe found that
+  `assignment_comb_self_dependency.fsm` still leaks `Parser.pm line ...` and
+  `called at` frames through quiet CLI failure output. No parser, scheduler,
+  report, generated artifact, HDL, CLI, public API, source, test, or generated
+  behavior changed in this selection. The follow-up frontier is `.2`, which
+  must preserve the illegal combinational self-dependency rejection while
+  removing parser implementation frames from CLI, check-JSON, and normalized
+  semantic JSON diagnostics. Validation passed: feature-backlog audit with
+  `Files=1, Tests=15`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R10 quiet-banner implementation:
   `R10-CLI-QUIET-BANNER-CLEANUP.2` aligned `bin/fsmgen --quiet` with its
   documented role and closed the task tree. Quiet success and quiet failure
@@ -6525,12 +6536,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `R10-CLI-QUIET-BANNER-CLEANUP.2` suppressed the
-  interactive banner in quiet CLI runs and closed the tree. The next PNT step
-  should select a fresh roadmap-aligned task tree before any further code
-  changes.
+- Active task tree: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
+- Current frontier: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`.
+- Completion status: `.1` selected the active tree with no behavior change.
+  `.2` owns stack-frame cleanup for the selected illegal combinational
+  self-dependency diagnostic.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8098,6 +8108,13 @@ Deliverables:
 - Clear remediation guidance for common construct-family failures.
 Status: `in progress`
 Done:
+- `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1` selected the next bounded direct
+  diagnostics cleanup before code:
+  - illegal combinational self-dependency remains a rejected direct-generation
+    failure,
+  - the current quiet CLI output still leaks parser implementation frames,
+  - and `.2` must preserve the actionable message while cleaning CLI and
+    machine JSON diagnostics.
 - `R10-CLI-QUIET-BANNER-CLEANUP.2` suppressed informational banner text in
   quiet CLI runs and closed the tree:
   - [bin/fsmgen](bin/fsmgen) now gates the interactive banner on non-quiet,
@@ -8189,6 +8206,9 @@ Done:
   - [bin/fsmgen](bin/fsmgen) now also wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path instead of letting constructor failures dump a raw script line,
   - and [t/253-extension-loader-diagnostic-context.t](t/253-extension-loader-diagnostic-context.t) now locks both the pipeline and CLI constructor-failure shapes for malformed config input and constructor-failing extension modules.
 Left:
+- Implement `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`: remove parser stack
+  leakage from the selected self-dependency diagnostic without changing
+  rejection semantics.
 - Define the next provenance-carrying boundaries and upgrade key diagnostics.
 - Add regression coverage for error shape and location reporting.
 Exit criteria:

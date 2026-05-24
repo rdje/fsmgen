@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Self-dependency diagnostics need cleanup without semantic drift
+- Illegal combinational self-dependency is already the correct semantic
+  failure: `=` cannot read its own LHS through a combinational chain. The
+  product-quality gap is presentation, not legality.
+- The implementation should avoid broad parser rewrites. The selected slice
+  should keep the actionable self-dependency text and remove only the raw
+  parser implementation location and Perl stack frames from public CLI/JSON
+  diagnostics.
+
 ## 2026-05-24: Quiet mode should suppress informational banners
 - `bin/fsmgen --quiet` currently suppresses the processing line but still
   prints the interactive `=== FSM HDL Generator ===` banner. That banner is
