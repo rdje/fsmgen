@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R11 — Parameter/generic frontier audited
+- Completed `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.2` and closed the task
+  tree.
+- Decided not to select a new parameter/generic implementation slice now:
+  VHDL generic-map lowering remains deferred behind active VHDL backend and
+  composition-target support, while richer non-leafwise or mixed aggregate
+  expression domains remain deferred until a precise portable type or
+  aggregate-operator contract exists.
+- Synchronized the mdBook feature backlog, roadmap, task-tree, README, and
+  live docs.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused parameter/generic and VHDL-deferral evidence with
+  `Files=10, Tests=203`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R11 — Parameter/generic frontier audit selected
 - Created active task tree `R11-PARAMETER-GENERIC-FRONTIER-AUDIT`.
 - The tree owns an evidence-gathering audit over the remaining semantic

@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R11-PARAMETER-GENERIC-FRONTIER-AUDIT` | `active` | `R11` | `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.2` | [docs/tasks/R11-PARAMETER-GENERIC-FRONTIER-AUDIT.md](docs/tasks/R11-PARAMETER-GENERIC-FRONTIER-AUDIT.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R11-PARAMETER-GENERIC-FRONTIER-AUDIT` | `done` | `R11` | `closed` | [docs/tasks/R11-PARAMETER-GENERIC-FRONTIER-AUDIT.md](docs/tasks/R11-PARAMETER-GENERIC-FRONTIER-AUDIT.md) |
 | `R11-RTLIF-INTERFACE-SOURCE-DIRECTION` | `done` | `R11` | `closed` | [docs/tasks/R11-RTLIF-INTERFACE-SOURCE-DIRECTION.md](docs/tasks/R11-RTLIF-INTERFACE-SOURCE-DIRECTION.md) |
 | `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT` | `done` | `R11` | `closed` | [docs/tasks/R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.md](docs/tasks/R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.md) |
 | `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT` | `done` | `R10` | `closed` | [docs/tasks/R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.md](docs/tasks/R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.md) |

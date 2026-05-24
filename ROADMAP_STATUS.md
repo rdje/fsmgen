@@ -1,9 +1,27 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R11`.
-- Active task tree: `R11-PARAMETER-GENERIC-FRONTIER-AUDIT`.
-- Current frontier: `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R11 parameter/generic frontier audit:
+  `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.2` audited the shipped semantic
+  parameter/generic contract and closed the task tree. No new
+  parameter/generic implementation slice is selected now. The shipped contract
+  is already regression-backed across direct `+params`, `.rtlif` defaults,
+  external `?rtl` overrides, generated `?fsmc` / `?dtc` overrides,
+  package-qualified defaults, scalar expressions, aggregate values,
+  matching-shape leafwise aggregate operators, unary aggregate complement,
+  Intent HIR, structural RTL IR, and SystemVerilog `#(...)` emission. VHDL
+  generic-map lowering remains deferred behind active VHDL backend and
+  composition-target support; richer non-leafwise or mixed aggregate
+  expression domains remain deferred until a precise portable type or
+  aggregate-operator contract exists. The mdBook feature backlog now states
+  those deferrals explicitly. No parser, scheduler, report, generated
+  artifact, HDL, CLI, public API, source, test, or generated behavior changed
+  in this audit slice. Validation passed: focused parameter/generic and
+  VHDL-deferral evidence with `Files=10, Tests=203`; feature-backlog audit
+  with `Files=1, Tests=15`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R11 parameter/generic frontier audit selection:
   `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.1` activated an evidence-gathering
   audit over the remaining semantic parameter/generic frontier. The roadmap
@@ -6669,11 +6687,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `R11-PARAMETER-GENERIC-FRONTIER-AUDIT`.
-- Current frontier: `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.2`.
-- Completion status: `.1` selected the active tree with no behavior change.
-  `.2` owns the evidence-gathering audit and next-frontier decision for the
-  semantic parameter/generic contract.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.2` completed the
+  evidence-gathering audit and closed the tree. No immediate
+  parameter/generic implementation slice is selected; future work waits for
+  VHDL backend/composition support or one precise richer aggregate contract.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8512,6 +8531,14 @@ Done:
     SystemVerilog instance emission,
   - and `.2` must select one bounded implementation slice or record a
     prerequisite deferral.
+- `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.2` audited the shipped semantic
+  parameter/generic contract and closed the task tree:
+  - no immediate parameter/generic implementation slice is selected,
+  - VHDL generic-map lowering remains deferred behind active VHDL backend and
+    composition-target support,
+  - richer non-leafwise or mixed aggregate expression domains remain deferred
+    until a precise portable type or aggregate-operator contract exists,
+  - and the mdBook feature backlog now states those deferrals explicitly.
 - Explicit composition `?wiring` blocks now accept canonical Lisp-ish list
   links:
   - `(source target)` is the compact directed-link spelling,
@@ -9271,8 +9298,6 @@ Done:
   - top-input fanout success across multiple same-name child inputs,
   - and mixed-direction same-name rejection for declared top-input connect-by-name.
 Left:
-- Complete `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.2`: audit shipped semantic
-  parameter/generic behavior and select one bounded next slice or deferral.
 - Extend the now-shipped semantic parameter/generic contract beyond direct-root metadata, external `?rtl` SystemVerilog instance emission, generated `?fsmc` / `?dtc` SystemVerilog instance emission, direct param-to-param default reuse, the first bounded scalar operator-expression value slice, and the first bounded leafwise aggregate operator slice: VHDL generic-map lowering plus richer expression-valued semantic parameter domains remain follow-up work, including non-leafwise typed aggregate-to-aggregate operator expressions where the operator is explicitly valid for the operand types/shapes.
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime/assertion slices,

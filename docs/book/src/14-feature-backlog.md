@@ -104,6 +104,9 @@ defined type/shape/result contract and validation path. Runtime direct `.fsm`
 aggregate-to-aggregate operators, ISF runtime subaggregate operands, aggregate
 paths in expression-operator position, VHDL aggregate lowering, mixed
 scalar/aggregate operators, and mismatched aggregate shapes remain deferred.
+The R11 parameter/generic frontier audit did not select another aggregate
+operator widening; future work must first name one exact type, shape, result,
+and lowering rule.
 
 ### VHDL Aggregate Lowering
 
@@ -137,7 +140,9 @@ generic maps.
 
 Current boundary: the Verilog-family backend lowers validated parameters and
 aggregate overrides to SystemVerilog `#(...)` instance parameters. VHDL
-generic-map lowering is not shipped.
+generic-map lowering is not shipped. The R11 parameter/generic frontier audit
+keeps this deferred because the composition VHDL target and full VHDL backend
+still fail closed.
 
 ### Broader Generated-Child Top Instantiation
 

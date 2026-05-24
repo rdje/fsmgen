@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R11 — Parameter/generic frontier audited
+- Completed `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.2` and closed the task
+  tree.
+- Decision: no new parameter/generic implementation slice is selected now.
+  VHDL generic-map lowering remains deferred behind active VHDL backend and
+  composition-target support, and richer non-leafwise or mixed aggregate
+  expression domains remain deferred until a precise portable type or
+  aggregate-operator contract exists.
+- The mdBook feature backlog now states those deferrals explicitly.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused parameter/generic and VHDL-deferral evidence with
+  `Files=10, Tests=203`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R11 — Parameter/generic frontier audit selected
 - Created active task tree `R11-PARAMETER-GENERIC-FRONTIER-AUDIT`.
 - Completed `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.1`.

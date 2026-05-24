@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Defer parameter/generic widening until a prerequisite is ready
+- The current parameter/generic surface has a strong tested base and the
+  remaining named gaps are not single-step follow-ups.
+- VHDL generic-map lowering should wait for actual VHDL composition/backend
+  support instead of implementing an isolated lowering path that cannot be
+  exercised end to end.
+- Richer aggregate expression domains should wait for one precise portable
+  type/shape/result rule. The already-shipped leafwise aggregate operators and
+  unary complement cover the safe fold-before-HDL subset.
+
 ## 2026-05-24: Parameter/generic widening needs an audit before code
 - The shipped parameter/generic surface already spans direct roots, `.rtlif`,
   external `?rtl`, generated children, package-qualified defaults, scalar
