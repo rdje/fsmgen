@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R9-STRICT-MODE-FRONTIER-AUDIT` | `active` | `R9` | `R9-STRICT-MODE-FRONTIER-AUDIT.2` | [docs/tasks/R9-STRICT-MODE-FRONTIER-AUDIT.md](docs/tasks/R9-STRICT-MODE-FRONTIER-AUDIT.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R9-STRICT-MODE-FRONTIER-AUDIT` | `done` | `R9` | `closed` | [docs/tasks/R9-STRICT-MODE-FRONTIER-AUDIT.md](docs/tasks/R9-STRICT-MODE-FRONTIER-AUDIT.md) |
 | `R8-LANGUAGE-CONTRACT-EXIT-AUDIT` | `done` | `R8` | `closed` | [docs/tasks/R8-LANGUAGE-CONTRACT-EXIT-AUDIT.md](docs/tasks/R8-LANGUAGE-CONTRACT-EXIT-AUDIT.md) |
 | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT` | `done` | `R8` | `closed` | [docs/tasks/R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.md](docs/tasks/R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.md) |
 | `R8-STRICT-SUPPORT-TIER-CUTS` | `done` | `R8` | `closed` | [docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md](docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md) |

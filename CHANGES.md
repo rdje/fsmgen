@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R9 — Strict-mode frontier audited and closed
+- Completed `R9-STRICT-MODE-FRONTIER-AUDIT.2` and closed the task tree.
+- Audited the strict-mode support-tier frontier against source-frontend
+  enforcement, stable `FSMGEN_STRICT_*` diagnostics, regression-corpus paired
+  default/strict ownership, 40 `strict_supported` positive acceptance entries,
+  mdBook strict-mode coverage, and language-surface manifest metadata.
+- No currently named default-mode compatibility residue was selected for
+  another behavior-bearing strict cut. Future strict-mode maintenance remains
+  a per-feature-slice requirement when new compatibility residue appears.
+- Updated `ROADMAP_STATUS.md` so `R9` is `mostly done` and active
+  implementation focus can move to `R10` diagnostics/provenance.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused strict/corpus gates with `Files=13,
+  Tests=3204`; feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
+
 ### R9 — Strict-mode frontier audit selected
 - Created active task tree `R9-STRICT-MODE-FRONTIER-AUDIT`.
 - The tree owns the next roadmap-aligned `R9` activity: audit current

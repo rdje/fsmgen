@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R9 strict-mode frontier audited and closed
+- Completed `R9-STRICT-MODE-FRONTIER-AUDIT.2` and closed the task tree.
+- The audit found no currently named default-mode compatibility residue that
+  needs another immediate strict-mode cut. The full
+  `language_surface.default_mode_compatibility.accepted_but_not_canonical_for_generated_output`
+  inventory is paired with default-compatible and strict-rejected
+  regression-corpus entries, stable `FSMGEN_STRICT_*` diagnostics, mdBook
+  strict-mode coverage, and public manifest metadata.
+- The strict-supported positive corpus currently has 40 entries, all owned by
+  catalog-level strict acceptance gates.
+- `ROADMAP_STATUS.md` now marks `R9` as `mostly done`. Future strict-mode
+  maintenance remains required whenever a future feature slice introduces,
+  preserves, or promotes compatibility residue, but no bounded strict cut is
+  selected right now.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused strict/corpus gates with `Files=13,
+  Tests=3204`; feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R9 strict-mode frontier audit selected
 - Created active task tree `R9-STRICT-MODE-FRONTIER-AUDIT`.
 - Purpose: audit strict-mode support-tier coverage after the `R8` handoff

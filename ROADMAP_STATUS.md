@@ -1,15 +1,36 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R9`.
-- Active task tree: `R9-STRICT-MODE-FRONTIER-AUDIT`.
-- Current frontier: `R9-STRICT-MODE-FRONTIER-AUDIT.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R9 strict-mode frontier audit:
+  `R9-STRICT-MODE-FRONTIER-AUDIT.2` audited the current strict-mode
+  support-tier frontier and closed the tree without selecting another
+  behavior-bearing strict cut. Every currently named
+  `language_surface.default_mode_compatibility.accepted_but_not_canonical_for_generated_output`
+  residue has paired default-compatible and strict-rejected regression-corpus
+  ownership, a stable `FSMGEN_STRICT_*` diagnostic, mdBook strict-mode
+  coverage, and manifest-visible compatibility metadata: legacy `+fsm`,
+  `?module`, empty `(+size)`, misleading reset spellings, compact `:=`,
+  infix assignments, legacy `<=+`, composition slash-link wiring, and
+  generated-child legacy roots. The maintained supported corpus also has 40
+  `strict_supported` positive acceptance entries. `R9` is now marked
+  `mostly done`: no known compatibility residue needs an immediate new
+  strict rejection, while future feature slices must continue adding
+  default/strict accounting when they introduce or preserve compatibility
+  surfaces. Active implementation focus can move to `R10` diagnostics and
+  provenance. No parser, scheduler, report, generated artifact, HDL, CLI,
+  public API, source, test, or generated behavior changed in this audit
+  slice. Validation passed: focused strict/corpus gates with `Files=13,
+  Tests=3204`; feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
 - Recent R9 strict-mode frontier selection:
   `R9-STRICT-MODE-FRONTIER-AUDIT.1` activated the next strict-mode task tree
   after `R8` handed active implementation focus to `R9`. No parser,
   scheduler, report, generated artifact, HDL, CLI, public API, source, test,
-  or generated behavior changed in this selection. The follow-up frontier is
-  `.2`, an audit-only leaf that must inspect the current default/strict split,
+  or generated behavior changed in this selection. The follow-up frontier was
+  `.2`, an audit-only leaf for inspecting the current default/strict split,
   supported-corpus strict acceptance evidence, diagnostics, mdBook coverage,
   and public metadata before selecting another strict cut or close-out.
   Validation passed: feature-backlog audit with `Files=1, Tests=15`; `mdbook
@@ -6445,12 +6466,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `R9-STRICT-MODE-FRONTIER-AUDIT`.
-- Current frontier: `R9-STRICT-MODE-FRONTIER-AUDIT.2`.
-- Completion status: `.1` selected the active tree with no behavior change.
-  `.2` is the audit/design frontier for deciding whether `R9` needs another
-  bounded strict cut, can close, or should hand remaining strict maintenance
-  to future feature slices.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `R9-STRICT-MODE-FRONTIER-AUDIT.2` closed the latest
+  strict-mode frontier audit without selecting another behavior-bearing strict
+  cut. Future strict-mode maintenance remains a per-feature obligation when
+  new compatibility residue appears, and the next roadmap-aligned active
+  implementation focus can move to `R10` diagnostics/provenance.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -7885,8 +7907,19 @@ Deliverables:
 - A strict mode in the CLI/pipeline.
 - Targeted diagnostics for constructs outside the fully supported tier.
 - User/developer docs that explain how strict mode interacts with support tiers.
-Status: `in progress`
+Status: `mostly done`
 Done:
+- `R9-STRICT-MODE-FRONTIER-AUDIT.2` audited the current strict-mode frontier
+  and closed the tree without selecting another behavior-bearing strict cut:
+  - the full `language_surface` default-mode compatibility inventory is paired
+    with default-compatible and strict-rejected corpus entries,
+  - every named strict rejection has a stable `FSMGEN_STRICT_*` diagnostic,
+  - mdBook strict-mode guidance and public manifest metadata describe the
+    compatibility split,
+  - the maintained supported corpus has 40 `strict_supported` positive
+    acceptance entries,
+  - and future strict-mode work is now a per-feature maintenance obligation
+    when new compatibility residue appears.
 - `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` shipped the selected strict-mode
   assignment-surface cut:
   - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm)
@@ -7989,9 +8022,12 @@ Done:
   - checks expected direct module names, composition top/child modules, and recorded HDL-shape patterns,
   - and prevents future supported entries from depending only on family-specific tests for positive acceptance.
 Left:
-- Widen strict-mode enforcement beyond the current canonical-root-family and current section-level compatibility cuts into more of the fully supported-vs-compatibility split.
-- Decide the next high-signal support-tier cuts after the current legacy root-family slices.
-- Continue documenting strict-mode behavior as the supported-tier boundary widens.
+- No known `language_surface` default-mode compatibility residue remains
+  without a paired strict-mode rejection, stable diagnostic, corpus owner, and
+  mdBook/public-metadata coverage after `R9-STRICT-MODE-FRONTIER-AUDIT.2`.
+- Continue strict-mode maintenance per future feature slice whenever a new
+  compatibility surface is introduced, retained, or promoted.
+- Hand active diagnostics and provenance work to `R10`.
 Exit criteria:
 - Users can run the tool in a mode that accepts only the fully supported language contract.
 

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: R9 closes as a maintenance contract, not as a frozen language claim
+- `R9-STRICT-MODE-FRONTIER-AUDIT.2` closes the current strict-mode frontier
+  because the present compatibility inventory is accounted for: each named
+  default-mode residue has default-compatible and strict-rejected corpus
+  ownership, a stable diagnostic code, mdBook guidance, and manifest-visible
+  metadata.
+- The important ongoing rule is that strict mode must evolve with the language.
+  Future feature slices that keep or add compatibility surfaces must add their
+  strict-mode boundary, positive strict-supported evidence when appropriate,
+  diagnostics, corpus accounting, and mdBook/live-doc truth in the same slice.
+- The next active roadmap pressure should move to `R10` diagnostics and
+  provenance instead of inventing an unsupported strict cut with no concrete
+  residue behind it.
+
 ## 2026-05-24: R9 strict-mode work starts with a coverage audit
 - `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` handed active implementation focus to
   `R9`, but the correct first `R9` step is still an audit. Strict mode is a

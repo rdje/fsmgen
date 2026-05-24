@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R9 — Strict-mode frontier audited and closed
+- Completed `R9-STRICT-MODE-FRONTIER-AUDIT.2` and closed the task tree.
+- The audit found no currently named default-mode compatibility residue that
+  requires another immediate strict-mode cut. Known residue is paired in the
+  regression corpus, rejected by stable `FSMGEN_STRICT_*` diagnostics under
+  strict mode, documented in the mdBook, and visible in language-surface
+  manifest metadata.
+- The maintained supported corpus currently has 40 `strict_supported` positive
+  acceptance entries.
+- `R9` is now `mostly done`; future strict-mode work is maintenance attached
+  to future feature slices that add or preserve compatibility surfaces.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused strict/corpus gates with `Files=13,
+  Tests=3204`; feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R9 — Strict-mode frontier audit selected
 - Created active task tree `R9-STRICT-MODE-FRONTIER-AUDIT`.
 - Completed `R9-STRICT-MODE-FRONTIER-AUDIT.1`.
