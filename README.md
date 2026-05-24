@@ -83,7 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
-- `docs/tasks/R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.md` — active `R10` task tree for auditing the diagnostic/provenance exit frontier.
+- `docs/tasks/R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.md` — completed `R10` task tree for auditing the diagnostic/provenance exit frontier.
 - `docs/tasks/R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.md` — completed `R10` task tree for cleaning D-input self-dependency diagnostic implementation leakage.
 - `docs/tasks/R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.md` — completed `R10` task tree for cleaning direct self-dependency diagnostic stack leakage.
 - `docs/tasks/R10-CLI-QUIET-BANNER-CLEANUP.md` — completed `R10` task tree for aligning quiet CLI banner behavior with diagnostics.

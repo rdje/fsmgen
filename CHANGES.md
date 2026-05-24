@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R10 — Diagnostic/provenance exit frontier audited
+- Completed `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2` and closed the task
+  tree.
+- Audited current R10 diagnostic coverage across source context, cleaned CLI
+  presentation, CLI entrypoint file context, extension hook/loading context,
+  empty-source diagnostics, quiet mode, self-dependency diagnostics, check
+  JSON, normalized semantic JSON, expected-failure corpus behavior, and
+  regression-corpus accounting.
+- A fresh expected-failure `.fsm` quiet CLI corpus probe checked 106 entries
+  with `leaks=0` for parser names and Perl stack/script-line leakage.
+- No behavior-bearing change was made in this audit leaf.
+- `R10` is now `mostly done`; future diagnostic/provenance work should be
+  selected by later feature slices when a concrete user-facing gap appears.
+- Validation passed: focused R10 diagnostics with `Files=12, Tests=37`;
+  expected-failure probe `checked=106, leaks=0`; regression-corpus accounting
+  with `Files=1, Tests=3149`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R10 — Diagnostic/provenance exit audit selected
 - Created active task tree `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT`.
 - The tree owns an evidence-gathering audit after the recent diagnostic

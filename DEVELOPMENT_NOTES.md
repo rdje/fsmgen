@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: R10 can move to mostly done after clean public diagnostic probes
+- The R10 exit audit did not find another immediate parser-name or stack-frame
+  cleanup frontier: focused diagnostic tests passed, the expected-failure
+  `.fsm` quiet CLI probe checked 106 entries with no leaks, and
+  regression-corpus accounting still passed.
+- Marking R10 `mostly done` is more honest than marking it `done` because full
+  line/construct-level source locations remain a future widening topic. Future
+  diagnostic work should be tied to concrete user-facing gaps found during
+  later feature slices.
+
 ## 2026-05-24: R10 exit audit should be evidence-led
 - After the direct cleanup slices, the next diagnostic/provenance step should
   not be selected by scanning for isolated `confess` calls alone. Some

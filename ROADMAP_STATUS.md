@@ -1,9 +1,26 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R10`.
-- Active task tree: `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT`.
-- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R10 diagnostic/provenance exit audit:
+  `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2` audited the current R10 diagnostic
+  and source-provenance frontier and closed the task tree. Focused R10
+  diagnostic tests passed across top-level source context, cleaned CLI errors,
+  CLI entrypoint file context, extension hook/loading context, empty sources,
+  quiet banners, combinational self-dependency, D-input self-dependency,
+  check JSON, and normalized semantic JSON. A fresh expected-failure `.fsm`
+  quiet CLI corpus probe checked 106 entries with `leaks=0`, and
+  regression-corpus accounting still passed. No behavior-bearing change was
+  made in this audit leaf. `R10` is now `mostly done`: no immediate
+  parser-name or stack-frame cleanup frontier is selected, and future
+  diagnostic/provenance work should be selected by later feature slices when a
+  concrete user-facing gap appears. Validation passed: focused R10 diagnostics
+  with `Files=12, Tests=37`; expected-failure probe `checked=106, leaks=0`;
+  regression-corpus accounting with `Files=1, Tests=3149`; feature-backlog
+  audit with `Files=1, Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R10 diagnostic/provenance exit audit selection:
   `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.1` activated an evidence-gathering
   audit after the empty-source, quiet-banner, combinational self-dependency,
@@ -12,8 +29,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `Parser.pm`, `SourceFrontend.pm`, `Lispish::`, `called at`, or generic Perl
   script-line leakage. No parser, scheduler, report, generated artifact, HDL,
   CLI, public API, source, test, or generated behavior changed in this
-  selection. The follow-up frontier is `.2`, which must decide from evidence
-  whether R10 has another bounded implementation slice or should move to a
+  selection. The follow-up frontier was `.2`, which decided from evidence
+  whether R10 had another bounded implementation slice or should move to a
   close/handoff status. Validation passed: feature-backlog audit with
   `Files=1, Tests=15`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R10 D-input self-dependency diagnostic implementation:
@@ -6586,11 +6603,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT`.
-- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2`.
-- Completion status: `.1` selected the active tree with no behavior change.
-  `.2` owns the evidence-gathering audit and next-frontier or close/handoff
-  decision for `R10`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT` is closed after
+  `.2`, and `R10` is now `mostly done`. The next PNT cycle should select a
+  new active task tree or leaf before any code, test, source,
+  generated-artifact, or config change.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8156,8 +8174,23 @@ Deliverables:
 - File/line/construct provenance through parsing and generation.
 - More targeted diagnostics instead of generic parser/runtime fallout.
 - Clear remediation guidance for common construct-family failures.
-Status: `in progress`
+Status: `mostly done`
 Done:
+- `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2` audited the R10
+  diagnostic/provenance frontier and closed the tree:
+  - focused R10 diagnostic tests cover top-level source context, cleaned CLI
+    errors, CLI entrypoint file context, extension hook/loading context, empty
+    sources, quiet banners, combinational self-dependency, D-input
+    self-dependency, check JSON, and normalized semantic JSON,
+  - a fresh expected-failure `.fsm` quiet CLI corpus probe checked 106 entries
+    with `leaks=0` for `Parser.pm`, `SourceFrontend.pm`, `Lispish::`,
+    `called at`, and generic Perl script-line leakage,
+  - regression-corpus accounting still passes, including stable diagnostic
+    code ownership for expected failures,
+  - no behavior-bearing change was made in the audit leaf,
+  - and `R10` is now `mostly done` with future diagnostic/provenance work to
+    be selected by later feature slices when a concrete user-facing gap
+    appears.
 - `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.1` selected an evidence-gathering
   exit/frontier audit before code:
   - the recent focused cleanup slices removed known empty-source, quiet-banner,
@@ -8166,8 +8199,8 @@ Done:
   - a fresh expected-failure `.fsm` corpus probe checked 106 entries and found
     no remaining quiet CLI `Parser.pm`, `SourceFrontend.pm`, `Lispish::`,
     `called at`, or generic Perl script-line leakage,
-  - and `.2` must decide whether another bounded `R10` implementation slice is
-    justified now or whether `R10` should move to close/handoff status.
+  - and `.2` had to decide whether another bounded `R10` implementation slice
+    was justified now or whether `R10` should move to close/handoff status.
 - `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` cleaned the selected
   illegal D-input self-dependency diagnostic and closed the tree:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
@@ -8300,9 +8333,13 @@ Done:
   - [bin/fsmgen](bin/fsmgen) now also wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path instead of letting constructor failures dump a raw script line,
   - and [t/253-extension-loader-diagnostic-context.t](t/253-extension-loader-diagnostic-context.t) now locks both the pipeline and CLI constructor-failure shapes for malformed config input and constructor-failing extension modules.
 Left:
-- Complete `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2`: decide from evidence
-  whether to select another bounded R10 slice or close/handoff.
-- Add regression coverage for error shape and location reporting.
+- No immediate parser-name or stack-frame cleanup frontier is selected after
+  the exit audit.
+- Continue adding regression coverage for error shape and location reporting
+  when future feature slices expose concrete diagnostic gaps.
+- Full line/construct-level source locations remain a future widening topic
+  and should be task-tree selected only when a concrete source-location model
+  is ready.
 Exit criteria:
 - Major parser/generator failures identify the offending source construct precisely and explain the intended fix path clearly.
 

@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R10 diagnostic/provenance exit frontier audited
+- Completed `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2` and closed the task
+  tree.
+- Focused R10 diagnostic tests passed across top-level source context, cleaned
+  CLI errors, CLI entrypoint file context, extension hook/loading context,
+  empty sources, quiet banners, combinational self-dependency, D-input
+  self-dependency, check JSON, and normalized semantic JSON.
+- A fresh expected-failure `.fsm` quiet CLI corpus probe checked 106 entries
+  with `leaks=0` for parser names and Perl stack/script-line leakage.
+- Regression-corpus accounting still passes.
+- No behavior-bearing change was made in this audit leaf. `R10` is now
+  `mostly done`; future diagnostic/provenance work should be selected by later
+  feature slices when a concrete user-facing gap appears.
+- Validation passed: focused R10 diagnostics with `Files=12, Tests=37`;
+  expected-failure probe `checked=106, leaks=0`; regression-corpus accounting
+  with `Files=1, Tests=3149`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R10 diagnostic/provenance exit audit selected
 - Created active task tree `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT`.
 - Purpose: audit current `R10` source-provenance and diagnostic evidence after

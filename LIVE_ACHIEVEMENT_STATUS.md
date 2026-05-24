@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R10 — Diagnostic/provenance exit frontier audited
+- Completed `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2` and closed the task
+  tree.
+- Focused R10 diagnostic tests passed across the shipped source-context,
+  cleaned CLI, entrypoint, extension, empty-source, quiet-mode,
+  self-dependency, check-JSON, and semantic-JSON surfaces.
+- A fresh expected-failure `.fsm` quiet CLI corpus probe checked 106 entries
+  with `leaks=0`, and regression-corpus accounting still passes.
+- No behavior-bearing change was made in this audit leaf. `R10` is now
+  `mostly done`.
+- Validation passed: focused R10 diagnostics with `Files=12, Tests=37`;
+  expected-failure probe `checked=106, leaks=0`; regression-corpus accounting
+  with `Files=1, Tests=3149`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R10 — Diagnostic/provenance exit audit selected
 - Created active task tree `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT`.
 - Completed `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.1`.
