@@ -2,8 +2,25 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS`.
+- Current frontier: `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2`.
+- Recent R14 generated-child transaction parameter dependency default selection:
+  `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1` created the active task tree
+  and selected a bounded child-local dependency widening for generated child
+  transaction parameter defaults. The next implementation leaf will allow
+  generated child transaction scalar defaults and scalar leaves inside
+  compatible aggregate/list defaults to reference earlier scalar transaction
+  parameter defaults by name. These dependency tokens must remain authored in
+  generated child `.fsm` `+params`, generated-composition child summaries, and
+  default instance bindings because the names are declared in the same child
+  artifact and are self-contained. Forward references, self references, cycles,
+  non-scalar transaction parameters, runtime interface signals, unknown
+  symbols, arbitrary expressions, activation-site override dependencies, and
+  package/imported constants beyond shipped enum members remain deferred or
+  fail-closed. No parser, scheduler, report, generated artifact, HDL, CLI
+  behavior, public API, source, test, or generated behavior changed in this
+  selection slice. Validation passed: feature-backlog audit with `Files=1,
+  Tests=15`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 generated-child transaction parameter static-default implementation:
   `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2` shipped the bounded
   generated-child transaction parameter default value-domain widening and

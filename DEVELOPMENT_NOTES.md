@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Transaction parameter dependencies should start source-order only
+- The next bounded transaction-parameter dependency surface should mirror the
+  actor-parameter dependency model: an ISF transaction parameter may reference
+  an earlier scalar transaction parameter default, but not a later parameter,
+  itself, a non-scalar parameter, or an arbitrary expression.
+- The generated child `.fsm` already owns all transaction parameter names, so
+  preserving authored dependency tokens is self-contained. This differs from
+  actor-static transaction defaults, where parent actor names have to be
+  literalized before child/report publication.
+- Starting source-order only avoids introducing a graph solver in the ISF
+  lowerer. Broader acyclic graph behavior can be revisited later if the
+  review/report contract needs it.
+
 ## 2026-05-24: Transaction parameter static names publish self-contained child defaults
 - The shipped lowerer resolves actor constants and actor-local scalar parameter
   defaults while building generated child transaction parameter declarations.

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS` | `active` | `R14` | `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` | [docs/tasks/ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.md](docs/tasks/ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.md) |
 
 ## Proposed Task Trees
 
