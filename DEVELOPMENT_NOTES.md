@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Generated child package constants should stay review tokens
+- `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` selects qualified
+  imported package scalar constants for generated-child transaction parameter
+  defaults as the next narrow static value-domain widening.
+- Unlike actor constants and actor scalar parameters in generated child
+  transaction defaults, package constants can remain authored review tokens in
+  child `.fsm` artifacts because generated children already preserve package
+  imports and embedded package roots for package enum defaults.
+- The implementation should still resolve those package constants internally
+  so diagnostics and any scalar consumers have a numeric/exact-width literal,
+  while leaving unqualified names, aggregate constants, member/item paths, and
+  unrelated value domains fail-closed.
+
 ## 2026-05-24: Package constants in actor params stay qualified and scalar
 - `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` resolves
   `PACKAGE.CONSTANT` actor parameter defaults only after package imports have

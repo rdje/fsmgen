@@ -2,6 +2,31 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Transaction package-constant defaults selected
+- Created active task tree
+  `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
+- Completed `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1`; the selected
+  implementation frontier is
+  `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`.
+- The next implementation leaf will allow generated-child transaction
+  parameter scalar defaults and scalar leaves inside compatible aggregate/list
+  defaults to reference qualified imported package scalar constants such as
+  `shared.DEFAULT_WIDTH`.
+- Authored package-constant tokens must remain visible in generated child
+  `.fsm` `+params`, generated-composition child summaries, and default
+  instance bindings because child artifacts already carry package imports and
+  embedded package roots for package enum defaults.
+- Unqualified package constants, package aggregate constants and aggregate
+  scalar-leaf paths, package constants in other value domains, arbitrary
+  expressions, runtime signals, and package namespace pollution remain
+  deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book audits with `Files=2,
+  Tests=38`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
+- Current frontier: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`.
+
 ## 2026-05-24: R14 — Package-constant actor parameter defaults shipped
 - Completed `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` and closed the task
   tree.

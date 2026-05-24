@@ -2,8 +2,25 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
+- Current frontier: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`.
+- Recent R14 transaction package-constant default selection:
+  `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` created the active task
+  tree and selected the next bounded implementation leaf. Generated-child
+  transaction parameter scalar defaults and scalar leaves inside compatible
+  aggregate/list defaults may next use qualified imported package scalar
+  constants such as `shared.DEFAULT_WIDTH`. Authored package-constant tokens
+  must remain visible in generated child `.fsm` `+params`,
+  generated-composition child summaries, and default instance bindings because
+  child artifacts already carry package imports and embedded package roots for
+  package enum defaults. Unqualified package constants, package aggregate
+  constants and aggregate scalar-leaf paths, package constants in other value
+  domains, arbitrary expressions, runtime signals, and package namespace
+  pollution remain deferred or fail closed. No parser, scheduler, report,
+  generated artifact, HDL, CLI behavior, public API, source, test, or
+  generated behavior changed in this selection slice. Validation passed:
+  feature-backlog/live-book audits with `Files=2, Tests=38`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 package-constant actor parameter default implementation:
   `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` shipped the bounded imported
   package scalar-constant widening and closed the task tree. Actor-level
@@ -7167,12 +7184,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` shipped
-  qualified imported package scalar constants for actor parameter defaults and
-  closed the task tree. The next behavior-bearing PNT slice must select or
-  create task-tree ownership before changing code.
+- Active task tree: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
+- Current frontier: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`.
+- Completion status: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1`
+  selected the next bounded R14 implementation tree. The next leaf will allow
+  generated-child transaction parameter defaults to use qualified imported
+  package scalar constants while preserving authored tokens in generated child
+  review surfaces and recording resolved literals internally.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
