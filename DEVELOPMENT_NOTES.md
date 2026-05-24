@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Unary aggregate complement is the next safe operator widening
+- `RICHER-AGGREGATE-OPERATORS.2` audited the shipped aggregate operator
+  surface and selected a bounded implementation target.
+- The existing aggregate operator path is deliberately semantic and
+  pre-backend: parameter/generic values are normalized in
+  `FSM::ParameterValueSupport`, aggregate expressions fold to ordinary
+  scalar/list/record payloads, and the backend receives already-validated
+  parameter values rather than raw aggregate operators.
+- Unary bitwise complement fits that model. It needs one aggregate operand,
+  keeps the same list/record shape, preserves every scalar leaf width, and
+  flips leaf bits before HDL lowering. It does not require runtime scheduling,
+  aggregate l-values, route semantics, or backend-rendered aggregate
+  expressions.
+- This is intentionally narrower than broad aggregate operators. Mixed
+  scalar/aggregate operands, shape mismatches, ISF runtime subaggregate
+  operands, and aggregate paths in expression operator position remain
+  deferred.
+
 ## 2026-05-24: Richer aggregate operators need exact contracts before widening
 - `RICHER-AGGREGATE-OPERATORS.1` selects the next aggregate-types backlog item
   after closing backend-owned structured lowering.

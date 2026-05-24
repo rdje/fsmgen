@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Richer aggregate operator frontier audited
+- Completed `RICHER-AGGREGATE-OPERATORS.2`.
+- Audited aggregate operator handling across direct `.fsm`, composition
+  parameter/generic values, ISF aggregate expression contexts, focused tests,
+  corpus accounting, mdBook, and live docs.
+- Confirmed that shipped aggregate operator support is currently a semantic
+  parameter/generic-value fold-before-HDL path in `FSM::ParameterValueSupport`.
+  Matching list/record aggregate operands support leafwise `+`, `-`, `*`,
+  `/`, `%`, `&`, `|`, and `^` plus word aliases, with fixed-width unsigned
+  leaves, matching-shape checks, overflow/underflow rejection, and
+  divide/modulo-by-zero rejection.
+- Selected `RICHER-AGGREGATE-OPERATORS.3` as the next implementation leaf:
+  unary bitwise aggregate complement through `(~ VALUE)` and `(not VALUE)` in
+  the same semantic parameter/generic value path.
+- Runtime direct `.fsm` aggregate-to-aggregate operators, ISF runtime
+  subaggregate operands, aggregate paths in expression-operator position, VHDL
+  aggregate lowering, mixed scalar/aggregate operators, and mismatched shapes
+  remain deferred.
+- Validation passed: focused aggregate-operator and ISF-deferral tests with
+  `Files=9, Tests=174`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `RICHER-AGGREGATE-OPERATORS`.
+- Current frontier: `RICHER-AGGREGATE-OPERATORS.3`.
+
 ## 2026-05-24: Richer aggregate operator frontier selected
 - Completed `RICHER-AGGREGATE-OPERATORS.1`.
 - Activated the aggregate-types task tree for the mdBook feature-backlog item

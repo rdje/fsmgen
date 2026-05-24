@@ -99,8 +99,9 @@ Current boundary: matching list/record aggregate shapes support leafwise
 
 Additional aggregate operators remain deferred until each operator has a
 defined type/shape/result contract and validation path. The active
-`RICHER-AGGREGATE-OPERATORS` task tree is auditing the shipped boundary before
-selecting any behavior-bearing widening.
+`RICHER-AGGREGATE-OPERATORS` task tree selected unary bitwise aggregate
+complement in semantic parameter/generic values as the next bounded
+implementation leaf.
 
 ### VHDL Aggregate Lowering
 

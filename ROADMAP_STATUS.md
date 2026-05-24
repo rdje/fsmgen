@@ -3,7 +3,28 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `aggregate types and data`.
 - Active task tree: `RICHER-AGGREGATE-OPERATORS`.
-- Current frontier: `RICHER-AGGREGATE-OPERATORS.2`.
+- Current frontier: `RICHER-AGGREGATE-OPERATORS.3`.
+- Recent richer aggregate operator audit:
+  `RICHER-AGGREGATE-OPERATORS.2` audited shipped aggregate operator handling
+  across direct `.fsm`, composition parameter/generic values, ISF aggregate
+  expression contexts, tests, corpus accounting, mdBook, and live docs. The
+  shipped operator implementation is currently a semantic
+  parameter/generic-value folder in `FSM::ParameterValueSupport`: matching
+  list/record aggregate operands fold leafwise for `+`, `-`, `*`, `/`, `%`,
+  `&`, `|`, `^` and word aliases before HDL lowering, with fixed-width
+  unsigned leaves, matching-shape checks, overflow/underflow rejection, and
+  divide/modulo-by-zero rejection. The selected next implementation leaf is
+  `RICHER-AGGREGATE-OPERATORS.3`, limited to unary bitwise aggregate
+  complement in the same semantic parameter/generic value path through
+  `(~ VALUE)` and `(not VALUE)`. Runtime direct `.fsm` aggregate-to-aggregate
+  operators, ISF runtime subaggregate operands, aggregate paths in expression
+  operator position, VHDL aggregate lowering, mixed scalar/aggregate
+  operators, and mismatched aggregate shapes remain deferred. No parser,
+  scheduler, report, generated artifact, HDL, CLI, public API, or public
+  language behavior changed in this audit slice. Validation passed: focused
+  aggregate-operator and ISF-deferral tests with `Files=9, Tests=174`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent richer aggregate operator selection:
   `RICHER-AGGREGATE-OPERATORS.1` activated the task tree for the mdBook
   feature-backlog item "Richer Aggregate Operators". The next executable
@@ -6305,11 +6326,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - Active task tree: `RICHER-AGGREGATE-OPERATORS`.
-- Current frontier: `RICHER-AGGREGATE-OPERATORS.2`.
-- Completion status: `RICHER-AGGREGATE-OPERATORS.1` selected the active
-  aggregate-types task tree for richer aggregate operator widening. The next
-  PNT step is an audit/design leaf before any behavior-bearing operator
-  semantics change.
+- Current frontier: `RICHER-AGGREGATE-OPERATORS.3`.
+- Completion status: `RICHER-AGGREGATE-OPERATORS.2` audited the shipped
+  aggregate operator boundary and selected unary bitwise aggregate complement
+  in semantic parameter/generic values as the next bounded implementation
+  leaf.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

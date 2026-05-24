@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `RICHER-AGGREGATE-OPERATORS` | `active` | `aggregate types and data` | `RICHER-AGGREGATE-OPERATORS.2` | [docs/tasks/RICHER-AGGREGATE-OPERATORS.md](docs/tasks/RICHER-AGGREGATE-OPERATORS.md) |
+| `RICHER-AGGREGATE-OPERATORS` | `active` | `aggregate types and data` | `RICHER-AGGREGATE-OPERATORS.3` | [docs/tasks/RICHER-AGGREGATE-OPERATORS.md](docs/tasks/RICHER-AGGREGATE-OPERATORS.md) |
 
 ## Proposed Task Trees
 

@@ -121,6 +121,33 @@ Arithmetic leaves are unsigned and fixed-width: each leaf width must match,
 division or modulo by zero is rejected, and overflow/underflow outside that
 leaf width aborts before generation.
 
+The supported aggregate-operator surface is currently limited to semantic
+parameter/generic values. It applies to direct `+params`, composition
+parameter overrides, generated-child parameter overrides, and `.rtlif`
+parameter/generic defaults after their values resolve to semantic payloads.
+It does not mean that runtime `.fsm` or `.isf` expressions can operate on
+whole aggregate values.
+
+Examples:
+
+```lisp
+(+constants
+  (LANES_A (8'hA5 8'h3C))
+  (LANES_B (8'h01 8'h02))
+  (FRAME_A ((mode 2'b10) (flag 1)))
+  (FRAME_B ((mode 2'b01) (flag 0))))
+
+(+params
+  (LANES_SUM (+ LANES_A LANES_B))
+  (LANES_MASK (& LANES_A LANES_B))
+  (FRAME_OR (or FRAME_A FRAME_B)))
+```
+
+`LANES_SUM` is folded by adding each matching list item. `LANES_MASK` is
+folded by applying bitwise `&` to each matching list item. `FRAME_OR` is
+folded by applying bitwise `|` to each matching record member while preserving
+the authored record member order.
+
 Richer aggregate operators remain future work until their type/shape/result
 contracts are explicit enough to validate before generation; that widening is
 tracked in [Feature Backlog](14-feature-backlog.md).

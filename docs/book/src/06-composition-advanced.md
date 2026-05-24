@@ -538,6 +538,28 @@ Arithmetic leaves are unsigned fixed-width values: leaf widths must match,
 division or modulo by zero is rejected, and overflow/underflow outside that
 leaf width aborts before generation.
 
+The same semantic rule applies in composition because parameter/generic
+override values are normalized before the structural plan reaches backend
+emission. For example, an external RTL or generated-child instance can pass a
+folded aggregate override when the child declaration/default establishes the
+expected parameter shape:
+
+```lisp
+(?top:top
+  (+constants
+    (LANES_A (8'hA5 8'h3C))
+    (LANES_B (8'h01 8'h02)))
+
+  (?rtl:core
+    (module core)
+    (params
+      (LANES_SUM (+ LANES_A LANES_B))
+      (LANES_MASK (and LANES_A LANES_B)))))
+```
+
+The plan records each override as one packed aggregate value, while retaining
+its semantic list/record kind and type-shape metadata for validation.
+
 Richer aggregate operators remain future work until the specific operator is
 defined for the operand aggregate types/shapes and the result can be
 validated before generation.

@@ -2,6 +2,27 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Aggregate types — Richer aggregate operator frontier audited
+- Completed `RICHER-AGGREGATE-OPERATORS.2`.
+- The shipped aggregate operator surface is currently semantic
+  parameter/generic value folding before HDL lowering: matching list/record
+  aggregate operands support leafwise numeric and bitwise operators with
+  fixed-width unsigned scalar leaves and fail-closed arithmetic diagnostics.
+- Selected `RICHER-AGGREGATE-OPERATORS.3` as the next bounded implementation
+  leaf: unary bitwise aggregate complement through `(~ VALUE)` and
+  `(not VALUE)` in the same parameter/generic value path.
+- Runtime direct `.fsm` aggregate-to-aggregate operators, ISF runtime
+  subaggregate operands, aggregate paths in expression-operator position, VHDL
+  aggregate lowering, mixed scalar/aggregate operators, and mismatched shapes
+  remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: focused aggregate-operator and ISF-deferral tests with
+  `Files=9, Tests=174`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `RICHER-AGGREGATE-OPERATORS`.
+- Current frontier: `RICHER-AGGREGATE-OPERATORS.3`.
+
 ## 2026-05-24: Aggregate types — Richer aggregate operator frontier selected
 - Completed `RICHER-AGGREGATE-OPERATORS.1`.
 - Activated the task tree for the mdBook feature-backlog item

@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Aggregate types — Richer aggregate operator frontier audited
+- Completed `RICHER-AGGREGATE-OPERATORS.2`.
+- Audited shipped aggregate operator handling across direct `.fsm`,
+  composition parameter/generic values, ISF aggregate expression contexts,
+  tests, corpus accounting, mdBook, and live docs.
+- Confirmed that aggregate operator support is currently limited to semantic
+  parameter/generic values folded before HDL lowering: matching list/record
+  aggregate operands support leafwise numeric and bitwise operators with
+  fixed-width unsigned scalar leaves and fail-closed arithmetic diagnostics.
+- Selected `RICHER-AGGREGATE-OPERATORS.3` as the next implementation leaf for
+  unary bitwise aggregate complement through `(~ VALUE)` and `(not VALUE)` in
+  the same parameter/generic value path.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in this audit slice.
+- Validation passed: focused aggregate-operator and ISF-deferral tests with
+  `Files=9, Tests=174`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Aggregate types — Richer aggregate operator frontier selected
 - Completed `RICHER-AGGREGATE-OPERATORS.1`.
 - Activated an aggregate-types task tree for the mdBook feature-backlog item
