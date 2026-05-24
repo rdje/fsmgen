@@ -573,25 +573,25 @@ sub _finalize_actor_param_values($self, $actor) {
         my $name = $param->{name};
         my $value = $param->{value};
         if (ref($value)) {
-            my ($resolved_value, $has_enum_leaf) = $self->_resolve_actor_param_enum_leaf_values(
+            my ($resolved_value, $has_static_leaf) = $self->_resolve_actor_param_static_leaf_values(
                 $actor,
                 $value,
                 "actor '$actor_name' parameter '$name'",
             );
             $param->{resolved_value} = _clone_isf_value($resolved_value)
-                if $has_enum_leaf;
+                if $has_static_leaf;
             next;
         }
 
         next if _is_numeric_or_exact_width_literal($value);
-        next unless _is_enum_member_reference($value);
 
-        my ($resolved_value) = $self->_resolve_actor_param_enum_leaf_values(
+        my ($resolved_value, $has_static_leaf) = $self->_resolve_actor_param_static_leaf_values(
             $actor,
             $value,
             "actor '$actor_name' parameter '$name'",
         );
-        $param->{resolved_value} = _clone_isf_value($resolved_value);
+        $param->{resolved_value} = _clone_isf_value($resolved_value)
+            if $has_static_leaf;
     }
 
     return 1;
@@ -848,32 +848,60 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
     return 1;
 }
 
-sub _resolve_actor_param_enum_leaf_values($self, $actor, $value, $context) {
+sub _resolve_actor_param_static_leaf_values($self, $actor, $value, $context) {
     if (!ref($value)) {
         return (_clone_isf_value($value), 0)
-            unless _is_enum_member_reference($value);
+            if defined($value) && _is_numeric_or_exact_width_literal($value);
 
-        my $resolved_value = $self->_resolve_actor_enum_member_value($actor, $value);
-        confess "Error: $context references unknown enum member '$value'\n"
-            unless defined($resolved_value) && !ref($resolved_value);
-        confess "Error: $context enum member '$value' must resolve to a non-negative integer literal value\n"
-            unless _is_non_negative_integer_literal_value($resolved_value);
-        return (_clone_isf_value($resolved_value), 1);
+        if (_is_enum_member_reference($value)) {
+            my $resolved_value = $self->_resolve_actor_enum_member_value($actor, $value);
+            confess "Error: $context references unknown enum member '$value'\n"
+                unless defined($resolved_value) && !ref($resolved_value);
+            confess "Error: $context enum member '$value' must resolve to a non-negative integer literal value\n"
+                unless _is_non_negative_integer_literal_value($resolved_value);
+            return (_clone_isf_value($resolved_value), 1);
+        }
+
+        if (_is_hdl_identifier($value)) {
+            if (my $constant = _actor_constant_by_name($actor, $value)) {
+                my $resolved_value = _constant_resolved_value($constant);
+                confess "Error: $context actor constant '$value' must resolve to a scalar numeric or exact-width literal value\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return (_clone_isf_value($resolved_value), 1);
+            }
+
+            confess "Error: $context actor parameter '$value' cannot be used as an actor parameter default; actor-parameter dependency ordering remains deferred\n"
+                if _actor_param_by_name($actor, $value);
+
+            if (my $tx = _actor_transaction_param_by_name($actor, $value)) {
+                my $tx_name = $tx->{name} // 'unknown';
+                confess "Error: $context transaction parameter '$value' from transaction '$tx_name' cannot be used as an actor parameter default; transaction parameters are scoped to generated child transactions\n";
+            }
+
+            confess "Error: $context token '$value' is a runtime interface signal; actor parameter defaults accept literals, declared actor constants, and enum members only\n"
+                if _actor_interface_signal_by_name($actor, $value);
+
+            confess "Error: $context token '$value' is not a declared actor constant or enum member\n";
+        }
+
+        confess "Error: $context uses unsupported parameter value '$value'; actor parameter defaults accept numeric, exact-width, aggregate/list, actor constant, and scalar enum member literals only\n";
     }
 
     my @resolved;
-    my $has_enum_leaf = 0;
+    my $has_static_leaf = 0;
     for my $item (@$value) {
-        my ($resolved_item, $item_has_enum_leaf) = $self->_resolve_actor_param_enum_leaf_values(
+        my ($resolved_item, $item_has_static_leaf) = $self->_resolve_actor_param_static_leaf_values(
             $actor,
             $item,
             $context,
         );
         push @resolved, $resolved_item;
-        $has_enum_leaf ||= $item_has_enum_leaf;
+        $has_static_leaf ||= $item_has_static_leaf;
     }
 
-    return (\@resolved, $has_enum_leaf);
+    return (\@resolved, $has_static_leaf);
 }
 
 sub _resolve_actor_enum_member_value($self, $actor, $member_ref) {
@@ -4556,6 +4584,18 @@ sub _transaction_param_by_name {
     return undef;
 }
 
+sub _actor_transaction_param_by_name {
+    my ($actor, $name) = @_;
+    return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        next unless ref($tx) eq 'HASH';
+        return $tx if _transaction_param_by_name($tx, $name);
+    }
+
+    return undef;
+}
+
 sub _actor_interface_signal_by_name {
     my ($actor, $name) = @_;
     return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
@@ -5597,9 +5637,11 @@ sub _validate_isf_param_value {
 sub _validate_actor_param_value {
     my ($value, $context) = @_;
     if (!ref($value)) {
-        confess "$context uses unsupported parameter value '$value'; actor parameter defaults accept numeric, exact-width, aggregate/list, and scalar enum member literals only\n"
+        confess "$context uses unsupported parameter value '$value'; actor parameter defaults accept numeric, exact-width, aggregate/list, actor constant, and scalar enum member literals only\n"
             unless defined($value)
-                && (_is_numeric_or_exact_width_literal($value) || _is_enum_member_reference($value));
+                && (_is_numeric_or_exact_width_literal($value)
+                    || _is_hdl_identifier($value)
+                    || _is_enum_member_reference($value));
         return 1;
     }
 
@@ -5615,9 +5657,11 @@ sub _validate_actor_param_value {
 sub _validate_actor_param_aggregate_leaf_value {
     my ($value, $context) = @_;
     if (!ref($value)) {
-        confess "$context uses unsupported aggregate/list parameter leaf '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, and enum member literal leaves only\n"
+        confess "$context uses unsupported aggregate/list parameter leaf '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, actor constant, and enum member literal leaves only\n"
             unless defined($value)
-                && (_is_numeric_or_exact_width_literal($value) || _is_enum_member_reference($value));
+                && (_is_numeric_or_exact_width_literal($value)
+                    || _is_hdl_identifier($value)
+                    || _is_enum_member_reference($value));
         return 1;
     }
 

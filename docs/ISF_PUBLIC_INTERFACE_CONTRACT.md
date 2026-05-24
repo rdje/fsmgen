@@ -1544,6 +1544,11 @@ expressions, inline drive assignment RHS scalar values, and scalar operands
 inside inline drive RHS expressions in this slice, using local `mode.BUSY` or package-qualified
 `shared.mode.BUSY` spelling and resolving to non-negative integer literal
 values before lowering.
+Declared actor constants are public as scalar actor parameter defaults or
+scalar leaves inside actor aggregate/list parameter defaults. Those defaults
+preserve authored constant tokens in scheduled `.fsm` `+params` and
+`actor_params[]` while carrying resolved literals internally for scalar
+parameter consumers.
 Enum member references in expression operator position, targets, rules outside
 scalar trigger parameter overrides, transaction
 condition, rule guard, or rule assignment expression operator position, drive
@@ -1624,6 +1629,12 @@ covering local and package enum member leaves in actor aggregate/list parameter
 defaults, scheduled `.fsm` `+params` review artifacts, `actor_params[]`
 schedule-report preservation, strict CLI HDL generation, and fail-closed
 diagnostics for unknown leaves.
+Actor-constant-backed actor parameter defaults are checked by
+[t/1345-isf-actor-param-actor-constants.t](../t/1345-isf-actor-param-actor-constants.t),
+covering scalar defaults, aggregate/list leaves, resolved width consumption,
+scheduled `.fsm` `+params` review artifacts, `actor_params[]` preservation,
+strict CLI HDL generation, and fail-closed diagnostics for unknown symbols,
+actor-parameter dependencies, transaction parameters, and runtime signals.
 Generated child transaction scalar parameter default enum member values are
 checked by
 [t/1270-isf-enum-member-transaction-params.t](../t/1270-isf-enum-member-transaction-params.t),
@@ -2631,10 +2642,13 @@ runtime ports, not overrideable params, and not inferred storage.
 
 For each `actor_params` entry, `name` is the actor-level parameter name and
 `value` is the JSON-safe default value emitted into scheduled `.fsm`
-`+params`; scalar enum member defaults and enum leaves inside aggregate/list
-defaults preserve the authored tokens. These are static specialization
-defaults, not runtime ports, and do not replace the generated-composition or
-reusable-library parameter binding reports for use sites. The
+`+params`; scalar enum member defaults, actor-constant-backed scalar defaults,
+and enum or actor-constant leaves inside aggregate/list defaults preserve the
+authored tokens. Actor-constant-backed defaults carry resolved literals
+internally for scalar actor-parameter consumers such as widths and counts.
+These are static specialization defaults, not runtime ports, and do not
+replace the generated-composition or reusable-library parameter binding
+reports for use sites. The
 machine-readable contract advertises these through
 `schedule_report_actor_param_keys`.
 

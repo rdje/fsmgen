@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Actor-constant actor-parameter defaults shipped
+- Completed `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.2` and closed the task
+  tree.
+- Actor-level scalar parameter defaults and scalar leaves inside compatible
+  aggregate/list parameter defaults now accept declared actor constants by
+  name.
+- The parser records resolved literal values internally for
+  actor-constant-backed defaults, so interface/storage/transaction-port widths,
+  bank depths, watchdogs, waits, contracts, and repeat counts can consume those
+  actor parameters as static scalar values.
+- Scheduled `.fsm` `+params` and `actor_params[]` reports preserve authored
+  constant tokens for review and downstream transparency.
+- Unknown names, actor-parameter-to-actor-parameter defaults, transaction
+  parameters, runtime interface signals, arbitrary expressions, generated
+  child transaction parameter defaults, package/imported constants beyond enum
+  members, dependency ordering, and expression solving remain fail-closed or
+  deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused actor-param/static-value tests
+  with `Files=9, Tests=29`; public/spec/book/backlog audits with `Files=6,
+  Tests=351`; `./bin/ci-regression isf --no-book` with `Files=251,
+  Tests=1686`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Actor-constant actor-parameter default selected
 - Created active task tree `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS`.
 - Completed `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.1`; the selected

@@ -105,7 +105,9 @@ the scheduled `.fsm` can carry them directly.
 | --- | --- | --- |
 | Actor constant | `(constants (DEFAULT mode.BUSY))` | Preserved in `+constants`; resolved integer is available for static waits and existing static activation overrides. |
 | Actor scalar parameter default | `(params (DEFAULT mode.BUSY))` | Preserved in actor `+params` and `actor_params[]`. |
+| Actor constant-backed parameter default | `(params (WIDTH DEFAULT_WIDTH))` | Authored constant token is preserved in actor `+params` and `actor_params[]`; resolved literal is used internally by scalar parameter consumers such as widths and counts. |
 | Actor aggregate/list parameter default leaf | `(params (MODES (mode.BUSY mode.IDLE)))` | Scalar enum leaves are preserved in compatible aggregate/list defaults. |
+| Actor constant-backed aggregate/list parameter leaf | `(params (LANES (LANE0 LANE1)))` | Authored constant leaf tokens are preserved while resolved literals are available internally. |
 | Generated child transaction scalar parameter default | `(transaction worker (params (MODE mode.BUSY)) ...)` | Preserved in child `+params`. |
 | Generated child transaction aggregate/list parameter default leaf | `(transaction worker (params (MODES (mode.BUSY mode.IDLE))) ...)` | Scalar enum leaves are preserved in compatible child parameter defaults. |
 | Spawn, blocking `do`, and rule-trigger scalar parameter override | `(spawn worker as w0 (params (MODE mode.BUSY)))` | Resolved to a literal value in the generated top `?fsmc` parameter block and generated-composition report. |

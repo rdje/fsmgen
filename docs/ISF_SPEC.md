@@ -287,19 +287,25 @@ package-qualified `shared.mode.BUSY` after `(imports (package shared))`.
 The referenced member must resolve before lowering to a non-negative integer
 literal. Constants are emitted into scheduled `.fsm` as `+constants`, appear
 in schedule reports as `actor_constants[]` with the authored value token, and
-are legal symbolic sources for static `(wait NAME)` counts, positive
-transaction latency min/max bounds, and the existing static
-activation-parameter override path. Actor-local scalar parameter defaults that
-resolve to non-negative integer literals are also legal static wait sources in
-the actor's own schedule. Actor-local scalar parameter defaults that resolve
-to positive integer literals are legal static transaction latency min/max
-sources, bounded eventual temporal-contract window sources, actor-level and
-await-local watchdog limit sources, and transaction repeat count sources in
-the actor's own schedule. Transaction parameters, non-scalar actor parameters,
-and use-site activation overrides are not latency-bound, contract-window,
-watchdog-limit, or repeat-count constants and do not respecialize
-already-emitted fixed latency counter, temporal monitor, watchdog counter, or
-repeat counter logic.
+are legal symbolic sources for actor parameter defaults, static `(wait NAME)`
+counts, positive transaction latency min/max bounds, and the existing static
+activation-parameter override path. Actor parameter defaults may use declared
+actor constants by name as scalar defaults or as scalar leaves inside
+compatible aggregate/list defaults; scheduled `.fsm` `+params` and
+`actor_params[]` preserve the authored constant token while the parser records
+the resolved literal internally for scalar parameter consumers such as widths,
+depths, watchdogs, waits, contracts, and repeat counts. Actor-local scalar
+parameter defaults that resolve to non-negative integer literals are also
+legal static wait sources in the actor's own schedule. Actor-local scalar
+parameter defaults that resolve to positive integer literals are legal static
+transaction latency min/max sources, bounded eventual temporal-contract window
+sources, actor-level and await-local watchdog limit sources, and transaction
+repeat count sources in the actor's own schedule. Transaction parameters,
+non-scalar actor parameters, runtime interface signals, arbitrary expressions,
+and use-site activation overrides are not actor-parameter-default,
+latency-bound, contract-window, watchdog-limit, or repeat-count constants and
+do not respecialize already-emitted fixed latency counter, temporal monitor,
+watchdog counter, or repeat counter logic.
 
 ISF scalar type-alias references are shipped for width-bearing declarations.
 Actor bodies may declare local `(types ...)` clauses whose payloads map
@@ -329,9 +335,12 @@ positive packed width through the existing `.fsm` `+types` machinery.
 Aggregate aliases on actor interface ports, transaction-local ports, storage
 banks, and other width-bearing declarations fail closed. Actor-local
 `(enums ...)` declarations are accepted and preserved into scheduled `.fsm` as
-`+enums`. Enum members are consumed by actor constants, by actor scalar
-parameter defaults or scalar leaves inside actor aggregate/list parameter
-defaults, by generated child transaction scalar parameter defaults or scalar
+`+enums`. Actor parameter defaults consume declared actor constants by name for
+scalar defaults and scalar leaves inside actor aggregate/list parameter
+defaults, preserving authored defaults while recording resolved literals.
+Enum members are consumed by actor constants, by actor scalar parameter
+defaults or scalar leaves inside actor aggregate/list parameter defaults, by
+generated child transaction scalar parameter defaults or scalar
 leaves inside generated child transaction aggregate/list parameter defaults,
 by scalar activation parameter overrides or scalar leaves inside activation
 aggregate/list parameter overrides, by reusable-library use-site parameter
@@ -531,25 +540,33 @@ a default value:
 Use-site overrides are instance-local. Missing overrides use the exported
 actor default. Unknown overrides, duplicate overrides, unsupported symbolic
 values, and override shapes that do not match aggregate/list defaults fail
-closed. The first value domain is scalar decimal literals, exact-width numeric
-literals in the shipped ISF parameter syntax, scalar local or
-package-qualified enum members, and compatible aggregate/list literals whose
-leaves are numeric, exact-width, or local/package enum member literals for
-actor and generated child transaction parameter defaults. Scalar activation
+closed. Actor parameter defaults accept scalar decimal literals, exact-width
+numeric literals in the shipped ISF parameter syntax, declared actor
+constants, scalar local or package-qualified enum members, and compatible
+aggregate/list literals whose leaves are numeric, exact-width, declared actor
+constants, or local/package enum member literals. Generated child transaction
+parameter defaults accept scalar decimal literals, exact-width numeric
+literals, scalar local or package-qualified enum members, and compatible
+aggregate/list literals whose leaves are numeric, exact-width, or
+local/package enum member literals. Scalar activation
 parameter overrides and scalar leaves inside activation aggregate/list
 parameter override values may use actor-local constants, actor-local scalar
 parameter defaults, and local or package-qualified enum members.
 Reusable-library use-site parameter overrides may use importing-actor
 constants, importing-actor scalar parameter defaults, and local or
 package-qualified enum members as scalar override values or as scalar leaves
-inside compatible aggregate/list override values. Actor constants, actor scalar
-parameters, and enum members resolve to literal values before generated-top
-emission and `library_uses[]` schedule-report publication where that report
-surface exists. Schedule
+inside compatible aggregate/list override values. Actor constants used as
+actor parameter defaults resolve internally before scalar actor-parameter
+consumers run while preserving the authored constant token in scheduled
+`.fsm` and `actor_params[]`. Actor constants, actor scalar parameters, and
+enum members used by activation and reusable-library use sites resolve to
+literal values before generated-top emission and `library_uses[]`
+schedule-report publication where that report surface exists. Schedule
 reports expose actor parameter defaults through `actor_params[]` entries with
-each authored parameter `name` and
-JSON-safe default `value`, preserving authored enum tokens such as `mode.BUSY`
-or `shared.mode.BUSY`. These entries describe static specialization defaults;
+each authored parameter `name` and JSON-safe default `value`, preserving
+authored actor constant tokens such as `DEFAULT_WIDTH` and enum tokens such as
+`mode.BUSY` or `shared.mode.BUSY`. These entries describe static
+specialization defaults;
 they are not runtime ports and do not replace generated-composition parameter
 binding reports for activation or library use sites.
 
@@ -4141,9 +4158,11 @@ compile-time constants; they are not runtime ports, not overrideable params,
 and not hidden scheduler registers.
 The `actor_params` array reports actor-level parameter defaults in source
 order. Each entry contains `name` and JSON-safe default `value`; scalar enum
-member defaults and enum leaves inside aggregate/list defaults preserve the
-authored tokens. Parameter defaults are static specialization values, not
-runtime ports; activation-site, generated-child,
+member defaults, actor-constant-backed scalar defaults, and enum or actor
+constant leaves inside aggregate/list defaults preserve the authored tokens.
+Parameter defaults are static specialization values, not runtime ports;
+actor-constant-backed defaults also carry resolved literals internally for
+scalar parameter consumers. Activation-site, generated-child,
 and reusable-library override bindings remain reported by their existing
 generated-composition and library-use summary families. The capability-manifest
 ISF public contract advertises this shape through
@@ -5180,6 +5199,7 @@ Focused tests:
 - [t/1342-isf-transaction-port-actor-constant-widths.t](../t/1342-isf-transaction-port-actor-constant-widths.t)
 - [t/1343-isf-data-op-static-width-sources.t](../t/1343-isf-data-op-static-width-sources.t)
 - [t/1344-isf-assemble-static-part-widths.t](../t/1344-isf-assemble-static-part-widths.t)
+- [t/1345-isf-actor-param-actor-constants.t](../t/1345-isf-actor-param-actor-constants.t)
 
 ## 12. Explicitly Deferred
 
@@ -5309,7 +5329,8 @@ Focused tests:
   scalar drive-call actual enum member values,
   drive-call actual expression enum member operands, actor scalar
   parameter default enum member values, actor aggregate/list parameter default
-  enum member leaves, generated
+  enum member leaves, actor parameter default scalar and aggregate/list leaves
+  backed by declared actor constants, generated
   child transaction scalar parameter default enum member values, generated
   child transaction aggregate/list parameter default enum member leaves, scalar
   activation parameter override enum member values, activation aggregate/list

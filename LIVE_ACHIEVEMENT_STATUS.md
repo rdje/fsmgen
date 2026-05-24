@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Actor-constant actor-parameter defaults shipped
+- Completed `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.2` and closed the task
+  tree.
+- Actor-level `(params ...)` scalar defaults may now use declared actor
+  constants by name.
+- Scalar leaves inside compatible aggregate/list actor parameter defaults may
+  also use declared actor constants.
+- Actor-constant-backed actor parameter defaults preserve authored constant
+  tokens in scheduled `.fsm` `+params` and `actor_params[]` reports while
+  recording resolved literals internally for scalar actor-parameter consumers.
+- Unknown symbolic names, actor-parameter-to-actor-parameter defaults,
+  transaction parameters, runtime interface signals, arbitrary expressions,
+  generated child transaction parameter defaults, package/imported constants
+  beyond enum members, dependency ordering, and expression solving remain
+  fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused actor-param/static-value tests
+  with `Files=9, Tests=29`; public/spec/book/backlog audits with `Files=6,
+  Tests=351`; `./bin/ci-regression isf --no-book` with `Files=251,
+  Tests=1686`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Reusable-library actor-static use-site overrides shipped
 - Completed `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2` and closed the task tree.
 - Reusable-library use-site `(params ...)` override values now accept

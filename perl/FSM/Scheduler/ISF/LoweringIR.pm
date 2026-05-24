@@ -2710,14 +2710,14 @@ sub _actor_param_declarations {
             confess "Actor '$actor_name': parameter '$name' enum member '$value' must resolve to a non-negative integer literal value\n"
                 unless defined _non_negative_integer_from_literal(_param_resolved_value($param));
             %resolved_value = (resolved_value => _clone_isf_value(_param_resolved_value($param)));
-        } elsif (ref($value)) {
-            my ($resolved, $has_enum_leaf) = _resolve_actor_param_default_value(
+        } elsif (ref($value) || (!ref($value) && defined($value) && _is_hdl_identifier($value))) {
+            my ($resolved, $has_static_leaf) = _resolve_actor_param_default_value(
                 $value,
                 "Actor '$actor_name': parameter '$name'",
                 $actor,
             );
             %resolved_value = (resolved_value => _clone_isf_value($resolved))
-                if $has_enum_leaf;
+                if $has_static_leaf;
         } else {
             _validate_isf_param_value(
                 $value,
@@ -2748,21 +2748,44 @@ sub _resolve_actor_param_default_value {
                 unless defined _non_negative_integer_from_literal($resolved_value);
             return (_clone_isf_value($resolved_value), 1);
         }
-        confess "$context uses unsupported parameter value '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, and enum member literal leaves only\n";
+        if (_is_hdl_identifier($value)) {
+            if (my $constant = _actor_constant_by_name($actor, $value)) {
+                my $resolved_value = _constant_resolved_value($constant);
+                confess "$context actor constant '$value' must resolve to a scalar numeric or exact-width literal value\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return (_clone_isf_value($resolved_value), 1);
+            }
+
+            confess "$context actor parameter '$value' cannot be used as an actor parameter default; actor-parameter dependency ordering remains deferred\n"
+                if _actor_param_by_name($actor, $value);
+
+            if (my $tx = _actor_transaction_param_by_name($actor, $value)) {
+                my $tx_name = $tx->{name} // 'unknown';
+                confess "$context transaction parameter '$value' from transaction '$tx_name' cannot be used as an actor parameter default; transaction parameters are scoped to generated child transactions\n";
+            }
+
+            confess "$context token '$value' is a runtime interface signal; actor parameter defaults accept literals, declared actor constants, and enum members only\n"
+                if _actor_interface_signal_by_name($actor, $value);
+
+            confess "$context token '$value' is not a declared actor constant or enum member\n";
+        }
+        confess "$context uses unsupported parameter value '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, actor constant, and enum member literal leaves only\n";
     }
 
     confess "$context uses unsupported parameter value shape; actor parameter defaults accept non-empty aggregate/list literals\n"
         unless ref($value) eq 'ARRAY' && @$value;
 
     my @resolved;
-    my $has_enum_leaf = 0;
+    my $has_static_leaf = 0;
     for my $item (@$value) {
-        my ($resolved_item, $item_has_enum_leaf) = _resolve_actor_param_default_value($item, $context, $actor);
+        my ($resolved_item, $item_has_static_leaf) = _resolve_actor_param_default_value($item, $context, $actor);
         push @resolved, $resolved_item;
-        $has_enum_leaf ||= $item_has_enum_leaf;
+        $has_static_leaf ||= $item_has_static_leaf;
     }
 
-    return (\@resolved, $has_enum_leaf);
+    return (\@resolved, $has_static_leaf);
 }
 
 sub _actor_package_imports {
@@ -3682,6 +3705,20 @@ sub _transaction_param_by_name {
 
     for my $param (@{_transaction_param_declarations($tx, $actor)}) {
         return $param if ($param->{name} // '') eq $name;
+    }
+
+    return undef;
+}
+
+sub _actor_transaction_param_by_name {
+    my ($actor, $name) = @_;
+    return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        next unless ref($tx) eq 'HASH';
+        my $tx_name = $tx->{name};
+        next unless defined($tx_name) && !ref($tx_name);
+        return $tx if _transaction_param_by_name($actor, $tx_name, $name);
     }
 
     return undef;

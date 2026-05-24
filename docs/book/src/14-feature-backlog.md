@@ -325,16 +325,13 @@ package-qualified enum members, and compatible aggregate/list literals whose
 scalar leaves are literals, actor-local constants, actor-local scalar
 parameter defaults, or enum members.
 
-Actor parameter defaults and generated child transaction parameter defaults
-also accept enum members in their shipped scalar and aggregate/list leaf
-positions.
+Actor parameter defaults accept enum members and declared actor constants in
+their shipped scalar and aggregate/list leaf positions. Actor constant tokens
+remain visible in scheduled `.fsm` `+params` and `actor_params[]`, and the
+resolved literal is recorded internally for scalar parameter consumers.
 
-The active `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS` task tree is selected to
-widen actor parameter defaults next: declared actor constants are planned for
-scalar defaults and scalar leaves inside compatible aggregate/list parameter
-defaults, preserving authored defaults in scheduled `.fsm` and report views
-while recording resolved literals internally. That widening is not shipped
-until the implementation leaf closes.
+Generated child transaction parameter defaults also accept enum members in
+their shipped scalar and aggregate/list leaf positions.
 
 Reusable-library use-site parameter overrides may use importing-actor
 constants, importing-actor scalar parameter defaults, and enum members as

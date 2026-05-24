@@ -557,7 +557,10 @@ Rules:
 - Use-site parameter overrides are instance-local. Missing overrides use actor
   defaults.
 - Actor parameter scalar defaults and scalar leaves inside actor aggregate/list
-  parameter defaults may use local or package-qualified enum member references.
+  parameter defaults may use declared actor constants or local/package-qualified
+  enum member references. Authored constant and enum tokens remain visible in
+  scheduled `.fsm` `+params` and `actor_params[]`, while resolved literals are
+  recorded internally for scalar actor-parameter consumers.
   Generated child transaction scalar parameter defaults and scalar leaves
   inside generated child transaction aggregate/list parameter defaults may also
   use local or package-qualified enum member references. Scalar activation
@@ -568,8 +571,9 @@ Rules:
   values or scalar leaves inside compatible aggregate/list override values.
   Duplicate overrides, unknown overrides, and shape mismatches fail closed.
 - Schedule reports expose actor parameter defaults through `actor_params[]`
-  entries with `name` and JSON-safe default `value`, preserving authored enum
-  tokens. These are static specialization defaults, not runtime payloads.
+  entries with `name` and JSON-safe default `value`, preserving authored actor
+  constant tokens and enum tokens. These are static specialization defaults,
+  not runtime payloads.
 - Every exported actor interface endpoint must be explicitly bound at the use
   site. Exported actor clock/reset endpoints may omit explicit bindings only
   when the parent and child use the same clock name and the same reset
@@ -1426,8 +1430,9 @@ Rules:
   Named drive-call scalar actual values may also consume local or package
   enum members, drive-call actual expressions may use enum members as scalar
   operands, scalar actor parameter defaults and scalar leaves inside actor
-  aggregate/list parameter defaults may consume local or package enum
-  members, generated child transaction scalar parameter defaults and scalar
+  aggregate/list parameter defaults may consume declared actor constants and
+  local or package enum members, generated child transaction scalar parameter
+  defaults and scalar
   leaves inside generated child transaction aggregate/list parameter defaults
   may consume local or package enum members, scalar activation parameter
   overrides may consume local or package enum members, scalar leaves inside
@@ -2930,7 +2935,8 @@ Required fail-closed examples:
   or drive-call actual scalar values/expression operands, aggregate paths in
   expression operator position, subaggregate operands/updates, and enum
   member references outside the shipped actor-constant, actor parameter
-  scalar default or aggregate/list default leaf, generated child transaction
+  scalar default or aggregate/list default leaf, actor-constant-backed actor
+  parameter default scalar or aggregate/list leaf, generated child transaction
   scalar parameter default or aggregate/list default leaf, scalar activation
   parameter override, activation aggregate/list override leaf,
   reusable-library use-site parameter override value or leaf, actor-static

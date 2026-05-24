@@ -9,6 +9,12 @@ This document captures engineering rationale, design constraints, and working de
 - The selected contract preserves authored defaults for review while recording
   resolved literals internally. That keeps scheduled `.fsm` and reports
   readable without making downstream tools resolve private actor-local names.
+- The shipped implementation resolves constants during actor parameter
+  finalization, before width/depth/watchdog/wait/contract/repeat consumers run.
+  It rejects actor-parameter-to-actor-parameter defaults instead of adding
+  dependency ordering or cycle checks, and it gives runtime interface signals
+  and transaction parameters targeted diagnostics instead of treating them as
+  unknown symbols.
 
 ## 2026-05-24: Library use-site static values resolve in the parser
 - Reusable-library use-site parameter overrides are validated while resolving

@@ -2,25 +2,26 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS`.
-- Current frontier: `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.2`.
-- Recent R14 actor-constant actor-parameter default selection:
-  `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.1` selected the next bounded R14
-  parameter value-domain widening before implementation. The selected
-  implementation frontier is `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.2`:
-  actor-level `(params ...)` defaults may use declared actor constants by
-  name, including scalar leaves inside compatible aggregate/list parameter
-  defaults. Authored defaults must stay visible in scheduled `.fsm` `+params`
-  and `actor_params[]` reports while resolved literals are recorded internally
-  for scalar actor-parameter consumers. Actor-parameter-to-actor-parameter
-  defaults, transaction parameters, runtime signals, arbitrary expressions,
-  generated child transaction parameter defaults, package/imported constants
-  beyond enum members, dependency ordering, and expression solving remain
-  deferred. No parser, scheduler, report, generated artifact, HDL, CLI
-  behavior, public API, source, test, or generated behavior changed in this
-  selection slice. Verification passed with
-  `prove -Iperl t/1256-feature-backlog-status-audit.t`, `mdbook build
-  docs/book`, and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 actor-constant actor-parameter default implementation:
+  `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.2` shipped the bounded actor
+  parameter value-domain widening and closed the task tree. Actor-level
+  `(params ...)` scalar defaults and scalar leaves inside compatible
+  aggregate/list defaults may now use declared actor constants by name.
+  Authored constant tokens stay visible in scheduled `.fsm` `+params` and
+  `actor_params[]` reports while resolved literals are recorded internally for
+  scalar actor-parameter consumers such as interface/storage/transaction-port
+  widths, bank depths, watchdogs, waits, contracts, and repeat counts. Unknown
+  symbolic names, actor-parameter-to-actor-parameter defaults, transaction
+  parameters, runtime interface signals, arbitrary expressions, generated
+  child transaction parameter defaults, package/imported constants beyond enum
+  members, dependency ordering, and expression solving remain fail-closed or
+  deferred. Validation passed with syntax checks; focused actor-param/static
+  value tests (`Files=9, Tests=29`); public/spec/book/backlog audits
+  (`Files=6, Tests=351`); `./bin/ci-regression isf --no-book`
+  (`Files=251, Tests=1686`); `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R14 reusable-library actor-static use-site override implementation:
   `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2` shipped the selected
   reusable-library parameter value-domain widening and closed the task tree.
@@ -7013,13 +7014,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS`.
-- Current frontier: `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.2`.
-- Completion status: `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.1` selected the
-  next bounded R14 implementation frontier before code changes. The selected
-  `.2` leaf will widen actor-level `(params ...)` defaults so declared actor
-  constants can be used as scalar defaults and scalar leaves inside compatible
-  aggregate/list parameter defaults.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.2` shipped the
+  bounded R14 actor-constant actor-parameter default widening and closed the
+  task tree. Actor-level scalar and aggregate/list parameter defaults now
+  accept declared actor constants while preserving authored review tokens and
+  recording resolved literals for scalar parameter consumers.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
