@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Transaction-start round-robin resource selected
+- Created active task tree `ISF-TRANSACTION-START-ROUND-ROBIN`.
+- Completed `ISF-TRANSACTION-START-ROUND-ROBIN.1`.
+- The next frontier is `ISF-TRANSACTION-START-ROUND-ROBIN.2`, which must
+  implement or explicitly close bounded `transaction_start` + `round_robin`
+  arbitration for declared rule users that trigger one local non-generated
+  transaction.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-TRANSACTION-START-ROUND-ROBIN`.
+- Current frontier: `ISF-TRANSACTION-START-ROUND-ROBIN.2`.
+
 ## 2026-05-24: R11 — Top-boundary convention frontier audited
 - Completed `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2` and closed the
   task tree.

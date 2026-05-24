@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Transaction-start round-robin resource selected
+- Created active task tree `ISF-TRANSACTION-START-ROUND-ROBIN`.
+- Completed `ISF-TRANSACTION-START-ROUND-ROBIN.1`; the next implementation
+  frontier is `ISF-TRANSACTION-START-ROUND-ROBIN.2`.
+- Selected a bounded public-facing resource-arbitration widening:
+  `(resource TX (kind transaction_start) (arbiter round_robin) (users RULE...))`
+  for declared rule users that trigger one local non-generated transaction.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R11 — Top-boundary convention frontier audited
 - Completed `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2` and closed the
   task tree.

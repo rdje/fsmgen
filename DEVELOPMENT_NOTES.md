@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Transaction-start round-robin is the next bounded ISF feature
+- `transaction_start` resources already have the tightest non-`rule_slot`
+  ownership contract: the resource name is a local transaction, users are
+  declared rules, and each user must already trigger that transaction through
+  the shipped non-generated rule-trigger path.
+- Bounded `round_robin` already exists for `rule_slot` rule users. Reusing that
+  grant/pointer model for `transaction_start` is the smallest resource
+  widening that improves author-facing arbitration without introducing
+  generated-child lifetime, route mux/storage, payload, ready/backpressure, or
+  actor-network endpoint semantics.
+
 ## 2026-05-24: Defer broader top-boundary convention growth until a sharper contract
 - The current same-name convention surface is now broad enough to document as
   a bounded shipped contract: omitted/empty `?ports`, same-name input fanout,
