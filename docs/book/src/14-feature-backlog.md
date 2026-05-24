@@ -332,6 +332,13 @@ positions.
 Reusable-library use-site parameter overrides may use enum members as scalar
 values or scalar leaves inside compatible aggregate/list override values.
 
+The active `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES` task tree is selected to
+widen reusable-library use-site override values next: importing-actor constants
+and actor-local scalar parameter defaults are planned for scalar override
+values and compatible aggregate/list leaves, with resolution before
+generated-top emission and `library_uses[]` report publication. That widening
+is not shipped until the implementation leaf closes.
+
 Actor constant names, actor-local scalar parameter default names, and scalar
 enum members on activation sites, and enum members on reusable-library use
 sites, are resolved to literal values before generated-top emission.

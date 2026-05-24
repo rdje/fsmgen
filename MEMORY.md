@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 reusable-library actor-static use-site override selected
+- Created active task tree `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES`.
+- Completed `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.1`.
+- The current implementation frontier is
+  `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2`.
+- The selected widening will allow reusable-library use-site `(params ...)`
+  override values to use the importing actor's declared constants and
+  actor-local scalar parameter defaults by name, including scalar leaves
+  inside compatible aggregate/list override values.
+- Actor static values must resolve before generated-top `?fsmc` parameter
+  emission and `library_uses[]` schedule-report publication, preserving
+  self-contained literal downstream artifacts.
+- Transaction parameters, runtime signals, arbitrary expressions, non-scalar
+  actor parameters as scalar values, library actor defaults, generated child
+  transaction parameter defaults, and use-site parameter-driven interface or
+  storage shape inference remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior,
+  public API, source, test, or generated behavior changed in this selection
+  slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES`.
+- Current frontier: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2`.
+
 ## 2026-05-24: R14 activation parameter value-domain docs synchronized
 - Completed `ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.1` and closed
   the task tree.

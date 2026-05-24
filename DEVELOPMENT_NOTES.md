@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Library use-site static values should match importer intent
+- Reusable-library use-site parameter overrides specialize the imported child
+  instance from the importing actor. Actor constants and actor-local scalar
+  parameter defaults declared by that importer are therefore the natural static
+  names to accept next, because they already resolve before generated-top
+  publication in activation parameter override contexts.
+- The selected slice keeps the boundary static and literalized. It does not
+  imply runtime payload movement, child interface shape inference, bank-depth
+  specialization, route storage, ready/backpressure, or protocol-level
+  specialization.
+
 ## 2026-05-24: Value-domain summaries must mirror the generated-top contract
 - Activation parameter value-domain summaries are treated as user-facing
   contract text. When generated activation overrides resolve actor-local

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES` | `active` | `R14` | `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2` | [docs/tasks/ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.md](docs/tasks/ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.md) |
 
 ## Proposed Task Trees
 

@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Reusable-library actor-static use-site override selected
+- Created active task tree `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES`.
+- Completed `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.1`; the current
+  implementation frontier is `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2`.
+- Selected a bounded reusable-library use-site parameter value widening:
+  importing-actor constants and actor-local scalar parameter defaults may be
+  used by name as static `(params ...)` override values, including scalar
+  leaves inside compatible aggregate/list overrides.
+- The implementation must resolve those values before generated-top `?fsmc`
+  parameter emission and `library_uses[]` schedule-report publication and must
+  keep transaction parameters, runtime signals, arbitrary expressions,
+  non-scalar actor parameters as scalar values, library actor defaults,
+  generated child transaction parameter defaults, and use-site
+  parameter-driven shape inference deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Activation parameter value-domain docs synchronized
 - Completed `ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.1` and closed
   the task tree.

@@ -2,8 +2,25 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES`.
+- Current frontier: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2`.
+- Recent R14 reusable-library actor-static use-site override selection:
+  `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.1` selected the next bounded
+  reusable-library parameter value-domain widening before implementation. The
+  selected implementation frontier is
+  `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2`: reusable-library use-site
+  `(params ...)` override values may use importing-actor constants and
+  actor-local scalar parameter defaults by name, including scalar leaves inside
+  compatible aggregate/list overrides. Values must resolve before generated-top
+  `?fsmc` parameter emission and `library_uses[]` report publication.
+  Transaction parameters, runtime signals, arbitrary expressions, non-scalar
+  actor parameters as scalar values, library actor defaults, generated child
+  transaction parameter defaults, and use-site parameter-driven interface or
+  storage shape inference remain deferred. No parser, scheduler, report,
+  generated artifact, HDL, CLI behavior, public API, source, test, or
+  generated behavior changed in this selection slice. Validation passed:
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent R14 activation parameter value-domain documentation sync:
   `ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.1` synchronized remaining
   mdBook feature-backlog, ISF spec, and public contract wording after
@@ -6960,13 +6977,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.1`
-  synchronized remaining activation parameter value-domain docs after
-  `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`. No behavior changed. The task tree
-  is closed. The next behavior-bearing PNT implementation slice must create
-  or select task-tree ownership before code changes.
+- Active task tree: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES`.
+- Current frontier: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2`.
+- Completion status: `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.1` selected the
+  next bounded R14 implementation frontier before code changes. The selected
+  `.2` leaf will widen reusable-library use-site `(params ...)` override
+  values so the importing actor's declared constants and actor-local scalar
+  parameter defaults can be used as scalar values and compatible
+  aggregate/list leaves, resolving to literals before generated-top emission
+  and `library_uses[]` report publication.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
