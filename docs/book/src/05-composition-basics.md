@@ -442,6 +442,11 @@ External RTL metadata can be sidecar `<module>.rtlif` or an embedded
 `(?rtlif:module ...)` companion root. Embedded metadata for the requested
 module takes precedence over sidecar metadata. Metadata roots are flat port
 contracts plus an optional semantic `(params (NAME default_value) ...)` block.
+This is the canonical low-level external-RTL interface metadata contract in
+the current toolchain. FSMGen does not currently define a separate higher-level
+interface-source language above `.rtlif`; future interface abstractions should
+be added only when a concrete type, package, shared-datapath, or reusable-module
+need cannot be represented honestly by this metadata layer.
 
 Port categories are currently `data`, `clock`, and `reset`; typed clock/reset
 ports are system-input roles and output-direction clock/reset tokens are

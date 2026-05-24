@@ -518,6 +518,24 @@ instance parameters by packing aggregates into one literal.
 VHDL generic-map lowering is still a future backend follow-up tracked in
 [Feature Backlog](14-feature-backlog.md).
 
+## Current `.rtlif` Direction
+
+`.rtlif` remains the canonical low-level external-RTL interface metadata
+contract. It is intentionally not a full standalone interface-source language.
+The shipped surface describes the RTL module boundary that composition needs
+today: flat input/output ports, `data` / `clock` / `reset` roles, explicit
+widths, optional semantic parameter/generic defaults, and per-instance
+overrides that are validated before HDL emission.
+
+Do not treat `.rtlif` as raw backend text or as a place to hide HDL-specific
+module internals. FSMGen uses it to validate and wire external RTL children
+without parsing or regenerating those children.
+
+A stronger interface-source layer is deferred until a concrete future
+requirement proves that the current metadata layer is not enough. Likely
+prerequisites are the portable type core, richer package/import contracts,
+shared-datapath ownership rules, or a broader reusable-module contract.
+
 Parameter/generic values on this path may also use bounded operator
 expressions such as `(+ WIDTH 1)`, `(* COUNT 2)`, or `(and MASK 8'hF0)`. Those
 expressions resolve semantic scalar operands before planning and lower as

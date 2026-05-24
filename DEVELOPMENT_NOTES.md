@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Keep `.rtlif` low-level until a stronger layer is justified
+- The shipped `.rtlif` contract already covers the composition needs that have
+  concrete tests today: external RTL port metadata, roles, widths, sidecar and
+  embedded roots, semantic parameter/generic declarations, reusable defaults,
+  per-instance overrides, diagnostics, and IR/backend propagation.
+- Introducing a stronger interface-source language now would mostly duplicate
+  that stable metadata layer while guessing at future portable-type,
+  package/import, shared-datapath, and reusable-module needs. The safer
+  direction is to keep `.rtlif` as the low-level contract and add any stronger
+  layer only when a future task tree has a precise requirement that `.rtlif`
+  cannot express.
+
 ## 2026-05-24: `.rtlif` direction work should start as a decision tree
 - The existing `.rtlif` behavior is useful and covered, but it is still
   positioned as interface metadata rather than a fully separate public

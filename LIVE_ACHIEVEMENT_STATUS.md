@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R11 — `.rtlif` interface-source direction decided
+- Completed `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2` and closed the task
+  tree.
+- Decision: `.rtlif` remains the canonical low-level external-RTL interface
+  metadata contract for now. A separate stronger interface-source language is
+  deferred until a concrete portable type, package/import, shared-datapath, or
+  reusable-module requirement proves the current metadata layer is
+  insufficient.
+- The mdBook composition chapters now state that boundary explicitly.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this decision slice.
+- Validation passed: focused `.rtlif` composition evidence with `Files=13,
+  Tests=68`; parameter/package composition evidence with `Files=4,
+  Tests=21`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R11 — `.rtlif` interface-source direction selected
 - Created active task tree `R11-RTLIF-INTERFACE-SOURCE-DIRECTION`.
 - Completed `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.1`.

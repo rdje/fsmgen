@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R11 `.rtlif` interface-source direction decided
+- Completed `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2` and closed the task
+  tree.
+- Decision: keep `.rtlif` as the canonical low-level external-RTL interface
+  metadata contract for now. Do not add a separate stronger interface-source
+  language until a concrete portable type, package/import, shared-datapath, or
+  reusable-module requirement proves the current metadata layer is
+  insufficient.
+- Synchronized the mdBook composition chapters, `COMPOSITION_SCOPE.md`,
+  `COMPOSITION_LEGACY_MAPPING.md`, roadmap, task-tree, README, and live docs.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this decision slice.
+- Validation passed: focused `.rtlif` composition evidence with `Files=13,
+  Tests=68`; parameter/package composition evidence with `Files=4,
+  Tests=21`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R11 `.rtlif` interface-source direction selected
 - Created active task tree `R11-RTLIF-INTERFACE-SOURCE-DIRECTION`.
 - Purpose: decide whether the shipped `.rtlif` family remains embedded-root

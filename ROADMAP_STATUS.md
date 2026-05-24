@@ -1,9 +1,27 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R11`.
-- Active task tree: `R11-RTLIF-INTERFACE-SOURCE-DIRECTION`.
-- Current frontier: `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R11 `.rtlif` interface-source direction decision:
+  `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2` audited the shipped `.rtlif`
+  surface and closed the task tree. The decision is to keep `.rtlif` as the
+  canonical low-level external-RTL interface metadata contract for now:
+  sidecar and embedded roots, compact and verbose ports, `data` / `clock` /
+  `reset` roles, semantic parameter/generic declarations, package-qualified
+  defaults, per-instance overrides, diagnostics, failure summaries, and
+  composition/IR propagation are already regression-backed. A separate
+  stronger interface-source language is deferred until a concrete portable
+  type, package/import, shared-datapath, or reusable-module requirement proves
+  the metadata layer is insufficient. The mdBook composition chapters and
+  composition live docs now state that boundary explicitly. No parser,
+  scheduler, report, generated artifact, HDL, CLI, public API, source, test,
+  or generated behavior changed in this decision slice. Validation passed:
+  focused `.rtlif` composition evidence with `Files=13, Tests=68`;
+  parameter/package composition evidence with `Files=4, Tests=21`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent R11 `.rtlif` interface-source direction selection:
   `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.1` activated the decision tree
   selected by the R11 composition-contract frontier audit. The next frontier
@@ -6641,12 +6659,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `R11-RTLIF-INTERFACE-SOURCE-DIRECTION`.
-- Current frontier: `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2`.
-- Completion status: `.1` selected the active tree with no behavior change.
-  `.2` owns the evidence-gathering decision over the `.rtlif`
-  interface-source direction before any `.rtlif` behavior-bearing
-  implementation.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2` completed the
+  evidence-gathering decision and closed the tree. `.rtlif` stays the
+  low-level external-RTL interface metadata contract for now; a stronger
+  interface-source language is deferred until a concrete future requirement
+  justifies it.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8464,6 +8483,18 @@ Done:
     contract surfaces, and R11 roadmap goals,
   - and no parser, scheduler, report, generated artifact, HDL, CLI, public
     API, source, test, or generated behavior changed in the selection slice.
+- `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2` decided the `.rtlif`
+  interface-source direction and closed the task tree:
+  - `.rtlif` remains the canonical low-level external-RTL interface metadata
+    contract for sidecar and embedded roots, compact and verbose ports,
+    `data` / `clock` / `reset` roles, semantic parameter/generic
+    declarations, package-qualified defaults, per-instance overrides,
+    diagnostics, failure summaries, and composition/IR propagation,
+  - a separate stronger interface-source language is deferred until a concrete
+    portable type, package/import, shared-datapath, or reusable-module
+    requirement proves the metadata layer is insufficient,
+  - and the mdBook composition chapters plus composition live docs now state
+    that boundary explicitly.
 - Explicit composition `?wiring` blocks now accept canonical Lisp-ish list
   links:
   - `(source target)` is the compact directed-link spelling,
@@ -9223,10 +9254,6 @@ Done:
   - top-input fanout success across multiple same-name child inputs,
   - and mixed-direction same-name rejection for declared top-input connect-by-name.
 Left:
-- Complete `R11-RTLIF-INTERFACE-SOURCE-DIRECTION.2`: audit shipped `.rtlif`
-  behavior and decide whether the now-formalized `.rtlif` interface-source
-  family stays embedded-root plus sidecar metadata, or whether a stronger
-  interface-source contract sits above it.
 - Extend the now-shipped semantic parameter/generic contract beyond direct-root metadata, external `?rtl` SystemVerilog instance emission, generated `?fsmc` / `?dtc` SystemVerilog instance emission, direct param-to-param default reuse, the first bounded scalar operator-expression value slice, and the first bounded leafwise aggregate operator slice: VHDL generic-map lowering plus richer expression-valued semantic parameter domains remain follow-up work, including non-leafwise typed aggregate-to-aggregate operator expressions where the operator is explicitly valid for the operand types/shapes.
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime/assertion slices,

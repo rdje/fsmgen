@@ -152,6 +152,10 @@ Active modern direction, started in `R6` and widened in `R11`:
   `core_clk:clock` / `data_in<8:data` / `txd>:data` or as verbose declarations
   such as `(input core_clk :clock)`, `(input data_in (width 8) :data)`, and
   `(output txd :data)`,
+- keep `.rtlif` as the canonical low-level external-RTL interface metadata
+  contract for now, rather than adding a separate stronger interface-source
+  language before the portable type, package/import, shared-datapath, or
+  reusable-module requirements demand it,
 - treat typed `.rtlif` `clock` and `reset` categories as system-input roles rather than HDL data types, so output-direction system-role tokens and verbose output-role declarations are rejected while ordinary `data` outputs remain valid,
 - do not parse or regenerate the external RTL child at this composition layer,
 - and keep VHDL generic-map lowering plus richer expression domains beyond the shipped bounded scalar-expression, leafwise aggregate-expression, and unary aggregate complement slices as future semantic follow-ups rather than reviving raw legacy template/plugin parameter passing.
