@@ -76,6 +76,13 @@ That means:
 - emitted SystemVerilog declarations can keep record fields and deterministic
   list fields visible through packed structs
 
+The backend-owned typedef path is intentionally contract-backed. It is used
+when the signal, port, net, or helper declaration carries both a stable
+aggregate type name and an exact list/record type spec. That currently covers
+direct generated-module ports, direct internal/helper declarations, structural
+composition ports and nets, projected child aggregate carriers, and bounded
+inferred direct targets that have already grown a complete aggregate contract.
+
 Typed aggregate direct-root expressions now also preserve declared member and
 list-item access when the base signal has a known aggregate type:
 
@@ -196,10 +203,17 @@ This concat autogrowth is intentionally list-only. `(concat ...)` provides
 operand order, not record member names, so anonymous record inference still
 requires a declared record target or a future explicit syntax decision.
 
-This is still deliberate and bounded. Broader inference-first aggregate growth
-without explicit declared anchors remains future work; the backend should
-never pretend a richer type surface is stable before it really is. The
-widening is tracked in [Feature Backlog](14-feature-backlog.md).
+This is still deliberate and bounded. It should not be read as Perl-style
+autovivification for hardware. Perl can create dynamic data-structure paths as
+code runs; FSMGen aggregate growth affects ports, storage, packed layout,
+type contracts, and emitted HDL declarations before synthesis. FSMGen
+therefore only grows aggregates from complete compile-time shape evidence and
+fails closed for partial member/index roots or width-only guesses.
+
+Broader inference-first aggregate growth without explicit declared anchors
+remains future work; the backend should never pretend a richer type surface is
+stable before it really is. The widening is tracked in
+[Feature Backlog](14-feature-backlog.md).
 
 ## SystemVerilog And VHDL Intent
 

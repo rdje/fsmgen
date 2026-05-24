@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING` | `active` | `aggregate types and data` | `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2` | [docs/tasks/BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.md](docs/tasks/BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.md) |
+| _none_ | _none_ | _none_ | _none_ | _none_ |
 
 ## Proposed Task Trees
 
@@ -58,6 +58,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING` | `done` | `aggregate types and data` | `closed` | [docs/tasks/BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.md](docs/tasks/BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.md) |
 | `AGGREGATE-AUTOGROWTH-FROM-USAGE` | `done` | `aggregate types and data` | `closed` | [docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md](docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md) |
 | `DYNAMIC-DIVISOR-SAFETY-FRONTIER` | `done` | `language ergonomics` | `closed` | [docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md](docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md) |
 | `INFERENCE-FIRST-SCALAR-AUTHORING` | `done` | `language ergonomics` | `closed` | [docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md](docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md) |
@@ -422,7 +423,7 @@ criteria.
 | mdBook backlog category | Current tracking stance |
 | --- | --- |
 | `Language Ergonomics` | `completed DYNAMIC-DIVISOR-SAFETY-FRONTIER tree for direct runtime literal-zero divisor rejection; completed INFERENCE-FIRST-SCALAR-AUTHORING tree for symbolic scalar type widths; future task tree required for broader language ergonomics behavior outside those trees` |
-| `Aggregate Types And Data` | `active AGGREGATE-AUTOGROWTH-FROM-USAGE tree for automatic aggregate growth selection; future task tree required for broader aggregate lowering, operators, VHDL aggregate support, or public type/export APIs outside that tree` |
+| `Aggregate Types And Data` | `completed AGGREGATE-AUTOGROWTH-FROM-USAGE tree for bounded automatic aggregate growth; completed BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING tree for exact-contract Verilog-family structured-lowering audit; future task tree required for broader aggregate lowering, operators, VHDL aggregate support, or public type/export APIs outside those trees` |
 | `Composition` | `covered by completed composition task trees for shipped surfaces; future task tree required for broader generated-child, VHDL generic-map, and generalized composition behavior` |
 | `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces; future task tree required for remaining deferred ISF behavior` |
 | `Backends And Validation` | `future task tree required for VHDL backend expansion, richer backend validation, and non-shipped backend targets` |

@@ -83,7 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
-- `docs/tasks/BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.md` — active aggregate-types task tree for backend-owned structured aggregate lowering.
+- `docs/tasks/BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.md` — completed aggregate-types task tree for backend-owned structured aggregate lowering audit.
 - `docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md` — completed aggregate-types task tree for bounded automatic aggregate growth from usage.
 - `docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md` — completed language-ergonomics task tree for direct runtime literal-zero divisor rejection.
 - `docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md` — completed language-ergonomics task tree for the first inference-first scalar authoring slice.

@@ -18,7 +18,8 @@ close $backlog_fh;
 my %expected_status = (
     'Automatic Aggregate Growth From Usage' =>
         'partially shipped; broader inference surfaces remain backlog.',
-    'Backend-Owned Struct/Record Default Lowering' => 'backlog.',
+    'Backend-Owned Struct/Record Default Lowering' =>
+        'partially shipped; broader default-lowering policy remains backlog.',
     'Temporal Contract Lowering' =>
         'partially shipped; broader contract forms remain backlog.',
     'Fully Frozen Schedule JSON Schema' =>

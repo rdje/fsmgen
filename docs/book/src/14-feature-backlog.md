@@ -69,16 +69,23 @@ complete, conflict-free hardware shape proof.
 
 ### Backend-Owned Struct/Record Default Lowering
 
-Status: backlog.
+Status: partially shipped; broader default-lowering policy remains backlog.
 
 Goal: make backend-owned structured `struct`/record emission the default
 lowering where it is portable and synthesizable.
 
 Current boundary: generated-module and composition-top packed typedef emission
-exists for aggregate aliases on the current SystemVerilog path. Structured
-record lowering is not the default for all aggregate data. The active
-task-tree frontier is auditing the exact contract-backed surfaces before any
-default-lowering policy change.
+exists for aggregate aliases and other exact aggregate contracts on the current
+SystemVerilog path. The shipped Verilog-family declaration renderers preserve
+named aggregate contracts as backend-owned packed typedefs on direct module
+ports, direct internal/helper declarations, structural composition ports and
+nets, projected child aggregate carriers, and bounded inferred direct targets.
+
+Structured record lowering is not the default for every aggregate-like value.
+FSMGen does not invent structs from partial member/index use, width-only
+matches, anonymous record guesses, or target families without a proven
+synthesizable lowering. VHDL aggregate lowering and ISF aggregate aliases on
+interface ports, transaction ports, and banks remain backlog.
 
 ### Richer Aggregate Operators
 

@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Aggregate types — Backend-owned struct lowering audit closed
+- Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2` and closed the
+  task tree.
+- Exact-contract Verilog-family aggregate declarations already use the shared
+  backend-owned packed typedef path for generated-module ports, direct
+  internal/helper declarations, structural composition ports/nets, projected
+  child aggregate carriers, and bounded inferred direct targets.
+- Broader default lowering remains backlog; FSMGen must not infer
+  hardware-visible structs from partial use, width-only evidence, anonymous
+  guesses, or unsupported backend targets.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: focused aggregate typedef and ISF-boundary tests with
+  `Files=7, Tests=45`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: Aggregate types — Backend-owned struct lowering frontier selected
 - Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.1`.
 - Activated the task tree for the mdBook feature-backlog item

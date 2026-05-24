@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Backend-owned struct lowering audit closed
+- Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2` and closed the
+  task tree without a behavior change.
+- Audited the shared Verilog-family structured lowering path across
+  `TypeDeclarationSupport`, direct generated-module scaffold ports, direct
+  internal/helper declarations, structural RTL IR ports/nets, composition
+  aggregate carriers, ISF aggregate storage lowering, focused tests, mdBook,
+  and live docs.
+- Confirmed that exact-contract Verilog-family aggregate declaration entries
+  already use backend-owned packed typedefs when both `declared_type_name` and
+  aggregate `declared_type_spec` are present.
+- Broader default lowering remains backlog: FSMGen must not invent structs
+  from partial member/index use, width-only evidence, anonymous aggregate
+  guesses, or backend targets without a synthesizable aggregate lowering
+  contract. ISF interface/transaction/bank aggregate aliases and VHDL
+  aggregate lowering also remain deferred.
+- Validation passed: focused aggregate typedef and ISF-boundary tests with
+  `Files=7, Tests=45`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: Backend-owned struct lowering frontier selected
 - Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.1`.
 - Activated the aggregate-types task tree for the mdBook feature-backlog item

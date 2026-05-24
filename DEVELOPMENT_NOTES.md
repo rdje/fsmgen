@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Backend-owned structured lowering is already exact-contract scoped
+- `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2` closes the audit tree
+  without selecting a behavior-bearing implementation leaf.
+- The existing lowering policy is already the safe one for the audited
+  Verilog-family path: if a declaration entry carries a stable
+  `declared_type_name` and aggregate `declared_type_spec`, the shared
+  `TypeDeclarationSupport` helper emits a local packed typedef and the
+  renderer uses that typedef on the port, net, internal signal, or helper
+  declaration.
+- That path is reached by direct generated-module ports, direct internal and
+  mux-helper declarations, structural RTL IR ports/nets, composition aggregate
+  carriers, and the bounded inferred direct targets that have already grown a
+  complete aggregate contract.
+- A broader "default struct lowering" switch would be unsafe unless a future
+  leaf names one exact proof source. The backend should not turn partial
+  member/index evidence, width-only compatibility, anonymous aggregate guesses,
+  or unsupported target families into hardware-visible structs.
+
 ## 2026-05-24: Backend-owned structured lowering needs an audit first
 - `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.1` selects the next
   aggregate-types backlog item after closing aggregate autogrowth.

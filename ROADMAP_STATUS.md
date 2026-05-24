@@ -1,9 +1,27 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `aggregate types and data`.
-- Active task tree: `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING`.
-- Current frontier: `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent backend-owned struct lowering audit close-out:
+  `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2` audited shipped
+  backend-owned structured aggregate lowering and closed the task tree without
+  a behavior change. Exact-contract Verilog-family declaration entries
+  already lower through the shared backend-owned packed typedef path:
+  generated-module ports, direct internal/helper declarations, structural
+  composition ports/nets, projected child aggregate carriers, and bounded
+  inferred direct targets that already carry complete aggregate contracts.
+  Broader default lowering remains backlog because FSMGen must not invent
+  hardware-visible structs from partial member/index use, width-only evidence,
+  anonymous record/list guesses, or backend targets without a synthesizable
+  aggregate lowering contract. ISF aggregate aliases on interface ports,
+  transaction ports, and banks, VHDL aggregate lowering, and richer public
+  type/export APIs remain deferred. No parser, scheduler, report, generated
+  artifact, HDL, CLI, public API, or public language behavior changed.
+  Validation passed: focused aggregate typedef and ISF-boundary tests with
+  `Files=7, Tests=45`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent backend-owned struct lowering selection:
   `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.1` activated the task tree
   for the mdBook feature-backlog item "Backend-Owned Struct/Record Default
@@ -6275,12 +6293,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING`.
-- Current frontier: `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2`.
-- Completion status: `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.1`
-  selected the active aggregate-types task tree for backend-owned structured
-  aggregate lowering. The next PNT step is an audit/design leaf before any
-  behavior-bearing default-lowering code changes.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2`
+  closed the backend-owned structured aggregate lowering audit. Exact-contract
+  Verilog-family declaration entries already use backend-owned packed typedefs;
+  broader default lowering remains future task-tree work.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Aggregate types — Backend-owned struct lowering audit closed
+- Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2` and closed the
+  task tree without changing generated behavior.
+- Confirmed that the current Verilog-family structured lowering surface is
+  already centralized in `TypeDeclarationSupport` and applies to
+  exact-contract aggregate declaration entries on generated-module ports,
+  direct internal/helper declarations, structural composition ports/nets,
+  projected child aggregate carriers, and bounded inferred direct targets.
+- Updated the mdBook and live docs to describe the shipped boundary and the
+  still-deferred surfaces: VHDL aggregate lowering, ISF aggregate aliases on
+  interface ports/transaction ports/banks, public type/export expansion, and
+  any default struct creation from partial use or width-only evidence.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in this audit slice.
+- Validation passed: focused aggregate typedef and ISF-boundary tests with
+  `Files=7, Tests=45`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Aggregate types — Backend-owned struct lowering frontier selected
 - Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.1`.
 - Activated an aggregate-types task tree for the mdBook feature-backlog item
