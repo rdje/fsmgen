@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R10 — Diagnostic/provenance frontier audit selected
+- Created active task tree `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
+- Completed `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.1`.
+- The next frontier is audit-only leaf
+  `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`, which will map current
+  source-local and construct-local diagnostic coverage, tests, public
+  metadata, mdBook coverage, and remaining gaps before selecting another
+  diagnostic/provenance cut or close-out.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
+- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`.
+
 ## 2026-05-24: R9 — Strict-mode frontier audited and closed
 - Completed `R9-STRICT-MODE-FRONTIER-AUDIT.2` and closed the task tree.
 - The audit found no currently named default-mode compatibility residue that

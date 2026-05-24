@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT` | `active` | `R10` | `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2` | [docs/tasks/R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.md](docs/tasks/R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.md) |
 
 ## Proposed Task Trees
 

@@ -1,9 +1,20 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `R10`.
+- Active task tree: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
+- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`.
+- Recent R10 diagnostic/provenance frontier selection:
+  `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.1` activated the next
+  source-provenance and diagnostics task tree after `R9` handed active
+  implementation focus to `R10`. No parser, scheduler, report, generated
+  artifact, HDL, CLI, public API, source, test, or generated behavior changed
+  in this selection. The follow-up frontier is `.2`, an audit-only leaf that
+  must inspect current source-local and construct-local diagnostic coverage,
+  tests, public metadata, mdBook coverage, and remaining gaps before selecting
+  another diagnostic/provenance implementation cut, a documentation truth-sync,
+  handoff, or close-out. Validation passed: feature-backlog audit with
+  `Files=1, Tests=15`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R9 strict-mode frontier audit:
   `R9-STRICT-MODE-FRONTIER-AUDIT.2` audited the current strict-mode
   support-tier frontier and closed the tree without selecting another
@@ -6466,13 +6477,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `R9-STRICT-MODE-FRONTIER-AUDIT.2` closed the latest
-  strict-mode frontier audit without selecting another behavior-bearing strict
-  cut. Future strict-mode maintenance remains a per-feature obligation when
-  new compatibility residue appears, and the next roadmap-aligned active
-  implementation focus can move to `R10` diagnostics/provenance.
+- Active task tree: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
+- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`.
+- Completion status: `.1` selected the active tree with no behavior change.
+  `.2` is the audit/design frontier for deciding whether `R10` needs another
+  bounded source-local diagnostic/provenance cut, a documentation truth-sync,
+  a handoff, or close-out.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8040,6 +8050,13 @@ Deliverables:
 - Clear remediation guidance for common construct-family failures.
 Status: `in progress`
 Done:
+- `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.1` selected the next
+  source-provenance and diagnostics task tree before code:
+  - the next frontier is audit-only,
+  - it must map shipped source-local and construct-local diagnostics to tests,
+    public metadata, mdBook coverage, and the remaining `R10` exit criteria,
+  - and it must select one bounded follow-up or close/handoff from evidence
+    before any behavior-bearing diagnostic change.
 - The first dedicated v2 provenance/diagnostic slice is now shipped:
   - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now wraps top-level parse/generation failures with a stable `Source file: '...'` line,
   - that source-local context now reaches both ordinary top-level parser/adapter failures and strict-mode support-tier failures,

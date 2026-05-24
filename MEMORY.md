@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R10 diagnostic/provenance frontier audit selected
+- Created active task tree `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
+- Purpose: audit source-provenance and diagnostic coverage after the `R9`
+  handoff before selecting any new behavior-bearing diagnostic boundary.
+- The next frontier is `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`, an
+  audit-only leaf that must map current source-local and construct-local
+  diagnostics, tests, public metadata, mdBook coverage, and remaining gaps.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
+- Current frontier: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.2`.
+
 ## 2026-05-24: R9 strict-mode frontier audited and closed
 - Completed `R9-STRICT-MODE-FRONTIER-AUDIT.2` and closed the task tree.
 - The audit found no currently named default-mode compatibility residue that

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: R10 resumes through a frontier audit
+- `R9-STRICT-MODE-FRONTIER-AUDIT.2` handed active focus to `R10`, but the
+  diagnostics/provenance lane already has many shipped context boundaries. The
+  next safe step is to audit those boundaries before choosing another
+  implementation cut.
+- A new diagnostic boundary should name the failure family, the source-local
+  or construct-local context users should see, focused pipeline/CLI tests, and
+  documentation impact before code changes begin.
+
 ## 2026-05-24: R9 closes as a maintenance contract, not as a frozen language claim
 - `R9-STRICT-MODE-FRONTIER-AUDIT.2` closes the current strict-mode frontier
   because the present compatibility inventory is accounted for: each named

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R10 — Diagnostic/provenance frontier audit selected
+- Created active task tree `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT`.
+- The tree owns the next roadmap-aligned `R10` activity: audit current
+  source-provenance and diagnostic coverage before selecting another
+  behavior-bearing boundary, documentation truth sync, handoff, or close-out.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R9 — Strict-mode frontier audited and closed
 - Completed `R9-STRICT-MODE-FRONTIER-AUDIT.2` and closed the task tree.
 - Audited the strict-mode support-tier frontier against source-frontend
