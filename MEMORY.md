@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Unary aggregate complement shipped
+- Completed `RICHER-AGGREGATE-OPERATORS.3` and closed the task tree.
+- Semantic parameter/generic aggregate values now support unary bitwise
+  complement through `(~ VALUE)` and `(not VALUE)` in direct `+params`,
+  `.rtlif` defaults, external RTL parameter overrides, and generated-child
+  parameter overrides.
+- The operator accepts exactly one list/record aggregate operand, flips each
+  scalar leaf at its existing width, preserves the aggregate shape, and folds
+  before HDL lowering.
+- Scalar operands, zero operands, and unparenthesized multiple operands are
+  rejected before HDL generation with targeted diagnostics.
+- Runtime direct `.fsm` aggregate-to-aggregate operators, ISF runtime
+  subaggregate operands, aggregate paths in expression-operator position, VHDL
+  aggregate lowering, mixed scalar/aggregate operators, mismatched aggregate
+  shapes, and backend-rendered aggregate operators remain deferred.
+- Added focused direct/composition coverage, strict supported corpus fixture
+  `feature.params_aggregate_unary_complement`, supported-corpus accounting,
+  mdBook updates, and live-doc synchronization.
+- Validation passed: focused direct/composition/corpus tests with `Files=6,
+  Tests=3287`; supported-corpus gates with `Files=6, Tests=27`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: Richer aggregate operator frontier audited
 - Completed `RICHER-AGGREGATE-OPERATORS.2`.
 - Audited aggregate operator handling across direct `.fsm`, composition

@@ -117,6 +117,10 @@ list/record aggregate shapes.
 Those expressions are folded leaf-by-leaf into one aggregate value before
 backend lowering.
 
+Unary bitwise complement is also supported on one aggregate operand through
+`(~ VALUE)` or `(not VALUE)`. It keeps the same list/record shape and scalar
+leaf widths, and flips each scalar leaf bit before backend lowering.
+
 Arithmetic leaves are unsigned and fixed-width: each leaf width must match,
 division or modulo by zero is rejected, and overflow/underflow outside that
 leaf width aborts before generation.
@@ -140,13 +144,17 @@ Examples:
 (+params
   (LANES_SUM (+ LANES_A LANES_B))
   (LANES_MASK (& LANES_A LANES_B))
-  (FRAME_OR (or FRAME_A FRAME_B)))
+  (FRAME_OR (or FRAME_A FRAME_B))
+  (LANES_INV (~ LANES_A))
+  (FRAME_INV (not FRAME_A)))
 ```
 
 `LANES_SUM` is folded by adding each matching list item. `LANES_MASK` is
 folded by applying bitwise `&` to each matching list item. `FRAME_OR` is
 folded by applying bitwise `|` to each matching record member while preserving
-the authored record member order.
+the authored record member order. `LANES_INV` and `FRAME_INV` apply unary
+bitwise complement to each scalar leaf while preserving the original aggregate
+shape.
 
 Richer aggregate operators remain future work until their type/shape/result
 contracts are explicit enough to validate before generation; that widening is

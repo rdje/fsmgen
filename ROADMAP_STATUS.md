@@ -1,9 +1,28 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `aggregate types and data`.
-- Active task tree: `RICHER-AGGREGATE-OPERATORS`.
-- Current frontier: `RICHER-AGGREGATE-OPERATORS.3`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent richer aggregate operator implementation:
+  `RICHER-AGGREGATE-OPERATORS.3` shipped unary bitwise aggregate complement
+  in the semantic parameter/generic value path and closed the task tree.
+  Direct `+params`, `.rtlif` parameter defaults, external RTL parameter
+  overrides, and generated-child parameter overrides now accept exactly one
+  aggregate operand through `(~ VALUE)` or `(not VALUE)`. FSMGen folds the
+  operator before HDL lowering, preserves the operand's list/record shape and
+  each scalar leaf width, and emits the resulting ordinary aggregate value.
+  Scalar operands, zero operands, and unparenthesized multiple operands are
+  rejected before HDL generation with targeted diagnostics. Runtime direct
+  `.fsm` aggregate-to-aggregate operators, ISF runtime subaggregate operands,
+  aggregate paths in expression-operator position, VHDL aggregate lowering,
+  mixed scalar/aggregate operators, mismatched aggregate shapes, and
+  backend-rendered aggregate operators remain deferred. Added direct,
+  composition override, `.rtlif`, generated-child, strict corpus, supported
+  corpus accounting, mdBook, and live-doc coverage. Validation passed:
+  focused direct/composition/corpus tests with `Files=6, Tests=3287`;
+  supported-corpus gates with `Files=6, Tests=27`; feature-backlog audit with
+  `Files=1, Tests=15`; `mdbook build docs/book`; and `git diff --check`.
 - Recent richer aggregate operator audit:
   `RICHER-AGGREGATE-OPERATORS.2` audited shipped aggregate operator handling
   across direct `.fsm`, composition parameter/generic values, ISF aggregate

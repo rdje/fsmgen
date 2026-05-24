@@ -526,6 +526,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.declarative_bits_symbol_widths` | [t/corpus/declarative_bits_symbol_widths.fsm](t/corpus/declarative_bits_symbol_widths.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_aggregate_constant_target_autogrowth` | [t/corpus/direct_aggregate_constant_target_autogrowth.fsm](t/corpus/direct_aggregate_constant_target_autogrowth.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_runtime_div_mod` | [t/corpus/direct_runtime_div_mod.fsm](t/corpus/direct_runtime_div_mod.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.params_aggregate_unary_complement` | [t/corpus/params_aggregate_unary_complement.fsm](t/corpus/params_aggregate_unary_complement.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.arithmetic_xor_operator_variants` | [t/corpus/arithmetic_xor_operator_variants.fsm](t/corpus/arithmetic_xor_operator_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.rhs_expression_supported_variants` | [t/corpus/rhs_expression_supported_variants.fsm](t/corpus/rhs_expression_supported_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_assignment_pair_form` | [t/corpus/direct_assignment_pair_form.fsm](t/corpus/direct_assignment_pair_form.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |

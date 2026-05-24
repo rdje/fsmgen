@@ -355,6 +355,34 @@ sub _canonical_expression_payload ($class, $value_ast, $context, $docs_hint, $re
     my $normalized_operator = $class->_normalize_scalar_expression_operator($operator);
     return undef unless defined $normalized_operator;
 
+    if ($class->_is_unary_aggregate_expression_operator($normalized_operator)) {
+        my @defined_operands = grep { defined } @operands;
+        my $has_flat_multi_operand_list =
+            @defined_operands == 1
+            && ref($defined_operands[0]) eq 'ARRAY'
+            && @{$defined_operands[0]} > 1
+            && !grep { ref } @{$defined_operands[0]};
+
+        confess
+            "$context is blocked because aggregate parameter/generic expression operator '$operator' requires exactly 1 operand.".
+            $docs_hint."\n"
+            unless @defined_operands == 1 && !$has_flat_multi_operand_list;
+
+        my $operand_payload = $class->_canonical_payload(
+            $defined_operands[0],
+            "$context expression operand for '$operator'",
+            $docs_hint,
+            $resolve_symbol_payload,
+        );
+        return $class->_canonical_unary_aggregate_expression_payload(
+            $normalized_operator,
+            $operator,
+            $operand_payload,
+            $context,
+            $docs_hint,
+        );
+    }
+
     if (@operands == 1 && ref($operands[0]) eq 'ARRAY') {
         @operands = @{$operands[0]};
     }
@@ -404,7 +432,7 @@ sub _canonical_expression_payload ($class, $value_ast, $context, $docs_hint, $re
 
 sub _canonical_aggregate_expression_payload ($class, $normalized_operator, $display_operator, $operand_payloads, $context, $docs_hint) {
     confess
-        "$context is blocked because aggregate parameter/generic expressions currently support only matching-shape leafwise operators '+', '-', '*', '/', '%', '&', '|', '^' and aliases 'add', 'sub', 'mul', 'div', 'mod', 'and', 'or', 'xor', but saw operator '$display_operator'.".
+        "$context is blocked because aggregate parameter/generic expressions currently support only matching-shape leafwise operators '+', '-', '*', '/', '%', '&', '|', '^' and aliases 'add', 'sub', 'mul', 'div', 'mod', 'and', 'or', 'xor', plus unary '~' and 'not', but saw operator '$display_operator'.".
         $docs_hint."\n"
         unless $class->_is_aggregate_expression_operator($normalized_operator);
 
@@ -460,6 +488,27 @@ sub _canonical_aggregate_expression_payload ($class, $normalized_operator, $disp
     );
 }
 
+sub _canonical_unary_aggregate_expression_payload ($class, $normalized_operator, $display_operator, $operand_payload, $context, $docs_hint) {
+    my $operand_kind = ref($operand_payload) eq 'HASH' ? ($operand_payload->{kind} || '') : '';
+    confess
+        "$context is blocked because aggregate parameter/generic expression operator '$display_operator' requires one aggregate operand, but operand 1 resolved to '$operand_kind'.".
+        $docs_hint."\n"
+        unless $operand_kind eq 'list' || $operand_kind eq 'map';
+
+    my $operand_type_spec = FSM::Package::PayloadTypeSupport->payload_to_type_spec($operand_payload);
+    confess
+        "$context is blocked because aggregate parameter/generic expression operator '$display_operator' could not infer a packed aggregate type for operand 1.".
+        $docs_hint."\n"
+        unless ref($operand_type_spec) eq 'HASH';
+
+    return $class->_apply_aggregate_expression_operator(
+        $normalized_operator,
+        [ $operand_payload ],
+        "$context aggregate expression operator '$display_operator'",
+        $docs_hint,
+    );
+}
+
 sub _scalar_expression_operand_text_from_payload ($class, $operand_payload, $context, $docs_hint) {
     my $operand_kind = ref($operand_payload) eq 'HASH' ? ($operand_payload->{kind} || '') : '';
     return $operand_payload->{payload}
@@ -484,11 +533,16 @@ sub _normalize_scalar_expression_operator ($class, $operator) {
         and => '&',
         or  => '|',
         xor => '^',
+        not => '~',
     );
 
     my $normalized = $operator_aliases{$operator} // $operator;
-    my %supported = map { $_ => 1 } qw(+ - * / % & | ^);
+    my %supported = map { $_ => 1 } qw(+ - * / % & | ^ ~);
     return $supported{$normalized} ? $normalized : undef;
+}
+
+sub _is_unary_aggregate_expression_operator ($class, $operator) {
+    return defined($operator) && !ref($operator) && $operator eq '~';
 }
 
 sub _is_aggregate_expression_operator ($class, $operator) {
@@ -501,6 +555,7 @@ sub _is_aggregate_expression_operator ($class, $operator) {
         || $operator eq '&'
         || $operator eq '|'
         || $operator eq '^'
+        || $operator eq '~'
     );
 }
 
@@ -561,7 +616,7 @@ sub _apply_aggregate_expression_operator ($class, $operator, $payloads, $context
 
 sub _apply_scalar_leaf_operator ($class, $operator, $payloads, $context, $docs_hint) {
     return $class->_apply_scalar_bitwise_operator($operator, $payloads, $context, $docs_hint)
-        if $operator eq '&' || $operator eq '|' || $operator eq '^';
+        if $operator eq '&' || $operator eq '|' || $operator eq '^' || $operator eq '~';
 
     return $class->_apply_scalar_arithmetic_operator($operator, $payloads, $context, $docs_hint)
         if $operator eq '+' || $operator eq '-' || $operator eq '*' || $operator eq '/' || $operator eq '%';
@@ -599,6 +654,14 @@ sub _apply_scalar_bitwise_operator ($class, $operator, $payloads, $context, $doc
     my ($bitstrings, $expected_width) = $class->_aggregate_leaf_bitstrings_and_width($payloads, $context, $docs_hint);
 
     my @result_bits = split //, $bitstrings->[0];
+    if ($operator eq '~') {
+        @result_bits = map { $_ eq '1' ? '0' : '1' } @result_bits;
+        return {
+            kind => 'scalar',
+            payload => $expected_width."'b".join('', @result_bits),
+        };
+    }
+
     for my $operand_index (1 .. $#$bitstrings) {
         my @operand_bits = split //, $bitstrings->[$operand_index];
         for my $bit_index (0 .. $#result_bits) {

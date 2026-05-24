@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Aggregate types — Unary aggregate complement shipped
+- Completed `RICHER-AGGREGATE-OPERATORS.3` and closed the task tree.
+- Added unary bitwise aggregate complement for semantic parameter/generic
+  values in direct `+params`, `.rtlif` defaults, external RTL parameter
+  overrides, and generated-child parameter overrides.
+- Accepted syntax is `(~ VALUE)` and `(not VALUE)`. The operand must be one
+  list/record aggregate value; the result preserves aggregate shape and scalar
+  leaf widths while flipping each leaf before HDL lowering.
+- Added targeted diagnostics for scalar operands, missing operands, and
+  unparenthesized multiple operands.
+- Added focused direct and composition tests, a strict supported corpus
+  fixture `feature.params_aggregate_unary_complement`, supported-corpus
+  accounting, regression-corpus docs, mdBook coverage, and live-doc sync.
+- Runtime direct `.fsm` aggregate-to-aggregate operators, ISF runtime
+  subaggregate operands, aggregate paths in expression-operator position, VHDL
+  aggregate lowering, mixed scalar/aggregate operators, mismatched aggregate
+  shapes, and backend-rendered aggregate operators remain deferred.
+- Validation passed: focused direct/composition/corpus tests with `Files=6,
+  Tests=3287`; supported-corpus gates with `Files=6, Tests=27`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
+
 ### Aggregate types — Richer aggregate operator frontier audited
 - Completed `RICHER-AGGREGATE-OPERATORS.2`.
 - Audited shipped aggregate operator handling across direct `.fsm`,

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `RICHER-AGGREGATE-OPERATORS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `aggregate types and data`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -45,7 +45,7 @@ expression family.
 ## Task Tree
 
 - ID: `RICHER-AGGREGATE-OPERATORS`
-  Status: `active`
+  Status: `done`
   Goal: `Widen aggregate operators only where the type/shape/result contract is exact.`
   Children: `RICHER-AGGREGATE-OPERATORS.1`,
     `RICHER-AGGREGATE-OPERATORS.2`,
@@ -66,17 +66,17 @@ expression family.
   Commit: `RICHER-AGGREGATE-OPERATORS.2: audit aggregate operator frontier`
 
 - ID: `RICHER-AGGREGATE-OPERATORS.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement unary bitwise aggregate complement for semantic parameter/generic values.`
   Acceptance: `Direct +params, .rtlif defaults, external RTL overrides, and generated-child overrides accept a single aggregate operand through (~ VALUE) and (not VALUE), fold each scalar leaf by bitwise complement with unchanged aggregate shape and leaf width, reject scalar operands and bad arity with targeted diagnostics, and keep ISF runtime aggregate-to-aggregate expressions deferred.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: focused direct/composition/corpus tests, supported-corpus gates, feature-backlog audit, mdBook build, and diff check`
+  Commit: `RICHER-AGGREGATE-OPERATORS.3: ship aggregate unary complement`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `RICHER-AGGREGATE-OPERATORS.3` | `pending` | Unary bitwise complement can reuse the existing pre-HDL aggregate parameter/generic folding path and has an exact same-shape result contract. |
+| 1 | `closed` | `done` | `RICHER-AGGREGATE-OPERATORS.3` shipped the bounded unary complement widening and closed this tree. |
 
 ## Decisions
 
@@ -91,6 +91,11 @@ expression family.
   lowering, so `(~ VALUE)` / `(not VALUE)` can preserve the operand's
   list/record shape and invert only scalar leaves without introducing runtime
   aggregate scheduling or backend-rendered aggregate operators.
+- `2026-05-24`: The implementation shipped unary bitwise aggregate
+  complement only in the semantic parameter/generic value path. The operator
+  accepts exactly one aggregate operand, preserves the operand list/record
+  shape and scalar leaf widths, and folds to an ordinary aggregate value
+  before HDL lowering.
 
 ## Audit Result
 
@@ -130,9 +135,27 @@ Selected next leaf:
   operands, zero operands, and ISF runtime aggregate-to-aggregate expressions
   remain rejected.
 
+## Implementation Result
+
+`RICHER-AGGREGATE-OPERATORS.3` extends `FSM::ParameterValueSupport` so
+semantic parameter/generic aggregate values accept unary bitwise complement in
+direct `+params`, `.rtlif` parameter defaults, external RTL parameter
+overrides, and generated-child parameter overrides. Both `(~ VALUE)` and
+`(not VALUE)` normalize to the same operator.
+
+The implementation preserves the established fold-before-HDL contract: the
+operand must resolve to one list or record aggregate payload, each scalar leaf
+is inverted at its declared width, and the result keeps the same aggregate
+shape. Scalar operands, zero operands, and unparenthesized multiple operands
+fail before HDL generation with targeted diagnostics. Runtime direct `.fsm`
+aggregate-to-aggregate expressions, ISF runtime subaggregate operands,
+aggregate paths in expression-operator position, mixed scalar/aggregate
+operators, mismatched aggregate shapes, VHDL aggregate lowering, and
+backend-rendered aggregate operators remain deferred.
+
 ## Open Questions
 
-- None for `.2`. The next active frontier is `.3`.
+- None. This tree is closed.
 
 ## Blockers
 
@@ -144,6 +167,7 @@ Selected next leaf:
 | --- | --- | --- | --- |
 | `2026-05-24` | `RICHER-AGGREGATE-OPERATORS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: feature-backlog audit Files=1, Tests=15` |
 | `2026-05-24` | `RICHER-AGGREGATE-OPERATORS.2` | `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1284-isf-aggregate-rule-expression-values.t t/1288-isf-aggregate-drive-expression-values.t t/1290-isf-aggregate-drive-call-expression-values.t t/1292-isf-aggregate-inline-drive-expression-values.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: focused tests Files=9, Tests=174; feature-backlog audit Files=1, Tests=15` |
+| `2026-05-24` | `RICHER-AGGREGATE-OPERATORS.3` | `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t t/297-capability-manifest.t t/359-support-accounting-corpus-runtime-audit.t t/372-support-accounting-catalog-path-audit.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: focused direct/composition/corpus tests Files=6, Tests=3287; supported-corpus gates Files=6, Tests=27` |
 
 ## Commit Log
 
@@ -151,7 +175,7 @@ Selected next leaf:
 | --- | --- | --- |
 | `RICHER-AGGREGATE-OPERATORS.1` | `RICHER-AGGREGATE-OPERATORS.1: select aggregate operator work` | `selection slice` |
 | `RICHER-AGGREGATE-OPERATORS.2` | `RICHER-AGGREGATE-OPERATORS.2: audit aggregate operator frontier` | `audit/design slice` |
-| `RICHER-AGGREGATE-OPERATORS.3` | `pending` | `implementation slice` |
+| `RICHER-AGGREGATE-OPERATORS.3` | `RICHER-AGGREGATE-OPERATORS.3: ship aggregate unary complement` | `implementation slice` |
 
 ## Changelog
 
@@ -160,3 +184,5 @@ Selected next leaf:
 - `2026-05-24`: Audited the shipped aggregate operator boundary and selected
   unary bitwise aggregate complement in semantic parameter/generic value
   contexts as the next bounded implementation leaf.
+- `2026-05-24`: Shipped unary bitwise aggregate complement for semantic
+  parameter/generic aggregate values and closed the task tree.

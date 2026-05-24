@@ -94,14 +94,16 @@ Status: backlog.
 Goal: widen aggregate operators beyond the shipped matching-shape leafwise
 numeric and bitwise families.
 
-Current boundary: matching list/record aggregate shapes support leafwise
-`+`, `-`, `*`, `/`, `%`, `&`, `|`, `^` plus word aliases before HDL lowering.
+Current boundary: semantic parameter/generic aggregate values support matching
+list/record aggregate shapes with leafwise `+`, `-`, `*`, `/`, `%`, `&`, `|`,
+`^` plus word aliases before HDL lowering. They also support unary bitwise
+aggregate complement through `(~ VALUE)` and `(not VALUE)`.
 
 Additional aggregate operators remain deferred until each operator has a
-defined type/shape/result contract and validation path. The active
-`RICHER-AGGREGATE-OPERATORS` task tree selected unary bitwise aggregate
-complement in semantic parameter/generic values as the next bounded
-implementation leaf.
+defined type/shape/result contract and validation path. Runtime direct `.fsm`
+aggregate-to-aggregate operators, ISF runtime subaggregate operands, aggregate
+paths in expression-operator position, VHDL aggregate lowering, mixed
+scalar/aggregate operators, and mismatched aggregate shapes remain deferred.
 
 ### VHDL Aggregate Lowering
 

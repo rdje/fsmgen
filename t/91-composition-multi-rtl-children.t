@@ -323,6 +323,7 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
       (EXPR_WIDTH (+ OVERRIDE_WIDTH 1))
       (LANES_MASKED (and LOCAL_LANES param_pkg.DEFAULT_LANE_MASK))
       (LANES_SUM (+ LOCAL_LANES LOCAL_LANE_INC))
+      (LANES_INVERTED (~ LOCAL_LANES))
     )
   )
   (?wiring:wiring
@@ -340,6 +341,7 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
     (EXPR_WIDTH (+ param_pkg.DEFAULT_WIDTH 1))
     (LANES_MASKED (and param_pkg.DEFAULT_LANES param_pkg.DEFAULT_LANE_MASK))
     (LANES_SUM (+ param_pkg.DEFAULT_LANES param_pkg.DEFAULT_LANE_INC))
+    (LANES_INVERTED (not param_pkg.DEFAULT_LANE_MASK))
   )
   core_clk:clock
   rst_async_n:reset
@@ -375,7 +377,7 @@ FSM
     my $parameter_overrides = $result->{composition_plan}->instances->[0]->parameter_overrides;
     is_deeply(
         [map { $_->{name} } @$parameter_overrides],
-        [qw(WIDTH RESET_VALUE LANES FRAME EXPR_WIDTH LANES_MASKED LANES_SUM)],
+        [qw(WIDTH RESET_VALUE LANES FRAME EXPR_WIDTH LANES_MASKED LANES_SUM LANES_INVERTED)],
         'composition plan preserves validated parameter override order',
     );
     my %overrides = map { $_->{name} => $_ } @$parameter_overrides;
@@ -403,12 +405,15 @@ FSM
     is($overrides{LANES_MASKED}{value_kind}, 'list', 'composition plan keeps aggregate bitwise override expressions as aggregate values');
     is($overrides{LANES_SUM}{value_text}, "16'b1010011000111110", 'composition plan folds aggregate arithmetic parameter override expressions');
     is($overrides{LANES_SUM}{value_kind}, 'list', 'composition plan keeps aggregate arithmetic override expressions as aggregate values');
+    is($overrides{LANES_INVERTED}{value_text}, "16'b0101101011000011", 'composition plan folds aggregate unary complement parameter override expressions');
+    is($overrides{LANES_INVERTED}{value_kind}, 'list', 'composition plan keeps aggregate unary complement override expressions as aggregate values');
     my %declarations = map { $_->{name} => $_ } @{$result->{composition_plan}->instances->[0]->module_info->{parameter_declarations}};
     is($declarations{WIDTH}{raw_default_value}, 'param_pkg.DEFAULT_WIDTH', 'rtlif defaults preserve package-symbol raw scalar token');
     is($declarations{WIDTH}{default_value_text}, '8', 'rtlif defaults resolve package-backed scalar values');
     is($declarations{EXPR_WIDTH}{default_value_text}, '(8 + 1)', 'rtlif defaults resolve package-backed scalar expressions');
     is($declarations{LANES_MASKED}{default_value_text}, "16'b0000000000000000", 'rtlif defaults resolve package-backed aggregate bitwise expressions');
     is($declarations{LANES_SUM}{default_value_text}, "16'b0000000100000010", 'rtlif defaults resolve package-backed aggregate arithmetic expressions');
+    is($declarations{LANES_INVERTED}{default_value_text}, "16'b0000111111110000", 'rtlif defaults resolve package-backed aggregate unary complement expressions');
     is($declarations{LANES}{raw_default_value}, 'param_pkg.DEFAULT_LANES', 'rtlif defaults preserve package-symbol raw aggregate token');
     is($declarations{LANES}{default_value_text}, "16'b0000000000000000", 'rtlif defaults resolve package-backed list aggregate shape');
     is_deeply(
@@ -428,12 +433,12 @@ FSM
     );
     is(
         $result->{intent_hir}{composition_children}[0]{parameter_override_count},
-        7,
+        8,
         'intent HIR child export reports the parameter override count',
     );
 
     my $hdl = $result->{hdl_code};
-    like($hdl, qr/\buart_tx\s+#\(\s*\.WIDTH\(16\),\s*\.RESET_VALUE\(8'hA5\),\s*\.LANES\(16'b1010010100111100\),\s*\.FRAME\(3'b101\),\s*\.EXPR_WIDTH\(\(16 \+ 1\)\),\s*\.LANES_MASKED\(16'b1010000000001100\),\s*\.LANES_SUM\(16'b1010011000111110\)\s*\)\s+u_uart\s*\(/s, 'generated HDL emits SV parameter overrides on the external RTL instance');
+    like($hdl, qr/\buart_tx\s+#\(\s*\.WIDTH\(16\),\s*\.RESET_VALUE\(8'hA5\),\s*\.LANES\(16'b1010010100111100\),\s*\.FRAME\(3'b101\),\s*\.EXPR_WIDTH\(\(16 \+ 1\)\),\s*\.LANES_MASKED\(16'b1010000000001100\),\s*\.LANES_SUM\(16'b1010011000111110\),\s*\.LANES_INVERTED\(16'b0101101011000011\)\s*\)\s+u_uart\s*\(/s, 'generated HDL emits SV parameter overrides on the external RTL instance');
     unlike($hdl, qr/\bmodule\s+uart_tx\b/s, 'generated HDL does not regenerate the parameterized external rtl child');
 
     my ($success) = run(

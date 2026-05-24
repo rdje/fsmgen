@@ -298,6 +298,22 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.params_aggregate_unary_complement',
+        relpath => 't/corpus/params_aggregate_unary_complement.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'params_aggregate_unary_complement',
+        expected_hdl_patterns => [
+            qr/parameter\s+P_NOT_LIST\s*=\s*16'b0101101011000011\b/s,
+            qr/parameter\s+P_NOT_RECORD\s*=\s*3'b010\b/s,
+            qr/\bOUT_LIST\s*=\s*P_NOT_LIST\b/s,
+            qr/\bOUT_RECORD\s*=\s*P_NOT_RECORD\b/s,
+        ],
+    },
+    {
         id => 'feature.arithmetic_xor_operator_variants',
         relpath => 't/corpus/arithmetic_xor_operator_variants.fsm',
         family => 'language_feature_fixture',

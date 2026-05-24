@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Unary aggregate complement stays fold-before-HDL
+- `RICHER-AGGREGATE-OPERATORS.3` ships unary bitwise aggregate complement by
+  extending the existing semantic parameter/generic value normalizer instead
+  of introducing backend-rendered aggregate operators.
+- Keeping the operator in `FSM::ParameterValueSupport` preserves the existing
+  contract: direct `+params`, `.rtlif` defaults, external RTL overrides, and
+  generated-child overrides all resolve to ordinary scalar/list/record
+  payloads before any HDL backend sees them.
+- The unary implementation intentionally treats arity as part of the language
+  contract. `(~ VALUE)` and `(not VALUE)` need exactly one aggregate operand;
+  missing operands and unparenthesized multiple operands fail before
+  canonicalization can reinterpret them as malformed aggregate payloads.
+- This leaf does not widen runtime aggregate operations. Direct `.fsm`
+  runtime aggregate-to-aggregate expressions, ISF runtime subaggregate
+  operands, aggregate paths in expression-operator position, and
+  backend-rendered aggregate operators still need separate source-position and
+  scheduling contracts before they can be implemented safely.
+
 ## 2026-05-24: Unary aggregate complement is the next safe operator widening
 - `RICHER-AGGREGATE-OPERATORS.2` audited the shipped aggregate operator
   surface and selected a bounded implementation target.

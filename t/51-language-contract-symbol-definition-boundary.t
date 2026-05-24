@@ -347,6 +347,70 @@ FSM
         qr/Direct source parameter 'P_BAD'.*aggregate expression operator '\/' item 1.*division by zero.*operand 2 is zero/s,
         'aggregate arithmetic +params expressions reject leaf division by zero before generation'
     );
+
+    my $unary_scalar_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_unary_scalar_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (~ 1))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $unary_scalar_error,
+        qr/Direct source parameter 'P_BAD'.*operator '~' requires one aggregate operand, but operand 1 resolved to 'scalar'/s,
+        'aggregate unary complement rejects scalar operands before generation'
+    );
+
+    my $unary_zero_arity_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_unary_zero_arity_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (not))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $unary_zero_arity_error,
+        qr/Direct source parameter 'P_BAD'.*operator 'not' requires exactly 1 operand/s,
+        'aggregate unary complement rejects missing operands before generation'
+    );
+
+    my $unary_multi_arity_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_unary_multi_arity_contract
+  (+constants
+    (LANES (8'hA5 8'h3C))
+    (MASK (8'hF0 8'h0F))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (~ LANES MASK))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $unary_multi_arity_error,
+        qr/Direct source parameter 'P_BAD'.*operator '~' requires exactly 1 operand/s,
+        'aggregate unary complement rejects multiple operands before generation'
+    );
 };
 
 subtest 'cyclic parameter value references are rejected before generation' => sub {

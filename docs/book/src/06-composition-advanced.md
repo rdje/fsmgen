@@ -534,6 +534,10 @@ list/record aggregate shapes.
 The normalizer folds those expressions leaf-by-leaf into one aggregate value
 before the composition plan reaches HDL lowering.
 
+Unary bitwise complement is supported for one aggregate operand as
+`(~ VALUE)` or `(not VALUE)`. It flips each scalar leaf and preserves the
+aggregate shape.
+
 Arithmetic leaves are unsigned fixed-width values: leaf widths must match,
 division or modulo by zero is rejected, and overflow/underflow outside that
 leaf width aborts before generation.
@@ -554,7 +558,8 @@ expected parameter shape:
     (module core)
     (params
       (LANES_SUM (+ LANES_A LANES_B))
-      (LANES_MASK (and LANES_A LANES_B)))))
+      (LANES_MASK (and LANES_A LANES_B))
+      (LANES_INV (~ LANES_A)))))
 ```
 
 The plan records each override as one packed aggregate value, while retaining

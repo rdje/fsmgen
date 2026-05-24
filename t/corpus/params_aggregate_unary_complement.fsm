@@ -1,0 +1,18 @@
+(?fsm:params_aggregate_unary_complement
+  (+constants
+    (LANES (8'hA5 8'h3C))
+    (FRAME ((mode 2'b10) (flag 1)))
+  )
+  (+params
+    (P_NOT_LIST (~ LANES))
+    (P_NOT_RECORD (not FRAME))
+  )
+  (+size
+    (OUT_LIST 16)
+    (OUT_RECORD 3)
+  )
+  (-dt
+    (= (OUT_LIST P_NOT_LIST))
+    (= (OUT_RECORD P_NOT_RECORD))
+  )
+)

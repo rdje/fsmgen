@@ -101,6 +101,7 @@ for my $required_id (qw(
     feature.declarative_bits_symbol_widths
     feature.direct_aggregate_constant_target_autogrowth
     feature.direct_runtime_div_mod
+    feature.params_aggregate_unary_complement
     feature.arithmetic_xor_operator_variants
     feature.rhs_expression_supported_variants
     feature.direct_assignment_pair_form
@@ -415,8 +416,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    39,
-    'catalog now keeps thirty-nine named supported-smoke entries including direct and composition language-feature fixtures',
+    40,
+    'catalog now keeps forty named supported-smoke entries including direct and composition language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -430,8 +431,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    39,
-    'catalog now records thirty-nine positive strict-mode supported-smoke acceptance entries',
+    40,
+    'catalog now records forty positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
