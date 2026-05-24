@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Richer aggregate operators need exact contracts before widening
+- `RICHER-AGGREGATE-OPERATORS.1` selects the next aggregate-types backlog item
+  after closing backend-owned structured lowering.
+- The first executable leaf is an audit because aggregate operator semantics
+  are not just syntax. Each widening must define the accepted source position,
+  legal operand shapes, result shape, overflow/divide-by-zero behavior,
+  diagnostics, and whether the operator folds before HDL lowering or needs a
+  typed runtime/IR contract.
+- The existing shipped surface is deliberately narrow: matching-shape
+  leafwise numeric and bitwise aggregate expressions in parameter/generic
+  value contexts. Any broader surface must prove it is still deterministic and
+  synthesizable before code changes begin.
+
 ## 2026-05-24: Backend-owned structured lowering is already exact-contract scoped
 - `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2` closes the audit tree
   without selecting a behavior-bearing implementation leaf.

@@ -98,7 +98,9 @@ Current boundary: matching list/record aggregate shapes support leafwise
 `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^` plus word aliases before HDL lowering.
 
 Additional aggregate operators remain deferred until each operator has a
-defined type/shape/result contract and validation path.
+defined type/shape/result contract and validation path. The active
+`RICHER-AGGREGATE-OPERATORS` task tree is auditing the shipped boundary before
+selecting any behavior-bearing widening.
 
 ### VHDL Aggregate Lowering
 

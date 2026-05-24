@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Aggregate types — Richer aggregate operator frontier selected
+- Completed `RICHER-AGGREGATE-OPERATORS.1`.
+- Activated the task tree for the mdBook feature-backlog item
+  "Richer Aggregate Operators".
+- The current frontier is `RICHER-AGGREGATE-OPERATORS.2`, an audit of shipped
+  aggregate operator handling and safe next surfaces.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `RICHER-AGGREGATE-OPERATORS`.
+- Current frontier: `RICHER-AGGREGATE-OPERATORS.2`.
+
 ## 2026-05-24: Aggregate types — Backend-owned struct lowering audit closed
 - Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2` and closed the
   task tree.

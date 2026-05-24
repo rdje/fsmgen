@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Richer aggregate operator frontier selected
+- Completed `RICHER-AGGREGATE-OPERATORS.1`.
+- Activated the aggregate-types task tree for the mdBook feature-backlog item
+  "Richer Aggregate Operators".
+- The selected follow-up leaf is `RICHER-AGGREGATE-OPERATORS.2`, which must
+  audit current aggregate operator handling across direct `.fsm`, composition
+  parameter/generic values, ISF aggregate expression contexts, tests, corpus
+  accounting, mdBook, and live docs before any behavior-bearing operator
+  widening.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `RICHER-AGGREGATE-OPERATORS`.
+- Current frontier: `RICHER-AGGREGATE-OPERATORS.2`.
+
 ## 2026-05-24: Backend-owned struct lowering audit closed
 - Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2` and closed the
   task tree without a behavior change.

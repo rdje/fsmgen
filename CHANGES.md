@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Aggregate types — Richer aggregate operator frontier selected
+- Completed `RICHER-AGGREGATE-OPERATORS.1`.
+- Activated an aggregate-types task tree for the mdBook feature-backlog item
+  "Richer Aggregate Operators".
+- The selected follow-up leaf will audit aggregate operator handling across
+  direct `.fsm`, composition parameter/generic values, ISF aggregate
+  expression contexts, tests, corpus accounting, mdBook, and live docs before
+  selecting any behavior-bearing operator widening.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Aggregate types — Backend-owned struct lowering audit closed
 - Completed `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.2` and closed the
   task tree without changing generated behavior.
