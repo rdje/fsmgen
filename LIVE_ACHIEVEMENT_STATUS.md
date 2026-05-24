@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-23: Project operations — Feature-backlog status audit CI repair
+- Completed `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` and closed the task tree.
+- Reproduced the latest `Perl FSM Regression` failure locally:
+  `t/1256-feature-backlog-status-audit.t` expected `Automatic Aggregate Growth
+  From Usage` to be `Status: backlog.`, while the mdBook now correctly records
+  `Status: partially shipped; broader inference surfaces remain backlog.`
+- Updated the audit expectation to follow the mdBook truth.
+- Triaged the earlier `Publish mdBook` failure as a Pages deploy
+  `Bad credentials` run that was followed by a later successful `Publish
+  mdBook` run with the same workflow file, so no Pages workflow change was
+  required.
+- Validation passed: focused failing audit with `Files=1, Tests=15`;
+  live-doc audits with `Files=2, Tests=25`; `git diff --check`; full local
+  `./bin/ci-regression` with `Files=1346, Tests=9515`, followed by a
+  successful mdBook build.
+
 ## 2026-05-23: R14 — Storage-port resource priority shipped
 - Completed `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` and closed the task tree.
 - `(kind storage_port)` resources now enforce static `priority` arbitration

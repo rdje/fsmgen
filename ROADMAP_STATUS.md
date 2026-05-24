@@ -4,6 +4,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Recent project-operations CI repair:
+  `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` repaired the latest GitHub
+  `Perl FSM Regression` failure. Run `26342756632` failed on
+  `t/1256-feature-backlog-status-audit.t` because the audit still expected
+  `Automatic Aggregate Growth From Usage` to be `Status: backlog.`, while the
+  mdBook now correctly says `Status: partially shipped; broader inference
+  surfaces remain backlog.` The audit expectation now follows the mdBook
+  truth. The earlier `Publish mdBook` failure, run `26334239514`, failed in
+  `actions/deploy-pages@v4` with `HttpError: Bad credentials`; the later
+  `Publish mdBook` run `26342756624` succeeded with the current workflow file
+  and permissions, so no Pages workflow change was needed in this slice.
 - Recent R14 storage-port resource completion:
   `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` shipped `(kind storage_port)`
   resources under the static `priority` arbiter for declared rule users.

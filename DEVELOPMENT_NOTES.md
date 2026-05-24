@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-23: CI status audits must follow documentation truth
+- `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` fixes a stale test expectation rather
+  than changing the mdBook. The book was already more accurate: automatic
+  aggregate growth is partially shipped, with broader inference surfaces still
+  backlog.
+- The audit should protect that truth, not freeze an older backlog label after
+  incremental aggregate support has shipped.
+- The Pages deploy `Bad credentials` failure was not treated as a workflow
+  source bug because the next `Publish mdBook` run succeeded with the same
+  checked-in workflow and permissions.
+
 ## 2026-05-23: Storage-port priority is storage-member validation plus grant gating
 - `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` ships the first storage-port subset
   as explicit storage-member validation over the existing static priority

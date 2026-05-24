@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-23: GitHub CI feature-backlog status audit repaired
+- Completed `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` and closed the task tree.
+- Investigated the latest GitHub failures:
+  - `Perl FSM Regression` run `26342756632` failed on
+    `t/1256-feature-backlog-status-audit.t`, test 2.
+  - The stale expectation still claimed `Automatic Aggregate Growth From
+    Usage` should be `Status: backlog.`, while the mdBook now correctly says
+    `Status: partially shipped; broader inference surfaces remain backlog.`
+  - `Publish mdBook` run `26334239514` failed during `Deploy to GitHub Pages`
+    with `HttpError: Bad credentials`, but the later `Publish mdBook` run
+    `26342756624` succeeded with the current workflow permissions, so no repo
+    workflow change was needed for Pages in this slice.
+- Updated `t/1256-feature-backlog-status-audit.t` to expect the current
+  mdBook truth for `Automatic Aggregate Growth From Usage`.
+- Validation passed: focused failing audit with `Files=1, Tests=15`;
+  live-doc audits with `Files=2, Tests=25`; `git diff --check`; full local
+  `./bin/ci-regression` with `Files=1346, Tests=9515`, followed by a
+  successful mdBook build.
+
 ## 2026-05-23: Storage-port resource priority shipped
 - Completed `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` and closed the task tree.
 - `(kind storage_port)` resources are now enforced for declared rule users

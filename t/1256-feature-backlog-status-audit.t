@@ -16,7 +16,8 @@ my $backlog = do { local $/; <$backlog_fh> };
 close $backlog_fh;
 
 my %expected_status = (
-    'Automatic Aggregate Growth From Usage' => 'backlog.',
+    'Automatic Aggregate Growth From Usage' =>
+        'partially shipped; broader inference surfaces remain backlog.',
     'Backend-Owned Struct/Record Default Lowering' => 'backlog.',
     'Temporal Contract Lowering' =>
         'partially shipped; broader contract forms remain backlog.',

@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `CI-FEATURE-BACKLOG-STATUS-AUDIT` | `done` | `project operations` | `closed` | [docs/tasks/CI-FEATURE-BACKLOG-STATUS-AUDIT.md](docs/tasks/CI-FEATURE-BACKLOG-STATUS-AUDIT.md) |
 | `ISF-STORAGE-PORT-RESOURCE-PRIORITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-STORAGE-PORT-RESOURCE-PRIORITY.md](docs/tasks/ISF-STORAGE-PORT-RESOURCE-PRIORITY.md) |
 | `ISF-TRANSACTION-START-RESOURCE-PRIORITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-START-RESOURCE-PRIORITY.md](docs/tasks/ISF-TRANSACTION-START-RESOURCE-PRIORITY.md) |
 | `ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.md](docs/tasks/ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.md) |

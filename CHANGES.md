@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-23
+### Project operations — Feature-backlog status audit CI repair
+- Completed `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` and closed the task tree.
+- Investigated the latest GitHub workflow failures. `Perl FSM Regression` run
+  `26342756632` failed on `t/1256-feature-backlog-status-audit.t` because the
+  audit still expected `Automatic Aggregate Growth From Usage` to be
+  `Status: backlog.` even though the mdBook now accurately records it as
+  `Status: partially shipped; broader inference surfaces remain backlog.`
+- Updated the audit expectation to match the current mdBook truth instead of
+  weakening the documentation.
+- The earlier `Publish mdBook` failure, run `26334239514`, failed at the
+  `actions/deploy-pages@v4` deploy step with `HttpError: Bad credentials`.
+  The later `Publish mdBook` run `26342756624` succeeded with the current
+  workflow file and permissions, so no Pages workflow change was needed in
+  this slice.
+- Validation passed: focused failing audit with `Files=1, Tests=15`;
+  live-doc audits with `Files=2, Tests=25`; `git diff --check`; full local
+  `./bin/ci-regression` with `Files=1346, Tests=9515`, followed by a
+  successful mdBook build.
+
 ### R14 — Storage-port resource priority shipped
 - Completed `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` and closed the task tree.
 - `storage_port` resources now enforce static `priority` arbitration for
