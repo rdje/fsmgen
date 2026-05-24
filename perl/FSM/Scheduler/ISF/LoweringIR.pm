@@ -7043,7 +7043,7 @@ sub _resource_kind_supports_priority_rule_users {
 
 sub _resource_kind_supports_round_robin_rule_users {
     my ($kind) = @_;
-    return defined($kind) && $kind eq 'rule_slot';
+    return defined($kind) && ($kind eq 'rule_slot' || $kind eq 'transaction_start');
 }
 
 sub _apply_round_robin_rule_user_resource_grants {
@@ -7107,7 +7107,7 @@ sub _validate_round_robin_rule_user_resource {
     _resource_arbitration_error(
         'isf_resource_round_robin_name_shape',
         $resource_name,
-        "round_robin rule_slot resource names must be HDL identifiers because FSMGen generates pointer storage from the resource name",
+        "round_robin resource names must be HDL identifiers because FSMGen generates pointer storage from the resource name",
     ) unless _is_hdl_identifier($resource_name);
 
     for my $user (@$users) {

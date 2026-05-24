@@ -1756,29 +1756,33 @@ Resource arbitration:
   (resource fair_slot
     (kind rule_slot)
     (arbiter round_robin)
-    (users rr_high rr_low)))
+    (users rr_high rr_low))
+  (resource fair_work
+    (kind transaction_start)
+    (arbiter round_robin)
+    (users fair_start_a fair_start_b)))
 ```
 
 Rules:
 
 - Current enforced resource kinds are `rule_slot`, `output_bundle`,
   `transaction_start`, and `storage_port` with `priority` arbitration for
-  declared rule users. `rule_slot` also supports bounded `round_robin`
-  arbitration for declared rule users.
-- A bounded `round_robin` `rule_slot` uses the `(users ...)` list as a
-  circular grant order. FSMGen emits a generated pointer counter named
-  `isf_rr_<resource>_turn`, grants the first requesting rule at or after the
-  current pointer, advances the pointer only from the winning rule DT, and
-  reports the pointer in `inferred_storage[]` with role
+  declared rule users. `rule_slot` and `transaction_start` also support
+  bounded `round_robin` arbitration for declared rule users.
+- A bounded `round_robin` `rule_slot` or `transaction_start` uses the
+  `(users ...)` list as a circular grant order. FSMGen emits a generated
+  pointer counter named `isf_rr_<resource>_turn`, grants the first requesting
+  rule at or after the current pointer, advances the pointer only from the
+  winning rule DT, and reports the pointer in `inferred_storage[]` with role
   `resource_round_robin_pointer`. The generated pointer name must not collide
   with existing actor ports, constants, parameters, declared storage, or
   generated counters.
 - A `transaction_start` resource is named by the local transaction it
   arbitrates. Each listed rule user must trigger that transaction through the
-  shipped non-generated rule-trigger surface. Priority suppression gates
-  lower-priority rule DTs before their per-rule trigger source pulses feed the
-  generated `{transaction}_trigger_fanin` DT; the fan-in owner and timing stay
-  unchanged.
+  shipped non-generated rule-trigger surface. Priority suppression and
+  bounded round-robin grants gate rule DTs before their per-rule trigger
+  source pulses feed the generated `{transaction}_trigger_fanin` DT; the
+  fan-in owner and timing stay unchanged.
 - An unmembered `output_bundle` keeps the historical implicit surface: the
   bound rule users and the outputs or other LHS targets they drive describe
   the bundle intent.
@@ -1810,7 +1814,8 @@ Rules:
   transaction starts, generated-child storage arbitration, actor-network
   triggers, actor-network endpoint users, transaction users, named-drive
   users, output-target users, lifetime ownership, route mux/storage, and
-  `round_robin` for non-`rule_slot` resource kinds remain outside the shipped
+  `round_robin` for `output_bundle`, `storage_port`, backlog resource kinds,
+  and other non-selected resource surfaces remain outside the shipped
   resource-arbitration subset.
 
 ## 12.5. Static Actor Network Metadata
@@ -3035,12 +3040,12 @@ for `rule_slot`, `output_bundle`, `transaction_start`, and `storage_port`,
 including explicit output-bundle member-list validation,
 transaction-start trigger-user validation, storage-port storage-member
 validation, and `resource_arbitration[].members` report evidence. They also
-cover bounded `rule_slot`/`round_robin` grants, generated pointer storage
-metadata, report projection, and fail-closed non-`rule_slot` round-robin
-combinations.
+cover bounded `rule_slot`/`round_robin` and
+`transaction_start`/`round_robin` grants, generated pointer storage metadata,
+report projection, and fail-closed unsupported round-robin combinations.
 The fixture above remains a `rule_slot` fixture; it does not claim
 weighted, token bucket, interface-bundle, named-drive, child-instance, or
-non-`rule_slot` round-robin resource support.
+broader round-robin resource support.
 
 The stage/contract fixture is covered by
 `t/1317-isf-stage-contract-fixture-coverage.t`, which proves strict schedule

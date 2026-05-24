@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-START-ROUND-ROBIN`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -58,7 +58,7 @@ local transaction through a `transaction_start` resource.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-START-ROUND-ROBIN`
-  Status: `active`
+  Status: `done`
   Goal: `Enforce bounded round_robin arbitration for transaction_start rule users.`
   Children: `ISF-TRANSACTION-START-ROUND-ROBIN.1`,
   `ISF-TRANSACTION-START-ROUND-ROBIN.2`
@@ -71,19 +71,19 @@ local transaction through a `transaction_start` resource.
   Commit: `ISF-TRANSACTION-START-ROUND-ROBIN.1: select transaction-start round robin`
 
 - ID: `ISF-TRANSACTION-START-ROUND-ROBIN.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement transaction_start round_robin arbitration for declared rule users.`
   Acceptance: `Lowering enforces the selected transaction_start round-robin boundary, reports expose grants and pointer storage, unsupported combinations fail closed, docs are synchronized, and focused plus broader checks pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: syntax checks; focused resource arbitration test; public contract/report/book audits; feature-backlog audit; ISF regression gate; mdBook build; diff check`
+  Commit: `ISF-TRANSACTION-START-ROUND-ROBIN.2: ship transaction-start round robin`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-START-ROUND-ROBIN.2` | `pending` | The selected slice is a bounded public-facing resource-arbitration widening that combines the shipped `transaction_start` rule-user contract with the shipped `rule_slot` round-robin machinery. |
+| 1 | `ISF-TRANSACTION-START-ROUND-ROBIN.2` | `done` | The bounded public-facing resource-arbitration widening is implemented, documented, and validated. |
 
-Current frontier: `ISF-TRANSACTION-START-ROUND-ROBIN.2`.
+Current frontier: `closed`.
 
 ## Decisions
 
@@ -112,16 +112,28 @@ Current frontier: `ISF-TRANSACTION-START-ROUND-ROBIN.2`.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-TRANSACTION-START-ROUND-ROBIN.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: feature-backlog audit Files=1, Tests=15` |
+| `2026-05-24` | `ISF-TRANSACTION-START-ROUND-ROBIN.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFResourceCatalog.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1218-isf-rule-slot-resource-arbitration.t`; focused public/report/book audits; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed: resource arbitration Files=1, Tests=13; public/report/book audits Files=8, Tests=355; ISF gate Files=250, Tests=1680` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-START-ROUND-ROBIN.1` | `ISF-TRANSACTION-START-ROUND-ROBIN.1: select transaction-start round robin` | `selection slice` |
-| `ISF-TRANSACTION-START-ROUND-ROBIN.2` | `pending` | `implementation slice` |
+| `ISF-TRANSACTION-START-ROUND-ROBIN.2` | `ISF-TRANSACTION-START-ROUND-ROBIN.2: ship transaction-start round robin` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created and activated the task tree, selected
   `ISF-TRANSACTION-START-ROUND-ROBIN.2` as the implementation frontier, and
   confirmed that the selection slice has no compiler behavior change.
+- `2026-05-24`: Shipped bounded `transaction_start` + `round_robin`
+  arbitration for declared rule users. The lowerer now accepts
+  `(resource TX (kind transaction_start) (arbiter round_robin) (users RULE...))`
+  when `TX` is a local non-generated transaction and every listed rule
+  triggers it through the shipped rule-trigger surface. Grants gate the
+  per-rule trigger-source DTs before the existing transaction trigger fan-in,
+  a generated `isf_rr_<resource>_turn` pointer records the next preferred
+  user, schedule reports expose `kind: transaction_start` and
+  `arbiter: round_robin`, and the pointer reports as
+  `resource_round_robin_pointer`. Generated-child transaction starts and
+  broader resource/lifetime ownership remain deferred.

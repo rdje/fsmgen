@@ -2,23 +2,29 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-START-ROUND-ROBIN`.
-- Current frontier: `ISF-TRANSACTION-START-ROUND-ROBIN.2`.
-- Recent R14 transaction-start round-robin resource selection:
-  `ISF-TRANSACTION-START-ROUND-ROBIN.1` activated the next public-facing ISF
-  feature tree. The selected implementation frontier is a bounded widening of
-  resource arbitration: `(resource TX (kind transaction_start)
-  (arbiter round_robin) (users RULE...))` for declared rule users that trigger
-  one local non-generated transaction through the shipped rule-trigger
-  surface. The selected leaf must reuse the existing round-robin grant/pointer
-  model, preserve current transaction trigger-fan-in timing, report grants
-  through `resource_arbitration[]`, report the generated pointer with role
-  `resource_round_robin_pointer`, and keep generated-child transaction starts
-  plus broader resource/lifetime ownership deferred. No parser, scheduler,
-  report, generated artifact, HDL, CLI behavior, public API, source, test, or
-  generated behavior changed in the selection slice. Validation passed:
-  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
-  and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 transaction-start round-robin resource implementation:
+  `ISF-TRANSACTION-START-ROUND-ROBIN.2` shipped the bounded public
+  resource-arbitration widening selected in `.1`. FSMGen now accepts
+  `(resource TX (kind transaction_start) (arbiter round_robin) (users RULE...))`
+  when `TX` is one local non-generated transaction and every listed rule user
+  triggers that transaction through the shipped non-generated rule-trigger
+  surface. The lowerer reuses the existing round-robin grant/pointer model,
+  gates the winning per-rule trigger-source DT before the existing
+  `{transaction}_trigger_fanin` owner, advances `isf_rr_<resource>_turn` only
+  from the winning rule DT, reports grants through `resource_arbitration[]`
+  with `kind: transaction_start` and `arbiter: round_robin`, and reports the
+  pointer with role `resource_round_robin_pointer`. Generated-child
+  transaction starts, output-bundle/storage-port round-robin, backlog resource
+  kinds, actor-network endpoints, ready/backpressure, payload protocols, route
+  mux/storage, and transaction lifetime ownership remain deferred. The ISF
+  spec, downstream integration handoff, public contract, mdBook, task tree,
+  README index, and live docs are synchronized. Validation passed: syntax
+  checks; `prove -Iperl t/1218-isf-rule-slot-resource-arbitration.t` with
+  `Files=1, Tests=13`; focused public/report/book audits with `Files=8,
+  Tests=355`; `./bin/ci-regression isf --no-book` with `Files=250,
+  Tests=1680`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R11 top-boundary convention frontier audit:
   `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2` audited the shipped
   top-boundary convention/connect-by-name contract and closed the task tree.
@@ -6826,12 +6832,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-TRANSACTION-START-ROUND-ROBIN`.
-- Current frontier: `ISF-TRANSACTION-START-ROUND-ROBIN.2`.
-- Completion status: `ISF-TRANSACTION-START-ROUND-ROBIN.1` selected the next
-  public-facing R14 feature slice. The implementation frontier must ship or
-  explicitly close bounded `transaction_start` + `round_robin` arbitration for
-  declared rule users that trigger one local non-generated transaction.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-TRANSACTION-START-ROUND-ROBIN.2` shipped bounded
+  `transaction_start` + `round_robin` arbitration for declared rule users
+  that trigger one local non-generated transaction, then closed the task tree.
+  The next PNT implementation slice must select or create a task tree before
+  changing code.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -10289,6 +10296,25 @@ Status: `in progress`
 Done:
 - R14 is active; the former VHDL backend lane is preserved as horizon `H5` in
   [ROADMAP_V2.md](ROADMAP_V2.md) and [docs/VHDL_SCOPE.md](docs/VHDL_SCOPE.md).
+- `ISF-TRANSACTION-START-ROUND-ROBIN.2` is shipped and the task tree is
+  closed:
+  - `(resource TX (kind transaction_start) (arbiter round_robin) (users RULE...))`
+    is now accepted for declared rule users that trigger one local
+    non-generated transaction,
+  - the scheduler emits and reports the generated
+    `isf_rr_<resource>_turn` pointer with role
+    `resource_round_robin_pointer`,
+  - grants gate the per-rule trigger-source DTs before the existing generated
+    `{transaction}_trigger_fanin` DT, preserving fan-in ownership and timing,
+  - schedule reports expose `resource_arbitration[]` entries with
+    `kind: transaction_start` and `arbiter: round_robin`,
+  - generated-child transaction starts, output-bundle/storage-port
+    round-robin, backlog resource kinds, route mux/storage,
+    ready/backpressure, payload protocols, and lifetime ownership remain
+    deferred,
+  - and validation passed through syntax checks, focused resource tests,
+    public/report/book audits, the ISF regression gate, mdBook build, and
+    diff check.
 - `ISF-TRANSACTION-START-ROUND-ROBIN.1` selected the next public-facing R14
   feature tree before implementation:
   - the implementation frontier is

@@ -249,6 +249,83 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'transaction_start_priority');
 };
 
+subtest 'round_robin transaction_start grant gates trigger sources with generated pointer state' => sub {
+    my $source = <<'ISF';
+(actor transaction_start_round_robin
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input high_req)
+    (input low_req)
+    (output done))
+  (transaction work
+    (on work_start)
+    (complete done))
+  (resources
+    (resource work
+      (kind transaction_start)
+      (arbiter round_robin)
+      (users high low)))
+  (rule high high_req
+    (trigger work))
+  (rule low low_req
+    (trigger work)))
+ISF
+
+    my $ir = lower_ir($source);
+    is($ir->{counters}{isf_rr_work_turn}, 1, 'transaction_start round_robin pointer width covers both rule users');
+    is(
+        $ir->{storage_roles}{isf_rr_work_turn},
+        'resource_round_robin_pointer',
+        'transaction_start round_robin pointer storage carries the public role',
+    );
+    is_deeply(
+        $ir->{resource_arbitration}{grants},
+        [
+            {
+                resource => 'work',
+                kind     => 'transaction_start',
+                arbiter  => 'round_robin',
+                user     => 'high',
+                higher   => ['low'],
+                members  => [],
+            },
+            {
+                resource => 'work',
+                kind     => 'transaction_start',
+                arbiter  => 'round_robin',
+                user     => 'low',
+                higher   => ['high'],
+                members  => [],
+            },
+        ],
+        'transaction_start round_robin grants reuse the resource arbitration IR shape',
+    );
+
+    my $high_start = find_record($ir, owner => 'high', target => 'high_work');
+    my $low_start = find_record($ir, owner => 'low', target => 'low_work');
+    is_deeply($high_start->{resource_suppressed_by}, ['low'], 'high trigger source records the dynamic low peer');
+    is_deeply($low_start->{resource_suppressed_by}, ['high'], 'low trigger source records the dynamic high peer');
+
+    my $high_pointer = find_record($ir, owner => 'high', target => 'isf_rr_work_turn');
+    my $low_pointer = find_record($ir, owner => 'low', target => 'isf_rr_work_turn');
+    is($high_pointer->{rhs}, 1, 'high grant advances the transaction_start pointer to low');
+    is($low_pointer->{rhs}, 0, 'low grant wraps the transaction_start pointer to high');
+
+    my $fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($source))->{files}{'transaction_start_round_robin.fsm'};
+    like($fsm, qr/\(isf_rr_work_turn 1\)/, 'scheduled .fsm declares the transaction_start round_robin pointer width');
+    like($fsm, qr/\(-high\s+<\(& high_req [\s\S]*\(== isf_rr_work_turn 0\)/, 'high trigger source is gated by pointer-0 grant logic');
+    like($fsm, qr/\(<- \(isf_rr_work_turn 1\)\)/, 'high grant updates the transaction_start pointer');
+    like($fsm, qr/\(-low\s+<\(& low_req [\s\S]*\(== isf_rr_work_turn 1\)/, 'low trigger source is gated by pointer-1 grant logic');
+    like($fsm, qr/\(<- \(isf_rr_work_turn 0\)\)/, 'low grant wraps the transaction_start pointer');
+    like(
+        $fsm,
+        qr/\(-work_trigger_fanin\s+\(= \(work_start \(\| high_work low_work\)\)\)\s+\)/s,
+        'transaction_start round_robin preserves the generated trigger fan-in DT owner',
+    );
+    assert_fsm_reaches_hdl($fsm, 'transaction_start_round_robin');
+};
+
 subtest 'priority storage_port grant gates lower-priority storage writers' => sub {
     my $source = <<'ISF';
 (actor storage_port_priority
@@ -653,6 +730,29 @@ ISF
   (rule low low_req
     (trigger work)))
 ISF
+
+    assert_lower_rejected(<<'ISF', 'round_robin generated-child transaction_start resource remains unsupported', qr/isf_transaction_start_generated_child_unsupported/);
+(actor transaction_start_round_robin_generated_child
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input high_req)
+    (input low_req)
+    (output done))
+  (transaction work
+    (params (LIMIT 4))
+    (on work_start)
+    (complete done))
+  (resources
+    (resource work
+      (kind transaction_start)
+      (arbiter round_robin)
+      (users high low)))
+  (rule high high_req
+    (trigger work (params (LIMIT 2))))
+  (rule low low_req
+    (trigger work)))
+ISF
 };
 
 subtest 'resource priority rejects incomplete and cyclic orderings' => sub {
@@ -815,29 +915,6 @@ ISF
     (valid 1))
   (rule low b
     (valid 0)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'round_robin transaction_start with bound users', qr/isf_resource_unsupported_arbiter/);
-(actor unsupported_rr_transaction_start_resource
-  (clock clk)
-  (reset rst_n)
-  (interface
-    (input high_req)
-    (input low_req)
-    (output done))
-  (transaction work
-    (on work_start)
-    (complete done))
-  (priority high over low)
-  (resources
-    (resource work
-      (kind transaction_start)
-      (arbiter round_robin)
-      (users high low)))
-  (rule high high_req
-    (trigger work))
-  (rule low low_req
-    (trigger work)))
 ISF
 
     assert_lower_rejected(<<'ISF', 'round_robin storage_port with bound users', qr/isf_resource_unsupported_arbiter/);

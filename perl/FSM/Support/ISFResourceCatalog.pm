@@ -29,7 +29,7 @@ my @RESOURCE_KINDS = qw(
 my %RESOURCE_KIND_STATUS = (
     rule_slot         => 'shipped_for_priority_and_round_robin_arbitration',
     output_bundle     => 'shipped_for_priority_arbitration',
-    transaction_start => 'shipped_for_priority_arbitration',
+    transaction_start => 'shipped_for_priority_and_round_robin_arbitration',
     storage_port      => 'shipped_for_priority_arbitration',
     interface_bundle  => 'backlog',
     named_drive       => 'backlog',
@@ -41,7 +41,7 @@ my %RESOURCE_KIND_MEANING = (
     output_bundle     => 'one-cycle ownership of a group of actor outputs or LHS targets',
     interface_bundle  => 'ownership of a protocol-facing interface or bus bundle',
     named_drive       => 'ownership of a reusable actor drive body or drive-call path',
-    transaction_start => 'arbitration for start/request fan-in into one transaction',
+    transaction_start => 'arbitration for start/request fan-in into one transaction, with priority or bounded round-robin arbitration',
     child_instance    => 're-entry control for a spawned child instance',
     storage_port      => 'arbitration for shared state, register, memory, or storage-port access',
 );

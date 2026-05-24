@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Transaction-start round-robin can reuse rule-user grant machinery
+- The shipped `round_robin` implementation is deliberately rule-user-based:
+  it computes requests from normalized rule guards, emits one generated
+  pointer counter, gates the whole bound rule DT, and advances the pointer
+  from the winning DT. `transaction_start` resources fit that model because
+  the selected surface is still declared rule users, not transaction users or
+  generated-child starts.
+- The implementation keeps the transaction trigger fan-in as the owner of the
+  shared start signal. The resource grant is applied before each per-rule
+  trigger-source pulse reaches `{transaction}_trigger_fanin`, so the widening
+  adds fairness without changing the scheduled fan-in DT owner, adding an
+  extra cycle, or inventing route/lifetime semantics.
+- Broader non-`rule_slot` resource round-robin is still not automatic.
+  `output_bundle` and `storage_port` need their own fairness semantics around
+  member coverage and write domains, while generated-child transaction starts
+  need child lifetime and generated-top contracts before they can share this
+  path safely.
+
 ## 2026-05-24: Transaction-start round-robin is the next bounded ISF feature
 - `transaction_start` resources already have the tightest non-`rule_slot`
   ownership contract: the resource name is a local transaction, users are

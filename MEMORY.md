@@ -1,5 +1,36 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 transaction-start round-robin resource shipped
+- Completed `ISF-TRANSACTION-START-ROUND-ROBIN.2` and closed the task tree.
+- FSMGen now accepts bounded
+  `(resource TX (kind transaction_start) (arbiter round_robin) (users RULE...))`
+  declarations when `TX` is a local non-generated transaction and every listed
+  rule user triggers that transaction through the shipped non-generated
+  rule-trigger surface.
+- The lowerer reuses the shipped round-robin pointer/grant model:
+  `isf_rr_<resource>_turn` records the next preferred rule user, grants the
+  first requesting rule at or after the pointer, advances only from the
+  winning rule DT, and reports as inferred storage with role
+  `resource_round_robin_pointer`.
+- Transaction-start round-robin grants gate the winning per-rule
+  trigger-source DT before the existing `{transaction}_trigger_fanin` owner,
+  preserving the current fan-in timing and review artifact shape.
+- Schedule reports expose the grants through `resource_arbitration[]` with
+  `kind: transaction_start`, `arbiter: round_robin`, empty `members`, and
+  dynamic peer `suppressed_by` evidence.
+- Generated-child transaction starts, output-bundle/storage-port round-robin,
+  backlog resource kinds, actor-network endpoints, ready/backpressure, payload
+  protocols, route mux/storage, and transaction lifetime ownership remain
+  deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, README index, roadmap, and live docs.
+- Validation passed: syntax checks; focused resource arbitration with
+  `Files=1, Tests=13`; public/report/book audits with `Files=8, Tests=355`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1680`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 transaction-start round-robin resource selected
 - Created active task tree `ISF-TRANSACTION-START-ROUND-ROBIN`.
 - Completed `ISF-TRANSACTION-START-ROUND-ROBIN.1`.

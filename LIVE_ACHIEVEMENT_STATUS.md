@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Transaction-start round-robin resource shipped
+- Completed `ISF-TRANSACTION-START-ROUND-ROBIN.2` and closed the task tree.
+- FSMGen now supports bounded
+  `(resource TX (kind transaction_start) (arbiter round_robin) (users RULE...))`
+  declarations for local non-generated transaction starts triggered by
+  declared rule users.
+- The scheduler emits `isf_rr_<resource>_turn`, gates the winning per-rule
+  trigger-source DT before the existing generated transaction trigger fan-in,
+  reports `resource_arbitration[]` grants with
+  `kind: transaction_start`/`arbiter: round_robin`, and reports the pointer as
+  `resource_round_robin_pointer`.
+- Generated-child transaction starts, output-bundle/storage-port round-robin,
+  backlog resource kinds, route mux/storage, ready/backpressure, payload
+  protocols, and lifetime ownership remain deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused resource arbitration with
+  `Files=1, Tests=13`; public/report/book audits with `Files=8, Tests=355`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1680`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Transaction-start round-robin resource selected
 - Created active task tree `ISF-TRANSACTION-START-ROUND-ROBIN`.
 - Completed `ISF-TRANSACTION-START-ROUND-ROBIN.1`.
