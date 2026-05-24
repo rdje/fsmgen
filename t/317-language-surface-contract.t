@@ -124,6 +124,16 @@ subtest 'in-process capability manifest language surface conforms to the bounded
         language_surface_assignments_keys(),
         'assignments section keeps bounded keys',
     );
+    assert_list_contains(
+        $surface->{default_mode_compatibility}{accepted_but_not_canonical_for_generated_output},
+        'legacy <=+ assignment operator alias for <=-',
+        'default-mode compatibility inventory names legacy <=+',
+    );
+    assert_list_contains(
+        $surface->{assignments}{compatibility_forms},
+        'legacy <=+ assignment operator alias for <=-',
+        'assignment compatibility inventory still names legacy <=+',
+    );
     assert_keys_present(
         $surface->{system_contracts},
         language_surface_system_contracts_keys(),
@@ -178,6 +188,16 @@ subtest 'CLI capability manifest keeps the bounded language-surface contract' =>
         language_surface_expressions_keys(),
         'CLI expressions section keeps bounded keys',
     );
+    assert_list_contains(
+        $surface->{default_mode_compatibility}{accepted_but_not_canonical_for_generated_output},
+        'legacy <=+ assignment operator alias for <=-',
+        'CLI default-mode compatibility inventory names legacy <=+',
+    );
+    assert_list_contains(
+        $surface->{assignments}{compatibility_forms},
+        'legacy <=+ assignment operator alias for <=-',
+        'CLI assignment compatibility inventory still names legacy <=+',
+    );
 };
 
 done_testing();
@@ -187,4 +207,10 @@ sub assert_keys_present {
     for my $key (@{$keys || []}) {
         ok(exists $payload->{$key}, "$label: keeps key $key");
     }
+}
+
+sub assert_list_contains {
+    my ($values, $expected, $label) = @_;
+    my %seen = map { $_ => 1 } @{$values || []};
+    ok($seen{$expected}, $label);
 }

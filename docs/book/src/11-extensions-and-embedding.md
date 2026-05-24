@@ -2502,6 +2502,17 @@ mode, compatibility, expression, declaration, and composition guidance in one
 place while preserving the contract rule that the broader language surface is
 still widened only by deliberate regression-backed changes.
 
+Within that manifest section,
+`default_mode_compatibility.accepted_but_not_canonical_for_generated_output`
+is the broad inventory for parser-accepted compatibility residues that should
+not be emitted by generated strict sources. It includes legacy roots and
+aliases, empty `(+size)`, misleading reset spellings, compact `:=`, infix
+assignment forms, the legacy `<=+` alias for `<=-`, legacy generated-child
+roots, and composition slash-link wiring. The assignment-specific
+`assignments.compatibility_forms` list also names `<=+`, so downstream tools
+can discover the alias from either the broad compatibility inventory or the
+assignment-family view.
+
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded first nested key families for
 `strict_mode`, `default_mode_compatibility`, `assignments`,

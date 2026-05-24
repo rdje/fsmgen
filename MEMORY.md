@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R8 language-surface legacy <=+ manifest metadata synced
+- Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` and closed the task tree.
+- The public capability manifest's `language_surface` section now records
+  `legacy <=+ assignment operator alias for <=-` in both
+  `default_mode_compatibility.accepted_but_not_canonical_for_generated_output`
+  and `assignments.compatibility_forms`.
+- Parser behavior, scheduler behavior, HDL output, strict-mode diagnostics,
+  corpus classification, and generated artifacts are unchanged. Default mode
+  still accepts `<=+` as a compatibility alias for `<=-`; strict mode still
+  rejects it with the existing stable diagnostic.
+- Added focused in-process and CLI language-surface manifest assertions and
+  synchronized the mdBook embedding/manifest chapter plus live docs.
+- Validation passed: syntax check; language-surface/manifest tests with
+  `Files=4, Tests=12`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R8 language-surface gray-zone residue audited
 - Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`.
 - Audited the remaining parser-accepted compatibility residue against

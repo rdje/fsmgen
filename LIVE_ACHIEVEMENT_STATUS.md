@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R8 — Language-surface legacy <=+ manifest metadata synced
+- Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` and closed the task tree.
+- The capability manifest now records `legacy <=+ assignment operator alias
+  for <=-` in both the broad default-mode compatibility inventory and the
+  assignment-specific compatibility list.
+- No parser, scheduler, strict-mode diagnostic, corpus classification, HDL,
+  CLI, or generated behavior changed.
+- The mdBook embedding/manifest chapter and live docs now describe the
+  manifest discoverability contract.
+- Validation passed: syntax check; language-surface/manifest tests with
+  `Files=4, Tests=12`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R8 — Language-surface gray-zone residue audited
 - Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`.
 - Audited parser-accepted compatibility residue across behavior, regression

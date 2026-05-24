@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R8 — Language-surface legacy <=+ manifest metadata synced
+- Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` and closed the task tree.
+- Updated [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm)
+  so the public capability manifest records `legacy <=+ assignment operator
+  alias for <=-` in the broad
+  `default_mode_compatibility.accepted_but_not_canonical_for_generated_output`
+  inventory as well as the existing assignment-specific compatibility list.
+- Extended [t/317-language-surface-contract.t](t/317-language-surface-contract.t)
+  to lock the in-process and CLI manifest views for both compatibility lists.
+- Synchronized the mdBook embedding/manifest chapter and live docs. Parser
+  behavior, strict-mode diagnostics, corpus classification, HDL output, CLI
+  behavior, and generated artifacts are unchanged.
+- Validation passed: syntax check; language-surface/manifest tests with
+  `Files=4, Tests=12`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R8 — Language-surface gray-zone residue audited
 - Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`.
 - Audited remaining parser-accepted `.fsm` compatibility residue against

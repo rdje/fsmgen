@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R8`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -41,7 +41,7 @@ regression ownership.
 ## Task Tree
 
 - ID: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`
-  Status: `active`
+  Status: `done`
   Goal: `Resolve the next parser-accepted language-surface gray zone.`
   Children: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1`,
     `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`,
@@ -62,17 +62,17 @@ regression ownership.
   Commit: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2: audit gray-zone residue`
 
 - ID: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Sync the legacy <=+ assignment alias into top-level language-surface compatibility metadata.`
   Acceptance: `The public language-surface manifest records legacy <=+ assignment compatibility in the same default-mode compatibility inventory as the other parser-accepted legacy residues, while preserving the existing assignment-specific compatibility entry, parser behavior, strict-mode rejection, corpus accounting, and mdBook truth.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: syntax, language-surface manifest tests, feature-backlog audit, mdBook build, and diff check`
+  Commit: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3: sync legacy lteplus manifest metadata`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` | `pending` | The audit found a bounded metadata truth gap: legacy `<=+` is documented and regression-owned as compatibility, but the top-level manifest compatibility inventory does not name it beside the other default-mode residues. |
+| 1 | `closed` | `done` | The selected metadata truth-sync leaf is complete; a future PNT selection should start from the roadmap/task-tree index. |
 
 ## Decisions
 
@@ -95,10 +95,17 @@ regression ownership.
   `default_mode_compatibility.accepted_but_not_canonical_for_generated_output`
   list does not name the same accepted legacy residue beside the other
   default-mode compatibility families.
+- `2026-05-24`: Completed `.3` and closed the tree. The language-surface
+  manifest now exposes `legacy <=+ assignment operator alias for <=-` in both
+  the broad
+  `default_mode_compatibility.accepted_but_not_canonical_for_generated_output`
+  inventory and the assignment-specific `assignments.compatibility_forms`
+  inventory. No parser, scheduler, HDL, CLI, strict-mode diagnostic, corpus
+  classification, or generated behavior changed.
 
 ## Open Questions
 
-- None. `.3` owns the selected metadata truth-sync slice.
+- None. The tree is closed.
 
 ## Blockers
 
@@ -110,6 +117,7 @@ regression ownership.
 | --- | --- | --- | --- |
 | `2026-05-24` | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: feature-backlog audit Files=1, Tests=15` |
 | `2026-05-24` | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: feature-backlog audit Files=1, Tests=15` |
+| `2026-05-24` | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` | `perl -Iperl -c perl/FSM/Support/LanguageSurfaceSection.pm`; `prove -Iperl t/317-language-surface-contract.t t/363-language-surface-section-runtime-contract-audit.t t/483-language-surface-section-defensive-copy-boundary-audit.t t/297-capability-manifest.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: manifest tests Files=4, Tests=12; feature-backlog audit Files=1, Tests=15` |
 
 ## Commit Log
 
@@ -117,6 +125,7 @@ regression ownership.
 | --- | --- | --- |
 | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1` | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1: select gray-zone audit` | `selection slice` |
 | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2` | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2: audit gray-zone residue` | `audit/design slice` |
+| `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3: sync legacy lteplus manifest metadata` | `metadata truth-sync slice` |
 
 ## Changelog
 
@@ -126,3 +135,5 @@ regression ownership.
   slice.
 - `2026-05-24`: Completed `.2`; selected `.3` to synchronize legacy `<=+`
   assignment compatibility into top-level language-surface metadata.
+- `2026-05-24`: Completed `.3`; closed the tree with language-surface
+  manifest metadata synchronized for legacy `<=+` compatibility.

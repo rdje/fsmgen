@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Language-surface metadata should not split compatibility truth
+- `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` is intentionally a manifest
+  truth-sync, not a parser change. The actual language behavior for legacy
+  `<=+` was already settled: default mode accepts it only as a compatibility
+  alias for `<=-`, while strict mode rejects it with the existing stable
+  diagnostic.
+- The important correction is discoverability. Downstream tools should not
+  have to merge the assignment-family compatibility list with the broad
+  default-mode compatibility inventory to discover that `<=+` is accepted but
+  non-canonical. The manifest now exposes the same residue in both places.
+
 ## 2026-05-24: Legacy <=+ needs manifest-level compatibility truth
 - `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2` did not select a new parser cut.
   The current legacy `<=+` surface already has the important behavior pieces:

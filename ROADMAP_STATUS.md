@@ -1,9 +1,24 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R8`.
-- Active task tree: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
-- Current frontier: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R8 language-surface metadata truth sync:
+  `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` synchronized the public
+  language-surface manifest with the already-shipped legacy `<=+`
+  compatibility boundary and closed the task tree. The manifest now exposes
+  `legacy <=+ assignment operator alias for <=-` in both the broad
+  `default_mode_compatibility.accepted_but_not_canonical_for_generated_output`
+  inventory and the assignment-specific `assignments.compatibility_forms`
+  inventory. Parser behavior, scheduler behavior, HDL output, strict-mode
+  diagnostics, corpus classification, and generated artifacts are unchanged:
+  default mode still accepts `<=+` as a compatibility alias for `<=-`, and
+  strict mode still rejects it with the existing stable diagnostic. The mdBook
+  embedding/manifest chapter now documents the discoverability contract.
+  Validation passed: language-surface/manifest tests with `Files=4,
+  Tests=12`; feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
 - Recent R8 language-surface gray-zone audit:
   `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2` audited the current parser-accepted
   compatibility residue against parser/frontend behavior, regression-corpus
@@ -6394,11 +6409,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
-- Current frontier: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`.
-- Completion status: `.1` selected the active tree with no behavior change.
-  `.2` is the audit/design frontier and must select one bounded construct
-  family or record a close-out decision before behavior changes.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT` closed after
+  synchronizing legacy `<=+` compatibility metadata in the language-surface
+  manifest.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
