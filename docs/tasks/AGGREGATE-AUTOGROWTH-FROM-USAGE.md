@@ -49,7 +49,8 @@ type anchor.
   Children: `AGGREGATE-AUTOGROWTH-FROM-USAGE.1`,
     `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`,
     `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`,
-    `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`
+    `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`,
+    `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`
 
 - ID: `AGGREGATE-AUTOGROWTH-FROM-USAGE.1`
   Status: `done`
@@ -73,9 +74,16 @@ type anchor.
   Commit: `AGGREGATE-AUTOGROWTH-FROM-USAGE.3: infer aggregate constant targets`
 
 - ID: `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit whether direct RHS concat expressions can safely seed undeclared whole-signal list aggregate contracts.`
   Acceptance: `The audit identifies the current RHS concat source-contract implementation, accepted and rejected coverage, ambiguity risks, naming policy implications, and whether the next behavior-bearing leaf should infer a list contract for undeclared whole targets from direct RHS concat. No behavior changes are made in this audit leaf.`
+  Verification: `passed: focused concat expression, SystemVerilog operand-contract, corpus accounting, feature-backlog audit, mdBook build, and diff check`
+  Commit: `AGGREGATE-AUTOGROWTH-FROM-USAGE.4: audit RHS concat autogrowth`
+
+- ID: `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`
+  Status: `pending`
+  Goal: `Infer undeclared whole-signal list contracts from direct RHS concat expressions.`
+  Acceptance: `When a direct .fsm whole-signal LHS has no explicit declaration and is assigned a direct RHS concat whose operands all have exact scalar or aggregate type specs, FSMGen records a generated list aggregate contract on the target before HDL generation. Nested concat operands preserve nested list shape. Explicit target declarations remain authoritative. Record mapping still requires a declared record target. Ambiguous, no-width, partial-path, child-endpoint, compound-update, and VHDL surfaces remain unchanged, and incompatible later aggregate contracts fail closed.`
   Verification: `pending`
   Commit: `pending`
 
@@ -83,7 +91,7 @@ type anchor.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` | `pending` | The constant-root source position is now shipped; direct RHS concat is the next candidate because it already produces source aggregate contracts for declared aggregate targets, but undeclared target autogrowth needs a separate ambiguity and naming-policy audit. |
+| 1 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` | `pending` | The audit found one bounded proof source: direct RHS concat can build an ordered list contract from exact operand specs, while record mapping still requires a declared record target. |
 
 ## Audit Findings
 
@@ -105,6 +113,11 @@ type anchor.
   contracts when the target has a declared aggregate type. Inferring aggregate
   contracts from concat into an undeclared target is useful but is a separate
   source-position decision because it may depend on operand width evidence.
+- The direct RHS concat audit found that only the list side is self-contained:
+  `concat_expression_list_type_spec` already builds ordered scalar/list/record
+  item specs from exact operands, including nested concat operands. Record
+  mapping is target-aware because member names come from a declared record
+  target, so anonymous record inference from concat alone remains out of scope.
 - Composition already has a bounded aggregate top-port inference path:
   declared aggregate top-port paths, whole-root links to typed child inputs,
   and uniform unlinked same-name child inputs can seed aggregate root
@@ -132,13 +145,22 @@ from child endpoints, will not change VHDL, will not change backend-owned
 struct lowering policy, and will not treat width equality alone as aggregate
 compatibility.
 
-## Selected Follow-up Slice
+## Completed Follow-up Audit
 
-`AGGREGATE-AUTOGROWTH-FROM-USAGE.4` will audit direct RHS concat autogrowth
-before any implementation. Existing concat/deconstruct handling already
-builds aggregate source contracts for declared aggregate targets, but growing
-an undeclared whole target from that source needs an explicit policy for
-anonymous list naming, width evidence, operand ambiguity, and diagnostics.
+`AGGREGATE-AUTOGROWTH-FROM-USAGE.4` audited direct RHS concat autogrowth
+before implementation. Existing concat/deconstruct handling already builds
+aggregate source contracts for declared aggregate targets. The safe
+undeclared-target widening is list-only: the authored concat order provides
+the list item order, nested concat operands preserve nested list shape, and
+each operand must already have an exact scalar or aggregate type spec.
+
+## Selected Next Slice
+
+`AGGREGATE-AUTOGROWTH-FROM-USAGE.5` will implement direct RHS concat
+autogrowth only for undeclared whole targets that can receive a generated list
+contract. It will not infer anonymous record member names, will not change
+explicit declarations, will not accept no-width operands, and will preserve
+fail-closed aggregate-contract diagnostics for incompatible later assignments.
 
 ## Decisions
 
@@ -161,11 +183,16 @@ anonymous list naming, width evidence, operand ambiguity, and diagnostics.
 - `2026-05-24`: The next frontier is an audit of direct RHS concat target
   autogrowth. Concat sources are useful but less canonical than constant
   roots, so they need a separate source-position review before code changes.
+- `2026-05-24`: The direct RHS concat audit selected a list-only
+  implementation frontier. Concat order is enough evidence for a list
+  contract when every operand has an exact type spec; it is not enough
+  evidence for anonymous record member names, so record mapping remains
+  target-declared only.
 
 ## Open Questions
 
-- Whether direct RHS concat should also grow undeclared whole-signal list
-  contracts is the active `.4` source-position audit.
+- Whether anonymous record contracts should ever be inferred from direct RHS
+  concat without a declared record target remains out of scope.
 
 ## Blockers
 
@@ -178,6 +205,7 @@ anonymous list naming, width evidence, operand ambiguity, and diagnostics.
 | `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.1` | `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: Files=3, Tests=351` |
 | `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.2` | `prove -Iperl t/276-direct-local-aggregate-values.t t/280-declarative-aggregate-types.t t/281-structural-declared-type-contracts.t t/285-aggregate-expression-type-support.t t/288-composition-aggregate-top-expression-inference.t t/248-regression-corpus-accounting.t`; `mdbook build docs/book`; `git diff --check` | `passed: Files=6, Tests=3085` |
 | `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/1321-direct-aggregate-autogrowth.t`; `prove -Iperl t/1321-direct-aggregate-autogrowth.t t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t t/297-capability-manifest.t t/359-support-accounting-corpus-runtime-audit.t t/372-support-accounting-catalog-path-audit.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: direct/corpus Files=3, Tests=3085; supported-corpus gates Files=6, Tests=27; feature-backlog audit Files=1, Tests=15` |
+| `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` | `prove -Iperl t/285-aggregate-expression-type-support.t t/270-systemverilog-assignment-width-contract-validation.t t/248-regression-corpus-accounting.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: focused concat/corpus Files=3, Tests=3088; feature-backlog audit Files=1, Tests=15` |
 
 ## Commit Log
 
@@ -186,7 +214,8 @@ anonymous list naming, width evidence, operand ambiguity, and diagnostics.
 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.1` | `b0f4783e AGGREGATE-AUTOGROWTH-FROM-USAGE.1: select aggregate autogrowth work` | `selection slice` |
 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.2` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.2: audit aggregate autogrowth frontier` | `audit/design slice` |
 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.3: infer aggregate constant targets` | `implementation slice` |
-| `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` | `pending` | `audit/design slice` |
+| `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.4: audit RHS concat autogrowth` | `audit/design slice` |
+| `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` | `pending` | `implementation slice` |
 
 ## Changelog
 
@@ -198,3 +227,5 @@ anonymous list naming, width evidence, operand ambiguity, and diagnostics.
 - `2026-05-24`: Completed direct whole-signal aggregate contract inference
   from whole aggregate RHS constants and selected direct RHS concat autogrowth
   audit as the next frontier.
+- `2026-05-24`: Completed direct RHS concat autogrowth audit and selected a
+  list-only implementation frontier for undeclared whole targets.

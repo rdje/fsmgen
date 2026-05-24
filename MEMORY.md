@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Direct RHS concat autogrowth audited
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`.
+- Audited the direct RHS concat aggregate-shape path across
+  `FSM::Package::AggregateExpressionTypeSupport`, direct parser provenance,
+  SystemVerilog operand-contract validation, focused tests, corpus accounting,
+  mdBook, and live docs.
+- Confirmed that declared aggregate targets already receive source contracts
+  from direct RHS concat: list targets compare against ordered concat item
+  shape, nested concat operands preserve nested list shape, and declared
+  record targets map exact top-level operands onto record member order.
+- Selected a bounded follow-up implementation leaf:
+  `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` will infer undeclared whole-signal list
+  contracts from direct RHS concat expressions only when every operand has an
+  exact scalar/list/record type spec.
+- Record autogrowth from concat remains out of scope because concat syntax has
+  ordering but no member names. Explicit declarations remain authoritative,
+  and no-width operands, partial paths, child endpoints, compound updates, and
+  VHDL aggregate lowering remain unchanged.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in this audit slice.
+- Validation passed: focused concat/corpus tests with `Files=3, Tests=3088`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
+- Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`.
+
 ## 2026-05-24: Aggregate constant target autogrowth shipped
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`.
 - Direct `.fsm` whole-signal targets with no explicit declaration now infer a

@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Aggregate types — Direct RHS concat autogrowth audited
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`.
+- Audited direct RHS concat aggregate-shape inference and confirmed the
+  current implementation already builds list and target-aware record source
+  contracts for declared aggregate targets.
+- Selected `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` as the next implementation
+  leaf: infer undeclared whole-signal list contracts from direct RHS concat
+  expressions when all operands have exact scalar/list/record type specs.
+- Kept anonymous record inference from concat out of scope because member
+  names require a declared record target.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in this audit slice.
+- Validation passed: focused concat/corpus tests with `Files=3, Tests=3088`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
+
 ### Aggregate types — Aggregate constant target autogrowth shipped
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`.
 - Updated direct `.fsm` assignment parsing so an undeclared whole-signal LHS

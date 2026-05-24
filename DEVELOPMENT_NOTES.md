@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Direct RHS concat autogrowth should be list-only first
+- `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` audited the existing concat aggregate
+  helpers before implementation. `concat_expression_list_type_spec` is the
+  right proof source for undeclared whole targets because it derives an
+  ordered list shape directly from authored operand order.
+- Record mapping is different. Existing record support in
+  `concat_operand_type_spec_for_target` is intentionally target-aware: the
+  declared record target supplies member names and member order. A bare
+  `(concat A B)` expression has order but no names, so generating anonymous
+  record members would be a policy invention rather than recovered intent.
+- The next implementation should therefore infer only a generated list
+  contract for undeclared whole targets. It should reuse exact operand type
+  specs, preserve nested concat list shape, skip explicit target
+  declarations, and leave record autogrowth for a separate syntax or explicit
+  type anchor decision.
+
 ## 2026-05-24: Inferred aggregate targets stay declaration-first
 - `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` places the new inference in the direct
   assignment path, immediately after source parsing and before source

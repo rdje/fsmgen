@@ -3,7 +3,23 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `aggregate types and data`.
 - Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
-- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`.
+- Recent aggregate autogrowth concat audit:
+  `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` audited whether direct RHS concat
+  expressions can safely seed undeclared whole-signal aggregate contracts.
+  The current implementation already builds source contracts for declared
+  aggregate targets: ordered list shape for list targets, nested list shape
+  for nested concat operands, and target-aware record mapping when a declared
+  record target supplies member names. The selected follow-up leaf is
+  `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`, limited to undeclared whole-signal
+  list contract inference from direct RHS concat when every operand has an
+  exact scalar/list/record type spec. Anonymous record inference from concat
+  remains out of scope because concat syntax provides ordering but no member
+  names. No parser, scheduler, report, generated artifact, HDL, CLI, public
+  API, or public language behavior changed in this audit slice. Validation
+  passed: focused concat/corpus tests with `Files=3, Tests=3088`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent aggregate autogrowth implementation:
   `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` shipped direct whole-signal aggregate
   contract inference from whole aggregate RHS constant roots. When a direct
@@ -18,9 +34,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `t/1321-direct-aggregate-autogrowth.t`, the supported corpus entry
   `feature.direct_aggregate_constant_target_autogrowth`, and synchronized the
   mdBook aggregate-type/backlog chapters, regression corpus docs, live docs,
-  and task tree. The current frontier is
-  `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`, an audit of whether direct RHS concat
-  expressions can safely seed undeclared whole-signal list contracts.
+  and task tree. The current frontier after `.3` was
+  `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`, a direct RHS concat autogrowth audit.
   Validation passed: parser/corpus syntax checks; direct/corpus tests with
   `Files=3, Tests=3085`; supported-corpus behavior/json/manifest/accounting
   gates with `Files=6, Tests=27`; feature-backlog audit with `Files=1,
@@ -6213,12 +6228,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
-- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`.
-- Completion status: `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` shipped direct
-  whole-signal aggregate contract inference from whole aggregate RHS constant
-  roots. The next PNT step audits whether direct RHS concat expressions can
-  safely seed undeclared whole-signal list contracts before any behavior
-  changes.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`.
+- Completion status: `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` audited direct RHS
+  concat autogrowth and selected a list-only implementation frontier. The
+  next PNT step may implement generated list contracts for undeclared whole
+  targets assigned direct RHS concat expressions with exact operand specs.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

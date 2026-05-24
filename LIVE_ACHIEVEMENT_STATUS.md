@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Aggregate types — Direct RHS concat autogrowth audited
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`.
+- Direct RHS concat already builds aggregate source contracts for declared
+  aggregate targets: ordered list shape for list targets, nested list shape
+  for nested concat operands, and target-aware record mapping when a declared
+  record target supplies member names.
+- The current frontier is `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`, which will
+  implement undeclared whole-signal list contract inference from direct RHS
+  concat expressions with exact operand type specs.
+- Anonymous record autogrowth from concat, no-width operands, partial paths,
+  child endpoints, compound updates, VHDL aggregate lowering, and explicit
+  target declaration overrides remain out of scope.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in this audit slice.
+- Validation passed: focused concat/corpus tests with `Files=3, Tests=3088`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
+
 ## 2026-05-24: Aggregate types — Aggregate constant target autogrowth shipped
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`.
 - Direct `.fsm` whole-signal targets with no explicit declaration now infer a

@@ -63,8 +63,8 @@ types, direct-root aggregate member/list expressions, partial aggregate LHS
 writes, and direct whole-signal target contract inference from whole aggregate
 constant roots are supported on the current SystemVerilog path. Broad
 automatic aggregate type growth from arbitrary usage is not fully shipped.
-The active task-tree frontier is auditing whether direct RHS concat
-expressions can safely seed an undeclared whole-signal list contract.
+The active task-tree frontier is implementing a bounded direct RHS concat
+autogrowth slice for undeclared whole-signal list contracts.
 
 ### Backend-Owned Struct/Record Default Lowering
 
