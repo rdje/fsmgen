@@ -4,6 +4,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Recent R14 transaction-over-rule book truth sync:
+  `ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.1` corrected stale
+  mdBook current-limitation prose that still described
+  transaction-over-rule priority as deferred. The intent-scheduling chapter
+  now matches the shipped covered same-target data behavior: the
+  lower-priority non-state rule DT is guarded by the scheduled `.fsm`
+  `(state_active STATE)` predicate while the higher-priority transaction
+  state is active. Broader transaction/transaction priority, unordered
+  rule/transaction conflicts, and mixed timing conflicts remain fail-closed.
+  No parser, scheduler, report, generated artifact, HDL, CLI behavior,
+  public API, source, test, or generated behavior changed. The task tree,
+  README index, roadmap, mdBook, and live docs are synchronized. Validation
+  passed: focused book/spec/backlog audits with `Files=3, Tests=343`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 storage-port round-robin resource implementation:
   `ISF-STORAGE-PORT-ROUND-ROBIN.2` shipped bounded
   `(resource NAME (kind storage_port) (arbiter round_robin) (members STORAGE_SIGNAL...) (users RULE...))`

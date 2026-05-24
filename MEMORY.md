@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 transaction-over-rule book truth sync
+- Completed `ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.1` and closed the task
+  tree.
+- Corrected stale mdBook intent-scheduling prose that still claimed
+  transaction-over-rule priority was deferred.
+- The book now states the shipped covered same-target data behavior:
+  scheduled `.fsm` uses `(state_active STATE)` to guard the lower-priority
+  non-state rule DT while the higher-priority transaction state is active.
+- Broader transaction/transaction priority, unordered rule/transaction
+  conflicts, and mixed timing conflicts remain fail-closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior,
+  public API, source, test, or generated behavior changed.
+- Synchronized the task tree, README index, roadmap, mdBook, and live docs.
+- Validation passed: focused book/spec/backlog audits with
+  `Files=3, Tests=343`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 storage-port round-robin resource shipped
 - Completed `ISF-STORAGE-PORT-ROUND-ROBIN.2` and closed the task tree.
 - FSMGen now accepts bounded

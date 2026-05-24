@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Transaction-over-rule book truth sync
+- Completed `ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.1` and closed the task
+  tree.
+- Corrected stale mdBook intent-scheduling current-limitation prose that
+  still described transaction-over-rule priority as deferred.
+- The book now documents the shipped covered same-target data behavior using
+  scheduled `.fsm` `(state_active STATE)` guard syntax and names the
+  remaining fail-closed conflict surfaces.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior,
+  public API, source, test, or generated behavior changed.
+- Synchronized the task tree, README index, roadmap, mdBook, and live docs.
+- Validation passed: focused book/spec/backlog audits with
+  `Files=3, Tests=343`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Storage-port round-robin resource shipped
 - Completed `ISF-STORAGE-PORT-ROUND-ROBIN.2` and closed the task tree.
 - `storage_port` resources now support the bounded `round_robin` arbiter for

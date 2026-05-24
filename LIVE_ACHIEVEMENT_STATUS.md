@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Transaction-over-rule book truth sync
+- Completed `ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.1` and closed the task
+  tree.
+- Corrected stale mdBook intent-scheduling prose that still claimed
+  transaction-over-rule priority was deferred.
+- The book now states that covered same-target data transaction-over-rule
+  priority is shipped through scheduled `.fsm` `(state_active STATE)` guard
+  syntax.
+- Broader transaction/transaction priority, unordered rule/transaction
+  conflicts, and mixed timing conflicts remain fail-closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior,
+  public API, source, test, or generated behavior changed.
+- The task tree, README index, roadmap, mdBook, and live docs are
+  synchronized.
+- Validation passed: focused book/spec/backlog audits with
+  `Files=3, Tests=343`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Storage-port round-robin resource shipped
 - Completed `ISF-STORAGE-PORT-ROUND-ROBIN.2` and closed the task tree.
 - FSMGen now supports bounded

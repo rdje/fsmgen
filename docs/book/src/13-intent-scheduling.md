@@ -763,8 +763,7 @@ The ISF-specific current limitations are:
 
   For `rule_slot`, `output_bundle`, `transaction_start`, or `storage_port`
   plus `round_robin`, the listed rule users form a circular grant order.
-  FSMGen
-  emits a generated pointer counter
+  FSMGen emits a generated pointer counter
   `isf_rr_<resource>_turn`, grants the first requesting rule at or after that
   pointer, and advances the pointer from the winning rule DT. The pointer is
   reported as inferred storage with role `resource_round_robin_pointer`.
@@ -785,9 +784,12 @@ The ISF-specific current limitations are:
   and `storage_port` resources, and the lowerable rule-over-transaction
   same-target data case.
 
-  Transaction-over-rule priority remains deferred because scheduled `.fsm`
-  review text does not yet expose a state-active predicate that can safely
-  guard a non-state rule DT assignment.
+  Transaction-over-rule priority is shipped for the covered same-target data
+  case. It uses the scheduled `.fsm` `(state_active STATE)` review predicate
+  to guard the lower-priority non-state rule DT while the higher-priority
+  transaction state is active. Broader transaction/transaction priority,
+  unordered rule/transaction conflicts, and mixed timing conflicts remain
+  fail-closed.
 - Deprecated `(handshake name (valid signal) (ready signal))` metadata is
   structurally validated and then ignored; direct `(on port ...)` activation
   plus generated `can_accept` is the current model.

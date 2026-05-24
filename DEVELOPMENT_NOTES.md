@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Transaction-over-rule book prose follows shipped state-active evidence
+- The transaction-over-rule priority implementation already has a bounded
+  scheduled `.fsm` review predicate, `(state_active STATE)`, and the spec,
+  public contract, downstream handoff, rule chapter, and feature backlog
+  already point at that shipped mechanism.
+- The intent-scheduling chapter is the user-facing overview, so stale
+  "deferred" language there is treated as a documentation truth defect even
+  when no compiler behavior changes.
+
 ## 2026-05-24: Storage-port round-robin keeps storage ownership concrete
 - The shipped `storage_port` round-robin path reuses the existing whole-rule
   DT grant machinery. Fairness changes which bound rule owns the storage-port
