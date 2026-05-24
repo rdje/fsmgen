@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Defer broader reusable-module growth until one surface is explicit
+- The shipped reusable standalone-DT/module-library contract is now broad
+  enough to document as a bounded contract: canonical `?dt:name` roots,
+  `?dtc` composition children, explicit standalone-DT system metadata, source
+  lookup, block-enable metadata, grouped multi-drive target metadata,
+  assertion hooks, composition exports, generated-child defaults and
+  parameter overrides, CLI summaries, and forward-IR exports are all
+  regression-backed.
+- The remaining work is not one small continuation. Unnamed roots, authored DT
+  enable-control, reusable packages, advanced interface/export rules, broader
+  lookup policy, external activation/deactivation, advanced merge/priority,
+  and debug reporting should each be selected through a separate precise
+  contract before code.
+
 ## 2026-05-24: Reusable-module work needs an audit before code
 - The shipped reusable standalone-DT surface already spans named `?dt:name`
   roots, composition-facing `?dtc` children, grouped multi-drive metadata,

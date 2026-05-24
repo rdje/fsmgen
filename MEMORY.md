@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R11 reusable-module contract frontier audited
+- Completed `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.2` and closed the
+  task tree.
+- Decision: no new reusable-module implementation slice is selected now. The
+  shipped bounded contract already covers canonical `?dt:name` roots,
+  compatibility aliases outside strict child-source checks, composition-facing
+  `?dtc` children, explicit standalone-DT system metadata, embedded /
+  repeated `--path DIR` / `FSMLIB` / local child-source lookup, block-enable
+  families, grouped multi-drive targets, SystemVerilog assertion hooks,
+  composition child exports, generated-child defaults and parameter overrides,
+  CLI summaries, and forward-IR export surfaces.
+- Broader unnamed roots, authored DT enable-control, declarative reusable
+  packages, advanced reusable-module interface/export rules, broader lookup
+  policy, external activation/deactivation, advanced same-target
+  merge/priority, and debug-reporting semantics remain deferred until one
+  precise prerequisite contract exists.
+- Synchronized the mdBook composition basics chapter, mdBook feature backlog,
+  roadmap, task-tree, README, and live docs.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused reusable-module evidence with `Files=16,
+  Tests=42`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R11 reusable-module contract frontier audit selected
 - Created active task tree `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT`.
 - Purpose: audit the shipped reusable standalone-DT and module-library surface

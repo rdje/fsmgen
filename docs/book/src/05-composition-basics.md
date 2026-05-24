@@ -370,6 +370,107 @@ interface and the top binds them by name. A single `?dtc` child can therefore
 emit a top instance with `.clk(clk)` and `.rst_n(rst_n)` while data ports such
 as `data_in` and `result_data` stay ordinary top/child connections.
 
+## Reusable Standalone-DT Modules
+
+A standalone-DT root is a reusable module-shaped source rooted at `?dt:name`.
+The legacy aliases `?mod:name` and `?module:name` are accepted in compatibility
+mode, but strict child-source checks require canonical `?dt:name` for `?dtc`
+children.
+
+Standalone-DT roots are built from one or more general DT blocks such as
+`(-from_a ...)` and `(-from_b ...)`.
+
+Example:
+
+```lisp
+(?dt:route_src
+  (+size
+    (sel 1)
+    (a 8)
+    (b 8)
+    (out 8)
+  )
+  (-from_a
+    (<sel==1'b0
+      (out> = a)
+    )
+  )
+  (-from_b
+    (<sel==1'b1
+      (out> = b)
+    )
+  )
+)
+```
+
+Direct `?dt:name` generation reports the reusable-DT structure in
+`module_info`:
+
+- `standalone_dt_count`
+- `standalone_dt_names`
+- `standalone_dt_enable_families`
+- `standalone_dt_module_enable_family`
+- `standalone_dt_multi_drive_target_count`
+- `standalone_dt_multi_drive_targets`
+
+The enable-family metadata names each block-level enable signal and the
+module-level group of block enables. For the example above, the block enables
+are `from_a_en` and `from_b_en`.
+
+When several standalone-DT blocks drive the same target, FSMGen reports one
+grouped multi-drive target family. That family records the target signal,
+mux/storage class, contributing DT block names, RHS values, per-DT enable
+signals, grouped LHS enable signals, and one bounded assertion metadata object.
+
+SystemVerilog output emits verification-only onehot0 guard assertions for
+those grouped standalone-DT multi-drive targets under `` `ifndef SYNTHESIS``.
+Verilog output keeps the metadata but does not emit SystemVerilog assertion
+syntax.
+
+The same metadata survives `?dtc` realization. A composition top that
+instantiates standalone-DT children aggregates those exports through:
+
+- `composition_standalone_dt_child_count`
+- `composition_standalone_dt_block_count`
+- `composition_standalone_dt_multi_drive_target_count`
+- `composition_standalone_dt_children`
+
+Those child exports also live in the top-level `intent_hir`, and they carry
+each realized child's forward `intent_hir`, `lowered_rtl_ir`, and structural
+interface boundary where those layers exist.
+
+Example:
+
+```lisp
+(?top:dtc_top
+  (?ports:public_io
+    sel
+    data_a<8
+    data_b<8
+    final_out>8
+  )
+  (?dtc:router_a route_src)
+  (?dtc:router_b route_src)
+  (?wiring:wiring
+    (sel router_a.sel)
+    (data_a router_a.a)
+    (data_b router_a.b)
+    (router_a.out router_b.a)
+    (router_b.out final_out)
+  )
+)
+```
+
+Named `?dtc:name` children may omit the source token and default it to the
+instance name. For external files, source lookup follows the same generated
+child order: repeated `--path DIR` roots, then `FSMLIB`, then the local source
+directory context.
+
+Current boundary: standalone-DT modules do not yet have an authored
+enable-control syntax that overrides the implicit block enable, unnamed
+`?dt:` roots are not a public contract, and broader reusable-module package or
+lookup semantics remain future work.
+
 ## Same-Name Convention
 
 There are now several bounded same-name paths:

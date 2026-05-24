@@ -1,9 +1,29 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R11`.
-- Active task tree: `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT`.
-- Current frontier: `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R11 reusable-module contract frontier audit:
+  `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.2` audited the shipped reusable
+  standalone-DT/module-library contract and closed the task tree. No new
+  reusable-module implementation slice is selected now. The shipped bounded
+  contract is regression-backed across canonical `?dt:name` roots,
+  compatibility aliases outside strict child-source checks, composition-facing
+  `?dtc` children, explicit standalone-DT system metadata, reusable source
+  lookup through embedded roots / repeated `--path DIR` roots / `FSMLIB` /
+  local source context, block-enable families, grouped multi-drive targets,
+  SystemVerilog assertion hooks, composition child exports, generated-child
+  defaults and parameter overrides, CLI summaries, and forward-IR export
+  surfaces. Broader unnamed roots, authored DT enable-control, declarative
+  reusable packages, advanced reusable-module interface/export rules, broader
+  lookup policy, external activation/deactivation, advanced same-target
+  merge/priority, and debug-reporting semantics remain deferred until one
+  precise prerequisite contract exists. The mdBook composition basics chapter
+  and feature backlog now document the shipped contract and backlog boundary.
+  Validation passed: focused reusable-module evidence with `Files=16,
+  Tests=42`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R11 reusable-module contract frontier audit selection:
   `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.1` activated an
   evidence-gathering audit over the remaining reusable standalone-DT and
@@ -8606,6 +8626,35 @@ Done:
   - Validation passed: focused shared-datapath evidence with `Files=18,
     Tests=36`; feature-backlog audit with `Files=1, Tests=15`;
     `mdbook build docs/book`; and `git diff --check`.
+- `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.1` selected the active
+  reusable-module contract frontier audit before implementation:
+  - the next frontier is `.2`,
+  - `.2` must audit shipped reusable standalone-DT/module-library behavior,
+    documentation truth, public contract surfaces, and R11 roadmap goals,
+  - and no parser, scheduler, report, generated artifact, HDL, CLI, public
+    API, source, test, or generated behavior changed in the selection slice.
+  - Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+    `mdbook build docs/book`; and `git diff --check`.
+- `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.2` audited the shipped
+  reusable standalone-DT/module-library contract and closed the task tree:
+  - no immediate reusable-module implementation slice is selected,
+  - the shipped bounded contract covers canonical `?dt:name` roots,
+    compatibility aliases outside strict child-source checks,
+    composition-facing `?dtc` children, explicit standalone-DT system
+    metadata, embedded/`--path`/`FSMLIB`/local child-source lookup,
+    block-enable families, grouped multi-drive targets, SystemVerilog
+    assertion hooks, composition child exports, generated-child defaults and
+    parameter overrides, CLI summaries, and forward-IR exports,
+  - broader unnamed roots, authored DT enable-control, declarative reusable
+    packages, advanced reusable-module interface/export rules, broader lookup
+    policy, external activation/deactivation, advanced same-target
+    merge/priority, and debug-reporting semantics remain deferred until one
+    precise prerequisite contract exists,
+  - and the mdBook composition basics chapter plus feature backlog now
+    document the shipped contract and backlog boundary.
+  - Validation passed: focused reusable-module evidence with `Files=16,
+    Tests=42`; feature-backlog audit with `Files=1, Tests=15`;
+    `mdbook build docs/book`; and `git diff --check`.
 - Explicit composition `?wiring` blocks now accept canonical Lisp-ish list
   links:
   - `(source target)` is the compact directed-link spelling,
@@ -9375,14 +9424,19 @@ Left:
   - mixed registered/combinational runtime lifting,
   - and wider shared-data movement that needs a reusable-module,
     portable-type, or architecture contract first.
-- Turn the reusable standalone-DT/module-library direction into a real contract:
-  - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
-  - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract beyond the now-shipped multi-block enable, grouped shared-target, assertion, and composition-facing child-export metadata surfaces,
-  - define how multi-`(-foo ...)` standalone DT modules expose block-level and module-level enable families beyond those current metadata/export summaries,
-  - define the authored advanced DT enable-control contract for overriding the current implicit `dt_enable = 1` behavior with a signal or bounded logical expression, including how it interacts with FSM state selection, multiple initial/entry-state-like regions, external activation/deactivation, same-target drive hazards, merge/priority policy, assertion hooks, and debug reporting,
-  - extend the now-shipped implicit-system rule split between `?fsm:name` and `?dt:name` into the broader reuse/composition contract,
-  - extend the now-shipped generated-child contract beyond the current `?fsmc` / `?dtc` `C1` / `C2` / `C3` plus generated-only and mixed-lane `C4` slices into reusable-module interface/export rules,
-  - and extend the now-shipped `--path` / `FSMLIB` lookup slice beyond bare top-level inputs, generated child sources, and `.rtlif` metadata lookup.
+- Defer broader reusable standalone-DT/module-library growth beyond the
+  documented bounded contract until one exact prerequisite contract is
+  selected:
+  - unnamed reusable roots such as bare `?dt:`,
+  - authored DT enable-control syntax beyond the implicit block enable,
+  - declarative reusable packages and richer package/import semantics,
+  - advanced reusable-module interface/export rules,
+  - broader `--path` / `FSMLIB` lookup policy,
+  - external activation/deactivation,
+  - advanced same-target merge/priority policy,
+  - and debug-reporting contracts that need a reusable-module,
+    lookup, package/import, enable-control, portable-type, or architecture
+    contract first.
 - Turn the portable synthesizable-type direction into a real contract:
   - settle the portable type core and keep it honest across SystemVerilog and future VHDL,
   - decide how a future `(+types ...)` family coexists with the already-shipped `(+enums ...)` lane,

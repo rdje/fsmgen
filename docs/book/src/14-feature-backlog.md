@@ -168,6 +168,47 @@ registered/combinational runtime lifting, and broader shared-data movement
 remain deferred until their route/storage/protocol, reusable-module,
 portable-type, or architecture contract is explicit.
 
+### Reusable Standalone-DT Modules
+
+Status: shipped for bounded `?dt:name` roots and `?dtc` generated children;
+broader reusable-module surfaces remain backlog.
+
+Goal: make standalone-DT roots usable as reusable module-shaped sources with a
+clear root/interface/lookup/system-port/arbitration contract.
+
+Current boundary: direct `?dt:name` roots are supported. Compatibility aliases
+`?mod:name` and `?module:name` are accepted outside strict child-source
+checks, while strict `?dtc` child sources require canonical `?dt:name`.
+Standalone-DT roots may contain multiple general DT blocks, expose explicit
+`+system` metadata when sequential behavior needs clock/reset ports, and
+report block-level enable families plus module-level enable-family metadata.
+
+Grouped standalone-DT multi-drive targets are shipped in metadata. They report
+target signal, mux/storage class, contributing DT block names, RHS values,
+per-DT enable signals, grouped LHS enable signals, and onehot0 assertion
+metadata. SystemVerilog direct `?dt` roots and realized `?dtc` children emit
+bounded non-synthesis guard assertions from that metadata; Verilog keeps the
+metadata without assertion syntax.
+
+Composition tops aggregate realized `?dtc` children through
+`composition_standalone_dt_children` and related count fields. Those exports
+preserve stable instance/module/source identity, standalone-DT names, enable
+families, grouped multi-drive targets, and forward IR summaries through
+`module_info` and `intent_hir`.
+
+Generated child source lookup is shipped for embedded roots, repeated
+`--path DIR` roots, `FSMLIB`, and local source context. Named `?dtc:name`
+children may omit the explicit source token and default it to `name`.
+
+Remaining backlog: unnamed reusable roots such as bare `?dt:`, authored DT
+enable-control syntax beyond the implicit block enable, reusable-module
+interface/export rules beyond the current generated-child surfaces, broader
+`--path`/`FSMLIB` lookup policy, declarative reusable packages, advanced
+same-target merge/priority policy, external activation/deactivation, and
+debug-reporting contracts remain deferred until one exact reusable-module,
+lookup, package/import, enable-control, portable-type, or architecture
+contract is selected.
+
 ### VHDL Generic-Map Lowering
 
 Status: backlog, behind active VHDL backend work.

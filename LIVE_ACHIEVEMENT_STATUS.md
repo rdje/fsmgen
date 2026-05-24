@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R11 — Reusable-module contract frontier audited
+- Completed `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.2` and closed the
+  task tree.
+- Decision: no new reusable-module implementation slice is selected now.
+  Broader unnamed roots, authored DT enable-control, declarative reusable
+  packages, advanced reusable-module interface/export rules, broader lookup
+  policy, external activation/deactivation, advanced same-target
+  merge/priority, and debug-reporting semantics remain deferred until one
+  precise prerequisite contract exists.
+- The mdBook composition basics chapter and feature backlog now document the
+  shipped bounded reusable standalone-DT/module-library contract and backlog
+  boundary.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused reusable-module evidence with `Files=16,
+  Tests=42`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R11 — Reusable-module contract frontier audit selected
 - Created active task tree `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT`.
 - Completed `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.1`.
