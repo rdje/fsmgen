@@ -1,5 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-24
+### R14 — Storage-port member documentation truth sync
+- Completed `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` and closed the task tree.
+- Corrected stale public spec wording that still said `(members ...)` was
+  accepted only for `(kind output_bundle)`.
+- The synchronized public truth is that `(members ...)` is accepted for both
+  `(kind output_bundle)` and `(kind storage_port)`. Storage-port members
+  remain limited to explicit concrete actor-owned storage signals for bound
+  declared rule users.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public contract,
+  or public runtime behavior changed.
+- Validation passed: stale-wording audit over source docs; public live-book,
+  spec-index, and feature-matrix audits with `Files=3, Tests=339`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-23
 ### Project operations — Feature-backlog status audit CI repair
 - Completed `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` and closed the task tree.

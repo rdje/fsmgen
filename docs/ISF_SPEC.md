@@ -3428,12 +3428,13 @@ optional `(kind ...)`, `(users ...)`, and `(members ...)` subclauses.
 Duplicate resource names, duplicate resource subclauses, duplicate users,
 duplicate members, malformed kinds, malformed users, malformed members,
 unknown enforced-kind users, bound `transaction_start` resource names that do
-not name declared local transactions, and output-bundle members that are not
-declared actor output ports or concrete actor-owned storage signals are
-rejected before scheduled `.fsm` emission. `(members ...)` is accepted only
-for `(kind output_bundle)` in the current shipped surface. `(resources ...)`
-is an actor-level singleton clause, so repeated resources blocks are rejected
-instead of merged or overwritten.
+not name declared local transactions, output-bundle members that are not
+declared actor output ports or concrete actor-owned storage signals, and
+storage-port members that are not concrete actor-owned storage signals are
+rejected before scheduled `.fsm` emission. `(members ...)` is accepted for
+`(kind output_bundle)` and `(kind storage_port)` in the current shipped
+surface. `(resources ...)` is an actor-level singleton clause, so repeated
+resources blocks are rejected instead of merged or overwritten.
 Resource
 semantics use a growable catalog of shareable resource kinds. The resource name
 is the author-defined instance handle; the kind says what is being shared; the

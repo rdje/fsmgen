@@ -4,6 +4,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Recent R14 storage-port member truth sync:
+  `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` corrected stale public spec wording
+  that still implied `(members ...)` belonged only to `output_bundle`. The
+  truth is that `(members ...)` is shipped for both `(kind output_bundle)` and
+  `(kind storage_port)`, with `storage_port` members limited to explicit
+  concrete actor-owned storage signals for bound declared rule users. No
+  parser, scheduler, report, generated artifact, HDL, CLI, or public runtime
+  behavior changed.
 - Recent project-operations CI repair:
   `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` repaired the latest GitHub
   `Perl FSM Regression` failure. Run `26342756632` failed on
@@ -5999,10 +6007,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - Active task tree: `none`.
 - Current frontier: `none`.
-- Completion status: `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` shipped
-  `output_bundle` resources for declared rule users under the existing static
-  `priority` arbiter and closed the active task tree. The next PNT step must
-  select or create the next roadmap-aligned task tree before any code changes.
+- Completion status: `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` corrected stale
+  public spec wording about resource `(members ...)` support and closed the
+  active task tree. The next PNT step must select or create the next
+  roadmap-aligned task tree before any code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

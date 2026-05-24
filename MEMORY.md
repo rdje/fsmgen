@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Storage-port member documentation truth sync
+- Completed `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` and closed the task tree.
+- Corrected stale [docs/ISF_SPEC.md](docs/ISF_SPEC.md) wording that still
+  implied `(members ...)` was accepted only for `(kind output_bundle)`.
+- The truthful shipped boundary is unchanged: `(members ...)` is accepted for
+  `(kind output_bundle)` and `(kind storage_port)`, and storage-port members
+  must be explicit concrete actor-owned storage signals for bound declared
+  rule users.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public contract,
+  or public runtime behavior changed.
+- Validation passed: stale-wording audit over source docs; public live-book,
+  spec-index, and feature-matrix audits with `Files=3, Tests=339`;
+  `mdbook build docs/book`; and `git diff --check`.
+- There is no active task tree after this closure; the next PNT step must
+  select or create the next roadmap-aligned task tree before any code changes.
+
 ## 2026-05-23: GitHub CI feature-backlog status audit repaired
 - Completed `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` and closed the task tree.
 - Investigated the latest GitHub failures:

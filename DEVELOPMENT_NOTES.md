@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Storage-port member support was already shipped
+- `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` is documentation-only. The parser,
+  lowerer, report projection, tests, public contract, downstream handoff, and
+  mdBook already described storage-port members correctly; one normative spec
+  sentence still carried the older output-bundle-only wording.
+- The correct public rule is that `(members ...)` belongs to
+  `output_bundle` and `storage_port` in the shipped resource surface. For
+  `storage_port`, members remain explicit concrete actor-owned storage
+  signals only.
+- This slice deliberately did not broaden resources or touch scheduling. It
+  keeps the documentation truth aligned before selecting another resource
+  feature.
+
 ## 2026-05-23: CI status audits must follow documentation truth
 - `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` fixes a stale test expectation rather
   than changing the mdBook. The book was already more accurate: automatic

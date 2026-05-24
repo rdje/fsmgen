@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Storage-port member documentation truth sync
+- Completed `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` and closed the task tree.
+- Corrected stale spec wording so the public docs no longer imply
+  `(members ...)` is accepted only for `(kind output_bundle)`.
+- The shipped boundary is unchanged: `(members ...)` is accepted for
+  `(kind output_bundle)` and `(kind storage_port)`, while `storage_port`
+  members remain explicit concrete actor-owned storage signals for bound
+  declared rule users.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public contract,
+  or public runtime behavior changed.
+- Validation passed: stale-wording audit over source docs; public live-book,
+  spec-index, and feature-matrix audits with `Files=3, Tests=339`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-23: Project operations — Feature-backlog status audit CI repair
 - Completed `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` and closed the task tree.
 - Reproduced the latest `Perl FSM Regression` failure locally:
