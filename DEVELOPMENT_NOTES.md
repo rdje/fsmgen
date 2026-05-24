@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Defer broader portable-type growth until the next exact contract
+- The current type surface is broad enough to document as a bounded shipped
+  contract: scalar aliases, signedness, two-state/four-state intent, positive
+  scalar width symbols, package-qualified type references, packed list/record
+  aliases, declared type identity, aggregate paths, SystemVerilog packed
+  typedef emission, and forward metadata preservation are all
+  regression-backed.
+- The remaining roadmap work is not one safe continuation. Enum-as-type
+  unification, fixed-size arrays, arrays of records, broad inference,
+  aggregate autogrowth, subaggregate runtime operators, VHDL record/array
+  lowering, backend-neutral inferred-type policy, and public type/export APIs
+  should each be selected only through one precise task-tree-owned contract.
+
 ## 2026-05-24: Portable-type work needs an audit before code
 - The shipped type surface already spans scalar width evidence, enums,
   aggregate values, declared aggregate aliases, composition declared-type

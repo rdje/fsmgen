@@ -24,12 +24,18 @@ What is shipped today:
 
 - widths from explicit `+size`
 - widths from scalar type aliases
+- signedness and two-state/four-state intent from scalar type aliases
 - widths from positive integer scalar symbols
 - symbolic scalar type widths such as `(type byte_t (bits BYTE_W))`
+- package-qualified scalar type and value references
 - bounded aggregate constant values
 - packed aggregate type aliases through `(list ...)` and `(record ...)`
 - declared-type preservation through the live pipeline
 - aggregate-aware compatibility checks on the current live paths
+- typed aggregate member/item paths on direct and composition source paths
+- backend-owned SystemVerilog packed typedefs for exact aggregate contracts
+- symbol-contract, `Intent HIR`, `module_info`, and `Structural RTL IR`
+  preservation for the bounded type surface
 
 The consolidated backlog for the following not-fully-shipped items is
 [Feature Backlog](14-feature-backlog.md). The type/aggregate highlights are:
@@ -37,6 +43,8 @@ The consolidated backlog for the following not-fully-shipped items is
 - “never declare scalar types unless you want to” across the whole language
 - broad automatic aggregate type growth from arbitrary usage
 - backend-owned struct/record emission as the default lowering
+- fixed-size arrays, arrays of records, enum-as-type unification, portable
+  VHDL record/array lowering, and richer public type/export APIs
 
 ## Mixed Integer Formats
 
@@ -215,9 +223,49 @@ remains future work; the backend should never pretend a richer type surface is
 stable before it really is. The widening is tracked in
 [Feature Backlog](14-feature-backlog.md).
 
+## Portable Type Contract Boundary
+
+The shipped type surface is already useful, but it is intentionally bounded.
+
+Current scalar aliases can express `bit`, `(bits N)`, signed variants, and
+explicit `two_state` / `four_state` intent. FSMGen carries those facts as
+semantic type metadata. On the SystemVerilog path, that metadata drives
+carrier spelling such as `bit`, `logic`, `signed`, and packed vector ranges.
+
+Current aggregate aliases can express exact packed `list` and `record`
+shapes. FSMGen preserves authored record member order, gives list items stable
+generated field names, and uses backend-owned packed typedefs when a stable
+aggregate contract reaches direct module ports, direct internal/helper
+declarations, composition ports and nets, projected child aggregate carriers,
+or bounded inferred direct targets.
+
+The forward metadata surfaces preserve the same bounded facts: symbol
+contracts, `Intent HIR`, `module_info`, `Structural RTL IR`, realized child
+interfaces, structural connection expressions, and inferred carrier nets all
+carry declared type names/specs where that contract exists.
+
+The following are not shipped as a complete portable type core yet:
+
+- enum-as-type unification between `+types` and the existing `+enums` family
+- fixed-size arrays and arrays of records
+- broad scalar declaration inference across every source position
+- aggregate member/index autogrowth from partial use without a complete
+  compile-time shape proof
+- arbitrary subaggregate runtime operators or aggregate paths in every
+  expression-operator position
+- VHDL record/array lowering and VHDL composition generic-map lowering
+- public type/export APIs beyond the bounded serialized contract surfaces
+
+Those are real roadmap items, not hidden behavior. Until a future task tree
+selects one exact contract, the current contract is the SystemVerilog-backed
+bounded surface described above.
+
 ## SystemVerilog And VHDL Intent
 
-The semantic type model should eventually carry facts like:
+The semantic type model already carries the bounded facts listed above for
+explicit scalar aliases and exact aggregate contracts. The longer-term goal is
+to carry those facts uniformly across every inferred and explicit type site,
+including:
 
 - width
 - signedness

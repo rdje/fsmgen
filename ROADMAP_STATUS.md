@@ -1,9 +1,30 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R11`.
-- Active task tree: `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT`.
-- Current frontier: `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R11 portable-type contract frontier audit:
+  `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.2` audited the shipped portable
+  synthesizable-type contract and closed the task tree. No new portable-type
+  implementation slice is selected now. The shipped bounded contract is
+  regression-backed across scalar aliases, signed and two-state/four-state
+  scalar intent, positive scalar width symbols, enum values,
+  package-qualified type/value references, packed list/record aliases,
+  declared type identity through direct roots and composition tops, aggregate
+  member/list-item access on direct and composition source paths, bounded
+  aggregate target inference, backend-owned SystemVerilog packed typedef
+  emission, symbol contracts, `Intent HIR`, `Structural RTL IR`, and VHDL
+  fail-closed diagnostics. Broader enum-as-type unification, fixed-size
+  arrays, arrays of records, broad inference-first scalar declarations,
+  aggregate member/index autogrowth from partial use, arbitrary subaggregate
+  runtime operators, portable VHDL record/array lowering, backend-neutral
+  policy across every inferred site, and richer public type/export APIs remain
+  deferred until one exact prerequisite contract exists. The mdBook symbols,
+  type/aggregate, and feature-backlog chapters now document the shipped
+  contract and backlog boundary. Validation passed: focused portable-type
+  evidence with `Files=13, Tests=59`; feature-backlog audit with `Files=1,
+  Tests=15`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R11 portable-type contract frontier audit selection:
   `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.1` activated an
   evidence-gathering audit over the remaining portable synthesizable-type
@@ -6760,10 +6781,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - Active task tree: `none`.
 - Current frontier: `none`.
-- Completion status: `R11-PARAMETER-GENERIC-FRONTIER-AUDIT.2` completed the
-  evidence-gathering audit and closed the tree. No immediate
-  parameter/generic implementation slice is selected; future work waits for
-  VHDL backend/composition support or one precise richer aggregate contract.
+- Completion status: `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.2`
+  completed the evidence-gathering audit and closed the tree. No immediate
+  portable-type implementation slice is selected; future work waits for one
+  precise frontend type-core, inference, member/index, backend-lowering, VHDL,
+  or public API contract.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8666,6 +8688,37 @@ Done:
   - Validation passed: focused reusable-module evidence with `Files=16,
     Tests=42`; feature-backlog audit with `Files=1, Tests=15`;
     `mdbook build docs/book`; and `git diff --check`.
+- `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.1` selected the active
+  portable-type contract frontier audit before implementation:
+  - the next frontier is `.2`,
+  - `.2` must audit shipped portable synthesizable-type behavior,
+    documentation truth, public contract surfaces, and R11 roadmap goals,
+  - and no parser, scheduler, report, generated artifact, HDL, CLI, public
+    API, source, test, or generated behavior changed in the selection slice.
+  - Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+    `mdbook build docs/book`; and `git diff --check`.
+- `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.2` audited the shipped portable
+  synthesizable-type contract and closed the task tree:
+  - no immediate portable-type implementation slice is selected,
+  - the shipped bounded contract covers scalar aliases, signed and
+    two-state/four-state scalar intent, positive scalar width symbols, enum
+    values, package-qualified type/value references, packed list/record
+    aliases, declared type identity through direct roots and composition tops,
+    aggregate member/list-item access on direct and composition source paths,
+    bounded aggregate target inference, backend-owned SystemVerilog packed
+    typedef emission, symbol contracts, `Intent HIR`, `Structural RTL IR`, and
+    VHDL fail-closed diagnostics,
+  - broader enum-as-type unification, fixed-size arrays, arrays of records,
+    broad inference-first scalar declarations, aggregate member/index
+    autogrowth from partial use, arbitrary subaggregate runtime operators,
+    portable VHDL record/array lowering, backend-neutral policy across every
+    inferred site, and richer public type/export APIs remain deferred until
+    one exact prerequisite contract exists,
+  - and the mdBook symbols, type/aggregate, and feature-backlog chapters now
+    document the shipped contract and backlog boundary.
+  - Validation passed: focused portable-type evidence with `Files=13,
+    Tests=59`; feature-backlog audit with `Files=1, Tests=15`;
+    `mdbook build docs/book`; and `git diff --check`.
 - Explicit composition `?wiring` blocks now accept canonical Lisp-ish list
   links:
   - `(source target)` is the compact directed-link spelling,
@@ -9448,13 +9501,20 @@ Left:
   - and debug-reporting contracts that need a reusable-module,
     lookup, package/import, enable-control, portable-type, or architecture
     contract first.
-- Turn the portable synthesizable-type direction into a real contract:
-  - settle the portable type core and keep it honest across SystemVerilog and future VHDL,
-  - decide how a future `(+types ...)` family coexists with the already-shipped `(+enums ...)` lane,
-  - define how far inference may go before the tool must require an explicit type anchor,
-  - define how inferred scalar/aggregate declarations are surfaced in generated interfaces and internal declarations,
-  - add member/field and fixed-size array access without overcommitting to aggregate literals too early,
-  - and keep explicit type declarations available as bounded overrides instead of the default authoring burden.
+- Defer broader portable synthesizable-type growth beyond the documented
+  bounded contract until one exact prerequisite contract is selected:
+  - enum-as-type unification between `+types` and the existing `+enums`
+    declaration family,
+  - fixed-size arrays and arrays of records,
+  - broad inference-first scalar declarations across every source position,
+  - aggregate member/index autogrowth from partial use without complete
+    compile-time shape evidence,
+  - arbitrary subaggregate runtime operators and aggregate paths in every
+    expression-operator position,
+  - portable VHDL record/array lowering and VHDL composition generic-map
+    paths,
+  - backend-neutral signedness/state-model policy across every inferred site,
+  - and richer public type/export APIs.
 - Refine declared top-port connect-by-name into an asymmetric integration-oriented contract:
   - decide how far future convention-over-configuration work should widen undeclared top-interface inference beyond the newly shipped `C1` passthrough slice and the newly shipped `C2` / `C3` omitted/empty-`?ports`, undeclared top-input/top-output/internal-carrier slices,
   - decide how far future convention-over-configuration work should widen beyond the newly shipped plain-explicit-top-port same-name convention in `C2` / `C3`,

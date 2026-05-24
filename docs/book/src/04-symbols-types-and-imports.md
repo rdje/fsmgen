@@ -371,6 +371,10 @@ The intent is:
 - 2-state vs 4-state is semantic
 - the HDL backend chooses the final spelling later
 
+This is not a complete portable type core yet. Enum families still use the
+existing `+enums` declaration family, and fixed-size arrays / arrays of
+records remain future work rather than accepted `+types` forms.
+
 ## Packed Aggregate Aliases
 
 The first shipped aggregate type aliases are:
@@ -553,7 +557,7 @@ What is shipped today:
 - named scalar constants
 - bounded aggregate constants
 - enum families
-- scalar type aliases
+- scalar type aliases, including signed and two-state/four-state intent
 - packed list and record aliases
 - semantic imports from `?pkg`
 - declared-type preservation across the live pipeline
@@ -561,6 +565,10 @@ What is shipped today:
 - composition-top packed typedef emission for aggregate aliases
 - direct-root typed aggregate signal member/list-item access in expressions
   and partial aggregate LHS writes on the SystemVerilog path
+- typed aggregate top-port and generated-child source paths in composition
+  `?wiring`
+- symbol-contract, `Intent HIR`, `module_info`, and `Structural RTL IR`
+  preservation for the bounded type surface
 
 These items are also tracked in the consolidated
 [Feature Backlog](14-feature-backlog.md):
@@ -568,5 +576,6 @@ These items are also tracked in the consolidated
 - broader inference-first typing so users need fewer explicit anchors
 - broader inference-first aggregate member/index typing without explicit
   declared aggregate anchors
+- fixed-size arrays, arrays of records, and full enum-as-type unification
 - VHDL aggregate-type lowering beyond current scalar/width-safe surfaces
 - richer public type/export surfaces for embedders

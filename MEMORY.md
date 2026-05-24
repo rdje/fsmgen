@@ -1,5 +1,33 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R11 portable-type contract frontier audited
+- Completed `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.2` and closed the
+  task tree.
+- Decision: no new portable-type implementation slice is selected now. The
+  shipped bounded contract already covers scalar aliases, signed and
+  two-state/four-state scalar intent, positive scalar width symbols, enum
+  values, package-qualified type/value references, packed list/record aliases,
+  declared type identity through direct roots and composition tops, aggregate
+  member/list-item access on direct and composition source paths, bounded
+  aggregate target inference, backend-owned SystemVerilog packed typedef
+  emission, symbol contracts, `Intent HIR`, `Structural RTL IR`, and VHDL
+  fail-closed diagnostics.
+- Broader enum-as-type unification, fixed-size arrays, arrays of records,
+  broad inference-first scalar declarations, aggregate member/index
+  autogrowth from partial use, arbitrary subaggregate runtime operators,
+  portable VHDL record/array lowering, backend-neutral policy across every
+  inferred site, and richer public type/export APIs remain deferred until one
+  precise prerequisite contract exists.
+- Synchronized the mdBook symbols, type/aggregate, and feature-backlog
+  chapters, roadmap, task-tree, README, and live docs.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused portable-type evidence with `Files=13,
+  Tests=59`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R11 portable-type contract frontier audit selected
 - Created active task tree `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT`.
 - Purpose: audit the shipped portable synthesizable type surface and select

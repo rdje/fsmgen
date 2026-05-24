@@ -51,6 +51,37 @@ overrideable specialization values, not fixed actor constants.
 
 ## Aggregate Types And Data
 
+### Portable Synthesizable Type Core
+
+Status: partially shipped; broader portable type core remains backlog.
+
+Goal: define one frontend type model that stays semantic and portable across
+SystemVerilog and future VHDL instead of exposing backend-specific spelling as
+the source-language contract.
+
+Current boundary: the shipped `+types` surface covers scalar aliases for
+`bit`, `(bits N)`, positive symbolic widths, signed variants, explicit
+`two_state` / `four_state` intent, local/imported aliases, and packed
+`list` / `record` aggregate aliases. Direct roots and composition tops preserve
+those exact contracts through symbol contracts, `Intent HIR`, `module_info`,
+`Structural RTL IR`, realized child interfaces, structural connection
+expressions, and SystemVerilog declaration lowering.
+
+Direct roots support typed aggregate member/list-item reads and partial
+aggregate LHS writes when the base signal has a declared aggregate type.
+Composition supports typed aggregate top-port and generated-child output
+member/list-item source paths, whole aggregate actuals, typed structural
+bindings, and bounded aggregate-root inference when a declared or safely
+inferred aggregate root already exists.
+
+Remaining backlog: enum-as-type unification with the existing `+enums`
+family, fixed-size arrays, arrays of records, broad inference-first scalar
+declarations, aggregate member/index autogrowth from partial use, arbitrary
+subaggregate runtime operators, VHDL record/array lowering, backend-neutral
+signedness/state-model policy across every inferred site, and richer public
+type/export APIs remain deferred until one exact task-tree-owned contract is
+selected.
+
 ### Automatic Aggregate Growth From Usage
 
 Status: partially shipped; broader inference surfaces remain backlog.

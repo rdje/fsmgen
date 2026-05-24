@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R11 — Portable-type contract frontier audited
+- Completed `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.2` and closed the
+  task tree.
+- Decision: no new portable-type implementation slice is selected now.
+  Broader enum-as-type unification, fixed-size arrays, arrays of records,
+  broad inference-first scalar declarations, aggregate member/index
+  autogrowth from partial use, arbitrary subaggregate runtime operators,
+  portable VHDL record/array lowering, backend-neutral policy across every
+  inferred site, and richer public type/export APIs remain deferred until one
+  precise prerequisite contract exists.
+- The mdBook symbols, type/aggregate, and feature-backlog chapters now
+  document the shipped bounded portable-type contract and backlog boundary.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused portable-type evidence with `Files=13,
+  Tests=59`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R11 — Portable-type contract frontier audit selected
 - Created active task tree `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT`.
 - Completed `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.1`.

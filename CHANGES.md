@@ -1,6 +1,32 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R11 — Portable-type contract frontier audited
+- Completed `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.2` and closed the
+  task tree.
+- Decided not to select a new portable-type implementation slice now: the
+  shipped bounded contract already covers scalar aliases, signed and
+  two-state/four-state scalar intent, positive scalar width symbols, enum
+  values, package-qualified type/value references, packed list/record aliases,
+  declared type identity through direct roots and composition tops, aggregate
+  member/list-item access on direct and composition source paths, bounded
+  aggregate target inference, backend-owned SystemVerilog packed typedef
+  emission, symbol contracts, `Intent HIR`, `Structural RTL IR`, and VHDL
+  fail-closed diagnostics.
+- Deferred broader enum-as-type unification, fixed-size arrays, arrays of
+  records, broad inference-first scalar declarations, aggregate member/index
+  autogrowth from partial use, arbitrary subaggregate runtime operators,
+  portable VHDL record/array lowering, backend-neutral policy across every
+  inferred site, and richer public type/export APIs until a precise
+  prerequisite contract exists.
+- Synchronized the mdBook symbols, type/aggregate, and feature-backlog
+  chapters, roadmap, task-tree, README, and live docs.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused portable-type evidence with `Files=13,
+  Tests=59`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R11 — Portable-type contract frontier audit selected
 - Created active task tree `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT`.
 - The tree owns an evidence-gathering audit over the remaining portable
