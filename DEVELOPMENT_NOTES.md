@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Output-bundle round-robin is the next resource widening
+- `output_bundle` is the next smallest non-`rule_slot` round-robin candidate
+  because it already has declared rule users and whole-rule-DT grant semantics
+  under the shipped `priority` arbiter.
+- The implementation must preserve the current member contract. Explicit
+  output-bundle members are declared actor outputs or concrete actor-owned
+  storage signals; they are not bank roots, aggregate paths, inferred targets,
+  route ownership, or lifetime ownership. Round-robin fairness should select
+  the winning rule, not widen what an output bundle is allowed to own.
+- `storage_port` remains a separate decision because fair arbitration over a
+  storage-domain member list has different design pressure around write
+  domains, storage locks, and future lifetime/hold-release semantics.
+
 ## 2026-05-24: Transaction-start round-robin can reuse rule-user grant machinery
 - The shipped `round_robin` implementation is deliberately rule-user-based:
   it computes requests from normalized rule guards, emits one generated

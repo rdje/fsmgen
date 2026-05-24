@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Output-bundle round-robin resource selected
+- Created active task tree `ISF-OUTPUT-BUNDLE-ROUND-ROBIN`.
+- Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1`; the next implementation
+  frontier is `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2`.
+- Selected the next bounded resource-arbitration widening:
+  `(resource NAME (kind output_bundle) (arbiter round_robin) (users RULE...))`
+  for declared rule users.
+- The implementation leaf must preserve current output-bundle member
+  validation/reporting, reuse the shipped round-robin pointer/grant machinery,
+  report grants with `kind: output_bundle` and `arbiter: round_robin`, and
+  keep storage-port round-robin plus broader resource/lifetime ownership
+  deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Transaction-start round-robin resource shipped
 - Completed `ISF-TRANSACTION-START-ROUND-ROBIN.2` and closed the task tree.
 - `transaction_start` resources now support the bounded `round_robin` arbiter

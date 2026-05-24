@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Output-bundle round-robin resource selected
+- Created active task tree `ISF-OUTPUT-BUNDLE-ROUND-ROBIN`.
+- Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1`.
+- The current frontier is `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2`, the
+  implementation leaf.
+- The selected source shape is bounded to
+  `(resource NAME (kind output_bundle) (arbiter round_robin) (users RULE...))`
+  for declared rule users, preserving current explicit output-bundle member
+  validation and `resource_arbitration[].members` reporting.
+- Storage-port round-robin, backlog resource kinds, generated-child resources,
+  route mux/storage, ready/backpressure, payload protocols, and lifetime
+  ownership remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN`.
+- Current frontier: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2`.
+
 ## 2026-05-24: R14 — Transaction-start round-robin resource shipped
 - Completed `ISF-TRANSACTION-START-ROUND-ROBIN.2` and closed the task tree.
 - FSMGen now supports bounded
