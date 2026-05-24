@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Actor parameter defaults can inherit constant intent safely
+- Actor constants are already static, actor-local, and resolved before actor
+  parameter consumers such as widths, counts, activation overrides, and
+  library use-site overrides. Letting actor parameter defaults reference those
+  constants is the next narrow value-domain widening because it reuses the
+  existing constant table instead of adding parameter dependency solving.
+- The selected contract preserves authored defaults for review while recording
+  resolved literals internally. That keeps scheduled `.fsm` and reports
+  readable without making downstream tools resolve private actor-local names.
+
 ## 2026-05-24: Library use-site static values resolve in the parser
 - Reusable-library use-site parameter overrides are validated while resolving
   imported actors, before lowerer IR publication. Resolving importing-actor

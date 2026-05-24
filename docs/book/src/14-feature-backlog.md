@@ -329,6 +329,13 @@ Actor parameter defaults and generated child transaction parameter defaults
 also accept enum members in their shipped scalar and aggregate/list leaf
 positions.
 
+The active `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS` task tree is selected to
+widen actor parameter defaults next: declared actor constants are planned for
+scalar defaults and scalar leaves inside compatible aggregate/list parameter
+defaults, preserving authored defaults in scheduled `.fsm` and report views
+while recording resolved literals internally. That widening is not shipped
+until the implementation leaf closes.
+
 Reusable-library use-site parameter overrides may use importing-actor
 constants, importing-actor scalar parameter defaults, and enum members as
 scalar values or scalar leaves inside compatible aggregate/list override

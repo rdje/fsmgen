@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Actor-constant actor-parameter default selected
+- Created active task tree `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS`.
+- Completed `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.1`; the selected
+  implementation frontier is `ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.2`.
+- Selected a bounded actor parameter default value widening: declared actor
+  constants may be used by name as static actor-level `(params ...)` defaults,
+  including scalar leaves inside compatible aggregate/list defaults.
+- The implementation must preserve authored defaults in scheduled `.fsm`
+  `+params` and `actor_params[]` reports while recording resolved literals
+  internally, and must keep actor-parameter-to-actor-parameter defaults,
+  transaction parameters, runtime signals, arbitrary expressions, generated
+  child transaction parameter defaults, package/imported constants beyond enum
+  members, dependency ordering, and expression solving deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Verification passed:
+  `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build
+  docs/book`; `git diff --check`.
+
 ### R14 — Reusable-library actor-static use-site overrides shipped
 - Completed `ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.2` and closed the task tree.
 - Reusable-library use-site `(params ...)` override values now accept
