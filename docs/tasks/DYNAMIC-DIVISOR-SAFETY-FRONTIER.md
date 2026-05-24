@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `DYNAMIC-DIVISOR-SAFETY-FRONTIER`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `language ergonomics`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -42,7 +42,7 @@ reviewable proof surface at a time.
 ## Task Tree
 
 - ID: `DYNAMIC-DIVISOR-SAFETY-FRONTIER`
-  Status: `active`
+  Status: `done`
   Goal: `Broaden divide/modulo safety proofs one reviewable surface at a time.`
   Children: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1`,
     `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2`,
@@ -60,14 +60,14 @@ reviewable proof surface at a time.
   Goal: `Audit shipped divide/modulo safety and choose the smallest safe implementation surface.`
   Acceptance: `The audit identifies current proof sources, expected-failure or deferred runtime divisor positions, relevant tests/docs, and one bounded next implementation leaf with explicit non-goals.`
   Verification: `passed: expression-builder syntax, focused ISF/direct/corpus tests, mdBook build, and diff check`
-  Commit: `pending this commit`
+  Commit: `ef64067c DYNAMIC-DIVISOR-SAFETY-FRONTIER.2: audit divisor safety frontier`
 
 - ID: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Reject literal-zero divisors in direct .fsm runtime expressions.`
   Acceptance: `Direct .fsm runtime expression parsing rejects numeric and exact-width literal-zero divisor operands for '/', '%', 'div', and 'mod' before HDL emission; nonzero literal divisors and dynamic signal divisors remain accepted; constant-expression and ISF behavior are unchanged except for shared documentation truth; focused tests, corpus/docs accounting, mdBook, and diff checks pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: syntax, focused direct/ISF/corpus tests, public report/capability gates, language-surface gates, mdBook build, and diff check`
+  Commit: `pending this commit`
 
 ## Audit Findings
 
@@ -80,13 +80,14 @@ reviewable proof surface at a time.
   literal-zero, actor-constant-zero, and actor-parameter-zero divisors before
   scheduled `.fsm` emission. The coverage is centralized in
   `t/1308-isf-dynamic-divisor-safety.t`.
-- Direct `.fsm` runtime division/modulo is a shipped supported surface through
+- Direct `.fsm` runtime division/modulo was already a shipped supported
+  surface through
   `feature.direct_runtime_div_mod`. It currently proves accepted dynamic
-  divisors and expression grouping, but it does not reject known literal-zero
-  runtime divisors before HDL emission.
-- An audit probe confirmed that a direct `.fsm` runtime assignment such as
-  `(= (OUT (/ A 0)))` currently parses successfully. That makes direct runtime
-  literal-zero rejection the smallest useful next implementation surface.
+  divisors and expression grouping.
+- The `.2` audit probe confirmed that, before `.3`, a direct `.fsm` runtime
+  assignment such as `(= (OUT (/ A 0)))` parsed successfully. The `.3`
+  implementation closes that hole for numeric and exact-width literal-zero
+  direct runtime divisors.
 - Broader dynamic nonzero proofs for runtime signals remain out of scope until
   FSMGen has explicit range/dataflow evidence to justify them.
 
@@ -94,7 +95,7 @@ reviewable proof surface at a time.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` | `pending` | Direct runtime literal-zero divisor rejection is the smallest audited gap: it is known at parse time, mirrors the ISF literal-zero safety boundary, and avoids broad dynamic dataflow proof. |
+| 1 | `closed` | `done` | Direct runtime literal-zero divisor rejection shipped; broader dynamic dataflow/range proofs remain future work. |
 
 ## Decisions
 
@@ -108,6 +109,10 @@ reviewable proof surface at a time.
   numeric or exact-width literal-zero divisor is known during expression
   parsing. Dynamic runtime scalar divisors, actor/symbol nonzero proofs outside
   ISF, and generated runtime guards remain out of scope.
+- `2026-05-24`: Close this task tree after `.3`. The shipped surface is the
+  bounded literal-zero runtime proof selected by the audit; every broader
+  dynamic nonzero proof needs a future task tree with explicit range/dataflow
+  evidence.
 
 ## Open Questions
 
@@ -123,14 +128,15 @@ reviewable proof surface at a time.
 | --- | --- | --- | --- |
 | `2026-05-24` | `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1` | `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: Files=3, Tests=351` |
 | `2026-05-24` | `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`; `prove -Iperl t/1308-isf-dynamic-divisor-safety.t t/310-systemverilog-implicit-width-and-truthiness-hardening.t t/248-regression-corpus-accounting.t`; `mdbook build docs/book`; `git diff --check` | `passed: Files=3, Tests=3057` |
+| `2026-05-24` | `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` | `perl -Iperl -c` for touched Perl/test files; `prove -Iperl t/1320-direct-runtime-divisor-safety.t t/248-regression-corpus-accounting.t`; `prove -Iperl t/249-regression-corpus-classified-behavior.t`; `prove -Iperl t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t t/360-diagnostics-registry-runtime-audit.t`; `prove -Iperl t/297-capability-manifest.t t/359-support-accounting-corpus-runtime-audit.t t/372-support-accounting-catalog-path-audit.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/303-normalized-semantic-json-supported-corpus.t`; `prove -Iperl t/317-language-surface-contract.t t/363-language-surface-section-runtime-contract-audit.t`; `prove -Iperl t/1308-isf-dynamic-divisor-safety.t t/310-systemverilog-implicit-width-and-truthiness-hardening.t`; `mdbook build docs/book`; `git diff --check` | `passed: focused/broader gates clean` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1` | `336b8afd DYNAMIC-DIVISOR-SAFETY-FRONTIER.1: select divisor safety work` | `selection slice` |
-| `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` | `pending this commit: DYNAMIC-DIVISOR-SAFETY-FRONTIER.2: audit divisor safety frontier` | `audit/design slice` |
-| `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` | `pending` | `implementation slice` |
+| `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` | `ef64067c DYNAMIC-DIVISOR-SAFETY-FRONTIER.2: audit divisor safety frontier` | `audit/design slice` |
+| `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` | `pending this commit: DYNAMIC-DIVISOR-SAFETY-FRONTIER.3: ship direct runtime divisor guard` | `implementation slice` |
 
 ## Changelog
 
@@ -138,3 +144,5 @@ reviewable proof surface at a time.
   frontier.
 - `2026-05-24`: Audited shipped divisor safety and selected direct runtime
   literal-zero divisor rejection as the next bounded implementation leaf.
+- `2026-05-24`: Shipped direct `.fsm` runtime literal-zero divisor rejection
+  and closed the task tree.

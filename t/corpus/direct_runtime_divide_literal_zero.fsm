@@ -1,0 +1,18 @@
+(?fsm:direct_runtime_divide_literal_zero
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (COND 1)
+    (A 8)
+    (OUT 8)
+  )
+
+  (idle
+    (<COND
+      (= (OUT (/ A 0)))
+    )
+  )
+)

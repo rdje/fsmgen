@@ -38,15 +38,16 @@ Goal: reject or prove safe runtime division/modulo expressions whose divisors
 could be zero.
 
 Current boundary: constant-expression domains reject divide/modulo-by-zero
-before HDL emission. ISF runtime expression contexts now reject
-numeric/exact-width literal-zero divisors and actor-level constants that
-resolve to zero, plus actor-local scalar parameter defaults that resolve to
-zero, before scheduled `.fsm` emission. Nonzero literal divisors, nonzero
-actor-constant divisors, nonzero actor-parameter divisors, and dynamic scalar
-divisors are emitted unchanged; FSMGen does not yet prove every dynamic
-divisor nonzero. Nonzero actor parameters and transaction parameters remain
-outside this safety proof because they are overrideable specialization values,
-not fixed actor constants.
+before HDL emission, and direct `.fsm` runtime expressions reject
+numeric/exact-width literal-zero divisors before HDL emission. ISF runtime
+expression contexts now reject numeric/exact-width literal-zero divisors and
+actor-level constants that resolve to zero, plus actor-local scalar parameter
+defaults that resolve to zero, before scheduled `.fsm` emission. Nonzero
+literal divisors, nonzero actor-constant divisors, nonzero actor-parameter
+divisors, and dynamic scalar divisors are emitted unchanged; FSMGen does not
+yet prove every dynamic divisor nonzero. Nonzero actor parameters and
+transaction parameters remain outside this safety proof because they are
+overrideable specialization values, not fixed actor constants.
 
 ## Aggregate Types And Data
 

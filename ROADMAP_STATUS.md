@@ -1,9 +1,30 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `language ergonomics`.
-- Active task tree: `DYNAMIC-DIVISOR-SAFETY-FRONTIER`.
-- Current frontier: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3`.
+- Active lane: `none selected`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent language-ergonomics divisor-safety completion:
+  `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` shipped direct `.fsm` runtime
+  literal-zero divisor rejection and closed the task tree. Direct runtime
+  expression parsing now rejects numeric and exact-width literal-zero divisor
+  operands for `/`, `%`, `div`, and `mod` before HDL emission. Nonzero
+  literal divisors and dynamic signal divisors remain accepted and lower
+  unchanged. The shipped surface is intentionally narrower than broad dynamic
+  range/dataflow proof: actor/symbol nonzero proofs outside ISF, arbitrary
+  runtime scalar nonzero proof, and generated runtime divide guards remain
+  future work. Added focused parser tests plus expected-failure corpus
+  fixtures `contract.direct_runtime_divide_literal_zero` and
+  `contract.direct_runtime_modulo_exact_zero`; synchronized diagnostic code
+  metadata, corpus accounting, mdBook, regression corpus docs, live docs, and
+  task-tree status. Validation passed: syntax checks; focused direct
+  parser/corpus accounting with `Files=2, Tests=3064`; expected-failure corpus
+  behavior with `Files=1, Tests=5`; check/semantic JSON and diagnostic
+  registry gates with `Files=3, Tests=5`; capability/support-accounting gates
+  with `Files=3, Tests=13`; supported-corpus gates with `Files=2, Tests=10`;
+  language-surface gates with `Files=2, Tests=6`; ISF/direct arithmetic
+  regression checks with `Files=2, Tests=24`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent language-ergonomics divisor-safety audit:
   `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` audited shipped divide/modulo safety
   across direct `.fsm`, ISF lowering, tests, corpus accounting, mdBook, and
@@ -6135,11 +6156,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `DYNAMIC-DIVISOR-SAFETY-FRONTIER`.
-- Current frontier: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3`.
-- Completion status: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` audited shipped
-  divide/modulo safety and selected direct `.fsm` runtime literal-zero divisor
-  rejection as the next bounded implementation leaf.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` shipped direct
+  `.fsm` runtime literal-zero divisor rejection and closed the task tree. The
+  next PNT step must select or create the next roadmap-aligned task tree before
+  any code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

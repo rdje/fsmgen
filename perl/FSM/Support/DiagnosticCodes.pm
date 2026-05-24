@@ -295,6 +295,12 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'An RHS expression operator used an unsupported operand count.',
     },
+    FSMGEN_LANGUAGE_RUNTIME_DIVISOR_LITERAL_ZERO => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A direct runtime division or modulo expression used a literal-zero divisor.',
+    },
     FSMGEN_LANGUAGE_UNSUPPORTED_RHS_EXPRESSION_TOKEN => {
         severity => 'error',
         stability => 'stable',

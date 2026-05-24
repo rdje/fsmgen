@@ -570,6 +570,8 @@ manifest output while keeping the exact file lists widenable.
 | `contract.direct_size_expression_modulo_by_zero` | [t/corpus/direct_size_expression_modulo_by_zero.fsm](t/corpus/direct_size_expression_modulo_by_zero.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_size_expression_unsupported_operator` | [t/corpus/direct_size_expression_unsupported_operator.fsm](t/corpus/direct_size_expression_unsupported_operator.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_size_expression_bad_arity` | [t/corpus/direct_size_expression_bad_arity.fsm](t/corpus/direct_size_expression_bad_arity.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.direct_runtime_divide_literal_zero` | [t/corpus/direct_runtime_divide_literal_zero.fsm](t/corpus/direct_runtime_divide_literal_zero.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.direct_runtime_modulo_exact_zero` | [t/corpus/direct_runtime_modulo_exact_zero.fsm](t/corpus/direct_runtime_modulo_exact_zero.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_lhs_deconstruct_width_mismatch` | [t/corpus/direct_lhs_deconstruct_width_mismatch.fsm](t/corpus/direct_lhs_deconstruct_width_mismatch.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.unsupported_top_level_define_source` | [t/corpus/unsupported_top_level_define_source.fsm](t/corpus/unsupported_top_level_define_source.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.unsupported_top_level_clock_directive` | [t/corpus/unsupported_top_level_clock_directive.fsm](t/corpus/unsupported_top_level_clock_directive.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
@@ -739,7 +741,11 @@ manifest output while keeping the exact file lists widenable.
   The
   `feature.direct_runtime_div_mod` entry proves that runtime RHS `/`, `%`,
   `div`, and `mod` expressions lower through pipeline and CLI, including the
-  left-associative n-ary shape for three-operand forms. The
+  left-associative n-ary shape for three-operand forms. The paired
+  `contract.direct_runtime_divide_literal_zero` and
+  `contract.direct_runtime_modulo_exact_zero` entries lock parser-side
+  rejection of known literal-zero direct runtime divisors before HDL emission.
+  The
   `feature.arithmetic_xor_operator_variants` entry proves n-ary `+`, `-`, `*`,
   `add`, `^`, and `xor` lowering through emitted arithmetic expressions and
   XOR intermediate shapes. The

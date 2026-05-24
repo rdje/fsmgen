@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Direct runtime literal-zero divisor rejection shipped
+- Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` and closed the task tree.
+- Direct `.fsm` runtime expression parsing now rejects numeric and exact-width
+  literal-zero divisor operands for `/`, `%`, `div`, and `mod` before HDL
+  emission.
+- Nonzero literal divisors and dynamic signal divisors remain accepted and
+  lower unchanged.
+- Added focused parser tests in `t/1320-direct-runtime-divisor-safety.t`.
+- Added expected-failure corpus fixtures
+  `contract.direct_runtime_divide_literal_zero` and
+  `contract.direct_runtime_modulo_exact_zero`.
+- Synchronized diagnostic code metadata, corpus accounting, regression corpus
+  docs, mdBook source, live docs, and task-tree status.
+- Broader dynamic range/dataflow nonzero proofs remain future work.
+- Validation passed: syntax checks; focused direct parser/corpus accounting
+  with `Files=2, Tests=3064`; expected-failure corpus behavior with
+  `Files=1, Tests=5`; check/semantic JSON and diagnostic registry gates with
+  `Files=3, Tests=5`; capability/support-accounting gates with
+  `Files=3, Tests=13`; supported-corpus gates with `Files=2, Tests=10`;
+  language-surface gates with `Files=2, Tests=6`; ISF/direct arithmetic
+  regression checks with `Files=2, Tests=24`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: Dynamic divisor safety frontier audited
 - Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2`.
 - Audited shipped divide/modulo safety across direct `.fsm`, ISF lowering,

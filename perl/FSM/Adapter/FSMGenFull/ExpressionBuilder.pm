@@ -250,6 +250,35 @@ sub finalize_nary_expression($self, $operator, $parsed_operands) {
     return $ast_tree;
 }
 
+sub literal_zero_divisor_text($self, $expr) {
+    return undef
+        unless blessed($expr) && $expr->isa('FSM::CoreAST::Literal');
+
+    my $integer = FSM::Package::IntegerLiteralSupport->integer_from_literal_like($expr);
+    return undef unless defined($integer) && $integer->bcmp(0) == 0;
+
+    return $expr->to_systemverilog;
+}
+
+sub reject_literal_zero_divisor_operands($self, $display_operator, $normalized_operator, $parsed_operands) {
+    return 1 unless defined($normalized_operator) && ($normalized_operator eq '/' || $normalized_operator eq '%');
+    return 1 unless ref($parsed_operands) eq 'ARRAY' && @$parsed_operands >= 2;
+
+    my $operation = $normalized_operator eq '/' ? 'division' : 'modulo';
+
+    for my $index (1 .. $#$parsed_operands) {
+        my $literal_text = $self->literal_zero_divisor_text($parsed_operands->[$index]);
+        next unless defined $literal_text;
+
+        Carp::confess
+            "Malformed expression operator '$display_operator' uses literal zero divisor '$literal_text' in $operation. ".
+            "Direct runtime division/modulo expressions reject numeric and exact-width literal-zero divisors before HDL emission; nonzero literal and dynamic signal divisors remain accepted. ".
+            supported_boundary_hint();
+    }
+
+    return 1;
+}
+
 sub build_chained_relational_expression($self, $operator, $parsed_operands) {
     my @comparisons;
     for my $i (0 .. ($#$parsed_operands - 1)) {
@@ -316,6 +345,8 @@ sub parse_recursive_expression($self, $expr) {
 
     return $self->build_chained_relational_expression($normalized_operator, \@parsed_operands)
         if $operator_family eq 'comparison';
+
+    $self->reject_literal_zero_divisor_operands($operator, $normalized_operator, \@parsed_operands);
 
     if ($operator_family eq 'concat') {
         my $concat = FSM::CoreAST::Concatenation->new(@parsed_operands);

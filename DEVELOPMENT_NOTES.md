@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Direct runtime divisor guard stays literal-only
+- `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` places the new guard in
+  `FSM::Adapter::FSMGenFull::ExpressionBuilder`, where direct `.fsm` runtime
+  expression S-expressions are normalized before `CoreAST` construction.
+- The guard inspects parsed literal operands in divisor positions for `/` and
+  `%`, including `div` and `mod` after alias normalization. This catches
+  numeric and exact-width literal zero before HDL emission without touching
+  generated HDL rendering.
+- Dynamic signal divisors remain accepted because FSMGen still lacks a
+  general direct `.fsm` range/dataflow proof source. Rejecting them would be a
+  language contraction rather than a proof; runtime guards would be a separate
+  scheduling/HDL policy decision.
+
 ## 2026-05-24: Direct runtime literal-zero divisors are the next proof surface
 - `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` found that existing divisor safety is
   strongest where FSMGen already has fixed values: direct `.fsm` `+size`

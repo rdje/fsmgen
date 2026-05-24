@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Language ergonomics — Direct runtime literal-zero divisor rejection shipped
+- Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` and closed the task tree.
+- Updated the direct `.fsm` runtime expression builder so `/`, `%`, `div`, and
+  `mod` reject numeric and exact-width literal-zero divisor operands before HDL
+  emission.
+- Preserved accepted behavior for nonzero literal divisors and dynamic signal
+  divisors.
+- Added focused parser coverage in `t/1320-direct-runtime-divisor-safety.t`.
+- Added expected-failure corpus fixtures
+  `contract.direct_runtime_divide_literal_zero` and
+  `contract.direct_runtime_modulo_exact_zero`.
+- Added stable diagnostic-code metadata
+  `FSMGEN_LANGUAGE_RUNTIME_DIVISOR_LITERAL_ZERO`.
+- Synchronized corpus accounting, regression corpus docs, mdBook source,
+  roadmap status, task-tree status, and live continuity docs.
+- Broader dynamic range/dataflow nonzero proofs remain future work.
+- Validation passed: syntax checks; focused direct parser/corpus accounting
+  with `Files=2, Tests=3064`; expected-failure corpus behavior with
+  `Files=1, Tests=5`; check/semantic JSON and diagnostic registry gates with
+  `Files=3, Tests=5`; capability/support-accounting gates with
+  `Files=3, Tests=13`; supported-corpus gates with `Files=2, Tests=10`;
+  language-surface gates with `Files=2, Tests=6`; ISF/direct arithmetic
+  regression checks with `Files=2, Tests=24`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ### Language ergonomics — Dynamic divisor safety frontier audited
 - Completed audit work for `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2`.
 - Audited shipped divide/modulo safety across direct `.fsm`, ISF lowering,
