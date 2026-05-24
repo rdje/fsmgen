@@ -3,7 +3,26 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `language ergonomics`.
 - Active task tree: `DYNAMIC-DIVISOR-SAFETY-FRONTIER`.
-- Current frontier: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2`.
+- Current frontier: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3`.
+- Recent language-ergonomics divisor-safety audit:
+  `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` audited shipped divide/modulo safety
+  across direct `.fsm`, ISF lowering, tests, corpus accounting, mdBook, and
+  live docs. Direct `.fsm` `+size` width expressions and aggregate `+params`
+  expression folding already reject divide/modulo by zero before HDL
+  emission. ISF runtime expressions already reject literal-zero,
+  actor-constant-zero, and actor-parameter-zero divisors before scheduled
+  `.fsm` emission. The smallest audited gap is direct `.fsm` runtime
+  expression parsing: a known literal-zero divisor such as `(/ A 0)` currently
+  parses successfully and can reach HDL emission. The selected next
+  implementation leaf is `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3`, which will
+  reject numeric/exact-width literal-zero divisors in direct runtime `/`, `%`,
+  `div`, and `mod` expressions while preserving nonzero literals and dynamic
+  signal divisors. No parser, scheduler, report, generated artifact, HDL, CLI,
+  public API, or public language behavior changed in the audit slice.
+  Validation passed: `perl -Iperl -c
+  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`; focused ISF/direct/corpus
+  tests with `Files=3, Tests=3057`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent language-ergonomics divisor-safety selection:
   `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1` activated the task tree for the
   mdBook feature-backlog item "Dynamic Divisor Safety Proofs". The next
@@ -6117,11 +6136,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - Active task tree: `DYNAMIC-DIVISOR-SAFETY-FRONTIER`.
-- Current frontier: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2`.
-- Completion status: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1` selected the active
-  language-ergonomics task tree for dynamic divisor safety proof work. The
-  next PNT step is an audit/design leaf before any behavior-bearing divisor
-  safety code changes.
+- Current frontier: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3`.
+- Completion status: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` audited shipped
+  divide/modulo safety and selected direct `.fsm` runtime literal-zero divisor
+  rejection as the next bounded implementation leaf.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

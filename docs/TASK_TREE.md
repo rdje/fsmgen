@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `DYNAMIC-DIVISOR-SAFETY-FRONTIER` | `active` | `language ergonomics` | `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` | [docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md](docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md) |
+| `DYNAMIC-DIVISOR-SAFETY-FRONTIER` | `active` | `language ergonomics` | `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` | [docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md](docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md) |
 
 ## Proposed Task Trees
 

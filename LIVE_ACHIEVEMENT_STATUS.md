@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Language ergonomics — Dynamic divisor safety frontier audited
+- Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2`.
+- Audited shipped divide/modulo safety across direct `.fsm`, ISF lowering,
+  tests, corpus accounting, mdBook, and live docs.
+- Direct `.fsm` `+size` width expressions and aggregate `+params` expression
+  folding already reject divide/modulo by zero before HDL emission.
+- ISF runtime expressions already reject literal-zero, actor-constant-zero,
+  and actor-parameter-zero divisors before scheduled `.fsm` emission.
+- The current frontier is `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3`.
+- The selected implementation surface is direct `.fsm` runtime expression
+  parsing: reject numeric/exact-width literal-zero divisors in `/`, `%`,
+  `div`, and `mod` expressions before HDL emission.
+- Broader dynamic dataflow/range nonzero proofs remain out of scope.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in the audit slice.
+- Validation passed: `perl -Iperl -c
+  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`; focused ISF/direct/corpus
+  tests with `Files=3, Tests=3057`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ## 2026-05-24: Language ergonomics — Dynamic divisor safety frontier selected
 - Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1`.
 - Activated the active language-ergonomics task tree for the mdBook

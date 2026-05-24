@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Direct runtime literal-zero divisors are the next proof surface
+- `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` found that existing divisor safety is
+  strongest where FSMGen already has fixed values: direct `.fsm` `+size`
+  expressions, direct aggregate `+params` folding, and bounded ISF runtime
+  literal/actor-symbol checks.
+- Direct `.fsm` runtime division/modulo is different: runtime signal divisors
+  cannot be proven nonzero without future dataflow/range evidence, but a
+  literal-zero divisor is already known during expression parsing.
+- The next implementation should therefore live in the direct runtime
+  expression parser and stay narrow. It should reject numeric/exact-width
+  literal-zero operands in divisor positions for `/`, `%`, `div`, and `mod`;
+  it should not reject dynamic signal operands, nonzero literals, or broader
+  symbolic values until a separate proof source exists.
+
 ## 2026-05-24: Dynamic divisor safety needs a proof-source audit first
 - `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1` selects the next concrete
   language-ergonomics backlog tree after symbolic scalar type widths shipped.

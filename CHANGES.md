@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Language ergonomics — Dynamic divisor safety frontier audited
+- Completed audit work for `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2`.
+- Audited shipped divide/modulo safety across direct `.fsm`, ISF lowering,
+  tests, corpus accounting, mdBook, and live docs.
+- Confirmed that direct `.fsm` `+size` width expressions and aggregate
+  `+params` expression folding already reject divide/modulo by zero before
+  HDL emission.
+- Confirmed that ISF runtime expressions already reject literal-zero,
+  actor-constant-zero, and actor-parameter-zero divisors before scheduled
+  `.fsm` emission.
+- Selected `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` as the next bounded
+  implementation leaf: reject numeric/exact-width literal-zero divisors in
+  direct `.fsm` runtime `/`, `%`, `div`, and `mod` expressions before HDL
+  emission.
+- Broader dynamic dataflow/range nonzero proofs remain out of scope.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in the audit slice.
+- Validation passed: `perl -Iperl -c
+  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`; focused ISF/direct/corpus
+  tests with `Files=3, Tests=3057`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ### Language ergonomics — Dynamic divisor safety frontier selected
 - Completed selection work for `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1`.
 - Activated a language-ergonomics task tree for the mdBook feature-backlog

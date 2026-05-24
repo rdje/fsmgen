@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Dynamic divisor safety frontier audited
+- Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2`.
+- Audited shipped divide/modulo safety across direct `.fsm`, ISF lowering,
+  tests, corpus accounting, mdBook, and live docs.
+- Direct `.fsm` `+size` width expressions and aggregate `+params` expression
+  folding already reject divide/modulo by zero before HDL emission.
+- ISF runtime expressions already reject literal-zero, actor-constant-zero,
+  and actor-parameter-zero divisors before scheduled `.fsm` emission.
+- The selected follow-up leaf is `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3`, which
+  will reject numeric/exact-width literal-zero divisors in direct `.fsm`
+  runtime `/`, `%`, `div`, and `mod` expressions before HDL emission.
+- Nonzero literal divisors and dynamic signal divisors remain in scope as
+  accepted cases for the implementation leaf; broader dynamic dataflow/range
+  nonzero proofs remain out of scope.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in the audit slice.
+- Validation passed: `perl -Iperl -c
+  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`; focused ISF/direct/corpus
+  tests with `Files=3, Tests=3057`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `DYNAMIC-DIVISOR-SAFETY-FRONTIER`.
+- Current frontier: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3`.
+
 ## 2026-05-24: Dynamic divisor safety proof frontier selected
 - Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1`.
 - Activated the active language-ergonomics task tree for the mdBook
