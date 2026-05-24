@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Direct RHS concat list autogrowth reuses exact operand contracts
+- `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` broadens the direct assignment
+  aggregate-contract resolver so a `Concatenation` expression first tries the
+  existing target-aware aggregate contract path, then falls back to
+  `concat_expression_list_type_spec` when no declared aggregate target exists.
+- The inference helper still refuses explicit target declarations and only
+  grows whole `SignalRef` targets. For concat sources it additionally requires
+  the inferred type spec to be a list, preserving the `.4` decision that
+  anonymous record names are not inferred from ordered operands alone.
+- This keeps the backend path honest: once the target signal receives the
+  generated list contract, the existing typedef planner, port declaration
+  emitter, and aggregate-contract validator handle it like any other declared
+  aggregate target.
+
 ## 2026-05-24: Direct RHS concat autogrowth should be list-only first
 - `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` audited the existing concat aggregate
   helpers before implementation. `concat_expression_list_type_spec` is the

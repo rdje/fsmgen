@@ -3256,7 +3256,7 @@ sub parse_signal_action($self, $action) {
     my $aggregate_contract = $compound_spec
         ? undef
         : $self->resolve_direct_assignment_aggregate_contract($value_expr, $source_expr, $target_expr);
-    $self->infer_whole_target_aggregate_contract_from_constant(
+    $self->infer_whole_target_aggregate_contract_from_source(
         target_expr => $target_expr,
         aggregate_contract => $aggregate_contract,
     );
@@ -3593,12 +3593,19 @@ sub resolve_direct_assignment_aggregate_contract($self, $value_expr, $source_exp
 
     my ($type_spec, $symbol_name);
     if ($source_expr->isa('FSM::CoreAST::Concatenation')) {
-        $type_spec = FSM::Package::AggregateExpressionTypeSupport->concat_expression_type_spec_for_target(
+        my %type_spec_args = (
             source_expr => $source_expr,
             target_expr => $target_expr,
             width_resolver => sub($expr) {
                 return $self->{expression_builder}->infer_exact_expression_width($expr);
             },
+        );
+        $type_spec = FSM::Package::AggregateExpressionTypeSupport->concat_expression_type_spec_for_target(
+            %type_spec_args,
+        );
+        $type_spec //= FSM::Package::AggregateExpressionTypeSupport->concat_expression_list_type_spec(
+            $source_expr,
+            width_resolver => $type_spec_args{width_resolver},
         );
         $symbol_name = eval { $source_expr->to_systemverilog };
         return undef unless FSM::Package::AggregateExpressionTypeSupport->is_aggregate_type_spec($type_spec);
@@ -3637,16 +3644,17 @@ sub resolve_direct_assignment_aggregate_contract($self, $value_expr, $source_exp
     return undef;
 }
 
-sub infer_whole_target_aggregate_contract_from_constant($self, %args) {
+sub infer_whole_target_aggregate_contract_from_source($self, %args) {
     my $target_expr = $args{target_expr};
     my $aggregate_contract = $args{aggregate_contract};
 
-    return undef
-        unless ref($aggregate_contract) eq 'HASH'
-            && ($aggregate_contract->{source_kind} || '') eq 'aggregate_constant_root';
+    return undef unless ref($aggregate_contract) eq 'HASH';
+    my $source_kind = $aggregate_contract->{source_kind} || '';
+    return undef unless $source_kind eq 'aggregate_constant_root' || $source_kind eq 'concat_expression';
 
     my $type_spec = $aggregate_contract->{type_spec};
     return undef unless FSM::Package::AggregateExpressionTypeSupport->is_aggregate_type_spec($type_spec);
+    return undef if $source_kind eq 'concat_expression' && ($type_spec->{kind} || '') ne 'list';
 
     return undef unless $target_expr && blessed($target_expr) && $target_expr->isa('FSM::CoreAST::SignalRef');
     return undef if $target_expr->slice;

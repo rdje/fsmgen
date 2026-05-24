@@ -167,9 +167,34 @@ SystemVerilog emission, so the generated module can use packed typedefs for
 Explicit target declarations remain authoritative. If `OUT_FRAME` is declared
 through `+size` as a scalar width or through an explicit aggregate type alias,
 FSMGen keeps that declaration. This slice also does not infer arbitrary
-member/index roots, does not infer from RHS concat into an undeclared target,
-does not infer from child endpoints, and does not treat packed-width equality
-alone as aggregate compatibility.
+member/index roots, does not infer from child endpoints, and does not treat
+packed-width equality alone as aggregate compatibility.
+
+Direct whole-signal targets can also grow a generated list contract from a RHS
+concat expression when every operand has exact scalar or aggregate type
+evidence:
+
+```lisp
+(+size
+  (FLAG 1)
+  (DATA 2)
+  (TAG 4)
+)
+
+(idle
+  (= (OUT> (concat FLAG DATA)))
+  (= (NESTED> (concat (concat FLAG DATA) TAG)))
+)
+```
+
+Here `OUT` grows a list contract equivalent to `list<bit, bits[2]>`.
+`NESTED` grows a nested list contract equivalent to
+`list<list<bit, bits[2]>, bits[4]>`. The generated SystemVerilog port uses a
+packed typedef for each inferred target instead of a width-only vector.
+
+This concat autogrowth is intentionally list-only. `(concat ...)` provides
+operand order, not record member names, so anonymous record inference still
+requires a declared record target or a future explicit syntax decision.
 
 This is still deliberate and bounded. Broader inference-first aggregate growth
 without explicit declared anchors remains future work; the backend should
@@ -238,6 +263,9 @@ Current guardrails:
   ordered concat operand list, nested concat operands keep nested list shape,
   and record targets map exact top-level concat operands onto record member
   order
+- when direct RHS concat drives an undeclared whole-signal target and every
+  operand has exact type evidence, FSMGen can grow a generated list contract
+  for that target; record autogrowth from concat alone remains out of scope
 - deconstruct LHS operands must be static writable lvalues: whole signals,
   static bit/slice references, or typed aggregate leaf references
 - total width is checked before HDL generation

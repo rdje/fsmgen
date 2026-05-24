@@ -60,11 +60,11 @@ explicit aggregate type anchor is present.
 
 Current boundary: aggregate aliases, aggregate constants, declared aggregate
 types, direct-root aggregate member/list expressions, partial aggregate LHS
-writes, and direct whole-signal target contract inference from whole aggregate
-constant roots are supported on the current SystemVerilog path. Broad
-automatic aggregate type growth from arbitrary usage is not fully shipped.
-The active task-tree frontier is implementing a bounded direct RHS concat
-autogrowth slice for undeclared whole-signal list contracts.
+writes, direct whole-signal target contract inference from whole aggregate
+constant roots, and list-only direct RHS concat target autogrowth are
+supported on the current SystemVerilog path. Broad automatic aggregate type
+growth from arbitrary usage is not fully shipped. The active task-tree
+frontier is auditing member/index-root aggregate autogrowth.
 
 ### Backend-Owned Struct/Record Default Lowering
 

@@ -514,6 +514,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.partial_lhs_with_size` | [t/corpus/partial_lhs_with_size.fsm](t/corpus/partial_lhs_with_size.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.partial_lhs_inferred_width` | [t/corpus/partial_lhs_inferred_width.fsm](t/corpus/partial_lhs_inferred_width.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_rhs_concat_pack` | [t/corpus/direct_rhs_concat_pack.fsm](t/corpus/direct_rhs_concat_pack.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.direct_rhs_concat_target_autogrowth` | [t/corpus/direct_rhs_concat_target_autogrowth.fsm](t/corpus/direct_rhs_concat_target_autogrowth.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_lhs_deconstruct_pack` | [t/corpus/direct_lhs_deconstruct_pack.fsm](t/corpus/direct_lhs_deconstruct_pack.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_sreset_active_high` | [t/corpus/direct_sreset_active_high.fsm](t/corpus/direct_sreset_active_high.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.custom_system_clock` | [t/corpus/custom_system_clock.fsm](t/corpus/custom_system_clock.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -743,6 +744,10 @@ manifest output while keeping the exact file lists widenable.
   direct whole-signal targets assigned whole aggregate constant roots preserve
   inferred list/record contracts into generated SystemVerilog typedefs instead
   of flattening the target to width-only metadata.
+  The `feature.direct_rhs_concat_target_autogrowth` entry proves that direct
+  whole-signal targets assigned RHS concat expressions can preserve generated
+  list contracts, including nested list shape, when concat operands have exact
+  type evidence.
   The
   `feature.direct_runtime_div_mod` entry proves that runtime RHS `/`, `%`,
   `div`, and `mod` expressions lower through pipeline and CLI, including the

@@ -106,6 +106,22 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.direct_rhs_concat_target_autogrowth',
+        relpath => 't/corpus/direct_rhs_concat_target_autogrowth.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'direct_rhs_concat_target_autogrowth',
+        expected_hdl_patterns => [
+            qr/fsmgen_inferred_OUT__fsmgen_t; \/\/ fsmgen_inferred_OUT/s,
+            qr/fsmgen_inferred_NESTED__fsmgen_t; \/\/ fsmgen_inferred_NESTED/s,
+            qr/\boutput\s+fsmgen_inferred_OUT__fsmgen_t\s+OUT\b/s,
+            qr/\boutput\s+fsmgen_inferred_NESTED__fsmgen_t\s+NESTED\b/s,
+        ],
+    },
+    {
         id => 'feature.direct_lhs_deconstruct_pack',
         relpath => 't/corpus/direct_lhs_deconstruct_pack.fsm',
         family => 'language_feature_fixture',

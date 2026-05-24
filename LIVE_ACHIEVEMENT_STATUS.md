@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Aggregate types — Direct RHS concat target list autogrowth shipped
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`.
+- Direct `.fsm` whole-signal targets with no explicit declaration now infer a
+  generated list aggregate contract from direct RHS concat expressions when
+  every operand has exact scalar/list/record type evidence.
+- Nested concat operands preserve nested list shape; SystemVerilog output uses
+  generated packed typedef ports instead of flattening those targets to
+  width-only metadata.
+- Explicit target declarations remain authoritative, and anonymous record
+  inference from concat remains out of scope.
+- Added `t/1321-direct-aggregate-autogrowth.t` coverage and supported corpus
+  entry `feature.direct_rhs_concat_target_autogrowth`.
+- The current frontier is `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`, an audit of
+  member/index-root aggregate autogrowth.
+- Validation passed: parser/corpus syntax checks; direct/corpus tests with
+  `Files=3, Tests=3107`; supported-corpus behavior/json/manifest/accounting
+  gates with `Files=6, Tests=27`; feature-backlog audit with `Files=1,
+  Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ## 2026-05-24: Aggregate types — Direct RHS concat autogrowth audited
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`.
 - Direct RHS concat already builds aggregate source contracts for declared

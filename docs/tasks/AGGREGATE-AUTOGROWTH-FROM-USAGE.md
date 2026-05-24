@@ -50,7 +50,8 @@ type anchor.
     `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`,
     `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`,
     `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`,
-    `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`
+    `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`,
+    `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`
 
 - ID: `AGGREGATE-AUTOGROWTH-FROM-USAGE.1`
   Status: `done`
@@ -81,9 +82,16 @@ type anchor.
   Commit: `AGGREGATE-AUTOGROWTH-FROM-USAGE.4: audit RHS concat autogrowth`
 
 - ID: `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Infer undeclared whole-signal list contracts from direct RHS concat expressions.`
   Acceptance: `When a direct .fsm whole-signal LHS has no explicit declaration and is assigned a direct RHS concat whose operands all have exact scalar or aggregate type specs, FSMGen records a generated list aggregate contract on the target before HDL generation. Nested concat operands preserve nested list shape. Explicit target declarations remain authoritative. Record mapping still requires a declared record target. Ambiguous, no-width, partial-path, child-endpoint, compound-update, and VHDL surfaces remain unchanged, and incompatible later aggregate contracts fail closed.`
+  Verification: `passed: parser/corpus syntax checks, focused direct aggregate autogrowth/corpus tests, supported-corpus behavior/json/manifest/accounting gates, feature-backlog audit, mdBook build, and diff check`
+  Commit: `AGGREGATE-AUTOGROWTH-FROM-USAGE.5: infer RHS concat target lists`
+
+- ID: `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`
+  Status: `pending`
+  Goal: `Audit whether member/index-root aggregate autogrowth has a safe first source position.`
+  Acceptance: `The audit identifies current behavior for assigning aggregate leaves or indexing undeclared roots, expected-failure coverage, conflict and naming risks, whether any narrow member/index-root source can be implemented safely, and the next frontier or close-out decision. No behavior changes are made in this audit leaf.`
   Verification: `pending`
   Commit: `pending`
 
@@ -91,7 +99,7 @@ type anchor.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` | `pending` | The audit found one bounded proof source: direct RHS concat can build an ordered list contract from exact operand specs, while record mapping still requires a declared record target. |
+| 1 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` | `pending` | Constant-root and concat-list autogrowth are now shipped; member/index-root autogrowth is the remaining broad ergonomic surface and needs a source-position audit before any code. |
 
 ## Audit Findings
 
@@ -118,6 +126,10 @@ type anchor.
   item specs from exact operands, including nested concat operands. Record
   mapping is target-aware because member names come from a declared record
   target, so anonymous record inference from concat alone remains out of scope.
+- Direct RHS concat into an undeclared whole target now grows a generated list
+  contract when every operand has exact scalar/list/record type evidence.
+  Nested concat operands preserve nested list shape, and explicit target
+  declarations still suppress autogrowth.
 - Composition already has a bounded aggregate top-port inference path:
   declared aggregate top-port paths, whole-root links to typed child inputs,
   and uniform unlinked same-name child inputs can seed aggregate root
@@ -154,13 +166,21 @@ undeclared-target widening is list-only: the authored concat order provides
 the list item order, nested concat operands preserve nested list shape, and
 each operand must already have an exact scalar or aggregate type spec.
 
-## Selected Next Slice
+## Completed Concat Implementation Slice
 
-`AGGREGATE-AUTOGROWTH-FROM-USAGE.5` will implement direct RHS concat
+`AGGREGATE-AUTOGROWTH-FROM-USAGE.5` implemented direct RHS concat
 autogrowth only for undeclared whole targets that can receive a generated list
-contract. It will not infer anonymous record member names, will not change
-explicit declarations, will not accept no-width operands, and will preserve
+contract. It does not infer anonymous record member names, does not change
+explicit declarations, does not accept no-width operands, and preserves
 fail-closed aggregate-contract diagnostics for incompatible later assignments.
+
+## Selected Follow-up Slice
+
+`AGGREGATE-AUTOGROWTH-FROM-USAGE.6` will audit member/index-root aggregate
+autogrowth before any implementation. That surface is broader than
+constant-root or concat-list autogrowth because individual leaf assignments do
+not by themselves prove a complete root shape, conflict policy, anonymous type
+naming, or record/list boundary.
 
 ## Decisions
 
@@ -188,11 +208,21 @@ fail-closed aggregate-contract diagnostics for incompatible later assignments.
   contract when every operand has an exact type spec; it is not enough
   evidence for anonymous record member names, so record mapping remains
   target-declared only.
+- `2026-05-24`: Direct RHS concat into undeclared whole targets now infers
+  generated list contracts only when operands have exact type evidence. Nested
+  concat operands preserve nested list shape. Explicit declarations remain
+  authoritative, and record inference from concat still requires a declared
+  record target.
+- `2026-05-24`: The next frontier is a member/index-root autogrowth audit,
+  not implementation, because partial usage may not prove a complete aggregate
+  root shape or naming policy.
 
 ## Open Questions
 
 - Whether anonymous record contracts should ever be inferred from direct RHS
   concat without a declared record target remains out of scope.
+- Whether any member/index-root usage can safely grow an undeclared aggregate
+  root is the active `.6` audit question.
 
 ## Blockers
 
@@ -206,6 +236,7 @@ fail-closed aggregate-contract diagnostics for incompatible later assignments.
 | `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.2` | `prove -Iperl t/276-direct-local-aggregate-values.t t/280-declarative-aggregate-types.t t/281-structural-declared-type-contracts.t t/285-aggregate-expression-type-support.t t/288-composition-aggregate-top-expression-inference.t t/248-regression-corpus-accounting.t`; `mdbook build docs/book`; `git diff --check` | `passed: Files=6, Tests=3085` |
 | `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/1321-direct-aggregate-autogrowth.t`; `prove -Iperl t/1321-direct-aggregate-autogrowth.t t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t t/297-capability-manifest.t t/359-support-accounting-corpus-runtime-audit.t t/372-support-accounting-catalog-path-audit.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: direct/corpus Files=3, Tests=3085; supported-corpus gates Files=6, Tests=27; feature-backlog audit Files=1, Tests=15` |
 | `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` | `prove -Iperl t/285-aggregate-expression-type-support.t t/270-systemverilog-assignment-width-contract-validation.t t/248-regression-corpus-accounting.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: focused concat/corpus Files=3, Tests=3088; feature-backlog audit Files=1, Tests=15` |
+| `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/1321-direct-aggregate-autogrowth.t`; `prove -Iperl t/1321-direct-aggregate-autogrowth.t t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t t/297-capability-manifest.t t/359-support-accounting-corpus-runtime-audit.t t/372-support-accounting-catalog-path-audit.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: direct/corpus Files=3, Tests=3107; supported-corpus gates Files=6, Tests=27; feature-backlog audit Files=1, Tests=15` |
 
 ## Commit Log
 
@@ -215,7 +246,8 @@ fail-closed aggregate-contract diagnostics for incompatible later assignments.
 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.2` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.2: audit aggregate autogrowth frontier` | `audit/design slice` |
 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.3: infer aggregate constant targets` | `implementation slice` |
 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.4: audit RHS concat autogrowth` | `audit/design slice` |
-| `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` | `pending` | `implementation slice` |
+| `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.5: infer RHS concat target lists` | `implementation slice` |
+| `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` | `pending` | `audit/design slice` |
 
 ## Changelog
 
@@ -229,3 +261,5 @@ fail-closed aggregate-contract diagnostics for incompatible later assignments.
   audit as the next frontier.
 - `2026-05-24`: Completed direct RHS concat autogrowth audit and selected a
   list-only implementation frontier for undeclared whole targets.
+- `2026-05-24`: Completed list-only direct RHS concat target autogrowth and
+  selected member/index-root autogrowth audit as the next frontier.

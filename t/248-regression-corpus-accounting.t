@@ -89,6 +89,7 @@ for my $required_id (qw(
     feature.partial_lhs_with_size
     feature.partial_lhs_inferred_width
     feature.direct_rhs_concat_pack
+    feature.direct_rhs_concat_target_autogrowth
     feature.direct_lhs_deconstruct_pack
     feature.direct_sreset_active_high
     feature.custom_system_clock
@@ -414,8 +415,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    38,
-    'catalog now keeps thirty-eight named supported-smoke entries including direct and composition language-feature fixtures',
+    39,
+    'catalog now keeps thirty-nine named supported-smoke entries including direct and composition language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -429,8 +430,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    38,
-    'catalog now records thirty-eight positive strict-mode supported-smoke acceptance entries',
+    39,
+    'catalog now records thirty-nine positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -440,6 +441,7 @@ for my $strict_supported_id (qw(
     feature.partial_lhs_with_size
     feature.partial_lhs_inferred_width
     feature.direct_rhs_concat_pack
+    feature.direct_rhs_concat_target_autogrowth
     feature.direct_lhs_deconstruct_pack
     feature.direct_sreset_active_high
     feature.custom_system_clock

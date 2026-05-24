@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Direct RHS concat target list autogrowth shipped
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`.
+- Direct `.fsm` whole-signal targets with no explicit declaration now infer a
+  generated list aggregate contract when assigned a direct RHS concat
+  expression whose operands all have exact scalar, list, or record type specs.
+- Nested RHS concat operands preserve nested list shape, so
+  `(concat (concat FLAG DATA) TAG)` infers a nested list contract rather than
+  flattening to width-only metadata.
+- Explicit target declarations remain authoritative. Record mapping from
+  concat still requires a declared record target because concat syntax has
+  operand order but no record member names.
+- Added focused parser/pipeline/CLI coverage in
+  `t/1321-direct-aggregate-autogrowth.t` and supported corpus fixture
+  `feature.direct_rhs_concat_target_autogrowth`.
+- Synchronized regression corpus docs, mdBook aggregate-type/backlog
+  chapters, roadmap status, task-tree status, and live continuity docs.
+- Validation passed: parser/corpus syntax checks; direct/corpus tests with
+  `Files=3, Tests=3107`; supported-corpus behavior/json/manifest/accounting
+  gates with `Files=6, Tests=27`; feature-backlog audit with `Files=1,
+  Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`.
+
 ## 2026-05-24: Direct RHS concat autogrowth audited
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`.
 - Audited the direct RHS concat aggregate-shape path across

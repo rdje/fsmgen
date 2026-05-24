@@ -127,6 +127,121 @@ FSM
     );
 };
 
+subtest 'direct RHS concat can infer undeclared whole-signal list contracts' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_rhs_concat_target_autogrowth.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_rhs_concat_target_autogrowth.sv');
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_rhs_concat_target_autogrowth
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (FLAG 1)
+    (DATA 2)
+    (TAG 4)
+  )
+  (idle
+    (= (OUT> (concat FLAG DATA)))
+    (= (NESTED> (concat (concat FLAG DATA) TAG)))
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+    );
+    my $result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $hdl = $result->{hdl_code};
+
+    like(
+        $hdl,
+        qr/typedef struct packed \{\n\s+logic item_0;\n\s+logic \[1:0\] item_1;\n\} fsmgen_inferred_OUT__fsmgen_t; \/\/ fsmgen_inferred_OUT/s,
+        'pipeline emits an inferred packed list typedef for a direct RHS concat target',
+    );
+    like(
+        $hdl,
+        qr/typedef struct packed \{\n\s+struct packed \{\n\s+logic item_0;\n\s+logic \[1:0\] item_1;\n\s+\} item_0;\n\s+logic \[3:0\] item_1;\n\} fsmgen_inferred_NESTED__fsmgen_t; \/\/ fsmgen_inferred_NESTED/s,
+        'pipeline emits an inferred nested packed list typedef for a nested direct RHS concat target',
+    );
+    like(
+        $hdl,
+        qr/\boutput\s+fsmgen_inferred_OUT__fsmgen_t\s+OUT\b/s,
+        'pipeline exposes the inferred concat list target through the generated module port',
+    );
+    like(
+        $hdl,
+        qr/\boutput\s+fsmgen_inferred_NESTED__fsmgen_t\s+NESTED\b/s,
+        'pipeline exposes the inferred nested concat list target through the generated module port',
+    );
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--output', $output_path, $fsm_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+    my $output_text = slurp_file($output_path);
+
+    ok($success, 'CLI accepts direct RHS concat target autogrowth');
+    ok(-e $output_path, 'CLI emits HDL for direct RHS concat target autogrowth');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for direct RHS concat target autogrowth');
+    unlike($combined_output, qr/aggregate contract|whole aggregate RHS/s, 'successful CLI run does not report concat aggregate-contract failures');
+    like(
+        $output_text,
+        qr/\boutput\s+fsmgen_inferred_OUT__fsmgen_t\s+OUT\b/s,
+        'CLI output preserves the inferred concat list target typedef',
+    );
+};
+
+subtest 'explicit scalar targets still block direct RHS concat autogrowth' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_explicit_scalar_blocks_concat_autogrowth.fsm');
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_explicit_scalar_blocks_concat_autogrowth
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (FLAG 1)
+    (DATA 2)
+    (OUT 3)
+  )
+  (idle
+    (= (OUT> (concat FLAG DATA)))
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+    );
+    my $result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $hdl = $result->{hdl_code};
+
+    unlike(
+        $hdl,
+        qr/fsmgen_inferred_OUT/s,
+        'explicit scalar +size target does not receive an inferred concat list typedef',
+    );
+    like(
+        $hdl,
+        qr/\boutput\s+reg\s+\[2:0\]\s+OUT\b/s,
+        'explicit scalar +size target remains a width-only concat output',
+    );
+};
+
 subtest 'conflicting later aggregate constants still fail against the inferred contract' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'bad_direct_aggregate_constant_target_autogrowth_conflict.fsm');
@@ -169,6 +284,51 @@ FSM
         $pipeline_error,
         qr/assignment to 'OUT'.*whole aggregate RHS 'BAD'.*does not match declared type/s,
         'pipeline rejects conflicting aggregate constants against the inferred target contract',
+    );
+};
+
+subtest 'conflicting later RHS concat order fails against the inferred list contract' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'bad_direct_rhs_concat_target_autogrowth_conflict.fsm');
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:bad_direct_rhs_concat_target_autogrowth_conflict
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (FLAG 1)
+    (DATA 2)
+  )
+  (idle
+    (= (OUT> (concat FLAG DATA)))
+  )
+  (busy
+    (= (OUT> (concat DATA FLAG)))
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+    );
+
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($fsm_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+
+    like(
+        $pipeline_error,
+        qr/assignment to 'OUT'.*whole aggregate RHS '\{DATA, FLAG\}'.*does not match declared type 'list<bit, bits\[2\]>'/s,
+        'pipeline rejects a later width-equal concat with the wrong inferred list item order',
     );
 };
 

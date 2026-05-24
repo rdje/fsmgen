@@ -1,0 +1,15 @@
+(?fsm:direct_rhs_concat_target_autogrowth
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (FLAG 1)
+    (DATA 2)
+    (TAG 4)
+  )
+  (idle
+    (= (OUT> (concat FLAG DATA)))
+    (= (NESTED> (concat (concat FLAG DATA) TAG)))
+  )
+)

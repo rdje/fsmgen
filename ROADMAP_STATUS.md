@@ -3,7 +3,28 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `aggregate types and data`.
 - Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
-- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`.
+- Recent aggregate autogrowth concat implementation:
+  `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` shipped list-only direct RHS concat
+  target autogrowth. When a direct `.fsm` whole-signal target has no explicit
+  declaration and the RHS is a direct concat expression whose operands all
+  have exact scalar/list/record type specs, FSMGen now records a generated
+  list aggregate contract on the target before HDL planning. Nested concat
+  operands preserve nested list shape, and SystemVerilog output uses generated
+  packed typedef ports instead of flattening those targets to width-only
+  metadata. Explicit target declarations remain authoritative, and anonymous
+  record inference from concat remains out of scope because concat syntax
+  provides order but no record member names. Added focused coverage in
+  `t/1321-direct-aggregate-autogrowth.t`, the supported corpus entry
+  `feature.direct_rhs_concat_target_autogrowth`, and synchronized mdBook,
+  regression corpus docs, live docs, and task-tree status. The current
+  frontier is `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`, an audit of whether any
+  member/index-root aggregate autogrowth source position can be implemented
+  safely. Validation passed: parser/corpus syntax checks; direct/corpus tests
+  with `Files=3, Tests=3107`; supported-corpus behavior/json/manifest/accounting
+  gates with `Files=6, Tests=27`; feature-backlog audit with `Files=1,
+  Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent aggregate autogrowth concat audit:
   `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` audited whether direct RHS concat
   expressions can safely seed undeclared whole-signal aggregate contracts.
@@ -6228,11 +6249,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
-- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`.
-- Completion status: `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` audited direct RHS
-  concat autogrowth and selected a list-only implementation frontier. The
-  next PNT step may implement generated list contracts for undeclared whole
-  targets assigned direct RHS concat expressions with exact operand specs.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`.
+- Completion status: `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` shipped list-only
+  direct RHS concat target autogrowth. The next PNT step audits whether any
+  member/index-root aggregate autogrowth source position can be implemented
+  safely.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
