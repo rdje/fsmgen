@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Legacy <=+ needs manifest-level compatibility truth
+- `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2` did not select a new parser cut.
+  The current legacy `<=+` surface already has the important behavior pieces:
+  default mode accepts it as an alias for `<=-`, strict mode rejects it with a
+  migration hint, the regression corpus has paired default-compatible and
+  strict-rejected entries, and the mdBook explains the user-facing split.
+- The gap is public metadata consistency. Downstream consumers can see
+  `legacy <=+ assignment operator alias for <=-` under assignment
+  compatibility, but the top-level default compatibility inventory should also
+  include it so the manifest's broad accepted-but-not-canonical list matches
+  the docs, corpus, and strict-mode contract.
+- The follow-up `.3` slice should therefore be behavior-preserving: update the
+  language-surface metadata and focused contract tests, then sync live docs.
+
 ## 2026-05-24: R8 gray-zone work starts with an inventory slice
 - The next R8 work is not another immediate rejection. The live roadmap still
   has gray-zone accepted constructs to resolve, so the first leaf must audit

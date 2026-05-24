@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R8 — Language-surface gray-zone residue audited
+- Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`.
+- Audited parser-accepted compatibility residue across behavior, regression
+  ownership, strict-mode boundaries, manifest metadata, regression docs, and
+  the mdBook.
+- Selected `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` as the next bounded leaf:
+  sync the legacy `<=+` assignment alias into the top-level language-surface
+  default compatibility inventory.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API,
+  source, test, or generated behavior changed.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
+- Current frontier: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3`.
+
 ## 2026-05-24: R8 — Language-surface gray-zone audit selected
 - Created active task tree `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
 - Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1`.

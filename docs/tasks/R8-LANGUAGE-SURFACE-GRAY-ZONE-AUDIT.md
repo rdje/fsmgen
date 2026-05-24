@@ -44,7 +44,8 @@ regression ownership.
   Status: `active`
   Goal: `Resolve the next parser-accepted language-surface gray zone.`
   Children: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1`,
-    `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`
+    `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`,
+    `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3`
 
 - ID: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1`
   Status: `done`
@@ -54,9 +55,16 @@ regression ownership.
   Commit: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1: select gray-zone audit`
 
 - ID: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit parser-accepted compatibility residue and select one bounded support-tier decision.`
   Acceptance: `The audit identifies remaining accepted compatibility or ambiguous constructs, current docs/support-accounting coverage, strict-mode behavior, manifest exposure, and one bounded next implementation leaf or a documented close-out decision. No behavior changes are made in this audit leaf.`
+  Verification: `passed: feature-backlog audit, mdBook build, and diff check`
+  Commit: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2: audit gray-zone residue`
+
+- ID: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3`
+  Status: `pending`
+  Goal: `Sync the legacy <=+ assignment alias into top-level language-surface compatibility metadata.`
+  Acceptance: `The public language-surface manifest records legacy <=+ assignment compatibility in the same default-mode compatibility inventory as the other parser-accepted legacy residues, while preserving the existing assignment-specific compatibility entry, parser behavior, strict-mode rejection, corpus accounting, and mdBook truth.`
   Verification: `pending`
   Commit: `pending`
 
@@ -64,7 +72,7 @@ regression ownership.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2` | `pending` | The tree is active; the next safe step is evidence gathering before any language-surface behavior change. |
+| 1 | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` | `pending` | The audit found a bounded metadata truth gap: legacy `<=+` is documented and regression-owned as compatibility, but the top-level manifest compatibility inventory does not name it beside the other default-mode residues. |
 
 ## Decisions
 
@@ -72,10 +80,25 @@ regression ownership.
   activity after closing the strict slash-link task tree. The live roadmap
   still lists R8 as in progress, with remaining work to resolve parser-
   accepted legacy constructs and keep support claims regression-backed.
+- `2026-05-24`: Completed the audit-only `.2` leaf without changing parser,
+  scheduler, HDL, CLI, public API, test, or generated behavior. The remaining
+  default-mode compatibility residue is already mostly accounted for: paired
+  corpus entries cover legacy direct roots, `?module` aliases, empty
+  `(+size)`, misleading reset spellings, compact `:=`, infix assignments,
+  legacy `<=+`, legacy generated-child roots, and composition slash-link
+  wiring. Strict mode rejects each current residue with stable diagnostics
+  where an explicit strict cut has shipped, and the mdBook/regression corpus
+  docs describe the user-facing split. The one bounded gap selected for `.3`
+  is manifest metadata truth: `FSM::Support::LanguageSurfaceSection` exposes
+  `legacy <=+ assignment operator alias for <=-` under assignment
+  compatibility, but its top-level
+  `default_mode_compatibility.accepted_but_not_canonical_for_generated_output`
+  list does not name the same accepted legacy residue beside the other
+  default-mode compatibility families.
 
 ## Open Questions
 
-- None. `.2` owns the actual inventory and next-slice selection.
+- None. `.3` owns the selected metadata truth-sync slice.
 
 ## Blockers
 
@@ -86,12 +109,14 @@ regression ownership.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: feature-backlog audit Files=1, Tests=15` |
+| `2026-05-24` | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: feature-backlog audit Files=1, Tests=15` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1` | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1: select gray-zone audit` | `selection slice` |
+| `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2` | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2: audit gray-zone residue` | `audit/design slice` |
 
 ## Changelog
 
@@ -99,3 +124,5 @@ regression ownership.
   selected the activation frontier.
 - `2026-05-24`: Completed `.1`; current frontier is `.2`, the audit/design
   slice.
+- `2026-05-24`: Completed `.2`; selected `.3` to synchronize legacy `<=+`
+  assignment compatibility into top-level language-surface metadata.

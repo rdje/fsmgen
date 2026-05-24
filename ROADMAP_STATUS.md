@@ -3,7 +3,23 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R8`.
 - Active task tree: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
-- Current frontier: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`.
+- Current frontier: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3`.
+- Recent R8 language-surface gray-zone audit:
+  `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2` audited the current parser-accepted
+  compatibility residue against parser/frontend behavior, regression-corpus
+  support accounting, strict-mode boundaries, manifest metadata, regression
+  docs, and the mdBook. No parser, scheduler, report, generated artifact,
+  HDL, CLI, public API, source, test, or generated behavior changed. The next
+  bounded implementation leaf is `.3`: synchronize the legacy `<=+`
+  assignment alias into the top-level language-surface default compatibility
+  inventory. The audit found that the corpus and mdBook already document
+  default-mode `<=+` compatibility and strict-mode rejection, and
+  `FSM::Support::LanguageSurfaceSection` already records it under assignment
+  compatibility, but the broader
+  `default_mode_compatibility.accepted_but_not_canonical_for_generated_output`
+  list does not name it beside the other default-mode residues. Validation
+  passed: feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
 - Recent R8 language-surface gray-zone selection:
   `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1` activated the next task tree for
   the roadmap's remaining R8 work: resolve parser-accepted `.fsm` constructs

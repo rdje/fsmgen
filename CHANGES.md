@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R8 — Language-surface gray-zone residue audited
+- Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`.
+- Audited remaining parser-accepted `.fsm` compatibility residue against
+  frontend behavior, support-accounting metadata, strict-mode boundaries,
+  manifest metadata, regression-corpus docs, and mdBook coverage.
+- Selected `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` as the next bounded
+  metadata truth-sync leaf: the legacy `<=+` assignment alias is already
+  documented and regression-owned as default-mode compatibility with
+  strict-mode rejection, and already appears under assignment-specific
+  compatibility metadata, but the top-level language-surface default
+  compatibility inventory should name it explicitly.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API,
+  source, test, or generated behavior changed in this audit slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R8 — Language-surface gray-zone audit selected
 - Created active task tree `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
 - The tree owns the next roadmap-aligned R8 activity: audit remaining

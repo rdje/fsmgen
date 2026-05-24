@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R8 language-surface gray-zone residue audited
+- Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`.
+- Audited the remaining parser-accepted compatibility residue against
+  parser/frontend behavior, support-accounting metadata, strict-mode
+  boundaries, manifest metadata, regression-corpus docs, and the mdBook.
+- The shipped default/strict split is already mostly owned by paired corpus
+  entries and user docs: legacy direct roots, `?module` aliases, empty
+  `(+size)`, misleading reset spellings, compact `:=`, infix assignments,
+  legacy `<=+`, generated-child legacy roots, and composition slash-link
+  wiring are accounted for as compatibility or strict-rejected surfaces.
+- Selected `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` as the next bounded leaf:
+  sync the legacy `<=+` assignment alias into the top-level language-surface
+  default compatibility inventory. That alias is already documented in the
+  mdBook and regression corpus, and already appears under assignment-specific
+  compatibility metadata, but the broader manifest inventory should name it
+  explicitly beside the other accepted-but-not-canonical residues.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API,
+  source, test, or generated behavior changed in this audit slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
+- Current frontier: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3`.
+
 ## 2026-05-24: R8 language-surface gray-zone audit selected
 - Created active task tree `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
 - Purpose: resolve the next parser-accepted `.fsm` construct family that is
