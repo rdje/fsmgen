@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Shared-datapath contract work needs an audit before code
+- The shipped shared-datapath surface already spans discovery, contributor
+  metadata, helper/runtime HDL, assertion HDL, visibility policy, registered
+  peer-read cases, combinational cases, public fanout, and forward-IR export
+  paths.
+- The remaining roadmap text mixes several contract questions: direct
+  child-owned outputs versus lifted shared targets, lifted mux/register
+  ownership, default re-export visibility, and realized combinational behavior.
+  The next safe step is an audit that selects one bounded implementation lane
+  or records a prerequisite deferral.
+
 ## 2026-05-24: Defer parameter/generic widening until a prerequisite is ready
 - The current parameter/generic surface has a strong tested base and the
   remaining named gaps are not single-step follow-ups.
