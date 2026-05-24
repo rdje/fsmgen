@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Actor-parameter activation overrides shipped
+- Completed `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` and closed the task tree.
+- Generated activation `(params ...)` override values now accept actor-local
+  scalar parameter defaults by name for spawn, generated blocking `do`, and
+  rule-trigger sites.
+- Scalar leaves inside compatible aggregate/list activation override values
+  may also use actor-local scalar parameter defaults.
+- Actor-parameter override values resolve before lowerer IR publication,
+  schedule reports, and generated-top `?fsmc` emission, preserving
+  self-contained literal outputs.
+- Transaction parameters, runtime signals, arbitrary expressions, non-scalar
+  actor parameters, direct `(on ...)` activation params, and reusable-library
+  use-site actor constants/parameters remain deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused activation parameter binding tests
+  with `Files=3, Tests=65`; public/spec/book/backlog audits with `Files=6,
+  Tests=351`; `./bin/ci-regression isf --no-book` with `Files=250,
+  Tests=1683`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Actor-parameter activation override selected
 - Created active task tree `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`.
 - Completed `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1`.

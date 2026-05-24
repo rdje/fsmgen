@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Activation parameter actor defaults resolve like constants
+- The shipped implementation keeps actor-local scalar parameter defaults in
+  the same static specialization class as actor constants for generated
+  activation parameter overrides. They resolve before lowerer IR, schedule
+  report, and generated-top publication, so downstream consumers see literal
+  parameter bindings rather than private name-resolution state.
+- Non-scalar actor parameters stay rejected as activation override values.
+  Allowing only scalar literal-resolved defaults avoids implying a dynamic
+  runtime data path or an aggregate specialization solver.
+
 ## 2026-05-24: Actor parameters are the next static activation override source
 - Activation parameter overrides already resolve actor constants and enum
   members before generated-top emission. Actor-local scalar parameter defaults

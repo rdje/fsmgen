@@ -5044,14 +5044,25 @@ sub _resolve_activation_param_value {
     $allow_enum_member //= 0;
 
     if (!ref($value)) {
-        confess "$context uses undefined parameter value; activation parameter values accept numeric, exact-width, actor-constant, scalar enum member, and aggregate/list literal values only\n"
+        confess "$context uses undefined parameter value; activation parameter values accept numeric, exact-width, actor-constant, actor scalar parameter, scalar enum member, and aggregate/list literal values only\n"
             unless defined($value);
         return _clone_isf_value($value)
             if _is_numeric_or_exact_width_literal($value);
         return _clone_isf_value($constant_values->{$value})
             if _is_hdl_identifier($value) && exists $constant_values->{$value};
+        if (_is_hdl_identifier($value)) {
+            my $param = _actor_param_by_name($actor, $value);
+            if ($param) {
+                my $resolved_value = _param_resolved_value($param);
+                confess "$context actor parameter '$value' must resolve to a scalar numeric or exact-width literal\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return _clone_isf_value($resolved_value);
+            }
+        }
         if (_is_enum_member_reference($value)) {
-            confess "$context uses unsupported aggregate/list override leaf '$value'; activation parameter aggregate/list overrides accept numeric, exact-width, actor-constant, and enum member leaves only when enum members resolve to non-negative integer literal values\n"
+            confess "$context uses unsupported aggregate/list override leaf '$value'; activation parameter aggregate/list overrides accept numeric, exact-width, actor-constant, actor scalar parameter, and enum member leaves only when enum members resolve to non-negative integer literal values\n"
                 unless $allow_enum_member;
             my $resolved_value = _resolve_actor_enum_member_value($actor, $value);
             confess "$context references unknown enum member '$value'\n"
@@ -5061,7 +5072,7 @@ sub _resolve_activation_param_value {
             return _clone_isf_value($resolved_value);
         }
 
-        confess "$context uses unsupported parameter value '$value'; activation parameter values accept numeric, exact-width, actor-constant, scalar enum member, and aggregate/list literal values only\n";
+        confess "$context uses unsupported parameter value '$value'; activation parameter values accept numeric, exact-width, actor-constant, actor scalar parameter, scalar enum member, and aggregate/list literal values only\n";
     }
 
     confess "$context uses unsupported parameter value shape; activation parameter values accept non-empty aggregate/list literal values only\n"

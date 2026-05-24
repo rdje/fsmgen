@@ -56,7 +56,8 @@ clear lower-layer mapping, and clear runtime behavior.
   `actor_params[]`; scalar defaults and aggregate/list default leaves may use
   enum members, and they are not runtime payload wires. Generated
   activation-site scalar parameter overrides and aggregate/list override leaves
-  may also use enum members, which resolve to literal generated-top bindings.
+  may use actor-local scalar parameter defaults and enum members, which
+  resolve to literal generated-top bindings.
   Actor-local scalar parameter defaults that resolve to non-negative integer
   literals may also be used as static `(wait NAME)` counts in the owning
   actor schedule.
@@ -603,9 +604,10 @@ The ISF-specific current limitations are:
   signals in scheduled `.fsm`. Spawn and blocking `do` parameter declaration,
   validation, child `+params` emission, per-instance override preservation, and
   generated-top application are shipped for the static `(params ...)` surface,
-  including actor-local constants as resolved static override values.
-  Actor/transaction parameter values, runtime-signal values, arbitrary
-  expressions, and richer generated-child surfaces remain backlog work.
+  including actor-local constants and actor-local scalar parameter defaults as
+  resolved static override values. Transaction parameter values,
+  runtime-signal values, arbitrary expressions, non-scalar actor parameters as
+  override values, and richer generated-child surfaces remain backlog work.
 - Transaction-local `(ports ...)` declarations are parser-public metadata and
   can use positive literal widths or actor-local scalar parameter defaults
   that resolve to positive integers. They can be bound at activation sites
@@ -657,10 +659,11 @@ The ISF-specific current limitations are:
   inline drive assignment RHS scalar values and scalar operands inside inline
   drive RHS expressions may use enum members, and scalar activation parameter
   overrides for spawn, generated blocking `do`, and rule `trigger` may use
-  enum members as static specialization values.
+  actor-local scalar parameter defaults or enum members as static
+  specialization values.
 
   Scalar leaves inside those activation aggregate/list parameter override
-  values may use enum members too.
+  values may use actor-local scalar parameter defaults and enum members too.
 
   Reusable-library use-site parameter overrides may also use enum members as
   scalar values or scalar leaves inside compatible aggregate/list override

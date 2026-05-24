@@ -212,7 +212,8 @@ transaction parameters, duplicate instance/parameter names fail, scalar
 literal overrides are width-flexible, and aggregate defaults require
 compatible aggregate overrides. Actor-local constants may be used as scalar
 override values, or as scalar leaves inside aggregate/list override values;
-they resolve to literal values before generated-top emission.
+actor-local scalar parameter defaults may be used in the same override value
+positions. Both resolve to literal values before generated-top emission.
 
 A generated child `.fsm` emits the child transaction defaults in `+params`;
 parameter declarations on non-generated transactions fail closed; the parent

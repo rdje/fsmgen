@@ -2,33 +2,32 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`.
-- Current frontier: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`.
-- Recent R14 activation actor-parameter override selection:
-  `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1` selected the next public-facing ISF
-  feature tree before implementation. The implementation frontier is
-  `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`, a bounded widening of generated
-  activation parameter override values: spawn, generated blocking `do`, and
-  rule-trigger `(params ...)` override values may use actor-local scalar
-  parameter defaults by name, including scalar leaves inside compatible
-  aggregate/list overrides. The implementation must resolve those actor
-  parameters before lowerer IR publication, schedule reports, and generated
-  `?fsmc` top emission, preserving self-contained literal outputs. It must
-  keep transaction parameters, runtime signals, arbitrary expressions,
-  non-scalar actor parameters as scalar values, direct `(on ...)` activation
-  params, and reusable-library use-site parameter semantics deferred. No
-  parser, scheduler, report, generated artifact, HDL, CLI behavior, public
-  API, source, test, or generated behavior changed in this selection slice.
-  Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 activation actor-parameter override implementation:
+  `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` shipped the selected generated
+  activation parameter value widening and closed the task tree. Spawn,
+  generated blocking `do`, and rule-trigger `(params ...)` override values
+  may now use actor-local scalar parameter defaults by name, including scalar
+  leaves inside compatible aggregate/list overrides. The lowerer resolves
+  those actor parameters before lowerer IR publication, schedule reports, and
+  generated `?fsmc` top emission, preserving self-contained literal outputs.
+  Transaction parameters, runtime signals, arbitrary expressions, non-scalar
+  actor parameters, direct `(on ...)` activation params, and reusable-library
+  use-site actor constants/parameters remain deferred. The ISF spec,
+  downstream integration handoff, public contract, mdBook, task tree, README
+  index, roadmap, and live docs are synchronized. Validation passed: syntax
+  checks; focused activation parameter binding tests with `Files=3,
+  Tests=65`; public/spec/book/backlog audits with `Files=6, Tests=351`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1683`;
   `mdbook build docs/book`; and `git diff --check`.
 - Recent roadmap active-lane latest-slice sync:
   `ROADMAP-ACTIVE-LANE-LATEST-SLICE-SYNC.1` synchronized the lower
   `Current active lane` summary after the transaction-over-rule book
-  truth-sync commit. Both live-roadmap surfaces now agree that no active task
-  tree/frontier is selected, that the latest completed slice is this
-  roadmap-maintenance truth sync, and that the next behavior-bearing PNT
-  implementation slice must create or select a task tree before changing
-  code. No parser, scheduler, report, generated artifact, HDL, CLI behavior,
+  truth-sync commit. At that point, both live-roadmap surfaces agreed that no
+  active task tree/frontier was selected and that the next behavior-bearing
+  PNT implementation slice had to create or select a task tree before
+  changing code. No parser, scheduler, report, generated artifact, HDL, CLI behavior,
   public API, source, test, or generated behavior changed. Validation passed:
   focused book/spec/backlog audits with `Files=3, Tests=343`; `mdbook build
   docs/book`; and `git diff --check`.
@@ -6951,13 +6950,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`.
-- Current frontier: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`.
-- Completion status: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1` selected the
-  actor-local scalar parameter activation-override contract and advanced the
-  active frontier to the implementation leaf. No parser, scheduler, report,
-  generated artifact, HDL, CLI behavior, public API, source, test, or
-  generated behavior changed in the selection slice.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` shipped
+  actor-local scalar parameter defaults as generated activation parameter
+  override values for spawn, generated blocking `do`, rule-trigger sites, and
+  scalar leaves inside compatible aggregate/list overrides. The task tree is
+  closed. The next behavior-bearing PNT implementation slice must create or
+  select task-tree ownership before code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

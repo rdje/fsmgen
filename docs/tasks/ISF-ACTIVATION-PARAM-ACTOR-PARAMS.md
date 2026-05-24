@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -48,7 +48,7 @@ compile-time actor-constant and enum-member override model.
 ## Task Tree
 
 - ID: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`
-  Status: `active`
+  Status: `done`
   Goal: `Track actor-local scalar parameter defaults as activation parameter override values`
   Children: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1`,
   `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`
@@ -61,17 +61,17 @@ compile-time actor-constant and enum-member override model.
   Commit: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1: select actor param overrides`
 
 - ID: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement actor-local scalar parameter defaults as activation override values`
   Acceptance: `Actor-local scalar parameter defaults work as static activation parameter override values for spawn, generated blocking do, and rule-trigger sites; malformed or runtime-looking names fail closed; focused tests and synchronized public docs pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2: ship actor param overrides`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` | `active` | Implement the selected public contract after the selection leaf. |
+| 1 | `closed` | `done` | All planned leaves are complete. |
 
 ## Decisions
 
@@ -101,14 +101,14 @@ compile-time actor-constant and enum-member override model.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
-| `2026-05-24` | `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` | `pending` | `pending` |
+| `2026-05-24` | `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1249-isf-activation-parameter-constants.t`; `prove -Iperl t/1249-isf-activation-parameter-constants.t t/1215-isf-spawn-parameter-binding.t t/1248-isf-rule-trigger-parameter-binding.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1256-feature-backlog-status-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1` | `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1: select actor param overrides` | `contract-selection slice` |
-| `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` | `pending` | `pending` |
+| `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` | `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2: ship actor param overrides` | `implementation slice` |
 
 ## Changelog
 
@@ -116,3 +116,7 @@ compile-time actor-constant and enum-member override model.
   parameter activation override contract.
 - `2026-05-24`: Completed the selection leaf and advanced the frontier to
   `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`.
+- `2026-05-24`: Completed the implementation leaf and closed the task tree.
+  Generated activation `(params ...)` override values now accept actor-local
+  scalar parameter defaults for spawn, generated blocking `do`, rule-trigger
+  sites, and scalar leaves inside compatible aggregate/list override values.

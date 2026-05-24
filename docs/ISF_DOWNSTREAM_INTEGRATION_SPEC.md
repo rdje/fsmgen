@@ -1264,18 +1264,20 @@ Rules:
 - Parameter overrides are static specialization values, not runtime payloads.
 - Runtime-varying values must use transaction ports and `(bind ...)`.
 - Activation parameter override values may be scalar/exact-width literals,
-  actor-local constants, scalar local or package-qualified enum members, or
-  compatible aggregate/list literals whose scalar leaves are literals or
-  actor-local constants or local/package-qualified enum members.
+  actor-local constants, actor-local scalar parameter defaults, scalar local
+  or package-qualified enum members, or compatible aggregate/list literals
+  whose scalar leaves are literals, actor-local constants, actor-local scalar
+  parameter defaults, or local/package-qualified enum members.
 - Transaction-local scalar parameter defaults may use local or
   package-qualified enum members; generated child `.fsm` `+params` and
   generated-composition schedule reports preserve the authored enum token.
-- Actor constants and scalar enum members resolve to literal values before
-  generated-top emission, including scalar enum leaves inside activation
-  aggregate/list override values.
+- Actor constants, actor-local scalar parameter defaults, and scalar enum
+  members resolve to literal values before generated-top emission, including
+  matching scalar leaves inside activation aggregate/list override values.
 - Reusable-library use-site enum member overrides resolve to literal values
   before generated-top emission and before `library_uses[]` report
-  publication. Use-site overrides do not accept actor constants yet.
+  publication. Use-site overrides do not accept actor constants or actor
+  parameters yet.
 - Spawned children and parameterized/generated blocking `do` activations lower
   through generated composition.
 - Parameterized rule triggers lower through generated child activation
@@ -3568,6 +3570,8 @@ For a SPECFORGE-style producer:
 - Use transaction ports and `(bind ...)` for runtime-varying data.
 - Use `(params ...)` only for static specialization on generated activation
   forms that explicitly support it.
+- Use actor constants or actor-local scalar parameter defaults for static
+  generated activation parameter override values.
 - Use actor constants or actor-local scalar parameter defaults for static
   latency bound symbols.
 - Use actor constants or actor-local scalar parameter defaults for static

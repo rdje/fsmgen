@@ -1465,18 +1465,20 @@ Spawn and blocking `do` parameter binding are checked by
 [t/1215-isf-spawn-parameter-binding.t](../t/1215-isf-spawn-parameter-binding.t).
 Rule-trigger parameter binding is checked by
 [t/1248-isf-rule-trigger-parameter-binding.t](../t/1248-isf-rule-trigger-parameter-binding.t).
-Actor constants as activation parameter override values are checked by
+Actor constants and actor-local scalar parameter defaults as activation
+parameter override values are checked by
 [t/1249-isf-activation-parameter-constants.t](../t/1249-isf-activation-parameter-constants.t).
 Generated composition-top wiring for generated child activations is checked by
 [t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t).
 The shipped surface preserves validated per-instance spawn and generated `do`
 overrides plus parameterized rule-trigger overrides in lowerer metadata, emits
 child transaction defaults into generated child scheduled `.fsm` `+params`
-blocks, resolves actor-local constants and scalar enum members in activation
-parameter override values and scalar enum member leaves inside activation
-aggregate/list override values, rejects duplicate instances, duplicate
-parameters, unknown overrides, unsupported non-constant symbolic or expression
-values, and aggregate shape mismatches, and rejects
+blocks, resolves actor-local constants, actor-local scalar parameter defaults,
+and scalar enum members in activation parameter override values and matching
+leaves inside activation aggregate/list override values, rejects duplicate
+instances, duplicate parameters, unknown overrides, unsupported runtime or
+expression values, non-scalar actor parameters, aggregate shape mismatches,
+and rejects
 parameter declarations on non-generated transactions.
 The public ISF surface now accepts the scalar type-alias subset plus one
 aggregate storage-carrier subset: actor-local `(types ...)` declarations,

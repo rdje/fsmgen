@@ -1909,21 +1909,22 @@ values, the implementation must specialize distinct logical child instances or
 cloned scheduled regions. It must not lower the parameter as a mutable runtime
 signal shared by every activation of the transaction.
 
-Actor-local constants and enum members are accepted as static activation
-parameter override values. A constant name may appear as a scalar override
-value, or as a scalar leaf inside an aggregate/list override value, for
-generated activation forms that already support `(params ...)`: spawn,
-parameterized blocking `do`, and parameterized rule `trigger`. A local enum
-member such as `mode.BUSY` or package enum member such as `shared.mode.BUSY`
-may appear as either a scalar override value or a scalar leaf inside an
-aggregate/list override value. The lowerer resolves constants and enum members
-to literal values before generated-top emission, so generated `?fsmc`
-parameter overrides remain self-contained. Reusable-library use-site parameter
-overrides follow the same enum-member rule for scalar values and aggregate/list
-leaves, but do not accept actor constants. Unknown names, unknown enum
-members, actor parameters, transaction parameters, runtime signals, and
-arbitrary expressions remain fail-closed until a later task explicitly ships a
-wider value source.
+Actor-local constants, actor-local scalar parameter defaults, and enum members
+are accepted as static activation parameter override values. A constant or
+actor-scalar-parameter name may appear as a scalar override value, or as a
+scalar leaf inside an aggregate/list override value, for generated activation
+forms that already support `(params ...)`: spawn, parameterized blocking `do`,
+and parameterized rule `trigger`. A local enum member such as `mode.BUSY` or
+package enum member such as `shared.mode.BUSY` may appear as either a scalar
+override value or a scalar leaf inside an aggregate/list override value. The
+lowerer resolves constants, actor scalar parameters, and enum members to
+literal values before generated-top emission, so generated `?fsmc` parameter
+overrides remain self-contained. Reusable-library use-site parameter overrides
+follow the same enum-member rule for scalar values and aggregate/list leaves,
+but do not accept actor constants or actor parameters. Unknown names, unknown
+enum members, non-scalar actor parameters, transaction parameters, runtime
+signals, and arbitrary expressions remain fail-closed until a later task
+explicitly ships a wider value source.
 
 The parameterized rule-trigger contract follows the same specialization rule.
 It elaborates a generated child activation instance named
@@ -5322,18 +5323,8 @@ Focused tests:
   inline drive target aggregate leaf writes, drive-call actual aggregate leaf
   values and expression operands,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
-  member references outside actor constants, actor parameter scalar values or
-  aggregate/list default leaves, generated child transaction parameter scalar
-  values or aggregate/list default leaves, activation parameter scalar values
-  or aggregate/list override leaves, reusable-library use-site parameter
-  override values or leaves, transaction
-  `when`/`while`/`until` condition scalar values or expression operands,
-  transaction `set` RHS scalar values/expression operands,
-  transaction `switch` selector or branch values, rule guard scalar values or
-  expression operands, rule assignment RHS scalar values or expression operands, drive
-  body RHS scalar values or expression operands, inline drive assignment RHS
-  scalar values or expression operands, or drive-call actual scalar
-  values/expression operands remain deferred.
+  member references in contexts not explicitly listed above as shipped remain
+  deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values, direct transaction `set` target tokens,
   transaction condition scalar values or expression operands, transaction

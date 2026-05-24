@@ -1771,12 +1771,14 @@ backed by local or package-qualified enum members, generated child
 transaction scalar parameter defaults backed by local or package-qualified
 enum members, generated child transaction aggregate/list parameter default
 leaves backed by local or package-qualified enum members, actor-local
-constants for selected static specialization values, and compatible
-aggregate/list literal parameter values.
+constants and actor-local scalar parameter defaults for selected generated
+activation specialization values, and compatible aggregate/list literal
+parameter values.
 
 Scalar activation parameter overrides and scalar leaves inside activation
-aggregate/list parameter override values may now also consume local and
-package-qualified enum members.
+aggregate/list parameter override values may now also consume actor-local
+scalar parameter defaults, local enum members, and package-qualified enum
+members.
 
 Direct transaction `set` RHS scalar values and scalar operands inside
 transaction `set` RHS expressions may consume local and package-qualified
@@ -1866,22 +1868,9 @@ values/expression operands, inline drive target tokens, inline drive
 assignment RHS scalar values/expression operands, or drive-call actual scalar
 values/expression operands, subaggregate operands/updates, aggregate
 interface or transaction ports, aggregate storage banks, enum member
-references outside actor constants, actor parameter scalar values or
-aggregate/list default leaves,
-
-generated child transaction scalar parameter defaults or aggregate/list
-default leaves, activation parameter scalar values or aggregate/list override
-leaves, reusable-library use-site parameter override values or leaves,
-transaction `set` RHS scalar values/expression operands, transaction
-`when`/`while`/`until` condition scalar values/expression operands,
-transaction `switch` selector/branch values, rule guard scalar
-values/expression operands, scalar rule assignment RHS values or expression
-operands, or drive body RHS scalar values/expression operands, inline drive
-assignment RHS scalar values/expression operands, or drive-call actual scalar
-values/expression operands, aggregate field/slice/update lowering,
-
-and broader aggregate shape inference require future task-tree ownership
-before they can ship.
+references in contexts not explicitly listed above as shipped, aggregate
+field/slice/update lowering, and broader aggregate shape inference require
+future task-tree ownership before they can ship.
 
 The lowering artifact remains the contract. ISF enum/aggregate source should
 lower to reviewable `.fsm` text that uses the established type and aggregate

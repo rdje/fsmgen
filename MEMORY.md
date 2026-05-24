@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 actor-parameter activation overrides shipped
+- Completed `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` and closed the task tree.
+- Generated activation `(params ...)` override values now accept actor-local
+  scalar parameter defaults by name for spawn, generated blocking `do`, and
+  rule-trigger sites.
+- Scalar leaves inside compatible aggregate/list activation override values
+  may also use actor-local scalar parameter defaults.
+- The lowerer resolves those actor parameters before lowerer IR publication,
+  schedule reports, and generated-top `?fsmc` emission. The public outputs
+  remain self-contained literal views.
+- Transaction parameters, runtime signals, arbitrary expressions, non-scalar
+  actor parameters, direct `(on ...)` activation params, and reusable-library
+  use-site actor constants/parameters remain deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, README index, roadmap, and live docs.
+- Validation passed: syntax checks; focused activation parameter binding tests
+  with `Files=3, Tests=65`; public/spec/book/backlog audits with `Files=6,
+  Tests=351`; `./bin/ci-regression isf --no-book` with `Files=250,
+  Tests=1683`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 actor-parameter activation override selection
 - Created active task tree `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`.
 - Completed `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1`.

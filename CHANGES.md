@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Actor-parameter activation overrides shipped
+- Completed `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` and closed the task tree.
+- Spawn, generated blocking `do`, and rule-trigger `(params ...)` override
+  values now accept actor-local scalar parameter defaults by name.
+- Scalar leaves inside compatible aggregate/list activation override values
+  may also use actor-local scalar parameter defaults.
+- Actor-parameter activation override values resolve before lowerer IR
+  publication, schedule reports, and generated-top `?fsmc` emission, so the
+  generated composition artifacts remain literal and self-contained.
+- Transaction parameters, runtime signals, arbitrary expressions, non-scalar
+  actor parameters, direct `(on ...)` activation params, and reusable-library
+  use-site actor constants/parameters remain deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, README index, roadmap, and live docs.
+- Validation passed: syntax checks; focused activation parameter binding tests
+  with `Files=3, Tests=65`; public/spec/book/backlog audits with `Files=6,
+  Tests=351`; `./bin/ci-regression isf --no-book` with `Files=250,
+  Tests=1683`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Actor-parameter activation override selected
 - Created active task tree `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`.
 - Completed `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1`; the current frontier is
