@@ -1921,11 +1921,12 @@ supported arbiter names, resource kinds, duplicate resource rejection, and
 resource-user validation for the enforced rule-user resource kinds. The
 scheduler now enforces `rule_slot`, `output_bundle`, `transaction_start`, and
 `storage_port` under the static `priority` arbiter for declared rule users.
-Each bound rule requests when its guard is true, the priority graph chooses a
-unique active winner, and the generated grant gates the whole rule DT DTE
-without adding a cycle. The scheduler also enforces bounded `round_robin`
-arbitration for `rule_slot`, `output_bundle`, and `transaction_start`
-resources with declared rule users by emitting a generated pointer counter,
+Each priority-bound rule requests when its guard is true, the priority graph
+chooses a unique active winner, and the generated grant gates the whole rule
+DT DTE without adding a cycle. The scheduler also enforces bounded `round_robin`
+arbitration for `rule_slot`, `output_bundle`, `transaction_start`, and
+`storage_port` resources with declared rule users by emitting a generated
+pointer counter,
 granting the first requesting rule at or after that pointer, and advancing the
 pointer from the winning rule DT.
 Unmembered `output_bundle` resources keep the implicit bound-rule surface: the
@@ -1945,10 +1946,12 @@ path.
 users are bound. Members must name concrete actor-owned storage signals:
 scalar storage variables or scalarized bank element signals. Member lists
 validate against bound rule writes in that storage domain and report through
-`resource_arbitration[].members`. Bank roots, aggregate storage paths,
-inferred undeclared targets, transaction ports, actor input ports, route
-mux/storage, storage locks, fairness state, and hold/release ownership remain
-outside this shipped subset.
+`resource_arbitration[].members`. Under bounded `round_robin`, the same
+mandatory member validation and report evidence apply while the generated
+pointer selects the winning bound rule for the cycle. Bank roots, aggregate
+storage paths, inferred undeclared targets, transaction ports, actor input
+ports, route mux/storage, storage locks, memory-port protocols, and
+hold/release ownership remain outside this shipped subset.
 
 The resource-kind catalog is owned in code by
 `FSM::Support::ISFResourceCatalog` and exposed through the machine-readable
@@ -1962,13 +1965,13 @@ Current shareable resource registry:
 | `rule_slot` | shipped for `priority` and bounded `round_robin` arbitration | One-cycle mutual exclusion for rule users under the `priority` or bounded `round_robin` arbiter. |
 | `output_bundle` | shipped for `priority` and bounded `round_robin` arbitration | One-cycle ownership of a group of actor outputs or rule-written LHS targets under the `priority` or bounded `round_robin` arbiter, with optional explicit declared-output/storage-signal member lists. |
 | `transaction_start` | shipped for `priority` and bounded `round_robin` arbitration | One-cycle arbitration for rule-trigger request fan-in into one local transaction. |
-| `storage_port` | shipped for `priority` arbitration | One-cycle arbitration for rule users that update explicit actor-owned storage signals. |
+| `storage_port` | shipped for `priority` and bounded `round_robin` arbitration | One-cycle arbitration for rule users that update explicit actor-owned storage signals. |
 | `interface_bundle` | backlog | Ownership of a protocol-facing interface or bus bundle. |
 | `named_drive` | backlog | Ownership of a reusable actor `(drive ...)` body or drive-call path. |
 | `child_instance` | backlog | Re-entry control for a spawned child instance. |
 
-Remaining backlog: `round_robin` for `storage_port` and backlog resource
-kinds, `interface_bundle`, `named_drive`, `child_instance`, generated-child
+Remaining backlog: `round_robin` for backlog resource kinds,
+`interface_bundle`, `named_drive`, `child_instance`, generated-child
 transaction starts, generated-child storage arbitration, actor-network trigger
 resources, actor-network endpoint users, transaction/storage lifetime
 ownership, named-drive users, output-target users, bank-root/aggregate/inferred
@@ -2571,9 +2574,10 @@ Declared typed actor-owned storage may also expose optional `type` and
 hashes.
 
 Remaining direction: keep `role`, `type`, and `type_kind` additive and omit
-them when evidence is ambiguous. The shipped `rule_slot`/`round_robin` and
-`output_bundle`/`round_robin` and `transaction_start`/`round_robin`
-implementations expose their generated pointers as inferred counter storage with role
+them when evidence is ambiguous. The shipped `rule_slot`/`round_robin`,
+`output_bundle`/`round_robin`, `transaction_start`/`round_robin`, and
+`storage_port`/`round_robin` implementations expose their generated pointers
+as inferred counter storage with role
 `resource_round_robin_pointer`; broader per-cycle resource-grant/debug storage
 remains deferred. Add a storage role only if future resource lowering
 materializes such signals with compatibility rules, public contract metadata,
@@ -2705,9 +2709,10 @@ strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, rule-over-transaction priority suppression, `rule_slot`/`priority`
 resource metadata, lower-priority rule gating by a higher-priority rule, and
 delayed completion pulse behavior. Focused resource tests also cover bounded
-`rule_slot`/`round_robin`, `output_bundle`/`round_robin`, and
-`transaction_start`/`round_robin` grants, generated pointer storage metadata,
-report projection, and fail-closed unsupported round-robin combinations.
+`rule_slot`/`round_robin`, `output_bundle`/`round_robin`,
+`transaction_start`/`round_robin`, and `storage_port`/`round_robin` grants,
+generated pointer storage metadata, report projection, and fail-closed
+unsupported round-robin combinations.
 
 The stage/contract fixture is now promoted in the `isf` tier for file-backed
 strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL

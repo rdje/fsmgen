@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Storage-port round-robin resource shipped
+- Completed `ISF-STORAGE-PORT-ROUND-ROBIN.2` and closed the task tree.
+- FSMGen now supports bounded
+  `(resource NAME (kind storage_port) (arbiter round_robin) (members STORAGE_SIGNAL...) (users RULE...))`
+  declarations for declared rule users.
+- Explicit storage-port members remain mandatory concrete actor-owned storage
+  signals and continue to appear in `resource_arbitration[].members`.
+- The scheduler emits `isf_rr_<resource>_turn`, gates the winning
+  storage-port rule DT, reports `resource_arbitration[]` grants with
+  `kind: storage_port`/`arbiter: round_robin`, and reports the pointer as
+  `resource_round_robin_pointer`.
+- Backlog resource kinds, generated-child resources, route mux/storage,
+  ready/backpressure, payload protocols, storage locks, memory-port protocols,
+  and lifetime ownership remain deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused resource arbitration with
+  `Files=1, Tests=15`; public/report/book audits with `Files=9, Tests=370`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1682`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Storage-port round-robin resource selected
 - Created active task tree `ISF-STORAGE-PORT-ROUND-ROBIN`.
 - Completed `ISF-STORAGE-PORT-ROUND-ROBIN.1`.
@@ -20,8 +43,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   API, source, test, or generated behavior changed in this selection slice.
 - Validation passed: feature-backlog audit with `Files=1, Tests=15`;
   `mdbook build docs/book`; and `git diff --check`.
-- Active task tree: `ISF-STORAGE-PORT-ROUND-ROBIN`.
-- Current frontier: `ISF-STORAGE-PORT-ROUND-ROBIN.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
 
 ## 2026-05-24: R14 — Output-bundle round-robin resource shipped
 - Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` and closed the task tree.
@@ -34,9 +57,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   output-bundle rule DT, reports `resource_arbitration[]` grants with
   `kind: output_bundle`/`arbiter: round_robin`, and reports the pointer as
   `resource_round_robin_pointer`.
-- Storage-port round-robin, backlog resource kinds, generated-child
-  resources, route mux/storage, ready/backpressure, payload protocols, and
-  lifetime ownership remain deferred.
+- Backlog resource kinds, generated-child resources, route mux/storage,
+  ready/backpressure, payload protocols, and lifetime ownership remain
+  deferred.
 - The ISF spec, downstream handoff, public contract, mdBook, task tree,
   README index, roadmap, and live docs are synchronized.
 - Validation passed: syntax checks; focused resource arbitration with
@@ -55,9 +78,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `(resource NAME (kind output_bundle) (arbiter round_robin) (users RULE...))`
   for declared rule users, preserving current explicit output-bundle member
   validation and `resource_arbitration[].members` reporting.
-- Storage-port round-robin, backlog resource kinds, generated-child resources,
-  route mux/storage, ready/backpressure, payload protocols, and lifetime
-  ownership remain deferred.
+- Backlog resource kinds, generated-child resources, route mux/storage,
+  ready/backpressure, payload protocols, and lifetime ownership remain
+  deferred.
 - No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
   API, source, test, or generated behavior changed in this selection slice.
 - Validation passed: feature-backlog audit with `Files=1, Tests=15`;
@@ -76,9 +99,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   reports `resource_arbitration[]` grants with
   `kind: transaction_start`/`arbiter: round_robin`, and reports the pointer as
   `resource_round_robin_pointer`.
-- Generated-child transaction starts, storage-port round-robin,
-  backlog resource kinds, route mux/storage, ready/backpressure, payload
-  protocols, and lifetime ownership remain deferred.
+- Generated-child transaction starts, backlog resource kinds,
+  route mux/storage, ready/backpressure, payload protocols, and lifetime
+  ownership remain deferred.
 - The ISF spec, downstream handoff, public contract, mdBook, task tree,
   README index, roadmap, and live docs are synchronized.
 - Validation passed: syntax checks; focused resource arbitration with

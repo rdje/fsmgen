@@ -1772,11 +1772,10 @@ Rules:
 
 - Current enforced resource kinds are `rule_slot`, `output_bundle`,
   `transaction_start`, and `storage_port` with `priority` arbitration for
-  declared rule users. `rule_slot`, `output_bundle`, and
-  `transaction_start` also support bounded `round_robin` arbitration for
-  declared rule users.
-- A bounded `round_robin` `rule_slot`, `output_bundle`, or
-  `transaction_start` uses the `(users ...)` list as a circular grant order.
+  declared rule users. All four also support bounded `round_robin`
+  arbitration for declared rule users.
+- A bounded `round_robin` `rule_slot`, `output_bundle`, `transaction_start`,
+  or `storage_port` uses the `(users ...)` list as a circular grant order.
   FSMGen emits a generated pointer counter named
   `isf_rr_<resource>_turn`, grants the first requesting rule at or after the
   current pointer, advances the pointer only from the winning rule DT, and
@@ -1808,7 +1807,10 @@ Rules:
   ports, actor input ports, and arbitrary expressions remain outside this
   explicit member domain. Every listed member must be written by at least one
   bound rule user, and no bound rule user may write a concrete actor-owned
-  storage signal outside the list.
+  storage signal outside the list. Under bounded `round_robin`, the same
+  mandatory member validation and `resource_arbitration[].members` report
+  evidence apply while the generated pointer selects the winning bound rule
+  for the cycle.
 - Reports expose `resource_arbitration[]`.
 - Each `resource_arbitration[]` entry includes `resource`, `kind`, `arbiter`,
   `user`, `user_kind`, `members`, and `suppressed_by`. `members` is an array
@@ -1820,10 +1822,9 @@ Rules:
   unless listed as enforced by the public contract. Generated-child
   transaction starts, generated-child storage arbitration, actor-network
   triggers, actor-network endpoint users, transaction users, named-drive
-  users, output-target users, lifetime ownership, route mux/storage, and
-  `round_robin` for `storage_port`, backlog resource kinds, and other
-  non-selected resource surfaces remain outside the shipped
-  resource-arbitration subset.
+  users, output-target users, lifetime ownership, route mux/storage,
+  `round_robin` for backlog resource kinds, and other non-selected resource
+  surfaces remain outside the shipped resource-arbitration subset.
 
 ## 12.5. Static Actor Network Metadata
 
@@ -3047,8 +3048,8 @@ for `rule_slot`, `output_bundle`, `transaction_start`, and `storage_port`,
 including explicit output-bundle member-list validation,
 transaction-start trigger-user validation, storage-port storage-member
 validation, and `resource_arbitration[].members` report evidence. They also
-cover bounded `rule_slot`/`round_robin` and
-`output_bundle`/`round_robin` and `transaction_start`/`round_robin` grants,
+cover bounded `rule_slot`/`round_robin`, `output_bundle`/`round_robin`,
+`transaction_start`/`round_robin`, and `storage_port`/`round_robin` grants,
 generated pointer storage metadata, report projection, and fail-closed
 unsupported round-robin combinations.
 The fixture above remains a `rule_slot` fixture; it does not claim

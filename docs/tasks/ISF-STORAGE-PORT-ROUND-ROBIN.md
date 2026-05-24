@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-STORAGE-PORT-ROUND-ROBIN`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -67,7 +67,7 @@ Ship a bounded `round_robin` arbiter for declared rule users that share a
 ## Task Tree
 
 - ID: `ISF-STORAGE-PORT-ROUND-ROBIN`
-  Status: `active`
+  Status: `done`
   Goal: `Enforce bounded round_robin arbitration for storage_port rule users.`
   Children: `ISF-STORAGE-PORT-ROUND-ROBIN.1`,
   `ISF-STORAGE-PORT-ROUND-ROBIN.2`
@@ -80,19 +80,19 @@ Ship a bounded `round_robin` arbiter for declared rule users that share a
   Commit: `pending`
 
 - ID: `ISF-STORAGE-PORT-ROUND-ROBIN.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement storage_port round_robin arbitration for declared rule users.`
   Acceptance: `Lowering enforces the selected storage_port round-robin boundary, mandatory member validation/reporting remains intact, reports expose grants and pointer storage, unsupported combinations fail closed, docs are synchronized, and focused plus broader checks pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: syntax checks; focused resource arbitration test; public contract/report/book audits; feature-backlog audit; ISF regression gate; mdBook build; diff check`
+  Commit: `ISF-STORAGE-PORT-ROUND-ROBIN.2: ship storage-port round robin`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-STORAGE-PORT-ROUND-ROBIN.2` | `pending` | The task tree is selected; the bounded storage-port round-robin implementation can now start. |
+| 1 | `ISF-STORAGE-PORT-ROUND-ROBIN.2` | `done` | The bounded storage-port round-robin resource widening is implemented, documented, and validated. |
 
-Current frontier: `ISF-STORAGE-PORT-ROUND-ROBIN.2`.
+Current frontier: `closed`.
 
 ## Decisions
 
@@ -116,17 +116,25 @@ Current frontier: `ISF-STORAGE-PORT-ROUND-ROBIN.2`.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-STORAGE-PORT-ROUND-ROBIN.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: feature-backlog audit Files=1, Tests=15` |
-| `2026-05-24` | `ISF-STORAGE-PORT-ROUND-ROBIN.2` | `pending` | `pending` |
+| `2026-05-24` | `ISF-STORAGE-PORT-ROUND-ROBIN.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFResourceCatalog.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1218-isf-rule-slot-resource-arbitration.t`; focused public/report/book audits; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed: resource arbitration Files=1, Tests=15; public/report/book audits Files=9, Tests=370; ISF gate Files=250, Tests=1682` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-STORAGE-PORT-ROUND-ROBIN.1` | `pending` | `selection slice` |
-| `ISF-STORAGE-PORT-ROUND-ROBIN.2` | `pending` | `implementation slice` |
+| `ISF-STORAGE-PORT-ROUND-ROBIN.1` | `ISF-STORAGE-PORT-ROUND-ROBIN.1: select storage-port round robin` | `selection slice` |
+| `ISF-STORAGE-PORT-ROUND-ROBIN.2` | `ISF-STORAGE-PORT-ROUND-ROBIN.2: ship storage-port round robin` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created and activated the task tree, selected
   `ISF-STORAGE-PORT-ROUND-ROBIN.2` as the implementation frontier, and
   confirmed that the selection slice has no compiler behavior change.
+- `2026-05-24`: Shipped bounded `storage_port` + `round_robin` arbitration
+  for declared rule users. The lowerer now accepts
+  `(resource NAME (kind storage_port) (arbiter round_robin) (members STORAGE_SIGNAL...) (users RULE...))`,
+  preserves mandatory concrete actor-owned storage member validation and
+  `resource_arbitration[].members` reporting, emits and reports the generated
+  `isf_rr_<resource>_turn` pointer, and keeps broader storage locks,
+  route mux/storage, memory-port protocols, lifetime ownership, generated-child
+  resources, and backlog resource kinds deferred.

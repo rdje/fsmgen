@@ -30,7 +30,7 @@ my %RESOURCE_KIND_STATUS = (
     rule_slot         => 'shipped_for_priority_and_round_robin_arbitration',
     output_bundle     => 'shipped_for_priority_and_round_robin_arbitration',
     transaction_start => 'shipped_for_priority_and_round_robin_arbitration',
-    storage_port      => 'shipped_for_priority_arbitration',
+    storage_port      => 'shipped_for_priority_and_round_robin_arbitration',
     interface_bundle  => 'backlog',
     named_drive       => 'backlog',
     child_instance    => 'backlog',
@@ -43,7 +43,7 @@ my %RESOURCE_KIND_MEANING = (
     named_drive       => 'ownership of a reusable actor drive body or drive-call path',
     transaction_start => 'arbitration for start/request fan-in into one transaction, with priority or bounded round-robin arbitration',
     child_instance    => 're-entry control for a spawned child instance',
-    storage_port      => 'arbitration for shared state, register, memory, or storage-port access',
+    storage_port      => 'arbitration for shared state, register, memory, or storage-port access, with priority or bounded round-robin arbitration',
 );
 
 sub isf_resource_arbiter_values {

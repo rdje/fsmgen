@@ -7046,7 +7046,8 @@ sub _resource_kind_supports_round_robin_rule_users {
     return defined($kind)
         && ($kind eq 'rule_slot'
             || $kind eq 'output_bundle'
-            || $kind eq 'transaction_start');
+            || $kind eq 'transaction_start'
+            || $kind eq 'storage_port');
 }
 
 sub _apply_round_robin_rule_user_resource_grants {

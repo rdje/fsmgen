@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Storage-port round-robin resource shipped
+- Completed `ISF-STORAGE-PORT-ROUND-ROBIN.2` and closed the task tree.
+- `storage_port` resources now support the bounded `round_robin` arbiter for
+  declared rule users with mandatory explicit concrete storage members.
+- The lowerer reuses the shipped generated pointer/grant machinery, emits
+  `isf_rr_<resource>_turn`, gates the whole winning storage-port rule DT, and
+  advances the pointer only from the winning rule DT.
+- Explicit storage-port members remain limited to concrete actor-owned
+  storage signals, must be written by bound rules, and continue to report
+  through `resource_arbitration[].members`.
+- Schedule reports expose the widening through existing
+  `resource_arbitration[]` entries with `kind: storage_port`,
+  `arbiter: round_robin`, member evidence, and dynamic peer suppressors; the
+  pointer reports through `inferred_storage[]` with role
+  `resource_round_robin_pointer`.
+- Backlog resource kinds, generated-child resources, actor-network endpoints,
+  ready/backpressure, payload protocols, route mux/storage, storage locks,
+  memory-port protocols, and lifetime ownership remain deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, README index, roadmap, and live docs.
+- Validation passed: syntax checks; focused resource arbitration with
+  `Files=1, Tests=15`; public/report/book audits with `Files=9, Tests=370`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1682`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Storage-port round-robin resource selected
 - Created active task tree `ISF-STORAGE-PORT-ROUND-ROBIN`.
 - Completed `ISF-STORAGE-PORT-ROUND-ROBIN.1`; the next implementation
@@ -35,9 +60,9 @@ This is the persistent technical change history for FSMGen.
   `arbiter: round_robin`, member evidence, and dynamic peer suppressors; the
   pointer reports through `inferred_storage[]` with role
   `resource_round_robin_pointer`.
-- Storage-port round-robin, backlog resource kinds, generated-child
-  resources, actor-network endpoints, ready/backpressure, payload protocols,
-  route mux/storage, and lifetime ownership remain deferred.
+- Backlog resource kinds, generated-child resources, actor-network endpoints,
+  ready/backpressure, payload protocols, route mux/storage, and lifetime
+  ownership remain deferred.
 - Synchronized the ISF spec, downstream integration handoff, public contract,
   mdBook, task tree, README index, roadmap, and live docs.
 - Validation passed: syntax checks; focused resource arbitration with
@@ -55,8 +80,7 @@ This is the persistent technical change history for FSMGen.
 - The implementation leaf must preserve current output-bundle member
   validation/reporting, reuse the shipped round-robin pointer/grant machinery,
   report grants with `kind: output_bundle` and `arbiter: round_robin`, and
-  keep storage-port round-robin plus broader resource/lifetime ownership
-  deferred.
+  keep broader resource/lifetime ownership deferred.
 - No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
   API, source, test, or generated behavior changed in this selection slice.
 - Validation passed: feature-backlog audit with `Files=1, Tests=15`;
@@ -75,10 +99,9 @@ This is the persistent technical change history for FSMGen.
   `arbiter: round_robin`, empty `members`, and dynamic peer suppressors; the
   pointer reports through `inferred_storage[]` with role
   `resource_round_robin_pointer`.
-- Generated-child transaction starts, storage-port round-robin,
-  backlog resource kinds, actor-network endpoints, ready/backpressure, payload
-  protocols, route mux/storage, and transaction lifetime ownership remain
-  deferred.
+- Generated-child transaction starts, backlog resource kinds, actor-network
+  endpoints, ready/backpressure, payload protocols, route mux/storage, and
+  transaction lifetime ownership remain deferred.
 - Synchronized the ISF spec, downstream integration handoff, public contract,
   mdBook, task tree, README index, roadmap, and live docs.
 - Validation passed: syntax checks; focused resource arbitration with

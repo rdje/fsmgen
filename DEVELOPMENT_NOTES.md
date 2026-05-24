@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Storage-port round-robin keeps storage ownership concrete
+- The shipped `storage_port` round-robin path reuses the existing whole-rule
+  DT grant machinery. Fairness changes which bound rule owns the storage-port
+  cycle; it does not infer new storage routes, add lock state, or introduce a
+  memory-port protocol.
+- Keeping explicit members mandatory is the key safety boundary. A
+  `storage_port` resource can arbitrate only concrete actor-owned storage
+  signals that the listed rules actually write, so the scheduler never has to
+  guess whether a bank root, aggregate path, transaction port, or inferred LHS
+  is part of the protected storage domain.
+
 ## 2026-05-24: Storage-port round-robin is the remaining bounded resource widening
 - `storage_port` is the remaining priority-enforced, parser-recognized
   resource kind whose first fair-arbitration slice can still use declared

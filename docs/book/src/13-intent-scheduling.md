@@ -747,8 +747,9 @@ The ISF-specific current limitations are:
 - `(resources ...)` is structurally validated by the parser and now has four
   enforced resource kinds for declared rule users under the `priority`
   arbiter: `rule_slot`, `output_bundle`, `transaction_start`, and
-  `storage_port`. `rule_slot`, `output_bundle`, and `transaction_start` also
-  have a bounded `round_robin` arbiter for declared rule users.
+  `storage_port`. `rule_slot`, `output_bundle`, `transaction_start`, and
+  `storage_port` also have a bounded `round_robin` arbiter for declared rule
+  users.
 
   `rule_slot` is a one-cycle mutual-exclusion slot. `output_bundle` owns a
   group of actor outputs or rule-written LHS targets and may carry explicit
@@ -760,8 +761,9 @@ The ISF-specific current limitations are:
   storage member lists when users are bound, and uses the same one-cycle
   rule-DT grant gating.
 
-  For `rule_slot`, `output_bundle`, or `transaction_start` plus
-  `round_robin`, the listed rule users form a circular grant order. FSMGen
+  For `rule_slot`, `output_bundle`, `transaction_start`, or `storage_port`
+  plus `round_robin`, the listed rule users form a circular grant order.
+  FSMGen
   emits a generated pointer counter
   `isf_rr_<resource>_turn`, grants the first requesting rule at or after that
   pointer, and advances the pointer from the winning rule DT. The pointer is
@@ -770,8 +772,8 @@ The ISF-specific current limitations are:
   Future kinds such as `interface_bundle`, `named_drive`, `child_instance`,
   generated-child storage arbitration, route mux/storage, storage locks, and
   lifetime ownership remain backlog until their lowering contracts are
-  explicit. `round_robin` remains unsupported for `storage_port`, backlog
-  resource kinds, and other non-selected resource surfaces.
+  explicit. `round_robin` remains unsupported for backlog resource kinds and
+  other non-selected resource surfaces.
 
   The parser and `embedding.isf_public_interface` contract share the same
   resource catalog, including the current status and meaning of each kind.
@@ -779,8 +781,8 @@ The ISF-specific current limitations are:
   `(priority ...)` is structurally validated and currently enforced for
   same-target rule/rule data conflicts, priority-arbitrated `rule_slot`,
   `output_bundle`, `transaction_start`, and `storage_port` resources,
-  bounded `round_robin` `rule_slot`, `output_bundle`, and
-  `transaction_start` resources, and the lowerable rule-over-transaction
+  bounded `round_robin` `rule_slot`, `output_bundle`, `transaction_start`,
+  and `storage_port` resources, and the lowerable rule-over-transaction
   same-target data case.
 
   Transaction-over-rule priority remains deferred because scheduled `.fsm`

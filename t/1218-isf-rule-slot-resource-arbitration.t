@@ -506,6 +506,82 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'storage_port_priority');
 };
 
+subtest 'round_robin storage_port grant gates rule DTs and preserves explicit members' => sub {
+    my $source = <<'ISF';
+(actor storage_port_round_robin
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input high_req)
+    (input low_req)
+    (output valid))
+  (storage
+    (var slot (width 1))
+    (var shadow (width 1)))
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter round_robin)
+      (members slot shadow)
+      (users high low)))
+  (rule high high_req
+    (slot 1))
+  (rule low low_req
+    (shadow 1)
+    (valid 1)))
+ISF
+
+    my $ir = lower_ir($source);
+    is($ir->{counters}{isf_rr_store_bus_turn}, 1, 'storage_port round_robin pointer width covers both rule users');
+    is(
+        $ir->{storage_roles}{isf_rr_store_bus_turn},
+        'resource_round_robin_pointer',
+        'storage_port round_robin pointer storage carries the public role',
+    );
+    is_deeply(
+        $ir->{resource_arbitration}{grants},
+        [
+            {
+                resource => 'store_bus',
+                kind     => 'storage_port',
+                arbiter  => 'round_robin',
+                user     => 'high',
+                higher   => ['low'],
+                members  => ['slot', 'shadow'],
+            },
+            {
+                resource => 'store_bus',
+                kind     => 'storage_port',
+                arbiter  => 'round_robin',
+                user     => 'low',
+                higher   => ['high'],
+                members  => ['slot', 'shadow'],
+            },
+        ],
+        'storage_port round_robin grants preserve explicit storage member evidence',
+    );
+
+    my $high_slot = find_record($ir, owner => 'high', target => 'slot');
+    my $low_shadow = find_record($ir, owner => 'low', target => 'shadow');
+    my $low_valid = find_record($ir, owner => 'low', target => 'valid');
+    is_deeply($high_slot->{resource_suppressed_by}, ['low'], 'high storage-port action records the dynamic low peer');
+    is_deeply($low_shadow->{resource_suppressed_by}, ['high'], 'low storage-port action records the dynamic high peer');
+    is_deeply($low_valid->{resource_suppressed_by}, ['high'], 'storage-port round_robin gates the whole bound low rule DT');
+
+    my $high_pointer = find_record($ir, owner => 'high', target => 'isf_rr_store_bus_turn');
+    my $low_pointer = find_record($ir, owner => 'low', target => 'isf_rr_store_bus_turn');
+    is($high_pointer->{rhs}, 1, 'high grant advances the storage_port pointer to low');
+    is($low_pointer->{rhs}, 0, 'low grant wraps the storage_port pointer to high');
+
+    my $fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($source))->{files}{'storage_port_round_robin.fsm'};
+    like($fsm, qr/\(isf_rr_store_bus_turn 1\)/, 'scheduled .fsm declares the storage_port round_robin pointer width');
+    like($fsm, qr/\(-high\s+<\(& high_req [\s\S]*\(== isf_rr_store_bus_turn 0\)/, 'high storage-port rule is gated by pointer-0 grant logic');
+    like($fsm, qr/\(<- \(isf_rr_store_bus_turn 1\)\)/, 'high grant updates the storage_port pointer');
+    like($fsm, qr/\(-low\s+<\(& low_req [\s\S]*\(== isf_rr_store_bus_turn 1\)/, 'low storage-port rule is gated by pointer-1 grant logic');
+    like($fsm, qr/\(<- \(isf_rr_store_bus_turn 0\)\)/, 'low grant wraps the storage_port pointer');
+    assert_fsm_reaches_hdl($fsm, 'storage_port_round_robin');
+};
+
 subtest 'round_robin rule_slot grant gates rule DTs with generated pointer state' => sub {
     my $source = <<'ISF';
 (actor round_robin_rule_slot
@@ -805,6 +881,48 @@ ISF
   (rule low b
     (slot 0)))
 ISF
+
+    assert_lower_rejected(<<'ISF', 'round_robin storage_port requires explicit members with users', qr/storage_port resource 'store_bus' with users requires explicit/);
+(actor storage_port_round_robin_missing_members
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input a)
+    (input b))
+  (storage
+    (var slot (width 1)))
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter round_robin)
+      (users high low)))
+  (rule high a
+    (slot 1))
+  (rule low b
+    (slot 0)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'round_robin storage_port member mismatch still fails closed', qr/isf_storage_port_member_mismatch/);
+(actor storage_port_round_robin_member_mismatch
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input a)
+    (input b))
+  (storage
+    (var slot (width 1))
+    (var shadow (width 1)))
+  (resources
+    (resource store_bus
+      (kind storage_port)
+      (arbiter round_robin)
+      (members slot)
+      (users high low)))
+  (rule high a
+    (slot 1))
+  (rule low b
+    (shadow 1)))
+ISF
 };
 
 subtest 'transaction_start resources fail closed outside the bounded rule-trigger surface' => sub {
@@ -1015,33 +1133,6 @@ ISF
     (valid 1))
   (rule low b
     (valid 0)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'round_robin storage_port with bound users', qr/isf_resource_unsupported_arbiter/);
-(actor unsupported_rr_storage_port_resource
-  (clock clk)
-  (reset rst_n)
-  (interface
-    (input start)
-    (input a)
-    (input b)
-    (output done))
-  (storage
-    (var slot (width 1)))
-  (transaction main
-    (on start)
-    (complete done))
-  (priority high over low)
-  (resources
-    (resource store_bus
-      (kind storage_port)
-      (arbiter round_robin)
-      (members slot)
-      (users high low)))
-  (rule high a
-    (slot 1))
-  (rule low b
-    (slot 0)))
 ISF
 
     assert_lower_rejected(<<'ISF', 'unsupported resource kind with bound users', qr/isf_resource_unsupported_kind/);
