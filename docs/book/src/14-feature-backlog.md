@@ -63,8 +63,9 @@ types, direct-root aggregate member/list expressions, partial aggregate LHS
 writes, direct whole-signal target contract inference from whole aggregate
 constant roots, and list-only direct RHS concat target autogrowth are
 supported on the current SystemVerilog path. Broad automatic aggregate type
-growth from arbitrary usage is not fully shipped. The active task-tree
-frontier is auditing member/index-root aggregate autogrowth.
+growth from arbitrary usage is not fully shipped. Member/index-root
+autogrowth from partial use remains backlog because it does not yet provide a
+complete, conflict-free hardware shape proof.
 
 ### Backend-Owned Struct/Record Default Lowering
 

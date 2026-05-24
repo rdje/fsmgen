@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `AGGREGATE-AUTOGROWTH-FROM-USAGE` | `active` | `aggregate types and data` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` | [docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md](docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `AGGREGATE-AUTOGROWTH-FROM-USAGE` | `done` | `aggregate types and data` | `closed` | [docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md](docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md) |
 | `DYNAMIC-DIVISOR-SAFETY-FRONTIER` | `done` | `language ergonomics` | `closed` | [docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md](docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md) |
 | `INFERENCE-FIRST-SCALAR-AUTHORING` | `done` | `language ergonomics` | `closed` | [docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md](docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md) |
 | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md](docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md) |

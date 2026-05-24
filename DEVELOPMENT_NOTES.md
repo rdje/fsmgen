@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Member/index-root autogrowth is not Perl autovivification
+- `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` closes the current aggregate autogrowth
+  tree by declining to implement member/index-root growth from partial usage.
+  This is an RTL safety decision, not a parser limitation.
+- Perl autovivification can create dynamic data structure paths as code runs.
+  FSMGen cannot adopt that semantics for hardware-visible aggregate roots:
+  inferred roots become ports, storage, packed layout, type contracts, and
+  backend declarations. A partial path such as `FRAME.flag` proves only one
+  leaf; it does not prove the whole record, list length, sibling ordering, or
+  conflict policy.
+- The safe rule for this tree is complete compile-time shape evidence only.
+  Whole aggregate constants provide complete list/record payloads. RHS concat
+  provides ordered list shape when every operand has exact type evidence.
+  Member/index-root usage remains backlog until a future explicit syntax or
+  proof source can make the complete shape deterministic.
+
 ## 2026-05-24: Direct RHS concat list autogrowth reuses exact operand contracts
 - `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` broadens the direct assignment
   aggregate-contract resolver so a `Concatenation` expression first tries the

@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Aggregate types — Member/index-root autogrowth audited and tree closed
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` and closed the task tree.
+- Audited member/index-root aggregate autogrowth and left that surface in
+  backlog for RTL safety.
+- Confirmed that direct `.fsm` already rejects member access on undeclared
+  aggregate roots and composition blocks aggregate member/item top expressions
+  until the root top port has a declared aggregate type.
+- Recorded the rationale: partial member/index usage does not prove a complete
+  hardware-visible aggregate shape, stable anonymous type name, packed layout,
+  or conflict policy.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in this audit slice.
+- Validation passed: focused direct/composition aggregate tests with `Files=5,
+  Tests=3124`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Aggregate types — Direct RHS concat target list autogrowth shipped
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`.
 - Updated direct `.fsm` assignment parsing so an undeclared whole-signal LHS

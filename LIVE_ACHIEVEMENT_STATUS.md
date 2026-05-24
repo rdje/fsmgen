@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Aggregate types — Member/index-root autogrowth audited and tree closed
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` and closed the task tree.
+- Member/index-root aggregate autogrowth remains backlog for RTL safety:
+  partial use does not prove complete root shape, record/list boundary, list
+  length, member order, packed layout, anonymous type name, or conflict policy.
+- Current diagnostics remain intentional: direct `.fsm` member access requires
+  a declared aggregate root, and composition aggregate member/item top
+  expressions require a declared aggregate root top port.
+- The shipped autogrowth boundary is complete compile-time evidence only:
+  whole aggregate constant roots and list-only direct RHS concat.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in this audit slice.
+- Validation passed: focused direct/composition aggregate tests with `Files=5,
+  Tests=3124`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: Aggregate types — Direct RHS concat target list autogrowth shipped
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`.
 - Direct `.fsm` whole-signal targets with no explicit declaration now infer a

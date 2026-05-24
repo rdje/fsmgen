@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Member/index-root aggregate autogrowth audited and tree closed
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` and closed the task tree.
+- Audited member/index-root aggregate autogrowth across direct `.fsm`,
+  composition, existing diagnostics, focused tests, mdBook, and live docs.
+- Kept member/index-root autogrowth out of implementation. Partial use such as
+  `FRAME.flag` or `FRAME[0]` does not prove a complete hardware shape: it
+  cannot establish all members/items, record/list boundary, member order, list
+  length, conflict policy, packed layout, or stable anonymous type name.
+- Current direct `.fsm` diagnostics correctly require a declared aggregate
+  root before member access. Composition likewise blocks top expressions such
+  as `in_frame.tag` until the root top port has a declared aggregate type.
+- Shipped aggregate autogrowth remains bounded to complete compile-time proof
+  sources: whole aggregate constant roots and list-only direct RHS concat.
+- Validation passed: focused direct/composition aggregate tests with `Files=5,
+  Tests=3124`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: Direct RHS concat target list autogrowth shipped
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.5`.
 - Direct `.fsm` whole-signal targets with no explicit declaration now infer a

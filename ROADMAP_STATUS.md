@@ -1,9 +1,25 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `aggregate types and data`.
-- Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
-- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent aggregate autogrowth close-out:
+  `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` audited member/index-root aggregate
+  autogrowth and closed the task tree without selecting an implementation
+  leaf. The current diagnostics remain intentional: direct `.fsm` member
+  access requires a declared aggregate root, and composition aggregate
+  member/item top expressions require a declared aggregate root top port.
+  Partial member/index use does not prove a complete hardware-visible
+  aggregate shape, record/list boundary, list length, member order, packed
+  layout, stable anonymous type name, or conflict policy. The shipped
+  autogrowth boundary is therefore limited to complete compile-time evidence:
+  whole aggregate constant roots and list-only direct RHS concat. No parser,
+  scheduler, report, generated artifact, HDL, CLI, public API, or public
+  language behavior changed in this audit slice. Validation passed: focused
+  direct/composition aggregate tests with `Files=5, Tests=3124`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent aggregate autogrowth concat implementation:
   `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` shipped list-only direct RHS concat
   target autogrowth. When a direct `.fsm` whole-signal target has no explicit
@@ -17,10 +33,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   provides order but no record member names. Added focused coverage in
   `t/1321-direct-aggregate-autogrowth.t`, the supported corpus entry
   `feature.direct_rhs_concat_target_autogrowth`, and synchronized mdBook,
-  regression corpus docs, live docs, and task-tree status. The current
-  frontier is `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`, an audit of whether any
-  member/index-root aggregate autogrowth source position can be implemented
-  safely. Validation passed: parser/corpus syntax checks; direct/corpus tests
+  regression corpus docs, live docs, and task-tree status. The follow-up
+  frontier was `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`, a member/index-root
+  autogrowth safety audit. Validation passed: parser/corpus syntax checks;
+  direct/corpus tests
   with `Files=3, Tests=3107`; supported-corpus behavior/json/manifest/accounting
   gates with `Files=6, Tests=27`; feature-backlog audit with `Files=1,
   Tests=15`; `mdbook build docs/book`; and
@@ -6248,12 +6264,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
-- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`.
-- Completion status: `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` shipped list-only
-  direct RHS concat target autogrowth. The next PNT step audits whether any
-  member/index-root aggregate autogrowth source position can be implemented
-  safely.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` closed the aggregate
+  autogrowth task tree. The next PNT step should select a new roadmap-aligned
+  task tree before any further code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

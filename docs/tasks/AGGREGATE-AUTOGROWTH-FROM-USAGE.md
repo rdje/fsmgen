@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `AGGREGATE-AUTOGROWTH-FROM-USAGE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `aggregate types and data`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -44,7 +44,7 @@ type anchor.
 ## Task Tree
 
 - ID: `AGGREGATE-AUTOGROWTH-FROM-USAGE`
-  Status: `active`
+  Status: `done`
   Goal: `Broaden safe aggregate shape inference one reviewable surface at a time.`
   Children: `AGGREGATE-AUTOGROWTH-FROM-USAGE.1`,
     `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`,
@@ -89,17 +89,17 @@ type anchor.
   Commit: `AGGREGATE-AUTOGROWTH-FROM-USAGE.5: infer RHS concat target lists`
 
 - ID: `AGGREGATE-AUTOGROWTH-FROM-USAGE.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit whether member/index-root aggregate autogrowth has a safe first source position.`
   Acceptance: `The audit identifies current behavior for assigning aggregate leaves or indexing undeclared roots, expected-failure coverage, conflict and naming risks, whether any narrow member/index-root source can be implemented safely, and the next frontier or close-out decision. No behavior changes are made in this audit leaf.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: focused direct/composition aggregate tests, feature-backlog audit, mdBook build, and diff check`
+  Commit: `AGGREGATE-AUTOGROWTH-FROM-USAGE.6: close unsafe member autogrowth`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` | `pending` | Constant-root and concat-list autogrowth are now shipped; member/index-root autogrowth is the remaining broad ergonomic surface and needs a source-position audit before any code. |
+| 1 | `closed` | `done` | The tree shipped the safe complete-shape sources and rejected member/index-root autogrowth as unsafe without a complete root-shape proof. |
 
 ## Audit Findings
 
@@ -130,6 +130,13 @@ type anchor.
   contract when every operand has exact scalar/list/record type evidence.
   Nested concat operands preserve nested list shape, and explicit target
   declarations still suppress autogrowth.
+- Direct member/index-root autogrowth is not safe as a first implementation
+  surface. Direct `.fsm` already rejects member access on undeclared aggregate
+  roots with a clear diagnostic, and composition already blocks aggregate
+  member/item top expressions until the root top port has a declared aggregate
+  type. A partial leaf use such as `FRAME.flag` proves one path width at most;
+  it does not prove all record members, list length, member order, conflict
+  resolution, packed layout, or a stable anonymous type name.
 - Composition already has a bounded aggregate top-port inference path:
   declared aggregate top-port paths, whole-root links to typed child inputs,
   and uniform unlinked same-name child inputs can seed aggregate root
@@ -174,13 +181,15 @@ contract. It does not infer anonymous record member names, does not change
 explicit declarations, does not accept no-width operands, and preserves
 fail-closed aggregate-contract diagnostics for incompatible later assignments.
 
-## Selected Follow-up Slice
+## Closed Follow-up Audit
 
-`AGGREGATE-AUTOGROWTH-FROM-USAGE.6` will audit member/index-root aggregate
-autogrowth before any implementation. That surface is broader than
-constant-root or concat-list autogrowth because individual leaf assignments do
-not by themselves prove a complete root shape, conflict policy, anonymous type
-naming, or record/list boundary.
+`AGGREGATE-AUTOGROWTH-FROM-USAGE.6` audited member/index-root aggregate
+autogrowth and deliberately did not select an implementation leaf. That
+surface is broader than constant-root or concat-list autogrowth because
+individual leaf assignments do not by themselves prove a complete root shape,
+conflict policy, anonymous type naming, or record/list boundary. The task tree
+is closed with member/index-root autogrowth remaining backlog until a future
+explicit syntax or proof source can make the hardware shape deterministic.
 
 ## Decisions
 
@@ -216,13 +225,17 @@ naming, or record/list boundary.
 - `2026-05-24`: The next frontier is a member/index-root autogrowth audit,
   not implementation, because partial usage may not prove a complete aggregate
   root shape or naming policy.
+- `2026-05-24`: Member/index-root autogrowth is not selected for
+  implementation in this tree. The current diagnostics requiring declared
+  aggregate roots remain correct for RTL safety, and broad Perl-like
+  autovivification is explicitly not accepted for hardware-visible shapes.
 
 ## Open Questions
 
 - Whether anonymous record contracts should ever be inferred from direct RHS
   concat without a declared record target remains out of scope.
-- Whether any member/index-root usage can safely grow an undeclared aggregate
-  root is the active `.6` audit question.
+- Whether a future explicit syntax can safely request record/list growth from
+  member/index usage remains backlog.
 
 ## Blockers
 
@@ -237,6 +250,7 @@ naming, or record/list boundary.
 | `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/1321-direct-aggregate-autogrowth.t`; `prove -Iperl t/1321-direct-aggregate-autogrowth.t t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t t/297-capability-manifest.t t/359-support-accounting-corpus-runtime-audit.t t/372-support-accounting-catalog-path-audit.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: direct/corpus Files=3, Tests=3085; supported-corpus gates Files=6, Tests=27; feature-backlog audit Files=1, Tests=15` |
 | `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` | `prove -Iperl t/285-aggregate-expression-type-support.t t/270-systemverilog-assignment-width-contract-validation.t t/248-regression-corpus-accounting.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: focused concat/corpus Files=3, Tests=3088; feature-backlog audit Files=1, Tests=15` |
 | `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/1321-direct-aggregate-autogrowth.t`; `prove -Iperl t/1321-direct-aggregate-autogrowth.t t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t t/297-capability-manifest.t t/359-support-accounting-corpus-runtime-audit.t t/372-support-accounting-catalog-path-audit.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: direct/corpus Files=3, Tests=3107; supported-corpus gates Files=6, Tests=27; feature-backlog audit Files=1, Tests=15` |
+| `2026-05-24` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` | `prove -Iperl t/280-declarative-aggregate-types.t t/288-composition-aggregate-top-expression-inference.t t/276-direct-local-aggregate-values.t t/1321-direct-aggregate-autogrowth.t t/248-regression-corpus-accounting.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: focused aggregate Files=5, Tests=3124; feature-backlog audit Files=1, Tests=15` |
 
 ## Commit Log
 
@@ -247,7 +261,7 @@ naming, or record/list boundary.
 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.3: infer aggregate constant targets` | `implementation slice` |
 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.4` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.4: audit RHS concat autogrowth` | `audit/design slice` |
 | `AGGREGATE-AUTOGROWTH-FROM-USAGE.5` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.5: infer RHS concat target lists` | `implementation slice` |
-| `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` | `pending` | `audit/design slice` |
+| `AGGREGATE-AUTOGROWTH-FROM-USAGE.6` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.6: close unsafe member autogrowth` | `audit/design close-out slice` |
 
 ## Changelog
 
@@ -263,3 +277,5 @@ naming, or record/list boundary.
   list-only implementation frontier for undeclared whole targets.
 - `2026-05-24`: Completed list-only direct RHS concat target autogrowth and
   selected member/index-root autogrowth audit as the next frontier.
+- `2026-05-24`: Completed the member/index-root autogrowth audit, left that
+  broad Perl-like surface in backlog for RTL safety, and closed the task tree.
