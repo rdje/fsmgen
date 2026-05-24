@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Language ergonomics — Inference-first scalar authoring selected
+- Completed `INFERENCE-FIRST-SCALAR-AUTHORING.1`.
+- Activated the active language-ergonomics task tree for the mdBook
+  feature-backlog item "Inference-First Scalar Authoring".
+- The current frontier is `INFERENCE-FIRST-SCALAR-AUTHORING.2`.
+- The follow-up leaf must audit the shipped scalar-inference boundary, current
+  corpus, live docs, and deferred source positions before choosing one bounded
+  behavior-bearing implementation surface.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`;
+  live-book, spec-index, and feature-backlog audits with `Files=3, Tests=351`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24: Roadmap maintenance — Feature-backlog owner coverage synchronized
 - Completed `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` and closed the task tree.
 - `docs/TASK_TREE.md` now lists every top-level mdBook feature-backlog category

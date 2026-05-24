@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Inference-first scalar authoring selected
+- Completed `INFERENCE-FIRST-SCALAR-AUTHORING.1`.
+- Activated the active language-ergonomics task tree for the mdBook
+  feature-backlog item "Inference-First Scalar Authoring".
+- The selected follow-up leaf is
+  `INFERENCE-FIRST-SCALAR-AUTHORING.2`, which must audit the shipped
+  scalar-inference boundary, current corpus, live docs, and deferred source
+  positions before choosing one bounded behavior-bearing implementation
+  surface.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`;
+  live-book, spec-index, and feature-backlog audits with `Files=3, Tests=351`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `INFERENCE-FIRST-SCALAR-AUTHORING`.
+- Current frontier: `INFERENCE-FIRST-SCALAR-AUTHORING.2`.
+
 ## 2026-05-24: Feature-backlog owner coverage sync completed
 - Completed `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` and closed the task tree.
 - The mdBook feature backlog now points to the task-tree owner coverage policy

@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Language ergonomics — Inference-first scalar authoring selected
+- Completed selection work for `INFERENCE-FIRST-SCALAR-AUTHORING.1`.
+- Activated a language-ergonomics task tree for the mdBook feature-backlog
+  item "Inference-First Scalar Authoring".
+- The selected follow-up leaf will audit the shipped scalar-inference
+  boundary, current corpus, live docs, and deferred source positions before
+  selecting one bounded behavior-bearing implementation surface.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`;
+  live-book, spec-index, and feature-backlog audits with `Files=3, Tests=351`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Roadmap maintenance — Feature-backlog owner coverage synchronized
 - Completed `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` and closed the task tree.
 - Added a book-facing feature-backlog owner coverage table to

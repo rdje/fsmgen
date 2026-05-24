@@ -1,9 +1,20 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `language ergonomics`.
+- Active task tree: `INFERENCE-FIRST-SCALAR-AUTHORING`.
+- Current frontier: `INFERENCE-FIRST-SCALAR-AUTHORING.2`.
+- Recent language-ergonomics scalar-inference selection:
+  `INFERENCE-FIRST-SCALAR-AUTHORING.1` activated the task tree for the
+  mdBook feature-backlog item "Inference-First Scalar Authoring". The first
+  executable frontier is an audit/design leaf that must inspect the shipped
+  scalar-inference boundary, current corpus, live docs, and deferred source
+  positions before choosing one bounded behavior-bearing implementation
+  surface. No parser, scheduler, report, generated artifact, HDL, CLI, public
+  API, or public language behavior changed in this selection. Validation
+  passed: `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; live-book,
+  spec-index, and feature-backlog audits with `Files=3, Tests=351`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent roadmap-maintenance feature-backlog owner coverage completion:
   `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` synchronized the mdBook feature
   backlog with repo-local task-tree owner coverage. `docs/TASK_TREE.md` now

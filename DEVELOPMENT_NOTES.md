@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Inference-first scalar authoring needs an audit first
+- `INFERENCE-FIRST-SCALAR-AUTHORING.1` selects the first concrete
+  language-ergonomics backlog tree after broad feature-backlog owner coverage
+  was synchronized.
+- The first executable leaf is intentionally an audit/design slice. Scalar
+  inference spans parser, semantic inference, corpus accounting, diagnostics,
+  HDL generation, and documentation; a behavior-bearing slice should name one
+  source position and one proof source before code changes begin.
+- The tree keeps aggregate inference, VHDL behavior, and broad "never declare
+  scalar types" promises out of scope until smaller shipped surfaces justify
+  them.
+
 ## 2026-05-24: Feature-backlog category ownership is a tracking stance
 - `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` records ownership at the mdBook
   backlog category level because those categories are intentionally broad.

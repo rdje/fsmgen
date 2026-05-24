@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `INFERENCE-FIRST-SCALAR-AUTHORING` | `active` | `language ergonomics` | `INFERENCE-FIRST-SCALAR-AUTHORING.2` | [docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md](docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md) |
 
 ## Proposed Task Trees
 
@@ -417,7 +418,7 @@ criteria.
 
 | mdBook backlog category | Current tracking stance |
 | --- | --- |
-| `Language Ergonomics` | `future task tree required for broader inference and language ergonomics behavior` |
+| `Language Ergonomics` | `active INFERENCE-FIRST-SCALAR-AUTHORING tree for the first inference-first scalar authoring slice; future task tree required for broader language ergonomics behavior` |
 | `Aggregate Types And Data` | `future task tree required for broader aggregate lowering, operators, VHDL aggregate support, or public type/export APIs beyond shipped bounded surfaces` |
 | `Composition` | `covered by completed composition task trees for shipped surfaces; future task tree required for broader generated-child, VHDL generic-map, and generalized composition behavior` |
 | `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces; future task tree required for remaining deferred ISF behavior` |
