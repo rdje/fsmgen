@@ -4,6 +4,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Recent roadmap active-lane latest-slice sync:
+  `ROADMAP-ACTIVE-LANE-LATEST-SLICE-SYNC.1` synchronized the lower
+  `Current active lane` summary after the transaction-over-rule book
+  truth-sync commit. Both live-roadmap surfaces now agree that no active task
+  tree/frontier is selected, that the latest completed slice is this
+  roadmap-maintenance truth sync, and that the next behavior-bearing PNT
+  implementation slice must create or select a task tree before changing
+  code. No parser, scheduler, report, generated artifact, HDL, CLI behavior,
+  public API, source, test, or generated behavior changed. Validation passed:
+  focused book/spec/backlog audits with `Files=3, Tests=343`; `mdbook build
+  docs/book`; and `git diff --check`.
 - Recent R14 transaction-over-rule book truth sync:
   `ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.1` corrected stale
   mdBook current-limitation prose that still described
@@ -6925,10 +6936,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - Active task tree: `none`.
 - Current frontier: `none`.
-- Completion status: `ISF-STORAGE-PORT-ROUND-ROBIN.2` shipped bounded
-  `storage_port` + `round_robin` arbitration for declared rule users, then
-  closed the task tree. The next PNT implementation slice must select or
-  create a task tree before changing code.
+- Completion status: `ROADMAP-ACTIVE-LANE-LATEST-SLICE-SYNC.1`
+  synchronized this lower live-roadmap summary with the top status board
+  after the transaction-over-rule book truth-sync slice. No active task tree
+  or frontier is selected. The next behavior-bearing PNT implementation slice
+  must create or select a task tree before changing code.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

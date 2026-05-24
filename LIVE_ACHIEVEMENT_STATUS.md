@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Roadmap — Active-lane latest-slice summary synchronized
+- Completed `ROADMAP-ACTIVE-LANE-LATEST-SLICE-SYNC.1` and closed the task
+  tree.
+- Updated the lower `ROADMAP_STATUS.md` current-active-lane summary so it
+  matches the top live-status board.
+- The roadmap now consistently reports no active task tree/frontier and
+  preserves the requirement that the next behavior-bearing implementation
+  slice must create or select a task tree before code changes.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior,
+  public API, source, test, or generated behavior changed.
+- Validation passed: focused book/spec/backlog audits with
+  `Files=3, Tests=343`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Transaction-over-rule book truth sync
 - Completed `ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.1` and closed the task
   tree.

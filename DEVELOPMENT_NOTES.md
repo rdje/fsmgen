@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Keep both roadmap live-status surfaces aligned
+- `ROADMAP_STATUS.md` has a top recency board and a lower current-active-lane
+  section. Both are user-facing recovery surfaces, so a completed PNT slice
+  should not leave the lower section naming an older completion.
+- The current policy remains unchanged: when no active task tree/frontier is
+  selected, the next behavior-bearing implementation must first create or
+  select a task-tree leaf with acceptance criteria.
+
 ## 2026-05-24: Transaction-over-rule book prose follows shipped state-active evidence
 - The transaction-over-rule priority implementation already has a bounded
   scheduled `.fsm` review predicate, `(state_active STATE)`, and the spec,

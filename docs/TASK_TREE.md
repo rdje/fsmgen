@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-ACTIVE-LANE-LATEST-SLICE-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-ACTIVE-LANE-LATEST-SLICE-SYNC.md](docs/tasks/ROADMAP-ACTIVE-LANE-LATEST-SLICE-SYNC.md) |
 | `ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.md](docs/tasks/ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.md) |
 | `ISF-STORAGE-PORT-ROUND-ROBIN` | `done` | `R14` | `closed` | [docs/tasks/ISF-STORAGE-PORT-ROUND-ROBIN.md](docs/tasks/ISF-STORAGE-PORT-ROUND-ROBIN.md) |
 | `ISF-OUTPUT-BUNDLE-ROUND-ROBIN` | `done` | `R14` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-ROUND-ROBIN.md](docs/tasks/ISF-OUTPUT-BUNDLE-ROUND-ROBIN.md) |
