@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -50,7 +50,7 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
 ## Task Tree
 
 - ID: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship bounded package scalar constants in actor parameter defaults.`
   Children: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1`,
     `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`
@@ -64,19 +64,19 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
   Commit: `this commit: ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select package constant defaults`
 
 - ID: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement package scalar constants as actor parameter defaults.`
   Acceptance: `Parser/lowerer behavior, diagnostics, public contracts,
   focused tests, mdBook, downstream handoff, and broader ISF gate are
   synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `this commit: ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship package constant defaults`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | `pending` | The package-constant actor parameter default boundary is now selected and ready for implementation. |
+| 1 | `closed` | `done` | The package-constant actor parameter default implementation leaf shipped and the task tree is complete. |
 
 ## Decisions
 
@@ -86,6 +86,10 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
 - `2026-05-24`: Preserve authored package-constant tokens in review surfaces
   because scheduled `.fsm` artifacts embed the imported package root and keep
   the matching `+import` review artifact.
+- `2026-05-24`: Keep package constants qualified and scalar-only in this
+  slice. Parser and LoweringIR both reject unqualified constants, unknown
+  constants, aggregate constants, member/item paths, and ambiguous
+  local-enum/package-constant spellings.
 
 ## Open Questions
 
@@ -101,15 +105,19 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-24` | `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | syntax checks; `prove -Iperl t/1349-isf-actor-param-package-constants.t t/1345-isf-actor-param-actor-constants.t t/1346-isf-actor-param-actor-params.t t/1269-isf-enum-member-actor-params.t t/1277-isf-enum-member-actor-aggregate-params.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1113-isf-public-interface-contract-json-roundtrip-audit.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1256-feature-backlog-status-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` | `this commit: ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select package constant defaults` | `selection slice` |
-| `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | `pending` | `implementation slice` |
+| `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | `this commit: ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship package constant defaults` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created task tree and selected the bounded package scalar
   constants in actor parameter defaults implementation frontier.
+- `2026-05-24`: Shipped qualified imported package scalar constants in actor
+  parameter defaults, synchronized specs/contracts/mdBook/downstream handoff,
+  and closed the task tree.

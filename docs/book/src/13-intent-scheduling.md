@@ -54,8 +54,9 @@ clear lower-layer mapping, and clear runtime behavior.
 - **Parameters are specialization defaults**. Actor-level `(params ...)`
   values emit as scheduled `.fsm` `+params` and schedule-report
   `actor_params[]`; scalar defaults and aggregate/list default leaves may use
-  declared actor constants, earlier scalar actor parameter defaults, or enum
-  members, and they are not runtime payload wires. Generated child transaction
+  declared actor constants, earlier scalar actor parameter defaults, enum
+  members, or qualified imported package scalar constants, and they are not
+  runtime payload wires. Generated child transaction
   parameter defaults may use declared actor constants, actor-local scalar
   parameter defaults, earlier scalar transaction parameter defaults, or enum
   members in scalar positions and scalar aggregate/list leaves; actor-static
@@ -603,9 +604,9 @@ The ISF-specific current limitations are:
   scalar parameter defaults that resolve to positive integers. Use-site FIFO
   interface shape, generated-top respecialization, arbitrary-depth generation beyond the first
   `DEPTH=4` fixture, automatic non-zero reset values, standalone
-  transaction/drive exports, package/imported constants beyond actor-local
-  constants, derived parameter expressions, and nested library imports remain
-  backlog work.
+  transaction/drive exports, package/imported constants outside the shipped
+  qualified actor parameter default scalar-constant subset, derived parameter
+  expressions, and nested library imports remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn and blocking `do` parameter declaration,
@@ -669,14 +670,20 @@ The ISF-specific current limitations are:
   actor-local scalar parameter defaults or enum members as static
   specialization values.
 
-  Actor parameter defaults may also use declared actor constants or earlier
-  scalar actor parameters by name:
-  `(params (DATA_W DEFAULT_WIDTH))`, `(params (DATA_W BASE_W))`, and
-  `(params (LANES (LANE0 BASE_W)))` preserve those authored tokens in
-  `+params` and `actor_params[]` while resolving them internally for
-  width/count consumers. Actor-parameter references are source-order
-  dependencies only; forward, self, cyclic, and non-scalar actor-parameter
-  references fail closed.
+  Actor parameter defaults may also use declared actor constants, earlier
+  scalar actor parameters by name, or qualified imported package scalar
+  constants:
+  `(params (DATA_W DEFAULT_WIDTH))`, `(params (DATA_W BASE_W))`,
+  `(params (DATA_W shared.DEFAULT_WIDTH))`, and
+  `(params (LANES (LANE0 BASE_W shared.LANE0)))` preserve those authored tokens
+  in `+params` and `actor_params[]` while resolving them internally for
+  width/count consumers. Package constants must come from an imported `.fsm`
+  package `+constants` entry and must resolve to a scalar numeric or exact-width
+  literal. Actor-parameter references are source-order dependencies only;
+  forward, self, cyclic, and non-scalar actor-parameter references fail closed;
+  unqualified package constants, aggregate package constants, package
+  member/item paths, and ambiguous local-enum/package-constant spellings fail
+  closed.
 
   Generated child transaction parameter defaults may also use earlier scalar
   transaction parameters, declared actor constants, or actor-local scalar

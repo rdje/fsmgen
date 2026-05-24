@@ -566,11 +566,17 @@ Rules:
   defaults.
 - Actor parameter scalar defaults and scalar leaves inside actor aggregate/list
   parameter defaults may use declared actor constants, earlier actor-local
-  scalar parameter defaults, or local/package-qualified enum member
-  references. Authored constant, actor-parameter, and enum tokens remain
-  visible in scheduled `.fsm` `+params` and `actor_params[]`, while resolved
-  literals are recorded internally for scalar actor-parameter consumers.
-  Forward, self, cyclic, and non-scalar actor-parameter references fail
+  scalar parameter defaults, local/package-qualified enum member references,
+  or qualified imported package scalar constants such as
+  `shared.DEFAULT_WIDTH`. Authored constant, actor-parameter, enum, and
+  qualified package-constant tokens remain visible in scheduled `.fsm`
+  `+params` and `actor_params[]`, while resolved literals are recorded
+  internally for scalar actor-parameter consumers. Imported package constants
+  are accepted only when the package is imported, the named package
+  `+constants` entry exists, and the package constant is a scalar numeric or
+  exact-width literal. Unqualified imported package constants, aggregate
+  package constants, package constant member/item paths, forward/self/cyclic
+  actor-parameter references, and non-scalar actor-parameter references fail
   closed.
   Generated child transaction scalar parameter defaults and scalar leaves
   inside generated child transaction aggregate/list parameter defaults may use
@@ -3573,8 +3579,8 @@ The following are not public shipped integration surfaces today:
 - Standalone transaction or drive library exports.
 - Broader interface, transaction-port, storage width, or bank-depth
   expressions beyond actor-local scalar parameter defaults.
-- Derived parameter expressions and package/imported constants beyond current
-  actor-local constants.
+- Derived parameter expressions and package/imported constants outside the
+  shipped qualified actor parameter default scalar-constant subset.
 - General memory-array HDL emission for actor-owned banks.
 - Arbitrary CDC, payload CDC, reset CDC, level sampling across domains, or
   FIFO-like cross-domain storage.

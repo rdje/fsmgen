@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 package-constant actor parameter defaults shipped
+- Completed `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` and closed the task
+  tree.
+- Actor-level `(params ...)` scalar defaults and scalar leaves inside
+  compatible aggregate/list defaults may now reference qualified imported
+  package scalar constants such as `shared.DEFAULT_WIDTH`.
+- Authored `PACKAGE.CONSTANT` tokens remain visible in scheduled `.fsm`
+  `+params` and `actor_params[]`; resolved scalar numeric or exact-width
+  literals are recorded internally for scalar actor-parameter consumers such
+  as interface widths.
+- The actor shell exposes bounded imported package constant symbol metadata so
+  the parser and LoweringIR can resolve the same value-domain surface.
+- Unqualified package constants, unknown package constants, aggregate package
+  constants, package constant member/item paths, ambiguous local-enum versus
+  package-constant spellings, transaction parameters, runtime signals, and
+  arbitrary expressions remain fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused actor-param/default tests with
+  `Files=5, Tests=12`; public/spec/book/backlog audits with `Files=7,
+  Tests=352`; `./bin/ci-regression isf --no-book` with `Files=255,
+  Tests=1694`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 package-constant actor parameter defaults selected
 - Created active task tree `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
 - Completed `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1`; the selected

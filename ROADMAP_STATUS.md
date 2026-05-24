@@ -2,8 +2,28 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
-- Current frontier: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 package-constant actor parameter default implementation:
+  `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` shipped the bounded imported
+  package scalar-constant widening and closed the task tree. Actor-level
+  `(params ...)` scalar defaults and scalar leaves inside compatible
+  aggregate/list defaults may now reference qualified imported package scalar
+  constants such as `shared.DEFAULT_WIDTH`. Authored `PACKAGE.CONSTANT`
+  tokens remain visible in scheduled `.fsm` `+params` and `actor_params[]`;
+  resolved scalar numeric or exact-width literals are recorded internally for
+  scalar actor-parameter consumers such as interface widths. The actor shell
+  exposes bounded imported package constant symbol metadata so parser and
+  LoweringIR resolution stay aligned. Unqualified package constants, unknown
+  package constants, aggregate package constants, package constant member/item
+  paths, ambiguous local-enum versus package-constant spellings, transaction
+  parameters, runtime signals, and arbitrary expressions remain fail-closed or
+  deferred. The ISF spec, downstream handoff, public contract, mdBook, task
+  tree, README index, roadmap, and live docs are synchronized. Validation
+  passed with syntax checks; focused actor-param/default tests (`Files=5,
+  Tests=12`); public/spec/book/backlog audits (`Files=7, Tests=352`);
+  `./bin/ci-regression isf --no-book` (`Files=255, Tests=1694`);
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 package-constant actor parameter default selection:
   `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` created the active task tree
   and selected the next bounded implementation leaf. Actor-level `(params ...)`
@@ -7147,13 +7167,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
-- Current frontier: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`.
-- Completion status: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` selected
-  the next bounded R14 implementation tree. The next leaf will allow actor
-  parameter defaults to use qualified imported package scalar constants while
-  preserving authored tokens in review surfaces and recording resolved
-  literals internally.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` shipped
+  qualified imported package scalar constants for actor parameter defaults and
+  closed the task tree. The next behavior-bearing PNT slice must select or
+  create task-tree ownership before changing code.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

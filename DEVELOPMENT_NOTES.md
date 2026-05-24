@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Package constants in actor params stay qualified and scalar
+- `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` resolves
+  `PACKAGE.CONSTANT` actor parameter defaults only after package imports have
+  populated bounded constant-symbol metadata on the actor shell. That keeps
+  imported package truth explicit and avoids unqualified namespace pollution.
+- The scheduled `.fsm` and report surfaces preserve the authored qualified
+  token because the scheduled artifact also preserves `+import` and embeds the
+  imported package root. Internal resolved values are used only by existing
+  scalar actor-parameter consumers, such as widths.
+- Parser and LoweringIR intentionally share the same fail-closed boundary:
+  unknown package constants, aggregate constants, package member/item paths,
+  ambiguous local-enum/package-constant spellings, transaction parameters,
+  runtime signals, and arbitrary expressions are not silently coerced.
+
 ## 2026-05-24: Package constants should enter ISF through qualified static defaults
 - `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` selects only qualified
   imported package scalar constants as actor parameter defaults. The package

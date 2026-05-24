@@ -96,7 +96,7 @@ subtest 'actor constant actor parameter diagnostics fail closed' => sub {
   (interface
     (output data_out)))
 ISF
-        qr/\AError: actor 'unknown_constant_param_default' parameter 'DATA_W' token 'DEFAULT_WIDTH' is not a declared actor constant, earlier scalar actor parameter, or enum member/,
+        qr/\AError: actor 'unknown_constant_param_default' parameter 'DATA_W' token 'DEFAULT_WIDTH' is not a declared actor constant, earlier scalar actor parameter, enum member, or qualified package scalar constant/,
         'unknown actor parameter default token is rejected',
     );
 

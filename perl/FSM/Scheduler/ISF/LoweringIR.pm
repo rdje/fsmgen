@@ -2707,11 +2707,9 @@ sub _actor_param_declarations {
             if $seen{$name}++;
         my $value = $param->{value};
         my %resolved_value;
-        if (!ref($value) && _is_enum_member_reference($value)) {
-            confess "Actor '$actor_name': parameter '$name' enum member '$value' must resolve to a non-negative integer literal value\n"
-                unless defined _non_negative_integer_from_literal(_param_resolved_value($param));
-            %resolved_value = (resolved_value => _clone_isf_value(_param_resolved_value($param)));
-        } elsif (ref($value) || (!ref($value) && defined($value) && _is_hdl_identifier($value))) {
+        if (ref($value)
+            || (!ref($value) && defined($value) && (_is_hdl_identifier($value) || _is_enum_member_reference($value) || _is_package_constant_path_reference_shape($value))))
+        {
             my ($resolved, $has_static_leaf) = _resolve_actor_param_default_value(
                 $value,
                 "Actor '$actor_name': parameter '$name'",
@@ -2745,6 +2743,27 @@ sub _resolve_actor_param_default_value {
     if (!ref($value)) {
         return (_clone_isf_value($value), 0)
             if defined($value) && _is_numeric_or_exact_width_literal($value);
+
+        if (my $package_constant = _actor_package_constant_reference($actor, $value)) {
+            my ($package_name, $constant_name, $suffix) = @$package_constant;
+            my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+            if (defined $constant_payload) {
+                confess "$context token '$value' is ambiguous: it matches local enum member '$value' and imported package constant '$value'\n"
+                    if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
+                confess "$context package constant '$package_name.$constant_name' aggregate/member path '$value' remains deferred; actor parameter defaults accept only qualified package scalar constants in this slice\n"
+                    if $suffix ne '';
+                my $resolved_value = _package_constant_scalar_value($constant_payload);
+                confess "$context package constant '$package_name.$constant_name' must resolve to a scalar numeric or exact-width literal value\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return (_clone_isf_value($resolved_value), 1);
+            }
+
+            confess "$context references unknown package constant '$value'\n"
+                if $suffix eq '' && !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
+        }
+
         if (_is_enum_member_reference($value)) {
             my $resolved_value = _resolve_actor_enum_member_value($actor, $value);
             confess "$context references unknown enum member '$value'\n"
@@ -2775,12 +2794,12 @@ sub _resolve_actor_param_default_value {
                 confess "$context transaction parameter '$value' from transaction '$tx_name' cannot be used as an actor parameter default; transaction parameters are scoped to generated child transactions\n";
             }
 
-            confess "$context token '$value' is a runtime interface signal; actor parameter defaults accept literals, declared actor constants, earlier scalar actor parameters, and enum members only\n"
+            confess "$context token '$value' is a runtime interface signal; actor parameter defaults accept literals, declared actor constants, earlier scalar actor parameters, enum members, and qualified package scalar constants only\n"
                 if _actor_interface_signal_by_name($actor, $value);
 
-            confess "$context token '$value' is not a declared actor constant, earlier scalar actor parameter, or enum member\n";
+            confess "$context token '$value' is not a declared actor constant, earlier scalar actor parameter, enum member, or qualified package scalar constant\n";
         }
-        confess "$context uses unsupported parameter value '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, actor constant, earlier scalar actor parameter, and enum member literal leaves only\n";
+        confess "$context uses unsupported parameter value '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, actor constant, earlier scalar actor parameter, enum member, and qualified package scalar constant literal leaves only\n";
     }
 
     confess "$context uses unsupported parameter value shape; actor parameter defaults accept non-empty aggregate/list literals\n"
@@ -4930,6 +4949,13 @@ sub _is_enum_member_reference {
         && $value =~ /\A[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)+\z/;
 }
 
+sub _is_package_constant_path_reference_shape {
+    my ($value) = @_;
+    return defined($value)
+        && !ref($value)
+        && $value =~ /\A[A-Za-z_]\w*\.[A-Za-z_]\w*(?:\.[A-Za-z_]\w*|\[\d+\])+\z/;
+}
+
 sub _is_activation_input_binding_expr_shape {
     my ($expr) = @_;
     return 1 if ref($expr) eq 'ARRAY' && @$expr;
@@ -5269,6 +5295,38 @@ sub _resolve_actor_enum_member_value {
     }
 
     return undef;
+}
+
+sub _actor_package_constant_reference {
+    my ($actor, $value) = @_;
+    return undef unless defined($value) && !ref($value);
+    return undef unless $value =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)((?:\.[A-Za-z_]\w*|\[\d+\])*)\z/;
+
+    my ($package_name, $constant_name, $suffix) = ($1, $2, $3 // '');
+    my $package_constants = (($actor->{constant_symbols} || {})->{packages} || {});
+    return undef unless exists $package_constants->{$package_name};
+    return [ $package_name, $constant_name, $suffix ];
+}
+
+sub _actor_package_constant_payload {
+    my ($actor, $package_name, $constant_name) = @_;
+    my $package_constants = (($actor->{constant_symbols} || {})->{packages} || {});
+    return undef unless exists $package_constants->{$package_name};
+    return undef unless exists(($package_constants->{$package_name} || {})->{$constant_name});
+    return _clone_isf_value($package_constants->{$package_name}{$constant_name});
+}
+
+sub _actor_local_enum_member_exists {
+    my ($actor, $enum_name, $member_name) = @_;
+    return exists(((($actor->{enum_symbols} || {})->{local} || {})->{$enum_name} || {})->{$member_name});
+}
+
+sub _package_constant_scalar_value {
+    my ($payload) = @_;
+    return undef unless defined $payload;
+    return $payload unless ref($payload) eq 'HASH';
+    return undef unless ($payload->{kind} || '') eq 'scalar';
+    return $payload->{payload};
 }
 
 sub _constant_resolved_value {

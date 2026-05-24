@@ -1549,6 +1549,15 @@ scalar leaves inside actor aggregate/list parameter defaults. Those defaults
 preserve authored constant tokens in scheduled `.fsm` `+params` and
 `actor_params[]` while carrying resolved literals internally for scalar
 parameter consumers.
+Qualified imported package scalar constants are public as scalar actor
+parameter defaults or scalar leaves inside actor aggregate/list parameter
+defaults when the package is imported, the named package `+constants` entry
+exists, and that package constant is a scalar numeric or exact-width literal.
+Those defaults preserve the authored `PACKAGE.CONSTANT` token in scheduled
+`.fsm` `+params` and `actor_params[]` while carrying resolved literals
+internally for scalar parameter consumers. Unqualified imported package
+constants, aggregate package constants, package constant member/item paths, and
+ambiguous local-enum/package-constant spellings remain fail-closed.
 Earlier actor-local scalar parameter defaults are public as scalar actor
 parameter defaults or scalar leaves inside actor aggregate/list parameter
 defaults. Source order is the only dependency model: the referenced actor
@@ -1650,6 +1659,14 @@ resolved width consumption, scheduled `.fsm` `+params` review artifacts,
 `actor_params[]` preservation, strict CLI HDL generation, and fail-closed
 diagnostics for forward, self, non-scalar, unknown, transaction-parameter, and
 runtime-signal sources.
+Package-constant-backed actor parameter defaults are checked by
+[t/1349-isf-actor-param-package-constants.t](../t/1349-isf-actor-param-package-constants.t),
+covering qualified imported package scalar constants, aggregate/list leaves,
+resolved width consumption, package root embedding, scheduled `.fsm`
+`+params` review artifacts, `actor_params[]` preservation, strict CLI HDL
+generation, and fail-closed diagnostics for unknown package constants,
+aggregate package constants, package constant member/item paths, and ambiguous
+local-enum/package-constant spellings.
 Generated child transaction scalar parameter default enum member values are
 checked by
 [t/1270-isf-enum-member-transaction-params.t](../t/1270-isf-enum-member-transaction-params.t),
@@ -2673,10 +2690,11 @@ runtime ports, not overrideable params, and not inferred storage.
 For each `actor_params` entry, `name` is the actor-level parameter name and
 `value` is the JSON-safe default value emitted into scheduled `.fsm`
 `+params`; scalar enum member defaults, actor-constant-backed scalar defaults,
-actor-parameter-backed scalar defaults, and enum, actor-constant, or earlier
-actor-parameter leaves inside aggregate/list defaults preserve the authored
-tokens. Actor-static-backed defaults carry resolved literals internally for
-scalar actor-parameter consumers such as widths and counts.
+actor-parameter-backed scalar defaults, qualified package-constant-backed
+scalar defaults, and enum, actor-constant, earlier actor-parameter, or
+qualified package-constant leaves inside aggregate/list defaults preserve the
+authored tokens. Actor-static-backed defaults carry resolved literals
+internally for scalar actor-parameter consumers such as widths and counts.
 These are static specialization defaults, not runtime ports, and do not
 replace the generated-composition or reusable-library parameter binding
 reports for use sites. The

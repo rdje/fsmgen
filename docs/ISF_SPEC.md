@@ -552,11 +552,17 @@ values, and override shapes that do not match aggregate/list defaults fail
 closed. Actor parameter defaults accept scalar decimal literals, exact-width
 numeric literals in the shipped ISF parameter syntax, declared actor
 constants, earlier scalar actor parameter defaults, scalar local or
-package-qualified enum members, and compatible aggregate/list literals whose
-leaves are numeric, exact-width, declared actor constants, earlier scalar
-actor parameter defaults, or local/package enum member literals. Earlier actor
-parameters are source-order dependencies only; forward, self, cyclic, and
-non-scalar actor-parameter references fail closed. Generated child transaction
+package-qualified enum members, qualified imported package scalar constants,
+and compatible aggregate/list literals whose leaves are numeric, exact-width,
+declared actor constants, earlier scalar actor parameter defaults,
+local/package enum member literals, or qualified imported package scalar
+constants. Qualified package constants use `PACKAGE.CONSTANT`, must name a
+scalar package `+constants` entry, and preserve the authored token in
+scheduled `.fsm` `+params` and `actor_params[]` while recording resolved
+literals internally. Unqualified package constants, package aggregate
+constants, and package aggregate scalar-leaf paths remain fail-closed. Earlier
+actor parameters are source-order dependencies only; forward, self, cyclic,
+and non-scalar actor-parameter references fail closed. Generated child transaction
 parameter defaults accept scalar decimal literals, exact-width numeric
 literals, declared actor constants, actor-local scalar parameter defaults,
 earlier scalar transaction parameter defaults, scalar local or
@@ -1316,8 +1322,9 @@ Use-site FIFO interface shape, use-site bank-depth
 specialization, generated-top respecialization, arbitrary-depth
 memory-backed FIFO generation beyond the first `DEPTH=4` fixture, automatic
 non-zero reset values such as empty=1, standalone transaction/drive exports,
-package/imported constants beyond actor-local constants, derived parameter
-expressions, and library actors that import other libraries remain deferred.
+package/imported constants outside the shipped qualified actor parameter
+default scalar-constant subset, derived parameter expressions, and library
+actors that import other libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -5235,6 +5242,7 @@ Focused tests:
 - [t/1346-isf-actor-param-actor-params.t](../t/1346-isf-actor-param-actor-params.t)
 - [t/1347-isf-transaction-param-actor-static-defaults.t](../t/1347-isf-transaction-param-actor-static-defaults.t)
 - [t/1348-isf-transaction-param-transaction-params.t](../t/1348-isf-transaction-param-transaction-params.t)
+- [t/1349-isf-actor-param-package-constants.t](../t/1349-isf-actor-param-package-constants.t)
 
 ## 12. Explicitly Deferred
 
@@ -5243,7 +5251,8 @@ Focused tests:
   rule-guard/disjoint-rule/FIFO-controller-matrix/bank-access/fixed FIFO
   library fixture/catalog slices:
   standalone transaction/drive exports,
-  package/imported constants beyond actor-local constants, derived parameter expressions,
+  package/imported constants outside the shipped qualified actor parameter
+  default scalar-constant subset, derived parameter expressions,
   transaction-port dimensions beyond positive literals, actor-local scalar
   parameters, and scalar type aliases,
   memory-array backend emission, and

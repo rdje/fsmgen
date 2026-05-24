@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Package-constant actor parameter defaults shipped
+- Completed `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` and closed the task
+  tree.
+- Actor parameter scalar defaults and scalar leaves inside compatible
+  aggregate/list defaults now accept qualified imported package scalar
+  constants such as `shared.DEFAULT_WIDTH`.
+- Parser and LoweringIR record the resolved scalar numeric or exact-width
+  literal internally while preserving authored `PACKAGE.CONSTANT` tokens in
+  scheduled `.fsm` `+params` and `actor_params[]`.
+- Actor shells expose bounded imported package constant symbol metadata for
+  this value-domain resolution.
+- Unknown package constants, unqualified package constants, aggregate package
+  constants, package member/item paths, ambiguous local-enum versus
+  package-constant spellings, transaction parameters, runtime signals, and
+  arbitrary expressions remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, README index, roadmap, and live docs.
+- Validation passed: syntax checks; focused actor-param/default tests with
+  `Files=5, Tests=12`; public/spec/book/backlog audits with `Files=7,
+  Tests=352`; `./bin/ci-regression isf --no-book` with `Files=255,
+  Tests=1694`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Package-constant actor parameter defaults selected
 - Created active task tree `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
 - Completed `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1`; the selected
