@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Output-bundle round-robin resource shipped
+- Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` and closed the task tree.
+- `output_bundle` resources now support the bounded `round_robin` arbiter for
+  declared rule users, including the explicit member-list surface.
+- The lowerer reuses the shipped generated pointer/grant machinery, emits
+  `isf_rr_<resource>_turn`, gates the whole winning output-bundle rule DT,
+  and advances the pointer only from the winning rule DT.
+- Explicit output-bundle members continue to validate as declared actor
+  outputs or concrete actor-owned storage signals and continue to report
+  through `resource_arbitration[].members`.
+- Schedule reports expose the widening through existing
+  `resource_arbitration[]` entries with `kind: output_bundle`,
+  `arbiter: round_robin`, member evidence, and dynamic peer suppressors; the
+  pointer reports through `inferred_storage[]` with role
+  `resource_round_robin_pointer`.
+- Storage-port round-robin, backlog resource kinds, generated-child
+  resources, actor-network endpoints, ready/backpressure, payload protocols,
+  route mux/storage, and lifetime ownership remain deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, README index, roadmap, and live docs.
+- Validation passed: syntax checks; focused resource arbitration with
+  `Files=1, Tests=14`; public/report/book audits with `Files=9, Tests=369`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1681`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Output-bundle round-robin resource selected
 - Created active task tree `ISF-OUTPUT-BUNDLE-ROUND-ROBIN`.
 - Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1`; the next implementation
@@ -31,7 +56,7 @@ This is the persistent technical change history for FSMGen.
   `arbiter: round_robin`, empty `members`, and dynamic peer suppressors; the
   pointer reports through `inferred_storage[]` with role
   `resource_round_robin_pointer`.
-- Generated-child transaction starts, output-bundle/storage-port round-robin,
+- Generated-child transaction starts, storage-port round-robin,
   backlog resource kinds, actor-network endpoints, ready/backpressure, payload
   protocols, route mux/storage, and transaction lifetime ownership remain
   deferred.

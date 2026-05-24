@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Output-bundle round-robin resource shipped
+- Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` and closed the task tree.
+- FSMGen now supports bounded
+  `(resource NAME (kind output_bundle) (arbiter round_robin) (users RULE...))`
+  declarations for declared rule users.
+- Explicit output-bundle members keep the shipped validation/reporting
+  contract and continue to appear in `resource_arbitration[].members`.
+- The scheduler emits `isf_rr_<resource>_turn`, gates the winning
+  output-bundle rule DT, reports `resource_arbitration[]` grants with
+  `kind: output_bundle`/`arbiter: round_robin`, and reports the pointer as
+  `resource_round_robin_pointer`.
+- Storage-port round-robin, backlog resource kinds, generated-child
+  resources, route mux/storage, ready/backpressure, payload protocols, and
+  lifetime ownership remain deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused resource arbitration with
+  `Files=1, Tests=14`; public/report/book audits with `Files=9, Tests=369`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1681`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Output-bundle round-robin resource selected
 - Created active task tree `ISF-OUTPUT-BUNDLE-ROUND-ROBIN`.
 - Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1`.
@@ -32,7 +55,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   reports `resource_arbitration[]` grants with
   `kind: transaction_start`/`arbiter: round_robin`, and reports the pointer as
   `resource_round_robin_pointer`.
-- Generated-child transaction starts, output-bundle/storage-port round-robin,
+- Generated-child transaction starts, storage-port round-robin,
   backlog resource kinds, route mux/storage, ready/backpressure, payload
   protocols, and lifetime ownership remain deferred.
 - The ISF spec, downstream handoff, public contract, mdBook, task tree,

@@ -1032,9 +1032,9 @@ concrete actor-owned storage signals: scalar storage variables or scalarized
 bank element signals. Storage-port members do not include bank roots,
 aggregate paths, inferred LHS targets, transaction ports, actor input ports,
 or arbitrary expressions. Shipped resource kinds use the static `priority`
-arbiter, and `rule_slot` plus `transaction_start` also support bounded
-`round_robin` arbitration for declared rule users. Bounded round-robin uses
-the `(users ...)` list as a circular grant order, emits
+arbiter, and `rule_slot`, `output_bundle`, and `transaction_start` also
+support bounded `round_robin` arbitration for declared rule users. Bounded
+round-robin uses the `(users ...)` list as a circular grant order, emits
 `isf_rr_<resource>_turn` pointer storage, grants the first requesting rule at
 or after the current pointer, and advances the pointer from the winning rule
 DT. The pointer is public report metadata in `inferred_storage[]` with role
@@ -1043,15 +1043,14 @@ with existing actor ports, constants, parameters, declared storage, or
 generated counters.
 The current shareable resource registry is: `rule_slot` (shipped for
 `priority` and bounded `round_robin` arbitration), `output_bundle` (shipped
-for `priority` arbitration), `transaction_start` (shipped for `priority` and
-bounded `round_robin` arbitration), `storage_port` (shipped for `priority`
-arbitration),
+for `priority` and bounded `round_robin` arbitration), `transaction_start`
+(shipped for `priority` and bounded `round_robin` arbitration),
+`storage_port` (shipped for `priority` arbitration),
 `interface_bundle`, `named_drive`, and `child_instance`. The non-shipped kinds
 are public catalog/backlog names, not public runtime behavior, until their
 lowering paths, runtime semantics, diagnostics, report surfaces, and
-regressions ship. `round_robin` remains unsupported for `output_bundle`,
-`storage_port`, backlog resource kinds, and other non-selected resource
-surfaces.
+regressions ship. `round_robin` remains unsupported for `storage_port`,
+backlog resource kinds, and other non-selected resource surfaces.
 The code owner for that registry is `FSM::Support::ISFResourceCatalog`; the
 parser and this public contract both consume it. Downstream consumers can
 discover the current values through `resource_arbiter_values`,
@@ -1062,10 +1061,10 @@ The first resource-arbitration path is checked by
 [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
 for parser metadata, `rule_slot`, `output_bundle`, `transaction_start`, and
 `storage_port` scheduled `.fsm` DTE gating, bounded `rule_slot`/`round_robin`
-and `transaction_start`/`round_robin` grant gating and pointer state,
-output-bundle output/storage member-list coverage, transaction-start
-trigger-user validation, storage-port storage-member validation, HDL handoff,
-and fail-closed unsupported arbitration cases.
+`output_bundle`/`round_robin`, and `transaction_start`/`round_robin` grant
+gating and pointer state, output-bundle output/storage member-list coverage,
+transaction-start trigger-user validation, storage-port storage-member
+validation, HDL handoff, and fail-closed unsupported arbitration cases.
 The first rule/transaction priority path is checked by
 [t/1219-isf-rule-transaction-priority.t](../t/1219-isf-rule-transaction-priority.t)
 for accepted rule-over-transaction suppression, accepted transaction-over-rule
@@ -2563,8 +2562,8 @@ activation port-binding handoff storage uses `transaction_port_binding`, and
 generated rule-trigger completion observation uses `trigger_done_observe`.
 Transaction-local port storage uses `transaction_port` when a declared
 transaction port is materialized in the scheduled `.fsm` review artifact.
-Bounded `round_robin` resource arbitration for `rule_slot` or
-`transaction_start` uses `resource_round_robin_pointer` for the generated
+Bounded `round_robin` resource arbitration for `rule_slot`, `output_bundle`,
+or `transaction_start` uses `resource_round_robin_pointer` for the generated
 pointer counter.
 Temporal-contract pending/fail registers and age counters use
 `temporal_contract_monitor`; use `temporal_contracts[]` to map those signal

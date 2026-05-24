@@ -7043,7 +7043,10 @@ sub _resource_kind_supports_priority_rule_users {
 
 sub _resource_kind_supports_round_robin_rule_users {
     my ($kind) = @_;
-    return defined($kind) && ($kind eq 'rule_slot' || $kind eq 'transaction_start');
+    return defined($kind)
+        && ($kind eq 'rule_slot'
+            || $kind eq 'output_bundle'
+            || $kind eq 'transaction_start');
 }
 
 sub _apply_round_robin_rule_user_resource_grants {

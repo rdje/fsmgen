@@ -181,6 +181,110 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'output_bundle_priority');
 };
 
+subtest 'round_robin output_bundle grant gates rule DTs and preserves explicit members' => sub {
+    my $source = <<'ISF';
+(actor output_bundle_round_robin
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input high_req)
+    (input low_req)
+    (output valid)
+    (output err))
+  (storage
+    (var status (width 1)))
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter round_robin)
+      (members valid err status)
+      (users high low)))
+  (rule high high_req
+    (valid 1)
+    (status 1))
+  (rule low low_req
+    (err 1)
+    (status 0)))
+ISF
+
+    my $ir = lower_ir($source);
+    is($ir->{counters}{isf_rr_response_outputs_turn}, 1, 'output_bundle round_robin pointer width covers both rule users');
+    is(
+        $ir->{storage_roles}{isf_rr_response_outputs_turn},
+        'resource_round_robin_pointer',
+        'output_bundle round_robin pointer storage carries the public role',
+    );
+    is_deeply(
+        $ir->{resource_arbitration}{grants},
+        [
+            {
+                resource => 'response_outputs',
+                kind     => 'output_bundle',
+                arbiter  => 'round_robin',
+                user     => 'high',
+                higher   => ['low'],
+                members  => ['valid', 'err', 'status'],
+            },
+            {
+                resource => 'response_outputs',
+                kind     => 'output_bundle',
+                arbiter  => 'round_robin',
+                user     => 'low',
+                higher   => ['high'],
+                members  => ['valid', 'err', 'status'],
+            },
+        ],
+        'output_bundle round_robin grants preserve explicit member evidence',
+    );
+
+    my $high_valid = find_record($ir, owner => 'high', target => 'valid');
+    my $low_err = find_record($ir, owner => 'low', target => 'err');
+    is_deeply($high_valid->{resource_suppressed_by}, ['low'], 'high output-bundle action records the dynamic low peer');
+    is_deeply($low_err->{resource_suppressed_by}, ['high'], 'low output-bundle action records the dynamic high peer');
+
+    my $high_pointer = find_record($ir, owner => 'high', target => 'isf_rr_response_outputs_turn');
+    my $low_pointer = find_record($ir, owner => 'low', target => 'isf_rr_response_outputs_turn');
+    is($high_pointer->{rhs}, 1, 'high grant advances the output_bundle pointer to low');
+    is($low_pointer->{rhs}, 0, 'low grant wraps the output_bundle pointer to high');
+
+    my $fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($source))->{files}{'output_bundle_round_robin.fsm'};
+    like($fsm, qr/\(isf_rr_response_outputs_turn 1\)/, 'scheduled .fsm declares the output_bundle round_robin pointer width');
+    like($fsm, qr/\(-high\s+<\(& high_req [\s\S]*\(== isf_rr_response_outputs_turn 0\)/, 'high output-bundle rule is gated by pointer-0 grant logic');
+    like($fsm, qr/\(<- \(isf_rr_response_outputs_turn 1\)\)/, 'high grant updates the output_bundle pointer');
+    like($fsm, qr/\(-low\s+<\(& low_req [\s\S]*\(== isf_rr_response_outputs_turn 1\)/, 'low output-bundle rule is gated by pointer-1 grant logic');
+    like($fsm, qr/\(<- \(isf_rr_response_outputs_turn 0\)\)/, 'low grant wraps the output_bundle pointer');
+    assert_fsm_reaches_hdl($fsm, 'output_bundle_round_robin');
+
+    my $unmembered = <<'ISF';
+(actor output_bundle_round_robin_unmembered
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input high_req)
+    (input low_req)
+    (output valid)
+    (output err))
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter round_robin)
+      (users high low)))
+  (rule high high_req
+    (valid 1))
+  (rule low low_req
+    (err 1)))
+ISF
+
+    my $unmembered_ir = lower_ir($unmembered);
+    is_deeply(
+        [map { $_->{members} } @{$unmembered_ir->{resource_arbitration}{grants}}],
+        [[], []],
+        'unmembered output_bundle round_robin grants keep empty member evidence',
+    );
+    my $unmembered_fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($unmembered))->{files}{'output_bundle_round_robin_unmembered.fsm'};
+    assert_fsm_reaches_hdl($unmembered_fsm, 'output_bundle_round_robin_unmembered');
+};
+
 subtest 'priority transaction_start grant gates lower-priority rule triggers' => sub {
     my $source = <<'ISF';
 (actor transaction_start_priority
@@ -569,6 +673,27 @@ ISF
     (status 1)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'round_robin output_bundle member mismatch still fails closed', qr/isf_output_bundle_member_mismatch/);
+(actor output_bundle_round_robin_member_mismatch
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input a)
+    (input b)
+    (output valid)
+    (output err))
+  (resources
+    (resource response_outputs
+      (kind output_bundle)
+      (arbiter round_robin)
+      (members valid)
+      (users high low)))
+  (rule high a
+    (valid 1))
+  (rule low b
+    (err 1)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'explicit storage member is not written by any user', qr/isf_output_bundle_member_unwritten/);
 (actor output_bundle_storage_member_unwritten
   (clock clk)
@@ -884,31 +1009,6 @@ ISF
       (users high low))
     (resource shared_bus_b
       (kind rule_slot)
-      (arbiter round_robin)
-      (users high low)))
-  (rule high a
-    (valid 1))
-  (rule low b
-    (valid 0)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'round_robin output_bundle with bound users', qr/isf_resource_unsupported_arbiter/);
-(actor unsupported_rr_output_bundle_resource
-  (clock clk)
-  (reset rst_n)
-  (interface
-    (input start)
-    (input a)
-    (input b)
-    (output done)
-    (output valid))
-  (transaction main
-    (on start)
-    (complete done))
-  (priority high over low)
-  (resources
-    (resource response_outputs
-      (kind output_bundle)
       (arbiter round_robin)
       (users high low)))
   (rule high a

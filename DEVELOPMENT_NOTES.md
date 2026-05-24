@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Output-bundle round-robin preserves member ownership
+- The shipped output-bundle round-robin path deliberately reuses the existing
+  whole-rule-DT grant machinery instead of adding output-specific muxing or
+  lifetime ownership. That keeps the behavior aligned with the already
+  shipped priority output-bundle contract: the resource selects one bound rule
+  for the cycle, and the selected rule owns the declared outputs/storage
+  targets it writes under the existing member rules.
+- Explicit member validation remains the safety boundary. Round-robin changes
+  which requester wins when multiple guards are true; it does not broaden
+  members to bank roots, aggregate paths, inferred targets, route ownership,
+  or storage/lifetime locks.
+
 ## 2026-05-24: Output-bundle round-robin is the next resource widening
 - `output_bundle` is the next smallest non-`rule_slot` round-robin candidate
   because it already has declared rule users and whole-rule-DT grant semantics
@@ -26,10 +38,10 @@ This document captures engineering rationale, design constraints, and working de
   adds fairness without changing the scheduled fan-in DT owner, adding an
   extra cycle, or inventing route/lifetime semantics.
 - Broader non-`rule_slot` resource round-robin is still not automatic.
-  `output_bundle` and `storage_port` need their own fairness semantics around
-  member coverage and write domains, while generated-child transaction starts
-  need child lifetime and generated-top contracts before they can share this
-  path safely.
+  `storage_port` needs its own fairness semantics around write domains,
+  storage locks, and future lifetime/hold-release behavior; generated-child
+  resources need child lifetime and generated-top contracts before they can
+  share this path safely.
 
 ## 2026-05-24: Transaction-start round-robin is the next bounded ISF feature
 - `transaction_start` resources already have the tightest non-`rule_slot`

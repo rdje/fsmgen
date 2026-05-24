@@ -2,8 +2,27 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN`.
-- Current frontier: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 output-bundle round-robin resource implementation:
+  `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` shipped bounded
+  `(resource NAME (kind output_bundle) (arbiter round_robin) (users RULE...))`
+  arbitration for declared rule users. The lowerer reuses the existing
+  round-robin pointer/grant model, gates the winning output-bundle rule DT,
+  advances `isf_rr_<resource>_turn` only from the winning rule DT, preserves
+  explicit output-bundle member validation/reporting, reports grants through
+  `resource_arbitration[]` with `kind: output_bundle` and
+  `arbiter: round_robin`, and reports the pointer with role
+  `resource_round_robin_pointer`. Storage-port round-robin, backlog resource
+  kinds, generated-child resources, actor-network endpoints,
+  ready/backpressure, payload protocols, route mux/storage, and lifetime
+  ownership remain deferred. The ISF spec, downstream integration handoff,
+  public contract, mdBook, task tree, README index, and live docs are
+  synchronized. Validation passed: syntax checks; `prove -Iperl
+  t/1218-isf-rule-slot-resource-arbitration.t` with `Files=1, Tests=14`;
+  focused public/report/book audits with `Files=9, Tests=369`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1681`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 output-bundle round-robin resource selection:
   `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1` activated the next public-facing ISF
   feature tree. The selected implementation frontier is
@@ -34,7 +53,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   from the winning rule DT, reports grants through `resource_arbitration[]`
   with `kind: transaction_start` and `arbiter: round_robin`, and reports the
   pointer with role `resource_round_robin_pointer`. Generated-child
-  transaction starts, output-bundle/storage-port round-robin, backlog resource
+  transaction starts, storage-port round-robin, backlog resource
   kinds, actor-network endpoints, ready/backpressure, payload protocols, route
   mux/storage, and transaction lifetime ownership remain deferred. The ISF
   spec, downstream integration handoff, public contract, mdBook, task tree,
@@ -830,8 +849,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   winning rule DT for that cycle. Schedule reports expose grants through the
   existing `resource_arbitration[]` shape with `arbiter: round_robin`, and the
   generated pointer appears in `inferred_storage[]` with role
-  `resource_round_robin_pointer`. `round_robin` for `output_bundle`,
-  `storage_port`, `interface_bundle`, `named_drive`,
+  `resource_round_robin_pointer`. `round_robin` for `storage_port`,
+  `interface_bundle`, `named_drive`,
   `child_instance`, transaction users, named-drive users, output-target users,
   child-instance users, actor-network endpoint users, generated-child
   resources, dynamic resource names, multi-capacity resources, storage
@@ -6850,15 +6869,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN`.
-- Current frontier: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2`.
-- Completion status: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1` selected the next
-  public-facing R14 feature tree. The selected implementation frontier is a
-  bounded `output_bundle` + `round_robin` resource-arbitration widening for
-  declared rule users, with current output-bundle member validation/reporting
-  preserved and storage-port/backlog resource round-robin deferred.
-  Validation passed: feature-backlog audit with `Files=1, Tests=15`;
-  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` shipped bounded
+  `output_bundle` + `round_robin` arbitration for declared rule users, then
+  closed the task tree. The next PNT implementation slice must select or
+  create a task tree before changing code.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -10332,6 +10348,24 @@ Done:
     slice.
   - Validation passed: feature-backlog audit with `Files=1, Tests=15`;
     `mdbook build docs/book`; and `git diff --check`.
+- `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` is shipped and the task tree is closed:
+  - `(resource NAME (kind output_bundle) (arbiter round_robin) (users RULE...))`
+    is now accepted for declared rule users,
+  - explicit output-bundle members still validate as declared actor outputs or
+    concrete actor-owned storage signals and still report through
+    `resource_arbitration[].members`,
+  - the scheduler emits and reports the generated
+    `isf_rr_<resource>_turn` pointer with role
+    `resource_round_robin_pointer`,
+  - grants gate the whole bound output-bundle rule DT for the winning cycle,
+  - schedule reports expose `resource_arbitration[]` entries with
+    `kind: output_bundle` and `arbiter: round_robin`,
+  - storage-port round-robin, backlog resource kinds, generated-child
+    resources, route mux/storage, ready/backpressure, payload protocols, and
+    lifetime ownership remain deferred,
+  - and validation passed through syntax checks, focused resource tests,
+    public/report/book audits, the ISF regression gate, mdBook build, and
+    diff check.
 - `ISF-TRANSACTION-START-ROUND-ROBIN.2` is shipped and the task tree is
   closed:
   - `(resource TX (kind transaction_start) (arbiter round_robin) (users RULE...))`
@@ -10344,8 +10378,8 @@ Done:
     `{transaction}_trigger_fanin` DT, preserving fan-in ownership and timing,
   - schedule reports expose `resource_arbitration[]` entries with
     `kind: transaction_start` and `arbiter: round_robin`,
-  - generated-child transaction starts, output-bundle/storage-port
-    round-robin, backlog resource kinds, route mux/storage,
+  - generated-child transaction starts, storage-port round-robin,
+    backlog resource kinds, route mux/storage,
     ready/backpressure, payload protocols, and lifetime ownership remain
     deferred,
   - and validation passed through syntax checks, focused resource tests,

@@ -1924,10 +1924,10 @@ scheduler now enforces `rule_slot`, `output_bundle`, `transaction_start`, and
 Each bound rule requests when its guard is true, the priority graph chooses a
 unique active winner, and the generated grant gates the whole rule DT DTE
 without adding a cycle. The scheduler also enforces bounded `round_robin`
-arbitration for `rule_slot` and `transaction_start` resources with declared
-rule users by emitting a generated pointer counter, granting the first
-requesting rule at or after that pointer, and advancing the pointer from the
-winning rule DT.
+arbitration for `rule_slot`, `output_bundle`, and `transaction_start`
+resources with declared rule users by emitting a generated pointer counter,
+granting the first requesting rule at or after that pointer, and advancing the
+pointer from the winning rule DT.
 Unmembered `output_bundle` resources keep the implicit bound-rule surface: the
 bound rule users and the outputs or other LHS targets they drive describe the
 bundle intent. `output_bundle` resources may now carry explicit
@@ -1960,16 +1960,15 @@ Current shareable resource registry:
 | Kind | Status | Meaning |
 | --- | --- | --- |
 | `rule_slot` | shipped for `priority` and bounded `round_robin` arbitration | One-cycle mutual exclusion for rule users under the `priority` or bounded `round_robin` arbiter. |
-| `output_bundle` | shipped for `priority` arbitration | One-cycle ownership of a group of actor outputs or rule-written LHS targets under the `priority` arbiter, with optional explicit declared-output/storage-signal member lists. |
+| `output_bundle` | shipped for `priority` and bounded `round_robin` arbitration | One-cycle ownership of a group of actor outputs or rule-written LHS targets under the `priority` or bounded `round_robin` arbiter, with optional explicit declared-output/storage-signal member lists. |
 | `transaction_start` | shipped for `priority` and bounded `round_robin` arbitration | One-cycle arbitration for rule-trigger request fan-in into one local transaction. |
 | `storage_port` | shipped for `priority` arbitration | One-cycle arbitration for rule users that update explicit actor-owned storage signals. |
 | `interface_bundle` | backlog | Ownership of a protocol-facing interface or bus bundle. |
 | `named_drive` | backlog | Ownership of a reusable actor `(drive ...)` body or drive-call path. |
 | `child_instance` | backlog | Re-entry control for a spawned child instance. |
 
-Remaining backlog: `round_robin` for `output_bundle`, `storage_port`, and
-backlog resource kinds, `interface_bundle`, `named_drive`, `child_instance`,
-generated-child
+Remaining backlog: `round_robin` for `storage_port` and backlog resource
+kinds, `interface_bundle`, `named_drive`, `child_instance`, generated-child
 transaction starts, generated-child storage arbitration, actor-network trigger
 resources, actor-network endpoint users, transaction/storage lifetime
 ownership, named-drive users, output-target users, bank-root/aggregate/inferred
@@ -2573,8 +2572,8 @@ hashes.
 
 Remaining direction: keep `role`, `type`, and `type_kind` additive and omit
 them when evidence is ambiguous. The shipped `rule_slot`/`round_robin` and
-`transaction_start`/`round_robin` implementations expose their generated
-pointers as inferred counter storage with role
+`output_bundle`/`round_robin` and `transaction_start`/`round_robin`
+implementations expose their generated pointers as inferred counter storage with role
 `resource_round_robin_pointer`; broader per-cycle resource-grant/debug storage
 remains deferred. Add a storage role only if future resource lowering
 materializes such signals with compatibility rules, public contract metadata,
@@ -2706,9 +2705,9 @@ strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, rule-over-transaction priority suppression, `rule_slot`/`priority`
 resource metadata, lower-priority rule gating by a higher-priority rule, and
 delayed completion pulse behavior. Focused resource tests also cover bounded
-`rule_slot`/`round_robin` and `transaction_start`/`round_robin` grants,
-generated pointer storage metadata, report projection, and fail-closed
-unsupported round-robin combinations.
+`rule_slot`/`round_robin`, `output_bundle`/`round_robin`, and
+`transaction_start`/`round_robin` grants, generated pointer storage metadata,
+report projection, and fail-closed unsupported round-robin combinations.
 
 The stage/contract fixture is now promoted in the `isf` tier for file-backed
 strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL

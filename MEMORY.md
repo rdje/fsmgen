@@ -1,5 +1,35 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 output-bundle round-robin resource shipped
+- Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` and closed the task tree.
+- FSMGen now accepts bounded
+  `(resource NAME (kind output_bundle) (arbiter round_robin) (users RULE...))`
+  declarations for declared rule users.
+- Explicit output-bundle members keep the shipped validation/reporting
+  contract: they must be declared actor outputs or concrete actor-owned
+  storage signals, every listed member must be written by a bound rule, bound
+  rules may not write declared output/storage targets outside the list, and
+  reports preserve `resource_arbitration[].members`.
+- The lowerer reuses the shipped round-robin pointer/grant model:
+  `isf_rr_<resource>_turn` records the next preferred rule user, grants the
+  first requesting rule at or after the pointer, advances only from the
+  winning rule DT, and reports as inferred storage with role
+  `resource_round_robin_pointer`.
+- Schedule reports expose grants with `kind: output_bundle`,
+  `arbiter: round_robin`, explicit `members`, and dynamic peer
+  `suppressed_by` evidence.
+- Storage-port round-robin, backlog resource kinds, generated-child
+  resources, actor-network endpoints, ready/backpressure, payload protocols,
+  route mux/storage, and lifetime ownership remain deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, README index, roadmap, and live docs.
+- Validation passed: syntax checks; focused resource arbitration with
+  `Files=1, Tests=14`; public/report/book audits with `Files=9, Tests=369`;
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1681`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 output-bundle round-robin resource selected
 - Created active task tree `ISF-OUTPUT-BUNDLE-ROUND-ROBIN`.
 - Completed `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1`.
@@ -39,7 +69,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - Schedule reports expose the grants through `resource_arbitration[]` with
   `kind: transaction_start`, `arbiter: round_robin`, empty `members`, and
   dynamic peer `suppressed_by` evidence.
-- Generated-child transaction starts, output-bundle/storage-port round-robin,
+- Generated-child transaction starts, storage-port round-robin,
   backlog resource kinds, actor-network endpoints, ready/backpressure, payload
   protocols, route mux/storage, and transaction lifetime ownership remain
   deferred.
@@ -1122,7 +1152,7 @@ This is the live continuity document for fast session recovery after crashes, re
   DT, suppress losing bound rule DTs, expose grants through
   `resource_arbitration[]`, and report the pointer as documented inferred
   storage.
-- `round_robin` for `output_bundle`, `transaction_start`, `storage_port`,
+- `round_robin` for `storage_port`,
   `interface_bundle`, `named_drive`, `child_instance`, transaction users,
   generated-child resources, actor-network endpoint users, lifetime
   ownership, hold/release ownership, ready/backpressure, and route

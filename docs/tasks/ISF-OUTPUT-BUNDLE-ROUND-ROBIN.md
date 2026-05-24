@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -64,7 +64,7 @@ Ship a bounded `round_robin` arbiter for declared rule users that share an
 ## Task Tree
 
 - ID: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN`
-  Status: `active`
+  Status: `done`
   Goal: `Enforce bounded round_robin arbitration for output_bundle rule users.`
   Children: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1`,
   `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2`
@@ -77,19 +77,19 @@ Ship a bounded `round_robin` arbiter for declared rule users that share an
   Commit: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1: select output-bundle round robin`
 
 - ID: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement output_bundle round_robin arbitration for declared rule users.`
   Acceptance: `Lowering enforces the selected output_bundle round-robin boundary, member validation/reporting remains intact, reports expose grants and pointer storage, unsupported combinations fail closed, docs are synchronized, and focused plus broader checks pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: syntax checks; focused resource arbitration test; public contract/report/book audits; feature-backlog audit; ISF regression gate; mdBook build; diff check`
+  Commit: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2: ship output-bundle round robin`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` | `pending` | The selected output-bundle round-robin boundary is documented and ready for implementation. |
+| 1 | `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` | `done` | The bounded output-bundle round-robin resource widening is implemented, documented, and validated. |
 
-Current frontier: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2`.
+Current frontier: `closed`.
 
 ## Decisions
 
@@ -114,16 +114,23 @@ Current frontier: `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2`.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: feature-backlog audit Files=1, Tests=15` |
+| `2026-05-24` | `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFResourceCatalog.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1218-isf-rule-slot-resource-arbitration.t`; focused public/report/book audits; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed: resource arbitration Files=1, Tests=14; public/report/book audits Files=9, Tests=369; ISF gate Files=250, Tests=1681` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1` | `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.1: select output-bundle round robin` | `selection slice` |
-| `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` | `pending` | `implementation slice` |
+| `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` | `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2: ship output-bundle round robin` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created and activated the task tree, selected
   `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` as the implementation frontier, and
   confirmed that the selection slice has no compiler behavior change.
+- `2026-05-24`: Shipped bounded `output_bundle` + `round_robin` arbitration
+  for declared rule users. The lowerer now accepts
+  `(resource NAME (kind output_bundle) (arbiter round_robin) (users RULE...))`,
+  preserves the explicit member-list validation/reporting contract, emits and
+  reports the generated `isf_rr_<resource>_turn` pointer, and keeps
+  storage-port round-robin plus broader resource/lifetime ownership deferred.

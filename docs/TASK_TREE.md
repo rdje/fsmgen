@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-OUTPUT-BUNDLE-ROUND-ROBIN` | `active` | `R14` | `ISF-OUTPUT-BUNDLE-ROUND-ROBIN.2` | [docs/tasks/ISF-OUTPUT-BUNDLE-ROUND-ROBIN.md](docs/tasks/ISF-OUTPUT-BUNDLE-ROUND-ROBIN.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-OUTPUT-BUNDLE-ROUND-ROBIN` | `done` | `R14` | `closed` | [docs/tasks/ISF-OUTPUT-BUNDLE-ROUND-ROBIN.md](docs/tasks/ISF-OUTPUT-BUNDLE-ROUND-ROBIN.md) |
 | `ISF-TRANSACTION-START-ROUND-ROBIN` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-START-ROUND-ROBIN.md](docs/tasks/ISF-TRANSACTION-START-ROUND-ROBIN.md) |
 | `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT` | `done` | `R11` | `closed` | [docs/tasks/R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.md](docs/tasks/R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.md) |
 | `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT` | `done` | `R11` | `closed` | [docs/tasks/R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.md](docs/tasks/R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.md) |
