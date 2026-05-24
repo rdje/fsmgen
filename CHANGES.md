@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Actor-parameter activation override selected
+- Created active task tree `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`.
+- Completed `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1`; the current frontier is
+  `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`.
+- Selected a bounded generated-activation parameter value widening:
+  actor-local scalar parameter defaults may be used by name in spawn,
+  generated blocking `do`, and rule-trigger `(params ...)` overrides,
+  including scalar leaves inside compatible aggregate/list overrides.
+- The implementation must resolve actor parameters before lowerer IR,
+  schedule reports, and generated-top `?fsmc` emission and must keep
+  transaction parameters, runtime signals, arbitrary expressions, non-scalar
+  actor parameters as scalar values, direct `(on ...)` activation params, and
+  reusable-library use-site parameter semantics deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior,
+  public API, source, test, or generated behavior changed in this selection
+  slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Roadmap — Active-lane latest-slice summary synchronized
 - Completed `ROADMAP-ACTIVE-LANE-LATEST-SLICE-SYNC.1` and closed the task
   tree.

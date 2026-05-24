@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Actor-parameter activation override selected
+- Created active task tree `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`.
+- Completed `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1`.
+- The current frontier is `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`.
+- The selected implementation will allow generated activation `(params ...)`
+  override values to use actor-local scalar parameter defaults by name for
+  spawn, generated blocking `do`, and rule-trigger sites.
+- Actor parameters must resolve before lowerer IR publication, schedule
+  reports, and generated-top `?fsmc` emission. Transaction parameters,
+  runtime signals, arbitrary expressions, non-scalar actor parameters as
+  scalar values, direct `(on ...)` activation params, and reusable-library
+  use-site parameter semantics remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior,
+  public API, source, test, or generated behavior changed in this selection
+  slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`.
+- Current frontier: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`.
+
 ## 2026-05-24: Roadmap — Active-lane latest-slice summary synchronized
 - Completed `ROADMAP-ACTIVE-LANE-LATEST-SLICE-SYNC.1` and closed the task
   tree.

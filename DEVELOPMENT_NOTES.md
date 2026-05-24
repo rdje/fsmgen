@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Actor parameters are the next static activation override source
+- Activation parameter overrides already resolve actor constants and enum
+  members before generated-top emission. Actor-local scalar parameter defaults
+  are the same class of compile-time specialization value when their resolved
+  value is scalar and literal.
+- The selected slice deliberately excludes transaction parameters and runtime
+  signals. Generated activation parameter overrides specialize a child
+  instance; runtime-varying values belong on transaction ports and `(bind
+  ...)`, not in `?fsmc` parameter blocks.
+
 ## 2026-05-24: Keep both roadmap live-status surfaces aligned
 - `ROADMAP_STATUS.md` has a top recency board and a lower current-active-lane
   section. Both are user-facing recovery surfaces, so a completed PNT slice

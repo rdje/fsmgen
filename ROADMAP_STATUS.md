@@ -2,8 +2,25 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`.
+- Current frontier: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`.
+- Recent R14 activation actor-parameter override selection:
+  `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1` selected the next public-facing ISF
+  feature tree before implementation. The implementation frontier is
+  `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`, a bounded widening of generated
+  activation parameter override values: spawn, generated blocking `do`, and
+  rule-trigger `(params ...)` override values may use actor-local scalar
+  parameter defaults by name, including scalar leaves inside compatible
+  aggregate/list overrides. The implementation must resolve those actor
+  parameters before lowerer IR publication, schedule reports, and generated
+  `?fsmc` top emission, preserving self-contained literal outputs. It must
+  keep transaction parameters, runtime signals, arbitrary expressions,
+  non-scalar actor parameters as scalar values, direct `(on ...)` activation
+  params, and reusable-library use-site parameter semantics deferred. No
+  parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+  Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent roadmap active-lane latest-slice sync:
   `ROADMAP-ACTIVE-LANE-LATEST-SLICE-SYNC.1` synchronized the lower
   `Current active lane` summary after the transaction-over-rule book
@@ -6934,13 +6951,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `ROADMAP-ACTIVE-LANE-LATEST-SLICE-SYNC.1`
-  synchronized this lower live-roadmap summary with the top status board
-  after the transaction-over-rule book truth-sync slice. No active task tree
-  or frontier is selected. The next behavior-bearing PNT implementation slice
-  must create or select a task tree before changing code.
+- Active task tree: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS`.
+- Current frontier: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`.
+- Completion status: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.1` selected the
+  actor-local scalar parameter activation-override contract and advanced the
+  active frontier to the implementation leaf. No parser, scheduler, report,
+  generated artifact, HDL, CLI behavior, public API, source, test, or
+  generated behavior changed in the selection slice.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
