@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 activation package-constant overrides selected
+- Created active task tree `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS`.
+- Completed `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1`; the selected
+  implementation frontier is `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2`.
+- The selected widening will allow generated activation parameter override
+  scalar values and scalar leaves inside compatible aggregate/list override
+  values to reference qualified imported package scalar constants such as
+  `shared.DEFAULT_WIDTH`.
+- Activation override publication will resolve package constants to literal
+  generated-top bindings and generated-composition report values, matching the
+  existing activation specialization model rather than preserving child-local
+  default tokens.
+- Unqualified package constants, package aggregate constants and aggregate
+  scalar-leaf paths, package constants in other value domains, arbitrary
+  expressions, runtime signals, and package namespace pollution remain
+  deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book audits with `Files=2,
+  Tests=38`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS`.
+- Current frontier: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2`.
+
 ## 2026-05-24: R14 transaction package-constant defaults shipped
 - Completed `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` and closed the
   task tree.

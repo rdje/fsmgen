@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Activation package constants should literalize at the top
+- `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1` selects qualified imported
+  package scalar constants for generated activation parameter overrides as the
+  next narrow static value-domain widening.
+- Unlike generated-child transaction parameter defaults, activation override
+  values are applied through generated-top parameter bindings and
+  generated-composition report values. The selected publication rule should
+  therefore resolve `PACKAGE.CONSTANT` to the scalar literal before generated
+  top emission instead of requiring generated-top package imports.
+- The boundary remains intentionally scalar and qualified: unqualified package
+  constants, aggregate package constants, package member/item paths, unrelated
+  value domains, and package namespace pollution stay fail-closed or deferred.
+
 ## 2026-05-24: Transaction package constants use the child artifact boundary
 - `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` resolves qualified
   imported package scalar constants in generated-child transaction parameter

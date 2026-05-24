@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Activation package-constant overrides selected
+- Created active task tree `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS`.
+- Completed `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1`; the selected
+  implementation frontier is `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2`.
+- Selected a bounded generated activation parameter override value-domain
+  widening: scalar override values and scalar leaves inside compatible
+  aggregate/list override values may reference qualified imported package
+  scalar constants such as `shared.DEFAULT_WIDTH`.
+- Activation override publication should resolve package constants to literal
+  generated-top bindings and generated-composition report values because
+  activation overrides specialize generated tops rather than preserving
+  child-local parameter default tokens.
+- Unqualified package constants, package aggregate constants and aggregate
+  scalar-leaf paths, package constants in other value domains, arbitrary
+  expressions, runtime signals, and package namespace pollution remain
+  deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book audits with `Files=2,
+  Tests=38`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Transaction package-constant defaults shipped
 - Completed `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` and closed the
   task tree.
