@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R8-STRICT-SUPPORT-TIER-CUTS` | `active` | `R8` | `R8-STRICT-SUPPORT-TIER-CUTS.2` | [docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md](docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md) |
+| `R8-STRICT-SUPPORT-TIER-CUTS` | `active` | `R8` | `R8-STRICT-SUPPORT-TIER-CUTS.3` | [docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md](docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md) |
 
 ## Proposed Task Trees
 

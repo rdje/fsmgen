@@ -3,7 +3,24 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R8`.
 - Active task tree: `R8-STRICT-SUPPORT-TIER-CUTS`.
-- Current frontier: `R8-STRICT-SUPPORT-TIER-CUTS.2`.
+- Current frontier: `R8-STRICT-SUPPORT-TIER-CUTS.3`.
+- Recent R8 strict support-tier audit:
+  `R8-STRICT-SUPPORT-TIER-CUTS.2` audited the shipped strict-mode enforcement
+  boundary across `FSM::Pipeline::SourceFrontend`, strict-mode diagnostics,
+  regression corpus support accounting, composition wiring token handling,
+  mdBook guidance, and live docs. Current strict mode rejects legacy direct
+  `+fsm` roots, legacy `?module:` direct-root aliases, empty legacy `(+size)`
+  sections, misleading reset spellings, compact init/default directives,
+  infix assignment forms, legacy `<=+`, and legacy generated-child roots under
+  `?fsmc` / `?dtc`. The selected next implementation leaf is
+  `R8-STRICT-SUPPORT-TIER-CUTS.3`, limited to rejecting legacy composition
+  `?wiring` `/source/target/` slash-link tokens in strict mode while leaving
+  default-mode compatibility intact. The canonical replacements are
+  `(source target)` and `(connect source target)`. No parser, scheduler,
+  report, generated artifact, HDL, CLI, public API, or public language
+  behavior changed in this audit slice. Validation passed: focused
+  strict/composition/corpus tests with `Files=13, Tests=3281`; `mdbook build
+  docs/book`; and `git diff --check`.
 - Recent R8 strict support-tier selection:
   `R8-STRICT-SUPPORT-TIER-CUTS.1` activated the task tree for the next
   strict-mode support-tier cuts. The next executable frontier is an
@@ -6356,10 +6373,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - Active task tree: `R8-STRICT-SUPPORT-TIER-CUTS`.
-- Current frontier: `R8-STRICT-SUPPORT-TIER-CUTS.2`.
-- Completion status: `R8-STRICT-SUPPORT-TIER-CUTS.1` selected the next R8
-  strict-mode task tree. The active frontier is an audit/design leaf before
-  any behavior-bearing strict-mode change.
+- Current frontier: `R8-STRICT-SUPPORT-TIER-CUTS.3`.
+- Completion status: `R8-STRICT-SUPPORT-TIER-CUTS.2` audited the current
+  strict-mode boundary and selected legacy composition `?wiring`
+  `/source/target/` slash-link tokens as the next bounded strict-mode cut.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

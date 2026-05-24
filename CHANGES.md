@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R8 — Strict support-tier frontier audited
+- Completed `R8-STRICT-SUPPORT-TIER-CUTS.2`.
+- Audited the current strict-mode enforcement boundary across source
+  frontend checks, diagnostic codes, regression corpus support accounting,
+  composition wiring token compatibility, mdBook guidance, and live docs.
+- Selected `R8-STRICT-SUPPORT-TIER-CUTS.3` as the next implementation leaf:
+  reject legacy composition `?wiring` `/source/target/` slash-link tokens in
+  strict mode while keeping default-mode compatibility and pointing users to
+  `(source target)` or `(connect source target)`.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in this audit slice.
+- Validation passed: focused strict/composition/corpus tests with `Files=13,
+  Tests=3281`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R8 — Strict support-tier frontier selected
 - Completed `R8-STRICT-SUPPORT-TIER-CUTS.1`.
 - Activated the R8 task tree for the next strict-mode support-tier cuts.

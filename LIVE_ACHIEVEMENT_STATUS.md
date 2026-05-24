@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R8 — Strict support-tier frontier audited
+- Completed `R8-STRICT-SUPPORT-TIER-CUTS.2`.
+- The shipped strict-mode boundary rejects legacy direct roots, direct-root
+  aliases, empty `+size`, misleading reset spellings, compact init/default
+  directives, infix assignments, `<=+`, and legacy generated-child roots.
+- Selected `R8-STRICT-SUPPORT-TIER-CUTS.3` as the next bounded implementation
+  leaf: reject legacy composition `?wiring` `/source/target/` slash-link
+  tokens in strict mode while preserving default-mode compatibility.
+- Canonical replacements are `(source target)` and `(connect source target)`.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in this audit slice.
+- Validation passed: focused strict/composition/corpus tests with `Files=13,
+  Tests=3281`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R8-STRICT-SUPPORT-TIER-CUTS`.
+- Current frontier: `R8-STRICT-SUPPORT-TIER-CUTS.3`.
+
 ## 2026-05-24: R8 — Strict support-tier frontier selected
 - Completed `R8-STRICT-SUPPORT-TIER-CUTS.1`.
 - Activated the R8 task tree for the next strict-mode support-tier cuts.
