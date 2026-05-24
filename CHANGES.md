@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Round-robin resource arbitration shipped
+- Completed `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` and closed the task tree.
+- Added lowering for bounded `(resource NAME (kind rule_slot)
+  (arbiter round_robin) (users rule_a rule_b ...))` resources with declared
+  rule users.
+- FSMGen now emits a generated `isf_rr_<resource>_turn` pointer counter,
+  grants the first requesting rule at or after the current pointer in circular
+  user order, gates the winning rule DT, and advances the pointer only from
+  the winning rule DT.
+- Schedule reports expose the new grants through `resource_arbitration[]`
+  with `arbiter: round_robin` and expose the generated pointer in
+  `inferred_storage[]` with role `resource_round_robin_pointer`.
+- Unsupported `round_robin` kind/user combinations, invalid generated pointer
+  names, pointer collisions, and one rule user bound to multiple round-robin
+  resources fail closed.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook source, live roadmap/task docs, and live continuity docs.
+- Validation passed: syntax checks; focused resource/report/public-contract
+  and docs audits with `Files=11, Tests=378`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1667`; and
+  `git diff --check`.
+
 ### R14 — Round-robin resource arbitration selected
 - Completed selection work for
   `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1`.
@@ -207,8 +229,9 @@ This is the persistent technical change history for FSMGen.
   element signals. Bank roots, aggregate paths, inferred undeclared LHS
   targets, actor-network endpoints, output-target users, transaction users,
   named-drive users, child-instance users, storage-port resources, route
-  mux/storage, fairness, hold/release, multi-capacity resources, and
-  `round_robin` remain deferred.
+  mux/storage, fairness, hold/release, multi-capacity resources, and broader
+  `round_robin` beyond the later-shipped bounded `rule_slot` subset remain
+  deferred.
 - No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
   behavior changed.
 - Validation passed: live-doc/spec index audits with `Files=2, Tests=25`;

@@ -2,26 +2,34 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION`.
-- Current frontier: `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2`.
-- Recent R14 round-robin resource selection:
-  `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1` activated the next bounded
-  resource-arbitration task tree. The selected implementation path is
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 round-robin resource completion:
+  `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` shipped bounded
   `(resource NAME (kind rule_slot) (arbiter round_robin)
-  (users rule_a rule_b ...))` for declared rule users only. The future
-  implementation leaf must generate an actor-local pointer, grant the first
-  requesting user at or after that pointer in circular user order, advance the
-  pointer only on an executed grant, gate the whole winning rule DT, suppress
-  losing bound rule DTs, expose grants through `resource_arbitration[]`, and
-  report the pointer as documented inferred storage. `round_robin` for
-  `output_bundle`, `transaction_start`, `storage_port`, `interface_bundle`,
-  `named_drive`, `child_instance`, transaction users, named-drive users,
-  output-target users, child-instance users, actor-network endpoint users,
-  generated-child resources, dynamic resource names, multi-capacity
-  resources, storage lifetime ownership, hold/release ownership,
-  ready/backpressure, and route mux/storage remains deferred. No parser,
-  scheduler, report, generated artifact, HDL, CLI, or public ISF behavior
-  changed in this selection.
+  (users rule_a rule_b ...))` arbitration for declared rule users. Lowering
+  emits an actor-local `isf_rr_<resource>_turn` counter, grants the first
+  requesting user at or after that pointer in circular `(users ...)` order,
+  advances the pointer only from the winning rule DT, and gates the whole
+  winning rule DT for that cycle. Schedule reports expose grants through the
+  existing `resource_arbitration[]` shape with `arbiter: round_robin`, and the
+  generated pointer appears in `inferred_storage[]` with role
+  `resource_round_robin_pointer`. `round_robin` for `output_bundle`,
+  `transaction_start`, `storage_port`, `interface_bundle`, `named_drive`,
+  `child_instance`, transaction users, named-drive users, output-target users,
+  child-instance users, actor-network endpoint users, generated-child
+  resources, dynamic resource names, multi-capacity resources, storage
+  lifetime ownership, hold/release ownership, ready/backpressure, and route
+  mux/storage remains deferred. Validation passed: syntax checks; focused
+  resource/report/public-contract and docs audits with `Files=11, Tests=378`;
+  `mdbook build docs/book`; broad `./bin/ci-regression isf --no-book` with
+  `Files=250, Tests=1667`; and `git diff --check`.
+- Recent R14 round-robin resource selection:
+  `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1` activated the bounded
+  resource-arbitration task tree that was later completed by
+  `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2`. No parser, scheduler, report,
+  generated artifact, HDL, CLI, or public ISF behavior changed in the
+  selection.
 - Recent R14 storage-port member truth sync:
   `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` corrected stale public spec wording
   that still implied `(members ...)` belonged only to `output_bundle`. The
@@ -110,7 +118,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   output-target users, transaction users, named-drive users,
   child-instance users, storage-port resources, route mux/storage,
   fan-in/fan-out, fairness, hold/release semantics, multi-capacity resources,
-  and `round_robin` remain deferred.
+  and broader `round_robin` beyond the later-shipped bounded `rule_slot`
+  subset remain deferred.
 - Recent R14 output-bundle storage-member selection:
   `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1` activated the next bounded member-list
   widening. The selected implementation path allows explicit
@@ -122,8 +131,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   undeclared LHS targets, output-target users, transaction users, named-drive
   users, child-instance users, storage-port resources, route mux/storage,
   fan-in/fan-out, fairness, hold/release semantics, multi-capacity resources,
-  and `round_robin` remain deferred. No parser, scheduler, report, generated
-  artifact, HDL, CLI, or public ISF behavior changed in this selection.
+  and broader `round_robin` beyond the later-shipped bounded `rule_slot`
+  subset remain deferred. No parser, scheduler, report, generated artifact,
+  HDL, CLI, or public ISF behavior changed in this selection.
 - Recent R14 output-bundle wording truth sync:
   `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1` aligned the public docs after
   explicit member lists shipped. The synchronized wording now distinguishes
@@ -167,8 +177,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   paths, pin paths, actor-network endpoints, output-target users,
   transaction users, named-drive users, route mux/storage, fan-in/fan-out,
   fairness state, hold/release semantics, multi-capacity resources, and
-  `round_robin` remain deferred. No parser, scheduler, report, generated
-  artifact, HDL, CLI, or public ISF behavior changed in the selection slice.
+  broader `round_robin` beyond the later-shipped bounded `rule_slot` subset
+  remain deferred. No parser, scheduler, report, generated artifact, HDL,
+  CLI, or public ISF behavior changed in the selection slice.
 - Recent R14 output-bundle resource priority completion:
   `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` shipped the first non-`rule_slot`
   enforced resource kind. `output_bundle` resources are now enforced for

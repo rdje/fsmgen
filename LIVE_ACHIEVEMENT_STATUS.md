@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Round-robin resource arbitration shipped
+- Completed `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` and closed the task tree.
+- FSMGen now supports bounded `(kind rule_slot)` resources with
+  `(arbiter round_robin)` and declared rule users.
+- Lowering emits a generated `isf_rr_<resource>_turn` pointer counter, grants
+  the first requesting rule at or after that pointer in circular `(users ...)`
+  order, gates the winning rule DT, and advances the pointer only from the
+  winning rule DT.
+- Schedule reports expose grants through `resource_arbitration[]` with
+  `arbiter: round_robin`, and expose the generated pointer in
+  `inferred_storage[]` with role `resource_round_robin_pointer`.
+- Non-`rule_slot` round-robin resources, transaction users, generated-child
+  resources, actor-network endpoint users, storage lifetime ownership,
+  hold/release ownership, ready/backpressure, route mux/storage, invalid
+  generated pointer names, pointer collisions, and multi-resource
+  round-robin rule-user ownership remain fail-closed or deferred as
+  documented.
+- Validation passed: syntax checks; focused resource/report/public-contract
+  and docs audits with `Files=11, Tests=378`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1667`; and
+  `git diff --check`.
+
 ## 2026-05-24: R14 — Round-robin resource arbitration selected
 - Completed `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1`.
 - Activated the active R14 task tree for bounded `(kind rule_slot)`
@@ -155,8 +177,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Bank roots, aggregate paths, inferred undeclared LHS targets,
   actor-network endpoints, output-target users, transaction users,
   named-drive users, child-instance users, storage-port resources, route
-  mux/storage, fairness, hold/release, multi-capacity resources, and
-  `round_robin` remain deferred.
+  mux/storage, fairness, hold/release, multi-capacity resources, and broader
+  `round_robin` beyond the later-shipped bounded `rule_slot` subset remain
+  deferred.
 - Validation passed: syntax checks; focused resource/public/spec/book tests
   with `Files=10, Tests=342`; `mdbook build docs/book`; broad
   `./bin/ci-regression isf --no-book` with `Files=250, Tests=1659`;
@@ -174,7 +197,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   roots, aggregate paths, inferred undeclared LHS targets, actor-network
   endpoints, output-target users, transaction users, named-drive users,
   child-instance users, storage-port resources, route mux/storage, fairness,
-  hold/release, multi-capacity resources, and `round_robin` remain deferred.
+  hold/release, multi-capacity resources, and broader `round_robin` beyond the
+  later-shipped bounded `rule_slot` subset remain deferred.
 - No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
   behavior changed.
 - Validation passed: live-doc/spec index audits with `Files=2, Tests=25`;

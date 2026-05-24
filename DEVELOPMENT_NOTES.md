@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Round-robin rule slots use generated pointer state
+- `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` keeps the first fair resource
+  arbiter deliberately narrow: declared rule users on `(kind rule_slot)` only.
+  That avoids payload ownership, member-list validation, transaction fan-in,
+  storage lifetime, and child-instance busy protocols while still exercising
+  real scheduler state.
+- The resource name must be an HDL identifier because the pointer is public
+  scheduled storage named `isf_rr_<resource>_turn`. Pointer collisions fail
+  closed rather than silently merging with authored or generated state.
+- The pointer advances only when a rule wins. This preserves idle cycles as
+  no-ops and keeps fairness tied to accepted grants rather than merely active
+  requests.
+- `resource_arbitration[].suppressed_by` remains the bounded public evidence
+  channel. For round-robin it names dynamic peer users instead of static
+  higher-priority users; per-cycle grant traces remain outside the public
+  schedule report.
+
 ## 2026-05-24: Round-robin should start at rule_slot
 - `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1` selects `rule_slot` as the first
   fair resource-arbiter target because it has the smallest ownership surface:

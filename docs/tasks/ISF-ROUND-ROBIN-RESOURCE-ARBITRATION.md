@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -50,7 +50,7 @@ existing `rule_slot` resource kind.
 ## Task Tree
 
 - ID: `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION`
-  Status: `active`
+  Status: `done`
   Goal: `Enforce bounded round_robin arbitration for rule_slot rule users`
   Children: `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1`,
   `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2`
@@ -62,22 +62,22 @@ existing `rule_slot` resource kind.
   implementation leaf, document the exact boundary, and confirm no compiler
   behavior changed`
   Verification: `live-doc/spec index audits; git diff check`
-  Commit: `pending`
+  Commit: `434fb8e7 ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1: select round-robin resources`
 
 - ID: `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement round_robin rule_slot arbitration for declared rule users`
   Acceptance: `Lowering enforces the selected round-robin boundary, reports
   expose grants and pointer storage, unsupported combinations fail closed,
   docs are synchronized, and focused plus broader checks pass`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused resource/report/public-contract tests; public documentation audits; mdBook build; git diff check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | `pending` | `The bounded rule_slot round_robin implementation is selected and owned.` |
+| 1 | `closed` | `done` | `The bounded rule_slot round_robin implementation is shipped and documented.` |
 
 ## Decisions
 
@@ -108,14 +108,21 @@ existing `rule_slot` resource kind.
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t` | `passed: Files=2, Tests=25` |
 | `2026-05-24` | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1` | `git diff --check` | `passed` |
+| `2026-05-24` | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Support/ISFResourceCatalog.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm` | `passed` |
+| `2026-05-24` | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | `prove -Iperl t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t t/1220-isf-arbitration-schedule-report.t t/1140-isf-public-schedule-report-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=11, Tests=378` |
+| `2026-05-24` | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-24` | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | `./bin/ci-regression isf --no-book` | `passed: Files=250, Tests=1667` |
+| `2026-05-24` | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1` | `pending this commit: ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1: select round-robin resources` | `selection slice` |
-| `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | `pending` | `implementation slice` |
+| `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1` | `434fb8e7 ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1: select round-robin resources` | `selection slice` |
+| `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | `pending this commit: ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2: ship rule-slot round robin` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created and activated the task tree.
+- `2026-05-24`: Shipped and documented bounded `rule_slot`/`round_robin`
+  arbitration for declared rule users, then closed the task tree.

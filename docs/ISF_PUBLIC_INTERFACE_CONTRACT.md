@@ -147,7 +147,10 @@ The rule/resource fixture is checked by
 to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
 strict HDL generation, rule-over-transaction priority suppression,
 `rule_slot`/`priority` arbitration metadata, lower-priority rule gating, and
-delayed completion pulse behavior covered.
+delayed completion pulse behavior covered. Focused resource tests additionally
+cover bounded `rule_slot`/`round_robin` grants, generated pointer storage
+metadata, report projection, and fail-closed non-`rule_slot` round-robin
+combinations.
 The stage/contract fixture is checked by
 [t/1317-isf-stage-contract-fixture-coverage.t](../t/1317-isf-stage-contract-fixture-coverage.t)
 to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
@@ -1026,17 +1029,24 @@ with bound users must carry explicit `(members target...)` metadata naming
 concrete actor-owned storage signals: scalar storage variables or scalarized
 bank element signals. Storage-port members do not include bank roots,
 aggregate paths, inferred LHS targets, transaction ports, actor input ports,
-or arbitrary expressions. Shipped resource kinds use
-the static `priority` arbiter today. The current shareable resource registry is:
-`rule_slot` (shipped for `priority` arbitration), `output_bundle` (shipped for
-`priority` arbitration), `transaction_start` (shipped for `priority`
+or arbitrary expressions. Shipped resource kinds use the static `priority`
+arbiter, and `rule_slot` also supports bounded `round_robin` arbitration for
+declared rule users. Bounded round-robin uses the `(users ...)` list as a
+circular grant order, emits `isf_rr_<resource>_turn` pointer storage, grants
+the first requesting rule at or after the current pointer, and advances the
+pointer from the winning rule DT. The pointer is public report metadata in
+`inferred_storage[]` with role `resource_round_robin_pointer`. The generated
+pointer name must not collide with existing actor ports, constants,
+parameters, declared storage, or generated counters.
+The current shareable resource registry is: `rule_slot` (shipped for
+`priority` and bounded `round_robin` arbitration), `output_bundle` (shipped
+for `priority` arbitration), `transaction_start` (shipped for `priority`
 arbitration), `storage_port` (shipped for `priority` arbitration),
-`interface_bundle`, `named_drive`, and `child_instance`. The non-shipped
-kinds are public catalog/backlog names, not
-public runtime behavior, until
-their lowering paths, runtime semantics, diagnostics, report surfaces, and
-regressions ship. The accepted `round_robin` string remains parser metadata
-until round-robin lowering ships.
+`interface_bundle`, `named_drive`, and `child_instance`. The non-shipped kinds
+are public catalog/backlog names, not public runtime behavior, until their
+lowering paths, runtime semantics, diagnostics, report surfaces, and
+regressions ship. `round_robin` remains unsupported for non-`rule_slot`
+resource kinds.
 The code owner for that registry is `FSM::Support::ISFResourceCatalog`; the
 parser and this public contract both consume it. Downstream consumers can
 discover the current values through `resource_arbiter_values`,
@@ -1046,10 +1056,11 @@ discover the current values through `resource_arbiter_values`,
 The first resource-arbitration path is checked by
 [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
 for parser metadata, `rule_slot`, `output_bundle`, `transaction_start`, and
-`storage_port` scheduled `.fsm` DTE gating, output-bundle output/storage
-member-list coverage, transaction-start trigger-user validation,
-storage-port storage-member validation, HDL handoff, and fail-closed
-unsupported arbitration cases.
+`storage_port` scheduled `.fsm` DTE gating, bounded `rule_slot`/`round_robin`
+grant gating and pointer state, output-bundle output/storage member-list
+coverage, transaction-start trigger-user validation, storage-port
+storage-member validation, HDL handoff, and fail-closed unsupported
+arbitration cases.
 The first rule/transaction priority path is checked by
 [t/1219-isf-rule-transaction-priority.t](../t/1219-isf-rule-transaction-priority.t)
 for accepted rule-over-transaction suppression, accepted transaction-over-rule
@@ -2533,9 +2544,10 @@ the lowerer has direct evidence. The current role family is
 `activation_done_handoff`, `activation_start_handoff`, `actor_storage`,
 `completion_pulse`, `data_register`, `dynamic_wait_counter`, `drive_payload`,
 `drive_request`, `extract_field`, `latency_counter`, `repeat_counter`,
-`rule_trigger_payload_source`, `rule_trigger_source`, `sample_alias`,
-`temporal_contract_monitor`, `transaction_port`, `transaction_port_binding`,
-`trigger_done_observe`, and `watchdog_counter`.
+`resource_round_robin_pointer`, `rule_trigger_payload_source`,
+`rule_trigger_source`, `sample_alias`, `temporal_contract_monitor`,
+`transaction_port`, `transaction_port_binding`, `trigger_done_observe`, and
+`watchdog_counter`.
 Runtime scalar and runtime expression waits use `dynamic_wait_counter` for
 their generated sampled-count storage. Rule-trigger source pulses use
 `rule_trigger_source`, and per-input trigger payload-source storage uses
@@ -2546,6 +2558,8 @@ activation port-binding handoff storage uses `transaction_port_binding`, and
 generated rule-trigger completion observation uses `trigger_done_observe`.
 Transaction-local port storage uses `transaction_port` when a declared
 transaction port is materialized in the scheduled `.fsm` review artifact.
+Bounded `rule_slot`/`round_robin` resource arbitration uses
+`resource_round_robin_pointer` for the generated pointer counter.
 Temporal-contract pending/fail registers and age counters use
 `temporal_contract_monitor`; use `temporal_contracts[]` to map those signal
 names back to the specific bounded-eventual contract. Optional `width` values
@@ -2778,13 +2792,16 @@ values in `schedule_report_transaction_port_binding_site_kind_values`.
 Successful arbitration metadata uses top-level `priority_resolutions` and
 `resource_arbitration` arrays. `priority_resolutions` records static
 target-local suppressions with bounded winner/loser owner names and owner
-kinds. `resource_arbitration` records static resource grant-shaping decisions
+kinds. `resource_arbitration` records bounded resource grant-shaping decisions
 for enforced resources, including the resource name, resource kind, arbiter,
-rule user, explicit member list, and higher-priority users that can suppress
-that user's grant. `members` is an array; it is empty when the resource has no
-explicit member list and contains declared actor output or concrete
-actor-owned storage signal names for explicit output-bundle members. These
-entries describe the lowering decision, not per-cycle runtime grant values.
+rule user, explicit member list, and users that can suppress that user's
+grant. For `priority`, `suppressed_by` names higher-priority bound rule users.
+For bounded `round_robin`, `suppressed_by` names dynamic peer rule users that
+can block that grant for a given pointer position and request set. `members`
+is an array; it is empty when the resource has no explicit member list and
+contains declared actor output or concrete actor-owned storage signal names
+for explicit output-bundle members. These entries describe the lowering
+decision, not per-cycle runtime grant values.
 Raw `assignment_provenance`, activation context, assignment indexes, and
 priority/resource suppression bookkeeping remain non-public `LoweringIR`
 internals unless a later slice deliberately advertises a narrower field.

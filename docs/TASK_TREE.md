@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION` | `active` | `R14` | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | [docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md](docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION` | `done` | `R14` | `closed` | [docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md](docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md) |
 | `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.md](docs/tasks/ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.md) |
 | `CI-FEATURE-BACKLOG-STATUS-AUDIT` | `done` | `project operations` | `closed` | [docs/tasks/CI-FEATURE-BACKLOG-STATUS-AUDIT.md](docs/tasks/CI-FEATURE-BACKLOG-STATUS-AUDIT.md) |
 | `ISF-STORAGE-PORT-RESOURCE-PRIORITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-STORAGE-PORT-RESOURCE-PRIORITY.md](docs/tasks/ISF-STORAGE-PORT-RESOURCE-PRIORITY.md) |

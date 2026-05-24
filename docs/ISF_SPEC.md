@@ -454,7 +454,8 @@ Additional actor clauses with mixed parser/scheduler behavior:
   `(arbiter priority|round_robin)` plus optional `(kind ...)` and
   `(users ...)`/`(members ...)`; `rule_slot`, `output_bundle`,
   `transaction_start`, and `storage_port` + `priority` rule-user resources
-  are scheduler-enforced.
+  are scheduler-enforced, and `rule_slot` + bounded `round_robin` rule-user
+  resources are scheduler-enforced.
 - actor-level `(priority lhs over rhs)`
 
 Deprecated compatibility:
@@ -3452,7 +3453,7 @@ Current shareable resource registry:
 
 | Kind | Status | Meaning |
 | --- | --- | --- |
-| `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
+| `rule_slot` | shipped for `priority` and bounded `round_robin` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
 | `output_bundle` | shipped for `priority` arbitration | A group of actor outputs or rule-written LHS targets with rule users. A grant enables the whole winning bound rule DT for that cycle; optional explicit members name declared actor output ports or concrete actor-owned storage signals. |
 | `transaction_start` | shipped for `priority` arbitration | One-cycle arbitration for rule-trigger request fan-in into one local transaction. The resource name must be the target transaction name. |
 | `storage_port` | shipped for `priority` arbitration | One-cycle arbitration for rule users that update explicit actor-owned storage signals. |
@@ -3467,27 +3468,43 @@ ship.
 
 The shipped resource-arbitration implementation covers priority-arbitrated
 `rule_slot`, `output_bundle`, `transaction_start`, and `storage_port` rule
-users. The source
-shape keeps binding centralized under `(resources ...)` by extending a
-resource entry with `(kind rule_slot)`, `(kind output_bundle)`, or
-`(kind transaction_start)`, `(kind storage_port)`,
+users, plus bounded `round_robin` arbitration for `rule_slot` rule users. The
+source shape keeps binding centralized under `(resources ...)` by extending a
+resource entry with `(kind rule_slot)`, `(kind output_bundle)`,
+`(kind transaction_start)`, or `(kind storage_port)`,
 `(users rule_a rule_b ...)`, and for output bundles or storage ports
 `(members target_a target_b ...)` subclauses.
-For those covered cases, each bound rule requests the resource when its
-normalized rule guard is true. Rule-local `(priority over other_rule)` and
-actor-level `(priority lhs over rhs)` edges choose the active winner when the
-endpoints are bound rules of the same resource. The generated grant gates the
-whole lowered rule DT DTE, while existing same-target priority suppression
-remains assignment-local. Without an explicit member list, the bundle remains
-the historical implicit bound-rule surface: the bound users and their driven
-outputs or other LHS targets describe the author intent. If an explicit
-output-bundle member list is present, each member must be a declared actor
-output port or a concrete actor-owned storage signal. Concrete storage signals
-include scalar storage variables and scalarized bank element signals; bank
-roots, aggregate paths, inferred undeclared LHS targets, and arbitrary
-expressions remain outside this explicit member domain. Each listed member
-must be written by at least one bound rule user, and no bound rule user may
-write a declared output or actor-owned storage signal outside the list.
+
+For priority-arbitrated covered cases, each bound rule requests the resource
+when its normalized rule guard is true. Rule-local
+`(priority over other_rule)` and actor-level `(priority lhs over rhs)` edges
+choose the active winner when the endpoints are bound rules of the same
+resource. The generated grant gates the whole lowered rule DT DTE, while
+existing same-target priority suppression remains assignment-local.
+
+For bounded `rule_slot` plus `round_robin`, each bound rule also requests when
+its normalized rule guard is true. The `(users ...)` list is the circular grant
+order. FSMGen emits a generated pointer named `isf_rr_<resource>_turn`, grants
+the first requesting rule at or after the current pointer, gates the whole
+winning rule DT DTE, and advances the pointer only from the winning rule DT.
+The pointer name is derived from the resource name, so bounded round-robin
+resource names must be HDL identifiers and must not collide with existing
+ports, actor constants, actor parameters, declared storage, or generated
+counters. A rule user may not be bound to more than one round-robin resource
+in the same actor. Reports expose the pointer in `inferred_storage[]` as a
+counter with role
+`resource_round_robin_pointer`.
+
+Without an explicit member list, the bundle remains the historical implicit
+bound-rule surface: the bound users and their driven outputs or other LHS
+targets describe the author intent. If an explicit output-bundle member list is
+present, each member must be a declared actor output port or a concrete
+actor-owned storage signal. Concrete storage signals include scalar storage
+variables and scalarized bank element signals; bank roots, aggregate paths,
+inferred undeclared LHS targets, and arbitrary expressions remain outside this
+explicit member domain. Each listed member must be written by at least one
+bound rule user, and no bound rule user may write a declared output or
+actor-owned storage signal outside the list.
 For `transaction_start`, the resource name is the target local transaction
 name. Every bound rule user must trigger that transaction through the shipped
 non-generated rule-trigger surface. The resource does not replace the
@@ -3504,10 +3521,12 @@ bound rule user may write a concrete actor-owned storage signal outside the
 list. The grant still gates the whole bound rule DT for the cycle; it does
 not create route mux/storage, storage locks, fairness state, or hold/release
 ownership.
-Cycles, incomplete ordering among potentially simultaneous bound users,
-ambiguous future user namespaces, unsupported resource kinds, member/list
-mismatches, unwritten explicit members, and `round_robin` resources with bound
-users fail closed.
+Cycles, incomplete ordering among potentially simultaneous priority-bound
+users, ambiguous future user namespaces, unsupported resource kinds,
+unsupported `round_robin` kind/user combinations, invalid generated
+round-robin pointer names or collisions, duplicate round-robin rule-user
+ownership across resources, member/list mismatches, and unwritten explicit
+members fail closed.
 Transaction users, named-drive users, output-target users, child-instance
 users, generated-child transaction-start resources, generated-child storage
 arbitration, actor-network trigger resources, actor-network endpoint users,
@@ -4161,9 +4180,10 @@ lowerer has direct evidence: `activation_done_handoff`,
 `activation_start_handoff`, `actor_storage`, `completion_pulse`,
 `data_register`, `dynamic_wait_counter`, `drive_payload`, `drive_request`,
 `extract_field`, `latency_counter`, `repeat_counter`,
-`rule_trigger_payload_source`, `rule_trigger_source`, `sample_alias`,
-`temporal_contract_monitor`, `transaction_port`, `transaction_port_binding`,
-`trigger_done_observe`, and `watchdog_counter`.
+`resource_round_robin_pointer`, `rule_trigger_payload_source`,
+`rule_trigger_source`, `sample_alias`, `temporal_contract_monitor`,
+`transaction_port`, `transaction_port_binding`, `trigger_done_observe`, and
+`watchdog_counter`.
 Runtime scalar and runtime expression waits use `dynamic_wait_counter` for the
 generated sampled-count storage that backs zero-bypass and decrement-loop
 lowering.
@@ -4178,6 +4198,8 @@ Generated activation port-binding handoff storage uses
 `trigger_done_observe`.
 Transaction-local port storage uses `transaction_port` when a declared
 transaction port is materialized in the scheduled `.fsm` review artifact.
+Bounded `rule_slot`/`round_robin` resource arbitration uses
+`resource_round_robin_pointer` for the generated pointer counter.
 Typed actor-owned storage may additionally report the authored alias in
 `type` and the resolved top-level kind in `type_kind`; this is intentionally a
 bounded summary, not a raw type-spec dump.
@@ -4340,12 +4362,14 @@ Successful priority/resource decisions are emitted as top-level
 `priority_resolutions` entry records the target plus bounded winner/loser owner
 names and owner kinds for target-local suppression. A `resource_arbitration`
 entry records an enforced resource's name, kind, arbiter, bound rule user,
-explicit member list, and the higher-priority rule users that can suppress
-that user's grant. The `members` array is empty for resources without an
-explicit member list and contains declared actor output or concrete
-actor-owned storage signal names for explicit output bundles. These entries
-describe the static lowering decision; they are not per-cycle runtime grant
-traces.
+explicit member list, and the users that can suppress that user's grant. For
+`priority` resources, `suppressed_by` names higher-priority bound rule users.
+For bounded `round_robin` resources, `suppressed_by` names dynamic peer rule
+users that can block that grant for a given pointer position and request set.
+The `members` array is empty for resources without an explicit member list and
+contains declared actor output or concrete actor-owned storage signal names
+for explicit output bundles. These entries describe the lowering decision;
+they are not per-cycle runtime grant traces.
 Raw assignment provenance remains a private `LoweringIR` implementation
 detail. Public reports expose only bounded substitutes: capped source
 summaries in `compile_issues[]`, compatible fan-in facts in
@@ -4476,8 +4500,11 @@ rule-over-transaction priority resolution, a `rule_slot`/`priority` resource
 with two rule users, lower-priority rule suppression by a higher-priority
 rule, bounded `priority_resolutions[]` and `resource_arbitration[]` report
 metadata, delayed completion pulse behavior, and strict generated HDL
-reachability. It covers the shipped `rule_slot` plus `priority` subset only;
-other resource kinds and arbiters remain explicitly deferred.
+reachability. Focused resource tests also cover the shipped bounded
+`rule_slot` plus `round_robin` subset, generated round-robin pointer storage
+metadata, report projection, and fail-closed non-`rule_slot` round-robin
+combinations. Other resource kinds and broader arbiter surfaces remain
+explicitly deferred.
 The [isf/stream_stage_contract.isf](../isf/stream_stage_contract.isf)
 fixture now has file-backed schedule/HDL/strict coverage for a sampled
 payload, top-level ready/valid stage, top-level bounded eventual contract,
@@ -5232,13 +5259,14 @@ Focused tests:
   parameter overrides for the shipped fixture set.
 - Enforced resource arbitration beyond the shipped priority-arbitrated
   `rule_slot`, `output_bundle`, `transaction_start`, and `storage_port`
-  rule-user cases:
-  `round_robin`, `interface_bundle`, `named_drive`, `child_instance`,
-  generated-child transaction starts, generated-child storage arbitration,
-  actor-network trigger resources, actor-network endpoint users, output-target
-  users, bank-root or aggregate output-bundle/storage-port member domains,
-  inferred undeclared member targets, multi-capacity resources, dynamic
-  resource names, and transaction/storage lifetime ownership remain deferred.
+  rule-user cases plus bounded `rule_slot`/`round_robin`:
+  `round_robin` for non-`rule_slot` resource kinds, `interface_bundle`,
+  `named_drive`, `child_instance`, generated-child transaction starts,
+  generated-child storage arbitration, actor-network trigger resources,
+  actor-network endpoint users, output-target users, bank-root or aggregate
+  output-bundle/storage-port member domains, inferred undeclared member
+  targets, multi-capacity resources, dynamic resource names, and
+  transaction/storage lifetime ownership remain deferred.
 - Priority resolution beyond the currently shipped same-target rule/rule,
   rule-over-transaction, and transaction-over-rule data-conflict cases, plus
   the resource-level bound-rule grant case.

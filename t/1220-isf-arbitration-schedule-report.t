@@ -28,12 +28,16 @@ my $source = <<'ISF';
     (input low_start_req)
     (input high_storage_req)
     (input low_storage_req)
+    (input rr_high_req)
+    (input rr_mid_req)
+    (input rr_low_req)
     (output done)
     (output out)
     (output valid)
     (output err)
     (output flag)
-    (output warn))
+    (output warn)
+    (output rr_flag))
   (storage
     (var status (width 1))
     (var slot (width 1))
@@ -61,7 +65,11 @@ my $source = <<'ISF';
       (kind storage_port)
       (arbiter priority)
       (members slot shadow)
-      (users high_storage low_storage)))
+      (users high_storage low_storage))
+    (resource rr_slot
+      (kind rule_slot)
+      (arbiter round_robin)
+      (users rr_high rr_mid rr_low)))
   (transaction main
     (on start)
     (update out 0)
@@ -87,7 +95,13 @@ my $source = <<'ISF';
   (rule high_storage high_storage_req
     (slot 1))
   (rule low_storage low_storage_req
-    (shadow 1)))
+    (shadow 1))
+  (rule rr_high rr_high_req
+    (rr_flag 1))
+  (rule rr_mid rr_mid_req
+    (rr_flag 0))
+  (rule rr_low rr_low_req
+    (rr_flag 1)))
 ISF
 
 subtest 'in-process report projects arbitration summaries' => sub {
@@ -136,7 +150,7 @@ sub assert_arbitration_projection {
 
     ok(exists $report->{resource_arbitration}, "$label exposes resource_arbitration");
     is(ref($report->{resource_arbitration}), 'ARRAY', "$label resource_arbitration is an array");
-    is(scalar(@{$report->{resource_arbitration}}), 8, "$label exposes rule_slot, output_bundle, transaction_start, and storage_port resource users");
+    is(scalar(@{$report->{resource_arbitration}}), 11, "$label exposes priority and round_robin resource users");
 
     for my $entry (@{$report->{priority_resolutions}}) {
         is_deeply(
@@ -200,6 +214,24 @@ sub assert_arbitration_projection {
     my $low_storage = find_resource_entry($report, user => 'low_storage');
     is_deeply($low_storage->{members}, ['slot', 'shadow'], "$label low storage_port grant exposes explicit storage members");
     is_deeply($low_storage->{suppressed_by}, ['high_storage'], "$label low storage_port user records higher suppressor");
+
+    my $rr_high = find_resource_entry($report, user => 'rr_high');
+    is($rr_high->{resource}, 'rr_slot', "$label round_robin high grant names resource");
+    is($rr_high->{kind}, 'rule_slot', "$label round_robin high grant names resource kind");
+    is($rr_high->{arbiter}, 'round_robin', "$label round_robin high grant names arbiter");
+    is_deeply($rr_high->{members}, [], "$label round_robin rule_slot grant has no member list");
+    is_deeply($rr_high->{suppressed_by}, ['rr_mid', 'rr_low'], "$label round_robin high grant records dynamic peers");
+
+    my $rr_mid = find_resource_entry($report, user => 'rr_mid');
+    is_deeply($rr_mid->{suppressed_by}, ['rr_high', 'rr_low'], "$label round_robin mid grant records dynamic peers");
+
+    my $rr_low = find_resource_entry($report, user => 'rr_low');
+    is_deeply($rr_low->{suppressed_by}, ['rr_high', 'rr_mid'], "$label round_robin low grant records dynamic peers");
+
+    my $rr_pointer = find_storage_entry($report, name => 'isf_rr_rr_slot_turn');
+    is($rr_pointer->{kind}, 'counter', "$label round_robin pointer is reported as counter storage");
+    is($rr_pointer->{role}, 'resource_round_robin_pointer', "$label round_robin pointer has the public storage role");
+    is($rr_pointer->{width}, 2, "$label round_robin pointer width is reported");
 }
 
 sub find_resource_entry {
@@ -214,6 +246,21 @@ sub find_resource_entry {
     }
 
     fail('found resource arbitration entry for ' . join(', ', map { "$_=$want{$_}" } sort keys %want));
+    return {};
+}
+
+sub find_storage_entry {
+    my ($report, %want) = @_;
+
+    ENTRY:
+    for my $entry (@{$report->{inferred_storage} || []}) {
+        for my $key (sort keys %want) {
+            next ENTRY unless defined($entry->{$key}) && $entry->{$key} eq $want{$key};
+        }
+        return $entry;
+    }
+
+    fail('found inferred storage entry for ' . join(', ', map { "$_=$want{$_}" } sort keys %want));
     return {};
 }
 

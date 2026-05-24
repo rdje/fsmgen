@@ -1752,14 +1752,27 @@ Resource arbitration:
     (kind output_bundle)
     (arbiter priority)
     (members valid ready status)
-    (users rule_a rule_b)))
+    (users rule_a rule_b))
+  (resource fair_slot
+    (kind rule_slot)
+    (arbiter round_robin)
+    (users rr_high rr_low)))
 ```
 
 Rules:
 
 - Current enforced resource kinds are `rule_slot`, `output_bundle`,
   `transaction_start`, and `storage_port` with `priority` arbitration for
-  declared rule users.
+  declared rule users. `rule_slot` also supports bounded `round_robin`
+  arbitration for declared rule users.
+- A bounded `round_robin` `rule_slot` uses the `(users ...)` list as a
+  circular grant order. FSMGen emits a generated pointer counter named
+  `isf_rr_<resource>_turn`, grants the first requesting rule at or after the
+  current pointer, advances the pointer only from the winning rule DT, and
+  reports the pointer in `inferred_storage[]` with role
+  `resource_round_robin_pointer`. The generated pointer name must not collide
+  with existing actor ports, constants, parameters, declared storage, or
+  generated counters.
 - A `transaction_start` resource is named by the local transaction it
   arbitrates. Each listed rule user must trigger that transaction through the
   shipped non-generated rule-trigger surface. Priority suppression gates
@@ -1788,13 +1801,17 @@ Rules:
 - Reports expose `resource_arbitration[]`.
 - Each `resource_arbitration[]` entry includes `resource`, `kind`, `arbiter`,
   `user`, `user_kind`, `members`, and `suppressed_by`. `members` is an array
-  and is empty when the resource has no explicit member list.
+  and is empty when the resource has no explicit member list. For `priority`
+  resources, `suppressed_by` names higher-priority bound rule users. For
+  bounded `round_robin` resources, `suppressed_by` names the dynamic peer
+  users that can block the grant for a given pointer position and request set.
 - Additional resource kinds may be cataloged as backlog but are not enforced
   unless listed as enforced by the public contract. Generated-child
   transaction starts, generated-child storage arbitration, actor-network
   triggers, actor-network endpoint users, transaction users, named-drive
   users, output-target users, lifetime ownership, route mux/storage, and
-  `round_robin` remain outside the shipped resource-arbitration subset.
+  `round_robin` for non-`rule_slot` resource kinds remain outside the shipped
+  resource-arbitration subset.
 
 ## 12.5. Static Actor Network Metadata
 
@@ -2817,9 +2834,10 @@ inferred_storage.kind: counter, register
 inferred_storage.role: activation_done_handoff, activation_start_handoff,
   actor_storage, completion_pulse, data_register, dynamic_wait_counter,
   drive_payload, drive_request, extract_field, latency_counter,
-  repeat_counter, rule_trigger_payload_source, rule_trigger_source,
-  sample_alias, temporal_contract_monitor, transaction_port,
-  transaction_port_binding, trigger_done_observe, watchdog_counter
+  repeat_counter, resource_round_robin_pointer,
+  rule_trigger_payload_source, rule_trigger_source, sample_alias,
+  temporal_contract_monitor, transaction_port, transaction_port_binding,
+  trigger_done_observe, watchdog_counter
 inferred_storage.type/type_kind: optional bounded authored type token and
   resolved top-level type kind for declared typed actor-owned storage
 dt_blocks.kind: drive, do_port_binding, latency_counter, rule,
@@ -3016,10 +3034,13 @@ Dedicated resource arbitration tests now cover the shipped priority arbiter
 for `rule_slot`, `output_bundle`, `transaction_start`, and `storage_port`,
 including explicit output-bundle member-list validation,
 transaction-start trigger-user validation, storage-port storage-member
-validation, and `resource_arbitration[].members` report evidence.
+validation, and `resource_arbitration[].members` report evidence. They also
+cover bounded `rule_slot`/`round_robin` grants, generated pointer storage
+metadata, report projection, and fail-closed non-`rule_slot` round-robin
+combinations.
 The fixture above remains a `rule_slot` fixture; it does not claim
-round-robin, weighted, token bucket, interface-bundle, named-drive, or
-child-instance resource support.
+weighted, token bucket, interface-bundle, named-drive, child-instance, or
+non-`rule_slot` round-robin resource support.
 
 The stage/contract fixture is covered by
 `t/1317-isf-stage-contract-fixture-coverage.t`, which proves strict schedule

@@ -325,6 +325,90 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'storage_port_priority');
 };
 
+subtest 'round_robin rule_slot grant gates rule DTs with generated pointer state' => sub {
+    my $source = <<'ISF';
+(actor round_robin_rule_slot
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input a)
+    (input b)
+    (input c)
+    (output valid))
+  (resources
+    (resource shared_bus
+      (kind rule_slot)
+      (arbiter round_robin)
+      (users high mid low)))
+  (rule high a
+    (valid 1))
+  (rule mid b
+    (valid 0))
+  (rule low c
+    (valid 1)))
+ISF
+
+    my $ir = lower_ir($source);
+    is($ir->{counters}{isf_rr_shared_bus_turn}, 2, 'round_robin pointer width covers all listed users');
+    is(
+        $ir->{storage_roles}{isf_rr_shared_bus_turn},
+        'resource_round_robin_pointer',
+        'round_robin pointer storage carries a public role',
+    );
+    is_deeply(
+        $ir->{resource_arbitration}{grants},
+        [
+            {
+                resource => 'shared_bus',
+                kind     => 'rule_slot',
+                arbiter  => 'round_robin',
+                user     => 'high',
+                higher   => ['mid', 'low'],
+                members  => [],
+            },
+            {
+                resource => 'shared_bus',
+                kind     => 'rule_slot',
+                arbiter  => 'round_robin',
+                user     => 'mid',
+                higher   => ['high', 'low'],
+                members  => [],
+            },
+            {
+                resource => 'shared_bus',
+                kind     => 'rule_slot',
+                arbiter  => 'round_robin',
+                user     => 'low',
+                higher   => ['high', 'mid'],
+                members  => [],
+            },
+        ],
+        'round_robin grants preserve peer suppression evidence in the resource arbitration IR shape',
+    );
+
+    my $high_valid = find_record($ir, owner => 'high', target => 'valid');
+    my $mid_valid = find_record($ir, owner => 'mid', target => 'valid');
+    my $low_valid = find_record($ir, owner => 'low', target => 'valid');
+    is_deeply($high_valid->{resource_suppressed_by}, ['mid', 'low'], 'high rule records dynamic round_robin peers');
+    is_deeply($mid_valid->{resource_suppressed_by}, ['high', 'low'], 'mid rule records dynamic round_robin peers');
+    is_deeply($low_valid->{resource_suppressed_by}, ['high', 'mid'], 'low rule records dynamic round_robin peers');
+
+    my $high_pointer = find_record($ir, owner => 'high', target => 'isf_rr_shared_bus_turn');
+    my $mid_pointer = find_record($ir, owner => 'mid', target => 'isf_rr_shared_bus_turn');
+    my $low_pointer = find_record($ir, owner => 'low', target => 'isf_rr_shared_bus_turn');
+    is($high_pointer->{rhs}, 1, 'high grant advances pointer to mid');
+    is($mid_pointer->{rhs}, 2, 'mid grant advances pointer to low');
+    is($low_pointer->{rhs}, 0, 'low grant wraps pointer to high');
+
+    my $fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($source))->{files}{'round_robin_rule_slot.fsm'};
+    like($fsm, qr/\(isf_rr_shared_bus_turn 2\)/, 'scheduled .fsm declares the round_robin pointer width');
+    like($fsm, qr/\(-high\s+<\(& a \(\| \(== isf_rr_shared_bus_turn 0\)/, 'high rule is gated by the pointer-0 grant case');
+    like($fsm, qr/\(<- \(isf_rr_shared_bus_turn 1\)\)/, 'high rule updates the pointer after a grant');
+    like($fsm, qr/\(-low\s+<\(& c [\s\S]*\(== isf_rr_shared_bus_turn 2\)/, 'low rule is gated by the pointer-2 grant case');
+    like($fsm, qr/\(<- \(isf_rr_shared_bus_turn 0\)\)/, 'low rule wraps the pointer after a grant');
+    assert_fsm_reaches_hdl($fsm, 'round_robin_rule_slot');
+};
+
 subtest 'explicit output_bundle members fail closed on rule output mismatch' => sub {
     assert_lower_rejected(<<'ISF', 'bound rule writes output outside members', qr/isf_output_bundle_member_mismatch/);
 (actor output_bundle_member_mismatch
@@ -624,22 +708,81 @@ ISF
 };
 
 subtest 'unsupported resource arbitration surfaces fail closed' => sub {
-    assert_lower_rejected(<<'ISF', 'round_robin with bound users', qr/isf_resource_unsupported_arbiter/);
-(actor unsupported_rr_resource
+    assert_lower_rejected(<<'ISF', 'round_robin resource name that cannot form generated pointer storage', qr/isf_resource_round_robin_name_shape/);
+(actor unsupported_rr_resource_name_shape
   (clock clk)
   (reset rst_n)
   (interface
-    (input start)
     (input a)
     (input b)
-    (output done)
     (output valid))
-  (transaction main
-    (on start)
-    (complete done))
-  (priority high over low)
+  (resources
+    (resource shared-bus
+      (kind rule_slot)
+      (arbiter round_robin)
+      (users high low)))
+  (rule high a
+    (valid 1))
+  (rule low b
+    (valid 0)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'round_robin generated pointer collision', qr/isf_resource_round_robin_pointer_collision/);
+(actor unsupported_rr_pointer_collision
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input a)
+    (input b)
+    (output valid))
+  (storage
+    (var isf_rr_shared_bus_turn (width 1)))
   (resources
     (resource shared_bus
+      (kind rule_slot)
+      (arbiter round_robin)
+      (users high low)))
+  (rule high a
+    (valid 1))
+  (rule low b
+    (valid 0)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'round_robin generated pointer collides with actor constant', qr/isf_resource_round_robin_pointer_collision/);
+(actor unsupported_rr_pointer_constant_collision
+  (clock clk)
+  (reset rst_n)
+  (constants
+    (isf_rr_shared_bus_turn 1))
+  (interface
+    (input a)
+    (input b)
+    (output valid))
+  (resources
+    (resource shared_bus
+      (kind rule_slot)
+      (arbiter round_robin)
+      (users high low)))
+  (rule high a
+    (valid 1))
+  (rule low b
+    (valid 0)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'round_robin user bound to two resources', qr/isf_resource_round_robin_user_overlap/);
+(actor unsupported_rr_user_overlap
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input a)
+    (input b)
+    (output valid))
+  (resources
+    (resource shared_bus_a
+      (kind rule_slot)
+      (arbiter round_robin)
+      (users high low))
+    (resource shared_bus_b
       (kind rule_slot)
       (arbiter round_robin)
       (users high low)))

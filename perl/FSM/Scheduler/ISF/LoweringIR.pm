@@ -1196,7 +1196,7 @@ sub _build_parent_ir($self, $actor, $generated_children) {
         bank_accesses => \@bank_accesses,
         transaction_port_bindings => $transaction_port_bindings,
     };
-    $ir->{resource_arbitration} = _apply_priority_rule_user_resource_arbitration($ir, $actor);
+    $ir->{resource_arbitration} = _apply_rule_user_resource_arbitration($ir, $actor);
     $ir->{priority_resolution} = _merge_priority_resolution(
         _apply_rule_priority_resolution($ir, $actor),
         _apply_rule_transaction_priority_resolution($ir, $actor),
@@ -6876,7 +6876,7 @@ sub _ir_repeat {
     return (\@s,$ctr,$width,\@dynamic_wait_counters);
 }
 
-sub _apply_priority_rule_user_resource_arbitration {
+sub _apply_rule_user_resource_arbitration {
     my ($ir, $actor) = @_;
     my @resources = @{$actor->{resources} || []};
     my %rule_dt = map {
@@ -6899,6 +6899,7 @@ sub _apply_priority_rule_user_resource_arbitration {
     } keys %rule_dt;
     my $model = _build_rule_priority_model($actor);
     my @grants;
+    my %round_robin_user_resource;
 
     for my $resource (@resources) {
         my @users = @{$resource->{users} || []};
@@ -6908,17 +6909,29 @@ sub _apply_priority_rule_user_resource_arbitration {
         my $kind = $resource->{kind} // '';
         my $arbiter = $resource->{arbiter} // '';
 
-        _resource_arbitration_error(
-            'isf_resource_unsupported_kind',
-            $resource_name,
-            "resource kind '$kind' is not enforced yet",
-        ) unless _resource_kind_supports_priority_rule_users($kind);
-
-        _resource_arbitration_error(
-            'isf_resource_unsupported_arbiter',
-            $resource_name,
-            "arbiter '$arbiter' is not enforced yet for $kind resources",
-        ) unless $arbiter eq 'priority';
+        if ($arbiter eq 'priority') {
+            _resource_arbitration_error(
+                'isf_resource_unsupported_kind',
+                $resource_name,
+                "resource kind '$kind' is not enforced yet",
+            ) unless _resource_kind_supports_priority_rule_users($kind);
+        } elsif ($arbiter eq 'round_robin') {
+            if (!_resource_kind_supports_round_robin_rule_users($kind)) {
+                my $code = _resource_kind_supports_priority_rule_users($kind)
+                    ? 'isf_resource_unsupported_arbiter'
+                    : 'isf_resource_unsupported_kind';
+                my $reason = $code eq 'isf_resource_unsupported_arbiter'
+                    ? "arbiter '$arbiter' is not enforced yet for $kind resources"
+                    : "resource kind '$kind' is not enforced yet";
+                _resource_arbitration_error($code, $resource_name, $reason);
+            }
+        } else {
+            _resource_arbitration_error(
+                'isf_resource_unsupported_arbiter',
+                $resource_name,
+                "arbiter '$arbiter' is not enforced yet for $kind resources",
+            );
+        }
 
         for my $user (@users) {
             _resource_arbitration_error(
@@ -6949,6 +6962,18 @@ sub _apply_priority_rule_user_resource_arbitration {
             \%rule_dt,
             \%storage_port_member_targets,
         ) if $kind eq 'storage_port';
+
+        if ($arbiter eq 'round_robin') {
+            push @grants, _apply_round_robin_rule_user_resource_grants(
+                $ir,
+                $resource,
+                \@users,
+                \%rule_dt,
+                \%original_guard,
+                \%round_robin_user_resource,
+            );
+            next;
+        }
 
         for my $left_idx (0 .. $#users) {
             my $left = $users[$left_idx];
@@ -7014,6 +7039,149 @@ sub _resource_kind_supports_priority_rule_users {
             || $kind eq 'output_bundle'
             || $kind eq 'transaction_start'
             || $kind eq 'storage_port');
+}
+
+sub _resource_kind_supports_round_robin_rule_users {
+    my ($kind) = @_;
+    return defined($kind) && $kind eq 'rule_slot';
+}
+
+sub _apply_round_robin_rule_user_resource_grants {
+    my ($ir, $resource, $users, $rule_dt, $original_guard, $round_robin_user_resource) = @_;
+    my $resource_name = $resource->{name} // '<unnamed>';
+    my @users = @$users;
+
+    _validate_round_robin_rule_user_resource($ir, $resource_name, \@users, $round_robin_user_resource);
+    my $pointer = _round_robin_pointer_name($resource_name);
+    my $pointer_width = _repeat_count_width_for_integer($#users);
+    _register_counter_width($ir->{counters}, $pointer, $pointer_width);
+    $ir->{storage_roles}{$pointer} = 'resource_round_robin_pointer'
+        if ref($ir->{storage_roles}) eq 'HASH';
+
+    my @grants;
+    for my $idx (0 .. $#users) {
+        my $user = $users[$idx];
+        my $dt = $rule_dt->{$user};
+        my @peers = grep { $_ ne $user } @users;
+        my $permission = _round_robin_rule_user_permission_expr(
+            $pointer,
+            \@users,
+            $idx,
+            $original_guard,
+        );
+        my $next_pointer = ($idx + 1) % @users;
+
+        push @grants, {
+            resource => $resource_name,
+            kind     => $resource->{kind} // '',
+            arbiter  => 'round_robin',
+            user     => $user,
+            higher   => [@peers],
+            members  => [@{$resource->{members} || []}],
+        };
+        push @{$dt->{resource_grants}}, {
+            resource => $resource_name,
+            higher   => [@peers],
+        };
+
+        $dt->{dte_guard} = _combine_rule_dte_with_required_condition(
+            $dt->{dte_guard},
+            $permission,
+        );
+        _mark_rule_assignments_resource_suppressed($dt, \@peers);
+        push @{$dt->{assignments}}, {
+            lhs                    => $pointer,
+            rhs                    => $next_pointer,
+            op                     => '<-',
+            source_kind            => 'resource_round_robin_pointer',
+            resource_suppressed_by => [@peers],
+        };
+    }
+
+    return @grants;
+}
+
+sub _validate_round_robin_rule_user_resource {
+    my ($ir, $resource_name, $users, $round_robin_user_resource) = @_;
+
+    _resource_arbitration_error(
+        'isf_resource_round_robin_name_shape',
+        $resource_name,
+        "round_robin rule_slot resource names must be HDL identifiers because FSMGen generates pointer storage from the resource name",
+    ) unless _is_hdl_identifier($resource_name);
+
+    for my $user (@$users) {
+        my $previous = $round_robin_user_resource->{$user};
+        _resource_arbitration_error(
+            'isf_resource_round_robin_user_overlap',
+            $resource_name,
+            "rule user '$user' is already bound to round_robin resource '$previous'",
+        ) if defined($previous) && $previous ne $resource_name;
+        $round_robin_user_resource->{$user} = $resource_name;
+    }
+
+    my $pointer = _round_robin_pointer_name($resource_name);
+    my %reserved = _ir_reserved_signal_names($ir);
+    _resource_arbitration_error(
+        'isf_resource_round_robin_pointer_collision',
+        $resource_name,
+        "generated round_robin pointer '$pointer' collides with an existing actor symbol",
+    ) if $reserved{$pointer};
+
+    return 1;
+}
+
+sub _round_robin_pointer_name {
+    my ($resource_name) = @_;
+    return "isf_rr_${resource_name}_turn";
+}
+
+sub _ir_reserved_signal_names {
+    my ($ir) = @_;
+    my %reserved;
+    $reserved{$_->{name}} = 1 for @{$ir->{ports} || []};
+    for my $entry (@{$ir->{constants} || []}, @{$ir->{params} || []}) {
+        $reserved{$entry->{name}} = 1
+            if ref($entry) eq 'HASH' && defined($entry->{name}) && !ref($entry->{name});
+    }
+    $reserved{$_} = 1 for keys %{$ir->{counters} || {}};
+    for my $storage (@{$ir->{declared_storage} || []}) {
+        for my $signal (@{$storage->{signals} || []}) {
+            $reserved{$signal->{name}} = 1
+                if defined($signal->{name}) && !ref($signal->{name});
+        }
+    }
+    return %reserved;
+}
+
+sub _round_robin_rule_user_permission_expr {
+    my ($pointer, $users, $winner_idx, $original_guard) = @_;
+    my @users = @$users;
+    my @terms;
+
+    for my $start_idx (0 .. $#users) {
+        my @parts = ("(== $pointer $start_idx)");
+        for my $blocker_idx (_round_robin_indices_before_winner($start_idx, $winner_idx, scalar(@users))) {
+            my $blocker = $users[$blocker_idx];
+            push @parts, _expr_not($original_guard->{$blocker} // '1');
+        }
+        push @terms, _expr_and(@parts);
+    }
+
+    return _expr_or(@terms);
+}
+
+sub _round_robin_indices_before_winner {
+    my ($start_idx, $winner_idx, $count) = @_;
+    return () if $start_idx == $winner_idx;
+
+    my @indices;
+    my $idx = $start_idx;
+    while ($idx != $winner_idx) {
+        push @indices, $idx;
+        $idx = ($idx + 1) % $count;
+    }
+    return @indices;
 }
 
 sub _validate_transaction_start_resource {
@@ -7149,6 +7317,46 @@ sub _combine_rule_dte_with_resource_suppressors {
     return { port => '1' } unless @terms;
     return { expr => $terms[0] } if @terms == 1;
     return { expr => '(& ' . join(' ', @terms) . ')' };
+}
+
+sub _combine_rule_dte_with_required_condition {
+    my ($guard, $required_condition) = @_;
+    my @terms;
+    my $existing = _guard_condition_expr($guard);
+    push @terms, $existing if defined($existing) && $existing ne '1';
+    push @terms, $required_condition
+        if defined($required_condition)
+            && length($required_condition)
+            && $required_condition ne '1';
+
+    return { port => '1' } unless @terms;
+    return { expr => $terms[0] } if @terms == 1;
+    return { expr => _expr_and(@terms) };
+}
+
+sub _expr_and {
+    my @terms = grep { defined($_) && length($_) } @_;
+    return '0' if grep { $_ eq '0' } @terms;
+    @terms = grep { $_ ne '1' } @terms;
+    return '1' unless @terms;
+    return $terms[0] if @terms == 1;
+    return '(& ' . join(' ', @terms) . ')';
+}
+
+sub _expr_or {
+    my @terms = grep { defined($_) && length($_) } @_;
+    return '1' if grep { $_ eq '1' } @terms;
+    @terms = grep { $_ ne '0' } @terms;
+    return '0' unless @terms;
+    return $terms[0] if @terms == 1;
+    return '(| ' . join(' ', @terms) . ')';
+}
+
+sub _expr_not {
+    my ($term) = @_;
+    return '0' if !defined($term) || !length($term) || $term eq '1';
+    return '1' if $term eq '0';
+    return "(! $term)";
 }
 
 sub _mark_rule_assignments_resource_suppressed {

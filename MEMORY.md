@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Round-robin resource arbitration shipped
+- Completed `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` and closed the task tree.
+- FSMGen now lowers bounded `(kind rule_slot)` resources with
+  `(arbiter round_robin)` for declared rule users.
+- The generated pointer counter is named `isf_rr_<resource>_turn`; the
+  scheduler grants the first requesting rule at or after that pointer in
+  circular `(users ...)` order, gates the winning rule DT, and advances the
+  pointer only from the winning rule DT.
+- Schedule reports keep `resource_arbitration[]` and use
+  `arbiter: round_robin` for the new grants. The pointer appears in
+  `inferred_storage[]` as a counter with role
+  `resource_round_robin_pointer`.
+- Fail-closed boundaries now cover non-HDL resource names that cannot form the
+  generated pointer, generated pointer collisions, one rule user bound to two
+  round-robin resources, and `round_robin` on non-`rule_slot` resource kinds.
+- The ISF spec, downstream integration handoff, public contract, mdBook source,
+  task docs, roadmap status, CHANGES, DEVELOPMENT_NOTES, and
+  LIVE_ACHIEVEMENT_STATUS were synchronized.
+- Validation passed: syntax checks; focused resource/report/public-contract
+  and docs audits with `Files=11, Tests=378`; `mdbook build docs/book`; broad
+  `./bin/ci-regression isf --no-book` with `Files=250, Tests=1667`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: Round-robin resource arbitration selected
 - Completed `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1`.
 - Activated the active R14 task tree for bounded `round_robin` arbitration on
@@ -187,8 +212,9 @@ This is the live continuity document for fast session recovery after crashes, re
 - Bank roots, aggregate paths, inferred undeclared LHS targets,
   actor-network endpoints, output-target users, transaction users,
   named-drive users, child-instance users, storage-port resources, route
-  mux/storage, fairness, hold/release, multi-capacity resources, and
-  `round_robin` remain deferred.
+  mux/storage, fairness, hold/release, multi-capacity resources, and broader
+  `round_robin` beyond the later-shipped bounded `rule_slot` subset remain
+  deferred.
 - Synchronized the ISF spec, downstream integration handoff, public contract,
   mdBook, roadmap status, task index, and live docs.
 - Validation passed: syntax checks; focused resource/public/spec/book tests
@@ -206,7 +232,8 @@ This is the live continuity document for fast session recovery after crashes, re
   roots, aggregate paths, inferred undeclared LHS targets, actor-network
   endpoints, output-target users, transaction users, named-drive users,
   child-instance users, storage-port resources, route mux/storage, fairness,
-  hold/release, multi-capacity resources, and `round_robin` remain deferred.
+  hold/release, multi-capacity resources, and broader `round_robin` beyond the
+  later-shipped bounded `rule_slot` subset remain deferred.
 - No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
   behavior changed.
 - Validation passed: live-doc/spec index audits with `Files=2, Tests=25`;

@@ -87,7 +87,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-CONFLICT-RESOLUTION.md` — completed `R14` task tree for ISF same-cycle conflict semantics.
 - `docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md` — completed `R14` task tree for covered transaction-over-rule same-target priority.
 - `docs/tasks/ISF-COMPOSITION-INSTANTIATION.md` — completed `R14` task tree for generated child instantiation and spawn parameter binding.
-- `docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md` — active `R14` task tree for bounded round-robin resource arbitration.
+- `docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md` — completed `R14` task tree for bounded round-robin resource arbitration.
 - `docs/tasks/ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.md` — completed `R14` task tree for output-bundle priority resource enforcement.
 - `docs/tasks/ISF-STORAGE-PORT-RESOURCE-PRIORITY.md` — completed `R14` task tree for storage-port priority resource enforcement.
 - `docs/tasks/ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.md` — completed `R14` task tree for storage-port member documentation truth sync.

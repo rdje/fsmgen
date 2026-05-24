@@ -194,20 +194,23 @@ Current storage: the parser returns
 
 ### Enforcement Gaps
 
-- There is no source syntax yet that binds a transaction, rule, drive, or
+At the start of this historical tree:
+
+- There was no source syntax yet that bound a transaction, rule, drive, or
   output to a declared resource.
-- `round_robin` is parser-accepted but has no scheduler or HDL implementation.
-- `priority` resource arbitration is parser-accepted but is not connected to
-  resource users or generated grants.
-- Actor-level priority that references transactions is validated but not
+- `round_robin` was parser-accepted but had no scheduler or HDL
+  implementation.
+- `priority` resource arbitration was parser-accepted but was not connected
+  to resource users or generated grants.
+- Actor-level priority that referenced transactions was validated but not
   enforced.
-- Rule-local priority only orders rule/rule data conflicts. It does not yet
+- Rule-local priority only ordered rule/rule data conflicts. It did not yet
   order transaction starts, resource requests, named-drive calls, or broader
   owner-level scheduling.
-- Successful arbitration decisions are not visible in bounded schedule-report
+- Successful arbitration decisions were not visible in bounded schedule-report
   metadata.
-- The scheduler does not yet diagnose unused resources or priorities that are
-  valid but have no effect.
+- The scheduler did not yet diagnose unused resources or priorities that were
+  valid but had no effect.
 
 ### Regression Evidence
 
@@ -358,15 +361,19 @@ The generated form is combinational and does not add a cycle.
 
 ### Round-Robin Arbiter Semantics
 
-`round_robin` remains parser-accepted metadata, but it is not
-implementation-ready for enforced resources.
+At the time this historical tree shipped, `round_robin` remained
+parser-accepted metadata and was not implementation-ready for enforced
+resources.
 
 Reason: a real round-robin arbiter introduces state. The contract still needs
 to define reset value, grant advance point, whether the pointer advances on
 request or accepted grant, behavior when no requester is active, and report/
-debug visibility for each resource kind. Until that is settled, a
-`round_robin` resource with bound users must fail closed instead of silently
-behaving like priority arbitration.
+debug visibility for each resource kind. Until that was settled, a
+`round_robin` resource with bound users had to fail closed instead of silently
+behaving like priority arbitration. `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2`
+later shipped the bounded `rule_slot`/`round_robin` subset with explicit
+pointer semantics and public storage metadata; non-`rule_slot` round-robin
+resource kinds remain fail-closed.
 
 ### Priority Declarations Outside Resources
 
@@ -456,8 +463,10 @@ priority-arbitrated rule-user grant model to `output_bundle`.
 - A complete acyclic ordering is required across bound users. Cycles fail with
   `isf_resource_priority_cycle`; unordered pairs fail with
   `isf_resource_priority_incomplete`.
-- `round_robin` resources with bound users fail with
-  `isf_resource_unsupported_arbiter` until round-robin state semantics ship.
+- During this tree, `round_robin` resources with bound users failed with
+  `isf_resource_unsupported_arbiter`. The current shipped surface supports
+  only bounded `rule_slot`/`round_robin`; non-`rule_slot` round-robin
+  resources still fail closed.
 - Bound users on unsupported kinds fail with
   `isf_resource_unsupported_kind`.
 - The generated grant gates the whole lowered rule DT DTE. For example,
@@ -582,8 +591,8 @@ open leaf work.
 
 ### Remaining Backlog Outside This Tree
 
-- `round_robin` resources with users still fail closed until stateful arbiter
-  semantics ship.
+- `round_robin` resources outside the later-shipped bounded `rule_slot`
+  subset still fail closed until their stateful arbiter semantics ship.
 - Resource kinds beyond the shipped `rule_slot` and later-shipped
   `output_bundle` remain backlog: `interface_bundle`, `named_drive`,
   `transaction_start`, `child_instance`, and `storage_port`.
@@ -618,15 +627,19 @@ open leaf work.
   resource user binding through explicit `(kind rule_slot)` and optional
   `(users ...)` resource subclauses, and should cover only
   priority-arbitrated rule users. Transaction, drive, output-target,
-  child-instance, storage-port, round-robin, and lifetime-hold resource
-  semantics remain deferred until their contracts are explicit.
+  child-instance, storage-port, broader round-robin, and lifetime-hold
+  resource semantics remained deferred until their contracts were explicit.
 - `2026-05-14`: `ISF-RESOURCE-PRIORITY.3` ships the `rule_slot`/`priority`
   case exactly. Other resource kinds stay accepted catalog metadata but fail
   closed when bound users attempt to use them for enforced arbitration.
 - `2026-05-23`: `ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2` later ships the
   `output_bundle`/`priority` rule-user case. The remaining catalog kinds,
-  non-rule users, `round_robin`, and output-bundle member-list syntax remain
-  backlog.
+  non-rule users, broader `round_robin`, and output-bundle member-list syntax
+  remain backlog at that point.
+- `2026-05-24`: `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` later ships bounded
+  `rule_slot`/`round_robin` rule-user arbitration with generated pointer
+  storage role `resource_round_robin_pointer`. `round_robin` for non-`rule_slot`
+  resource kinds remains backlog.
 - `2026-05-14`: Resource grant provenance remains internal for now.
   Successful schedule-report projection is left to `ISF-RESOURCE-PRIORITY.5`
   so the public JSON surface can be specified and audited as its own slice.

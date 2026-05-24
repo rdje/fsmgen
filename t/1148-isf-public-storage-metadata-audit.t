@@ -178,6 +178,25 @@ subtest 'generated activation handoff storage roles follow advertised metadata' 
         if $trigger_payload;
 };
 
+subtest 'resource round-robin pointer storage role follows advertised metadata' => sub {
+    my $report = report_source(round_robin_resource_source(), 'round-robin-resource-storage-role.isf');
+    my %role = map { $_ => 1 } @{isf_public_interface_schedule_report_storage_role_values()};
+
+    ok($role{resource_round_robin_pointer}, 'resource_round_robin_pointer is an advertised storage role');
+
+    my ($entry) = grep {
+        ($_->{name} // '') eq 'isf_rr_shared_bus_turn'
+    } @{$report->{inferred_storage} || []};
+
+    ok($entry, 'round_robin resource report exposes generated pointer storage');
+    is($entry->{kind}, 'counter', 'round_robin pointer storage is a counter')
+        if $entry;
+    is($entry->{role}, 'resource_round_robin_pointer', 'round_robin pointer storage reports its role')
+        if $entry;
+    is($entry->{width}, 1, 'two-user round_robin pointer storage reports one-bit width')
+        if $entry;
+};
+
 subtest 'transaction-local port storage role follows advertised metadata' => sub {
     my $report = report_source(transaction_port_source(), 'transaction-port-storage-role.isf');
     my %role = map { $_ => 1 } @{isf_public_interface_schedule_report_storage_role_values()};
@@ -348,6 +367,26 @@ sub trigger_binding_source {
         (WIDTH 16))
       (bind
         (input addr req)))))
+ISF
+}
+
+sub round_robin_resource_source {
+    return <<'ISF';
+(actor round_robin_resource_storage_role
+  (clock clk)
+  (interface
+    (input high_req)
+    (input low_req)
+    (output valid))
+  (resources
+    (resource shared_bus
+      (kind rule_slot)
+      (arbiter round_robin)
+      (users high low)))
+  (rule high high_req
+    (valid 1))
+  (rule low low_req
+    (valid 0)))
 ISF
 }
 
