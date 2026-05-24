@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Round-robin resource arbitration selected
+- Completed `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1`.
+- Activated the active R14 task tree for bounded `(kind rule_slot)`
+  `round_robin` arbitration over declared rule users.
+- The active implementation frontier is
+  `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2`.
+- The selected implementation must generate an actor-local pointer, use
+  circular `(users ...)` order, grant the first requesting user at or after
+  that pointer, advance the pointer only when a grant executes, gate the whole
+  winning rule DT, and expose grants through `resource_arbitration[]`.
+- Other `round_robin` resource kinds, transaction users, generated-child
+  resources, actor-network endpoint users, storage lifetime ownership,
+  hold/release ownership, ready/backpressure, and route mux/storage remain
+  deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ## 2026-05-24: R14 — Storage-port member documentation truth sync
 - Completed `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` and closed the task tree.
 - Corrected stale spec wording so the public docs no longer imply

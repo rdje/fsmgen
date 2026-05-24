@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Round-robin should start at rule_slot
+- `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1` selects `rule_slot` as the first
+  fair resource-arbiter target because it has the smallest ownership surface:
+  explicit declared rule users and no member lists, route payloads, storage
+  lifetime, transaction-start fan-in, or child-instance busy protocol.
+- The implementation should be runtime arbitration, not a static priority
+  graph. The `(users ...)` order is the circular scan order, and generated
+  pointer state records the next preferred user.
+- The first slice should reuse whole-rule DT gating. It should not broaden
+  `output_bundle`, `transaction_start`, `storage_port`, route mux/storage, or
+  lifetime ownership under the same change.
+
 ## 2026-05-24: Storage-port member support was already shipped
 - `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` is documentation-only. The parser,
   lowerer, report projection, tests, public contract, downstream handoff, and

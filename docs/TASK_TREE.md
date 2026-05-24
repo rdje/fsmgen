@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION` | `active` | `R14` | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | [docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md](docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md) |
 
 ## Proposed Task Trees
 

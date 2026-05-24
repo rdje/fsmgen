@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Round-robin resource arbitration selected
+- Completed selection work for
+  `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1`.
+- Activated a new R14 task tree for bounded `(kind rule_slot)`
+  `round_robin` arbitration over declared rule users.
+- The selected implementation must keep the source surface explicit:
+  `(resource NAME (kind rule_slot) (arbiter round_robin)
+  (users rule_a rule_b ...))`.
+- The implementation leaf must use an actor-local pointer, circular user
+  order, whole-rule DT grant gating, and the existing
+  `resource_arbitration[]` report key family.
+- `round_robin` for other resource kinds and broader resource ownership
+  semantics remain deferred.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public ISF
+  behavior changed.
+
 ### R14 — Storage-port member documentation truth sync
 - Completed `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` and closed the task tree.
 - Corrected stale public spec wording that still said `(members ...)` was
