@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Scalar inference frontier audited
+- Completed `INFERENCE-FIRST-SCALAR-AUTHORING.2`.
+- Audited the direct `.fsm`, composition, ISF lowering, test, corpus, mdBook,
+  and live-doc scalar-inference boundary.
+- The selected follow-up leaf is
+  `INFERENCE-FIRST-SCALAR-AUTHORING.3`, which will accept positive integer
+  scalar width symbols inside declarative `(bits WIDTH_SYMBOL)` type specs.
+- The selected scope is constants and enum members already available in the
+  same semantic symbol scope, including imported package symbols where imports
+  are already available. Arbitrary type-width expressions, aggregate leaf
+  paths, runtime signals, parameter-specialization values, broad scalar
+  autodeclaration, and aggregate autovivification remain out of scope.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in the audit slice.
+- Validation passed: `perl -Iperl -c t/279-declarative-scalar-types.t`;
+  focused scalar/corpus tests with `Files=3, Tests=3036`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `INFERENCE-FIRST-SCALAR-AUTHORING`.
+- Current frontier: `INFERENCE-FIRST-SCALAR-AUTHORING.3`.
+
 ## 2026-05-24: Inference-first scalar authoring selected
 - Completed `INFERENCE-FIRST-SCALAR-AUTHORING.1`.
 - Activated the active language-ergonomics task tree for the mdBook

@@ -3,7 +3,22 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `language ergonomics`.
 - Active task tree: `INFERENCE-FIRST-SCALAR-AUTHORING`.
-- Current frontier: `INFERENCE-FIRST-SCALAR-AUTHORING.2`.
+- Current frontier: `INFERENCE-FIRST-SCALAR-AUTHORING.3`.
+- Recent language-ergonomics scalar-inference audit:
+  `INFERENCE-FIRST-SCALAR-AUTHORING.2` audited the current scalar-inference
+  boundary across direct `.fsm`, composition, ISF lowering, tests, corpus
+  accounting, mdBook, and live docs. The selected next implementation leaf is
+  bounded symbolic width tokens inside declarative `(bits WIDTH_SYMBOL)` type
+  specs. The selected scope is positive integer scalar constants and enum
+  members already available in the same semantic symbol scope, including
+  imported package symbols where that scope already supports imports. Arbitrary
+  type-width expressions, aggregate leaf paths, runtime signals, parameter
+  specialization values, broad scalar autodeclaration, and aggregate
+  autovivification remain out of scope. No parser, scheduler, report,
+  generated artifact, HDL, CLI, public API, or public language behavior changed
+  in the audit slice. Validation passed: `perl -Iperl -c
+  t/279-declarative-scalar-types.t`; focused scalar/corpus tests with
+  `Files=3, Tests=3036`; `mdbook build docs/book`; and `git diff --check`.
 - Recent language-ergonomics scalar-inference selection:
   `INFERENCE-FIRST-SCALAR-AUTHORING.1` activated the task tree for the
   mdBook feature-backlog item "Inference-First Scalar Authoring". The first

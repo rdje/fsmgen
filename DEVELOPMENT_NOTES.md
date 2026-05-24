@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Symbolic `(bits ...)` widths are the next scalar inference surface
+- `INFERENCE-FIRST-SCALAR-AUTHORING.2` found that most shipped scalar
+  inference already has code and corpus ownership: direct `+size`, width
+  symbols in `+size` and composition `?ports`, static slices/indexes, guards,
+  selectors, partial LHS writes, composition top-boundary inference, and ISF
+  scheduled `+size` emission.
+- The smallest useful gap is declarative type width syntax. The shared
+  `DeclarativeTypeSupport` currently treats `(bits N)` as literal-only, while
+  the book already presents `(type byte (bits BYTE_W))` as the intended
+  width-symbol authoring style.
+- The next implementation should stay narrow: positive integer scalar
+  constants and enum members in the active symbol scope only. This avoids
+  turning type aliases into arbitrary expression evaluators or parameterized
+  specialization surfaces.
+
 ## 2026-05-24: Inference-first scalar authoring needs an audit first
 - `INFERENCE-FIRST-SCALAR-AUTHORING.1` selects the first concrete
   language-ergonomics backlog tree after broad feature-backlog owner coverage

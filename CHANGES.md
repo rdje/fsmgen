@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Language ergonomics — Scalar inference frontier audited
+- Completed audit work for `INFERENCE-FIRST-SCALAR-AUTHORING.2`.
+- Audited the current scalar-inference boundary across direct `.fsm`,
+  composition, ISF lowering, tests, corpus accounting, mdBook, and live docs.
+- Selected `INFERENCE-FIRST-SCALAR-AUTHORING.3` as the next bounded
+  implementation leaf: accept positive integer scalar width symbols inside
+  declarative `(bits WIDTH_SYMBOL)` type specs.
+- The selected follow-up deliberately excludes arbitrary type-width
+  expressions, aggregate leaf paths, runtime signals, parameter-specialization
+  values, broad scalar autodeclaration, and aggregate autovivification.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in the audit slice.
+- Validation passed: `perl -Iperl -c t/279-declarative-scalar-types.t`;
+  focused scalar/corpus tests with `Files=3, Tests=3036`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Language ergonomics — Inference-first scalar authoring selected
 - Completed selection work for `INFERENCE-FIRST-SCALAR-AUTHORING.1`.
 - Activated a language-ergonomics task tree for the mdBook feature-backlog

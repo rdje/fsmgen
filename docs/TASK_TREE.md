@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `INFERENCE-FIRST-SCALAR-AUTHORING` | `active` | `language ergonomics` | `INFERENCE-FIRST-SCALAR-AUTHORING.2` | [docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md](docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md) |
+| `INFERENCE-FIRST-SCALAR-AUTHORING` | `active` | `language ergonomics` | `INFERENCE-FIRST-SCALAR-AUTHORING.3` | [docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md](docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md) |
 
 ## Proposed Task Trees
 

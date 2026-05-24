@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Language ergonomics — Scalar inference frontier audited
+- Completed `INFERENCE-FIRST-SCALAR-AUTHORING.2`.
+- Audited the shipped scalar-inference boundary across direct `.fsm`,
+  composition, ISF lowering, tests, corpus accounting, mdBook, and live docs.
+- The current frontier is `INFERENCE-FIRST-SCALAR-AUTHORING.3`.
+- The selected implementation surface is positive integer scalar width symbols
+  inside declarative `(bits WIDTH_SYMBOL)` type specs.
+- Arbitrary type-width expressions, aggregate leaf paths, runtime signals,
+  parameter-specialization values, broad scalar autodeclaration, and aggregate
+  autovivification remain out of scope.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed in the audit slice.
+- Validation passed: `perl -Iperl -c t/279-declarative-scalar-types.t`;
+  focused scalar/corpus tests with `Files=3, Tests=3036`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24: Language ergonomics — Inference-first scalar authoring selected
 - Completed `INFERENCE-FIRST-SCALAR-AUTHORING.1`.
 - Activated the active language-ergonomics task tree for the mdBook
