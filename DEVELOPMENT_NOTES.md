@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: R11 should settle `.rtlif` direction before widening behavior
+- The R11 evidence sweep shows a large amount of shipped composition coverage:
+  explicit wiring, generated and external RTL children, connect-by-name,
+  standalone-DT exports, shared-datapath slices, runtime assertions, and
+  forward IR surfaces are all regression-backed.
+- The least risky next R11 cut is not another behavior-bearing widening yet.
+  It is a narrow `.rtlif` direction decision: either keep the existing
+  embedded-root plus sidecar metadata family as the low-level interface source
+  of record, or define the stronger interface-source contract that should sit
+  above it before code depends on an accidental shape.
+
 ## 2026-05-24: R11 restart should begin with frontier selection
 - R11 contains several broad and partially overlapping families:
   `.rtlif`, shared datapath, standalone-DT/reusable modules, portable types,

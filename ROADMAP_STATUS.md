@@ -1,9 +1,25 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R11`.
-- Active task tree: `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`.
-- Current frontier: `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R11 composition-contract frontier audit:
+  `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2` audited the shipped R11
+  composition evidence and closed the task tree. The focused sweep passed
+  across the composition parser, standalone-DT roots and children,
+  reusable-source lookup, `.rtlif` typed and embedded roots, generated-child
+  composition, explicit wiring, connect-by-name, shared-datapath metadata and
+  runtime HDL, assertion HDL, composition top forward IR, structural RTL IR,
+  and child forward-IR export surfaces. No parser, scheduler, report,
+  generated artifact, HDL, CLI, public API, source, test, or generated
+  behavior changed in this audit slice. The next bounded R11 frontier should
+  be a new `R11-RTLIF-INTERFACE-SOURCE-DIRECTION` task tree that decides
+  whether `.rtlif` remains embedded-root plus sidecar metadata or whether a
+  stronger interface-source contract sits above it before implementation.
+  Validation passed: focused R11 evidence sweep with `Files=27, Tests=175`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent R11 composition-contract frontier audit selection:
   `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.1` activated an evidence-gathering
   audit after `R10` moved to `mostly done`. The R11 roadmap remains broad:
@@ -12,10 +28,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   direction, composition policy ownership, and adjacent type/package surfaces
   need evidence-based sequencing. No parser, scheduler, report, generated
   artifact, HDL, CLI, public API, source, test, or generated behavior changed
-  in this selection. The follow-up frontier is `.2`, which must choose one
-  bounded R11 slice or explicitly defer from evidence before any code.
-  Validation passed: feature-backlog audit with `Files=1, Tests=15`;
-  `mdbook build docs/book`; and `git diff --check`.
+  in this selection. The follow-up frontier was `.2`, which chose a bounded
+  R11 decision slice from evidence before any code. Validation passed:
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent R10 diagnostic/provenance exit audit:
   `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2` audited the current R10 diagnostic
   and source-provenance frontier and closed the task tree. Focused R10
@@ -6615,11 +6631,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`.
-- Current frontier: `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2`.
-- Completion status: `.1` selected the active tree with no behavior change.
-  `.2` owns the evidence-gathering audit and next-frontier decision for
-  `R11`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2` completed
+  the evidence-gathering audit and closed the tree. The next PNT-eligible
+  R11 step is to create/select `R11-RTLIF-INTERFACE-SOURCE-DIRECTION` before
+  any `.rtlif` behavior-bearing implementation.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8419,6 +8436,17 @@ Done:
     connect-by-name convention, and composition architecture ownership,
   - and `.2` must map shipped coverage to those remaining objectives before
     selecting one bounded implementation or deferral.
+- `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2` audited the shipped R11
+  composition evidence and closed the task tree:
+  - the focused sweep passed with `Files=27, Tests=175` across composition
+    parser, standalone-DT, reusable-source lookup, `.rtlif`, generated-child,
+    explicit-wiring, connect-by-name, shared-datapath, assertion,
+    runtime-HDL, and forward-IR surfaces,
+  - no parser, scheduler, report, generated artifact, HDL, CLI, public API,
+    source, test, or generated behavior changed,
+  - and the next bounded R11 frontier should be the
+    `R11-RTLIF-INTERFACE-SOURCE-DIRECTION` decision tree before any `.rtlif`
+    behavior change.
 - Explicit composition `?wiring` blocks now accept canonical Lisp-ish list
   links:
   - `(source target)` is the compact directed-link spelling,
@@ -9178,10 +9206,12 @@ Done:
   - top-input fanout success across multiple same-name child inputs,
   - and mixed-direction same-name rejection for declared top-input connect-by-name.
 Left:
-- Complete `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2`: select the next
-  bounded composition-contract slice or record a deferral from evidence.
+- Create/select `R11-RTLIF-INTERFACE-SOURCE-DIRECTION` as the next bounded
+  R11 decision tree before any `.rtlif` behavior change. It should decide
+  whether the now-formalized `.rtlif` interface-source family stays
+  embedded-root plus sidecar metadata, or whether a stronger interface-source
+  contract sits above it.
 - Extend the now-shipped semantic parameter/generic contract beyond direct-root metadata, external `?rtl` SystemVerilog instance emission, generated `?fsmc` / `?dtc` SystemVerilog instance emission, direct param-to-param default reuse, the first bounded scalar operator-expression value slice, and the first bounded leafwise aggregate operator slice: VHDL generic-map lowering plus richer expression-valued semantic parameter domains remain follow-up work, including non-leafwise typed aggregate-to-aggregate operator expressions where the operator is explicitly valid for the operand types/shapes.
-- Decide whether later work should keep the now-formalized `.rtlif` interface-source family as embedded-root plus sidecar metadata, or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime/assertion slices,
   - lifted shared-target mux/register ownership beyond the now-shipped registered peer-read public-preserving, mixed-boundary, internal-only, and public-fanout slices,

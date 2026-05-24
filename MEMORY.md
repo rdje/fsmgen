@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R11 composition-contract frontier audited
+- Completed `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2` and closed the task
+  tree.
+- The focused R11 evidence sweep passed across the shipped composition parser,
+  standalone-DT, reusable-source lookup, `.rtlif`, generated-child,
+  explicit-wiring, connect-by-name, shared-datapath, assertion, runtime-HDL,
+  and forward-IR surfaces.
+- The audit selected the next bounded R11 frontier:
+  `R11-RTLIF-INTERFACE-SOURCE-DIRECTION`, a decision tree that should settle
+  whether `.rtlif` stays embedded-root plus sidecar metadata or whether a
+  stronger interface-source contract sits above it before any behavior change.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused R11 composition evidence sweep with `Files=27,
+  Tests=175`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R11 composition-contract frontier audit selected
 - Created active task tree `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`.
 - Purpose: audit current R11 composition-contract coverage and select one

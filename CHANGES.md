@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R11 — Composition-contract frontier audited
+- Completed `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2` and closed the task
+  tree.
+- Audited the shipped R11 evidence across composition parser, standalone-DT,
+  reusable-source lookup, `.rtlif`, generated-child, explicit-wiring,
+  connect-by-name, shared-datapath, assertion, runtime-HDL, and forward-IR
+  tests.
+- Selected a new `R11-RTLIF-INTERFACE-SOURCE-DIRECTION` task tree as the next
+  bounded R11 frontier so `.rtlif` interface-source direction is decided
+  before implementation.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused R11 composition evidence sweep with `Files=27,
+  Tests=175`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R11 — Composition-contract frontier audit selected
 - Created active task tree `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`.
 - The tree owns an evidence-gathering audit over the broad R11 composition
