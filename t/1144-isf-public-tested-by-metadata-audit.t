@@ -237,6 +237,7 @@ my $expected_tested_by = [
     't/1343-isf-data-op-static-width-sources.t',
     't/1344-isf-assemble-static-part-widths.t',
     't/1345-isf-actor-param-actor-constants.t',
+    't/1346-isf-actor-param-actor-params.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

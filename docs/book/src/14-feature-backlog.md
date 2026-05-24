@@ -325,10 +325,13 @@ package-qualified enum members, and compatible aggregate/list literals whose
 scalar leaves are literals, actor-local constants, actor-local scalar
 parameter defaults, or enum members.
 
-Actor parameter defaults accept enum members and declared actor constants in
-their shipped scalar and aggregate/list leaf positions. Actor constant tokens
-remain visible in scheduled `.fsm` `+params` and `actor_params[]`, and the
-resolved literal is recorded internally for scalar parameter consumers.
+Actor parameter defaults accept enum members, declared actor constants, and
+earlier scalar actor parameter defaults in their shipped scalar and
+aggregate/list leaf positions. Actor constant and actor-parameter tokens remain
+visible in scheduled `.fsm` `+params` and `actor_params[]`, and the resolved
+literal is recorded internally for scalar parameter consumers. Actor parameter
+references are source-order dependencies only; forward, self, cyclic, and
+non-scalar actor-parameter references remain fail-closed.
 
 Generated child transaction parameter defaults also accept enum members in
 their shipped scalar and aggregate/list leaf positions.

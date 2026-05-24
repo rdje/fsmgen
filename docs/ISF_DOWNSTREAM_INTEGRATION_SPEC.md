@@ -220,11 +220,12 @@ General source rules:
   widths, actor-owned bank storage widths, actor-owned bank storage depths,
   and transaction-local port widths also accept declared actor constants and
   actor-local scalar parameter defaults that resolve to positive integers.
-- Actor constants, scalar actor parameter defaults, and generated child
-  transaction scalar parameter defaults use non-negative integer literals or
-  enum member references that resolve to non-negative integers; static wait
-  counts use non-negative integer literals, actor constants, or actor-local
-  scalar parameter defaults.
+- Actor constants and generated child transaction scalar parameter defaults
+  use non-negative integer literals or enum member references that resolve to
+  non-negative integers. Actor parameter scalar defaults may also use earlier
+  actor-local scalar parameter defaults by name, preserving authored tokens
+  while resolving those names internally. Static wait counts use non-negative
+  integer literals, actor constants, or actor-local scalar parameter defaults.
 - Numeric and exact-width integer literals are accepted where this document
   says scalar numeric literals are accepted.
 - Runtime expression positions may use scalar tokens, numeric/exact-width
@@ -557,10 +558,13 @@ Rules:
 - Use-site parameter overrides are instance-local. Missing overrides use actor
   defaults.
 - Actor parameter scalar defaults and scalar leaves inside actor aggregate/list
-  parameter defaults may use declared actor constants or local/package-qualified
-  enum member references. Authored constant and enum tokens remain visible in
-  scheduled `.fsm` `+params` and `actor_params[]`, while resolved literals are
-  recorded internally for scalar actor-parameter consumers.
+  parameter defaults may use declared actor constants, earlier actor-local
+  scalar parameter defaults, or local/package-qualified enum member
+  references. Authored constant, actor-parameter, and enum tokens remain
+  visible in scheduled `.fsm` `+params` and `actor_params[]`, while resolved
+  literals are recorded internally for scalar actor-parameter consumers.
+  Forward, self, cyclic, and non-scalar actor-parameter references fail
+  closed.
   Generated child transaction scalar parameter defaults and scalar leaves
   inside generated child transaction aggregate/list parameter defaults may also
   use local or package-qualified enum member references. Scalar activation
@@ -572,8 +576,8 @@ Rules:
   Duplicate overrides, unknown overrides, and shape mismatches fail closed.
 - Schedule reports expose actor parameter defaults through `actor_params[]`
   entries with `name` and JSON-safe default `value`, preserving authored actor
-  constant tokens and enum tokens. These are static specialization defaults,
-  not runtime payloads.
+  constant tokens, earlier actor-parameter tokens, and enum tokens. These are
+  static specialization defaults, not runtime payloads.
 - Every exported actor interface endpoint must be explicitly bound at the use
   site. Exported actor clock/reset endpoints may omit explicit bindings only
   when the parent and child use the same clock name and the same reset

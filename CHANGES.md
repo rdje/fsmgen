@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Ordered actor-parameter defaults shipped
+- Completed `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` and closed the task
+  tree.
+- Actor-level scalar parameter defaults and scalar leaves inside compatible
+  aggregate/list parameter defaults now accept earlier actor-local scalar
+  parameter defaults by name.
+- The parser records resolved literal values internally for
+  actor-parameter-backed defaults, so interface/storage/transaction-port
+  widths, bank depths, watchdogs, waits, contracts, repeat counts, activation
+  overrides, and reusable-library use-site overrides can consume those actor
+  parameters as static scalar values.
+- Scheduled `.fsm` `+params` and `actor_params[]` reports preserve authored
+  actor-parameter tokens for review and downstream transparency.
+- Forward references, self references, cycles, non-scalar actor parameters,
+  transaction parameters, runtime interface signals, arbitrary expressions,
+  package/imported constants beyond shipped enum members, and generated child
+  transaction parameter defaults remain fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused actor-param/static-value tests
+  with `Files=11, Tests=35`; public/spec/book/backlog audits with `Files=6,
+  Tests=351`; `./bin/ci-regression isf --no-book` with `Files=252,
+  Tests=1688`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Actor-parameter dependency default selected
 - Created active task tree `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS`.
 - Completed `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1`; the selected

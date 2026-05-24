@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Ordered actor-parameter defaults shipped
+- Completed `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` and closed the task
+  tree.
+- Actor-level scalar parameter defaults and scalar leaves inside compatible
+  aggregate/list defaults may now reference earlier actor-local scalar
+  parameter defaults by name.
+- Authored actor-parameter tokens remain visible in scheduled `.fsm` `+params`
+  and `actor_params[]`; resolved literals are recorded internally for scalar
+  parameter consumers.
+- Forward references, self references, cycles, non-scalar actor parameters,
+  transaction parameters, runtime interface signals, arbitrary expressions,
+  package/imported constants beyond shipped enum members, and generated child
+  transaction parameter defaults remain fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused actor-param/static-value tests
+  with `Files=11, Tests=35`; public/spec/book/backlog audits with `Files=6,
+  Tests=351`; `./bin/ci-regression isf --no-book` with `Files=252,
+  Tests=1688`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Actor-parameter dependency defaults selected
 - Created active task tree `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS`.
 - Completed `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1`; the selected

@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 ordered actor-parameter defaults shipped
+- Completed `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` and closed the task
+  tree.
+- Actor-level `(params ...)` scalar defaults may now reference earlier
+  actor-local scalar parameter defaults by name.
+- Scalar leaves inside compatible aggregate/list actor parameter defaults may
+  also reference earlier actor-local scalar parameter defaults.
+- Actor-parameter-backed actor parameter defaults preserve authored tokens in
+  scheduled `.fsm` `+params` and `actor_params[]` reports while recording
+  resolved literal values internally for scalar actor-parameter consumers.
+- Forward references, self references, cycles, non-scalar actor parameters,
+  transaction parameters, runtime interface signals, arbitrary expressions,
+  package/imported constants beyond shipped enum members, and generated child
+  transaction parameter defaults remain fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused actor-param/static-value tests
+  with `Files=11, Tests=35`; public/spec/book/backlog audits with `Files=6,
+  Tests=351`; `./bin/ci-regression isf --no-book` with `Files=252,
+  Tests=1688`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 actor-parameter dependency defaults selected
 - Created active task tree `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS`.
 - Completed `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1`; the selected

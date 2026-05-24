@@ -1549,6 +1549,13 @@ scalar leaves inside actor aggregate/list parameter defaults. Those defaults
 preserve authored constant tokens in scheduled `.fsm` `+params` and
 `actor_params[]` while carrying resolved literals internally for scalar
 parameter consumers.
+Earlier actor-local scalar parameter defaults are public as scalar actor
+parameter defaults or scalar leaves inside actor aggregate/list parameter
+defaults. Source order is the only dependency model: the referenced actor
+parameter must appear earlier and already resolve to a scalar numeric or
+exact-width literal. Forward references, self references, cycles, non-scalar
+actor parameters, transaction parameters, runtime interface signals, and
+arbitrary expressions remain fail-closed.
 Enum member references in expression operator position, targets, rules outside
 scalar trigger parameter overrides, transaction
 condition, rule guard, or rule assignment expression operator position, drive
@@ -1634,7 +1641,15 @@ Actor-constant-backed actor parameter defaults are checked by
 covering scalar defaults, aggregate/list leaves, resolved width consumption,
 scheduled `.fsm` `+params` review artifacts, `actor_params[]` preservation,
 strict CLI HDL generation, and fail-closed diagnostics for unknown symbols,
-actor-parameter dependencies, transaction parameters, and runtime signals.
+forward actor-parameter dependencies, transaction parameters, and runtime
+signals.
+Actor-parameter-backed actor parameter defaults are checked by
+[t/1346-isf-actor-param-actor-params.t](../t/1346-isf-actor-param-actor-params.t),
+covering earlier scalar actor parameter defaults, aggregate/list leaves,
+resolved width consumption, scheduled `.fsm` `+params` review artifacts,
+`actor_params[]` preservation, strict CLI HDL generation, and fail-closed
+diagnostics for forward, self, non-scalar, unknown, transaction-parameter, and
+runtime-signal sources.
 Generated child transaction scalar parameter default enum member values are
 checked by
 [t/1270-isf-enum-member-transaction-params.t](../t/1270-isf-enum-member-transaction-params.t),

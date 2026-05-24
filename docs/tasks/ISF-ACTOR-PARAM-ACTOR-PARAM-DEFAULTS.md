@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -46,7 +46,7 @@ graph.
 ## Task Tree
 
 - ID: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship ordered actor-parameter-backed actor parameter defaults.`
   Children: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1`,
   `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2`
@@ -60,20 +60,20 @@ graph.
   Commit: `pending this commit`
 
 - ID: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement earlier scalar actor parameters as actor parameter defaults.`
   Acceptance: `Parser and LoweringIR metadata resolve earlier scalar actor
   parameter defaults for scalar and aggregate/list leaves, preserve authored
   tokens in review/report surfaces, reject unsupported dependency shapes, and
   update public docs/tests.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1345-isf-actor-param-actor-constants.t`; `perl -Iperl -c t/1346-isf-actor-param-actor-params.t`; focused actor-param/static-value tests with `Files=11, Tests=35`; public/spec/book/backlog audits with `Files=6, Tests=351`; `./bin/ci-regression isf --no-book` with `Files=252, Tests=1688`; `mdbook build docs/book`; `git diff --check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` | `pending` | This is the selected implementation leaf after the documentation-only tree selection. |
+| - | - | `closed` | `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` shipped the bounded ordered actor-parameter default value domain. |
 
 ## Decisions
 
@@ -97,15 +97,18 @@ graph.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-24` | `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` | Syntax checks; focused actor-param/static-value tests; public/spec/book/backlog audits; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1` | `pending this commit: ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1: select actor param dependency defaults` | Selection commit. |
-| `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` | `pending` | Implementation leaf. |
+| `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1` | `91ed9079 ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1: select actor param dependency defaults` | Selection commit. |
+| `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` | `pending this commit: ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2: ship ordered actor param defaults` | Implementation commit. |
 
 ## Changelog
 
 - `2026-05-24`: Created the active R14 task tree for ordered
   actor-parameter-backed actor parameter defaults.
+- `2026-05-24`: Shipped the bounded ordered actor-parameter-backed actor
+  parameter default value domain and closed the task tree.

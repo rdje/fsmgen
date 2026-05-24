@@ -96,22 +96,22 @@ subtest 'actor constant actor parameter diagnostics fail closed' => sub {
   (interface
     (output data_out)))
 ISF
-        qr/\AError: actor 'unknown_constant_param_default' parameter 'DATA_W' token 'DEFAULT_WIDTH' is not a declared actor constant or enum member/,
+        qr/\AError: actor 'unknown_constant_param_default' parameter 'DATA_W' token 'DEFAULT_WIDTH' is not a declared actor constant, earlier scalar actor parameter, or enum member/,
         'unknown actor parameter default token is rejected',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor dependent_param_default
+(actor forward_param_default
   (clock clk)
   (params
-    (BASE_W 8)
-    (DATA_W BASE_W))
+    (DATA_W BASE_W)
+    (BASE_W 8))
   (interface
     (output data_out)))
 ISF
-        qr/\AError: actor 'dependent_param_default' parameter 'DATA_W' actor parameter 'BASE_W' cannot be used as an actor parameter default/,
-        'actor-parameter-to-actor-parameter defaults remain deferred',
+        qr/\AError: actor 'forward_param_default' parameter 'DATA_W' actor parameter 'BASE_W' must reference an earlier scalar actor parameter default/,
+        'forward actor-parameter defaults remain deferred',
     );
 
     assert_parse_rejected(

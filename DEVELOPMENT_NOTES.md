@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Ordered actor parameter defaults stay source-local
+- The shipped implementation records earlier scalar actor parameter defaults in
+  declaration order while finalizing actor parameters. A later default can
+  reuse only those already-recorded scalar numeric or exact-width values.
+- This keeps the model deterministic without adding a dependency graph or
+  cycle solver. The diagnostic for a known-but-unavailable actor parameter
+  intentionally covers forward references, self references, cycles, and
+  non-scalar parameters as one source-order boundary.
+- LoweringIR mirrors the parser resolution so malformed or hand-built actor
+  hashes keep the same public boundary, while parsed actors preserve authored
+  tokens in review/report surfaces and carry resolved values internally.
+
 ## 2026-05-24: Actor parameter dependency defaults should be ordered only
 - Actor-parameter-backed actor parameter defaults are useful only if they stay
   reviewable and deterministic. The selected model is therefore source-order

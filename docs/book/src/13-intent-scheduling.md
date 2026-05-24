@@ -54,8 +54,8 @@ clear lower-layer mapping, and clear runtime behavior.
 - **Parameters are specialization defaults**. Actor-level `(params ...)`
   values emit as scheduled `.fsm` `+params` and schedule-report
   `actor_params[]`; scalar defaults and aggregate/list default leaves may use
-  declared actor constants or enum members, and they are not runtime payload
-  wires. Generated
+  declared actor constants, earlier scalar actor parameter defaults, or enum
+  members, and they are not runtime payload wires. Generated
   activation-site scalar parameter overrides and aggregate/list override leaves
   may use actor-local constants, actor-local scalar parameter defaults, and
   enum members, which
@@ -664,10 +664,14 @@ The ISF-specific current limitations are:
   actor-local scalar parameter defaults or enum members as static
   specialization values.
 
-  Actor parameter defaults may also use declared actor constants by name:
-  `(params (DATA_W DEFAULT_WIDTH))` and `(params (LANES (LANE0 LANE1)))`
-  preserve those authored tokens in `+params` and `actor_params[]` while
-  resolving the constants internally for width/count consumers.
+  Actor parameter defaults may also use declared actor constants or earlier
+  scalar actor parameters by name:
+  `(params (DATA_W DEFAULT_WIDTH))`, `(params (DATA_W BASE_W))`, and
+  `(params (LANES (LANE0 BASE_W)))` preserve those authored tokens in
+  `+params` and `actor_params[]` while resolving them internally for
+  width/count consumers. Actor-parameter references are source-order
+  dependencies only; forward, self, cyclic, and non-scalar actor-parameter
+  references fail closed.
 
   Scalar leaves inside those activation aggregate/list parameter override
   values may use actor-local scalar parameter defaults and enum members too.

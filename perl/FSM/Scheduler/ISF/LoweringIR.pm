@@ -2696,6 +2696,7 @@ sub _actor_param_declarations {
     my $actor_name = $actor->{actor_name} // 'unknown';
     my @params;
     my %seen;
+    my %earlier_scalar_param_values;
     for my $param (@{$actor->{params} || []}) {
         confess "Actor '$actor_name': params entries must be hash references\n"
             unless ref($param) eq 'HASH';
@@ -2715,6 +2716,7 @@ sub _actor_param_declarations {
                 $value,
                 "Actor '$actor_name': parameter '$name'",
                 $actor,
+                \%earlier_scalar_param_values,
             );
             %resolved_value = (resolved_value => _clone_isf_value($resolved))
                 if $has_static_leaf;
@@ -2724,18 +2726,21 @@ sub _actor_param_declarations {
                 "Actor '$actor_name': parameter '$name'",
             );
         }
-        push @params, {
+        my $entry = {
             name  => $name,
             value => _clone_isf_value($value),
             (exists($param->{resolved_value}) ? (resolved_value => _clone_isf_value($param->{resolved_value})) : %resolved_value),
         };
+        push @params, $entry;
+        _record_earlier_scalar_actor_param_value(\%earlier_scalar_param_values, $entry);
     }
 
     return \@params;
 }
 
 sub _resolve_actor_param_default_value {
-    my ($value, $context, $actor) = @_;
+    my ($value, $context, $actor, $earlier_scalar_param_values) = @_;
+    $earlier_scalar_param_values ||= {};
 
     if (!ref($value)) {
         return (_clone_isf_value($value), 0)
@@ -2758,20 +2763,24 @@ sub _resolve_actor_param_default_value {
                 return (_clone_isf_value($resolved_value), 1);
             }
 
-            confess "$context actor parameter '$value' cannot be used as an actor parameter default; actor-parameter dependency ordering remains deferred\n"
-                if _actor_param_by_name($actor, $value);
+            if (_actor_param_by_name($actor, $value)) {
+                if (exists $earlier_scalar_param_values->{$value}) {
+                    return (_clone_isf_value($earlier_scalar_param_values->{$value}), 1);
+                }
+                confess "$context actor parameter '$value' must reference an earlier scalar actor parameter default; forward, self, cyclic, and non-scalar actor-parameter defaults remain deferred\n";
+            }
 
             if (my $tx = _actor_transaction_param_by_name($actor, $value)) {
                 my $tx_name = $tx->{name} // 'unknown';
                 confess "$context transaction parameter '$value' from transaction '$tx_name' cannot be used as an actor parameter default; transaction parameters are scoped to generated child transactions\n";
             }
 
-            confess "$context token '$value' is a runtime interface signal; actor parameter defaults accept literals, declared actor constants, and enum members only\n"
+            confess "$context token '$value' is a runtime interface signal; actor parameter defaults accept literals, declared actor constants, earlier scalar actor parameters, and enum members only\n"
                 if _actor_interface_signal_by_name($actor, $value);
 
-            confess "$context token '$value' is not a declared actor constant or enum member\n";
+            confess "$context token '$value' is not a declared actor constant, earlier scalar actor parameter, or enum member\n";
         }
-        confess "$context uses unsupported parameter value '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, actor constant, and enum member literal leaves only\n";
+        confess "$context uses unsupported parameter value '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, actor constant, earlier scalar actor parameter, and enum member literal leaves only\n";
     }
 
     confess "$context uses unsupported parameter value shape; actor parameter defaults accept non-empty aggregate/list literals\n"
@@ -2780,12 +2789,37 @@ sub _resolve_actor_param_default_value {
     my @resolved;
     my $has_static_leaf = 0;
     for my $item (@$value) {
-        my ($resolved_item, $item_has_static_leaf) = _resolve_actor_param_default_value($item, $context, $actor);
+        my ($resolved_item, $item_has_static_leaf) = _resolve_actor_param_default_value(
+            $item,
+            $context,
+            $actor,
+            $earlier_scalar_param_values,
+        );
         push @resolved, $resolved_item;
         $has_static_leaf ||= $item_has_static_leaf;
     }
 
     return (\@resolved, $has_static_leaf);
+}
+
+sub _record_earlier_scalar_actor_param_value {
+    my ($earlier_scalar_param_values, $param) = @_;
+    return unless ref($earlier_scalar_param_values) eq 'HASH' && ref($param) eq 'HASH';
+
+    my $name = $param->{name};
+    return unless defined($name) && !ref($name);
+
+    my $resolved_value = _param_resolved_value($param);
+    if (defined($resolved_value)
+        && !ref($resolved_value)
+        && _is_numeric_or_exact_width_literal($resolved_value))
+    {
+        $earlier_scalar_param_values->{$name} = _clone_isf_value($resolved_value);
+        return;
+    }
+
+    delete $earlier_scalar_param_values->{$name};
+    return;
 }
 
 sub _actor_package_imports {

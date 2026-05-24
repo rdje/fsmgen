@@ -569,6 +569,7 @@ sub _finalize_actor_constant_values($self, $actor) {
 sub _finalize_actor_param_values($self, $actor) {
     my $actor_name = $actor->{actor_name} // 'unknown';
 
+    my %earlier_scalar_param_values;
     for my $param (@{$actor->{params} || []}) {
         my $name = $param->{name};
         my $value = $param->{value};
@@ -577,21 +578,26 @@ sub _finalize_actor_param_values($self, $actor) {
                 $actor,
                 $value,
                 "actor '$actor_name' parameter '$name'",
+                \%earlier_scalar_param_values,
             );
             $param->{resolved_value} = _clone_isf_value($resolved_value)
                 if $has_static_leaf;
+            _record_earlier_scalar_actor_param_value(\%earlier_scalar_param_values, $param);
             next;
         }
 
-        next if _is_numeric_or_exact_width_literal($value);
+        if (!_is_numeric_or_exact_width_literal($value)) {
+            my ($resolved_value, $has_static_leaf) = $self->_resolve_actor_param_static_leaf_values(
+                $actor,
+                $value,
+                "actor '$actor_name' parameter '$name'",
+                \%earlier_scalar_param_values,
+            );
+            $param->{resolved_value} = _clone_isf_value($resolved_value)
+                if $has_static_leaf;
+        }
 
-        my ($resolved_value, $has_static_leaf) = $self->_resolve_actor_param_static_leaf_values(
-            $actor,
-            $value,
-            "actor '$actor_name' parameter '$name'",
-        );
-        $param->{resolved_value} = _clone_isf_value($resolved_value)
-            if $has_static_leaf;
+        _record_earlier_scalar_actor_param_value(\%earlier_scalar_param_values, $param);
     }
 
     return 1;
@@ -848,7 +854,9 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
     return 1;
 }
 
-sub _resolve_actor_param_static_leaf_values($self, $actor, $value, $context) {
+sub _resolve_actor_param_static_leaf_values($self, $actor, $value, $context, $earlier_scalar_param_values) {
+    $earlier_scalar_param_values ||= {};
+
     if (!ref($value)) {
         return (_clone_isf_value($value), 0)
             if defined($value) && _is_numeric_or_exact_width_literal($value);
@@ -872,21 +880,25 @@ sub _resolve_actor_param_static_leaf_values($self, $actor, $value, $context) {
                 return (_clone_isf_value($resolved_value), 1);
             }
 
-            confess "Error: $context actor parameter '$value' cannot be used as an actor parameter default; actor-parameter dependency ordering remains deferred\n"
-                if _actor_param_by_name($actor, $value);
+            if (_actor_param_by_name($actor, $value)) {
+                if (exists $earlier_scalar_param_values->{$value}) {
+                    return (_clone_isf_value($earlier_scalar_param_values->{$value}), 1);
+                }
+                confess "Error: $context actor parameter '$value' must reference an earlier scalar actor parameter default; forward, self, cyclic, and non-scalar actor-parameter defaults remain deferred\n";
+            }
 
             if (my $tx = _actor_transaction_param_by_name($actor, $value)) {
                 my $tx_name = $tx->{name} // 'unknown';
                 confess "Error: $context transaction parameter '$value' from transaction '$tx_name' cannot be used as an actor parameter default; transaction parameters are scoped to generated child transactions\n";
             }
 
-            confess "Error: $context token '$value' is a runtime interface signal; actor parameter defaults accept literals, declared actor constants, and enum members only\n"
+            confess "Error: $context token '$value' is a runtime interface signal; actor parameter defaults accept literals, declared actor constants, earlier scalar actor parameters, and enum members only\n"
                 if _actor_interface_signal_by_name($actor, $value);
 
-            confess "Error: $context token '$value' is not a declared actor constant or enum member\n";
+            confess "Error: $context token '$value' is not a declared actor constant, earlier scalar actor parameter, or enum member\n";
         }
 
-        confess "Error: $context uses unsupported parameter value '$value'; actor parameter defaults accept numeric, exact-width, aggregate/list, actor constant, and scalar enum member literals only\n";
+        confess "Error: $context uses unsupported parameter value '$value'; actor parameter defaults accept numeric, exact-width, aggregate/list, actor constant, earlier scalar actor parameter, and scalar enum member literals only\n";
     }
 
     my @resolved;
@@ -896,12 +908,33 @@ sub _resolve_actor_param_static_leaf_values($self, $actor, $value, $context) {
             $actor,
             $item,
             $context,
+            $earlier_scalar_param_values,
         );
         push @resolved, $resolved_item;
         $has_static_leaf ||= $item_has_static_leaf;
     }
 
     return (\@resolved, $has_static_leaf);
+}
+
+sub _record_earlier_scalar_actor_param_value {
+    my ($earlier_scalar_param_values, $param) = @_;
+    return unless ref($earlier_scalar_param_values) eq 'HASH' && ref($param) eq 'HASH';
+
+    my $name = $param->{name};
+    return unless defined($name) && !ref($name);
+
+    my $resolved_value = _param_resolved_value($param);
+    if (defined($resolved_value)
+        && !ref($resolved_value)
+        && _is_numeric_or_exact_width_literal($resolved_value))
+    {
+        $earlier_scalar_param_values->{$name} = _clone_isf_value($resolved_value);
+        return;
+    }
+
+    delete $earlier_scalar_param_values->{$name};
+    return;
 }
 
 sub _resolve_actor_enum_member_value($self, $actor, $member_ref) {
@@ -5637,7 +5670,7 @@ sub _validate_isf_param_value {
 sub _validate_actor_param_value {
     my ($value, $context) = @_;
     if (!ref($value)) {
-        confess "$context uses unsupported parameter value '$value'; actor parameter defaults accept numeric, exact-width, aggregate/list, actor constant, and scalar enum member literals only\n"
+        confess "$context uses unsupported parameter value '$value'; actor parameter defaults accept numeric, exact-width, aggregate/list, actor constant, earlier scalar actor parameter, and scalar enum member literals only\n"
             unless defined($value)
                 && (_is_numeric_or_exact_width_literal($value)
                     || _is_hdl_identifier($value)
@@ -5657,7 +5690,7 @@ sub _validate_actor_param_value {
 sub _validate_actor_param_aggregate_leaf_value {
     my ($value, $context) = @_;
     if (!ref($value)) {
-        confess "$context uses unsupported aggregate/list parameter leaf '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, actor constant, and enum member literal leaves only\n"
+        confess "$context uses unsupported aggregate/list parameter leaf '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, actor constant, earlier scalar actor parameter, and enum member literal leaves only\n"
             unless defined($value)
                 && (_is_numeric_or_exact_width_literal($value)
                     || _is_hdl_identifier($value)
