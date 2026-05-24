@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Aggregate types — Aggregate autogrowth frontier selected
+- Completed selection work for `AGGREGATE-AUTOGROWTH-FROM-USAGE.1`.
+- Activated an aggregate-types task tree for the mdBook feature-backlog item
+  "Automatic Aggregate Growth From Usage".
+- The selected follow-up leaf will audit shipped aggregate inference across
+  direct `.fsm`, composition, ISF lowering, tests, corpus accounting, mdBook,
+  and live docs before selecting one bounded behavior-bearing source position.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: live-book, spec-index, and feature-backlog audits with
+  `Files=3, Tests=351`; `mdbook build docs/book`; and `git diff --check`.
+
 ### Language ergonomics — Direct runtime literal-zero divisor rejection shipped
 - Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` and closed the task tree.
 - Updated the direct `.fsm` runtime expression builder so `/`, `%`, `div`, and

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `AGGREGATE-AUTOGROWTH-FROM-USAGE` | `active` | `aggregate types and data` | `AGGREGATE-AUTOGROWTH-FROM-USAGE.2` | [docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md](docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md) |
 
 ## Proposed Task Trees
 
@@ -420,7 +421,7 @@ criteria.
 | mdBook backlog category | Current tracking stance |
 | --- | --- |
 | `Language Ergonomics` | `completed DYNAMIC-DIVISOR-SAFETY-FRONTIER tree for direct runtime literal-zero divisor rejection; completed INFERENCE-FIRST-SCALAR-AUTHORING tree for symbolic scalar type widths; future task tree required for broader language ergonomics behavior outside those trees` |
-| `Aggregate Types And Data` | `future task tree required for broader aggregate lowering, operators, VHDL aggregate support, or public type/export APIs beyond shipped bounded surfaces` |
+| `Aggregate Types And Data` | `active AGGREGATE-AUTOGROWTH-FROM-USAGE tree for automatic aggregate growth selection; future task tree required for broader aggregate lowering, operators, VHDL aggregate support, or public type/export APIs outside that tree` |
 | `Composition` | `covered by completed composition task trees for shipped surfaces; future task tree required for broader generated-child, VHDL generic-map, and generalized composition behavior` |
 | `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces; future task tree required for remaining deferred ISF behavior` |
 | `Backends And Validation` | `future task tree required for VHDL backend expansion, richer backend validation, and non-shipped backend targets` |

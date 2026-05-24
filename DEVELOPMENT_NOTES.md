@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Aggregate autogrowth needs a source-position audit first
+- `AGGREGATE-AUTOGROWTH-FROM-USAGE.1` selects the next aggregate-types backlog
+  tree after the dynamic-divisor safety frontier closed.
+- The first executable leaf is an audit/design slice because aggregate growth
+  can affect direct source typing, composition endpoint shape checks, ISF
+  lowered `.fsm`, and backend lowering. A code slice should name one source
+  position and one proof source before it changes aggregate inference.
+- The tree keeps backend-owned struct/record default lowering, VHDL aggregate
+  lowering, richer aggregate operators, and public type/export APIs out of
+  scope until separate task trees select those surfaces.
+
 ## 2026-05-24: Direct runtime divisor guard stays literal-only
 - `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` places the new guard in
   `FSM::Adapter::FSMGenFull::ExpressionBuilder`, where direct `.fsm` runtime

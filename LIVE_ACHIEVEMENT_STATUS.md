@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Aggregate types — Aggregate autogrowth frontier selected
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.1`.
+- Activated the active aggregate-types task tree for the mdBook
+  feature-backlog item "Automatic Aggregate Growth From Usage".
+- The current frontier is `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
+- The follow-up leaf must audit shipped aggregate inference across direct
+  `.fsm`, composition, ISF lowering, tests, corpus accounting, mdBook, and
+  live docs before selecting one bounded behavior-bearing source position.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: live-book, spec-index, and feature-backlog audits with
+  `Files=3, Tests=351`; `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24: Language ergonomics — Direct runtime literal-zero divisor rejection shipped
 - Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` and closed the task tree.
 - Direct `.fsm` runtime expression parsing now rejects numeric and exact-width

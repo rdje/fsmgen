@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Aggregate autogrowth frontier selected
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.1`.
+- Activated the active aggregate-types task tree for the mdBook
+  feature-backlog item "Automatic Aggregate Growth From Usage".
+- The selected follow-up leaf is `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`, which
+  must audit shipped aggregate inference across direct `.fsm`, composition,
+  ISF lowering, tests, corpus accounting, mdBook, and live docs before
+  selecting one bounded behavior-bearing source position.
+- No parser, scheduler, report, generated artifact, HDL, CLI, public API, or
+  public language behavior changed.
+- Validation passed: live-book, spec-index, and feature-backlog audits with
+  `Files=3, Tests=351`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
+
 ## 2026-05-24: Direct runtime literal-zero divisor rejection shipped
 - Completed `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` and closed the task tree.
 - Direct `.fsm` runtime expression parsing now rejects numeric and exact-width

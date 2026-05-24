@@ -1,9 +1,20 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none selected`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `aggregate types and data`.
+- Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
+- Recent aggregate autogrowth selection:
+  `AGGREGATE-AUTOGROWTH-FROM-USAGE.1` activated the task tree for the mdBook
+  feature-backlog item "Automatic Aggregate Growth From Usage". The next
+  executable frontier is an audit/design leaf that must inspect shipped
+  aggregate inference across direct `.fsm`, composition, ISF lowering, tests,
+  corpus accounting, mdBook, and live docs before choosing one bounded
+  behavior-bearing source position. No parser, scheduler, report, generated
+  artifact, HDL, CLI, public API, or public language behavior changed in this
+  selection. Validation passed: live-book, spec-index, and feature-backlog
+  audits with `Files=3, Tests=351`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent language-ergonomics divisor-safety completion:
   `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` shipped direct `.fsm` runtime
   literal-zero divisor rejection and closed the task tree. Direct runtime
@@ -6156,12 +6167,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` shipped direct
-  `.fsm` runtime literal-zero divisor rejection and closed the task tree. The
-  next PNT step must select or create the next roadmap-aligned task tree before
-  any code changes.
+- Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
+- Completion status: `AGGREGATE-AUTOGROWTH-FROM-USAGE.1` selected the active
+  aggregate-types task tree for automatic aggregate growth from usage. The
+  next PNT step is an audit/design leaf before any behavior-bearing aggregate
+  inference code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
