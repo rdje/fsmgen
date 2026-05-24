@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT` | `active` | `R11` | `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2` | [docs/tasks/R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.md](docs/tasks/R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.md) |
 
 ## Proposed Task Trees
 

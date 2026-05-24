@@ -1,9 +1,21 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `R11`.
+- Active task tree: `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`.
+- Current frontier: `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2`.
+- Recent R11 composition-contract frontier audit selection:
+  `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.1` activated an evidence-gathering
+  audit after `R10` moved to `mostly done`. The R11 roadmap remains broad:
+  `.rtlif` contract direction, stronger interface-source decisions,
+  multi-FSM shared-datapath composition, standalone-DT/reusable module
+  direction, composition policy ownership, and adjacent type/package surfaces
+  need evidence-based sequencing. No parser, scheduler, report, generated
+  artifact, HDL, CLI, public API, source, test, or generated behavior changed
+  in this selection. The follow-up frontier is `.2`, which must choose one
+  bounded R11 slice or explicitly defer from evidence before any code.
+  Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R10 diagnostic/provenance exit audit:
   `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2` audited the current R10 diagnostic
   and source-provenance frontier and closed the task tree. Focused R10
@@ -6603,12 +6615,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT` is closed after
-  `.2`, and `R10` is now `mostly done`. The next PNT cycle should select a
-  new active task tree or leaf before any code, test, source,
-  generated-artifact, or config change.
+- Active task tree: `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`.
+- Current frontier: `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2`.
+- Completion status: `.1` selected the active tree with no behavior change.
+  `.2` owns the evidence-gathering audit and next-frontier decision for
+  `R11`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8400,6 +8411,14 @@ Deliverables:
 - Harden mixed generated-child / `?rtl` flows before broader composition syntax is considered.
 Status: `in progress`
 Done:
+- `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.1` selected an evidence-gathering
+  composition-contract frontier audit before code:
+  - R10 is mostly done and active focus moves to R11,
+  - R11 has several broad remaining families across `.rtlif` direction,
+    shared-datapath, standalone-DT/reusable modules, portable types,
+    connect-by-name convention, and composition architecture ownership,
+  - and `.2` must map shipped coverage to those remaining objectives before
+    selecting one bounded implementation or deferral.
 - Explicit composition `?wiring` blocks now accept canonical Lisp-ish list
   links:
   - `(source target)` is the compact directed-link spelling,
@@ -9159,6 +9178,8 @@ Done:
   - top-input fanout success across multiple same-name child inputs,
   - and mixed-direction same-name rejection for declared top-input connect-by-name.
 Left:
+- Complete `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT.2`: select the next
+  bounded composition-contract slice or record a deferral from evidence.
 - Extend the now-shipped semantic parameter/generic contract beyond direct-root metadata, external `?rtl` SystemVerilog instance emission, generated `?fsmc` / `?dtc` SystemVerilog instance emission, direct param-to-param default reuse, the first bounded scalar operator-expression value slice, and the first bounded leafwise aggregate operator slice: VHDL generic-map lowering plus richer expression-valued semantic parameter domains remain follow-up work, including non-leafwise typed aggregate-to-aggregate operator expressions where the operator is explicitly valid for the operand types/shapes.
 - Decide whether later work should keep the now-formalized `.rtlif` interface-source family as embedded-root plus sidecar metadata, or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:

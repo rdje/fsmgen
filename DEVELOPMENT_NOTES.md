@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: R11 restart should begin with frontier selection
+- R11 contains several broad and partially overlapping families:
+  `.rtlif`, shared datapath, standalone-DT/reusable modules, portable types,
+  connect-by-name convention, and composition architecture ownership.
+- The next safe step is an audit leaf that chooses one bounded slice from
+  evidence. Starting with implementation would risk mixing unrelated R11
+  concerns in one commit.
+
 ## 2026-05-24: R10 can move to mostly done after clean public diagnostic probes
 - The R10 exit audit did not find another immediate parser-name or stack-frame
   cleanup frontier: focused diagnostic tests passed, the expected-failure

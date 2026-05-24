@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R11 — Composition-contract frontier audit selected
+- Created active task tree `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`.
+- The tree owns an evidence-gathering audit over the broad R11 composition
+  frontier before any behavior-bearing composition change.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R10 — Diagnostic/provenance exit frontier audited
 - Completed `R10-DIAGNOSTIC-PROVENANCE-EXIT-AUDIT.2` and closed the task
   tree.
