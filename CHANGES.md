@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Aggregate types — Aggregate constant target autogrowth shipped
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`.
+- Updated direct `.fsm` assignment parsing so an undeclared whole-signal LHS
+  inherits a generated aggregate type contract from a whole aggregate RHS
+  constant root when that constant already has one canonical list or record
+  payload shape.
+- Preserved explicit target declarations as authoritative and kept
+  non-constant, child-endpoint, partial-path, RHS concat, and width-only
+  aggregate compatibility surfaces unchanged.
+- Added focused tests for inferred record/list targets, explicit scalar target
+  preservation, and conflicting later aggregate constants.
+- Added supported corpus coverage through
+  `feature.direct_aggregate_constant_target_autogrowth` and synchronized
+  corpus accounting.
+- Updated the mdBook aggregate-type and feature-backlog chapters plus live
+  docs to make the shipped boundary and remaining deferrals explicit.
+- Validation passed: parser/corpus syntax checks; direct/corpus tests with
+  `Files=3, Tests=3085`; supported-corpus behavior/json/manifest/accounting
+  gates with `Files=6, Tests=27`; feature-backlog audit with `Files=1,
+  Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ### Aggregate types — Aggregate autogrowth frontier audited
 - Completed audit work for `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
 - Audited shipped aggregate-growth behavior across direct `.fsm`,

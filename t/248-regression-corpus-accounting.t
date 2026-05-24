@@ -98,6 +98,7 @@ for my $required_id (qw(
     feature.direct_canonical_init_directive
     feature.direct_size_expression_widths
     feature.declarative_bits_symbol_widths
+    feature.direct_aggregate_constant_target_autogrowth
     feature.direct_runtime_div_mod
     feature.arithmetic_xor_operator_variants
     feature.rhs_expression_supported_variants
@@ -413,8 +414,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    37,
-    'catalog now keeps thirty-seven named supported-smoke entries including direct and composition language-feature fixtures',
+    38,
+    'catalog now keeps thirty-eight named supported-smoke entries including direct and composition language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -428,8 +429,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    37,
-    'catalog now records thirty-seven positive strict-mode supported-smoke acceptance entries',
+    38,
+    'catalog now records thirty-eight positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -447,6 +448,8 @@ for my $strict_supported_id (qw(
     feature.reset_state_aliases
     feature.direct_canonical_init_directive
     feature.direct_size_expression_widths
+    feature.declarative_bits_symbol_widths
+    feature.direct_aggregate_constant_target_autogrowth
     feature.direct_runtime_div_mod
     feature.arithmetic_xor_operator_variants
     feature.rhs_expression_supported_variants

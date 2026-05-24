@@ -134,7 +134,7 @@ check follows the authored leaf target:
 
 ```lisp
 (idle
-  (OUT.payload = TAIL)
+  (= (OUT.payload TAIL))
 )
 ```
 
@@ -142,6 +142,34 @@ Here `TAIL` must match the declared type of `OUT.payload`, not merely the
 packed width of `OUT` or the packed width of `payload`. Compatible aggregate
 leaf writes are accepted; width-equal but list-vs-record or otherwise
 shape-incompatible writes fail before HDL emission.
+
+Direct whole-signal targets can now also grow one aggregate contract from a
+whole aggregate constant root when the target has no explicit declaration:
+
+```lisp
+(+constants
+  (FRAME ((tag const_4b1010) (flag 1)))
+  (LANES (const_2b10 const_3b101))
+)
+
+(idle
+  (= (OUT_FRAME> FRAME))
+  (= (OUT_LANES> LANES))
+)
+```
+
+In this bounded case, `FRAME` already has one canonical record shape and
+`LANES` already has one canonical list shape before assignment parsing
+finishes. FSMGen records those inferred contracts on the whole targets before
+SystemVerilog emission, so the generated module can use packed typedefs for
+`OUT_FRAME` and `OUT_LANES` instead of exposing only width vectors.
+
+Explicit target declarations remain authoritative. If `OUT_FRAME` is declared
+through `+size` as a scalar width or through an explicit aggregate type alias,
+FSMGen keeps that declaration. This slice also does not infer arbitrary
+member/index roots, does not infer from RHS concat into an undeclared target,
+does not infer from child endpoints, and does not treat packed-width equality
+alone as aggregate compatibility.
 
 This is still deliberate and bounded. Broader inference-first aggregate growth
 without explicit declared anchors remains future work; the backend should

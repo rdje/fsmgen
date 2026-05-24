@@ -523,6 +523,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.direct_canonical_init_directive` | [t/corpus/direct_canonical_init_directive.fsm](t/corpus/direct_canonical_init_directive.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_size_expression_widths` | [t/corpus/direct_size_expression_widths.fsm](t/corpus/direct_size_expression_widths.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.declarative_bits_symbol_widths` | [t/corpus/declarative_bits_symbol_widths.fsm](t/corpus/declarative_bits_symbol_widths.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.direct_aggregate_constant_target_autogrowth` | [t/corpus/direct_aggregate_constant_target_autogrowth.fsm](t/corpus/direct_aggregate_constant_target_autogrowth.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_runtime_div_mod` | [t/corpus/direct_runtime_div_mod.fsm](t/corpus/direct_runtime_div_mod.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.arithmetic_xor_operator_variants` | [t/corpus/arithmetic_xor_operator_variants.fsm](t/corpus/arithmetic_xor_operator_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.rhs_expression_supported_variants` | [t/corpus/rhs_expression_supported_variants.fsm](t/corpus/rhs_expression_supported_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -738,6 +739,10 @@ manifest output while keeping the exact file lists widenable.
   `feature.declarative_bits_symbol_widths` entry proves that direct-root
   `+types` `(bits WIDTH_SYMBOL)` specs resolve positive integer scalar
   constants and enum members before driving downstream `+size` declarations.
+  The `feature.direct_aggregate_constant_target_autogrowth` entry proves that
+  direct whole-signal targets assigned whole aggregate constant roots preserve
+  inferred list/record contracts into generated SystemVerilog typedefs instead
+  of flattening the target to width-only metadata.
   The
   `feature.direct_runtime_div_mod` entry proves that runtime RHS `/`, `%`,
   `div`, and `mod` expressions lower through pipeline and CLI, including the

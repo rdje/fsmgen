@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Aggregate types — Aggregate constant target autogrowth shipped
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`.
+- Direct `.fsm` whole-signal targets with no explicit declaration now infer a
+  generated aggregate type contract from whole aggregate RHS constant roots
+  that already carry one canonical list or record payload shape.
+- SystemVerilog output preserves the inferred target as a packed typedef port
+  instead of flattening it to width-only metadata.
+- Explicit target declarations remain authoritative; conflicting later
+  aggregate constants fail closed; direct RHS concat autogrowth, arbitrary
+  member/index root autogrowth, child endpoint inference, VHDL aggregate
+  lowering, backend-owned struct lowering policy, and width-only aggregate
+  compatibility remain out of scope.
+- Added `t/1321-direct-aggregate-autogrowth.t` and supported corpus entry
+  `feature.direct_aggregate_constant_target_autogrowth`.
+- The current frontier is `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`, an audit of
+  direct RHS concat target autogrowth.
+- Validation passed: parser/corpus syntax checks; direct/corpus tests with
+  `Files=3, Tests=3085`; supported-corpus behavior/json/manifest/accounting
+  gates with `Files=6, Tests=27`; feature-backlog audit with `Files=1,
+  Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ## 2026-05-24: Aggregate types — Aggregate autogrowth frontier audited
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
 - Audited shipped aggregate-growth behavior across direct `.fsm`,

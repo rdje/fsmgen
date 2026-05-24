@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Inferred aggregate targets stay declaration-first
+- `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` places the new inference in the direct
+  assignment path, immediately after source parsing and before source
+  provenance is validated. That timing lets FSMGen reuse the existing
+  whole-RHS aggregate-contract resolver and register the target contract
+  before HDL planning.
+- The guard is deliberately strict: it only accepts source contracts whose
+  proof kind is a whole aggregate constant root, only applies to whole
+  `SignalRef` targets, and skips targets that already have a declared type
+  name, declared type spec, or explicit width declaration.
+- The generated type name is derived from the target signal
+  (`fsmgen_inferred_<target>`), which keeps emitted SystemVerilog typedefs
+  stable and reviewable while making the inferred nature visible.
+- Compound updates, direct RHS concat, child endpoint paths, member/index
+  roots, and width-only matches remain outside this implementation. Those
+  surfaces need separate task-tree leaves because they do not have the same
+  canonical payload proof as aggregate constant roots.
+
 ## 2026-05-24: Aggregate constant roots are the first safe autogrowth source
 - `AGGREGATE-AUTOGROWTH-FROM-USAGE.2` found that broad member/index
   autovivification is still too wide for a first code slice: it would need a

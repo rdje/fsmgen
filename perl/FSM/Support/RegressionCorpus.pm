@@ -248,6 +248,22 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.direct_aggregate_constant_target_autogrowth',
+        relpath => 't/corpus/direct_aggregate_constant_target_autogrowth.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'direct_aggregate_constant_target_autogrowth',
+        expected_hdl_patterns => [
+            qr/fsmgen_inferred_OUT_FRAME__fsmgen_t; \/\/ fsmgen_inferred_OUT_FRAME/s,
+            qr/fsmgen_inferred_OUT_LANES__fsmgen_t; \/\/ fsmgen_inferred_OUT_LANES/s,
+            qr/\boutput\s+fsmgen_inferred_OUT_FRAME__fsmgen_t\s+OUT_FRAME\b/s,
+            qr/\boutput\s+fsmgen_inferred_OUT_LANES__fsmgen_t\s+OUT_LANES\b/s,
+        ],
+    },
+    {
         id => 'feature.direct_runtime_div_mod',
         relpath => 't/corpus/direct_runtime_div_mod.fsm',
         family => 'language_feature_fixture',

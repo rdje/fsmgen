@@ -1,0 +1,14 @@
+(?fsm:direct_aggregate_constant_target_autogrowth
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+constants
+    (FRAME ((tag const_4b1010) (flag 1)))
+    (LANES (const_2b10 const_3b101))
+  )
+  (idle
+    (= (OUT_FRAME> FRAME))
+    (= (OUT_LANES> LANES))
+  )
+)

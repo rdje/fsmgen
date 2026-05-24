@@ -59,9 +59,12 @@ Goal: infer aggregate record/list shapes from member/index usage when no
 explicit aggregate type anchor is present.
 
 Current boundary: aggregate aliases, aggregate constants, declared aggregate
-types, direct-root aggregate member/list expressions, and partial aggregate
-LHS writes are supported on the current SystemVerilog path. Broad automatic
-aggregate type growth from arbitrary usage is not fully shipped.
+types, direct-root aggregate member/list expressions, partial aggregate LHS
+writes, and direct whole-signal target contract inference from whole aggregate
+constant roots are supported on the current SystemVerilog path. Broad
+automatic aggregate type growth from arbitrary usage is not fully shipped.
+The active task-tree frontier is auditing whether direct RHS concat
+expressions can safely seed an undeclared whole-signal list contract.
 
 ### Backend-Owned Struct/Record Default Lowering
 

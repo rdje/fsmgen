@@ -3,7 +3,29 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `aggregate types and data`.
 - Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
-- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`.
+- Recent aggregate autogrowth implementation:
+  `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` shipped direct whole-signal aggregate
+  contract inference from whole aggregate RHS constant roots. When a direct
+  `.fsm` whole-signal target has no explicit declaration and the RHS symbol is
+  an aggregate constant root with one canonical list or record payload shape,
+  FSMGen now records a generated aggregate type contract on the target before
+  HDL planning. SystemVerilog output therefore preserves inferred typedef
+  ports instead of flattening the target to width-only metadata. Explicit
+  target declarations remain authoritative, incompatible later aggregate
+  constants fail closed against the inferred contract, and non-constant source
+  positions remain unchanged. Added focused coverage in
+  `t/1321-direct-aggregate-autogrowth.t`, the supported corpus entry
+  `feature.direct_aggregate_constant_target_autogrowth`, and synchronized the
+  mdBook aggregate-type/backlog chapters, regression corpus docs, live docs,
+  and task tree. The current frontier is
+  `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`, an audit of whether direct RHS concat
+  expressions can safely seed undeclared whole-signal list contracts.
+  Validation passed: parser/corpus syntax checks; direct/corpus tests with
+  `Files=3, Tests=3085`; supported-corpus behavior/json/manifest/accounting
+  gates with `Files=6, Tests=27`; feature-backlog audit with `Files=1,
+  Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent aggregate autogrowth audit:
   `AGGREGATE-AUTOGROWTH-FROM-USAGE.2` audited shipped aggregate-growth
   behavior across direct `.fsm`, composition, ISF lowering, tests, corpus
@@ -15,12 +37,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   when a declared aggregate anchor exists. Composition already supports a
   bounded aggregate top-port inference path through declared roots, whole-root
   links to typed child inputs, and uniform unlinked same-name child inputs.
-  The smallest safe implementation gap is direct whole-signal LHS aggregate
-  contract inference from a whole aggregate RHS constant root: today
-  `(OUT> = FRAME)` where `FRAME` is a record/list constant lowers only as a
-  packed vector and loses the known shape. The selected next leaf is
-  `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`, limited to that direct `.fsm` whole
-  aggregate constant-root source position. Direct RHS concat autogrowth,
+  The smallest safe implementation gap selected by the audit was direct
+  whole-signal LHS aggregate contract inference from a whole aggregate RHS
+  constant root. Before `.3`, assigning a record/list constant to an
+  undeclared whole output lowered only as a packed vector and lost the known
+  shape; `.3` now covers that source position. Direct RHS concat autogrowth,
   arbitrary member/index root autogrowth, child endpoint inference, VHDL
   aggregate lowering, backend-owned struct lowering policy, and width-only
   aggregate compatibility remain deferred. No parser, scheduler, report,
@@ -6192,11 +6213,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
-- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
-- Completion status: `AGGREGATE-AUTOGROWTH-FROM-USAGE.1` selected the active
-  aggregate-types task tree for automatic aggregate growth from usage. The
-  next PNT step is an audit/design leaf before any behavior-bearing aggregate
-  inference code changes.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`.
+- Completion status: `AGGREGATE-AUTOGROWTH-FROM-USAGE.3` shipped direct
+  whole-signal aggregate contract inference from whole aggregate RHS constant
+  roots. The next PNT step audits whether direct RHS concat expressions can
+  safely seed undeclared whole-signal list contracts before any behavior
+  changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

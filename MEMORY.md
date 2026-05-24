@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Aggregate constant target autogrowth shipped
+- Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.3`.
+- Direct `.fsm` whole-signal targets with no explicit declaration now infer a
+  generated aggregate type contract when assigned a whole aggregate constant
+  root whose payload already has one canonical list or record shape.
+- The inferred contract is recorded before HDL planning, so SystemVerilog
+  output preserves packed typedef ports such as
+  `fsmgen_inferred_OUT_FRAME__fsmgen_t OUT_FRAME` instead of flattening the
+  target to width-only metadata.
+- Explicit target declarations remain authoritative, incompatible later
+  aggregate constants still fail closed against the inferred contract, and
+  direct RHS concat autogrowth plus arbitrary member/index root autogrowth
+  remain deferred.
+- Added focused coverage in `t/1321-direct-aggregate-autogrowth.t` and the
+  supported corpus fixture
+  `feature.direct_aggregate_constant_target_autogrowth`.
+- Synchronized regression corpus docs, mdBook aggregate-type/backlog
+  chapters, roadmap status, task-tree status, and live continuity docs.
+- Validation passed: parser/corpus syntax checks; direct/corpus tests with
+  `Files=3, Tests=3085`; supported-corpus behavior/json/manifest/accounting
+  gates with `Files=6, Tests=27`; feature-backlog audit with `Files=1,
+  Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `AGGREGATE-AUTOGROWTH-FROM-USAGE`.
+- Current frontier: `AGGREGATE-AUTOGROWTH-FROM-USAGE.4`.
+
 ## 2026-05-24: Aggregate autogrowth frontier audited
 - Completed `AGGREGATE-AUTOGROWTH-FROM-USAGE.2`.
 - Audited shipped aggregate-growth behavior across direct `.fsm`,
