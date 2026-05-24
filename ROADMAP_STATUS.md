@@ -1,9 +1,22 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `R11`.
+- Active task tree: `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT`.
+- Current frontier: `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2`.
+- Recent R11 top-boundary convention frontier audit selection:
+  `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.1` activated an
+  evidence-gathering audit over the remaining declared top-port and
+  connect-by-name convention frontier. The roadmap mixes asymmetric declared
+  top-port connect-by-name, convention-over-configuration widening, explicit
+  local override ergonomics, internal re-export policy, and the guardrail that
+  convention should stay top-boundary-oriented rather than hidden
+  child-to-child inference, so `.2` must select one bounded implementation
+  slice or record a prerequisite deferral before code. No parser, scheduler,
+  report, generated artifact, HDL, CLI, public API, source, test, or generated
+  behavior changed in this selection. Validation passed: feature-backlog
+  audit with `Files=1, Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R11 portable-type contract frontier audit:
   `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.2` audited the shipped portable
   synthesizable-type contract and closed the task tree. No new portable-type
@@ -6779,13 +6792,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.2`
-  completed the evidence-gathering audit and closed the tree. No immediate
-  portable-type implementation slice is selected; future work waits for one
-  precise frontend type-core, inference, member/index, backend-lowering, VHDL,
-  or public API contract.
+- Active task tree: `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT`.
+- Current frontier: `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2`.
+- Completion status: `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.1`
+  activated the next R11 evidence-gathering audit. No parser, scheduler,
+  report, generated artifact, HDL, CLI, public API, source, test, or generated
+  behavior changed; `.2` must audit the shipped top-boundary convention and
+  connect-by-name contract before any behavior-bearing work.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8718,6 +8731,18 @@ Done:
     document the shipped contract and backlog boundary.
   - Validation passed: focused portable-type evidence with `Files=13,
     Tests=59`; feature-backlog audit with `Files=1, Tests=15`;
+    `mdbook build docs/book`; and `git diff --check`.
+- `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.1` selected the active
+  top-boundary convention/connect-by-name frontier audit before implementation:
+  - the next frontier is `.2`,
+  - `.2` must audit shipped omitted/empty `?ports` inference, same-name
+    top-input fanout, same-name top-output adoption, internal-carrier
+    inference/re-export, declared `=name` connect-by-name, explicit local
+    overrides, provenance/block reporting, structural IR surfaces,
+    generated/RTL child mixes, and explicit deferrals,
+  - and no parser, scheduler, report, generated artifact, HDL, CLI, public
+    API, source, test, or generated behavior changed in the selection slice.
+  - Validation passed: feature-backlog audit with `Files=1, Tests=15`;
     `mdbook build docs/book`; and `git diff --check`.
 - Explicit composition `?wiring` blocks now accept canonical Lisp-ish list
   links:

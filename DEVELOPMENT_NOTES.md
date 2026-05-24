@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Top-boundary convention work needs an audit before code
+- The shipped convention surface already spans omitted/empty `?ports`
+  inference, same-name top-input fanout, same-name top-output adoption,
+  internal-carrier inference and re-export, declared `=name` connect-by-name,
+  generated/RTL child mixes, and user-facing provenance/block reporting.
+- The remaining roadmap text mixes several distinct decisions: how far
+  convention-over-configuration should widen, which local override forms are
+  worth standardizing, whether internal re-export policy needs more user
+  surface, and how to keep convention top-boundary-oriented instead of hidden
+  child-to-child inference. The next step is an audit that selects one
+  bounded implementation lane or records a prerequisite deferral.
+
 ## 2026-05-24: Defer broader portable-type growth until the next exact contract
 - The current type surface is broad enough to document as a bounded shipped
   contract: scalar aliases, signedness, two-state/four-state intent, positive

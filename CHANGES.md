@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R11 — Top-boundary convention frontier audit selected
+- Created active task tree `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT`.
+- The tree owns an evidence-gathering audit over the remaining declared
+  top-port/connect-by-name convention frontier before any behavior-bearing
+  widening.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R11 — Portable-type contract frontier audited
 - Completed `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.2` and closed the
   task tree.
