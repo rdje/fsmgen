@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Roadmap maintenance — Current active lane truth sync
+- Corrected the secondary `ROADMAP_STATUS.md` current active lane block so it
+  matches the top live snapshot after `RICHER-AGGREGATE-OPERATORS.3` closed.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24: Aggregate types — Unary aggregate complement shipped
 - Completed `RICHER-AGGREGATE-OPERATORS.3` and closed the task tree.
 - Semantic parameter/generic aggregate values now support unary bitwise

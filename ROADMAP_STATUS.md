@@ -6344,12 +6344,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `RICHER-AGGREGATE-OPERATORS`.
-- Current frontier: `RICHER-AGGREGATE-OPERATORS.3`.
-- Completion status: `RICHER-AGGREGATE-OPERATORS.2` audited the shipped
-  aggregate operator boundary and selected unary bitwise aggregate complement
-  in semantic parameter/generic values as the next bounded implementation
-  leaf.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `RICHER-AGGREGATE-OPERATORS.3` shipped unary bitwise
+  aggregate complement in semantic parameter/generic values and closed the
+  aggregate-operator task tree. The next PNT selection must create or
+  activate task-tree ownership before any behavior-bearing code change.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Roadmap live status has one current truth
+- `ROADMAP_STATUS.md` has both a top snapshot and a lower "Current active
+  lane" section used during recovery. After closing a task tree, both must be
+  updated in the same truth-sync pass so PNT does not select work from stale
+  current-frontier text.
+
 ## 2026-05-24: Unary aggregate complement stays fold-before-HDL
 - `RICHER-AGGREGATE-OPERATORS.3` ships unary bitwise aggregate complement by
   extending the existing semantic parameter/generic value normalizer instead

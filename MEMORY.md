@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Current active lane truth sync
+- Corrected the secondary `ROADMAP_STATUS.md` current active lane block to
+  match the top live snapshot after `RICHER-AGGREGATE-OPERATORS.3` closed.
+- The live status remains: active task tree `none`, current frontier `none`.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24: Unary aggregate complement shipped
 - Completed `RICHER-AGGREGATE-OPERATORS.3` and closed the task tree.
 - Semantic parameter/generic aggregate values now support unary bitwise

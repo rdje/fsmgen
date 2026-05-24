@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Roadmap maintenance — Current active lane truth sync
+- Corrected the secondary `ROADMAP_STATUS.md` current active lane block after
+  `RICHER-AGGREGATE-OPERATORS.3` closed, so it matches the top live snapshot.
+- The live status remains active task tree `none` and current frontier `none`.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Aggregate types — Unary aggregate complement shipped
 - Completed `RICHER-AGGREGATE-OPERATORS.3` and closed the task tree.
 - Added unary bitwise aggregate complement for semantic parameter/generic
