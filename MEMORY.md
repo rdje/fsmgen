@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Feature-backlog owner coverage sync selected
+- Completed `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1`.
+- Activated the active roadmap-maintenance task tree for broad mdBook
+  feature-backlog owner coverage synchronization.
+- The selected follow-up leaf is
+  `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2`, which must make the task-tree owner
+  coverage table and mdBook backlog agree on broad backlog owner status and
+  add focused audit coverage if needed.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public API
+  behavior changed.
+- Validation passed: live-book/spec index audits with `Files=2, Tests=25`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC`.
+- Current frontier: `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2`.
+
 ## 2026-05-24: Round-robin resource arbitration shipped
 - Completed `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` and closed the task tree.
 - FSMGen now lowers bounded `(kind rule_slot)` resources with

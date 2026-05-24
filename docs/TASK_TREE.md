@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC` | `active` | `roadmap maintenance` | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | [docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md](docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md) |
 
 ## Proposed Task Trees
 
@@ -403,6 +404,7 @@ as done work unless a future task reopens them.
 | Schedule-report metadata feature matrix coverage | `ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC` |
 | Downstream issue-bundle feature matrix coverage | `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC` |
 | `.isf` CLI example feature matrix coverage | `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC` |
+| Broad feature-backlog owner coverage synchronization | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC` |
 
 ## ISF Task-Tree Rule
 

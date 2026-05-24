@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Roadmap maintenance — Feature-backlog owner coverage selected
+- Completed `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1`.
+- Activated the active roadmap-maintenance task tree for broad mdBook
+  feature-backlog owner coverage synchronization.
+- The current frontier is `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2`.
+- The follow-up leaf must make the task-tree owner coverage table and mdBook
+  backlog agree on broad backlog owner status and add focused audit coverage
+  if needed.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public API
+  behavior changed.
+- Validation passed: live-book/spec index audits with `Files=2, Tests=25`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24: R14 — Round-robin resource arbitration shipped
 - Completed `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` and closed the task tree.
 - FSMGen now supports bounded `(kind rule_slot)` resources with

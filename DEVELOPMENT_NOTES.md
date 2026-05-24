@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Broad backlog owner coverage needs explicit tracking
+- `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1` selects a documentation/audit slice
+  because the mdBook feature backlog is broader than R14 ISF and can drift
+  from `docs/TASK_TREE.md` owner coverage if it is only maintained by prose.
+- The selected follow-up should not implement backlog behavior. It should make
+  owner status explicit and reserve behavior-bearing work for separate task
+  trees with concrete acceptance criteria.
+
 ## 2026-05-24: Round-robin rule slots use generated pointer state
 - `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` keeps the first fair resource
   arbiter deliberately narrow: declared rule users on `(kind rule_slot)` only.

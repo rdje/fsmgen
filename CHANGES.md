@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Roadmap maintenance — Feature-backlog owner coverage selected
+- Completed selection work for `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1`.
+- Activated a roadmap-maintenance task tree for broad mdBook feature-backlog
+  owner coverage synchronization.
+- The selected follow-up leaf will make the task-tree owner coverage table and
+  mdBook backlog agree on broad backlog owner status and add audit coverage if
+  needed.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public API
+  behavior changed.
+- Validation passed: live-book/spec index audits with `Files=2, Tests=25`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Round-robin resource arbitration shipped
 - Completed `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` and closed the task tree.
 - Added lowering for bounded `(resource NAME (kind rule_slot)

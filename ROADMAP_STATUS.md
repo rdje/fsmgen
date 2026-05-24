@@ -2,8 +2,18 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC`.
+- Current frontier: `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2`.
+- Recent roadmap-maintenance feature-backlog owner coverage selection:
+  `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1` activated a documentation/audit
+  task tree for broad mdBook feature-backlog owner coverage. The selected
+  follow-up leaf must make the task-tree owner coverage table and mdBook
+  backlog agree on broad backlog owner status, while keeping future
+  behavior-bearing work behind explicit task-tree creation. No parser,
+  scheduler, report, generated artifact, HDL, CLI, or public API behavior
+  changed in this selection. Validation passed: live-book/spec index audits
+  with `Files=2, Tests=25`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R14 round-robin resource completion:
   `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` shipped bounded
   `(resource NAME (kind rule_slot) (arbiter round_robin)
