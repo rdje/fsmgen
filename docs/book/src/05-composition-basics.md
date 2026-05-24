@@ -475,10 +475,16 @@ lookup semantics remain future work.
 
 There are now several bounded same-name paths:
 
+- single-child top-interface passthrough when `?ports` is omitted or empty
+- explicit-link top-port inference when `?wiring` endpoints define the public
+  boundary exactly
 - undeclared top-input inference when compatible child inputs remain top-facing
 - undeclared top-output inference when one unique child output remains top-facing
-- plain explicit top ports reusing the same-name convention
+- plain explicit top ports reusing the same-name convention in explicit-link
+  `C2` / `C3` tops
 - declared compact `=name` or verbose `:same-name` connect-by-name
+- same-name internal carrier inference for one producer and one or more sinks
+- explicit top-output re-export of a compatible inferred internal carrier
 
 Simple example:
 
@@ -496,6 +502,33 @@ Simple example:
 
 This is useful when the top boundary is intentionally the same as the child
 boundary.
+
+The shipped rule is direction-asymmetric:
+
+- a same-name top input may fan out to one or more child inputs when every
+  child-side candidate is an input and the width/type/declared-type contract
+  matches
+- a same-name top output must match exactly one child output
+- mixed-direction families fail instead of being guessed
+- width-equal but declared-type-incompatible families fail instead of being
+  flattened to raw vectors
+
+The convention is also local. Explicit `?wiring` owns the exact endpoints it
+mentions and overrides same-name convention at those endpoints. The
+composition report records those overrides and the common blocked cases, such
+as explicit child links preventing undeclared top-interface inference or an
+inferred internal carrier staying internal by default.
+
+What this does not mean:
+
+- no broad hidden child-to-child auto-wiring
+- no interface-bundle or protocol-group inference
+- no priority, merge, or arbitration semantics for same-name conflicts
+- no automatic publication of internal carriers as top outputs
+- no backend-specific remapping syntax hidden behind `=name`
+
+When the boundary is not obvious, write the link explicitly in `?wiring` or
+declare the top port explicitly in `?ports`.
 
 ## External RTL Children
 

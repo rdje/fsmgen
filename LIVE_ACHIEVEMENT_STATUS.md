@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R11 — Top-boundary convention frontier audited
+- Completed `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2` and closed the
+  task tree.
+- Decision: no new top-boundary convention implementation slice is selected
+  now. Broader interface bundles, protocol groups, hidden child-to-child
+  inference, automatic priority/merge/arbitration, wider public re-export
+  policy, non-top-boundary convention semantics, and richer local override
+  syntax remain deferred until one precise prerequisite contract exists.
+- The mdBook composition basics chapter and feature backlog now document the
+  shipped bounded top-boundary convention/connect-by-name contract and backlog
+  boundary.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused top-boundary convention evidence with `Files=19,
+  Tests=65`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R11 — Top-boundary convention frontier audit selected
 - Created active task tree `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT`.
 - Completed `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.1`.

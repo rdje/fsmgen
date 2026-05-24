@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Defer broader top-boundary convention growth until a sharper contract
+- The current same-name convention surface is now broad enough to document as
+  a bounded shipped contract: omitted/empty `?ports`, same-name input fanout,
+  unique top-output adoption, internal carrier inference, explicit re-export,
+  declared `=name` / `:same-name`, generated/RTL mixes, declared-type checks,
+  and provenance/block reporting are all regression-backed.
+- The remaining convention ideas are not one small extension. Interface
+  bundles, protocol groups, hidden child-to-child inference, conflict
+  arbitration, broader public re-export policy, and extra local override
+  syntax each need a precise composition contract before code.
+
 ## 2026-05-24: Top-boundary convention work needs an audit before code
 - The shipped convention surface already spans omitted/empty `?ports`
   inference, same-name top-input fanout, same-name top-output adoption,

@@ -1,9 +1,28 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R11`.
-- Active task tree: `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT`.
-- Current frontier: `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R11 top-boundary convention frontier audit:
+  `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2` audited the shipped
+  top-boundary convention/connect-by-name contract and closed the task tree.
+  No new top-boundary convention implementation slice is selected now. The
+  shipped bounded contract is regression-backed across single-child
+  passthrough, explicit-link omitted/empty `?ports` inference, same-name
+  top-input fanout, same-name top-output adoption, internal-carrier inference
+  and re-export, direction-asymmetric declared `=name` / `:same-name`
+  connect-by-name, generated/RTL/mixed child lanes, declared-type
+  compatibility checks, provenance/override/block reporting, `Intent HIR`, and
+  `Structural RTL IR`. Broader interface bundles, protocol groups, hidden
+  child-to-child inference, automatic priority/merge/arbitration, wider public
+  re-export policy, non-top-boundary convention semantics, and richer local
+  override syntax remain deferred until one exact prerequisite contract
+  exists. The mdBook composition basics chapter and feature backlog now
+  document the shipped contract and backlog boundary. Validation passed:
+  focused top-boundary convention evidence with `Files=19, Tests=65`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent R11 top-boundary convention frontier audit selection:
   `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.1` activated an
   evidence-gathering audit over the remaining declared top-port and
@@ -6792,13 +6811,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT`.
-- Current frontier: `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2`.
-- Completion status: `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.1`
-  activated the next R11 evidence-gathering audit. No parser, scheduler,
-  report, generated artifact, HDL, CLI, public API, source, test, or generated
-  behavior changed; `.2` must audit the shipped top-boundary convention and
-  connect-by-name contract before any behavior-bearing work.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2`
+  completed the evidence-gathering audit and closed the tree. No immediate
+  top-boundary convention implementation slice is selected; future work waits
+  for one precise interface-bundle, protocol-group, hidden-routing,
+  priority/merge/arbitration, public re-export, or local-override contract.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8744,6 +8763,25 @@ Done:
     API, source, test, or generated behavior changed in the selection slice.
   - Validation passed: feature-backlog audit with `Files=1, Tests=15`;
     `mdbook build docs/book`; and `git diff --check`.
+- `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2` audited the shipped
+  top-boundary convention/connect-by-name contract and closed the task tree:
+  - no immediate top-boundary convention implementation slice is selected,
+  - the shipped bounded contract covers single-child passthrough,
+    explicit-link omitted/empty `?ports` inference, same-name top-input
+    fanout, same-name top-output adoption, internal-carrier inference and
+    re-export, direction-asymmetric declared `=name` / `:same-name`
+    connect-by-name, generated/RTL/mixed child lanes, declared-type
+    compatibility checks, provenance/override/block reporting, `Intent HIR`,
+    and `Structural RTL IR`,
+  - broader interface bundles, protocol groups, hidden child-to-child
+    inference, automatic priority/merge/arbitration, wider public re-export
+    policy, non-top-boundary convention semantics, and richer local override
+    syntax remain deferred until one exact prerequisite contract exists,
+  - and the mdBook composition basics chapter plus feature backlog now
+    document the shipped contract and backlog boundary.
+  - Validation passed: focused top-boundary convention evidence with
+    `Files=19, Tests=65`; feature-backlog audit with `Files=1, Tests=15`;
+    `mdbook build docs/book`; and `git diff --check`.
 - Explicit composition `?wiring` blocks now accept canonical Lisp-ish list
   links:
   - `(source target)` is the compact directed-link spelling,
@@ -9540,13 +9578,18 @@ Left:
     paths,
   - backend-neutral signedness/state-model policy across every inferred site,
   - and richer public type/export APIs.
-- Refine declared top-port connect-by-name into an asymmetric integration-oriented contract:
-  - decide how far future convention-over-configuration work should widen undeclared top-interface inference beyond the newly shipped `C1` passthrough slice and the newly shipped `C2` / `C3` omitted/empty-`?ports`, undeclared top-input/top-output/internal-carrier slices,
-  - decide how far future convention-over-configuration work should widen beyond the newly shipped plain-explicit-top-port same-name convention in `C2` / `C3`,
-  - decide whether the newly shipped explicit top-output re-export slice is enough or whether lighter/further override forms are warranted,
-  - keep convention as the default authoring path while making explicit port/link declarations override inference locally instead of replacing the whole inferred interface,
-  - keep that explicit override layer elegant and expressive rather than verbose duplicate configuration,
-  - and keep any such convention top-boundary-oriented rather than turning child-to-child wiring into hidden inference everywhere.
+- Defer broader top-boundary convention growth beyond the documented bounded
+  contract until one exact prerequisite contract is selected:
+  - interface bundles and protocol groups,
+  - broader hidden child-to-child auto-wiring beyond exact declared or
+    inferred top-boundary convention,
+  - automatic priority, merge, or arbitration semantics for same-name
+    conflicts,
+  - wider default public re-export policy for internal carriers,
+  - non-top-boundary convention semantics that would make child-to-child
+    routing implicit everywhere,
+  - and richer local override syntax beyond the current `?ports` and
+    `?wiring` surfaces.
 - Track and later retire the current architectural hotspot set deliberately instead of letting it stay ambient debt:
   - widen the now-shipped first `Intent HIR` extraction slice beyond direct generated roots, realized generated children, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,
   - widen the now-shipped first explicit `Lowered RTL IR` extraction slice beyond generated output-drive families, standalone-DT grouped multi-drive targets, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,

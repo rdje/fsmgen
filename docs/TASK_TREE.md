@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT` | `active` | `R11` | `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2` | [docs/tasks/R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.md](docs/tasks/R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT` | `done` | `R11` | `closed` | [docs/tasks/R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.md](docs/tasks/R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.md) |
 | `R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT` | `done` | `R11` | `closed` | [docs/tasks/R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.md](docs/tasks/R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.md) |
 | `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT` | `done` | `R11` | `closed` | [docs/tasks/R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.md](docs/tasks/R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.md) |
 | `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT` | `done` | `R11` | `closed` | [docs/tasks/R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.md](docs/tasks/R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.md) |
@@ -440,7 +440,7 @@ criteria.
 | --- | --- |
 | `Language Ergonomics` | `completed DYNAMIC-DIVISOR-SAFETY-FRONTIER tree for direct runtime literal-zero divisor rejection; completed INFERENCE-FIRST-SCALAR-AUTHORING tree for symbolic scalar type widths; future task tree required for broader language ergonomics behavior outside those trees` |
 | `Aggregate Types And Data` | `completed RICHER-AGGREGATE-OPERATORS tree for semantic parameter/generic aggregate operator widening; completed AGGREGATE-AUTOGROWTH-FROM-USAGE tree for bounded automatic aggregate growth; completed BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING tree for exact-contract Verilog-family structured-lowering audit; completed R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT tree for the shipped bounded portable-type frontier decision; future task tree required for broader aggregate lowering, VHDL aggregate support, portable-type implementation, or public type/export APIs outside those trees` |
-| `Composition` | `active R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT tree for the declared top-port/connect-by-name convention frontier; covered by completed composition task trees for shipped surfaces; future task tree required for broader generated-child, VHDL generic-map, and generalized composition behavior outside active/completed trees` |
+| `Composition` | `completed R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT tree for the declared top-port/connect-by-name convention frontier; covered by completed composition task trees for shipped surfaces; future task tree required for broader generated-child, VHDL generic-map, and generalized composition behavior outside active/completed trees` |
 | `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces; future task tree required for remaining deferred ISF behavior` |
 | `Backends And Validation` | `future task tree required for VHDL backend expansion, richer backend validation, and non-shipped backend targets` |
 | `Embedding And Public APIs` | `future task tree required for richer embedding, public API, and export surfaces beyond the frozen advertised contracts` |

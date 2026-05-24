@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R11 — Top-boundary convention frontier audited
+- Completed `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.2` and closed the
+  task tree.
+- Decided not to select a new top-boundary convention implementation slice
+  now: the shipped bounded contract already covers single-child passthrough,
+  explicit-link omitted/empty `?ports` inference, same-name top-input fanout,
+  same-name top-output adoption, internal-carrier inference and re-export,
+  direction-asymmetric declared `=name` / `:same-name` connect-by-name,
+  generated/RTL/mixed child lanes, declared-type compatibility checks,
+  provenance/override/block reporting, `Intent HIR`, and `Structural RTL IR`.
+- Deferred broader interface bundles, protocol groups, hidden child-to-child
+  inference, automatic priority/merge/arbitration, wider public re-export
+  policy, non-top-boundary convention semantics, and richer local override
+  syntax until a precise prerequisite contract exists.
+- Synchronized the mdBook composition basics chapter, mdBook feature backlog,
+  roadmap, task-tree, README, and live docs.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this audit slice.
+- Validation passed: focused top-boundary convention evidence with `Files=19,
+  Tests=65`; feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R11 — Top-boundary convention frontier audit selected
 - Created active task tree `R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT`.
 - The tree owns an evidence-gathering audit over the remaining declared

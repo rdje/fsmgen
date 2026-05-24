@@ -240,6 +240,37 @@ debug-reporting contracts remain deferred until one exact reusable-module,
 lookup, package/import, enable-control, portable-type, or architecture
 contract is selected.
 
+### Top-Boundary Convention Widening
+
+Status: shipped for bounded top-boundary same-name convention; broader
+convention surfaces remain backlog.
+
+Goal: keep composition authoring lightweight by inferring or adopting the top
+boundary when one safe public interface exists, while preserving explicit
+`?ports` and `?wiring` as local override and disambiguation surfaces.
+
+Current boundary: single-child `C1` passthrough may infer the full top
+interface when `?ports` is omitted or empty. Explicit-link `C2` / `C3` tops
+may infer renamed top-boundary endpoints from `?wiring`, undeclared same-name
+top inputs when compatible child inputs agree exactly, undeclared same-name
+top outputs when one unique child output remains top-facing, and same-name
+internal carriers when one producer and one or more sinks remain otherwise
+unwired. Plain explicit top inputs may adopt same-name fanout, plain explicit
+top outputs may adopt one unique same-name child output, and declared compact
+`=name` or verbose `:same-name` ports use the C4 declared connect-by-name
+contract. Explicit top outputs may also re-export compatible inferred internal
+carriers.
+
+Those paths are direction-, width-, type-, and declared-type-checked.
+Explicit `?wiring` overrides convention locally, inferred internal carriers
+stay internal by default, and composition provenance/reporting surfaces expose
+declared, inferred, override, and blocked convention events.
+
+Remaining backlog: interface bundles, protocol groups, broader hidden
+child-to-child inference, automatic priority/merge/arbitration for same-name
+conflicts, wider public re-export policy, and non-top-boundary convention
+semantics remain deferred until one exact composition contract is selected.
+
 ### VHDL Generic-Map Lowering
 
 Status: backlog, behind active VHDL backend work.
