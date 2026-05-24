@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP` | `active` | `R10` | `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` | [docs/tasks/R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.md](docs/tasks/R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.md) |
 
 ## Proposed Task Trees
 

@@ -1,9 +1,22 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `R10`.
+- Active task tree: `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
+- Current frontier: `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`.
+- Recent R10 D-input self-dependency diagnostic cleanup selection:
+  `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1` activated a bounded
+  direct D-input self-dependency diagnostic cleanup after a quiet CLI probe
+  found that `assignment_d_input_self_dependency.fsm` still exposes
+  `[Parser.pm][validate_no_register_input_self_dependency()]` in the public
+  diagnostic. No parser, scheduler, report, generated artifact, HDL, CLI,
+  public API, source, test, or generated behavior changed in this selection.
+  The follow-up frontier is `.2`, which must preserve the illegal D-input
+  self-dependency rejection and actionable guidance while removing parser
+  implementation names and any stack-frame leakage from CLI, check-JSON, and
+  normalized semantic JSON diagnostics. Validation passed: feature-backlog
+  audit with `Files=1, Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R10 self-dependency diagnostic implementation:
   `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` cleaned the selected illegal
   combinational self-dependency diagnostic and closed the task tree. The
@@ -6548,11 +6561,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP` is closed after
-  `.2`. The next PNT cycle must select a new active task tree or leaf before
-  any code, test, source, generated-artifact, or config change.
+- Active task tree: `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
+- Current frontier: `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`.
+- Completion status: `.1` selected the active tree with no behavior change.
+  `.2` owns parser implementation leakage cleanup for the selected illegal
+  D-input self-dependency diagnostic.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8120,6 +8133,14 @@ Deliverables:
 - Clear remediation guidance for common construct-family failures.
 Status: `in progress`
 Done:
+- `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1` selected the next
+  bounded direct diagnostics cleanup before code:
+  - illegal D-input self-dependency remains a rejected direct-generation
+    failure,
+  - a quiet CLI probe showed the public diagnostic still exposes
+    `[Parser.pm][validate_no_register_input_self_dependency()]`,
+  - and `.2` must preserve the actionable D-input guidance while cleaning CLI
+    and machine JSON diagnostics.
 - `R10-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` cleaned the selected illegal
   combinational self-dependency diagnostic and closed the tree:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
@@ -8231,9 +8252,11 @@ Done:
   - [bin/fsmgen](bin/fsmgen) now also wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path instead of letting constructor failures dump a raw script line,
   - and [t/253-extension-loader-diagnostic-context.t](t/253-extension-loader-diagnostic-context.t) now locks both the pipeline and CLI constructor-failure shapes for malformed config input and constructor-failing extension modules.
 Left:
-- Select the next bounded provenance-carrying boundary or diagnostic cleanup
-  under a task tree before any code.
-- Upgrade key diagnostics from the selected next frontier.
+- Implement `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`: remove parser
+  implementation leakage from the selected D-input self-dependency diagnostic
+  without changing rejection semantics.
+- Select later provenance-carrying boundaries or diagnostic cleanups under
+  task trees before any code.
 - Add regression coverage for error shape and location reporting.
 Exit criteria:
 - Major parser/generator failures identify the offending source construct precisely and explain the intended fix path clearly.

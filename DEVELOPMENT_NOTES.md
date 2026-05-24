@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: D-input self-dependency cleanup follows the same diagnostic policy
+- D-input self-dependency rejection is a separate semantic rule from
+  combinational `=` self-dependency, but the public diagnostic quality target
+  is the same: keep source context and actionable remediation, do not expose
+  parser filenames or validator routine names.
+- The implementation slice should stay presentation-only. The legality of
+  `<=`, `<=-`, and legacy `<=+` self-dependency remains unchanged.
+
 ## 2026-05-24: Self-dependency cleanup should keep semantics and remove implementation leakage
 - The illegal combinational self-dependency diagnostic is a language-contract
   rejection, not a parser crash. Raising it with `die` and a trailing newline
