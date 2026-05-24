@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.md` — active `R11` task tree for auditing the reusable standalone-DT/module-library frontier.
 - `docs/tasks/R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.md` — completed `R11` task tree for auditing the shared-datapath contract frontier.
 - `docs/tasks/R11-PARAMETER-GENERIC-FRONTIER-AUDIT.md` — completed `R11` task tree for auditing the semantic parameter/generic frontier.
 - `docs/tasks/R11-RTLIF-INTERFACE-SOURCE-DIRECTION.md` — completed `R11` task tree for deciding the `.rtlif` interface-source direction.

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Reusable-module work needs an audit before code
+- The shipped reusable standalone-DT surface already spans named `?dt:name`
+  roots, composition-facing `?dtc` children, grouped multi-drive metadata,
+  assertion hooks, child export metadata, implicit system-port policy, lookup
+  roots, and forward-IR projections.
+- The remaining roadmap text mixes unrelated decisions: unnamed roots,
+  advanced enable-control syntax, broader lookup/package semantics,
+  generated-child export policy, and reusable-module interface contracts. The
+  next step is an audit that selects one bounded implementation lane or
+  records a prerequisite deferral.
+
 ## 2026-05-24: Defer broader shared-datapath growth until route semantics are explicit
 - The shipped shared-datapath contract is now broad enough to be considered a
   bounded contract for same-name generated-FSM output families: it has

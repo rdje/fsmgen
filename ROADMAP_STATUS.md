@@ -1,9 +1,21 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `R11`.
+- Active task tree: `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT`.
+- Current frontier: `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.2`.
+- Recent R11 reusable-module contract frontier audit selection:
+  `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.1` activated an
+  evidence-gathering audit over the remaining reusable standalone-DT and
+  module-library frontier. The roadmap mixes unnamed DT roots, fuller
+  standalone-DT module contracts, multi-block enable exposure, advanced DT
+  enable-control, implicit system-port policy, generated-child export rules,
+  lookup roots, and reusable package/import semantics, so `.2` must select one
+  bounded implementation slice or record a prerequisite deferral before code.
+  No parser, scheduler, report, generated artifact, HDL, CLI, public API,
+  source, test, or generated behavior changed in this selection. Validation
+  passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R11 shared-datapath contract frontier audit:
   `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.2` audited the shipped
   shared-datapath contract and closed the task tree. No new shared-datapath

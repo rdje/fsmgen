@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R11 — Reusable-module contract frontier audit selected
+- Created active task tree `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT`.
+- Completed `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.1`.
+- The next frontier is `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.2`, which
+  will audit shipped reusable standalone-DT/module-library behavior and choose
+  one bounded next implementation slice or deferral.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test,
+  generated artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT`.
+- Current frontier: `R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT.2`.
+
 ## 2026-05-24: R11 — Shared-datapath contract frontier audited
 - Completed `R11-SHARED-DATAPATH-CONTRACT-FRONTIER-AUDIT.2` and closed the
   task tree.
