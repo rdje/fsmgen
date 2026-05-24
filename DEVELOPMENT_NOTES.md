@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: R9 strict-mode work starts with a coverage audit
+- `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` handed active implementation focus to
+  `R9`, but the correct first `R9` step is still an audit. Strict mode is a
+  support-tier contract, so another rejection should be selected only after
+  mapping the current default/strict split, diagnostics, corpus coverage,
+  mdBook guidance, and public metadata.
+
 ## 2026-05-24: R8 closure is a handoff, not a claim of no future language work
 - `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` marks `R8` mostly done because the
   current known compatibility residue is accounted for in the manifest,

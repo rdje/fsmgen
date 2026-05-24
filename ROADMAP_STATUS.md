@@ -1,9 +1,19 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `R9`.
+- Active task tree: `R9-STRICT-MODE-FRONTIER-AUDIT`.
+- Current frontier: `R9-STRICT-MODE-FRONTIER-AUDIT.2`.
+- Recent R9 strict-mode frontier selection:
+  `R9-STRICT-MODE-FRONTIER-AUDIT.1` activated the next strict-mode task tree
+  after `R8` handed active implementation focus to `R9`. No parser,
+  scheduler, report, generated artifact, HDL, CLI, public API, source, test,
+  or generated behavior changed in this selection. The follow-up frontier is
+  `.2`, an audit-only leaf that must inspect the current default/strict split,
+  supported-corpus strict acceptance evidence, diagnostics, mdBook coverage,
+  and public metadata before selecting another strict cut or close-out.
+  Validation passed: feature-backlog audit with `Files=1, Tests=15`; `mdbook
+  build docs/book`; and `git diff --check`.
 - Recent R8 language-contract exit audit:
   `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` audited the `R8` exit criteria and
   closed the task tree without selecting another behavior-bearing `R8` leaf.
@@ -6435,10 +6445,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `R8-LANGUAGE-CONTRACT-EXIT-AUDIT` closed after marking
-  `R8` mostly done and handing active implementation focus to `R9`.
+- Active task tree: `R9-STRICT-MODE-FRONTIER-AUDIT`.
+- Current frontier: `R9-STRICT-MODE-FRONTIER-AUDIT.2`.
+- Completion status: `.1` selected the active tree with no behavior change.
+  `.2` is the audit/design frontier for deciding whether `R9` needs another
+  bounded strict cut, can close, or should hand remaining strict maintenance
+  to future feature slices.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

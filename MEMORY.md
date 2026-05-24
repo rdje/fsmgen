@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R9 strict-mode frontier audit selected
+- Created active task tree `R9-STRICT-MODE-FRONTIER-AUDIT`.
+- Purpose: audit strict-mode support-tier coverage after the `R8` handoff
+  before selecting any new strict rejection or close-out decision.
+- The next frontier is `R9-STRICT-MODE-FRONTIER-AUDIT.2`, an audit-only leaf
+  that must map current default-mode compatibility residue to strict-mode
+  behavior, diagnostics, corpus accounting, mdBook coverage, and public
+  metadata.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R9-STRICT-MODE-FRONTIER-AUDIT`.
+- Current frontier: `R9-STRICT-MODE-FRONTIER-AUDIT.2`.
+
 ## 2026-05-24: R8 exit criteria audited and handed to R9
 - Completed `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` and closed the task tree.
 - The audit found no concrete unclassified parser-visible legacy family for a

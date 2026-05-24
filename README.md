@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/R9-STRICT-MODE-FRONTIER-AUDIT.md` — active `R9` task tree for auditing the strict-mode support-tier frontier.
 - `docs/tasks/R8-LANGUAGE-CONTRACT-EXIT-AUDIT.md` — completed `R8` task tree for auditing the language-contract exit criteria.
 - `docs/tasks/RICHER-AGGREGATE-OPERATORS.md` — completed aggregate-types task tree for richer aggregate operator widening.
 - `docs/tasks/R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.md` — completed `R8` task tree for resolving the next parser-accepted language-surface gray zone.

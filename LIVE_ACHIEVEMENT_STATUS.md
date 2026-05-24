@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R9 — Strict-mode frontier audit selected
+- Created active task tree `R9-STRICT-MODE-FRONTIER-AUDIT`.
+- Completed `R9-STRICT-MODE-FRONTIER-AUDIT.1`.
+- The next frontier is audit-only leaf `R9-STRICT-MODE-FRONTIER-AUDIT.2`,
+  which will map the current default/strict split, diagnostics, corpus
+  accounting, mdBook coverage, and public metadata before selecting another
+  strict cut or close-out.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R9-STRICT-MODE-FRONTIER-AUDIT`.
+- Current frontier: `R9-STRICT-MODE-FRONTIER-AUDIT.2`.
+
 ## 2026-05-24: R8 — Exit criteria audited and handed to R9
 - Completed `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` and closed the task tree.
 - The audit found no concrete unclassified parser-visible legacy family for

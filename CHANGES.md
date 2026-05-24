@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R9 — Strict-mode frontier audit selected
+- Created active task tree `R9-STRICT-MODE-FRONTIER-AUDIT`.
+- The tree owns the next roadmap-aligned `R9` activity: audit current
+  strict-mode support-tier coverage before selecting another compatibility
+  rejection or closing the strict-mode lane.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R8 — Exit criteria audited and handed to R9
 - Completed `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` and closed the task tree.
 - Audited the `R8` language-contract exit criteria against the mdBook

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R9-STRICT-MODE-FRONTIER-AUDIT` | `active` | `R9` | `R9-STRICT-MODE-FRONTIER-AUDIT.2` | [docs/tasks/R9-STRICT-MODE-FRONTIER-AUDIT.md](docs/tasks/R9-STRICT-MODE-FRONTIER-AUDIT.md) |
 
 ## Proposed Task Trees
 
