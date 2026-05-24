@@ -213,6 +213,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-TRANSACTION-ACTIVATION.md` — completed `R14` task tree for task-like transaction activation and parameter overrides.
 - `docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md` — completed `R14` task tree for remaining rule-trigger and direct-activation parameter overrides.
 - `docs/tasks/ISF-ACTIVATION-PARAM-ACTOR-PARAMS.md` — completed `R14` task tree for actor-local scalar parameter defaults as generated activation parameter override values.
+- `docs/tasks/ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.md` — completed `R14` documentation truth-sync task tree for activation parameter value-domain prose.
 - `docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md` — completed `R14` task tree for reusable-library clock/reset name remapping.
 - `docs/tasks/ISF-STORAGE-VAR-ALIASES.md` — completed `R14` task tree for actor-owned scalar storage variable aliases.
 - `docs/tasks/ISF-STORAGE-VAR-SURFACE.md` — completed `R14` task tree for the narrowed actor-owned scalar storage source vocabulary.

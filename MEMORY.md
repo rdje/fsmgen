@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 activation parameter value-domain docs synchronized
+- Completed `ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.1` and closed
+  the task tree.
+- Synchronized remaining mdBook feature-backlog, ISF spec, and public
+  contract wording after `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`.
+- The docs now consistently state that generated activation parameter
+  override values may use scalar/exact-width literals, actor-local constants,
+  actor-local scalar parameter defaults, enum members, and compatible
+  aggregate/list literals with those shipped leaf sources.
+- Parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, and generated behavior are unchanged.
+- Validation passed: focused spec/book/backlog audits with
+  `Files=3, Tests=343`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 actor-parameter activation overrides shipped
 - Completed `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` and closed the task tree.
 - Generated activation `(params ...)` override values now accept actor-local

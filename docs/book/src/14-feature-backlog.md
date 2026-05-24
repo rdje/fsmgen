@@ -319,19 +319,22 @@ overrides/value shapes, rejects parameter declarations on non-generated
 transactions, preserves per-instance override lists in the parent lowerer IR,
 and applies those overrides through the generated top.
 
-The shipped value domain is scalar/exact-width literals, actor-local
-constants, scalar local or package-qualified enum members, and compatible
-aggregate/list literals whose scalar leaves are literals, actor-local
-constants for activation overrides, or enum members for actor parameter
-defaults, generated child transaction parameter defaults, and activation
-overrides.
+The shipped activation override value domain is scalar/exact-width literals,
+actor-local constants, actor-local scalar parameter defaults, scalar local or
+package-qualified enum members, and compatible aggregate/list literals whose
+scalar leaves are literals, actor-local constants, actor-local scalar
+parameter defaults, or enum members.
+
+Actor parameter defaults and generated child transaction parameter defaults
+also accept enum members in their shipped scalar and aggregate/list leaf
+positions.
 
 Reusable-library use-site parameter overrides may use enum members as scalar
 values or scalar leaves inside compatible aggregate/list override values.
 
-Constant names and scalar enum members on activation sites, and enum members
-on reusable-library use sites, are resolved to literal values before
-generated-top emission.
+Actor constant names, actor-local scalar parameter default names, and scalar
+enum members on activation sites, and enum members on reusable-library use
+sites, are resolved to literal values before generated-top emission.
 
 Runtime signals and arbitrary expressions remain outside the shipped value
 domain.

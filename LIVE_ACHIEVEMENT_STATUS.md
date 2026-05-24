@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Activation parameter value-domain docs synchronized
+- Completed `ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.1` and closed
+  the task tree.
+- Synchronized remaining mdBook feature-backlog, ISF spec, and public
+  contract wording so activation override summaries include actor-local
+  scalar parameter defaults.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed.
+- Validation passed: focused spec/book/backlog audits with
+  `Files=3, Tests=343`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Actor-parameter activation overrides shipped
 - Completed `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` and closed the task tree.
 - Generated activation `(params ...)` override values now accept actor-local

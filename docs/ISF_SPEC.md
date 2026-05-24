@@ -537,7 +537,10 @@ package-qualified enum members, and compatible aggregate/list literals whose
 leaves are numeric, exact-width, or local/package enum member literals for
 actor and generated child transaction parameter defaults. Scalar activation
 parameter overrides and scalar leaves inside activation aggregate/list
-parameter override values may also use local or package-qualified enum members.
+parameter override values may use actor-local constants, actor-local scalar
+parameter defaults, and local or package-qualified enum members. Actor
+constants, actor scalar parameters, and enum members resolve to literal values
+before generated-top emission.
 Reusable-library use-site parameter overrides may use local or
 package-qualified enum members as scalar override values or as scalar leaves
 inside compatible aggregate/list override values. Library use-site enum
@@ -3170,9 +3173,10 @@ child activations. Child transaction parameter declarations must use unique
 HDL-identifier-compatible names. Overrides must use unique names declared by
 the child transaction; missing overrides use child defaults. Scalar numeric
 and exact-width literal overrides are width-flexible. Aggregate/list defaults
-require compatible aggregate/list override shape. Actor-local constants and
-enum members may supply static activation override scalar values or scalar
-leaves inside activation aggregate/list override values. Malformed
+require compatible aggregate/list override shape. Actor-local constants,
+actor-local scalar parameter defaults, and enum members may supply static
+activation override scalar values or scalar leaves inside activation
+aggregate/list override values. Malformed
 forms, duplicate generated instance names, duplicate parameters, unknown
 targets, unknown override names, unsupported value shapes, unresolved enum
 members, and parameter declarations on non-generated transactions fail before

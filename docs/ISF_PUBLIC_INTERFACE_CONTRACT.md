@@ -2639,11 +2639,11 @@ machine-readable contract advertises these through
 Generated-composition child `parameters[]` and instance
 `parameter_bindings[]` entries also preserve authored scalar enum member
 tokens and aggregate/list enum leaves for generated child transaction parameter
-defaults. Scalar activation override enum values and enum leaves inside
-activation aggregate/list override values are resolved to literal values before
-generated-top emission, so
-generated-composition instance `parameter_bindings[]` entries carry the emitted
-literal override value for those use sites.
+defaults. Actor constants, actor-local scalar parameter defaults, scalar enum
+member values, and matching leaves inside activation aggregate/list override
+values are resolved to literal values before generated-top emission, so
+generated-composition instance `parameter_bindings[]` entries carry the
+emitted literal override value for those use sites.
 
 For each `actor_phases` or `actor_stages` entry, `name` is the authored
 actor-level metadata name and `body` is the JSON-safe copy of the

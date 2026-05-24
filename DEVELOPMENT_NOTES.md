@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Value-domain summaries must mirror the generated-top contract
+- Activation parameter value-domain summaries are treated as user-facing
+  contract text. When generated activation overrides resolve actor-local
+  scalar parameter defaults before generated-top emission, every overview of
+  that value domain must name that source beside actor constants and enum
+  members, or downstream users will see a false non-claim.
+
 ## 2026-05-24: Activation parameter actor defaults resolve like constants
 - The shipped implementation keeps actor-local scalar parameter defaults in
   the same static specialization class as actor constants for generated

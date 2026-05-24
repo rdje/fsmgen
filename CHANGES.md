@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Activation parameter value-domain docs synchronized
+- Completed `ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.1` and closed
+  the task tree.
+- Synced remaining mdBook feature-backlog, ISF spec, and public contract
+  wording so activation override summaries include actor-local scalar
+  parameter defaults alongside literals, actor constants, enum members, and
+  compatible aggregate/list literals.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed.
+- Validation passed: focused spec/book/backlog audits with
+  `Files=3, Tests=343`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Actor-parameter activation overrides shipped
 - Completed `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` and closed the task tree.
 - Spawn, generated blocking `do`, and rule-trigger `(params ...)` override

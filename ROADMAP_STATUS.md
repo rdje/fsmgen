@@ -4,6 +4,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Recent R14 activation parameter value-domain documentation sync:
+  `ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.1` synchronized remaining
+  mdBook feature-backlog, ISF spec, and public contract wording after
+  `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`. Activation override summaries now
+  consistently include actor-local scalar parameter defaults alongside
+  literals, actor constants, enum members, and compatible aggregate/list
+  literals. No parser, scheduler, report, generated artifact, HDL, CLI
+  behavior, public API, source, test, or generated behavior changed.
+  Validation passed: focused spec/book/backlog audits with `Files=3,
+  Tests=343`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 activation actor-parameter override implementation:
   `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` shipped the selected generated
   activation parameter value widening and closed the task tree. Spawn,
@@ -6952,12 +6962,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - Active task tree: `none`.
 - Current frontier: `none`.
-- Completion status: `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2` shipped
-  actor-local scalar parameter defaults as generated activation parameter
-  override values for spawn, generated blocking `do`, rule-trigger sites, and
-  scalar leaves inside compatible aggregate/list overrides. The task tree is
-  closed. The next behavior-bearing PNT implementation slice must create or
-  select task-tree ownership before code changes.
+- Completion status: `ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.1`
+  synchronized remaining activation parameter value-domain docs after
+  `ISF-ACTIVATION-PARAM-ACTOR-PARAMS.2`. No behavior changed. The task tree
+  is closed. The next behavior-bearing PNT implementation slice must create
+  or select task-tree ownership before code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
