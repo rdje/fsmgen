@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Generated-child transaction static defaults selected
+- Created active task tree `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS`.
+- Completed `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1`; the selected
+  implementation frontier is `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2`.
+- Selected a bounded generated-child transaction parameter default value
+  widening: generated child transaction scalar defaults and scalar leaves
+  inside compatible aggregate/list defaults may use declared actor constants
+  and actor-local scalar parameter defaults by name.
+- Actor-static names must resolve to literals before generated child `.fsm`
+  `+params`, generated-composition summaries, and schedule-report publication.
+  Enum member transaction defaults keep the existing authored-token review
+  behavior.
+- Transaction-parameter dependencies, non-scalar actor parameters, runtime
+  interface signals, arbitrary expressions, package/imported constants beyond
+  shipped enum members, and malformed shapes remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Verification passed: `prove -Iperl t/1256-feature-backlog-status-audit.t`
+  with `Files=1, Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ### R14 — Ordered actor-parameter defaults shipped
 - Completed `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` and closed the task
   tree.

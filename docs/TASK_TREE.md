@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS` | `active` | `R14` | `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2` | [docs/tasks/ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.md](docs/tasks/ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.md) |
 
 ## Proposed Task Trees
 

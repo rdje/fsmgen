@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Generated child transaction defaults must publish literals for actor-static names
+- Generated child transaction parameters are child-local specialization
+  defaults. When those defaults refer to parent actor constants or parent actor
+  scalar parameters, the generated child `.fsm` and schedule report should not
+  depend on private parent name resolution.
+- The selected implementation will therefore literalize actor-static names at
+  transaction parameter declaration lowering time. Enum member defaults remain
+  reviewable as authored enum tokens because child artifacts already preserve
+  the enum declarations needed to interpret them.
+
 ## 2026-05-24: Ordered actor parameter defaults stay source-local
 - The shipped implementation records earlier scalar actor parameter defaults in
   declaration order while finalizing actor parameters. A later default can

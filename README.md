@@ -217,6 +217,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.md` — completed `R14` task tree for actor static values in reusable-library use-site parameter overrides.
 - `docs/tasks/ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.md` — completed `R14` task tree for actor constants in actor parameter defaults.
 - `docs/tasks/ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.md` — completed `R14` task tree for ordered actor-parameter-backed actor parameter defaults.
+- `docs/tasks/ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.md` — active `R14` task tree for actor-static generated-child transaction parameter defaults.
 - `docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md` — completed `R14` task tree for reusable-library clock/reset name remapping.
 - `docs/tasks/ISF-STORAGE-VAR-ALIASES.md` — completed `R14` task tree for actor-owned scalar storage variable aliases.
 - `docs/tasks/ISF-STORAGE-VAR-SURFACE.md` — completed `R14` task tree for the narrowed actor-owned scalar storage source vocabulary.

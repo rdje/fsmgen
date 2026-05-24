@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 generated-child transaction static defaults selected
+- Created active task tree `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS`.
+- Completed `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1`; the selected
+  implementation frontier is `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2`.
+- The selected widening will allow generated child transaction scalar
+  parameter defaults and scalar leaves inside compatible aggregate/list
+  defaults to use declared actor constants and actor-local scalar parameter
+  defaults by name.
+- Actor-static names must resolve to literals before generated child `.fsm`
+  `+params`, generated-composition summaries, and schedule-report publication.
+  Existing enum-member transaction defaults keep authored-token review
+  behavior.
+- Transaction-parameter dependencies, non-scalar actor parameters, runtime
+  interface signals, arbitrary expressions, package/imported constants beyond
+  shipped enum members, and malformed shapes remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS`.
+- Current frontier: `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2`.
+
 ## 2026-05-24: R14 ordered actor-parameter defaults shipped
 - Completed `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` and closed the task
   tree.
