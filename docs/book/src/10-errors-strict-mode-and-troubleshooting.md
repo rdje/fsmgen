@@ -110,6 +110,9 @@ Examples of what strict mode is already used for:
   compatibility spellings such as `(OUT = IN)`
 - preferring the D-input dual-output spelling `(<=- (D_IN NEXT_VALUE))` over
   the legacy `<=+` alias
+- preferring canonical composition wiring entries such as `(child.out top_out)`
+  or `(connect child.out top_out)` over legacy `/child.out/top_out/` slash-link
+  tokens
 
 Use strict mode when you want the tool to tell you whether a source already
 fits the cleaner forward contract.
@@ -117,6 +120,9 @@ fits the cleaner forward contract.
 The regression corpus deliberately keeps paired default-compatible and
 strict-rejected assets for compatibility residue such as infix assignments, so
 the supported boundary is machine-checked instead of living only in examples.
+That paired accounting now includes legacy composition `?wiring` slash-link
+tokens: default mode still compiles `/source/target/`, while strict mode
+rejects it with a diagnostic that names both canonical list-form replacements.
 
 Coverage buckets are also tied to their intended classifications, so supported
 smoke, legacy compatibility, and expected-failure entries cannot accidentally
@@ -385,7 +391,8 @@ contract. Current out-of-support examples include:
   without declared aggregate types,
   malformed verbose `?ports` declarations, invalid `?ports` tokens,
   non-positive `?ports` widths, malformed `?wiring` list-form endpoints,
-  unsupported `?wiring` tokens, malformed composition-top symbol names, or
+  unsupported `?wiring` tokens, strict-mode legacy `?wiring`
+  `/source/target/` slash-link tokens, malformed composition-top symbol names, or
   non-literal composition-top enum values,
   missing external generated child sources, wrong-kind external generated-child
   roots such as `?fsmc` resolving to `?dt:name` or `?dtc` resolving to

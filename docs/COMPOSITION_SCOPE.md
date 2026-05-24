@@ -15,7 +15,8 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - two or more generated children (`?fsmc` / `?dtc`),
   - explicit `?wiring` wiring using canonical Lisp-ish list links such as
     `(source target)` or `(connect source target)`, with the older
-    `/source/target/` token still accepted as compatibility input. Sources may
+    `/source/target/` token still accepted as default-mode compatibility input
+    and rejected by strict mode in favor of the list forms. Sources may
     be top-port names, source-side top-port bit/slice expressions such as
     `data_bus[3]` or `data_bus[7:4]`, source-side child-output bit/slice
     expressions such as `producer.payload[3]` or `producer.payload[7:4]`,
@@ -58,7 +59,8 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - explicit `?wiring` wiring using the same canonical Lisp-ish list links as
     `C2`, including `(source target)`, `(connect source target)`, source-side
     `(cat ...)` concat expressions, source-side `(repeat COUNT operand)`
-    groups, and compatibility `/source/target/` tokens. The same endpoint,
+    groups, and default-mode compatibility `/source/target/` tokens. Strict
+    mode rejects slash-link tokens and requires the list forms. The same endpoint,
     actual, literal-width, named-literal, and target-width rules from the `C2`
     bullet apply to mixed generated-child plus external-RTL tops,
   - one resolved child output source may now also fan out to multiple top outputs through one deterministic shared carrier plus explicit top-output assignments,

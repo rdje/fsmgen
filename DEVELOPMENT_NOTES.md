@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Composition slash-link strict cut is scoped to compatibility tokens
+- `R8-STRICT-SUPPORT-TIER-CUTS.3` intentionally rejects only well-formed
+  `?wiring` scalar slash-link tokens under strict mode. It does not change
+  default-mode parsing, parser diagnostics for malformed wrapped slash links,
+  or the canonical list-form wiring planner.
+- The scanner runs on composition body items in `FSM::Pipeline::SourceFrontend`
+  before composition planning, so the strict diagnostic is source-level and
+  appears before HDL emission or lane-specific planning can reinterpret the
+  legacy token.
+- Strict-supported fixtures must use canonical list links. That keeps strict
+  mode useful as a positive generated-source target while preserving
+  default-mode compatibility for older authored sources.
+
 ## 2026-05-24: Composition slash-link tokens are the next strict cut
 - `R8-STRICT-SUPPORT-TIER-CUTS.2` selected legacy `?wiring`
   `/source/target/` slash-link tokens as the next strict-mode widening.

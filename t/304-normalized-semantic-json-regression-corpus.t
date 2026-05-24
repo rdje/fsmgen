@@ -22,6 +22,7 @@ my %strict_rejection_coverages = map { $_ => 1 } qw(
     strict_section_rejection_pipeline_cli
     strict_assignment_rejection_pipeline_cli
     strict_child_root_rejection_pipeline_cli
+    strict_composition_rejection_pipeline_cli
 );
 
 subtest 'semantic JSON classifies every expected-failure corpus entry' => sub {

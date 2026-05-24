@@ -30,6 +30,7 @@ sub build_language_surface_section {
                 '(sreset rstn) reset spelling',
                 'compact (:= signal=value) init/default directive',
                 'infix assignment forms such as (OUT = SRC)',
+                'composition ?wiring /source/target/ slash-link tokens',
                 'legacy child roots under ?fsmc / ?dtc',
             ],
         },

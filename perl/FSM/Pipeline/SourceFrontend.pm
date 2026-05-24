@@ -357,6 +357,21 @@ sub enforce_strict_source_boundary ($class, %args) {
               . "or re-run without strict mode if you still need infix assignment compatibility. "
               . strict_mode_boundary_hint();
         }
+
+    }
+
+    my $composition_body_items = $class->_composition_body_items(
+        raw_ast => $args{raw_ast},
+        source_info => $source_info,
+    );
+    if ($composition_body_items) {
+        if (my $slash_link_issue = $class->_find_strict_composition_wiring_slash_link_issue($composition_body_items)) {
+            confess
+                "Strict mode rejects legacy '?wiring' slash-link token '$slash_link_issue->{token}' in source '$source_label'. "
+              . "Use the canonical '$slash_link_issue->{canonical_hint}' form or verbose '$slash_link_issue->{verbose_hint}' form for strict-mode composition wiring, "
+              . "or re-run without strict mode if you still need '/source/target/' compatibility. "
+              . strict_mode_boundary_hint();
+        }
     }
 }
 
@@ -681,6 +696,33 @@ sub _find_strict_infix_assignment_issue ($class, $node) {
     for my $child (@$node) {
         next unless ref($child) eq 'ARRAY';
         if (my $issue = $class->_find_strict_infix_assignment_issue($child)) {
+            return $issue;
+        }
+    }
+
+    return undef;
+}
+
+sub _find_strict_composition_wiring_slash_link_issue ($class, $node) {
+    return undef unless ref($node) eq 'ARRAY';
+
+    if (@$node >= 2 && !ref($node->[0]) && ($node->[0] // '') =~ /^\?wiring:/ && ref($node->[1]) eq 'ARRAY') {
+        for my $item (@{$node->[1]}) {
+            next unless defined($item) && !ref($item);
+            next unless $item =~ m{\A/([^/]+)/([^/]+)/\z};
+            return {
+                token => $item,
+                source => $1,
+                target => $2,
+                canonical_hint => "($1 $2)",
+                verbose_hint => "(connect $1 $2)",
+            };
+        }
+    }
+
+    for my $child (@$node) {
+        next unless ref($child) eq 'ARRAY';
+        if (my $issue = $class->_find_strict_composition_wiring_slash_link_issue($child)) {
             return $issue;
         }
     }

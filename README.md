@@ -89,7 +89,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/DYNAMIC-DIVISOR-SAFETY-FRONTIER.md` — completed language-ergonomics task tree for direct runtime literal-zero divisor rejection.
 - `docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md` — completed language-ergonomics task tree for the first inference-first scalar authoring slice.
 - `docs/tasks/COMPOSITION-WIRING-LISPISH.md` — completed `R11` task tree for canonical Lisp-ish `?wiring` list forms.
-- `docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md` — active `R8` task tree for the next strict-mode support-tier cuts.
+- `docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md` — completed `R8` task tree for the latest strict-mode support-tier cut.
 - `docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md` — completed roadmap-maintenance task tree for broad feature-backlog owner coverage synchronization.
 - `docs/tasks/ISF-CONFLICT-RESOLUTION.md` — completed `R14` task tree for ISF same-cycle conflict semantics.
 - `docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md` — completed `R14` task tree for covered transaction-over-rule same-target priority.

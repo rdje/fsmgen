@@ -152,7 +152,11 @@ Nested brace groups are also preserved:
 The compatibility source-token spelling remains accepted too, so older sources
 like `/header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/` still
 parse. In new code, prefer `(source target)` and use `(cat ...)` when the
-source is a concat expression.
+source is a concat expression. In strict mode, the slash-token spelling is
+rejected as composition compatibility residue; write the same movement as
+`((cat header_bus status_bus[0] =1 payload_bus[3:0]) uart_tx.data_in)` or
+`(connect (cat header_bus status_bus[0] =1 payload_bus[3:0])
+uart_tx.data_in)`.
 
 Concat operands may currently include:
 

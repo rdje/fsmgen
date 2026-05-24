@@ -335,7 +335,9 @@ Each list item is one directed link: `(source target)`.
 The verbose spelling `(connect source target)` is equivalent and can improve
 readability in dense wiring blocks. The older `/source/target/` token remains
 accepted as compatibility input, but new examples and generated artifacts use
-the list form.
+the list form. In strict mode, `/source/target/` is rejected with a migration
+hint because the strict composition surface is the canonical `(source target)`
+or `(connect source target)` list form.
 
 List-form wiring entries must be real directed links; a list wrapper around an
 old slash token such as `(group /child.out/top_out/)` is rejected instead of

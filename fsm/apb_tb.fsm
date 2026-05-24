@@ -21,13 +21,13 @@
   (?fsmc:requester apb_requester)
   (?fsmc:completer apb_completer)
   (?wiring:apb_bus
-    /requester.PSEL/completer.PSEL/
-    /requester.PENABLE/completer.PENABLE/
-    /requester.PWRITE/completer.PWRITE/
-    /requester.PADDR/completer.PADDR/
-    /requester.PWDATA/completer.PWDATA/
-    /completer.PREADY/requester.PREADY/
-    /completer.PRDATA/requester.PRDATA/
-    /completer.PSLVERR/requester.PSLVERR/
+    (requester.PSEL completer.PSEL)
+    (requester.PENABLE completer.PENABLE)
+    (requester.PWRITE completer.PWRITE)
+    (requester.PADDR completer.PADDR)
+    (requester.PWDATA completer.PWDATA)
+    (completer.PREADY requester.PREADY)
+    (completer.PRDATA requester.PRDATA)
+    (completer.PSLVERR requester.PSLVERR)
   )
 )

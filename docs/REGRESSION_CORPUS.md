@@ -62,6 +62,10 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   realization compatibility residue asset and must still compile through both
   the pipeline API and the CLI in default mode, including any extra source
   search roots needed to realize the child.
+- `legacy_composition_default_pipeline_cli`: the entry is retained as a
+  composition-surface compatibility residue asset and must still compile
+  through both the pipeline API and the CLI in default mode even though the
+  canonical composition form is preferred for new authored sources.
 - `strict_root_rejection_pipeline_cli`: the entry is intentionally rejected in
   strict mode through both the pipeline API and the CLI, and that rejection is
   part of the supported contract.
@@ -77,6 +81,10 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   rejected in strict mode through both the pipeline API and the CLI because it
   relies on compatibility residue at the generated-child source-root boundary,
   and that rejection is part of the supported contract.
+- `strict_composition_rejection_pipeline_cli`: the entry is intentionally
+  rejected in strict mode through both the pipeline API and the CLI because it
+  relies on composition-surface compatibility residue, and that rejection is
+  part of the supported contract.
 - `language_contract_rejection_pipeline_cli`: the entry is intentionally
   rejected by the normal language-contract boundary through both the pipeline
   API and the CLI, and that rejection is part of the supported contract. This
@@ -409,6 +417,10 @@ integer literal normalization on both direct and composition paths. Computed
 test selectors and relational test-branch selectors are also covered as
 supported direct selector surfaces. Legacy `<=+` compatibility is tracked
 separately through paired default-compatible and strict-rejected corpus entries.
+Legacy composition `?wiring` slash-link tokens follow the same accounting
+shape: default mode still compiles `/source/target/`, while strict mode rejects
+that token family with a migration hint toward `(source target)` or
+`(connect source target)`.
 
 ## Capability manifest
 
@@ -565,6 +577,8 @@ manifest output while keeping the exact file lists widenable.
 | `legacy.fsm_child_root.strict_rejection` | [t/corpus/legacy_fsm_child_root_top.fsm](t/corpus/legacy_fsm_child_root_top.fsm) | `expected_failure` | `strict_child_root_rejection_pipeline_cli` |
 | `legacy.dt_child_root.default_compat` | [t/corpus/legacy_dt_child_root_top.fsm](t/corpus/legacy_dt_child_root_top.fsm) | `legacy_out_of_scope` | `legacy_child_root_default_pipeline_cli` |
 | `legacy.dt_child_root.strict_rejection` | [t/corpus/legacy_dt_child_root_top.fsm](t/corpus/legacy_dt_child_root_top.fsm) | `expected_failure` | `strict_child_root_rejection_pipeline_cli` |
+| `legacy.composition_wiring_slash.default_compat` | [t/corpus/legacy_composition_wiring_slash_top.fsm](t/corpus/legacy_composition_wiring_slash_top.fsm) | `legacy_out_of_scope` | `legacy_composition_default_pipeline_cli` |
+| `legacy.composition_wiring_slash.strict_rejection` | [t/corpus/legacy_composition_wiring_slash_top.fsm](t/corpus/legacy_composition_wiring_slash_top.fsm) | `expected_failure` | `strict_composition_rejection_pipeline_cli` |
 | `contract.language_contract_bad_size_entry` | [t/corpus/language_contract_bad_size_entry.fsm](t/corpus/language_contract_bad_size_entry.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_size_expression_non_positive` | [t/corpus/direct_size_expression_non_positive.fsm](t/corpus/direct_size_expression_non_positive.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_size_expression_unknown_symbol` | [t/corpus/direct_size_expression_unknown_symbol.fsm](t/corpus/direct_size_expression_unknown_symbol.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |

@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R8-STRICT-SUPPORT-TIER-CUTS` | `active` | `R8` | `R8-STRICT-SUPPORT-TIER-CUTS.3` | [docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md](docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R8-STRICT-SUPPORT-TIER-CUTS` | `done` | `R8` | `closed` | [docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md](docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md) |
 | `RICHER-AGGREGATE-OPERATORS` | `done` | `aggregate types and data` | `closed` | [docs/tasks/RICHER-AGGREGATE-OPERATORS.md](docs/tasks/RICHER-AGGREGATE-OPERATORS.md) |
 | `BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING` | `done` | `aggregate types and data` | `closed` | [docs/tasks/BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.md](docs/tasks/BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING.md) |
 | `AGGREGATE-AUTOGROWTH-FROM-USAGE` | `done` | `aggregate types and data` | `closed` | [docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md](docs/tasks/AGGREGATE-AUTOGROWTH-FROM-USAGE.md) |

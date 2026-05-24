@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R8 — Strict composition slash-link cut shipped
+- Completed `R8-STRICT-SUPPORT-TIER-CUTS.3` and closed the task tree.
+- Default mode continues to accept well-formed composition `?wiring`
+  `/source/target/` slash-link tokens as compatibility input.
+- Strict mode now rejects those slash-link tokens before HDL emission with
+  `FSMGEN_STRICT_COMPOSITION_WIRING_SLASH_LINK` and a migration hint toward
+  `(source target)` or `(connect source target)`.
+- Added paired regression-corpus accounting for default compatibility and
+  strict rejection, plus check-JSON and normalized semantic JSON strict-bucket
+  support for the new coverage family.
+- Migrated strict-supported composition fixtures to canonical list-form
+  wiring, and synchronized the mdBook composition/strict-mode chapters,
+  regression corpus docs, composition scope, roadmap status, and task-tree
+  status.
+- Validation passed: focused strict/composition/corpus tests with `Files=6,
+  Tests=3279`; manifest/diagnostic/JSON/support gates with `Files=8,
+  Tests=1131`; feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
+
 ### R8 — Strict support-tier frontier audited
 - Completed `R8-STRICT-SUPPORT-TIER-CUTS.2`.
 - Audited the current strict-mode enforcement boundary across source

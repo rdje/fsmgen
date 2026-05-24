@@ -67,6 +67,12 @@ my %DIAGNOSTIC_CODES = (
         family => 'strict_mode',
         summary => 'Strict mode rejected an incompatible child source under ?dtc.',
     },
+    FSMGEN_STRICT_COMPOSITION_WIRING_SLASH_LINK => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'strict_mode',
+        summary => 'Strict mode rejected legacy composition ?wiring slash-link syntax.',
+    },
     FSMGEN_LANGUAGE_BAD_SIZE_ENTRY => {
         severity => 'error',
         stability => 'stable',

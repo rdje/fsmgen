@@ -96,6 +96,7 @@ subtest 'expected-failure entries reject through the classified strict support-t
                 || $_->{coverage} eq 'strict_section_rejection_pipeline_cli'
                 || $_->{coverage} eq 'strict_assignment_rejection_pipeline_cli'
                 || $_->{coverage} eq 'strict_child_root_rejection_pipeline_cli'
+                || $_->{coverage} eq 'strict_composition_rejection_pipeline_cli'
         } regression_corpus_entries()
     ) {
         my $path = repo_path($entry->{relpath});

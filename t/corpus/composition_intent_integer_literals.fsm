@@ -6,12 +6,12 @@
   )
   (?rtl:uart_tx)
   (?wiring:wiring
-    /=5'23/decimal_out/
-    /=8'-0xA/negative_out/
-    /=5'23,=8'-10,=20'x1/packed_out/
-    /=5'23/uart_tx.decimal_in/
-    /=8'-0b1010/uart_tx.negative_in/
-    /=5'23,=8'-0xA,=20'x1/uart_tx.packed_in/
+    (=5'23 decimal_out)
+    (=8'-0xA negative_out)
+    ((cat =5'23 =8'-10 =20'x1) packed_out)
+    (=5'23 uart_tx.decimal_in)
+    (=8'-0b1010 uart_tx.negative_in)
+    ((cat =5'23 =8'-0xA =20'x1) uart_tx.packed_in)
   )
 )
 

@@ -36,10 +36,12 @@ my %allowed_coverages = map { $_ => 1 } qw(
     legacy_section_default_pipeline_cli
     legacy_assignment_default_pipeline_cli
     legacy_child_root_default_pipeline_cli
+    legacy_composition_default_pipeline_cli
     strict_root_rejection_pipeline_cli
     strict_section_rejection_pipeline_cli
     strict_assignment_rejection_pipeline_cli
     strict_child_root_rejection_pipeline_cli
+    strict_composition_rejection_pipeline_cli
     language_contract_rejection_pipeline_cli
     direct_generation_contract_rejection_pipeline_cli
     composition_contract_rejection_pipeline_cli
@@ -58,6 +60,7 @@ my %strict_rejection_coverages = map { $_ => 1 } qw(
     strict_section_rejection_pipeline_cli
     strict_assignment_rejection_pipeline_cli
     strict_child_root_rejection_pipeline_cli
+    strict_composition_rejection_pipeline_cli
 );
 
 my %coverage_classification = (
@@ -67,10 +70,12 @@ my %coverage_classification = (
     legacy_section_default_pipeline_cli => 'legacy_out_of_scope',
     legacy_assignment_default_pipeline_cli => 'legacy_out_of_scope',
     legacy_child_root_default_pipeline_cli => 'legacy_out_of_scope',
+    legacy_composition_default_pipeline_cli => 'legacy_out_of_scope',
     strict_root_rejection_pipeline_cli => 'expected_failure',
     strict_section_rejection_pipeline_cli => 'expected_failure',
     strict_assignment_rejection_pipeline_cli => 'expected_failure',
     strict_child_root_rejection_pipeline_cli => 'expected_failure',
+    strict_composition_rejection_pipeline_cli => 'expected_failure',
     language_contract_rejection_pipeline_cli => 'expected_failure',
     direct_generation_contract_rejection_pipeline_cli => 'expected_failure',
     composition_contract_rejection_pipeline_cli => 'expected_failure',
@@ -140,6 +145,8 @@ for my $required_id (qw(
     legacy.fsm_child_root.strict_rejection
     legacy.dt_child_root.default_compat
     legacy.dt_child_root.strict_rejection
+    legacy.composition_wiring_slash.default_compat
+    legacy.composition_wiring_slash.strict_rejection
     contract.language_contract_bad_size_entry
     contract.direct_size_expression_non_positive
     contract.direct_size_expression_unknown_symbol
@@ -421,13 +428,13 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
-    9,
-    'catalog now records nine explicit legacy-out-of-scope compatibility entries',
+    10,
+    'catalog now records ten explicit legacy-out-of-scope compatibility entries',
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    160,
-    'catalog now records one hundred sixty explicit expected-failure entries',
+    161,
+    'catalog now records one hundred sixty-one explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R8 — Strict composition slash-link cut shipped
+- Completed `R8-STRICT-SUPPORT-TIER-CUTS.3` and closed the task tree.
+- Default mode still accepts well-formed composition `?wiring`
+  `/source/target/` slash-link tokens as compatibility input.
+- Strict mode now rejects those tokens before HDL emission with
+  `FSMGEN_STRICT_COMPOSITION_WIRING_SLASH_LINK` and points users to
+  `(source target)` or `(connect source target)`.
+- Regression corpus accounting now has paired default-compatible and
+  strict-rejected entries for this compatibility residue, and check-JSON plus
+  normalized semantic JSON corpus gates classify the new strict bucket.
+- The mdBook composition basics, composition advanced, and strict-mode
+  chapters now document the exact default/strict split.
+- Validation passed: focused strict/composition/corpus tests with `Files=6,
+  Tests=3279`; manifest/diagnostic/JSON/support gates with `Files=8,
+  Tests=1131`; feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R8 — Strict support-tier frontier audited
 - Completed `R8-STRICT-SUPPORT-TIER-CUTS.2`.
 - The shipped strict-mode boundary rejects legacy direct roots, direct-root

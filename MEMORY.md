@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Strict composition slash-link cut shipped
+- Completed `R8-STRICT-SUPPORT-TIER-CUTS.3` and closed the task tree.
+- Default mode still accepts well-formed composition `?wiring`
+  `/source/target/` slash-link tokens as compatibility input.
+- Strict mode now rejects those slash-link tokens before HDL emission with
+  `FSMGEN_STRICT_COMPOSITION_WIRING_SLASH_LINK` and a migration hint toward
+  `(source target)` or `(connect source target)`.
+- Added paired regression-corpus entries
+  `legacy.composition_wiring_slash.default_compat` and
+  `legacy.composition_wiring_slash.strict_rejection`, plus the new
+  `legacy_composition_default_pipeline_cli` and
+  `strict_composition_rejection_pipeline_cli` coverage buckets.
+- Migrated strict-supported composition fixtures that still used legacy slash
+  links to canonical list-form wiring.
+- Synced the mdBook composition and strict-mode chapters, the regression
+  corpus docs, `docs/COMPOSITION_SCOPE.md`, roadmap status, and task-tree
+  status.
+- Validation passed: focused strict/composition/corpus tests with `Files=6,
+  Tests=3279`; manifest/diagnostic/JSON/support gates with `Files=8,
+  Tests=1131`; feature-backlog audit with `Files=1, Tests=15`; `mdbook build
+  docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: Strict support-tier frontier audited
 - Completed `R8-STRICT-SUPPORT-TIER-CUTS.2`.
 - Audited strict-mode enforcement across `FSM::Pipeline::SourceFrontend`,
