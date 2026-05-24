@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R10 — Quiet CLI banner suppressed
+- Completed `R10-CLI-QUIET-BANNER-CLEANUP.2` and closed the task tree.
+- Updated [bin/fsmgen](bin/fsmgen) so `--quiet` suppresses the interactive
+  `=== FSM HDL Generator ===` banner and processing line on success and
+  failure.
+- Added [t/1347-cli-quiet-banner-boundary.t](t/1347-cli-quiet-banner-boundary.t)
+  to lock quiet success, quiet failure, and non-quiet success behavior.
+- Non-quiet output still prints the banner, human diagnostics still print on
+  failure, and machine JSON modes remain JSON-only.
+- Synchronized the mdBook CLI chapter and live docs.
+- Validation passed: focused CLI quiet/banner tests with `Files=4, Tests=12`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
+
 ### R10 — Quiet-banner cleanup selected
 - Created active task tree `R10-CLI-QUIET-BANNER-CLEANUP`.
 - The tree owns a narrow CLI diagnostics/UX cleanup: align `--quiet` with its

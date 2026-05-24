@@ -166,7 +166,9 @@ Trace behavior:
   the semantic JSON export while the public wording settles.
 - `--verify-hdl` / `--validate-hdl` runs external SystemVerilog validation
   after writing generated HDL.
-- `-q, --quiet` suppresses informational messages.
+- `-q, --quiet` suppresses informational messages, including the interactive
+  banner, processing line, and success summaries. Human failure diagnostics
+  still print, and machine JSON modes remain JSON-only.
 - `-h, --help` prints the full CLI help.
 
 `--capability-manifest` is different from the HDL-generation options: it emits

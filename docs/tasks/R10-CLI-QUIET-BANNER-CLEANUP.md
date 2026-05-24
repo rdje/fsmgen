@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R10-CLI-QUIET-BANNER-CLEANUP`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R10`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -38,7 +38,7 @@ while preserving diagnostics and machine-readable report modes.
 ## Task Tree
 
 - ID: `R10-CLI-QUIET-BANNER-CLEANUP`
-  Status: `active`
+  Status: `done`
   Goal: `Align quiet CLI banner behavior with the documented quiet option.`
   Children: `R10-CLI-QUIET-BANNER-CLEANUP.1`,
     `R10-CLI-QUIET-BANNER-CLEANUP.2`
@@ -51,17 +51,17 @@ while preserving diagnostics and machine-readable report modes.
   Commit: `R10-CLI-QUIET-BANNER-CLEANUP.1: select quiet banner cleanup`
 
 - ID: `R10-CLI-QUIET-BANNER-CLEANUP.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Suppress the interactive CLI banner when --quiet is active.`
   Acceptance: `Quiet success and quiet failure runs omit the informational banner while preserving stderr diagnostics and generated output behavior; non-quiet runs still print the banner; mdBook/live docs describe the quiet-mode behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: syntax checks, focused CLI quiet/banner tests, feature-backlog audit, mdBook build, and diff check`
+  Commit: `R10-CLI-QUIET-BANNER-CLEANUP.2: suppress quiet CLI banner`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R10-CLI-QUIET-BANNER-CLEANUP.2` | `pending` | A post-implementation probe found that `--quiet` still prints the interactive banner on failure, despite the CLI help saying quiet suppresses informational messages. |
+| 1 | `R10-CLI-QUIET-BANNER-CLEANUP.2` | `done` | `--quiet` now suppresses the interactive banner on success and failure while non-quiet output keeps it. |
 
 ## Decisions
 
@@ -70,6 +70,10 @@ while preserving diagnostics and machine-readable report modes.
   `bin/fsmgen --quiet` suppresses the processing line but still prints
   `=== FSM HDL Generator ===`, including on failures. The implementation
   should gate that banner on both non-machine JSON mode and non-quiet mode.
+- `2026-05-24`: Close the tree after `.2`. `bin/fsmgen --quiet` now suppresses
+  the interactive banner and processing line on success and failure, while
+  non-quiet output still prints the banner and machine JSON modes remain
+  JSON-only.
 
 ## Open Questions
 
@@ -84,14 +88,18 @@ while preserving diagnostics and machine-readable report modes.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `R10-CLI-QUIET-BANNER-CLEANUP.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: feature-backlog audit Files=1, Tests=15` |
+| `2026-05-24` | `R10-CLI-QUIET-BANNER-CLEANUP.2` | `perl -c bin/fsmgen`; `perl -Iperl -c t/1347-cli-quiet-banner-boundary.t`; `prove -Iperl t/1347-cli-quiet-banner-boundary.t t/250-cli-entrypoint-file-context.t t/246-cli-error-output-cleanup.t t/384-public-json-trace-stdout-boundary-audit.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: focused CLI quiet/banner tests Files=4, Tests=12; feature-backlog audit Files=1, Tests=15` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R10-CLI-QUIET-BANNER-CLEANUP.1` | `R10-CLI-QUIET-BANNER-CLEANUP.1: select quiet banner cleanup` | `selection slice` |
+| `R10-CLI-QUIET-BANNER-CLEANUP.2` | `R10-CLI-QUIET-BANNER-CLEANUP.2: suppress quiet CLI banner` | `implementation close-out slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created active `R10` quiet-banner cleanup tree and selected
   `.2` as the implementation frontier.
+- `2026-05-24`: Completed `.2` and closed the tree. Quiet CLI runs now
+  suppress the interactive banner.

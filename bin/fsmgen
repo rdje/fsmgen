@@ -682,9 +682,9 @@ if ($trace_log_enabled) {
         unless $machine_json_mode;
 }
 
-unless ($machine_json_mode) {
+unless ($machine_json_mode || $quiet) {
     print "=== FSM HDL Generator ===\n\n";
-    print "Processing FSM file: $fsm_file\n" unless $quiet;
+    print "Processing FSM file: $fsm_file\n";
 }
 
 # Create and run the HDL generation pipeline

@@ -1,9 +1,18 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R10`.
-- Active task tree: `R10-CLI-QUIET-BANNER-CLEANUP`.
-- Current frontier: `R10-CLI-QUIET-BANNER-CLEANUP.2`.
+- Active lane: `none`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R10 quiet-banner implementation:
+  `R10-CLI-QUIET-BANNER-CLEANUP.2` aligned `bin/fsmgen --quiet` with its
+  documented role and closed the task tree. Quiet success and quiet failure
+  runs now suppress the interactive `=== FSM HDL Generator ===` banner and
+  processing line, while human diagnostics still print and non-quiet runs keep
+  the banner. Machine JSON modes remain JSON-only. The mdBook CLI chapter now
+  documents the quiet-mode boundary. Validation passed: focused CLI
+  quiet/banner tests with `Files=4, Tests=12`; feature-backlog audit with
+  `Files=1, Tests=15`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R10 quiet-banner cleanup selection:
   `R10-CLI-QUIET-BANNER-CLEANUP.1` activated a narrow CLI diagnostics/UX tree
   after the empty source-file diagnostic slice. No parser, scheduler, report,
@@ -6516,11 +6525,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `R10-CLI-QUIET-BANNER-CLEANUP`.
-- Current frontier: `R10-CLI-QUIET-BANNER-CLEANUP.2`.
-- Completion status: `.1` selected the active tree with no behavior change.
-  `.2` owns the quiet CLI banner cleanup and must keep non-quiet and machine
-  JSON behavior intact.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `R10-CLI-QUIET-BANNER-CLEANUP.2` suppressed the
+  interactive banner in quiet CLI runs and closed the tree. The next PNT step
+  should select a fresh roadmap-aligned task tree before any further code
+  changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8088,6 +8098,14 @@ Deliverables:
 - Clear remediation guidance for common construct-family failures.
 Status: `in progress`
 Done:
+- `R10-CLI-QUIET-BANNER-CLEANUP.2` suppressed informational banner text in
+  quiet CLI runs and closed the tree:
+  - [bin/fsmgen](bin/fsmgen) now gates the interactive banner on non-quiet,
+    non-machine-JSON runs,
+  - [t/1347-cli-quiet-banner-boundary.t](t/1347-cli-quiet-banner-boundary.t)
+    locks quiet success, quiet failure, and non-quiet success behavior,
+  - human diagnostics still print on failure,
+  - and the mdBook CLI chapter documents the quiet-mode boundary.
 - `R10-CLI-QUIET-BANNER-CLEANUP.1` selected a bounded quiet CLI banner cleanup
   before code:
   - `--quiet` already suppresses the processing line,
@@ -8171,8 +8189,6 @@ Done:
   - [bin/fsmgen](bin/fsmgen) now also wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path instead of letting constructor failures dump a raw script line,
   - and [t/253-extension-loader-diagnostic-context.t](t/253-extension-loader-diagnostic-context.t) now locks both the pipeline and CLI constructor-failure shapes for malformed config input and constructor-failing extension modules.
 Left:
-- Implement `R10-CLI-QUIET-BANNER-CLEANUP.2`: suppress the interactive banner
-  in quiet CLI runs while preserving diagnostics and non-quiet output.
 - Define the next provenance-carrying boundaries and upgrade key diagnostics.
 - Add regression coverage for error shape and location reporting.
 Exit criteria:

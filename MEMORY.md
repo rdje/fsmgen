@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Quiet CLI banner suppressed
+- Completed `R10-CLI-QUIET-BANNER-CLEANUP.2` and closed the task tree.
+- `bin/fsmgen --quiet` now suppresses the interactive
+  `=== FSM HDL Generator ===` banner and processing line on success and
+  failure.
+- Non-quiet runs still print the banner, human diagnostics still print on
+  failure, and machine JSON modes remain JSON-only.
+- Added [t/1347-cli-quiet-banner-boundary.t](t/1347-cli-quiet-banner-boundary.t)
+  and updated the mdBook CLI chapter.
+- Validation passed: focused CLI quiet/banner tests with `Files=4, Tests=12`;
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R10 quiet-banner cleanup selected
 - Created active task tree `R10-CLI-QUIET-BANNER-CLEANUP`.
 - Purpose: align `bin/fsmgen --quiet` with the documented quiet option by
