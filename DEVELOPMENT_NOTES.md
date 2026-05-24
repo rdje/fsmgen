@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Quiet mode should suppress informational banners
+- `bin/fsmgen --quiet` currently suppresses the processing line but still
+  prints the interactive `=== FSM HDL Generator ===` banner. That banner is
+  informational text, so it should be gated by quiet mode just like other
+  human-facing progress output.
+- The cleanup should not touch non-quiet output or machine JSON modes. It is a
+  CLI presentation boundary, not a generation, parser, or JSON schema change.
+
 ## 2026-05-24: Empty source files are the next bounded R10 diagnostic cut
 - The existing `R10` context work covers many higher-value source and artifact
   boundaries, but empty direct `.fsm` files still escape through a low-level

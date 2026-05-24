@@ -1,9 +1,19 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `R10`.
+- Active task tree: `R10-CLI-QUIET-BANNER-CLEANUP`.
+- Current frontier: `R10-CLI-QUIET-BANNER-CLEANUP.2`.
+- Recent R10 quiet-banner cleanup selection:
+  `R10-CLI-QUIET-BANNER-CLEANUP.1` activated a narrow CLI diagnostics/UX tree
+  after the empty source-file diagnostic slice. No parser, scheduler, report,
+  generated artifact, HDL, CLI, public API, source, test, or generated
+  behavior changed in this selection. The follow-up frontier is `.2`, which
+  must align `bin/fsmgen --quiet` with its documented role by suppressing the
+  interactive `=== FSM HDL Generator ===` banner while preserving non-quiet
+  output, human diagnostics, and machine JSON behavior. Validation passed:
+  feature-backlog audit with `Files=1, Tests=15`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent R10 empty source-file diagnostic implementation:
   `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` cleaned up empty direct `.fsm`
   source-file diagnostics and closed the task tree. Empty sources now fail
@@ -6506,12 +6516,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` cleaned
-  empty source-file diagnostics across pipeline, CLI, check-JSON, and
-  normalized semantic JSON, then closed the tree. The next PNT step should
-  select a fresh roadmap-aligned task tree before any further code changes.
+- Active task tree: `R10-CLI-QUIET-BANNER-CLEANUP`.
+- Current frontier: `R10-CLI-QUIET-BANNER-CLEANUP.2`.
+- Completion status: `.1` selected the active tree with no behavior change.
+  `.2` owns the quiet CLI banner cleanup and must keep non-quiet and machine
+  JSON behavior intact.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -8079,6 +8088,12 @@ Deliverables:
 - Clear remediation guidance for common construct-family failures.
 Status: `in progress`
 Done:
+- `R10-CLI-QUIET-BANNER-CLEANUP.1` selected a bounded quiet CLI banner cleanup
+  before code:
+  - `--quiet` already suppresses the processing line,
+  - the interactive banner still appears on quiet runs,
+  - and `.2` must suppress that informational banner without changing
+    non-quiet output or machine JSON modes.
 - `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` shipped a targeted empty
   source-file diagnostic and closed the tree:
   - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm)
@@ -8156,6 +8171,8 @@ Done:
   - [bin/fsmgen](bin/fsmgen) now also wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path instead of letting constructor failures dump a raw script line,
   - and [t/253-extension-loader-diagnostic-context.t](t/253-extension-loader-diagnostic-context.t) now locks both the pipeline and CLI constructor-failure shapes for malformed config input and constructor-failing extension modules.
 Left:
+- Implement `R10-CLI-QUIET-BANNER-CLEANUP.2`: suppress the interactive banner
+  in quiet CLI runs while preserving diagnostics and non-quiet output.
 - Define the next provenance-carrying boundaries and upgrade key diagnostics.
 - Add regression coverage for error shape and location reporting.
 Exit criteria:

@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R10 quiet-banner cleanup selected
+- Created active task tree `R10-CLI-QUIET-BANNER-CLEANUP`.
+- Purpose: align `bin/fsmgen --quiet` with the documented quiet option by
+  suppressing the interactive `=== FSM HDL Generator ===` banner in quiet
+  runs.
+- The next frontier is `R10-CLI-QUIET-BANNER-CLEANUP.2`.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R10-CLI-QUIET-BANNER-CLEANUP`.
+- Current frontier: `R10-CLI-QUIET-BANNER-CLEANUP.2`.
+
 ## 2026-05-24: Empty source-file diagnostics cleaned
 - Completed `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` and closed the task
   tree.

@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R10 — Quiet-banner cleanup selected
+- Created active task tree `R10-CLI-QUIET-BANNER-CLEANUP`.
+- Completed `R10-CLI-QUIET-BANNER-CLEANUP.1`.
+- The next frontier is `R10-CLI-QUIET-BANNER-CLEANUP.2`, which will suppress
+  the interactive `=== FSM HDL Generator ===` banner when `--quiet` is active
+  while preserving diagnostics, non-quiet output, and machine JSON behavior.
+- No parser, scheduler, HDL, CLI behavior, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R10-CLI-QUIET-BANNER-CLEANUP`.
+- Current frontier: `R10-CLI-QUIET-BANNER-CLEANUP.2`.
+
 ## 2026-05-24: R10 — Empty source-file diagnostics cleaned
 - Completed `R10-DIAGNOSTIC-PROVENANCE-FRONTIER-AUDIT.3` and closed the task
   tree.

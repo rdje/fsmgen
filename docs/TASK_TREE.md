@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R10-CLI-QUIET-BANNER-CLEANUP` | `active` | `R10` | `R10-CLI-QUIET-BANNER-CLEANUP.2` | [docs/tasks/R10-CLI-QUIET-BANNER-CLEANUP.md](docs/tasks/R10-CLI-QUIET-BANNER-CLEANUP.md) |
 
 ## Proposed Task Trees
 
