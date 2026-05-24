@@ -1768,12 +1768,13 @@ sub validate_no_register_input_self_dependency($self, $operator, $target_base_sp
         next unless defined($source_name) && $source_name ne '';
         next unless $target_names{$source_name};
 
-        Carp::confess(
-            "[Parser.pm][validate_no_register_input_self_dependency()] Illegal D-input self-dependency for '$target_display' using '$operator'. "
+        die(
+            "Error: Illegal D-input self-dependency for '$target_display' using '$operator'. "
             . "The $expr_role references '$source_name', which is the same D-input-named LHS. "
             . "This creates combinational feedback before HDL generation; use '<-' for Q/output-named synchronous feedback, "
             . "or use '<=-' and read the generated '<signal>_r' Q mirror when same-cycle D visibility is required. "
             . supported_boundary_hint()
+            . "\n"
         );
     }
 }

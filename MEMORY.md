@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: D-input self-dependency diagnostics cleaned
+- Completed `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` and closed the
+  task tree.
+- Illegal D-input self-dependency still rejects before HDL emission, but the
+  covered diagnostic now raises a plain source-facing error instead of a Perl
+  `confess` exception.
+- Quiet CLI, `--check-json`, and `--emit-semantic-json` retain source context,
+  the rejected operator, offending expression role, self-dependent signal,
+  stable diagnostic code, and remediation hints without leaking `Parser.pm`,
+  parser routine names, or `called at` stack frames.
+- Added [t/1349-d-input-self-dependency-diagnostic-cleanup.t](t/1349-d-input-self-dependency-diagnostic-cleanup.t)
+  and updated the mdBook troubleshooting chapter plus regression-corpus
+  companion.
+- Validation passed: focused diagnostics tests with `Files=7, Tests=32`;
+  regression-corpus accounting with `Files=1, Tests=3149`; feature-backlog
+  audit with `Files=1, Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R10 D-input self-dependency diagnostic cleanup selected
 - Created active task tree
   `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.

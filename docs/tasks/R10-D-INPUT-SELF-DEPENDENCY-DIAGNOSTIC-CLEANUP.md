@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R10`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -38,7 +38,7 @@ stack-frame leakage.
 ## Task Tree
 
 - ID: `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`
-  Status: `active`
+  Status: `done`
   Goal: `Remove parser implementation leakage from selected D-input self-dependency diagnostics.`
   Children: `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1`,
     `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`
@@ -51,17 +51,17 @@ stack-frame leakage.
   Commit: `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1: select D-input diagnostic cleanup`
 
 - ID: `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Clean parser implementation leakage from illegal D-input self-dependency diagnostics.`
   Acceptance: `The selected D-input self-dependency failures still reject before HDL emission with actionable guidance, but CLI/check-JSON/semantic-JSON output contains no parser implementation names, raw parser implementation frames, or Perl call stack; focused tests and live docs pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: syntax checks, focused D-input/self-dependency/check-JSON/semantic-JSON diagnostics tests, regression-corpus accounting, feature-backlog audit, mdBook build, and diff check`
+  Commit: `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2: clean D-input diagnostics`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` | `pending` | A quiet CLI probe found that `assignment_d_input_self_dependency.fsm` still exposes `[Parser.pm][validate_no_register_input_self_dependency()]` in a public D-input self-dependency diagnostic. |
+| 1 | `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` | `done` | The selected D-input self-dependency diagnostics are now source-facing and stack-free through quiet CLI, check JSON, and normalized semantic JSON. |
 
 ## Decisions
 
@@ -70,10 +70,15 @@ stack-frame leakage.
   cleanup. The parser already rejects the construct before HDL emission and
   the mdBook already describes the legality rule; the remaining gap is public
   diagnostic presentation.
+- `2026-05-24`: Close the tree after `.2`. The selected diagnostic now raises
+  a plain source-facing error instead of a Perl `confess` exception, preserving
+  the D-input rejection, offending expression role, self-dependent signal, and
+  remediation while removing parser filenames, parser routine names, and Perl
+  stack frames from the covered public surfaces.
 
 ## Open Questions
 
-- None. `.2` owns the selected D-input diagnostic cleanup.
+- None. The tree is closed.
 
 ## Blockers
 
@@ -84,14 +89,20 @@ stack-frame leakage.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: feature-backlog audit Files=1, Tests=15` |
+| `2026-05-24` | `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c t/1349-d-input-self-dependency-diagnostic-cleanup.t`; `prove -Iperl t/1349-d-input-self-dependency-diagnostic-cleanup.t t/1348-self-dependency-diagnostic-cleanup.t t/02-combinational-self-dependency.t t/299-check-json-diagnostics.t t/634-normalized-semantic-snapshot-failure-boundary.t t/636-normalized-semantic-diagnostic-summary.t t/637-check-json-diagnostic-summary.t`; `prove -Iperl t/248-regression-corpus-accounting.t`; `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: focused diagnostics tests Files=7, Tests=32; regression-corpus accounting Files=1, Tests=3149; feature-backlog audit Files=1, Tests=15` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1` | `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.1: select D-input diagnostic cleanup` | `selection slice` |
+| `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` | `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2: clean D-input diagnostics` | `implementation close-out slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created active `R10` D-input self-dependency diagnostic
   cleanup tree and selected `.2` as the implementation frontier.
+- `2026-05-24`: Completed `.2` and closed the tree. Illegal D-input
+  self-dependency diagnostics now remain targeted while avoiding parser
+  implementation leakage across quiet CLI, check JSON, and normalized semantic
+  JSON.

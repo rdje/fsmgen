@@ -410,6 +410,13 @@ emission while preserving source context, the dependency path, the stable
 `FSMGEN_LANGUAGE_COMBINATIONAL_SELF_DEPENDENCY` code, and the remediation hint
 without exposing parser implementation names or Perl stack frames.
 
+[t/1349-d-input-self-dependency-diagnostic-cleanup.t](t/1349-d-input-self-dependency-diagnostic-cleanup.t)
+locks the same public diagnostic boundary for D-input self-dependency. It
+covers the regression-corpus RHS fixture plus a guard-expression fixture across
+quiet CLI, check JSON, and normalized semantic JSON, preserving the stable
+`FSMGEN_LANGUAGE_D_INPUT_SELF_DEPENDENCY` code and remediation text without
+leaking parser implementation names or Perl stack frames.
+
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces

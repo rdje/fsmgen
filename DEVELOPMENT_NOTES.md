@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: D-input cleanup should cover both RHS and guard roles
+- The same validator rejects self-dependency from either the assigned RHS or
+  the assignment guard condition. Coverage needs both roles because the message
+  names the offending expression role and users need to know whether to rewrite
+  the value expression or the guard.
+- The diagnostic can still point users to `<-` or the generated `<signal>_r`
+  mirror without exposing the parser routine that discovered the issue.
+
 ## 2026-05-24: D-input self-dependency cleanup follows the same diagnostic policy
 - D-input self-dependency rejection is a separate semantic rule from
   combinational `=` self-dependency, but the public diagnostic quality target

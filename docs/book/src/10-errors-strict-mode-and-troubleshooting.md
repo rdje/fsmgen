@@ -76,6 +76,14 @@ form, for example `(<- (COUNT (+ COUNT 1)))`. The D-input-named forms `<=` and
 `<=-` are stricter: their RHS and assignment guard may not read the same LHS
 name, because that would build a combinational loop on the next-value carrier.
 
+D-input self-dependency diagnostics are also source-local before HDL emission.
+The CLI, `--check-json`, and `--emit-semantic-json` surfaces identify the
+rejected operator, whether the RHS or guard expression caused the failure, the
+self-dependent signal, and the two intended fixes: use `<-` for Q/output-named
+feedback, or read the generated `<signal>_r` Q mirror when same-cycle D-input
+visibility is required. Those surfaces do not expose parser implementation
+filenames, parser routine names, or Perl call-stack frames.
+
 In default mode, legacy `<=+` is accepted as an alias for `<=-` and follows the
 same self-dependency rule. In strict mode, `<=+` is rejected as compatibility
 residue; write the preferred `<=-` pair form instead.

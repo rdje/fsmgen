@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R10 — D-input self-dependency diagnostics cleaned
+- Completed `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` and closed the
+  task tree.
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  so illegal D-input self-dependency failures raise a plain source-facing
+  error instead of a Perl `confess` exception.
+- Added [t/1349-d-input-self-dependency-diagnostic-cleanup.t](t/1349-d-input-self-dependency-diagnostic-cleanup.t)
+  to lock RHS and guard-expression failures across quiet CLI, check-JSON, and
+  normalized semantic JSON.
+- The rejection semantics, offending expression role, self-dependent signal,
+  stable diagnostic code, and remediation hints are preserved; parser
+  filenames, parser routine names, and Perl stack frames no longer leak through
+  the covered public surfaces.
+- Synchronized the mdBook troubleshooting chapter, regression-corpus
+  companion, and live docs.
+- Validation passed: focused diagnostics tests with `Files=7, Tests=32`;
+  regression-corpus accounting with `Files=1, Tests=3149`; feature-backlog
+  audit with `Files=1, Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ### R10 — D-input self-dependency diagnostic cleanup selected
 - Created active task tree
   `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.

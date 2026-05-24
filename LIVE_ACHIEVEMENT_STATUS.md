@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R10 — D-input self-dependency diagnostics cleaned
+- Completed `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP.2` and closed the
+  task tree.
+- Illegal D-input self-dependency still rejects before HDL emission, but quiet
+  CLI, check-JSON, and normalized semantic JSON diagnostics no longer expose
+  parser filenames, parser routine names, or Perl stack frames.
+- The diagnostic keeps source context, rejected operator, offending expression
+  role, self-dependent signal, stable diagnostic code, and remediation hints.
+- The mdBook troubleshooting chapter documents the user-facing behavior.
+- Validation passed: focused diagnostics tests with `Files=7, Tests=32`;
+  regression-corpus accounting with `Files=1, Tests=3149`; feature-backlog
+  audit with `Files=1, Tests=15`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R10 — D-input self-dependency diagnostic cleanup selected
 - Created active task tree
   `R10-D-INPUT-SELF-DEPENDENCY-DIAGNOSTIC-CLEANUP`.
