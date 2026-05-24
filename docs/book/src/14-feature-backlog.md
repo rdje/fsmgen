@@ -25,9 +25,10 @@ Goal: make scalar declarations optional across the whole language whenever a
 safe type and width can be recovered from authored usage.
 
 Current boundary: FSMGen already infers widths from explicit `+size`, scalar
-type aliases, positive integer scalar symbols, slices, selectors, guards, and
-other bounded evidence. It does not yet promise "never declare scalar types
-unless you want to" across every source position.
+type aliases, positive integer scalar symbols, symbolic scalar `+types`
+`(bits WIDTH_SYMBOL)` specs, slices, selectors, guards, and other bounded
+evidence. It does not yet promise "never declare scalar types unless you want
+to" across every source position.
 
 ### Dynamic Divisor Safety Proofs
 

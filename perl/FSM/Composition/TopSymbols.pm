@@ -133,6 +133,24 @@ sub resolve_positive_integer_scalar ($self, $symbol_name) {
     );
 }
 
+sub resolve_positive_integer_width_symbol ($self, $symbol_name) {
+    return undef unless defined($symbol_name) && !ref($symbol_name);
+
+    if ($self->{local_symbols}->can('resolve_positive_integer_width_symbol')) {
+        my $resolved_local_width = $self->{local_symbols}->resolve_positive_integer_width_symbol($symbol_name);
+        return $resolved_local_width if defined $resolved_local_width;
+    }
+
+    if ($symbol_name =~ /\A([A-Za-z_]\w*)\.(.+)\z/) {
+        my ($package_name, $package_symbol) = ($1, $2);
+        my $package_symbols = $self->{imported_packages}{$package_name};
+        return undef unless $package_symbols && $package_symbols->can('resolve_positive_integer_width_symbol');
+        return $package_symbols->resolve_positive_integer_width_symbol($package_symbol);
+    }
+
+    return undef;
+}
+
 sub finalize_imported_type_aliases ($self) {
     my $local_types = $self->{local_symbols}->types || {};
 
@@ -142,6 +160,9 @@ sub finalize_imported_type_aliases ($self) {
             type_spec => $type_spec,
             resolve_type_reference => sub ($type_ref) {
                 return $self->_resolve_imported_type_ref($type_ref);
+            },
+            resolve_positive_integer_width_symbol => sub ($width_symbol) {
+                return $self->resolve_positive_integer_width_symbol($width_symbol);
             },
         );
         next unless defined $finalized_spec;

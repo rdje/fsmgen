@@ -2,6 +2,27 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Language ergonomics — Symbolic scalar type widths shipped
+- Completed `INFERENCE-FIRST-SCALAR-AUTHORING.3` and closed the task tree.
+- Scalar `+types` now accept `(bits WIDTH_SYMBOL)` across direct-root,
+  package, and composition-top paths when the width symbol resolves to a
+  positive integer scalar constant or enum member in the available symbol
+  scope.
+- Signed, `two_state`, and `four_state` wrappers preserve the resolved width;
+  composition local type specs can defer imported package width symbols until
+  package-import finalization.
+- Aggregate scalar leaves, parameters, runtime signals, and arbitrary
+  expressions remain outside the declarative `(bits WIDTH_SYMBOL)` surface.
+- The mdBook, regression corpus docs, capability/language-surface metadata,
+  task tree, roadmap status, and live continuity docs were synchronized.
+- Validation passed: syntax checks; focused scalar type tests with
+  `Files=1, Tests=18`; corpus accounting with `Files=1, Tests=3033`;
+  supported language-feature corpus with `Files=1, Tests=2`;
+  language-surface/capability-manifest gates with `Files=3, Tests=10`;
+  supported-corpus/semantic-JSON gates with `Files=2, Tests=10`;
+  aggregate/structural type gates with `Files=2, Tests=10`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24: Language ergonomics — Scalar inference frontier audited
 - Completed `INFERENCE-FIRST-SCALAR-AUTHORING.2`.
 - Audited the shipped scalar-inference boundary across direct `.fsm`,

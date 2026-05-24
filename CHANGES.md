@@ -1,6 +1,35 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Language ergonomics — Symbolic scalar type widths shipped
+- Completed `INFERENCE-FIRST-SCALAR-AUTHORING.3` and closed the task tree.
+- Updated the shared declarative type canonicalizer plus direct-root,
+  package, and composition-top parser paths so scalar `+types` may use
+  `(bits WIDTH_SYMBOL)` when the symbol resolves to a positive integer scalar
+  constant or enum member in the available symbol scope.
+- Reordered direct-root, package, and composition-top declarative resolution so
+  constants/enums are available before type specs are canonicalized, while
+  keeping type alias dependency resolution and cycle checks intact.
+- Added a composition deferral path for imported package width symbols inside
+  local type specs, so local top aliases using `(bits shared_cfg.BYTE_W)` or
+  imported enum members finalize after package imports are resolved.
+- Kept the new type-width resolver narrower than `+size` expressions:
+  aggregate scalar leaves, parameters, runtime signals, and arbitrary
+  expressions remain rejected in declarative `(bits WIDTH_SYMBOL)` specs.
+- Added focused tests for direct-root, package, composition-top, imported,
+  signed/state-model wrapper, and aggregate-leaf rejection behavior.
+- Added the maintained supported-smoke fixture
+  `feature.declarative_bits_symbol_widths` and synchronized corpus
+  accounting, regression corpus docs, language-surface metadata, mdBook
+  chapters, roadmap status, task-tree status, and live continuity docs.
+- Validation passed: syntax checks; focused scalar type tests with
+  `Files=1, Tests=18`; corpus accounting with `Files=1, Tests=3033`;
+  supported language-feature corpus with `Files=1, Tests=2`;
+  language-surface/capability-manifest gates with `Files=3, Tests=10`;
+  supported-corpus/semantic-JSON gates with `Files=2, Tests=10`;
+  aggregate/structural type gates with `Files=2, Tests=10`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Language ergonomics — Scalar inference frontier audited
 - Completed audit work for `INFERENCE-FIRST-SCALAR-AUTHORING.2`.
 - Audited the current scalar-inference boundary across direct `.fsm`,

@@ -185,15 +185,15 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         }
     }
 
-    $self->resolve_pending_direct_root_types(
-        $module_name,
-        \@pending_type_entries,
-    );
-
     $self->resolve_pending_direct_root_symbols(
         $module_name,
         \@pending_constant_entries,
         \@pending_enum_entries,
+    );
+
+    $self->resolve_pending_direct_root_types(
+        $module_name,
+        \@pending_type_entries,
     );
 
     my @pending_param_entries;
@@ -1234,13 +1234,16 @@ sub canonicalize_scalar_type_spec($self, %args) {
         unwrap_single_nested_list => sub ($value) { return $self->unwrap_single_nested_list($value) },
         is_contract_type_reference => sub ($value) { return $self->is_contract_type_reference($value) },
         resolve_type_reference => sub ($type_ref) { return $self->{signal_manager}->resolve_type($type_ref) },
+        resolve_positive_integer_width_symbol => sub ($width_symbol) {
+            return $self->{signal_manager}->resolve_positive_integer_width_symbol($width_symbol);
+        },
         is_contract_identifier => sub ($value) { return $self->is_contract_identifier($value) },
     );
     return $resolved_spec if $resolved_spec;
 
     Carp::confess
         "Malformed '+types' entry for type '$type_name' in source '$module_name'. ".
-        "The first active '+types' lane supports 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local/imported types. ".
+        "The first active '+types' lane supports 'bit', '(bits N)', '(bits WIDTH_SYMBOL)', '(signed bit)', '(signed (bits N))', '(signed (bits WIDTH_SYMBOL))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local/imported types. ".
         supported_boundary_hint();
 }
 

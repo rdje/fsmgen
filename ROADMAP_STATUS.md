@@ -1,9 +1,30 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `language ergonomics`.
-- Active task tree: `INFERENCE-FIRST-SCALAR-AUTHORING`.
-- Current frontier: `INFERENCE-FIRST-SCALAR-AUTHORING.3`.
+- Active lane: `none selected`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent language-ergonomics scalar-width completion:
+  `INFERENCE-FIRST-SCALAR-AUTHORING.3` shipped symbolic scalar type widths and
+  closed the task tree. Direct-root, package, and composition-top `+types` now
+  accept `(bits WIDTH_SYMBOL)` when the symbol resolves to a positive integer
+  scalar constant or enum member in the available symbol scope. Signed,
+  `two_state`, and `four_state` wrappers preserve the resolved width.
+  Composition local type specs may defer imported package width symbols until
+  package-import finalization, matching the existing imported type alias path.
+  The type-width resolver remains narrower than `+size` expressions:
+  aggregate scalar leaves, parameters, runtime signals, and arbitrary
+  expressions are still rejected for declarative `(bits ...)` widths. Added
+  maintained supported-smoke fixture
+  `feature.declarative_bits_symbol_widths` and synchronized corpus accounting,
+  language-surface metadata, mdBook, live docs, and task-tree status.
+  Validation passed: syntax checks; focused scalar type tests with
+  `Files=1, Tests=18`; corpus accounting with `Files=1, Tests=3033`;
+  supported language-feature corpus with `Files=1, Tests=2`;
+  language-surface/capability-manifest gates with `Files=3, Tests=10`;
+  supported-corpus/semantic-JSON gates with `Files=2, Tests=10`;
+  aggregate/structural type gates with `Files=2, Tests=10`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent language-ergonomics scalar-inference audit:
   `INFERENCE-FIRST-SCALAR-AUTHORING.2` audited the current scalar-inference
   boundary across direct `.fsm`, composition, ISF lowering, tests, corpus

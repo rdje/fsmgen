@@ -6,6 +6,8 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Package::ScalarWidthSupport;
+
 sub new ($class, %args) {
     return bless {
         constants => _clone($args{constants} || {}),
@@ -46,6 +48,27 @@ sub push_raw_block ($self, $block_ast) {
 sub resolve_actual_payload ($self, $symbol_name) {
     my $resolved_payload = $self->resolve_payload($symbol_name);
     return _scalar_payload_value($resolved_payload);
+}
+
+sub resolve_positive_integer_width_symbol ($self, $symbol_name) {
+    return undef unless defined($symbol_name) && !ref($symbol_name);
+
+    if (exists $self->{constants}{$symbol_name}) {
+        return FSM::Package::ScalarWidthSupport->positive_integer_from_literal_like(
+            $self->{constants}{$symbol_name},
+        );
+    }
+
+    if ($symbol_name =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/) {
+        my ($enum_name, $member_name) = ($1, $2);
+        if (exists $self->{enums}{$enum_name} && exists $self->{enums}{$enum_name}{$member_name}) {
+            return FSM::Package::ScalarWidthSupport->positive_integer_from_literal_like(
+                $self->{enums}{$enum_name}{$member_name},
+            );
+        }
+    }
+
+    return undef;
 }
 
 sub resolve_payload ($self, $symbol_name) {

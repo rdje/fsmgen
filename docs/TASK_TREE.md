@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `INFERENCE-FIRST-SCALAR-AUTHORING` | `active` | `language ergonomics` | `INFERENCE-FIRST-SCALAR-AUTHORING.3` | [docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md](docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `INFERENCE-FIRST-SCALAR-AUTHORING` | `done` | `language ergonomics` | `closed` | [docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md](docs/tasks/INFERENCE-FIRST-SCALAR-AUTHORING.md) |
 | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md](docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md) |
 | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION` | `done` | `R14` | `closed` | [docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md](docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md) |
 | `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.md](docs/tasks/ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.md) |
@@ -418,7 +418,7 @@ criteria.
 
 | mdBook backlog category | Current tracking stance |
 | --- | --- |
-| `Language Ergonomics` | `active INFERENCE-FIRST-SCALAR-AUTHORING tree for the first inference-first scalar authoring slice; future task tree required for broader language ergonomics behavior` |
+| `Language Ergonomics` | `completed INFERENCE-FIRST-SCALAR-AUTHORING tree for symbolic scalar type widths; future task tree required for broader language ergonomics behavior` |
 | `Aggregate Types And Data` | `future task tree required for broader aggregate lowering, operators, VHDL aggregate support, or public type/export APIs beyond shipped bounded surfaces` |
 | `Composition` | `covered by completed composition task trees for shipped surfaces; future task tree required for broader generated-child, VHDL generic-map, and generalized composition behavior` |
 | `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces; future task tree required for remaining deferred ISF behavior` |

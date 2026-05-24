@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Symbolic scalar type widths shipped
+- Completed `INFERENCE-FIRST-SCALAR-AUTHORING.3` and closed the task tree.
+- Direct-root, package, and composition-top `+types` now accept
+  `(bits WIDTH_SYMBOL)` when `WIDTH_SYMBOL` resolves to a positive integer
+  scalar constant or enum member in the available symbol scope.
+- Signed, `two_state`, and `four_state` wrappers preserve the resolved width.
+  Composition local types may defer imported package width symbols until the
+  normal package-import finalization step, matching the existing imported type
+  alias path.
+- The type-width-symbol resolver is intentionally narrower than `+size`
+  expressions: aggregate scalar leaves, parameters, runtime signals, and
+  arbitrary expressions remain rejected for declarative `(bits ...)` type
+  widths.
+- Added the maintained supported-smoke fixture
+  `feature.declarative_bits_symbol_widths` and synchronized regression corpus
+  accounting, language-surface manifest metadata, mdBook source, live docs,
+  and task-tree status.
+- Validation passed: syntax checks for touched Perl/test files; focused scalar
+  type tests with `Files=1, Tests=18`; corpus accounting with
+  `Files=1, Tests=3033`; supported language-feature corpus with
+  `Files=1, Tests=2`; language-surface/capability-manifest gates with
+  `Files=3, Tests=10`; supported-corpus/semantic-JSON gates with
+  `Files=2, Tests=10`; aggregate/structural type gates with
+  `Files=2, Tests=10`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: Scalar inference frontier audited
 - Completed `INFERENCE-FIRST-SCALAR-AUTHORING.2`.
 - Audited the direct `.fsm`, composition, ISF lowering, test, corpus, mdBook,

@@ -18,6 +18,8 @@ sub canonicalize_type_spec ($class, %args) {
     my $resolve_type_reference = $args{resolve_type_reference}
         or confess "DeclarativeTypeSupport requires a resolve_type_reference callback";
     my $defer_type_reference = $args{defer_type_reference};
+    my $resolve_positive_integer_width_symbol = $args{resolve_positive_integer_width_symbol};
+    my $defer_width_symbol = $args{defer_width_symbol};
     my $is_contract_identifier = $args{is_contract_identifier};
 
     my $scalar = $unwrap_scalar_token->($spec_ast);
@@ -65,6 +67,22 @@ sub canonicalize_type_spec ($class, %args) {
                     width => 0 + $width_token,
                     signed => 0,
                 };
+            }
+
+            if (defined($width_token) && !ref($width_token) && $resolve_positive_integer_width_symbol) {
+                my $resolved_width = $resolve_positive_integer_width_symbol->($width_token);
+                if (defined($resolved_width) && !ref($resolved_width)
+                    && $resolved_width =~ /\A\d+\z/ && $resolved_width > 0) {
+                    return {
+                        kind => 'bits',
+                        width => 0 + $resolved_width,
+                        signed => 0,
+                    };
+                }
+
+                my $deferred_spec = $defer_width_symbol ? $defer_width_symbol->($width_token) : undef;
+                return $class->_normalized_type_spec($deferred_spec)
+                    if $class->_is_deferred_width_symbol_spec($deferred_spec);
             }
         }
 
@@ -170,6 +188,24 @@ sub finalize_imported_type_spec ($class, %args) {
         return $class->_normalized_type_spec($resolved_spec);
     }
 
+    if ($class->_is_deferred_width_symbol_spec($type_spec)) {
+        my $resolve_positive_integer_width_symbol = $args{resolve_positive_integer_width_symbol};
+        my $resolved_width = $resolve_positive_integer_width_symbol
+            ? $resolve_positive_integer_width_symbol->($type_spec->{width_symbol_ref})
+            : undef;
+        return $class->_normalized_type_spec($type_spec) unless defined $resolved_width;
+
+        my %resolved_spec = (
+            kind => 'bits',
+            width => 0 + $resolved_width,
+            signed => ($type_spec->{signed} // 0) ? 1 : 0,
+        );
+        $resolved_spec{state_model} = $type_spec->{state_model}
+            if exists $type_spec->{state_model};
+
+        return $class->_normalized_type_spec(\%resolved_spec);
+    }
+
     my $kind = $type_spec->{kind} || '';
     if ($kind eq 'list') {
         my @items;
@@ -213,6 +249,7 @@ sub finalize_imported_type_spec ($class, %args) {
 sub has_deferred_imported_aliases ($class, $type_spec) {
     return 0 unless ref($type_spec) eq 'HASH';
     return 1 if $class->_is_deferred_type_spec($type_spec);
+    return 1 if $class->_is_deferred_width_symbol_spec($type_spec);
 
     my $kind = $type_spec->{kind} || '';
     if ($kind eq 'list') {
@@ -241,9 +278,17 @@ sub _is_deferred_type_spec ($class, $type_spec) {
         && !ref($type_spec->{imported_type_ref});
 }
 
+sub _is_deferred_width_symbol_spec ($class, $type_spec) {
+    return ref($type_spec) eq 'HASH'
+        && ($type_spec->{kind} || '') eq 'deferred_width_symbol'
+        && defined($type_spec->{width_symbol_ref})
+        && !ref($type_spec->{width_symbol_ref});
+}
+
 sub _is_known_type_spec ($class, $type_spec) {
     return ref($type_spec) eq 'HASH'
         && !$class->_is_deferred_type_spec($type_spec)
+        && !$class->_is_deferred_width_symbol_spec($type_spec)
         && defined($type_spec->{kind})
         && !ref($type_spec->{kind});
 }
@@ -251,6 +296,7 @@ sub _is_known_type_spec ($class, $type_spec) {
 sub _can_overlay_scalar_property ($class, $type_spec) {
     return 0 unless ref($type_spec) eq 'HASH';
     return 1 if $class->_is_deferred_type_spec($type_spec);
+    return 1 if $class->_is_deferred_width_symbol_spec($type_spec);
 
     my $kind = $type_spec->{kind} || '';
     return ($kind eq 'bit' || $kind eq 'bits') ? 1 : 0;
@@ -265,6 +311,22 @@ sub _normalized_type_spec ($class, $type_spec) {
         my %normalized = (
             kind => 'deferred_imported_alias',
             imported_type_ref => $type_spec->{imported_type_ref},
+        );
+        $normalized{signed} = ($type_spec->{signed} // 0) ? 1 : 0
+            if exists $type_spec->{signed};
+        if (exists $type_spec->{state_model}) {
+            return undef unless defined($type_spec->{state_model})
+                && !ref($type_spec->{state_model})
+                && $type_spec->{state_model} =~ /\A(?:two_state|four_state)\z/;
+            $normalized{state_model} = $type_spec->{state_model};
+        }
+        return \%normalized;
+    }
+
+    if ($class->_is_deferred_width_symbol_spec($type_spec)) {
+        my %normalized = (
+            kind => 'deferred_width_symbol',
+            width_symbol_ref => $type_spec->{width_symbol_ref},
         );
         $normalized{signed} = ($type_spec->{signed} // 0) ? 1 : 0
             if exists $type_spec->{signed};

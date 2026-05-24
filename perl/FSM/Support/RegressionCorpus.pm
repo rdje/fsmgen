@@ -233,6 +233,21 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.declarative_bits_symbol_widths',
+        relpath => 't/corpus/declarative_bits_symbol_widths.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'declarative_bits_symbol_widths',
+        expected_hdl_patterns => [
+            qr/\breg\s+\[7:0\]\s+OUT;/s,
+            qr/\breg\s+signed\s+\[3:0\]\s+NIB;/s,
+            qr/\bbit\s+FLAG;/s,
+        ],
+    },
+    {
         id => 'feature.direct_runtime_div_mod',
         relpath => 't/corpus/direct_runtime_div_mod.fsm',
         family => 'language_feature_fixture',

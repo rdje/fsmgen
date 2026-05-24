@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `INFERENCE-FIRST-SCALAR-AUTHORING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `language ergonomics`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -42,7 +42,7 @@ weakening existing fail-closed diagnostics for ambiguous or unsafe values.
 ## Task Tree
 
 - ID: `INFERENCE-FIRST-SCALAR-AUTHORING`
-  Status: `active`
+  Status: `done`
   Goal: `Broaden safe scalar width/type inference one reviewable surface at a time.`
   Children: `INFERENCE-FIRST-SCALAR-AUTHORING.1`,
     `INFERENCE-FIRST-SCALAR-AUTHORING.2`,
@@ -63,11 +63,11 @@ weakening existing fail-closed diagnostics for ambiguous or unsafe values.
   Commit: `INFERENCE-FIRST-SCALAR-AUTHORING.2: audit scalar inference frontier`
 
 - ID: `INFERENCE-FIRST-SCALAR-AUTHORING.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Accept positive integer scalar width symbols inside declarative (bits WIDTH) type specs.`
   Acceptance: `Direct-root, composition-top, and package +types paths accept (bits WIDTH_SYMBOL) when WIDTH_SYMBOL resolves to a positive integer scalar constant or enum member in the same available symbol scope, including imported package symbols where the scope already supports imports; signed/two_state/four_state/list/record wrappers preserve the resolved width; non-positive, aggregate, unresolved, or cyclic width symbols fail closed with existing type-shape diagnostics or sharper width-symbol diagnostics; docs, manifest/support accounting, and focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: syntax checks; focused scalar type tests; corpus accounting and supported language-feature corpus; language-surface, capability-manifest, supported-corpus, normalized semantic JSON, aggregate-type, structural-type, mdBook, and diff checks`
+  Commit: `INFERENCE-FIRST-SCALAR-AUTHORING.3: ship symbolic bits widths`
 
 ## Audit Findings
 
@@ -98,7 +98,7 @@ weakening existing fail-closed diagnostics for ambiguous or unsafe values.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `INFERENCE-FIRST-SCALAR-AUTHORING.3` | `pending` | The audit found a small declarative scalar-width gap: `(bits WIDTH_SYMBOL)` should reuse existing positive integer scalar width symbols in type specs. |
+| 1 | `INFERENCE-FIRST-SCALAR-AUTHORING.3` | `done` | Shipped the bounded symbolic scalar type width surface and closed this task tree. |
 
 ## Decisions
 
@@ -110,6 +110,11 @@ weakening existing fail-closed diagnostics for ambiguous or unsafe values.
   inside `(bits ...)` type specs. This is narrower than arbitrary type-width
   expressions and aligns the code with the existing width-symbol authoring
   direction documented in the mdBook.
+- `2026-05-24`: `INFERENCE-FIRST-SCALAR-AUTHORING.3` deliberately uses a
+  type-width-symbol resolver that is narrower than `+size` width expressions:
+  positive integer scalar constants and enum members are accepted, while
+  aggregate scalar leaves, parameters, runtime signals, and arbitrary
+  expressions remain outside the declarative `(bits WIDTH_SYMBOL)` surface.
 
 ## Open Questions
 
@@ -128,6 +133,7 @@ weakening existing fail-closed diagnostics for ambiguous or unsafe values.
 | --- | --- | --- | --- |
 | `2026-05-24` | `INFERENCE-FIRST-SCALAR-AUTHORING.1` | `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: Files=3, Tests=351` |
 | `2026-05-24` | `INFERENCE-FIRST-SCALAR-AUTHORING.2` | `perl -Iperl -c t/279-declarative-scalar-types.t`; `prove -Iperl t/279-declarative-scalar-types.t t/310-systemverilog-implicit-width-and-truthiness-hardening.t t/248-regression-corpus-accounting.t`; `mdbook build docs/book`; `git diff --check` | `passed: Files=3, Tests=3036` |
+| `2026-05-24` | `INFERENCE-FIRST-SCALAR-AUTHORING.3` | `perl -Iperl -c` for touched parser/support/test files; `prove -Iperl t/279-declarative-scalar-types.t`; `prove -Iperl t/248-regression-corpus-accounting.t`; `prove -Iperl t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/317-language-surface-contract.t t/363-language-surface-section-runtime-contract-audit.t t/297-capability-manifest.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/303-normalized-semantic-json-supported-corpus.t`; `prove -Iperl t/280-declarative-aggregate-types.t t/281-structural-declared-type-contracts.t`; `mdbook build docs/book`; `git diff --check` | `passed: focused/broader gates clean` |
 
 ## Commit Log
 
@@ -135,6 +141,7 @@ weakening existing fail-closed diagnostics for ambiguous or unsafe values.
 | --- | --- | --- |
 | `INFERENCE-FIRST-SCALAR-AUTHORING.1` | `INFERENCE-FIRST-SCALAR-AUTHORING.1: select scalar inference work` | Selection leaf complete. |
 | `INFERENCE-FIRST-SCALAR-AUTHORING.2` | `INFERENCE-FIRST-SCALAR-AUTHORING.2: audit scalar inference frontier` | Audit leaf complete. |
+| `INFERENCE-FIRST-SCALAR-AUTHORING.3` | `INFERENCE-FIRST-SCALAR-AUTHORING.3: ship symbolic bits widths` | Implementation leaf complete. |
 
 ## Changelog
 
@@ -143,3 +150,6 @@ weakening existing fail-closed diagnostics for ambiguous or unsafe values.
 - `2026-05-24`: Audited the current scalar-inference boundary and selected
   symbolic `(bits WIDTH_SYMBOL)` type-spec widths as the next bounded
   implementation leaf.
+- `2026-05-24`: Shipped symbolic `(bits WIDTH_SYMBOL)` type-spec widths for
+  direct-root, package, and composition-top `+types` paths and closed the task
+  tree.

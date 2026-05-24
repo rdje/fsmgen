@@ -111,13 +111,6 @@ sub parse_package_root ($self, $package_ast) {
             "but package child kind support is blocked because the active package parser currently accepts only '+constants', '+enums', and '+types'.";
     }
 
-    $self->resolve_pending_package_types(
-        $package_name,
-        $symbols,
-        $symbol_manager,
-        \@pending_type_entries,
-    );
-
     $self->resolve_pending_package_symbols(
         $package_name,
         $symbols,
@@ -125,6 +118,13 @@ sub parse_package_root ($self, $package_ast) {
         $expression_builder,
         \@pending_constant_entries,
         \@pending_enum_entries,
+    );
+
+    $self->resolve_pending_package_types(
+        $package_name,
+        $symbols,
+        $symbol_manager,
+        \@pending_type_entries,
     );
 
     return FSM::Package::Spec->new(
@@ -465,13 +465,20 @@ sub canonicalize_package_type_spec ($self, %args) {
                     : undef
             );
         },
+        resolve_positive_integer_width_symbol => sub ($width_symbol) {
+            return (
+                $symbols && $symbols->can('resolve_positive_integer_width_symbol')
+                    ? $symbols->resolve_positive_integer_width_symbol($width_symbol)
+                    : undef
+            );
+        },
         is_contract_identifier => sub ($value) { return $self->is_contract_identifier($value) },
     );
     return $resolved_spec if $resolved_spec;
 
     confess
         "Package '$package_name' contains malformed '+types' entry for type '$type_name', ".
-        "but the first active '+types' lane supports 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local/imported types.";
+        "but the first active '+types' lane supports 'bit', '(bits N)', '(bits WIDTH_SYMBOL)', '(signed bit)', '(signed (bits N))', '(signed (bits WIDTH_SYMBOL))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local/imported types.";
 }
 
 sub canonicalize_package_symbol_literal_payload ($self, %args) {

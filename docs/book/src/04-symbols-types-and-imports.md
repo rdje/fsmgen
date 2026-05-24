@@ -304,8 +304,10 @@ Current bounded scalar forms include:
 
 - `bit`
 - `(bits N)`
+- `(bits WIDTH_SYMBOL)`
 - `(signed bit)`
 - `(signed (bits N))`
+- `(signed (bits WIDTH_SYMBOL))`
 - `(two_state TYPE)`
 - `(four_state TYPE)`
 - named aliases to other scalar types
@@ -313,9 +315,14 @@ Current bounded scalar forms include:
 Examples:
 
 ```lisp
+(+constants
+  (WORD_W 32)
+)
+
 (+types
   (type flag bit)
   (type byte (bits 8))
+  (type word (bits WORD_W))
   (type signed_word (signed (bits 16)))
   (type packed_flag (two_state bit))
   (type safe_bus (four_state (bits 32)))
@@ -405,7 +412,8 @@ correct packed base-signal range before generation.
 
 ## Width Tokens From Types And Scalars
 
-Direct-root `+size` and composition `?ports` widths may now come from:
+Direct-root `+size`, composition `?ports`, and scalar `+types` `(bits ...)`
+widths may now come from:
 
 - raw positive integers
 - local scalar type aliases
@@ -413,11 +421,18 @@ Direct-root `+size` and composition `?ports` widths may now come from:
 - local positive integer scalar symbols
 - imported positive integer scalar symbols
 
-Those scalar width symbols use the same literal interpretation as direct
-`+size` expression terms, including decimal, `0d`, `0b`, `0o`, `0x`,
-SystemVerilog-style based spellings, and intent-level sized values. This keeps
-a package constant such as `(BYTE_W 0d8)` or `(BYTE_W 'h8)` usable anywhere a
-positive width scalar is allowed.
+For `+size` and composition `?ports`, width expressions also retain the
+broader already-shipped constant-expression surface where documented. For
+`+types` `(bits WIDTH_SYMBOL)`, the accepted symbol must resolve directly to a
+positive integer scalar constant or enum member in the available symbol scope.
+Aggregate scalar leaves, runtime signals, parameters, and arbitrary
+expressions are intentionally not accepted as type-width symbols.
+
+Those scalar width symbols use the same positive-integer literal
+interpretation as direct `+size` scalar terms, including decimal, `0d`, `0b`,
+`0o`, `0x`, SystemVerilog-style based spellings, and intent-level sized
+values. This keeps a package constant such as `(BYTE_W 0d8)` or `(BYTE_W 'h8)`
+usable anywhere a positive width scalar symbol is allowed.
 
 Example:
 
@@ -428,6 +443,19 @@ Example:
 
 (+types
   (type byte (bits BYTE_W))
+)
+```
+
+Enum members are also valid width symbols:
+
+```lisp
+(+enums
+  (width_e
+    (NIBBLE 4))
+)
+
+(+types
+  (type nibble (signed (bits width_e.NIBBLE)))
 )
 ```
 

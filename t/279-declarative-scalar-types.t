@@ -280,6 +280,171 @@ FSM
     like($output_text, qr/reg\s+\[7:0\]\s+OUT\b/s, 'CLI output preserves imported positive integer scalar symbol width');
 };
 
+subtest 'direct-root and package +types accept positive integer scalar width symbols' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+
+    my $fsm_path = File::Spec->catfile($tempdir, 'symbolic_bits_direct_root.fsm');
+    my $package_path = File::Spec->catfile($libdir, 'shared_cfg.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'symbolic_bits_direct_root.sv');
+
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_cfg
+  (+types
+    (type imported_byte (bits BYTE_W))
+    (type imported_nibble (signed (bits width_e.NIBBLE)))
+  )
+  (+constants
+    (BYTE_W 8)
+  )
+  (+enums
+    (width_e
+      (NIBBLE 4))
+  )
+)
+FSM
+    );
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:symbolic_bits_direct_root
+  (+import shared_cfg)
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (bits BYTE_W))
+    (type nibble_t (signed (bits width_e.NIBBLE)))
+    (type imported_byte_t shared_cfg.imported_byte)
+    (type imported_nibble_t shared_cfg.imported_nibble)
+    (type imported_symbol_t (four_state (bits shared_cfg.BYTE_W)))
+  )
+  (+size
+    (OUT byte_t)
+    (NIB nibble_t)
+    (IMP imported_byte_t)
+    (IMPN imported_nibble_t)
+    (ISYM imported_symbol_t)
+  )
+  (+constants
+    (BYTE_W 8)
+  )
+  (+enums
+    (width_e
+      (NIBBLE 4))
+  )
+  (idle
+    (OUT = 8'hA5)
+    (NIB = 4'h7)
+    (IMP = OUT)
+    (IMPN = NIB)
+    (ISYM = OUT)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+        source_search_paths => [$libdir],
+    );
+    my $result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $symbol_contract = $result->{intent_hir}{symbol_contract};
+    my $hdl = $result->{hdl_code};
+
+    is($symbol_contract->{types}{byte_t}{width}, 8, 'direct +types resolves local constant width symbols');
+    is($symbol_contract->{types}{nibble_t}{width}, 4, 'direct +types resolves local enum-member width symbols');
+    is($symbol_contract->{types}{nibble_t}{signed}, 1, 'direct +types preserves signed overlay around enum-member width symbols');
+    is($symbol_contract->{types}{imported_byte_t}{width}, 8, 'direct +types sees package types built from package constants');
+    is($symbol_contract->{types}{imported_nibble_t}{width}, 4, 'direct +types sees package types built from package enum members');
+    is($symbol_contract->{types}{imported_symbol_t}{width}, 8, 'direct +types resolves imported package scalar width symbols directly');
+    is($symbol_contract->{types}{imported_symbol_t}{state_model}, 'four_state', 'direct +types preserves state-model overlay around imported width symbols');
+    like($hdl, qr/reg\s+\[7:0\]\s+OUT\b/s, 'generated HDL uses direct local symbolic (bits WIDTH_SYMBOL) width');
+    like($hdl, qr/reg\s+signed\s+\[3:0\]\s+NIB\b/s, 'generated HDL uses direct enum-member symbolic signed width');
+    like($hdl, qr/reg\s+\[7:0\]\s+IMP\b/s, 'generated HDL uses package type built from package symbolic width');
+    like($hdl, qr/reg\s+signed\s+\[3:0\]\s+IMPN\b/s, 'generated HDL uses package enum-member symbolic signed width');
+    like($hdl, qr/logic\s+\[7:0\]\s+ISYM;/s, 'generated HDL uses imported scalar symbol width with four-state overlay');
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $fsm_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+    my $output_text = slurp_file($output_path);
+
+    ok($success, 'CLI accepts direct and package symbolic bits width declarations');
+    ok(-e $output_path, 'CLI emits HDL for direct and package symbolic bits width declarations');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for direct and package symbolic bits width declarations');
+    unlike($combined_output, qr/malformed '\+types' entry|symbolic bits/s, 'successful symbolic bits CLI run does not report type failures');
+    like($output_text, qr/reg\s+\[7:0\]\s+OUT\b/s, 'CLI output preserves direct symbolic bits width');
+};
+
+subtest 'direct-root +types rejects aggregate scalar leaves as bits width symbols' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'bad_symbolic_bits_direct_root.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'bad_symbolic_bits_direct_root.sv');
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:bad_symbolic_bits_direct_root
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (bits CFG.width))
+  )
+  (+size
+    (OUT byte_t)
+  )
+  (+constants
+    (CFG ((width 8)))
+  )
+  (idle
+    (OUT = 8'hA5)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+    );
+
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($fsm_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+
+    like(
+        $pipeline_error,
+        qr/Malformed '\+types' entry for type 'byte_t'.*\(bits WIDTH_SYMBOL\)/s,
+        'pipeline rejects aggregate scalar leaves as declarative bits width symbols',
+    );
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--output', $output_path, $fsm_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+
+    ok(!$success, 'CLI rejects aggregate scalar leaves as declarative bits width symbols');
+    ok(!-e $output_path, 'CLI does not emit HDL for aggregate scalar leaf type widths');
+    like(
+        $combined_output,
+        qr/Malformed '\+types' entry for type 'byte_t'.*\(bits WIDTH_SYMBOL\)/s,
+        'CLI surfaces the declarative bits width-symbol boundary',
+    );
+    isnt($error_code, 0, 'CLI exits non-zero for aggregate scalar leaf type widths');
+};
+
 subtest 'direct-root +size rejects non-positive scalar symbol widths explicitly' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'bad_scalar_symbol_direct_root.fsm');
@@ -612,6 +777,111 @@ FSM
     ok(-e $output_path, 'CLI emits HDL for composition positive integer scalar symbol widths');
     ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for composition positive integer scalar symbol widths');
     unlike($combined_output, qr/composition port sizing is blocked|positive integer scalar symbol/s, 'successful composition scalar symbol width CLI run does not report width failures');
+};
+
+subtest 'composition-top +types accept local and imported positive integer scalar width symbols' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+
+    my $composition_path = File::Spec->catfile($tempdir, 'symbolic_bits_top_ports.fsm');
+    my $package_path = File::Spec->catfile($libdir, 'shared_cfg.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'symbolic_bits_top_ports.sv');
+
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_cfg
+  (+types
+    (type byte_from_const (bits BYTE_W))
+    (type nibble_from_enum (signed (bits width_e.NIBBLE)))
+  )
+  (+constants
+    (BYTE_W 8)
+  )
+  (+enums
+    (width_e
+      (NIBBLE 4))
+  )
+)
+FSM
+    );
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:symbolic_bits_top_ports
+  (+import shared_cfg)
+  (?ports:public_io
+    out_local>byte_t
+    out_enum>nibble_t
+    out_pkg_const>pkg_const_t
+    out_pkg_enum>pkg_enum_t
+  )
+  (+types
+    (type byte_t (bits BYTE_W))
+    (type nibble_t (signed (bits width_e.NIBBLE)))
+    (type pkg_const_t (bits shared_cfg.BYTE_W))
+    (type pkg_enum_t (four_state (signed (bits shared_cfg.width_e.NIBBLE))))
+  )
+  (+constants
+    (BYTE_W 8)
+  )
+  (+enums
+    (width_e
+      (NIBBLE 4))
+  )
+  (?rtl:producer)
+  (?wiring:wiring
+    /producer.data_out/out_local/
+    /producer.nib_out/out_enum/
+    /producer.pkg_data/out_pkg_const/
+    /producer.pkg_nib/out_pkg_enum/
+  )
+)
+
+(?rtlif:producer
+  data_out>8:data
+  nib_out>4:data
+  pkg_data>8:data
+  pkg_nib>4:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+        source_search_paths => [$libdir],
+    );
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my $ports = $result->{composition_spec}->top->ports_blocks->[0]->ports;
+    my %ports_by_name = map { $_->name => $_ } @$ports;
+    my $symbol_contract = $result->{intent_hir}{symbol_contract};
+    my $hdl = $result->{hdl_code};
+
+    is($ports_by_name{out_local}->width, 8, 'composition local constant-backed bits width resolves after top symbols');
+    is($ports_by_name{out_enum}->width, 4, 'composition local enum-backed bits width resolves after top symbols');
+    is($ports_by_name{out_enum}->signed, 1, 'composition preserves signed overlay around local enum-backed bits width');
+    is($ports_by_name{out_pkg_const}->width, 8, 'composition imported package constant-backed bits width resolves after imports');
+    is($ports_by_name{out_pkg_enum}->width, 4, 'composition imported package enum-backed bits width resolves after imports');
+    is($ports_by_name{out_pkg_enum}->state_model, 'four_state', 'composition preserves four-state overlay around imported enum-backed bits width');
+    is($symbol_contract->{types}{byte_t}{width}, 8, 'composition symbol contract preserves local constant-backed bits width');
+    is($symbol_contract->{types}{pkg_const_t}{width}, 8, 'composition symbol contract finalizes imported constant-backed bits width');
+    like($hdl, qr/output\s+\[7:0\]\s+out_local\b/s, 'generated top HDL uses local symbolic bits width');
+    like($hdl, qr/output\s+signed\s+\[3:0\]\s+out_enum\b/s, 'generated top HDL uses local enum-backed signed symbolic bits width');
+    like($hdl, qr/output\s+\[7:0\]\s+out_pkg_const\b/s, 'generated top HDL uses imported constant-backed symbolic bits width');
+    like($hdl, qr/output\s+logic\s+signed\s+\[3:0\]\s+out_pkg_enum\b/s, 'generated top HDL uses imported enum-backed four-state symbolic bits width');
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $composition_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+
+    ok($success, 'CLI accepts composition symbolic bits width declarations');
+    ok(-e $output_path, 'CLI emits HDL for composition symbolic bits width declarations');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for composition symbolic bits width declarations');
+    unlike($combined_output, qr/composition port sizing is blocked|malformed '\+types' entry/s, 'successful composition symbolic bits CLI run does not report type failures');
 };
 
 subtest 'composition ?ports reject non-positive scalar symbol widths explicitly' => sub {

@@ -77,7 +77,10 @@ sub build_language_surface_section {
         },
         declarations => {
             scalar_and_aggregate_names => [qw(+constants +enums +params +types +define +import)],
-            width_declarations => ['+size with positive integer literal or constant expression terms'],
+            width_declarations => [
+                '+size with positive integer literal or constant expression terms',
+                '+types (bits WIDTH_SYMBOL) with positive integer scalar constants or enum members',
+            ],
             package_roots => ['?pkg reusable scalar/aggregate/type/enum declarations'],
         },
         composition => {

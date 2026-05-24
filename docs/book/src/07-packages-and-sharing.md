@@ -116,6 +116,13 @@ Package declarations now resolve declaratively rather than purely by order.
 That means normal non-cyclic references can point forward or backward within
 the same family, while explicit dependency cycles are rejected.
 
+Package `+types` also participate in the same scalar width-symbol model as
+direct roots: `(type byte_t (bits BYTE_W))` is accepted when `BYTE_W` is a
+positive integer scalar package constant, and enum members such as
+`width_e.NIBBLE` may be used the same way. Aggregate scalar leaves,
+parameters, runtime signals, and arbitrary expressions are not type-width
+symbols.
+
 ## Search And Resolution
 
 Package roots may be:

@@ -341,6 +341,27 @@ sub resolve_positive_integer_scalar($self, $symbol_name) {
     );
 }
 
+sub resolve_positive_integer_width_symbol($self, $symbol_name) {
+    return undef unless defined $symbol_name && !ref($symbol_name);
+
+    if ($symbol_name =~ /^([a-zA-Z_]\w*)\.([a-zA-Z_]\w*)$/) {
+        my ($enum_name, $member_name) = ($1, $2);
+        if (exists $self->{enums}{$enum_name} && exists $self->{enums}{$enum_name}{$member_name}) {
+            return FSM::Package::ScalarWidthSupport->positive_integer_from_literal_like(
+                $self->{enums}{$enum_name}{$member_name},
+            );
+        }
+    }
+
+    return undef unless exists $self->{constants}{$symbol_name};
+    my $aggregate_prefix = $self->aggregate_symbol_prefix_for($symbol_name);
+    return undef if defined($aggregate_prefix) && $aggregate_prefix ne $symbol_name;
+
+    return FSM::Package::ScalarWidthSupport->positive_integer_from_literal_like(
+        $self->{constants}{$symbol_name},
+    );
+}
+
 # Summaries
 sub get_symbol_summary($self) {
     my $constant_definition_count = scalar(keys %{$self->{constant_definitions} || {}});

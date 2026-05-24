@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: symbolic `(bits WIDTH_SYMBOL)` uses a deliberately narrow resolver
+- `INFERENCE-FIRST-SCALAR-AUTHORING.3` resolves type-width symbols from the
+  declarative symbol table instead of reusing the full `+size` expression
+  evaluator. That is intentional: type aliases describe static semantic
+  shapes, so accepting constants and enum members is enough to remove the
+  common magic-number duplication without turning type specs into a second
+  expression language.
+- Direct-root and package parsing now resolve constants/enums before `+types`.
+  This is safe because declarative symbols do not depend on type aliases, and
+  it lets `(type byte_t (bits BYTE_W))` work regardless of declaration order.
+- Composition keeps the existing imported-type timing model: local top types
+  can carry a deferred imported package width symbol until package imports are
+  finalized. After import resolution, the local type is rewritten to a normal
+  scalar type spec with width, signedness, and state-model metadata.
+- Aggregate scalar leaves remain outside this type-width surface even though
+  direct `+size` expressions support them. That distinction keeps aggregate
+  shape inference and scalar type-width authoring separated for review.
+
 ## 2026-05-24: Symbolic `(bits ...)` widths are the next scalar inference surface
 - `INFERENCE-FIRST-SCALAR-AUTHORING.2` found that most shipped scalar
   inference already has code and corpus ownership: direct `+size`, width

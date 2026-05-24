@@ -1,0 +1,29 @@
+(?fsm:declarative_bits_symbol_widths
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t (bits BYTE_W))
+    (type nibble_t (signed (bits width_e.NIBBLE)))
+    (type flag_t (two_state (bits FLAG_W)))
+  )
+  (+size
+    (OUT byte_t)
+    (NIB nibble_t)
+    (FLAG flag_t)
+  )
+  (+constants
+    (BYTE_W 8)
+    (FLAG_W 1)
+  )
+  (+enums
+    (width_e
+      (NIBBLE 4))
+  )
+  (idle
+    (= (OUT 8'hA5))
+    (= (NIB 4'h7))
+    (= (FLAG 1))
+  )
+)

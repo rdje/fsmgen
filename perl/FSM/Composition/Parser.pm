@@ -168,13 +168,6 @@ sub parse_top ($self, $top_ast) {
         }
     }
 
-    $self->resolve_pending_top_types(
-        $top_name,
-        $top_symbols,
-        $symbol_manager,
-        \@pending_type_entries,
-    );
-
     $self->resolve_pending_top_symbols(
         $top_name,
         $top_symbols,
@@ -182,6 +175,14 @@ sub parse_top ($self, $top_ast) {
         $expression_builder,
         \@pending_constant_entries,
         \@pending_enum_entries,
+    );
+
+    $self->resolve_pending_top_types(
+        $top_name,
+        $top_symbols,
+        $symbol_manager,
+        \@pending_type_entries,
+        \@package_imports,
     );
 
     for my $pending_ports (@pending_ports_blocks) {
@@ -508,9 +509,10 @@ sub resolve_pending_top_symbols ($self, $top_name, $top_symbols, $symbol_manager
     return 1;
 }
 
-sub resolve_pending_top_types ($self, $top_name, $top_symbols, $symbol_manager, $type_entries) {
+sub resolve_pending_top_types ($self, $top_name, $top_symbols, $symbol_manager, $type_entries, $package_imports = []) {
     $type_entries ||= [];
     return 1 unless @$type_entries;
+    my %package_import = map { $_ => 1 } @{ $package_imports || [] };
 
     FSM::Package::DeclarativeTypeResolver->resolve_types(
         type_entries => $type_entries,
@@ -524,6 +526,7 @@ sub resolve_pending_top_types ($self, $top_name, $top_symbols, $symbol_manager, 
                 spec_ast => $entry->{spec_ast},
                 top_symbols => $top_symbols,
                 allow_unresolved_imported_type_refs => 1,
+                package_imports => \%package_import,
             );
         },
         store_type => sub ($type_name, $type_spec) {
@@ -1456,6 +1459,7 @@ sub canonicalize_top_type_spec ($self, %args) {
     my $spec_ast = $args{spec_ast};
     my $top_symbols = $args{top_symbols};
     my $allow_unresolved_imported_type_refs = $args{allow_unresolved_imported_type_refs} // 0;
+    my $package_imports = $args{package_imports} || {};
 
     my $resolved_spec = FSM::Package::DeclarativeTypeSupport->canonicalize_type_spec(
         spec_ast => $spec_ast,
@@ -1468,6 +1472,23 @@ sub canonicalize_top_type_spec ($self, %args) {
                     ? $top_symbols->resolve_type($type_ref)
                     : undef
             );
+        },
+        resolve_positive_integer_width_symbol => sub ($width_symbol) {
+            return (
+                $top_symbols && $top_symbols->can('resolve_positive_integer_width_symbol')
+                    ? $top_symbols->resolve_positive_integer_width_symbol($width_symbol)
+                    : undef
+            );
+        },
+        defer_width_symbol => sub ($width_symbol) {
+            return undef unless $allow_unresolved_imported_type_refs;
+            return undef unless defined($width_symbol) && !ref($width_symbol);
+            return undef unless $width_symbol =~ /\A([A-Za-z_]\w*)\./;
+            return undef unless $package_imports->{$1};
+            return {
+                kind => 'deferred_width_symbol',
+                width_symbol_ref => $width_symbol,
+            };
         },
         defer_type_reference => sub ($type_ref) {
             return undef unless $allow_unresolved_imported_type_refs;
@@ -1484,7 +1505,7 @@ sub canonicalize_top_type_spec ($self, %args) {
 
     confess
         "Composition top '$top_name' contains malformed '+types' entry for type '$type_name', ".
-        "but the first active '+types' lane supports 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local or imported types.".
+        "but the first active '+types' lane supports 'bit', '(bits N)', '(bits WIDTH_SYMBOL)', '(signed bit)', '(signed (bits N))', '(signed (bits WIDTH_SYMBOL))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local or imported types.".
         $self->scope_docs_suffix;
 }
 

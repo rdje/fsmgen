@@ -25,6 +25,7 @@ What is shipped today:
 - widths from explicit `+size`
 - widths from scalar type aliases
 - widths from positive integer scalar symbols
+- symbolic scalar type widths such as `(type byte_t (bits BYTE_W))`
 - bounded aggregate constant values
 - packed aggregate type aliases through `(list ...)` and `(record ...)`
 - declared-type preservation through the live pipeline
