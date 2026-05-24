@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Transaction package constants use the child artifact boundary
+- `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` resolves qualified
+  imported package scalar constants in generated-child transaction parameter
+  defaults inside LoweringIR, not by literalizing them in the parser.
+- The parser change is deliberately narrow: transaction-parameter enum-member
+  validation defers imported package-constant-shaped tokens so LoweringIR can
+  issue the package-specific unknown, aggregate, path, and ambiguity
+  diagnostics. Other enum validation surfaces keep their existing behavior.
+- Generated children already publish package imports and embedded package
+  roots for package enum defaults, so preserving `PACKAGE.CONSTANT` in child
+  `+params`, generated-composition child summaries, and default instance
+  bindings is reviewable and self-contained. Resolved scalar literals stay
+  internal for lowerer consumers and diagnostics.
+
 ## 2026-05-24: Generated child package constants should stay review tokens
 - `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` selects qualified
   imported package scalar constants for generated-child transaction parameter

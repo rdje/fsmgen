@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 transaction package-constant defaults shipped
+- Completed `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` and closed the
+  task tree.
+- Generated-child transaction parameter scalar defaults and scalar leaves
+  inside compatible aggregate/list defaults may now reference qualified
+  imported package scalar constants such as `shared.DEFAULT_WIDTH`.
+- Authored `PACKAGE.CONSTANT` tokens remain visible in generated child `.fsm`
+  `+params`, generated-composition child summaries, and default instance
+  bindings; resolved scalar numeric or exact-width literals are recorded
+  internally for lowerer consumers and diagnostics.
+- The parser now defers imported package-constant-shaped transaction parameter
+  tokens to LoweringIR instead of rejecting them as enum members, while keeping
+  other enum validation surfaces unchanged.
+- Unknown package constants, unqualified package constants, aggregate package
+  constants, package member/item paths, ambiguous local-enum versus
+  package-constant spellings, runtime signals, non-scalar actor parameters,
+  and arbitrary expressions remain fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused transaction/default tests with
+  `Files=5, Tests=12`; public/spec/book/backlog audits with `Files=7,
+  Tests=352`; `./bin/ci-regression isf --no-book` with `Files=256,
+  Tests=1696`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 transaction package-constant defaults selected
 - Created active task tree
   `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS`.

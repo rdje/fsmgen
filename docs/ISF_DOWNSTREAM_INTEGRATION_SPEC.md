@@ -226,10 +226,15 @@ General source rules:
   authored tokens while resolving those names internally. Generated child
   transaction parameter defaults may use numeric/exact-width literals,
   declared actor constants, actor-local scalar parameter defaults, earlier
-  scalar transaction parameter defaults, enum members, or compatible
-  aggregate/list literals with those scalar leaf sources; actor-static names
-  are published as literal child/report defaults while earlier transaction
-  parameter names and enum tokens stay authored in child review artifacts.
+  scalar transaction parameter defaults, enum members, qualified imported
+  package scalar constants, or compatible aggregate/list literals with those
+  scalar leaf sources; actor constants and actor scalar parameter defaults are
+  published as literal child/report defaults while earlier transaction
+  parameter names, enum tokens, and qualified package-constant tokens stay
+  authored in child review artifacts. Package-constant-backed transaction
+  defaults require imported `PACKAGE.CONSTANT` scalar package `+constants`
+  entries; unqualified package constants, aggregate package constants, and
+  package member/item paths fail closed.
   Static wait
   counts use non-negative integer literals, actor constants, or actor-local
   scalar parameter defaults.
@@ -581,12 +586,15 @@ Rules:
   Generated child transaction scalar parameter defaults and scalar leaves
   inside generated child transaction aggregate/list parameter defaults may use
   declared actor constants, actor-local scalar parameter defaults, earlier
-  scalar transaction parameter defaults, or local or package-qualified enum
-  member references. Actor-static generated child
-  transaction defaults are resolved to literal generated child `.fsm`
-  `+params`, generated-composition child summaries, and default instance
-  bindings; transaction-parameter dependencies and enum references preserve
-  authored tokens in those review surfaces because they are child-local.
+  scalar transaction parameter defaults, local or package-qualified enum
+  member references, or qualified imported package scalar constants. Actor
+  constants and actor scalar parameter defaults in generated child transaction
+  defaults are resolved to literal generated child `.fsm` `+params`,
+  generated-composition child summaries, and default instance bindings;
+  transaction-parameter dependencies, enum references, and qualified
+  package-constant references preserve authored tokens in those review
+  surfaces because they are child-local or carried by generated child package
+  imports and embedded package roots.
   Scalar activation
   parameter overrides and scalar leaves inside activation aggregate/list
   parameter override values may also use local or package-qualified enum member
@@ -596,8 +604,9 @@ Rules:
   Duplicate overrides, unknown overrides, and shape mismatches fail closed.
 - Schedule reports expose actor parameter defaults through `actor_params[]`
   entries with `name` and JSON-safe default `value`, preserving authored actor
-  constant tokens, earlier actor-parameter tokens, and enum tokens. These are
-  static specialization defaults, not runtime payloads.
+  constant tokens, earlier actor-parameter tokens, enum tokens, and qualified
+  package-constant tokens. These are static specialization defaults, not
+  runtime payloads.
 - Every exported actor interface endpoint must be explicitly bound at the use
   site. Exported actor clock/reset endpoints may omit explicit bindings only
   when the parent and child use the same clock name and the same reset
@@ -3580,7 +3589,8 @@ The following are not public shipped integration surfaces today:
 - Broader interface, transaction-port, storage width, or bank-depth
   expressions beyond actor-local scalar parameter defaults.
 - Derived parameter expressions and package/imported constants outside the
-  shipped qualified actor parameter default scalar-constant subset.
+  shipped qualified actor parameter and generated-child transaction parameter
+  default scalar-constant subsets.
 - General memory-array HDL emission for actor-owned banks.
 - Arbitrary CDC, payload CDC, reset CDC, level sampling across domains, or
   FIFO-like cross-domain storage.

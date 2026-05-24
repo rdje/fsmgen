@@ -562,22 +562,30 @@ scheduled `.fsm` `+params` and `actor_params[]` while recording resolved
 literals internally. Unqualified package constants, package aggregate
 constants, and package aggregate scalar-leaf paths remain fail-closed. Earlier
 actor parameters are source-order dependencies only; forward, self, cyclic,
-and non-scalar actor-parameter references fail closed. Generated child transaction
-parameter defaults accept scalar decimal literals, exact-width numeric
-literals, declared actor constants, actor-local scalar parameter defaults,
-earlier scalar transaction parameter defaults, scalar local or
-package-qualified enum members, and compatible aggregate/list literals whose
-leaves are numeric, exact-width, declared actor constants, actor-local scalar
-parameter defaults, earlier scalar transaction parameter defaults, or
-local/package enum member literals. Transaction-parameter dependencies are
-source-order dependencies only; forward, self, cyclic, and non-scalar
-transaction-parameter references fail closed.
-Actor-static generated child transaction defaults are literalized before child
-`.fsm` `+params`, generated-composition child summaries, and default instance
-bindings are published; enum member defaults keep authored enum tokens because
-generated child artifacts carry the matching enum declarations. Earlier scalar
+and non-scalar actor-parameter references fail closed. Generated child
+transaction parameter defaults accept scalar decimal literals, exact-width
+numeric literals, declared actor constants, actor-local scalar parameter
+defaults, earlier scalar transaction parameter defaults, scalar local or
+package-qualified enum members, qualified imported package scalar constants,
+and compatible aggregate/list literals whose leaves are numeric, exact-width,
+declared actor constants, actor-local scalar parameter defaults, earlier
+scalar transaction parameter defaults, local/package enum member literals, or
+qualified imported package scalar constants. Transaction-parameter
+dependencies are source-order dependencies only; forward, self, cyclic, and
+non-scalar transaction-parameter references fail closed.
+Actor constants and actor scalar parameter defaults used by generated child
+transaction defaults are literalized before child `.fsm` `+params`,
+generated-composition child summaries, and default instance bindings are
+published. Enum member defaults keep authored enum tokens because generated
+child artifacts carry the matching enum declarations. Earlier scalar
 transaction-parameter dependency tokens also keep authored tokens because the
-names are declared in the same generated child artifact. Scalar activation
+names are declared in the same generated child artifact. Qualified package
+constant defaults keep authored `PACKAGE.CONSTANT` tokens in generated child
+`.fsm` `+params`, generated-composition child summaries, and default instance
+bindings because generated child artifacts carry package imports and embedded
+package roots; resolved scalar literals are recorded internally. Unknown
+package constants, unqualified package constants, package aggregate constants,
+and package aggregate member/item paths remain fail-closed. Scalar activation
 parameter overrides and scalar leaves inside activation aggregate/list
 parameter override values may use actor-local constants, actor-local scalar
 parameter defaults, and local or package-qualified enum members.
@@ -1322,8 +1330,9 @@ Use-site FIFO interface shape, use-site bank-depth
 specialization, generated-top respecialization, arbitrary-depth
 memory-backed FIFO generation beyond the first `DEPTH=4` fixture, automatic
 non-zero reset values such as empty=1, standalone transaction/drive exports,
-package/imported constants outside the shipped qualified actor parameter
-default scalar-constant subset, derived parameter expressions, and library
+package/imported constants outside the shipped qualified actor parameter and
+generated-child transaction parameter default scalar-constant subsets, derived
+parameter expressions, and library
 actors that import other libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
@@ -5243,6 +5252,7 @@ Focused tests:
 - [t/1347-isf-transaction-param-actor-static-defaults.t](../t/1347-isf-transaction-param-actor-static-defaults.t)
 - [t/1348-isf-transaction-param-transaction-params.t](../t/1348-isf-transaction-param-transaction-params.t)
 - [t/1349-isf-actor-param-package-constants.t](../t/1349-isf-actor-param-package-constants.t)
+- [t/1350-isf-transaction-param-package-constants.t](../t/1350-isf-transaction-param-package-constants.t)
 
 ## 12. Explicitly Deferred
 
@@ -5251,8 +5261,9 @@ Focused tests:
   rule-guard/disjoint-rule/FIFO-controller-matrix/bank-access/fixed FIFO
   library fixture/catalog slices:
   standalone transaction/drive exports,
-  package/imported constants outside the shipped qualified actor parameter
-  default scalar-constant subset, derived parameter expressions,
+  package/imported constants outside the shipped qualified actor parameter and
+  generated-child transaction parameter default scalar-constant subsets,
+  derived parameter expressions,
   transaction-port dimensions beyond positive literals, actor-local scalar
   parameters, and scalar type aliases,
   memory-array backend emission, and
@@ -5380,7 +5391,8 @@ Focused tests:
   child transaction aggregate/list parameter default enum member leaves,
   generated child transaction parameter default scalar and aggregate/list
   leaves backed by declared actor constants, actor-local scalar parameter
-  defaults, or earlier scalar transaction parameter defaults, scalar
+  defaults, earlier scalar transaction parameter defaults, or qualified
+  imported package scalar constants, scalar
   activation parameter override enum member values, activation aggregate/list
   override enum member leaves, reusable-library use-site parameter override
   enum member values and leaves plus importing-actor constant/scalar-parameter

@@ -1001,6 +1001,11 @@ sub _actor_package_constant_payload {
     return _clone_isf_value($package_constants->{$package_name}{$constant_name});
 }
 
+sub _transaction_param_package_constant_candidate {
+    my ($actor, $value) = @_;
+    return defined _actor_package_constant_reference($actor, $value);
+}
+
 sub _actor_local_enum_member_exists {
     my ($actor, $enum_name, $member_name) = @_;
     return exists(((($actor->{enum_symbols} || {})->{local} || {})->{$enum_name} || {})->{$member_name});
@@ -3530,8 +3535,10 @@ sub _validate_transaction_param_enum_member_value {
 
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        _validate_enum_member_value($member, $actor, $context)
-            if defined $member;
+        if (defined $member) {
+            _validate_enum_member_value($member, $actor, $context)
+                unless _transaction_param_package_constant_candidate($actor, $value);
+        }
         return 1;
     }
 
@@ -3554,8 +3561,10 @@ sub _validate_transaction_param_enum_member_aggregate_leaf {
 
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        _validate_enum_member_value($member, $actor, $context)
-            if defined $member;
+        if (defined $member) {
+            _validate_enum_member_value($member, $actor, $context)
+                unless _transaction_param_package_constant_candidate($actor, $value);
+        }
         return 1;
     }
 

@@ -5098,11 +5098,31 @@ sub _resolve_transaction_param_default_value {
     $earlier_scalar_transaction_params ||= {};
 
     if (!ref($value)) {
-        confess "$context uses undefined parameter value; transaction parameter defaults accept numeric, exact-width, aggregate/list, earlier scalar transaction parameter, actor constant, actor scalar parameter, and scalar enum member literals only\n"
+        confess "$context uses undefined parameter value; transaction parameter defaults accept numeric, exact-width, aggregate/list, earlier scalar transaction parameter, actor constant, actor scalar parameter, scalar enum member, and qualified package scalar constant literals only\n"
             unless defined($value);
 
         return (_clone_isf_value($value), _clone_isf_value($value), 0)
             if defined($value) && _is_numeric_or_exact_width_literal($value);
+
+        if (my $package_constant = _actor_package_constant_reference($actor, $value)) {
+            my ($package_name, $constant_name, $suffix) = @$package_constant;
+            my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+            if (defined $constant_payload) {
+                confess "$context token '$value' is ambiguous: it matches local enum member '$value' and imported package constant '$value'\n"
+                    if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
+                confess "$context package constant '$package_name.$constant_name' aggregate/member path '$value' remains deferred; transaction parameter defaults accept only qualified package scalar constants in this slice\n"
+                    if $suffix ne '';
+                my $resolved_value = _package_constant_scalar_value($constant_payload);
+                confess "$context package constant '$package_name.$constant_name' must resolve to a scalar numeric or exact-width literal value\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return (_clone_isf_value($value), _clone_isf_value($resolved_value), 1);
+            }
+
+            confess "$context references unknown package constant '$value'\n"
+                if $suffix eq '' && !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
+        }
 
         if (_is_enum_member_reference($value)) {
             my $resolved_value = _resolve_actor_enum_member_value($actor, $value);
@@ -5140,13 +5160,13 @@ sub _resolve_transaction_param_default_value {
                 return (_clone_isf_value($resolved_value), _clone_isf_value($resolved_value), 1);
             }
 
-            confess "$context token '$value' is a runtime interface signal; transaction parameter defaults accept literals, earlier scalar transaction parameters, declared actor constants, actor scalar parameters, and enum members only\n"
+            confess "$context token '$value' is a runtime interface signal; transaction parameter defaults accept literals, earlier scalar transaction parameters, declared actor constants, actor scalar parameters, enum members, and qualified package scalar constants only\n"
                 if _actor_interface_signal_by_name($actor, $value);
 
-            confess "$context token '$value' is not an earlier scalar transaction parameter, declared actor constant, actor scalar parameter, or enum member\n";
+            confess "$context token '$value' is not an earlier scalar transaction parameter, declared actor constant, actor scalar parameter, enum member, or qualified package scalar constant\n";
         }
 
-        confess "$context uses unsupported parameter value '$value'; transaction parameter defaults accept numeric, exact-width, aggregate/list, earlier scalar transaction parameter, actor constant, actor scalar parameter, and scalar enum member literals only\n";
+        confess "$context uses unsupported parameter value '$value'; transaction parameter defaults accept numeric, exact-width, aggregate/list, earlier scalar transaction parameter, actor constant, actor scalar parameter, scalar enum member, and qualified package scalar constant literals only\n";
     }
 
     confess "$context uses unsupported parameter value shape; transaction parameter defaults accept non-empty aggregate/list literals\n"

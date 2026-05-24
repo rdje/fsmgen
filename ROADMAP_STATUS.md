@@ -2,8 +2,30 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
-- Current frontier: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 transaction package-constant default implementation:
+  `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` shipped the bounded
+  imported package scalar-constant widening for generated-child transaction
+  parameter defaults and closed the task tree. Generated-child transaction
+  scalar defaults and scalar leaves inside compatible aggregate/list defaults
+  may now reference qualified imported package scalar constants such as
+  `shared.DEFAULT_WIDTH`. Authored `PACKAGE.CONSTANT` tokens remain visible in
+  generated child `.fsm` `+params`, generated-composition child summaries, and
+  default instance bindings; resolved scalar numeric or exact-width literals
+  are recorded internally for lowerer consumers and diagnostics. The parser
+  now defers imported package-constant-shaped transaction parameter tokens to
+  LoweringIR instead of rejecting them as enum members, while keeping other
+  enum validation surfaces unchanged. Unknown package constants, unqualified
+  package constants, aggregate package constants, package member/item paths,
+  ambiguous local-enum versus package-constant spellings, runtime signals,
+  non-scalar actor parameters, and arbitrary expressions remain fail-closed or
+  deferred. The ISF spec, downstream handoff, public contract, mdBook, task
+  tree, README index, roadmap, and live docs are synchronized. Validation
+  passed with syntax checks; focused transaction/default tests (`Files=5,
+  Tests=12`); public/spec/book/backlog audits (`Files=7, Tests=352`);
+  `./bin/ci-regression isf --no-book` (`Files=256, Tests=1696`);
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 transaction package-constant default selection:
   `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` created the active task
   tree and selected the next bounded implementation leaf. Generated-child
@@ -7184,13 +7206,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
-- Current frontier: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`.
-- Completion status: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1`
-  selected the next bounded R14 implementation tree. The next leaf will allow
-  generated-child transaction parameter defaults to use qualified imported
-  package scalar constants while preserving authored tokens in generated child
-  review surfaces and recording resolved literals internally.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`
+  shipped qualified imported package scalar constants in generated-child
+  transaction parameter defaults, synchronized the user-facing book and
+  downstream handoff, and closed the task tree. The next implementation must
+  be selected through a new or active task-tree leaf before code changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -56,7 +56,7 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship bounded package scalar constants in generated-child transaction parameter defaults.`
   Children: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1`,
     `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`
@@ -70,18 +70,18 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
   Commit: `this commit: ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select transaction package constants`
 
 - ID: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement package scalar constants as generated-child transaction parameter defaults.`
   Acceptance: `Lowering behavior, diagnostics, public contracts, focused
   tests, mdBook, downstream handoff, and broader ISF gate are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `this commit: ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship transaction package constants`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | `pending` | The package-constant generated-child transaction parameter default boundary is selected and ready for implementation. |
+| 1 | `closed` | `done` | The package-constant generated-child transaction parameter default implementation is shipped and the task tree is closed. |
 
 ## Decisions
 
@@ -107,16 +107,21 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-24` | `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -c t/1350-isf-transaction-param-package-constants.t`; `perl -c t/1144-isf-public-tested-by-metadata-audit.t`; focused transaction/default `prove` set; public/spec/book/backlog audit `prove` set; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` | `this commit: ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select transaction package constants` | `selection slice` |
-| `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | `pending` | `implementation slice` |
+| `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | `this commit: ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship transaction package constants` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created task tree and selected the bounded package scalar
   constants in generated-child transaction parameter defaults implementation
   frontier.
+- `2026-05-24`: Shipped qualified imported package scalar constants in
+  generated-child transaction parameter scalar defaults and scalar aggregate/list
+  leaves; synchronized tests, public contracts, mdBook, downstream handoff,
+  live docs, and roadmap state.

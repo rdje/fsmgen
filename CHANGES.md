@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Transaction package-constant defaults shipped
+- Completed `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` and closed the
+  task tree.
+- Generated-child transaction parameter scalar defaults and scalar leaves
+  inside compatible aggregate/list defaults now accept qualified imported
+  package scalar constants such as `shared.DEFAULT_WIDTH`.
+- Lowering records resolved scalar numeric or exact-width literals internally
+  while preserving authored `PACKAGE.CONSTANT` tokens in generated child
+  `.fsm` `+params`, generated-composition child summaries, and default
+  instance bindings.
+- Parser enum-member validation now defers imported package-constant-shaped
+  transaction parameter tokens to LoweringIR so package constants receive the
+  same bounded diagnostics as other generated-child transaction defaults.
+- Unknown package constants, unqualified package constants, aggregate package
+  constants, package member/item paths, ambiguous local-enum versus
+  package-constant spellings, runtime signals, non-scalar actor parameters,
+  and arbitrary expressions remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, README index, roadmap, and live docs.
+- Validation passed: syntax checks; focused transaction/default tests with
+  `Files=5, Tests=12`; public/spec/book/backlog audits with `Files=7,
+  Tests=352`; `./bin/ci-regression isf --no-book` with `Files=256,
+  Tests=1696`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Transaction package-constant defaults selected
 - Created active task tree
   `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS`.

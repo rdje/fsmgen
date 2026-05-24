@@ -1698,6 +1698,15 @@ generated child `.fsm` `+params` review artifacts, generated-composition child
 parameter summaries and default instance bindings, strict CLI HDL generation,
 and fail-closed diagnostics for forward, self, non-scalar, runtime-signal, and
 unknown sources.
+Package-constant-backed generated child transaction parameter defaults are
+checked by
+[t/1350-isf-transaction-param-package-constants.t](../t/1350-isf-transaction-param-package-constants.t),
+covering qualified imported package scalar constants, aggregate/list leaves,
+generated child `.fsm` `+params`, embedded package roots,
+generated-composition child summaries and default instance bindings, strict
+CLI HDL generation, and fail-closed diagnostics for unknown package constants,
+unqualified package constants, aggregate package constants, package
+member/item paths, and ambiguous local-enum/package-constant spellings.
 Scalar activation parameter override enum member values are checked by
 [t/1271-isf-enum-member-activation-params.t](../t/1271-isf-enum-member-activation-params.t),
 covering local and package enum member overrides on spawn, generated blocking
@@ -2705,7 +2714,10 @@ Generated-composition child `parameters[]` and instance
 `parameter_bindings[]` entries preserve authored scalar enum member tokens and
 aggregate/list enum leaves for generated child transaction parameter defaults,
 and they preserve earlier scalar transaction-parameter dependency tokens
-because those names are child-local.
+because those names are child-local. Qualified package-constant tokens and
+leaves are also preserved in those child review surfaces because generated
+child artifacts carry package imports and embedded package roots; resolved
+scalar literals remain internal.
 Actor constants and actor-local scalar parameter defaults used by generated
 child transaction parameter defaults are literalized before child `+params`
 emission and report publication, so generated-composition child defaults and

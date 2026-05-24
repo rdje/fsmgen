@@ -174,7 +174,7 @@ ISF
       (WIDTH DEFAULT_WIDTH))
     (complete done)))
 ISF
-        qr/Transaction 'worker': parameter 'WIDTH' token 'DEFAULT_WIDTH' is not an earlier scalar transaction parameter, declared actor constant, actor scalar parameter, or enum member/,
+        qr/Transaction 'worker': parameter 'WIDTH' token 'DEFAULT_WIDTH' is not an earlier scalar transaction parameter, declared actor constant, actor scalar parameter, enum member, or qualified package scalar constant/,
         'unknown transaction parameter default tokens fail closed',
     );
 };
