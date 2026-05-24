@@ -220,6 +220,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.md` — completed `R14` task tree for actor-static generated-child transaction parameter defaults.
 - `docs/tasks/ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.md` — completed `R14` task tree for earlier-scalar generated-child transaction parameter dependency defaults.
 - `docs/tasks/ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.md` — completed roadmap-maintenance task tree for synchronizing stale current-active-lane roadmap wording.
+- `docs/tasks/ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.md` — active `R14` task tree for package scalar constants in actor parameter defaults.
 - `docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md` — completed `R14` task tree for reusable-library clock/reset name remapping.
 - `docs/tasks/ISF-STORAGE-VAR-ALIASES.md` — completed `R14` task tree for actor-owned scalar storage variable aliases.
 - `docs/tasks/ISF-STORAGE-VAR-SURFACE.md` — completed `R14` task tree for the narrowed actor-owned scalar storage source vocabulary.

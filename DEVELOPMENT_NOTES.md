@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Package constants should enter ISF through qualified static defaults
+- `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` selects only qualified
+  imported package scalar constants as actor parameter defaults. The package
+  parser already canonicalizes package `+constants`, so this slice can reuse
+  existing package truth without inventing unqualified imports or a new
+  expression evaluator.
+- The selected publication rule keeps authored `PACKAGE.CONSTANT` tokens in
+  scheduled `.fsm` `+params` and schedule reports because the lowered `.fsm`
+  embeds the imported package root and the `+import` review artifact.
+- Aggregate package constants and package constants in other ISF value domains
+  stay deferred so the first implementation remains auditable and does not
+  silently widen unrelated scheduling semantics.
+
 ## 2026-05-24: Current-active-lane status should use the live pointer
 - `ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1` keeps the lower
   `ROADMAP_STATUS.md` current-active-lane section aligned with the top

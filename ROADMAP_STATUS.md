@@ -2,8 +2,23 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
+- Current frontier: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`.
+- Recent R14 package-constant actor parameter default selection:
+  `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` created the active task tree
+  and selected the next bounded implementation leaf. Actor-level `(params ...)`
+  scalar defaults and scalar leaves inside compatible aggregate/list defaults
+  may next use qualified imported package scalar constants such as
+  `shared.DEFAULT_WIDTH`, preserving authored package-constant tokens in
+  scheduled `.fsm` `+params` and `actor_params[]` while recording resolved
+  literals internally. Unqualified package constants, package aggregate
+  constants and aggregate scalar-leaf paths, package constants in other value
+  domains, arbitrary expressions, transaction parameters, runtime signals,
+  and package namespace pollution remain deferred or fail closed. No parser,
+  scheduler, report, generated artifact, HDL, CLI behavior, public API,
+  source, test, or generated behavior changed in this selection slice.
+  Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent roadmap current-active-lane truth sync:
   `ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1` synchronized the lower
   `Current active lane` section after it still named the already-closed
@@ -7132,14 +7147,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` shipped
-  generated-child transaction parameter defaults that can reference earlier
-  scalar transaction parameter defaults by name and closed the task tree. The
-  next behavior-bearing implementation slice must create or select a task tree
-  before code, tests, source artifacts, generated artifacts, config, or public
-  behavior changes.
+- Active task tree: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
+- Current frontier: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`.
+- Completion status: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` selected
+  the next bounded R14 implementation tree. The next leaf will allow actor
+  parameter defaults to use qualified imported package scalar constants while
+  preserving authored tokens in review surfaces and recording resolved
+  literals internally.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

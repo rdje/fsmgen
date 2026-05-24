@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Package-constant actor parameter defaults selected
+- Created active task tree `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS`.
+- Completed `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1`; the selected
+  implementation frontier is `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`.
+- Selected a bounded actor parameter default value-domain widening: actor
+  parameter scalar defaults and scalar leaves inside compatible aggregate/list
+  defaults may reference qualified imported package scalar constants such as
+  `shared.DEFAULT_WIDTH`.
+- Authored package-constant tokens must remain visible in scheduled `.fsm`
+  `+params` and `actor_params[]`, while resolved literals are recorded
+  internally for scalar actor-parameter consumers.
+- Unqualified package constants, package aggregate constants and aggregate
+  scalar-leaf paths, package constants in other value domains, arbitrary
+  expressions, transaction parameters, runtime signals, and package namespace
+  pollution remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Roadmap — Current-active-lane truth sync
 - Completed `ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1` and closed the task
   tree.
