@@ -114,8 +114,8 @@ subtest 'transaction parameter actor-static defaults fail closed outside scalar 
       (BASE_W 8))
     (complete done)))
 ISF
-        qr/Transaction 'worker': parameter 'WIDTH' transaction parameter 'BASE_W' cannot be used as a transaction parameter default/,
-        'transaction parameter defaults cannot depend on sibling transaction parameters',
+        qr/Transaction 'worker': parameter 'WIDTH' transaction parameter 'BASE_W' must reference an earlier scalar transaction parameter default/,
+        'forward transaction parameter defaults cannot depend on sibling transaction parameters',
     );
 
     assert_lower_rejected(
@@ -174,7 +174,7 @@ ISF
       (WIDTH DEFAULT_WIDTH))
     (complete done)))
 ISF
-        qr/Transaction 'worker': parameter 'WIDTH' token 'DEFAULT_WIDTH' is not a declared actor constant, actor scalar parameter, or enum member/,
+        qr/Transaction 'worker': parameter 'WIDTH' token 'DEFAULT_WIDTH' is not an earlier scalar transaction parameter, declared actor constant, actor scalar parameter, or enum member/,
         'unknown transaction parameter default tokens fail closed',
     );
 };

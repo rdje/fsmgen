@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Transaction parameter dependency defaults preserve child-local tokens
+- The shipped implementation tracks earlier scalar transaction parameter
+  defaults while lowering one generated child transaction. A later default can
+  reuse only those already-recorded scalar defaults, so forward references,
+  self references, cycles, and non-scalar dependencies fail closed without a
+  graph solver.
+- The published value remains the authored transaction parameter token because
+  the generated child `.fsm` owns both the referenced parameter and the
+  dependent parameter. This keeps child artifacts reviewable and
+  self-contained while still recording resolved literals for diagnostics and
+  metadata consumers.
+
 ## 2026-05-24: Transaction parameter dependencies should start source-order only
 - The next bounded transaction-parameter dependency surface should mirror the
   actor-parameter dependency model: an ISF transaction parameter may reference

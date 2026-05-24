@@ -4454,6 +4454,7 @@ sub _transaction_param_declarations {
     my @params;
     my %seen;
     my %declared_transaction_params;
+    my %earlier_scalar_transaction_param_values;
     for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
         next unless ref($entry) eq 'ARRAY' && @$entry >= 1;
         my $declared_name = $entry->[0];
@@ -4474,6 +4475,7 @@ sub _transaction_param_declarations {
             "Transaction '$tx_name': parameter '$name'",
             $actor,
             \%declared_transaction_params,
+            \%earlier_scalar_transaction_param_values,
         );
         my %param = (
             name  => $name,
@@ -4482,6 +4484,7 @@ sub _transaction_param_declarations {
         $param{resolved_value} = _clone_isf_value($resolved_value)
             if $has_resolved_value;
         push @params, \%param;
+        _record_earlier_scalar_transaction_param_value(\%earlier_scalar_transaction_param_values, \%param);
     }
 
     return \@params;
@@ -5051,18 +5054,25 @@ sub _validate_isf_param_value {
 }
 
 sub _validate_transaction_param_value {
-    my ($value, $context, $actor, $transaction_param_names) = @_;
+    my ($value, $context, $actor, $transaction_param_names, $earlier_scalar_transaction_params) = @_;
 
-    _resolve_transaction_param_default_value($value, $context, $actor, $transaction_param_names || {});
+    _resolve_transaction_param_default_value(
+        $value,
+        $context,
+        $actor,
+        $transaction_param_names || {},
+        $earlier_scalar_transaction_params || {},
+    );
     return 1;
 }
 
 sub _resolve_transaction_param_default_value {
-    my ($value, $context, $actor, $transaction_param_names) = @_;
+    my ($value, $context, $actor, $transaction_param_names, $earlier_scalar_transaction_params) = @_;
     $transaction_param_names ||= {};
+    $earlier_scalar_transaction_params ||= {};
 
     if (!ref($value)) {
-        confess "$context uses undefined parameter value; transaction parameter defaults accept numeric, exact-width, aggregate/list, actor constant, actor scalar parameter, and scalar enum member literals only\n"
+        confess "$context uses undefined parameter value; transaction parameter defaults accept numeric, exact-width, aggregate/list, earlier scalar transaction parameter, actor constant, actor scalar parameter, and scalar enum member literals only\n"
             unless defined($value);
 
         return (_clone_isf_value($value), _clone_isf_value($value), 0)
@@ -5078,7 +5088,12 @@ sub _resolve_transaction_param_default_value {
         }
 
         if (_is_hdl_identifier($value)) {
-            confess "$context transaction parameter '$value' cannot be used as a transaction parameter default; transaction-parameter dependency ordering remains deferred\n"
+            if (exists $earlier_scalar_transaction_params->{$value}) {
+                my $resolved_value = $earlier_scalar_transaction_params->{$value};
+                return (_clone_isf_value($value), _clone_isf_value($resolved_value), 1);
+            }
+
+            confess "$context transaction parameter '$value' must reference an earlier scalar transaction parameter default\n"
                 if $transaction_param_names->{$value};
 
             if (my $constant = _actor_constant_by_name($actor, $value)) {
@@ -5099,13 +5114,13 @@ sub _resolve_transaction_param_default_value {
                 return (_clone_isf_value($resolved_value), _clone_isf_value($resolved_value), 1);
             }
 
-            confess "$context token '$value' is a runtime interface signal; transaction parameter defaults accept literals, declared actor constants, actor scalar parameters, and enum members only\n"
+            confess "$context token '$value' is a runtime interface signal; transaction parameter defaults accept literals, earlier scalar transaction parameters, declared actor constants, actor scalar parameters, and enum members only\n"
                 if _actor_interface_signal_by_name($actor, $value);
 
-            confess "$context token '$value' is not a declared actor constant, actor scalar parameter, or enum member\n";
+            confess "$context token '$value' is not an earlier scalar transaction parameter, declared actor constant, actor scalar parameter, or enum member\n";
         }
 
-        confess "$context uses unsupported parameter value '$value'; transaction parameter defaults accept numeric, exact-width, aggregate/list, actor constant, actor scalar parameter, and scalar enum member literals only\n";
+        confess "$context uses unsupported parameter value '$value'; transaction parameter defaults accept numeric, exact-width, aggregate/list, earlier scalar transaction parameter, actor constant, actor scalar parameter, and scalar enum member literals only\n";
     }
 
     confess "$context uses unsupported parameter value shape; transaction parameter defaults accept non-empty aggregate/list literals\n"
@@ -5121,6 +5136,7 @@ sub _resolve_transaction_param_default_value {
                 $context,
                 $actor,
                 $transaction_param_names,
+                $earlier_scalar_transaction_params,
             );
         push @published, $published_item;
         push @resolved, $resolved_item;
@@ -5128,6 +5144,25 @@ sub _resolve_transaction_param_default_value {
     }
 
     return (\@published, \@resolved, $has_resolved_leaf);
+}
+
+sub _record_earlier_scalar_transaction_param_value {
+    my ($earlier_scalar_transaction_param_values, $param) = @_;
+    return unless ref($earlier_scalar_transaction_param_values) eq 'HASH';
+    return unless ref($param) eq 'HASH';
+
+    my $name = $param->{name};
+    return unless defined($name) && !ref($name) && length($name);
+    return if ref($param->{value});
+
+    my $resolved_value = exists($param->{resolved_value})
+        ? $param->{resolved_value}
+        : $param->{value};
+    return unless defined($resolved_value)
+        && !ref($resolved_value)
+        && _is_numeric_or_exact_width_literal($resolved_value);
+
+    $earlier_scalar_transaction_param_values->{$name} = _clone_isf_value($resolved_value);
 }
 
 sub _resolve_activation_param_value {

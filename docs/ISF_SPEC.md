@@ -559,13 +559,19 @@ parameters are source-order dependencies only; forward, self, cyclic, and
 non-scalar actor-parameter references fail closed. Generated child transaction
 parameter defaults accept scalar decimal literals, exact-width numeric
 literals, declared actor constants, actor-local scalar parameter defaults,
-scalar local or package-qualified enum members, and compatible aggregate/list
-literals whose leaves are numeric, exact-width, declared actor constants,
-actor-local scalar parameter defaults, or local/package enum member literals.
+earlier scalar transaction parameter defaults, scalar local or
+package-qualified enum members, and compatible aggregate/list literals whose
+leaves are numeric, exact-width, declared actor constants, actor-local scalar
+parameter defaults, earlier scalar transaction parameter defaults, or
+local/package enum member literals. Transaction-parameter dependencies are
+source-order dependencies only; forward, self, cyclic, and non-scalar
+transaction-parameter references fail closed.
 Actor-static generated child transaction defaults are literalized before child
 `.fsm` `+params`, generated-composition child summaries, and default instance
 bindings are published; enum member defaults keep authored enum tokens because
-generated child artifacts carry the matching enum declarations. Scalar activation
+generated child artifacts carry the matching enum declarations. Earlier scalar
+transaction-parameter dependency tokens also keep authored tokens because the
+names are declared in the same generated child artifact. Scalar activation
 parameter overrides and scalar leaves inside activation aggregate/list
 parameter override values may use actor-local constants, actor-local scalar
 parameter defaults, and local or package-qualified enum members.
@@ -1906,14 +1912,15 @@ transactions and blocking `do` generated child activations support
 transaction-local `params` and per-instance `(params (NAME value) ...)`
 overrides through the generated composition path, and those overrides
 specialize static child instances. Transaction-local scalar parameter defaults
-may use actor-local constants, actor-local scalar parameter defaults, local enum
-members such as `mode.BUSY`, or package enum members such as
-`shared.mode.BUSY`; compatible aggregate/list defaults may use the same scalar
-leaf sources. Actor-static default leaves are resolved to literal values before
-generated child `.fsm` `+params`, generated-composition child parameter
-summaries, and default instance bindings are published. Enum member defaults
-preserve the authored token in those review surfaces because the generated
-child `.fsm` carries the needed enum declarations. Parameterized rule
+may use earlier scalar transaction parameter defaults, actor-local constants,
+actor-local scalar parameter defaults, local enum members such as `mode.BUSY`,
+or package enum members such as `shared.mode.BUSY`; compatible aggregate/list
+defaults may use the same scalar leaf sources. Actor-static default leaves are
+resolved to literal values before generated child `.fsm` `+params`,
+generated-composition child parameter summaries, and default instance bindings
+are published. Earlier transaction-parameter dependency tokens and enum member
+defaults preserve the authored token in those review surfaces because the
+generated child `.fsm` carries the needed declarations. Parameterized rule
 triggers use the same static-specialization model: they specialize generated
 child activation instances rather than mutate a shared transaction body.
 Direct `(on ...)`
@@ -3223,8 +3230,8 @@ misleading scheduled artifacts are emitted. The scheduled child `.fsm` carries
 the child transaction defaults in a direct `+params` block. Generated child
 transaction defaults backed by actor constants or actor-local scalar parameter
 defaults are published as resolved literal values in that child `+params`
-block and generated-composition report metadata, while enum defaults preserve
-authored enum tokens. The parent lowerer IR
+block and generated-composition report metadata, while child-local transaction
+parameter dependencies and enum defaults preserve authored tokens. The parent lowerer IR
 preserves each generated instance's override list. The generated top emits
 those overrides as `?fsmc` instance `(params ...)` blocks, so the existing
 composition pipeline applies them to the generated child instances.
@@ -5227,6 +5234,7 @@ Focused tests:
 - [t/1345-isf-actor-param-actor-constants.t](../t/1345-isf-actor-param-actor-constants.t)
 - [t/1346-isf-actor-param-actor-params.t](../t/1346-isf-actor-param-actor-params.t)
 - [t/1347-isf-transaction-param-actor-static-defaults.t](../t/1347-isf-transaction-param-actor-static-defaults.t)
+- [t/1348-isf-transaction-param-transaction-params.t](../t/1348-isf-transaction-param-transaction-params.t)
 
 ## 12. Explicitly Deferred
 
@@ -5362,8 +5370,8 @@ Focused tests:
   child transaction scalar parameter default enum member values, generated
   child transaction aggregate/list parameter default enum member leaves,
   generated child transaction parameter default scalar and aggregate/list
-  leaves backed by declared actor constants or actor-local scalar parameter
-  defaults, scalar
+  leaves backed by declared actor constants, actor-local scalar parameter
+  defaults, or earlier scalar transaction parameter defaults, scalar
   activation parameter override enum member values, activation aggregate/list
   override enum member leaves, reusable-library use-site parameter override
   enum member values and leaves plus importing-actor constant/scalar-parameter

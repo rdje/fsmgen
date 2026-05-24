@@ -57,9 +57,10 @@ clear lower-layer mapping, and clear runtime behavior.
   declared actor constants, earlier scalar actor parameter defaults, or enum
   members, and they are not runtime payload wires. Generated child transaction
   parameter defaults may use declared actor constants, actor-local scalar
-  parameter defaults, or enum members in scalar positions and scalar
-  aggregate/list leaves; actor-static names are published as literal child
-  defaults while enum tokens remain authored review tokens. Generated
+  parameter defaults, earlier scalar transaction parameter defaults, or enum
+  members in scalar positions and scalar aggregate/list leaves; actor-static
+  names are published as literal child defaults while child-local transaction
+  dependency tokens and enum tokens remain authored review tokens. Generated
   activation-site scalar parameter overrides and aggregate/list override leaves
   may use actor-local constants, actor-local scalar parameter defaults, and
   enum members, which
@@ -677,14 +678,17 @@ The ISF-specific current limitations are:
   dependencies only; forward, self, cyclic, and non-scalar actor-parameter
   references fail closed.
 
-  Generated child transaction parameter defaults may also use declared actor
-  constants or actor-local scalar parameter defaults by name:
-  `(transaction worker (params (WIDTH DEFAULT_WIDTH) (LANES (LANE0 BASE_W))) ...)`
-  publishes literal child `+params` and generated-composition defaults for
-  those actor-static leaves. Enum-backed transaction defaults keep the authored
-  enum token because the generated child artifact carries the enum declaration.
-  Transaction-parameter dependencies, runtime signals, unknown symbols,
-  non-scalar actor parameters, and arbitrary expressions fail closed.
+  Generated child transaction parameter defaults may also use earlier scalar
+  transaction parameters, declared actor constants, or actor-local scalar
+  parameter defaults by name:
+  `(transaction worker (params (BASE 8) (WIDTH BASE) (LANES (BASE DEFAULT_WIDTH))) ...)`.
+  Actor-static leaves publish literal child `+params` and
+  generated-composition defaults. Earlier transaction parameter dependency
+  tokens and enum-backed transaction defaults keep their authored tokens
+  because the generated child artifact carries the needed declarations.
+  Forward/self/cyclic/non-scalar transaction-parameter dependencies, runtime
+  signals, unknown symbols, non-scalar actor parameters, and arbitrary
+  expressions fail closed.
 
   Scalar leaves inside those activation aggregate/list parameter override
   values may use actor-local scalar parameter defaults and enum members too.

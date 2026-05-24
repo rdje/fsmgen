@@ -1674,6 +1674,13 @@ transaction defaults and aggregate/list leaves, literalized generated child
 bindings, enum-token preservation, strict CLI HDL generation, and fail-closed
 diagnostics for transaction-parameter dependencies, non-scalar actor
 parameters, runtime interface signals, and unknown symbols.
+Child-local transaction-parameter dependency defaults are checked by
+[t/1348-isf-transaction-param-transaction-params.t](../t/1348-isf-transaction-param-transaction-params.t),
+covering earlier scalar transaction parameter defaults, aggregate/list leaves,
+generated child `.fsm` `+params` review artifacts, generated-composition child
+parameter summaries and default instance bindings, strict CLI HDL generation,
+and fail-closed diagnostics for forward, self, non-scalar, runtime-signal, and
+unknown sources.
 Scalar activation parameter override enum member values are checked by
 [t/1271-isf-enum-member-activation-params.t](../t/1271-isf-enum-member-activation-params.t),
 covering local and package enum member overrides on spawn, generated blocking
@@ -2678,7 +2685,9 @@ machine-readable contract advertises these through
 
 Generated-composition child `parameters[]` and instance
 `parameter_bindings[]` entries preserve authored scalar enum member tokens and
-aggregate/list enum leaves for generated child transaction parameter defaults.
+aggregate/list enum leaves for generated child transaction parameter defaults,
+and they preserve earlier scalar transaction-parameter dependency tokens
+because those names are child-local.
 Actor constants and actor-local scalar parameter defaults used by generated
 child transaction parameter defaults are literalized before child `+params`
 emission and report publication, so generated-composition child defaults and

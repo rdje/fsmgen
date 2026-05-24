@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -46,7 +46,7 @@ graph, expression solver, or parent actor resolution requirement.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship earlier-scalar generated-child transaction parameter dependency defaults.`
   Children: `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1`,
   `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2`
@@ -58,22 +58,22 @@ graph, expression solver, or parent actor resolution requirement.
   boundary, publication rule, non-goals, and validation scope are recorded
   before code changes.`
   Verification: `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `48fdb245 ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1: select transaction param dependency defaults`
 
 - ID: `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement earlier scalar transaction parameter defaults inside generated-child transaction params.`
   Acceptance: `Lowering accepts earlier scalar transaction parameter
   dependencies, preserves child-local authored tokens, records resolved
   default literals, rejects unsupported sources, and updates public docs/tests.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused transaction/default tests; public/spec/book/backlog audits; full ISF regression gate; mdBook build; diff whitespace check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` | `pending` | This is the selected implementation leaf after the documentation-only tree selection. |
+| 1 | `closed` | `done` | Earlier-scalar generated-child transaction parameter dependency defaults are shipped and the tree is closed. |
 
 ## Decisions
 
@@ -99,15 +99,18 @@ graph, expression solver, or parent actor resolution requirement.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-24` | `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1348-isf-transaction-param-transaction-params.t`; `perl -Iperl -c t/1144-isf-public-tested-by-metadata-audit.t`; focused `prove` over transaction/default tests (`Files=6, Tests=71`); public/spec/book/backlog audits (`Files=6, Tests=351`); `./bin/ci-regression isf --no-book` (`Files=254, Tests=1692`); `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1` | `pending this commit: ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1: select transaction param dependency defaults` | Selection commit. |
-| `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` | `pending` | Implementation leaf. |
+| `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1` | `48fdb245 ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1: select transaction param dependency defaults` | Selection commit. |
+| `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` | `pending this commit: ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2: ship transaction param dependency defaults` | Implementation leaf. |
 
 ## Changelog
 
 - `2026-05-24`: Created the active R14 task tree for earlier-scalar generated
   child transaction parameter dependency defaults.
+- `2026-05-24`: Shipped earlier-scalar generated-child transaction parameter
+  dependency defaults and closed the tree.

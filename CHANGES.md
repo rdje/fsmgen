@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Transaction parameter dependency defaults shipped
+- Completed `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` and closed the task
+  tree.
+- Generated child transaction parameter defaults now accept earlier scalar
+  transaction parameter defaults by name for scalar defaults and scalar leaves
+  inside compatible aggregate/list defaults.
+- The lowerer preserves child-local dependency tokens in generated child
+  `.fsm` `+params`, generated-composition child parameter summaries, and
+  default instance bindings, while recording resolved default literals
+  internally.
+- Forward references, self references, cycles, non-scalar transaction
+  parameters, runtime interface signals, unknown symbols, arbitrary
+  expressions, activation-site override dependencies, and package/imported
+  constants beyond shipped enum members remain fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused transaction/default tests with
+  `Files=6, Tests=71`; public/spec/book/backlog audits with `Files=6,
+  Tests=351`; `./bin/ci-regression isf --no-book` with `Files=254,
+  Tests=1692`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Transaction parameter dependency defaults selected
 - Created active task tree `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS`.
 - Completed `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1`; the selected

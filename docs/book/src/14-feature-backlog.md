@@ -335,11 +335,13 @@ non-scalar actor-parameter references remain fail-closed.
 
 Generated child transaction parameter defaults also accept enum members in
 their shipped scalar and aggregate/list leaf positions. They also accept
-declared actor constants and actor-local scalar parameter defaults by name in
-those positions. Actor-static transaction defaults are resolved to literal
-values before generated child `.fsm` `+params`, generated-composition child
-summaries, and default instance bindings are published; enum-backed defaults
-keep the authored enum token in those review surfaces.
+declared actor constants, actor-local scalar parameter defaults, and earlier
+scalar transaction parameter defaults by name in those positions.
+Actor-static transaction defaults are resolved to literal values before
+generated child `.fsm` `+params`, generated-composition child summaries, and
+default instance bindings are published; child-local transaction parameter
+dependencies and enum-backed defaults keep the authored token in those review
+surfaces.
 
 Reusable-library use-site parameter overrides may use importing-actor
 constants, importing-actor scalar parameter defaults, and enum members as

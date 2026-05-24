@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Transaction parameter dependency defaults shipped
+- Completed `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` and closed the task
+  tree.
+- Generated child transaction scalar defaults and scalar leaves inside
+  compatible aggregate/list defaults may now reference earlier scalar
+  transaction parameter defaults by name.
+- Child-local dependency tokens remain authored in generated child `.fsm`
+  `+params`, generated-composition child summaries, and default instance
+  bindings, while resolved default literals are recorded internally.
+- Forward references, self references, cycles, non-scalar transaction
+  parameters, runtime interface signals, unknown symbols, arbitrary
+  expressions, activation-site override dependencies, and package/imported
+  constants beyond shipped enum members remain fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused transaction/default tests with
+  `Files=6, Tests=71`; public/spec/book/backlog audits with `Files=6,
+  Tests=351`; `./bin/ci-regression isf --no-book` with `Files=254,
+  Tests=1692`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Transaction parameter dependency defaults selected
 - Created active task tree `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS`.
 - Completed `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1`; the selected

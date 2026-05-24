@@ -225,10 +225,12 @@ General source rules:
   also use earlier actor-local scalar parameter defaults by name, preserving
   authored tokens while resolving those names internally. Generated child
   transaction parameter defaults may use numeric/exact-width literals,
-  declared actor constants, actor-local scalar parameter defaults, enum
-  members, or compatible aggregate/list literals with those scalar leaf
-  sources; actor-static names are published as literal child/report defaults
-  while enum tokens stay authored in child review artifacts. Static wait
+  declared actor constants, actor-local scalar parameter defaults, earlier
+  scalar transaction parameter defaults, enum members, or compatible
+  aggregate/list literals with those scalar leaf sources; actor-static names
+  are published as literal child/report defaults while earlier transaction
+  parameter names and enum tokens stay authored in child review artifacts.
+  Static wait
   counts use non-negative integer literals, actor constants, or actor-local
   scalar parameter defaults.
 - Numeric and exact-width integer literals are accepted where this document
@@ -572,11 +574,13 @@ Rules:
   closed.
   Generated child transaction scalar parameter defaults and scalar leaves
   inside generated child transaction aggregate/list parameter defaults may use
-  declared actor constants, actor-local scalar parameter defaults, or local or
-  package-qualified enum member references. Actor-static generated child
+  declared actor constants, actor-local scalar parameter defaults, earlier
+  scalar transaction parameter defaults, or local or package-qualified enum
+  member references. Actor-static generated child
   transaction defaults are resolved to literal generated child `.fsm`
   `+params`, generated-composition child summaries, and default instance
-  bindings; enum references preserve authored tokens in those review surfaces.
+  bindings; transaction-parameter dependencies and enum references preserve
+  authored tokens in those review surfaces because they are child-local.
   Scalar activation
   parameter overrides and scalar leaves inside activation aggregate/list
   parameter override values may also use local or package-qualified enum member
@@ -1287,11 +1291,12 @@ Rules:
   whose scalar leaves are literals, actor-local constants, actor-local scalar
   parameter defaults, or local/package-qualified enum members.
 - Transaction-local scalar parameter defaults and scalar leaves inside
-  compatible aggregate/list defaults may use actor-local constants,
-  actor-local scalar parameter defaults, or local/package-qualified enum
-  members. Actor-static names resolve to literal generated child `.fsm`
-  `+params`, generated-composition child summaries, and default instance
-  bindings; enum member defaults preserve the authored enum token.
+  compatible aggregate/list defaults may use earlier scalar transaction
+  parameters, actor-local constants, actor-local scalar parameter defaults, or
+  local/package-qualified enum members. Actor-static names resolve to literal
+  generated child `.fsm` `+params`, generated-composition child summaries, and
+  default instance bindings; transaction-parameter dependencies and enum member
+  defaults preserve the authored token.
 - Actor constants, actor-local scalar parameter defaults, and scalar enum
   members resolve to literal values before generated-top emission, including
   matching scalar leaves inside activation aggregate/list override values.
@@ -1451,8 +1456,9 @@ Rules:
   earlier scalar actor parameters, and local or package enum members,
   generated child transaction scalar parameter defaults and scalar leaves
   inside generated child transaction aggregate/list parameter defaults may
-  consume declared actor constants, actor-local scalar parameter defaults, and
-  local or package enum members, scalar activation parameter
+  consume declared actor constants, actor-local scalar parameter defaults,
+  earlier scalar transaction parameters, and local or package enum members,
+  scalar activation parameter
   overrides may consume local or package enum members, scalar leaves inside
   activation aggregate/list parameter override values may consume local or
   package enum members, reusable-library use-site parameter override values
