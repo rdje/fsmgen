@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### Roadmap maintenance — Feature-backlog owner coverage synchronized
+- Completed `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` and closed the task tree.
+- Added a book-facing feature-backlog owner coverage table to
+  `docs/TASK_TREE.md` that lists every top-level mdBook backlog category and
+  its tracking stance.
+- Updated the mdBook feature backlog introduction to point to that owner
+  coverage policy and to state that categories marked
+  `future task tree required` are not implementation permission slips.
+- Extended `t/1305-isf-book-feature-matrix-audit.t` so the top-level backlog
+  category set and owner coverage table stay synchronized.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public API
+  behavior changed.
+- Validation passed: `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`;
+  `prove -Iperl t/1305-isf-book-feature-matrix-audit.t` with
+  `Files=1, Tests=326`; live-book/spec index audits with `Files=2, Tests=25`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### Roadmap maintenance — Feature-backlog owner coverage selected
 - Completed selection work for `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1`.
 - Activated a roadmap-maintenance task tree for broad mdBook feature-backlog

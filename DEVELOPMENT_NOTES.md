@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Feature-backlog category ownership is a tracking stance
+- `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` records ownership at the mdBook
+  backlog category level because those categories are intentionally broad.
+  The table is a review and gating aid, not a claim that each backlog item is
+  immediately implementable.
+- The exact phrase `future task tree required` is audited in both the task-tree
+  owner coverage section and the feature backlog introduction. This gives
+  future PNT work a clear rule: create or activate an executable task tree
+  before code, even when the broad category is already acknowledged.
+
 ## 2026-05-24: Broad backlog owner coverage needs explicit tracking
 - `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1` selects a documentation/audit slice
   because the mdBook feature backlog is broader than R14 ISF and can drift

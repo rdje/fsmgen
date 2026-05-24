@@ -2,8 +2,22 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC`.
-- Current frontier: `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent roadmap-maintenance feature-backlog owner coverage completion:
+  `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` synchronized the mdBook feature
+  backlog with repo-local task-tree owner coverage. `docs/TASK_TREE.md` now
+  lists each top-level mdBook backlog category with its tracking stance, and
+  the feature backlog states that categories marked `future task tree
+  required` are not implementation permission slips. The focused mdBook
+  feature-matrix audit now verifies that every top-level feature-backlog
+  category is represented in the task-tree owner coverage table and that the
+  future-task-tree requirement remains explicit. No parser, scheduler, report,
+  generated artifact, HDL, CLI, or public API behavior changed. Validation
+  passed: `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`;
+  `prove -Iperl t/1305-isf-book-feature-matrix-audit.t` with
+  `Files=1, Tests=326`; live-book/spec index audits with `Files=2, Tests=25`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent roadmap-maintenance feature-backlog owner coverage selection:
   `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1` activated a documentation/audit
   task tree for broad mdBook feature-backlog owner coverage. The selected

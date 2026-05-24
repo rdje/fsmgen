@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: Roadmap maintenance — Feature-backlog owner coverage synchronized
+- Completed `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` and closed the task tree.
+- `docs/TASK_TREE.md` now lists every top-level mdBook feature-backlog category
+  with its tracking stance.
+- The mdBook feature backlog now points to that owner coverage policy and says
+  categories marked `future task tree required` are not implementation
+  permission slips.
+- `t/1305-isf-book-feature-matrix-audit.t` verifies the category set, the
+  owner coverage rows, and the future-task-tree wording.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public API
+  behavior changed.
+- Validation passed: `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`;
+  `prove -Iperl t/1305-isf-book-feature-matrix-audit.t` with
+  `Files=1, Tests=326`; live-book/spec index audits with `Files=2, Tests=25`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24: Roadmap maintenance — Feature-backlog owner coverage selected
 - Completed `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1`.
 - Activated the active roadmap-maintenance task tree for broad mdBook

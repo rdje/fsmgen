@@ -8,6 +8,13 @@ When another chapter mentions a limitation of that kind, the item must also be
 listed here. Local chapters may keep short contextual notes, but this chapter
 is the consolidated review list.
 
+Top-level backlog category ownership is tracked in
+[docs/TASK_TREE.md](../../TASK_TREE.md). A category marked there as
+`future task tree required` is not an implementation permission slip;
+behavior-bearing work still has to create or activate an executable task tree
+before code, tests, source artifacts, generated artifacts, or public behavior
+changes.
+
 ## Language Ergonomics
 
 ### Inference-First Scalar Authoring

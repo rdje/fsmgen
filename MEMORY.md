@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: Feature-backlog owner coverage sync completed
+- Completed `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` and closed the task tree.
+- The mdBook feature backlog now points to the task-tree owner coverage policy
+  for top-level backlog categories.
+- `docs/TASK_TREE.md` now lists each top-level mdBook feature-backlog category
+  with a tracking stance and explicitly requires a future task tree before
+  behavior-bearing work in categories marked `future task tree required`.
+- `t/1305-isf-book-feature-matrix-audit.t` now verifies that every top-level
+  feature-backlog category is represented in the task-tree owner coverage table
+  and that the future-task-tree requirement remains explicit.
+- No parser, scheduler, report, generated artifact, HDL, CLI, or public API
+  behavior changed.
+- Validation passed: `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`;
+  `prove -Iperl t/1305-isf-book-feature-matrix-audit.t` with
+  `Files=1, Tests=326`; live-book/spec index audits with `Files=2, Tests=25`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: Feature-backlog owner coverage sync selected
 - Completed `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1`.
 - Activated the active roadmap-maintenance task tree for broad mdBook

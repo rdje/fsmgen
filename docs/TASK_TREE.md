@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC` | `active` | `roadmap maintenance` | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | [docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md](docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md](docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md) |
 | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION` | `done` | `R14` | `closed` | [docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md](docs/tasks/ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.md) |
 | `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.md](docs/tasks/ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.md) |
 | `CI-FEATURE-BACKLOG-STATUS-AUDIT` | `done` | `project operations` | `closed` | [docs/tasks/CI-FEATURE-BACKLOG-STATUS-AUDIT.md](docs/tasks/CI-FEATURE-BACKLOG-STATUS-AUDIT.md) |
@@ -405,6 +405,24 @@ as done work unless a future task reopens them.
 | Downstream issue-bundle feature matrix coverage | `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC` |
 | `.isf` CLI example feature matrix coverage | `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC` |
 | Broad feature-backlog owner coverage synchronization | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC` |
+
+## Book-Facing Feature Backlog Owner Coverage
+
+The mdBook feature backlog is the user-facing review surface for broad future
+work. A category listed here with `future task tree required` is deliberately
+not an implementation permission slip: before code, tests, source artifacts,
+generated artifacts, or public behavior change for that category, the work
+must be attached to an active task tree with executable leaves and acceptance
+criteria.
+
+| mdBook backlog category | Current tracking stance |
+| --- | --- |
+| `Language Ergonomics` | `future task tree required for broader inference and language ergonomics behavior` |
+| `Aggregate Types And Data` | `future task tree required for broader aggregate lowering, operators, VHDL aggregate support, or public type/export APIs beyond shipped bounded surfaces` |
+| `Composition` | `covered by completed composition task trees for shipped surfaces; future task tree required for broader generated-child, VHDL generic-map, and generalized composition behavior` |
+| `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces; future task tree required for remaining deferred ISF behavior` |
+| `Backends And Validation` | `future task tree required for VHDL backend expansion, richer backend validation, and non-shipped backend targets` |
+| `Embedding And Public APIs` | `future task tree required for richer embedding, public API, and export surfaces beyond the frozen advertised contracts` |
 
 ## ISF Task-Tree Rule
 

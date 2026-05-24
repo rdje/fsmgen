@@ -17,11 +17,13 @@ my $composition_path = 'docs/book/src/13f-composition.md';
 my $backlog_path = 'docs/book/src/14-feature-backlog.md';
 my $downstream_path = 'docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md';
 my $design_path = 'docs/ISF_ATL_DESIGN_PROPOSAL.md';
+my $task_tree_path = 'docs/TASK_TREE.md';
 my $matrix = read_repo_file($matrix_path);
 my $composition = read_repo_file($composition_path);
 my $backlog = read_repo_file($backlog_path);
 my $downstream = read_repo_file($downstream_path);
 my $design = read_repo_file($design_path);
+my $task_tree = read_repo_file($task_tree_path);
 my $summary = read_repo_file('docs/book/src/SUMMARY.md');
 
 like(
@@ -41,6 +43,50 @@ like(
     qr{\[Feature Backlog\]\(14-feature-backlog\.md\)},
     'ISF feature backlog chapter is reachable from the mdBook summary',
 );
+
+my @book_backlog_categories = $backlog =~ /^## ([^\n]+)$/mg;
+is_deeply(
+    \@book_backlog_categories,
+    [
+        'Language Ergonomics',
+        'Aggregate Types And Data',
+        'Composition',
+        'Intent Scheduling Format',
+        'Backends And Validation',
+        'Embedding And Public APIs',
+    ],
+    'feature backlog category set is explicit',
+);
+
+like(
+    $task_tree,
+    qr{## Book-Facing Feature Backlog Owner Coverage},
+    'task tree documents book-facing feature backlog owner coverage',
+);
+
+for my $category (@book_backlog_categories) {
+    like(
+        $task_tree,
+        qr{\|\s*`\Q$category\E`\s*\|},
+        "task tree owner coverage lists feature backlog category $category",
+    );
+}
+
+for my $phrase (
+    'future task tree required',
+    'not an implementation permission slip',
+) {
+    like(
+        $task_tree,
+        qr{\Q$phrase\E},
+        "task tree owner coverage makes $phrase explicit",
+    );
+    like(
+        $backlog,
+        qr{\Q$phrase\E},
+        "feature backlog introduction makes $phrase explicit",
+    );
+}
 
 my %live_paths = map { $_ => 1 } @{isf_public_interface_live_document_paths()};
 ok(

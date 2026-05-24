@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `roadmap maintenance`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -39,7 +39,7 @@ selected.
 ## Task Tree
 
 - ID: `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC`
-  Status: `active`
+  Status: `done`
   Goal: `Synchronize broad feature-backlog owner coverage with task-tree tracking`
   Children: `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1`,
   `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2`
@@ -51,22 +51,22 @@ selected.
   implementation frontier, and update roadmap/live docs without behavior
   changes`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `pending this commit`
+  Commit: `3720bc7e FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1: select backlog owner coverage sync`
 
 - ID: `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit and synchronize broad feature-backlog owner coverage`
   Acceptance: `The task-tree owner coverage table and mdBook backlog agree on
   broad backlog owner status, future-owner needs are explicit, and focused
   audits prevent the drift from returning`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `feature-matrix audit; live-book/spec index audits; mdBook build; git diff check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | `pending` | `The broad feature-backlog owner coverage gap is selected and owned.` |
+| 1 | `closed` | `done` | `The broad feature-backlog owner coverage gap is synchronized and audited.` |
 
 ## Decisions
 
@@ -91,14 +91,21 @@ selected.
 | `2026-05-24` | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t` | `passed: Files=2, Tests=25` |
 | `2026-05-24` | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1` | `mdbook build docs/book` | `passed` |
 | `2026-05-24` | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1` | `git diff --check` | `passed` |
+| `2026-05-24` | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t` | `passed` |
+| `2026-05-24` | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | `prove -Iperl t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=1, Tests=326` |
+| `2026-05-24` | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t` | `passed: Files=2, Tests=25` |
+| `2026-05-24` | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-24` | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1` | `pending this commit: FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1: select backlog owner coverage sync` | `selection slice` |
-| `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | `pending` | `owner coverage sync slice` |
+| `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1` | `3720bc7e FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1: select backlog owner coverage sync` | `selection slice` |
+| `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | `pending this commit: FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2: sync backlog owner coverage` | `owner coverage sync slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created and activated the task tree.
+- `2026-05-24`: Synchronized and audited broad feature-backlog owner coverage,
+  then closed the task tree.
