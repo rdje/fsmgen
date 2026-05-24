@@ -1,9 +1,16 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `none`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `R8`.
+- Active task tree: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
+- Current frontier: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`.
+- Recent R8 language-surface gray-zone selection:
+  `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1` activated the next task tree for
+  the roadmap's remaining R8 work: resolve parser-accepted `.fsm` constructs
+  that are not yet clearly bucketed as supported, compatibility/deferred, or
+  rejected. Validation passed: feature-backlog audit with `Files=1,
+  Tests=15`; `mdbook build docs/book`; and `git diff --check`. The follow-up
+  frontier is `.2`, an audit-only leaf before any behavior change.
 - Recent R8 strict support-tier implementation:
   `R8-STRICT-SUPPORT-TIER-CUTS.3` shipped the bounded strict-mode cut for
   legacy composition `?wiring` `/source/target/` slash-link tokens. Default
@@ -6371,12 +6378,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `R8-STRICT-SUPPORT-TIER-CUTS.3` shipped the bounded
-  composition slash-link strict-mode cut and closed the task tree. Future R8
-  strict-mode support-tier work should start with a new audit leaf or task
-  tree before code changes.
+- Active task tree: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
+- Current frontier: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`.
+- Completion status: `.1` selected the active tree with no behavior change.
+  `.2` is the audit/design frontier and must select one bounded construct
+  family or record a close-out decision before behavior changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

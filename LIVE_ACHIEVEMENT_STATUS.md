@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R8 — Language-surface gray-zone audit selected
+- Created active task tree `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
+- Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.1`.
+- The next frontier is audit-only leaf
+  `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`, which will select one bounded
+  parser-accepted gray-zone construct family or record a close-out decision.
+- No parser, scheduler, HDL, CLI, public API, source, test, or generated
+  behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
+- Current frontier: `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2`.
+
 ## 2026-05-24: R8 — Strict composition slash-link cut shipped
 - Completed `R8-STRICT-SUPPORT-TIER-CUTS.3` and closed the task tree.
 - Default mode still accepts well-formed composition `?wiring`

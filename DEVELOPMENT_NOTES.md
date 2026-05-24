@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: R8 gray-zone work starts with an inventory slice
+- The next R8 work is not another immediate rejection. The live roadmap still
+  has gray-zone accepted constructs to resolve, so the first leaf must audit
+  parser/frontend behavior, support accounting, strict-mode boundaries,
+  manifest metadata, and mdBook coverage before selecting a behavior-bearing
+  construct family.
+- This keeps the task-tree gate useful: the implementation leaf should be
+  chosen from evidence, not from whichever compatibility spelling is easiest
+  to scan for.
+
 ## 2026-05-24: Composition slash-link strict cut is scoped to compatibility tokens
 - `R8-STRICT-SUPPORT-TIER-CUTS.3` intentionally rejects only well-formed
   `?wiring` scalar slash-link tokens under strict mode. It does not change

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R8 — Language-surface gray-zone audit selected
+- Created active task tree `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT`.
+- The tree owns the next roadmap-aligned R8 activity: audit remaining
+  parser-accepted `.fsm` gray-zone constructs and select one bounded
+  support-tier decision before any behavior change.
+- No parser, scheduler, HDL, CLI, public API, source, test, or generated
+  behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R8 — Strict composition slash-link cut shipped
 - Completed `R8-STRICT-SUPPORT-TIER-CUTS.3` and closed the task tree.
 - Default mode continues to accept well-formed composition `?wiring`

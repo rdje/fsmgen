@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT` | `active` | `R8` | `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.2` | [docs/tasks/R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.md](docs/tasks/R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.md) |
 
 ## Proposed Task Trees
 
