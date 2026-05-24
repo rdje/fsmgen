@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R8 language-contract exit audit selected
+- Created active task tree `R8-LANGUAGE-CONTRACT-EXIT-AUDIT`.
+- Purpose: audit the remaining `R8` language-contract exit criteria before
+  declaring the lane done or selecting any more behavior-bearing work.
+- The next frontier is `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2`, an audit-only
+  leaf that must map current docs, tests, corpus accounting, strict-mode
+  behavior, manifest metadata, and mdBook coverage to the `R8` exit criteria.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R8-LANGUAGE-CONTRACT-EXIT-AUDIT`.
+- Current frontier: `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2`.
+
 ## 2026-05-24: R8 language-surface legacy <=+ manifest metadata synced
 - Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` and closed the task tree.
 - The public capability manifest's `language_surface` section now records

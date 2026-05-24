@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: R8 needs an explicit exit audit before closure
+- `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT` closed one concrete metadata truth
+  gap, but `ROADMAP_STATUS.md` still marks `R8` as in progress. The correct
+  next step is not to assume the lane is complete; it is to audit the exit
+  criteria against current docs, corpus accounting, strict-mode behavior,
+  manifest metadata, and mdBook coverage.
+- `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` should either close `R8` with evidence,
+  hand remaining work to a more precise later lane, or select exactly one
+  bounded parser-visible construct family for follow-up.
+
 ## 2026-05-24: Language-surface metadata should not split compatibility truth
 - `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` is intentionally a manifest
   truth-sync, not a parser change. The actual language behavior for legacy

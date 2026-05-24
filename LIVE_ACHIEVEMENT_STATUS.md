@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R8 — Language-contract exit audit selected
+- Created active task tree `R8-LANGUAGE-CONTRACT-EXIT-AUDIT`.
+- Completed `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.1`.
+- The next frontier is audit-only leaf `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2`,
+  which will map the `R8` exit criteria to current docs, tests, corpus,
+  strict-mode, manifest, and mdBook evidence before deciding close-out,
+  handoff, or one bounded follow-up.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `R8-LANGUAGE-CONTRACT-EXIT-AUDIT`.
+- Current frontier: `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2`.
+
 ## 2026-05-24: R8 — Language-surface legacy <=+ manifest metadata synced
 - Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` and closed the task tree.
 - The capability manifest now records `legacy <=+ assignment operator alias

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R8-LANGUAGE-CONTRACT-EXIT-AUDIT` | `active` | `R8` | `R8-LANGUAGE-CONTRACT-EXIT-AUDIT.2` | [docs/tasks/R8-LANGUAGE-CONTRACT-EXIT-AUDIT.md](docs/tasks/R8-LANGUAGE-CONTRACT-EXIT-AUDIT.md) |
 
 ## Proposed Task Trees
 

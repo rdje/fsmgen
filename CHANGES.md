@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R8 — Language-contract exit audit selected
+- Created active task tree `R8-LANGUAGE-CONTRACT-EXIT-AUDIT`.
+- The tree owns the next roadmap-aligned `R8` activity: audit whether the
+  language-contract hardening exit criteria are actually satisfied, should
+  hand off remaining work to another lane, or still require one bounded
+  parser-visible follow-up.
+- No parser, scheduler, HDL, CLI, public API, source, test, generated
+  artifact, or generated behavior changed in this activation slice.
+- Validation passed: feature-backlog audit with `Files=1, Tests=15`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R8 — Language-surface legacy <=+ manifest metadata synced
 - Completed `R8-LANGUAGE-SURFACE-GRAY-ZONE-AUDIT.3` and closed the task tree.
 - Updated [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm)
