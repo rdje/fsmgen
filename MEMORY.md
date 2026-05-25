@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: Hosted strict wiring and diagnostic CI repair completed
+- Completed `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` and closed the task tree.
+- Reproduced GitHub `Perl FSM Regression` run `26386567406` locally with the
+  hosted-failing focused set.
+- Updated stale strict-mode `?wiring` slash-link fixtures in HDL generator
+  contract/audit tests to canonical list wiring forms:
+  `(=shared_external.RESET_BYTE shared_out)` and
+  `(=shared_local.mode.BUSY uart_tx.enable)`.
+- Updated stale direct LHS deconstruct diagnostic expectations so they assert
+  the current operand-preserving text with the selected concat slice:
+  `{{DATA, FLAG}, TAG_IN}[6:4]` and
+  `{{TAG_IN, BAD_PAYLOAD}, EXTRA_IN}[7:1]`.
+- This was test-only. It does not change `.fsm`, `.isf`, scheduler,
+  generated HDL, public API, runtime behavior, or mdBook user-facing behavior.
+- Validation passed: focused hosted-failing set with `Files=5, Tests=17`;
+  full `./bin/ci-regression` with `Files=1376, Tests=9776`; live-doc audits
+  with `Files=3, Tests=40`; mdBook build; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: Hosted strict wiring and diagnostic CI repair selected
 - Created active project-operations task tree
   `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR`.

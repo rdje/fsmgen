@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `project operations`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -40,7 +40,7 @@ strict composition wiring and direct LHS deconstruct diagnostics.
 ## Task Tree
 
 - ID: `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR`
-  Status: `active`
+  Status: `done`
   Goal: `Repair hosted strict-wiring and diagnostic expectation CI failures`
   Children: `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1, CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2`
 
@@ -50,21 +50,21 @@ strict composition wiring and direct LHS deconstruct diagnostics.
   Acceptance: `The CI failure is mapped to a task-tree owner with explicit
   non-goals, acceptance criteria, and the next executable implementation leaf`
   Verification: `live-doc selection audits; mdBook build; git diff check`
-  Commit: `pending this commit`
+  Commit: `c747df97 CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1: select hosted CI repair`
 
 - ID: `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair stale strict wiring fixtures and direct LHS diagnostic expectation`
   Acceptance: `The focused hosted-failing tests pass locally, live docs capture
   the exact repair, and no user-facing behavior changes are introduced`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `focused hosted-failing tests; full local CI gate; mdBook build; git diff check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` | `pending` | `The repair scope is selected; the implementation leaf must update stale tests/fixtures and validate the hosted-failing set.` |
+| 1 | `closed` | `done` | `The hosted-failing tests and full local CI gate pass after the stale fixtures and expectations were repaired.` |
 
 ## Decisions
 
@@ -92,13 +92,19 @@ strict composition wiring and direct LHS deconstruct diagnostics.
 | `2026-05-25` | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1` | `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1256-feature-backlog-status-audit.t` | `passed: Files=3, Tests=40` |
 | `2026-05-25` | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1` | `mdbook build docs/book` | `passed` |
 | `2026-05-25` | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1` | `git diff --check` | `passed` |
+| `2026-05-25` | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` | `prove -Iperl t/283-direct-lhs-deconstruct-assignment.t t/305-hdl-generator-result-contract.t t/355-hdl-generator-leaf-runtime-contract-audit.t t/356-hdl-generator-shell-only-runtime-contract-audit.t t/495-source-info-package-import-summary-defensive-copy-boundary-audit.t` | `reproduced hosted failure locally: t/283 stale diagnostic expectations; t/305, t/355, t/356, and t/495 strict-mode legacy slash-link fixture failures` |
+| `2026-05-25` | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` | `prove -Iperl t/283-direct-lhs-deconstruct-assignment.t t/305-hdl-generator-result-contract.t t/355-hdl-generator-leaf-runtime-contract-audit.t t/356-hdl-generator-shell-only-runtime-contract-audit.t t/495-source-info-package-import-summary-defensive-copy-boundary-audit.t` | `passed after repair: Files=5, Tests=17` |
+| `2026-05-25` | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` | `./bin/ci-regression` | `passed: Files=1376, Tests=9776; mdBook build passed` |
+| `2026-05-25` | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` | `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1256-feature-backlog-status-audit.t` | `passed: Files=3, Tests=40` |
+| `2026-05-25` | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-25` | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1` | `pending this commit` | `selection slice` |
-| `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` | `pending` | `implementation slice` |
+| `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1` | `c747df97 CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1: select hosted CI repair` | `selection slice` |
+| `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` | `pending this commit` | `implementation slice` |
 
 ## Changelog
 
@@ -106,3 +112,6 @@ strict composition wiring and direct LHS deconstruct diagnostics.
   wiring and direct LHS diagnostic CI repair.
 - `2026-05-25`: Closed selection validation with live-doc audits and mdBook
   build passing.
+- `2026-05-25`: Reproduced the hosted failures locally, updated stale strict
+  wiring fixtures to canonical list wiring, updated stale direct LHS
+  diagnostic expectations, and closed full local CI validation.

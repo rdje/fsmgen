@@ -169,8 +169,8 @@ sub composition_source {
   )
   (?rtl:uart_tx)
   (?wiring:wiring
-    /=shared_external.RESET_BYTE/shared_out/
-    /=shared_local.mode.BUSY/uart_tx.enable/
+    (=shared_external.RESET_BYTE shared_out)
+    (=shared_local.mode.BUSY uart_tx.enable)
   )
 )
 

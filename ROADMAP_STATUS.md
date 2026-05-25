@@ -1,19 +1,23 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `project operations`.
-- Active task tree: `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR`.
-- Current frontier: `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2`.
-- Current project-operations selection:
-  `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1` created the active task tree for the
-  latest hosted `Perl FSM Regression` failure. The selected repair covers
-  GitHub run `26386567406`: stale strict-mode `?wiring` slash-link fixtures
-  in HDL generator contract/audit tests, plus a stale direct LHS deconstruct
-  diagnostic expectation for slice-decorated RHS concat text. The selected
-  boundary preserves strict-mode slash-link rejection and does not change
-  `.fsm`, `.isf`, scheduler, generated HDL, public API, or runtime behavior.
-  Validation passed: feature-backlog/live-book/book matrix audits with
-  `Files=3, Tests=40`; `mdbook build docs/book`; and `git diff --check`.
+- Active lane: `R14`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Current project-operations completion:
+  `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` repaired the latest hosted
+  `Perl FSM Regression` failure and closed the task tree. GitHub run
+  `26386567406` reproduced locally: `t/283` had stale direct LHS deconstruct
+  diagnostic expectations, while `t/305`, `t/355`, `t/356`, and `t/495`
+  generated strict-mode temp sources with legacy `?wiring` slash-link tokens.
+  The fixtures now use canonical list wiring, and the diagnostic expectations
+  now assert the current operand-preserving slice-decorated RHS concat text.
+  This was test-only and does not change `.fsm`, `.isf`, scheduler,
+  generated HDL, public API, runtime behavior, or mdBook user-facing
+  behavior. Validation passed: focused hosted-failing set with `Files=5,
+  Tests=17`; full `./bin/ci-regression` with `Files=1376, Tests=9776`;
+  live-doc audits with `Files=3, Tests=40`; mdBook build; and
+  `git diff --check`.
 - Current roadmap-maintenance completion:
   `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` synchronized stale `this
   commit` placeholders and stale `final gate pending` verification wording in
@@ -3915,12 +3919,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   quick, focused ISF, and full regression gates pass. No active R14
   task-tree frontier remains in `docs/TASK_TREE.md` after the ATL `.9.99`
   completion.
-- Current project-operations CI repair:
-  `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1` selected the repair for GitHub
-  `Perl FSM Regression` run `26386567406`. The next frontier is
-  `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2`, which will update stale strict
-  `?wiring` fixtures to canonical list wiring and refresh the stale direct
-  LHS deconstruct diagnostic expectation without changing compiler behavior.
+- Recent project-operations CI repair:
+  `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` repaired GitHub
+  `Perl FSM Regression` run `26386567406` and closed the task tree. The stale
+  strict `?wiring` fixtures now use canonical list wiring, and the stale
+  direct LHS deconstruct diagnostic expectations now match the current
+  operand-preserving slice-decorated RHS concat text. The local focused
+  hosted-failing set and full `./bin/ci-regression` gate pass.
 - Recent R14 ATL documentation truth sync:
   `ISF-ATL-DOC-STATUS-TRUTH-SYNC.1` corrected stale active-tree wording in
   the mdBook feature backlog, ATL design proposal, and roadmap status board.

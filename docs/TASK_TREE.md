@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR` | `active` | `project operations` | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` | [docs/tasks/CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.md](docs/tasks/CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR` | `done` | `project operations` | `closed` | [docs/tasks/CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.md](docs/tasks/CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.md) |
 | `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.md](docs/tasks/TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.md) |
 | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.md](docs/tasks/TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.md) |
 | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.md](docs/tasks/ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.md) |

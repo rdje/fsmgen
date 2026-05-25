@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Full CI is required after strict support-tier cuts
+- `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` confirms there was no hosted-only
+  dependency behind GitHub `Perl FSM Regression` run `26386567406`; the same
+  failure reproduced locally.
+- The objective gap was local gate selection. The prior focused ISF gates and
+  `./bin/ci-regression isf --no-book` did not include the HDL generator
+  contract/audit tests that still generated strict-mode temp sources with
+  legacy `?wiring` slash-link tokens.
+- After strict support-tier cuts, especially cuts that reject legacy syntax,
+  at least one full `./bin/ci-regression` is the appropriate pre-push gate
+  because stale compatibility fixtures can live outside the immediate feature
+  subset.
+- The direct LHS deconstruct diagnostic was not weakened. The test now asserts
+  the selected concat expression including the slice range, which is the text
+  the validator currently reports for nested operand-preserving fragments.
+
 ## 2026-05-25: Hosted CI strict wiring repair should update fixtures, not policy
 - `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1` selects a repo-side CI repair after
   GitHub `Perl FSM Regression` run `26386567406` failed on stale local tests.

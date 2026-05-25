@@ -211,7 +211,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.md` — completed `R14` task tree for dynamic-divisor control and bank expression coverage hardening.
 - `docs/tasks/ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.md` — completed `R14` task tree for actor-parameter-zero dynamic-divisor safety.
 - `docs/tasks/ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.md` — completed `R14` roadmap-maintenance task tree for synchronizing stale next-PNT roadmap wording.
-- `docs/tasks/CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.md` — active project-operations task tree for repairing the hosted strict wiring and direct LHS diagnostic regression.
+- `docs/tasks/CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.md` — completed project-operations task tree for repairing the hosted strict wiring and direct LHS diagnostic regression.
 - `docs/tasks/CI-FEATURE-BACKLOG-STATUS-AUDIT.md` — completed project-operations task tree for repairing a stale feature-backlog status audit expectation.
 - `docs/tasks/ISF-ATL-FRONTIER-TRUTH-SYNC.md` — completed `R14` roadmap-maintenance task tree for synchronizing stale closed ATL frontier wording.
 - `docs/tasks/ISF-ATL-BACKLOG-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing stale ATL backlog prose.

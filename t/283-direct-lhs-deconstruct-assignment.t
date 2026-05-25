@@ -451,7 +451,7 @@ FSM
 )
 FSM
         ),
-        qr/assignment to 'PAYLOAD' uses whole aggregate RHS '\{DATA, FLAG\}' with contract 'list<bits\[2\], bit>' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        qr/assignment to 'PAYLOAD' uses whole aggregate RHS '\{\{DATA, FLAG\}, TAG_IN\}\[6:4\]' with contract 'list<bits\[2\], bit>' that does not match declared type 'list<bit, bits\[2\]>'/s,
         'nested aligned RHS concat operands keep their own list-shape contract during deconstruct validation',
     );
 
@@ -482,7 +482,7 @@ FSM
 )
 FSM
         ),
-        qr/assignment to 'OUT' uses whole aggregate RHS '\{TAG_IN, BAD_PAYLOAD\}' with contract 'record\{tag:bits\[4\], payload:record\{mode:bits\[2\], flag:bit\}\}' that does not match declared type 'record\{tag:bits\[4\], payload:list<bit, bits\[2\]>\}'/s,
+        qr/assignment to 'OUT' uses whole aggregate RHS '\{\{TAG_IN, BAD_PAYLOAD\}, EXTRA_IN\}\[7:1\]' with contract 'record\{tag:bits\[4\], payload:record\{mode:bits\[2\], flag:bit\}\}' that does not match declared type 'record\{tag:bits\[4\], payload:list<bit, bits\[2\]>\}'/s,
         'nested aligned RHS concat operands map onto record member order before deconstruct validation rejects bad nested member shape',
     );
 };
