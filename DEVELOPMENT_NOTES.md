@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Report metadata non-claims need exact shipped field lists
+- `ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.1` repairs stale non-claim
+  wording left behind after `authored_timing_mode` shipped.
+- Backlog boundaries should name the exact shipped report metadata set:
+  endpoint kind, binding timing, and authored timing mode. Otherwise the docs
+  incorrectly imply that `authored_timing_mode` remains outside the shipped
+  boundary.
+
 ## 2026-05-25: Authored timing mode is source provenance only
 - `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` carries the parsed
   input binding `timing_mode` into `transaction_port_bindings[]` as

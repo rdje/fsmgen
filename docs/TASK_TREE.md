@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.md](docs/tasks/ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.md) |
 | `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.md) |
 | `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.md) |
 | `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.md) |

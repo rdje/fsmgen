@@ -4,6 +4,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 documentation truth sync:
+  `ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.1` synchronized stale ISF spec
+  and mdBook feature-matrix non-claim wording after `authored_timing_mode`
+  shipped. The shipped binding-report boundary now consistently names
+  endpoint-kind, binding-timing, and authored timing-mode metadata. This is
+  documentation-only truth synchronization; parser behavior, scheduler
+  lowering, generated `.fsm`, HDL, schedule-report payloads, public API, and
+  runtime behavior did not change. Validation passed: live spec/book audits
+  with `Files=4, Tests=366`; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 authored binding timing metadata implementation:
   `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` added
   `authored_timing_mode` to every public `transaction_port_bindings[]`
@@ -8125,12 +8134,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` shipped
-  `authored_timing_mode` as additive report metadata and closed the task tree.
-  Every `transaction_port_bindings[]` entry now carries `snapshot`, `live`, or
-  JSON null source-provenance for explicit timing clauses. Parser behavior,
-  binding timing, scheduler lowering, generated `.fsm`, HDL, schema version,
-  and runtime behavior are unchanged.
+  `ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.1` synchronized stale ISF spec
+  and mdBook feature-matrix non-claim wording after `authored_timing_mode`
+  shipped. This was documentation-only; parser behavior, scheduler lowering,
+  generated `.fsm`, HDL, schedule-report payloads, public API, and runtime
+  behavior are unchanged.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

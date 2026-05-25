@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 Documentation Truth Sync — Authored timing metadata wording completed
+- Completed `ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.1` and closed the
+  task tree.
+- Updated stale ISF spec and mdBook feature-matrix non-claim wording so the
+  shipped binding-report boundary names endpoint-kind, binding-timing, and
+  authored timing-mode metadata.
+- This was documentation-only truth synchronization; no parser behavior,
+  scheduler lowering, generated `.fsm`, HDL, schedule-report payloads, public
+  API, or runtime behavior changed.
+- Validation passed: live spec/book audits with `Files=4, Tests=366`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Authored binding timing metadata shipped
 - Completed `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` and
   closed the task tree.

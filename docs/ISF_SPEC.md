@@ -5540,8 +5540,8 @@ Focused tests:
   output bindings. Direct/local rule-trigger output bindings, explicit
   behavior-changing snapshot-vs-live timing conversion, broader static
   conflict diagnostics, richer report metadata beyond the shipped
-  endpoint-kind and binding-timing fields, and full expression width inference
-  remain under `ISF-PORT-BINDING` and
+  endpoint-kind, binding-timing, and authored timing-mode fields, and full
+  expression width inference remain under `ISF-PORT-BINDING` and
   `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset, the top-level repeat-body local `(do child)` subset,
