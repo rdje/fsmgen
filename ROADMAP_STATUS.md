@@ -1,9 +1,18 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `roadmap maintenance`.
+- Active task tree: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC`.
+- Current frontier: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2`.
+- Current roadmap-maintenance selection:
+  `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1` created the active task tree for
+  synchronizing stale `pending commit` evidence in completed task-tree files.
+  The selected follow-up is documentation-only: audit completed task files,
+  replace recoverable stale pending evidence with concrete completion subjects
+  or commit references, leave templates/workflow examples untouched, and keep
+  compiler behavior unchanged. Validation passed:
+  feature-backlog/live-book/book matrix audits with `Files=3, Tests=351`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current R14 direct transaction-parameter data-width implementation:
   `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` completed and closed the task tree.
   Direct/non-generated transactions now accept same-transaction scalar

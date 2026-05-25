@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### Roadmap Maintenance — Task-tree commit evidence truth sync selected
+- Created active task tree `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC`.
+- Completed selection leaf `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1`; the next
+  frontier is `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2`.
+- Selected a documentation-only repair for completed task files that still
+  carry stale `pending commit`, `pending this commit`, `pending commit hash`,
+  or `pending commit workflow` evidence.
+- The repair scope leaves templates, workflow examples, and active unfinished
+  leaves untouched.
+- No parser, scheduler, generated `.fsm`, HDL, schedule-report, public API, or
+  runtime behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=351`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Direct transaction-parameter data-operation widths shipped
 - Completed `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` and closed the task
   tree.

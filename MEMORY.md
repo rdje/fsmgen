@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: Task-tree commit evidence truth sync selected
+- Created active task tree `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC`.
+- Completed selection leaf `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1`; the next
+  frontier is `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2`.
+- The selected repair will audit completed task files and replace recoverable
+  stale `pending commit`, `pending this commit`, `pending commit hash`, or
+  `pending commit workflow` evidence with concrete completion subjects or
+  commit references.
+- Templates, workflow examples, and active unfinished leaves remain out of the
+  repair scope.
+- No parser, scheduler, generated `.fsm`, HDL, schedule-report, public API, or
+  runtime behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=351`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC`.
+- Current frontier: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2`.
+
 ## 2026-05-25: R14 direct transaction-parameter data-operation widths shipped
 - Completed `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` and closed the task
   tree.

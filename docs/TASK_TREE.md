@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC` | `active` | `roadmap maintenance` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` | [docs/tasks/TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.md](docs/tasks/TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.md) |
 
 ## Proposed Task Trees
 

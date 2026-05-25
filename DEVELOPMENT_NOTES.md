@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Completed task trees should not keep stale pending evidence
+- `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1` selects a documentation-only
+  recovery-quality repair after an audit found many completed task files whose
+  leaf or commit-log rows still say `pending commit` or `pending this commit`.
+- The repair target is evidence truth, not historical reinterpretation. The
+  follow-up leaf should replace recoverable stale placeholders with concrete
+  completion subjects or commit references while leaving templates and
+  workflow examples as placeholders.
+- This keeps task-tree tracking useful for review and session recovery without
+  touching compiler behavior.
+
 ## 2026-05-25: Direct data-operation width parameters need an explicit use gate
 - `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` reuses the generated-child
   transaction-parameter width resolver for direct/non-generated transactions,
