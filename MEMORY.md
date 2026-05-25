@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 binding timing metadata tree selected
+- Created active task tree
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA`.
+- Completed selection leaf
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.1`; the next implementation
+  frontier is `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2`.
+- Selected public schedule-report key `binding_timing` for
+  `transaction_port_bindings[]` entries.
+- Selected bounded values: `activation_region`, `generated_live_handoff`,
+  `trigger_payload`, and `done_guarded`.
+- This selection does not change parser, scheduler, generated `.fsm`, HDL,
+  schedule-report payloads, public API, or runtime behavior yet.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA`.
+- Current frontier: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2`.
+
 ## 2026-05-25: R14 latest-slice roadmap truth sync completed
 - Completed `ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC.1` and closed the task tree.
 - Synchronized the lower `ROADMAP_STATUS.md` current-active-lane summary with

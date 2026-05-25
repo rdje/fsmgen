@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Binding timing metadata before timing syntax
+- `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.1` selects a public
+  `binding_timing` report key before adding any new author-facing timing
+  syntax.
+- The selected values describe the shipped transfer classes:
+  `activation_region`, `generated_live_handoff`, `trigger_payload`, and
+  `done_guarded`.
+- This keeps the next implementation bounded to report metadata and docs. It
+  also gives downstream tooling a stable vocabulary for current behavior
+  before a later task considers explicit snapshot-vs-live source spelling.
+
 ## 2026-05-25: Current-active-lane roadmap text needs the same latest slice
 - `ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC.1` repairs the lower
   `ROADMAP_STATUS.md` current-active-lane summary after the top canonical

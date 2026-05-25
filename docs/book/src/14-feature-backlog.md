@@ -2552,6 +2552,13 @@ Direct/local rule-trigger output bindings, explicit snapshot-vs-live timing
 selection, additional binding report fields beyond the shipped endpoint-kind
 metadata, and broader static conflict diagnostics remain backlog.
 
+The next selected transaction-port binding report slice is
+`binding_timing`, with bounded values `activation_region`,
+`generated_live_handoff`, `trigger_payload`, and `done_guarded`. That selected
+metadata will describe the timing class of shipped binding transfers without
+changing binding syntax, default timing, `.fsm` lowering, HDL generation, or
+runtime behavior.
+
 Actor pin binding now uses the same assignment/conflict path as ordinary ISF
 drives where it has shipped coverage. Spawn output bindings carry parent
 transaction ownership in provenance, so a spawned child output bound to an
