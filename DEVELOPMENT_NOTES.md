@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Timing syntax validates authored intent against current wiring
+- `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` accepts an optional fourth
+  `(timing snapshot)` or `(timing live)` subclause on input bindings, records
+  the requested mode on the parsed binding, and validates it against the
+  existing `binding_timing` class for the activation site.
+- `snapshot` is accepted for activation-region and trigger-payload captures;
+  `live` is accepted for generated-top live handoff wiring. A mismatch fails
+  before any scheduled `.fsm` is emitted, because converting between those
+  timing classes would need explicit storage or live wiring design.
+- Output bindings reject timing clauses. Their timing remains derived from
+  generated-top handoff or done-guarded completion semantics, not a source-side
+  authoring mode.
+
 ## 2026-05-25: Timing syntax starts as current-timing-only
 - `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1` selects explicit
   `(timing snapshot)` / `(timing live)` input-binding syntax, but deliberately

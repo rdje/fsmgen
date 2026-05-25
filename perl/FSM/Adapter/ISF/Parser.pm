@@ -7317,12 +7317,25 @@ sub _parse_rule_trigger_bind($self, $clause, $rule_name, $transaction_name) {
     my %seen;
     for my $entry (@{$clause}[1 .. $#$clause]) {
         confess "Error: rule '$rule_name' trigger '$transaction_name' bind entries must be list forms\n"
-            unless ref($entry) eq 'ARRAY' && @$entry == 3;
-        my ($role, $port, $actor_endpoint) = @$entry;
+            unless ref($entry) eq 'ARRAY' && (@$entry == 3 || @$entry == 4);
+        my ($role, $port, $actor_endpoint, $timing_clause) = @$entry;
         confess "Error: rule '$rule_name' trigger '$transaction_name' bind role must be input or output\n"
             unless defined($role) && !ref($role) && ($role eq 'input' || $role eq 'output');
         confess "Error: rule '$rule_name' trigger '$transaction_name' bind port must be a scalar HDL identifier\n"
             unless _is_hdl_identifier($port);
+        if (defined $timing_clause) {
+            confess "Error: rule '$rule_name' trigger '$transaction_name' output bind timing selection is supported only on input bindings\n"
+                if $role eq 'output';
+            confess "Error: rule '$rule_name' trigger '$transaction_name' input bind timing must be '(timing snapshot)' or '(timing live)'\n"
+                unless ref($timing_clause) eq 'ARRAY'
+                    && @$timing_clause == 2
+                    && defined($timing_clause->[0])
+                    && !ref($timing_clause->[0])
+                    && $timing_clause->[0] eq 'timing'
+                    && defined($timing_clause->[1])
+                    && !ref($timing_clause->[1])
+                    && ($timing_clause->[1] eq 'snapshot' || $timing_clause->[1] eq 'live');
+        }
         if ($role eq 'output') {
             confess "Error: rule '$rule_name' trigger '$transaction_name' output bind target must be a scalar HDL identifier\n"
                 unless _is_hdl_identifier($actor_endpoint);

@@ -695,9 +695,12 @@ The ISF-specific current limitations are:
   triggers support scalar output bindings under the per-trigger done observer.
   Bindings are direction- and known-width-checked, actor input writes are
   rejected, actor output readback is rejected, and direct/local rule-trigger
-  output bindings plus explicit snapshot-vs-live timing selection remain
-  backlog. Schedule reports tag each binding with `binding_timing` so the
-  shipped timing class is reviewable without parsing generated handoff names.
+  output bindings plus behavior-changing snapshot-vs-live timing conversion
+  remain backlog. Input bindings may spell `(timing snapshot)` for current
+  activation/trigger payload capture or `(timing live)` for current
+  generated-top live handoffs; mismatched mode/site combinations fail closed.
+  Schedule reports tag each binding with `binding_timing` so the shipped
+  timing class is reviewable without parsing generated handoff names.
 - Width-bearing actor interface ports, transaction-local ports, and
   actor-owned storage entries may use scalar type aliases through `(type
   NAME)`, mutually exclusive with `(width N)`, `(width PARAM)`, or

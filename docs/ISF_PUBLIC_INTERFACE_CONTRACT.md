@@ -3158,13 +3158,14 @@ These are not stable public interfaces yet:
 - Transaction port behavior beyond parser-shell `ports.inputs[]` /
   `ports.outputs[]` `name`/`width` metadata, scalar/literal/list-expression
   input-binding lowering for `do`, `spawn`, and rule-trigger activation sites,
-  generated-child rule-trigger scalar output bindings, plus the first
-  conflict/runtime coverage for binding-generated assignments, and bounded
-  `binding_timing` report metadata. Direct/local rule-trigger output bindings,
-  explicit snapshot-vs-live timing selection, broader static conflict
-  diagnostics, additional report fields beyond endpoint-kind and
-  binding-timing metadata, and full expression width inference remain deferred
-  follow-on port-binding work.
+  explicit current-timing `(timing snapshot|live)` assertions on input
+  bindings, generated-child rule-trigger scalar output bindings, plus the
+  first conflict/runtime coverage for binding-generated assignments, and
+  bounded `binding_timing` report metadata. Direct/local rule-trigger output
+  bindings, behavior-changing snapshot-vs-live timing conversion, broader
+  static conflict diagnostics, additional report fields beyond endpoint-kind
+  and binding-timing metadata, and full expression width inference remain
+  deferred follow-on port-binding work.
 - Transaction control-flow behavior beyond shipped static/symbolic actor
   constant, actor parameter, qualified package scalar constant, runtime
   scalar, and runtime expression `(wait N)`, sample-compatible runtime wait pending

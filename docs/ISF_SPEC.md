@@ -2281,8 +2281,24 @@ signal, or known transaction variable in the caller's scope; actor output
 readback is rejected. Division and modulo in input-binding expressions reject
 literal-zero, actor-constant-zero, and actor-parameter-zero divisor operands
 before scheduled `.fsm` emission. Transaction output bindings remain
-scalar-only because the
-actor-side endpoint is the writable destination.
+scalar-only because the actor-side endpoint is the writable destination.
+
+Transaction input bindings may include an explicit timing assertion as a
+fourth entry:
+
+```lisp
+(bind
+  (input addr req_addr (timing snapshot))
+  (input live_data source (timing live)))
+```
+
+`snapshot` is accepted only on activation-region `do` inputs and rule-trigger
+payload captures, where the source is already captured at the activation or
+trigger boundary. `live` is accepted only on generated-top live handoff input
+bindings, such as spawned generated-child inputs. A mismatched timing mode
+fails closed; FSMGen does not add extra capture storage or continuous local
+wiring to convert one timing mode into another in this slice. Output bindings
+do not accept timing selection.
 
 Local `(do ...)` bindings lower into the scheduled parent `.fsm` state that
 starts and awaits the child transaction. Transaction input bindings are
@@ -2316,11 +2332,12 @@ silently merged. Direct/local transaction rule-trigger output bindings remain
 deferred because a shared local transaction target has no rule-specific
 completion identity.
 
-The same-cycle visibility rule for this first shipped surface is: input
-payloads are emitted in the same activation region as their start/trigger
-handoff, and spawned child bindings are live handoff wiring through the
-generated top. If authors need explicit snapshot-vs-live selection later, it
-must be added as a separate source spelling rather than changing this behavior.
+The same-cycle visibility rule for the shipped surface is: input payloads are
+emitted in the same activation region as their start/trigger handoff, and
+spawned child bindings are live handoff wiring through the generated top.
+Explicit `(timing snapshot)` / `(timing live)` spelling documents and checks
+that current timing class; behavior-changing timing conversion remains
+deferred.
 
 Actor top-level input pins are readable observations. ISF should not allow
 transactions or rules to write actor inputs. Actor top-level output pins are
@@ -5518,10 +5535,10 @@ Focused tests:
 - Transaction binding surfaces beyond scalar and expression-valued `do`,
   `spawn`, rule-trigger input bindings, and generated-child rule-trigger
   output bindings. Direct/local rule-trigger output bindings, explicit
-  snapshot-vs-live timing selection, broader static conflict diagnostics,
-  richer report metadata beyond the shipped endpoint-kind and binding-timing
-  fields, and full expression width inference remain under `ISF-PORT-BINDING`
-  and
+  behavior-changing snapshot-vs-live timing conversion, broader static
+  conflict diagnostics, richer report metadata beyond the shipped
+  endpoint-kind and binding-timing fields, and full expression width inference
+  remain under `ISF-PORT-BINDING` and
   `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset, the top-level repeat-body local `(do child)` subset,

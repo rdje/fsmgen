@@ -2702,12 +2702,19 @@ sub _validate_transaction_port_bindings($self, $actor) {
             my $context = $label eq 'repeat body'
                 ? "Transaction '$tx_name': repeat-body $keyword target '$target'"
                 : "Transaction '$tx_name': $keyword target '$target'";
+            my $generated_instance = $keyword eq 'spawn'
+                || ($keyword eq 'do' && $label eq 'transaction body' && $generated_children{$target})
+                || ($keyword eq 'do' && $label eq 'repeat body' && _repeat_body_do_is_generated_activation($clause, $target, \%generated_children));
             _validate_activation_bindings(
                 $actor,
                 $tx,
                 $transaction_by_name{$target},
                 _activation_bindings_from_clause($clause, $tx_name, $label),
                 $context,
+                {
+                    site_kind          => $keyword,
+                    generated_instance => $generated_instance ? 1 : 0,
+                },
             );
         }
     }
@@ -2725,7 +2732,11 @@ sub _validate_transaction_port_bindings($self, $actor) {
                 $transaction_by_name{$target},
                 _activation_bindings_from_clause($action, $rule_name, 'rule trigger'),
                 "Rule '$rule_name': trigger target '$target'",
-                { allow_outputs => $generated_children{$target} ? 1 : 0 },
+                {
+                    allow_outputs      => $generated_children{$target} ? 1 : 0,
+                    site_kind          => 'rule_trigger',
+                    generated_instance => $generated_children{$target} ? 1 : 0,
+                },
             );
         }
     }
@@ -5109,13 +5120,19 @@ sub _parse_activation_bind_clause {
     my @bindings;
     my %seen;
     for my $entry (@{$clause}[1 .. $#$clause]) {
-        confess "$context bind entries must be '(input port signal)' or '(output port signal)'\n"
-            unless ref($entry) eq 'ARRAY' && @$entry == 3;
-        my ($role, $port, $actor_endpoint) = @$entry;
+        confess "$context bind entries must be '(input port expr [(timing snapshot|live)])' or '(output port signal)'\n"
+            unless ref($entry) eq 'ARRAY' && (@$entry == 3 || @$entry == 4);
+        my ($role, $port, $actor_endpoint, $timing_clause) = @$entry;
         confess "$context bind role must be input or output\n"
             unless defined($role) && !ref($role) && ($role eq 'input' || $role eq 'output');
         confess "$context bind transaction port must be a scalar HDL identifier\n"
             unless _is_hdl_identifier($port);
+        my $timing_mode;
+        if (defined $timing_clause) {
+            confess "$context output bind timing selection is supported only on input bindings\n"
+                if $role eq 'output';
+            $timing_mode = _parse_activation_binding_timing_clause($timing_clause, $context);
+        }
         if ($role eq 'output') {
             confess "$context output bind actor target must be a scalar HDL identifier\n"
                 unless _is_hdl_identifier($actor_endpoint);
@@ -5134,10 +5151,27 @@ sub _parse_activation_bind_clause {
             actor_signal     => $actor_signal,
             actor_expr       => $actor_expr,
             actor_expression => _format_isf_expr($actor_expr),
+            (defined($timing_mode) ? (timing_mode => $timing_mode) : ()),
         };
     }
 
     return \@bindings;
+}
+
+sub _parse_activation_binding_timing_clause {
+    my ($clause, $context) = @_;
+
+    confess "$context input bind timing must be '(timing snapshot)' or '(timing live)'\n"
+        unless ref($clause) eq 'ARRAY'
+            && @$clause == 2
+            && defined($clause->[0])
+            && !ref($clause->[0])
+            && $clause->[0] eq 'timing'
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && ($clause->[1] eq 'snapshot' || $clause->[1] eq 'live');
+
+    return $clause->[1];
 }
 
 sub _validate_activation_bindings {
@@ -5168,6 +5202,7 @@ sub _validate_activation_bindings {
 
         if ($binding->{role} eq 'input') {
             _validate_activation_input_binding_expr($actor, $owner_tx, $binding, $port, $context);
+            _validate_activation_input_binding_timing($binding, $context, $options);
         } else {
             my $signal = $binding->{actor_signal};
             my $info = _binding_signal_info($actor, $owner_tx, $signal);
@@ -5189,6 +5224,34 @@ sub _validate_activation_bindings {
     }
 
     return 1;
+}
+
+sub _validate_activation_input_binding_timing {
+    my ($binding, $context, $options) = @_;
+    my $mode = $binding->{timing_mode};
+    return 1 unless defined($mode);
+
+    my $site_kind = $options->{site_kind} // 'do';
+    my $current_timing = _activation_input_binding_current_timing(
+        $site_kind,
+        $options->{generated_instance} ? 1 : 0,
+    );
+    my $matches = $mode eq 'snapshot'
+        ? ($current_timing eq 'activation_region' || $current_timing eq 'trigger_payload')
+        : ($current_timing eq 'generated_live_handoff');
+
+    confess "$context input binding for port '$binding->{port}' requested timing '$mode', but this activation currently uses '$current_timing'; behavior-changing timing conversion is not supported yet\n"
+        unless $matches;
+
+    return 1;
+}
+
+sub _activation_input_binding_current_timing {
+    my ($site_kind, $generated_instance) = @_;
+
+    return 'trigger_payload' if $site_kind eq 'rule_trigger';
+    return 'generated_live_handoff' if $generated_instance;
+    return 'activation_region';
 }
 
 sub _transaction_port_map {

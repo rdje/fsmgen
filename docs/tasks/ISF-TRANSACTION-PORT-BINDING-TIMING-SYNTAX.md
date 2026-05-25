@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -47,7 +47,7 @@ conversion is attempted.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX`
-  Status: `active`
+  Status: `done`
   Goal: `Add explicit bounded timing selection syntax for transaction input bindings.`
   Children: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1`,
   `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`
@@ -60,17 +60,17 @@ conversion is attempted.
   Commit: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1: select binding timing syntax`
 
 - ID: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement explicit current-timing input binding syntax.`
   Acceptance: `Input bindings may spell timing snapshot or timing live only where the spelling matches the existing binding_timing class; unsupported or output-binding timing selections reject clearly; docs/book/tests/public metadata stay synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused transaction-port/spec/book tests; ./bin/ci-regression isf --no-book; mdBook build; git diff --check`
+  Commit: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2: accept current binding timing syntax`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` | `pending` | Selection leaf is complete; implementation is the next bounded R14 syntax slice. |
+| `_None_` | `_None_` | `_None_` | Tree closed. |
 
 ## Decisions
 
@@ -99,16 +99,19 @@ conversion is attempted.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `pass` |
-| `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` | `pending` | `pending` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1241-isf-transaction-port-bindings.t`; `prove -Iperl t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t t/1248-isf-rule-trigger-parameter-binding.t t/1255-isf-schedule-report-golden-matrix.t t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1256-feature-backlog-status-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `pass` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1` | `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1: select binding timing syntax` | `selection commit` |
-| `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` | `pending` | `pending implementation` |
+| `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` | `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2: accept current binding timing syntax` | `completion commit` |
 
 ## Changelog
 
 - `2026-05-25`: Created active task tree and completed the selection leaf for
   explicit input-binding timing syntax.
+- `2026-05-25`: Completed implementation leaf; input bindings now accept
+  current-timing-only `(timing snapshot)` and `(timing live)` assertions, while
+  mismatched timing modes and output-binding timing clauses fail closed.

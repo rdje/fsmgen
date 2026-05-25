@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX` | `active` | `R14` | `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.md) |
 | `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.md) |
 | `ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC.md) |
 | `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md](docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md) |

@@ -961,6 +961,11 @@ Rules:
 - Port names are unique across directions.
 - Input bindings may pass scalar signals, numeric/exact-width literals, or
   non-empty list expressions.
+- Input bindings may add `(timing snapshot)` when the shipped site timing is
+  activation/trigger payload capture, or `(timing live)` when the shipped site
+  timing is generated-top live handoff wiring. Mismatched timing selections
+  fail closed; this slice does not synthesize conversion storage or new
+  continuous local wiring.
 - Output bindings name scalar writable actor-side targets.
 - `do` and `spawn` support input and output bindings.
 - Rule `trigger` supports input bindings for local and generated targets.

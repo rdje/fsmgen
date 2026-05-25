@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Binding timing syntax shipped
+- Completed `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` and closed the
+  task tree.
+- Input bindings on `do`, `spawn`, and rule `trigger` now accept explicit
+  current-timing assertions: `(timing snapshot)` for activation-region or
+  trigger-payload capture, and `(timing live)` for generated-top live handoff
+  wiring.
+- Mismatched timing mode/site combinations, malformed timing clauses, and
+  timing clauses on output bindings fail closed.
+- This is syntax validation only; scheduler lowering, generated `.fsm`, HDL,
+  schedule-report schema, `binding_timing` values, and runtime behavior did
+  not change.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook,
+  README index, roadmap, task tree, and live docs.
+- Validation passed: syntax checks; focused transaction-port/spec/book tests
+  with `Files=8, Tests=382`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1743`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Binding timing syntax tree selected
 - Created active task tree `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX`.
 - Completed selection leaf

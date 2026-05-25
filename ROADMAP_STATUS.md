@@ -2,20 +2,32 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX`.
-- Current frontier: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`.
-- Current R14 transaction-port binding timing syntax selection:
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Current R14 transaction-port binding timing syntax implementation:
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` shipped explicit
+  current-timing input-binding syntax and closed the task tree. Input bindings
+  on `do`, `spawn`, and rule `trigger` may add
+  `(timing snapshot)` when the current binding timing is activation-region or
+  trigger-payload capture, and `(timing live)` when the current binding timing
+  is generated-top live handoff wiring. Mismatched mode/site combinations,
+  malformed timing clauses, and timing clauses on output bindings fail closed.
+  This is a syntax assertion only: scheduler lowering, generated `.fsm`, HDL,
+  schedule-report schema, and runtime behavior do not change, and
+  `binding_timing` keeps reporting the existing transfer class. Validation
+  passed: syntax checks; focused transaction-port/spec/book tests with
+  `Files=8, Tests=382`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1743`; `mdbook build docs/book`; and `git diff --check`.
+- Recent R14 transaction-port binding timing syntax selection:
   `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1` created the active task tree
   for explicit input-binding timing syntax. The selected spelling is a fourth
   per-input-binding subclause: `(input PORT EXPR (timing snapshot))` or
   `(input PORT EXPR (timing live))`. `snapshot` means activation or trigger
   payload capture; `live` means generated-top live handoff wiring. The first
-  implementation boundary is current-timing-only: accept explicit spelling
+  implementation boundary was current-timing-only: accept explicit spelling
   only where it matches the already-shipped timing class, reject mismatched
   mode/site combinations fail-closed, and do not change scheduler lowering,
-  generated `.fsm`, HDL, schedule-report schema, or runtime behavior. The next
-  frontier is implementation and public documentation synchronization in
-  `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`.
+  generated `.fsm`, HDL, schedule-report schema, or runtime behavior.
 - Current R14 transaction-port binding timing metadata implementation:
   `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` added public
   `binding_timing` metadata to every `transaction_port_bindings[]` schedule
@@ -8087,15 +8099,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX`.
-- Current frontier: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
 - Completion status:
-  `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1` selected explicit
-  snapshot/live timing syntax for transaction input bindings. The first
-  implementation boundary is current-timing-only and must not change
-  scheduler lowering, generated `.fsm`, HDL, schedule-report schema, or
-  runtime behavior. The next frontier is
-  `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`.
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` shipped explicit
+  current-timing `(timing snapshot)` / `(timing live)` input-binding syntax and
+  closed the task tree. The syntax is accepted only where it matches the
+  already-shipped binding timing class; mismatches, malformed timing clauses,
+  and output-binding timing clauses fail closed. Scheduler lowering, generated
+  `.fsm`, HDL, schedule-report schema, and runtime behavior are unchanged.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
