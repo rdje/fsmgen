@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Binding endpoint kind is report metadata, not new semantics
+- `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1` selects a small additive
+  schedule-report metadata field for transaction-port bindings:
+  `actor_endpoint_kind`.
+- The existing `actor_expression` string is useful for human review but should
+  not become an implicit parser contract for downstream tools. Reporting
+  `signal`, `literal`, or `expression` directly keeps the public JSON surface
+  easier to consume without exposing raw `LoweringIR` assignment internals.
+- The selection deliberately leaves binding timing and lowering untouched.
+  Rule-trigger output bindings and explicit snapshot-vs-live spelling are
+  separate semantic features and need their own task-tree-owned contracts.
+
 ## 2026-05-25: Direct transaction-port width params use a private evidence marker
 - `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` removes the generated-child
   only gate from parser width normalization and lets direct transactions

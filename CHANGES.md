@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Transaction-port binding endpoint-kind report tree selected
+- Created active task tree
+  `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`.
+- Completed selection leaf
+  `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1`; the next implementation
+  frontier is `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2`.
+- Selected a bounded additive schedule-report field,
+  `transaction_port_bindings[].actor_endpoint_kind`, with value family
+  `signal`, `literal`, and `expression`.
+- The selected field avoids requiring downstream consumers to parse
+  `actor_expression` or infer operand shape from `actor_signal` nullability.
+- No parser, scheduler, generated `.fsm`, HDL, public syntax, runtime
+  behavior, or schedule-report payload changed in this selection slice.
+
 ### R14 — Direct transaction-parameter transaction-port widths shipped
 - Completed `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` and closed the
   task tree.

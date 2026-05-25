@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Transaction-port binding endpoint-kind report tree selected
+- Created active task tree
+  `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`.
+- Completed selection leaf
+  `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1`; the next implementation
+  frontier is `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2`.
+- The selected additive schedule-report field is
+  `transaction_port_bindings[].actor_endpoint_kind`, with values `signal`,
+  `literal`, and `expression`.
+- This selection slice does not change parser behavior, scheduler lowering,
+  generated `.fsm`, HDL, public syntax, runtime behavior, or schedule-report
+  payloads yet.
+- Active task tree: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`.
+- Current frontier: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2`.
+
 ## 2026-05-25: R14 — Direct transaction-parameter transaction-port widths shipped
 - Completed `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` and closed the
   task tree.

@@ -2,8 +2,20 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`.
+- Current frontier: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2`.
+- Current R14 transaction-port binding endpoint-kind report selection:
+  `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1` created the active task
+  tree for an additive `transaction_port_bindings[]` report field named
+  `actor_endpoint_kind`. The selected value family is `signal` for scalar
+  actor-side endpoints, `literal` for numeric or exact-width input operands,
+  and `expression` for non-empty list-expression input operands. This
+  selection slice does not change parser behavior, scheduler lowering,
+  generated `.fsm`, HDL, public syntax, runtime semantics, or schedule-report
+  payloads yet. Rule-trigger output bindings, explicit snapshot-vs-live timing
+  syntax, raw assignment provenance export, and timing behavior changes remain
+  deferred. The next frontier is implementation and public documentation
+  synchronization in `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2`.
 - Current R14 direct transaction-parameter transaction-port width
   implementation:
   `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` shipped

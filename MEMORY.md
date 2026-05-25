@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 transaction-port binding endpoint-kind report tree selected
+- Created active task tree
+  `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`.
+- Completed selection leaf
+  `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1`; the next implementation
+  frontier is `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2`.
+- The selected additive schedule-report field is
+  `transaction_port_bindings[].actor_endpoint_kind`, with values `signal`,
+  `literal`, and `expression`.
+- The field will let downstream consumers distinguish scalar endpoints,
+  numeric/exact-width literal operands, and list-expression operands without
+  parsing `actor_expression` or relying on `actor_signal` nullability.
+- This selection slice does not change parser behavior, scheduler lowering,
+  generated `.fsm`, HDL, public syntax, runtime behavior, or report payloads
+  yet.
+- Rule-trigger output bindings, explicit snapshot-vs-live timing syntax, raw
+  assignment provenance export, and timing behavior changes remain deferred.
+- Active task tree: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`.
+- Current frontier: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2`.
+
 ## 2026-05-25: R14 direct transaction-parameter transaction-port widths shipped
 - Completed `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` and closed the
   task tree.

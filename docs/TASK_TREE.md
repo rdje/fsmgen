@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS` | `active` | `R14` | `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.md) |
 
 ## Proposed Task Trees
 
@@ -461,6 +462,7 @@ as done work unless a future task reopens them.
 | Generated activation handoff storage schedule-report roles | `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS` |
 | Generated activation start/done handoff storage schedule-report roles | `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS` |
 | Transaction-local port storage schedule-report roles | `ISF-TRANSACTION-PORT-STORAGE-REPORTS` |
+| Transaction-port binding endpoint-kind schedule-report metadata | `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS` |
 | Rule-trigger source and payload-source storage schedule-report roles | `ISF-RULE-TRIGGER-STORAGE-REPORTS` |
 | ISF spec, mdBook, public interface contract, and manifest synchronization | `ISF-PUBLIC-CONTRACT` |
 | Public ISF live-document manifest discovery for mdBook chapters | `ISF-LIVE-BOOK-DOCUMENT-PATHS` |
