@@ -126,7 +126,7 @@ ISF
 };
 
 subtest 'unsupported repeat count sources fail before counter emission' => sub {
-    assert_lower_rejected(<<'ISF', 'unknown repeat count name', qr/\ATransaction 'main': repeat count 'beats' is neither a declared positive actor constant, actor scalar parameter, nor a known-width runtime scalar/);
+    assert_lower_rejected(<<'ISF', 'unknown repeat count name', qr/\ATransaction 'main': repeat count 'beats' is neither a declared positive actor constant, actor scalar parameter, qualified package scalar constant, nor a known-width runtime scalar/);
 (actor repeat_unknown_count
   (clock clk)
   (interface (input start) (output flag) (output done))
@@ -154,7 +154,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'transaction parameter repeat count', qr/\ATransaction 'worker': repeat count transaction parameter 'COUNT' remains deferred; use a known-width runtime scalar, positive actor constant, or actor scalar parameter/);
+    assert_lower_rejected(<<'ISF', 'transaction parameter repeat count', qr/\ATransaction 'worker': repeat count transaction parameter 'COUNT' remains deferred; use a known-width runtime scalar, positive actor constant, actor scalar parameter, or qualified package scalar constant/);
 (actor repeat_transaction_param_count
   (clock clk)
   (interface (input start) (output flag) (output done))
@@ -173,7 +173,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'transaction parameter shadows actor parameter repeat count', qr/\ATransaction 'worker': repeat count transaction parameter 'COUNT' remains deferred; use a known-width runtime scalar, positive actor constant, or actor scalar parameter/);
+    assert_lower_rejected(<<'ISF', 'transaction parameter shadows actor parameter repeat count', qr/\ATransaction 'worker': repeat count transaction parameter 'COUNT' remains deferred; use a known-width runtime scalar, positive actor constant, actor scalar parameter, or qualified package scalar constant/);
 (actor repeat_transaction_param_shadow_count
   (clock clk)
   (params
@@ -194,7 +194,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'negative repeat count literal', qr/\ATransaction 'main': repeat count '-1' must be a positive decimal literal, declared positive actor constant, actor scalar parameter, or known-width runtime scalar name/);
+    assert_lower_rejected(<<'ISF', 'negative repeat count literal', qr/\ATransaction 'main': repeat count '-1' must be a positive decimal literal, declared positive actor constant, actor scalar parameter, qualified package scalar constant, or known-width runtime scalar name/);
 (actor repeat_negative_count
   (clock clk)
   (interface (input start) (output flag) (output done))

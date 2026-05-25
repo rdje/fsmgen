@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -39,8 +39,8 @@ positive integer literal.
   counter-width path as positive literals, actor constants, and actor-local
   scalar parameter defaults.
 - Positive package constants preserve the authored `PACKAGE.CONSTANT` token
-  where the scheduled `.fsm` and schedule report expose the repeat count
-  source, while using the resolved positive integer as counter-width evidence.
+  in the scheduled `.fsm` repeat-counter load while using the resolved
+  positive integer as counter-width evidence.
 - Zero-valued package constants fail closed with the existing static
   zero-count repeat policy.
 - Unsupported repeat-count sources fail closed with targeted diagnostics.
@@ -54,7 +54,7 @@ positive integer literal.
 ## Task Tree
 
 - ID: `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS`
-  Status: `active`
+  Status: `done`
   Goal: `Qualified package scalar constants in static transaction repeat counts`
   Children: `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.1`,
   `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2`
@@ -67,17 +67,17 @@ positive integer literal.
   Commit: `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.1: select repeat package counts`
 
 - ID: `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document package scalar constants in static repeat counts`
   Acceptance: `Accepted package scalar constants resolve to positive static repeat counts, unsupported sources fail closed, and public docs/tests are synchronized`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks`; focused repeat/public/spec/book tests with `Files=10, Tests=386`; `./bin/ci-regression isf --no-book` with `Files=266, Tests=1717`; post-closure public/spec/book audits with `Files=7, Tests=374`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2: support repeat package counts`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` | `pending` | Static repeats already accept positive literals, actor constants, and actor-local scalar parameter defaults; package scalar constants are the next bounded static value-domain widening for repeat counts. |
+| 1 | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` | `done` | Closed: static repeats now accept qualified imported package scalar constants in the bounded positive integer surface. |
 
 ## Decisions
 
@@ -89,6 +89,10 @@ positive integer literal.
   constants resolving to zero should fail closed before scheduled `.fsm`
   emission, matching literal zero, actor constants resolving to zero, and
   actor scalar parameters resolving to zero.
+- `2026-05-25`: Keep repeat schedule-report shape unchanged. The public
+  review surface for accepted package constants is the scheduled `.fsm`
+  repeat-counter load plus the resolved counter width, not a new
+  `transaction_loops[]` repeat-count field.
 
 ## Open Questions
 
@@ -103,14 +107,18 @@ positive integer literal.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.1` | `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `passed`; audits `Files=3, Tests=364` |
+| `2026-05-25` | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` | syntax checks; `prove -Iperl t/1102-isf-repeat-counter-widths.t t/1202-isf-repeat-clause-boundary.t t/1360-isf-repeat-package-constant-counts.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; post-closure public/spec/book audits; `mdbook build docs/book`; `git diff --check` | `passed`; focused audits `Files=10, Tests=386`; broad gate `Files=266, Tests=1717`; post-closure audits `Files=7, Tests=374` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.1` | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.1: select repeat package counts` | Selection slice; no behavior change. |
+| `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2: support repeat package counts` | Implementation slice; package scalar constants in static repeat counts. |
 
 ## Changelog
 
 - `2026-05-25`: Created task tree and selected
   `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` as the next implementation frontier.
+- `2026-05-25`: Implemented qualified imported package scalar constants in
+  static transaction repeat counts and closed the task tree.

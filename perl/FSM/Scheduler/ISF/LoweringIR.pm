@@ -3670,6 +3670,9 @@ sub _repeat_count_width {
     my $param_value = _actor_param_repeat_count_value($count, $actor);
     return _repeat_count_width_for_integer($param_value)
         if defined $param_value;
+    my $package_constant_value = _package_constant_repeat_count_value($count, $actor);
+    return _repeat_count_width_for_integer($package_constant_value)
+        if defined $package_constant_value;
     if (defined($count)) {
         my $literal_width = _literal_repeat_count_width($count);
         return $literal_width if defined $literal_width;
@@ -3687,7 +3690,10 @@ sub _static_repeat_count_value {
     my $constant_value = _actor_constant_repeat_count_value($count, $actor);
     return $constant_value if defined $constant_value;
 
-    return _actor_param_repeat_count_value($count, $actor);
+    my $param_value = _actor_param_repeat_count_value($count, $actor);
+    return $param_value if defined $param_value;
+
+    return _package_constant_repeat_count_value($count, $actor);
 }
 
 sub _actor_constant_repeat_count_value {
@@ -3720,6 +3726,23 @@ sub _actor_param_repeat_count_value {
     return undef;
 }
 
+sub _package_constant_repeat_count_value {
+    my ($count, $actor) = @_;
+    return undef unless defined($count) && !ref($count);
+
+    my $package_constant = _actor_package_constant_reference($actor, $count);
+    return undef unless $package_constant;
+    my ($package_name, $constant_name, $suffix) = @$package_constant;
+    return undef unless $suffix eq '';
+
+    my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+    return undef unless defined $constant_payload;
+    my $constant_value = _package_constant_scalar_value($constant_payload);
+    return defined($constant_value) && !ref($constant_value)
+        ? _non_negative_integer_from_literal($constant_value)
+        : undef;
+}
+
 sub _reject_static_zero_repeat_count {
     my ($count, $actor, $tn) = @_;
     return 1
@@ -3737,7 +3760,28 @@ sub _validate_repeat_count_source {
 
     if (defined($count) && !ref($count) && _is_hdl_identifier($count)
         && _transaction_param_by_name($actor, $tn, $count)) {
-        confess "Transaction '$tn': repeat count transaction parameter '$count' remains deferred; use a known-width runtime scalar, positive actor constant, or actor scalar parameter\n";
+        confess "Transaction '$tn': repeat count transaction parameter '$count' remains deferred; use a known-width runtime scalar, positive actor constant, actor scalar parameter, or qualified package scalar constant\n";
+    }
+
+    if (my $package_constant = _actor_package_constant_reference($actor, $count)) {
+        my ($package_name, $constant_name, $suffix) = @$package_constant;
+        my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+        if (defined $constant_payload) {
+            confess "Transaction '$tn': repeat count token '$count' is ambiguous: it matches local enum member '$count' and imported package constant '$count'\n"
+                if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
+            confess "Transaction '$tn': repeat count package constant '$package_name.$constant_name' aggregate/member path '$count' remains deferred; repeat counts accept only qualified package scalar constants in this slice\n"
+                if $suffix ne '';
+            my $constant_value = _package_constant_scalar_value($constant_payload);
+            my $integer_value = defined($constant_value) && !ref($constant_value)
+                ? _non_negative_integer_from_literal($constant_value)
+                : undef;
+            confess "Transaction '$tn': repeat count package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
+                unless defined($integer_value) && $integer_value > 0;
+            return 1;
+        }
+
+        confess "Transaction '$tn': repeat count references unknown package constant '$count'\n"
+            if $suffix eq '' && !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
     }
 
     my $static_value = _static_repeat_count_value($count, $actor);
@@ -3752,10 +3796,10 @@ sub _validate_repeat_count_source {
         }
         return 1 if defined _runtime_repeat_count_source($count, $widths, $actor);
 
-        confess "Transaction '$tn': repeat count '$count' is neither a declared positive actor constant, actor scalar parameter, nor a known-width runtime scalar\n";
+        confess "Transaction '$tn': repeat count '$count' is neither a declared positive actor constant, actor scalar parameter, qualified package scalar constant, nor a known-width runtime scalar\n";
     }
 
-    confess "Transaction '$tn': repeat count '$count' must be a positive decimal literal, declared positive actor constant, actor scalar parameter, or known-width runtime scalar name\n";
+    confess "Transaction '$tn': repeat count '$count' must be a positive decimal literal, declared positive actor constant, actor scalar parameter, qualified package scalar constant, or known-width runtime scalar name\n";
 }
 
 sub _runtime_repeat_count_source {

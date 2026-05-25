@@ -304,12 +304,14 @@ sources in the actor's own schedule. Actor-local scalar parameter defaults
 that resolve to positive integer literals are legal static transaction latency
 min/max sources, bounded eventual temporal-contract window sources,
 actor-level and await-local watchdog limit sources, and transaction repeat
-count sources in the actor's own schedule. Transaction parameters, runtime
+count sources in the actor's own schedule. Qualified imported package scalar
+constants are also accepted as static transaction repeat-count sources when
+they resolve to positive integer literals. Transaction parameters, runtime
 interface signals, arbitrary expressions, and use-site activation overrides
-are not actor-parameter-default,
-latency-bound, contract-window, watchdog-limit, or repeat-count constants and
-do not respecialize already-emitted fixed latency counter, temporal monitor,
-watchdog counter, or repeat counter logic.
+are not actor-parameter-default, latency-bound, contract-window,
+watchdog-limit, or repeat-count constants and do not respecialize
+already-emitted fixed latency counter, temporal monitor, watchdog counter, or
+repeat counter logic.
 Actor constants and actor-local scalar parameter defaults are also accepted as
 static default values for generated child transaction parameters; the lowerer
 resolves those parent actor names to literal child `+params` and
@@ -634,6 +636,11 @@ resolve to non-negative integer timing facts: zero counts remain transparent
 no-ops, and positive counts emit fixed scheduled wait-state chains plus
 `transaction_waits[]` entries whose `count_source` preserves the authored
 qualified token.
+Qualified package scalar constants used by static transaction repeat counts
+resolve to positive integer counter-width evidence; the scheduled `.fsm`
+repeat-counter load preserves the authored qualified token, and package
+constants resolving to zero fail closed under the shipped static zero-count
+repeat policy.
 Schedule reports expose actor parameter defaults through `actor_params[]` entries with
 each authored parameter `name` and JSON-safe default `value`, preserving
 authored actor constant tokens such as `DEFAULT_WIDTH`, earlier actor
@@ -2602,14 +2609,17 @@ Current lowering:
 
 The repeat count is a runtime counter load value, not an elaboration count.
 Positive literal counts give statically reviewable loop bounds. Actor
-constants and actor scalar parameter defaults resolving to positive integers
-are static width evidence for the repeat counter, but the scheduled `.fsm`
-still loads the authored count token. Literal zero counts and actor constants
-or actor scalar parameters resolving to zero fail closed under the bounded
+constants, actor scalar parameter defaults, and qualified imported package
+scalar constants resolving to positive integers are static width evidence for
+the repeat counter, but the scheduled `.fsm` still loads the authored count
+token. Literal zero counts and actor constants, actor scalar parameters, or
+package scalar constants resolving to zero fail closed under the bounded
 static zero-count policy. Named counts may be dynamic scalar signals when
 their width is known; those known-width runtime scalar counts skip the repeat
 body and repeat check when the runtime value is zero. Unknown count names,
-non-scalar actor parameters, transaction parameters, expression-valued counts,
+unqualified package constants, package aggregate constants, package
+member/item paths, non-scalar actor parameters, transaction parameters,
+expression-valued counts, package constants inside repeat-count expressions,
 and generated-top respecialization fail closed or remain deferred outside the
 shipped repeat count-source policy. Repeat-body local `do` and repeat-body spawn
 support preserve the
@@ -5355,6 +5365,7 @@ Focused tests:
 - [t/1357-isf-transaction-port-package-constant-widths.t](../t/1357-isf-transaction-port-package-constant-widths.t)
 - [t/1358-isf-data-op-package-constant-widths.t](../t/1358-isf-data-op-package-constant-widths.t)
 - [t/1359-isf-wait-package-constant-counts.t](../t/1359-isf-wait-package-constant-counts.t)
+- [t/1360-isf-repeat-package-constant-counts.t](../t/1360-isf-repeat-package-constant-counts.t)
 
 ## 12. Explicitly Deferred
 
@@ -5383,9 +5394,10 @@ Focused tests:
   sample-incompatible successor splits remain deferred until their timing and
   diagnostics are implemented.
 - Transaction repeat counts beyond the shipped positive decimal literal,
-  positive actor-constant, positive actor-scalar-parameter, and known-width
-  runtime scalar shapes: transaction parameters, arbitrary expressions,
-  non-scalar actor parameters, use-site parameter-specialized counter sizing,
+  positive actor-constant, positive actor-scalar-parameter, qualified package
+  scalar constant, and known-width runtime scalar shapes: transaction
+  parameters, arbitrary expressions, non-scalar actor parameters, aggregate or
+  path package constants, use-site parameter-specialized counter sizing,
   generated-top respecialization, and repeat-body widening remain deferred.
 - Transaction latency bounds beyond the shipped positive decimal literal,
   positive actor-constant, and positive actor-scalar-parameter

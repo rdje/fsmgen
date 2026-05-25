@@ -2,8 +2,33 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS`.
-- Current frontier: `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 repeat package-constant count implementation:
+  `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` shipped qualified imported package
+  scalar constants as static transaction repeat counts and closed the task
+  tree. Static transaction `(repeat PACKAGE.CONSTANT body...)` counts now
+  resolve when the owning actor imports `PACKAGE`, the package declares
+  `CONSTANT`, and the constant resolves to a positive integer scalar literal.
+  Accepted package constants reuse the existing static repeat counter-width
+  path used by positive literals, actor constants, and actor-local scalar
+  parameter defaults. The scheduled `.fsm` repeat-counter load preserves the
+  authored `PACKAGE.CONSTANT` token while the repeat counter width uses the
+  resolved positive integer. Package constants resolving to zero keep the
+  existing static zero-count repeat policy and fail closed before scheduled
+  `.fsm` emission. Unknown package constants, unqualified package constants,
+  aggregate package constants, package member/item paths, ambiguous
+  local-enum/package-constant spellings, package constants inside repeat-count
+  expressions, transaction parameters, runtime expressions, arbitrary
+  expressions, package constants in other value domains, repeat-body child
+  activation widening, cross-domain repeat behavior, generated-top
+  respecialization, and repeat-body clause widening remain fail closed or
+  deferred. The ISF spec, downstream handoff, public contract, mdBook, task
+  tree, README index, roadmap, and live docs are synchronized. Validation
+  passed with syntax checks; focused repeat/public/spec/book tests
+  (`Files=10, Tests=386`); `./bin/ci-regression isf --no-book`
+  (`Files=266, Tests=1717`); post-closure public/spec/book audits
+  (`Files=7, Tests=374`); `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 repeat package-constant count selection:
   `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.1` created the active task tree and
   selected the next bounded implementation leaf. Static transaction
@@ -12,9 +37,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   literal. Accepted package-constant repeat counts should reuse the existing
   static repeat counter-width path used by positive literals, actor constants,
   and actor-local scalar parameter defaults, while preserving the authored
-  `PACKAGE.CONSTANT` token where scheduled `.fsm` and schedule-report
-  surfaces expose the repeat count source. Package constants resolving to zero
-  should keep the existing static zero-count repeat policy and fail closed
+  `PACKAGE.CONSTANT` token in the scheduled `.fsm` repeat-counter load.
+  Package constants resolving to zero should keep the existing static
+  zero-count repeat policy and fail closed
   before scheduled `.fsm` emission. Unqualified package constants, unknown
   package constants, package aggregate constants, package member/item paths,
   transaction parameters, runtime expressions, arbitrary expressions, package

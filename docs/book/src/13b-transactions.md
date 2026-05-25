@@ -503,15 +503,18 @@ region.
 
 Repeat counter width is inferred from the count expression. Positive decimal
 literal counts use the minimum width that can represent the loaded count.
-Declared positive actor constants and actor-local scalar parameter defaults use
-the resolved integer value as width evidence while preserving the authored
-count token in the scheduled `.fsm` load. Literal zero counts and actor
-constants or actor scalar parameters resolving to zero fail closed before
-scheduled `.fsm` emission. Named dynamic counts use their known interface or
+Declared positive actor constants, actor-local scalar parameter defaults, and
+qualified imported package scalar constants use the resolved integer value as
+width evidence while preserving the authored count token in the scheduled
+`.fsm` load. Literal zero counts and actor constants, actor scalar parameters,
+or package scalar constants resolving to zero fail closed before scheduled
+`.fsm` emission. Named dynamic counts use their known interface or
 sample-derived width and bypass the body when the runtime value is zero.
-Unknown names, non-scalar actor parameters, transaction parameters, malformed
-scalar tokens, and expression-valued counts fail closed before scheduled
-`.fsm` emission.
+Unknown names, unqualified package constants, aggregate package constants,
+package member/item paths, non-scalar actor parameters, transaction
+parameters, malformed scalar tokens, package constants inside repeat-count
+expressions, and expression-valued counts fail closed before scheduled `.fsm`
+emission.
 Repeats nested in switch branches declare the same transaction counter,
 widened to the largest branch requirement.
 

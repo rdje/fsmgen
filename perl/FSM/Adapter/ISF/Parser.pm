@@ -3469,7 +3469,7 @@ sub _validate_transaction_enum_member_value_clause {
     }
 
     if ($head eq 'repeat') {
-        _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context repeat count");
+        _reject_repeat_count_enum_member_value($clause->[1], $actor, $aggregate_roots, "$context repeat count");
         _validate_transaction_enum_member_value_contexts(
             [ @{$clause}[2 .. $#$clause] ],
             $actor,
@@ -3626,6 +3626,14 @@ sub _reject_data_op_width_enum_member_value {
 }
 
 sub _reject_wait_count_enum_member_value {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context)
+        if ref($value);
+    return 1 if defined _actor_package_constant_reference($actor, $value);
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context);
+}
+
+sub _reject_repeat_count_enum_member_value {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context)
         if ref($value);

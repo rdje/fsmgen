@@ -1,6 +1,34 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Repeat package-constant counts shipped
+- Completed `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` and closed the task tree.
+- Static transaction `(repeat PACKAGE.CONSTANT body...)` counts now accept
+  qualified imported package scalar constants when the owning actor imports
+  `PACKAGE`, the package declares `CONSTANT`, and the constant resolves to a
+  positive integer scalar literal.
+- Accepted package constants reuse the existing static repeat counter-width
+  path used by positive literals, actor constants, and actor-local scalar
+  parameter defaults.
+- The scheduled `.fsm` repeat-counter load preserves the authored
+  `PACKAGE.CONSTANT` token while the repeat counter width uses the resolved
+  positive integer.
+- Package constants resolving to zero keep the existing static zero-count
+  repeat policy and fail closed before scheduled `.fsm` emission.
+- Unknown package constants, unqualified package constants, package aggregate
+  constants, package member/item paths, ambiguous local-enum/package-constant
+  spellings, package constants inside repeat-count expressions, transaction
+  parameters, runtime expressions, arbitrary expressions, package constants in
+  other value domains, repeat-body child activation widening, cross-domain
+  repeat behavior, generated-top respecialization, and repeat-body clause
+  widening remain fail closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused repeat/public/spec/book tests with
+  `Files=10, Tests=386`; `./bin/ci-regression isf --no-book` with
+  `Files=266, Tests=1717`; post-closure public/spec/book audits with
+  `Files=7, Tests=374`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Repeat package-constant counts selected
 - Created active task tree `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS`.
 - Completed `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.1`; the selected
@@ -11,8 +39,7 @@ This is the persistent technical change history for FSMGen.
 - Accepted package-constant repeat counts should reuse the existing static
   repeat counter-width path used by positive literals, actor constants, and
   actor-local scalar parameter defaults, while preserving the authored
-  `PACKAGE.CONSTANT` token where scheduled `.fsm` and schedule-report surfaces
-  expose the repeat count source.
+  `PACKAGE.CONSTANT` token in the scheduled `.fsm` repeat-counter load.
 - Package constants resolving to zero should keep the existing static
   zero-count repeat policy and fail closed before scheduled `.fsm` emission.
 - Unqualified package constants, unknown package constants, package aggregate

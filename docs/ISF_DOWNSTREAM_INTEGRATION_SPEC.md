@@ -837,7 +837,7 @@ Transaction clauses currently supported:
 (wait count)
 (while condition body...)
 (until condition body...)
-(repeat count body...)          ;; count may be literal, actor constant, actor scalar parameter, or known-width runtime name
+(repeat count body...)          ;; count may be literal, actor constant, actor scalar parameter, qualified package scalar constant, or known-width runtime name
 (switch selector branch...)
 (set target expr)
 (update target expr)
@@ -1064,16 +1064,19 @@ Repeat:
 
 Repeat counts are runtime counter load values, not elaboration directives.
 Positive decimal literals infer the minimum counter width for that literal.
-Declared positive actor constants and actor-local scalar parameter defaults
-infer width from their resolved integer value while preserving the authored
-count token in the scheduled `.fsm` load. Literal zero counts and actor
-constants or actor scalar parameters resolving to zero fail closed before
+Declared positive actor constants, actor-local scalar parameter defaults, and
+qualified imported package scalar constants infer width from their resolved
+integer value while preserving the authored count token in the scheduled
+`.fsm` load. Literal zero counts and actor constants, actor scalar
+parameters, or package scalar constants resolving to zero fail closed before
 scheduled `.fsm` emission. Known-width sampled/interface names use their known
 source width and now split the repeat init edge: nonzero values enter the
 repeat body, while zero values bypass the body and repeat check to the state
-after the repeat region. Unknown names, non-scalar actor parameters,
-transaction parameters, malformed scalar tokens, and expression-valued counts
-fail closed before scheduled `.fsm` emission.
+after the repeat region. Unknown names, unqualified package constants,
+aggregate package constants, package member/item paths, non-scalar actor
+parameters, transaction parameters, malformed scalar tokens, package
+constants inside repeat-count expressions, and expression-valued counts fail
+closed before scheduled `.fsm` emission.
 
 Switch:
 
@@ -3656,7 +3659,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1352-isf-library-use-package-constants.t \
   t/1357-isf-transaction-port-package-constant-widths.t \
   t/1358-isf-data-op-package-constant-widths.t \
-  t/1359-isf-wait-package-constant-counts.t
+  t/1359-isf-wait-package-constant-counts.t \
+  t/1360-isf-repeat-package-constant-counts.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

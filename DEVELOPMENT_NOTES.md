@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Repeat package constants reuse static width evidence
+- `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` resolves qualified imported package
+  scalar constants at the static transaction repeat-count boundary.
+- The implementation deliberately reuses the existing repeat counter-width
+  evidence path. Accepted package constants resolve to positive integers for
+  counter sizing, while the scheduled `.fsm` repeat-counter load preserves
+  the authored `PACKAGE.CONSTANT` token.
+- The slice does not add repeat count fields to `transaction_loops[]`; that
+  report family remains the existing `while`/`until` loop summary.
+- Static zero-count policy remains unchanged. Package constants resolving to
+  zero fail closed before scheduled `.fsm` emission, matching literal zero,
+  actor constants resolving to zero, and actor scalar parameters resolving to
+  zero.
+- Unqualified lookup, aggregate package constants, package member/item paths,
+  ambiguous local enum/package spellings, transaction parameters, runtime
+  expressions, repeat-body clause widening, cross-domain repeat behavior, and
+  generated-top respecialization remain fail-closed or deferred.
+
 ## 2026-05-25: Repeat package constants should preserve positive-count policy
 - `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.1` selects qualified imported package
   scalar constants for static transaction repeat counts as the next narrow
