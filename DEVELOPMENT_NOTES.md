@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Current-active-lane roadmap text needs the same latest slice
+- `ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC.1` repairs the lower
+  `ROADMAP_STATUS.md` current-active-lane summary after the top canonical
+  snapshot was already updated by the generated rule-trigger output-binding
+  implementation.
+- Keeping both roadmap summaries aligned reduces handoff ambiguity: a resumed
+  session can trust `Active task tree: none`, `Current frontier: none`, and
+  the latest completed R14 slice without reconciling two different current
+  completions.
+- This is documentation-only roadmap maintenance and does not change compiler
+  behavior.
+
 ## 2026-05-25: Generated trigger output copies use the done observer
 - `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` keeps output binding lowering
   inside the generated trigger handoff DT instead of inventing a rule callback

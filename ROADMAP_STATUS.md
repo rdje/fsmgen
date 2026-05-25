@@ -8059,14 +8059,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` shipped same-value
-  activation-site overrides for generated child temporal contract-window
-  parameters and closed the task tree. No report key, schema version,
-  generated child variant module, HDL projection, or public API shape changed.
-  Validation passed: syntax checks; focused contract/public/spec/book tests
-  with `Files=13, Tests=453`; `./bin/ci-regression isf --no-book` with
-  `Files=272, Tests=1732`; final public/spec/book audits with `Files=5,
-  Tests=368`; `mdbook build docs/book`; and `git diff --check`.
+  `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` shipped generated-child
+  rule-trigger output bindings and closed the task tree. Generated-child rule
+  triggers now accept scalar output bindings for declared output ports when
+  the actor target is writable, same-domain, and width-compatible. The output
+  copy is guarded by the per-trigger done-observer signal, preserving
+  non-blocking rule-trigger behavior. Direct/local transaction rule-trigger
+  output bindings remain fail-closed until a separate completion-identity
+  contract is selected. Validation passed: syntax checks; focused
+  public/report/spec/book tests with `Files=13, Tests=396`;
+  `./bin/ci-regression isf --no-book` with `Files=274, Tests=1742`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

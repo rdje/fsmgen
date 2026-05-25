@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 Roadmap Maintenance — Latest slice truth sync completed
+- Completed `ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC.1` and closed the task tree.
+- Synchronized the lower [ROADMAP_STATUS.md](ROADMAP_STATUS.md)
+  current-active-lane summary with the latest completed R14 slice,
+  `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2`.
+- This is documentation-only roadmap maintenance; no parser, scheduler,
+  generated `.fsm`, HDL, schedule-report, public API, or runtime behavior
+  changed.
+- Validation passed: `mdbook build docs/book`; current-active-lane roadmap
+  audit; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Generated rule-trigger output bindings shipped
 - Completed `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` and closed the
   task tree.

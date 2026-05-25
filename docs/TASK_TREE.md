@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC.md) |
 | `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md](docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md) |
 | `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.md) |
 | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.md](docs/tasks/ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.md) |

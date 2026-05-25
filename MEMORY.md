@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 latest-slice roadmap truth sync completed
+- Completed `ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC.1` and closed the task tree.
+- Synchronized the lower `ROADMAP_STATUS.md` current-active-lane summary with
+  the latest completed R14 slice,
+  `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2`.
+- This is documentation-only roadmap maintenance; no parser, scheduler,
+  generated `.fsm`, HDL, schedule-report, public API, or runtime behavior
+  changed.
+- Validation passed: `mdbook build docs/book`; current-active-lane roadmap
+  audit; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 generated rule-trigger output bindings shipped
 - Completed `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` and closed the
   task tree.
