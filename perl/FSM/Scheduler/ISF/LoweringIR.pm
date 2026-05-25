@@ -5196,7 +5196,7 @@ sub _validate_activation_bindings {
         my $port = $ports{$port_name};
         confess "$context binding for port '$port_name' uses role '$binding->{role}' but the transaction declares '$port->{direction}'\n"
             unless $binding->{role} eq $port->{direction};
-        confess "$context output binding for port '$port_name' is not supported on rule triggers yet\n"
+        confess "$context output binding for port '$port_name' requires a generated-child rule trigger completion identity; direct/local rule-trigger targets do not provide one yet\n"
             if exists($options->{allow_outputs}) && !$options->{allow_outputs} && $binding->{role} eq 'output';
         confess "$context has duplicate binding for transaction port '$port_name'\n"
             if $seen{$port_name}++;

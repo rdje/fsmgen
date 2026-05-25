@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Local rule-trigger output diagnostic hardened
+- Completed `ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.1` and closed
+  the task tree.
+- Direct/local rule-trigger output bindings still fail closed, but the
+  diagnostic now says output bindings require a generated-child rule trigger
+  completion identity and that direct/local targets do not provide one yet.
+- Generated-child rule-trigger output-binding behavior is unchanged.
+- This is diagnostic/docs only; scheduler lowering, generated `.fsm`, HDL,
+  schedule-report schema, public API, and runtime behavior did not change.
+- Validation passed: syntax checks; focused transaction-port/report/book
+  tests with `Files=6, Tests=376`; conflict/golden checks with `Files=2,
+  Tests=7`; final live-doc/book audits with `Files=4, Tests=366`; `mdbook
+  build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 Documentation Truth Sync — Authored timing metadata wording completed
 - Completed `ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.1` and closed the
   task tree.

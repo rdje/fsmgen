@@ -2330,7 +2330,9 @@ is high. Multiple rule payloads or output copies for the same port/target
 therefore remain visible as guarded same-LHS assignments instead of being
 silently merged. Direct/local transaction rule-trigger output bindings remain
 deferred because a shared local transaction target has no rule-specific
-completion identity.
+completion identity; their diagnostic names the missing generated-child
+completion identity instead of implying all rule-trigger output bindings are
+unsupported.
 
 The same-cycle visibility rule for the shipped surface is: input payloads are
 emitted in the same activation region as their start/trigger handoff, and

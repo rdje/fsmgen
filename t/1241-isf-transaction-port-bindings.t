@@ -324,7 +324,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'rule output binding', qr/\ARule 'fire': trigger target 'work' output binding for port 'data' is not supported on rule triggers yet/);
+    assert_lower_rejected(<<'ISF', 'rule output binding', qr/\ARule 'fire': trigger target 'work' output binding for port 'data' requires a generated-child rule trigger completion identity; direct\/local rule-trigger targets do not provide one yet/);
 (actor rule_output_bind
   (clock clk)
   (interface (input ready) (output data (width 8)))

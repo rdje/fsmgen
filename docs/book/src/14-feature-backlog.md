@@ -2552,6 +2552,9 @@ Direct/local rule-trigger output bindings, behavior-changing
 snapshot-vs-live timing conversion, additional binding report fields beyond
 the shipped endpoint-kind, binding-timing, and authored timing-mode metadata,
 and broader static conflict diagnostics remain backlog.
+The direct/local rule-trigger output-binding diagnostic is intentionally
+specific: output bindings require a generated-child rule trigger completion
+identity, and direct/local targets do not provide one yet.
 
 Schedule reports also publish `authored_timing_mode` on
 `transaction_port_bindings[]`. It reports `snapshot` or `live` when the source

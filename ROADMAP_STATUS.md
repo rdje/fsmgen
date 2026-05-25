@@ -4,6 +4,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 local rule-trigger output-binding diagnostic hardening:
+  `ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.1` clarified the
+  direct/local rule-trigger output-binding fail-closed diagnostic and closed
+  the task tree. Direct/local targets still reject output bindings, but the
+  diagnostic now says output bindings require a generated-child rule trigger
+  completion identity and that direct/local targets do not provide one yet.
+  Generated-child rule-trigger output-binding behavior is unchanged. This is
+  diagnostic/docs only: scheduler lowering, generated `.fsm`, HDL,
+  schedule-report schema, public API, and runtime behavior did not change.
+  Validation passed: syntax checks; focused transaction-port/report/book tests
+  with `Files=6, Tests=376`; conflict/golden checks with `Files=2, Tests=7`;
+  final live-doc/book audits with `Files=4, Tests=366`; `mdbook build
+  docs/book`; and `git diff --check`.
 - Current R14 documentation truth sync:
   `ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.1` synchronized stale ISF spec
   and mdBook feature-matrix non-claim wording after `authored_timing_mode`
@@ -8134,11 +8147,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.1` synchronized stale ISF spec
-  and mdBook feature-matrix non-claim wording after `authored_timing_mode`
-  shipped. This was documentation-only; parser behavior, scheduler lowering,
-  generated `.fsm`, HDL, schedule-report payloads, public API, and runtime
-  behavior are unchanged.
+  `ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.1` clarified the
+  direct/local rule-trigger output-binding fail-closed diagnostic. This is
+  diagnostic/docs only; generated-child rule-trigger output-binding behavior,
+  scheduler lowering, generated `.fsm`, HDL, schedule-report schema, public
+  API, and runtime behavior are unchanged.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

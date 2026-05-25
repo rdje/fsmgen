@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Direct/local trigger output diagnostics should name identity
+- `ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.1` keeps direct/local
+  rule-trigger output bindings rejected, but aligns the diagnostic with the
+  actual reason.
+- Generated-child rule triggers have a per-trigger generated instance and
+  done-observer signal, so output copies have a concrete completion identity.
+  Direct/local targets share a transaction instance and done pulse, so a rule-
+  specific output copy cannot be proven yet.
+
 ## 2026-05-25: Report metadata non-claims need exact shipped field lists
 - `ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.1` repairs stale non-claim
   wording left behind after `authored_timing_mode` shipped.
