@@ -2,8 +2,32 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS`.
-- Current frontier: `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 scalar storage package-constant width implementation:
+  `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` shipped the bounded imported
+  package scalar-constant widening for actor-owned scalar storage widths and
+  closed the task tree. Actor-owned scalar storage
+  `(var NAME (width PACKAGE.CONSTANT))` and verbose
+  `(variable NAME (width PACKAGE.CONSTANT))` declarations may now use
+  qualified imported package scalar constants when the resolved value is a
+  positive integer literal. Parser scalar storage width validation now accepts
+  package-constant-shaped qualified tokens for actor-owned scalar storage only,
+  so package-specific diagnostics can distinguish unknown, unqualified,
+  aggregate, aggregate/member path, ambiguous, zero-valued, runtime, and
+  expression-valued sources. Accepted package-constant scalar storage widths
+  publish as resolved integer widths in parser handoff, scheduled `.fsm`
+  `+size`, schedule-report evidence, width evidence, and generated HDL
+  register ranges. Package constants in actor-owned bank widths/depths,
+  transaction-local port widths, waits, watchdogs, latency bounds, contract
+  windows, repeat counts, generated-top respecialization, and other
+  dimensions/value domains remain deferred or fail closed. The ISF spec,
+  downstream handoff, public contract, mdBook, task tree, README index,
+  roadmap, and live docs are synchronized. Validation passed with syntax
+  checks; focused public/scalar-storage/package tests (`Files=10,
+  Tests=350`); `./bin/ci-regression isf --no-book` (`Files=260,
+  Tests=1705`); post-closure public/spec/book/backlog audits (`Files=7,
+  Tests=374`); `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 scalar storage package-constant width selection:
   `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.1` created the active task tree
   and selected the next bounded implementation leaf. Actor-owned scalar
@@ -36,12 +60,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   ambiguous, zero-valued, runtime, and expression-valued sources. Accepted
   package-constant interface widths publish as resolved integer widths in
   parser handoff, scheduled `.fsm` `+size`, schedule-report evidence, and
-  generated HDL port ranges. Package constants in actor-owned storage widths,
-  bank widths/depths, transaction-local port widths, waits, watchdogs,
-  latency bounds, contract windows, repeat counts, generated-top
-  respecialization, and other dimensions/value domains remain deferred or
-  fail closed. The ISF spec, downstream handoff, public contract, mdBook, task
-  tree, README index, roadmap, and live docs are synchronized. Validation
+  generated HDL port ranges. Package constants in actor-owned bank
+  widths/depths, transaction-local port widths, waits, watchdogs, latency
+  bounds, contract windows, repeat counts, generated-top respecialization, and
+  other dimensions/value domains remain deferred or fail closed. The ISF spec,
+  downstream handoff, public contract, mdBook, task tree, README index,
+  roadmap, and live docs are synchronized. Validation
   passed with syntax checks; focused public/interface/package tests
   (`Files=10, Tests=350`); `./bin/ci-regression isf --no-book`
   (`Files=259, Tests=1703`); post-closure public/spec/book/backlog audits
@@ -7346,13 +7370,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS`.
-- Current frontier: `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`.
-- Completion status: `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.1`
-  created the bounded R14 scalar storage package-constant width task tree and
-  selected `.2` as the next implementation leaf. No parser, scheduler, report,
-  generated artifact, HDL, CLI behavior, public API, source, test, or
-  generated behavior changed in this selection slice.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`
+  shipped the bounded R14 actor-owned scalar storage package-constant width
+  widening and closed its task tree. The next PNT behavior-bearing slice must
+  select or create a task tree before code, test, source, generated-artifact,
+  or config changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

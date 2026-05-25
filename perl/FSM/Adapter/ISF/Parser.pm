@@ -736,10 +736,41 @@ sub _finalize_actor_storage_widths($self, $actor) {
             ? "storage bank '$storage_name'"
             : "storage '$storage_name'";
 
-        my $accepted_sources = 'a positive integer literal, actor constant, or actor scalar parameter';
+        my $accepted_sources = $is_bank
+            ? 'a positive integer literal, actor constant, or actor scalar parameter'
+            : 'a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant';
 
         confess "Error: actor '$actor_name' $context width must be $accepted_sources\n"
-            unless defined($width) && !ref($width) && _is_hdl_identifier($width);
+            unless defined($width)
+                && !ref($width)
+                && (_is_hdl_identifier($width)
+                    || (!$is_bank && _is_package_constant_reference_shape($width)));
+
+        if (!$is_bank) {
+            if (my $package_constant = _actor_package_constant_reference($actor, $width)) {
+                my ($package_name, $constant_name, $suffix) = @$package_constant;
+                my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+                confess "Error: actor '$actor_name' $context references unknown package constant '$width'\n"
+                    unless defined $constant_payload;
+                confess "Error: actor '$actor_name' $context package constant '$package_name.$constant_name' aggregate/member path '$width' remains deferred; actor-owned scalar storage widths accept only qualified package scalar constants in this slice\n"
+                    if length($suffix);
+                confess "Error: actor '$actor_name' $context width token '$width' is ambiguous: it matches local enum member '$width' and imported package constant '$width'\n"
+                    if $width =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/
+                        && _actor_local_enum_member_exists($actor, $1, $2);
+
+                my $constant_value = _package_constant_scalar_value($constant_payload);
+                my $constant_width = _positive_integer_from_literal_value($constant_value);
+                confess "Error: actor '$actor_name' $context package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
+                    unless defined $constant_width;
+                $entry->{width} = $constant_width;
+                $_->{width} = $constant_width for @{$entry->{signals} || []};
+                next;
+            }
+
+            if (_is_package_constant_reference_shape($width)) {
+                confess "Error: actor '$actor_name' $context references unknown package constant '$width'\n";
+            }
+        }
 
         my $param = _actor_param_by_name($actor, $width);
         if ($param) {
@@ -764,7 +795,10 @@ sub _finalize_actor_storage_widths($self, $actor) {
         confess "Error: actor '$actor_name' $context width token '$width' is a runtime interface signal; storage widths accept $accepted_sources only; use '(type NAME)' for type aliases\n"
             if _actor_interface_signal_by_name($actor, $width);
 
-        confess "Error: actor '$actor_name' $context width token '$width' is not a declared actor scalar parameter or actor constant; use '(type NAME)' for type aliases\n";
+        my $missing_source_detail = $is_bank
+            ? 'declared actor scalar parameter or actor constant'
+            : 'declared actor scalar parameter, actor constant, or imported package scalar constant';
+        confess "Error: actor '$actor_name' $context width token '$width' is not a $missing_source_detail; use '(type NAME)' for type aliases\n";
     }
 
     return 1;
@@ -6274,10 +6308,17 @@ sub _parse_storage($self, $clause, $actor_name) {
                 if $parsed_options{$option_name}++;
 
             if ($option_name eq 'width') {
-                $parsed_options{width_value} = _parse_positive_integer_or_actor_scalar_parameter_or_actor_constant_width_option(
-                    $option,
-                    "Error: actor '$actor_name' storage '$name' width",
-                );
+                if ($kind eq 'var') {
+                    $parsed_options{width_value} = _parse_scalar_storage_width_option(
+                        $option,
+                        "Error: actor '$actor_name' storage '$name' width",
+                    );
+                } else {
+                    $parsed_options{width_value} = _parse_positive_integer_or_actor_scalar_parameter_or_actor_constant_width_option(
+                        $option,
+                        "Error: actor '$actor_name' storage '$name' width",
+                    );
+                }
                 next;
             }
             if ($option_name eq 'type') {
@@ -6356,6 +6397,23 @@ sub _parse_positive_integer_or_actor_scalar_parameter_depth_option {
             && defined($option->[1])
             && !ref($option->[1])
             && ($option->[1] =~ /\A[1-9][0-9]*\z/ || _is_hdl_identifier($option->[1]));
+
+    return $option->[1] =~ /\A[1-9][0-9]*\z/
+        ? 0 + $option->[1]
+        : $option->[1];
+}
+
+sub _parse_scalar_storage_width_option {
+    my ($option, $context) = @_;
+
+    confess "$context requires '(width positive_integer_or_actor_scalar_parameter_or_actor_constant_or_qualified_package_scalar_constant)'\n"
+        unless ref($option) eq 'ARRAY'
+            && @$option == 2
+            && defined($option->[1])
+            && !ref($option->[1])
+            && ($option->[1] =~ /\A[1-9][0-9]*\z/
+                || _is_hdl_identifier($option->[1])
+                || _is_package_constant_reference_shape($option->[1]));
 
     return $option->[1] =~ /\A[1-9][0-9]*\z/
         ? 0 + $option->[1]

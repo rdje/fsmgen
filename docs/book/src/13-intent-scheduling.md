@@ -71,6 +71,11 @@ clear lower-layer mapping, and clear runtime behavior.
   Actor top-level interface widths may also use qualified imported package
   scalar constants when they resolve to positive integers; parser handoff,
   scheduled `.fsm`, reports, and HDL publish the resolved integer width.
+  Actor-owned scalar storage widths may use the same qualified package scalar
+  constant form when it resolves to a positive integer; parser handoff,
+  scheduled `.fsm`, `inferred_storage[]`, width evidence, and HDL publish the
+  resolved integer width. Bank widths/depths and transaction-local port widths
+  do not inherit that package-constant widening.
   Actor-local scalar parameter defaults that resolve to non-negative integer
   literals may also be used as static `(wait NAME)` counts in the owning
   actor schedule.
@@ -607,8 +612,10 @@ The ISF-specific current limitations are:
   Actor top-level interface widths may use actor-local scalar parameter
   defaults, declared actor constants, or qualified imported package scalar
   constants that resolve to positive integers. Actor-owned scalar storage
-  widths, actor-owned bank widths, and actor-owned bank depths may use
-  actor-local scalar parameter defaults or declared actor constants that
+  widths may use actor-local scalar parameter defaults, declared actor
+  constants, or qualified imported package scalar constants that resolve to
+  positive integers. Actor-owned bank widths and actor-owned bank depths may
+  use actor-local scalar parameter defaults or declared actor constants that
   resolve to positive integers.
   Use-site FIFO interface shape, generated-top respecialization,
   arbitrary-depth generation beyond the first
@@ -616,8 +623,9 @@ The ISF-specific current limitations are:
   transaction/drive exports, package/imported constants outside the shipped
   qualified actor parameter, generated-child transaction parameter default,
   generated activation override, reusable-library use-site override, and actor
-  interface width scalar-constant subsets, derived parameter expressions, and
-  nested library imports remain backlog work.
+  interface width and actor-owned scalar storage width scalar-constant
+  subsets, derived parameter expressions, and nested library imports remain
+  backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn and blocking `do` parameter declaration,

@@ -2,6 +2,34 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Scalar storage package-constant widths shipped
+- Completed `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` and closed the
+  task tree.
+- Actor-owned scalar storage `(var NAME (width PACKAGE.CONSTANT))` and
+  verbose `(variable NAME (width PACKAGE.CONSTANT))` declarations may now use
+  qualified imported package scalar constants when the resolved value is a
+  positive integer literal.
+- Parser scalar storage width validation now accepts package-constant-shaped
+  qualified tokens for actor-owned scalar storage only, so package-specific
+  diagnostics can distinguish unknown, unqualified, aggregate,
+  aggregate/member path, ambiguous, zero-valued, runtime, and
+  expression-valued sources.
+- Accepted package-constant scalar storage widths publish as resolved integer
+  widths in parser handoff, scheduled `.fsm` `+size`, schedule-report
+  evidence, width evidence, and generated HDL register ranges.
+- Package constants in actor-owned bank widths/depths, transaction-local port
+  widths, waits, watchdogs, latency bounds, contract windows, repeat counts,
+  generated-top respecialization, and other dimensions/value domains remain
+  deferred or fail closed.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused public/scalar-storage/package
+  tests with `Files=10, Tests=350`; `./bin/ci-regression isf --no-book` with
+  `Files=260, Tests=1705`; post-closure public/spec/book/backlog audits with
+  `Files=7, Tests=374`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Scalar storage package-constant widths selected
 - Created active task tree `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS`.
 - Completed `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.1`; the selected
@@ -41,10 +69,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Accepted package-constant interface widths publish as resolved integer
   widths in parser handoff, scheduled `.fsm` `+size`, schedule-report
   evidence, and generated HDL port ranges.
-- Package constants in actor-owned storage widths, bank widths/depths,
-  transaction-local port widths, waits, watchdogs, latency bounds, contract
-  windows, repeat counts, generated-top respecialization, and other
-  dimensions/value domains remain deferred or fail closed.
+- Package constants in actor-owned bank widths/depths, transaction-local port
+  widths, waits, watchdogs, latency bounds, contract windows, repeat counts,
+  generated-top respecialization, and other dimensions/value domains remain
+  deferred or fail closed.
 - The ISF spec, downstream handoff, public contract, mdBook, task tree,
   README index, roadmap, and live docs are synchronized.
 - Validation passed: syntax checks; focused public/interface/package tests

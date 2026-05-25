@@ -232,6 +232,7 @@ my $expected_tested_by = [
     't/1338-isf-interface-actor-constant-widths.t',
     't/1353-isf-interface-package-constant-widths.t',
     't/1339-isf-scalar-storage-actor-constant-widths.t',
+    't/1354-isf-scalar-storage-package-constant-widths.t',
     't/1340-isf-bank-storage-actor-constant-widths.t',
     't/1341-isf-bank-storage-actor-constant-depths.t',
     't/1342-isf-transaction-port-actor-constant-widths.t',

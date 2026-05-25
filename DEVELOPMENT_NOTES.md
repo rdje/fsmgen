@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Scalar storage package constants publish resolved widths
+- `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` resolves qualified imported
+  package scalar constants at the actor-owned scalar storage width boundary.
+  The public parser shell, scheduled `.fsm` `+size`, schedule evidence, width
+  evidence, and HDL register ranges all carry the resolved positive integer
+  width, matching the existing actor-constant and actor-parameter scalar
+  storage width surfaces.
+- The parser change is intentionally scalar-storage-only. Bank storage widths
+  and depths, transaction-local port widths, watchdogs, waits, latency bounds,
+  contract windows, repeat counts, generated-top respecialization, and other
+  value domains do not inherit package-constant width handling in this slice.
+- The shipped surface remains qualified and scalar only. Unqualified package
+  constants, aggregate package constants, package member/item paths,
+  local-enum/package-constant ambiguity, runtime signals, zero-valued
+  constants, unsupported actor values, and arbitrary expressions continue to
+  fail closed or stay deferred.
+
 ## 2026-05-24: Scalar storage package constants should reuse storage width resolution
 - `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.1` selects qualified imported
   package scalar constants for actor-owned scalar storage widths as the next

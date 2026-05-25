@@ -379,6 +379,16 @@ so accepted `(var NAME (width CONST))` and
 widths, scheduled `.fsm` `+size` declarations, schedule-report widths, and HDL
 register ranges while zero-valued actor constants, unknown symbolic names,
 runtime interface signals, and arbitrary expressions fail closed.
+Actor-owned scalar storage widths backed by qualified imported package scalar
+constants are checked by
+[t/1354-isf-scalar-storage-package-constant-widths.t](../t/1354-isf-scalar-storage-package-constant-widths.t)
+so accepted `(var NAME (width PACKAGE.CONSTANT))` and
+`(variable NAME (width PACKAGE.CONSTANT))` entries resolve to positive integer
+storage widths, scheduled `.fsm` `+size` declarations, schedule-report widths,
+width evidence, and HDL register ranges while unknown, unqualified,
+aggregate, path, ambiguous, zero-valued, runtime, and expression-valued
+sources fail closed. Bank storage widths do not inherit this package-constant
+scalar-storage widening.
 Actor-owned bank storage widths backed by actor-local scalar parameter
 defaults are checked by
 [t/1335-isf-bank-storage-actor-param-widths.t](../t/1335-isf-bank-storage-actor-param-widths.t)
