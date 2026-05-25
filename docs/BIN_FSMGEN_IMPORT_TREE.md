@@ -11,13 +11,13 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-05-15`.
-- Startup bootstrap refreshed on `2026-05-15`; the live static trace still
+- Reviewed on `2026-05-25`.
+- Startup bootstrap refreshed on `2026-05-25`; the live static trace still
   includes the R14 `.isf` intent-scheduling path and the selected line-count
   measurements below were refreshed from source.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `195` project files total, `194` `.pm` packages.
+- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `196` project files total, `195` `.pm` packages.
 - The R14 `.isf` front door is reachable from [bin/fsmgen](bin/fsmgen)
   through conditional runtime requires of [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm)
   and [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm). That path lowers
@@ -233,10 +233,10 @@ This is the current static measurement view behind the qualitative assessment
 above.
 
 Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
-- total reachable project files: `195`
-- reachable `.pm` packages: `194`
+- total reachable project files: `196`
+- reachable `.pm` packages: `195`
 - `Support`: `65`
-- `Composition`: `35`
+- `Composition`: `36`
 - `HDL`: `32`
 - `Package`: `14`
 - `Synthesis`: `10`
@@ -250,58 +250,64 @@ Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
 - singleton support surfaces: `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `ParameterValueSupport.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
 
 Current thin-coordinator / public-surface assembler line counts:
-- [bin/fsmgen](bin/fsmgen): `1097`
+- [bin/fsmgen](bin/fsmgen): `1175`
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm): `418`
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm): `175`
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `117`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm): `172`
 - [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm): `172`
-- [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm): `50`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `1669`
+- [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm): `100`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `7960`
 - [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm): `99`
-- [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm): `58`
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `5471`
-- [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm): `428`
-- [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm): `137`
-- [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `623`
+- [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm): `477`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `10483`
+- [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm): `504`
+- [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm): `499`
+- [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `994`
 - [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm): `34`
-- [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm): `265`
+- [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm): `267`
 - [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm): `62`
 - [perl/FSM/Support/SupportAccountingSection.pm](perl/FSM/Support/SupportAccountingSection.pm): `94`
 - [perl/FSM/Support/DiagnosticsSection.pm](perl/FSM/Support/DiagnosticsSection.pm): `49`
 - [perl/FSM/Support/SemanticExportsSection.pm](perl/FSM/Support/SemanticExportsSection.pm): `36`
 - [perl/FSM/Support/BackendValidationSection.pm](perl/FSM/Support/BackendValidationSection.pm): `30`
-- [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm): `32`
+- [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm): `34`
 - [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm): `107`
-- [perl/FSM/Support/DocumentationSection.pm](perl/FSM/Support/DocumentationSection.pm): `28`
+- [perl/FSM/Support/DocumentationSection.pm](perl/FSM/Support/DocumentationSection.pm): `30`
 - [perl/FSM/Support/DebugRuntimeContract.pm](perl/FSM/Support/DebugRuntimeContract.pm): `184`
 - [perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm): `223`
 - [perl/FSM/Support/CheckDiagnostics.pm](perl/FSM/Support/CheckDiagnostics.pm): `266`
 - [perl/FSM/Support/NormalizedSemanticReport.pm](perl/FSM/Support/NormalizedSemanticReport.pm): `383`
 
 Current largest reachable files by line count:
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `5471`
-- [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3530`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `10483`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `7960`
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3742`
+- [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `2447`
 - [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm): `2429`
+- [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2001`
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm): `1827`
-- [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm): `1674`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `1669`
+- [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm): `1695`
 - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm): `1471`
-- [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `1464`
 - [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm): `1443`
 - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm): `1301`
 - [perl/FSM/HDL/ASTFactorization.pm](perl/FSM/HDL/ASTFactorization.pm): `1219`
 - [perl/FSM/Composition/ActualLiteralSupport.pm](perl/FSM/Composition/ActualLiteralSupport.pm): `1191`
-- [bin/fsmgen](bin/fsmgen): `1097`
-- [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm): `990`
-- [perl/FSM/Composition/ProvenanceReportBuilder.pm](perl/FSM/Composition/ProvenanceReportBuilder.pm): `937`
+- [bin/fsmgen](bin/fsmgen): `1175`
+- [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm): `1064`
 
 Interpretation:
 - line count alone is not the same thing as current architectural risk,
 - the R14 ISF runtime-lowering owner
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   is now the largest reachable file by a wide margin after the recent
-  transaction, library, composition, storage, and dynamic-wait expansion work,
+  transaction, library, composition, storage, dynamic-wait, data-operation,
+  resource, and report-metadata expansion work,
+- the R14 ISF parser
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  is now the second largest reachable file after the same public syntax
+  expansion, so future R14 feature work should keep checking whether stable
+  parser subfamilies deserve narrow helper owners,
 - the older direct parser/core AST/expression infrastructure is still large:
   [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
   and [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm) remain major shared owners
@@ -326,6 +332,7 @@ Interpretation:
 
 ## What `bin/fsmgen` actually owns
 [bin/fsmgen](bin/fsmgen) directly imports:
+- [perl/FSM/Backend/GeneratedModuleEmitter.pm](perl/FSM/Backend/GeneratedModuleEmitter.pm)
 - [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm)
 - [perl/FSM/Composition/ProvenanceReportBuilder.pm](perl/FSM/Composition/ProvenanceReportBuilder.pm)
 - [perl/FSM/Debug.pm](perl/FSM/Debug.pm)
@@ -354,7 +361,7 @@ It mainly owns:
 - external HDL validation lifecycle routing
 - user-facing summaries for composition provenance, override/block events, failure summaries, generated children, and shared-datapath metadata
 
-[bin/fsmgen](bin/fsmgen) is `1097` lines today, so it is not tiny, but most of
+[bin/fsmgen](bin/fsmgen) is `1175` lines today, so it is not tiny, but most of
 that weight is presentation/reporting and `.isf` pre-lowering glue rather than
 semantic compiler ownership.
 
@@ -1220,9 +1227,14 @@ It behaves like a hook system, not a competing architecture.
   delivery rather than abandoned legacy shape, but the file now owns enough
   parser-normalized transaction validation, lowering IR construction, dynamic
   wait edge-splitting, pending-sample materialization, generated-child/library
-  handoff, storage/bank access, and report provenance that future ISF work
-  should look for bounded helper-owner extractions when a behavior family
-  becomes stable.
+  handoff, storage/bank access, resource arbitration, transaction-port
+  report metadata, and report provenance that future ISF work should look for
+  bounded helper-owner extractions when a behavior family becomes stable.
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) is now the
+  second largest reachable file. Its growth is active syntax delivery, but the
+  parser has enough stable subfamilies now that future behavior slices should
+  consider narrow owner extractions when the parser normalization boundary for
+  one feature family has stopped moving.
 - [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm) is now a thin synthesis-context shell at `75` lines, so the remaining backend gravity lives in the broader `EnableGraph::*` owner family rather than the shell package itself.
 - The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary and a dedicated generated-module backend owner.
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) is no longer the largest reachable file after [perl/FSM/Composition/ActualLiteralSupport.pm](perl/FSM/Composition/ActualLiteralSupport.pm) took ownership of literal actual policy and [perl/FSM/Composition/SourceExpressionSpecSupport.pm](perl/FSM/Composition/SourceExpressionSpecSupport.pm) took ownership of source-expression parsing/spec collection. [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm) is the same good shape at smaller scale for direct, external RTL, and generated-child parameter/generic scalar, aggregate, scalar-expression, leafwise aggregate-expression, and unary aggregate complement values, and [perl/FSM/Composition/ParameterOverrideResolver.pm](perl/FSM/Composition/ParameterOverrideResolver.pm) now owns symbolic override-value resolution, but `LinkedPlanBuilder` remains a real composition hotspot because source-expression resolution, aggregate shape checks, carrier allocation, and binding-type preservation still meet there.

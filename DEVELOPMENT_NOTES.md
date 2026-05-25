@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: import-tree bootstrap refresh keeps architecture notes measured
+- The README/SESSION_BOOTSTRAP startup pass rebuilt the project-owned
+  transitive `FSM::...` closure reachable from [bin/fsmgen](bin/fsmgen)
+  before selecting a new implementation task.
+- The measured closure is now `196` project files total and `195` reachable
+  `.pm` packages. `Composition` is the only family count that moved in the
+  refreshed grouping, now measuring `36` reachable packages.
+- The direct entrypoint import list now explicitly includes
+  [perl/FSM/Backend/GeneratedModuleEmitter.pm](perl/FSM/Backend/GeneratedModuleEmitter.pm),
+  matching the live source.
+- The largest-file hotspot read shifted materially: R14
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  measures `10483` lines and
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  measures `7960` lines. That growth is active public ISF syntax/lowering
+  delivery, not abandoned compatibility code, but future ISF slices should
+  keep checking whether stable subfamilies deserve narrow helper owners.
+- [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) is a
+  measured architecture note, not a behavioral contract. This refresh does not
+  change parser, scheduler, generated `.fsm`, HDL, CLI behavior, public API,
+  schedule-report payload, or mdBook user-facing behavior.
+
 ## 2026-05-25: Endpoint-kind values are not presence-key families
 - `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` adds
   `transaction_port_bindings[].actor_endpoint_kind` as additive report

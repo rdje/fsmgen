@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: Bootstrap — import tree snapshot refreshed
+- Completed the README/SESSION_BOOTSTRAP startup import-tree refresh.
+- Rebuilt the source-derived [bin/fsmgen](bin/fsmgen) transitive
+  project-owned `FSM::...` closure.
+- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
+  to the current `196` reachable project files / `195` reachable `.pm`
+  packages snapshot.
+- Updated the measured direct import list and current largest-file hotspot
+  read for the R14
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  and [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  owners.
+- This was documentation-only bootstrap maintenance; no parser, scheduler,
+  generated `.fsm`, HDL, CLI behavior, public API, schedule-report payload, or
+  mdBook user-facing behavior changed.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Transaction-port binding endpoint-kind reports shipped
 - Completed `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` and closed the
   task tree.

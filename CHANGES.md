@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### Bootstrap — import tree snapshot refreshed
+- Rebuilt the source-derived [bin/fsmgen](bin/fsmgen) transitive
+  project-owned `FSM::...` import closure.
+- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
+  to the current `196` reachable project files / `195` reachable `.pm`
+  packages snapshot.
+- Updated measured line counts and hotspot notes for the grown R14
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  and [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  owners.
+- Recorded the direct
+  [perl/FSM/Backend/GeneratedModuleEmitter.pm](perl/FSM/Backend/GeneratedModuleEmitter.pm)
+  import in the CLI entrypoint note.
+- This is documentation-only bootstrap maintenance; no parser, scheduler,
+  generated `.fsm`, HDL, CLI behavior, public API, schedule-report payload,
+  or mdBook user-facing behavior changed.
+
 ### R14 — Transaction-port binding endpoint-kind reports shipped
 - Completed `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` and closed the
   task tree.

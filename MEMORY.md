@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: Bootstrap import-tree snapshot refreshed
+- Completed the README/SESSION_BOOTSTRAP startup import-tree refresh.
+- Rebuilt the source-derived project-owned transitive `FSM::...` closure from
+  [bin/fsmgen](bin/fsmgen).
+- The live static trace now reaches `196` project files total and `195`
+  reachable `.pm` packages.
+- Family counts are unchanged except for `Composition`, which now measures
+  `36` reachable packages.
+- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
+  with current line counts, the direct
+  [perl/FSM/Backend/GeneratedModuleEmitter.pm](perl/FSM/Backend/GeneratedModuleEmitter.pm)
+  import, and the current hotspot read: R14
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  and [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) are
+  now the two largest reachable files after recent ISF syntax/lowering
+  expansion.
+- No parser, scheduler, generated `.fsm`, HDL, CLI behavior, public API,
+  schedule-report payload, or mdBook user-facing behavior changed.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 transaction-port binding endpoint-kind reports shipped
 - Completed `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` and closed the
   task tree.
