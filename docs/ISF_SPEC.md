@@ -2647,7 +2647,13 @@ Current lowering:
   re-entry. The generated do site owns one deterministic
   `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
   fresh done handoff, and still leaves every pending generated-spawn done
-  handoff live for the later same-body `(await_all done)` drain. Top-level
+  handoff live for the later same-body `(await_all done)` drain. When no
+  multi-pending `await_any` observation is active before the drain, that
+  plain generated-child do may also be followed by one or more additional
+  generated nested spawns before the mandatory same-body `(await_all done)`
+  drain. The generated do instance's fresh done handoff gates the later
+  spawn state, and the later `await_all` drains both pre-do and post-do
+  generated spawns before nested repeat re-entry. Top-level
   `when` body and top-level `switch` branch nested repeats also accept
   static-parameter generated `(do child (params ...))` in that same
   pending-spawn interval; the generated do site owns one deterministic
@@ -2711,7 +2717,9 @@ Current lowering:
   post-do multi-pending observation and later-drain contract while also
   retaining declared ownership metadata in generated-composition,
   domain-partition, and schedule-report clock-domain summaries. New nested
-  `spawn` after generated `do`, or after local `do` when a multi-pending
+  `spawn` after static-parameter, bound, or same-domain generated `do`; after
+  plain generated-child `do` when a multi-pending `await_any` observation is
+  active before the drain; or after local `do` when a multi-pending
   `await_any` observation is active before the drain, deeper branch/loop
   nesting, and cross-domain activation remain fail-closed.
   Top-level

@@ -1151,6 +1151,13 @@ That generated do starts its own deterministic
 fresh done handoff, and leaves pending generated-spawn done handoffs live
 until the later `await_all` drain.
 
+When no multi-pending `await_any` observation is active before the drain, that
+plain generated-child do may also be followed by one or more additional
+generated nested spawns before the mandatory same-body `await_all` drain. The
+generated do instance's fresh done handoff gates the later spawn state, and
+the later `await_all` drains both pre-do and post-do generated-spawn done
+handoffs.
+
 The same top-level branch-contained nested-repeat forms may lower
 static-parameter generated `(do child (params ...))` in that interval; the
 generated do instance carries the authored parameter overrides in the
@@ -1225,9 +1232,11 @@ top-level `switch` branch same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` share that post-do
 observation and later-drain contract while lowering also retains declared
 ownership metadata in generated-composition, domain-partition, and
-schedule-report clock-domain summaries. A new nested spawn after generated
-do, or after local do when a multi-pending `await_any` observation is active
-before the drain, remains fail-closed.
+schedule-report clock-domain summaries. A new nested spawn after
+static-parameter, bound, or same-domain generated do; after plain
+generated-child do when a multi-pending `await_any` observation is active
+before the drain; or after local do when a multi-pending `await_any`
+observation is active before the drain, remains fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1471,6 +1480,33 @@ later drain.
 The top-level `when` body and top-level `switch` branch bound forms may also
 follow a prior multi-pending `await_any` observation before the later
 `await_all` drain.
+
+When the pending operation is plain generated-child `do`, the later-spawn
+variant waits for the generated do instance before starting the post-do
+spawn:
+
+```lisp
+(parent_spawn_2
+  (= (w0_start> 1))
+  (-> parent_do_3))
+
+(parent_do_3
+  (= (parent_worker_repeat_do_0_start> 1))
+  (<parent_worker_repeat_do_0_done
+    (-> parent_spawn_4)))
+
+(parent_spawn_4
+  (= (w1_start> 1))
+  (-> parent_await_all_5))
+
+(parent_await_all_5
+  (-> parent_repeat_check_6 <(& w0_done w1_done)))
+```
+
+The generated top instantiates `w0`, `parent_worker_repeat_do_0`, and `w1`.
+The later generated spawn starts only after the generated do instance's done
+handoff, and the nested repeat check remains unreachable until same-body
+`await_all` drains both generated spawns.
 
 When the pending operation is local plain `do`, the later-spawn variant keeps
 the local and generated lifetimes separate:

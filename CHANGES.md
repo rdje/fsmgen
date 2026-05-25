@@ -1,6 +1,32 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-26
+### R14 — Plain generated do then spawn before drain shipped
+- Completed `ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO.1` and closed the task
+  tree.
+- A repeat directly inside a top-level `when` body or top-level `switch`
+  branch may now run an initial generated spawn, then plain generated-child
+  blocking `(do child)` for a target already emitted as a generated child,
+  then one or more additional generated spawns, and then mandatory same-body
+  `(await_all done)` before nested repeat re-entry.
+- The deterministic generated do instance must complete before the later
+  generated spawn starts; the later spawn joins the outstanding
+  generated-spawn done set; the final `await_all` drains both pre-do and
+  post-do generated children.
+- Static-parameter, bound, and same-domain generated-do spawn-after-do,
+  generated-child or local spawn-after-do with post-do or active multi-pending
+  `await_any`, missing drains, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, feature matrix
+  audit, task tree, README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=64`; focused
+  book/public audits with `Files=3, Tests=343`; broader repeat/child
+  regression with `Files=4, Tests=78`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1778`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ### R14 — Local do then spawn before drain shipped
 - Completed `ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO.1` and closed the task tree.
 - A repeat directly inside a top-level `when` body or top-level `switch`

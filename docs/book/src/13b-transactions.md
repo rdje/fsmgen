@@ -680,6 +680,12 @@ target child is already emitted as a generated child by another activation
 site. That generated do site owns one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
 fresh done handoff, and does not clear the pending generated-spawn done set.
+When no multi-pending `(await_any done)` observation is active before the
+drain, that same plain generated-child do may then start one or more
+additional generated nested spawns before the mandatory same-body
+`(await_all done)` drain. The generated do instance must complete before the
+later spawn starts, and the `await_all` drain observes both pre-do and
+post-do generated spawns before the nested repeat check can loop.
 
 The same branch-contained forms support static-parameter generated `(do child
 (params ...))` in that pending-spawn interval; the generated do site keeps
@@ -734,8 +740,10 @@ same-domain generated `(do child (params ...) [(bind ...)] (domain NAME))`
 subsets support the same post-do observation and later-drain contract while
 retaining declared ownership metadata in generated-composition,
 domain-partition, and schedule-report clock-domain summaries. New nested
-`spawn` after generated `do`, or after local `do` when a multi-pending
-`await_any` observation is active before the drain, remains fail-closed.
+`spawn` after static-parameter, bound, or same-domain generated `do`; after
+plain generated-child `do` when a multi-pending `await_any` observation is
+active before the drain; or after local `do` when a multi-pending `await_any`
+observation is active before the drain, remains fail-closed.
 
 The top-level `switch` branch nested repeat plain generated-child `(do
 child)` subset supports the same post-do multi-pending observation and
@@ -1516,6 +1524,10 @@ generated nested `spawn` sites before the same later `await_all` drain.
 Both branch-contained forms also permit the documented plain generated-child
 `(do child)` while generated nested spawns are pending before that same later
 drain.
+When no multi-pending `await_any` observation is active, both
+branch-contained forms also permit that plain generated-child do to be
+followed by additional generated nested `spawn` sites before the same later
+`await_all` drain.
 
 The top-level `when` body and top-level `switch` branch nested repeat
 generated-child `(do child)` subsets also permit a prior multi-pending

@@ -6229,6 +6229,7 @@ sub _validate_repeat_body_spawn_subset {
     my $pending_generated_do_before_drain = 0;
     my $pending_generated_do_kind_before_drain;
     my $spawn_after_local_do_before_drain = 0;
+    my $spawn_after_generated_child_do_before_drain = 0;
     my $top_level_repeat = $label eq 'transaction body';
     my $when_body_repeat = $label eq 'when body'
         && _context_depths_match_exactly($context_depths, { when => 1 });
@@ -6260,13 +6261,22 @@ sub _validate_repeat_body_spawn_subset {
                 && $pending_local_do_before_drain
                 && !$pending_generated_do_before_drain
                 && @pending_spawns;
+            my $allowed_branch_spawn_after_generated_child_do_before_drain =
+                ($when_body_repeat || $switch_branch_repeat)
+                && !$pending_local_do_before_drain
+                && $pending_generated_do_before_drain
+                && ($pending_generated_do_kind_before_drain // '') eq 'generated-child do'
+                && @pending_spawns;
             confess "Transaction '$tn': $pending_local_do_label nested repeat spawn cannot follow local do while generated spawns are pending; drain with same-body '(await_all done)' before spawning again\n"
                 if defined $pending_local_do_label
                     && $pending_local_do_before_drain
                     && @pending_spawns
                     && !$allowed_branch_spawn_after_local_do_before_drain;
             confess "Transaction '$tn': $pending_generated_do_label nested repeat spawn cannot follow $pending_generated_do_kind_before_drain while generated spawns are pending; drain with same-body '(await_all done)' before spawning again\n"
-                if defined $pending_generated_do_label && $pending_generated_do_before_drain && @pending_spawns;
+                if defined $pending_generated_do_label
+                    && $pending_generated_do_before_drain
+                    && @pending_spawns
+                    && !$allowed_branch_spawn_after_generated_child_do_before_drain;
             for my $subclause (@{$body_clause}[4 .. $#$body_clause]) {
                 confess "Transaction '$tn': repeat-body spawn subclauses must be '(params ...)', '(bind ...)', or '(domain ...)' in the spawn domain subset\n"
                     unless ref($subclause) eq 'ARRAY'
@@ -6280,6 +6290,8 @@ sub _validate_repeat_body_spawn_subset {
             }
             $spawn_after_local_do_before_drain = 1
                 if $allowed_branch_spawn_after_local_do_before_drain;
+            $spawn_after_generated_child_do_before_drain = 1
+                if $allowed_branch_spawn_after_generated_child_do_before_drain;
             push @pending_spawns, $body_clause->[3];
             next;
         }
@@ -6412,6 +6424,10 @@ sub _validate_repeat_body_spawn_subset {
                 if defined $pending_local_do_label
                     && $spawn_after_local_do_before_drain
                     && $keyword eq 'await_any';
+            confess "Transaction '$tn': $pending_generated_do_label nested repeat spawn after generated-child do while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the later spawn remains deferred\n"
+                if defined $pending_generated_do_label
+                    && $spawn_after_generated_child_do_before_drain
+                    && $keyword eq 'await_any';
             my $allowed_branch_local_do_before_post_await_any =
                 ($when_body_repeat || $switch_branch_repeat)
                 && $pending_local_do_before_drain
@@ -6471,6 +6487,7 @@ sub _validate_repeat_body_spawn_subset {
             $pending_generated_do_before_drain = 0;
             $pending_generated_do_kind_before_drain = undef;
             $spawn_after_local_do_before_drain = 0;
+            $spawn_after_generated_child_do_before_drain = 0;
             next;
         }
     }

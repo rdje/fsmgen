@@ -1583,16 +1583,22 @@ and top-level `switch` branch same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` subsets support the same
 post-do `await_any` observation and later-drain contract while retaining
 declared ownership metadata in generated-composition, domain-partition, and
-schedule-report clock-domain summaries. New spawn after generated `do`, and
-new spawn after local `do` when a multi-pending `await_any` observation is
-active before the drain, remain outside the public shipped subset.
+schedule-report clock-domain summaries. New spawn after static-parameter,
+bound, or same-domain generated `do`; after plain generated-child `do` when a
+multi-pending `await_any` observation is active before the drain; and after
+local `do` when a multi-pending `await_any` observation is active before the
+drain remain outside the public shipped subset.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. In the top-level `when` body and top-level
 `switch` branch subsets, that plain generated-child do may also run after a
 prior multi-pending `await_any` observation. The generated do uses only its
 deterministic generated do instance's start/done handoff and leaves the
-generated-spawn done set live until the later same-body `await_all` drain. In
+generated-spawn done set live until the later same-body `await_all` drain.
+When no multi-pending `await_any` observation is active before the drain,
+that plain generated-child do may also be followed by one or more additional
+generated nested spawns before the mandatory same-body `await_all`; the
+generated do instance's fresh done handoff gates the later spawn state. In
 the documented top-level `when` body and top-level `switch` branch nested subsets,
 static-parameter generated `(do child (params ...))` may also run while
 generated nested spawns are pending. In both top-level branch-contained
@@ -3275,7 +3281,10 @@ These are not stable public interfaces yet:
   `await_all` drain. Both top-level branch subsets
   support plain generated-child `(do child)` while generated nested spawns are
   pending before or after a prior multi-pending `await_any` observation and
-  before that same later drain. Both top-level branch subsets support
+  before that same later drain. When no multi-pending `await_any` observation
+  is active, both top-level branch subsets also support plain generated-child
+  `(do child)` followed by additional generated nested `spawn` sites before
+  that same later drain. Both top-level branch subsets support
   static-parameter generated
   `(do child (params ...))` while generated nested spawns are pending before
   that same later drain, and both top-level branch-contained subsets also

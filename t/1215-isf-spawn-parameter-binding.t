@@ -1112,6 +1112,75 @@ ISF
         'generated top instantiates the generated-child do instance separately from the pending spawn');
 };
 
+subtest 'when body nested repeat generated-child do can run before later generated spawn before await_all' => sub {
+    my $source = <<'ISF';
+(actor when_repeat_generated_child_do_then_spawn_before_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input cond)
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (when cond
+      (repeat loops
+        (sample status as before)
+        (spawn worker as w0)
+        (do worker)
+        (sample status as after_do)
+        (spawn worker as w1)
+        (await_all done)))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 3,
+        'when-body generated-child do-then-spawn subset records both spawns and generated do');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{w0}, 'when-body generated-child do-then-spawn preserves the pre-do spawn');
+    ok($instances{parent_worker_repeat_do_0}, 'when-body generated-child do-then-spawn records the generated do instance');
+    ok($instances{w1}, 'when-body generated-child do-then-spawn preserves the post-do spawn');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'when-body generated-child do-then-spawn preserves do activation provenance');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [],
+        'when-body generated-child do-then-spawn keeps the do site plain');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'when_repeat_generated_child_do_then_spawn_before_drain.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'when_repeat_generated_child_do_then_spawn_before_drain_top.fsm'};
+
+    ok(defined($parent_fsm), 'when-body generated-child do-then-spawn parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'generated child scheduled .fsm is emitted once for do and spawns');
+    ok(defined($top_fsm), 'when-body generated-child do-then-spawn generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_when_\d+[\s\S]*\(=1 \(-> parent_repeat_init_\d+\)\)/,
+        'when true path enters the generated-child do-then-spawn nested repeat region');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample before generated-child do-then-spawn materializes before the first spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'first generated spawn starts before the generated-child do');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'generated-child do completes before the later generated spawn can start');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample after generated-child do materializes before the later generated spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'later generated spawn advances directly to the mandatory drain');
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+        'await_all drains both generated spawns before nested repeat re-entry');
+    like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
+        'generated top keeps the pre-do spawn instance');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker(?:\s|\))/,
+        'generated top keeps the generated do instance');
+    like($top_fsm, qr/\(\?fsmc:w1 worker(?:\s|\))/,
+        'generated top keeps the post-do spawn instance');
+};
+
 subtest 'when body nested repeat generated-child do can run after multi-pending await_any before await_all' => sub {
     my $source = <<'ISF';
 (actor when_repeat_generated_child_do_after_await_any
@@ -3397,6 +3466,78 @@ ISF
         'generated top keeps the switch pending spawn instance');
     like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker(?:\s|\))/,
         'generated top instantiates the switch generated-child do instance separately from the pending spawn');
+};
+
+subtest 'switch branch nested repeat generated-child do can run before later generated spawn before await_all' => sub {
+    my $source = <<'ISF';
+(actor switch_repeat_generated_child_do_then_spawn_before_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input mode (width 2))
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (sample status as before)
+          (spawn worker as w0)
+          (do worker)
+          (sample status as after_do)
+          (spawn worker as w1)
+          (await_all done)))
+      (1
+        (sample status as other)))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 3,
+        'switch-branch generated-child do-then-spawn subset records both spawns and generated do');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{w0}, 'switch-branch generated-child do-then-spawn preserves the pre-do spawn');
+    ok($instances{parent_worker_repeat_do_0}, 'switch-branch generated-child do-then-spawn records the generated do instance');
+    ok($instances{w1}, 'switch-branch generated-child do-then-spawn preserves the post-do spawn');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'switch-branch generated-child do-then-spawn preserves do activation provenance');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [],
+        'switch-branch generated-child do-then-spawn keeps the do site plain');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'switch_repeat_generated_child_do_then_spawn_before_drain.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'switch_repeat_generated_child_do_then_spawn_before_drain_top.fsm'};
+
+    ok(defined($parent_fsm), 'switch-branch generated-child do-then-spawn parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'switch generated child scheduled .fsm is emitted once for do and spawns');
+    ok(defined($top_fsm), 'switch-branch generated-child do-then-spawn generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_switch_\d+[\s\S]*\(=0 \(-> parent_repeat_init_\d+\)\)/,
+        'matching switch branch enters the generated-child do-then-spawn nested repeat region');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample before switch generated-child do-then-spawn materializes before the first spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'first switch generated spawn starts before the generated-child do');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'switch generated-child do completes before the later generated spawn can start');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample after switch generated-child do materializes before the later generated spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'later switch generated spawn advances directly to the mandatory drain');
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+        'switch await_all drains both generated spawns before nested repeat re-entry');
+    like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
+        'generated top keeps the switch pre-do spawn instance');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker(?:\s|\))/,
+        'generated top keeps the switch generated do instance');
+    like($top_fsm, qr/\(\?fsmc:w1 worker(?:\s|\))/,
+        'generated top keeps the switch post-do spawn instance');
 };
 
 subtest 'switch branch nested repeat generated-child do can run after multi-pending await_any before await_all' => sub {
@@ -6648,8 +6789,8 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'when nested repeat spawn after generated-child do before drain', qr/when-body nested repeat spawn cannot follow generated-child do while generated spawns are pending; drain with same-body '\(await_all done\)' before spawning again/);
-(actor when_nested_repeat_spawn_after_generated_child_do_before_drain
+    assert_lower_rejected(<<'ISF', 'when nested repeat spawn after generated-child do with await_any before drain', qr/when-body nested repeat spawn after generated-child do while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the later spawn remains deferred/);
+(actor when_nested_repeat_spawn_after_generated_child_do_with_await_any_before_drain
   (clock clk)
   (interface (input start) (input cond) (input loops (width 3)) (output done))
   (transaction parent
@@ -6659,7 +6800,7 @@ ISF
         (spawn worker as w0)
         (do worker)
         (spawn worker as w1)
-        (await_all done)))
+        (await_any done)))
     (complete done))
   (transaction worker
     (complete done)))
@@ -7189,8 +7330,8 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested repeat spawn after generated-child do before drain', qr/switch-branch nested repeat spawn cannot follow generated-child do while generated spawns are pending; drain with same-body '\(await_all done\)' before spawning again/);
-(actor switch_nested_repeat_spawn_after_generated_child_do_before_drain
+    assert_lower_rejected(<<'ISF', 'switch nested repeat spawn after generated-child do with await_any before drain', qr/switch-branch nested repeat spawn after generated-child do while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the later spawn remains deferred/);
+(actor switch_nested_repeat_spawn_after_generated_child_do_with_await_any_before_drain
   (clock clk)
   (interface (input start) (input mode) (input loops (width 3)) (output done))
   (transaction parent
@@ -7201,7 +7342,7 @@ ISF
           (spawn worker as w0)
           (do worker)
           (spawn worker as w1)
-          (await_all done))))
+          (await_any done))))
     (complete done))
   (transaction worker
     (complete done)))

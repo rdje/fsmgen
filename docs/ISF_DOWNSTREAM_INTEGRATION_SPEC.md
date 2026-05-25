@@ -1350,6 +1350,12 @@ Rules:
   `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
   fresh done handoff, and leaves the generated-spawn done set live for the
   later same-body `(await_all done)` drain.
+  When no multi-pending `(await_any done)` observation is active before the
+  drain, that plain generated-child do may then start one or more additional
+  generated nested spawns before the mandatory same-body `(await_all done)`
+  drain. The generated do instance must complete before the later generated
+  spawn starts, and the final `await_all` drains both the pre-do and post-do
+  generated spawns before nested repeat re-entry.
 
   Top-level `when` body and top-level `switch` branch nested-repeat generated
   `(do child (params ...))` may also run in that pending interval when the
@@ -1427,7 +1433,9 @@ Rules:
   retaining declared ownership metadata in generated-composition,
   domain-partition, and schedule-report clock-domain summaries.
 
-  New nested `spawn` after generated `do`, or after local `do` when a
+  New nested `spawn` after static-parameter, bound, or same-domain generated
+  `do`; after plain generated-child `do` when a multi-pending `await_any`
+  observation is active before the drain; or after local `do` when a
   multi-pending `await_any` observation is active before the drain, deeper
   branch/loop nesting, and cross-domain activation remain fail-closed.
 
@@ -1911,7 +1919,11 @@ Rules:
   `await_any` observation. That generated do consumes only its deterministic
   generated do instance's fresh done handoff; it does not clear pending
   generated spawn handoffs, and the same later `await_all` drain still gates
-  nested repeat re-entry on every outstanding generated child.
+  nested repeat re-entry on every outstanding generated child. When no
+  multi-pending `await_any` observation is active before the drain, that
+  plain generated-child do may also be followed by one or more additional
+  generated spawns before that later same-body `await_all`; the generated do
+  instance must complete before the later spawn starts.
 - In the documented top-level `when` body and top-level `switch` branch nested
   subsets, static-parameter generated `(do child (params ...))` may also run
   while generated nested spawns are pending, including after a prior multi-
