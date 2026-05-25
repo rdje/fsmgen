@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Same-value activation overrides are the next bounded contract-window step
+- `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1` selects a narrow follow-up to
+  the current fail-closed activation override diagnostic.
+- The implementation frontier will accept an activation-site override of a
+  generated child temporal contract-window parameter only when that override
+  resolves to the same positive integer as the child transaction parameter
+  default. In that case, the already emitted generated child monitor remains
+  semantically correct.
+- Mismatched override values still need true per-activation monitor
+  specialization or generated child variant modules, so they stay fail-closed.
+
 ## 2026-05-25: R14 objective coverage must include the activation override diagnostic tree
 - `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1` fixes a documentation ledger
   gap left after the activation override diagnostic implementation commit.

@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 same-value activation override contract-window slice selected
+- Created active task tree `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE`.
+- Completed `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1`; the selected
+  implementation frontier is
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2`.
+- The selected slice will accept activation-site overrides of generated child
+  contract-window parameters only when the override resolves to the same
+  positive integer cycle count as the child transaction parameter default.
+- Mismatched override values remain fail-closed until full per-activation
+  temporal monitor specialization is deliberately selected.
+- The selection does not change parser, scheduler, generated `.fsm`, HDL,
+  schedule-report, public API, or runtime behavior.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE`.
+- Current frontier: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2`.
+
 ## 2026-05-25: R14 activation override roadmap truth sync completed
 - Completed `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1` and closed the
   one-leaf documentation truth-sync task tree.

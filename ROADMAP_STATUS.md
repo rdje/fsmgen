@@ -2,8 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE`.
+- Current frontier: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2`.
+- Recent R14 same-value activation override contract-window selection:
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1` created the active task
+  tree for accepting activation-site overrides of generated child
+  contract-window parameters only when the override resolves to the same
+  positive integer cycle count as the child transaction parameter default.
+  Mismatched override values remain fail-closed until full per-activation
+  temporal monitor specialization is deliberately selected. No parser,
+  scheduler, generated `.fsm`, HDL, schedule-report, public API, or runtime
+  behavior changed in this selection slice. Validation passed:
+  feature-backlog/live-book/book matrix audits with `Files=3, Tests=364`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 activation override roadmap truth sync:
   `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1` synchronized the lower R14
   done detail and the task-tree objective coverage table after
@@ -7835,15 +7846,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE`.
+- Current frontier: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2`.
 - Completion status:
-  `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1` synchronized the lower R14
-  done detail and task-tree objective coverage table after the activation
-  override diagnostic implementation. No behavior changed in this
-  documentation-only maintenance slice. Validation passed:
-  feature-backlog/live-book/book matrix audits with `Files=3, Tests=364`;
-  `mdbook build docs/book`; and `git diff --check`.
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1` selected the next bounded
+  temporal-contract implementation frontier. The next leaf will accept
+  activation-site overrides of generated child contract-window parameters only
+  when the override resolves to the same positive integer cycle count as the
+  child transaction parameter default. No behavior changed in this selection
+  slice. Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE` | `active` | `R14` | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` | [docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.md](docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.md) |
 
 ## Proposed Task Trees
 
@@ -363,6 +364,7 @@ as done work unless a future task reopens them.
 | Temporal-contract generated child same-transaction scalar parameter window counts | `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS` |
 | Temporal-contract direct transaction same-transaction scalar parameter window counts | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS` |
 | Activation-site override diagnostics for generated child temporal contract-window parameters | `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS` |
+| Same-value activation-site overrides for generated child temporal contract-window parameters | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE` |
 | Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
 | Transaction latency qualified package scalar-constant min/max bounds | `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS` |
