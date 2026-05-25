@@ -4353,6 +4353,7 @@ sub _bounded_eventual_contract_parts {
 
 sub _temporal_contract_within_cycles {
     my ($token, $actor, $tn, $contract_name, $label) = @_;
+    my $accepted_sources = 'positive integer literals, same-transaction scalar parameters, actor constants, actor scalar parameters, or qualified package scalar constants';
 
     return 0 + $token
         if defined($token) && !ref($token) && $token =~ /\A[1-9][0-9]*\z/;
@@ -4366,6 +4367,14 @@ sub _temporal_contract_within_cycles {
     if (defined($token) && !ref($token) && _is_hdl_identifier($token)) {
         return $token unless ref($actor) eq 'HASH';
 
+        my $transaction_param = _transaction_param_by_name($actor, $tn, $token);
+        if ($transaction_param) {
+            my $param_value = _non_negative_integer_from_literal(_param_resolved_value($transaction_param));
+            confess "Transaction '$tn': contract '$contract_name' within transaction parameter '$token' must resolve to a positive cycle count in $label\n"
+                unless defined($param_value) && $param_value > 0;
+            return $param_value;
+        }
+
         my $constant = _actor_constant_by_name($actor, $token);
         if ($constant) {
             my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
@@ -4373,9 +4382,6 @@ sub _temporal_contract_within_cycles {
                 unless defined($constant_value) && $constant_value > 0;
             return $constant_value;
         }
-
-        confess "Transaction '$tn': contract '$contract_name' within token '$token' is a transaction parameter; temporal contract windows accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in $label\n"
-            if _transaction_param_by_name($actor, $tn, $token);
 
         my $param = _actor_param_by_name($actor, $token);
         if ($param) {
@@ -4385,10 +4391,10 @@ sub _temporal_contract_within_cycles {
             return $param_value;
         }
 
-        confess "Transaction '$tn': contract '$contract_name' within token '$token' is a runtime interface signal; temporal contract windows accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in $label\n"
+        confess "Transaction '$tn': contract '$contract_name' within token '$token' is a runtime interface signal; temporal contract windows accept $accepted_sources only in $label\n"
             if _actor_interface_signal_by_name($actor, $token);
 
-        confess "Transaction '$tn': contract '$contract_name' within token '$token' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant in $label\n";
+        confess "Transaction '$tn': contract '$contract_name' within token '$token' is not a same-transaction scalar parameter, declared actor constant, actor scalar parameter, or qualified package scalar constant in $label\n";
     }
 
     confess "Transaction '$tn': contract '$contract_name' supports only '(eventually signal within cycles)' or '(eventually signal (within cycles))'\n";

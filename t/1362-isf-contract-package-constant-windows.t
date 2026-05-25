@@ -134,7 +134,7 @@ ISF
     (contract ack_seen (eventually ack (within WINDOW_FOUR)))
     (complete done)))
 ISF
-        qr/Transaction 'main': contract 'ack_seen' within token 'WINDOW_FOUR' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant in transaction body/,
+        qr/Transaction 'main': contract 'ack_seen' within token 'WINDOW_FOUR' is not a same-transaction scalar parameter, declared actor constant, actor scalar parameter, or qualified package scalar constant in transaction body/,
         'unqualified package constants are rejected as contract windows',
     );
 

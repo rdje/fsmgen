@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Contract transaction parameters stay generated-child-local
+- `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2` resolves generated child
+  transaction-local scalar parameter defaults at the bounded eventual
+  temporal-contract `within` boundary.
+- Transaction `(params ...)` clauses are currently a generated-child surface,
+  so the implementation deliberately does not widen direct/non-generated
+  transaction parameter declarations. Those still fail before temporal
+  contract lowering.
+- The lowerer resolves a same-transaction generated child parameter before
+  actor constants and actor parameters. That keeps transaction-local names
+  local in the most specific scope and lets generated child parameters shadow
+  actor-level static names in the contract-window value-domain slot.
+- Accepted parameters are resolved before existing monitor lowering, which
+  keeps generated arm states, pending/age/fail storage, sticky-fail overlap
+  behavior, reset behavior, and SystemVerilog assertion projection identical
+  to the equivalent positive literal window.
+- The report stays source-token-free:
+  `temporal_contracts[].within_cycles` remains the resolved positive integer.
+  Generated child `.fsm` artifacts and their `+params` entries remain the
+  review path for authored child parameters.
+- Activation-site parameter override specialization, cross-transaction
+  parameter references, aggregate/list parameter defaults, runtime signals,
+  arbitrary expressions, dynamic windows, min/max windows, same-cycle checks,
+  nested contracts, and multiple outstanding obligations remain fail-closed or
+  deferred.
+
 ## 2026-05-25: Contract transaction parameters should reuse static monitor lowering
 - `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.1` selects same-transaction scalar
   parameter defaults for bounded eventual temporal-contract `within` windows.

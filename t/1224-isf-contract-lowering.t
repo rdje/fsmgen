@@ -301,60 +301,6 @@ ISF
         'non-scalar actor parameter diagnostic is targeted',
     );
 
-    my ($ok_tx_param, $tx_param_diag) = lower_rejected(<<'ISF');
-(actor contract_transaction_parameter_window
-  (clock clk)
-  (reset rst_n)
-  (interface
-    (input start)
-    (input ack)
-    (output done))
-  (transaction parent
-    (on start)
-    (spawn child as c0)
-    (complete done))
-  (transaction child
-    (params
-      (ACK_WINDOW 3))
-    (contract ack_seen (eventually ack (within ACK_WINDOW)))
-    (complete done)))
-ISF
-
-    ok(!$ok_tx_param, 'transaction parameter window is rejected');
-    like(
-        $tx_param_diag,
-        qr/\ATransaction 'child': contract 'ack_seen' within token 'ACK_WINDOW' is a transaction parameter; temporal contract windows accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in transaction body/,
-        'transaction parameter diagnostic is targeted',
-    );
-
-    my ($ok_tx_param_shadow, $tx_param_shadow_diag) = lower_rejected(<<'ISF');
-(actor contract_transaction_parameter_shadow
-  (clock clk)
-  (reset rst_n)
-  (params
-    (ACK_WINDOW 3))
-  (interface
-    (input start)
-    (input ack)
-    (output done))
-  (transaction parent
-    (on start)
-    (spawn child as c0)
-    (complete done))
-  (transaction child
-    (params
-      (ACK_WINDOW 4))
-    (contract ack_seen (eventually ack (within ACK_WINDOW)))
-    (complete done)))
-ISF
-
-    ok(!$ok_tx_param_shadow, 'transaction parameter window shadows actor parameter and is rejected');
-    like(
-        $tx_param_shadow_diag,
-        qr/\ATransaction 'child': contract 'ack_seen' within token 'ACK_WINDOW' is a transaction parameter; temporal contract windows accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in transaction body/,
-        'shadowed transaction parameter diagnostic is targeted',
-    );
-
     my ($ok_runtime, $runtime_diag) = lower_rejected(<<'ISF');
 (actor contract_runtime_window
   (clock clk)
@@ -373,7 +319,7 @@ ISF
     ok(!$ok_runtime, 'runtime interface window is rejected');
     like(
         $runtime_diag,
-        qr/\ATransaction 'main': contract 'ack_seen' within token 'delay' is a runtime interface signal; temporal contract windows accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in transaction body/,
+        qr/\ATransaction 'main': contract 'ack_seen' within token 'delay' is a runtime interface signal; temporal contract windows accept positive integer literals, same-transaction scalar parameters, actor constants, actor scalar parameters, or qualified package scalar constants only in transaction body/,
         'runtime interface diagnostic is targeted',
     );
 
@@ -394,7 +340,7 @@ ISF
     ok(!$ok_unknown, 'unknown symbolic window is rejected');
     like(
         $unknown_diag,
-        qr/\ATransaction 'main': contract 'ack_seen' within token 'ACK_WINDOW' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant in transaction body/,
+        qr/\ATransaction 'main': contract 'ack_seen' within token 'ACK_WINDOW' is not a same-transaction scalar parameter, declared actor constant, actor scalar parameter, or qualified package scalar constant in transaction body/,
         'unknown symbolic window diagnostic is targeted',
     );
 };

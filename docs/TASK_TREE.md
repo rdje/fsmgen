@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS` | `active` | `R14` | `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2` | [docs/tasks/ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.md](docs/tasks/ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.md](docs/tasks/ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.md) |
 | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS` | `done` | `R14` | `closed` | [docs/tasks/ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.md](docs/tasks/ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.md) |
 | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.md](docs/tasks/ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.md) |
 | `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.md](docs/tasks/ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.md) |
@@ -357,7 +357,7 @@ as done work unless a future task reopens them.
 | Temporal-contract actor-constant window counts | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` |
 | Temporal-contract actor-scalar-parameter window counts | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS` |
 | Temporal-contract qualified package scalar-constant window counts | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS` |
-| Temporal-contract same-transaction scalar parameter window counts | `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS` |
+| Temporal-contract generated child same-transaction scalar parameter window counts | `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS` |
 | Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
 | Transaction latency qualified package scalar-constant min/max bounds | `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS` |

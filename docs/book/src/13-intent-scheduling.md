@@ -980,13 +980,16 @@ The ISF-specific current limitations are:
   top-level `(contract name (eventually signal within cycles))`. The older
   nested `(eventually signal (within cycles))` spelling remains accepted as an
   alias. The `cycles` token may be a positive integer literal or a declared
-  actor constant, actor-local scalar parameter default, or qualified imported
-  package scalar constant that resolves to a positive integer. Transaction
-  parameters, runtime expressions, arbitrary expressions, unknown or
+  actor constant, actor-local scalar parameter default, qualified imported
+  package scalar constant, or same-transaction scalar parameter default on a
+  generated child transaction that resolves to a positive integer. Direct or
+  non-generated transaction parameter declarations remain invalid, and
+  activation-site parameter overrides do not respecialize contract windows in
+  this subset. Runtime expressions, arbitrary expressions, unknown or
   unqualified package constants, aggregate package constants, package
   member/item paths, ambiguous local-enum/package-constant spellings,
-  zero-valued constants, and zero-valued or non-scalar actor parameters remain
-  invalid.
+  zero-valued constants, and zero-valued or non-scalar actor/transaction
+  parameters remain invalid.
   Both forms lower to an arm state plus an always-on monitor DT with pending,
   age, and sticky-fail storage, and reports expose the resolved bound in
   `temporal_contracts[].within_cycles`.

@@ -1840,16 +1840,20 @@ verification-only assertion from the generated sticky fail bit under
 accepts the older nested alias `(eventually signal (within N))`; downstream
 emitters should prefer the flat `within N` form shown above. `N` may be a
 positive integer literal, a declared actor constant, an actor-local scalar
-parameter default, or a qualified imported package scalar constant that
-resolves to a positive integer. Reports keep
+parameter default, a qualified imported package scalar constant, or a
+same-transaction scalar parameter default on a generated child transaction
+that resolves to a positive integer. Reports keep parent-local
 `temporal_contracts[].within_cycles` as the resolved integer and do not expose
 a separate source-token field; package-authored windows remain visible through
-package/import metadata and embedded package `+constants` entries.
-Transaction parameters, runtime signals, arbitrary expressions, unknown names,
-unknown or unqualified package constants, aggregate package constants, package
-member/item paths, ambiguous local-enum/package-constant spellings,
-zero-valued constants, and zero-valued or non-scalar actor parameters remain
-invalid contract windows.
+package/import metadata and embedded package `+constants` entries. Generated
+child contract monitors are reviewable in the generated child scheduled
+`.fsm`; the parent schedule report remains parent-scoped for child-local
+temporal contracts. Direct/non-generated transaction parameter declarations,
+activation-site parameter override specialization, runtime signals, arbitrary
+expressions, unknown names, unknown or unqualified package constants,
+aggregate package constants, package member/item paths, ambiguous
+local-enum/package-constant spellings, zero-valued constants, and zero-valued
+or non-scalar actor/transaction parameters remain invalid contract windows.
 
 Latency:
 
@@ -3088,12 +3092,13 @@ Required fail-closed examples:
   signals, unknown symbolic names, arbitrary expressions, constants that
   resolve to zero, or actor parameters that resolve to zero or non-scalar
   values.
-- Temporal contract windows that name transaction parameters, runtime
-  interface signals, unknown symbolic names, arbitrary expressions, unknown or
-  unqualified package constants, aggregate package constants, package
-  member/item paths, ambiguous local-enum/package-constant spellings,
-  constants that resolve to zero, or actor parameters that resolve to zero or
-  non-scalar values.
+- Temporal contract windows that name direct/non-generated transaction
+  parameters, activation-site parameter override-specialized transaction
+  parameters, runtime interface signals, unknown symbolic names, arbitrary
+  expressions, unknown or unqualified package constants, aggregate package
+  constants, package member/item paths, ambiguous
+  local-enum/package-constant spellings, constants that resolve to zero, or
+  actor/transaction parameters that resolve to zero or non-scalar values.
 - Direct cross-domain access without a shipped crossing primitive.
 - Width mismatch where width evidence is known.
 - Parameter override unknown names, duplicate names, symbolic values, and

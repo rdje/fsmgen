@@ -313,12 +313,14 @@ min/max sources, bounded eventual temporal-contract window sources,
 actor-level and await-local watchdog limit sources, and transaction repeat
 count sources in the actor's own schedule. Qualified imported package scalar
 constants are also accepted as static transaction repeat-count sources when
-they resolve to positive integer literals. Transaction parameters, runtime
-interface signals, arbitrary expressions, and use-site activation overrides
-are not actor-parameter-default, latency-bound, contract-window,
-watchdog-limit, or repeat-count constants and do not respecialize
-already-emitted fixed latency counter, temporal monitor, watchdog counter, or
-repeat counter logic.
+they resolve to positive integer literals. Same-transaction scalar parameter
+defaults on generated child transactions are legal bounded eventual
+contract-window sources when they resolve to positive integer literals. Other
+transaction parameters, runtime interface signals, arbitrary expressions, and
+use-site activation overrides are not actor-parameter-default, latency-bound,
+contract-window, watchdog-limit, or repeat-count constants and do not
+respecialize already-emitted fixed latency counter, temporal monitor,
+watchdog counter, or repeat counter logic.
 Actor constants and actor-local scalar parameter defaults are also accepted as
 static default values for generated child transaction parameters; the lowerer
 resolves those parent actor names to literal child `+params` and
@@ -3772,12 +3774,17 @@ transaction clause, with a unique contract name per transaction, `signal` bound
 to a scalar actor interface input or output, and `cycles` as either a positive
 integer literal, a declared actor constant that resolves to a positive
 integer, an actor-local scalar parameter default that resolves to a positive
-integer, or a qualified imported package scalar constant that resolves to a
-positive integer. Transaction parameters, runtime signals, arbitrary
-expressions, unknown names, unknown or unqualified package constants, package
-aggregate constants, package member/item paths, ambiguous
+integer, a qualified imported package scalar constant that resolves to a
+positive integer, or a same-transaction scalar parameter default on a
+generated child transaction that resolves to a positive integer. Direct or
+non-generated transaction parameter declarations remain invalid at the
+transaction-parameter boundary; activation-site parameter override
+specialization does not respecialize contract windows in this subset. Runtime
+signals, arbitrary expressions, unknown names, unknown or unqualified package
+constants, package aggregate constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, zero-valued constants, and zero-valued
-or non-scalar actor parameters are not accepted as contract windows. Reaching the
+or non-scalar actor/transaction parameters are not accepted as contract
+windows. Reaching the
 clause emits one arm state. The checked window starts on the next cycle and
 lasts for the resolved `cycles` bound. The generated scheduled `.fsm` artifact
 contains the arm state plus an always-on monitor DT with pending, age, and
@@ -3800,7 +3807,8 @@ verification-only assertion under `` `ifndef SYNTHESIS`` that checks the
 generated sticky fail bit remains clear outside reset, while Verilog output
 stays assertion-free. Raw monitor equations and backend assertion text are not
 schedule-report payloads; the scheduled monitor remains the source of truth.
-Historical/free-form contract bodies, transaction-parameter windows,
+Historical/free-form contract bodies, direct/non-generated transaction
+parameter windows, activation-site parameter override specialization,
 runtime-signal or expression windows, global `always` implication forms,
 min/max windows, dynamic bounds, same-cycle checks, nested contracts,
 expression operands, and multiple outstanding obligations remain
@@ -5393,6 +5401,7 @@ Focused tests:
 - [t/1361-isf-latency-package-constant-bounds.t](../t/1361-isf-latency-package-constant-bounds.t)
 - [t/1362-isf-contract-package-constant-windows.t](../t/1362-isf-contract-package-constant-windows.t)
 - [t/1363-isf-watchdog-package-constant-limits.t](../t/1363-isf-watchdog-package-constant-limits.t)
+- [t/1364-isf-contract-transaction-param-windows.t](../t/1364-isf-contract-transaction-param-windows.t)
 
 ## 12. Explicitly Deferred
 
@@ -5522,8 +5531,10 @@ Focused tests:
   endpoints, registered-valid variants, and skid buffers remain deferred.
 - Temporal `(contract ...)` forms beyond the shipped top-level bounded
   eventual subset with positive decimal literal, positive actor-constant,
-  positive actor-scalar-parameter, and qualified package scalar-constant
-  windows.
+  positive actor-scalar-parameter, qualified package scalar-constant, and
+  generated-child same-transaction scalar-parameter windows. Direct or
+  non-generated transaction parameter windows and activation-site parameter
+  override-specialized contract windows remain deferred.
 - Rich storage-class optimization in schedule reports.
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
   actor-constant enum member references, direct transaction `set` RHS enum

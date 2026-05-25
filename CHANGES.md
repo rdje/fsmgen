@@ -1,6 +1,41 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Temporal-contract transaction-parameter windows shipped
+- Completed `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2` and closed the task
+  tree.
+- Generated child bounded eventual temporal-contract windows now accept
+  same-transaction scalar parameter defaults in both supported spellings:
+  `(eventually SIGNAL within PARAM)` and
+  `(eventually SIGNAL (within PARAM))`.
+- Accepted generated child transaction parameters require a parameter declared
+  on the same generated child transaction and a resolved positive integer
+  scalar literal default.
+- Accepted transaction parameters reuse the existing temporal monitor path
+  used by positive literals, actor constants, actor-local scalar parameter
+  defaults, and qualified package scalar constants. Monitor timing,
+  sticky-fail behavior, reset behavior, and SystemVerilog assertion
+  projection are unchanged.
+- Transaction-local parameter names resolve before actor constants and actor
+  parameters in this value-domain slot, so generated child parameters shadow
+  actor-level static names for contract windows.
+- Schedule reports keep `temporal_contracts[].within_cycles` as the resolved
+  positive integer and do not add a source-token field. Generated child `.fsm`
+  artifacts remain the review path for authored child `+params`.
+- Direct/non-generated transaction parameter declarations, activation-site
+  parameter override specialization, transaction parameters from other
+  transactions, non-scalar aggregate/list transaction parameters,
+  forward/self/cyclic transaction parameter defaults, runtime signals,
+  arbitrary expressions, dynamic bounds, min/max windows, same-cycle checks,
+  nested contracts, expression operands, global implication forms, and
+  multiple outstanding obligations remain deferred or fail closed.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused contract/public/spec/book tests
+  with `Files=10, Tests=388`; `./bin/ci-regression isf --no-book` with
+  `Files=270, Tests=1726`; post-closure public/spec/book audits with
+  `Files=5, Tests=368`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Temporal-contract transaction-parameter windows selected
 - Created active task tree `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS`.
 - Completed `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.1`; the selected
