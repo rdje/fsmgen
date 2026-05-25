@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `roadmap maintenance`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -39,7 +39,7 @@ completion subjects or commit references.
 ## Task Tree
 
 - ID: `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC`
-  Status: `active`
+  Status: `done`
   Goal: `synchronize stale this-commit task-tree evidence`
   Children: `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1`,
   `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2`
@@ -51,21 +51,21 @@ completion subjects or commit references.
   set the implementation frontier, and update live docs without behavior
   changes`
   Verification: `feature-backlog/live-book/book matrix audits; mdBook build; git diff check`
-  Commit: `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1: select this-commit evidence sync`
+  Commit: `edfe91f8 TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1: select this-commit evidence sync`
 
 - ID: `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2`
-  Status: `pending`
+  Status: `done`
   Goal: `synchronize stale this-commit and final-gate evidence`
   Acceptance: `Completed task files no longer carry stale this-commit commit
   evidence or stale final-gate-pending verification evidence`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `this-commit/final-gate field audit; feature-backlog/live-book/book matrix audits; mdBook build; git diff check`
+  Commit: `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2: sync this-commit evidence`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `pending` | `The selection leaf is complete; the next step is the bounded evidence audit and repair.` |
+| 1 | `closed` | `done` | `Stale this-commit and final-gate task-tree evidence has been synchronized.` |
 
 ## Decisions
 
@@ -91,14 +91,20 @@ completion subjects or commit references.
 | `2026-05-25` | `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=3, Tests=351` |
 | `2026-05-25` | `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1` | `mdbook build docs/book` | `passed` |
 | `2026-05-25` | `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1` | `git diff --check` | `passed` |
+| `2026-05-25` | `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `rg this-commit/final-gate field audit` | `passed: no stale evidence field matches` |
+| `2026-05-25` | `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=3, Tests=351` |
+| `2026-05-25` | `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-25` | `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1` | `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1: select this-commit evidence sync` | `selection slice` |
-| `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `pending` | `implementation slice` |
+| `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1` | `edfe91f8 TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1: select this-commit evidence sync` | `selection slice` |
+| `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2: sync this-commit evidence` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-25`: Created and activated the task tree.
+- `2026-05-25`: Synchronized stale this-commit/final-gate evidence and closed
+  the task tree.

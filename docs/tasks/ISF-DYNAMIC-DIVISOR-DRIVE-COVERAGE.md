@@ -94,8 +94,8 @@ and inline drive RHS expressions.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1` | `this commit: ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1: select divisor drive coverage` | `selects focused coverage hardening for drive expression divisor guards` |
-| `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` | `this commit: ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2: cover divisor drive expressions` | `adds focused drive-call actual and inline drive RHS divisor-zero coverage` |
+| `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1` | `9cf0394f ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1: select divisor drive coverage` | `selects focused coverage hardening for drive expression divisor guards` |
+| `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2` | `ff4e6fd6 ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2: cover divisor drive expressions` | `adds focused drive-call actual and inline drive RHS divisor-zero coverage` |
 
 ## Changelog
 

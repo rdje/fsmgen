@@ -100,7 +100,7 @@ literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-LATENCY-ACTOR-PARAM-BOUNDS.1` | `8bf157ab ISF-LATENCY-ACTOR-PARAM-BOUNDS.1: select latency actor-param bounds` | `selects static actor-parameter latency bound support` |
-| `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` | `this commit: ISF-LATENCY-ACTOR-PARAM-BOUNDS.2: ship latency actor-param bounds` | `ships actor-local scalar parameter defaults as static transaction latency min/max bounds` |
+| `ISF-LATENCY-ACTOR-PARAM-BOUNDS.2` | `a6dba694 ISF-LATENCY-ACTOR-PARAM-BOUNDS.2: ship latency actor-param bounds` | `ships actor-local scalar parameter defaults as static transaction latency min/max bounds` |
 
 ## Changelog
 

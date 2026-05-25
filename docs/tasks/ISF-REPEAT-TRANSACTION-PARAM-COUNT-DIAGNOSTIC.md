@@ -106,8 +106,8 @@ including when they shadow an actor parameter of the same name.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1` | `this commit: ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1: select repeat transaction parameter diagnostic` | `selects targeted transaction-parameter repeat-count diagnostic hardening` |
-| `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` | `this commit: ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2: harden repeat transaction parameter diagnostic` | `ships the targeted generated child transaction-parameter repeat-count diagnostic` |
+| `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1` | `3d20e7ad ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1: select repeat transaction parameter diagnostic` | `selects targeted transaction-parameter repeat-count diagnostic hardening` |
+| `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2` | `d60fe2ea ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2: harden repeat transaction parameter diagnostic` | `ships the targeted generated child transaction-parameter repeat-count diagnostic` |
 
 ## Changelog
 

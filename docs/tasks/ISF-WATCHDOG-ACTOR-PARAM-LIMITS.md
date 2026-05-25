@@ -110,7 +110,7 @@ accepted.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1` | `9a126d5a ISF-WATCHDOG-ACTOR-PARAM-LIMITS.1: select watchdog actor-param limits` | `selects static actor-parameter watchdog limit support` |
-| `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` | `this commit: ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2: ship watchdog actor-param limits` | `ships actor-parameter-backed watchdog limits and closes the tree` |
+| `ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2` | `8cdeab60 ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2: ship watchdog actor-param limits` | `ships actor-parameter-backed watchdog limits and closes the tree` |
 
 ## Changelog
 

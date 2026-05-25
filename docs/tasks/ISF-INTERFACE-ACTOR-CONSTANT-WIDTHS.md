@@ -60,7 +60,7 @@ literals.
   boundary, preserve non-goals, and update roadmap/live docs without behavior
   changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit`
+  Commit: `ea2e5003 ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1: select interface actor-constant widths`
 
 - ID: `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2`
   Status: `done`
@@ -76,7 +76,7 @@ literals.
   broad `./bin/ci-regression isf --no-book` with `Files=244, Tests=1635`;
   post-closure doc/public audits with `Files=6, Tests=348`;
   `git diff --check`
-  Commit: `this commit`
+  Commit: `7121b9c3 ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2: ship interface actor-constant widths`
 
 ## Current Frontier
 
@@ -119,7 +119,7 @@ literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1` | `ea2e5003: ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.1: select interface actor-constant widths` | `selects actor-constant interface width support` |
-| `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` | `this commit: ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2: ship interface actor-constant widths` | `ships actor-constant interface width support and closes the tree` |
+| `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2` | `7121b9c3 ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS.2: ship interface actor-constant widths` | `ships actor-constant interface width support and closes the tree` |
 
 ## Changelog
 

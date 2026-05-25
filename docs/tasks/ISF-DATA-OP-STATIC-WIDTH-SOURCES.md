@@ -66,7 +66,7 @@ static scalar values when those values resolve to positive integers.
   source boundary, preserve non-goals, and update roadmap/live docs without
   behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit`
+  Commit: `ef25efbf ISF-DATA-OP-STATIC-WIDTH-SOURCES.1: select static data op width sources`
 
 - ID: `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2`
   Status: `done`
@@ -78,7 +78,7 @@ static scalar values when those values resolve to positive integers.
   Verification: `syntax checks`; `focused data-operation/public/spec/book tests`;
   `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
   `post-closure doc/public audits`; `git diff --check`
-  Commit: `this commit`
+  Commit: `f97821d8 ISF-DATA-OP-STATIC-WIDTH-SOURCES.2: ship static data op width sources`
 
 ## Current Frontier
 
@@ -117,8 +117,8 @@ static scalar values when those values resolve to positive integers.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1` | `this commit: ISF-DATA-OP-STATIC-WIDTH-SOURCES.1: select static data op width sources` | `selects actor-local static value sources for data-operation width evidence` |
-| `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` | `this commit: ISF-DATA-OP-STATIC-WIDTH-SOURCES.2: ship static data op width sources` | `ships actor-local static value sources for data-operation width evidence` |
+| `ISF-DATA-OP-STATIC-WIDTH-SOURCES.1` | `ef25efbf ISF-DATA-OP-STATIC-WIDTH-SOURCES.1: select static data op width sources` | `selects actor-local static value sources for data-operation width evidence` |
+| `ISF-DATA-OP-STATIC-WIDTH-SOURCES.2` | `f97821d8 ISF-DATA-OP-STATIC-WIDTH-SOURCES.2: ship static data op width sources` | `ships actor-local static value sources for data-operation width evidence` |
 
 ## Changelog
 

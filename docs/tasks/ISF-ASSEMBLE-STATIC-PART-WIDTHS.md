@@ -80,7 +80,7 @@ that resolves to a positive integer.
   Verification: `syntax checks`; `focused assemble/data/public/spec/book tests`;
   `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
   `post-closure doc/public audits`; `git diff --check`
-  Commit: `this commit`
+  Commit: `94305b11 ISF-ASSEMBLE-STATIC-PART-WIDTHS.2: ship assemble static part widths`
 
 ## Current Frontier
 
@@ -119,7 +119,7 @@ that resolves to a positive integer.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ASSEMBLE-STATIC-PART-WIDTHS.1` | `935d0fba: ISF-ASSEMBLE-STATIC-PART-WIDTHS.1: select assemble static part widths` | selection slice |
-| `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` | `this commit: ISF-ASSEMBLE-STATIC-PART-WIDTHS.2: ship assemble static part widths` | implementation slice |
+| `ISF-ASSEMBLE-STATIC-PART-WIDTHS.2` | `94305b11 ISF-ASSEMBLE-STATIC-PART-WIDTHS.2: ship assemble static part widths` | implementation slice |
 
 ## Changelog
 

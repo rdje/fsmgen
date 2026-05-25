@@ -70,7 +70,7 @@ per-activation temporal monitor specialization.
   Goal: `Select the bounded same-value override slice and record the frontier before code changes.`
   Acceptance: `Task tree, roadmap, task index, README, and live docs name the active implementation frontier, exact behavior boundary, non-goals, documentation impact, and verification scope. No parser, scheduler, generated artifact, HDL, schedule-report, public API, or runtime behavior changes.`
   Verification: `passed: feature-backlog/live-book/book matrix audits with Files=3, Tests=364; mdbook build docs/book; git diff --check`
-  Commit: `this commit`
+  Commit: `c3cb4b6e ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1: select same-value contract-window overrides`
 
 - ID: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2`
   Status: `done`
@@ -117,7 +117,7 @@ per-activation temporal monitor specialization.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1` | `this commit: ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1: select same-value contract-window overrides` | `selection leaf; no behavior change` |
+| `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1` | `c3cb4b6e ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1: select same-value contract-window overrides` | `selection leaf; no behavior change` |
 | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` | `c3b87893 ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2: accept same-value contract-window overrides` | `implementation slice; closes the tree` |
 
 ## Changelog

@@ -65,7 +65,7 @@ integer literals.
   roadmap/live docs without behavior changes.`
   Verification: `feature-backlog/live-book/book-matrix audits with Files=3,
   Tests=364; mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1: select bank storage package-constant widths`
+  Commit: `474892c5 ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1: select bank storage package-constant widths`
 
 - ID: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`
   Status: `done`
@@ -78,7 +78,7 @@ integer literals.
   Files=11, Tests=352; ./bin/ci-regression isf --no-book with Files=261,
   Tests=1707; post-closure public/spec/book/backlog audits with Files=7,
   Tests=374; mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2: ship bank storage package-constant widths`
+  Commit: `74526f72 ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2: ship bank storage package-constant widths`
 
 ## Current Frontier
 
@@ -121,8 +121,8 @@ integer literals.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1` | `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1: select bank storage package-constant widths` | `selection slice` |
-| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` | `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2: ship bank storage package-constant widths` | `implementation slice` |
+| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1` | `474892c5 ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1: select bank storage package-constant widths` | `selection slice` |
+| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` | `74526f72 ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2: ship bank storage package-constant widths` | `implementation slice` |
 
 ## Changelog
 

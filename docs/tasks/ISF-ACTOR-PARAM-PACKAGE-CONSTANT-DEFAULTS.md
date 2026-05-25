@@ -61,7 +61,7 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
   Acceptance: `Task tree, roadmap, README index, and live docs name the
   selected value-domain boundary before implementation.`
   Verification: `passed`
-  Commit: `this commit: ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select package constant defaults`
+  Commit: `0ccaaa7e ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select package constant defaults`
 
 - ID: `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`
   Status: `done`
@@ -70,7 +70,7 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
   focused tests, mdBook, downstream handoff, and broader ISF gate are
   synchronized.`
   Verification: `passed`
-  Commit: `this commit: ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship package constant defaults`
+  Commit: `664d5959 ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship package constant defaults`
 
 ## Current Frontier
 
@@ -111,8 +111,8 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` | `this commit: ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select package constant defaults` | `selection slice` |
-| `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | `this commit: ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship package constant defaults` | `implementation slice` |
+| `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` | `0ccaaa7e ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select package constant defaults` | `selection slice` |
+| `ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | `664d5959 ISF-ACTOR-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship package constant defaults` | `implementation slice` |
 
 ## Changelog
 

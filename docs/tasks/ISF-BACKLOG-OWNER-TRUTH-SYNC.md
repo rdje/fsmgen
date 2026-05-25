@@ -98,8 +98,8 @@ task trees have closed.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-BACKLOG-OWNER-TRUTH-SYNC.1` | `this commit: ISF-BACKLOG-OWNER-TRUTH-SYNC.1: select backlog owner truth sync` | `selects the book-facing backlog owner wording sync` |
-| `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` | `this commit: ISF-BACKLOG-OWNER-TRUTH-SYNC.2: sync backlog owner wording` | `syncs book/design wording and adds audit coverage` |
+| `ISF-BACKLOG-OWNER-TRUTH-SYNC.1` | `ee5a59e5 ISF-BACKLOG-OWNER-TRUTH-SYNC.1: select backlog owner truth sync` | `selects the book-facing backlog owner wording sync` |
+| `ISF-BACKLOG-OWNER-TRUTH-SYNC.2` | `dac334c1 ISF-BACKLOG-OWNER-TRUTH-SYNC.2: sync backlog owner wording` | `syncs book/design wording and adds audit coverage` |
 
 ## Changelog
 

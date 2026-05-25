@@ -46,7 +46,7 @@ tree closed.
   Acceptance: `The lower roadmap current-active-lane section matches the top
   live-status pointer and keeps the task-tree gate explicit.`
   Verification: `passed`
-  Commit: `this commit: ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1: sync current active lane`
+  Commit: `d519b13b ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1: sync current active lane`
 
 ## Current Frontier
 
@@ -78,7 +78,7 @@ tree closed.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1` | `this commit: ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1: sync current active lane` | `roadmap-maintenance truth-sync slice` |
+| `ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1` | `d519b13b ROADMAP-CURRENT-ACTIVE-LANE-TRUTH-SYNC.1: sync current active lane` | `roadmap-maintenance truth-sync slice` |
 
 ## Changelog
 

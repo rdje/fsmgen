@@ -49,7 +49,7 @@ gate after the Perl 5.32 compatibility blockers have been removed.
   Goal: `Root-cause and repair the five locally reproducible full-regression failures that remain after the Perl 5.32 compatibility fix.`
   Acceptance: `The five known failing test files are reproduced, corrected through focused source/test changes, validated locally, documented, committed, and pushed for hosted CI rerun.`
   Verification: `focused five-test cluster; ./bin/ci-regression quick --no-book; ./bin/ci-regression full --no-book; mdbook build docs/book; git diff --check`
-  Commit: `this commit: CI-FULL-REGRESSION-GREEN.1: restore full regression gate`
+  Commit: `de04debd CI-FULL-REGRESSION-GREEN.1: restore full regression gate`
 
 ## Current Frontier
 

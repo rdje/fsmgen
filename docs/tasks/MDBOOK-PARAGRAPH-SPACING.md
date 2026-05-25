@@ -46,28 +46,28 @@ large text blobs.
   Goal: `Create task-tree ownership and define the paragraph-spacing cleanup scope.`
   Acceptance: `Create this task tree, register it in docs/TASK_TREE.md, identify chapter 12 and chapter 14 as required audit targets, and keep implementation deferred to the next leaf.`
   Verification: `mdbook build docs/book; git diff --check; whitespace-normalized mdBook source comparison against HEAD`
-  Commit: `this commit: MDBOOK-PARAGRAPH-SPACING.1: create book spacing task tree`
+  Commit: `a1144655 MDBOOK-PARAGRAPH-SPACING.1: create book spacing task tree`
 
 - ID: `MDBOOK-PARAGRAPH-SPACING.2`
   Status: `completed`
   Goal: `Normalize obvious mdBook prose paragraph blobs.`
   Acceptance: `Review the mdBook source, starting with chapter 12 and chapter 14, and insert one blank line between adjacent prose paragraphs where missing. Preserve code fences, tables, lists, examples, headings, and all technical wording. Update live docs with the formatting-only result.`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `this commit: MDBOOK-PARAGRAPH-SPACING.2: normalize book paragraph spacing`
+  Commit: `eebafed9 MDBOOK-PARAGRAPH-SPACING.2: normalize book paragraph spacing`
 
 - ID: `MDBOOK-PARAGRAPH-SPACING.3`
   Status: `completed`
   Goal: `Reopen the cleanup for rendered-HTML list-item blobs.`
   Acceptance: `Record that the first cleanup fixed ordinary paragraph boundaries but left long Markdown list items that render as single HTML list-item blobs, and select a follow-up leaf with rendered-HTML validation.`
   Verification: `mdbook build docs/book; rendered HTML audit identifies long list-item blobs`
-  Commit: `this commit: MDBOOK-PARAGRAPH-SPACING.3: reopen rendered HTML blob cleanup`
+  Commit: `1ccd62c9 MDBOOK-PARAGRAPH-SPACING.3: reopen rendered HTML blob cleanup`
 
 - ID: `MDBOOK-PARAGRAPH-SPACING.4`
   Status: `completed`
   Goal: `Split long rendered HTML list-item prose blobs.`
   Acceptance: `Audit the built mdBook HTML for long prose paragraphs and list items, split the remaining long list-item prose blobs into list-contained paragraphs without changing technical wording, preserve fences/tables/lists/examples/headings, and validate the rendered HTML no longer has obvious long blobs in the reported chapters.`
   Verification: `mdbook build docs/book; rendered HTML audit for long paragraphs and long list items; whitespace-normalized source comparison against HEAD; git diff --check`
-  Commit: `this commit: MDBOOK-PARAGRAPH-SPACING.4: split rendered book prose blobs`
+  Commit: `3047fd10 MDBOOK-PARAGRAPH-SPACING.4: split rendered book prose blobs`
 
 ## Current Frontier
 
@@ -106,10 +106,10 @@ large text blobs.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `MDBOOK-PARAGRAPH-SPACING.1` | `this commit: MDBOOK-PARAGRAPH-SPACING.1: create book spacing task tree` | `creates ownership before book-source formatting edits` |
-| `MDBOOK-PARAGRAPH-SPACING.2` | `this commit: MDBOOK-PARAGRAPH-SPACING.2: normalize book paragraph spacing` | `formatting-only mdBook source readability cleanup` |
-| `MDBOOK-PARAGRAPH-SPACING.3` | `this commit: MDBOOK-PARAGRAPH-SPACING.3: reopen rendered HTML blob cleanup` | `reopens the task tree for HTML-visible list-item blobs` |
-| `MDBOOK-PARAGRAPH-SPACING.4` | `this commit: MDBOOK-PARAGRAPH-SPACING.4: split rendered book prose blobs` | `validates the generated HTML directly` |
+| `MDBOOK-PARAGRAPH-SPACING.1` | `a1144655 MDBOOK-PARAGRAPH-SPACING.1: create book spacing task tree` | `creates ownership before book-source formatting edits` |
+| `MDBOOK-PARAGRAPH-SPACING.2` | `eebafed9 MDBOOK-PARAGRAPH-SPACING.2: normalize book paragraph spacing` | `formatting-only mdBook source readability cleanup` |
+| `MDBOOK-PARAGRAPH-SPACING.3` | `1ccd62c9 MDBOOK-PARAGRAPH-SPACING.3: reopen rendered HTML blob cleanup` | `reopens the task tree for HTML-visible list-item blobs` |
+| `MDBOOK-PARAGRAPH-SPACING.4` | `3047fd10 MDBOOK-PARAGRAPH-SPACING.4: split rendered book prose blobs` | `validates the generated HTML directly` |
 
 ## Changelog
 

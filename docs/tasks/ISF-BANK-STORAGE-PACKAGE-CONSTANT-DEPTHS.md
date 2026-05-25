@@ -65,7 +65,7 @@ literals.
   roadmap/live docs without behavior changes.`
   Verification: `feature-backlog/live-book/book-matrix audits with Files=3,
   Tests=364; mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1: select bank storage package-constant depths`
+  Commit: `717b47ab ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1: select bank storage package-constant depths`
 
 - ID: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2`
   Status: `done`
@@ -78,7 +78,7 @@ literals.
   Files=11, Tests=35; ./bin/ci-regression isf --no-book with Files=262,
   Tests=1709; post-closure public/spec/book/backlog audits with Files=8,
   Tests=375; mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2: ship bank storage package-constant depths`
+  Commit: `aa044756 ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2: ship bank storage package-constant depths`
 
 ## Current Frontier
 
@@ -123,8 +123,8 @@ literals.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1` | `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1: select bank storage package-constant depths` | `selection slice` |
-| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` | `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2: ship bank storage package-constant depths` | `implementation slice` |
+| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1` | `717b47ab ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1: select bank storage package-constant depths` | `selection slice` |
+| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` | `aa044756 ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2: ship bank storage package-constant depths` | `implementation slice` |
 
 ## Changelog
 

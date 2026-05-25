@@ -819,14 +819,14 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   Goal: `Select the next repeat-body child activation subset.`
   Acceptance: `Task tree, roadmap, and book backlog select top-level switch-branch nested repeat generated blocking '(do child (params ...) (bind ...))' followed by post-do multi-pending '(await_any done)' and then mandatory same-body '(await_all done)' as the next bounded implementation subset; the selected source shape is a repeat directly inside a top-level switch branch with multiple generated '(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])' sites, then static-parameter bound generated blocking '(do child (params ...) (bind ...))' while those generated spawns remain pending, then '(await_any done)' as an observation point after the generated do, and then a later same-body '(await_all done)' drain before the nested repeat check can loop; the generated do uses static parameter overrides and input/output bind handoffs but no domain subclause, the post-do await_any observes only the pending generated spawns and does not clear them, and same-domain metadata, new spawn after the do before drain, cross-domain activation, deeper branch/loop nesting, and broader outstanding-child semantics remain deferred.`
   Verification: `mdbook build docs/book; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t; git diff --check`
-  Commit: `this commit`
+  Commit: `4f0078ca ISF-REPEAT-BODY-CHILD-ACTIVATION.111: select switch bound post-do await_any`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`
   Status: `done`
   Goal: `Ship switch-branch nested repeat generated do with static params and bind handoffs before post-do multi-pending await_any before mandatory await_all drain if selected.`
   Acceptance: `Top-level switch branches accept nested '(repeat COUNT ... (spawn child as a ...) (spawn child as b ...) (do generated_child (params ...) (bind ...)) (await_any done) (await_all done) ...)' only when the generated do uses static parameter overrides plus input/output bind handoffs, the await_any appears after that generated do while the generated spawns are still pending, and a later same-body await_all drains every outstanding generated nested spawn before the nested repeat check can loop; lowering waits for the generated do instance's fresh done handoff before evaluating the post-do await_any observation, wires generated-top input/output binding handoffs for the generated do instance, keeps every generated-spawn done handoff live through the generated do and await_any, preserves source-order samples around spawn/do/await_any/await_all, and keeps domain metadata, new spawn after the do before drain, cross-domain activation, deeper branch/loop nesting, and broader outstanding-child semantics fail-closed.`
   Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c t/1215-isf-spawn-parameter-binding.t; perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t; prove -l t/1215-isf-spawn-parameter-binding.t; prove -l t/1215-isf-spawn-parameter-binding.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
-  Commit: `this commit: ISF-REPEAT-BODY-CHILD-ACTIVATION.112: implement switch repeat bound do before await_any`
+  Commit: `1e52fac7 ISF-REPEAT-BODY-CHILD-ACTIVATION.112: implement switch repeat bound do before await_any`
 
 ## Current Frontier
 
@@ -2231,8 +2231,8 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` | `this commit` | `selected switch-contained bound generated-do post-do await_any implementation leaf` |
-| `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` | `this commit` | `switch-contained bound generated-do post-do await_any subset shipped; tree closed` |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` | `4f0078ca ISF-REPEAT-BODY-CHILD-ACTIVATION.111: select switch bound post-do await_any` | `selected switch-contained bound generated-do post-do await_any implementation leaf` |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` | `1e52fac7 ISF-REPEAT-BODY-CHILD-ACTIVATION.112: implement switch repeat bound do before await_any` | `switch-contained bound generated-do post-do await_any subset shipped; tree closed` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `ISF-REPEAT-BODY-CHILD-ACTIVATION: track repeat activation backlog` | `e942bfc6; proposed tracking tree created` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.1` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.1: select repeat spawn bindings` | `47715e55; selected repeat-body spawn binding subset` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.2` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.2: implement repeat spawn bindings` | `0bc68c85; repeat-body spawn binding handoffs shipped` |

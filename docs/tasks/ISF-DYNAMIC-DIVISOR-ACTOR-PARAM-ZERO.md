@@ -63,7 +63,7 @@ actor-local scalar parameter default that resolves to zero.
   Verification: `syntax`; `focused dynamic-divisor/public/doc tests`;
   `mdbook build docs/book`; `git diff --check`;
   `./bin/ci-regression isf --no-book`
-  Commit: `this commit`
+  Commit: `25579db5 ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2: ship actor-param zero divisors`
 
 ## Current Frontier
 
@@ -101,7 +101,7 @@ actor-local scalar parameter default that resolves to zero.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1` | `f7cd9c76 ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.1: select actor-param zero divisors` | `selects actor-parameter-zero dynamic-divisor safety` |
-| `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` | `this commit: ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2: ship actor-param zero divisors` | `ships actor-parameter-zero dynamic-divisor safety` |
+| `ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2` | `25579db5 ISF-DYNAMIC-DIVISOR-ACTOR-PARAM-ZERO.2: ship actor-param zero divisors` | `ships actor-parameter-zero dynamic-divisor safety` |
 
 ## Changelog
 

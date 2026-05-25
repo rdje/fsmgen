@@ -93,7 +93,7 @@ rule guard, and actor-owned bank access expression surfaces.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1` | `141ed202 ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.1: select divisor control bank coverage` | `selects focused coverage hardening for control and bank expression divisor guards` |
-| `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` | `this commit: ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2: cover divisor control bank expressions` | `adds focused coverage for transaction condition, rule guard, and bank access expression divisor guards` |
+| `ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2` | `ea26425b ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2: cover divisor control bank expressions` | `adds focused coverage for transaction condition, rule guard, and bank access expression divisor guards` |
 
 ## Changelog
 

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Closed task trees are completed evidence too
+- `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` treats metadata status values
+  `done`, `completed`, and `closed` as completed task-tree states for evidence
+  repair.
+- The first mechanical pass caught `done`/`completed` files; the follow-up
+  audit exposed two `closed` files with the same stale `this commit` pattern,
+  so the final repair includes all three completed-status spellings.
+- Stale `final gate pending` wording is repaired only in the leaf verification
+  evidence field; historical verification logs remain the detailed source of
+  exact checks.
+
 ## 2026-05-25: This-commit placeholders need a separate evidence pass
 - `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1` selects the follow-up
   maintenance pass for historical task-tree evidence that used `this commit`

@@ -65,7 +65,7 @@ one resolved child before the sink child is triggered.
   Goal: `implement bounded multiple scalar generated-child actor-to-actor routes`
   Acceptance: `positive fixture, schedule report, generated top wiring, HDL reachability, docs, and focused gates prove the shipped subset`
   Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2: ship bounded ATL multi-route data movement`
+  Commit: `3711d038 ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2: ship bounded ATL multi-route data movement`
 
 ## Current Frontier
 
@@ -112,7 +112,7 @@ one resolved child before the sink child is triggered.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1` | `8ec95e9e ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.1: select ATL multi-route slice` | Selection committed. |
-| `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` | `this commit: ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2: ship bounded ATL multi-route data movement` | Implementation committed through this slice. |
+| `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` | `3711d038 ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2: ship bounded ATL multi-route data movement` | Implementation committed through this slice. |
 
 ## Changelog
 

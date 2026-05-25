@@ -99,7 +99,7 @@ those defaults resolve to positive integer literals.
   t/1303-isf-public-live-book-paths-audit.t
   t/1305-isf-book-feature-matrix-audit.t`;
   `git diff --check`;
-  Commit: `this commit`
+  Commit: `d666a4db ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2: ship bank storage actor-param depths`
 
 ## Current Frontier
 
@@ -140,7 +140,7 @@ those defaults resolve to positive integer literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1` | `eafafdb1: ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.1: select bank storage actor-param depths` | `selects static actor-parameter bank depth support` |
-| `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` | `this commit: ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2: ship bank storage actor-param depths` | `ships actor-parameter bank depth support` |
+| `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2` | `d666a4db ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.2: ship bank storage actor-param depths` | `ships actor-parameter bank depth support` |
 
 ## Changelog
 

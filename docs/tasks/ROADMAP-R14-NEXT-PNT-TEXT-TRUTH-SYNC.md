@@ -43,7 +43,7 @@ so it does not identify an old closed task tree as the current context.
   boundary tree as the current closed context; docs and live status are synced;
   documentation checks pass.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit: ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1: sync R14 next-PNT text`
+  Commit: `35bf9555 ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1: sync R14 next-PNT text`
 
 ## Current Frontier
 
@@ -75,7 +75,7 @@ so it does not identify an old closed task tree as the current context.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` | `this commit: ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1: sync R14 next-PNT text` | `removes stale closed-tree naming from the live R14 Left section` |
+| `ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1` | `35bf9555 ROADMAP-R14-NEXT-PNT-TEXT-TRUTH-SYNC.1: sync R14 next-PNT text` | `removes stale closed-tree naming from the live R14 Left section` |
 
 ## Changelog
 

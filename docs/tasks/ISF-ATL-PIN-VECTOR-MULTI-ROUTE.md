@@ -69,7 +69,7 @@ pin and resolved child endpoint widths before scheduled `.fsm` emission.
   Goal: `select the bounded ATL pin vector multi-route tree`
   Acceptance: `task-tree owner, scope, boundaries, and implementation leaves are recorded before code changes`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit: ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1: select ATL pin vector multi-route`
+  Commit: `5affa01f ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1: select ATL pin vector multi-route`
 
 - ID: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2`
   Status: `done`
@@ -83,7 +83,7 @@ pin and resolved child endpoint widths before scheduled `.fsm` emission.
   `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`;
   `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
   `git diff --check`
-  Commit: `this commit: ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2: ship ATL pin-ingress vector multi-route`
+  Commit: `bc03fbc0 ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2: ship ATL pin-ingress vector multi-route`
 
 - ID: `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3`
   Status: `done`
@@ -98,7 +98,7 @@ pin and resolved child endpoint widths before scheduled `.fsm` emission.
   `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`;
   `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
   `git diff --check`
-  Commit: `this commit: ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3: ship ATL pin-egress vector multi-route`
+  Commit: `459ae89c ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3: ship ATL pin-egress vector multi-route`
 
 ## Current Frontier
 
@@ -149,9 +149,9 @@ pin and resolved child endpoint widths before scheduled `.fsm` emission.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1` | `this commit: ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1: select ATL pin vector multi-route` | Selection committed. |
-| `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2` | `this commit: ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2: ship ATL pin-ingress vector multi-route` | Exact-width vector pin-ingress route-set committed. |
-| `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` | `this commit: ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3: ship ATL pin-egress vector multi-route` | Exact-width vector pin-egress route-set committed. |
+| `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1` | `5affa01f ISF-ATL-PIN-VECTOR-MULTI-ROUTE.1: select ATL pin vector multi-route` | Selection committed. |
+| `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2` | `bc03fbc0 ISF-ATL-PIN-VECTOR-MULTI-ROUTE.2: ship ATL pin-ingress vector multi-route` | Exact-width vector pin-ingress route-set committed. |
+| `ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3` | `459ae89c ISF-ATL-PIN-VECTOR-MULTI-ROUTE.3: ship ATL pin-egress vector multi-route` | Exact-width vector pin-egress route-set committed. |
 
 ## Changelog
 

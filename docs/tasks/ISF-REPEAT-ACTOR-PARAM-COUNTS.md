@@ -70,7 +70,7 @@ parameter defaults when those defaults resolve to positive integer literals.
   Verification: `syntax`; `focused repeat/public/doc tests`;
   `mdbook build docs/book`; `git diff --check`;
   `./bin/ci-regression isf --no-book`
-  Commit: `this commit`
+  Commit: `81f24112 ISF-REPEAT-ACTOR-PARAM-COUNTS.2: ship repeat actor-param counts`
 
 ## Current Frontier
 
@@ -109,7 +109,7 @@ parameter defaults when those defaults resolve to positive integer literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-REPEAT-ACTOR-PARAM-COUNTS.1` | `6e51a0ba ISF-REPEAT-ACTOR-PARAM-COUNTS.1: select repeat actor-param counts` | `selects static actor-parameter repeat count support` |
-| `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` | `this commit: ISF-REPEAT-ACTOR-PARAM-COUNTS.2: ship repeat actor-param counts` | `ships static actor-parameter repeat count support` |
+| `ISF-REPEAT-ACTOR-PARAM-COUNTS.2` | `81f24112 ISF-REPEAT-ACTOR-PARAM-COUNTS.2: ship repeat actor-param counts` | `ships static actor-parameter repeat count support` |
 
 ## Changelog
 

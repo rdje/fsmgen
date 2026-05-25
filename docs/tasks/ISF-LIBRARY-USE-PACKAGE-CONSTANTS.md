@@ -65,7 +65,7 @@ package scalar constants by qualified name, for example
   Acceptance: `Task tree, roadmap, README index, and live docs name the
   selected value-domain boundary before implementation.`
   Verification: `passed`
-  Commit: `this commit: ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1: select library use package constants`
+  Commit: `f3be036f ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1: select library use package constants`
 
 - ID: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2`
   Status: `done`
@@ -73,7 +73,7 @@ package scalar constants by qualified name, for example
   Acceptance: `Lowering behavior, diagnostics, public contracts, focused
   tests, mdBook, downstream handoff, and broader ISF gate are synchronized.`
   Verification: `passed`
-  Commit: `this commit: ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2: ship library use package constants`
+  Commit: `684ed1de ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2: ship library use package constants`
 
 ## Current Frontier
 
@@ -113,8 +113,8 @@ package scalar constants by qualified name, for example
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1` | `this commit: ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1: select library use package constants` | `selection slice` |
-| `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` | `this commit: ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2: ship library use package constants` | `implementation slice` |
+| `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1` | `f3be036f ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1: select library use package constants` | `selection slice` |
+| `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` | `684ed1de ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2: ship library use package constants` | `implementation slice` |
 
 ## Changelog
 

@@ -69,21 +69,21 @@ keeps owning the explicit drive-call timing cycle.
   Goal: `select the bounded ATL pin-route vector-width tree`
   Acceptance: `task-tree owner, scope, boundaries, and implementation leaves are recorded before code changes`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1: select ATL pin-route vector width`
+  Commit: `b09174f1 ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1: select ATL pin-route vector width`
 
 - ID: `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2`
   Status: `done`
   Goal: `implement exact-width vector generated-child pin-ingress routes`
   Acceptance: `matching-width top-level input to resolved-child input routes lower through parent/top/HDL artifacts, mismatches fail closed, and public docs describe the shipped boundary`
   Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`
-  Commit: `this commit: ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2: ship ATL pin-ingress vector width`
+  Commit: `44830c8f ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2: ship ATL pin-ingress vector width`
 
 - ID: `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3`
   Status: `done`
   Goal: `implement exact-width vector generated-child pin-egress routes`
   Acceptance: `matching-width resolved-child output to top-level output routes lower through parent/top/HDL artifacts, mismatches fail closed, and public docs describe the shipped boundary`
   Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `perl -Iperl -c t/1322-isf-actor-network-static.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`
-  Commit: `this commit: ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3: ship ATL pin-egress vector width`
+  Commit: `7c7607bb ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3: ship ATL pin-egress vector width`
 
 ## Current Frontier
 
@@ -135,9 +135,9 @@ keeps owning the explicit drive-call timing cycle.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1` | `this commit: ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1: select ATL pin-route vector width` | Selection committed. |
-| `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2` | `this commit: ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2: ship ATL pin-ingress vector width` | Exact-width generated-child pin-ingress vector route committed. |
-| `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` | `this commit: ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3: ship ATL pin-egress vector width` | Exact-width generated-child pin-egress vector route committed. |
+| `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1` | `b09174f1 ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.1: select ATL pin-route vector width` | Selection committed. |
+| `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2` | `44830c8f ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.2: ship ATL pin-ingress vector width` | Exact-width generated-child pin-ingress vector route committed. |
+| `ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3` | `7c7607bb ISF-ATL-PIN-ROUTE-VECTOR-WIDTH.3: ship ATL pin-egress vector width` | Exact-width generated-child pin-egress vector route committed. |
 
 ## Changelog
 

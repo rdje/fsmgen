@@ -71,7 +71,7 @@ constants resolve to positive integer literals.
   Verification: `syntax checks`; `focused bank/public/spec/book tests`;
   `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
   `post-closure doc/public audits with Files=6, Tests=348`; `git diff --check`
-  Commit: `this commit`
+  Commit: `1dffdd8d ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2: ship bank storage actor-constant depths`
 
 ## Current Frontier
 
@@ -110,7 +110,7 @@ constants resolve to positive integer literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.1` | `d143eebe: ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.1: select bank storage actor-constant depths` | `selects actor-constant bank storage depth support` |
-| `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` | `this commit: ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2: ship bank storage actor-constant depths` | `ships actor-constant bank storage depth support` |
+| `ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2` | `1dffdd8d ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.2: ship bank storage actor-constant depths` | `ships actor-constant bank storage depth support` |
 
 ## Changelog
 

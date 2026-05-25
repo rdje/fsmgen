@@ -54,7 +54,7 @@ actor-level clock, reset, or watchdog declarations.
   Goal: `Implement and document omitted clock/reset/watchdog defaults.`
   Acceptance: `Parser output, lowering, schedule reports, public-contract metadata, specs, downstream handoff, and the mdBook all agree that omitted single-clock actor timing defaults to clock clk, async active-low reset rst_n, and watchdog 65535, while explicit clauses and named clock-domain timing remain source-owned.`
   Verification: `passed`
-  Commit: `this commit`
+  Commit: `d5bf42e2 ISF-TIMING-CONVENTIONS.1: default omitted actor timing`
 
 ## Current Frontier
 
@@ -87,7 +87,7 @@ actor-level clock, reset, or watchdog declarations.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TIMING-CONVENTIONS.1` | `this commit` | `Default actor timing conventions implemented and documented.` |
+| `ISF-TIMING-CONVENTIONS.1` | `d5bf42e2 ISF-TIMING-CONVENTIONS.1: default omitted actor timing` | `Default actor timing conventions implemented and documented.` |
 
 ## Changelog
 

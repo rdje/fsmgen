@@ -60,7 +60,7 @@ literals.
   boundary, preserve non-goals, and update roadmap/live docs without behavior
   changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit`
+  Commit: `44d87399 ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1: select scalar storage actor-constant widths`
 
 - ID: `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2`
   Status: `done`
@@ -76,7 +76,7 @@ literals.
   broad `./bin/ci-regression isf --no-book` with `Files=245, Tests=1638`;
   post-closure doc/public audits with `Files=6, Tests=348`;
   `git diff --check`
-  Commit: `this commit`
+  Commit: `f86b7a37 ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2: ship scalar storage actor-constant widths`
 
 ## Current Frontier
 
@@ -120,7 +120,7 @@ literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1` | `44d87399: ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.1: select scalar storage actor-constant widths` | `selects actor-constant scalar storage width support` |
-| `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2` | `this commit: ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2: ship scalar storage actor-constant widths` | `ships actor-constant scalar storage width support and closes the tree` |
+| `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2` | `f86b7a37 ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.2: ship scalar storage actor-constant widths` | `ships actor-constant scalar storage width support and closes the tree` |
 
 ## Changelog
 

@@ -67,7 +67,7 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
   Acceptance: `Task tree, roadmap, README index, and live docs name the
   selected value-domain boundary before implementation.`
   Verification: `passed`
-  Commit: `this commit: ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select transaction package constants`
+  Commit: `47e7a21a ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select transaction package constants`
 
 - ID: `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2`
   Status: `done`
@@ -75,7 +75,7 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
   Acceptance: `Lowering behavior, diagnostics, public contracts, focused
   tests, mdBook, downstream handoff, and broader ISF gate are synchronized.`
   Verification: `passed`
-  Commit: `this commit: ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship transaction package constants`
+  Commit: `8cae22e8 ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship transaction package constants`
 
 ## Current Frontier
 
@@ -113,8 +113,8 @@ constants by qualified name, for example `shared.DEFAULT_WIDTH`.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` | `this commit: ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select transaction package constants` | `selection slice` |
-| `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | `this commit: ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship transaction package constants` | `implementation slice` |
+| `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1` | `47e7a21a ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.1: select transaction package constants` | `selection slice` |
+| `ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2` | `8cae22e8 ISF-TRANSACTION-PARAM-PACKAGE-CONSTANT-DEFAULTS.2: ship transaction package constants` | `implementation slice` |
 
 ## Changelog
 

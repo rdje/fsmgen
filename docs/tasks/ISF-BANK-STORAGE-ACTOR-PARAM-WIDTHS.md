@@ -94,7 +94,7 @@ widths when those defaults resolve to positive integer literals.
   t/1303-isf-public-live-book-paths-audit.t
   t/1305-isf-book-feature-matrix-audit.t`;
   `git diff --check`;
-  Commit: `this commit`
+  Commit: `ff4a33a8 ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2: ship bank storage actor-param widths`
 
 ## Current Frontier
 
@@ -135,7 +135,7 @@ widths when those defaults resolve to positive integer literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1` | `6efa1164: ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.1: select bank storage actor-param widths` | `selects static actor-parameter bank element width support` |
-| `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` | `this commit: ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2: ship bank storage actor-param widths` | `ships actor-parameter bank element width support` |
+| `ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2` | `ff4a33a8 ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.2: ship bank storage actor-param widths` | `ships actor-parameter bank element width support` |
 
 ## Changelog
 

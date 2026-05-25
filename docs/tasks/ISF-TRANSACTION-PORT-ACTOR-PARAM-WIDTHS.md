@@ -93,7 +93,7 @@ integer literals.
   t/1303-isf-public-live-book-paths-audit.t
   t/1305-isf-book-feature-matrix-audit.t`;
   `git diff --check`;
-  Commit: `this commit`
+  Commit: `e306d38f ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2: ship transaction port actor-param widths`
 
 ## Current Frontier
 
@@ -136,7 +136,7 @@ integer literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1` | `dcf216d1: ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.1: select transaction port actor-param widths` | `selects static actor-parameter transaction-local port width support` |
-| `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` | `this commit: ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2: ship transaction port actor-param widths` | `ships actor-parameter transaction-local port width support` |
+| `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2` | `e306d38f ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.2: ship transaction port actor-param widths` | `ships actor-parameter transaction-local port width support` |
 
 ## Changelog
 

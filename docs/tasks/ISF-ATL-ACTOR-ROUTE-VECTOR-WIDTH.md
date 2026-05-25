@@ -66,14 +66,14 @@ scheduled `.fsm` remains the explicit timing owner for the drive-call cycle.
   Goal: `select the bounded ATL actor-route vector-width slice`
   Acceptance: `task-tree owner, scope, boundaries, and implementation leaf are recorded before code changes`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1: select ATL actor-route vector width`
+  Commit: `435440a7 ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1: select ATL actor-route vector width`
 
 - ID: `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2`
   Status: `done`
   Goal: `implement exact-width vector generated-child actor-to-actor ATL routes`
   Acceptance: `matching-width vector routes lower through parent/top/HDL artifacts, mismatches fail closed, and public docs describe the shipped boundary`
-  Verification: `final gate pending`
-  Commit: `this commit: ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2: ship ATL actor-route vector width`
+  Verification: `final gates recorded in verification log`
+  Commit: `5cbc7555 ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2: ship ATL actor-route vector width`
 
 ## Current Frontier
 
@@ -112,8 +112,8 @@ scheduled `.fsm` remains the explicit timing owner for the drive-call cycle.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` | `this commit: ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1: select ATL actor-route vector width` | Selection committed. |
-| `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` | `this commit: ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2: ship ATL actor-route vector width` | Implementation, focused coverage, public docs, and final gates committed. |
+| `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1` | `435440a7 ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.1: select ATL actor-route vector width` | Selection committed. |
+| `ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2` | `5cbc7555 ISF-ATL-ACTOR-ROUTE-VECTOR-WIDTH.2: ship ATL actor-route vector width` | Implementation, focused coverage, public docs, and final gates committed. |
 
 ## Changelog
 

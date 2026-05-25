@@ -64,7 +64,7 @@ to positive integer literals.
   scalar-constant source boundary, preserve non-goals, and update
   roadmap/live docs without behavior changes.`
   Verification: `passed`
-  Commit: `this commit: ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1: select interface package-constant widths`
+  Commit: `cb381c19 ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1: select interface package-constant widths`
 
 - ID: `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2`
   Status: `done`
@@ -74,7 +74,7 @@ to positive integer literals.
   book, public contract, downstream handoff, focused tests, and broader ISF
   gate are synchronized.`
   Verification: `passed`
-  Commit: `this commit: ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2: ship interface package-constant widths`
+  Commit: `dd27c60a ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2: ship interface package-constant widths`
 
 ## Current Frontier
 
@@ -118,8 +118,8 @@ to positive integer literals.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1` | `this commit: ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1: select interface package-constant widths` | `selection slice` |
-| `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2` | `this commit: ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2: ship interface package-constant widths` | `implementation slice` |
+| `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1` | `cb381c19 ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1: select interface package-constant widths` | `selection slice` |
+| `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2` | `dd27c60a ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2: ship interface package-constant widths` | `implementation slice` |
 
 ## Changelog
 

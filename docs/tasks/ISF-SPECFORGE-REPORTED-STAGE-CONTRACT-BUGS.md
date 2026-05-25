@@ -83,7 +83,7 @@ public contract, mdBook, task tree, and regression tests synchronized.
   Goal: `Triage the shared strict-check JSON failure surface.`
   Acceptance: `For parser/strict-check failures reached through --strict --check --json, FSMGen either emits a documented JSON failure payload with regression coverage or the live docs explicitly mark the current empty-stdout behavior as unsupported with rationale.`
   Verification: `fixed: ISF parser/lowering/report/semantic check failures under --check --json emit success:false JSON on stdout, keep stderr clean, and preserve diagnostic text; exact sf-isf-stage-ready-valid now emits JSON failure for the mixed-timing conflict`
-  Commit: `this commit: ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3: emit ISF check JSON failures`
+  Commit: `9bfb9a20 ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3: emit ISF check JSON failures`
 
 ## Current Frontier
 
@@ -157,7 +157,7 @@ Current frontier: `closed`.
 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS: track reproduced reports` | `created tracking tree and reproduced both reported failures before implementation` |
 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `610cb26e ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1: accept flat eventual contracts` | `accepts the documented flat bounded-eventually source form and preserves the nested alias` |
 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` | `d4d6dfab ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2: accept ready-valid stages` | `accepts the documented ready/valid stage source form, preserves the older input/output alias, and records the exact bundle's residual mixed-timing conflict` |
-| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` | `this commit: ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3: emit ISF check JSON failures` | `emits structured check JSON for ISF lowering/report/semantic failures` |
+| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` | `9bfb9a20 ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3: emit ISF check JSON failures` | `emits structured check JSON for ISF lowering/report/semantic failures` |
 
 ## Changelog
 

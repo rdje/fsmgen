@@ -60,14 +60,14 @@ route kind has not yet been selected.
   Goal: `select the shared ATL route-drive argument boundary slice`
   Acceptance: `task-tree owner, scope, boundaries, and implementation leaf are recorded before code changes`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1: select ATL route-drive argument boundary`
+  Commit: `e22d4725 ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1: select ATL route-drive argument boundary`
 
 - ID: `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2`
   Status: `done`
   Goal: `implement and document the shared ATL route-drive argument boundary`
   Acceptance: `pin-ingress and pin-egress formal/actual-argument fail-closed coverage, kind-neutral diagnostics, synchronized public docs, and focused gates prove the boundary`
   Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t; prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2: harden ATL route-drive argument boundary`
+  Commit: `11011dbc ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2: harden ATL route-drive argument boundary`
 
 ## Current Frontier
 
@@ -105,8 +105,8 @@ route kind has not yet been selected.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1` | `this commit: ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1: select ATL route-drive argument boundary` | Selection committed. |
-| `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` | `this commit: ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2: harden ATL route-drive argument boundary` | Implementation committed. |
+| `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1` | `e22d4725 ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.1: select ATL route-drive argument boundary` | Selection committed. |
+| `ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2` | `11011dbc ISF-ATL-ROUTE-DRIVE-ARGUMENT-BOUNDARY.2: harden ATL route-drive argument boundary` | Implementation committed. |
 
 ## Changelog
 

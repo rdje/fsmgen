@@ -71,21 +71,21 @@ and each route keeps its own scalar or exact-width evidence in
   Goal: `select the bounded ATL pin mixed route-set tree`
   Acceptance: `task-tree owner, scope, boundaries, and implementation leaves are recorded before code changes`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit: ISF-ATL-PIN-MIXED-ROUTE-SETS.1: select ATL pin mixed route sets`
+  Commit: `622909c1 ISF-ATL-PIN-MIXED-ROUTE-SETS.1: select ATL pin mixed route sets`
 
 - ID: `ISF-ATL-PIN-MIXED-ROUTE-SETS.2`
   Status: `done`
   Goal: `implement mixed scalar/vector generated-child pin-ingress route sets`
   Acceptance: `same-child top-level input to resolved-child input route sets may combine scalar and exact-width vector routes while preserving route-local public metadata and generated-top wiring`
   Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `mdbook build docs/book`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1328-isf-atl-trigger-wait-fixture-coverage.t t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `./bin/ci-regression isf --no-book`; `git diff --check`
-  Commit: `this commit: ISF-ATL-PIN-MIXED-ROUTE-SETS.2: ship ATL pin-ingress mixed route sets`
+  Commit: `e42813b0 ISF-ATL-PIN-MIXED-ROUTE-SETS.2: ship ATL pin-ingress mixed route sets`
 
 - ID: `ISF-ATL-PIN-MIXED-ROUTE-SETS.3`
   Status: `done`
   Goal: `implement mixed scalar/vector generated-child pin-egress route sets`
   Acceptance: `same-child resolved-child output to top-level output route sets may combine scalar and exact-width vector routes while preserving route-local public metadata and generated-top wiring`
   Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `mdbook build docs/book`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1328-isf-atl-trigger-wait-fixture-coverage.t t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `./bin/ci-regression isf --no-book`; `git diff --check`
-  Commit: `this commit: ISF-ATL-PIN-MIXED-ROUTE-SETS.3: ship ATL pin-egress mixed route sets`
+  Commit: `16261633 ISF-ATL-PIN-MIXED-ROUTE-SETS.3: ship ATL pin-egress mixed route sets`
 
 ## Current Frontier
 
@@ -136,9 +136,9 @@ and each route keeps its own scalar or exact-width evidence in
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ATL-PIN-MIXED-ROUTE-SETS.1` | `this commit: ISF-ATL-PIN-MIXED-ROUTE-SETS.1: select ATL pin mixed route sets` | Selection commit. |
-| `ISF-ATL-PIN-MIXED-ROUTE-SETS.2` | `this commit: ISF-ATL-PIN-MIXED-ROUTE-SETS.2: ship ATL pin-ingress mixed route sets` | Pin-ingress mixed scalar/vector route-set implementation. |
-| `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` | `this commit: ISF-ATL-PIN-MIXED-ROUTE-SETS.3: ship ATL pin-egress mixed route sets` | Pin-egress mixed scalar/vector route-set implementation; tree closed. |
+| `ISF-ATL-PIN-MIXED-ROUTE-SETS.1` | `622909c1 ISF-ATL-PIN-MIXED-ROUTE-SETS.1: select ATL pin mixed route sets` | Selection commit. |
+| `ISF-ATL-PIN-MIXED-ROUTE-SETS.2` | `e42813b0 ISF-ATL-PIN-MIXED-ROUTE-SETS.2: ship ATL pin-ingress mixed route sets` | Pin-ingress mixed scalar/vector route-set implementation. |
+| `ISF-ATL-PIN-MIXED-ROUTE-SETS.3` | `16261633 ISF-ATL-PIN-MIXED-ROUTE-SETS.3: ship ATL pin-egress mixed route sets` | Pin-egress mixed scalar/vector route-set implementation; tree closed. |
 
 ## Changelog
 

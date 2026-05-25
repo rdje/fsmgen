@@ -41,7 +41,7 @@ current PNT frontier after `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` closed.
   Goal: `remove the stale completed-leaf frontier wording from R14 live status`
   Acceptance: `roadmap, task-tree index, and live docs agree that no tree is active before the next PNT selection`
   Verification: `git diff --check; mdbook build docs/book`
-  Commit: `this commit: ROADMAP-R14-FRONTIER-TRUTH-SYNC.1: sync R14 frontier status after ATL multi-route`
+  Commit: `e00d5d82 ROADMAP-R14-FRONTIER-TRUTH-SYNC.1: sync R14 frontier status after ATL multi-route`
 
 ## Current Frontier
 
@@ -73,7 +73,7 @@ current PNT frontier after `ISF-ATL-MULTI-ROUTE-DATA-MOVEMENT.2` closed.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1` | `this commit: ROADMAP-R14-FRONTIER-TRUTH-SYNC.1: sync R14 frontier status after ATL multi-route` | Documentation-only maintenance commit. |
+| `ROADMAP-R14-FRONTIER-TRUTH-SYNC.1` | `e00d5d82 ROADMAP-R14-FRONTIER-TRUTH-SYNC.1: sync R14 frontier status after ATL multi-route` | Documentation-only maintenance commit. |
 
 ## Changelog
 

@@ -63,7 +63,7 @@ constants resolve to positive integer literals.
   roadmap/live docs without behavior changes.`
   Verification: `feature-backlog/live-book/book-matrix audits with Files=3,
   Tests=364; mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.1: select scalar storage package-constant widths`
+  Commit: `d9ebd8c0 ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.1: select scalar storage package-constant widths`
 
 - ID: `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`
   Status: `done`
@@ -76,7 +76,7 @@ constants resolve to positive integer literals.
   with Files=10, Tests=350; ./bin/ci-regression isf --no-book with Files=260,
   Tests=1705; post-closure public/spec/book/backlog audits with Files=7,
   Tests=374; mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2: ship scalar storage package-constant widths`
+  Commit: `b127b7cc ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2: ship scalar storage package-constant widths`
 
 ## Current Frontier
 
@@ -118,8 +118,8 @@ constants resolve to positive integer literals.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.1` | `this commit: ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.1: select scalar storage package-constant widths` | `selection slice` |
-| `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` | `this commit: ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2: ship scalar storage package-constant widths` | `implementation slice` |
+| `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.1` | `d9ebd8c0 ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.1: select scalar storage package-constant widths` | `selection slice` |
+| `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` | `b127b7cc ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2: ship scalar storage package-constant widths` | `implementation slice` |
 
 ## Changelog
 

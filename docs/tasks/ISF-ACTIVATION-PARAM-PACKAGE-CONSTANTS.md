@@ -64,7 +64,7 @@ scalar constants by qualified name, for example `shared.DEFAULT_WIDTH`.
   Acceptance: `Task tree, roadmap, README index, and live docs name the
   selected value-domain boundary before implementation.`
   Verification: `passed`
-  Commit: `this commit: ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1: select activation package constants`
+  Commit: `d915dd57 ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1: select activation package constants`
 
 - ID: `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2`
   Status: `done`
@@ -72,7 +72,7 @@ scalar constants by qualified name, for example `shared.DEFAULT_WIDTH`.
   Acceptance: `Lowering behavior, diagnostics, public contracts, focused
   tests, mdBook, downstream handoff, and broader ISF gate are synchronized.`
   Verification: `passed`
-  Commit: `this commit: ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2: ship activation package constants`
+  Commit: `8531b4af ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2: ship activation package constants`
 
 ## Current Frontier
 
@@ -111,8 +111,8 @@ scalar constants by qualified name, for example `shared.DEFAULT_WIDTH`.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1` | `this commit: ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1: select activation package constants` | `selection slice` |
-| `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` | `this commit: ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2: ship activation package constants` | `implementation slice` |
+| `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1` | `d915dd57 ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.1: select activation package constants` | `selection slice` |
+| `ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2` | `8531b4af ISF-ACTIVATION-PARAM-PACKAGE-CONSTANTS.2: ship activation package constants` | `implementation slice` |
 
 ## Changelog
 

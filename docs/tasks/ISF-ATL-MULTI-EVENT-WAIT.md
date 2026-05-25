@@ -62,7 +62,7 @@ reviewable cycle boundary, and each wait reports through the existing
   Goal: `select the bounded ATL multi-event wait task tree`
   Acceptance: `task-tree owner, scope, boundaries, and implementation leaf are recorded before code changes`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit: ISF-ATL-MULTI-EVENT-WAIT.1: select ATL multi-event waits`
+  Commit: `2735aa52 ISF-ATL-MULTI-EVENT-WAIT.1: select ATL multi-event waits`
 
 - ID: `ISF-ATL-MULTI-EVENT-WAIT.2`
   Status: `done`
@@ -110,7 +110,7 @@ reviewable cycle boundary, and each wait reports through the existing
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ATL-MULTI-EVENT-WAIT.1` | `this commit: ISF-ATL-MULTI-EVENT-WAIT.1: select ATL multi-event waits` | Selection commit. |
+| `ISF-ATL-MULTI-EVENT-WAIT.1` | `2735aa52 ISF-ATL-MULTI-EVENT-WAIT.1: select ATL multi-event waits` | Selection commit. |
 | `ISF-ATL-MULTI-EVENT-WAIT.2` | `a4742f19 ISF-ATL-MULTI-EVENT-WAIT.2: ship ATL multi-event waits` | Implementation commit. |
 
 ## Changelog

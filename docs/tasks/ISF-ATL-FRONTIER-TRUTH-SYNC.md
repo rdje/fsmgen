@@ -97,7 +97,7 @@ completed leaves as if they were still selectable frontier work.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ATL-FRONTIER-TRUTH-SYNC.1` | `266ffc99 ISF-ATL-FRONTIER-TRUTH-SYNC.1: select ATL frontier truth sync` | `selects stale closed-frontier synchronization for the exhausted ATL tree` |
-| `ISF-ATL-FRONTIER-TRUTH-SYNC.2` | `this commit: ISF-ATL-FRONTIER-TRUTH-SYNC.2: sync ATL frontier truth` | `syncs the exhausted ATL tree's current frontier and closes this maintenance tree` |
+| `ISF-ATL-FRONTIER-TRUTH-SYNC.2` | `0e538e57 ISF-ATL-FRONTIER-TRUTH-SYNC.2: sync ATL frontier truth` | `syncs the exhausted ATL tree's current frontier and closes this maintenance tree` |
 
 ## Changelog
 

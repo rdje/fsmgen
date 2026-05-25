@@ -108,7 +108,7 @@ literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1` | `5fa55f61 ISF-CONTRACT-ACTOR-PARAM-WINDOWS.1: select contract actor-param windows` | `selects static actor-parameter temporal-contract window support` |
-| `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` | `this commit: ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2: ship contract actor-param windows` | `ships actor-parameter-backed temporal-contract windows and closes the tree` |
+| `ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2` | `44c1d3c7 ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2: ship contract actor-param windows` | `ships actor-parameter-backed temporal-contract windows and closes the tree` |
 
 ## Changelog
 

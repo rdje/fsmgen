@@ -60,14 +60,14 @@ triggered.
   Goal: `select the bounded ATL pin-ingress multi-route feature slice`
   Acceptance: `task-tree owner, scope, boundaries, and implementation leaf are recorded before code changes`
   Verification: `git diff --check; mdbook build docs/book`
-  Commit: `this commit: ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1: select ATL pin-ingress multi-route slice`
+  Commit: `bb755776 ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1: select ATL pin-ingress multi-route slice`
 
 - ID: `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2`
   Status: `done`
   Goal: `implement bounded multiple scalar generated-child pin-ingress routes`
   Acceptance: `positive fixture, schedule report, generated top wiring, HDL reachability, docs, and focused gates prove the shipped subset`
   Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c t/1322-isf-actor-network-static.t; perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t; perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1322-isf-actor-network-static.t; prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t; prove -Iperl t/1324-isf-atl-fixture-coverage.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1328-isf-atl-trigger-wait-fixture-coverage.t t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t t/1331-isf-timing-conventions.t; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
-  Commit: `this commit: ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2: ship bounded ATL pin-ingress route sets`
+  Commit: `5e973aa1 ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2: ship bounded ATL pin-ingress route sets`
 
 ## Current Frontier
 
@@ -106,8 +106,8 @@ triggered.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1` | `this commit: ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1: select ATL pin-ingress multi-route slice` | Selection committed. |
-| `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2` | `this commit: ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2: ship bounded ATL pin-ingress route sets` | Implementation committed through this slice. |
+| `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1` | `bb755776 ISF-ATL-PIN-INGRESS-MULTI-ROUTE.1: select ATL pin-ingress multi-route slice` | Selection committed. |
+| `ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2` | `5e973aa1 ISF-ATL-PIN-INGRESS-MULTI-ROUTE.2: ship bounded ATL pin-ingress route sets` | Implementation committed through this slice. |
 
 ## Changelog
 

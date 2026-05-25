@@ -60,7 +60,7 @@ when those constants resolve to positive integer literals.
   boundary, preserve non-goals, and update roadmap/live docs without behavior
   changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `this commit`
+  Commit: `ef1b0d06 ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.1: select bank storage actor-constant widths`
 
 - ID: `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2`
   Status: `done`
@@ -76,7 +76,7 @@ when those constants resolve to positive integer literals.
   broad `./bin/ci-regression isf --no-book` with `Files=246, Tests=1641`;
   post-closure doc/public audits with `Files=6, Tests=348`;
   `git diff --check`
-  Commit: `this commit`
+  Commit: `4111d512 ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2: ship bank storage actor-constant widths`
 
 ## Current Frontier
 
@@ -120,7 +120,7 @@ when those constants resolve to positive integer literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.1` | `ef1b0d06: ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.1: select bank storage actor-constant widths` | `selects actor-constant bank storage width support` |
-| `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2` | `this commit: ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2: ship bank storage actor-constant widths` | `ships actor-constant bank storage width support and closes the tree` |
+| `ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2` | `4111d512 ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.2: ship bank storage actor-constant widths` | `ships actor-constant bank storage width support and closes the tree` |
 
 ## Changelog
 

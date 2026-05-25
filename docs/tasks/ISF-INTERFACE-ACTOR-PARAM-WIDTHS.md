@@ -71,7 +71,7 @@ integer literals.
   Verification: `parser/contract syntax; focused interface/public/spec/book
   tests; mdBook build; broad ISF regression; post-closure doc audits; diff
   hygiene`
-  Commit: `this commit`
+  Commit: `2003514c ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2: ship interface actor-param widths`
 
 ## Current Frontier
 
@@ -114,7 +114,7 @@ integer literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1` | `74ff7d07 ISF-INTERFACE-ACTOR-PARAM-WIDTHS.1: select interface actor-param widths` | `selects static actor-parameter interface port width support` |
-| `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` | `this commit: ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2: ship interface actor-param widths` | `ships parser lowering, diagnostics, public contract metadata, specs, book, and tests` |
+| `ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2` | `2003514c ISF-INTERFACE-ACTOR-PARAM-WIDTHS.2: ship interface actor-param widths` | `ships parser lowering, diagnostics, public contract metadata, specs, book, and tests` |
 
 ## Changelog
 

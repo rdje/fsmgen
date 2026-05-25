@@ -89,7 +89,7 @@ parameter defaults when those defaults resolve to positive integer literals.
   `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t
   t/1303-isf-public-live-book-paths-audit.t
   t/1305-isf-book-feature-matrix-audit.t`; `git diff --check`;
-  Commit: `this commit`
+  Commit: `5640dfcd ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2: ship scalar storage actor-param widths`
 
 ## Current Frontier
 
@@ -131,7 +131,7 @@ parameter defaults when those defaults resolve to positive integer literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1` | `3769ec9e: ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.1: select scalar storage actor-param widths` | `selects static actor-parameter scalar storage width support` |
-| `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` | `this commit: ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2: ship scalar storage actor-param widths` | `ships actor-parameter scalar storage width support` |
+| `ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2` | `5640dfcd ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.2: ship scalar storage actor-param widths` | `ships actor-parameter scalar storage width support` |
 
 ## Changelog
 

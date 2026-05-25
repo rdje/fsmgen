@@ -77,7 +77,7 @@ literals.
   Verification: `syntax checks`; `focused transaction-port/public/spec/book tests`;
   `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
   `post-closure doc/public audits with Files=7, Tests=352`; `git diff --check`
-  Commit: `this commit`
+  Commit: `40bc6b66 ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2: ship transaction port actor-constant widths`
 
 ## Current Frontier
 
@@ -116,7 +116,7 @@ literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1` | `794dbb78: ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.1: select transaction port actor-constant widths` | `selects actor-constant transaction port width support` |
-| `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` | `this commit: ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2: ship transaction port actor-constant widths` | `ships actor-constant transaction port width support` |
+| `ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2` | `40bc6b66 ISF-TRANSACTION-PORT-ACTOR-CONSTANT-WIDTHS.2: ship transaction port actor-constant widths` | `ships actor-constant transaction port width support` |
 
 ## Changelog
 
