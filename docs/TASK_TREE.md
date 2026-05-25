@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.md) |
 | `ISF-STATIC-ZERO-REPEAT-NOOP` | `done` | `R14` | `closed` | [docs/tasks/ISF-STATIC-ZERO-REPEAT-NOOP.md](docs/tasks/ISF-STATIC-ZERO-REPEAT-NOOP.md) |
 | `NO-RESET-SCHEDULED-FSM-HDL` | `done` | `R14` | `closed` | [docs/tasks/NO-RESET-SCHEDULED-FSM-HDL.md](docs/tasks/NO-RESET-SCHEDULED-FSM-HDL.md) |
 | `ISF-CDC-NO-RESET-FIXTURE` | `done` | `R14` | `closed` | [docs/tasks/ISF-CDC-NO-RESET-FIXTURE.md](docs/tasks/ISF-CDC-NO-RESET-FIXTURE.md) |

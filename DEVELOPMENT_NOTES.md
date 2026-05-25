@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Roadmap current status must show superseded zero-repeat policy
+- `ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.1` is documentation-only cleanup
+  after `ISF-STATIC-ZERO-REPEAT-NOOP.1`.
+- Earlier transaction-parameter repeat-count slices correctly shipped a
+  positive-only surface at the time. After static zero no-op lowering, current
+  roadmap summaries must say that zero-valued same-transaction scalar repeat
+  parameters are now accepted as no-op repeat regions when the body has no
+  child activation.
+- The historical positive-count validation remains useful evidence, but the
+  active status text must also name the later superseding behavior so roadmap
+  recovery does not send the next slice toward a solved limitation.
+
 ## 2026-05-25: Static zero repeat should skip, not allocate dead loop artifacts
 - `ISF-STATIC-ZERO-REPEAT-NOOP.1` narrows the earlier static-zero fail-closed
   policy now that runtime repeat zero-bypass behavior is shipped and covered.

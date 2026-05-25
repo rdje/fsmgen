@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 repeat zero roadmap status truth sync shipped
+- Completed `ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.1` and closed the task
+  tree.
+- Current R14 transaction-parameter repeat-count roadmap entries no longer
+  imply zero-valued same-transaction scalar repeat parameters fail closed after
+  `ISF-STATIC-ZERO-REPEAT-NOOP.1`.
+- The roadmap now records that the original positive-count transaction
+  parameter slice was later superseded for zero-valued scalar parameters by
+  static zero no-op lowering; aggregate/list and cross-transaction parameters
+  remain fail-closed/unsupported.
+- This was documentation-only: parser behavior, scheduler lowering, generated
+  `.fsm`, HDL, schedule-report payloads, public contract code, tests, and
+  runtime behavior did not change.
+- Validation passed: stale roadmap wording grep; `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 static zero repeat no-op shipped
 - Completed `ISF-STATIC-ZERO-REPEAT-NOOP.1` and closed the task tree.
 - Static zero repeat counts now lower as transparent zero-iteration no-op

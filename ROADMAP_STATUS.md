@@ -4,6 +4,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 repeat zero status truth sync:
+  `ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.1` synchronized current
+  roadmap/live-status repeat-count wording and closed the task tree. Current
+  R14 transaction-parameter repeat-count entries no longer imply zero-valued
+  same-transaction scalar repeat parameters fail closed after
+  `ISF-STATIC-ZERO-REPEAT-NOOP.1`; they now record the later static zero
+  no-op behavior while keeping aggregate/list and cross-transaction parameter
+  deferrals intact. This was documentation-only: parser behavior, scheduler
+  lowering, generated `.fsm`, HDL, schedule-report payloads, public contract
+  code, tests, and runtime behavior did not change. Validation passed: stale
+  roadmap wording grep; `git diff --check`.
 - Current R14 static zero-count repeat no-op:
   `ISF-STATIC-ZERO-REPEAT-NOOP.1` shipped bounded static zero-count repeat
   no-op lowering and closed the task tree. Literal zero, zero-valued actor
@@ -152,12 +163,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-REPEAT-TRANSACTION-PARAM-COUNTS.1` shipped same-transaction scalar
   parameter defaults as static `(repeat COUNT body...)` count sources and
   closed the task tree. Transaction repeat-count params now shadow actor-level
-  static names, provide counter-width evidence from their resolved positive
-  integer value, and load that resolved integer in scheduled `.fsm` because
-  transaction params are local lowering inputs. Zero-valued and non-scalar
-  transaction params fail closed before scheduled emission; cross-transaction
-  params remain unsupported. Validation passed: syntax checks; focused
-  repeat/parameter-surface tests with `Files=7, Tests=80`;
+  static names. Positive resolved values provide counter-width evidence and
+  load that resolved integer in scheduled `.fsm` because transaction params
+  are local lowering inputs. Zero-valued same-transaction scalar parameter
+  counts were accepted later by `ISF-STATIC-ZERO-REPEAT-NOOP.1` and now lower
+  as no-op repeat regions when the body contains no child activation.
+  Non-scalar transaction params fail closed before scheduled emission;
+  cross-transaction params remain unsupported. Validation passed for the
+  original positive-count slice: syntax checks; focused repeat/parameter-surface
+  tests with `Files=7, Tests=80`;
   `./bin/ci-regression isf --no-book` with `Files=274, Tests=1745`;
   focused public/spec/book audits with `Files=4, Tests=366`; `mdbook build
   docs/book`; and `git diff --check`.
@@ -11881,6 +11895,21 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.1` is shipped and the task tree
+  is closed:
+  - current R14 transaction-parameter repeat-count roadmap entries no longer
+    imply zero-valued same-transaction scalar repeat parameters fail closed
+    after `ISF-STATIC-ZERO-REPEAT-NOOP.1`,
+  - the roadmap now records that the original positive-count transaction
+    parameter slice was later superseded for zero-valued scalar parameters by
+    static zero no-op lowering,
+  - aggregate/list and cross-transaction repeat parameters remain
+    fail-closed/unsupported,
+  - parser behavior, scheduler lowering, generated `.fsm`, HDL,
+    schedule-report payloads, public contract code, tests, and runtime
+    behavior did not change,
+  - and the roadmap, task tree, README index, and live docs are synchronized.
+  - Validation passed: stale roadmap wording grep; `git diff --check`.
 - `ISF-STATIC-ZERO-REPEAT-NOOP.1` is shipped and the task tree is closed:
   - static zero repeat counts now lower as transparent zero-iteration no-op
     regions for literal zero, zero-valued actor constants, actor scalar
@@ -12079,9 +12108,12 @@ Done:
   - the repeat counter width uses the resolved positive integer and scheduled
     `.fsm` loads that resolved value because transaction params are local
     lowering inputs,
-  - zero-valued transaction params and aggregate/list transaction params fail
-    closed before scheduled `.fsm` emission; cross-transaction params remain
-    unsupported,
+  - zero-valued transaction params failed closed in the original positive-count
+    slice, then `ISF-STATIC-ZERO-REPEAT-NOOP.1` later accepted zero-valued
+    same-transaction scalar parameter counts as no-op repeat regions when the
+    body contains no child activation; aggregate/list transaction params still
+    fail closed before scheduled `.fsm` emission, and cross-transaction params
+    remain unsupported,
   - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
     README index, roadmap, and live docs are synchronized.
   - Validation passed: syntax checks; focused repeat/parameter-surface tests
