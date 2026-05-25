@@ -3050,8 +3050,10 @@ owner, target transaction, port role/name, actor signal when the actor side is
 a scalar endpoint, formatted actor expression, `actor_endpoint_kind`, width,
 and generated handoff signal names where applicable. Parameterized
 rule-trigger entries use the generated trigger instance handoff names and
-preserve the per-rule trigger and payload source names. For expression-valued
-or literal input bindings, `actor_signal` is JSON null and
+preserve the per-rule trigger and payload source names; generated-child
+rule-trigger output entries also report the done-observer signal that guards
+the output copy in `done_signal`. For expression-valued or literal input
+bindings, `actor_signal` is JSON null and
 `actor_expression` carries the formatted source expression.
 `actor_endpoint_kind` is `signal`, `literal`, or `expression`. JSON null is
 used for non-applicable handoff fields. The machine-readable contract
@@ -3152,8 +3154,9 @@ These are not stable public interfaces yet:
 - Transaction port behavior beyond parser-shell `ports.inputs[]` /
   `ports.outputs[]` `name`/`width` metadata, scalar/literal/list-expression
   input-binding lowering for `do`, `spawn`, and rule-trigger activation sites,
-  plus the first conflict/runtime coverage for binding-generated assignments.
-  Rule-trigger output bindings, explicit snapshot-vs-live timing selection,
+  generated-child rule-trigger scalar output bindings, plus the first
+  conflict/runtime coverage for binding-generated assignments. Direct/local
+  rule-trigger output bindings, explicit snapshot-vs-live timing selection,
   broader static conflict diagnostics, additional report fields beyond
   endpoint-kind metadata, and full expression width inference remain deferred
   follow-on port-binding work.

@@ -689,10 +689,12 @@ The ISF-specific current limitations are:
   supports input and output bindings in the parent await state. `spawn`
   supports input and output bindings through hidden generated-top handoffs and
   parent binding DTs. Rule `trigger` supports input bindings through per-rule
-  payload source signals before trigger fan-in. Bindings are direction- and
-  known-width-checked, actor input writes are rejected, actor output readback
-  is rejected, and rule-trigger output bindings plus explicit
-  snapshot-vs-live timing selection remain backlog.
+  payload source signals before trigger fan-in, and generated-child rule
+  triggers support scalar output bindings under the per-trigger done observer.
+  Bindings are direction- and known-width-checked, actor input writes are
+  rejected, actor output readback is rejected, and direct/local rule-trigger
+  output bindings plus explicit snapshot-vs-live timing selection remain
+  backlog.
 - Width-bearing actor interface ports, transaction-local ports, and
   actor-owned storage entries may use scalar type aliases through `(type
   NAME)`, mutually exclusive with `(width N)`, `(width PARAM)`, or

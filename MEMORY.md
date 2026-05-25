@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 generated rule-trigger output bindings shipped
+- Completed `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` and closed the
+  task tree.
+- Generated-child rule triggers now accept scalar output bindings for declared
+  output ports when the actor target is writable, same-domain, and
+  width-compatible.
+- The generated trigger handoff DT exposes the child output handoff and copies
+  it into the actor target under the per-trigger `*_done_seen` observer. The
+  rule remains non-blocking and does not wait in-line for child completion.
+- `transaction_port_bindings[]` report entries for generated rule-trigger
+  output bindings now report the done-observer signal in `done_signal`.
+- Direct/local transaction rule-trigger output bindings remain fail-closed
+  because shared local transaction instances still have no rule-specific
+  completion identity.
+- Validation passed: syntax checks; focused public/report/spec/book tests with
+  `Files=13, Tests=396`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1742`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 generated rule-trigger output-binding tree selected
 - Created active task tree
   `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS`.

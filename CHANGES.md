@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Generated rule-trigger output bindings shipped
+- Completed `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` and closed the
+  task tree.
+- Generated-child rule triggers now accept scalar output bindings for declared
+  transaction output ports when the actor target is writable, same-domain, and
+  width-compatible.
+- The generated trigger handoff DT copies the child output handoff into the
+  actor target under the per-trigger done-observer signal, preserving
+  non-blocking rule-trigger behavior.
+- `transaction_port_bindings[]` report entries for generated rule-trigger
+  output bindings now report that done observer in `done_signal`.
+- Direct/local transaction rule-trigger output bindings remain fail-closed
+  until a separate task selects a completion-identity contract for shared
+  local transaction instances.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook,
+  README index, roadmap, task tree, and live docs.
+- Validation passed: syntax checks; focused public/report/spec/book tests with
+  `Files=13, Tests=396`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1742`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Generated rule-trigger output-binding tree selected
 - Created active task tree
   `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS`.

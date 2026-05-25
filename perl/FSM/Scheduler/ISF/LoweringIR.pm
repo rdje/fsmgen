@@ -1410,8 +1410,11 @@ sub _register_generated_activation_instance {
                 op          => '=',
                 source_kind => "${activation_kind}_output_binding",
             );
-            $assignment{guard} = { port => "${instance}_done" }
-                if $activation_kind eq 'do';
+            if ($activation_kind eq 'do') {
+                $assignment{guard} = { port => "${instance}_done" };
+            } elsif ($activation_kind eq 'trigger') {
+                $assignment{guard} = { port => "${instance}_done_seen" };
+            }
             push @port_binding_assignments, \%assignment;
         }
         $ctrs->{$parent_port} = $port->{width};
@@ -2686,6 +2689,7 @@ sub _collect_isf_value_declared_name_refs {
 
 sub _validate_transaction_port_bindings($self, $actor) {
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
+    my %generated_children = _generated_child_transaction_refs($actor);
 
     for my $tx (@{$actor->{transactions} || []}) {
         my $tx_name = $tx->{name};
@@ -2721,7 +2725,7 @@ sub _validate_transaction_port_bindings($self, $actor) {
                 $transaction_by_name{$target},
                 _activation_bindings_from_clause($action, $rule_name, 'rule trigger'),
                 "Rule '$rule_name': trigger target '$target'",
-                { allow_outputs => 0 },
+                { allow_outputs => $generated_children{$target} ? 1 : 0 },
             );
         }
     }
@@ -2841,7 +2845,7 @@ sub _transaction_port_binding_entry {
         child_port          => defined($instance) ? $port : undef,
         start_signal        => defined($instance) ? "${instance}_start" : "${target}_start",
         done_signal         => $site_kind eq 'rule_trigger'
-            ? undef
+            ? ($role eq 'output' && defined($instance) ? "${instance}_done_seen" : undef)
             : (defined($instance) ? "${instance}_done" : "${target}_done"),
         trigger_source      => $site_kind eq 'rule_trigger'
             ? ($args{trigger_source} // _rule_trigger_source_name($args{owner}, $target))

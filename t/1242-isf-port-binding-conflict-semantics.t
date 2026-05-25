@@ -77,6 +77,33 @@ subtest 'spawn output bindings fail closed against conflicting rule writers' => 
 ISF
 };
 
+subtest 'generated rule-trigger output bindings fail closed against conflicting rule writers' => sub {
+    assert_lower_rejected(<<'ISF', qr/ISF conflict 'isf_conflicting_rule_writes' on target 'resp'.*rule 'force'.*rule 'launch' \(trigger_output_binding, = launch_worker_trigger_0_data\)/s);
+(actor trigger_binding_rule_conflict
+  (clock clk)
+  (interface
+    (input fire)
+    (input force_resp)
+    (output done)
+    (output resp (width 8)))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (output data (width 8)))
+    (update data 8'hA5)
+    (complete done))
+  (rule launch fire
+    (trigger worker
+      (params
+        (WIDTH 16))
+      (bind
+        (output data resp))))
+  (rule force force_resp
+    (resp 0)))
+ISF
+};
+
 subtest 'spawn output fan-in reaches backend runtime selector instrumentation' => sub {
     my $result = generate_parent_hdl_from_isf(
         'spawn_binding_runtime_selector',

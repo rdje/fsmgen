@@ -963,8 +963,12 @@ Rules:
   non-empty list expressions.
 - Output bindings name scalar writable actor-side targets.
 - `do` and `spawn` support input and output bindings.
-- Rule `trigger` supports input bindings only because a rule does not wait for
-  transaction completion.
+- Rule `trigger` supports input bindings for local and generated targets.
+  Generated-child rule triggers also support scalar output bindings; the copy
+  back to the actor target is guarded by the generated trigger instance's
+  done-observer signal. Direct/local rule-trigger output bindings remain
+  rejected because a shared local target has no rule-specific completion
+  identity.
 - Width mismatches fail closed when width evidence is known.
 - Reports expose `transaction_port_bindings[]`, including
   `actor_endpoint_kind` so consumers can distinguish scalar endpoints,
@@ -1954,7 +1958,9 @@ Rules:
 - Multiple rules triggering the same local transaction lower through a
   deterministic trigger fan-in DT unless the target is generated.
 - Parameterized triggers use generated child activation instances.
-- Rule-trigger output bindings remain rejected.
+- Generated-child rule triggers may bind scalar output ports back to actor
+  targets under the per-trigger done observer; direct/local rule-trigger output
+  bindings remain rejected.
 
 Resource arbitration:
 
@@ -3113,7 +3119,7 @@ Required fail-closed examples:
 - Unsupported transaction clause heads in a lowered context.
 - Unsupported `(on ...)` body forms such as `(params ...)`.
 - Rule triggers targeting unknown transactions.
-- Rule-trigger output bindings.
+- Direct/local rule-trigger output bindings.
 - Literal-zero, actor-constant-zero, and actor-parameter-zero divisor operands
   in shipped runtime division/modulo expression contexts.
 - Watchdog limits that name transaction parameters, runtime interface signals,
@@ -3798,7 +3804,7 @@ The following are not public shipped integration surfaces today:
 - Arbitrary CDC, payload CDC, reset CDC, level sampling across domains, or
   FIFO-like cross-domain storage.
 - Direct cross-domain reads/writes/triggers/activations/bindings.
-- Rule-trigger output bindings.
+- Direct/local rule-trigger output bindings.
 - Direct `(on ...)` activation parameter overrides.
 - Snapshot-vs-live binding timing selection beyond the shipped binding timing.
 - Proof that every dynamic division/modulo divisor is nonzero. Literal-zero,

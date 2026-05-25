@@ -86,8 +86,11 @@ hardware. The generated instance name is
 `{rule}_{transaction}_trigger_{ordinal}` so repeated lexical trigger sites do
 not collide. The rule still emits the existing one-cycle trigger source and
 payload source timing, then a generated trigger handoff DT drives the child
-instance start and input handoff ports. Rule-trigger output bindings remain
-unsupported because a rule does not await transaction completion.
+instance start and input handoff ports. Generated-child rule-trigger output
+bindings copy the child output handoff into the scalar actor target under that
+trigger instance's done-observer signal. Direct/local rule-trigger output
+bindings remain rejected because a shared local target has no rule-specific
+completion identity.
 
 ## How Transactions Become Hardware
 

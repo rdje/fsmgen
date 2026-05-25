@@ -1869,7 +1869,9 @@ composition consistency, while the rule itself does not wait on completion.
 
 The parent handoff DT reads that `done` input into an internal observer signal
 only to make the composition endpoint explicit; it does not change rule
-control flow. Rule-trigger output bindings stay rejected.
+control flow. Generated-child rule-trigger output bindings reuse that observer
+as the guard for the output copy back to the bound scalar actor target.
+Direct/local rule-trigger output bindings stay rejected.
 
 ## Complete Example — APB Transfer
 

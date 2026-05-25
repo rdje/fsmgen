@@ -2,8 +2,23 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS`.
-- Current frontier: `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Current R14 generated rule-trigger output-binding implementation:
+  `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` shipped generated-child
+  rule-trigger output bindings and closed the task tree. Rule triggers whose
+  target is a generated child now accept scalar output bindings for declared
+  output ports when the target actor signal is writable, same-domain, and
+  width-compatible. The generated trigger handoff DT exposes the child output
+  handoff and copies it to the actor target under that trigger instance's
+  done-observer signal; the rule itself still does not wait in-line for child
+  completion. `transaction_port_bindings[]` entries for generated rule-trigger
+  output bindings report that done observer in `done_signal`. Direct/local
+  transaction rule-trigger output bindings remain fail-closed because shared
+  local transaction instances still have no rule-specific completion identity.
+  Validation passed: syntax checks; focused public/report/spec/book tests with
+  `Files=13, Tests=396`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1742`; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 generated rule-trigger output-binding selection:
   `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.1` created the active task tree
   for generated-child rule-trigger output bindings. The selected surface is

@@ -2541,30 +2541,37 @@ done-gated.
 parent binding DTs; actor signals consumed by explicit spawn input-binding
 expressions are not also same-name wired into the child instance.
 
-Rule `trigger` supports input bindings only; each rule owns a distinct
+Rule `trigger` supports input bindings; each local target rule owns a distinct
 payload source and the trigger fan-in DT routes payloads under the matching
-per-rule trigger pulse.
+per-rule trigger pulse. Generated-child rule triggers also support scalar
+output bindings: the generated trigger handoff DT copies the child output
+handoff into the actor target under that trigger instance's done-observer
+signal.
 
-Rule-trigger output bindings, explicit snapshot-vs-live timing selection,
-additional binding report fields beyond the shipped endpoint-kind metadata,
-and broader static conflict diagnostics remain backlog.
+Direct/local rule-trigger output bindings, explicit snapshot-vs-live timing
+selection, additional binding report fields beyond the shipped endpoint-kind
+metadata, and broader static conflict diagnostics remain backlog.
 
 Actor pin binding now uses the same assignment/conflict path as ordinary ISF
 drives where it has shipped coverage. Spawn output bindings carry parent
 transaction ownership in provenance, so a spawned child output bound to an
 actor output conflicts with a same-target rule writer through the existing
-rule/transaction diagnostics. Accepted spawn-output fan-in and rule-trigger
-input payload fan-in remain visible as normal `.fsm` same-LHS assignments and
-reach the SystemVerilog backend's verification-only selector checks.
+rule/transaction diagnostics. Generated-child rule-trigger output bindings
+carry rule ownership in provenance and conflict with same-target rule writers
+through the rule conflict diagnostics. Accepted spawn-output fan-in and
+rule-trigger input payload fan-in remain visible as normal `.fsm` same-LHS
+assignments and reach the SystemVerilog backend's verification-only selector
+checks.
 
 Successful schedule reports now expose bounded `transaction_port_bindings`
 entries for the shipped binding surface. Each entry records the binding site
 kind, owner, target transaction, direction role, port, scalar actor signal
 when applicable, formatted actor expression, `actor_endpoint_kind`, width, and
-generated handoff names where they exist. The endpoint kind is `signal` for
-scalar actor-side endpoints, `literal` for numeric or exact-width input
-operands, and `expression` for non-empty list-expression input operands. This
-is a public summary for downstream tooling, not the raw binding or
+generated handoff names where they exist. Generated-child rule-trigger output
+entries report the done-observer signal in `done_signal`. The endpoint kind is
+`signal` for scalar actor-side endpoints, `literal` for numeric or exact-width
+input operands, and `expression` for non-empty list-expression input operands.
+This is a public summary for downstream tooling, not the raw binding or
 assignment-provenance internals.
 
 ### Temporal Contract Lowering

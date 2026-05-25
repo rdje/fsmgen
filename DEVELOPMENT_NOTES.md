@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Generated trigger output copies use the done observer
+- `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` keeps output binding lowering
+  inside the generated trigger handoff DT instead of inventing a rule callback
+  form.
+- The copy back to the actor target is guarded by the per-trigger
+  `*_done_seen` observer. That makes the generated-top child completion
+  explicit in the parent `.fsm` and gives the output binding a concrete
+  completion identity while preserving the rule's non-blocking trigger
+  behavior.
+- The validation gate allows rule-trigger output bindings only when the target
+  transaction is in the generated-child activation set. Direct/local
+  transaction triggers still fail closed because one shared target instance
+  and one shared done pulse cannot prove which rule owns the completion.
+- Schedule reports publish only bounded public metadata: the generated
+  instance, handoff ports, and the `done_signal` observer for output entries.
+  Raw assignment provenance and private lowering internals remain private.
+
 ## 2026-05-25: Generated rule-trigger output bindings need per-trigger identity
 - `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.1` selects generated-child rule
   triggers as the next bounded output-binding surface.

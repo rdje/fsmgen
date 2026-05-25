@@ -2091,8 +2091,12 @@ It elaborates a generated child activation instance named
 `{rule}_{transaction}_trigger_{ordinal}` for each lexical parameterized trigger
 site, applies the overrides on that generated `?fsmc` instance, and preserves
 the shipped rule-trigger pulse and input payload timing through generated
-handoff DTs. Rule-trigger output bindings remain unsupported because rules do
-not wait for transaction completion.
+handoff DTs. Generated-child rule-trigger output bindings are supported for
+scalar actor targets: the parent handoff DT reads the generated child output
+port through the generated top and copies it to the bound actor signal only
+under that trigger instance's done-observer signal. Direct/local transaction
+rule-trigger output bindings remain rejected because a shared local target has
+no rule-specific completion identity.
 
 Direct `(on ...)` activation has no corresponding `(params ...)` source shape.
 The only legal nested body clauses in `(on port body...)` are
@@ -2299,13 +2303,18 @@ child instance; the explicit handoff is the data path. Spawn output-binding
 assignments are owned by the parent transaction for assignment provenance and
 rule/transaction conflict analysis.
 
-Rule `(trigger ...)` bindings currently support transaction input ports only.
-Each triggering rule emits a distinct payload source signal per bound input
-port, and the generated trigger fan-in DT routes that payload into the
-transaction port under the matching per-rule trigger source. Multiple rule
-payloads for the same port therefore remain visible as guarded same-LHS
-assignments instead of being silently merged. Rule-trigger output bindings
-remain deferred because a rule does not await transaction completion.
+Rule `(trigger ...)` bindings support transaction input ports for local and
+generated targets. Each triggering rule emits a distinct payload source signal
+per bound input port, and the generated trigger fan-in DT routes that payload
+into a local transaction port under the matching per-rule trigger source.
+Parameterized/generated rule triggers additionally support scalar output
+bindings: the generated trigger handoff DT copies the child output handoff to
+the actor target when that generated trigger instance's done-observer signal
+is high. Multiple rule payloads or output copies for the same port/target
+therefore remain visible as guarded same-LHS assignments instead of being
+silently merged. Direct/local transaction rule-trigger output bindings remain
+deferred because a shared local transaction target has no rule-specific
+completion identity.
 
 The same-cycle visibility rule for this first shipped surface is: input
 payloads are emitted in the same activation region as their start/trigger
@@ -3566,8 +3575,10 @@ Current lowering:
   rule-trigger timing by routing the existing per-rule trigger source and input
   payload sources through a generated handoff DT. The rule does not wait for
   the generated child `done` handoff; the parent reads that done handoff into
-  an internal observer only so the generated-top endpoint is explicit.
-  Rule-trigger output bindings remain rejected.
+  an internal observer so the generated-top endpoint is explicit and so any
+  generated-child output binding can copy its output under that per-trigger
+  completion observation. Direct/local rule-trigger output bindings remain
+  rejected.
 - Scheduled `.fsm` emission writes the rule guard as the non-state DT header
   DTE, for example:
 
@@ -4603,6 +4614,8 @@ Transaction port binding provenance is emitted as a top-level
 transaction port, actor signal when the actor side is a scalar endpoint,
 formatted actor expression, `actor_endpoint_kind`, width, and the bounded
 generated signal names that make the scheduled `.fsm` handoff reviewable.
+For generated-child rule-trigger output bindings, `done_signal` names the
+per-trigger done-observer signal that guards the copy back into the actor.
 `actor_endpoint_kind` is `signal` for scalar actor-side endpoints, `literal`
 for numeric or exact-width input operands, and `expression` for non-empty
 list-expression input operands. For expression-valued or literal input
@@ -5498,10 +5511,11 @@ Focused tests:
   divisor expressions nonzero remains deferred until range/dataflow evidence
   is specified.
 - Transaction binding surfaces beyond scalar and expression-valued `do`,
-  `spawn`, and rule-trigger input bindings. Rule-trigger output bindings,
-  explicit snapshot-vs-live timing selection, broader static conflict
-  diagnostics, richer report metadata, and full expression width inference
-  remain under `ISF-PORT-BINDING` and
+  `spawn`, rule-trigger input bindings, and generated-child rule-trigger
+  output bindings. Direct/local rule-trigger output bindings, explicit
+  snapshot-vs-live timing selection, broader static conflict diagnostics,
+  richer report metadata, and full expression width inference remain under
+  `ISF-PORT-BINDING` and
   `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset, the top-level repeat-body local `(do child)` subset,

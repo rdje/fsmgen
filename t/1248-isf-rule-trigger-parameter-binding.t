@@ -173,6 +173,110 @@ ISF
     like($parent_fsm, qr/with_default_worker_trigger_0_trigger_handoff/, 'default trigger gets a generated handoff DT');
 };
 
+subtest 'generated rule trigger output bindings copy child output on done observation' => sub {
+    my $source = <<'ISF';
+(actor rule_trigger_output_binding
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input fire)
+    (input req_addr (width 8))
+    (output done)
+    (output data (width 8)))
+  (storage
+    (var scratch (width 8)))
+  (transaction parent
+    (on fire)
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update scratch addr)
+    (update data scratch)
+    (complete done))
+  (rule launch fire
+    (trigger worker
+      (params
+        (WIDTH 16))
+      (bind
+        (input addr req_addr)
+        (output data data)))))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    my $instance = $ir->{spawn_instances}[0];
+    is($instance->{activation_kind}, 'trigger', 'generated output binding still uses trigger activation provenance');
+    is_deeply(
+        $instance->{port_bindings},
+        [
+            {
+                role             => 'input',
+                child_port       => 'addr',
+                parent_port      => 'launch_worker_trigger_0_addr',
+                actor_signal     => 'req_addr',
+                actor_expr       => 'req_addr',
+                actor_expression => 'req_addr',
+                width            => 8,
+            },
+            {
+                role             => 'output',
+                child_port       => 'data',
+                parent_port      => 'launch_worker_trigger_0_data',
+                actor_signal     => 'data',
+                actor_expr       => 'data',
+                actor_expression => 'data',
+                width            => 8,
+            },
+        ],
+        'generated trigger instance exposes input and output handoff metadata',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'rule_trigger_output_binding.fsm'};
+    my $top_fsm = $lowered->{files}{'rule_trigger_output_binding_top.fsm'};
+
+    like($parent_fsm, qr/\(launch_worker_trigger_0_data 8\)/, 'parent exposes hidden output-binding handoff width');
+    like($parent_fsm, qr/\(launch_worker_trigger_0_done_seen 1\)/, 'parent exposes generated trigger done observation');
+    like($parent_fsm, qr/\(-launch_worker_trigger_0_trigger_handoff[\s\S]*\(= \(launch_worker_trigger_0_start> launch_worker_trigger_0\)\)[\s\S]*\(= \(launch_worker_trigger_0_done_seen launch_worker_trigger_0_done\)\)[\s\S]*\(= \(launch_worker_trigger_0_addr> launch_worker_trigger_0_addr_payload\) <launch_worker_trigger_0\)[\s\S]*\(= \(data> launch_worker_trigger_0_data\) <launch_worker_trigger_0_done_seen\)/,
+        'generated trigger handoff copies output only under the done observation');
+    like($top_fsm, qr/\(launch_worker_trigger_0\.data rule_trigger_output_binding\.launch_worker_trigger_0_data\)/,
+        'generated top wires child output port to parent output handoff');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . $_->{role} . ':' . ($_->{instance} // '') . ':' . $_->{port} . ':' . ($_->{done_signal} // '') } @{$report->{transaction_port_bindings}} ],
+        [
+            'rule_trigger:input:launch_worker_trigger_0:addr:',
+            'rule_trigger:output:launch_worker_trigger_0:data:launch_worker_trigger_0_done_seen',
+        ],
+        'report exposes generated trigger output binding completion observation',
+    );
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $source_path = File::Spec->catfile($tempdir, 'rule_trigger_output_binding.isf');
+    my $hdl_path = File::Spec->catfile($tempdir, 'rule_trigger_output_binding.sv');
+    write_file($source_path, $source);
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => [
+            './bin/fsmgen',
+            '--quiet',
+            '--outdir',
+            $tempdir,
+            '--output',
+            $hdl_path,
+            $source_path,
+        ],
+    );
+    ok($success, 'generated rule-trigger output binding reaches HDL generation');
+    is(join('', @{$stderr_buf || []}), '', 'generated rule-trigger output binding HDL generation keeps stderr clean');
+    like(slurp($hdl_path), qr/\bmodule\s+rule_trigger_output_binding_top\b/, 'HDL contains generated top module');
+    like(slurp($hdl_path), qr/\blaunch_worker_trigger_0_data\b/, 'HDL contains generated output-binding handoff');
+};
+
 subtest 'rule trigger parameter bindings fail closed for unsupported or ambiguous shapes' => sub {
     assert_parse_or_lower_rejected(<<'ISF', 'unknown trigger override name', qr/trigger instance 'launch_worker_trigger_0' overrides unknown parameter 'MODE'/);
 (actor unknown_trigger_parameter
@@ -218,25 +322,6 @@ ISF
         (WIDTH TOP_WIDTH)))))
 ISF
 
-    assert_parse_or_lower_rejected(<<'ISF', 'rule trigger output binding remains unsupported', qr/output binding 'data' is not supported/);
-(actor trigger_output_binding
-  (clock clk)
-  (interface
-    (input fire)
-    (output data (width 8)))
-  (transaction worker
-    (params
-      (WIDTH 8))
-    (ports
-      (output data (width 8)))
-    (complete data))
-  (rule launch fire
-    (trigger worker
-      (params
-        (WIDTH 16))
-      (bind
-        (output data data)))))
-ISF
 };
 
 done_testing();

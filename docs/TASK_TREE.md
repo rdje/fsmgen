@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS` | `active` | `R14` | `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` | [docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md](docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md](docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md) |
 | `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.md) |
 | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.md](docs/tasks/ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.md) |
 | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR` | `done` | `project operations` | `closed` | [docs/tasks/CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.md](docs/tasks/CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.md) |

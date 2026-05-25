@@ -292,8 +292,11 @@ drives `{instance}_start` plus the input handoff ports under that trigger
 source. The generated top applies the `(params ...)` overrides on that
 `?fsmc` instance. The parent wires `instance.done` back for uniform generated
 composition and reads it into an internal observer signal, but the rule does
-not wait for it. Rule-trigger output bindings remain unsupported because there
-is no completion point in the rule action.
+not wait for it. Generated-child rule-trigger output bindings copy a bound
+child output handoff into a scalar actor target under that same done-observer
+signal. Direct/local rule-trigger output bindings remain rejected because a
+shared local transaction target does not identify which rule trigger owns a
+completion.
 
 Malformed or ambiguous trigger parameter overrides must fail before scheduled
 artifacts are emitted: duplicate `params` blocks, duplicate override names,

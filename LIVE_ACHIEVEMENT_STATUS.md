@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Generated rule-trigger output bindings shipped
+- Completed `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` and closed the
+  task tree.
+- Generated-child rule triggers now accept scalar output bindings for declared
+  output ports when the actor target is writable, same-domain, and
+  width-compatible.
+- The generated trigger handoff DT copies the child output handoff into the
+  actor target under that trigger instance's `*_done_seen` observer, while the
+  rule remains non-blocking.
+- `transaction_port_bindings[]` entries for generated rule-trigger output
+  bindings report the done observer in `done_signal`.
+- Direct/local transaction rule-trigger output bindings remain fail-closed
+  until a separate completion-identity contract is selected.
+- Validation passed: syntax checks; focused public/report/spec/book tests with
+  `Files=13, Tests=396`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1742`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Generated rule-trigger output-binding tree selected
 - Created active task tree
   `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS`.
