@@ -10,6 +10,10 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 
+my $direct_on_params_diagnostic =
+    "Transaction 'main': on body does not accept '(params ...)'; "
+    . "direct '(on ...)' activation is an entry guard, not a generated activation-site parameter override";
+
 sub lower_source {
     my ($source) = @_;
     my $actor = FSM::Adapter::ISF->new()->parse_source($source, 'sample-clause-boundary.isf');
@@ -118,7 +122,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'direct on params block', qr/\ATransaction 'main': on body supports only '\(sample port as name\)' clauses/);
+    assert_lower_rejected(<<'ISF', 'direct on params block', qr/\A\Q$direct_on_params_diagnostic\E/);
 (actor direct_on_params
   (clock clk)
   (interface (input start) (input req) (output done))

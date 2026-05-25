@@ -268,9 +268,10 @@ Explicit `async`/`active_low`/`active_high` override.
 
 `(on ...)` is the transaction's own entry guard, not a generated activation
 instance. It does not accept `(params ...)`; nested body clauses are limited to
-`(sample port as name)`. Static specialization must happen through generated
-activation forms such as `spawn`, parameterized blocking `do`, or
-parameterized rule `trigger`.
+`(sample port as name)`. Unsupported `(params ...)` body clauses fail with a
+diagnostic that names the entry-guard/generated-activation boundary. Static
+specialization must happen through generated activation forms such as `spawn`,
+parameterized blocking `do`, or parameterized rule `trigger`.
 
 ## `(drive name args...)` -> One State + Non-State DT
 

@@ -4346,6 +4346,14 @@ sub _validate_on_clause {
 
     for my $i (2 .. $#$clause) {
         my $body_clause = $clause->[$i];
+        if (ref($body_clause) eq 'ARRAY'
+            && @$body_clause
+            && defined($body_clause->[0])
+            && !ref($body_clause->[0])
+            && $body_clause->[0] eq 'params') {
+            confess "Transaction '$tn': on body does not accept '(params ...)'; "
+                . "direct '(on ...)' activation is an entry guard, not a generated activation-site parameter override\n";
+        }
         confess "Transaction '$tn': on body supports only '(sample port as name)' clauses\n"
             unless ref($body_clause) eq 'ARRAY'
                 && @$body_clause

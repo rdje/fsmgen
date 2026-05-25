@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Direct on-entry params deserve a specific diagnostic
+- `ISF-DIRECT-ON-PARAM-DIAGNOSTIC.1` keeps direct `(on ...)` entry activation
+  outside the activation-parameter override surface, but avoids reporting that
+  `(params ...)` is merely an arbitrary unsupported body form.
+- The sharper message matches the design reason: `(on ...)` is the
+  transaction's entry guard, while static specialization belongs to generated
+  activation sites with a concrete instance identity.
+
 ## 2026-05-25: Historical port-binding notes need later-slice anchors
 - `ROADMAP-R14-PORT-BINDING-HISTORICAL-TRUTH-SYNC.1` keeps the older
   `ISF-PORT-BINDING.5` closure useful for recovery by naming the later slices

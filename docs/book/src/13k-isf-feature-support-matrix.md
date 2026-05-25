@@ -1066,9 +1066,10 @@ does not exist:
   drive-call actual arguments, recursive actor networks, and permanent actor
   grouping also remain outside the shipped generated-child actor-to-actor
   route subset.
-- Direct `(on ...)` activation-site `(params ...)` is unsupported; static
-  specialization belongs to spawn, generated blocking `do`, and rule-trigger
-  generated activation sites.
+- Direct `(on ...)` activation-site `(params ...)` is unsupported and fails
+  with an entry-guard/generated-activation diagnostic; static specialization
+  belongs to spawn, generated blocking `do`, and rule-trigger generated
+  activation sites.
 - Rule-trigger output bindings for direct/local targets, explicit
   behavior-changing snapshot-vs-live binding timing selection/conversion,
   additional future binding-report expansions beyond the shipped bounded

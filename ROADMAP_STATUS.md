@@ -4,6 +4,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 direct entry parameter diagnostic hardening:
+  `ISF-DIRECT-ON-PARAM-DIAGNOSTIC.1` makes direct
+  `(on ... (params ...))` reject with a targeted diagnostic that says direct
+  `(on ...)` activation is an entry guard, not a generated activation-site
+  parameter override, and closed the task tree. Legal `(on ... (sample ...))`
+  behavior is unchanged. This is fail-closed diagnostic hardening:
+  generated `.fsm`, HDL, schedule-report schema, public API, and runtime
+  behavior for accepted sources did not change. Validation passed: syntax
+  checks; focused sample/public-doc/book tests with `Files=7, Tests=375`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current R14 port-binding historical recovery-note truth sync:
   `ROADMAP-R14-PORT-BINDING-HISTORICAL-TRUTH-SYNC.1` synchronized older
   `ISF-PORT-BINDING.5` recovery notes with later shipped R14 port-binding

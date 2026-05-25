@@ -118,11 +118,13 @@ The only supported inline body clauses inside `(on ...)` are
 silently ignored.
 
 `(params ...)` is not a legal `(on ...)` body clause. A direct entry guard has
-no per-call instance to specialize; transaction-local `params` on that
-transaction remain definition defaults. If an author needs a statically
-specialized child instance, use a generated activation form (`spawn`,
-parameterized blocking `do`, or parameterized rule `trigger`) and pass runtime
-data through ports or bindings.
+no per-call instance to specialize; the lowerer reports that direct
+`(on ...)` activation is an entry guard, not a generated activation-site
+parameter override. Transaction-local `params` on that transaction remain
+definition defaults. If an author needs a statically specialized child
+instance, use a generated activation form (`spawn`, parameterized blocking
+`do`, or parameterized rule `trigger`) and pass runtime data through ports or
+bindings.
 
 **Timing**: 0 active cycles (waits). Fires in 1 cycle when condition is met.
 

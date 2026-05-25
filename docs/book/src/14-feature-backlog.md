@@ -519,8 +519,9 @@ values resolve to the same literal generated-top bindings.
 
 Direct `(on port body...)` remains the entry/idle-state guard and accepts only
 `(sample port as name)` nested body clauses. `(on start (params (WIDTH 16)))`
-must fail closed instead of being interpreted as a static specialization or a
-runtime parameter assignment.
+fails closed with a diagnostic that says direct `(on ...)` activation is an
+entry guard, not a generated activation-site parameter override. It must not
+be interpreted as a static specialization or a runtime parameter assignment.
 
 If two activation sites pass different parameter values to the same
 transaction, the lowerer must elaborate distinct logical child instances or
