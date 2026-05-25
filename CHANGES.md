@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Binding timing history synchronized
+- Completed `ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.1` and closed
+  the task tree.
+- Older recovery notes no longer imply all snapshot/live binding timing syntax
+  is deferred.
+- The docs now distinguish later shipped current-timing
+  `(timing snapshot|live)` assertions and `authored_timing_mode` report
+  metadata from deferred behavior-changing snapshot/live timing conversion.
+- This is documentation-only truth synchronization; parser behavior, scheduler
+  lowering, generated `.fsm`, HDL, schedule-report payloads, public contract
+  code, and runtime behavior did not change.
+- Validation passed: stale timing wording grep confirmed remaining matches are
+  historical task non-goals or explicit behavior-conversion deferrals; focused
+  live-doc/book audits with `Files=4, Tests=366`; `mdbook build docs/book`;
+  and `git diff --check`.
+
 ### R14 — Rule-trigger output history synchronized
 - Completed `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.1` and
   closed the task tree.

@@ -4,6 +4,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 binding timing history truth sync:
+  `ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.1` synchronized older
+  recovery notes that still treated explicit snapshot/live binding timing
+  syntax as wholly deferred. They now distinguish later shipped current-timing
+  `(timing snapshot|live)` assertions and `authored_timing_mode` report
+  metadata from still-deferred behavior-changing snapshot/live timing
+  conversion. This is documentation-only truth synchronization: parser
+  behavior, scheduler lowering, generated `.fsm`, HDL, schedule-report
+  payloads, public contract code, and runtime behavior did not change.
+  Validation passed: stale timing wording grep confirmed remaining matches are
+  historical task non-goals or explicit behavior-conversion deferrals; focused
+  live-doc/book audits with `Files=4, Tests=366`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Current R14 rule-trigger output history truth sync:
   `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.1` synchronized current
   mdBook activation-parameter wording and older recovery notes that still said
@@ -12133,9 +12146,12 @@ Done:
   lowering and temporal contract SystemVerilog assertion projection with
   example syntax and broader non-claims.
 - The ISF shipped feature matrix now explicitly lists transaction ports,
-  activation-site bindings, `transaction_port_bindings[]` report provenance,
-  and the rule-trigger output-binding plus snapshot-vs-live timing
-  non-claims.
+  activation-site bindings, and `transaction_port_bindings[]` report
+  provenance. At that historical slice the rule-trigger output-binding plus
+  snapshot-vs-live timing non-claims were still present; later R14 slices
+  shipped generated-child rule-trigger output bindings and current-timing
+  `(timing snapshot|live)` assertions while keeping direct/local rule-trigger
+  output bindings and behavior-changing timing conversion deferred.
 - The ISF shipped feature matrix now explicitly lists actor report metadata,
   actor params, schedule JSON schema-version stability, storage roles, and
   report-internal non-claims.

@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Binding timing history must separate syntax from conversion
+- `ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.1` keeps older notes from
+  implying that all snapshot/live binding timing work remains deferred.
+- The shipped boundary is current-timing assertion and report provenance:
+  `(timing snapshot|live)` validates the existing transfer class, and
+  `authored_timing_mode` records the authored assertion. Behavior-changing
+  snapshot/live conversion still needs a separate design.
+
 ## 2026-05-25: Rule-trigger output history must name the split
 - `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.1` keeps older
   activation-parameter notes useful by naming the later generated-child
@@ -132,6 +140,9 @@ This document captures engineering rationale, design constraints, and working de
 - This keeps the next implementation bounded to report metadata and docs. It
   also gives downstream tooling a stable vocabulary for current behavior
   before a later task considers explicit snapshot-vs-live source spelling.
+  Later R14 slices shipped current-timing `(timing snapshot|live)` assertions
+  and `authored_timing_mode` report metadata; behavior-changing timing
+  conversion remains deferred.
 
 ## 2026-05-25: Current-active-lane roadmap text needs the same latest slice
 - `ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC.1` repairs the lower
@@ -10040,10 +10051,12 @@ This document captures engineering rationale, design constraints, and working de
 - The projection is source/site provenance, not runtime arbitration evidence.
   Conflict, fan-in, priority, and runtime selector facts remain in their
   existing report or backend result surfaces.
-- Closing this tree does not freeze richer binding features. Expression-valued
-  bindings, rule-trigger output bindings, snapshot-vs-live timing selection,
-  and broader static conflict proof still need separate task-tree leaves before
-  they become public.
+- Closing this tree does not freeze richer binding features. Later R14 slices
+  shipped expression-valued input bindings, generated-child rule-trigger output
+  bindings, and current-timing `(timing snapshot|live)` assertions with
+  `authored_timing_mode` report metadata. Behavior-changing snapshot/live
+  timing conversion and broader static conflict proof still need separate
+  task-tree leaves before they become public.
 ## 2026-05-15: ISF port binding conflict semantics
 - Spawn output bindings should be treated as transaction-owned data writes,
   not anonymous generated wiring. The binding DT is generated, but its

@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 binding timing history synchronized
+- Completed `ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.1` and closed
+  the task tree.
+- Older recovery notes no longer imply all snapshot/live binding timing syntax
+  is deferred.
+- The docs now distinguish later shipped current-timing
+  `(timing snapshot|live)` assertions and `authored_timing_mode` report
+  metadata from deferred behavior-changing snapshot/live timing conversion.
+- This is documentation-only truth synchronization; parser behavior, scheduler
+  lowering, generated `.fsm`, HDL, schedule-report payloads, public contract
+  code, and runtime behavior did not change.
+- Validation passed: stale timing wording grep confirmed remaining matches are
+  historical task non-goals or explicit behavior-conversion deferrals; focused
+  live-doc/book audits with `Files=4, Tests=366`; `mdbook build docs/book`;
+  and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 rule-trigger output history synchronized
 - Completed `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.1` and
   closed the task tree.
@@ -352,8 +370,12 @@ This is the live continuity document for fast session recovery after crashes, re
 - This selection slice does not change parser behavior, scheduler lowering,
   generated `.fsm`, HDL, public syntax, runtime behavior, or report payloads
   yet.
-- Rule-trigger output bindings, explicit snapshot-vs-live timing syntax, raw
-  assignment provenance export, and timing behavior changes remain deferred.
+- At this historical selection slice, rule-trigger output bindings, explicit
+  snapshot-vs-live timing syntax, raw assignment provenance export, and timing
+  behavior changes remained deferred. Later R14 slices shipped generated-child
+  rule-trigger output bindings, current-timing `(timing snapshot|live)`
+  assertions, and `authored_timing_mode` report metadata; behavior-changing
+  timing conversion and raw assignment provenance export remain deferred.
 - Active task tree: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`.
 - Current frontier: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2`.
 
@@ -12074,8 +12096,11 @@ This is the live continuity document for fast session recovery after crashes, re
   provenance.
 - Widened
   [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
-  so those markers and the rule-trigger output-binding/snapshot-vs-live
-  non-claims cannot disappear silently.
+  so those markers and the original rule-trigger output-binding/snapshot-vs-live
+  non-claims could not disappear silently. Later R14 slices shipped
+  generated-child rule-trigger output bindings and current-timing
+  `(timing snapshot|live)` assertions; direct/local rule-trigger output
+  bindings and behavior-changing timing conversion remain backlog.
 - No parser, scheduler, emitter, schedule-report payload, generated `.fsm`, or
   HDL behavior changed. No active ISF task tree remains open.
 ## 2026-05-16: ISF feature matrix stage/contract coverage synchronized

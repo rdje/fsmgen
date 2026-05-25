@@ -149,7 +149,9 @@ reviewable `.fsm` signals with conflict checks.
 - Same-cycle visibility for the first shipped binding surface is explicit:
   input payloads are emitted in the same activation region as their
   start/trigger handoff, and spawned child bindings use live generated-top
-  handoff wiring. A future snapshot-vs-live choice needs a separate spelling.
+  handoff wiring. Later R14 slices shipped current-timing
+  `(timing snapshot|live)` assertions; behavior-changing timing conversion
+  remains deferred.
 - Rules that trigger transactions need a port-binding story before the model
   is fully ergonomic. Directly pulsing a transaction start input works for
   control-only transactions, but data-bearing activations need per-trigger
@@ -209,10 +211,10 @@ reviewable `.fsm` signals with conflict checks.
 
 ## Blockers
 
-- None. Remaining richer surfaces are deferred backlog: rule-trigger output
-  binding, expression-valued binding width contracts, explicit
-  snapshot-vs-live timing, broader static conflict proof, and richer report
-  fields.
+- None. Remaining richer surfaces are deferred backlog: direct/local
+  rule-trigger output binding, expression-valued binding width contracts,
+  behavior-changing snapshot-vs-live timing conversion, broader static
+  conflict proof, and richer report fields.
 
 ## Verification Log
 
