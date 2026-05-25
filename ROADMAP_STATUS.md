@@ -2,8 +2,27 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS`.
+- Current frontier: `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2`.
+- Recent R14 interface package-constant width selection:
+  `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1` created the active task tree and
+  selected the next bounded implementation leaf. Actor top-level interface
+  `(input NAME (width PACKAGE.CONSTANT))` and
+  `(output NAME (width PACKAGE.CONSTANT))` declarations may next use
+  qualified imported package scalar constants when the resolved value is a
+  positive integer literal. Accepted package-constant interface widths should
+  publish as resolved integer widths in parser handoff, scheduled `.fsm`,
+  schedule reports, and generated HDL, matching existing actor-constant and
+  actor-parameter interface width behavior. Unqualified package constants,
+  unknown package constants, package aggregate constants, package aggregate
+  scalar-leaf paths, ambiguous local-token spellings, zero-valued constants,
+  runtime signals, arbitrary expressions, package constants in other
+  dimension/value domains, and generated-top respecialization remain deferred
+  or fail closed. No parser, scheduler, report, generated artifact, HDL, CLI
+  behavior, public API, source, test, or generated behavior changed in this
+  selection slice. Validation passed: feature-backlog/live-book/book-matrix
+  audits with `Files=3, Tests=364`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R14 reusable-library use-site package-constant implementation:
   `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` shipped the bounded imported package
   scalar-constant widening for reusable-library use-site parameter overrides
@@ -7285,13 +7304,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2`
-  shipped the bounded R14 reusable-library use-site package-constant widening
-  and closed its task tree. The next PNT behavior-bearing slice must select or
-  create a task tree before code, test, source, generated-artifact, or config
-  changes.
+- Active task tree: `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS`.
+- Current frontier: `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2`.
+- Completion status: `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1`
+  selected the next bounded R14 implementation tree. The next leaf will allow
+  actor top-level interface port widths to use qualified imported package
+  scalar constants and publish resolved integer widths through the existing
+  interface-width surfaces.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

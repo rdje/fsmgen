@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Interface package-constant widths selected
+- Created active task tree `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS`.
+- Completed `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1`; the selected
+  implementation frontier is `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2`.
+- Selected a bounded actor interface width value-domain widening: top-level
+  `(input NAME (width PACKAGE.CONSTANT))` and
+  `(output NAME (width PACKAGE.CONSTANT))` declarations may use qualified
+  imported package scalar constants when the resolved value is a positive
+  integer literal.
+- Accepted package-constant interface widths should publish as resolved
+  integer widths in parser handoff, scheduled `.fsm`, schedule reports, and
+  generated HDL, matching actor-constant and actor-parameter interface width
+  behavior.
+- Unqualified package constants, unknown package constants, package aggregate
+  constants, package aggregate scalar-leaf paths, ambiguous local-token
+  spellings, zero-valued constants, runtime signals, arbitrary expressions,
+  package constants in other dimension/value domains, and generated-top
+  respecialization remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Reusable-library use-site package constants shipped
 - Completed `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` and closed the task tree.
 - Reusable-library use-site parameter override scalar values and scalar

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Interface package constants should reuse width resolution
+- `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1` selects qualified imported package
+  scalar constants for actor top-level interface port widths as the next
+  narrow package-constant dimension widening.
+- Actor constants and actor-local scalar parameter defaults already resolve to
+  concrete integer widths for the same `(width ...)` interface surface. The
+  selected package-constant behavior should reuse that public shape: resolve
+  the imported package scalar constant during parsing/lowering and publish the
+  positive integer width in scheduled `.fsm`, reports, and HDL.
+- The boundary stays explicit and scalar. Unqualified lookup, aggregate
+  package constants, package member/item paths, unrelated width/value domains,
+  generated-top respecialization, and package namespace pollution remain
+  fail-closed or deferred.
+
 ## 2026-05-24: Library use package constants publish literal specialized values
 - `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` keeps reusable-library use-site
   package constants on the importer-side specialization boundary. The parser
