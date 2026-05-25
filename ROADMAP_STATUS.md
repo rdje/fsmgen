@@ -4,6 +4,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 port-binding historical recovery-note truth sync:
+  `ROADMAP-R14-PORT-BINDING-HISTORICAL-TRUTH-SYNC.1` synchronized older
+  `ISF-PORT-BINDING.5` recovery notes with later shipped R14 port-binding
+  slices and closed the task tree. This is documentation-only truth
+  synchronization: parser behavior, scheduler lowering, generated `.fsm`,
+  HDL, schedule-report payloads, public contract code, and runtime behavior
+  did not change. Validation passed: recovery-doc grep; public
+  contract/spec/book audits with `Files=4, Tests=366`; `mdbook build
+  docs/book`; and `git diff --check`.
 - Current R14 rule-trigger duplicate output target diagnostic:
   `ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` rejects multiple
   generated-child rule-trigger output bindings in one rule when they target
@@ -6532,9 +6541,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `transaction_port_bindings` entries for `do`, `spawn`, and rule-trigger
   scalar input bindings, including owner, target transaction, role, port,
   actor signal, width, and generated handoff names where applicable.
-  Remaining richer binding surfaces stay deferred: expression-valued
-  bindings, rule-trigger output bindings, explicit snapshot-vs-live timing,
-  broader static conflict proof, and richer report fields.
+  Later R14 slices shipped expression-valued input bindings, generated-child
+  rule-trigger output bindings, explicit current-timing
+  `(timing snapshot|live)` assertions, endpoint-kind metadata, binding-timing
+  metadata, authored timing-mode metadata, and targeted duplicate output
+  diagnostics. Remaining transaction-port binding surfaces are direct/local
+  rule-trigger output bindings, behavior-changing snapshot-vs-live timing
+  conversion, and broader static conflict diagnostics.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet
@@ -11641,6 +11654,20 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ROADMAP-R14-PORT-BINDING-HISTORICAL-TRUTH-SYNC.1` is shipped and the task
+  tree is closed:
+  - older `ISF-PORT-BINDING.5` recovery notes now point to later shipped
+    expression-valued input bindings, generated-child rule-trigger output
+    bindings, explicit current-timing assertions, endpoint-kind metadata,
+    binding-timing metadata, authored timing-mode metadata, and targeted
+    duplicate output diagnostics,
+  - parser behavior, scheduler lowering, generated `.fsm`, HDL,
+    schedule-report payloads, public contract code, and runtime behavior are
+    unchanged,
+  - and README, task tree, roadmap, and live docs are synchronized.
+  - Validation passed: recovery-doc grep; public contract/spec/book audits
+    with `Files=4, Tests=366`; `mdbook build docs/book`; and
+    `git diff --check`.
 - `ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` is shipped and the
   task tree is closed:
   - multiple generated-child rule-trigger output bindings in one rule now

@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Port-binding historical recovery notes synchronized
+- Completed `ROADMAP-R14-PORT-BINDING-HISTORICAL-TRUTH-SYNC.1` and closed
+  the task tree.
+- Older `ISF-PORT-BINDING.5` recovery notes now point to later shipped slices
+  for expression-valued input bindings, generated-child rule-trigger output
+  bindings, explicit current-timing assertions, endpoint-kind metadata,
+  binding-timing metadata, authored timing-mode metadata, and targeted
+  duplicate output diagnostics.
+- This is documentation-only truth synchronization; parser behavior,
+  scheduler lowering, generated `.fsm`, HDL, schedule-report payloads, public
+  contract code, and runtime behavior did not change.
+- Validation passed: recovery-doc grep; public contract/spec/book audits with
+  `Files=4, Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Rule-trigger duplicate output target diagnostic shipped
 - Completed
   `ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` and closed the task

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Historical port-binding notes need later-slice anchors
+- `ROADMAP-R14-PORT-BINDING-HISTORICAL-TRUTH-SYNC.1` keeps the older
+  `ISF-PORT-BINDING.5` closure useful for recovery by naming the later slices
+  that superseded its deferred-surface list.
+- Recovery notes should not leave old deferred lists looking current after
+  later slices ship the exact surfaces named in those lists.
+
 ## 2026-05-25: Rule-local trigger output copies need one actor target each
 - `ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` keeps generated
   rule-trigger output bindings non-blocking, but rejects two copies in the

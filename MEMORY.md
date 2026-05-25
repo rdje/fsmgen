@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 port-binding historical recovery notes synchronized
+- Completed `ROADMAP-R14-PORT-BINDING-HISTORICAL-TRUTH-SYNC.1` and closed
+  the task tree.
+- Older `ISF-PORT-BINDING.5` recovery notes now point to later shipped slices
+  for expression-valued input bindings, generated-child rule-trigger output
+  bindings, explicit current-timing assertions, endpoint-kind metadata,
+  binding-timing metadata, authored timing-mode metadata, and targeted
+  duplicate output diagnostics.
+- This is documentation-only truth synchronization; parser behavior,
+  scheduler lowering, generated `.fsm`, HDL, schedule-report payloads, public
+  contract code, and runtime behavior did not change.
+- Validation passed: recovery-doc grep; public contract/spec/book audits with
+  `Files=4, Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 rule-trigger duplicate output target diagnostic shipped
 - Completed
   `ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` and closed the task
@@ -13836,10 +13852,11 @@ This is the live continuity document for fast session recovery after crashes, re
   mux selectors, and generated-top bridge wiring.
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and
   [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
-  were aligned with the shipped port-binding status: bounded binding
-  provenance is shipped, while expression-valued bindings, rule-trigger
-  output bindings, explicit snapshot-vs-live timing, and richer conflict/report
-  surfaces remain deferred follow-on work.
+  were aligned with the then-shipped port-binding status. Later R14 slices
+  shipped expression-valued input bindings, generated-child rule-trigger
+  output bindings, explicit current-timing `(timing snapshot|live)`
+  assertions, endpoint-kind metadata, binding-timing metadata, authored
+  timing-mode metadata, and targeted duplicate output diagnostics.
 - R14 feature delivery remains focused on the next user-visible feature tree;
   the public-contract tree's normal frontier remains `ISF-PUBLIC-CONTRACT.1`.
 ## 2026-05-15: ISF port binding schedule-report projection
@@ -13855,9 +13872,13 @@ This is the live continuity document for fast session recovery after crashes, re
   [t/1243-isf-port-binding-schedule-report.t](t/1243-isf-port-binding-schedule-report.t)
   for in-process and CLI report projection, and refreshed public contract
   metadata/tests.
-- Remaining richer surfaces are backlog: expression-valued bindings,
-  rule-trigger output bindings, explicit snapshot-vs-live timing, broader
-  static conflict proof, and richer report fields.
+- Later R14 slices shipped expression-valued input bindings, generated-child
+  rule-trigger output bindings, explicit current-timing
+  `(timing snapshot|live)` assertions, endpoint-kind metadata, binding-timing
+  metadata, authored timing-mode metadata, and targeted duplicate output
+  diagnostics. Remaining transaction-port binding surfaces are direct/local
+  rule-trigger output bindings, behavior-changing snapshot-vs-live timing
+  conversion, and broader static conflict diagnostics.
 - The next R14 feature candidate is the proposed `ISF-CONTROL-FLOW` tree for
   `(wait N)`, `(while ...)`, and `(until ...)`.
 ## 2026-05-15: ISF port binding conflict semantics
