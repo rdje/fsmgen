@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Activation override contract windows should fail closed before respecialization exists
+- `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.1` selects a diagnostic-only
+  boundary for activation-site overrides that would specialize generated child
+  temporal-contract windows.
+- Generated child transaction parameter contract windows currently lower from
+  the child transaction definition's resolved default. Accepting an
+  activation-site override for the same parameter without respecializing the
+  emitted monitor would make the authored override appear honored when the
+  contract still uses the default.
+- The next implementation slice should therefore reject only overrides of
+  parameters actually referenced by target transaction contract windows, while
+  preserving unrelated activation overrides and generated child defaults
+  without overrides.
+- Full per-activation temporal monitor specialization remains a larger future
+  scheduler design problem because it needs use-site-aware generated child
+  monitor lowering rather than another local value-domain resolver.
+
 ## 2026-05-25: Direct transaction contract parameters remain local lowering inputs
 - `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` resolves direct
   transaction-local scalar parameter defaults at the bounded eventual

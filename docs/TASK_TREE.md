@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS` | `active` | `R14` | `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` | [docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md) |
 
 ## Proposed Task Trees
 

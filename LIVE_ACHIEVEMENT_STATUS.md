@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Activation override contract-window diagnostics selected
+- Created active task tree `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS`.
+- Completed `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.1`; the selected
+  implementation frontier is
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2`.
+- The selected slice will fail closed with targeted diagnostics when a
+  `spawn`, generated child `do`, or rule `trigger` activation-site parameter
+  override targets a generated child transaction parameter used by the target
+  transaction's bounded eventual temporal-contract window.
+- Use-site temporal monitor respecialization remains deferred. The selection
+  deliberately does not respecialize generated child `.fsm` contract windows
+  per activation site, generated top, instance, or trigger edge.
+- Generated child transaction parameter contract windows with no activation
+  override stay on the already shipped resolved-default path, and unrelated
+  activation-site overrides should remain accepted.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS`.
+- Current frontier: `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2`.
+
 ## 2026-05-25: R14 — Direct transaction contract parameter windows shipped
 - Completed `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` and closed the
   task tree.

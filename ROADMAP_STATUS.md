@@ -2,8 +2,22 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS`.
+- Current frontier: `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2`.
+- Recent R14 activation override contract-window diagnostic selection:
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.1` created the active task tree
+  for fail-closed diagnostics when an activation-site parameter override would
+  specialize a generated child transaction parameter already used as that
+  child's bounded eventual temporal-contract `within` window. The selected
+  implementation boundary is diagnostic-only: it will not respecialize
+  temporal monitors per activation site, generated top, instance, or trigger
+  edge; it will preserve accepted generated child defaults when no override
+  targets the window parameter; and it will preserve unrelated activation
+  overrides. No parser, scheduler, report, generated artifact, HDL, CLI
+  behavior, public API, source, test, or generated behavior changed in this
+  selection slice. Validation passed: feature-backlog/live-book/book matrix
+  audits with `Files=3, Tests=364`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R14 direct transaction contract-window parameter implementation:
   `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` shipped
   direct/non-generated same-transaction scalar parameter defaults as bounded
@@ -7798,17 +7812,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS`.
+- Current frontier: `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2`.
 - Completion status:
-  `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` shipped
-  direct/non-generated same-transaction scalar parameter defaults as bounded
-  eventual temporal-contract window sources and closed the task tree. Direct
-  transaction params remain local to this contract-window value domain and are
-  not emitted as actor-level `.fsm` `+params`. Validation passed: syntax
-  checks; focused contract/public/spec/book tests with `Files=11, Tests=447`;
-  `./bin/ci-regression isf --no-book` with `Files=271, Tests=1729`;
-  post-closure public/spec/book audits with `Files=5, Tests=368`;
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.1` selected the next R14
+  implementation frontier. The next slice will fail closed when `spawn`,
+  generated child `do`, or rule `trigger` activation-site parameter overrides
+  target a generated child transaction parameter used by that child's
+  temporal-contract window. Use-site monitor respecialization remains
+  deferred. No behavior changed in the selection slice. Validation passed:
+  feature-backlog/live-book/book matrix audits with `Files=3, Tests=364`;
   `mdbook build docs/book`; and `git diff --check`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
