@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Transaction port package constants should reuse port-width resolution
+- `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1` selects qualified imported
+  package scalar constants for transaction-local port widths as the next
+  narrow package-constant dimension widening.
+- Actor constants and actor-local scalar parameter defaults already resolve to
+  concrete integer widths for transaction-local `(ports ...)` declarations.
+  The selected package-constant behavior should reuse that public shape:
+  resolve the imported package scalar constant during parsing/lowering and
+  publish the positive integer width in parser handoff, scheduled `.fsm`,
+  activation handoff storage, reports, and HDL.
+- The boundary stays explicit and scalar. Unqualified lookup, aggregate
+  package constants, package member/item paths, transaction-parameter-backed
+  widths, unrelated value domains, generated-top respecialization, and package
+  namespace pollution remain fail-closed or deferred.
+
 ## 2026-05-24: Bank storage package constants publish resolved depths
 - `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` resolves qualified imported
   package scalar constants at the actor-owned bank storage depth boundary.

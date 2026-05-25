@@ -1,5 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-25
+### R14 — Transaction port package-constant widths selected
+- Created active task tree
+  `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS`.
+- Completed `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1`; the selected
+  implementation frontier is
+  `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2`.
+- Selected a bounded transaction-local port width value-domain widening:
+  `(input NAME (width PACKAGE.CONSTANT))` and
+  `(output NAME (width PACKAGE.CONSTANT))` declarations inside `(ports ...)`
+  may use qualified imported package scalar constants when the resolved value
+  is a positive integer literal.
+- Accepted package-constant transaction port widths should publish as
+  resolved integer widths in parser handoff, scheduled `.fsm`, activation
+  handoff storage, schedule reports, and generated HDL, matching
+  actor-constant and actor-parameter transaction port width behavior.
+- Unqualified package constants, unknown package constants, package aggregate
+  constants, package aggregate scalar-leaf paths, ambiguous local-token
+  spellings, zero-valued constants, runtime signals, arbitrary expressions,
+  package constants in other dimension/value domains, and generated-top
+  respecialization remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ## 2026-05-24
 ### R14 — Bank storage package-constant depths shipped
 - Completed `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` and closed the task
