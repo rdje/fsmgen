@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS` | `active` | `R14` | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` | [docs/tasks/ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.md](docs/tasks/ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.md) |
 
 ## Proposed Task Trees
 
@@ -358,6 +359,7 @@ as done work unless a future task reopens them.
 | Temporal-contract actor-scalar-parameter window counts | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS` |
 | Temporal-contract qualified package scalar-constant window counts | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS` |
 | Temporal-contract generated child same-transaction scalar parameter window counts | `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS` |
+| Temporal-contract direct transaction same-transaction scalar parameter window counts | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS` |
 | Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
 | Transaction latency qualified package scalar-constant min/max bounds | `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS` |

@@ -2,6 +2,35 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Direct transaction contract parameter windows selected
+- Created active task tree `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS`.
+- Completed `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1`; the selected
+  implementation frontier is
+  `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2`.
+- The selected widening will allow direct/non-generated transaction bounded
+  eventual temporal-contract `(eventually SIGNAL within PARAM)` windows, plus
+  the nested `(within PARAM)` alias, to use same-transaction scalar parameter
+  defaults when the resolved default is a positive integer literal.
+- Accepted direct transaction-parameter windows should reuse the existing
+  temporal monitor lowering used by positive literals, actor constants,
+  actor-local scalar parameter defaults, qualified package scalar constants,
+  and generated child transaction scalar parameter defaults.
+- Schedule reports should keep `temporal_contracts[].within_cycles` as the
+  resolved integer without adding a source-token field.
+- Activation-site parameter override specialization, transaction parameters
+  from other transactions, non-scalar aggregate/list transaction parameters,
+  forward/self/cyclic transaction parameter defaults, runtime signals,
+  arbitrary expressions, dynamic bounds, min/max windows, same-cycle checks,
+  nested contracts, expression operands, global implication forms, multiple
+  outstanding obligations, and transaction-parameter use in other value
+  domains remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS`.
+- Current frontier: `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2`.
+
 ## 2026-05-25: R14 — Temporal-contract transaction-parameter windows shipped
 - Completed `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2` and closed the task
   tree.

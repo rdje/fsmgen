@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Direct transaction contract parameters should stay boundary-local
+- `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1` selects
+  direct/non-generated transaction-local scalar parameter defaults for bounded
+  eventual temporal-contract `within` windows.
+- The selected behavior is a narrow value-domain widening, not a general
+  transaction-parameter feature. Accepted parameters should resolve before
+  temporal monitor lowering and should not imply transaction-parameter support
+  for waits, repeats, latency, watchdogs, storage/port widths, or data
+  operation width evidence.
+- The report should stay source-token-free for contract windows:
+  `temporal_contracts[].within_cycles` remains the resolved positive integer.
+- Activation-site parameter override specialization stays deferred. A direct
+  transaction parameter window uses the transaction definition's resolved
+  default in this slice.
+- Transaction parameters from other transactions, non-scalar aggregate/list
+  values, forward/self/cyclic defaults, runtime signals, arbitrary
+  expressions, dynamic windows, min/max windows, nested contracts,
+  same-cycle checks, and multiple outstanding obligations remain fail-closed
+  or deferred.
+
 ## 2026-05-25: Contract transaction parameters stay generated-child-local
 - `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2` resolves generated child
   transaction-local scalar parameter defaults at the bounded eventual
