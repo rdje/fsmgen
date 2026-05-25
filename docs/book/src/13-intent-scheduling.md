@@ -369,9 +369,11 @@ static lowering decisions, not per-cycle runtime traces.
 
 Transaction port bindings now project as bounded `transaction_port_bindings` entries with
 binding site, owner, target transaction, port role/name, scalar actor signal
-where applicable, formatted actor expression, `actor_endpoint_kind`, width,
-and generated handoff signal names where applicable. Endpoint kind is
-`signal`, `literal`, or `expression`.
+where applicable, formatted actor expression, `actor_endpoint_kind`,
+`binding_timing`, width, and generated handoff signal names where applicable.
+Endpoint kind is `signal`, `literal`, or `expression`. Binding timing is
+`activation_region`, `generated_live_handoff`, `trigger_payload`, or
+`done_guarded`.
 
 Raw assignment provenance, private assignment indexes, and activation proof internals remain
 private.
@@ -694,7 +696,8 @@ The ISF-specific current limitations are:
   Bindings are direction- and known-width-checked, actor input writes are
   rejected, actor output readback is rejected, and direct/local rule-trigger
   output bindings plus explicit snapshot-vs-live timing selection remain
-  backlog.
+  backlog. Schedule reports tag each binding with `binding_timing` so the
+  shipped timing class is reviewable without parsing generated handoff names.
 - Width-bearing actor interface ports, transaction-local ports, and
   actor-owned storage entries may use scalar type aliases through `(type
   NAME)`, mutually exclusive with `(width N)`, `(width PARAM)`, or

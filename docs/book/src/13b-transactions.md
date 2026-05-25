@@ -1394,6 +1394,8 @@ the output handoff `parent_worker_repeat_do_0_data` back to `resp`. The parent
 `.fsm` records those handoffs under `-parent_worker_repeat_do_0_port_bindings`,
 and schedule JSON exposes `transaction_port_bindings[]` entries with
 `site_kind: "do"`, `actor_endpoint_kind: "signal"`, and
+`binding_timing: "generated_live_handoff"` for the input handoff,
+`binding_timing: "done_guarded"` for the output copy, and
 `instance: "parent_worker_repeat_do_0"`. If the actor declares clock domains,
 the same source may add `(domain core)` beside the `params`/`bind` clauses;
 schedule JSON then groups

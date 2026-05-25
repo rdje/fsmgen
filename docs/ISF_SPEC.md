@@ -4612,17 +4612,22 @@ Transaction port binding provenance is emitted as a top-level
 `transaction_port_bindings` array. Each entry records the binding site
 (`do`, `spawn`, or `rule_trigger`), owner, target transaction, direction role,
 transaction port, actor signal when the actor side is a scalar endpoint,
-formatted actor expression, `actor_endpoint_kind`, width, and the bounded
-generated signal names that make the scheduled `.fsm` handoff reviewable.
+formatted actor expression, `actor_endpoint_kind`, `binding_timing`, width,
+and the bounded generated signal names that make the scheduled `.fsm` handoff
+reviewable.
 For generated-child rule-trigger output bindings, `done_signal` names the
 per-trigger done-observer signal that guards the copy back into the actor.
 `actor_endpoint_kind` is `signal` for scalar actor-side endpoints, `literal`
 for numeric or exact-width input operands, and `expression` for non-empty
 list-expression input operands. For expression-valued or literal input
 bindings, `actor_signal` is JSON null and `actor_expression` carries the
-formatted source expression. Non-applicable generated signals are JSON null.
-This is provenance and review support; it is not raw assignment provenance and
-it does not expose private activation proof state.
+formatted source expression. `binding_timing` is `activation_region` for
+same activation-region copies, `generated_live_handoff` for generated-top
+handoff wiring, `trigger_payload` for rule-trigger input payload
+capture/fan-in, and `done_guarded` for output copies guarded by child
+completion or trigger done observation. Non-applicable generated signals are
+JSON null. This is provenance and review support; it is not raw assignment
+provenance and it does not expose private activation proof state.
 Successful priority/resource decisions are emitted as top-level
 `priority_resolutions` and `resource_arbitration` arrays. A
 `priority_resolutions` entry records the target plus bounded winner/loser owner
@@ -5514,8 +5519,9 @@ Focused tests:
   `spawn`, rule-trigger input bindings, and generated-child rule-trigger
   output bindings. Direct/local rule-trigger output bindings, explicit
   snapshot-vs-live timing selection, broader static conflict diagnostics,
-  richer report metadata, and full expression width inference remain under
-  `ISF-PORT-BINDING` and
+  richer report metadata beyond the shipped endpoint-kind and binding-timing
+  fields, and full expression width inference remain under `ISF-PORT-BINDING`
+  and
   `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset, the top-level repeat-body local `(do child)` subset,

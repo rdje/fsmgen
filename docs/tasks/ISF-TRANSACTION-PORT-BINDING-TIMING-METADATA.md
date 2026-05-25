@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -41,7 +41,7 @@ rule-trigger payload capture, or a done-guarded output copy.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA`
-  Status: `active`
+  Status: `done`
   Goal: `Expose bounded public binding timing metadata without changing binding semantics.`
   Children: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.1`,
   `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2`
@@ -54,17 +54,17 @@ rule-trigger payload capture, or a done-guarded output copy.
   Commit: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.1: select binding timing metadata`
 
 - ID: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document binding_timing report metadata.`
   Acceptance: `Every transaction_port_bindings[] entry carries binding_timing with one advertised value, existing report keys/tests are updated, timing behavior remains unchanged, and docs/book/public contract describe the field.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused report/public-contract/spec/book tests; ./bin/ci-regression isf --no-book; mdBook build; git diff --check`
+  Commit: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2: report binding timing`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` | `pending` | Selection leaf is complete; implementation is the next bounded R14 report-metadata slice. |
+| `_None_` | `_None_` | `_None_` | Tree closed. |
 
 ## Decisions
 
@@ -93,16 +93,18 @@ rule-trigger payload capture, or a done-guarded output copy.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `pass` |
-| `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` | `pending` | `pending` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; syntax checks for focused tests; `prove -Iperl t/1243-isf-port-binding-schedule-report.t t/1248-isf-rule-trigger-parameter-binding.t t/1140-isf-public-schedule-report-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1255-isf-schedule-report-golden-matrix.t t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1256-feature-backlog-status-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `pass` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.1` | `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.1: select binding timing metadata` | `selection commit` |
-| `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` | `pending` | `pending implementation` |
+| `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` | `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2: report binding timing` | `completion commit` |
 
 ## Changelog
 
 - `2026-05-25`: Created active task tree and completed the selection leaf for
   bounded transaction-port binding timing report metadata.
+- `2026-05-25`: Completed implementation leaf; every public
+  `transaction_port_bindings[]` entry now reports `binding_timing`.

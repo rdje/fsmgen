@@ -560,6 +560,7 @@ sub _transaction_port_binding_summary($self, $ir) {
                 actor_signal        => $_->{actor_signal},
                 actor_expression    => $_->{actor_expression},
                 actor_endpoint_kind => $_->{actor_endpoint_kind},
+                binding_timing      => $_->{binding_timing},
                 width               => $_->{width},
                 instance            => exists($_->{instance}) ? $_->{instance} : undef,
                 parent_port         => exists($_->{parent_port}) ? $_->{parent_port} : undef,

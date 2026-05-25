@@ -2839,6 +2839,7 @@ sub _transaction_port_binding_entry {
         actor_signal        => $binding->{actor_signal},
         actor_expression    => _activation_binding_actor_expr_text($binding),
         actor_endpoint_kind => _activation_binding_actor_endpoint_kind($binding),
+        binding_timing      => _transaction_port_binding_timing($site_kind, $role, $instance),
         width               => ($args{port} || {})->{width} // 1,
         instance            => $instance,
         parent_port         => defined($instance) ? "${instance}_$port" : undef,
@@ -2854,6 +2855,18 @@ sub _transaction_port_binding_entry {
             ? ($args{payload_source} // _rule_trigger_payload_source_name($args{owner}, $target, $port))
             : undef,
     };
+}
+
+sub _transaction_port_binding_timing {
+    my ($site_kind, $role, $instance) = @_;
+
+    return 'trigger_payload'
+        if $site_kind eq 'rule_trigger' && $role eq 'input';
+    return 'done_guarded'
+        if $role eq 'output' && ($site_kind eq 'do' || $site_kind eq 'rule_trigger');
+    return 'generated_live_handoff'
+        if defined($instance) && length($instance);
+    return 'activation_region';
 }
 
 sub _actor_param_declarations {

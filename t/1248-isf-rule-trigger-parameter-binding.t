@@ -103,8 +103,8 @@ ISF
         'report exposes generated trigger parameter binding provenance',
     );
     is_deeply(
-        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} . ':' . ($_->{payload_source} // '') } @{$report->{transaction_port_bindings}} ],
-        [ 'rule_trigger:launch_worker_trigger_0:addr:launch_worker_trigger_0_addr_payload' ],
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} . ':' . ($_->{payload_source} // '') . ':' . $_->{binding_timing} } @{$report->{transaction_port_bindings}} ],
+        [ 'rule_trigger:launch_worker_trigger_0:addr:launch_worker_trigger_0_addr_payload:trigger_payload' ],
         'report exposes generated trigger transaction port-binding provenance',
     );
 
@@ -248,10 +248,10 @@ ISF
 
     my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
     is_deeply(
-        [ map { $_->{site_kind} . ':' . $_->{role} . ':' . ($_->{instance} // '') . ':' . $_->{port} . ':' . ($_->{done_signal} // '') } @{$report->{transaction_port_bindings}} ],
+        [ map { $_->{site_kind} . ':' . $_->{role} . ':' . ($_->{instance} // '') . ':' . $_->{port} . ':' . ($_->{done_signal} // '') . ':' . $_->{binding_timing} } @{$report->{transaction_port_bindings}} ],
         [
-            'rule_trigger:input:launch_worker_trigger_0:addr:',
-            'rule_trigger:output:launch_worker_trigger_0:data:launch_worker_trigger_0_done_seen',
+            'rule_trigger:input:launch_worker_trigger_0:addr::trigger_payload',
+            'rule_trigger:output:launch_worker_trigger_0:data:launch_worker_trigger_0_done_seen:done_guarded',
         ],
         'report exposes generated trigger output binding completion observation',
     );

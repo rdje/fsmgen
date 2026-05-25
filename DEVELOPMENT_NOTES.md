@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Binding timing metadata is report-only
+- `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` computes
+  `binding_timing` from the existing binding site, role, and generated
+  instance identity.
+- The report field intentionally describes already-shipped timing classes. It
+  does not add snapshot/live source syntax, change any `.fsm` assignment, or
+  alter generated HDL.
+- `trigger_payload` is used for rule-trigger input payload capture/fan-in even
+  when the target is a generated child, because the rule side still creates a
+  per-trigger payload source before generated handoff wiring.
+
 ## 2026-05-25: Binding timing metadata before timing syntax
 - `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.1` selects a public
   `binding_timing` report key before adding any new author-facing timing

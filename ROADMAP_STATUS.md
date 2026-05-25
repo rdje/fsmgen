@@ -2,17 +2,26 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA`.
-- Current frontier: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2`.
-- Current R14 transaction-port binding timing metadata selection:
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Current R14 transaction-port binding timing metadata implementation:
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` added public
+  `binding_timing` metadata to every `transaction_port_bindings[]` schedule
+  report entry and closed the task tree. The bounded values are
+  `activation_region` for same activation-region copies,
+  `generated_live_handoff` for generated-top handoff wiring,
+  `trigger_payload` for rule-trigger input payload capture/fan-in, and
+  `done_guarded` for output copies guarded by child completion or trigger done
+  observation. This is additive report metadata only: ISF syntax, binding
+  timing, scheduler lowering, generated `.fsm`, HDL, schema version, and
+  runtime behavior do not change. Validation passed: syntax checks; focused
+  report/public-contract/spec/book tests with `Files=11, Tests=386`;
+  `./bin/ci-regression isf --no-book` with `Files=274, Tests=1742`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Recent R14 transaction-port binding timing metadata selection:
   `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.1` created the active task
-  tree for bounded `transaction_port_bindings[]` timing metadata. The selected
-  public key is `binding_timing`; the selected bounded values are
-  `activation_region`, `generated_live_handoff`, `trigger_payload`, and
-  `done_guarded`. This selection does not change parser behavior, scheduler
-  lowering, generated `.fsm`, HDL, public syntax, runtime semantics, public
-  API shape, or schedule-report payloads yet. The next frontier is
-  implementation and public documentation synchronization in
+  tree for bounded `transaction_port_bindings[]` timing metadata and selected
+  the public key/value family shipped by
   `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2`.
 - Current R14 generated rule-trigger output-binding implementation:
   `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` shipped generated-child
@@ -8066,17 +8075,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA`.
-- Current frontier: `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
 - Completion status:
-  `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.1` selected the next bounded
-  R14 report-metadata slice. The public key will be `binding_timing`, and the
-  selected bounded values are `activation_region`, `generated_live_handoff`,
-  `trigger_payload`, and `done_guarded`. This selection does not change parser
-  behavior, scheduler lowering, generated `.fsm`, HDL, public syntax, runtime
-  semantics, public API shape, or schedule-report payloads yet. The next
-  frontier is implementation and public documentation synchronization in
-  `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2`.
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` shipped additive
+  `binding_timing` metadata for every public `transaction_port_bindings[]`
+  entry and closed the task tree. Values are `activation_region`,
+  `generated_live_handoff`, `trigger_payload`, and `done_guarded`. ISF syntax,
+  binding timing, scheduler lowering, generated `.fsm`, HDL, schema version,
+  and runtime behavior did not change. Validation passed: syntax checks;
+  focused report/public-contract/spec/book tests with `Files=11, Tests=386`;
+  `./bin/ci-regression isf --no-book` with `Files=274, Tests=1742`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

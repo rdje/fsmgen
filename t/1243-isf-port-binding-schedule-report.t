@@ -15,6 +15,7 @@ use FSM::Scheduler::ISF;
 use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_transaction_port_binding_keys
     isf_public_interface_schedule_report_transaction_port_binding_actor_endpoint_kind_values
+    isf_public_interface_schedule_report_transaction_port_binding_timing_values
     isf_public_interface_schedule_report_transaction_port_binding_site_kind_values
 );
 
@@ -119,6 +120,7 @@ ISF
     is($binding->{actor_signal}, undef, 'expression input binding has no scalar actor_signal');
     is($binding->{actor_expression}, '(concat req_hi req_lo)', 'expression input binding reports the formatted actor expression');
     is($binding->{actor_endpoint_kind}, 'expression', 'expression input binding reports endpoint kind');
+    is($binding->{binding_timing}, 'activation_region', 'expression input binding reports activation-region timing');
 };
 
 subtest 'literal input bindings report literal endpoint kind' => sub {
@@ -153,6 +155,7 @@ ISF
     is($binding->{actor_signal}, undef, 'literal input binding has no scalar actor_signal');
     is($binding->{actor_expression}, "8'hA5", 'literal input binding reports the authored literal expression');
     is($binding->{actor_endpoint_kind}, 'literal', 'literal input binding reports endpoint kind');
+    is($binding->{binding_timing}, 'activation_region', 'literal input binding reports activation-region timing');
 };
 
 done_testing();
@@ -166,6 +169,7 @@ sub assert_binding_projection {
 
     my %allowed_site_kind = map { $_ => 1 } @{isf_public_interface_schedule_report_transaction_port_binding_site_kind_values()};
     my %allowed_endpoint_kind = map { $_ => 1 } @{isf_public_interface_schedule_report_transaction_port_binding_actor_endpoint_kind_values()};
+    my %allowed_timing = map { $_ => 1 } @{isf_public_interface_schedule_report_transaction_port_binding_timing_values()};
     for my $binding (@{$report->{transaction_port_bindings}}) {
         is_deeply(
             sorted([keys %$binding]),
@@ -174,6 +178,7 @@ sub assert_binding_projection {
         );
         ok($allowed_site_kind{$binding->{site_kind}}, "$label binding site kind is advertised");
         ok($allowed_endpoint_kind{$binding->{actor_endpoint_kind}}, "$label binding endpoint kind is advertised");
+        ok($allowed_timing{$binding->{binding_timing}}, "$label binding timing is advertised");
     }
 
     is_deeply(
@@ -195,6 +200,7 @@ sub expected_bindings {
             actor_signal       => 'req_addr',
             actor_expression   => 'req_addr',
             actor_endpoint_kind => 'signal',
+            binding_timing      => 'activation_region',
             width              => 8,
             instance           => undef,
             parent_port        => undef,
@@ -214,6 +220,7 @@ sub expected_bindings {
             actor_signal       => 'resp',
             actor_expression   => 'resp',
             actor_endpoint_kind => 'signal',
+            binding_timing      => 'done_guarded',
             width              => 8,
             instance           => undef,
             parent_port        => undef,
@@ -233,6 +240,7 @@ sub expected_bindings {
             actor_signal       => 'req_addr',
             actor_expression   => 'req_addr',
             actor_endpoint_kind => 'signal',
+            binding_timing      => 'generated_live_handoff',
             width              => 8,
             instance           => 'w0',
             parent_port        => 'w0_addr',
@@ -252,6 +260,7 @@ sub expected_bindings {
             actor_signal       => 'resp',
             actor_expression   => 'resp',
             actor_endpoint_kind => 'signal',
+            binding_timing      => 'generated_live_handoff',
             width              => 8,
             instance           => 'w0',
             parent_port        => 'w0_data',
@@ -271,6 +280,7 @@ sub expected_bindings {
             actor_signal       => 'req_addr',
             actor_expression   => 'req_addr',
             actor_endpoint_kind => 'signal',
+            binding_timing      => 'trigger_payload',
             width              => 8,
             instance           => undef,
             parent_port        => undef,

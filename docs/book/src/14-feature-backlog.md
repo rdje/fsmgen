@@ -2550,14 +2550,8 @@ signal.
 
 Direct/local rule-trigger output bindings, explicit snapshot-vs-live timing
 selection, additional binding report fields beyond the shipped endpoint-kind
-metadata, and broader static conflict diagnostics remain backlog.
-
-The next selected transaction-port binding report slice is
-`binding_timing`, with bounded values `activation_region`,
-`generated_live_handoff`, `trigger_payload`, and `done_guarded`. That selected
-metadata will describe the timing class of shipped binding transfers without
-changing binding syntax, default timing, `.fsm` lowering, HDL generation, or
-runtime behavior.
+and binding-timing metadata, and broader static conflict diagnostics remain
+backlog.
 
 Actor pin binding now uses the same assignment/conflict path as ordinary ISF
 drives where it has shipped coverage. Spawn output bindings carry parent
@@ -2573,11 +2567,14 @@ checks.
 Successful schedule reports now expose bounded `transaction_port_bindings`
 entries for the shipped binding surface. Each entry records the binding site
 kind, owner, target transaction, direction role, port, scalar actor signal
-when applicable, formatted actor expression, `actor_endpoint_kind`, width, and
-generated handoff names where they exist. Generated-child rule-trigger output
-entries report the done-observer signal in `done_signal`. The endpoint kind is
-`signal` for scalar actor-side endpoints, `literal` for numeric or exact-width
-input operands, and `expression` for non-empty list-expression input operands.
+when applicable, formatted actor expression, `actor_endpoint_kind`,
+`binding_timing`, width, and generated handoff names where they exist.
+Generated-child rule-trigger output entries report the done-observer signal in
+`done_signal`. The endpoint kind is `signal` for scalar actor-side endpoints,
+`literal` for numeric or exact-width input operands, and `expression` for
+non-empty list-expression input operands. The binding timing is
+`activation_region`, `generated_live_handoff`, `trigger_payload`, or
+`done_guarded`.
 This is a public summary for downstream tooling, not the raw binding or
 assignment-provenance internals.
 
