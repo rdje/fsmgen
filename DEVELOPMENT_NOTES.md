@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Binding report non-claims must not hide shipped base fields
+- `ISF-TRANSACTION-PORT-BINDING-REPORT-WORDING-TRUTH-SYNC.1` clarifies that
+  deferred future report expansions are separate from the already-shipped
+  `transaction_port_bindings[]` summary key set.
+- The shipped report already exposes both scalar and formatted actor-side
+  provenance through `actor_signal` and `actor_expression`, plus endpoint-kind,
+  binding-timing, and authored timing-mode metadata.
+
 ## 2026-05-25: Duplicate output binding targets fail before assignment conflict
 - `ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` keeps
   the duplicate-target check activation-local: two output bindings in the same

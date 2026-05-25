@@ -4,6 +4,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 binding report wording truth sync:
+  `ISF-TRANSACTION-PORT-BINDING-REPORT-WORDING-TRUTH-SYNC.1` synchronized
+  public contract and mdBook wording so deferred future binding-report
+  expansions are distinct from the already-shipped bounded
+  `transaction_port_bindings[]` summary fields. The shipped field set includes
+  `actor_signal`, `actor_expression`, endpoint kind, binding timing, and
+  authored timing mode. This is documentation-only truth synchronization:
+  parser behavior, scheduler lowering, generated `.fsm`, HDL,
+  schedule-report payloads, public contract code, and runtime behavior did not
+  change. Validation passed: public contract/spec/book audits with `Files=4,
+  Tests=366`; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 duplicate output binding target diagnostic:
   `ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1`
   rejects multiple output bindings in one activation bind block when they
@@ -11618,6 +11629,19 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-TRANSACTION-PORT-BINDING-REPORT-WORDING-TRUTH-SYNC.1` is shipped and
+  the task tree is closed:
+  - public contract and mdBook wording now distinguish deferred future
+    binding-report expansions from the shipped bounded
+    `transaction_port_bindings[]` summary fields,
+  - the shipped summary field wording names `actor_signal`, `actor_expression`,
+    endpoint kind, binding timing, and authored timing mode,
+  - parser behavior, scheduler lowering, generated `.fsm`, HDL,
+    schedule-report payloads, public contract code, and runtime behavior are
+    unchanged,
+  - and README, task tree, roadmap, and live docs are synchronized.
+  - Validation passed: public contract/spec/book audits with `Files=4,
+    Tests=366`; `mdbook build docs/book`; and `git diff --check`.
 - `ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` is
   shipped and the task tree is closed:
   - multiple output bindings in one activation bind block now fail closed when

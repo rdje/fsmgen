@@ -2549,9 +2549,11 @@ handoff into the actor target under that trigger instance's done-observer
 signal.
 
 Direct/local rule-trigger output bindings, behavior-changing
-snapshot-vs-live timing conversion, additional binding report fields beyond
-the shipped endpoint-kind, binding-timing, and authored timing-mode metadata,
-and broader static conflict diagnostics remain backlog.
+snapshot-vs-live timing conversion, additional future binding-report
+expansions beyond the shipped bounded `transaction_port_bindings[]` summary
+fields, and broader static conflict diagnostics remain backlog. The shipped
+summary fields already include `actor_signal`, `actor_expression`,
+`actor_endpoint_kind`, `binding_timing`, and `authored_timing_mode`.
 The direct/local rule-trigger output-binding diagnostic is intentionally
 specific: output bindings require a generated-child rule trigger completion
 identity, and direct/local targets do not provide one yet.

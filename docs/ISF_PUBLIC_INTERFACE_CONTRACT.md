@@ -3169,9 +3169,9 @@ These are not stable public interfaces yet:
   `binding_timing` report metadata, and `authored_timing_mode` report
   metadata. Direct/local rule-trigger output bindings, behavior-changing
   snapshot-vs-live timing conversion, broader static conflict diagnostics,
-  additional report fields beyond endpoint-kind, binding-timing, and authored
-  timing-mode metadata, and full expression width inference remain deferred
-  follow-on port-binding work.
+  additional future report expansions beyond the bounded
+  `transaction_port_bindings[]` summary fields listed above, and full
+  expression width inference remain deferred follow-on port-binding work.
 - Transaction control-flow behavior beyond shipped static/symbolic actor
   constant, actor parameter, qualified package scalar constant, runtime
   scalar, and runtime expression `(wait N)`, sample-compatible runtime wait pending

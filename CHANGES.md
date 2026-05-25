@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Binding report wording truth sync completed
+- Completed
+  `ISF-TRANSACTION-PORT-BINDING-REPORT-WORDING-TRUTH-SYNC.1` and closed the
+  task tree.
+- Public contract and mdBook wording now distinguish deferred future
+  binding-report expansions from the already-shipped bounded
+  `transaction_port_bindings[]` summary fields, including `actor_signal`,
+  `actor_expression`, endpoint kind, binding timing, and authored timing mode.
+- This is documentation-only truth synchronization; parser behavior,
+  scheduler lowering, generated `.fsm`, HDL, schedule-report payloads, public
+  contract code, and runtime behavior did not change.
+- Validation passed: public contract/spec/book audits with `Files=4,
+  Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Duplicate output binding target diagnostic shipped
 - Completed
   `ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` and

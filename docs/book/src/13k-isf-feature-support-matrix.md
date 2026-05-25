@@ -1071,9 +1071,11 @@ does not exist:
   generated activation sites.
 - Rule-trigger output bindings for direct/local targets, explicit
   behavior-changing snapshot-vs-live binding timing selection/conversion,
-  additional binding reports beyond endpoint-kind, binding-timing, and
-  authored timing-mode metadata, and broader static binding conflict
-  diagnostics are not shipped. The direct/local rule-trigger output-binding
+  additional future binding-report expansions beyond the shipped bounded
+  `transaction_port_bindings[]` summary fields, and broader static binding
+  conflict diagnostics are not shipped. The shipped summary fields include
+  `actor_signal`, `actor_expression`, endpoint kind, binding timing, and
+  authored timing mode. The direct/local rule-trigger output-binding
   diagnostic names the missing generated-child completion identity. Duplicate
   output actor targets inside one bind block fail closed before broader
   assignment conflict handling.

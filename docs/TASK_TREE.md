@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TRANSACTION-PORT-BINDING-REPORT-WORDING-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-REPORT-WORDING-TRUTH-SYNC.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-REPORT-WORDING-TRUTH-SYNC.md) |
 | `ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.md) |
 | `ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.md](docs/tasks/ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.md) |
 | `ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.md](docs/tasks/ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.md) |
