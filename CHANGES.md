@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Data-operation package-constant widths selected
+- Created active task tree `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS`.
+- Completed `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1`; the selected
+  implementation frontier is `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2`.
+- Selected a bounded data-operation width-evidence value-domain widening:
+  `shift_left` and `shift_right` `(width PACKAGE.CONSTANT)` options plus
+  `assemble` and `extract` `(widths PACKAGE.CONSTANT ...)` entries may use
+  qualified imported package scalar constants when the resolved value is a
+  positive integer.
+- Accepted package-constant width evidence should publish through the
+  resolved integer width path already used by positive literals, actor
+  constants, and actor-local scalar parameter defaults.
+- Unqualified package constants, unknown package constants, package aggregate
+  constants, package aggregate scalar-leaf paths, enum values, transaction
+  parameters, runtime signals, arbitrary expressions, package constants in
+  other value domains, and generated-top respecialization remain deferred or
+  fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Transaction port package width book truth sync
 - Completed `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1` and
   closed the documentation truth-sync task tree.

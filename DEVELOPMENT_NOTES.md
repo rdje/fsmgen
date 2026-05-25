@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Data-operation package constants should reuse explicit width resolution
+- `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1` selects qualified imported package
+  scalar constants for explicit data-operation width evidence as the next
+  narrow package-constant value-domain widening.
+- The selected boundary is deliberately explicit: `shift_left` and
+  `shift_right` `(width ...)`, plus `assemble` and `extract` `(widths ...)`.
+  That keeps this slice on existing author-provided width evidence instead of
+  broadening automatic width inference.
+- Accepted package constants should resolve to concrete positive integer
+  widths before scheduler publication, matching existing positive literals,
+  actor constants, and actor-local scalar parameter defaults. Unqualified
+  lookup, aggregate package constants, package member/item paths, enum values,
+  transaction parameters, runtime signals, arbitrary expressions, unrelated
+  value domains, generated-top respecialization, and package namespace
+  pollution remain fail-closed or deferred.
+
 ## 2026-05-25: Book backlog package-width text must track shipped dimensions
 - `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1` is a documentation
   truth-sync slice after the transaction-port package-constant width

@@ -182,6 +182,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS.md` — completed `R14` task tree for actor-parameter-backed transaction-local port widths.
 - `docs/tasks/ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.md` — completed `R14` task tree for qualified package scalar constants in transaction-local port widths.
 - `docs/tasks/ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.md` — completed `R14` documentation truth-sync task tree for stale mdBook transaction-port package-constant width wording.
+- `docs/tasks/ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.md` — active `R14` task tree for qualified package scalar constants in explicit data-operation width evidence.
 - `docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.md` — completed `R14` task tree for qualified package scalar constants in actor-owned bank storage depths.
 - `docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.md` — completed `R14` task tree for actor-parameter-backed actor-owned bank storage depths.
 - `docs/tasks/ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.md` — completed `R14` task tree for positive actor constants in watchdog limits.

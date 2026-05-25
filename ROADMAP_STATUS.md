@@ -2,8 +2,26 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS`.
+- Current frontier: `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2`.
+- Recent R14 data-operation package-constant width selection:
+  `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1` created the active task tree and
+  selected the next bounded implementation leaf. Explicit data-operation width
+  evidence may next use qualified imported package scalar constants for
+  positive integer widths: `shift_left` and `shift_right` `(width
+  PACKAGE.CONSTANT)` options, plus `assemble` and `extract` `(widths
+  PACKAGE.CONSTANT ...)` entries. Accepted package-constant width evidence
+  should publish through the existing resolved-width path used by literals,
+  actor constants, and actor-local scalar parameter defaults. Unqualified
+  package constants, unknown package constants, package aggregate constants,
+  package aggregate scalar-leaf paths, enum values, transaction parameters,
+  runtime signals, arbitrary expressions, package constants in unrelated
+  value domains, and generated-top respecialization remain deferred or fail
+  closed. No parser, scheduler, report, generated artifact, HDL, CLI
+  behavior, public API, source, test, or generated behavior changed in this
+  selection slice. Validation passed: feature-backlog/live-book/book-matrix
+  audits with `Files=3, Tests=364`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R14 transaction port package width book truth sync:
   `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1` removed stale
   mdBook feature-backlog prose that still said package constants fail closed
@@ -10973,6 +10991,26 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1` selected the next public-facing R14
+  feature tree before implementation:
+  - the implementation frontier is
+    `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2`,
+  - the selected source shape is bounded to explicit data-operation width
+    evidence: `shift_left` and `shift_right` `(width PACKAGE.CONSTANT)`, plus
+    `assemble` and `extract` `(widths PACKAGE.CONSTANT ...)`,
+  - accepted package constants must be imported, qualified, scalar, and
+    resolved to positive integer widths before publication through the existing
+    literal/actor-constant/actor-parameter width path,
+  - unqualified package constants, unknown package constants, package
+    aggregate constants, package member/item paths, enum values, transaction
+    parameters, runtime signals, arbitrary expressions, unrelated value
+    domains, and generated-top respecialization remain deferred or fail
+    closed,
+  - and no parser, scheduler, report, generated artifact, HDL, CLI behavior,
+    public API, source, test, or generated behavior changed in this selection
+    slice.
+  - Validation passed: feature-backlog/live-book/book-matrix audits with
+    `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
 - R14 is active; the former VHDL backend lane is preserved as horizon `H5` in
   [ROADMAP_V2.md](ROADMAP_V2.md) and [docs/VHDL_SCOPE.md](docs/VHDL_SCOPE.md).
 - `ISF-STORAGE-PORT-ROUND-ROBIN.2` is shipped and the task tree is closed:
