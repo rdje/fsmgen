@@ -220,12 +220,12 @@ General source rules:
   widths, actor-owned bank storage widths, actor-owned bank storage depths,
   and transaction-local port widths also accept declared actor constants and
   actor-local scalar parameter defaults that resolve to positive integers.
-  Actor top-level interface port widths and actor-owned scalar storage widths
-  additionally accept qualified imported package scalar constants that resolve
-  to positive integers; the parser handoff, scheduled `.fsm`, schedule report,
-  and generated HDL publish the resolved integer width. Bank widths, bank
-  depths, and transaction-local port widths do not inherit that package
-  constant widening.
+  Actor top-level interface port widths, actor-owned scalar storage widths,
+  and actor-owned bank storage widths additionally accept qualified imported
+  package scalar constants that resolve to positive integers; the parser
+  handoff, scheduled `.fsm`, schedule report, and generated HDL publish the
+  resolved integer width. Bank depths and transaction-local port widths do not
+  inherit that package constant widening.
 - Actor constants use non-negative integer literals or enum member references
   that resolve to non-negative integers. Actor parameter scalar defaults may
   also use earlier actor-local scalar parameter defaults by name, preserving
@@ -605,9 +605,18 @@ Rules:
   entries, `inferred_storage[].width` report evidence, width evidence, and HDL
   register ranges. Unqualified package constants, aggregate package constants,
   package constant member/item paths, ambiguous local-enum/package-constant
-  spellings, zero-valued constants, runtime signals, expressions, and package
-  constants in bank width/depth or transaction-local port width contexts fail
+  spellings, zero-valued constants, runtime signals, and expressions fail
   closed.
+  Actor-owned bank storage widths may use qualified imported package scalar
+  constants under the same imported-package and positive-integer scalar
+  requirements. Package-constant-backed bank widths publish as resolved
+  integer parser-handoff bank widths, scheduled `.fsm` scalarized `+size`
+  entries, `inferred_storage[].width`, `bank_accesses[].width`, width
+  evidence, and HDL register ranges. Unqualified package constants, aggregate
+  package constants, package constant member/item paths, ambiguous
+  local-enum/package-constant spellings, zero-valued constants, runtime
+  signals, expressions, and package constants in bank depth or
+  transaction-local port width contexts fail closed.
   Generated child transaction scalar parameter defaults and scalar leaves
   inside generated child transaction aggregate/list parameter defaults may use
   declared actor constants, actor-local scalar parameter defaults, earlier
@@ -1403,11 +1412,11 @@ Rules:
   Actor interface ports, transaction-local ports, actor-owned scalar storage,
   and actor-owned bank storage may use actor-local scalar parameter defaults
   or declared actor constants that resolve to positive integers as
-  `(width PARAM)` / `(width CONST)` sources. Actor interface ports and
-  actor-owned scalar storage may also use qualified imported package scalar
-  constants as `(width PACKAGE.CONSTANT)` sources when the resolved value is a
-  positive integer; bank storage and transaction-local ports remain outside
-  that package-constant width subset.
+  `(width PARAM)` / `(width CONST)` sources. Actor interface ports,
+  actor-owned scalar storage, and actor-owned bank storage widths may also use
+  qualified imported package scalar constants as `(width PACKAGE.CONSTANT)`
+  sources when the resolved value is a positive integer; bank depths and
+  transaction-local ports remain outside that package-constant width subset.
 - Actor-owned storage variables may also use `(type NAME)` when `NAME`
   resolves to a packed aggregate `list` or `record` alias. The first aggregate
   carrier subset is anchored on declared actor-owned storage roots.
@@ -3573,6 +3582,7 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1339-isf-scalar-storage-actor-constant-widths.t \
   t/1354-isf-scalar-storage-package-constant-widths.t \
   t/1340-isf-bank-storage-actor-constant-widths.t \
+  t/1355-isf-bank-storage-package-constant-widths.t \
   t/1341-isf-bank-storage-actor-constant-depths.t \
   t/1342-isf-transaction-port-actor-constant-widths.t \
   t/1343-isf-data-op-static-width-sources.t \
@@ -3637,12 +3647,12 @@ The following are not public shipped integration surfaces today:
 - Broader interface, transaction-port, storage width, or bank-depth
   expressions beyond actor-local scalar parameter defaults and the shipped
   qualified package-scalar-constant actor interface width and actor-owned
-  scalar storage width subsets.
+  scalar storage width and actor-owned bank storage width subsets.
 - Derived parameter expressions and package/imported constants outside the
   shipped qualified actor parameter, generated-child transaction parameter
   default, generated activation override, reusable-library use-site override,
-  actor interface width, and actor-owned scalar storage width scalar-constant
-  subsets.
+  actor interface width, actor-owned scalar storage width, and actor-owned
+  bank storage width scalar-constant subsets.
 - General memory-array HDL emission for actor-owned banks.
 - Arbitrary CDC, payload CDC, reset CDC, level sampling across domains, or
   FIFO-like cross-domain storage.

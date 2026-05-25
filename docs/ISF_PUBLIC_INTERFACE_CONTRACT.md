@@ -387,8 +387,7 @@ so accepted `(var NAME (width PACKAGE.CONSTANT))` and
 storage widths, scheduled `.fsm` `+size` declarations, schedule-report widths,
 width evidence, and HDL register ranges while unknown, unqualified,
 aggregate, path, ambiguous, zero-valued, runtime, and expression-valued
-sources fail closed. Bank storage widths do not inherit this package-constant
-scalar-storage widening.
+sources fail closed.
 Actor-owned bank storage widths backed by actor-local scalar parameter
 defaults are checked by
 [t/1335-isf-bank-storage-actor-param-widths.t](../t/1335-isf-bank-storage-actor-param-widths.t)
@@ -404,6 +403,16 @@ integer bank element widths, scheduled `.fsm` `+size` declarations,
 schedule-report storage and `bank_accesses[]` widths, and HDL register ranges
 while zero-valued actor constants, unknown symbolic names, runtime interface
 signals, and arbitrary expressions fail closed.
+Actor-owned bank storage widths backed by qualified imported package scalar
+constants are checked by
+[t/1355-isf-bank-storage-package-constant-widths.t](../t/1355-isf-bank-storage-package-constant-widths.t)
+so accepted `(bank NAME (width PACKAGE.CONSTANT) (depth N))` entries resolve
+to positive integer bank element widths, scheduled `.fsm` `+size`
+declarations, schedule-report storage and `bank_accesses[]` widths, width
+evidence, and HDL register ranges while unknown, unqualified, aggregate,
+path, ambiguous, zero-valued, runtime, and expression-valued sources fail
+closed. Bank storage depths do not inherit this package-constant bank-width
+widening.
 Actor-owned bank storage depths backed by actor-local scalar parameter
 defaults are checked by
 [t/1337-isf-bank-storage-actor-param-depths.t](../t/1337-isf-bank-storage-actor-param-depths.t)

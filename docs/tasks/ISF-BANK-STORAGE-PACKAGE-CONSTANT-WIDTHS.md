@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -52,7 +52,7 @@ integer literals.
 ## Task Tree
 
 - ID: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship qualified imported package scalar constants as actor-owned bank storage widths.`
   Children: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1`,
     `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`
@@ -68,20 +68,23 @@ integer literals.
   Commit: `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1: select bank storage package-constant widths`
 
 - ID: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document qualified package scalar constants as actor-owned bank storage widths.`
   Acceptance: `Positive imported package scalar constants lower as
   actor-owned bank storage widths; unsupported width sources fail closed;
   specs, book, public contract, downstream handoff, focused tests, and broader
   ISF gate are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused public/storage/package tests with
+  Files=11, Tests=352; ./bin/ci-regression isf --no-book with Files=261,
+  Tests=1707; post-closure public/spec/book/backlog audits with Files=7,
+  Tests=374; mdbook build docs/book; git diff --check`
+  Commit: `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2: ship bank storage package-constant widths`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` | `pending` | The qualified package-constant actor-owned bank storage width boundary is selected and ready for implementation. |
+| 1 | `closed` | `done` | The qualified package-constant actor-owned bank storage width boundary is implemented and documented. |
 
 ## Decisions
 
@@ -112,16 +115,19 @@ integer literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: Files=3, Tests=364` |
+| `2026-05-24` | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -c t/1355-isf-bank-storage-package-constant-widths.t`; `perl -c t/1144-isf-public-tested-by-metadata-audit.t`; focused public/storage/package tests; `./bin/ci-regression isf --no-book`; post-closure public/spec/book/backlog audits; `mdbook build docs/book`; `git diff --check` | `passed: focused Files=11, Tests=352; full ISF Files=261, Tests=1707; post-closure Files=7, Tests=374` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1` | `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1: select bank storage package-constant widths` | `selection slice` |
-| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` | `pending` | `implementation slice` |
+| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` | `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2: ship bank storage package-constant widths` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created task tree and selected qualified imported package
   scalar constants in actor-owned bank storage widths as the next bounded
   static-dimension implementation frontier.
+- `2026-05-24`: Implemented and documented qualified imported package scalar
+  constants in actor-owned bank storage widths, then closed the tree.

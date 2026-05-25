@@ -199,19 +199,6 @@ ISF
         'width expressions remain rejected at parse time',
     );
 
-    assert_parse_file_rejected(
-        $dir,
-        'bank_package_constant_width.isf',
-        <<'ISF',
-(actor bank_package_constant_width
-  (imports
-    (package shared))
-  (storage
-    (bank slots (width shared.DEFAULT_WIDTH) (depth 2))))
-ISF
-        qr/actor 'bank_package_constant_width' storage 'slots' width requires '\(width positive_integer_or_actor_scalar_parameter_or_actor_constant\)'/,
-        'bank storage widths do not inherit this scalar-storage package constant widening',
-    );
 };
 
 done_testing();

@@ -124,7 +124,7 @@ ISF
   (storage
     (bank data (width DATA_W) (depth 2))))
 ISF
-        qr/\AError: actor 'unknown_parameter_bank_width' storage bank 'data' width token 'DATA_W' is not a declared actor scalar parameter or actor constant/,
+        qr/\AError: actor 'unknown_parameter_bank_width' storage bank 'data' width token 'DATA_W' is not a declared actor scalar parameter, actor constant, or imported package scalar constant/,
         'unknown symbolic width is rejected',
     );
 
@@ -153,7 +153,7 @@ ISF
   (storage
     (bank data (width (+ DATA_W 1)) (depth 2))))
 ISF
-        qr/\AError: actor 'expression_parameter_bank_width' storage 'data' width requires '\(width positive_integer_or_actor_scalar_parameter_or_actor_constant\)'/,
+        qr/\AError: actor 'expression_parameter_bank_width' storage 'data' width requires '\(width positive_integer_or_actor_scalar_parameter_or_actor_constant_or_qualified_package_scalar_constant\)'/,
         'width expressions are rejected at parse time',
     );
 

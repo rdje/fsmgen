@@ -1306,8 +1306,9 @@ constants, or qualified imported package scalar constants that resolve to
 positive integers, actor-owned scalar storage widths may use actor-local
 scalar parameter defaults, declared actor constants, or qualified imported
 package scalar constants that resolve to positive integers, actor-owned bank
-widths may use positive actor-local scalar parameter defaults or declared
-actor constants, and bank depths may use positive actor-local scalar
+widths may use actor-local scalar parameter defaults, declared actor
+constants, or qualified imported package scalar constants that resolve to
+positive integers, and bank depths may use positive actor-local scalar
 parameter defaults or declared actor constants. The actor has
 actor-owned storage, read
 and write pointers, occupancy state, actor-maintained flags, reset ownership,
@@ -1345,7 +1346,8 @@ Actor-owned scalar storage widths may now use actor-local scalar parameter
 defaults, declared actor constants, or qualified imported package scalar
 constants that resolve to positive integers.
 Actor-owned bank storage widths may now use actor-local scalar parameter
-defaults or declared actor constants that resolve to positive integers.
+defaults, declared actor constants, or qualified imported package scalar
+constants that resolve to positive integers.
 Actor-owned bank storage depths may now use actor-local scalar parameter
 defaults or declared actor constants that resolve to positive integers.
 Use-site FIFO interface shape, use-site bank-depth
@@ -1355,8 +1357,9 @@ non-zero reset values such as empty=1, standalone transaction/drive exports,
 package/imported constants outside the shipped qualified actor parameter,
 generated-child transaction parameter default, generated activation override,
 reusable-library use-site override, actor interface width, and actor-owned
-scalar storage width scalar-constant subsets, derived parameter expressions,
-and library actors that import other libraries remain deferred.
+scalar storage width and actor-owned bank storage width scalar-constant
+subsets, derived parameter expressions, and library actors that import other
+libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -1687,15 +1690,21 @@ zero-valued actor constants, zero-valued package constants, and arbitrary
 expressions fail closed. Type aliases remain spelled with `(type NAME)`, not
 `(width NAME)`.
 
-Storage bank widths and depths may be positive integer literals, actor-local
-scalar parameter defaults, or declared actor constants that resolve to
-positive integer literals. The parser returns the resolved integer width and
-depth; scheduled `.fsm`, schedule reports, bank access metadata, and generated
-HDL see the same scalarized storage family they would see for equivalent
-literal values. Unknown symbolic names, runtime interface signals, zero-valued
-or non-scalar actor parameters, zero-valued actor constants, arbitrary storage
-dimension expressions, dynamic storage depth, and memory-array backend
-emission remain deferred or fail closed.
+Storage bank widths may be positive integer literals, actor-local scalar
+parameter defaults, declared actor constants, or qualified imported package
+scalar constants that resolve to positive integer literals. Storage bank
+depths may be positive integer literals, actor-local scalar parameter
+defaults, or declared actor constants that resolve to positive integer
+literals. The parser returns the resolved integer width and depth; scheduled
+`.fsm`, schedule reports, bank access metadata, and generated HDL see the
+same scalarized storage family they would see for equivalent literal values.
+Unknown symbolic names, unknown or unqualified package constants, package
+aggregate constants, package aggregate scalar-leaf paths, ambiguous
+local-enum/package-constant spellings, runtime interface signals, zero-valued
+or non-scalar actor parameters, zero-valued actor constants, zero-valued
+package constants, arbitrary storage dimension expressions, dynamic storage
+depth, package-constant-backed bank depths, and memory-array backend emission
+remain deferred or fail closed.
 
 Storage banks lower to deterministic scalar storage element names in the
 scheduled `.fsm` review artifact. For example,
@@ -5293,6 +5302,7 @@ Focused tests:
 - [t/1352-isf-library-use-package-constants.t](../t/1352-isf-library-use-package-constants.t)
 - [t/1353-isf-interface-package-constant-widths.t](../t/1353-isf-interface-package-constant-widths.t)
 - [t/1354-isf-scalar-storage-package-constant-widths.t](../t/1354-isf-scalar-storage-package-constant-widths.t)
+- [t/1355-isf-bank-storage-package-constant-widths.t](../t/1355-isf-bank-storage-package-constant-widths.t)
 
 ## 12. Explicitly Deferred
 
@@ -5304,8 +5314,8 @@ Focused tests:
   package/imported constants outside the shipped qualified actor parameter,
   generated-child transaction parameter default, generated activation
   override, reusable-library use-site override, actor interface width, and
-  actor-owned scalar storage width scalar-constant subsets, derived parameter
-  expressions,
+  actor-owned scalar storage width and actor-owned bank storage width
+  scalar-constant subsets, derived parameter expressions,
   transaction-port dimensions beyond positive literals, actor-local scalar
   parameters, and scalar type aliases,
   memory-array backend emission, and

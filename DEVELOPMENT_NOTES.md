@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Bank storage package constants publish resolved widths
+- `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` resolves qualified imported
+  package scalar constants at the actor-owned bank storage width boundary.
+  The public parser shell, scalarized scheduled `.fsm` `+size`, schedule
+  evidence, `bank_accesses[]`, width evidence, and HDL register ranges all
+  carry the resolved positive integer width, matching the existing
+  actor-constant and actor-parameter bank storage width surfaces.
+- The parser change stays on actor-owned storage widths. Bank storage depths,
+  transaction-local port widths, watchdogs, waits, latency bounds, contract
+  windows, repeat counts, generated-top respecialization, and other value
+  domains do not inherit package-constant width handling in this slice.
+- The shipped surface remains qualified and scalar only. Unqualified package
+  constants, aggregate package constants, package member/item paths,
+  local-enum/package-constant ambiguity, runtime signals, zero-valued
+  constants, unsupported actor values, and arbitrary expressions continue to
+  fail closed or stay deferred.
+
 ## 2026-05-24: Bank storage package constants should reuse bank width resolution
 - `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1` selects qualified imported
   package scalar constants for actor-owned bank storage element widths as the
@@ -45,7 +62,7 @@ This document captures engineering rationale, design constraints, and working de
   positive integer width in parser handoff, scheduled `.fsm`, reports, width
   evidence, and HDL.
 - The boundary stays explicit and scalar. Unqualified lookup, aggregate
-  package constants, package member/item paths, bank dimensions,
+  package constants, package member/item paths, bank depths,
   transaction-local port widths, unrelated value domains, generated-top
   respecialization, and package namespace pollution remain fail-closed or
   deferred.
@@ -60,11 +77,11 @@ This document captures engineering rationale, design constraints, and working de
   namespace pollution. Unqualified names do not search imported packages, and
   aggregate constants or aggregate member/item paths remain deferred rather
   than being coerced into dimension values.
-- This slice intentionally leaves package constants out of storage widths,
-  bank dimensions, transaction-port widths, waits, watchdogs, latency bounds,
-  contract windows, repeat counts, and generated-top respecialization so each
-  future dimension/value domain can be reviewed with its own diagnostics and
-  report contract.
+- This slice intentionally leaves package constants out of bank depths,
+  transaction-port widths, waits, watchdogs, latency bounds, contract windows,
+  repeat counts, and generated-top respecialization so each future
+  dimension/value domain can be reviewed with its own diagnostics and report
+  contract.
 
 ## 2026-05-24: Interface package constants should reuse width resolution
 - `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1` selects qualified imported package
