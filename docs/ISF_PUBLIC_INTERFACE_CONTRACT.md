@@ -2772,7 +2772,7 @@ library_uses entries: library, alias, export, kind, instance, module, scheduled_
 library_uses parameter entries: name, source, value
 library_uses binding entries: role, library_name, parent_name, width
 bank_accesses entries: kind, owner, owner_kind, container_kind, container_name, bank, index, width, depth, scalar_entries, same_cycle_policy, value, target
-transaction_port_bindings entries: site_kind, owner, owner_kind, target_transaction, role, port, actor_signal, actor_expression, width, instance, parent_port, child_port, start_signal, done_signal, trigger_source, payload_source
+transaction_port_bindings entries: site_kind, owner, owner_kind, target_transaction, role, port, actor_signal, actor_expression, actor_endpoint_kind, width, instance, parent_port, child_port, start_signal, done_signal, trigger_source, payload_source
 clock_domains entries: name, default, clock, reset, scheduled_fsm, ports, storage, transactions, rules, library_uses, child_instances, crossings, state_count, dt_block_count
 clock_domains child_instances entries: kind, owner, child, instance
 clock_domains crossings entries: event, role, signal, ready
@@ -3047,15 +3047,20 @@ Transaction port binding provenance uses a top-level
 `transaction_port_bindings` array. Each entry is bounded to the advertised key
 set and records the binding site kind (`do`, `spawn`, or `rule_trigger`),
 owner, target transaction, port role/name, actor signal when the actor side is
-a scalar endpoint, formatted actor expression, width, and generated handoff
-signal names where applicable. Parameterized rule-trigger entries use the
-generated trigger instance handoff names and preserve the per-rule trigger and
-payload source names. For expression-valued input bindings,
-`actor_signal` is JSON null and `actor_expression` carries the formatted
-source expression. JSON null is used for non-applicable handoff fields. The
-machine-readable contract advertises the entry key set in
-`schedule_report_transaction_port_binding_keys` and the current site-kind
-values in `schedule_report_transaction_port_binding_site_kind_values`.
+a scalar endpoint, formatted actor expression, `actor_endpoint_kind`, width,
+and generated handoff signal names where applicable. Parameterized
+rule-trigger entries use the generated trigger instance handoff names and
+preserve the per-rule trigger and payload source names. For expression-valued
+or literal input bindings, `actor_signal` is JSON null and
+`actor_expression` carries the formatted source expression.
+`actor_endpoint_kind` is `signal`, `literal`, or `expression`. JSON null is
+used for non-applicable handoff fields. The machine-readable contract
+advertises the entry key set in
+`schedule_report_transaction_port_binding_keys`, the endpoint-kind value
+family in
+`schedule_report_transaction_port_binding_actor_endpoint_kind_values`, and the
+current site-kind values in
+`schedule_report_transaction_port_binding_site_kind_values`.
 Successful arbitration metadata uses top-level `priority_resolutions` and
 `resource_arbitration` arrays. `priority_resolutions` records static
 target-local suppressions with bounded winner/loser owner names and owner
@@ -3149,8 +3154,9 @@ These are not stable public interfaces yet:
   input-binding lowering for `do`, `spawn`, and rule-trigger activation sites,
   plus the first conflict/runtime coverage for binding-generated assignments.
   Rule-trigger output bindings, explicit snapshot-vs-live timing selection,
-  broader static conflict diagnostics, richer report fields, and full
-  expression width inference remain deferred follow-on port-binding work.
+  broader static conflict diagnostics, additional report fields beyond
+  endpoint-kind metadata, and full expression width inference remain deferred
+  follow-on port-binding work.
 - Transaction control-flow behavior beyond shipped static/symbolic actor
   constant, actor parameter, qualified package scalar constant, runtime
   scalar, and runtime expression `(wait N)`, sample-compatible runtime wait pending

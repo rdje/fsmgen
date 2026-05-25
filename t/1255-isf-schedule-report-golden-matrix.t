@@ -246,6 +246,7 @@ sub golden_matrix_cases {
             covers => [
                 qw(
                   schedule_report_transaction_port_binding_keys
+                  schedule_report_transaction_port_binding_actor_endpoint_kind_values
                   schedule_report_transaction_port_binding_site_kind_values
                 )
             ],
@@ -706,6 +707,9 @@ sub assert_value_branch {
     }
     elsif ($branch eq 'schedule_report_transaction_port_binding_site_kind_values') {
         @values = map { $_->{site_kind} } @{$report->{transaction_port_bindings}};
+    }
+    elsif ($branch eq 'schedule_report_transaction_port_binding_actor_endpoint_kind_values') {
+        @values = map { $_->{actor_endpoint_kind} } @{$report->{transaction_port_bindings}};
     }
     elsif ($branch eq 'schedule_report_compile_issue_severity_values') {
         @values = map { $_->{severity} } @{$report->{compile_issues}};

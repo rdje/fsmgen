@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Transaction-port binding endpoint-kind reports shipped
+- Completed `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` and closed the
+  task tree.
+- Public `transaction_port_bindings[]` schedule-report entries now include
+  `actor_endpoint_kind`.
+- Values are `signal` for scalar actor-side endpoints, `literal` for numeric
+  or exact-width input operands, and `expression` for non-empty
+  list-expression input operands.
+- This is additive report metadata only; ISF syntax, binding timing, generated
+  `.fsm`, HDL lowering, schema version, raw `LoweringIR` exposure, and
+  rule-trigger output-binding behavior did not change.
+- Validation passed: syntax checks; focused public/report/spec/book tests
+  with `Files=8, Tests=344`; schedule-report freeze-boundary rerun with
+  `Files=5, Tests=11`; `./bin/ci-regression isf --no-book` with `Files=274,
+  Tests=1740`; final live-doc/book audits; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Transaction-port binding endpoint-kind report tree selected
 - Created active task tree
   `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`.

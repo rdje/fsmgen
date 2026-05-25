@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -44,7 +44,7 @@ the formatted `actor_expression` string.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`
-  Status: `active`
+  Status: `done`
   Goal: `Expose authored transaction-port binding endpoint kind in schedule reports.`
   Children: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1`,
   `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2`
@@ -57,17 +57,17 @@ the formatted `actor_expression` string.
   Commit: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1: select endpoint-kind reports`
 
 - ID: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document transaction-port binding endpoint-kind report metadata.`
   Acceptance: `Schedule reports emit actor_endpoint_kind for signal, literal, and expression bindings; public contract metadata and downstream/user docs are synchronized; focused public/report tests pass; broad ISF regression runs when warranted.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused public/report/spec/book tests; schedule-report freeze-boundary rerun; broad ISF regression; final live-doc/book audits; mdBook build; git diff --check`
+  Commit: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2: report binding endpoint kinds`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` | `pending` | Task-tree ownership is now recorded; the next leaf can safely change report code, tests, and public docs. |
+| `_None_` | `_None_` | `_None_` | Tree closed. |
 
 ## Decisions
 
@@ -83,6 +83,11 @@ the formatted `actor_expression` string.
   existing same-activation, generated-handoff, completion-gated, and
   rule-trigger payload behavior remains documented by existing transaction
   port binding surfaces.
+- `2026-05-25`: Keep
+  `schedule_report_transaction_port_binding_actor_endpoint_kind_values` as a
+  value family, not a presence key family. The broad ISF gate caught the first
+  accidental presence-map publication through
+  `t/1227-isf-schedule-report-freeze-boundary.t`, and the final rerun passed.
 
 ## Open Questions
 
@@ -97,17 +102,19 @@ the formatted `actor_expression` string.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `pass` |
-| `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` | `pending` | `pending` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1243-isf-port-binding-schedule-report.t`; `perl -Iperl -c t/1140-isf-public-schedule-report-metadata-audit.t`; `perl -Iperl -c t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1243-isf-port-binding-schedule-report.t t/1140-isf-public-schedule-report-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1255-isf-schedule-report-golden-matrix.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1227-isf-schedule-report-freeze-boundary.t t/1140-isf-public-schedule-report-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1255-isf-schedule-report-golden-matrix.t`; `./bin/ci-regression isf --no-book`; final live-doc/book audits; `mdbook build docs/book`; `git diff --check` | `pass` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1` | `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1: select endpoint-kind reports` | `selection commit` |
-| `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` | `pending` | `pending` |
+| `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` | `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2: report binding endpoint kinds` | `completion commit` |
 
 ## Changelog
 
 - `2026-05-25`: Created active task tree and selected the bounded
   `actor_endpoint_kind` schedule-report field. The next frontier is
   implementation and documentation synchronization.
+- `2026-05-25`: Completed `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` and
+  closed the tree.

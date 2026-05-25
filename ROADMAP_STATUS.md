@@ -2,8 +2,26 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`.
-- Current frontier: `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Current R14 transaction-port binding endpoint-kind report implementation:
+  `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` added
+  `actor_endpoint_kind` to every public `transaction_port_bindings[]` report
+  entry and closed the task tree. Values are `signal` for scalar actor-side
+  endpoints, `literal` for numeric or exact-width input operands, and
+  `expression` for non-empty list-expression input operands. The field is
+  advertised through
+  `schedule_report_transaction_port_binding_actor_endpoint_kind_values`, while
+  the entry key family is advertised through
+  `schedule_report_transaction_port_binding_keys`; the endpoint-kind value
+  family deliberately stays out of the presence-key-family map. No ISF syntax,
+  binding timing, generated `.fsm`, HDL lowering, schema version, raw
+  `LoweringIR` exposure, or rule-trigger output-binding behavior changed.
+  Validation passed: syntax checks; focused public/report/spec/book tests with
+  `Files=8, Tests=344`; schedule-report freeze-boundary rerun with `Files=5,
+  Tests=11`; `./bin/ci-regression isf --no-book` with `Files=274,
+  Tests=1740`; final live-doc/book audits; `mdbook build docs/book`; and
+  `git diff --check`.
 - Current R14 transaction-port binding endpoint-kind report selection:
   `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1` created the active task
   tree for an additive `transaction_port_bindings[]` report field named

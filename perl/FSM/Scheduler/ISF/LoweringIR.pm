@@ -2832,20 +2832,21 @@ sub _transaction_port_binding_entry {
         target_transaction => $target,
         role               => $role,
         port               => $port,
-        actor_signal       => $binding->{actor_signal},
-        actor_expression   => _activation_binding_actor_expr_text($binding),
-        width              => ($args{port} || {})->{width} // 1,
-        instance           => $instance,
-        parent_port        => defined($instance) ? "${instance}_$port" : undef,
-        child_port         => defined($instance) ? $port : undef,
-        start_signal       => defined($instance) ? "${instance}_start" : "${target}_start",
-        done_signal        => $site_kind eq 'rule_trigger'
+        actor_signal        => $binding->{actor_signal},
+        actor_expression    => _activation_binding_actor_expr_text($binding),
+        actor_endpoint_kind => _activation_binding_actor_endpoint_kind($binding),
+        width               => ($args{port} || {})->{width} // 1,
+        instance            => $instance,
+        parent_port         => defined($instance) ? "${instance}_$port" : undef,
+        child_port          => defined($instance) ? $port : undef,
+        start_signal        => defined($instance) ? "${instance}_start" : "${target}_start",
+        done_signal         => $site_kind eq 'rule_trigger'
             ? undef
             : (defined($instance) ? "${instance}_done" : "${target}_done"),
-        trigger_source     => $site_kind eq 'rule_trigger'
+        trigger_source      => $site_kind eq 'rule_trigger'
             ? ($args{trigger_source} // _rule_trigger_source_name($args{owner}, $target))
             : undef,
-        payload_source     => $site_kind eq 'rule_trigger' && $role eq 'input'
+        payload_source      => $site_kind eq 'rule_trigger' && $role eq 'input'
             ? ($args{payload_source} // _rule_trigger_payload_source_name($args{owner}, $target, $port))
             : undef,
     };
@@ -5260,6 +5261,20 @@ sub _activation_binding_actor_expr_text {
     return _format_isf_expr($binding->{actor_expr})
         if ref($binding) eq 'HASH' && exists($binding->{actor_expr});
     return $binding->{actor_signal};
+}
+
+sub _activation_binding_actor_endpoint_kind {
+    my ($binding) = @_;
+    return 'signal'
+        if ref($binding) eq 'HASH'
+            && defined($binding->{actor_signal})
+            && length($binding->{actor_signal});
+
+    my $expr = ref($binding) eq 'HASH' && exists($binding->{actor_expr})
+        ? $binding->{actor_expr}
+        : undef;
+    return 'literal' if _is_numeric_or_exact_width_literal($expr);
+    return 'expression';
 }
 
 sub _validate_activation_input_binding_expr {

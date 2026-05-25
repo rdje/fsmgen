@@ -63,6 +63,7 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_temporal_contract_reset_policy_shape
     isf_public_interface_schedule_report_top_level_keys
     isf_public_interface_schedule_report_transaction_port_binding_keys
+    isf_public_interface_schedule_report_transaction_port_binding_actor_endpoint_kind_values
     isf_public_interface_schedule_report_transaction_port_binding_site_kind_values
     isf_public_interface_schedule_report_transaction_loop_keys
     isf_public_interface_schedule_report_transaction_wait_count_kind_values
@@ -199,6 +200,10 @@ sub assert_schedule_report_metadata {
                 isf_public_interface_schedule_report_transaction_port_binding_keys(),
         ],
         [
+            schedule_report_transaction_port_binding_actor_endpoint_kind_values =>
+                isf_public_interface_schedule_report_transaction_port_binding_actor_endpoint_kind_values(),
+        ],
+        [
             schedule_report_transaction_loop_keys =>
                 isf_public_interface_schedule_report_transaction_loop_keys(),
         ],
@@ -327,6 +332,15 @@ sub assert_schedule_report_metadata {
     assert_unique_scalar_list(
         $contract->{schedule_report_bank_access_policy_values},
         "$label bank access policy values",
+    );
+    is_deeply(
+        $contract->{schedule_report_transaction_port_binding_actor_endpoint_kind_values},
+        isf_public_interface_schedule_report_transaction_port_binding_actor_endpoint_kind_values(),
+        "$label transaction port binding actor endpoint kind values are exact",
+    );
+    assert_unique_scalar_list(
+        $contract->{schedule_report_transaction_port_binding_actor_endpoint_kind_values},
+        "$label transaction port binding actor endpoint kind values",
     );
     is_deeply(
         $contract->{schedule_report_transaction_port_binding_site_kind_values},

@@ -2546,7 +2546,8 @@ payload source and the trigger fan-in DT routes payloads under the matching
 per-rule trigger pulse.
 
 Rule-trigger output bindings, explicit snapshot-vs-live timing selection,
-richer report fields, and broader static conflict diagnostics remain backlog.
+additional binding report fields beyond the shipped endpoint-kind metadata,
+and broader static conflict diagnostics remain backlog.
 
 Actor pin binding now uses the same assignment/conflict path as ordinary ISF
 drives where it has shipped coverage. Spawn output bindings carry parent
@@ -2559,9 +2560,12 @@ reach the SystemVerilog backend's verification-only selector checks.
 Successful schedule reports now expose bounded `transaction_port_bindings`
 entries for the shipped binding surface. Each entry records the binding site
 kind, owner, target transaction, direction role, port, scalar actor signal
-when applicable, formatted actor expression, width, and generated handoff names
-where they exist. This is a public summary for downstream tooling, not the raw
-binding or assignment-provenance internals.
+when applicable, formatted actor expression, `actor_endpoint_kind`, width, and
+generated handoff names where they exist. The endpoint kind is `signal` for
+scalar actor-side endpoints, `literal` for numeric or exact-width input
+operands, and `expression` for non-empty list-expression input operands. This
+is a public summary for downstream tooling, not the raw binding or
+assignment-provenance internals.
 
 ### Temporal Contract Lowering
 

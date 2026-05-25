@@ -369,8 +369,9 @@ static lowering decisions, not per-cycle runtime traces.
 
 Transaction port bindings now project as bounded `transaction_port_bindings` entries with
 binding site, owner, target transaction, port role/name, scalar actor signal
-where applicable, formatted actor expression, width, and generated handoff
-signal names where applicable.
+where applicable, formatted actor expression, `actor_endpoint_kind`, width,
+and generated handoff signal names where applicable. Endpoint kind is
+`signal`, `literal`, or `expression`.
 
 Raw assignment provenance, private assignment indexes, and activation proof internals remain
 private.

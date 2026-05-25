@@ -4601,8 +4601,11 @@ Transaction port binding provenance is emitted as a top-level
 `transaction_port_bindings` array. Each entry records the binding site
 (`do`, `spawn`, or `rule_trigger`), owner, target transaction, direction role,
 transaction port, actor signal when the actor side is a scalar endpoint,
-formatted actor expression, width, and the bounded generated signal names that
-make the scheduled `.fsm` handoff reviewable. For expression-valued input
+formatted actor expression, `actor_endpoint_kind`, width, and the bounded
+generated signal names that make the scheduled `.fsm` handoff reviewable.
+`actor_endpoint_kind` is `signal` for scalar actor-side endpoints, `literal`
+for numeric or exact-width input operands, and `expression` for non-empty
+list-expression input operands. For expression-valued or literal input
 bindings, `actor_signal` is JSON null and `actor_expression` carries the
 formatted source expression. Non-applicable generated signals are JSON null.
 This is provenance and review support; it is not raw assignment provenance and

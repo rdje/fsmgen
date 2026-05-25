@@ -966,7 +966,10 @@ Rules:
 - Rule `trigger` supports input bindings only because a rule does not wait for
   transaction completion.
 - Width mismatches fail closed when width evidence is known.
-- Reports expose `transaction_port_bindings[]`.
+- Reports expose `transaction_port_bindings[]`, including
+  `actor_endpoint_kind` so consumers can distinguish scalar endpoints,
+  numeric/exact-width literal operands, and list-expression operands without
+  parsing `actor_expression`.
 
 ### 11.3 Sampling, Await, Wait, Completion
 
@@ -2990,8 +2993,9 @@ temporal_contracts[]: transaction, name, kind, trigger, signal,
 bank_accesses[]: kind, owner, owner_kind, container_kind, container_name,
   bank, index, width, depth, scalar_entries, same_cycle_policy, value, target
 transaction_port_bindings[]: site_kind, owner, owner_kind, target_transaction,
-  role, port, actor_signal, actor_expression, width, instance, parent_port,
-  child_port, start_signal, done_signal, trigger_source, payload_source
+  role, port, actor_signal, actor_expression, actor_endpoint_kind, width,
+  instance, parent_port, child_port, start_signal, done_signal,
+  trigger_source, payload_source
 dt_blocks[]: name, kind, assignments
 actor_network: kind, instances, groups, association_schedules,
   group_schedules, data_movements, event_waits, transaction_triggers
@@ -3062,6 +3066,7 @@ temporal_contracts.assertion_projection: systemverilog_sticky_fail
 bank_accesses.kind: store, load
 bank_accesses.same_cycle_policy: read_before_write
 transaction_port_bindings.site_kind: do, spawn, rule_trigger
+transaction_port_bindings.actor_endpoint_kind: signal, literal, expression
 generated_composition.kind: activation_generated_top, spawn_generated_top
 inferred_storage.kind: counter, register
 inferred_storage.role: activation_done_handoff, activation_start_handoff,

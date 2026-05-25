@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Endpoint-kind values are not presence-key families
+- `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` adds
+  `transaction_port_bindings[].actor_endpoint_kind` as additive report
+  metadata and advertises the legal values through
+  `schedule_report_transaction_port_binding_actor_endpoint_kind_values`.
+- The schedule-report presence map intentionally remains limited to `*_keys`
+  families. A value list describes allowed scalar values for a field; it does
+  not describe entry key presence. The broad ISF gate caught the accidental
+  value-list publication in the presence map via
+  `t/1227-isf-schedule-report-freeze-boundary.t`, and the final rerun passed
+  after the map was corrected.
+- This keeps schema-freeze accounting honest: adding the field is additive,
+  but value-family metadata and key-presence metadata stay separate.
+
 ## 2026-05-25: Binding endpoint kind is report metadata, not new semantics
 - `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.1` selects a small additive
   schedule-report metadata field for transaction-port bindings:

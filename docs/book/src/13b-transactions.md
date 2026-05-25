@@ -1390,9 +1390,10 @@ wires the input handoff `parent_worker_repeat_do_0_addr` from `req_addr` and
 the output handoff `parent_worker_repeat_do_0_data` back to `resp`. The parent
 `.fsm` records those handoffs under `-parent_worker_repeat_do_0_port_bindings`,
 and schedule JSON exposes `transaction_port_bindings[]` entries with
-`site_kind: "do"` and `instance: "parent_worker_repeat_do_0"`. If the actor
-declares clock domains, the same source may add `(domain core)` beside the
-`params`/`bind` clauses; schedule JSON then groups
+`site_kind: "do"`, `actor_endpoint_kind: "signal"`, and
+`instance: "parent_worker_repeat_do_0"`. If the actor declares clock domains,
+the same source may add `(domain core)` beside the `params`/`bind` clauses;
+schedule JSON then groups
 `parent_worker_repeat_do_0` under the `core` `clock_domains[].child_instances`
 summary. The repeat loop still waits for `parent_worker_repeat_do_0_done`
 before decrementing/checking the repeat counter.

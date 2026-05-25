@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 transaction-port binding endpoint-kind reports shipped
+- Completed `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` and closed the
+  task tree.
+- Public `transaction_port_bindings[]` schedule-report entries now include
+  `actor_endpoint_kind`.
+- Values are `signal` for scalar actor-side endpoints, `literal` for numeric
+  or exact-width input operands, and `expression` for non-empty
+  list-expression input operands.
+- The public contract advertises the field in
+  `schedule_report_transaction_port_binding_keys` and the value family in
+  `schedule_report_transaction_port_binding_actor_endpoint_kind_values`; the
+  value list is not a presence key family.
+- This is additive report metadata only. ISF syntax, binding timing,
+  generated `.fsm`, HDL lowering, schema version, raw `LoweringIR` exposure,
+  and rule-trigger output-binding behavior did not change.
+- The first broad ISF run caught an accidental presence-map classification for
+  the value family through `t/1227-isf-schedule-report-freeze-boundary.t`; the
+  contract was corrected and the broad rerun passed.
+- Validation passed: syntax checks; focused public/report/spec/book tests
+  with `Files=8, Tests=344`; schedule-report freeze-boundary rerun with
+  `Files=5, Tests=11`; `./bin/ci-regression isf --no-book` with `Files=274,
+  Tests=1740`; final live-doc/book audits; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 transaction-port binding endpoint-kind report tree selected
 - Created active task tree
   `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS`.

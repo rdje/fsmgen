@@ -14,6 +14,7 @@ use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_transaction_port_binding_keys
+    isf_public_interface_schedule_report_transaction_port_binding_actor_endpoint_kind_values
     isf_public_interface_schedule_report_transaction_port_binding_site_kind_values
 );
 
@@ -117,6 +118,41 @@ ISF
     );
     is($binding->{actor_signal}, undef, 'expression input binding has no scalar actor_signal');
     is($binding->{actor_expression}, '(concat req_hi req_lo)', 'expression input binding reports the formatted actor expression');
+    is($binding->{actor_endpoint_kind}, 'expression', 'expression input binding reports endpoint kind');
+};
+
+subtest 'literal input bindings report literal endpoint kind' => sub {
+    my $source = <<'ISF';
+(actor port_binding_literal_report
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (transaction child
+    (ports
+      (input addr (width 8)))
+    (on child_start)
+    (complete done))
+  (transaction parent
+    (on start)
+    (do child
+      (bind
+        (input addr 8'hA5)))
+    (complete done)))
+ISF
+
+    my $actor = FSM::Adapter::ISF->new()->parse_source($source, 'port-binding-literal-report.isf');
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    my $binding = $report->{transaction_port_bindings}[0];
+
+    is_deeply(
+        sorted([keys %$binding]),
+        sorted(isf_public_interface_schedule_report_transaction_port_binding_keys()),
+        'literal binding entry still uses the bounded public key set',
+    );
+    is($binding->{actor_signal}, undef, 'literal input binding has no scalar actor_signal');
+    is($binding->{actor_expression}, "8'hA5", 'literal input binding reports the authored literal expression');
+    is($binding->{actor_endpoint_kind}, 'literal', 'literal input binding reports endpoint kind');
 };
 
 done_testing();
@@ -129,6 +165,7 @@ sub assert_binding_projection {
     is(scalar(@{$report->{transaction_port_bindings}}), 5, "$label reports every authored scalar binding");
 
     my %allowed_site_kind = map { $_ => 1 } @{isf_public_interface_schedule_report_transaction_port_binding_site_kind_values()};
+    my %allowed_endpoint_kind = map { $_ => 1 } @{isf_public_interface_schedule_report_transaction_port_binding_actor_endpoint_kind_values()};
     for my $binding (@{$report->{transaction_port_bindings}}) {
         is_deeply(
             sorted([keys %$binding]),
@@ -136,6 +173,7 @@ sub assert_binding_projection {
             "$label binding entry uses the bounded public key set",
         );
         ok($allowed_site_kind{$binding->{site_kind}}, "$label binding site kind is advertised");
+        ok($allowed_endpoint_kind{$binding->{actor_endpoint_kind}}, "$label binding endpoint kind is advertised");
     }
 
     is_deeply(
@@ -156,6 +194,7 @@ sub expected_bindings {
             port               => 'addr',
             actor_signal       => 'req_addr',
             actor_expression   => 'req_addr',
+            actor_endpoint_kind => 'signal',
             width              => 8,
             instance           => undef,
             parent_port        => undef,
@@ -174,6 +213,7 @@ sub expected_bindings {
             port               => 'data',
             actor_signal       => 'resp',
             actor_expression   => 'resp',
+            actor_endpoint_kind => 'signal',
             width              => 8,
             instance           => undef,
             parent_port        => undef,
@@ -192,6 +232,7 @@ sub expected_bindings {
             port               => 'addr',
             actor_signal       => 'req_addr',
             actor_expression   => 'req_addr',
+            actor_endpoint_kind => 'signal',
             width              => 8,
             instance           => 'w0',
             parent_port        => 'w0_addr',
@@ -210,6 +251,7 @@ sub expected_bindings {
             port               => 'data',
             actor_signal       => 'resp',
             actor_expression   => 'resp',
+            actor_endpoint_kind => 'signal',
             width              => 8,
             instance           => 'w0',
             parent_port        => 'w0_data',
@@ -228,6 +270,7 @@ sub expected_bindings {
             port               => 'addr',
             actor_signal       => 'req_addr',
             actor_expression   => 'req_addr',
+            actor_endpoint_kind => 'signal',
             width              => 8,
             instance           => undef,
             parent_port        => undef,
