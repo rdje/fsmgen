@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Static zero repeat no-op shipped
+- Completed `ISF-STATIC-ZERO-REPEAT-NOOP.1` and closed the task tree.
+- Static zero repeat counts now lower as transparent zero-iteration no-op
+  regions for literal zero, zero-valued actor constants, actor scalar
+  parameters, same-transaction scalar parameters, and qualified package scalar
+  constants.
+- Zero-count no-op repeats emit no repeat counter, repeat init/check state,
+  repeat-body state, or `transaction_loops[]` entry.
+- Static zero repeat bodies containing child activation (`do` or `spawn`)
+  still fail closed with a targeted diagnostic until generated-child artifact
+  pruning is specified.
+- Positive static repeat counts and known-width runtime scalar repeat counts
+  keep their existing behavior.
+- The ISF spec, downstream handoff, public contract, public contract code,
+  mdBook, task tree, README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused repeat/public-audit tests with
+  `Files=7, Tests=344`; `./bin/ci-regression isf --no-book` with
+  `Files=275, Tests=1757`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — No-reset scheduled FSM HDL shipped
 - Completed `NO-RESET-SCHEDULED-FSM-HDL.1` and closed the task tree.
 - Direct scheduled `.fsm` parsing now accepts explicit clock-only `+system`

@@ -509,11 +509,18 @@ For `(repeat 8 (drive scl 1) (drive scl 0))`:
 
 The form is exact: `(repeat count body...)`, with a scalar non-empty count and
 at least one body clause. Malformed missing or nested counts fail before
-counter construction. `count` may be a positive literal, same-transaction
-scalar parameter default, positive actor constant, positive actor scalar
-parameter default, qualified package scalar constant, or known-width runtime
-scalar. Same-transaction parameter counts resolve to a positive integer for
-counter width and load that resolved value in the scheduled `.fsm`.
+counter construction. `count` may be a non-negative literal,
+same-transaction scalar parameter default, non-negative actor constant,
+non-negative actor scalar parameter default, qualified package scalar
+constant, or known-width runtime scalar. Positive same-transaction parameter
+counts resolve to a counter width and load that resolved value in the
+scheduled `.fsm`.
+Static zero counts from literal zero, actor constants, actor scalar
+parameters, same-transaction scalar parameters, or package scalar constants
+lower as transparent no-op regions with no counter, repeat init/check state,
+repeat-body state, or `transaction_loops[]` entry when the body does not
+contain child activation. Static zero repeat bodies containing `do` or
+`spawn` fail closed until generated-child artifact pruning is specified.
 Generated child activation overrides for repeat-count transaction parameters
 must preserve the child default value; mismatches fail closed until
 per-activation repeat counter specialization is shipped.
@@ -539,15 +546,18 @@ literal counts use the minimum width that can represent the loaded count.
 Declared positive actor constants, actor-local scalar parameter defaults, and
 qualified imported package scalar constants use the resolved integer value as
 width evidence while preserving the authored count token in the scheduled
-`.fsm` load. Literal zero counts and actor constants, actor scalar parameters,
-or package scalar constants resolving to zero fail closed before scheduled
-`.fsm` emission. Named dynamic counts use their known interface or
-sample-derived width and bypass the body when the runtime value is zero.
+`.fsm` load. Static zero counts from literal zero, actor constants, actor
+scalar parameters, same-transaction scalar parameters, or package scalar
+constants lower as transparent no-op regions with no repeat counter or loop
+report entry when the body contains no child activation. Named dynamic counts
+use their known interface or sample-derived width and bypass the body when the
+runtime value is zero.
 Unknown names, unqualified package constants, aggregate package constants,
-package member/item paths, non-scalar actor parameters, transaction
-parameters, malformed scalar tokens, package constants inside repeat-count
-expressions, and expression-valued counts fail closed before scheduled `.fsm`
-emission.
+package member/item paths, non-scalar actor parameters, non-scalar
+transaction parameters, cross-transaction parameters, malformed scalar
+tokens, package constants inside repeat-count expressions, expression-valued
+counts, and static zero repeat bodies containing child activation fail closed
+before scheduled `.fsm` emission.
 Repeats nested in switch branches declare the same transaction counter,
 widened to the largest branch requirement.
 
@@ -1262,15 +1272,21 @@ check is reached only after that instance reports fresh done.
 The repeat count is not an elaboration count. It is loaded into a runtime
 counter. A declared positive actor constant or actor-local scalar parameter
 default gives static counter-width evidence, but FSMGen still emits the
-authored count token as the load value. Static zero counts fail closed rather
-than silently running the body once. A named count may be a dynamic scalar
-signal when its width is known. Dynamic counts make latency data-dependent
-rather than statically fixed; verification and reports need either a known
-width-derived bound or an explicit future bound if tighter proof is required.
-Known-width runtime scalar counts skip the body when the runtime value is zero.
-Unknown names, non-scalar actor parameters, transaction parameters,
-expression-valued counts, and generated-top repeat-count specialization remain
-deferred and fail closed rather than falling back to an implicit counter.
+authored count token as the load value. Static zero counts from literal zero,
+actor constants, actor scalar parameters, same-transaction scalar parameters,
+or package scalar constants lower as transparent no-op regions with no
+counter, repeat init/check state, repeat-body state, or `transaction_loops[]`
+entry when the body does not contain child activation. Static zero repeat
+bodies containing `do` or `spawn` fail closed until generated-child artifact
+pruning is specified. A named count may be a dynamic scalar signal when its
+width is known. Dynamic counts make latency data-dependent rather than
+statically fixed; verification and reports need either a known width-derived
+bound or an explicit future bound if tighter proof is required. Known-width
+runtime scalar counts skip the body when the runtime value is zero. Unknown
+names, non-scalar actor parameters, non-scalar transaction parameters,
+cross-transaction parameters, expression-valued counts, and generated-top
+repeat-count specialization remain deferred and fail closed rather than
+falling back to an implicit counter.
 
 For the shipped repeat-body spawn subset, `(spawn child as name)` may add
 optional `(params ...)`, `(bind ...)`, and `(domain NAME)` subclauses while

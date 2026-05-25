@@ -95,10 +95,14 @@ clear lower-layer mapping, and clear runtime behavior.
   package constants preserve the authored qualified token in `count_source`.
   Static transaction repeat counts may use same-transaction scalar parameter
   defaults and qualified imported package scalar constants when they resolve
-  to positive integers; the repeat counter width uses the resolved value.
-  Package constants preserve the authored qualified token in the scheduled
+  to non-negative integers. Positive counts provide counter-width evidence;
+  package constants preserve the authored qualified token in the scheduled
   `.fsm` load, while transaction parameters load the resolved integer because
-  they are local lowering inputs.
+  they are local lowering inputs. Zero counts lower as transparent no-op
+  regions with no counter, repeat init/check state, repeat-body state, or
+  `transaction_loops[]` entry when the body does not contain child
+  activation; zero-count repeat bodies containing `do` or `spawn` still fail
+  closed until generated-child artifact pruning is specified.
   Actor-local scalar parameter defaults and same-transaction scalar parameter
   defaults that resolve to non-negative integer literals may also be used as
   static `(wait NAME)` counts in their owning actor or transaction schedule.

@@ -1366,12 +1366,16 @@ imported package scalar constants use their resolved integer value as width
 evidence while preserving the authored load token, same-transaction scalar
 parameter defaults use their resolved positive integer as width evidence and
 scheduled `.fsm` load value, and sampled/runtime names continue to use known
-source width. Package-constant repeat counts are checked by
+source width. Static zero counts from literal zero, actor constants, actor
+scalar parameters, same-transaction scalar parameters, or package scalar
+constants lower as transparent no-op regions with no counter, repeat
+init/check state, repeat-body state, or `transaction_loops[]` entry when the
+body does not contain child activation. Package-constant repeat counts are
+checked by
 [t/1360-isf-repeat-package-constant-counts.t](../t/1360-isf-repeat-package-constant-counts.t).
-The same boundary test also checks that literal zero repeat counts and actor
-constants, actor scalar parameters, same-transaction scalar parameters, or
-package scalar constants resolving to zero fail closed before scheduled
-`.fsm` emission.
+The same boundary test also checks that static zero repeat bodies containing
+`do` or `spawn` fail closed until generated-child artifact pruning is
+specified.
 Generated child activation overrides for repeat-count transaction parameters
 are accepted only when they resolve to the same positive integer as the child
 default; mismatches fail closed until per-activation repeat counter

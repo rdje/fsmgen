@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Static zero repeat should skip, not allocate dead loop artifacts
+- `ISF-STATIC-ZERO-REPEAT-NOOP.1` narrows the earlier static-zero fail-closed
+  policy now that runtime repeat zero-bypass behavior is shipped and covered.
+- A statically zero count is a provable zero-iteration loop. Lowering now
+  omits the repeat counter, repeat init/check states, repeat-body states, and
+  `transaction_loops[]` metadata instead of constructing an unreachable loop
+  region.
+- The rule applies to literal zero, zero-valued actor constants, actor scalar
+  parameters, same-transaction scalar parameters, and qualified package scalar
+  constants. Positive static counts retain counter-width evidence semantics,
+  and known-width runtime counts retain their runtime zero-bypass branch.
+- Bodies containing `do` or `spawn` remain fail-closed under static zero
+  counts. Those clauses can imply generated child/top artifacts, and pruning
+  unreachable generated-child artifacts needs a separate explicit design.
+
 ## 2026-05-25: Clock-only +system means no reset, not an inferred reset
 - `NO-RESET-SCHEDULED-FSM-HDL.1` changes explicit clock-only `+system`
   contracts from a fail-closed parser shape into an authored no-reset backend

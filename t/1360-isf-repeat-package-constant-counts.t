@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use JSON::PP qw(decode_json);
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
@@ -116,7 +117,7 @@ ISF
       (drive tick))
     (complete done)))
 ISF
-        qr/Transaction 'main': repeat count 'REPEAT_NINE' is neither a declared positive actor constant, actor scalar parameter, qualified package scalar constant, nor a known-width runtime scalar/,
+        qr/Transaction 'main': repeat count 'REPEAT_NINE' is neither a declared non-negative actor constant, actor scalar parameter, qualified package scalar constant, nor a known-width runtime scalar/,
         'unqualified package constants are rejected as repeat counts',
     );
 
@@ -139,7 +140,7 @@ ISF
       (drive tick))
     (complete done)))
 ISF
-        qr/Transaction 'main': repeat count package constant 'shared\.REPEATS' must resolve to a positive integer scalar/,
+        qr/Transaction 'main': repeat count package constant 'shared\.REPEATS' must resolve to a non-negative integer scalar/,
         'aggregate package constants remain deferred as repeat counts',
     );
 
@@ -166,10 +167,7 @@ ISF
         'package aggregate constant scalar-leaf paths remain deferred as repeat counts',
     );
 
-    assert_lower_file_rejected(
-        $dir,
-        'zero_package_constant_repeat_count.isf',
-        <<'ISF',
+    my $zero_path = write_file(File::Spec->catfile($dir, 'zero_package_constant_repeat_count.isf'), <<'ISF');
 (actor zero_package_constant_repeat_count
   (imports
     (package shared))
@@ -185,9 +183,18 @@ ISF
       (drive tick))
     (complete done)))
 ISF
-        qr/Transaction 'main': repeat count 'shared\.REPEAT_ZERO' is statically zero; zero-count repeat semantics remain deferred/,
-        'zero-valued package constants keep the static zero repeat policy',
-    );
+    my $zero_actor = FSM::Adapter::ISF->new()->parse_file($zero_path);
+    my $zero_fsm = FSM::Scheduler::ISF->new()->lower($zero_actor)->{files}{'zero_package_constant_repeat_count.fsm'};
+    unlike($zero_fsm, qr/\bmain_cnt\b/, 'zero-valued package constant emits no repeat counter');
+    unlike($zero_fsm, qr/main_repeat_init_/, 'zero-valued package constant emits no repeat init state');
+    unlike($zero_fsm, qr/main_repeat_check_/, 'zero-valued package constant emits no repeat check state');
+    unlike($zero_fsm, qr/\(= \(tick_start 1\)\)/, 'zero-valued package constant emits no repeat-body drive start');
+    like($zero_fsm, qr/\(main_idle_0[\s\S]*\(-> main_done_1\)/,
+        'zero-valued package constant links surrounding states directly');
+    my $zero_report = decode_json(FSM::Scheduler::ISF->new()->report($zero_actor));
+    is_deeply($zero_report->{transaction_loops}, [],
+        'zero-valued package constant emits no transaction loop report entry');
+    assert_fsm_reaches_hdl($zero_fsm, 'zero_package_constant_repeat_count');
 
     my $mode_dir = tempdir(CLEANUP => 1);
     write_file(File::Spec->catfile($mode_dir, 'mode.fsm'), <<'FSM');

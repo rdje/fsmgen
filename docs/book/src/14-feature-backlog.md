@@ -1062,15 +1062,19 @@ transaction parameters, cross-transaction parameters, expression-valued counts,
 and generated-top repeat-count respecialization fail closed or remain backlog,
 so fully general dynamic repeat counts are still not a frozen public contract.
 Actor-constant and actor-scalar-parameter repeat counts, plus qualified
-imported package scalar constant repeat counts, are now static width evidence
-only when they resolve to positive integers: the counter width uses the
-resolved value while scheduled `.fsm` still loads the authored count token.
-Same-transaction scalar parameter repeat counts also provide static width
-evidence when they resolve to positive integers, but the scheduled `.fsm`
-loads the resolved integer because transaction parameters are local lowering
-inputs. Static zero repeat counts, whether literal zero or
+imported package scalar constant repeat counts, are now static repeat-count
+sources when they resolve to non-negative integers: positive counts provide
+counter-width evidence while scheduled `.fsm` still loads the authored count
+token. Same-transaction scalar parameter repeat counts also provide static
+width evidence when they resolve to positive integers, but the scheduled
+`.fsm` loads the resolved integer because transaction parameters are local
+lowering inputs. Static zero repeat counts, whether literal zero or
 actor/transaction parameters, actor constants, or package scalar constants
-resolving to zero, fail closed before scheduled `.fsm` emission. Unqualified
+resolving to zero, lower as transparent no-op regions with no counter, repeat
+init/check state, repeat-body state, or `transaction_loops[]` entry when the
+body does not contain child activation. Static zero repeat bodies containing
+`do` or `spawn` fail closed until generated-child artifact pruning is
+specified. Unqualified
 package constants, aggregate package constants, package
 member/item paths, and package constants inside repeat-count expressions
 remain fail-closed.

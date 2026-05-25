@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use JSON::PP qw(decode_json);
 use File::Spec;
 use FindBin;
 
@@ -28,6 +29,24 @@ sub assert_lower_rejected {
     ok(!$ok, "$label is rejected during lowering");
     ok(!ref($diagnostic), "$label diagnostic is scalar");
     like($diagnostic, $diagnostic_re, "$label diagnostic is targeted");
+}
+
+sub assert_static_zero_repeat_noop {
+    my ($source, $label, $filename) = @_;
+
+    my $actor = FSM::Adapter::ISF->new()->parse_source($source, "$label.isf");
+    my $result = FSM::Scheduler::ISF->new()->lower($actor);
+    my $fsm = $result->{files}{$filename};
+
+    unlike($fsm, qr/\bmain_cnt\b/, "$label does not declare a repeat counter");
+    unlike($fsm, qr/main_repeat_init_/, "$label emits no repeat init state");
+    unlike($fsm, qr/main_repeat_check_/, "$label emits no repeat check state");
+    unlike($fsm, qr/\(= \(tick_start 1\)\)/, "$label emits no repeat-body drive start");
+    like($fsm, qr/\(main_idle_0[\s\S]*\(-> main_done_1\)/,
+        "$label links surrounding transaction states directly");
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply($report->{transaction_loops}, [], "$label emits no transaction loop report entry");
 }
 
 subtest 'valid repeat clause lowers counter init, body, and check states' => sub {
@@ -176,7 +195,7 @@ ISF
 };
 
 subtest 'unsupported repeat count sources fail before counter emission' => sub {
-    assert_lower_rejected(<<'ISF', 'unknown repeat count name', qr/\ATransaction 'main': repeat count 'beats' is neither a declared positive actor constant, actor scalar parameter, qualified package scalar constant, nor a known-width runtime scalar/);
+    assert_lower_rejected(<<'ISF', 'unknown repeat count name', qr/\ATransaction 'main': repeat count 'beats' is neither a declared non-negative actor constant, actor scalar parameter, qualified package scalar constant, nor a known-width runtime scalar/);
 (actor repeat_unknown_count
   (clock clk)
   (interface (input start) (output flag) (output done))
@@ -189,7 +208,7 @@ subtest 'unsupported repeat count sources fail before counter emission' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'non-scalar actor parameter repeat count', qr/\ATransaction 'main': repeat count actor parameter 'COUNT' must resolve to a positive integer literal/);
+    assert_lower_rejected(<<'ISF', 'non-scalar actor parameter repeat count', qr/\ATransaction 'main': repeat count actor parameter 'COUNT' must resolve to a non-negative integer literal/);
 (actor repeat_actor_param_count
   (clock clk)
   (params
@@ -204,7 +223,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'aggregate transaction parameter repeat count', qr/\ATransaction 'worker': repeat count transaction parameter 'COUNT' must resolve to a positive integer literal/);
+    assert_lower_rejected(<<'ISF', 'aggregate transaction parameter repeat count', qr/\ATransaction 'worker': repeat count transaction parameter 'COUNT' must resolve to a non-negative integer literal/);
 (actor repeat_aggregate_transaction_param_count
   (clock clk)
   (interface (input start) (output flag) (output done))
@@ -223,7 +242,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'negative repeat count literal', qr/\ATransaction 'main': repeat count '-1' must be a positive decimal literal, declared positive actor constant, actor scalar parameter, qualified package scalar constant, or known-width runtime scalar name/);
+    assert_lower_rejected(<<'ISF', 'negative repeat count literal', qr/\ATransaction 'main': repeat count '-1' must be a non-negative decimal literal, declared non-negative actor constant, actor scalar parameter, qualified package scalar constant, or known-width runtime scalar name/);
 (actor repeat_negative_count
   (clock clk)
   (interface (input start) (output flag) (output done))
@@ -236,7 +255,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'transaction parameter zero repeat count', qr/\ATransaction 'main': repeat count 'COUNT' is statically zero; zero-count repeat semantics remain deferred/);
+    assert_static_zero_repeat_noop(<<'ISF', 'transaction parameter zero repeat count', 'repeat_transaction_param_zero.fsm');
 (actor repeat_transaction_param_zero
   (clock clk)
   (interface (input start) (output flag) (output done))
@@ -253,8 +272,8 @@ ISF
 
 };
 
-subtest 'statically zero repeat counts fail closed before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'literal zero repeat count', qr/\ATransaction 'main': repeat count '0' is statically zero; zero-count repeat semantics remain deferred/);
+subtest 'statically zero repeat counts lower as no-op regions' => sub {
+    assert_static_zero_repeat_noop(<<'ISF', 'literal zero repeat count', 'repeat_literal_zero.fsm');
 (actor repeat_literal_zero
   (clock clk)
   (interface (input start) (output flag) (output done))
@@ -267,7 +286,7 @@ subtest 'statically zero repeat counts fail closed before scheduled emission' =>
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'actor constant zero repeat count', qr/\ATransaction 'main': repeat count 'COUNT' is statically zero; zero-count repeat semantics remain deferred/);
+    assert_static_zero_repeat_noop(<<'ISF', 'actor constant zero repeat count', 'repeat_constant_zero.fsm');
 (actor repeat_constant_zero
   (clock clk)
   (constants
@@ -282,7 +301,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'actor parameter zero repeat count', qr/\ATransaction 'main': repeat count 'COUNT' is statically zero; zero-count repeat semantics remain deferred/);
+    assert_static_zero_repeat_noop(<<'ISF', 'actor parameter zero repeat count', 'repeat_parameter_zero.fsm');
 (actor repeat_parameter_zero
   (clock clk)
   (params
@@ -294,6 +313,36 @@ ISF
     (on start)
     (repeat COUNT
       (drive tick))
+    (complete done)))
+ISF
+};
+
+subtest 'statically zero repeat child activations remain fail closed' => sub {
+    assert_lower_rejected(<<'ISF', 'zero repeat spawn body', qr/\ATransaction 'main': statically zero repeat bodies containing child activation remain fail-closed until generated child artifact pruning is specified/);
+(actor zero_repeat_spawn_body
+  (clock clk)
+  (interface (input start) (output done))
+  (transaction main
+    (on start)
+    (repeat 0
+      (spawn child as c0)
+      (await_all done))
+    (complete done))
+  (transaction child
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'zero repeat do body', qr/\ATransaction 'main': statically zero repeat bodies containing child activation remain fail-closed until generated child artifact pruning is specified/);
+(actor zero_repeat_do_body
+  (clock clk)
+  (interface (input start) (output done))
+  (transaction main
+    (on start)
+    (repeat 0
+      (do child))
+    (complete done))
+  (transaction child
+    (on child_start)
     (complete done)))
 ISF
 };

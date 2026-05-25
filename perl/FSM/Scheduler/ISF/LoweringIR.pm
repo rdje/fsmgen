@@ -4028,10 +4028,12 @@ sub _register_counter_width {
 
 sub _register_repeat_counters {
     my ($counters, $storage_roles, $repeat_counter, $repeat_width, $dynamic_wait_counters) = @_;
-    _register_counter_width($counters, $repeat_counter, $repeat_width)
-        if $counters;
-    $storage_roles->{$repeat_counter} = 'repeat_counter'
-        if ref($storage_roles) eq 'HASH';
+    if (defined($repeat_counter) && length($repeat_counter)) {
+        _register_counter_width($counters, $repeat_counter, $repeat_width)
+            if $counters;
+        $storage_roles->{$repeat_counter} = 'repeat_counter'
+            if ref($storage_roles) eq 'HASH';
+    }
 
     for my $entry (@{$dynamic_wait_counters || []}) {
         next unless ref($entry) eq 'HASH';
@@ -4173,12 +4175,31 @@ sub _repeat_count_load_value {
     return $count;
 }
 
-sub _reject_static_zero_repeat_count {
+sub _is_static_zero_repeat_count {
     my ($count, $actor, $tn) = @_;
     my $static_value = _static_repeat_count_value($count, $actor, $tn);
-    return 1 unless defined($static_value) && $static_value == 0;
 
-    confess "Transaction '$tn': repeat count '$count' is statically zero; zero-count repeat semantics remain deferred\n";
+    return defined($static_value) && $static_value == 0 ? 1 : 0;
+}
+
+sub _repeat_clause_has_child_activation {
+    my ($clause) = @_;
+
+    return 0 unless ref($clause) eq 'ARRAY';
+    for my $body (@{$clause}[2 .. $#$clause]) {
+        next unless ref($body) eq 'ARRAY' && @$body;
+        next unless defined($body->[0]) && !ref($body->[0]);
+        return 1 if $body->[0] eq 'do' || $body->[0] eq 'spawn';
+    }
+
+    return 0;
+}
+
+sub _reject_static_zero_repeat_child_activation {
+    my ($clause, $tn) = @_;
+    return 1 unless _repeat_clause_has_child_activation($clause);
+
+    confess "Transaction '$tn': statically zero repeat bodies containing child activation remain fail-closed until generated child artifact pruning is specified\n";
 }
 
 sub _validate_repeat_count_source {
@@ -4187,9 +4208,9 @@ sub _validate_repeat_count_source {
     if (defined($count) && !ref($count) && _is_hdl_identifier($count)
         && _transaction_param_by_name($actor, $tn, $count)) {
         my $param_value = _transaction_param_repeat_count_value($count, $actor, $tn);
-        return 1 if defined($param_value) && $param_value > 0;
+        return 1 if defined($param_value);
 
-        confess "Transaction '$tn': repeat count transaction parameter '$count' must resolve to a positive integer literal\n";
+        confess "Transaction '$tn': repeat count transaction parameter '$count' must resolve to a non-negative integer literal\n";
     }
 
     if (my $package_constant = _actor_package_constant_reference($actor, $count)) {
@@ -4204,8 +4225,8 @@ sub _validate_repeat_count_source {
             my $integer_value = defined($constant_value) && !ref($constant_value)
                 ? _non_negative_integer_from_literal($constant_value)
                 : undef;
-            confess "Transaction '$tn': repeat count package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
-                unless defined($integer_value) && $integer_value > 0;
+            confess "Transaction '$tn': repeat count package constant '$package_name.$constant_name' must resolve to a non-negative integer scalar\n"
+                unless defined($integer_value);
             return 1;
         }
 
@@ -4214,21 +4235,21 @@ sub _validate_repeat_count_source {
     }
 
     my $static_value = _static_repeat_count_value($count, $actor, $tn);
-    return 1 if defined($static_value) && $static_value > 0;
+    return 1 if defined($static_value);
 
     if (defined($count) && !ref($count) && _is_hdl_identifier($count)) {
         if (_actor_constant_by_name($actor, $count)) {
-            confess "Transaction '$tn': repeat count actor constant '$count' must resolve to a positive integer literal\n";
+            confess "Transaction '$tn': repeat count actor constant '$count' must resolve to a non-negative integer literal\n";
         }
         if (_actor_param_by_name($actor, $count)) {
-            confess "Transaction '$tn': repeat count actor parameter '$count' must resolve to a positive integer literal\n";
+            confess "Transaction '$tn': repeat count actor parameter '$count' must resolve to a non-negative integer literal\n";
         }
         return 1 if defined _runtime_repeat_count_source($count, $widths, $actor, $tn);
 
-        confess "Transaction '$tn': repeat count '$count' is neither a declared positive actor constant, actor scalar parameter, qualified package scalar constant, nor a known-width runtime scalar\n";
+        confess "Transaction '$tn': repeat count '$count' is neither a declared non-negative actor constant, actor scalar parameter, qualified package scalar constant, nor a known-width runtime scalar\n";
     }
 
-    confess "Transaction '$tn': repeat count '$count' must be a positive decimal literal, declared positive actor constant, actor scalar parameter, qualified package scalar constant, or known-width runtime scalar name\n";
+    confess "Transaction '$tn': repeat count '$count' must be a non-negative decimal literal, declared non-negative actor constant, actor scalar parameter, qualified package scalar constant, or known-width runtime scalar name\n";
 }
 
 sub _runtime_repeat_count_source {
@@ -7708,8 +7729,11 @@ sub _expand_loop_body {
 
 sub _ir_repeat {
     my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters; my @spawn_done_ports;
-    _reject_static_zero_repeat_count($cl->[1], $actor, $tn);
     _validate_repeat_count_source($cl->[1], $widths, $actor, $tn);
+    if (_is_static_zero_repeat_count($cl->[1], $actor, $tn)) {
+        _reject_static_zero_repeat_child_activation($cl, $tn);
+        return ([], undef, undef, []);
+    }
     my $width = _repeat_count_width($cl->[1], $widths, $actor, $tn);
     my $runtime_count_source = _runtime_repeat_count_source($cl->[1], $widths, $actor, $tn);
     my $repeat_count_load_value = _repeat_count_load_value($cl->[1], $actor, $tn);

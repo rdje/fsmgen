@@ -1167,9 +1167,13 @@ integer value while preserving the authored count token in the scheduled
 `.fsm` load. Same-transaction scalar parameter defaults infer width from
 their resolved positive integer value and load that resolved value in the
 scheduled `.fsm`, because transaction parameters are local lowering inputs.
-Literal zero counts and actor constants, actor scalar parameters,
-same-transaction scalar parameters, or package scalar constants resolving to
-zero fail closed before scheduled `.fsm` emission. Known-width
+Static zero counts from literal zero, actor constants, actor scalar
+parameters, same-transaction scalar parameters, or package scalar constants
+lower as transparent no-op regions with no counter, repeat init/check state,
+repeat-body state, or `transaction_loops[]` entry when the body does not
+contain child activation. Static zero repeat bodies containing `do` or
+`spawn` fail closed until generated-child artifact pruning is specified.
+Known-width
 sampled/interface names use their known source width and now split the repeat
 init edge: nonzero values enter the repeat body, while zero values bypass the
 body and repeat check to the state after the repeat region. Unknown names,
@@ -3203,8 +3207,9 @@ Required fail-closed examples:
   zero or non-scalar values, or distinct per-await limits in one transaction.
 - Repeat counts that name cross-transaction parameters, unknown symbolic
   names, arbitrary expressions, malformed scalar tokens, actor/transaction
-  parameters that resolve to zero or non-scalar values, or runtime names
-  without width evidence.
+  parameters that resolve to non-scalar values, runtime names without width
+  evidence, or statically zero bodies containing child activation before
+  generated-child artifact pruning is specified.
 - Latency min/max bounds that name cross-transaction parameters, runtime
   interface signals, unknown symbolic names, arbitrary expressions, constants
   that resolve to zero, or actor/transaction parameters that resolve to zero

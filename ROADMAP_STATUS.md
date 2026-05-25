@@ -4,6 +4,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 static zero-count repeat no-op:
+  `ISF-STATIC-ZERO-REPEAT-NOOP.1` shipped bounded static zero-count repeat
+  no-op lowering and closed the task tree. Literal zero, zero-valued actor
+  constants, actor scalar parameters, same-transaction scalar parameters, and
+  qualified package scalar constants now lower as zero-iteration no-op regions
+  with no repeat counter, repeat init/check state, repeat-body state, or
+  `transaction_loops[]` entry. Static zero repeat bodies containing child
+  activation (`do` or `spawn`) remain fail-closed until generated-child
+  artifact pruning is specified. Positive static repeat counts and known-width
+  runtime scalar repeat counts keep their existing behavior. Validation
+  passed: syntax checks; focused repeat/public-audit tests with `Files=7,
+  Tests=344`; `./bin/ci-regression isf --no-book` with `Files=275,
+  Tests=1757`; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 no-reset scheduled `.fsm` HDL support:
   `NO-RESET-SCHEDULED-FSM-HDL.1` shipped explicit clock-only `+system`
   contracts through Verilog-family HDL and closed the task tree. Direct
@@ -759,9 +772,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   path used by positive literals, actor constants, and actor-local scalar
   parameter defaults. The scheduled `.fsm` repeat-counter load preserves the
   authored `PACKAGE.CONSTANT` token while the repeat counter width uses the
-  resolved positive integer. Package constants resolving to zero keep the
-  existing static zero-count repeat policy and fail closed before scheduled
-  `.fsm` emission. Unknown package constants, unqualified package constants,
+  resolved positive integer. At the time, package constants resolving to zero
+  kept the then-existing static zero-count repeat policy and failed closed;
+  `ISF-STATIC-ZERO-REPEAT-NOOP.1` later narrowed that policy to no-op lowering
+  for static zero bodies without child activation. Unknown package constants,
+  unqualified package constants,
   aggregate package constants, package member/item paths, ambiguous
   local-enum/package-constant spellings, package constants inside repeat-count
   expressions, transaction parameters, runtime expressions, arbitrary
@@ -783,9 +798,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   static repeat counter-width path used by positive literals, actor constants,
   and actor-local scalar parameter defaults, while preserving the authored
   `PACKAGE.CONSTANT` token in the scheduled `.fsm` repeat-counter load.
-  Package constants resolving to zero should keep the existing static
-  zero-count repeat policy and fail closed
-  before scheduled `.fsm` emission. Unqualified package constants, unknown
+  The selected implementation preserved the then-existing static zero-count
+  repeat policy for package constants resolving to zero; that policy was later
+  narrowed by `ISF-STATIC-ZERO-REPEAT-NOOP.1`. Unqualified package constants,
+  unknown
   package constants, package aggregate constants, package member/item paths,
   transaction parameters, runtime expressions, arbitrary expressions, package
   constants in other value domains, repeat-body child activation widening,
@@ -3043,9 +3059,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   transaction parameters. Such counts now report that transaction-parameter
   repeat counts remain deferred instead of falling through to the generic
   unknown-name diagnostic. Positive literals, positive actor constants,
-  known-width runtime scalar names, static zero diagnostics, runtime scalar
-  zero-bypass behavior, actor-parameter diagnostics, and malformed-token
-  diagnostics remain preserved. Full actor/transaction parameter
+  known-width runtime scalar names, the then-current static zero diagnostics,
+  runtime scalar zero-bypass behavior, actor-parameter diagnostics, and
+  malformed-token diagnostics remained preserved by that slice. Full
+  actor/transaction parameter
   repeat-count specialization and generated-top respecialization remain
   deferred.
 - Recent R14 repeat transaction-parameter count diagnostic selection:
@@ -3073,9 +3090,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   source boundary and closed the task tree. Repeat counts are now accepted
   only as positive decimal literals, declared actor constants resolving to
   positive integers, or known-width runtime scalar names. Literal zero and
-  actor-constant zero counts keep the static zero diagnostic; unknown names,
-  actor parameters, transaction parameters, malformed scalar tokens, and
-  expression-valued counts fail closed before scheduled `.fsm` emission.
+  actor-constant zero counts kept the then-current static zero diagnostic;
+  `ISF-STATIC-ZERO-REPEAT-NOOP.1` later narrowed static zero bodies without
+  child activation to no-op lowering. Unknown names, actor parameters,
+  transaction parameters, malformed scalar tokens, and expression-valued
+  counts fail closed before scheduled `.fsm` emission.
   Actor/transaction parameter specialization, expression-valued repeat
   counts, generated-top respecialization, repeat-body activation widening,
   and cross-domain repeat behavior remain deferred.
@@ -3095,16 +3114,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   while zero values bypass the body and repeat check to the state after the
   repeat region. Positive literal repeat counts, positive actor constants,
   repeat-body lowering, existing positive runtime repeat behavior, and static
-  zero fail-closed diagnostics remain preserved. Unknown count names,
-  actor/transaction parameter specialization, expression-valued repeat counts,
-  generated-top respecialization, repeat-body activation widening, and
-  cross-domain repeat behavior remain deferred.
+  zero fail-closed diagnostics remained preserved by that slice;
+  `ISF-STATIC-ZERO-REPEAT-NOOP.1` later narrowed static zero bodies without
+  child activation to no-op lowering. Unknown count names, actor/transaction
+  parameter specialization, expression-valued repeat counts, generated-top
+  respecialization, repeat-body activation widening, and cross-domain repeat
+  behavior remain deferred.
 - Recent R14 repeat runtime zero-count policy selection:
   `ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.1` activated the runtime repeat
   zero-count tree. The selected implementation will make runtime scalar
   repeat counts that evaluate to zero skip the repeat body rather than execute
   one body iteration, while preserving existing positive runtime repeat
-  behavior and the already shipped static zero fail-closed policy. Actor and
+  behavior and the then-shipped static zero fail-closed policy. That static
+  zero policy was later narrowed by `ISF-STATIC-ZERO-REPEAT-NOOP.1`. Actor and
   transaction parameter specialization, expression-valued repeat counts,
   generated-top respecialization, repeat-body activation widening, and
   cross-domain repeat behavior remain out of scope. No compiler behavior
@@ -3112,12 +3134,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Recent R14 repeat static zero-count policy completion:
   `ISF-REPEAT-STATIC-ZERO-COUNT-POLICY.2` shipped fail-closed handling for
   repeat counts that are statically known to be zero and closed the task tree.
-  Literal zero counts and actor constants resolving to zero now fail before
-  scheduled `.fsm` emission. Positive literal repeat counts, positive
-  actor-constant repeat counts, sampled/runtime dynamic repeat counts,
-  repeat-body lowering, parameterized specialization, generated-top
-  respecialization, and fully dynamic runtime zero-count skip semantics remain
-  unchanged or deferred.
+  Literal zero counts and actor constants resolving to zero failed before
+  scheduled `.fsm` emission until `ISF-STATIC-ZERO-REPEAT-NOOP.1` later
+  narrowed static zero bodies without child activation to no-op lowering.
+  Positive literal repeat counts, positive actor-constant repeat counts,
+  sampled/runtime dynamic repeat counts, repeat-body lowering, parameterized
+  specialization, generated-top respecialization, and fully dynamic runtime
+  zero-count skip semantics remained unchanged or deferred in that earlier
+  slice.
 - Recent R14 repeat actor-constant width completion:
   `ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.2` shipped declared actor constants as
   repeat counter width evidence and closed the task tree. The repeat counter
@@ -11857,6 +11881,24 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-STATIC-ZERO-REPEAT-NOOP.1` is shipped and the task tree is closed:
+  - static zero repeat counts now lower as transparent zero-iteration no-op
+    regions for literal zero, zero-valued actor constants, actor scalar
+    parameters, same-transaction scalar parameters, and qualified package
+    scalar constants,
+  - zero-count no-op repeats emit no repeat counter, repeat init/check state,
+    repeat-body state, or `transaction_loops[]` entry,
+  - static zero repeat bodies containing child activation (`do` or `spawn`)
+    still fail closed with a targeted diagnostic until generated-child
+    artifact pruning is specified,
+  - positive static repeat counts and known-width runtime scalar repeat counts
+    keep their existing behavior,
+  - and the ISF spec, downstream handoff, public contract, public contract
+    code, mdBook, task tree, README index, roadmap, and live docs are
+    synchronized.
+  - Validation passed: syntax checks; focused repeat/public-audit tests with
+    `Files=7, Tests=344`; `./bin/ci-regression isf --no-book` with
+    `Files=275, Tests=1757`; `mdbook build docs/book`; and `git diff --check`.
 - `NO-RESET-SCHEDULED-FSM-HDL.1` is shipped and the task tree is closed:
   - direct scheduled `.fsm` parsing accepts explicit clock-only `+system`
     contracts such as `(+system (clock clk))`,

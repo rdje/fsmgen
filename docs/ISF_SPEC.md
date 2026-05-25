@@ -306,20 +306,22 @@ scalar parameter consumers such as widths, depths, watchdogs, waits,
 contracts, and repeat counts. Source order is the only actor-parameter
 dependency model: forward references, self references, cycles, and non-scalar
 actor parameters remain fail-closed. Actor-local scalar parameter defaults
-that resolve to non-negative integer literals are also legal static wait
-sources in the actor's own schedule. Actor-local scalar parameter defaults
-that resolve to positive integer literals are legal static transaction latency
-min/max sources, bounded eventual temporal-contract window sources,
-actor-level and await-local watchdog limit sources, and transaction repeat
-count sources in the actor's own schedule. Qualified imported package scalar
+that resolve to non-negative integer literals are legal static wait sources
+and static transaction repeat count sources in the actor's own schedule; zero
+repeat counts lower as transparent no-op regions when the body does not
+contain child activation, while positive repeat counts still provide
+counter-width evidence. Actor-local scalar parameter defaults that resolve to
+positive integer literals are legal static transaction latency min/max
+sources, bounded eventual temporal-contract window sources, and actor-level
+and await-local watchdog limit sources. Qualified imported package scalar
 constants are also accepted as static transaction repeat-count sources when
-they resolve to positive integer literals. Same-transaction scalar parameter
+they resolve to non-negative integer literals. Same-transaction scalar parameter
 defaults on generated child and direct/non-generated transactions are legal
 static sources in the shipped transaction-local slots: port widths,
 data-operation width evidence, repeat counts, wait counts, latency bounds,
 bounded eventual contract windows, and top-level await-local watchdog limits.
-Positive slots require a resolved positive integer; wait counts allow a
-resolved non-negative integer. Transaction parameters outside those
+Positive slots require a resolved positive integer; wait and repeat counts
+allow a resolved non-negative integer. Transaction parameters outside those
 same-transaction slots, runtime interface signals, arbitrary expressions, and
 use-site activation overrides are not actor-parameter-default,
 actor-level-watchdog-limit, or general static constants. Use-site overrides
@@ -670,10 +672,13 @@ entries. Transaction parameters shadow actor-level static names and remain
 local lowering inputs; package entries preserve the authored qualified token
 in `count_source`.
 Qualified package scalar constants used by static transaction repeat counts
-resolve to positive integer counter-width evidence; the scheduled `.fsm`
-repeat-counter load preserves the authored qualified token, and package
-constants resolving to zero fail closed under the shipped static zero-count
-repeat policy.
+resolve to non-negative integer timing facts. Positive counts provide
+counter-width evidence and preserve the authored qualified token in the
+scheduled `.fsm` repeat-counter load. Zero counts lower as transparent no-op
+regions with no counter, repeat init/check state, repeat-body state, or
+`transaction_loops[]` entry when the body does not contain child activation.
+Statically zero repeat bodies that contain `do` or `spawn` still fail closed
+until generated-child artifact pruning is specified.
 Schedule reports expose actor parameter defaults through `actor_params[]` entries with
 each authored parameter `name` and JSON-safe default `value`, preserving
 authored actor constant tokens such as `DEFAULT_WIDTH`, earlier actor
@@ -2539,24 +2544,28 @@ Current lowering:
 - The repeat body is expanded inline.
 - The repeat check state decrements with `<-` and loops while the counter is
   nonzero.
-- Repeat counter width is inferred. Positive decimal literal counts use the
-  minimum width that can represent the loaded count; positive actor constants,
-  actor scalar parameter defaults, and qualified package scalar constants use
-  their resolved integer value as width evidence while preserving the authored
-  load token; same-transaction scalar parameter defaults use their resolved
-  positive integer value as width evidence and as the scheduled `.fsm` load
-  value; known-width runtime scalar names use their known interface, storage,
-  or sample-derived width. Unknown names, non-scalar or zero-valued
-  actor/transaction parameters, cross-transaction parameters, malformed scalar
-  tokens, and expression-valued counts fail closed before counter emission.
+- Repeat counter width is inferred for positive static and runtime counts.
+  Positive decimal literal counts use the minimum width that can represent the
+  loaded count; positive actor constants, actor scalar parameter defaults, and
+  qualified package scalar constants use their resolved integer value as width
+  evidence while preserving the authored load token; same-transaction scalar
+  parameter defaults use their resolved positive integer value as width
+  evidence and as the scheduled `.fsm` load value; known-width runtime scalar
+  names use their known interface, storage, or sample-derived width. Unknown
+  names, non-scalar actor/transaction parameters, cross-transaction
+  parameters, malformed scalar tokens, and expression-valued counts fail
+  closed before counter emission.
 - Generated child activation overrides for a repeat-count transaction
   parameter are accepted only when the override resolves to the same positive
   integer as the child default; mismatches fail closed because per-activation
   repeat counter specialization remains deferred.
 - Repeat counts that are statically known to be zero, either as literal zero
   or as an actor constant, actor scalar parameter, same-transaction scalar
-  parameter, or package scalar constant resolving to zero, fail closed before
-  scheduled `.fsm` emission.
+  parameter, or package scalar constant resolving to zero, lower as
+  transparent no-op regions with no counter, repeat init/check state,
+  repeat-body state, or `transaction_loops[]` entry when the body does not
+  contain child activation. Static zero repeat bodies that contain `do` or
+  `spawn` fail closed until generated-child artifact pruning is specified.
 - Known-width runtime scalar repeat counts split the repeat init edge:
   nonzero values enter the repeat body, while zero values bypass the body and
   repeat check to the state after the repeat region.
@@ -2741,11 +2750,15 @@ the repeat counter, but the scheduled `.fsm` still loads the authored count
 token. Same-transaction scalar parameter repeat counts also provide static
 width evidence when they resolve to positive integers, but the scheduled `.fsm`
 loads the resolved integer because transaction parameters are local lowering
-inputs. Literal zero counts and actor constants, actor scalar parameters,
-transaction parameters, or package scalar constants resolving to zero fail
-closed under the bounded static zero-count policy. Named counts may be dynamic
-scalar signals when their width is known; those known-width runtime scalar
-counts skip the repeat body and repeat check when the runtime value is zero.
+inputs. Static zero counts from literals, actor constants, actor scalar
+parameters, same-transaction scalar parameters, or package scalar constants
+lower as transparent no-op regions with no counter, repeat init/check state,
+repeat-body state, or `transaction_loops[]` entry when the body does not
+contain child activation; static zero repeat bodies containing `do` or `spawn`
+fail closed until generated-child artifact pruning is specified. Named counts
+may be dynamic scalar signals when their width is known; those known-width
+runtime scalar counts skip the repeat body and repeat check when the runtime
+value is zero.
 Unknown count names, unqualified package constants, package aggregate
 constants, package member/item paths, non-scalar actor parameters, non-scalar
 transaction parameters, cross-transaction parameters, expression-valued counts,
@@ -5608,16 +5621,17 @@ Focused tests:
   remain deferred until their timing and diagnostics are implemented.
   Mismatched generated child activation overrides for wait-count parameters
   fail closed.
-- Transaction repeat counts beyond the shipped positive decimal literal,
-  positive actor-constant, positive actor-scalar-parameter,
-  same-transaction scalar-parameter, qualified package scalar constant, and
-  known-width runtime scalar shapes: cross-transaction parameters,
-  non-scalar or zero-valued actor/transaction parameters, arbitrary
-  expressions, aggregate or path package constants, use-site
+- Transaction repeat counts beyond the shipped non-negative decimal literal,
+  non-negative actor-constant, non-negative actor-scalar-parameter,
+  non-negative same-transaction scalar-parameter, non-negative qualified
+  package scalar constant, and known-width runtime scalar shapes:
+  cross-transaction parameters, non-scalar actor/transaction parameters,
+  arbitrary expressions, aggregate or path package constants, use-site
   parameter-specialized counter sizing beyond same-value generated child
-  activation overrides, generated-top respecialization, and repeat-body
-  widening remain deferred. Mismatched generated child activation overrides
-  for repeat-count parameters fail closed.
+  activation overrides, generated-top respecialization, static zero repeat
+  bodies that contain child activation before artifact pruning is specified,
+  and repeat-body widening remain deferred. Mismatched generated child
+  activation overrides for repeat-count parameters fail closed.
 - Transaction latency bounds beyond the shipped positive decimal literal,
   same-transaction scalar-parameter, positive actor-constant, positive
   actor-scalar-parameter, and qualified package scalar-constant

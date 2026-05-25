@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/ISF-STATIC-ZERO-REPEAT-NOOP.md` — completed `R14` task tree for bounded static zero-count repeat no-op lowering.
 - `docs/tasks/NO-RESET-SCHEDULED-FSM-HDL.md` — completed `R14` task tree for reset-free scheduled `.fsm` HDL support.
 - `docs/tasks/ISF-CDC-NO-RESET-FIXTURE.md` — completed `R14` task tree for no-reset acknowledged-event CDC fixture coverage.
 - `docs/tasks/ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.md` — completed `R14` documentation truth-sync task tree for data-operation width backlog wording.
