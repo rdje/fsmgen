@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS` | `active` | `R14` | `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2` | [docs/tasks/ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.md](docs/tasks/ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.md) |
 
 ## Proposed Task Trees
 
@@ -354,6 +355,7 @@ as done work unless a future task reopens them.
 | Temporal-contract actor-scalar-parameter window counts | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS` |
 | Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
+| Transaction latency qualified package scalar-constant min/max bounds | `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS` |
 | Actor top-level interface actor-constant widths | `ISF-INTERFACE-ACTOR-CONSTANT-WIDTHS` |
 | Actor top-level interface actor-scalar-parameter widths | `ISF-INTERFACE-ACTOR-PARAM-WIDTHS` |
 | Actor-owned scalar storage actor-constant widths | `ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS` |

@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Latency package constants should reuse static latency lowering
+- `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.1` selects qualified imported package
+  scalar constants for transaction latency min/max bounds as the next narrow
+  package-constant value-domain widening.
+- Latency bounds are static timing metadata in the current scheduler. Accepted
+  package constants should resolve before latency counter and timeout-state
+  emission, then reuse the existing literal/actor-constant/actor-parameter
+  latency path.
+- The positive-only boundary remains unchanged. Package constants resolving
+  to zero should fail closed, matching literal zero, actor constants resolving
+  to zero, and actor scalar parameters resolving to zero.
+- Unqualified lookup, aggregate package constants, package member/item paths,
+  transaction parameters, runtime signals, arbitrary expressions,
+  stage-local latency, generated-top respecialization, and use-site
+  specialization remain fail-closed or deferred.
+
 ## 2026-05-25: Repeat package constants reuse static width evidence
 - `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` resolves qualified imported package
   scalar constants at the static transaction repeat-count boundary.

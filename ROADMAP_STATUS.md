@@ -2,8 +2,28 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS`.
+- Current frontier: `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2`.
+- Recent R14 latency package-constant bound selection:
+  `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.1` created the active task tree and
+  selected the next bounded implementation leaf. Transaction latency
+  `(latency (min PACKAGE.CONSTANT) (max PACKAGE.CONSTANT))` bounds may next
+  use qualified imported package scalar constants when the resolved value is
+  a positive integer literal. Accepted package-constant latency bounds should
+  reuse the existing static latency path used by positive literals, actor
+  constants, and actor-local scalar parameter defaults. Package constants
+  resolving to zero should keep the existing positive-only latency-bound
+  policy and fail closed before latency counter emission. Unqualified package
+  constants, unknown package constants, package aggregate constants, package
+  member/item paths, transaction parameters, runtime signals, arbitrary
+  expressions, package constants in unrelated value domains, reusable-library
+  use-site specialization, generated-top respecialization, stage-local
+  latency, and actor-level stage runtime semantics remain deferred or fail
+  closed. No parser, scheduler, report, generated artifact, HDL, CLI
+  behavior, public API, source, test, or generated behavior changed in this
+  selection slice. Validation passed: feature-backlog/live-book/book-matrix
+  audits with `Files=3, Tests=364`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R14 repeat package-constant count implementation:
   `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` shipped qualified imported package
   scalar constants as static transaction repeat counts and closed the task
@@ -7637,14 +7657,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS`.
+- Current frontier: `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2`.
 - Completion status:
-  `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1` synchronized stale
-  mdBook feature-backlog wording after
-  `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` shipped qualified imported
-  package scalar constants as transaction-local port widths. No behavior
-  changed in the truth-sync slice.
+  `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.1` selected qualified imported
+  package scalar constants as the next bounded transaction latency min/max
+  bound source. No behavior changed in the selection slice.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11100,6 +11118,26 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.1` selected the next public-facing R14
+  feature tree before implementation:
+  - the implementation frontier is
+    `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2`,
+  - the selected source shape is bounded to transaction
+    `(latency (min PACKAGE.CONSTANT) (max PACKAGE.CONSTANT))`,
+  - accepted package constants must be imported, qualified, scalar, and
+    resolved to positive integer bounds before publication through the
+    existing literal/actor-constant/actor-parameter latency path,
+  - unqualified package constants, unknown package constants, package
+    aggregate constants, package member/item paths, transaction parameters,
+    runtime signals, arbitrary expressions, unrelated value domains,
+    reusable-library use-site specialization, generated-top
+    respecialization, stage-local latency, and actor-level stage runtime
+    semantics remain deferred or fail closed,
+  - and no parser, scheduler, report, generated artifact, HDL, CLI behavior,
+    public API, source, test, or generated behavior changed in this selection
+    slice.
+  - Validation passed: feature-backlog/live-book/book-matrix audits with
+    `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
 - `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` is shipped and the task tree is
   closed:
   - `shift_left` and `shift_right` `(width PACKAGE.CONSTANT)` options are now

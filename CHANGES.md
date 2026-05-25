@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Latency package-constant bounds selected
+- Created active task tree `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS`.
+- Completed `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.1`; the selected
+  implementation frontier is `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2`.
+- Selected a bounded static transaction latency-bound value-domain widening:
+  `(latency (min PACKAGE.CONSTANT) (max PACKAGE.CONSTANT))` may use
+  qualified imported package scalar constants when the resolved values are
+  positive integer literals.
+- Accepted package-constant latency bounds should reuse the existing static
+  latency path used by positive literals, actor constants, and actor-local
+  scalar parameter defaults.
+- Package constants resolving to zero should keep the existing positive-only
+  latency-bound policy and fail closed before latency counter emission.
+- Unqualified package constants, unknown package constants, package aggregate
+  constants, package member/item paths, transaction parameters, runtime
+  signals, arbitrary expressions, package constants in unrelated value
+  domains, reusable-library use-site specialization, generated-top
+  respecialization, stage-local latency, and actor-level stage runtime
+  semantics remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Repeat package-constant counts shipped
 - Completed `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` and closed the task tree.
 - Static transaction `(repeat PACKAGE.CONSTANT body...)` counts now accept
