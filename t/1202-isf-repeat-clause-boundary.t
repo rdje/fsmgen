@@ -49,6 +49,29 @@ sub assert_static_zero_repeat_noop {
     is_deeply($report->{transaction_loops}, [], "$label emits no transaction loop report entry");
 }
 
+sub assert_static_zero_child_activation_pruned {
+    my ($source, $label, $filename) = @_;
+
+    my $actor = FSM::Adapter::ISF->new()->parse_source($source, "$label.isf");
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $fsm = $lowered->{files}{$filename};
+    (my $actor_name = $filename) =~ s/\.fsm\z//;
+
+    ok(defined($fsm), "$label parent scheduled .fsm is emitted");
+    ok(!exists($lowered->{files}{'child.fsm'}), "$label emits no generated child scheduled .fsm");
+    ok(!exists($lowered->{files}{"${actor_name}_top.fsm"}), "$label emits no generated top");
+    unlike($fsm, qr/\bmain_cnt\b/, "$label does not declare a repeat counter");
+    unlike($fsm, qr/main_repeat_init_/, "$label emits no repeat init state");
+    unlike($fsm, qr/main_repeat_check_/, "$label emits no repeat check state");
+    unlike($fsm, qr/\bchild_(?:idle|done|complete)_/, "$label prunes child-only transaction states");
+    unlike($fsm, qr/\b(?:child|c0)_(?:start|done)\b/, "$label emits no child activation handoff");
+    like($fsm, qr/\(main_idle_0[\s\S]*\(-> main_done_1\)/,
+        "$label links surrounding transaction states directly");
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply($report->{transaction_loops}, [], "$label emits no transaction loop report entry");
+}
+
 subtest 'valid repeat clause lowers counter init, body, and check states' => sub {
     my $result = lower_source(<<'ISF');
 (actor repeat_boundary
@@ -317,23 +340,22 @@ ISF
 ISF
 };
 
-subtest 'statically zero repeat child activations remain fail closed' => sub {
-    assert_lower_rejected(<<'ISF', 'zero repeat spawn body', qr/\ATransaction 'main': statically zero repeat bodies containing child activation remain fail-closed until generated child artifact pruning is specified/);
-(actor zero_repeat_spawn_body
+subtest 'statically zero repeat child activations prune unreachable artifacts' => sub {
+    assert_static_zero_child_activation_pruned(<<'ISF', 'zero repeat plain spawn body', 'zero_repeat_spawn_pruned.fsm');
+(actor zero_repeat_spawn_pruned
   (clock clk)
   (interface (input start) (output done))
   (transaction main
     (on start)
     (repeat 0
-      (spawn child as c0)
-      (await_all done))
+      (spawn child as c0))
     (complete done))
   (transaction child
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'zero repeat do body', qr/\ATransaction 'main': statically zero repeat bodies containing child activation remain fail-closed until generated child artifact pruning is specified/);
-(actor zero_repeat_do_body
+    assert_static_zero_child_activation_pruned(<<'ISF', 'zero repeat plain do body', 'zero_repeat_do_pruned.fsm');
+(actor zero_repeat_do_pruned
   (clock clk)
   (interface (input start) (output done))
   (transaction main
@@ -342,6 +364,65 @@ ISF
       (do child))
     (complete done))
   (transaction child
+    (on child_start)
+    (complete done)))
+ISF
+
+    my $actor = FSM::Adapter::ISF->new()->parse_source(<<'ISF', 'zero_repeat_external_child_preserved.isf');
+(actor zero_repeat_external_child_preserved
+  (clock clk)
+  (interface (input start) (input child_start) (output child_done) (output done))
+  (transaction main
+    (on start)
+    (repeat 0
+      (spawn child as c0))
+    (complete done))
+  (transaction child
+    (on child_start)
+    (complete child_done)))
+ISF
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $fsm = $lowered->{files}{'zero_repeat_external_child_preserved.fsm'};
+    ok(defined($fsm), 'zero repeat external child preservation emits parent scheduled .fsm');
+    ok(!exists($lowered->{files}{'child.fsm'}), 'zero repeat external child preservation emits no generated child scheduled .fsm');
+    ok(!exists($lowered->{files}{'zero_repeat_external_child_preserved_top.fsm'}), 'zero repeat external child preservation emits no generated top');
+    unlike($fsm, qr/\bc0_start\b/, 'zero repeat external child preservation emits no pruned spawn handoff');
+    like($fsm, qr/\(child_idle_\d+[\s\S]*<child_start[\s\S]*\(-> child_done_\d+\)/,
+        'externally guarded child transaction remains in the parent scheduled module');
+};
+
+subtest 'statically zero repeat specialized child activations remain fail closed' => sub {
+    assert_lower_rejected(<<'ISF', 'zero repeat parameterized spawn body', qr/\ATransaction 'main': statically zero repeat spawn target 'child' with activation subclauses remains fail-closed until specialization-payload pruning is specified/);
+(actor zero_repeat_parameterized_spawn_body
+  (clock clk)
+  (interface (input start) (output done))
+  (transaction main
+    (on start)
+    (repeat 0
+      (spawn child as c0
+        (params
+          (WIDTH 16))))
+    (complete done))
+  (transaction child
+    (params
+      (WIDTH 8))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'zero repeat domain do body', qr/\ATransaction 'main': statically zero repeat do target 'child' with activation subclauses remains fail-closed until specialization-payload pruning is specified/);
+(actor zero_repeat_domain_do_body
+  (clock-domains
+    (domain core (clock clk) :default))
+  (interface (input start) (output done))
+  (transaction main
+    (domain core)
+    (on start)
+    (repeat 0
+      (do child
+        (domain core)))
+    (complete done))
+  (transaction child
+    (domain core)
     (on child_start)
     (complete done)))
 ISF

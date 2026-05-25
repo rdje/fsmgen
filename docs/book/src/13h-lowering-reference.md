@@ -1075,8 +1075,10 @@ the zero-count policy to be explicit. Static zero counts from literal zero,
 actor constants, actor scalar parameters, same-transaction scalar parameters,
 or package scalar constants lower as transparent no-op regions with no
 counter, repeat init/check state, repeat-body state, or `transaction_loops[]`
-entry when the body does not contain child activation. Static zero repeat
-bodies containing `do` or `spawn` fail closed until generated-child artifact
+entry. Plain static-zero repeat-body `do` and `spawn` child activations are
+pruned with no generated child/top or local handoff artifact when their
+targets are not otherwise live. Parameterized, bound, or domain-annotated
+zero-count child activations still fail closed until specialization-payload
 pruning is specified. Positive same-transaction scalar parameter counts
 resolve to a static load value. Known-width runtime scalar counts bypass the
 body and repeat check when the runtime value is zero.

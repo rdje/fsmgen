@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Static zero child activation pruning must prove dead artifacts
+- `ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.1` narrows the remaining static-zero
+  repeat limitation after the earlier no-op slice.
+- A plain child activation inside a statically zero repeat body is unreachable,
+  but the target transaction may still be externally live. The lowerer now
+  separates live child-action references from static-zero child-action
+  references, and prunes only target transactions that are reachable solely
+  through skipped zero-count activations.
+- The implementation deliberately keeps parameterized, bound, and
+  domain-annotated activation sites fail-closed. Those sites carry
+  specialization payload that a later slice needs to either discard explicitly
+  or validate as unreachable without weakening generated-child review
+  artifacts.
+- Positive static counts, runtime counts, and repeat-body re-entry validation
+  stay unchanged. This keeps the slice limited to provably dead zero-count
+  artifacts rather than widening live child scheduling semantics.
+
 ## 2026-05-25: Bootstrap import-tree counts are topology plus measurement
 - `BIN-FSMGEN-IMPORT-TREE-BOOTSTRAP-REFRESH.1` reran the session bootstrap
   import-tree audit before opening a new behavior slice.
@@ -33,9 +50,11 @@ This document captures engineering rationale, design constraints, and working de
   parameters, same-transaction scalar parameters, and qualified package scalar
   constants. Positive static counts retain counter-width evidence semantics,
   and known-width runtime counts retain their runtime zero-bypass branch.
-- Bodies containing `do` or `spawn` remain fail-closed under static zero
-  counts. Those clauses can imply generated child/top artifacts, and pruning
-  unreachable generated-child artifacts needs a separate explicit design.
+- At shipment time, bodies containing `do` or `spawn` remained fail-closed
+  under static zero counts. The later
+  `ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.1` design accepts plain static-zero
+  child activations while still deferring activation sites with specialization
+  payload.
 
 ## 2026-05-25: Clock-only +system means no reset, not an inferred reset
 - `NO-RESET-SCHEDULED-FSM-HDL.1` changes explicit clock-only `+system`

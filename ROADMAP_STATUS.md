@@ -4,6 +4,24 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 static zero repeat child activation pruning:
+  `ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.1` shipped plain static-zero repeat
+  child-activation pruning and closed the task tree. Literal zero and other
+  statically zero repeat counts now treat plain `(spawn child as inst)` and
+  plain `(do child)` bodies as true zero-iteration no-ops when the referenced
+  child transaction is reachable only through pruned zero-count activations.
+  The pruned path emits no repeat counter, repeat init/check/body state,
+  generated child `.fsm`, generated top `.fsm`, activation instance, local
+  child start/done handoff, or `transaction_loops[]` entry. Targets with live
+  nonzero activations, rule triggers, or explicit external entry guards are
+  preserved. Parameterized, bound, or domain-annotated static-zero child
+  activations remain fail-closed until specialization-payload pruning is
+  specified. Positive static repeat counts, known-width runtime repeat counts,
+  and nonzero repeat-body child-activation re-entry rules are unchanged.
+  Validation passed: syntax checks; focused repeat/parameter/child-boundary
+  tests with `Files=4, Tests=71`; focused public/book audits with `Files=5,
+  Tests=334`; `./bin/ci-regression isf --no-book` with `Files=275,
+  Tests=1758`; `mdbook build docs/book`; and `git diff --check`.
 - Current bootstrap import-tree refresh:
   `BIN-FSMGEN-IMPORT-TREE-BOOTSTRAP-REFRESH.1` refreshed the saved
   `bin/fsmgen` import-tree architecture note and closed the task tree. The
@@ -32,13 +50,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   constants, actor scalar parameters, same-transaction scalar parameters, and
   qualified package scalar constants now lower as zero-iteration no-op regions
   with no repeat counter, repeat init/check state, repeat-body state, or
-  `transaction_loops[]` entry. Static zero repeat bodies containing child
-  activation (`do` or `spawn`) remain fail-closed until generated-child
-  artifact pruning is specified. Positive static repeat counts and known-width
-  runtime scalar repeat counts keep their existing behavior. Validation
-  passed: syntax checks; focused repeat/public-audit tests with `Files=7,
-  Tests=344`; `./bin/ci-regression isf --no-book` with `Files=275,
-  Tests=1757`; `mdbook build docs/book`; and `git diff --check`.
+  `transaction_loops[]` entry. At shipment time, child activation inside
+  statically zero repeat bodies remained fail-closed; the later
+  `ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.1` slice accepts plain static-zero
+  `do`/`spawn` child activations while keeping specialized activation forms
+  fail-closed. Positive static repeat counts and known-width runtime scalar
+  repeat counts keep their existing behavior. Validation passed: syntax
+  checks; focused repeat/public-audit tests with `Files=7, Tests=344`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1757`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current R14 no-reset scheduled `.fsm` HDL support:
   `NO-RESET-SCHEDULED-FSM-HDL.1` shipped explicit clock-only `+system`
   contracts through Verilog-family HDL and closed the task tree. Direct
@@ -11906,6 +11926,30 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.1` is shipped and the task tree is
+  closed:
+  - plain `(spawn child as inst)` and plain `(do child)` clauses inside
+    statically zero repeat bodies now lower as zero-iteration no-ops when the
+    target transaction is declared and reachable only through pruned
+    zero-count activations,
+  - the pruned path emits no repeat counter, repeat init/check state,
+    repeat-body state, generated child `.fsm`, generated top `.fsm`,
+    activation instance, local child start/done handoff, or
+    `transaction_loops[]` entry,
+  - target transactions referenced by nonzero/live child activations, rule
+    triggers, or explicit external entry guards are preserved,
+  - parameterized, bound, or domain-annotated child activation sites inside
+    static-zero repeat bodies remain fail-closed until specialization-payload
+    pruning is specified,
+  - positive static repeat counts, known-width runtime repeat counts, and
+    existing repeat-body child activation re-entry validation are unchanged,
+  - and the ISF spec, downstream handoff, public contract, public contract
+    code, mdBook, task tree, README index, roadmap, and live docs are
+    synchronized.
+  - Validation passed: syntax checks; focused repeat/parameter/child-boundary
+    tests with `Files=4, Tests=71`; focused public/book audits with `Files=5,
+    Tests=334`; `./bin/ci-regression isf --no-book` with `Files=275,
+    Tests=1758`; `mdbook build docs/book`; and `git diff --check`.
 - `ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.1` is shipped and the task tree
   is closed:
   - current R14 transaction-parameter repeat-count roadmap entries no longer
@@ -11928,9 +11972,11 @@ Done:
     scalar constants,
   - zero-count no-op repeats emit no repeat counter, repeat init/check state,
     repeat-body state, or `transaction_loops[]` entry,
-  - static zero repeat bodies containing child activation (`do` or `spawn`)
-    still fail closed with a targeted diagnostic until generated-child
-    artifact pruning is specified,
+  - at shipment time, child activation inside statically zero repeat bodies
+    remained fail-closed; the later
+    `ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.1` slice accepts plain static-zero
+    `do`/`spawn` child activations while keeping specialized activation forms
+    fail-closed,
   - positive static repeat counts and known-width runtime scalar repeat counts
     keep their existing behavior,
   - and the ISF spec, downstream handoff, public contract, public contract

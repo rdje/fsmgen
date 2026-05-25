@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.md` — completed `R14` task tree for bounded static-zero repeat child-activation artifact pruning.
 - `docs/tasks/BIN-FSMGEN-IMPORT-TREE-BOOTSTRAP-REFRESH.md` — completed bootstrap architecture-maintenance task tree for refreshing the `bin/fsmgen` import-tree note.
 - `docs/tasks/ISF-STATIC-ZERO-REPEAT-NOOP.md` — completed `R14` task tree for bounded static zero-count repeat no-op lowering.
 - `docs/tasks/ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.md` — completed `R14` roadmap maintenance task tree for repeat zero status truth sync.

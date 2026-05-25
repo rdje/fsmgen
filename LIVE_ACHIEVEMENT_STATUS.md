@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Static zero repeat child activation pruning shipped
+- Completed `ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.1` and closed the task tree.
+- Plain `(spawn child as inst)` and plain `(do child)` clauses inside
+  statically zero repeat bodies now lower as true zero-iteration no-ops when
+  the target transaction is declared and reachable only through pruned
+  zero-count activations.
+- The pruned path emits no repeat counter, repeat init/check state,
+  repeat-body state, generated child `.fsm`, generated top `.fsm`,
+  activation instance, local child start/done handoff, or
+  `transaction_loops[]` entry.
+- Target transactions referenced by nonzero/live child activations, rule
+  triggers, or explicit external entry guards are preserved.
+- Parameterized, bound, or domain-annotated child activation sites inside
+  static-zero repeat bodies remain fail-closed until specialization-payload
+  pruning is specified.
+- Positive static repeat counts, known-width runtime repeat counts, and
+  existing repeat-body child activation re-entry validation are unchanged.
+- Validation passed: syntax checks; focused repeat/parameter/child-boundary
+  tests with `Files=4, Tests=71`; focused public/book audits with `Files=5,
+  Tests=334`; `./bin/ci-regression isf --no-book` with `Files=275,
+  Tests=1758`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: Bootstrap — Import-tree measurement refresh shipped
 - Completed `BIN-FSMGEN-IMPORT-TREE-BOOTSTRAP-REFRESH.1` and closed the task
   tree.
@@ -42,9 +66,11 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   constants.
 - Zero-count no-op repeats emit no repeat counter, repeat init/check state,
   repeat-body state, or `transaction_loops[]` entry.
-- Static zero repeat bodies containing child activation (`do` or `spawn`)
-  still fail closed with a targeted diagnostic until generated-child artifact
-  pruning is specified.
+- At shipment time, child activation inside statically zero repeat bodies
+  remained fail-closed; the later
+  `ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.1` slice accepts plain static-zero
+  `do`/`spawn` child activations while keeping specialized activation forms
+  fail-closed.
 - Positive static repeat counts and known-width runtime scalar repeat counts
   keep their existing behavior.
 - Validation passed: syntax checks; focused repeat/public-audit tests with

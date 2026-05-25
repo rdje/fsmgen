@@ -62,11 +62,14 @@ my %TRANSACTION_CONTEXT_LABEL = (
 );
 
 sub build_module($self, $actor) {
-    my $domain_partition = $self->_build_domain_partition($actor);
+    $self->_validate_static_zero_repeat_child_activation_prune_subset($actor);
     $self->_validate_child_transaction_refs($actor);
     $self->_validate_activation_domain_names($actor);
     my %generated_children = $self->_collect_generated_child_transaction_refs($actor);
-    $self->_validate_transaction_parameter_clauses($actor, \%generated_children);
+    my %pruned_static_zero_children =
+        _pruned_static_zero_child_transaction_targets($actor, \%generated_children);
+    my $domain_partition = $self->_build_domain_partition($actor, \%pruned_static_zero_children);
+    $self->_validate_transaction_parameter_clauses($actor, \%generated_children, \%pruned_static_zero_children);
     $self->_validate_transaction_port_bindings($actor);
 
     my %child_irs;
@@ -104,7 +107,7 @@ sub build_module($self, $actor) {
     my @atl_top_instances = $self->_select_atl_generated_top_instances($actor, \%child_irs);
     _mark_atl_data_link_child_interface_ports(\%child_irs, \@atl_top_instances);
 
-    my $parent_ir = $self->_build_parent_ir($actor, \%generated_children);
+    my $parent_ir = $self->_build_parent_ir($actor, \%generated_children, \%pruned_static_zero_children);
     $parent_ir->{children} = \%child_irs;
     $parent_ir->{library_uses} = \@library_instances;
     $parent_ir->{atl_top_instances} = \@atl_top_instances;
@@ -1077,7 +1080,7 @@ sub _atl_reset_signature {
 
 # --- Parent IR (composition top, non-spawned transactions only) ---
 
-sub _build_parent_ir($self, $actor, $generated_children) {
+sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = undef) {
     my @ports  = @{$self->_build_ports($actor)};
     my %ctrs;
     my @states;
@@ -1095,6 +1098,7 @@ sub _build_parent_ir($self, $actor, $generated_children) {
     my %local_drive_uses;
     my %spawn_drive_sources;
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
+    $pruned_transactions ||= {};
     my $ti = 0;
 
     for my $movement (@{(($actor->{actor_network} || {})->{data_movements}) || []}) {
@@ -1107,6 +1111,7 @@ sub _build_parent_ir($self, $actor, $generated_children) {
 
     for my $tx (@{$actor->{transactions}}) {
         next if $generated_children->{$tx->{name}};
+        next if $pruned_transactions->{$tx->{name}};
         my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses) =
             $self->_build_transaction($tx, $actor, $ti++, $generated_children);
         _merge_signal_widths(\%signal_widths, $widths, $tx->{name});
@@ -1513,7 +1518,7 @@ sub _generated_child_transaction_refs {
     my %s;
     my $constant_values = _actor_constant_value_map($actor);
     for my $tx (@{$actor->{transactions}}) {
-        for my $ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name})) {
+        for my $ref (_live_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name}, $actor)) {
             my $clause = $ref->{clause};
             my $label = $ref->{label};
             if ($clause->[0] eq 'spawn') {
@@ -1541,8 +1546,85 @@ sub _generated_child_transaction_refs {
     return %s;
 }
 
+sub _live_child_action_refs_from_transaction_clauses {
+    my ($clauses, $tx_name, $actor) = @_;
+    return _child_action_refs_from_transaction_clauses(
+        $clauses,
+        $tx_name,
+        $actor,
+        { skip_static_zero_repeats => 1 },
+    );
+}
+
+sub _static_zero_child_action_refs_from_transaction_clauses {
+    my ($clauses, $tx_name, $actor) = @_;
+    my @refs;
+    _push_static_zero_child_action_refs_recursive(\@refs, $clauses, $tx_name, $actor, 'transaction body');
+    return @refs;
+}
+
+sub _push_static_zero_child_action_refs_recursive {
+    my ($refs, $clauses, $tx_name, $actor, $label) = @_;
+    return unless ref($clauses) eq 'ARRAY';
+
+    for my $clause (@$clauses) {
+        next unless ref($clause) eq 'ARRAY' && @$clause;
+        next unless defined($clause->[0]) && !ref($clause->[0]);
+
+        my $keyword = $clause->[0];
+        if ($keyword eq 'repeat') {
+            if (_repeat_clause_is_static_zero_for_refs($clause, $actor, $tx_name)) {
+                _push_repeat_body_child_action_refs(
+                    $refs,
+                    $clause,
+                    $label,
+                    undef,
+                    { static_zero_repeat => 1 },
+                );
+            }
+            next;
+        }
+
+        if ($keyword eq 'when') {
+            _push_static_zero_child_action_refs_recursive(
+                $refs,
+                [@{$clause}[2 .. $#$clause]],
+                $tx_name,
+                $actor,
+                'when body',
+            );
+            next;
+        }
+
+        if ($keyword eq 'switch') {
+            for my $branch (@{$clause}[2 .. $#$clause]) {
+                next unless ref($branch) eq 'ARRAY' && @$branch >= 2;
+                _push_static_zero_child_action_refs_recursive(
+                    $refs,
+                    [@{$branch}[1 .. $#$branch]],
+                    $tx_name,
+                    $actor,
+                    'switch branch',
+                );
+            }
+            next;
+        }
+
+        if ($keyword eq 'while' || $keyword eq 'until') {
+            _push_static_zero_child_action_refs_recursive(
+                $refs,
+                [@{$clause}[2 .. $#$clause]],
+                $tx_name,
+                $actor,
+                "$keyword body",
+            );
+        }
+    }
+}
+
 sub _child_action_refs_from_transaction_clauses {
-    my ($clauses, $tx_name) = @_;
+    my ($clauses, $tx_name, $actor, $options) = @_;
+    $options ||= {};
     my @refs;
     my $top_level_do_ordinal = 0;
     my $repeat_do_ordinal = 0;
@@ -1564,8 +1646,14 @@ sub _child_action_refs_from_transaction_clauses {
         }
 
         if ($keyword eq 'repeat') {
+            my $static_zero_repeat = _repeat_clause_is_static_zero_for_refs($clause, $actor, $tx_name);
+            next if $options->{skip_static_zero_repeats} && $static_zero_repeat;
             _push_repeat_body_child_action_refs(
-                \@refs, $clause, 'transaction body', \$repeat_do_ordinal,
+                \@refs,
+                $clause,
+                'transaction body',
+                \$repeat_do_ordinal,
+                { static_zero_repeat => $static_zero_repeat ? 1 : 0 },
             );
             next;
         }
@@ -1575,8 +1663,14 @@ sub _child_action_refs_from_transaction_clauses {
                 next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
                 next unless defined($body_clause->[0]) && !ref($body_clause->[0]);
                 next unless $body_clause->[0] eq 'repeat';
+                my $static_zero_repeat = _repeat_clause_is_static_zero_for_refs($body_clause, $actor, $tx_name);
+                next if $options->{skip_static_zero_repeats} && $static_zero_repeat;
                 _push_repeat_body_child_action_refs(
-                    \@refs, $body_clause, 'when body', \$repeat_do_ordinal,
+                    \@refs,
+                    $body_clause,
+                    'when body',
+                    \$repeat_do_ordinal,
+                    { static_zero_repeat => $static_zero_repeat ? 1 : 0 },
                 );
             }
         }
@@ -1588,8 +1682,14 @@ sub _child_action_refs_from_transaction_clauses {
                     next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
                     next unless defined($body_clause->[0]) && !ref($body_clause->[0]);
                     next unless $body_clause->[0] eq 'repeat';
+                    my $static_zero_repeat = _repeat_clause_is_static_zero_for_refs($body_clause, $actor, $tx_name);
+                    next if $options->{skip_static_zero_repeats} && $static_zero_repeat;
                     _push_repeat_body_child_action_refs(
-                        \@refs, $body_clause, 'switch branch', \$repeat_do_ordinal,
+                        \@refs,
+                        $body_clause,
+                        'switch branch',
+                        \$repeat_do_ordinal,
+                        { static_zero_repeat => $static_zero_repeat ? 1 : 0 },
                     );
                 }
             }
@@ -1599,8 +1699,19 @@ sub _child_action_refs_from_transaction_clauses {
     return @refs;
 }
 
+sub _repeat_clause_is_static_zero_for_refs {
+    my ($clause, $actor, $tx_name) = @_;
+    return 0 unless ref($clause) eq 'ARRAY'
+        && ref($actor) eq 'HASH'
+        && defined($tx_name)
+        && @$clause >= 2;
+
+    return _is_static_zero_repeat_count($clause->[1], $actor, $tx_name) ? 1 : 0;
+}
+
 sub _push_repeat_body_child_action_refs {
-    my ($refs, $repeat_clause, $repeat_parent_label, $repeat_do_ordinal_ref) = @_;
+    my ($refs, $repeat_clause, $repeat_parent_label, $repeat_do_ordinal_ref, $attrs) = @_;
+    $attrs ||= {};
 
     for my $body_clause (@{$repeat_clause}[2 .. $#$repeat_clause]) {
         next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
@@ -1611,6 +1722,7 @@ sub _push_repeat_body_child_action_refs {
             keyword             => $body_clause->[0],
             label               => 'repeat body',
             repeat_parent_label => $repeat_parent_label,
+            %$attrs,
         );
         $ref{repeat_do_ordinal} = $$repeat_do_ordinal_ref++
             if $body_clause->[0] eq 'do' && ref($repeat_do_ordinal_ref);
@@ -1618,11 +1730,98 @@ sub _push_repeat_body_child_action_refs {
     }
 }
 
+sub _validate_static_zero_repeat_child_activation_prune_subset($self, $actor) {
+    my %transactions = map { $_->{name} => 1 } @{$actor->{transactions} || []};
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        my $tx_name = $tx->{name};
+        for my $ref (_static_zero_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx_name, $actor)) {
+            my $clause = $ref->{clause};
+            my $keyword = $ref->{keyword};
+            my $target = $clause->[1];
+            my $label = $ref->{label};
+
+            _validate_child_action_clause($clause, $tx_name, $label);
+            confess "Transaction '$tx_name': $keyword target must be a scalar transaction name\n"
+                unless defined($target) && !ref($target) && length($target);
+            confess "Transaction '$tx_name': $keyword target '$target' is not a declared transaction\n"
+                unless $transactions{$target};
+
+            my @subclauses = $keyword eq 'spawn'
+                ? @{$clause}[4 .. $#$clause]
+                : @{$clause}[2 .. $#$clause];
+            confess "Transaction '$tx_name': statically zero repeat $keyword target '$target' with activation subclauses remains fail-closed until specialization-payload pruning is specified\n"
+                if @subclauses;
+        }
+    }
+
+    return 1;
+}
+
+sub _pruned_static_zero_child_transaction_targets {
+    my ($actor, $generated_children) = @_;
+    $generated_children ||= {};
+
+    my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
+    my %live_targets;
+    for my $tx (@{$actor->{transactions} || []}) {
+        for my $ref (_live_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name}, $actor)) {
+            my $target = $ref->{clause}[1];
+            $live_targets{$target} = 1
+                if defined($target) && !ref($target) && length($target);
+        }
+    }
+    for my $rule (@{$actor->{rules} || []}) {
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY'
+                && @$action
+                && defined($action->[0])
+                && !ref($action->[0])
+                && $action->[0] eq 'trigger';
+            my $target = $action->[1];
+            $live_targets{$target} = 1
+                if defined($target) && !ref($target) && length($target);
+        }
+    }
+
+    my %pruned;
+    for my $tx (@{$actor->{transactions} || []}) {
+        for my $ref (_static_zero_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name}, $actor)) {
+            my $target = $ref->{clause}[1];
+            next unless defined($target) && !ref($target) && exists($transaction_by_name{$target});
+            next if $generated_children->{$target};
+            next if $live_targets{$target};
+            next if _transaction_has_external_entry_guard($transaction_by_name{$target}, $actor);
+            $pruned{$target} = 1;
+        }
+    }
+
+    return %pruned;
+}
+
+sub _transaction_has_external_entry_guard {
+    my ($tx, $actor) = @_;
+    return 0 unless ref($tx) eq 'HASH' && ref($actor) eq 'HASH';
+
+    my %inputs = map { $_->{name} => 1 } @{$actor->{interface}{inputs} || []};
+    for my $clause (@{$tx->{clauses} || []}) {
+        next unless ref($clause) eq 'ARRAY'
+            && @$clause >= 2
+            && defined($clause->[0])
+            && !ref($clause->[0])
+            && $clause->[0] eq 'on';
+        my $guard = $clause->[1];
+        return 1 if defined($guard) && !ref($guard) && $inputs{$guard};
+    }
+
+    return 0;
+}
+
 sub _validate_activation_domain_names($self, $actor) {
     my %declared_domains = _actor_declared_domain_names($actor);
 
     for my $tx (@{$actor->{transactions} || []}) {
-        for my $child_ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name})) {
+        for my $child_ref (_live_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name}, $actor)) {
             my $domain = _activation_domain_from_clause(
                 $child_ref->{clause},
                 $tx->{name},
@@ -1699,8 +1898,9 @@ sub _rule_trigger_generated_refs {
     return @refs;
 }
 
-sub _build_domain_partition($self, $actor) {
+sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
     return undef unless _actor_has_clock_domains($actor);
+    $pruned_transactions ||= {};
 
     my $clock_domains = $actor->{clock_domains};
     my $default_domain = $clock_domains->{default};
@@ -1740,7 +1940,7 @@ sub _build_domain_partition($self, $actor) {
     for my $storage (@{$actor->{storage} || []}) {
         push @{$groups{_domain_for_entry($storage, $default_domain)}{storage}}, $storage->{name};
     }
-    for my $tx (@{$actor->{transactions} || []}) {
+    for my $tx (grep { !$pruned_transactions->{$_->{name}} } @{$actor->{transactions} || []}) {
         push @{$groups{_domain_for_entry($tx, $default_domain)}{transactions}}, $tx->{name};
     }
     for my $rule (@{$actor->{rules} || []}) {
@@ -1780,9 +1980,9 @@ sub _build_domain_partition($self, $actor) {
 
     my %generated_children = _generated_child_transaction_refs($actor);
     my %do_ordinals;
-    for my $tx (@{$actor->{transactions} || []}) {
+    for my $tx (grep { !$pruned_transactions->{$_->{name}} } @{$actor->{transactions} || []}) {
         my $owner_domain = _domain_for_entry($tx, $default_domain);
-        for my $child_ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name})) {
+        for my $child_ref (_live_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name}, $actor)) {
             my $clause = $child_ref->{clause};
             my $keyword = $child_ref->{keyword};
             next unless $keyword eq 'spawn' || $keyword eq 'do';
@@ -1835,6 +2035,7 @@ sub _build_domain_partition($self, $actor) {
         \%constants,
         \%drive_use_domains,
         $default_domain,
+        $pruned_transactions,
     );
     $self->_validate_rule_domain_refs(
         $actor,
@@ -1939,8 +2140,9 @@ sub _register_domain_signal {
     return 1;
 }
 
-sub _validate_transaction_domain_refs($self, $actor, $signal_domains, $transaction_domains, $constants, $drive_use_domains, $default_domain) {
-    for my $tx (@{$actor->{transactions} || []}) {
+sub _validate_transaction_domain_refs($self, $actor, $signal_domains, $transaction_domains, $constants, $drive_use_domains, $default_domain, $pruned_transactions = undef) {
+    $pruned_transactions ||= {};
+    for my $tx (grep { !$pruned_transactions->{$_->{name}} } @{$actor->{transactions} || []}) {
         my $domain = _domain_for_entry($tx, $default_domain);
         my %local_signals = _transaction_local_signal_domains($tx, $domain);
         for my $clause (@{$tx->{clauses} || []}) {
@@ -2351,7 +2553,7 @@ sub _validate_child_transaction_refs($self, $actor) {
 
     for my $tx (@{$actor->{transactions} || []}) {
         my $tx_name = $tx->{name};
-        for my $child_ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx_name)) {
+        for my $child_ref (_live_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx_name, $actor)) {
             my $clause = $child_ref->{clause};
             my $keyword = $child_ref->{keyword};
             my $label = $child_ref->{label};
@@ -2535,13 +2737,15 @@ sub _validate_child_transaction_refs($self, $actor) {
     return 1;
 }
 
-sub _validate_transaction_parameter_clauses($self, $actor, $generated_children) {
+sub _validate_transaction_parameter_clauses($self, $actor, $generated_children, $pruned_transactions = undef) {
+    $pruned_transactions ||= {};
     for my $tx (@{$actor->{transactions} || []}) {
         my $params = _transaction_param_declarations($tx, $actor);
         next unless @$params;
 
         my $tx_name = $tx->{name};
         next if $generated_children->{$tx_name};
+        next if $pruned_transactions->{$tx_name};
         next if _transaction_params_used_by_contract_window($tx, $params);
         next if _transaction_params_used_by_data_op_width($tx, $params);
         next if _transaction_params_used_by_transaction_port_width($tx, $params);
@@ -2870,7 +3074,7 @@ sub _validate_transaction_port_bindings($self, $actor) {
 
     for my $tx (@{$actor->{transactions} || []}) {
         my $tx_name = $tx->{name};
-        for my $ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx_name)) {
+        for my $ref (_live_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx_name, $actor)) {
             my $clause = $ref->{clause};
             my $keyword = $ref->{keyword};
             my $label = $ref->{label};
@@ -2939,7 +3143,7 @@ sub _transaction_port_binding_metadata {
     for my $tx (@{$actor->{transactions} || []}) {
         my $owner = $tx->{name};
         my $do_ordinal = 0;
-        for my $ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $owner)) {
+        for my $ref (_live_child_action_refs_from_transaction_clauses($tx->{clauses}, $owner, $actor)) {
             my $clause = $ref->{clause};
             my $keyword = $ref->{keyword};
             my $label = $ref->{label};
@@ -4182,26 +4386,6 @@ sub _is_static_zero_repeat_count {
     return defined($static_value) && $static_value == 0 ? 1 : 0;
 }
 
-sub _repeat_clause_has_child_activation {
-    my ($clause) = @_;
-
-    return 0 unless ref($clause) eq 'ARRAY';
-    for my $body (@{$clause}[2 .. $#$clause]) {
-        next unless ref($body) eq 'ARRAY' && @$body;
-        next unless defined($body->[0]) && !ref($body->[0]);
-        return 1 if $body->[0] eq 'do' || $body->[0] eq 'spawn';
-    }
-
-    return 0;
-}
-
-sub _reject_static_zero_repeat_child_activation {
-    my ($clause, $tn) = @_;
-    return 1 unless _repeat_clause_has_child_activation($clause);
-
-    confess "Transaction '$tn': statically zero repeat bodies containing child activation remain fail-closed until generated child artifact pruning is specified\n";
-}
-
 sub _validate_repeat_count_source {
     my ($count, $widths, $actor, $tn) = @_;
 
@@ -4325,7 +4509,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
     my $drives = $actor->{drives} || {};
     $generated_children ||= {};
     my $constant_values = _actor_constant_value_map($actor);
-    _validate_supported_transaction_clauses($tx->{clauses}, $tn, 'transaction', undef, $generated_children);
+    _validate_supported_transaction_clauses($tx->{clauses}, $tn, 'transaction', undef, $generated_children, $actor);
     my $widths = _build_signal_width_map($actor, $tx);
     my @st;
     my %ct;
@@ -4502,7 +4686,7 @@ sub _merge_storage_roles {
 }
 
 sub _validate_supported_transaction_clauses {
-    my ($clauses, $tn, $context, $context_depths, $generated_children) = @_;
+    my ($clauses, $tn, $context, $context_depths, $generated_children, $actor) = @_;
     return unless ref($clauses) eq 'ARRAY';
     $context_depths ||= {};
     $generated_children ||= {};
@@ -4548,15 +4732,16 @@ sub _validate_supported_transaction_clauses {
         } elsif ($keyword eq 'when') {
             _validate_when_clause($clause, $tn, $label);
             my %next_depths = (%$context_depths, when => (($context_depths->{when} // 0) + 1));
-            _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'when', \%next_depths, $generated_children);
+            _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'when', \%next_depths, $generated_children, $actor);
         } elsif ($keyword eq 'repeat') {
             _validate_repeat_clause($clause, $tn, $label);
-            _validate_repeat_body_spawn_subset($clause, $tn, $label, $context_depths, $generated_children);
-            _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'repeat', $context_depths, $generated_children);
+            _validate_repeat_body_spawn_subset($clause, $tn, $label, $context_depths, $generated_children)
+                unless ref($actor) eq 'HASH' && _is_static_zero_repeat_count($clause->[1], $actor, $tn);
+            _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'repeat', $context_depths, $generated_children, $actor);
         } elsif ($keyword eq 'while' || $keyword eq 'until') {
             _validate_loop_clause($clause, $tn, $label, $keyword);
             my %next_depths = (%$context_depths, $keyword => (($context_depths->{$keyword} // 0) + 1));
-            _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, $keyword, \%next_depths, $generated_children);
+            _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, $keyword, \%next_depths, $generated_children, $actor);
         } elsif ($keyword eq 'await_all' || $keyword eq 'await_any') {
             _validate_sync_clause($clause, $tn, $label);
         } elsif ($keyword eq 'do' || $keyword eq 'spawn') {
@@ -4570,7 +4755,7 @@ sub _validate_supported_transaction_clauses {
             for my $branch (@{$clause}[2 .. $#$clause]) {
                 next unless ref($branch) eq 'ARRAY';
                 my %next_depths = (%$context_depths, switch => (($context_depths->{switch} // 0) + 1));
-                _validate_supported_transaction_clauses([@{$branch}[1 .. $#$branch]], $tn, 'switch', \%next_depths, $generated_children);
+                _validate_supported_transaction_clauses([@{$branch}[1 .. $#$branch]], $tn, 'switch', \%next_depths, $generated_children, $actor);
             }
         }
     }
@@ -7731,7 +7916,6 @@ sub _ir_repeat {
     my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters; my @spawn_done_ports;
     _validate_repeat_count_source($cl->[1], $widths, $actor, $tn);
     if (_is_static_zero_repeat_count($cl->[1], $actor, $tn)) {
-        _reject_static_zero_repeat_child_activation($cl, $tn);
         return ([], undef, undef, []);
     }
     my $width = _repeat_count_width($cl->[1], $widths, $actor, $tn);
@@ -10836,7 +11020,7 @@ sub _wire_do_children {
     my %ctx = map { $_->{name} => 1 } @{$actor->{transactions}};
     my %need;
     for my $tx (@{$actor->{transactions}}) {
-        for my $ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name})) {
+        for my $ref (_live_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name}, $actor)) {
             next unless ($ref->{keyword} // '') eq 'do';
             my $target = $ref->{clause}[1];
             next if $generated_children->{$target};

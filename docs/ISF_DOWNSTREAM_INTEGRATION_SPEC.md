@@ -1170,9 +1170,14 @@ scheduled `.fsm`, because transaction parameters are local lowering inputs.
 Static zero counts from literal zero, actor constants, actor scalar
 parameters, same-transaction scalar parameters, or package scalar constants
 lower as transparent no-op regions with no counter, repeat init/check state,
-repeat-body state, or `transaction_loops[]` entry when the body does not
-contain child activation. Static zero repeat bodies containing `do` or
-`spawn` fail closed until generated-child artifact pruning is specified.
+repeat-body state, or `transaction_loops[]` entry. Plain `(do child)` and
+plain `(spawn child as inst)` clauses in statically zero repeat bodies are
+pruned with the skipped body: no local child handoff, generated child `.fsm`,
+generated top, activation instance, or loop report entry is published. A
+target transaction that is otherwise live or explicitly actor-input guarded
+is preserved; only the zero-count activation disappears. Parameterized,
+bound, or domain-annotated zero-count child activations remain fail-closed
+until specialization-payload pruning is specified.
 Known-width
 sampled/interface names use their known source width and now split the repeat
 init edge: nonzero values enter the repeat body, while zero values bypass the
@@ -3208,8 +3213,9 @@ Required fail-closed examples:
 - Repeat counts that name cross-transaction parameters, unknown symbolic
   names, arbitrary expressions, malformed scalar tokens, actor/transaction
   parameters that resolve to non-scalar values, runtime names without width
-  evidence, or statically zero bodies containing child activation before
-  generated-child artifact pruning is specified.
+  evidence, or statically zero bodies containing parameterized, bound, or
+  domain-annotated child activation before specialization-payload pruning is
+  specified.
 - Latency min/max bounds that name cross-transaction parameters, runtime
   interface signals, unknown symbolic names, arbitrary expressions, constants
   that resolve to zero, or actor/transaction parameters that resolve to zero

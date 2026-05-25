@@ -1370,12 +1370,18 @@ source width. Static zero counts from literal zero, actor constants, actor
 scalar parameters, same-transaction scalar parameters, or package scalar
 constants lower as transparent no-op regions with no counter, repeat
 init/check state, repeat-body state, or `transaction_loops[]` entry when the
-body does not contain child activation. Package-constant repeat counts are
+body does not contain child activation, and the same no-artifact rule applies
+to plain `(do child)` and plain `(spawn child as inst)` clauses inside
+statically zero repeat bodies when the target transaction is not otherwise
+live. Package-constant repeat counts are
 checked by
 [t/1360-isf-repeat-package-constant-counts.t](../t/1360-isf-repeat-package-constant-counts.t).
-The same boundary test also checks that static zero repeat bodies containing
-`do` or `spawn` fail closed until generated-child artifact pruning is
-specified.
+The repeat boundary test also checks that those plain static-zero child
+activations emit no generated child `.fsm`, generated top, activation
+instance, local handoff, or loop report entry, while preserving target
+transactions that are explicitly actor-input guarded. Parameterized, bound,
+or domain-annotated static-zero child activations remain fail-closed until
+specialization-payload pruning is specified.
 Generated child activation overrides for repeat-count transaction parameters
 are accepted only when they resolve to the same positive integer as the child
 default; mismatches fail closed until per-activation repeat counter
