@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Static-parameter generated do can precede a later generated spawn
+- `ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO.1` narrows the remaining
+  generated-do spawn-after-do backlog after the plain generated-child do
+  precedent.
+- The accepted path is limited to static-parameter generated
+  `(do child (params ...))` inside a repeat directly in a top-level `when`
+  body or top-level `switch` branch, after at least one generated spawn is
+  already pending, with no active multi-pending `await_any` observation before
+  the final drain.
+- The generated do site owns one deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` instance, preserves its authored
+  static parameter override in the generated top, and waits for that
+  instance's fresh done handoff before starting any later generated spawn.
+- The later spawn joins the same outstanding generated-spawn done set as the
+  pre-do spawn. The mandatory same-body `await_all` remains the only drain and
+  gates nested repeat re-entry on both generated children.
+- Bound and same-domain generated do variants remain deferred for
+  spawn-after-do because those paths add generated-top binding handoffs or
+  declared ownership metadata that should be widened in separate reviewable
+  leaves.
+
 ## 2026-05-26: Plain generated do can precede a later generated spawn
 - `ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO.1` narrows the generated-do
   spawn-after-do backlog for the simplest generated do shape.

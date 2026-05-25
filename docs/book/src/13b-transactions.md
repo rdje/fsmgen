@@ -692,6 +692,13 @@ The same branch-contained forms support static-parameter generated `(do child
 its authored static parameter binding and still leaves the pending
 generated-spawn done set live for the later drain.
 
+When no multi-pending `(await_any done)` observation is active before the
+drain, that same static-parameter generated do may then start one or more
+additional generated nested spawns before the mandatory same-body
+`(await_all done)` drain. The generated do instance's fresh done handoff
+gates the later spawn state, and the `await_all` drain observes both pre-do
+and post-do generated spawns before the nested repeat check can loop.
+
 The top-level `when` body and top-level `switch` branch forms also support
 static-parameter generated `(do child (params ...)
 
@@ -740,10 +747,11 @@ same-domain generated `(do child (params ...) [(bind ...)] (domain NAME))`
 subsets support the same post-do observation and later-drain contract while
 retaining declared ownership metadata in generated-composition,
 domain-partition, and schedule-report clock-domain summaries. New nested
-`spawn` after static-parameter, bound, or same-domain generated `do`; after
+`spawn` after bound or same-domain generated `do`; after generated `do` when
+a multi-pending `await_any` observation is active before the drain; after
 plain generated-child `do` when a multi-pending `await_any` observation is
-active before the drain; or after local `do` when a multi-pending `await_any`
-observation is active before the drain, remains fail-closed.
+active before the drain; or after local `do` when a multi-pending
+`await_any` observation is active before the drain, remains fail-closed.
 
 The top-level `switch` branch nested repeat plain generated-child `(do
 child)` subset supports the same post-do multi-pending observation and

@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO.md](docs/tasks/ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO.md) |
 | `ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO.md](docs/tasks/ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO.md) |
 | `ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO.md](docs/tasks/ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO.md) |
 | `ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.md](docs/tasks/ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.md) |

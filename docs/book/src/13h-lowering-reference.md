@@ -1164,6 +1164,13 @@ generated do instance carries the authored parameter overrides in the
 generated top and still leaves pending generated-spawn done handoffs live
 until the later drain.
 
+When no multi-pending `await_any` observation is active before the drain, that
+static-parameter generated do may also be followed by one or more additional
+generated nested spawns before the mandatory same-body `await_all` drain. The
+generated do instance's fresh done handoff gates the later spawn state, and
+the final drain observes both pre-do and post-do generated-spawn done
+handoffs.
+
 Top-level `when` body and top-level `switch` branch nested-repeat forms may
 also lower static-parameter generated `(do child (params ...)
 
@@ -1232,11 +1239,12 @@ top-level `switch` branch same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` share that post-do
 observation and later-drain contract while lowering also retains declared
 ownership metadata in generated-composition, domain-partition, and
-schedule-report clock-domain summaries. A new nested spawn after
-static-parameter, bound, or same-domain generated do; after plain
-generated-child do when a multi-pending `await_any` observation is active
-before the drain; or after local do when a multi-pending `await_any`
-observation is active before the drain, remains fail-closed.
+schedule-report clock-domain summaries. A new nested spawn after bound or
+same-domain generated do; after generated do when a multi-pending `await_any`
+observation is active before the drain; after plain generated-child do when a
+multi-pending `await_any` observation is active before the drain; or after
+local do when a multi-pending `await_any` observation is active before the
+drain, remains fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches

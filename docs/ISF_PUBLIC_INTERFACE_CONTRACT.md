@@ -1487,7 +1487,12 @@ fresh done handoff, and leaves pending generated-spawn done handoffs live for
 the later same-body `await_all` drain. The documented top-level `when` body
 and top-level `switch` branch nested subsets also support static-parameter
 generated `(do child (params ...))` after a prior multi-pending `await_any`,
-with the same later same-body `await_all` drain requirement. The documented
+with the same later same-body `await_all` drain requirement. When no
+multi-pending `await_any` observation is active before the drain, those same
+static-parameter generated-do subsets may also start one or more later
+generated nested spawns before the mandatory same-body `await_all`; the
+generated do instance's fresh done handoff gates the later spawn state and
+the final drain covers both pre-do and post-do generated spawns. The documented
 top-level `when` body nested subset additionally supports static-parameter
 generated `(do child (params ...) (bind ...))` after a prior multi-pending
 `await_any`, with generated-top input/output binding handoffs and the same
@@ -1498,8 +1503,9 @@ top-level `switch` branch nested subsets additionally support static-
 parameter same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` after a prior
 multi-pending `await_any`, with declared ownership metadata and the same later
-same-body `await_all` drain requirement. `await_any` after that do and new
-nested `spawn` after that do before the drain remain fail-closed.
+same-body `await_all` drain requirement. `await_any` after a later post-do
+spawn and new nested `spawn` after bound or same-domain generated `do` before
+the drain remain fail-closed.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus
@@ -1583,9 +1589,10 @@ and top-level `switch` branch same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` subsets support the same
 post-do `await_any` observation and later-drain contract while retaining
 declared ownership metadata in generated-composition, domain-partition, and
-schedule-report clock-domain summaries. New spawn after static-parameter,
-bound, or same-domain generated `do`; after plain generated-child `do` when a
-multi-pending `await_any` observation is active before the drain; and after
+schedule-report clock-domain summaries. New spawn after bound or same-domain
+generated `do`; after generated `do` when a multi-pending `await_any`
+observation is active before the drain; after plain generated-child `do` when
+a multi-pending `await_any` observation is active before the drain; and after
 local `do` when a multi-pending `await_any` observation is active before the
 drain remain outside the public shipped subset.
 In the documented top-level `when` body and top-level `switch` branch nested
@@ -1606,7 +1613,12 @@ subsets, that static-parameter generated do may also run after a prior multi-
 pending `await_any` observation. The generated do uses its deterministic
 generated do instance, preserves static generated-top parameter binding, and
 leaves the generated spawn done set live until the later same-body
-`await_all` drain. In the documented top-level `when` body and top-level
+`await_all` drain. When no multi-pending `await_any` observation is active
+before the drain, that static-parameter generated do may also be followed by
+one or more later generated nested spawns before the mandatory same-body
+`await_all`; the generated do instance's fresh done handoff gates the later
+spawn state and the final drain covers both pre-do and post-do generated
+spawns. In the documented top-level `when` body and top-level
 `switch` branch nested subsets, static-parameter generated
 `(do child (params ...) (bind ...))` may also run while generated nested spawns
 are pending. The generated do wires generated-top input/output binding
@@ -1624,9 +1636,9 @@ instance; generated-composition/domain partition metadata and schedule JSON
 CDC. In the top-level `when` body and top-level `switch` branch subsets, that
 same-domain generated do may also run after a prior multi-pending `await_any`
 observation, still requiring the later same-body `await_all` drain before
-nested repeat re-entry. Later `await_any` after generated `do` and new spawn
-after that generated do before the drain remain outside the public shipped
-subset.
+nested repeat re-entry. Later `await_any` after a post-do spawn and new spawn
+after bound or same-domain generated do before the drain remain outside the
+public shipped subset.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent

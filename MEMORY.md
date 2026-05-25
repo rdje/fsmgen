@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-26: R14 static-parameter generated do then spawn before drain shipped
+- Completed `ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO.1` and closed the task
+  tree.
+- Branch-contained nested repeats now accept the static-parameter generated-
+  do-then-later-spawn analogue: a repeat directly inside a top-level `when`
+  body or top-level `switch` branch may run an initial generated spawn,
+  generated blocking `(do child (params ...))`, one or more later generated
+  spawns, and then mandatory same-body `(await_all done)` before nested repeat
+  re-entry.
+- The generated do instance must complete before the later generated spawn
+  starts. The generated do preserves its static generated-top parameter
+  override, the later spawn joins the outstanding generated-spawn set, and the
+  final `await_all` drains both pre-do and post-do generated children.
+- Bound and same-domain generated-do spawn-after-do, generated or local
+  spawn-after-do with post-do or active multi-pending `await_any`, missing
+  drains, cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics remain fail-closed/deferred.
+- Public ISF specs, downstream handoff, public contract, mdBook, feature
+  matrix audit, roadmap, task tree, README index, and live docs are
+  synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=66`; focused
+  book/public audits with `Files=3, Tests=347`; broader repeat/child
+  regression with `Files=4, Tests=80`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1784`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 plain generated do then spawn before drain shipped
 - Completed `ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO.1` and closed the task
   tree.
