@@ -667,6 +667,12 @@ loop.
 
 That local do target remains in the parent scheduled module, waits for its
 own fresh local done pulse, and does not clear the generated-spawn done set.
+When no multi-pending `(await_any done)` observation is active before the
+drain, the same branch-contained local-do path may then start one or more
+additional generated nested spawns before the mandatory same-body
+`(await_all done)` drain. The later spawn joins the outstanding generated
+child set, and the `await_all` drain observes both the pre-do and post-do
+generated spawns before the nested repeat check can loop.
 
 The top-level `when` body and top-level `switch` branch forms also support
 plain generated-child `(do child)` in that pending-spawn interval when the
@@ -728,7 +734,8 @@ same-domain generated `(do child (params ...) [(bind ...)] (domain NAME))`
 subsets support the same post-do observation and later-drain contract while
 retaining declared ownership metadata in generated-composition,
 domain-partition, and schedule-report clock-domain summaries. New nested
-`spawn` after the do before the drain remains fail-closed.
+`spawn` after generated `do`, or after local `do` when a multi-pending
+`await_any` observation is active before the drain, remains fail-closed.
 
 The top-level `switch` branch nested repeat plain generated-child `(do
 child)` subset supports the same post-do multi-pending observation and
@@ -1502,6 +1509,9 @@ The top-level `when` body and top-level `switch` branch forms also permit the
 documented local plain `(do child)` while generated nested spawns are pending
 before a later same-body `await_all` drain; both branch-contained forms also
 permit that local do after a prior multi-pending `await_any` observation.
+When no multi-pending `await_any` observation is active, both
+branch-contained forms also permit that local do to be followed by additional
+generated nested `spawn` sites before the same later `await_all` drain.
 
 Both branch-contained forms also permit the documented plain generated-child
 `(do child)` while generated nested spawns are pending before that same later

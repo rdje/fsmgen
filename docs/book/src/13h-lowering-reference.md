@@ -1136,6 +1136,12 @@ That local do uses the parent-module start/done contract and does not consume
 the generated-spawn done set; the later `await_all` still gates the nested
 repeat check on every outstanding generated child.
 
+When no multi-pending `await_any` observation is active before the drain, that
+local do may also be followed by one or more additional generated nested
+spawns before the mandatory same-body `await_all` drain. The local child's
+fresh done handoff gates the later spawn state, and the later `await_all`
+drains both the pre-do and post-do generated-spawn done handoffs.
+
 The top-level `when` body and top-level `switch` branch nested-repeat forms
 may also lower a plain generated-child `(do child)` in that pending-spawn
 interval when the target is already generated elsewhere.
@@ -1219,8 +1225,9 @@ top-level `switch` branch same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` share that post-do
 observation and later-drain contract while lowering also retains declared
 ownership metadata in generated-composition, domain-partition, and
-schedule-report clock-domain summaries. A new nested spawn after the do
-before the drain remains fail-closed.
+schedule-report clock-domain summaries. A new nested spawn after generated
+do, or after local do when a multi-pending `await_any` observation is active
+before the drain, remains fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1464,6 +1471,32 @@ later drain.
 The top-level `when` body and top-level `switch` branch bound forms may also
 follow a prior multi-pending `await_any` observation before the later
 `await_all` drain.
+
+When the pending operation is local plain `do`, the later-spawn variant keeps
+the local and generated lifetimes separate:
+
+```lisp
+(parent_spawn_2
+  (= (w0_start> 1))
+  (-> parent_do_3))
+
+(parent_do_3
+  (= (local_worker_start 1))
+  (<local_worker_done
+    (-> parent_spawn_4)))
+
+(parent_spawn_4
+  (= (w1_start> 1))
+  (-> parent_await_all_5))
+
+(parent_await_all_5
+  (-> parent_repeat_check_6 <(& w0_done w1_done)))
+```
+
+The generated top instantiates `w0` and `w1`; the local worker remains in the
+parent module. The later generated spawn starts only after the local done
+pulse, and the nested repeat check remains unreachable until the same-body
+`await_all` drains both generated children.
 
 Multi-pending repeat-body `await_any` keeps the outstanding spawned done ports
 live until a later same-body `await_all` drain:

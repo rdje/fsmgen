@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Local do can precede a later generated spawn before drain
+- `ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO.1` narrows the previous broad
+  spawn-after-do deferral only for local blocking `do` inside branch-contained
+  nested repeats.
+- The rule is intentionally limited to repeats directly inside top-level
+  `when` bodies and top-level `switch` branches, and only when no
+  multi-pending `await_any` observation is active before the final drain.
+- The local do has no generated instance metadata, generated-top parameter
+  binding, binding handoff, or domain ownership payload. It waits for the
+  parent-module local child's fresh done pulse, then permits the later
+  generated spawn to start.
+- The later generated spawn is added to the same outstanding generated-spawn
+  set as the pre-do spawn. The mandatory same-body `await_all` remains the
+  only drain and gates nested repeat re-entry on both generated children.
+- Generated-do spawn-after-do remains deferred because that would mix a
+  deterministic generated do instance lifetime with a later generated spawn
+  before the drain. Local-do spawn-after-do with post-do or active
+  multi-pending `await_any` also remains deferred because the observation
+  leaves outstanding done handoffs live and the later-spawn ordering proof has
+  not been widened across that observation.
+
 ## 2026-05-25: Same-domain generated do can precede post-do await_any
 - `ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.1` completes the same-domain
   metadata analogue of the shipped static-parameter and bound generated-do

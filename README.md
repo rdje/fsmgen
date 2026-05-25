@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO.md` — completed `R14` task tree for branch-contained local `do` followed by generated `spawn` before same-body drain.
 - `docs/tasks/ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.md` — completed `R14` task tree for same-domain generated `do` before post-do multi-pending `await_any` in branch-contained nested repeats.
 - `docs/tasks/ISF-MDBOOK-STATIC-ZERO-REPEAT-TRUTH-SYNC.md` — completed `R14` documentation truth-sync task tree for mdBook static-zero repeat child-activation wording.
 - `docs/tasks/BIN-FSMGEN-IMPORT-TREE-STATIC-ZERO-REPEAT-REFRESH.md` — completed bootstrap architecture-maintenance task tree for refreshing the `bin/fsmgen` import-tree note after static-zero repeat pruning.

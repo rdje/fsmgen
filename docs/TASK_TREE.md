@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO.md](docs/tasks/ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO.md) |
 | `ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.md](docs/tasks/ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.md) |
 | `ISF-MDBOOK-STATIC-ZERO-REPEAT-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-MDBOOK-STATIC-ZERO-REPEAT-TRUTH-SYNC.md](docs/tasks/ISF-MDBOOK-STATIC-ZERO-REPEAT-TRUTH-SYNC.md) |
 | `BIN-FSMGEN-IMPORT-TREE-STATIC-ZERO-REPEAT-REFRESH` | `done` | `bootstrap architecture maintenance` | `closed` | [docs/tasks/BIN-FSMGEN-IMPORT-TREE-STATIC-ZERO-REPEAT-REFRESH.md](docs/tasks/BIN-FSMGEN-IMPORT-TREE-STATIC-ZERO-REPEAT-REFRESH.md) |

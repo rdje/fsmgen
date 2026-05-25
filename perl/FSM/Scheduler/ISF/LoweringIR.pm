@@ -6228,6 +6228,7 @@ sub _validate_repeat_body_spawn_subset {
     my $pending_local_do_before_drain = 0;
     my $pending_generated_do_before_drain = 0;
     my $pending_generated_do_kind_before_drain;
+    my $spawn_after_local_do_before_drain = 0;
     my $top_level_repeat = $label eq 'transaction body';
     my $when_body_repeat = $label eq 'when body'
         && _context_depths_match_exactly($context_depths, { when => 1 });
@@ -6254,8 +6255,16 @@ sub _validate_repeat_body_spawn_subset {
                 unless $top_level_repeat || $when_body_repeat || $switch_branch_repeat;
             confess "Transaction '$tn': repeat-body spawn cannot follow multi-pending await_any before same-body await_all drains outstanding children\n"
                 if $awaiting_multi_pending_drain;
+            my $allowed_branch_spawn_after_local_do_before_drain =
+                ($when_body_repeat || $switch_branch_repeat)
+                && $pending_local_do_before_drain
+                && !$pending_generated_do_before_drain
+                && @pending_spawns;
             confess "Transaction '$tn': $pending_local_do_label nested repeat spawn cannot follow local do while generated spawns are pending; drain with same-body '(await_all done)' before spawning again\n"
-                if defined $pending_local_do_label && $pending_local_do_before_drain && @pending_spawns;
+                if defined $pending_local_do_label
+                    && $pending_local_do_before_drain
+                    && @pending_spawns
+                    && !$allowed_branch_spawn_after_local_do_before_drain;
             confess "Transaction '$tn': $pending_generated_do_label nested repeat spawn cannot follow $pending_generated_do_kind_before_drain while generated spawns are pending; drain with same-body '(await_all done)' before spawning again\n"
                 if defined $pending_generated_do_label && $pending_generated_do_before_drain && @pending_spawns;
             for my $subclause (@{$body_clause}[4 .. $#$body_clause]) {
@@ -6269,6 +6278,8 @@ sub _validate_repeat_body_spawn_subset {
                 next if $head eq 'params' || $head eq 'bind' || $head eq 'domain';
                 confess "Transaction '$tn': repeat-body spawn supports only optional '(params ...)', '(bind ...)', and '(domain ...)' subclauses in the spawn domain subset\n";
             }
+            $spawn_after_local_do_before_drain = 1
+                if $allowed_branch_spawn_after_local_do_before_drain;
             push @pending_spawns, $body_clause->[3];
             next;
         }
@@ -6397,6 +6408,10 @@ sub _validate_repeat_body_spawn_subset {
         if ($keyword eq 'await_all' || $keyword eq 'await_any') {
             confess "Transaction '$tn': repeat-body $keyword is supported only after repeat-body spawn clauses\n"
                 unless @pending_spawns;
+            confess "Transaction '$tn': $pending_local_do_label nested repeat spawn after local do while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the later spawn remains deferred\n"
+                if defined $pending_local_do_label
+                    && $spawn_after_local_do_before_drain
+                    && $keyword eq 'await_any';
             my $allowed_branch_local_do_before_post_await_any =
                 ($when_body_repeat || $switch_branch_repeat)
                 && $pending_local_do_before_drain
@@ -6455,6 +6470,7 @@ sub _validate_repeat_body_spawn_subset {
             $pending_local_do_before_drain = 0;
             $pending_generated_do_before_drain = 0;
             $pending_generated_do_kind_before_drain = undef;
+            $spawn_after_local_do_before_drain = 0;
             next;
         }
     }

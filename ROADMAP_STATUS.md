@@ -4,6 +4,25 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 branch-contained local-do spawn-after-do:
+  `ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO.1` shipped the local-do-then-later-spawn
+  analogue and closed the task tree. A repeat directly inside a top-level
+  `when` body or top-level `switch` branch may now run an initial generated
+  spawn, then local blocking `(do child)` in the parent scheduled module, then
+  one or more additional generated spawns, and then mandatory same-body
+  `(await_all done)` before nested repeat re-entry. The local child must
+  complete before the later generated spawn starts; the later spawn joins the
+  outstanding generated-spawn done set; and the final `await_all` drains both
+  pre-do and post-do generated children. Generated-do spawn-after-do,
+  local-do spawn-after-do with post-do/active multi-pending `await_any`,
+  missing drains, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child lifetime semantics remain fail-closed/deferred.
+  Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=62`; focused
+  book/public audits with `Files=3, Tests=338`; broader repeat/child
+  regression with `Files=4, Tests=76`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1771`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Current R14 same-domain generated-do post-do await_any:
   `ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.1` shipped the branch-contained
   same-domain generated-do post-do multi-pending `await_any` analogue and
@@ -16,7 +35,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   before the observation; generated-spawn done handoffs remain live for the
   later drain; generated-composition, domain partition, and schedule-report
   clock-domain summaries retain the declared ownership metadata without
-  implying CDC. New spawn after the do before the drain, cross-domain
+  implying CDC. New spawn after generated do before the drain, cross-domain
   activation, deeper branch/loop nesting, and broader outstanding-child
   lifetime semantics remain fail-closed/deferred. Validation passed: syntax
   checks; `prove -Iperl t/1215-isf-spawn-parameter-binding.t`; focused

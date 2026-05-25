@@ -1545,8 +1545,13 @@ subsets, local plain `(do child)` may run while generated nested spawns are
 pending before or after a prior multi-pending `await_any` observation. The
 local do uses only the parent-module local child start/done contract and
 leaves the generated-spawn done set live until the later same-body
-`await_all` drain. In the top-level `when` body and top-level `switch` branch
-subsets, local plain `(do child)` may also run before a post-do multi-pending
+`await_all` drain. When no multi-pending `await_any` observation is active
+before the drain, those same branch-contained local-do forms may then start
+one or more additional generated nested spawns before the mandatory same-body
+`await_all`; the local child's fresh done pulse must be observed first, and
+the later drain covers both pre-do and post-do generated spawns. In the
+top-level `when` body and top-level `switch` branch subsets, local plain
+`(do child)` may also run before a post-do multi-pending
 `await_any` observation when that later same-body `await_all` still drains
 every pending generated spawn before nested repeat re-entry. Generated `do`
 forms with parameters, binding handoffs, or domain metadata are separate
@@ -1578,8 +1583,9 @@ and top-level `switch` branch same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` subsets support the same
 post-do `await_any` observation and later-drain contract while retaining
 declared ownership metadata in generated-composition, domain-partition, and
-schedule-report clock-domain summaries. New spawn after the do before the
-drain remains outside the public shipped subset.
+schedule-report clock-domain summaries. New spawn after generated `do`, and
+new spawn after local `do` when a multi-pending `await_any` observation is
+active before the drain, remain outside the public shipped subset.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. In the top-level `when` body and top-level
@@ -3263,6 +3269,9 @@ These are not stable public interfaces yet:
   when-body and switch-branch nested repeats also support local `(do child)`
   while generated nested spawns are pending before or after a prior
   multi-pending `await_any` observation and before a later same-body
+  `await_all` drain. When no multi-pending `await_any` observation is active,
+  both top-level branch subsets also support local `(do child)` followed by
+  additional generated nested `spawn` sites before that same later
   `await_all` drain. Both top-level branch subsets
   support plain generated-child `(do child)` while generated nested spawns are
   pending before or after a prior multi-pending `await_any` observation and

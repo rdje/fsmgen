@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-26: R14 — Local do then spawn before drain shipped
+- Completed `ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO.1` and closed the task tree.
+- Branch-contained nested repeats now accept initial generated spawn, local
+  blocking `(do child)`, later generated spawn, and mandatory same-body
+  `(await_all done)` before nested repeat re-entry for repeats directly inside
+  top-level `when` bodies or top-level `switch` branches.
+- The local child completes before the later generated spawn starts; the later
+  spawn joins the outstanding generated-spawn done set; the final `await_all`
+  drains both pre-do and post-do generated children.
+- Generated-do spawn-after-do, local-do spawn-after-do with post-do or active
+  multi-pending `await_any`, missing drains, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=62`; focused
+  book/public audits with `Files=3, Tests=338`; broader repeat/child
+  regression with `Files=4, Tests=76`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1771`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Same-domain generated-do post-do await_any shipped
 - Completed `ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.1` and closed the task
   tree.

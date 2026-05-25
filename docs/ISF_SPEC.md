@@ -2630,10 +2630,17 @@ Current lowering:
   drains every outstanding generated child before the nested repeat check can
   loop. That local do target remains in the parent scheduled module, waits for
   its own fresh local done pulse, and does not clear the generated-spawn done
-  set. The top-level `when` body and top-level `switch` branch nested-repeat
-  subsets also accept a plain generated-child `(do child)` in that same
-  pending-spawn interval when the target child is already emitted as a
-  generated child by another activation site. The top-level `when` body and
+  set. When no multi-pending `await_any` observation has occurred before or
+  after that local do, those same branch-contained local-do forms may then
+  start one or more additional generated nested spawns before the mandatory
+  same-body `(await_all done)` drain. The later spawn joins the same
+  outstanding generated-spawn set; the local child's done pulse must be
+  observed before the later spawn state can start, and the later `await_all`
+  still drains both the pre-do and post-do generated spawns before nested
+  repeat re-entry. The top-level `when` body and top-level `switch` branch
+  nested-repeat subsets also accept a plain generated-child `(do child)` in
+  that same pending-spawn interval when the target child is already emitted as
+  a generated child by another activation site. The top-level `when` body and
   top-level `switch` branch forms may also place that plain generated-child
   `do` after a prior multi-pending `(await_any done)` observation, provided
   the later same-body `(await_all done)` drain still gates nested repeat
@@ -2704,8 +2711,9 @@ Current lowering:
   post-do multi-pending observation and later-drain contract while also
   retaining declared ownership metadata in generated-composition,
   domain-partition, and schedule-report clock-domain summaries. New nested
-  `spawn` after the do before the drain, deeper branch/loop nesting, and
-  cross-domain activation remain fail-closed.
+  `spawn` after generated `do`, or after local `do` when a multi-pending
+  `await_any` observation is active before the drain, deeper branch/loop
+  nesting, and cross-domain activation remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
