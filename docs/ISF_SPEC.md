@@ -320,9 +320,11 @@ literals. Transaction parameters outside same-transaction contract windows,
 runtime interface signals, arbitrary expressions, and use-site activation
 overrides are not actor-parameter-default, latency-bound, watchdog-limit, or
 repeat-count constants. Use-site overrides that target generated child
-contract-window parameters fail closed instead of respecializing the
-already-emitted temporal monitor; other override-specialized static timing
-logic remains unshipped.
+contract-window parameters are accepted only when the override resolves to the
+same positive integer cycle count as the child transaction parameter default;
+mismatched overrides fail closed instead of respecializing the already-emitted
+temporal monitor. Other override-specialized static timing logic remains
+unshipped.
 Actor constants and actor-local scalar parameter defaults are also accepted as
 static default values for generated child transaction parameters; the lowerer
 resolves those parent actor names to literal child `+params` and
@@ -3783,7 +3785,9 @@ positive integer. Direct transaction parameters are local lowering inputs for
 this contract-window value domain and are not emitted as actor-level `.fsm`
 `+params`. Activation-site overrides on `spawn`, generated blocking `do`, or
 rule `trigger` that target a generated child parameter used by the child
-contract window fail closed with a targeted diagnostic; override
+contract window are accepted only when the override resolves to the same
+positive integer cycle count as the child transaction parameter default.
+Mismatched overrides fail closed with a targeted diagnostic; override
 specialization of generated child contract windows remains deferred. Runtime
 signals, arbitrary expressions, unknown names, unknown or unqualified package
 constants, package aggregate constants, package member/item paths, ambiguous
@@ -3813,9 +3817,9 @@ generated sticky fail bit remains clear outside reset, while Verilog output
 stays assertion-free. Raw monitor equations and backend assertion text are not
 schedule-report payloads; the scheduled monitor remains the source of truth.
 Historical/free-form contract bodies, override-specialized contract-window
-lowering after activation-site parameter overrides, runtime-signal or
-expression windows, global `always` implication forms, min/max windows,
-dynamic bounds, same-cycle checks, nested
+lowering after mismatched activation-site parameter overrides,
+runtime-signal or expression windows, global `always` implication forms,
+min/max windows, dynamic bounds, same-cycle checks, nested
 contracts, expression operands, and multiple outstanding obligations remain
 fail-closed/deferred.
 
@@ -5538,11 +5542,11 @@ Focused tests:
   endpoints, registered-valid variants, and skid buffers remain deferred.
 - Temporal `(contract ...)` forms beyond the shipped top-level bounded
   eventual subset with positive decimal literal, positive actor-constant,
-  positive actor-scalar-parameter, qualified package scalar-constant, and
-  generated-child or direct same-transaction scalar-parameter windows.
-  Activation-site overrides that target generated child contract-window
-  parameters fail closed; override-specialized contract-window lowering
-  remains deferred.
+  positive actor-scalar-parameter, qualified package scalar-constant,
+  generated-child or direct same-transaction scalar-parameter windows, and
+  same-value generated child activation-site overrides for those
+  contract-window parameters. Mismatched activation-site overrides still fail
+  closed; override-specialized contract-window lowering remains deferred.
 - Rich storage-class optimization in schedule reports.
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
   actor-constant enum member references, direct transaction `set` RHS enum

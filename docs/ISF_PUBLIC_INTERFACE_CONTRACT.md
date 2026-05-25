@@ -1055,8 +1055,9 @@ transactions are checked by
 Same-transaction scalar parameter defaults on direct/non-generated
 transactions are checked by
 [t/1365-isf-contract-direct-transaction-param-windows.t](../t/1365-isf-contract-direct-transaction-param-windows.t).
-Activation-site override diagnostics for generated child transaction
-parameters used by child contract windows are checked by
+Activation-site same-value override acceptance and mismatch diagnostics for
+generated child transaction parameters used by child contract windows are
+checked by
 [t/1366-isf-contract-activation-override-windows.t](../t/1366-isf-contract-activation-override-windows.t).
 The shipped subset is the top-level transaction form
 `(contract name (eventually signal within cycles))`. The older nested
@@ -1068,7 +1069,9 @@ default, a qualified imported package scalar constant, or a same-transaction
 scalar parameter default on a generated child or direct/non-generated
 transaction that resolves to a positive integer. Activation-site overrides on
 `spawn`, generated blocking `do`, or rule `trigger` that target a generated
-child parameter used by the child contract window fail closed with a targeted
+child parameter used by the child contract window are accepted only when the
+override resolves to the same positive integer cycle count as the child
+transaction parameter default. Mismatched overrides fail closed with a targeted
 diagnostic; override specialization remains outside the contract-window
 surface. Runtime signals, arbitrary expressions, unknown names, unknown or
 unqualified package constants, aggregate package constants, package

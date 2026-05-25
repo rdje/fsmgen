@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE` | `active` | `R14` | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` | [docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.md](docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.md](docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.md) |
 | `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.md) |
 | `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md) |
 | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.md](docs/tasks/ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.md) |

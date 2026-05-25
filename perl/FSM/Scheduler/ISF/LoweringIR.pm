@@ -2478,7 +2478,8 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Transaction '$tx_name': $keyword instance '$instance' parameter '$name' shape does not match child '$target' declaration\n"
                 unless _param_values_shape_compatible($declared_params{$name}{value}, $override->{value});
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides contract-window parameter '$name' on child '$target'; activation-site parameter override-specialized contract windows remain deferred\n"
-                if $contract_window_params->{$name};
+                if $contract_window_params->{$name}
+                    && !_activation_override_preserves_contract_window_param($declared_params{$name}, $override);
         }
     }
 
@@ -2513,7 +2514,8 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Rule '$rule_name': trigger instance '$instance' parameter '$name' shape does not match child '$target' declaration\n"
                 unless _param_values_shape_compatible($declared_params{$name}{value}, $override->{value});
             confess "Rule '$rule_name': trigger instance '$instance' overrides contract-window parameter '$name' on child '$target'; activation-site parameter override-specialized contract windows remain deferred\n"
-                if $contract_window_params->{$name};
+                if $contract_window_params->{$name}
+                    && !_activation_override_preserves_contract_window_param($declared_params{$name}, $override);
         }
     }
 
@@ -2555,6 +2557,17 @@ sub _transaction_contract_window_param_names {
     }
 
     return \%used;
+}
+
+sub _activation_override_preserves_contract_window_param {
+    my ($declared_param, $override) = @_;
+    return 0 unless ref($declared_param) eq 'HASH' && ref($override) eq 'HASH';
+
+    my $declared_cycles = _non_negative_integer_from_literal(_param_resolved_value($declared_param));
+    my $override_cycles = _non_negative_integer_from_literal($override->{value});
+    return 0 unless defined($declared_cycles) && defined($override_cycles);
+
+    return $declared_cycles == $override_cycles ? 1 : 0;
 }
 
 sub _contract_within_value_if_present {

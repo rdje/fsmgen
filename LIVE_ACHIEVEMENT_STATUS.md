@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Same-value activation override contract-window support shipped
+- Completed `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` and closed the
+  task tree.
+- Generated child activation-site overrides on `spawn`, generated blocking
+  `do`, and rule `trigger` now accept a parameter override that targets a child
+  temporal contract-window parameter when the override resolves to the same
+  positive integer cycle count as the child transaction parameter default.
+- Mismatched override values still fail closed with the targeted
+  override-specialized contract-window diagnostic.
+- Unknown override names and parameter-shape mismatches keep their existing
+  diagnostic precedence.
+- Generated child contract monitors and schedule reports remain
+  default-resolved; no generated child variant module, report key, schema
+  version, HDL projection, or public API shape changed.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused contract/public/spec/book tests
+  with `Files=13, Tests=453`; `./bin/ci-regression isf --no-book` with
+  `Files=272, Tests=1732`; final public/spec/book audits with `Files=5,
+  Tests=368`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Same-value activation override contract-window slice selected
 - Created active task tree `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE`.
 - Completed `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1`; the selected

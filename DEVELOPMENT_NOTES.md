@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Same-value contract-window activation overrides reuse the default monitor safely
+- `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` keeps the existing generated
+  child monitor architecture intact and accepts only activation-site overrides
+  whose resolved integer cycle count matches the child transaction parameter
+  default.
+- The check runs after the existing unknown-name and shape diagnostics, so the
+  user still sees the most local parameter binding error first.
+- Mismatched values keep failing closed because the child `.fsm` still contains
+  one monitor emitted from the child transaction definition. Accepting a
+  mismatched override without generating a specialized child module would make
+  the generated top parameter binding and the child monitor disagree.
+
 ## 2026-05-25: Same-value activation overrides are the next bounded contract-window step
 - `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1` selects a narrow follow-up to
   the current fail-closed activation override diagnostic.

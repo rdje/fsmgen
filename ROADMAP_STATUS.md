@@ -2,8 +2,26 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE`.
-- Current frontier: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 same-value activation override contract-window implementation:
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` shipped same-value
+  activation-site overrides for generated child temporal contract-window
+  parameters and closed the task tree. `spawn`, generated blocking `do`, and
+  rule `trigger` now accept an override of a child contract-window parameter
+  when the override resolves to the same positive integer cycle count as the
+  child transaction parameter default. Mismatched override values still fail
+  closed with the targeted override-specialized contract-window diagnostic.
+  Unknown override names and parameter-shape mismatches keep their existing
+  diagnostic precedence. Generated child contract monitors and schedule
+  reports remain default-resolved; no generated child variant module, report
+  key, schema version, HDL projection, or public API shape changed. The ISF
+  spec, downstream handoff, public contract, mdBook, task tree, README index,
+  roadmap, and live docs are synchronized. Validation passed: syntax checks;
+  focused contract/public/spec/book tests with `Files=13, Tests=453`;
+  `./bin/ci-regression isf --no-book` with `Files=272, Tests=1732`; final
+  public/spec/book audits with `Files=5, Tests=368`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Recent R14 same-value activation override contract-window selection:
   `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1` created the active task
   tree for accepting activation-site overrides of generated child
@@ -7846,16 +7864,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE`.
-- Current frontier: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
 - Completion status:
-  `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1` selected the next bounded
-  temporal-contract implementation frontier. The next leaf will accept
-  activation-site overrides of generated child contract-window parameters only
-  when the override resolves to the same positive integer cycle count as the
-  child transaction parameter default. No behavior changed in this selection
-  slice. Validation passed: feature-backlog/live-book/book matrix audits with
-  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` shipped same-value
+  activation-site overrides for generated child temporal contract-window
+  parameters and closed the task tree. No report key, schema version,
+  generated child variant module, HDL projection, or public API shape changed.
+  Validation passed: syntax checks; focused contract/public/spec/book tests
+  with `Files=13, Tests=453`; `./bin/ci-regression isf --no-book` with
+  `Files=272, Tests=1732`; final public/spec/book audits with `Files=5,
+  Tests=368`; `mdbook build docs/book`; and `git diff --check`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11311,6 +11330,26 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` is shipped and the task tree
+  is closed:
+  - generated child activation-site overrides on `spawn`, generated blocking
+    `do`, and rule `trigger` now accept a parameter override that targets a
+    child temporal contract-window parameter when the override resolves to the
+    same positive integer cycle count as the child transaction parameter
+    default,
+  - mismatched override values still fail closed with the targeted
+    override-specialized contract-window diagnostic,
+  - unknown override names and parameter-shape mismatches keep their existing
+    diagnostic precedence,
+  - generated child contract monitors and schedule reports remain
+    default-resolved; no generated child variant module, report key, schema
+    version, HDL projection, or public API shape changed,
+  - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
+    README index, roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused contract/public/spec/book tests
+    with `Files=13, Tests=453`; `./bin/ci-regression isf --no-book` with
+    `Files=272, Tests=1732`; final public/spec/book audits with `Files=5,
+    Tests=368`; `mdbook build docs/book`; and `git diff --check`.
 - `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` is shipped and the task tree is
   closed:
   - generated child activation-site parameter overrides now fail closed with a

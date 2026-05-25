@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -60,7 +60,7 @@ per-activation temporal monitor specialization.
 ## Task Tree
 
 - ID: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE`
-  Status: `active`
+  Status: `done`
   Goal: `Ship bounded same-value activation overrides for generated child contract-window parameters.`
   Children: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1`,
   `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2`
@@ -73,17 +73,17 @@ per-activation temporal monitor specialization.
   Commit: `this commit`
 
 - ID: `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement same-value activation override acceptance for generated child temporal contract-window parameters.`
   Acceptance: `Lowering accepts same-value contract-window parameter overrides for spawn, generated do, and rule trigger; mismatches still fail closed with a targeted diagnostic; unknown/shape diagnostics keep precedence; generated child monitors and reports remain default-resolved; public docs/book/contract/handoff are synchronized; focused and appropriate broader gates pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1366-isf-contract-activation-override-windows.t`; `prove -Iperl t/1366-isf-contract-activation-override-windows.t`; focused contract/public/spec/book tests; `./bin/ci-regression isf --no-book`; final public/spec/book audits; `mdbook build docs/book`; `git diff --check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` | `pending` | Implements the selected bounded public behavior after the task-tree gate. |
+| 1 | `closed` | `done` | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` shipped same-value activation override acceptance for generated child contract-window parameters. |
 
 ## Decisions
 
@@ -111,15 +111,18 @@ per-activation temporal monitor specialization.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed: doc/book audits Files=3, Tests=364` |
+| `2026-05-25` | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` | syntax checks; focused contract/public/spec/book tests; `./bin/ci-regression isf --no-book`; final public/spec/book audits; `mdbook build docs/book`; `git diff --check` | `passed: focused Files=13, Tests=453; broad Files=272, Tests=1732; final audits Files=5, Tests=368` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1` | `this commit: ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1: select same-value contract-window overrides` | `selection leaf; no behavior change` |
-| `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` | `pending` | `pending` |
+| `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` | `pending this commit: ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2: accept same-value contract-window overrides` | `implementation slice; closes the tree` |
 
 ## Changelog
 
 - `2026-05-25`: Created active task tree, completed the selection leaf in the
   working tree, and set `.2` as the implementation frontier.
+- `2026-05-25`: Shipped same-value activation override acceptance for generated
+  child temporal contract-window parameters and closed the task tree.

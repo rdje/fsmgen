@@ -987,7 +987,9 @@ The ISF-specific current limitations are:
   this contract-window value domain and are not emitted as actor-level `.fsm`
   `+params`. Activation-site overrides on `spawn`, generated blocking `do`,
   or rule `trigger` that target a generated child parameter used by the child
-  contract window fail closed with a targeted diagnostic; override
+  contract window are accepted only when the override resolves to the same
+  positive integer cycle count as the child transaction parameter default.
+  Mismatched overrides fail closed with a targeted diagnostic; override
   specialization of generated child contract windows remains deferred.
   Runtime expressions, arbitrary expressions, unknown or
   unqualified package constants, aggregate package constants, package

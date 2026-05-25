@@ -10,7 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 
-subtest 'activation overrides of contract-window parameters fail closed' => sub {
+subtest 'activation overrides that change contract-window parameters fail closed' => sub {
     assert_lower_rejected(
         <<'ISF',
 (actor spawn_contract_window_override
@@ -82,6 +82,107 @@ ISF
 ISF
         qr/Rule 'launch': trigger instance 'launch_worker_trigger_0' overrides contract-window parameter 'ACK_WINDOW' on child 'worker'; activation-site parameter override-specialized contract windows remain deferred/,
         'rule trigger override of a contract-window parameter is rejected',
+    );
+};
+
+subtest 'same-value activation overrides of contract-window parameters are accepted' => sub {
+    my $spawn_source = <<'ISF';
+(actor spawn_same_value_contract_window_override
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0
+      (params
+        (ACK_WINDOW 4)))
+    (complete done))
+  (transaction worker
+    (params
+      (ACK_WINDOW 4))
+    (contract ack_seen (eventually ack (within ACK_WINDOW)))
+    (complete done)))
+ISF
+
+    my $spawn_lowered = lower_source($spawn_source);
+    like(
+        $spawn_lowered->{files}{'worker.fsm'},
+        qr/\(== worker_contract_0_age 3\)/,
+        'spawn same-value override keeps the child default-resolved monitor window',
+    );
+    like(
+        $spawn_lowered->{files}{'spawn_same_value_contract_window_override_top.fsm'},
+        qr/\(\?fsmc:w0 worker\s+\(params\s+\(ACK_WINDOW 4\)\s+\)\s+\)/s,
+        'spawn same-value override remains visible in the generated top',
+    );
+
+    my $do_source = <<'ISF';
+(actor do_same_value_contract_window_override
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction parent
+    (on start)
+    (do worker
+      (params
+        (ACK_WINDOW 3'd4)))
+    (complete done))
+  (transaction worker
+    (params
+      (ACK_WINDOW 4))
+    (contract ack_seen (eventually ack within ACK_WINDOW))
+    (complete done)))
+ISF
+
+    my $do_lowered = lower_source($do_source);
+    like(
+        $do_lowered->{files}{'worker.fsm'},
+        qr/\(== worker_contract_0_age 3\)/,
+        'generated do same-value exact-width override keeps the child monitor window',
+    );
+    like(
+        $do_lowered->{files}{'do_same_value_contract_window_override_top.fsm'},
+        qr/\(\?fsmc:parent_worker_do_0 worker\s+\(params\s+\(ACK_WINDOW 3'd4\)\s+\)\s+\)/s,
+        'generated do same-value exact-width override remains visible in the generated top',
+    );
+
+    my $trigger_source = <<'ISF';
+(actor trigger_same_value_contract_window_override
+  (clock clk)
+  (reset rst_n)
+  (constants
+    (MATCH_WINDOW 4))
+  (interface
+    (input fire)
+    (input ack)
+    (output done))
+  (transaction worker
+    (params
+      (ACK_WINDOW 4))
+    (contract ack_seen (eventually ack (within ACK_WINDOW)))
+    (complete done))
+  (rule launch fire
+    (trigger worker
+      (params
+        (ACK_WINDOW MATCH_WINDOW)))))
+ISF
+
+    my $trigger_lowered = lower_source($trigger_source);
+    like(
+        $trigger_lowered->{files}{'worker.fsm'},
+        qr/\(== worker_contract_0_age 3\)/,
+        'rule trigger same-value actor-constant override keeps the child monitor window',
+    );
+    like(
+        $trigger_lowered->{files}{'trigger_same_value_contract_window_override_top.fsm'},
+        qr/\(\?fsmc:launch_worker_trigger_0 worker\s+\(params\s+\(ACK_WINDOW 4\)\s+\)\s+\)/s,
+        'rule trigger same-value actor-constant override remains visible in the generated top as the resolved value',
     );
 };
 

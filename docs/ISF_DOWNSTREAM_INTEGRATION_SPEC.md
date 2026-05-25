@@ -897,7 +897,9 @@ Rules:
 - Direct `(on ...)` activation is not a generated activation instance and does
   not accept activation-site parameter overrides. For generated activations,
   `spawn`, generated blocking `do`, and rule `trigger` overrides that target a
-  generated child parameter used by the child temporal-contract window fail
+  generated child parameter used by the child temporal-contract window are
+  accepted only when the override resolves to the same positive integer cycle
+  count as the child transaction parameter default. Mismatched overrides fail
   closed until override-specialized contract-window lowering is shipped.
 
 ### 11.2 Transaction Ports And Bindings
@@ -1855,7 +1857,9 @@ parent-scoped for child-local temporal contracts. Direct transaction
 parameters remain local lowering inputs and are not promoted to actor-level
 `.fsm` `+params`. Activation-site overrides on `spawn`, generated blocking
 `do`, or rule `trigger` that target a generated child parameter used by the
-child contract window fail closed with a targeted diagnostic. Full
+child contract window are accepted only when the override resolves to the same
+positive integer cycle count as the child transaction parameter default.
+Mismatched overrides fail closed with a targeted diagnostic. Full
 override-specialized contract-window lowering, runtime signals, arbitrary
 expressions, unknown names, unknown or unqualified package constants,
 aggregate package constants, package member/item paths, ambiguous
@@ -3100,8 +3104,9 @@ Required fail-closed examples:
   resolve to zero, or actor parameters that resolve to zero or non-scalar
   values.
 - Temporal contract windows that need activation-site override-specialized
-  lowering, transaction parameters from other transactions, runtime interface
-  signals, unknown symbolic names, arbitrary expressions,
+  lowering beyond same-value generated child activation overrides,
+  transaction parameters from other transactions, runtime interface signals,
+  unknown symbolic names, arbitrary expressions,
   unknown or unqualified package constants, aggregate package constants,
   package member/item paths, ambiguous
   local-enum/package-constant spellings, constants that resolve to zero, or
