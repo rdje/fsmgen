@@ -2716,18 +2716,24 @@ Current lowering:
   bound generated `(do child (params ...) (bind ...))` support the same
   post-do multi-pending observation and later-drain contract while also
   wiring the generated-top input/output binding handoffs for the generated do
-  instance. Top-level `when` body and top-level `switch` branch nested repeat
+  instance. When no multi-pending `await_any` observation is active before the
+  drain, those bound generated-do subsets may also start one or more later
+  generated nested spawns before the mandatory same-body `await_all`; the
+  generated do instance's fresh done handoff gates the later spawn state,
+  generated-top binding handoffs stay scoped to the do instance, and the final
+  drain covers both pre-do and post-do generated spawns. Top-level `when`
+  body and top-level `switch` branch nested repeat
   static-parameter same-domain generated
   `(do child (params ...) [(bind ...)] (domain NAME))` support the same
   post-do multi-pending observation and later-drain contract while also
   retaining declared ownership metadata in generated-composition,
   domain-partition, and schedule-report clock-domain summaries. New nested
-  `spawn` after bound or same-domain generated `do`; after generated `do`
-  when a multi-pending `await_any` observation is active before the drain;
-  after plain generated-child `do` when a multi-pending `await_any`
-  observation is active before the drain; or after local `do` when a
-  multi-pending `await_any` observation is active before the drain, deeper
-  branch/loop nesting, and cross-domain activation remain fail-closed.
+  `spawn` after same-domain generated `do`; after generated `do` when a
+  multi-pending `await_any` observation is active before the drain; after
+  plain generated-child `do` when a multi-pending `await_any` observation is
+  active before the drain; or after local `do` when a multi-pending
+  `await_any` observation is active before the drain, deeper branch/loop
+  nesting, and cross-domain activation remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a

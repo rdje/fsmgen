@@ -2,6 +2,32 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-26: R14 — Bound generated do then spawn before drain shipped
+- Completed `ISF-REPEAT-GENDO-BOUND-SPAWN-AFTER-DO.1` and closed the task
+  tree.
+- Branch-contained nested repeats now accept initial generated spawn,
+  generated blocking `(do child (params ...) (bind ...))`, later generated
+  spawn, and mandatory same-body `(await_all done)` before nested repeat
+  re-entry for repeats directly inside top-level `when` bodies or top-level
+  `switch` branches.
+- The generated do instance completes before the later generated spawn starts;
+  it preserves its static generated-top parameter override and input/output
+  binding handoffs; the later spawn joins the outstanding generated-spawn done
+  set; the final `await_all` drains both pre-do and post-do generated
+  children.
+- Same-domain generated-do spawn-after-do, generated or local spawn-after-do
+  with post-do or active multi-pending `await_any`, missing drains,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics remain fail-closed/deferred.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=68`; focused
+  book/public audits with `Files=3, Tests=351`; broader repeat/child
+  regression with `Files=4, Tests=82`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1790`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 — Static-parameter generated do then spawn before drain shipped
 - Completed `ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO.1` and closed the task
   tree.
@@ -14,10 +40,11 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   it preserves its static generated-top parameter override; the later spawn
   joins the outstanding generated-spawn done set; the final `await_all` drains
   both pre-do and post-do generated children.
-- Bound and same-domain generated-do spawn-after-do, generated or local
-  spawn-after-do with post-do or active multi-pending `await_any`, missing
-  drains, cross-domain activation, deeper branch/loop nesting, and broader
-  outstanding-child lifetime semantics remain fail-closed/deferred.
+- At that checkpoint, bound and same-domain generated-do spawn-after-do,
+  generated or local spawn-after-do with post-do or active multi-pending
+  `await_any`, missing drains, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child lifetime semantics remained
+  fail-closed/deferred.
 - Validation passed: syntax checks; `prove -Iperl
   t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=66`; focused
   book/public audits with `Files=3, Tests=347`; broader repeat/child
@@ -37,11 +64,11 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - The generated do instance completes before the later generated spawn starts;
   the later spawn joins the outstanding generated-spawn done set; the final
   `await_all` drains both pre-do and post-do generated children.
-- Static-parameter, bound, and same-domain generated-do spawn-after-do,
-  generated-child or local spawn-after-do with post-do or active multi-pending
-  `await_any`, missing drains, cross-domain activation, deeper branch/loop
-  nesting, and broader outstanding-child lifetime semantics remain
-  fail-closed/deferred.
+- At that checkpoint, static-parameter, bound, and same-domain generated-do
+  spawn-after-do, generated-child or local spawn-after-do with post-do or
+  active multi-pending `await_any`, missing drains, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child lifetime
+  semantics remained fail-closed/deferred.
 - Validation passed: syntax checks; `prove -Iperl
   t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=64`; focused
   book/public audits with `Files=3, Tests=343`; broader repeat/child
