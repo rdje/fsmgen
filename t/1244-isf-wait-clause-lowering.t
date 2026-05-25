@@ -227,6 +227,113 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_params');
 };
 
+subtest 'same-transaction scalar parameter wait counts lower as static waits' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-transaction-params');
+(actor wait_transaction_params
+  (clock clk)
+  (reset (rst_n async active_low))
+  (params
+    (WAIT_COUNT 2))
+  (interface
+    (input start)
+    (input din (width 8))
+    (output done)
+    (output out (width 8)))
+  (drive (out val)
+    (out val))
+  (transaction main
+    (params
+      (WAIT_ZERO 0)
+      (WAIT_COUNT 3)
+      (WAIT_ONE 4'd1))
+    (on start)
+    (sample din as hold)
+    (wait WAIT_ZERO)
+    (wait WAIT_COUNT)
+    (drive out hold)
+    (wait WAIT_ONE)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_transaction_params.fsm'};
+    like($fsm, qr/\(\+params[\s\S]*\(WAIT_COUNT 2\)/, 'scheduled .fsm preserves only the actor-level parameter declaration');
+    like(state_block($fsm, 'main_wait_1'), qr/\(<= \(hold din\)\)/, 'pending sample survives transaction-parameter zero wait and piggybacks onto first positive wait');
+    like(state_block($fsm, 'main_wait_1'), qr/\(-> main_wait_2\)/, 'shadowing transaction parameter first wait state advances');
+    like(state_block($fsm, 'main_wait_2'), qr/\(-> main_wait_3\)/, 'shadowing transaction parameter second wait state advances');
+    like(state_block($fsm, 'main_wait_3'), qr/\(-> main_drive_4\)/, 'shadowing transaction parameter third wait state exits to following clause');
+    like(state_block($fsm, 'main_wait_5'), qr/\(-> main_done_6\)/, 'exact-width transaction parameter emits one wait state');
+    unlike($fsm, qr/\bmain_wait_0\b/, 'transaction-parameter zero wait emits no hidden wait state');
+
+    is_deeply(
+        [map { $_->{cycles} } @{$report->{transaction_waits}}],
+        [3, 1],
+        'transaction parameter waits resolve to exact static wait counts',
+    );
+    is_deeply(
+        [map { $_->{count_kind} } @{$report->{transaction_waits}}],
+        [qw(static static)],
+        'transaction parameter waits remain static waits in report metadata',
+    );
+    is_deeply(
+        [map { $_->{count_source} } @{$report->{transaction_waits}}],
+        [qw(WAIT_COUNT WAIT_ONE)],
+        'transaction parameter wait report entries preserve authored source names',
+    );
+    is_deeply(
+        $report->{transactions}[0]{states},
+        [qw(main_idle_0 main_wait_1 main_wait_2 main_wait_3 main_drive_4 main_wait_5 main_done_6)],
+        'transaction-parameter zero wait creates no state gap and positive waits keep emitted order',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_transaction_params');
+
+    ($lowered, $report) = lower_source(<<'ISF', 'wait-transaction-params-inline');
+(actor wait_transaction_params_inline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cond)
+    (output done))
+  (transaction main
+    (params
+      (WAIT_ONE 1))
+    (on start)
+    (when cond
+      (wait WAIT_ONE))
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_transaction_params_inline.fsm'};
+    like($fsm, qr/\bmain_wait_\d+\b/, 'inline transaction-parameter wait emits a wait state');
+    is_deeply(
+        [map { $_->{cycles} } @{$report->{transaction_waits}}],
+        [1],
+        'inline transaction parameter wait resolves to an exact static wait count',
+    );
+    is_deeply(
+        [map { $_->{count_source} } @{$report->{transaction_waits}}],
+        [qw(WAIT_ONE)],
+        'inline transaction parameter wait preserves its authored source name',
+    );
+    assert_fsm_reaches_hdl($fsm, 'wait_transaction_params_inline');
+
+    assert_lower_rejected(<<'ISF', 'aggregate transaction parameter wait count', qr/\ATransaction 'main': wait count transaction parameter 'WAIT_PAIR' must resolve to a non-negative integer literal in transaction body/);
+(actor wait_transaction_param_pair_count
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (transaction main
+    (params
+      (WAIT_PAIR (2 3)))
+    (on start)
+    (wait WAIT_PAIR)
+    (complete done)))
+ISF
+};
+
 subtest 'wait clauses lower in existing inline body contexts' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-nested');
 (actor wait_nested
@@ -3182,7 +3289,7 @@ ISF
 };
 
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_actor_parameter_or_transaction_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
 (actor wait_missing_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -3193,7 +3300,7 @@ subtest 'malformed wait clauses fail before scheduled emission' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_actor_parameter_or_transaction_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
 (actor wait_extra_operand
   (clock clk)
   (reset (rst_n async active_low))
@@ -3204,7 +3311,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'negative wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'negative wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_actor_parameter_or_transaction_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
 (actor wait_negative_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -3215,7 +3322,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'unknown dynamic wait count', qr/\ATransaction 'main': wait count 'cycles' is neither a declared actor constant, actor parameter, qualified package scalar constant, nor a known-width runtime scalar in transaction body/);
+    assert_lower_rejected(<<'ISF', 'unknown dynamic wait count', qr/\ATransaction 'main': wait count 'cycles' is neither a same-transaction scalar parameter, declared actor constant, actor parameter, qualified package scalar constant, nor a known-width runtime scalar in transaction body/);
 (actor wait_unknown_dynamic_count
   (clock clk)
   (reset (rst_n async active_low))

@@ -422,13 +422,15 @@ Timeout state:
 ```
 
 The static shipped surface accepts a non-negative integer literal, an
-actor-level constant name, or an actor-local scalar parameter default that
-resolves to a non-negative integer literal. For a resolved `N > 0`, lowering
+actor-level constant name, an actor-local scalar parameter default, a
+same-transaction scalar parameter default, or a qualified package scalar
+constant that resolves to a non-negative integer literal. For a resolved
+`N > 0`, lowering
 emits exactly `N` generated `*_wait_*` states, each advancing unconditionally
 to the next wait state or the following transaction clause. `(wait 0)` emits
 no generated state, consumes no active transaction cycle, and falls through to
 the following transaction clause. No hidden wait counter is introduced for
-this static literal/constant/parameter surface.
+this static literal/constant/parameter/package-constant surface.
 
 If samples are pending before a positive wait, they are emitted in the first
 wait state:
@@ -447,7 +449,8 @@ Schedule reports expose each authored positive static wait through
 `count_kind`, `count_source`, `entry_state`, `exit_state`, `counter_signal`,
 and `counter_width`. Only waits whose resolved count is greater than zero
 create report entries. Static waits report `count_kind` as `static`,
-`count_source` as the literal, actor constant name, or actor parameter name, and
+`count_source` as the literal, actor constant name, actor parameter name,
+transaction parameter name, or qualified package constant token, and
 `counter_signal`/`counter_width` as null for the fixed-chain lowering.
 
 Runtime scalar and runtime expression waits additionally expose their
@@ -456,11 +459,13 @@ generated sampled-count storage through `inferred_storage[]` with role
 
 The shipped symbolic surface is `(wait NAME)`, where `NAME` is an actor-level
 constant declared with `(constants (NAME value) ...)` or an actor-local scalar
-parameter default declared with `(params (NAME value) ...)`. The value must
-resolve before lowering to a non-negative integer literal. Once resolved, it
-uses the same fixed-chain lowering as a literal: a resolved zero emits no wait
-state and a resolved positive count emits that many wait states. Transaction
-`params`, non-scalar actor parameter defaults, and use-site override
+parameter default declared with `(params (NAME value) ...)`, with
+same-transaction scalar parameter defaults checked first in the owning
+transaction. The value must resolve before lowering to a non-negative integer
+literal. Once resolved, it uses the same fixed-chain lowering as a literal: a
+resolved zero emits no wait state and a resolved positive count emits that
+many wait states. Non-scalar transaction parameters, cross-transaction
+parameters, non-scalar actor parameter defaults, and use-site override
 specialization are not wait-count constants because they would require a
 different fixed state chain after scheduled state emission.
 

@@ -2230,10 +2230,12 @@ different from `(await cond)`, which waits for a signal condition, and
 different from `(repeat N body...)`, which repeats a body. The static surface
 accepts non-negative integer literals, actor-level constants declared with
 `(constants (NAME value) ...)`, and actor-local scalar parameter defaults
-declared with `(params (NAME value) ...)` when they resolve to non-negative
-integer literals. `wait 0`, constants that resolve to zero, and scalar actor
-parameters that resolve to zero are transparent no-ops that emit no wait
-state, consume no active transaction cycle, and create no report entry.
+declared with `(params (NAME value) ...)`, plus same-transaction scalar
+parameter defaults, when they resolve to non-negative integer literals.
+`wait 0`, constants that resolve to zero, scalar actor parameters that resolve
+to zero, and same-transaction scalar parameters that resolve to zero are
+transparent no-ops that emit no wait state, consume no active transaction
+cycle, and create no report entry.
 
 `wait 1` occupies one generated wait state for one active cycle and advances
 on the next state transition; `wait N` contributes exactly `N` active cycles
@@ -2249,8 +2251,12 @@ constant surface.
 Qualified package scalar constants are now part of the shipped static
 wait-count surface when they resolve to non-negative integer literals; the
 authored `PACKAGE.CONSTANT` token is preserved in `transaction_waits[]`.
-Unqualified package constants, aggregate constants, package member/item paths,
-and package constants inside wait-count expressions remain fail-closed.
+Same-transaction scalar parameter defaults are also part of the shipped static
+wait-count surface in their owning transaction, shadow actor-level static
+names, and remain local lowering inputs. Non-scalar or cross-transaction
+parameters, unqualified package constants, aggregate constants, package
+member/item paths, and package constants inside wait-count expressions remain
+fail-closed.
 
 Pending samples before a positive static wait piggyback onto the first wait
 state; pending samples before a zero wait remain pending for the next

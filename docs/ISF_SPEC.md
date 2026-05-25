@@ -364,9 +364,9 @@ same qualified package scalar constants in `shift_left`/`shift_right`
 `(widths PACKAGE.CONSTANT ...)` entries, and may use same-transaction scalar
 parameter defaults on generated child or direct/non-generated transactions as
 `TX_PARAM` evidence when those defaults resolve to positive integers. Static
-transaction wait counts may also use `(wait PACKAGE.CONSTANT)` when the
-imported package constant resolves
-to a non-negative integer scalar. `NAME` may be
+transaction wait counts may also use same-transaction scalar parameter
+defaults or `(wait PACKAGE.CONSTANT)` when the parameter or imported package
+constant resolves to a non-negative integer scalar. `NAME` may be
 local, such as `byte`, or package-qualified, such as `shared.byte`.
 Unknown aliases fail closed. Resolved `list` or `record` aliases are accepted
 only on actor-owned storage variables, for example `(var frame (type
@@ -650,11 +650,13 @@ Qualified package scalar constants used by explicit data-operation width
 evidence resolve to positive integer scheduler width facts that drive
 scheduled `.fsm` shift positions, assemble/extract slice evidence, and
 `inferred_storage[]` report widths.
-Qualified package scalar constants used by static transaction wait counts
-resolve to non-negative integer timing facts: zero counts remain transparent
-no-ops, and positive counts emit fixed scheduled wait-state chains plus
-`transaction_waits[]` entries whose `count_source` preserves the authored
-qualified token.
+Same-transaction scalar parameter defaults and qualified package scalar
+constants used by static transaction wait counts resolve to non-negative
+integer timing facts: zero counts remain transparent no-ops, and positive
+counts emit fixed scheduled wait-state chains plus `transaction_waits[]`
+entries. Transaction parameters shadow actor-level static names and remain
+local lowering inputs; package entries preserve the authored qualified token
+in `count_source`.
 Qualified package scalar constants used by static transaction repeat counts
 resolve to positive integer counter-width evidence; the scheduled `.fsm`
 repeat-counter load preserves the authored qualified token, and package
@@ -2729,8 +2731,10 @@ handoff.
 condition and it does not repeat a body. The shipped static count surface
 accepts a non-negative integer literal, an actor constant name, an actor-local
 scalar parameter name whose default resolves before lowering to a non-negative
-integer literal, or a qualified imported package scalar constant that resolves
-to a non-negative integer literal. The runtime count surface accepts a
+integer literal, a same-transaction scalar parameter default that resolves to
+a non-negative integer literal, or a qualified imported package scalar
+constant that resolves to a non-negative integer literal. The runtime count
+surface accepts a
 known-width scalar count name or a known-width non-empty list expression in
 contexts whose predecessor edge can be split safely.
 
@@ -2753,8 +2757,10 @@ static counts. `(wait N)` emits `N` generated `*_wait_*` states when `N > 0`;
 each state advances unconditionally to the next wait state or to the following
 transaction clause. `(wait 0)` emits no generated state and no
 `transaction_waits[]` entry. A symbolic `(wait NAME)` first resolves `NAME`
-through the actor constant table, then through actor-local scalar parameter
-defaults, and then follows the same rule. A qualified `(wait PACKAGE.CONSTANT)`
+through same-transaction parameter defaults, then through the actor constant
+table, then through actor-local scalar parameter defaults, and then follows
+the same rule. Same-transaction parameters therefore shadow actor-level static
+names in this value-domain slot. A qualified `(wait PACKAGE.CONSTANT)`
 resolves through the actor's imported package constant metadata and keeps the
 authored qualified token in reports. No hidden wait counter is introduced for
 this static literal/constant/parameter/package-constant surface. Pending
@@ -2939,9 +2945,10 @@ cannot yet carry pending samples without changing timing fail closed.
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.
 - Negative literals, non-integer literals, unknown symbolic names,
-  non-scalar or non-integer actor parameter defaults, transaction parameter
-  names, unknown package constants, unqualified package constants, package
-  aggregate constants, package member/item paths, package constants inside
+  non-scalar or non-integer actor or transaction parameter defaults,
+  cross-transaction parameter names, unknown package constants, unqualified
+  package constants, package aggregate constants, package member/item paths,
+  package constants inside
   wait-count expressions, unknown-width dynamic scalar names, malformed or
   unknown-width dynamic expressions, and unsupported dynamic wait contexts
   fail closed.
@@ -4518,6 +4525,7 @@ capability-manifest ISF public contract advertises this through
 `schedule_report_transaction_ordering`.
 The `transaction_waits` array reports the shipped literal `(wait N)` surface,
 actor-constant `(wait NAME)` surface, actor-parameter `(wait NAME)` surface,
+same-transaction-parameter `(wait NAME)` surface,
 package-constant `(wait PACKAGE.CONSTANT)` surface,
 bounded runtime scalar `(wait count_signal)` surface, and bounded runtime
 expression `(wait (<op> ...))` surface, including accepted top-level, `when`
@@ -5527,8 +5535,9 @@ Focused tests:
   memory-array backend emission, and
   library actors that import other libraries.
 - Unconditional transaction delay beyond the shipped non-negative literal,
-  actor-constant, actor-parameter, qualified package scalar constant, bounded
-  runtime scalar, and bounded runtime expression `(wait N)` shapes:
+  actor-constant, actor-parameter, same-transaction scalar parameter,
+  qualified package scalar constant, bounded runtime scalar, and bounded
+  runtime expression `(wait N)` shapes:
   unknown-width expressions and any remaining predecessor-edge or
   sample-incompatible successor splits remain deferred until their timing and
   diagnostics are implemented.

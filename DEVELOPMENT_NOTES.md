@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Wait transaction params are local static timing inputs
+- `ISF-WAIT-TRANSACTION-PARAM-COUNTS.1` treats same-transaction scalar
+  parameter defaults as another static wait-count source after literal,
+  actor-constant, actor-parameter, and package-constant wait support.
+- Wait counts differ from repeat counts: zero is already a valid transparent
+  no-op for waits, so a zero-valued transaction parameter emits no wait state
+  and creates no `transaction_waits[]` entry.
+- Transaction-local names intentionally shadow actor-level static names in the
+  wait-count slot. The resolved integer drives fixed wait-state expansion,
+  while transaction params remain local lowering inputs rather than scheduled
+  `.fsm` actor parameters.
+
 ## 2026-05-25: Repeat transaction params are local static count inputs
 - `ISF-REPEAT-TRANSACTION-PARAM-COUNTS.1` treats same-transaction scalar
   parameter defaults like other static repeat-count sources for width

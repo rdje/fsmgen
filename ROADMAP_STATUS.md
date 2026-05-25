@@ -4,6 +4,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 transaction-parameter wait counts:
+  `ISF-WAIT-TRANSACTION-PARAM-COUNTS.1` shipped same-transaction scalar
+  parameter defaults as static `(wait COUNT)` count sources and closed the
+  task tree. Transaction wait-count params now shadow actor-level static
+  names, remain local lowering inputs, and drive fixed wait-state expansion
+  from the resolved non-negative integer value. Positive values emit the
+  corresponding scheduled wait-state chain and `transaction_waits[]` entry;
+  zero values preserve the existing no-state/no-report zero-wait semantics.
+  Aggregate/list transaction params fail closed before scheduled `.fsm`
+  emission; cross-transaction params and activation-site override
+  specialization remain unsupported. Validation passed: syntax checks;
+  focused wait/parameter/public-audit tests with `Files=16, Tests=488`;
+  `./bin/ci-regression isf --no-book` with `Files=274, Tests=1746`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current R14 transaction-parameter repeat counts:
   `ISF-REPEAT-TRANSACTION-PARAM-COUNTS.1` shipped same-transaction scalar
   parameter defaults as static `(repeat COUNT body...)` count sources and
@@ -8267,11 +8281,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-REPEAT-TRANSACTION-PARAM-COUNTS.1` shipped same-transaction scalar
-  parameter defaults as static repeat-count sources. Transaction repeat-count
-  params now provide resolved counter-width evidence and scheduled `.fsm`
-  load values, while zero-valued, non-scalar, and cross-transaction parameter
-  count sources fail closed.
+  `ISF-WAIT-TRANSACTION-PARAM-COUNTS.1` shipped same-transaction scalar
+  parameter defaults as static wait-count sources. Transaction wait-count
+  params now shadow actor-level static names, drive fixed wait-state
+  expansion from their resolved non-negative integer value, keep zero-wait
+  no-state/no-report semantics, and fail closed for aggregate/list or
+  cross-transaction parameter sources.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11727,6 +11742,24 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-WAIT-TRANSACTION-PARAM-COUNTS.1` is shipped and the task tree is
+  closed:
+  - `(wait COUNT)` now accepts `COUNT` when it names a same-transaction scalar
+    parameter default that resolves to a non-negative integer literal,
+  - transaction wait-count params shadow actor-level static names and remain
+    local lowering inputs rather than scheduled `.fsm` actor parameters,
+  - positive resolved values emit fixed wait-state chains and
+    `transaction_waits[]` entries; zero resolved values keep the existing
+    transparent no-state/no-report zero-wait semantics,
+  - aggregate/list transaction params fail closed before scheduled `.fsm`
+    emission; cross-transaction params and activation-site override
+    specialization remain unsupported,
+  - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
+    README index, roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused wait/parameter/public-audit
+    tests with `Files=16, Tests=488`; `./bin/ci-regression isf --no-book`
+    with `Files=274, Tests=1746`; `mdbook build docs/book`; and
+    `git diff --check`.
 - `ISF-REPEAT-TRANSACTION-PARAM-COUNTS.1` is shipped and the task tree is
   closed:
   - `(repeat COUNT body...)` now accepts `COUNT` when it names a

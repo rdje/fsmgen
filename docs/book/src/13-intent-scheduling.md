@@ -87,19 +87,21 @@ clear lower-layer mapping, and clear runtime behavior.
   Generated child and direct/non-generated transaction-local port widths may
   also use same-transaction scalar parameter defaults that resolve to positive
   integers.
-  Static transaction wait counts may use qualified imported package scalar
-  constants when they resolve to non-negative integers; scheduled `.fsm`
-  fixed wait states and `transaction_waits[]` publish the resolved timing and
-  preserve the authored qualified token in `count_source`.
+  Static transaction wait counts may use same-transaction scalar parameter
+  defaults or qualified imported package scalar constants when they resolve to
+  non-negative integers; scheduled `.fsm` fixed wait states and
+  `transaction_waits[]` publish the resolved timing. Transaction parameters
+  shadow actor-level static names and remain local lowering inputs, while
+  package constants preserve the authored qualified token in `count_source`.
   Static transaction repeat counts may use same-transaction scalar parameter
   defaults and qualified imported package scalar constants when they resolve
   to positive integers; the repeat counter width uses the resolved value.
   Package constants preserve the authored qualified token in the scheduled
   `.fsm` load, while transaction parameters load the resolved integer because
   they are local lowering inputs.
-  Actor-local scalar parameter defaults that resolve to non-negative integer
-  literals may also be used as static `(wait NAME)` counts in the owning
-  actor schedule.
+  Actor-local scalar parameter defaults and same-transaction scalar parameter
+  defaults that resolve to non-negative integer literals may also be used as
+  static `(wait NAME)` counts in their owning actor or transaction schedule.
 - **Every construct has semantics**. A construct is not considered shipped just
   because the parser accepts it. It needs a documented lowering path into
   scheduled `.fsm`, a runtime meaning in terms of cycles, activation, storage,

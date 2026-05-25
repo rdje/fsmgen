@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-WAIT-TRANSACTION-PARAM-COUNTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-WAIT-TRANSACTION-PARAM-COUNTS.md](docs/tasks/ISF-WAIT-TRANSACTION-PARAM-COUNTS.md) |
 | `ISF-REPEAT-TRANSACTION-PARAM-COUNTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNTS.md](docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNTS.md) |
 | `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.md](docs/tasks/ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.md) |
 | `ISF-GENERATED-DO-BINDING-TIMING-COVERAGE` | `done` | `R14` | `closed` | [docs/tasks/ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.md](docs/tasks/ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.md) |

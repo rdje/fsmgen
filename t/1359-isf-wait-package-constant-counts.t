@@ -139,7 +139,7 @@ ISF
     (wait WAIT_TWO)
     (complete done)))
 ISF
-        qr/Transaction 'main': wait count 'WAIT_TWO' is neither a declared actor constant, actor parameter, qualified package scalar constant, nor a known-width runtime scalar in transaction body/,
+        qr/Transaction 'main': wait count 'WAIT_TWO' is neither a same-transaction scalar parameter, declared actor constant, actor parameter, qualified package scalar constant, nor a known-width runtime scalar in transaction body/,
         'unqualified package constants are rejected as wait counts',
     );
 

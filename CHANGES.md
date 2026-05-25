@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Wait transaction parameter counts shipped
+- Completed `ISF-WAIT-TRANSACTION-PARAM-COUNTS.1` and closed the task tree.
+- `(wait COUNT)` now accepts `COUNT` when it names a same-transaction scalar
+  parameter default that resolves to a non-negative integer literal.
+- Transaction wait-count params shadow actor-level static names and remain
+  local lowering inputs; positive values emit fixed wait-state chains, and
+  zero values keep the existing no-state/no-report zero-wait semantics.
+- Aggregate/list transaction params fail closed before scheduled `.fsm`
+  emission; cross-transaction params and activation-site override
+  specialization remain unsupported.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused wait/parameter/public-audit tests
+  with `Files=16, Tests=488`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1746`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Repeat transaction parameter counts shipped
 - Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNTS.1` and closed the task tree.
 - `(repeat COUNT body...)` now accepts `COUNT` when it names a

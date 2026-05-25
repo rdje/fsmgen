@@ -2536,8 +2536,9 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children) 
         next if _transaction_params_used_by_data_op_width($tx, $params);
         next if _transaction_params_used_by_transaction_port_width($tx, $params);
         next if _transaction_params_used_by_repeat_count($tx, $params);
+        next if _transaction_params_used_by_wait_count($tx, $params);
 
-        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, or same-transaction repeat counts\n";
+        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, or same-transaction wait counts\n";
     }
     return 1;
 }
@@ -2587,6 +2588,18 @@ sub _transaction_params_used_by_repeat_count {
     return keys %used ? 1 : 0;
 }
 
+sub _transaction_params_used_by_wait_count {
+    my ($tx, $params) = @_;
+    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return 0 unless keys %declared;
+
+    my %used;
+    _collect_wait_count_declared_name_refs($tx->{clauses}, \%declared, \%used);
+    return keys %used ? 1 : 0;
+}
+
 sub _collect_repeat_count_declared_name_refs {
     my ($node, $declared, $used) = @_;
     return unless ref($node) eq 'ARRAY';
@@ -2597,6 +2610,20 @@ sub _collect_repeat_count_declared_name_refs {
 
     for my $child (@$node) {
         _collect_repeat_count_declared_name_refs($child, $declared, $used)
+            if ref($child) eq 'ARRAY';
+    }
+}
+
+sub _collect_wait_count_declared_name_refs {
+    my ($node, $declared, $used) = @_;
+    return unless ref($node) eq 'ARRAY';
+
+    if (@$node >= 2 && defined($node->[0]) && !ref($node->[0]) && $node->[0] eq 'wait') {
+        _collect_isf_value_declared_name_refs($node->[1], $declared, $used);
+    }
+
+    for my $child (@$node) {
+        _collect_wait_count_declared_name_refs($child, $declared, $used)
             if ref($child) eq 'ARRAY';
     }
 }
@@ -3983,6 +4010,22 @@ sub _package_constant_repeat_count_value {
 }
 
 sub _transaction_param_repeat_count_value {
+    my ($count, $actor, $tn) = @_;
+    return undef unless defined($tn) && defined($count) && !ref($count) && _is_hdl_identifier($count);
+
+    my $param = _transaction_param_by_name($actor, $tn, $count);
+    return undef unless $param;
+
+    my $param_value = exists($param->{resolved_value})
+        ? $param->{resolved_value}
+        : $param->{value};
+    return _non_negative_integer_from_literal($param_value)
+        if defined($param_value) && !ref($param_value);
+
+    return undef;
+}
+
+sub _transaction_param_wait_count_value {
     my ($count, $actor, $tn) = @_;
     return undef unless defined($tn) && defined($count) && !ref($count) && _is_hdl_identifier($count);
 
@@ -6284,6 +6327,17 @@ sub _wait_count_spec {
         }
 
         if (_is_hdl_identifier($count)) {
+            if (_transaction_param_by_name($actor, $tn, $count)) {
+                my $param_value = _transaction_param_wait_count_value($count, $actor, $tn);
+                confess "Transaction '$tn': wait count transaction parameter '$count' must resolve to a non-negative integer literal in $label\n"
+                    unless defined $param_value;
+                return {
+                    kind   => 'static',
+                    cycles => $param_value,
+                    source => $count,
+                };
+            }
+
             my $constant = _actor_constant_by_name($actor, $count);
             if ($constant) {
                 my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
@@ -6319,7 +6373,7 @@ sub _wait_count_spec {
                 };
             }
 
-            confess "Transaction '$tn': wait count '$count' is neither a declared actor constant, actor parameter, qualified package scalar constant, nor a known-width runtime scalar in $label\n";
+            confess "Transaction '$tn': wait count '$count' is neither a same-transaction scalar parameter, declared actor constant, actor parameter, qualified package scalar constant, nor a known-width runtime scalar in $label\n";
         }
 
         _confess_wait_requires($tn, $label);
@@ -6353,7 +6407,7 @@ sub _wait_count_spec {
 
 sub _confess_wait_requires {
     my ($tn, $label) = @_;
-    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression)' in $label\n";
+    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_actor_parameter_or_transaction_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression)' in $label\n";
 }
 
 sub _is_wait_expression_shape {
