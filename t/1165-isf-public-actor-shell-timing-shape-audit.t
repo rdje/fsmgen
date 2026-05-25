@@ -117,7 +117,7 @@ ISF
   (interface
     (input start)))
 ISF
-            qr/\AError: actor 'bad_watchdog' watchdog token 'slow' is not a declared actor constant or actor scalar parameter/,
+            qr/\AError: actor 'bad_watchdog' watchdog token 'slow' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant/,
         ],
     ) {
         my ($label, $source, $pattern) = @$case;

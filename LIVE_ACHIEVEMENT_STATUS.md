@@ -2,6 +2,39 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Watchdog package-constant limits shipped
+- Completed `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` and closed the task tree.
+- Actor-level `(watchdog PACKAGE.CONSTANT)` and await-local
+  `(await ready (watchdog PACKAGE.CONSTANT))` limits now accept qualified
+  imported package scalar constants when the owning actor imports `PACKAGE`,
+  the package declares `CONSTANT`, and the constant resolves to a positive
+  integer scalar literal.
+- Accepted package constants reuse the existing watchdog counter lowering used
+  by positive literals, actor constants, and actor-local scalar parameter
+  defaults. Generated counter widths and init values match the equivalent
+  literal limit.
+- Schedule reports and public parser shells keep watchdog limits as resolved
+  integers without adding a source-token field. Package/import metadata and
+  embedded package `+constants` entries remain the review path for authored
+  package constants.
+- Unknown package constants, unqualified package constants, package aggregate
+  constants, package member/item paths, ambiguous local-enum/package-constant
+  spellings, zero-valued constants, package constants inside watchdog-limit
+  expressions, transaction parameters, runtime signals, arbitrary
+  expressions, package constants in unrelated value domains, use-site
+  specialization, generated-top respecialization, distinct per-await limits in
+  one transaction, cross-domain watchdog policy, dynamic watchdog limits, and
+  per-await counter reset semantics remain fail closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused watchdog/public/spec/book tests
+  with `Files=12, Tests=393`; `./bin/ci-regression isf --no-book` with
+  `Files=269, Tests=1723`; post-closure public/spec/book audits with
+  `Files=8, Tests=377`; `mdbook build docs/book`; final live-doc/book audits
+  with `Files=3, Tests=364`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Watchdog package-constant limits selected
 - Created active task tree `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS`.
 - Completed `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.1`; the selected

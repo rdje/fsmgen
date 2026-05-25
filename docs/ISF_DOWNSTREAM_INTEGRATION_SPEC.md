@@ -272,7 +272,7 @@ Supported actor clauses:
 (reset (name async active_low))
 (reset (name async active_high))
 (reset (name sync active_low))
-(watchdog positive_integer_or_actor_constant_or_actor_scalar_parameter)
+(watchdog positive_integer_or_actor_constant_or_actor_scalar_parameter_or_package_constant)
 (interface ...)
 (params ...)
 (constants ...)
@@ -349,12 +349,13 @@ Rules:
 - List reset form may include `sync`, `async`, `active_low`, or `active_high`.
 - Async reset lowers to `.fsm` `areset`; sync reset lowers to `.fsm` `sreset`.
 - `(watchdog N)` is the actor default for `(await ...)`; `N` may be a positive
-  integer literal, a declared actor constant, or an actor-local scalar
-  parameter default that resolves to a positive integer.
+  integer literal, a declared actor constant, an actor-local scalar parameter
+  default, or a qualified imported package scalar constant that resolves to a
+  positive integer.
 - Per-await watchdog overrides are supported with `(await port (watchdog M))`;
-  `M` may also be a positive actor constant or actor-local scalar parameter
-  default. The current scheduled `.fsm` model has one watchdog counter per
-  transaction, so distinct per-await limits in one transaction fail closed.
+  `M` may use the same static source set as actor-level `N`. The current
+  scheduled `.fsm` model has one watchdog counter per transaction, so distinct
+  per-await limits in one transaction fail closed.
 
 Named domains:
 
@@ -661,6 +662,17 @@ Rules:
   ambiguous local-enum/package-constant spellings, transaction parameters,
   runtime signals, arbitrary expressions, and package constants inside
   wait-count expressions fail closed.
+  Actor-level and await-local watchdog limits may use qualified imported
+  package scalar constants when the constant resolves to a positive integer
+  scalar. Package-constant-backed watchdog limits lower through the existing
+  watchdog counter path, publish resolved integer parser/report watchdog
+  values for actor-level limits, and keep package-authored declarations
+  visible through package/import metadata plus embedded package `+constants`
+  entries. Unknown or unqualified package constants, aggregate package
+  constants, package constant member/item paths, ambiguous
+  local-enum/package-constant spellings, zero-valued constants, transaction
+  parameters, runtime signals, arbitrary expressions, and package constants
+  inside watchdog expressions fail closed.
   Generated child transaction scalar parameter defaults and scalar leaves
   inside generated child transaction aggregate/list parameter defaults may use
   declared actor constants, actor-local scalar parameter defaults, earlier
@@ -951,12 +963,15 @@ Await:
 (await ready)
 (await ready (watchdog 1024))
 (await ready (watchdog WD_LIMIT))
+(await ready (watchdog timing.WD_LIMIT))
 ```
 
 Await waits for a port and uses the actor watchdog unless overridden.
-Actor-level and await-local watchdog constants and actor scalar parameters
-resolve before counter lowering, and reports expose the actor watchdog scalar
-as the resolved integer.
+Actor-level and await-local watchdog constants, actor scalar parameters, and
+qualified imported package scalar constants resolve before counter lowering.
+Reports expose the actor watchdog scalar as the resolved integer, while
+package-authored limits remain visible through package/import metadata and
+embedded package `+constants` entries.
 
 Wait:
 
@@ -2911,7 +2926,9 @@ Scalar summaries:
 - `reset`: object with `name`, `kind`, and `polarity` for configured or
   defaulted legacy single-clock resets; null only when the selected
   default-domain reset is omitted in a `(clock-domains ...)` actor.
-- `watchdog`: scalar watchdog limit; omitted watchdogs report `65535`.
+- `watchdog`: scalar watchdog limit; omitted watchdogs report `65535`; accepted
+  actor-level actor constants, actor scalar parameters, and qualified imported
+  package scalar constants report as resolved integers.
 - `inputs`, `outputs`, `port_count`, `state_count`: non-negative integer
   counts. Multi-domain generated-top reports use `state_count == 0` and put
   domain-local counts in `clock_domains[]`.
@@ -3771,6 +3788,9 @@ For a SPECFORGE-style producer:
 - Use actor constants, actor-local scalar parameter defaults, or qualified
   imported package scalar constants for static temporal-contract window
   symbols.
+- Use actor constants, actor-local scalar parameter defaults, or qualified
+  imported package scalar constants for static actor-level and await-local
+  watchdog limits.
 - Use actor constants, actor-local scalar parameter defaults, or qualified
   imported package scalar constants for static wait-count symbols.
 - Treat every fail-closed diagnostic as a source-generation bug.

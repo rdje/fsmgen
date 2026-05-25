@@ -929,8 +929,13 @@ The default timing convention is checked by
 [t/1331-isf-timing-conventions.t](../t/1331-isf-timing-conventions.t)
 to keep omitted legacy single-clock timing normalized to clock `clk`, async
 active-low reset `rst_n`, and watchdog `65535`, and to keep positive
-actor-constant and actor-scalar-parameter watchdog limits resolved to the same
-numeric public shape as literals.
+actor-constant, actor-scalar-parameter, and qualified package-scalar-constant
+watchdog limits resolved to the same numeric public shape as literals.
+Qualified imported package scalar constants in actor-level and await-local
+watchdog limits are checked by
+[t/1363-isf-watchdog-package-constant-limits.t](../t/1363-isf-watchdog-package-constant-limits.t),
+which keeps accepted package constants on the same resolved-integer public
+shape while unsupported package forms fail closed.
 The actor-shell rule shape is checked by
 [t/1166-isf-public-actor-shell-rule-shape-audit.t](../t/1166-isf-public-actor-shell-rule-shape-audit.t)
 to keep parser-returned rule entries discoverable as unique non-empty scalar
@@ -2405,13 +2410,15 @@ defaulting to `clk`; `reset` is a default-domain hash with scalar `name`,
 `kind`, and `polarity`, with omitted legacy single-clock actor resets
 defaulting to async active-low `rst_n`; and `watchdog` is a positive resolved
 integer, with omitted watchdog clauses defaulting to `65535` exactly
-`(2^16 - 1)`. Actor-level watchdog constants and actor-local scalar parameter
-defaults are accepted when they resolve to positive integers; the parser
-returns the resolved integer in `watchdog` and keeps the authored declaration
-visible through `actor_constants[]` or `actor_params[]`. Await-local watchdog
-constants and actor scalar parameters resolve during lowering. One transaction
-still has one watchdog counter, so distinct per-await watchdog limits in the
-same transaction fail closed.
+`(2^16 - 1)`. Actor-level watchdog constants, actor-local scalar parameter
+defaults, and qualified imported package scalar constants are accepted when
+they resolve to positive integers; the parser returns the resolved integer in
+`watchdog` and keeps the authored declaration visible through
+`actor_constants[]`, `actor_params[]`, or package/import metadata and embedded
+package `+constants` entries. Await-local watchdog constants, actor scalar
+parameters, and qualified imported package scalar constants resolve during
+lowering. One transaction still has one watchdog counter, so distinct
+per-await watchdog limits in the same transaction fail closed.
 When `clock_domains` is present, `clock` and `reset` expose the selected
 default-domain timing, and `reset` is null only when that domain omits reset.
 Public multi-domain `lower(...)` emits domain-specific scheduled `.fsm`
@@ -2933,8 +2940,9 @@ Multi-domain reports use the generated `<actor>_top.fsm` artifact. `clock` is
 the scalar clock signal name from the actor declaration, `clk` for omitted
 legacy single-clock actor clocks, or the selected default-domain clock when
 `clock_domains` is present. `watchdog` is a scalar resolved limit, with omitted
-watchdog clauses normalized to `65535` and actor-constant actor watchdogs
-reported as the resolved integer. The machine-readable contract
+watchdog clauses normalized to `65535` and actor-constant, actor-parameter, or
+qualified package-scalar-constant actor watchdogs reported as the resolved
+integer. The machine-readable contract
 advertises these through
 `schedule_report_source_shape`, `schedule_report_scheduled_fsm_shape`,
 `schedule_report_clock_shape`, and `schedule_report_watchdog_shape`.

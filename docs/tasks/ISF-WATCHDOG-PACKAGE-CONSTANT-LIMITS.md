@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -56,7 +56,7 @@ scalar literals.
 ## Task Tree
 
 - ID: `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship qualified package scalar constants as watchdog limits.`
   Children: `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.1`,
   `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2`
@@ -71,19 +71,19 @@ scalar literals.
   Commit: `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.1: select watchdog package limits`
 
 - ID: `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document package scalar constants in watchdog limits.`
   Acceptance: `Positive package scalar constants lower as literal watchdog
   limits; unsupported watchdog tokens fail closed; specs, book, public
   contract, downstream handoff, and focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks`; `prove -Iperl t/1331-isf-timing-conventions.t t/1363-isf-watchdog-package-constant-limits.t t/1160-isf-public-actor-shell-value-shape-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; post-closure public/spec/book audits; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2: support watchdog package limits`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` | `pending` | Watchdog limits already accept positive literals, actor constants, and actor-local scalar parameter defaults; qualified package scalar constants are the next bounded static value-domain widening. |
+| 1 | `closed` | `done` | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` shipped qualified package scalar constants as watchdog limits and closed the tree. |
 
 ## Decisions
 
@@ -112,12 +112,14 @@ scalar literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.1` | `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `passed`; audits `Files=3, Tests=364` |
+| `2026-05-25` | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1363-isf-watchdog-package-constant-limits.t`; `prove -Iperl t/1331-isf-timing-conventions.t t/1363-isf-watchdog-package-constant-limits.t t/1160-isf-public-actor-shell-value-shape-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; `prove -Iperl t/1160-isf-public-actor-shell-value-shape-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `passed`; focused `Files=12, Tests=393`; broad `Files=269, Tests=1723`; post-closure `Files=8, Tests=377`; final audits `Files=3, Tests=364` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.1` | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.1: select watchdog package limits` | Selection slice; no behavior change. |
+| `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2: support watchdog package limits` | Implementation slice; package scalar constants now ship for actor-level and await-local watchdog limits. |
 
 ## Changelog
 
@@ -125,3 +127,4 @@ scalar literals.
   `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.1` as the current selection frontier.
 - `2026-05-25`: Completed selection leaf and selected
   `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` as the implementation frontier.
+- `2026-05-25`: Completed implementation leaf and closed the task tree.

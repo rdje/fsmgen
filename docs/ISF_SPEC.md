@@ -186,10 +186,12 @@ clk`, `reset = { name: rst_n, kind: async, polarity: active_low }`, and
 `clock` and `reset` expose the selected default-domain timing, and `reset`
 is null only when that default domain omits reset ownership.
 Explicit actor-level watchdogs may use a positive decimal literal, a declared
-actor constant, or an actor-local scalar parameter default that resolves to a
-positive integer. The parser returns the resolved integer in the public
-`watchdog` scalar; the authored declaration remains visible through
-`actor_constants[]` or `actor_params[]`.
+actor constant, an actor-local scalar parameter default, or a qualified
+imported package scalar constant that resolves to a positive integer. The
+parser returns the resolved integer in the public `watchdog` scalar; the
+authored declaration remains visible through `actor_constants[]`,
+`actor_params[]`, or package/import metadata and embedded package
+`+constants` entries.
 Current rule entries are advertised as a bounded shell: `rules` is an array of
 entries with scalar `name`, optional `when`, and `actions` array fields. Rule
 condition/action payload contents remain private scheduler input.
@@ -290,14 +292,15 @@ literal. Constants are emitted into scheduled `.fsm` as `+constants`, appear
 in schedule reports as `actor_constants[]` with the authored value token, and
 are legal symbolic sources for actor parameter defaults, static `(wait NAME)`
 counts, positive transaction latency min/max bounds, positive bounded
-eventual temporal-contract windows, and the existing static
-activation-parameter override path. Qualified imported package scalar
-constants are legal static transaction latency min/max and temporal-contract
-window sources when they resolve to positive integer literals. Actor parameter
-defaults may use declared
-actor constants by name or earlier actor-local scalar parameter defaults by
-name as scalar defaults or as scalar leaves inside compatible aggregate/list
-defaults; scheduled `.fsm` `+params` and `actor_params[]` preserve the
+eventual temporal-contract windows, positive actor-level and await-local
+watchdog limits, and the existing static activation-parameter override path.
+Qualified imported package scalar constants are legal static transaction
+latency min/max, temporal-contract window, and actor-level/await-local
+watchdog-limit sources when they resolve to positive integer literals. Actor
+parameter defaults may use declared actor constants by name or earlier
+actor-local scalar parameter defaults by name as scalar defaults or as scalar
+leaves inside compatible aggregate/list defaults; scheduled `.fsm` `+params`
+and `actor_params[]` preserve the
 authored token while the parser records the resolved literal internally for
 scalar parameter consumers such as widths, depths, watchdogs, waits,
 contracts, and repeat counts. Source order is the only actor-parameter
@@ -1628,14 +1631,15 @@ Selected lowering artifact strategy and current implementation status:
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.
-- `N` must be a positive integer literal, a declared actor constant, or an
-  actor-local scalar parameter default that resolves to a positive integer.
+- `N` must be a positive integer literal, a declared actor constant, an
+  actor-local scalar parameter default, or a qualified imported package scalar
+  constant that resolves to a positive integer.
 - `(await port (watchdog M))` overrides the default for that wait.
-- Await-local `M` may also be a positive actor constant or actor-local scalar
-  parameter default. The current scheduled `.fsm` model has one watchdog
-  counter per transaction, so one transaction must have a single effective
-  watchdog limit; distinct per-await limits in the same transaction fail
-  closed until per-await counter reset semantics are selected.
+- Await-local `M` may use the same static source set as actor-level `N`.
+  The current scheduled `.fsm` model has one watchdog counter per transaction,
+  so one transaction must have a single effective watchdog limit; distinct
+  per-await limits in the same transaction fail closed until per-await counter
+  reset semantics are selected.
 - Await states decrement an inferred watchdog counter and transition to a
   timeout state at zero.
 
@@ -2361,11 +2365,14 @@ Current lowering:
   but the emitted next-value selection stays blocked at zero.
 - Timeout states assign `done` with a one-cycle delayed pulse (`<1`) and
   `last_error` with a flopped output assignment (`<-`).
-- Actor-level and await-local watchdog limits may use declared actor constants
-  that resolve to positive integers. The generated counter width and init
-  value use the resolved integer. Actor parameters, transaction parameters,
-  runtime signals, unknown symbols, arbitrary expressions, and zero-valued
-  constants fail closed.
+- Actor-level and await-local watchdog limits may use declared actor
+  constants, actor-local scalar parameter defaults, or qualified imported
+  package scalar constants that resolve to positive integers. The generated
+  counter width and init value use the resolved integer. Transaction
+  parameters, runtime signals, unknown symbols, unknown or unqualified package
+  constants, aggregate package constants, package member/item paths, arbitrary
+  expressions, zero-valued constants, zero-valued package constants, and
+  zero-valued or non-scalar actor parameters fail closed.
 
 ### 7.4 Completion
 
@@ -4518,9 +4525,10 @@ The top-level `source` and `scheduled_fsm` values are actor-derived `.isf` and
 actor clock signal name, or `clk` when a legacy single-clock actor omits
 `(clock ...)`; with `clock-domains`, it is the selected default-domain clock.
 `watchdog` is always a scalar resolved limit after parser defaults, with
-omitted `(watchdog ...)` normalized to `65535` and actor-constant or actor
-scalar parameter watchdogs reported as the resolved integer. The
-capability-manifest ISF public contract advertises this through
+omitted `(watchdog ...)` normalized to `65535` and actor-constant, actor
+scalar parameter, or qualified imported package scalar constant watchdogs
+reported as the resolved integer. The capability-manifest ISF public contract
+advertises this through
 `schedule_report_source_shape`,
 `schedule_report_scheduled_fsm_shape`, `schedule_report_clock_shape`, and
 `schedule_report_watchdog_shape`.
@@ -5384,6 +5392,7 @@ Focused tests:
 - [t/1360-isf-repeat-package-constant-counts.t](../t/1360-isf-repeat-package-constant-counts.t)
 - [t/1361-isf-latency-package-constant-bounds.t](../t/1361-isf-latency-package-constant-bounds.t)
 - [t/1362-isf-contract-package-constant-windows.t](../t/1362-isf-contract-package-constant-windows.t)
+- [t/1363-isf-watchdog-package-constant-limits.t](../t/1363-isf-watchdog-package-constant-limits.t)
 
 ## 12. Explicitly Deferred
 
@@ -5426,9 +5435,10 @@ Focused tests:
   use-site parameter-specialized counter sizing remain deferred until a
   separate specialization/scheduling policy is selected.
 - Watchdog limits beyond the shipped positive decimal literal, positive
-  actor-constant, and positive actor-scalar-parameter actor-level/await-local
-  shapes: qualified package scalar constants, transaction parameters, runtime
-  signals, arbitrary expressions, distinct per-await limits in one
+  actor-constant, positive actor-scalar-parameter, and qualified package
+  scalar-constant actor-level/await-local shapes: transaction parameters,
+  runtime signals, arbitrary expressions, aggregate or path package constants,
+  distinct per-await limits in one
   transaction, cross-domain watchdog policy, dynamic watchdog limits, and
   parameter-specialized watchdog counter sizing remain deferred.
 - Runtime division/modulo safety beyond literal-zero, actor-constant-zero, and

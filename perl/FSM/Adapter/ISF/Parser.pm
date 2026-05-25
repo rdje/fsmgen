@@ -618,6 +618,11 @@ sub _finalize_actor_watchdog_limit($self, $actor) {
     return 1
         if defined($token) && !ref($token) && $token =~ /\A[1-9][0-9]*\z/;
 
+    if (my $package_limit = _actor_watchdog_package_constant_limit($actor, $token)) {
+        $actor->{watchdog} = "$package_limit";
+        return 1;
+    }
+
     if (defined($token) && !ref($token) && _is_hdl_identifier($token)) {
         my $constant = _actor_constant_by_name($actor, $token);
         if ($constant) {
@@ -637,13 +642,45 @@ sub _finalize_actor_watchdog_limit($self, $actor) {
             return 1;
         }
 
-        confess "Error: actor '$actor_name' watchdog token '$token' is a runtime interface signal; watchdog limits accept positive integer literals, actor constants, or actor scalar parameters only\n"
+        confess "Error: actor '$actor_name' watchdog token '$token' is a runtime interface signal; watchdog limits accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only\n"
             if _actor_interface_signal_by_name($actor, $token);
 
-        confess "Error: actor '$actor_name' watchdog token '$token' is not a declared actor constant or actor scalar parameter\n";
+        confess "Error: actor '$actor_name' watchdog token '$token' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant\n";
     }
 
-    confess "Error: (watchdog ...) requires a positive integer literal, actor constant, or actor scalar parameter\n";
+    confess "Error: (watchdog ...) requires a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant\n";
+}
+
+sub _actor_watchdog_package_constant_limit {
+    my ($actor, $token) = @_;
+    return undef unless defined($token) && !ref($token);
+
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    my $package_constant = _actor_package_constant_reference($actor, $token);
+    if (!$package_constant) {
+        confess "Error: actor '$actor_name' watchdog references unknown package constant '$token'\n"
+            if _is_package_constant_reference_shape($token);
+        return undef;
+    }
+
+    my ($package_name, $constant_name, $suffix) = @$package_constant;
+    my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+    if (defined $constant_payload) {
+        confess "Error: actor '$actor_name' watchdog token '$token' is ambiguous: it matches local enum member '$token' and imported package constant '$token'\n"
+            if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
+        confess "Error: actor '$actor_name' watchdog package constant '$package_name.$constant_name' aggregate/member path '$token' remains deferred; watchdog limits accept only qualified package scalar constants in this slice\n"
+            if $suffix ne '';
+        my $constant_value = _package_constant_scalar_value($constant_payload);
+        my $integer_value = _positive_integer_from_literal_value($constant_value);
+        confess "Error: actor '$actor_name' watchdog package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
+            unless defined $integer_value;
+        return $integer_value;
+    }
+
+    confess "Error: actor '$actor_name' watchdog references unknown package constant '$token'\n"
+        if !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
+
+    return undef;
 }
 
 sub _finalize_actor_interface_widths($self, $actor) {
@@ -3492,6 +3529,29 @@ sub _validate_transaction_enum_member_value_clause {
         return 1;
     }
 
+    if ($head eq 'await') {
+        _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context await signal")
+            if @$clause >= 2;
+        for my $option (@{$clause}[2 .. $#$clause]) {
+            if (ref($option) eq 'ARRAY'
+                && @$option == 2
+                && defined($option->[0])
+                && !ref($option->[0])
+                && $option->[0] eq 'watchdog')
+            {
+                _reject_watchdog_limit_enum_member_value(
+                    $option->[1],
+                    $actor,
+                    $aggregate_roots,
+                    "$context await watchdog",
+                );
+                next;
+            }
+            _reject_enum_member_value_contexts($option, $actor, $aggregate_roots, "$context await clause");
+        }
+        return 1;
+    }
+
     if ($head eq 'latency') {
         for my $option (@{$clause}[1 .. $#$clause]) {
             if (ref($option) eq 'ARRAY'
@@ -3702,6 +3762,14 @@ sub _reject_wait_count_enum_member_value {
 }
 
 sub _reject_repeat_count_enum_member_value {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context)
+        if ref($value);
+    return 1 if defined _actor_package_constant_reference($actor, $value);
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context);
+}
+
+sub _reject_watchdog_limit_enum_member_value {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context)
         if ref($value);
@@ -6433,12 +6501,14 @@ sub _default_actor_reset {
 }
 
 sub _parse_watchdog($self, $clause) {
-    confess "Error: (watchdog ...) requires a positive integer literal or actor constant\n"
+    confess "Error: (watchdog ...) requires a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant\n"
         unless @$clause == 2;
-    confess "Error: (watchdog ...) requires a positive integer literal or actor constant\n"
+    confess "Error: (watchdog ...) requires a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant\n"
         unless defined($clause->[1])
             && !ref($clause->[1])
-            && ($clause->[1] =~ /\A[1-9][0-9]*\z/ || _is_hdl_identifier($clause->[1]));
+            && ($clause->[1] =~ /\A[1-9][0-9]*\z/
+                || _is_hdl_identifier($clause->[1])
+                || _is_package_constant_reference_shape($clause->[1]));
     return $clause->[1];
 }
 

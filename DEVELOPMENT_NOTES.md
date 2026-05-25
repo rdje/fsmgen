@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Watchdog package constants stay report-equivalent to literals
+- `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` resolves qualified imported package
+  scalar constants at the actor-level and await-local watchdog-limit boundary.
+- The implementation resolves the package constant before existing watchdog
+  counter lowering. That keeps counter width inference, init values,
+  decrement/timeout behavior, reset behavior, and generated `.fsm` shape
+  identical to the equivalent positive literal limit.
+- Actor-level watchdog package constants resolve during parser finalization so
+  public actor shells and schedule reports keep `watchdog` as a resolved
+  scalar integer. Await-local watchdog package constants resolve during
+  lowering, matching the existing await-local actor-constant and actor
+  parameter path.
+- The parser has a narrow enum/package-token exemption only for scalar
+  watchdog limit values. Package constants inside watchdog expressions remain
+  rejected before lowering so expression support cannot slip in accidentally.
+- The report deliberately stays source-token-free for watchdog limits.
+  Package/import metadata and embedded package `+constants` entries preserve
+  authored-source reviewability.
+- Unqualified lookup, aggregate package constants, package member/item paths,
+  ambiguous local enum/package spellings, zero-valued constants, transaction
+  parameters, runtime signals, arbitrary expressions, use-site
+  specialization, generated-top respecialization, distinct per-await limits,
+  cross-domain watchdog policy, and dynamic watchdog limits remain
+  fail-closed or deferred.
+
 ## 2026-05-25: Watchdog package constants should reuse static counter lowering
 - `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.1` selects qualified imported package
   scalar constants for actor-level and await-local watchdog limits as the next

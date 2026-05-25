@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS` | `active` | `R14` | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` | [docs/tasks/ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.md](docs/tasks/ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS` | `done` | `R14` | `closed` | [docs/tasks/ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.md](docs/tasks/ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.md) |
 | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.md](docs/tasks/ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.md) |
 | `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.md](docs/tasks/ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.md) |
 | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.md](docs/tasks/ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.md) |

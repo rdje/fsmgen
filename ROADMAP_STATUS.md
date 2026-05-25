@@ -2,31 +2,38 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS`.
-- Current frontier: `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2`.
-- Recent R14 watchdog package-constant limit selection:
-  `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS` is the active task tree for the next
-  bounded watchdog value-domain widening. Actor-level
-  `(watchdog PACKAGE.CONSTANT)` and await-local
-  `(await ready (watchdog PACKAGE.CONSTANT))` limits may next use qualified
-  imported package scalar constants when the resolved value is a positive
-  integer literal. Accepted package constants should reuse the existing
-  watchdog counter lowering used by positive literals, actor constants, and
-  actor-local scalar parameter defaults, while preserving the existing
-  resolved-integer watchdog report shape and not adding a source-token field.
-  Package constants resolving to zero should keep the existing positive-only
-  watchdog-limit policy and fail closed before watchdog counter emission.
-  Unqualified package constants, unknown package constants, package aggregate
-  constants, package member/item paths, transaction parameters, runtime
-  signals, arbitrary expressions, package constants in unrelated value
-  domains, reusable-library use-site specialization, generated-top
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 watchdog package-constant limit implementation:
+  `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` shipped qualified imported package
+  scalar constants as actor-level and await-local watchdog limits and closed
+  the task tree. Actor-level `(watchdog PACKAGE.CONSTANT)` and await-local
+  `(await ready (watchdog PACKAGE.CONSTANT))` limits now resolve when the
+  owning actor imports `PACKAGE`, the package declares `CONSTANT`, and the
+  constant resolves to a positive integer scalar literal. Accepted package
+  constants reuse the existing watchdog counter lowering used by positive
+  literals, actor constants, and actor-local scalar parameter defaults, so
+  generated counter widths, init values, decrement/timeout behavior, and
+  reset behavior match the equivalent literal limit. Schedule reports and
+  public parser shells keep watchdog limits as resolved integers without
+  adding a source-token field; package/import metadata and embedded package
+  `+constants` entries remain the review path for the authored package
+  constant. Unknown package constants, unqualified package constants, package
+  aggregate constants, package member/item paths, ambiguous
+  local-enum/package-constant spellings, zero-valued constants, package
+  constants inside watchdog-limit expressions, transaction parameters,
+  runtime signals, arbitrary expressions, package constants in unrelated
+  value domains, reusable-library use-site specialization, generated-top
   respecialization, distinct per-await limits in one transaction,
   cross-domain watchdog policy, dynamic watchdog limits, and per-await
-  counter reset semantics remain deferred or fail closed. No parser,
-  scheduler, report, generated artifact, HDL, CLI behavior, public API,
-  source, test, or generated behavior changed in this selection slice.
-  Validation passed: feature-backlog/live-book/book-matrix audits with
-  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+  counter reset semantics remain fail closed or deferred. The ISF spec,
+  downstream handoff, public contract, mdBook, task tree, README index,
+  roadmap, and live docs are synchronized. Validation passed with syntax
+  checks; focused watchdog/public/spec/book tests (`Files=12, Tests=393`);
+  `./bin/ci-regression isf --no-book` (`Files=269, Tests=1723`);
+  post-closure public/spec/book audits (`Files=8, Tests=377`); and
+  `mdbook build docs/book`; final live-doc/book audits
+  (`Files=3, Tests=364`); and `git diff --check`.
 - Recent R14 temporal-contract package-constant window implementation:
   `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` shipped qualified imported
   package scalar constants as bounded eventual temporal-contract windows and
@@ -7734,11 +7741,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS`.
-- Current frontier: `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
 - Completion status:
-  `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS` is the active task tree for the next
-  bounded watchdog value-domain widening before implementation.
+  `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS` is closed after shipping qualified
+  package scalar constants as actor-level and await-local watchdog limits.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11194,30 +11201,35 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
-- `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.1` selected the next public-facing
-  R14 feature tree before implementation:
-  - the implementation frontier is
-    `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2`,
-  - the selected source shape is bounded to actor-level
-    `(watchdog PACKAGE.CONSTANT)` and await-local
-    `(await ready (watchdog PACKAGE.CONSTANT))`,
-  - accepted package constants must be imported, qualified, scalar, and
-    resolved to positive integer limits before publication through the
-    existing literal/actor-constant/actor-parameter watchdog path,
-  - watchdog report shape should remain resolved integers without a new
-    source-token field,
-  - unqualified package constants, unknown package constants, package
-    aggregate constants, package member/item paths, transaction parameters,
+- `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` is shipped and the task tree is
+  closed:
+  - actor-level `(watchdog PACKAGE.CONSTANT)` and await-local
+    `(await ready (watchdog PACKAGE.CONSTANT))` limits now accept qualified
+    imported package scalar constants when the owning actor imports
+    `PACKAGE`, the package declares `CONSTANT`, and the constant resolves to a
+    positive integer scalar literal,
+  - accepted package constants reuse the existing watchdog counter lowering
+    used by positive literals, actor constants, and actor-local scalar
+    parameter defaults,
+  - generated counter widths, init values, decrement/timeout behavior, and
+    reset behavior match the equivalent literal limit,
+  - watchdog report and parser-shell fields remain resolved integers without a
+    new source-token field; package/import metadata and embedded package
+    `+constants` entries keep authored package constants reviewable,
+  - unknown package constants, unqualified package constants, package
+    aggregate constants, package member/item paths, ambiguous
+    local-enum/package-constant spellings, zero-valued constants, package
+    constants inside watchdog-limit expressions, transaction parameters,
     runtime signals, arbitrary expressions, unrelated value domains,
     reusable-library use-site specialization, generated-top
     respecialization, distinct per-await limits in one transaction,
     cross-domain watchdog policy, dynamic watchdog limits, and per-await
-    counter reset semantics remain deferred or fail closed,
-  - and no parser, scheduler, report, generated artifact, HDL, CLI behavior,
-    public API, source, test, or generated behavior changed in this selection
-    slice.
-  - Validation passed: feature-backlog/live-book/book-matrix audits with
-    `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+    counter reset semantics remain fail closed or deferred.
+  - Validation passed: syntax checks; focused watchdog/public/spec/book tests
+    with `Files=12, Tests=393`; `./bin/ci-regression isf --no-book` with
+    `Files=269, Tests=1723`; post-closure public/spec/book audits with
+    `Files=8, Tests=377`; `mdbook build docs/book`; final live-doc/book
+    audits with `Files=3, Tests=364`; and `git diff --check`.
 - `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` is shipped and the task tree is
   closed:
   - bounded eventual temporal-contract windows now accept qualified imported

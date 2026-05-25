@@ -205,14 +205,14 @@ ISF
   (interface (input start)))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'runtime interface watchdog token', qr/\AError: actor 'runtime_watchdog' watchdog token 'limit' is a runtime interface signal; watchdog limits accept positive integer literals, actor constants, or actor scalar parameters only/);
+    assert_parse_rejected(<<'ISF', 'runtime interface watchdog token', qr/\AError: actor 'runtime_watchdog' watchdog token 'limit' is a runtime interface signal; watchdog limits accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only/);
 (actor runtime_watchdog
   (clock clk)
   (watchdog limit)
   (interface (input start) (input limit)))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'unknown symbolic watchdog token', qr/\AError: actor 'unknown_watchdog' watchdog token 'WD_LIMIT' is not a declared actor constant or actor scalar parameter/);
+    assert_parse_rejected(<<'ISF', 'unknown symbolic watchdog token', qr/\AError: actor 'unknown_watchdog' watchdog token 'WD_LIMIT' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant/);
 (actor unknown_watchdog
   (clock clk)
   (watchdog WD_LIMIT)
@@ -245,7 +245,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'await watchdog transaction parameter', qr/\ATransaction 'child': watchdog token 'WD_LIMIT' is a transaction parameter; watchdog limits accept positive integer literals, actor constants, or actor scalar parameters only in await watchdog override/);
+    assert_lower_rejected(<<'ISF', 'await watchdog transaction parameter', qr/\ATransaction 'child': watchdog token 'WD_LIMIT' is a transaction parameter; watchdog limits accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in await watchdog override/);
 (actor await_transaction_parameter_watchdog
   (clock clk)
   (interface (input start) (input ready) (output done))
@@ -260,7 +260,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'await watchdog transaction parameter shadows actor parameter', qr/\ATransaction 'child': watchdog token 'WD_LIMIT' is a transaction parameter; watchdog limits accept positive integer literals, actor constants, or actor scalar parameters only in await watchdog override/);
+    assert_lower_rejected(<<'ISF', 'await watchdog transaction parameter shadows actor parameter', qr/\ATransaction 'child': watchdog token 'WD_LIMIT' is a transaction parameter; watchdog limits accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in await watchdog override/);
 (actor await_transaction_parameter_shadow_watchdog
   (clock clk)
   (params
@@ -277,7 +277,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'await watchdog runtime signal', qr/\ATransaction 'main': watchdog token 'limit' is a runtime interface signal; watchdog limits accept positive integer literals, actor constants, or actor scalar parameters only in await watchdog override/);
+    assert_lower_rejected(<<'ISF', 'await watchdog runtime signal', qr/\ATransaction 'main': watchdog token 'limit' is a runtime interface signal; watchdog limits accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in await watchdog override/);
 (actor await_runtime_watchdog
   (clock clk)
   (interface (input start) (input ready) (input limit) (output done))
@@ -287,7 +287,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'await watchdog unknown symbolic token', qr/\ATransaction 'main': watchdog token 'WD_LIMIT' is not a declared actor constant or actor scalar parameter in await watchdog override/);
+    assert_lower_rejected(<<'ISF', 'await watchdog unknown symbolic token', qr/\ATransaction 'main': watchdog token 'WD_LIMIT' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant in await watchdog override/);
 (actor await_unknown_watchdog
   (clock clk)
   (interface (input start) (input ready) (output done))

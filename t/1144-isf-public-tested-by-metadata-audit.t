@@ -226,6 +226,7 @@ my $expected_tested_by = [
     't/1329-isf-atl-trigger-batch-wait-fixture-coverage.t',
     't/1330-isf-atl-resolved-child-fixture-coverage.t',
     't/1331-isf-timing-conventions.t',
+    't/1363-isf-watchdog-package-constant-limits.t',
     't/1333-isf-interface-actor-param-widths.t',
     't/1334-isf-scalar-storage-actor-param-widths.t',
     't/1335-isf-bank-storage-actor-param-widths.t',
