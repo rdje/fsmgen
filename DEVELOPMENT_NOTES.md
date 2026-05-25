@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Repeat package constants should preserve positive-count policy
+- `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.1` selects qualified imported package
+  scalar constants for static transaction repeat counts as the next narrow
+  package-constant value-domain widening.
+- Repeat counts are stricter than wait counts: static zero-count repeats
+  currently fail closed instead of becoming a no-op. Package constants should
+  preserve that policy, so only positive integer scalar package constants are
+  selected for implementation.
+- Accepted package constants should resolve before counter-width inference,
+  but preserve the authored `PACKAGE.CONSTANT` token where generated artifacts
+  expose the repeat count source.
+- Unqualified lookup, aggregate package constants, package member/item paths,
+  transaction parameters, runtime expressions, repeat-body clause widening,
+  cross-domain repeat behavior, and generated-top respecialization remain
+  fail-closed or deferred.
+
 ## 2026-05-25: Wait package constants publish authored static sources
 - `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` resolves qualified imported package
   scalar constants at the static transaction wait-count boundary.

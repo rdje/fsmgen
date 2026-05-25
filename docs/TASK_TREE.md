@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS` | `active` | `R14` | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2` | [docs/tasks/ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.md](docs/tasks/ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.md) |
 
 ## Proposed Task Trees
 
@@ -364,6 +365,7 @@ as done work unless a future task reopens them.
 | Transaction-local port actor-scalar-parameter widths | `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS` |
 | Actor-level and await-local watchdog actor-scalar-parameter limits | `ISF-WATCHDOG-ACTOR-PARAM-LIMITS` |
 | Transaction repeat actor-scalar-parameter counts | `ISF-REPEAT-ACTOR-PARAM-COUNTS` |
+| Transaction repeat qualified package scalar-constant counts | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS` |
 | Temporal-contract monitor storage schedule-report roles | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` |
 | Temporal-contract SystemVerilog assertion projection | `ISF-TEMPORAL-CONTRACT-ASSERTIONS` |
 | Actor-level phase/stage schedule-report metadata | `ISF-ACTOR-PHASE-STAGE-REPORTS` |

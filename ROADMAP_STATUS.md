@@ -2,8 +2,29 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS`.
+- Current frontier: `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.2`.
+- Recent R14 repeat package-constant count selection:
+  `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.1` created the active task tree and
+  selected the next bounded implementation leaf. Static transaction
+  `(repeat PACKAGE.CONSTANT body...)` counts may next use qualified imported
+  package scalar constants when the resolved value is a positive integer
+  literal. Accepted package-constant repeat counts should reuse the existing
+  static repeat counter-width path used by positive literals, actor constants,
+  and actor-local scalar parameter defaults, while preserving the authored
+  `PACKAGE.CONSTANT` token where scheduled `.fsm` and schedule-report
+  surfaces expose the repeat count source. Package constants resolving to zero
+  should keep the existing static zero-count repeat policy and fail closed
+  before scheduled `.fsm` emission. Unqualified package constants, unknown
+  package constants, package aggregate constants, package member/item paths,
+  transaction parameters, runtime expressions, arbitrary expressions, package
+  constants in other value domains, repeat-body child activation widening,
+  cross-domain repeat behavior, generated-top respecialization, and
+  repeat-body clause widening remain deferred or fail closed. No parser,
+  scheduler, report, generated artifact, HDL, CLI behavior, public API,
+  source, test, or generated behavior changed in this selection slice.
+  Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 wait package-constant count implementation:
   `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` shipped qualified imported package
   scalar constants as static transaction wait counts and closed the task
