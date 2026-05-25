@@ -985,8 +985,11 @@ The ISF-specific current limitations are:
   generated child or direct/non-generated transaction that resolves to a
   positive integer. Direct transaction parameters are local lowering inputs for
   this contract-window value domain and are not emitted as actor-level `.fsm`
-  `+params`; activation-site parameter overrides do not respecialize contract
-  windows in this subset. Runtime expressions, arbitrary expressions, unknown or
+  `+params`. Activation-site overrides on `spawn`, generated blocking `do`,
+  or rule `trigger` that target a generated child parameter used by the child
+  contract window fail closed with a targeted diagnostic; override
+  specialization of generated child contract windows remains deferred.
+  Runtime expressions, arbitrary expressions, unknown or
   unqualified package constants, aggregate package constants, package
   member/item paths, ambiguous local-enum/package-constant spellings,
   zero-valued constants, and zero-valued or non-scalar actor/transaction

@@ -2564,6 +2564,11 @@ integer. Direct transaction parameters are local lowering inputs for this
 contract-window value domain and are not emitted as actor-level `.fsm`
 `+params`.
 
+Activation-site overrides on `spawn`, generated blocking `do`, or rule
+`trigger` that target a generated child parameter used by the child contract
+window fail closed with a targeted diagnostic. Full override-specialized
+contract-window lowering remains backlog.
+
 Reaching the clause emits one arm state; the generated scheduled `.fsm`
 monitor tracks pending/age/fail storage, clears on actor reset, and sets a
 sticky fail bit if the signal is not seen within the window or if the same
@@ -2571,9 +2576,10 @@ contract is armed again while pending.
 
 SystemVerilog generation now projects the sticky fail bit into a
 verification-only assertion under `` `ifndef SYNTHESIS``; Verilog output stays
-assertion-free. Remaining backlog: activation-site parameter
-override-specialized contract windows, runtime-signal or expression windows,
-unknown or unqualified package constants, aggregate package constants, package
+assertion-free. Remaining backlog: override-specialized contract-window
+lowering after activation-site parameter overrides, runtime-signal or
+expression windows, unknown or unqualified package constants, aggregate
+package constants, package
 member/item paths, package constants inside contract-window expressions,
 global `always` implication forms, min/max windows, dynamic bounds,
 same-cycle checks, nested contracts, expression operands, and multiple

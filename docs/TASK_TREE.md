@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS` | `active` | `R14` | `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` | [docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md) |
 | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.md](docs/tasks/ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.md) |
 | `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.md](docs/tasks/ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.md) |
 | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS` | `done` | `R14` | `closed` | [docs/tasks/ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.md](docs/tasks/ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.md) |

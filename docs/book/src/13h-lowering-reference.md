@@ -2003,9 +2003,11 @@ qualified imported package scalar constant, or a same-transaction scalar
 parameter default on a generated child or direct/non-generated transaction
 that resolves to a positive integer. Direct transaction parameters are local
 lowering inputs for this contract-window value domain and are not emitted as
-actor-level `.fsm` `+params`; activation-site parameter overrides do not
-respecialize contract windows in the shipped subset. If `done` is seen before
-the window expires, the
+actor-level `.fsm` `+params`. Activation-site overrides on `spawn`, generated
+blocking `do`, or rule `trigger` that target a generated child parameter used
+by the child contract window fail closed with a targeted diagnostic; override
+specialization of generated child contract windows remains deferred. If
+`done` is seen before the window expires, the
 obligation clears. If the window expires first, or if the same contract is
 armed again while an obligation is still pending, a generated sticky fail bit
 is set until actor reset.

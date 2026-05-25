@@ -422,6 +422,7 @@ sub build_isf_public_interface_contract {
             't/1362-isf-contract-package-constant-windows.t',
             't/1364-isf-contract-transaction-param-windows.t',
             't/1365-isf-contract-direct-transaction-param-windows.t',
+            't/1366-isf-contract-activation-override-windows.t',
             't/1225-isf-stage-contract-schedule-report.t',
             't/1226-isf-data-width-storage-report.t',
             't/1227-isf-schedule-report-freeze-boundary.t',

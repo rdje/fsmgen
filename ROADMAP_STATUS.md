@@ -2,8 +2,23 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS`.
-- Current frontier: `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 activation override contract-window diagnostic implementation:
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` shipped targeted fail-closed
+  diagnostics for generated child activation-site parameter overrides that
+  target transaction parameters used by child bounded eventual temporal
+  contract windows. The check covers `spawn`, generated blocking `do`, and
+  rule `trigger`; it runs after existing unknown-parameter and shape checks,
+  preserves unrelated activation overrides, and preserves generated child
+  contract windows that use the transaction definition's resolved default.
+  Full override-specialized temporal monitor lowering remains deferred. The
+  ISF spec, downstream handoff, public contract, mdBook, task tree, README
+  index, roadmap, and live docs are synchronized. Validation passed: syntax
+  checks; focused contract/public/spec/book tests with `Files=13,
+  Tests=452`; `./bin/ci-regression isf --no-book` with `Files=272,
+  Tests=1731`; post-closure public/spec/book audits with `Files=5,
+  Tests=368`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 activation override contract-window diagnostic selection:
   `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.1` created the active task tree
   for fail-closed diagnostics when an activation-site parameter override would
@@ -7812,17 +7827,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS`.
-- Current frontier: `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
 - Completion status:
-  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.1` selected the next R14
-  implementation frontier. The next slice will fail closed when `spawn`,
-  generated child `do`, or rule `trigger` activation-site parameter overrides
-  target a generated child transaction parameter used by that child's
-  temporal-contract window. Use-site monitor respecialization remains
-  deferred. No behavior changed in the selection slice. Validation passed:
-  feature-backlog/live-book/book matrix audits with `Files=3, Tests=364`;
-  `mdbook build docs/book`; and `git diff --check`.
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` shipped targeted fail-closed
+  diagnostics for activation-site overrides of generated child transaction
+  parameters used by child temporal-contract windows and closed the task tree.
+  Full override-specialized temporal monitor lowering remains deferred.
+  Validation passed: syntax checks; focused contract/public/spec/book tests
+  with `Files=13, Tests=452`; `./bin/ci-regression isf --no-book` with
+  `Files=272, Tests=1731`; post-closure public/spec/book audits with
+  `Files=5, Tests=368`; `mdbook build docs/book`; and `git diff --check`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

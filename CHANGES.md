@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Activation override contract-window diagnostics shipped
+- Completed `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` and closed the task
+  tree.
+- Generated child activation-site parameter overrides now fail closed with a
+  targeted diagnostic when `spawn`, generated blocking `do`, or rule
+  `trigger` overrides a child transaction parameter used by that child
+  transaction's bounded eventual temporal-contract window.
+- The diagnostic runs after existing unknown-parameter and parameter-shape
+  checks, so those earlier diagnostics remain stable.
+- Overrides of generated child parameters that are not used by temporal
+  contract windows remain accepted, and generated child contract windows with
+  no activation override continue to lower from the transaction definition's
+  resolved default.
+- Full per-activation override-specialized temporal monitor lowering remains
+  deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused contract/public/spec/book tests
+  with `Files=13, Tests=452`; `./bin/ci-regression isf --no-book` with
+  `Files=272, Tests=1731`; post-closure public/spec/book audits with
+  `Files=5, Tests=368`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Activation override contract-window diagnostics selected
 - Created active task tree `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS`.
 - Completed `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.1`; the selected

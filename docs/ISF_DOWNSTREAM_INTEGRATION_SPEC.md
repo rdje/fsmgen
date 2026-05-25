@@ -895,7 +895,10 @@ Rules:
 - `(on start (params ...))` is not public syntax and fails closed as an
   unsupported entry-body form.
 - Direct `(on ...)` activation is not a generated activation instance and does
-  not accept activation-site parameter overrides.
+  not accept activation-site parameter overrides. For generated activations,
+  `spawn`, generated blocking `do`, and rule `trigger` overrides that target a
+  generated child parameter used by the child temporal-contract window fail
+  closed until override-specialized contract-window lowering is shipped.
 
 ### 11.2 Transaction Ports And Bindings
 
@@ -1850,9 +1853,12 @@ remain visible through package/import metadata and embedded package
 generated child scheduled `.fsm`; the parent schedule report remains
 parent-scoped for child-local temporal contracts. Direct transaction
 parameters remain local lowering inputs and are not promoted to actor-level
-`.fsm` `+params`. Activation-site parameter override specialization, runtime
-signals, arbitrary expressions, unknown names, unknown or unqualified package
-constants, aggregate package constants, package member/item paths, ambiguous
+`.fsm` `+params`. Activation-site overrides on `spawn`, generated blocking
+`do`, or rule `trigger` that target a generated child parameter used by the
+child contract window fail closed with a targeted diagnostic. Full
+override-specialized contract-window lowering, runtime signals, arbitrary
+expressions, unknown names, unknown or unqualified package constants,
+aggregate package constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, zero-valued constants, and zero-valued
 or non-scalar actor/transaction parameters remain invalid contract windows.
 
@@ -3093,9 +3099,9 @@ Required fail-closed examples:
   signals, unknown symbolic names, arbitrary expressions, constants that
   resolve to zero, or actor parameters that resolve to zero or non-scalar
   values.
-- Temporal contract windows that name activation-site override-specialized
-  transaction parameters, transaction parameters from other transactions,
-  runtime interface signals, unknown symbolic names, arbitrary expressions,
+- Temporal contract windows that need activation-site override-specialized
+  lowering, transaction parameters from other transactions, runtime interface
+  signals, unknown symbolic names, arbitrary expressions,
   unknown or unqualified package constants, aggregate package constants,
   package member/item paths, ambiguous
   local-enum/package-constant spellings, constants that resolve to zero, or

@@ -2465,15 +2465,20 @@ sub _validate_child_transaction_refs($self, $actor) {
             target  => $target,
         };
 
+        my $declared_param_list = _transaction_param_declarations($transaction_by_name{$target}, $actor);
         my %declared_params = map {
             $_->{name} => $_
-        } @{_transaction_param_declarations($transaction_by_name{$target}, $actor)};
+        } @$declared_param_list;
+        my $contract_window_params =
+            _transaction_contract_window_param_names($transaction_by_name{$target}, $declared_param_list);
         for my $override (@{_activation_parameter_overrides($clause, $tx_name, $label, $constant_values, $actor)}) {
             my $name = $override->{name};
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
                 unless exists $declared_params{$name};
             confess "Transaction '$tx_name': $keyword instance '$instance' parameter '$name' shape does not match child '$target' declaration\n"
                 unless _param_values_shape_compatible($declared_params{$name}{value}, $override->{value});
+            confess "Transaction '$tx_name': $keyword instance '$instance' overrides contract-window parameter '$name' on child '$target'; activation-site parameter override-specialized contract windows remain deferred\n"
+                if $contract_window_params->{$name};
         }
     }
 
@@ -2495,15 +2500,20 @@ sub _validate_child_transaction_refs($self, $actor) {
             target  => $target,
         };
 
+        my $declared_param_list = _transaction_param_declarations($transaction_by_name{$target}, $actor);
         my %declared_params = map {
             $_->{name} => $_
-        } @{_transaction_param_declarations($transaction_by_name{$target}, $actor)};
+        } @$declared_param_list;
+        my $contract_window_params =
+            _transaction_contract_window_param_names($transaction_by_name{$target}, $declared_param_list);
         for my $override (@{$ref->{parameter_overrides} || []}) {
             my $name = $override->{name};
             confess "Rule '$rule_name': trigger instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
                 unless exists $declared_params{$name};
             confess "Rule '$rule_name': trigger instance '$instance' parameter '$name' shape does not match child '$target' declaration\n"
                 unless _param_values_shape_compatible($declared_params{$name}{value}, $override->{value});
+            confess "Rule '$rule_name': trigger instance '$instance' overrides contract-window parameter '$name' on child '$target'; activation-site parameter override-specialized contract windows remain deferred\n"
+                if $contract_window_params->{$name};
         }
     }
 
@@ -2526,17 +2536,25 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children) 
 
 sub _transaction_params_used_by_contract_window {
     my ($tx, $params) = @_;
-    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+    my $used = _transaction_contract_window_param_names($tx, $params);
+    return keys %$used ? 1 : 0;
+}
+
+sub _transaction_contract_window_param_names {
+    my ($tx, $params) = @_;
+    return {} unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
 
     my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
-    return 0 unless keys %declared;
+    return {} unless keys %declared;
 
+    my %used;
     for my $clause (@{$tx->{clauses} || []}) {
         my $value = _contract_within_value_if_present($clause);
-        return 1 if defined($value) && _isf_value_references_declared_name($value, \%declared);
+        _collect_isf_value_declared_name_refs($value, \%declared, \%used)
+            if defined $value;
     }
 
-    return 0;
+    return \%used;
 }
 
 sub _contract_within_value_if_present {
@@ -2575,16 +2593,17 @@ sub _contract_within_value_if_present {
     return undef;
 }
 
-sub _isf_value_references_declared_name {
-    my ($value, $declared) = @_;
-    return 0 unless ref($declared) eq 'HASH';
-    return exists $declared->{$value}
-        if defined($value) && !ref($value);
-    return 0 unless ref($value) eq 'ARRAY';
-    for my $part (@$value) {
-        return 1 if _isf_value_references_declared_name($part, $declared);
+sub _collect_isf_value_declared_name_refs {
+    my ($value, $declared, $used) = @_;
+    return unless ref($declared) eq 'HASH' && ref($used) eq 'HASH';
+    if (defined($value) && !ref($value)) {
+        $used->{$value} = 1 if exists $declared->{$value};
+        return;
     }
-    return 0;
+    return unless ref($value) eq 'ARRAY';
+    for my $part (@$value) {
+        _collect_isf_value_declared_name_refs($part, $declared, $used);
+    }
 }
 
 sub _validate_transaction_port_bindings($self, $actor) {

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Activation override diagnostics stay at the generated activation gate
+- `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` reuses the existing generated
+  activation parameter validation pass for the new contract-window
+  specialization diagnostic.
+- That validation pass already has the target transaction, generated instance
+  name, child parameter declarations, and parsed override values, so it can
+  reject only overrides whose parameter names are referenced by a child
+  temporal-contract window.
+- The check is deliberately ordered after unknown-parameter and shape
+  compatibility validation. That preserves the older diagnostics for invalid
+  override names and incompatible aggregate/scalar shapes.
+- The implementation does not mutate the contract window, generated child
+  `.fsm`, generated top, or schedule report. It prevents a misleading partial
+  specialization until a future use-site-aware monitor lowering design exists.
+
 ## 2026-05-25: Activation override contract windows should fail closed before respecialization exists
 - `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.1` selects a diagnostic-only
   boundary for activation-site overrides that would specialize generated child

@@ -1055,6 +1055,9 @@ transactions are checked by
 Same-transaction scalar parameter defaults on direct/non-generated
 transactions are checked by
 [t/1365-isf-contract-direct-transaction-param-windows.t](../t/1365-isf-contract-direct-transaction-param-windows.t).
+Activation-site override diagnostics for generated child transaction
+parameters used by child contract windows are checked by
+[t/1366-isf-contract-activation-override-windows.t](../t/1366-isf-contract-activation-override-windows.t).
 The shipped subset is the top-level transaction form
 `(contract name (eventually signal within cycles))`. The older nested
 `(contract name (eventually signal (within cycles)))` spelling remains an
@@ -1063,10 +1066,13 @@ pending, age, and sticky-fail storage. The `cycles` token may be a positive
 integer literal, a declared actor constant, an actor-local scalar parameter
 default, a qualified imported package scalar constant, or a same-transaction
 scalar parameter default on a generated child or direct/non-generated
-transaction that resolves to a positive integer. Activation-site parameter
-override specialization remains outside the contract-window surface. Runtime
-signals, arbitrary expressions, unknown names, unknown or unqualified package
-constants, aggregate package constants, package member/item paths, ambiguous
+transaction that resolves to a positive integer. Activation-site overrides on
+`spawn`, generated blocking `do`, or rule `trigger` that target a generated
+child parameter used by the child contract window fail closed with a targeted
+diagnostic; override specialization remains outside the contract-window
+surface. Runtime signals, arbitrary expressions, unknown names, unknown or
+unqualified package constants, aggregate package constants, package
+member/item paths, ambiguous
 local-enum/package-constant spellings, zero-valued constants, and zero-valued
 or non-scalar actor/transaction parameters remain outside the
 contract-window surface.
