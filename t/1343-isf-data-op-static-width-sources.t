@@ -155,26 +155,22 @@ ISF
 
     assert_lower_rejected(
         <<'ISF',
-(actor transaction_parameter_data_op_width
+(actor direct_transaction_parameter_data_op_width
   (clock clk)
   (interface
     (input start)
     (input bit_in)
     (output done))
-  (transaction parent
-    (on start)
-    (spawn main as child)
-    (await_all done)
-    (complete done))
   (transaction main
+    (on start)
     (params
       (SHREG_W 8))
     (shift_right shreg bit_in (width SHREG_W))
     (complete done)))
 ISF
-        'transaction-parameter-data-op-width.isf',
-        qr/\ATransaction 'main': shift_right width token 'SHREG_W' is a transaction parameter/,
-        'transaction parameter width',
+        'direct-transaction-parameter-data-op-width.isf',
+        qr/\ATransaction 'main': params are supported only on generated child transactions or same-transaction temporal contract windows/,
+        'direct transaction parameter width',
     );
 
     assert_lower_rejected(
@@ -210,7 +206,7 @@ ISF
     (complete done)))
 ISF
         'unknown-data-op-width.isf',
-        qr/\ATransaction 'main': shift_right width token 'SHREG_W' is not a declared actor constant, actor scalar parameter, or imported package scalar constant/,
+        qr/\ATransaction 'main': shift_right width token 'SHREG_W' is not a same-transaction scalar parameter, declared actor constant, actor scalar parameter, or imported package scalar constant/,
         'unknown symbolic width',
     );
 
@@ -228,7 +224,7 @@ ISF
     (complete done)))
 ISF
         'expression-data-op-width.isf',
-        qr/\Ashift_right width must be a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant/,
+        qr/\Ashift_right width must be a positive integer literal, same-transaction scalar parameter, actor constant, actor scalar parameter, or qualified package scalar constant/,
         'expression width',
     );
 };

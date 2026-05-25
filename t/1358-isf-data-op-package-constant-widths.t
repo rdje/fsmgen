@@ -159,7 +159,7 @@ ISF
     (extract word as field (widths DEFAULT_WIDTH))
     (complete done)))
 ISF
-        qr/Transaction 'main': extract width for 'field' token 'DEFAULT_WIDTH' is not a declared actor constant, actor scalar parameter, or imported package scalar constant/,
+        qr/Transaction 'main': extract width for 'field' token 'DEFAULT_WIDTH' is not a same-transaction scalar parameter, declared actor constant, actor scalar parameter, or imported package scalar constant/,
         'unqualified package constants are rejected as data-operation widths',
     );
 
@@ -267,7 +267,7 @@ ISF
     (assemble header payload as packet (widths 4 WIDTH))
     (complete done)))
 ISF
-        qr/Transaction 'main': assemble width for 'payload' token 'WIDTH' is a runtime interface signal; data-operation width evidence accepts positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only/,
+        qr/Transaction 'main': assemble width for 'payload' token 'WIDTH' is a runtime interface signal; data-operation width evidence accepts positive integer literals, same-transaction scalar parameters, actor constants, actor scalar parameters, or qualified package scalar constants only/,
         'runtime interface signals are rejected as data-operation widths',
     );
 
@@ -287,7 +287,7 @@ ISF
     (shift_right shreg bit_in (width (+ shared.DEFAULT_WIDTH 1)))
     (complete done)))
 ISF
-        qr/shift_right width must be a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant/,
+        qr/shift_right width must be a positive integer literal, same-transaction scalar parameter, actor constant, actor scalar parameter, or qualified package scalar constant/,
         'width expressions remain rejected',
     );
 };

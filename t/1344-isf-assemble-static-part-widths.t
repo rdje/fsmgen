@@ -118,25 +118,21 @@ ISF
 
     assert_lower_rejected(
         <<'ISF',
-(actor transaction_parameter_assemble_part_width
+(actor direct_transaction_parameter_assemble_part_width
   (clock clk)
   (interface
     (input start)
     (output done))
-  (transaction parent
-    (on start)
-    (spawn main as child)
-    (await_all done)
-    (complete done))
   (transaction main
+    (on start)
     (params
       (PAYLOAD_W 8))
     (assemble header payload as packet (widths 4 PAYLOAD_W))
     (complete done)))
 ISF
-        'transaction-parameter-assemble-part-width.isf',
-        qr/\ATransaction 'main': assemble width for 'payload' token 'PAYLOAD_W' is a transaction parameter/,
-        'transaction parameter width',
+        'direct-transaction-parameter-assemble-part-width.isf',
+        qr/\ATransaction 'main': params are supported only on generated child transactions or same-transaction temporal contract windows/,
+        'direct transaction parameter width',
     );
 
     assert_lower_rejected(
@@ -170,7 +166,7 @@ ISF
     (complete done)))
 ISF
         'unknown-assemble-part-width.isf',
-        qr/\ATransaction 'main': assemble width for 'payload' token 'PAYLOAD_W' is not a declared actor constant, actor scalar parameter, or imported package scalar constant/,
+        qr/\ATransaction 'main': assemble width for 'payload' token 'PAYLOAD_W' is not a same-transaction scalar parameter, declared actor constant, actor scalar parameter, or imported package scalar constant/,
         'unknown symbolic width',
     );
 
@@ -187,7 +183,7 @@ ISF
     (complete done)))
 ISF
         'expression-assemble-part-width.isf',
-        qr/\Aassemble widths must be positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants/,
+        qr/\Aassemble widths must be positive integer literals, same-transaction scalar parameters, actor constants, actor scalar parameters, or qualified package scalar constants/,
         'expression width',
     );
 };

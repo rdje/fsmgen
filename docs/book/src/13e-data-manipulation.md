@@ -90,14 +90,18 @@ positive integer width when the option is present.
 ```
 
 Known interface, sampled-source, assemble-inferred, and explicit
-`(width N|PARAM|CONST)` widths use a concrete insert position. If the shifted
-value has no known width and no explicit width option, lowering fails before
-scheduled `.fsm` emission instead of emitting a placeholder `WIDTH`
-expression. An explicit `(width N|PARAM|CONST)` is an assertion: it may fill
+`(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)` widths use a concrete insert
+position. If the shifted value has no known width and no explicit width
+option, lowering fails before scheduled `.fsm` emission instead of emitting a
+placeholder `WIDTH` expression. An explicit
+`(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)` is an assertion: it may fill
 missing width evidence, but it must match any already-known width for the
-shifted register. `PARAM` names an actor-local scalar parameter default that
-resolves to a positive integer, and `CONST` names a declared actor constant
-that resolves to a positive integer.
+shifted register. `TX_PARAM` names a same-transaction generated child scalar
+parameter default that resolves to a positive integer, `PARAM` names an
+actor-local scalar parameter default that resolves to a positive integer, and
+`CONST` names a declared actor constant that resolves to a positive integer.
+Direct transaction parameters remain deferred for data-operation width
+evidence.
 
 ## `(assemble field1 field2 ... as var [(widths N...)])` — Concatenation
 
@@ -109,7 +113,7 @@ that resolves to a positive integer.
 Concatenates fields into a single variable.
 
 The form is exact:
-`(assemble part... as var [(widths N|PARAM|CONST...)])`, with one or more
+`(assemble part... as var [(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)])`, with one or more
 scalar parts and scalar target `var`.
 
 When present, the optional trailing `(widths ...)` list must contain one

@@ -258,6 +258,7 @@ my $expected_tested_by = [
     't/1358-isf-data-op-package-constant-widths.t',
     't/1359-isf-wait-package-constant-counts.t',
     't/1360-isf-repeat-package-constant-counts.t',
+    't/1367-isf-data-op-transaction-param-widths.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

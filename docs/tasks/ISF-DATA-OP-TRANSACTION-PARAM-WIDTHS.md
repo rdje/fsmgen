@@ -69,21 +69,22 @@ positive integer.
   runtime behavior.`
   Verification: `feature-backlog/live-book/book matrix audits; mdBook build;
   git diff check`
-  Commit: `pending`
+  Commit: `eef37d53 ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.1: select transaction parameter width tree`
 
 - ID: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2`
-  Status: `active`
+  Status: `done`
   Goal: `Accept generated child same-transaction scalar parameter defaults as
   data-operation width evidence.`
   Acceptance: `Generated child transactions accept positive resolved
   transaction parameters in shift/extract/assemble width options, preserve
   existing explicit-width conflicts, report inferred data-register widths, and
   keep unsupported transaction parameter values fail-closed.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused data-operation/public/spec/book tests;
+  broader ISF regression; mdBook build; git diff check`
+  Commit: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2: accept generated child data width params`
 
 - ID: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Accept direct same-transaction scalar parameter defaults as
   data-operation width evidence.`
   Acceptance: `Direct transactions with params clauses are accepted only when
@@ -98,8 +99,8 @@ positive integer.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.1` | `done` | `Selection-only leaf established task-tree ownership before implementation.` |
-| 2 | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2` | `active` | `Generated child transactions already have a parameter publication path, so this is the smallest implementation step.` |
-| 3 | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` | `pending` | `Direct transaction validation should widen only after the generated-child value-domain behavior is proven.` |
+| 2 | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2` | `done` | `Generated child transactions now accept same-transaction scalar parameter defaults as data-operation width evidence.` |
+| 3 | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` | `active` | `Direct transaction validation can now widen with the generated-child value-domain behavior proven.` |
 
 ## Decisions
 
@@ -111,11 +112,15 @@ positive integer.
   Data-operation widths are resolved from the transaction definition's scalar
   parameter defaults; use-site overrides would require generated-child variant
   or generated-top respecialization work.
+- `2026-05-25`: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2` keeps transaction
+  parameter data-width evidence generated-child-only. Direct transactions that
+  already have legal contract-window parameters still fail closed if they try
+  to reuse those parameters as data-operation width evidence before `.3`.
 
 ## Open Questions
 
-- None blocking. Direct transaction support remains a pending leaf, not an
-  assumption in the generated-child leaf.
+- None blocking. Direct transaction support is the active leaf after generated
+  child support shipped.
 
 ## Blockers
 
@@ -126,15 +131,15 @@ positive integer.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
-| `2026-05-25` | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2` | `pending` | `pending` |
+| `2026-05-25` | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1367-isf-data-op-transaction-param-widths.t`; `perl -Iperl -c t/1144-isf-public-tested-by-metadata-audit.t`; focused data-operation/public/spec/book/boundary test runs totaling `Files=16, Tests=405`; `./bin/ci-regression isf --no-book` with `Files=273, Tests=1734`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-25` | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` | `pending` | `pending` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.1` | `pending` | `selection complete; commit pending` |
-| `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2` | `pending` | `pending` |
+| `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.1` | `eef37d53 ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.1: select transaction parameter width tree` | `selection committed` |
+| `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2` | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2: accept generated child data width params` | `implementation validated; commit in progress` |
 | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` | `pending` | `pending` |
 
 ## Changelog
@@ -142,3 +147,6 @@ positive integer.
 - `2026-05-25`: Created task tree, completed the documentation-only ownership
   leaf, and moved the current implementation frontier to
   `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2`.
+- `2026-05-25`: Implemented generated-child transaction-parameter
+  data-operation width evidence and moved the active frontier to direct
+  transaction validation.

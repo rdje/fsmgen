@@ -1011,13 +1011,13 @@ Verilog no-assertion boundary remain regression-backed after ISF lowers through
 scheduled `.fsm` into HDL.
 The explicit-width `shift_right` data-operation path is checked by
 [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
-so explicit `(width N|PARAM|CONST|PACKAGE.CONSTANT)` fills otherwise missing register-width
+so explicit `(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)` fills otherwise missing register-width
 evidence, known-width shifts do not need the option, conflicting explicit
 widths fail closed, and accepted `shift_right` source no longer emits
 placeholder `WIDTH` terms.
 The explicit-width `shift_left` data-operation path is checked by
 [t/1318-isf-shift-left-explicit-width.t](../t/1318-isf-shift-left-explicit-width.t)
-so optional `(width N|PARAM|CONST|PACKAGE.CONSTANT)` fills missing
+so optional `(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)` fills missing
 register-width evidence for later data operations and schedule-report storage
 metadata, conflicting explicit widths fail closed, and ordinary widthless
 `shift_left` source remains accepted.
@@ -1030,14 +1030,24 @@ Static data-operation width sources are checked by
 so `shift_left`, `shift_right`, and `extract` explicit width evidence may use
 positive integer literals, actor-local scalar parameter defaults, declared
 actor constants, or qualified imported package scalar constants that resolve
-to positive integers. Unsupported transaction parameters, runtime interface
-signals, unknown names, unknown or unqualified package constants, aggregate
+to positive integers. Unsupported direct transaction parameters, runtime
+interface signals, unknown names, unknown or unqualified package constants, aggregate
 package constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, arbitrary expressions, zero values, and
 aggregate values fail closed.
+Generated child transaction-parameter data-operation width evidence is checked
+by
+[t/1367-isf-data-op-transaction-param-widths.t](../t/1367-isf-data-op-transaction-param-widths.t),
+so generated child same-transaction scalar parameter defaults may provide
+`shift_left`/`shift_right` `(width TX_PARAM)` and `extract`/`assemble`
+`(widths TX_PARAM...)` evidence when they resolve to positive integers.
+Direct/non-generated transaction parameters, aggregate/list parameter
+defaults, zero-valued defaults, activation-site override specialization, and
+generated-top respecialization remain fail-closed for this data-operation
+width surface.
 Assemble static part widths are checked by
 [t/1344-isf-assemble-static-part-widths.t](../t/1344-isf-assemble-static-part-widths.t),
-so `(assemble part... as target (widths N|PARAM|CONST|PACKAGE.CONSTANT...))`
+so `(assemble part... as target (widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...))`
 supplies ordered part-width evidence from the same accepted static source set
 while preserving the emitted concat assignment shape.
 The single-missing-field `extract` inference path is checked by
@@ -1287,12 +1297,12 @@ expression payload, and nested expression payloads are formatted as `.fsm`
 expressions instead of Perl reference strings.
 The shift-clause boundary is checked by
 [t/1199-isf-shift-clause-boundary.t](../t/1199-isf-shift-clause-boundary.t)
-so `(shift_left reg bit [(width N|PARAM|CONST|PACKAGE.CONSTANT)])` and
-`(shift_right reg bit [(width N|PARAM|CONST|PACKAGE.CONSTANT)])` require
+so `(shift_left reg bit [(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)])` and
+`(shift_right reg bit [(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)])` require
 scalar register/bit operands before scheduled `.fsm` emission.
 The assemble-clause boundary is checked by
 [t/1200-isf-assemble-clause-boundary.t](../t/1200-isf-assemble-clause-boundary.t)
-so `(assemble part... as target [(widths N|PARAM|CONST|PACKAGE.CONSTANT...)])`
+so `(assemble part... as target [(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)])`
 requires one or more scalar parts, one scalar target, and any optional
 trailing width list to match the part count before scheduled `.fsm` emission.
 The same regression
@@ -1304,7 +1314,7 @@ remainder. Multiple unknown parts remain non-evidence concat operands unless
 explicit widths make them known.
 The extract-clause boundary is checked by
 [t/1201-isf-extract-clause-boundary.t](../t/1201-isf-extract-clause-boundary.t)
-so `(extract word as field... [(widths N|PARAM|CONST|PACKAGE.CONSTANT...)])` requires one
+so `(extract word as field... [(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)])` requires one
 scalar source word, one or more scalar fields, and at most one ordered
 positive static-width `(widths ...)` option before scheduled `.fsm` emission.
 The exact-slice extraction behavior is checked by
@@ -1675,6 +1685,12 @@ and `extract` when they resolve to positive integers. Those width evidence
 tokens resolve inside scheduler publication and appear as concrete scheduled
 `.fsm` shift positions, assemble/extract width facts, and
 `inferred_storage[]` report widths; unsupported package shapes fail closed.
+Generated child same-transaction scalar parameter defaults are public as
+explicit data-operation width evidence for `shift_left`, `shift_right`,
+`assemble`, and `extract` when they resolve to positive integers. Those width
+facts use the generated child transaction definition default; direct
+transaction parameters and activation-site override-specialized data widths
+remain fail-closed.
 Earlier actor-local scalar parameter defaults are public as scalar actor
 parameter defaults or scalar leaves inside actor aggregate/list parameter
 defaults. Source order is the only dependency model: the referenced actor

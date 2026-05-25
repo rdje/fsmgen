@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Generated-child transaction-parameter data-operation widths shipped
+- Completed `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2`.
+- Generated child `shift_left`/`shift_right` `(width TX_PARAM)` and
+  `extract`/`assemble` `(widths TX_PARAM...)` now accept same-transaction
+  scalar parameter defaults when the resolved default is a positive integer.
+- Transaction-local parameter names resolve before actor constants and actor
+  parameters for this data-operation width value-domain slot.
+- Direct/non-generated transaction parameters remain fail-closed for
+  data-operation width evidence, including direct transactions whose params
+  are legal for temporal contract windows.
+- Aggregate/list defaults, zero-valued defaults, runtime signals, arbitrary
+  expressions, activation-site override specialization, generated child
+  variants, generated-top respecialization, and schedule-report key-family
+  changes remain deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused data-operation/public/spec/book
+  and boundary test runs totaling `Files=16, Tests=405`;
+  `./bin/ci-regression isf --no-book` with `Files=273, Tests=1734`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Transaction-parameter data-operation width tree selected
 - Created active task tree `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS`.
 - Completed selection leaf `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.1`; the next

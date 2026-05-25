@@ -950,16 +950,18 @@ The ISF-specific current limitations are:
   `(port expr)` remains rule shorthand. Rule trigger targets must resolve to a
   declared transaction in the same actor before parser handoff returns.
 - `(shift_left ...)` and `(shift_right ...)` accept explicit
-  `(width N|PARAM|CONST|PACKAGE.CONSTANT)` options when the shifted register
-  width is not declared elsewhere. `PARAM` names an actor-local scalar
-  parameter default that resolves to a positive integer, `CONST` names a
-  declared actor constant that resolves to a positive integer, and
-  `PACKAGE.CONSTANT` names a qualified imported package scalar constant that
-  resolves to a positive integer. The option is an assertion and must agree
-  with any known register width. Values with no known or explicit width still
-  fail closed for `shift_right` instead of emitting a placeholder `WIDTH`
-  expression. Plain `shift_left` remains accepted without width evidence
-  because it does not need an insertion-position width.
+  `(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)` options when the shifted
+  register width is not declared elsewhere. `TX_PARAM` names a
+  same-transaction generated child scalar parameter default that resolves to a
+  positive integer, `PARAM` names an actor-local scalar parameter default that
+  resolves to a positive integer, `CONST` names a declared actor constant that
+  resolves to a positive integer, and `PACKAGE.CONSTANT` names a qualified
+  imported package scalar constant that resolves to a positive integer. The
+  option is an assertion and must agree with any known register width. Values
+  with no known or explicit width still fail closed for `shift_right` instead
+  of emitting a placeholder `WIDTH` expression. Plain `shift_left` remains
+  accepted without width evidence because it does not need an insertion-position
+  width.
 - `(assemble ...)` derives target width when every part width is known. It
   also infers exactly one missing part width when the target width and every
   sibling part width prove a positive remainder. Two or more unknown part
@@ -967,7 +969,7 @@ The ISF-specific current limitations are:
   used as width evidence. Known target-width disagreements or non-positive
   inferred remainders fail closed.
 - `(assemble ...)` and `(extract ...)` accept ordered
-  `(widths N|PARAM|CONST|PACKAGE.CONSTANT...)` evidence lists. The list may
+  `(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)` evidence lists. The list may
   mix positive integer literals, actor-local scalar parameter defaults,
   declared actor constants, and qualified imported package scalar constants
   that resolve to positive integers. `extract` also infers exactly one missing

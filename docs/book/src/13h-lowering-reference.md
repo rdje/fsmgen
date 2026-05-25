@@ -1610,15 +1610,18 @@ The generated shift expressions are ordinary `.fsm` expressions. Raw `<<` and
 SystemVerilog path as binary operators rather than schedule-only placeholders.
 
 For `shift_right`, known signal widths are used for the inserted MSB position;
-an explicit `(width N)` option supplies that width when the register is not
-declared elsewhere. The option is an assertion and must agree with any known
+an explicit `(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)` option supplies
+that width when the register is not declared elsewhere. `TX_PARAM` is limited
+to same-transaction generated child scalar parameter defaults that resolve to
+positive integers. The option is an assertion and must agree with any known
 register width. Unknown widths fail closed instead of emitting the placeholder
 `WIDTH` expression.
 
-For `shift_left`, the same optional `(width N)` option supplies register-width
-evidence for later data operations and report metadata. It does not change the
-emitted left-shift expression, and plain `shift_left` remains accepted without
-width evidence.
+For `shift_left`, the same optional
+`(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)` option supplies
+register-width evidence for later data operations and report metadata. It does
+not change the emitted left-shift expression, and plain `shift_left` remains
+accepted without width evidence.
 
 ## `(assemble fields... as var)` / `(extract word as fields... [(widths N...)])` → Sequential State
 

@@ -3,7 +3,26 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
 - Active task tree: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS`.
-- Current frontier: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2`.
+- Current frontier: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3`.
+- Current R14 generated-child transaction-parameter data-width implementation:
+  `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2` shipped same-transaction scalar
+  parameter defaults as data-operation width evidence for generated child
+  transactions. Generated child `shift_left` and `shift_right`
+  `(width TX_PARAM)` and `extract`/`assemble` `(widths TX_PARAM...)` now
+  resolve positive integer transaction parameter defaults before scheduled
+  child `.fsm` emission. Transaction-local names resolve before actor
+  constants and actor parameters in this value-domain slot. Direct
+  transactions remain fail-closed for data-operation width evidence, including
+  direct transactions whose `(params ...)` clauses are already legal for
+  temporal contract windows. Aggregate/list defaults, zero-valued defaults,
+  runtime signals, arbitrary expressions, activation-site override
+  specialization, generated child variants, generated-top respecialization,
+  and schedule-report key-family changes remain deferred. The active frontier
+  moves to direct/non-generated transaction validation. Validation passed:
+  syntax checks; focused data-operation/public/spec/book and boundary test
+  runs totaling `Files=16, Tests=405`; `./bin/ci-regression isf --no-book`
+  with `Files=273, Tests=1734`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Current R14 transaction-parameter data-operation width selection:
   `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.1` created the active task tree for
   accepting same-transaction scalar parameter defaults as explicit

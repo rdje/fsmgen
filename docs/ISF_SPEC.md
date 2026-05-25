@@ -2114,13 +2114,13 @@ Current transaction clauses:
 - `(set var expr)`
 - `(update var expr)`
 - `(shift_left reg bit)`
-- `(shift_left reg bit (width N|PARAM|CONST|PACKAGE.CONSTANT))`
+- `(shift_left reg bit (width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT))`
 - `(shift_right reg bit)`
-- `(shift_right reg bit (width N|PARAM|CONST|PACKAGE.CONSTANT))`
+- `(shift_right reg bit (width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT))`
 - `(assemble part... as var)`
-- `(assemble part... as var (widths N|PARAM|CONST|PACKAGE.CONSTANT...))`
+- `(assemble part... as var (widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...))`
 - `(extract word as field...)`
-- `(extract word as field... (widths N|PARAM|CONST|PACKAGE.CONSTANT...))`
+- `(extract word as field... (widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...))`
 - `(do transaction [(domain NAME)] [(params (NAME value) ...)] [(bind ...)])`
 - `(spawn transaction as instance [(domain NAME)] [(params (NAME value) ...)] [(bind ...)])`
 - `(trigger transaction [(params (NAME value) ...)] [(bind ...)])`
@@ -3080,13 +3080,13 @@ The `condition` value is the normalized condition text used in the scheduled
 (set var expr)
 (update var expr)
 (shift_left reg bit)
-(shift_left reg bit (width N|PARAM|CONST|PACKAGE.CONSTANT))
+(shift_left reg bit (width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT))
 (shift_right reg bit)
-(shift_right reg bit (width N|PARAM|CONST|PACKAGE.CONSTANT))
+(shift_right reg bit (width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT))
 (assemble header payload crc as packet)
-(assemble header payload crc as packet (widths HEADER_W PACKAGE.PAYLOAD_W CRC_W))
+(assemble header payload crc as packet (widths TX_HEADER_W HEADER_W PACKAGE.CRC_W))
 (extract packet as header payload crc)
-(extract packet as header payload crc (widths 4 PACKAGE.HEADER_W CRC_W))
+(extract packet as header payload crc (widths TX_HEADER_W 8 PACKAGE.CRC_W))
 ```
 
 Current lowering:
@@ -3097,18 +3097,19 @@ Current lowering:
 - `update` remains supported as the older transaction-local spelling for the
   same flopped transaction update behavior.
 - `shift_left` is structurally validated as
-  `(shift_left reg bit [(width N|PARAM|CONST|PACKAGE.CONSTANT)])` with scalar
+  `(shift_left reg bit [(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)])` with scalar
   `reg` and scalar `bit`, then emits a left shift plus inserted bit. The
   optional `(width ...)` is width evidence for the shifted register. It may be
-  a positive integer literal, actor-local scalar parameter default, declared
-  actor constant, or qualified imported package scalar constant that resolves
-  to a positive integer. It may fill missing transaction-local width evidence
-  for later data operations and report metadata, but it must match any
+  a positive integer literal, same-transaction generated child scalar
+  parameter default, actor-local scalar parameter default, declared actor
+  constant, or qualified imported package scalar constant that resolves to a
+  positive integer. It may fill missing transaction-local width evidence for
+  later data operations and report metadata, but it must match any
   already-known width for the same register. Plain
   `(shift_left reg bit)` remains accepted without width evidence because the
   emitted left-shift expression does not need an insertion-position width.
 - `shift_right` is structurally validated as
-  `(shift_right reg bit [(width N|PARAM|CONST|PACKAGE.CONSTANT)])` with
+  `(shift_right reg bit [(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)])` with
   scalar `reg` and scalar `bit`, then emits a right shift plus inserted bit.
   When the shifted
   signal has a known interface, sampled-source, assemble-inferred, or explicit
@@ -3118,11 +3119,12 @@ Current lowering:
   it may fill missing width evidence, but it must match any already-known
   width for the shifted register.
 - `assemble` is structurally validated as
-  `(assemble part... as target [(widths N|PARAM|CONST|PACKAGE.CONSTANT...)])`
+  `(assemble part... as target [(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)])`
   with one or more scalar parts and one scalar target, then emits a concat
   expression into the target variable. An optional trailing `(widths ...)`
   list supplies ordered part-width evidence and must have one entry per part.
-  Each explicit width entry may be a positive integer literal, actor-local
+  Each explicit width entry may be a positive integer literal,
+  same-transaction generated child scalar parameter default, actor-local
   scalar parameter default, declared actor constant, or qualified imported
   package scalar constant that resolves to a positive integer. Mixed literal
   and accepted symbolic entries are allowed. The private width map infers the
@@ -3136,15 +3138,16 @@ Current lowering:
   may still be accepted for the reviewable concat expression, but they are not
   used as width evidence unless the `(widths ...)` option makes them known.
 - `extract` is structurally validated as
-  `(extract word as field... [(widths N|PARAM|CONST|PACKAGE.CONSTANT...)])`
+  `(extract word as field... [(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)])`
   with one scalar source word and one or more scalar destination fields. It
   emits one extraction state. When the source word and destination fields have
   known widths, or when the clause supplies an ordered `(widths ...)` list
   matching the field count, fields are assigned exact descending slices. Each
-  explicit width entry may be a positive integer literal, actor-local scalar
-  parameter default, declared actor constant, or qualified imported package
-  scalar constant that resolves to a positive integer. Mixed literal and
-  accepted symbolic entries are allowed. If exactly one
+  explicit width entry may be a positive integer literal,
+  same-transaction generated child scalar parameter default, actor-local
+  scalar parameter default, declared actor constant, or qualified imported
+  package scalar constant that resolves to a positive integer. Mixed literal
+  and accepted symbolic entries are allowed. If exactly one
   destination field width is missing and the source word width plus every
   sibling field width is known, the missing field width is inferred as the
   positive remainder. The inferred width becomes transaction-local evidence
@@ -3167,15 +3170,20 @@ declarations seed it, sampled aliases inherit known source widths, explicit
 `shift_left`, `shift_right`, `assemble`, and `extract` options add local
 evidence, and `assemble` can infer target width from known parts. Explicit
 data-operation width options accept positive integer literals, actor-local
-scalar parameter defaults, declared actor constants, or qualified imported
-package scalar constants that resolve to positive integers. Accepted package
-constants must be imported, qualified as `PACKAGE.CONSTANT`, and scalar
-package `+constants` entries. Unqualified package constants, unknown package
+scalar parameter defaults, declared actor constants, qualified imported
+package scalar constants, or same-transaction scalar parameter defaults on
+generated child transactions that resolve to positive integers. Accepted
+package constants must be imported, qualified as `PACKAGE.CONSTANT`, and
+scalar package `+constants` entries. Accepted generated child transaction
+parameters are resolved from the transaction definition's default before
+scheduled child `.fsm` emission; direct/non-generated transaction parameters
+remain fail-closed for data-operation width evidence until their own
+validation leaf ships. Unqualified package constants, unknown package
 constants, package aggregate constants, package member/item paths, ambiguous
-local-enum/package-constant spellings, transaction parameters, runtime
+local-enum/package-constant spellings, direct transaction parameters, runtime
 signals, unknown names, arbitrary expressions, zero values, non-scalar values,
-use-site overrides, and generated-top respecialization are not data-operation
-width evidence. The
+use-site overrides, activation-site override specialization, and generated-top
+respecialization are not data-operation width evidence. The
 evidence is collected from the whole transaction clause tree before scheduled
 state emission, so it is not source-order-sensitive. Schedule reports expose
 positive integer `width` metadata for inferred scheduler counters and for
@@ -3205,7 +3213,7 @@ evidence is missing or contradictory. `shift_left` accepts the same optional
 `(width ...)` evidence shape, rejects contradictory explicit widths, and keeps
 plain widthless shifting accepted because no insertion-position width is
 needed. `assemble` accepts an optional
-`(widths N|PARAM|CONST|PACKAGE.CONSTANT...)` evidence list for ordered part
+`(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)` evidence list for ordered part
 widths, derives a target width from fully known or explicit part widths, can
 infer exactly one missing part width from a known target and known siblings,
 and rejects known target-width mismatches,
@@ -5413,6 +5421,7 @@ Focused tests:
 - [t/1364-isf-contract-transaction-param-windows.t](../t/1364-isf-contract-transaction-param-windows.t)
 - [t/1365-isf-contract-direct-transaction-param-windows.t](../t/1365-isf-contract-direct-transaction-param-windows.t)
 - [t/1366-isf-contract-activation-override-windows.t](../t/1366-isf-contract-activation-override-windows.t)
+- [t/1367-isf-data-op-transaction-param-widths.t](../t/1367-isf-data-op-transaction-param-widths.t)
 
 ## 12. Explicitly Deferred
 
@@ -5432,7 +5441,8 @@ Focused tests:
   parameters, actor constants, qualified package scalar constants, and scalar
   type aliases,
   data-operation width evidence beyond positive literals, actor-local scalar
-  parameters, actor constants, and qualified package scalar constants,
+  parameters, actor constants, qualified package scalar constants, and
+  generated child same-transaction scalar parameter defaults,
   memory-array backend emission, and
   library actors that import other libraries.
 - Unconditional transaction delay beyond the shipped non-negative literal,

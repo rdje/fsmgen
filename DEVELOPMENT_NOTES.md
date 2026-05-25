@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Generated-child data-operation width parameters stay definition-local
+- `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2` resolves transaction-local scalar
+  defaults as static width facts only for generated child transactions.
+- The lowerer checks the generated-child set before accepting a transaction
+  parameter token as data-operation width evidence. That prevents direct
+  transactions that are already allowed to declare params for temporal
+  contracts from accidentally widening into the data-width surface before the
+  direct validation leaf is implemented.
+- The implementation intentionally uses the transaction definition default,
+  not activation-site overrides. Use-site override-specialized data widths
+  would need generated child variants or generated-top respecialization before
+  the scheduled child `.fsm` and generated top could both stay truthful.
+
 ## 2026-05-25: Transaction-parameter data-operation widths should reuse the static width path
 - `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.1` selects a narrow value-domain
   widening for data-operation width options.
