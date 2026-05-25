@@ -4,6 +4,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 mdBook static-zero repeat truth sync:
+  `ISF-MDBOOK-STATIC-ZERO-REPEAT-TRUTH-SYNC.1` synchronized stale ISF
+  introduction wording in the mdBook and closed the task tree. The book no
+  longer carries the pre-pruning do/spawn zero-repeat limitation; it now
+  records the shipped
+  behavior that plain and syntactically valid specialized static-zero child
+  activations are pruned with no generated child/top, activation instance,
+  local handoff, or loop-report artifact when their targets are not otherwise
+  live, while malformed activation subclause syntax still fails closed. This
+  was documentation-only: parser behavior, scheduler lowering, generated
+  `.fsm`, HDL, public API, tests, and runtime behavior did not change.
+  Validation passed: stale wording grep; `prove -Iperl
+  t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Current bootstrap import-tree static-zero repeat refresh:
   `BIN-FSMGEN-IMPORT-TREE-STATIC-ZERO-REPEAT-REFRESH.1` refreshed the saved
   `bin/fsmgen` import-tree architecture note and closed the task tree after

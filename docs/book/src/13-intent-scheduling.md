@@ -100,9 +100,13 @@ clear lower-layer mapping, and clear runtime behavior.
   `.fsm` load, while transaction parameters load the resolved integer because
   they are local lowering inputs. Zero counts lower as transparent no-op
   regions with no counter, repeat init/check state, repeat-body state, or
-  `transaction_loops[]` entry when the body does not contain child
-  activation; zero-count repeat bodies containing `do` or `spawn` still fail
-  closed until generated-child artifact pruning is specified.
+  `transaction_loops[]` entry. Plain `do` and `spawn` child activations in
+  statically zero repeat bodies are pruned with no generated child, generated
+  top, activation instance, local handoff, or loop-report artifact when their
+  targets are not otherwise live. Syntactically valid parameterized, bound, or
+  domain-annotated zero-count child activations are pruned the same way after
+  activation subclause shape validation; malformed activation subclause syntax
+  still fails closed.
   Actor-local scalar parameter defaults and same-transaction scalar parameter
   defaults that resolve to non-negative integer literals may also be used as
   static `(wait NAME)` counts in their owning actor or transaction schedule.

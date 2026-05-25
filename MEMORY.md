@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 static-zero repeat mdBook wording synchronized
+- Completed `ISF-MDBOOK-STATIC-ZERO-REPEAT-TRUTH-SYNC.1` and closed the task
+  tree.
+- Replaced stale ISF introduction wording that still said zero-count repeat
+  bodies containing `do` or `spawn` fail closed until generated-child artifact
+  pruning is specified.
+- The mdBook now records the shipped behavior: plain and syntactically valid
+  specialized static-zero child activations are pruned with no generated
+  child/top, activation instance, local handoff, or loop-report artifact when
+  their targets are not otherwise live; malformed activation subclause syntax
+  still fails closed.
+- This was documentation-only: parser behavior, scheduler lowering, generated
+  `.fsm`, HDL, public API, tests, and runtime behavior did not change.
+- Validation passed: stale wording grep; `prove -Iperl
+  t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: Bootstrap import-tree static-zero repeat measurement refresh shipped
 - Completed `BIN-FSMGEN-IMPORT-TREE-STATIC-ZERO-REPEAT-REFRESH.1` and closed
   the task tree.

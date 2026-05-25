@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: The ISF introduction must not lag shipped repeat pruning
+- `ISF-MDBOOK-STATIC-ZERO-REPEAT-TRUTH-SYNC.1` is documentation-only.
+- The feature matrix, transaction chapter, lowering reference, downstream
+  handoff, public contract, and tests already reflected static-zero repeat
+  child-activation pruning. The ISF introduction still had pre-pruning wording
+  for the old do/spawn zero-repeat limitation.
+- The corrected introduction now names the shipped no-artifact pruning rule
+  and keeps malformed activation subclause syntax fail-closed.
+
 ## 2026-05-25: Static-zero repeat pruning only changed import-tree measurements
 - `BIN-FSMGEN-IMPORT-TREE-STATIC-ZERO-REPEAT-REFRESH.1` reran the session
   bootstrap import-tree audit before opening another behavior slice.
