@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 direct transaction-parameter data-operation widths shipped
+- Completed `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` and closed the task
+  tree.
+- Direct/non-generated `shift_left`/`shift_right` `(width TX_PARAM)` and
+  `extract`/`assemble` `(widths TX_PARAM...)` now accept same-transaction
+  scalar parameter defaults when the resolved default is a positive integer.
+- Direct transaction parameter declarations are accepted only when at least
+  one data-operation width option references a declared same-transaction
+  parameter; unrelated direct transaction parameters still fail closed.
+- Transaction-local parameter names keep precedence before actor constants and
+  actor parameters for this data-operation width value-domain slot.
+- Aggregate/list defaults, zero-valued defaults, runtime signals, arbitrary
+  expressions, activation-site override specialization, generated child
+  variants, generated-top respecialization, and schedule-report key-family
+  changes remain deferred.
+- Validation passed: syntax checks; focused data-operation/public/spec/book
+  tests with `Files=13, Tests=447`; `./bin/ci-regression isf --no-book` with
+  `Files=273, Tests=1735`; final status/spec/book audits with `Files=4,
+  Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 generated-child transaction-parameter data-operation widths shipped
 - Completed `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2`.
 - Generated child `shift_left`/`shift_right` `(width TX_PARAM)` and

@@ -7009,7 +7009,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'non-generated transaction parameter declaration', qr/params are supported only on generated child transactions or same-transaction temporal contract windows/);
+    assert_lower_rejected(<<'ISF', 'non-generated transaction parameter declaration', qr/params are supported only on generated child transactions, same-transaction temporal contract windows, or same-transaction data-operation width evidence/);
 (actor non_spawned_transaction_parameter
   (clock clk)
   (interface (input start) (output done))

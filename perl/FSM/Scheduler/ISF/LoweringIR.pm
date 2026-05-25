@@ -2530,8 +2530,9 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children) 
         my $tx_name = $tx->{name};
         next if $generated_children->{$tx_name};
         next if _transaction_params_used_by_contract_window($tx, $params);
+        next if _transaction_params_used_by_data_op_width($tx, $params);
 
-        confess "Transaction '$tx_name': params are supported only on generated child transactions or same-transaction temporal contract windows\n";
+        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, or same-transaction data-operation width evidence\n";
     }
     return 1;
 }
@@ -2540,6 +2541,54 @@ sub _transaction_params_used_by_contract_window {
     my ($tx, $params) = @_;
     my $used = _transaction_contract_window_param_names($tx, $params);
     return keys %$used ? 1 : 0;
+}
+
+sub _transaction_params_used_by_data_op_width {
+    my ($tx, $params) = @_;
+    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return 0 unless keys %declared;
+
+    my %used;
+    _collect_data_op_width_declared_name_refs($tx->{clauses}, \%declared, \%used);
+    return keys %used ? 1 : 0;
+}
+
+sub _collect_data_op_width_declared_name_refs {
+    my ($node, $declared, $used) = @_;
+    return unless ref($node) eq 'ARRAY';
+
+    if (@$node && defined($node->[0]) && !ref($node->[0])) {
+        my $keyword = $node->[0];
+        if ($keyword eq 'shift_left' || $keyword eq 'shift_right') {
+            for my $option (@{$node}[3 .. $#$node]) {
+                next unless ref($option) eq 'ARRAY'
+                    && @$option >= 2
+                    && defined($option->[0])
+                    && !ref($option->[0])
+                    && $option->[0] eq 'width';
+                _collect_isf_value_declared_name_refs($option->[1], $declared, $used);
+            }
+        }
+        elsif ($keyword eq 'assemble' || $keyword eq 'extract') {
+            for my $option (@$node) {
+                next unless ref($option) eq 'ARRAY'
+                    && @$option >= 2
+                    && defined($option->[0])
+                    && !ref($option->[0])
+                    && $option->[0] eq 'widths';
+                for my $width (@{$option}[1 .. $#$option]) {
+                    _collect_isf_value_declared_name_refs($width, $declared, $used);
+                }
+            }
+        }
+    }
+
+    for my $child (@$node) {
+        _collect_data_op_width_declared_name_refs($child, $declared, $used)
+            if ref($child) eq 'ARRAY';
+    }
 }
 
 sub _transaction_contract_window_param_names {
@@ -3710,9 +3759,6 @@ sub _static_data_width_evidence_value {
 
     my $transaction_param = _transaction_param_by_name($actor, $tn, $token);
     if ($transaction_param) {
-        my %generated_children = _generated_child_transaction_refs($actor);
-        confess "Transaction '$tn': $context transaction parameter '$token' is supported only for generated child transactions in data-operation width evidence\n"
-            unless $generated_children{$tn};
         my $param_value = _non_negative_integer_from_literal(_param_resolved_value($transaction_param));
         confess "Transaction '$tn': $context transaction parameter '$token' must resolve to a positive integer\n"
             unless defined($param_value) && $param_value > 0;

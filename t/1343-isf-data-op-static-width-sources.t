@@ -155,7 +155,7 @@ ISF
 
     assert_lower_rejected(
         <<'ISF',
-(actor direct_transaction_parameter_data_op_width
+(actor unrelated_direct_transaction_parameter_data_op_width
   (clock clk)
   (interface
     (input start)
@@ -164,13 +164,13 @@ ISF
   (transaction main
     (on start)
     (params
-      (SHREG_W 8))
-    (shift_right shreg bit_in (width SHREG_W))
+      (UNUSED_W 8))
+    (shift_right shreg bit_in (width 8))
     (complete done)))
 ISF
-        'direct-transaction-parameter-data-op-width.isf',
-        qr/\ATransaction 'main': params are supported only on generated child transactions or same-transaction temporal contract windows/,
-        'direct transaction parameter width',
+        'unrelated-direct-transaction-parameter-data-op-width.isf',
+        qr/\ATransaction 'main': params are supported only on generated child transactions, same-transaction temporal contract windows, or same-transaction data-operation width evidence/,
+        'unrelated direct transaction parameter',
     );
 
     assert_lower_rejected(

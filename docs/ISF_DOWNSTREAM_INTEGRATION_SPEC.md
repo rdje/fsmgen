@@ -647,9 +647,9 @@ Rules:
   `(width ...)` options, plus `assemble` and `extract` `(widths ...)` entries,
   publish as resolved scheduler width evidence for scheduled `.fsm` shift
   positions, assemble/extract width facts, and `inferred_storage[]` report
-  widths. Generated child same-transaction scalar parameter defaults may also
-  provide data-operation width evidence when they resolve to positive
-  integers. Direct/non-generated transaction parameters, activation-site
+  widths. Same-transaction scalar parameter defaults on generated child and
+  direct/non-generated transactions may also provide data-operation width
+  evidence when they resolve to positive integers. Activation-site
   override-specialized data widths, unknown or unqualified package constants,
   aggregate package constants, package constant member/item paths, ambiguous
   local-enum/package-constant spellings, zero-valued constants, runtime
@@ -1372,13 +1372,13 @@ Rules:
   width evidence for the shifted register, but plain `shift_left` remains
   accepted without width evidence because left insertion does not require a
   computed MSB position. `shift_right` accepts the same explicit source set
-  for its inserted-bit position. `TX_PARAM` is accepted only for
-  same-transaction generated child scalar parameter defaults that resolve to a
-  positive integer. `PARAM` must name an actor-local scalar parameter default
-  that resolves to a positive integer, `CONST` must name a declared actor
-  constant that resolves to a positive integer, and `PACKAGE.CONSTANT` must
-  name a qualified imported package scalar constant that resolves to a
-  positive integer.
+  for its inserted-bit position. `TX_PARAM` names a same-transaction scalar
+  parameter default on a generated child or direct/non-generated transaction
+  and must resolve to a positive integer. `PARAM` must name an actor-local
+  scalar parameter default that resolves to a positive integer, `CONST` must
+  name a declared actor constant that resolves to a positive integer, and
+  `PACKAGE.CONSTANT` must name a qualified imported package scalar constant
+  that resolves to a positive integer.
 - `assemble` can infer exactly one missing part width from a known target
   width and known sibling part widths. It also accepts one optional trailing
   `(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)` list after the target to

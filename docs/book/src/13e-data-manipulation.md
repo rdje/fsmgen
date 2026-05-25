@@ -96,12 +96,12 @@ option, lowering fails before scheduled `.fsm` emission instead of emitting a
 placeholder `WIDTH` expression. An explicit
 `(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)` is an assertion: it may fill
 missing width evidence, but it must match any already-known width for the
-shifted register. `TX_PARAM` names a same-transaction generated child scalar
-parameter default that resolves to a positive integer, `PARAM` names an
-actor-local scalar parameter default that resolves to a positive integer, and
-`CONST` names a declared actor constant that resolves to a positive integer.
-Direct transaction parameters remain deferred for data-operation width
-evidence.
+shifted register. `TX_PARAM` names a same-transaction scalar parameter default
+on a generated child or direct/non-generated transaction and must resolve to a
+positive integer. `PARAM` names an actor-local scalar parameter default that
+resolves to a positive integer, and `CONST` names a declared actor constant
+that resolves to a positive integer. Unrelated or cross-transaction
+transaction parameters remain fail-closed for data-operation width evidence.
 
 ## `(assemble field1 field2 ... as var [(widths N...)])` — Concatenation
 

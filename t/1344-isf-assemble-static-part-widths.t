@@ -118,7 +118,7 @@ ISF
 
     assert_lower_rejected(
         <<'ISF',
-(actor direct_transaction_parameter_assemble_part_width
+(actor unrelated_direct_transaction_parameter_assemble_part_width
   (clock clk)
   (interface
     (input start)
@@ -126,13 +126,13 @@ ISF
   (transaction main
     (on start)
     (params
-      (PAYLOAD_W 8))
-    (assemble header payload as packet (widths 4 PAYLOAD_W))
+      (UNUSED_W 8))
+    (assemble header payload as packet (widths 4 8))
     (complete done)))
 ISF
-        'direct-transaction-parameter-assemble-part-width.isf',
-        qr/\ATransaction 'main': params are supported only on generated child transactions or same-transaction temporal contract windows/,
-        'direct transaction parameter width',
+        'unrelated-direct-transaction-parameter-assemble-part-width.isf',
+        qr/\ATransaction 'main': params are supported only on generated child transactions, same-transaction temporal contract windows, or same-transaction data-operation width evidence/,
+        'unrelated direct transaction parameter',
     );
 
     assert_lower_rejected(

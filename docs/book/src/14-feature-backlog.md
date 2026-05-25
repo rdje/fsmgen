@@ -2643,12 +2643,13 @@ Current boundary: `shift_left` and `shift_right` accept
 `(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)`, `assemble` accepts
 `(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)` after the target, and
 `extract` accepts `(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)` as
-explicit assertions. `TX_PARAM` names a same-transaction generated child
-scalar parameter default that resolves to a positive integer, `PARAM` names an
-actor-local scalar parameter default that resolves to a positive integer,
-`CONST` names a declared actor constant that resolves to a positive integer,
-and `PACKAGE.CONSTANT` names a qualified imported package scalar constant that
-resolves to a positive integer.
+explicit assertions. `TX_PARAM` names a same-transaction scalar parameter
+default on a generated child or direct/non-generated transaction and must
+resolve to a positive integer, `PARAM` names an actor-local scalar parameter
+default that resolves to a positive integer, `CONST` names a declared actor
+constant that resolves to a positive integer, and `PACKAGE.CONSTANT` names a
+qualified imported package scalar constant that resolves to a positive
+integer.
 `shift_left` uses the optional width only as register-width evidence; plain
 widthless `shift_left` remains accepted because no insertion-position width
 is needed.
@@ -2669,17 +2670,17 @@ explicit widths make them known.
 
 Unknown package constants, unqualified package constants, aggregate package
 constants, package member/item paths, ambiguous local-enum/package-constant
-spellings, direct/non-generated transaction parameters, runtime signals,
+spellings, unrelated or cross-transaction parameters, runtime signals,
 arbitrary expressions, zero-valued constants, non-scalar values, use-site
 overrides, activation-site override-specialized data widths, and generated-top
 respecialization remain outside the shipped data-operation width-evidence
 surface.
 
-Active follow-up: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS` has shipped the
-generated-child leaf for same-transaction scalar parameter defaults in
-existing `shift_left`/`shift_right` `(width TX_PARAM)` and
-`extract`/`assemble` `(widths TX_PARAM...)` options. The remaining active leaf
-is direct/non-generated transaction validation.
+`ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS` is complete: same-transaction scalar
+parameter defaults are now accepted for generated child and direct/non-
+generated transaction data-operation width evidence in existing
+`shift_left`/`shift_right` `(width TX_PARAM)` and `extract`/`assemble`
+`(widths TX_PARAM...)` options.
 
 Schedule reports now expose positive integer `width` metadata for inferred
 scheduler counters and register storage with known ISF width evidence.

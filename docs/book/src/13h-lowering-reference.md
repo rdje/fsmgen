@@ -1612,10 +1612,10 @@ SystemVerilog path as binary operators rather than schedule-only placeholders.
 For `shift_right`, known signal widths are used for the inserted MSB position;
 an explicit `(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)` option supplies
 that width when the register is not declared elsewhere. `TX_PARAM` is limited
-to same-transaction generated child scalar parameter defaults that resolve to
-positive integers. The option is an assertion and must agree with any known
-register width. Unknown widths fail closed instead of emitting the placeholder
-`WIDTH` expression.
+to same-transaction scalar parameter defaults on generated child or
+direct/non-generated transactions that resolve to positive integers. The
+option is an assertion and must agree with any known register width. Unknown
+widths fail closed instead of emitting the placeholder `WIDTH` expression.
 
 For `shift_left`, the same optional
 `(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)` option supplies

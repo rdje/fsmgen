@@ -1548,13 +1548,13 @@ Shift operations are also exact scalar forms:
 `(shift_left reg bit [(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)])` and
 `(shift_right reg bit [(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)])`.
 
-The optional width value can be a positive literal, generated child
-same-transaction scalar parameter default, actor-local scalar parameter
-default, declared actor constant, or qualified imported package scalar
-constant that resolves to a positive integer. `assemble` and `extract` use
-the same source set in ordered
-`(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)` lists. Direct
-transaction parameters are still deferred for this data-width surface.
+The optional width value can be a positive literal, same-transaction scalar
+parameter default on a generated child or direct/non-generated transaction,
+actor-local scalar parameter default, declared actor constant, or qualified
+imported package scalar constant that resolves to a positive integer.
+`assemble` and `extract` use the same source set in ordered
+`(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)` lists. Unrelated or
+cross-transaction parameters remain fail-closed for this data-width surface.
 
 **What happens**:
 1. `(<- (var expr))` — variable modified, takes effect next cycle (flopped)

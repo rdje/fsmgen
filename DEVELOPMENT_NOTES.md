@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Direct data-operation width parameters need an explicit use gate
+- `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` reuses the generated-child
+  transaction-parameter width resolver for direct/non-generated transactions,
+  but only after a direct validation gate proves that a data-operation width
+  option actually references a declared same-transaction parameter.
+- That gate keeps the old fail-closed behavior for unrelated direct
+  `(params ...)` declarations, while letting malformed or non-positive
+  referenced width values reach the more targeted data-operation diagnostics.
+- The accepted value remains the transaction definition default. Activation
+  overrides, generated child variants, and generated-top respecialization stay
+  outside this slice.
+
 ## 2026-05-25: Generated-child data-operation width parameters stay definition-local
 - `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2` resolves transaction-local scalar
   defaults as static width facts only for generated child transactions.

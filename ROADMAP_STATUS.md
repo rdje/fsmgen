@@ -2,9 +2,27 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS`.
-- Current frontier: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3`.
-- Current R14 generated-child transaction-parameter data-width implementation:
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Current R14 direct transaction-parameter data-width implementation:
+  `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` completed and closed the task tree.
+  Direct/non-generated transactions now accept same-transaction scalar
+  parameter defaults as data-operation width evidence for `shift_left` and
+  `shift_right` `(width TX_PARAM)` plus `extract` and `assemble`
+  `(widths TX_PARAM...)` when the parameter default resolves to a positive
+  integer. The validation gate opens only when at least one data-operation
+  width option references a declared same-transaction parameter, so unrelated
+  direct transaction parameter declarations still fail closed. The shared
+  width resolver preserves transaction-local precedence before actor
+  constants and actor parameters. Aggregate/list defaults, zero-valued
+  defaults, runtime signals, arbitrary expressions, activation-site override
+  specialization, generated child variants, generated-top respecialization,
+  and schedule-report key-family changes remain deferred. Validation passed:
+  syntax checks; focused data-operation/public/spec/book tests with
+  `Files=13, Tests=447`; `./bin/ci-regression isf --no-book` with
+  `Files=273, Tests=1735`; final status/spec/book audits with `Files=4,
+  Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- Recent R14 generated-child transaction-parameter data-width implementation:
   `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2` shipped same-transaction scalar
   parameter defaults as data-operation width evidence for generated child
   transactions. Generated child `shift_left` and `shift_right`

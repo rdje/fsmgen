@@ -1030,21 +1030,21 @@ Static data-operation width sources are checked by
 so `shift_left`, `shift_right`, and `extract` explicit width evidence may use
 positive integer literals, actor-local scalar parameter defaults, declared
 actor constants, or qualified imported package scalar constants that resolve
-to positive integers. Unsupported direct transaction parameters, runtime
-interface signals, unknown names, unknown or unqualified package constants, aggregate
-package constants, package member/item paths, ambiguous
+to positive integers. Unsupported unrelated or cross-transaction parameters,
+runtime interface signals, unknown names, unknown or unqualified package constants,
+aggregate package constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, arbitrary expressions, zero values, and
 aggregate values fail closed.
-Generated child transaction-parameter data-operation width evidence is checked
+Transaction-parameter data-operation width evidence is checked
 by
 [t/1367-isf-data-op-transaction-param-widths.t](../t/1367-isf-data-op-transaction-param-widths.t),
-so generated child same-transaction scalar parameter defaults may provide
-`shift_left`/`shift_right` `(width TX_PARAM)` and `extract`/`assemble`
-`(widths TX_PARAM...)` evidence when they resolve to positive integers.
-Direct/non-generated transaction parameters, aggregate/list parameter
-defaults, zero-valued defaults, activation-site override specialization, and
-generated-top respecialization remain fail-closed for this data-operation
-width surface.
+so same-transaction scalar parameter defaults on generated child and
+direct/non-generated transactions may provide `shift_left`/`shift_right`
+`(width TX_PARAM)` and `extract`/`assemble` `(widths TX_PARAM...)` evidence
+when they resolve to positive integers. Aggregate/list parameter defaults,
+zero-valued defaults, unrelated or cross-transaction parameters,
+activation-site override specialization, and generated-top respecialization
+remain fail-closed for this data-operation width surface.
 Assemble static part widths are checked by
 [t/1344-isf-assemble-static-part-widths.t](../t/1344-isf-assemble-static-part-widths.t),
 so `(assemble part... as target (widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...))`
@@ -1685,12 +1685,12 @@ and `extract` when they resolve to positive integers. Those width evidence
 tokens resolve inside scheduler publication and appear as concrete scheduled
 `.fsm` shift positions, assemble/extract width facts, and
 `inferred_storage[]` report widths; unsupported package shapes fail closed.
-Generated child same-transaction scalar parameter defaults are public as
-explicit data-operation width evidence for `shift_left`, `shift_right`,
-`assemble`, and `extract` when they resolve to positive integers. Those width
-facts use the generated child transaction definition default; direct
-transaction parameters and activation-site override-specialized data widths
-remain fail-closed.
+Same-transaction scalar parameter defaults on generated child and
+direct/non-generated transactions are public as explicit data-operation width
+evidence for `shift_left`, `shift_right`, `assemble`, and `extract` when they
+resolve to positive integers. Those width facts use the transaction
+definition default; activation-site override-specialized data widths remain
+fail-closed.
 Earlier actor-local scalar parameter defaults are public as scalar actor
 parameter defaults or scalar leaves inside actor aggregate/list parameter
 defaults. Source order is the only dependency model: the referenced actor

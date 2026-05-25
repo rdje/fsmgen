@@ -952,11 +952,12 @@ The ISF-specific current limitations are:
 - `(shift_left ...)` and `(shift_right ...)` accept explicit
   `(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)` options when the shifted
   register width is not declared elsewhere. `TX_PARAM` names a
-  same-transaction generated child scalar parameter default that resolves to a
-  positive integer, `PARAM` names an actor-local scalar parameter default that
-  resolves to a positive integer, `CONST` names a declared actor constant that
-  resolves to a positive integer, and `PACKAGE.CONSTANT` names a qualified
-  imported package scalar constant that resolves to a positive integer. The
+  same-transaction scalar parameter default on a generated child or
+  direct/non-generated transaction and must resolve to a positive integer,
+  `PARAM` names an actor-local scalar parameter default that resolves to a
+  positive integer, `CONST` names a declared actor constant that resolves to a
+  positive integer, and `PACKAGE.CONSTANT` names a qualified imported package
+  scalar constant that resolves to a positive integer. The
   option is an assertion and must agree with any known register width. Values
   with no known or explicit width still fail closed for `shift_right` instead
   of emitting a placeholder `WIDTH` expression. Plain `shift_left` remains
@@ -970,9 +971,10 @@ The ISF-specific current limitations are:
   inferred remainders fail closed.
 - `(assemble ...)` and `(extract ...)` accept ordered
   `(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)` evidence lists. The list may
-  mix positive integer literals, actor-local scalar parameter defaults,
-  declared actor constants, and qualified imported package scalar constants
-  that resolve to positive integers. `extract` also infers exactly one missing
+  mix positive integer literals, same-transaction scalar parameter defaults on
+  generated child or direct/non-generated transactions, actor-local scalar
+  parameter defaults, declared actor constants, and qualified imported package
+  scalar constants that resolve to positive integers. `extract` also infers exactly one missing
   destination field width when the source word width and every sibling field
   width prove a positive remainder. Accepted `extract` source now emits exact
   descending slices only; multiple unknown field widths, non-positive inferred
