@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS` | `active` | `R14` | `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` | [docs/tasks/ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.md](docs/tasks/ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.md) |
 
 ## Proposed Task Trees
 

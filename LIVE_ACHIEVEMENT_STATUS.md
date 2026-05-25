@@ -2,6 +2,31 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Scalar storage package-constant widths selected
+- Created active task tree `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS`.
+- Completed `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.1`; the selected
+  implementation frontier is `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`.
+- The next implementation leaf will allow actor-owned scalar storage
+  `(var NAME (width PACKAGE.CONSTANT))` and verbose
+  `(variable NAME (width PACKAGE.CONSTANT))` declarations to use qualified
+  imported package scalar constants when the resolved value is a positive
+  integer literal.
+- Accepted package-constant scalar storage widths will publish as resolved
+  integer widths in parser handoff, scheduled `.fsm`, schedule-report
+  evidence, width evidence, and generated HDL, matching existing
+  actor-constant and actor-parameter scalar storage width behavior.
+- Unqualified package constants, unknown package constants, package aggregate
+  constants, package aggregate scalar-leaf paths, ambiguous local-token
+  spellings, zero-valued constants, runtime signals, arbitrary expressions,
+  package constants in other dimension/value domains, and generated-top
+  respecialization remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS`.
+- Current frontier: `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`.
+
 ## 2026-05-24: R14 — Interface package-constant widths shipped
 - Completed `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2` and closed the task
   tree.
