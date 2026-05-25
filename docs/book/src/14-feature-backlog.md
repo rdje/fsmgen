@@ -2672,6 +2672,14 @@ zero-valued constants, non-scalar values, use-site overrides, and generated-top
 respecialization remain outside the shipped data-operation width-evidence
 surface.
 
+Active follow-up: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS` is selected to widen
+that boundary for same-transaction scalar parameter defaults in existing
+`shift_left`/`shift_right` `(width PARAM)` and `extract`/`assemble`
+`(widths PARAM...)` options. The implementation sequence is generated-child
+transactions first, then direct/non-generated transaction validation. Until
+those leaves ship, transaction parameters remain fail-closed for
+data-operation width evidence.
+
 Schedule reports now expose positive integer `width` metadata for inferred
 scheduler counters and register storage with known ISF width evidence.
 

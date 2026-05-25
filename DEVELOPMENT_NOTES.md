@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Transaction-parameter data-operation widths should reuse the static width path
+- `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.1` selects a narrow value-domain
+  widening for data-operation width options.
+- Transaction parameters are compile-time defaults in this context, not
+  runtime values. The first implementation leaf should therefore resolve a
+  same-transaction scalar parameter default to the same positive integer
+  evidence already used by literals, actor constants, actor scalar parameters,
+  and qualified package scalar constants.
+- The generated-child leaf is first because generated child transaction
+  parameters already have a publication and validation path. Direct
+  transactions need a separate validation gate so unrelated direct
+  `(params ...)` clauses do not become silently accepted.
+- Activation-site overrides stay out of scope because existing data-operation
+  lowering uses the transaction definition's width facts. Per-activation width
+  specialization would require generated child variants or generated-top
+  respecialization, which is a separate scheduler design problem.
+
 ## 2026-05-25: Same-value contract-window activation overrides reuse the default monitor safely
 - `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` keeps the existing generated
   child monitor architecture intact and accepts only activation-site overrides

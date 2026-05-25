@@ -2,6 +2,27 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Transaction-parameter data-operation width tree selected
+- Created active task tree `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS`.
+- Completed selection leaf `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.1`; the next
+  implementation frontier is `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2`.
+- The selected surface will allow same-transaction scalar parameter defaults
+  to act as explicit data-operation width evidence for
+  `shift_left`/`shift_right` `(width PARAM)` and
+  `extract`/`assemble` `(widths PARAM...)` when the resolved default is a
+  positive integer.
+- The implementation sequence is generated-child first, then direct
+  transaction validation. Activation-site override specialization,
+  generated-top respecialization, aggregate/list parameters, runtime signals,
+  arbitrary expressions, and schedule-report key-family changes remain
+  deferred.
+- No parser, scheduler, generated `.fsm`, HDL, schedule-report, public API, or
+  runtime behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS`.
+- Current frontier: `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.2`.
+
 ## 2026-05-25: R14 — Same-value activation override contract-window support shipped
 - Completed `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` and closed the
   task tree.
