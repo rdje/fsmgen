@@ -184,6 +184,14 @@ active-low reset conditions. It also synchronizes the opposite side's
 reset-active condition before allowing new source requests or destination
 pulses, so a reset on one side does not create a spurious event on the other.
 
+When a domain intentionally omits a reset, the generated CDC metadata marks the
+absence with `SOURCE_RESET_PRESENT 0d0` or `DEST_RESET_PRESENT 0d0`. The
+`isf/clock_domain_no_reset_event_crossing.isf` fixture proves that lower-result
+review artifacts, in-process schedule reports, and `--emit-schedule-json`
+preserve this metadata. Plain HDL generation for that fixture still fails
+closed because current direct scheduled `.fsm` HDL requires each domain artifact
+to declare both a clock and a reset.
+
 Plain `.isf` HDL generation now writes the generated `.fsm` artifacts and then
 feeds the generated top through the normal composition HDL path. For accepted
 event-crossing actors on SystemVerilog/Verilog-family targets, with

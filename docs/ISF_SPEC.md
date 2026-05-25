@@ -1470,7 +1470,10 @@ Multi-clock boundary:
   Generated HDL for accepted event-crossing actors now emits the generated top
   and concrete acknowledged-event CDC child modules for accepted crossings on
   SystemVerilog/Verilog-family targets when each emitted domain artifact
-  satisfies the current scheduled `.fsm` clock/reset HDL contract.
+  satisfies the current scheduled `.fsm` clock/reset HDL contract. No-reset
+  domains participate in lowering and schedule-report metadata, including
+  absent-reset CDC metadata, but plain HDL generation for those domain artifacts
+  still fails closed under the current direct `.fsm` clock/reset contract.
 - Direct reads or writes between domains are not accepted by implication. A
   shipped CDC primitive or protocol actor must provide specified runtime
   behavior, lowering, diagnostics, and report metadata before such crossings
@@ -1561,7 +1564,10 @@ Selected reset ownership model and current implementation status:
 ```
 
 - Each domain owns zero or one reset. A domain with no reset clause has no
-  generated reset for its clocked state.
+  generated reset for its clocked state. Current lower/report/schedule-JSON
+  paths preserve that absence; current direct scheduled `.fsm` HDL generation
+  still requires a clock plus reset declaration, so no-reset multi-domain HDL
+  fails closed rather than emitting misleading output.
 - Domain reset payloads reuse the shipped reset value rules: flat
   `(reset name)` is synchronous with inferred polarity; list forms may include
   `async`, `active_low`, or `active_high`; and reset names must be scalar.
@@ -1612,7 +1618,11 @@ Selected crossing primitive and current implementation status:
   names, endpoint domains/signals, single-outstanding acknowledgement policy,
   and no-payload policy. The generated HDL path recognizes the ISF-generated
   CDC metadata and emits a concrete acknowledged-event synchronizer child; it
-  does not infer HDL for arbitrary external `?rtl` children.
+  does not infer HDL for arbitrary external `?rtl` children. For no-reset
+  domains, the generated `?rtlif` metadata records
+  `SOURCE_RESET_PRESENT 0d0` and/or `DEST_RESET_PRESENT 0d0`; that metadata is
+  public through lower/report review artifacts even though no-reset domain HDL
+  remains fail-closed today.
 - An actor may declare multiple independent event crossings. Each crossing
   gets its own deterministic CDC instance/module, top wiring, report entry,
   and generated child HDL. This does not add ordering, payload, or multi-event
@@ -1653,7 +1663,9 @@ Selected lowering artifact strategy and current implementation status:
   accepted event-crossing actors emits the generated top and concrete
   acknowledged-event CDC child on SystemVerilog/Verilog-family targets when
   each emitted domain artifact satisfies the current scheduled `.fsm`
-  clock/reset HDL contract.
+  clock/reset HDL contract. No-reset event-crossing fixtures are supported for
+  scheduled `.fsm` review artifacts and schedule reports only; the direct HDL
+  backend still fails closed on the reset-required `+system` contract.
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.
@@ -4786,6 +4798,7 @@ Representative shipped fixtures:
 - [isf/stream_stage_contract.isf](../isf/stream_stage_contract.isf)
 - [isf/clock_domain_event_crossing.isf](../isf/clock_domain_event_crossing.isf)
 - [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
+- [isf/clock_domain_no_reset_event_crossing.isf](../isf/clock_domain_no_reset_event_crossing.isf)
 - [isf/spi_master.isf](../isf/spi_master.isf)
 - [isf/uart_tx.isf](../isf/uart_tx.isf)
 - [isf/when_test.isf](../isf/when_test.isf)
@@ -4885,6 +4898,11 @@ explicitly deferred.
 hardens the CDC fixture surface by covering two opposite-direction acknowledged
 event crossings in one generated top with two concrete CDC child modules and
 bounded schedule-report metadata.
+[isf/clock_domain_no_reset_event_crossing.isf](../isf/clock_domain_no_reset_event_crossing.isf)
+hardens the CDC fixture surface for domains that intentionally omit reset
+declarations. It proves lower/report and CLI schedule-JSON propagation of
+absent-reset CDC metadata, and it locks the current plain-HDL fail-closed
+boundary for no-reset domain artifacts.
 The [isf/fifo_library_use.isf](../isf/fifo_library_use.isf) fixture now has
 file-backed strict reusable-library coverage for importer/child/generated-top
 scheduled `.fsm` artifacts, fixed FIFO parameter overrides, use-site bindings,

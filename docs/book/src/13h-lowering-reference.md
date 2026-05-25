@@ -154,6 +154,13 @@ The file-backed
 events in one generated top. This still carries no payload and creates no
 ordering relationship between the event channels.
 
+The file-backed `isf/clock_domain_no_reset_event_crossing.isf` fixture covers
+domains that omit reset declarations. Lowering and schedule reports preserve
+the generated CDC metadata with absent source and destination resets; current
+plain HDL generation for that fixture remains fail-closed because no-reset
+domain `.fsm` artifacts do not satisfy the direct backend's clock/reset
+`+system` contract.
+
 The generated CDC HDL is a toggle/acknowledge synchronizer. In outline, it
 contains:
 

@@ -421,6 +421,10 @@ Rules:
   concrete acknowledged-event CDC child modules for SystemVerilog/Verilog-family
   targets when each domain artifact satisfies the scheduled `.fsm` clock/reset
   HDL contract.
+- No-reset event crossings are accepted for lower-result review artifacts and
+  schedule JSON. Their generated CDC metadata marks absent source/destination
+  resets, and current plain HDL generation fails closed because direct
+  scheduled `.fsm` HDL still requires clock plus reset declarations.
 
 ## 8. Interface, Storage, Constants
 
@@ -3273,6 +3277,7 @@ isf/rule_resource_arbiter.isf
 isf/full_featured.isf
 isf/clock_domain_event_crossing.isf
 isf/clock_domain_dual_event_crossing.isf
+isf/clock_domain_no_reset_event_crossing.isf
 isf/common/fifo.isf
 isf/fifo_controller.isf
 isf/fifo_data_path.isf
@@ -3730,6 +3735,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-multi-data isf/atl_two_child_multi_data_pipeline.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
 ./bin/fsmgen --outdir /tmp/isf-cdc isf/clock_domain_dual_event_crossing.isf
+./bin/fsmgen --emit-schedule-json isf/clock_domain_no_reset_event_crossing.isf
 ./bin/fsmgen --capability-manifest
 ```
 

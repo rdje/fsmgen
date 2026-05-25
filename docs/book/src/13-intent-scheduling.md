@@ -594,6 +594,13 @@ The file-backed `isf/clock_domain_dual_event_crossing.isf` fixture now covers tw
 opposite-direction event crossings in one top, proving repeated CDC child
 generation without adding payload or ordering semantics.
 
+The file-backed `isf/clock_domain_no_reset_event_crossing.isf` fixture covers
+the same acknowledged-event schedule/report surface when both domains
+intentionally omit resets. It proves generated CDC metadata such as
+`SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`, and it documents the
+current HDL boundary: direct HDL generation still fails closed for no-reset
+domain `.fsm` artifacts.
+
 Direct cross-domain reads, writes, triggers, activations, bindings, and multi-domain
 drive reuse remain illegal unless a shipped CDC primitive or protocol actor
 owns the crossing semantics.

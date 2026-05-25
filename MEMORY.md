@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 no-reset CDC fixture coverage shipped
+- Completed `ISF-CDC-NO-RESET-FIXTURE.1` and closed the task tree.
+- Added `isf/clock_domain_no_reset_event_crossing.isf` as a file-backed
+  acknowledged-event CDC fixture with bus/core clock domains that intentionally
+  omit resets.
+- Focused coverage now proves lower-result domain artifacts plus generated top
+  emission, CDC child wiring, absent-reset `?rtlif` metadata
+  (`SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`), in-process
+  schedule report metadata, and CLI `--emit-schedule-json` parity.
+- Plain HDL generation for this no-reset fixture remains deliberately
+  fail-closed with the current incomplete `+system` diagnostic because direct
+  scheduled `.fsm` HDL still requires clock plus reset declarations.
+- Public specs, downstream handoff, public contract, mdBook, roadmap, task
+  tree, README index, and live docs are synchronized.
+- Validation passed: syntax check; focused clock-domain/book audits with
+  `Files=4, Tests=376`; `./bin/ci-regression isf --no-book` with
+  `Files=275, Tests=1756`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 data-operation width backlog synchronized
 - Completed `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` and closed the task
   tree.

@@ -597,7 +597,9 @@ The multi-domain clock-domain report projection and event-crossing fixture are
 checked by [t/1247-isf-clock-domain-partition.t](../t/1247-isf-clock-domain-partition.t).
 That test now also covers the file-backed dual event-crossing fixture, proving
 two generated CDC child modules and both source/destination endpoint roles in
-one top.
+one top. It also covers the file-backed no-reset event-crossing fixture,
+proving absent-reset CDC metadata in the generated top and schedule-report
+surface while preserving the current no-reset HDL fail-closed boundary.
 The `parse_source(...)` facade method is checked by
 [t/1118-isf-public-parse-source-facade-audit.t](../t/1118-isf-public-parse-source-facade-audit.t)
 to ensure in-memory source text returns a scheduler-consumable actor with the
@@ -2164,6 +2166,12 @@ expose bounded per-domain and event-crossing metadata through
 SystemVerilog/Verilog-family event-crossing actors now emits the generated top
 and a concrete generated acknowledged-event CDC child when each emitted domain
 artifact satisfies the current scheduled `.fsm` clock/reset HDL contract.
+No-reset event-crossing actors are accepted for lowering, in-process
+`report(...)`, and `--emit-schedule-json`; their generated CDC interface
+metadata publishes `SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`.
+Plain HDL generation for those no-reset domain artifacts still fails closed
+with the current incomplete `+system` diagnostic because direct scheduled
+`.fsm` HDL generation still requires a clock plus reset declaration.
 The current shipped reusable library catalog contains `common.fifo.fifo` with
 source [isf/common/fifo.isf](../isf/common/fifo.isf), import fixture
 [isf/fifo_library_use.isf](../isf/fifo_library_use.isf), fixed parameters
@@ -2615,6 +2623,10 @@ artifacts, then emits SystemVerilog/Verilog-family HDL containing the
 generated multi-domain top and concrete acknowledged-event CDC child modules
 for accepted crossings when each emitted domain artifact satisfies the current
 scheduled `.fsm` clock/reset HDL contract.
+No-reset event-crossing actors remain public lower/report/schedule-JSON
+fixtures, not HDL fixtures: their generated CDC metadata marks source and
+destination resets absent, and the plain HDL path fails closed under the
+current reset-required scheduled `.fsm` backend contract.
 `--emit-schedule-json` succeeds for accepted multi-domain actors.
 The strict CLI success-shape field advertises that accepted `--strict
 file.isf` generation follows the public HDL-generation success shape and keeps
@@ -3142,6 +3154,11 @@ single-outstanding acknowledgement policy, no-payload policy, and generated
 top basename. Plain SystemVerilog/Verilog-family HDL generation for accepted
 event-crossing actors emits the generated top and concrete acknowledged-event
 CDC child modules.
+When a crossing's source or destination domain omits reset ownership, generated
+CDC interface metadata marks the corresponding reset as absent. Schedule
+reports and `--emit-schedule-json` preserve that no-reset crossing metadata,
+but plain HDL generation remains fail-closed until direct scheduled `.fsm`
+HDL supports no-reset domain artifacts.
 
 The schedule report is not yet a frozen full schema. Downstream consumers should
 use the advertised contract metadata instead of assuming every current field,

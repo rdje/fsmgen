@@ -4,6 +4,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 no-reset CDC fixture coverage:
+  `ISF-CDC-NO-RESET-FIXTURE.1` shipped a file-backed
+  `isf/clock_domain_no_reset_event_crossing.isf` fixture and closed the task
+  tree. Lowering now has focused coverage for bus/core no-reset domain
+  artifacts plus a generated top and CDC child; the generated CDC interface
+  metadata records `SOURCE_RESET_PRESENT 0d0` and
+  `DEST_RESET_PRESENT 0d0`; in-process and CLI schedule JSON preserve the
+  crossing metadata. Plain HDL generation for this no-reset fixture remains
+  deliberately fail-closed with the current incomplete `+system` diagnostic
+  because direct scheduled `.fsm` HDL still requires clock plus reset
+  declarations. Validation passed: syntax check; focused clock-domain/book
+  audits with `Files=4, Tests=376`; `./bin/ci-regression isf --no-book` with
+  `Files=275, Tests=1756`; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 data-operation width backlog truth sync:
   `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` synchronized one stale mdBook
   backlog sentence and closed the task tree. The data-operation width backlog
@@ -8371,13 +8384,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` closed a documentation-only
-  mdBook backlog truth sync. The data-operation width backlog now
-  distinguishes shipped same-transaction scalar parameter defaults from
-  still-invalid unrelated/cross-transaction parameters, zero-valued
-  transaction parameters, aggregate/list transaction parameters,
-  activation-site override-specialized data widths, runtime signals, and
-  expressions.
+  `ISF-CDC-NO-RESET-FIXTURE.1` closed a no-reset acknowledged-event CDC
+  fixture hardening slice. The new fixture proves lower-result review
+  artifacts, in-process schedule reports, and CLI schedule JSON preserve
+  absent source/destination reset metadata while current plain HDL generation
+  still fails closed under the reset-required scheduled `.fsm` backend
+  contract.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11833,6 +11845,23 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-CDC-NO-RESET-FIXTURE.1` is shipped and the task tree is closed:
+  - the file-backed `isf/clock_domain_no_reset_event_crossing.isf` fixture now
+    covers two no-reset clock domains with one acknowledged event crossing,
+  - lowering emits bus/core domain scheduled `.fsm` artifacts plus a generated
+    top and CDC child review artifact,
+  - generated CDC metadata records `SOURCE_RESET_PRESENT 0d0` and
+    `DEST_RESET_PRESENT 0d0`, and in-process plus CLI schedule JSON preserve
+    the no-reset crossing metadata,
+  - plain HDL generation for this no-reset fixture remains fail-closed with
+    the current incomplete `+system` diagnostic because direct scheduled
+    `.fsm` HDL still requires clock plus reset declarations,
+  - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
+    README index, roadmap, and live docs are synchronized.
+  - Validation passed: syntax check; focused clock-domain/book audits with
+    `Files=4, Tests=376`; `./bin/ci-regression isf --no-book` with
+    `Files=275, Tests=1756`; `mdbook build docs/book`; and
+    `git diff --check`.
 - `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` is shipped and the task tree is
   closed:
   - the mdBook feature backlog no longer implies that every transaction

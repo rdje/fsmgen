@@ -705,6 +705,86 @@ subtest 'dual event-crossing fixture emits two CDC children and reports both dir
     );
 };
 
+subtest 'no-reset event-crossing fixture emits reset-absent CDC metadata' => sub {
+    my $path = repo_file('isf/clock_domain_no_reset_event_crossing.isf');
+    my $actor = FSM::Adapter::ISF->new()->parse_file($path);
+    my $scheduler = FSM::Scheduler::ISF->new();
+
+    my $lowered = $scheduler->lower($actor);
+    is_deeply(
+        sorted([keys %{$lowered->{files}}]),
+        [qw(
+          clock_domain_no_reset_event_crossing__domain_bus.fsm
+          clock_domain_no_reset_event_crossing__domain_core.fsm
+          clock_domain_no_reset_event_crossing_top.fsm
+        )],
+        'no-reset event fixture emits one artifact per domain plus the generated top',
+    );
+
+    my $top_fsm = $lowered->{files}{'clock_domain_no_reset_event_crossing_top.fsm'};
+    like(
+        $top_fsm,
+        qr/\(\?rtl:req_seen_cdc clock_domain_no_reset_event_crossing__cdc_event_req_seen\)/,
+        'generated top instantiates the no-reset CDC child',
+    );
+    like($top_fsm, qr{/bus_clk/req_seen_cdc\.source_clk/}, 'top wires the source clock into the CDC child');
+    like($top_fsm, qr{/core_clk/req_seen_cdc\.dest_clk/}, 'top wires the destination clock into the CDC child');
+    unlike($top_fsm, qr{/[^/\s]*rst[^/\s]*/req_seen_cdc\.(?:source_reset|dest_reset)/},
+        'top does not wire absent domain resets into the CDC child');
+    like(
+        $top_fsm,
+        qr{
+            \(\?rtlif:clock_domain_no_reset_event_crossing__cdc_event_req_seen
+            [\s\S]*?\(SOURCE_RESET_PRESENT\s+0d0\)
+            [\s\S]*?\(DEST_RESET_PRESENT\s+0d0\)
+        }x,
+        'CDC metadata records absent source and destination resets',
+    );
+
+    my $report = decode_json($scheduler->report($actor));
+    is_deeply(
+        [map { $_->{name} } @{$report->{crossings}}],
+        ['req_seen'],
+        'schedule report preserves the no-reset crossing declaration',
+    );
+    my %reported_domain = map { $_->{name} => $_ } @{$report->{clock_domains}};
+    is_deeply(
+        $reported_domain{bus}{crossings},
+        [{ event => 'req_seen', role => 'source', signal => 'req_seen_req', ready => 'req_seen_ready' }],
+        'bus-domain report includes the source crossing endpoint',
+    );
+    is_deeply(
+        $reported_domain{core}{crossings},
+        [{ event => 'req_seen', role => 'destination', signal => 'req_seen_pulse', ready => undef }],
+        'core-domain report includes the destination crossing endpoint',
+    );
+
+    my $cli_report = run_schedule_json($path);
+    is_deeply($cli_report->{clock_domains}, $report->{clock_domains},
+        'CLI schedule JSON preserves no-reset domain metadata');
+    is_deeply($cli_report->{crossings}, $report->{crossings},
+        'CLI schedule JSON preserves the no-reset crossing summary');
+
+    my $dir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($dir, 'generated');
+    mkdir $outdir or die "Cannot create $outdir: $!";
+    my $out_path = File::Spec->catfile($outdir, 'clock_domain_no_reset_event_crossing.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => [
+            './bin/fsmgen',
+            '--quiet',
+            '--outdir', $outdir,
+            '--output', $out_path,
+            $path,
+        ],
+    );
+
+    ok(!$success, 'no-reset event fixture HDL generation fails closed');
+    like(join('', @{$stderr_buf || []}), qr/Incomplete '\+system' section/,
+        'no-reset event fixture HDL diagnostic names the current reset-required system contract');
+    ok(!-f $out_path, 'no-reset event fixture does not write misleading HDL output');
+};
+
 subtest 'direct unowned cross-domain references fail closed before emission' => sub {
     assert_lower_rejected(<<'ISF', 'transaction cross-domain activation read', qr/clock-domain violation: transaction 'bus_tx' on clause read signal 'start' owned by domain 'core' from domain 'bus'/);
 (actor bad_cross_read

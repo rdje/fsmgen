@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: No-reset CDC is schedule/report coverage, not HDL support
+- `ISF-CDC-NO-RESET-FIXTURE.1` deliberately hardens the acknowledged-event CDC
+  fixture matrix without changing backend reset support.
+- Lowering can represent domains that omit reset clauses, and generated CDC
+  interface metadata can publish absent resets through
+  `SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`.
+- The direct scheduled `.fsm` HDL path still requires a `+system` section with
+  clock plus reset. The no-reset fixture therefore locks the current
+  fail-closed diagnostic instead of pretending generated HDL is available for
+  no-reset domain artifacts.
+- Future no-reset HDL support should be implemented as an explicit backend
+  contract change, not as a CDC fixture side effect.
+
 ## 2026-05-25: Backlog wording must preserve shipped data-width sources
 - `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` is documentation-only. It repairs a
   broad backlog sentence that predated same-transaction scalar parameter

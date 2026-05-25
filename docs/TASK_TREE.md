@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CDC-NO-RESET-FIXTURE` | `done` | `R14` | `closed` | [docs/tasks/ISF-CDC-NO-RESET-FIXTURE.md](docs/tasks/ISF-CDC-NO-RESET-FIXTURE.md) |
 | `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.md) |
 | `ISF-SCHEDULE-REPORT-STORAGE-ROLES` | `done` | `R14` | `closed` | [docs/tasks/ISF-SCHEDULE-REPORT-STORAGE-ROLES.md](docs/tasks/ISF-SCHEDULE-REPORT-STORAGE-ROLES.md) |
 | `ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.md](docs/tasks/ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.md) |

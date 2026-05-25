@@ -3378,10 +3378,14 @@ hardening slice now adds
 [isf/clock_domain_dual_event_crossing.isf](../../isf/clock_domain_dual_event_crossing.isf),
 which covers two opposite-direction acknowledged event crossings in one
 generated top with two CDC children, report metadata, and generated HDL.
+[isf/clock_domain_no_reset_event_crossing.isf](../../isf/clock_domain_no_reset_event_crossing.isf)
+now covers the no-reset acknowledged-event schedule/report path, including
+absent-reset CDC metadata and the current fail-closed HDL boundary for no-reset
+domain artifacts.
 
-Remaining backlog still needs richer CDC fixture matrices for payload-like
-protocol actors, dual-clock FIFO-like actors, and broader reset/no-reset
-combinations.
+Remaining backlog still needs no-reset scheduled `.fsm` HDL support, richer CDC
+fixture matrices for payload-like protocol actors, dual-clock FIFO-like actors,
+and broader reset/no-reset protocol combinations.
 
 Outside that shipped event primitive, direct same-cycle reads or writes across
 domains must not be inferred from ordinary signal access.

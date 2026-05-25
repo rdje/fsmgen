@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — No-reset CDC fixture coverage shipped
+- Completed `ISF-CDC-NO-RESET-FIXTURE.1` and closed the task tree.
+- Added `isf/clock_domain_no_reset_event_crossing.isf` as a no-reset
+  acknowledged-event CDC fixture.
+- Focused coverage now proves bus/core domain lower-result artifacts,
+  generated top CDC child wiring, absent-reset CDC metadata
+  (`SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`), in-process
+  schedule report metadata, and CLI schedule JSON parity.
+- Plain HDL generation for the no-reset fixture remains fail-closed with the
+  current incomplete `+system` diagnostic because direct scheduled `.fsm` HDL
+  still requires clock plus reset declarations.
+- Validation passed: syntax check; focused clock-domain/book audits with
+  `Files=4, Tests=376`; `./bin/ci-regression isf --no-book` with
+  `Files=275, Tests=1756`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Data-operation width backlog synchronized
 - Completed `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` and closed the task
   tree.
