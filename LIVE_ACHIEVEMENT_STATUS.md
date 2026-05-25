@@ -2,6 +2,40 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Temporal-contract package-constant windows shipped
+- Completed `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` and closed the task tree.
+- Bounded eventual temporal-contract windows now accept qualified imported
+  package scalar constants in both supported spellings:
+  `(eventually SIGNAL within PACKAGE.CONSTANT)` and
+  `(eventually SIGNAL (within PACKAGE.CONSTANT))`.
+- Accepted package constants require an imported package, an existing package
+  `+constants` entry, and a resolved positive integer scalar literal.
+- Accepted package constants reuse the existing temporal monitor path used by
+  positive literals, actor constants, and actor-local scalar parameter
+  defaults; monitor timing, sticky-fail behavior, reset behavior, and
+  SystemVerilog assertion projection are unchanged.
+- Schedule reports keep `temporal_contracts[].within_cycles` as the resolved
+  positive integer and do not add a source-token field. Package/import
+  metadata and embedded package `+constants` entries remain the review path
+  for the authored package constant.
+- Unknown package constants, unqualified package constants, package aggregate
+  constants, package member/item paths, ambiguous local-enum/package-constant
+  spellings, zero-valued constants, package constants inside contract-window
+  expressions, transaction parameters, runtime signals, arbitrary
+  expressions, package constants in unrelated value domains, use-site
+  specialization, generated-top respecialization, dynamic bounds, min/max
+  windows, same-cycle checks, nested contracts, expression operands, global
+  implication forms, and multiple outstanding obligations remain fail closed
+  or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused contract/public/spec/book tests
+  with `Files=9, Tests=385`; `./bin/ci-regression isf --no-book` with
+  `Files=268, Tests=1721`; post-closure public/spec/book audits with
+  `Files=7, Tests=374`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Temporal-contract package-constant windows selected
 - Created active task tree `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS`.
 - Completed `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1`; the selected

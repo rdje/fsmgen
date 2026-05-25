@@ -289,10 +289,12 @@ The referenced member must resolve before lowering to a non-negative integer
 literal. Constants are emitted into scheduled `.fsm` as `+constants`, appear
 in schedule reports as `actor_constants[]` with the authored value token, and
 are legal symbolic sources for actor parameter defaults, static `(wait NAME)`
-counts, positive transaction latency min/max bounds, and the existing static
+counts, positive transaction latency min/max bounds, positive bounded
+eventual temporal-contract windows, and the existing static
 activation-parameter override path. Qualified imported package scalar
-constants are legal static transaction latency min/max sources when they
-resolve to positive integer literals. Actor parameter defaults may use declared
+constants are legal static transaction latency min/max and temporal-contract
+window sources when they resolve to positive integer literals. Actor parameter
+defaults may use declared
 actor constants by name or earlier actor-local scalar parameter defaults by
 name as scalar defaults or as scalar leaves inside compatible aggregate/list
 defaults; scheduled `.fsm` `+params` and `actor_params[]` preserve the
@@ -3762,10 +3764,13 @@ same bounded-eventually monitor. The contract is supported only as a top-level
 transaction clause, with a unique contract name per transaction, `signal` bound
 to a scalar actor interface input or output, and `cycles` as either a positive
 integer literal, a declared actor constant that resolves to a positive
-integer, or an actor-local scalar parameter default that resolves to a
+integer, an actor-local scalar parameter default that resolves to a positive
+integer, or a qualified imported package scalar constant that resolves to a
 positive integer. Transaction parameters, runtime signals, arbitrary
-expressions, unknown names, zero-valued constants, and zero-valued or
-non-scalar actor parameters are not accepted as contract windows. Reaching the
+expressions, unknown names, unknown or unqualified package constants, package
+aggregate constants, package member/item paths, ambiguous
+local-enum/package-constant spellings, zero-valued constants, and zero-valued
+or non-scalar actor parameters are not accepted as contract windows. Reaching the
 clause emits one arm state. The checked window starts on the next cycle and
 lasts for the resolved `cycles` bound. The generated scheduled `.fsm` artifact
 contains the arm state plus an always-on monitor DT with pending, age, and
@@ -4460,10 +4465,13 @@ assertion text. The
 capability-manifest ISF public contract advertises the keys, kind values,
 overlap values, assertion-projection values, and reset-policy shape through the
 matching `schedule_report_temporal_contract_*` metadata fields.
-When a contract window is authored with a positive actor constant or actor
-scalar parameter, `within_cycles` reports the resolved positive integer and no
-separate source-token field is public. The actor-local declaration remains
-visible through `actor_constants[]` or `actor_params[]`.
+When a contract window is authored with a positive actor constant, actor
+scalar parameter, or qualified imported package scalar constant,
+`within_cycles` reports the resolved positive integer and no separate
+source-token field is public. The actor-local declaration remains visible
+through `actor_constants[]` or `actor_params[]`; imported package constants
+remain visible through package/import metadata and embedded package
+`+constants` entries.
 Latency bounds do not have a dedicated public schedule-report entry. When a
 positive actor constant, actor scalar parameter, or qualified imported package
 scalar constant names `(latency (min ...))` or `(latency (max ...))`, the
@@ -5375,6 +5383,7 @@ Focused tests:
 - [t/1359-isf-wait-package-constant-counts.t](../t/1359-isf-wait-package-constant-counts.t)
 - [t/1360-isf-repeat-package-constant-counts.t](../t/1360-isf-repeat-package-constant-counts.t)
 - [t/1361-isf-latency-package-constant-bounds.t](../t/1361-isf-latency-package-constant-bounds.t)
+- [t/1362-isf-contract-package-constant-windows.t](../t/1362-isf-contract-package-constant-windows.t)
 
 ## 12. Explicitly Deferred
 
@@ -5502,7 +5511,9 @@ Focused tests:
   barrier: nested stages, stage-local latency/compute bodies, multiple
   endpoints, registered-valid variants, and skid buffers remain deferred.
 - Temporal `(contract ...)` forms beyond the shipped top-level bounded
-  eventual subset.
+  eventual subset with positive decimal literal, positive actor-constant,
+  positive actor-scalar-parameter, and qualified package scalar-constant
+  windows.
 - Rich storage-class optimization in schedule reports.
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
   actor-constant enum member references, direct transaction `set` RHS enum

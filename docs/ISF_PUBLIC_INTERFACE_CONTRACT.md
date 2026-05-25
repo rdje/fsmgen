@@ -1041,17 +1041,21 @@ unknown destination field can derive its width from a known source word and
 known sibling fields before later data operations consume that width evidence.
 The temporal-contract lowering boundary is checked by
 [t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
-and [t/1224-isf-contract-lowering.t](../t/1224-isf-contract-lowering.t).
+and [t/1224-isf-contract-lowering.t](../t/1224-isf-contract-lowering.t);
+qualified imported package scalar constants in contract windows are checked by
+[t/1362-isf-contract-package-constant-windows.t](../t/1362-isf-contract-package-constant-windows.t).
 The shipped subset is the top-level transaction form
 `(contract name (eventually signal within cycles))`. The older nested
 `(contract name (eventually signal (within cycles)))` spelling remains an
 accepted alias; both lower to one arm state plus an always-on monitor DT with
 pending, age, and sticky-fail storage. The `cycles` token may be a positive
-integer literal, a declared actor constant, or an actor-local scalar parameter
-default that resolves to a positive integer. Transaction parameters, runtime
-signals, arbitrary expressions, unknown names, zero-valued constants, and
-zero-valued or non-scalar actor parameters remain outside the contract-window
-surface.
+integer literal, a declared actor constant, an actor-local scalar parameter
+default, or a qualified imported package scalar constant that resolves to a
+positive integer. Transaction parameters, runtime signals, arbitrary
+expressions, unknown names, unknown or unqualified package constants, aggregate
+package constants, package member/item paths, ambiguous
+local-enum/package-constant spellings, zero-valued constants, and zero-valued
+or non-scalar actor parameters remain outside the contract-window surface.
 Schedule reports classify that DT as `temporal_contract_monitor` and classify
 the generated pending/fail storage as registers and age storage as a counter.
 Those three monitor storage entries also carry the advertised
@@ -1061,8 +1065,9 @@ pending, counter, and fail signal names.
 The bounded `temporal_contracts` summary projection reports the public trigger,
 observed signal, cycle bound, generated storage names, reset policy, overlap
 policy, and assertion projection status for downstream consumers.
-Actor-constant and actor-scalar-parameter windows report the resolved positive
-integer in `within_cycles`; no public source-token field is added.
+Actor-constant, actor-scalar-parameter, and qualified package-scalar-constant
+windows report the resolved positive integer in `within_cycles`; no public
+source-token field is added.
 Unsupported top-level bodies and nested contracts still fail closed with
 targeted diagnostics. Verification-only assertion text is not advertised yet.
 The parser boundary for resource and priority metadata is checked by

@@ -2556,8 +2556,9 @@ checks or equivalent scheduled artifacts.
 Shipped subset: a top-level transaction contract of the preferred form
 `(contract name (eventually signal within cycles))`. The older nested
 `(eventually signal (within cycles))` spelling remains accepted as an alias.
-The `cycles` value may be a positive integer literal or a declared actor
-constant that resolves to a positive integer.
+The `cycles` value may be a positive integer literal, a declared actor
+constant, an actor-local scalar parameter default, or a qualified imported
+package scalar constant that resolves to a positive integer.
 
 Reaching the clause emits one arm state; the generated scheduled `.fsm`
 monitor tracks pending/age/fail storage, clears on actor reset, and sets a
@@ -2566,11 +2567,12 @@ contract is armed again while pending.
 
 SystemVerilog generation now projects the sticky fail bit into a
 verification-only assertion under `` `ifndef SYNTHESIS``; Verilog output stays
-assertion-free. Actor-local scalar parameter windows are shipped when the
-default resolves to a positive integer. Remaining backlog: transaction
-parameter windows, runtime-signal or expression windows, global `always`
-implication forms, min/max windows, dynamic bounds, same-cycle checks, nested
-contracts, expression operands, and multiple outstanding obligations.
+assertion-free. Remaining backlog: transaction parameter windows,
+runtime-signal or expression windows, unknown or unqualified package constants,
+aggregate package constants, package member/item paths, package constants
+inside contract-window expressions, global `always` implication forms, min/max
+windows, dynamic bounds, same-cycle checks, nested contracts, expression
+operands, and multiple outstanding obligations.
 
 The file-backed `isf/stream_stage_contract.isf` fixture covers the shipped
 top-level ready/valid stage plus bounded eventual contract path through

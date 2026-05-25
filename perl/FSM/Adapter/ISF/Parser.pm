@@ -3513,6 +3513,53 @@ sub _validate_transaction_enum_member_value_clause {
         return 1;
     }
 
+    if ($head eq 'contract') {
+        _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context contract name")
+            if @$clause >= 2;
+
+        my $eventual = $clause->[2];
+        if (ref($eventual) eq 'ARRAY'
+            && @$eventual >= 2
+            && defined($eventual->[0])
+            && !ref($eventual->[0])
+            && $eventual->[0] eq 'eventually')
+        {
+            _reject_enum_member_value_contexts($eventual->[1], $actor, $aggregate_roots, "$context contract signal");
+
+            if (@$eventual == 4
+                && defined($eventual->[2])
+                && !ref($eventual->[2])
+                && $eventual->[2] eq 'within')
+            {
+                _reject_contract_window_enum_member_value(
+                    $eventual->[3],
+                    $actor,
+                    $aggregate_roots,
+                    "$context contract window",
+                );
+                return 1;
+            }
+
+            if (@$eventual == 3
+                && ref($eventual->[2]) eq 'ARRAY'
+                && @{$eventual->[2]} == 2
+                && defined($eventual->[2][0])
+                && !ref($eventual->[2][0])
+                && $eventual->[2][0] eq 'within')
+            {
+                _reject_contract_window_enum_member_value(
+                    $eventual->[2][1],
+                    $actor,
+                    $aggregate_roots,
+                    "$context contract window",
+                );
+                return 1;
+            }
+        }
+
+        return _reject_enum_member_value_contexts($clause, $actor, $aggregate_roots, $context);
+    }
+
     if ($head eq 'shift_left' || $head eq 'shift_right') {
         _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context $head target");
         _reject_enum_member_value_contexts($clause->[2], $actor, $aggregate_roots, "$context $head bit");
@@ -3663,6 +3710,14 @@ sub _reject_repeat_count_enum_member_value {
 }
 
 sub _reject_latency_bound_enum_member_value {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context)
+        if ref($value);
+    return 1 if defined _actor_package_constant_reference($actor, $value);
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context);
+}
+
+sub _reject_contract_window_enum_member_value {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context)
         if ref($value);

@@ -4360,6 +4360,9 @@ sub _temporal_contract_within_cycles {
     confess "Transaction '$tn': contract '$contract_name' within cycles must be positive in $label\n"
         if defined($token) && !ref($token) && $token =~ /\A0+\z/;
 
+    my $package_window = _contract_package_constant_window_cycles($token, $actor, $tn, $contract_name, $label);
+    return $package_window if defined $package_window;
+
     if (defined($token) && !ref($token) && _is_hdl_identifier($token)) {
         return $token unless ref($actor) eq 'HASH';
 
@@ -4371,7 +4374,7 @@ sub _temporal_contract_within_cycles {
             return $constant_value;
         }
 
-        confess "Transaction '$tn': contract '$contract_name' within token '$token' is a transaction parameter; temporal contract windows accept positive integer literals, actor constants, or actor scalar parameters only in $label\n"
+        confess "Transaction '$tn': contract '$contract_name' within token '$token' is a transaction parameter; temporal contract windows accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in $label\n"
             if _transaction_param_by_name($actor, $tn, $token);
 
         my $param = _actor_param_by_name($actor, $token);
@@ -4382,13 +4385,46 @@ sub _temporal_contract_within_cycles {
             return $param_value;
         }
 
-        confess "Transaction '$tn': contract '$contract_name' within token '$token' is a runtime interface signal; temporal contract windows accept positive integer literals, actor constants, or actor scalar parameters only in $label\n"
+        confess "Transaction '$tn': contract '$contract_name' within token '$token' is a runtime interface signal; temporal contract windows accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in $label\n"
             if _actor_interface_signal_by_name($actor, $token);
 
-        confess "Transaction '$tn': contract '$contract_name' within token '$token' is not a declared actor constant or actor scalar parameter in $label\n";
+        confess "Transaction '$tn': contract '$contract_name' within token '$token' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant in $label\n";
     }
 
     confess "Transaction '$tn': contract '$contract_name' supports only '(eventually signal within cycles)' or '(eventually signal (within cycles))'\n";
+}
+
+sub _contract_package_constant_window_cycles {
+    my ($token, $actor, $tn, $contract_name, $label) = @_;
+    return undef unless defined($token) && !ref($token);
+
+    my $package_constant = _actor_package_constant_reference($actor, $token);
+    if (!$package_constant) {
+        confess "Transaction '$tn': contract '$contract_name' within references unknown package constant '$token' in $label\n"
+            if _is_package_constant_reference_shape($token);
+        return undef;
+    }
+
+    my ($package_name, $constant_name, $suffix) = @$package_constant;
+    my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+    if (defined $constant_payload) {
+        confess "Transaction '$tn': contract '$contract_name' within token '$token' is ambiguous: it matches local enum member '$token' and imported package constant '$token' in $label\n"
+            if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
+        confess "Transaction '$tn': contract '$contract_name' within package constant '$package_name.$constant_name' aggregate/member path '$token' remains deferred; temporal contract windows accept only qualified package scalar constants in this slice\n"
+            if $suffix ne '';
+        my $constant_value = _package_constant_scalar_value($constant_payload);
+        my $integer_value = defined($constant_value) && !ref($constant_value)
+            ? _non_negative_integer_from_literal($constant_value)
+            : undef;
+        confess "Transaction '$tn': contract '$contract_name' within package constant '$package_name.$constant_name' must resolve to a positive integer scalar cycle count in $label\n"
+            unless defined($integer_value) && $integer_value > 0;
+        return $integer_value;
+    }
+
+    confess "Transaction '$tn': contract '$contract_name' within references unknown package constant '$token' in $label\n"
+        if !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
+
+    return undef;
 }
 
 sub _validate_child_action_clause {

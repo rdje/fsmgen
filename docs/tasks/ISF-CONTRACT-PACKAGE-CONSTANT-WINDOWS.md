@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -56,7 +56,7 @@ integer scalar literals.
 ## Task Tree
 
 - ID: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship qualified package scalar constants as temporal-contract windows.`
   Children: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1`,
   `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2`
@@ -71,19 +71,19 @@ integer scalar literals.
   Commit: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1: select contract package windows`
 
 - ID: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document package scalar constants in temporal-contract windows.`
   Acceptance: `Positive package scalar constants lower as literal contract
   windows; unsupported window tokens fail closed; specs, book, public
   contract, downstream handoff, and focused tests are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1362-isf-contract-package-constant-windows.t`; `prove -Iperl t/1224-isf-contract-lowering.t t/1362-isf-contract-package-constant-windows.t`; `prove -Iperl t/1224-isf-contract-lowering.t t/1362-isf-contract-package-constant-windows.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; post-closure public/spec/book audits; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2: support contract package windows`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` | `pending` | Temporal-contract windows already accept positive literals, actor constants, and actor-local scalar parameter defaults; qualified package scalar constants are the next bounded static value-domain widening. |
+| 1 | `closed` | `done` | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` shipped qualified package scalar constants as temporal-contract windows. |
 
 ## Decisions
 
@@ -111,14 +111,18 @@ integer scalar literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1` | `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `passed`; audits `Files=3, Tests=364` |
+| `2026-05-25` | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1362-isf-contract-package-constant-windows.t`; `prove -Iperl t/1224-isf-contract-lowering.t t/1362-isf-contract-package-constant-windows.t`; `prove -Iperl t/1224-isf-contract-lowering.t t/1362-isf-contract-package-constant-windows.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; post-closure public/spec/book audits; `mdbook build docs/book`; `git diff --check` | `passed`; focused `Files=9, Tests=385`; broad `Files=268, Tests=1721` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1` | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1: select contract package windows` | Selection slice; no behavior change. |
+| `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2: support contract package windows` | Implementation slice; task tree closed. |
 
 ## Changelog
 
 - `2026-05-25`: Created task tree and selected
   `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` as the next implementation frontier.
+- `2026-05-25`: Shipped qualified imported package scalar constants as
+  bounded eventual temporal-contract windows and closed the task tree.

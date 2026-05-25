@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Contract package constants reuse temporal monitor semantics
+- `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` resolves qualified imported
+  package scalar constants at the bounded eventual temporal-contract
+  `within` boundary.
+- The implementation resolves package constants before the existing monitor
+  lowering path. That keeps generated arm states, pending/age/fail storage,
+  sticky-fail overlap behavior, reset behavior, and SystemVerilog assertion
+  projection identical to the equivalent positive literal window.
+- The parser has a narrow enum/package-token exemption only for the scalar
+  window value in the two supported contract spellings. Package constants
+  inside contract-window expressions remain rejected by the enum/context
+  guard, so expression support cannot slip in accidentally.
+- The public report shape deliberately stays unchanged:
+  `temporal_contracts[].within_cycles` is the resolved integer, while
+  package/import metadata and embedded package `+constants` entries preserve
+  authored-source reviewability.
+- Unqualified lookup, aggregate package constants, package member/item paths,
+  ambiguous local enum/package spellings, zero-valued constants, transaction
+  parameters, runtime signals, arbitrary expressions, generated-top
+  respecialization, use-site specialization, dynamic windows, min/max
+  windows, nested contracts, and multiple outstanding obligations remain
+  fail-closed or deferred.
+
 ## 2026-05-25: Contract package constants should not change report shape
 - `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1` selects qualified imported package
   scalar constants for bounded eventual temporal-contract `within` windows as

@@ -2,31 +2,37 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS`.
-- Current frontier: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2`.
-- Recent R14 temporal-contract package-constant window selection:
-  `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1` created the active task tree and
-  selected the next bounded implementation leaf. Bounded eventual temporal
-  contract `(eventually SIGNAL within PACKAGE.CONSTANT)` windows may next use
-  qualified imported package scalar constants when the resolved value is a
-  positive integer literal. Accepted package-constant windows should reuse the
-  existing temporal monitor lowering used by positive literals, actor
-  constants, and actor-local scalar parameter defaults, while preserving the
-  existing `temporal_contracts[].within_cycles` integer report shape and not
-  adding a source-token field. Package constants resolving to zero should keep
-  the existing positive-only contract-window policy and fail closed before
-  temporal monitor emission. Unqualified package constants, unknown package
-  constants, package aggregate constants, package member/item paths,
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 temporal-contract package-constant window implementation:
+  `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` shipped qualified imported
+  package scalar constants as bounded eventual temporal-contract windows and
+  closed the task tree. Both supported spellings now resolve when the owning
+  actor imports `PACKAGE`, the package declares `CONSTANT`, and the constant
+  resolves to a positive integer scalar literal:
+  `(eventually SIGNAL within PACKAGE.CONSTANT)` and
+  `(eventually SIGNAL (within PACKAGE.CONSTANT))`. Accepted package constants
+  reuse the existing temporal monitor path used by positive literals, actor
+  constants, and actor-local scalar parameter defaults, so monitor timing,
+  sticky-fail behavior, reset behavior, and SystemVerilog assertion projection
+  are unchanged. Schedule reports keep `temporal_contracts[].within_cycles`
+  as the resolved positive integer without adding a source-token field;
+  package/import metadata and embedded package `+constants` entries remain
+  the review path for the authored package constant. Unknown package
+  constants, unqualified package constants, package aggregate constants,
+  package member/item paths, ambiguous local-enum/package-constant spellings,
+  zero-valued constants, package constants inside contract-window expressions,
   transaction parameters, runtime signals, arbitrary expressions, package
   constants in unrelated value domains, reusable-library use-site
   specialization, generated-top respecialization, dynamic bounds, min/max
   windows, same-cycle checks, nested contracts, expression operands, global
-  implication forms, and multiple outstanding obligations remain deferred or
-  fail closed. No parser, scheduler, report, generated artifact, HDL, CLI
-  behavior, public API, source, test, or generated behavior changed in this
-  selection slice. Validation passed: feature-backlog/live-book/book-matrix
-  audits with `Files=3, Tests=364`; `mdbook build docs/book`; and
-  `git diff --check`.
+  implication forms, and multiple outstanding obligations remain fail closed
+  or deferred. The ISF spec, downstream handoff, public contract, mdBook,
+  task tree, README index, roadmap, and live docs are synchronized.
+  Validation passed with syntax checks; focused contract/public/spec/book
+  tests (`Files=9, Tests=385`); `./bin/ci-regression isf --no-book`
+  (`Files=268, Tests=1721`); post-closure public/spec/book audits
+  (`Files=7, Tests=374`); `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 latency package-constant bound implementation:
   `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2` shipped qualified imported package
   scalar constants as transaction latency min/max bounds and closed the task
@@ -7705,12 +7711,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS`.
-- Current frontier: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
 - Completion status:
-  `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1` selected qualified imported
-  package scalar constants as the next bounded temporal-contract `within`
-  window source. No behavior changed in the selection slice.
+  `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` shipped qualified imported
+  package scalar constants as bounded temporal-contract `within` window
+  sources and closed the task tree.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11166,30 +11172,35 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
-- `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1` selected the next public-facing
-  R14 feature tree before implementation:
-  - the implementation frontier is
-    `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2`,
-  - the selected source shape is bounded to temporal-contract
-    `(eventually SIGNAL within PACKAGE.CONSTANT)` and the nested
-    `(eventually SIGNAL (within PACKAGE.CONSTANT))` alias,
+- `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` is shipped and the task tree is
+  closed:
+  - bounded eventual temporal-contract windows now accept qualified imported
+    package scalar constants in both supported spellings:
+    `(eventually SIGNAL within PACKAGE.CONSTANT)` and
+    `(eventually SIGNAL (within PACKAGE.CONSTANT))`,
   - accepted package constants must be imported, qualified, scalar, and
     resolved to positive integer windows before publication through the
     existing literal/actor-constant/actor-parameter temporal monitor path,
-  - `temporal_contracts[].within_cycles` should remain the resolved integer
-    public report field without a new source-token field,
+  - monitor timing, sticky-fail behavior, reset behavior, and SystemVerilog
+    assertion projection are unchanged,
+  - `temporal_contracts[].within_cycles` remains the resolved integer public
+    report field without a new source-token field; package/import metadata and
+    embedded package `+constants` entries keep authored package constants
+    reviewable,
   - unqualified package constants, unknown package constants, package
-    aggregate constants, package member/item paths, transaction parameters,
+    aggregate constants, package member/item paths, ambiguous
+    local-enum/package-constant spellings, zero-valued constants, package
+    constants inside contract-window expressions, transaction parameters,
     runtime signals, arbitrary expressions, unrelated value domains,
     reusable-library use-site specialization, generated-top
     respecialization, dynamic bounds, min/max windows, same-cycle checks,
     nested contracts, expression operands, global implication forms, and
     multiple outstanding obligations remain deferred or fail closed,
-  - and no parser, scheduler, report, generated artifact, HDL, CLI behavior,
-    public API, source, test, or generated behavior changed in this selection
-    slice.
-  - Validation passed: feature-backlog/live-book/book-matrix audits with
-    `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+  - and validation passed through syntax checks, focused
+    contract/public/spec/book tests, the broader ISF regression gate,
+    post-closure public/spec/book audits, mdBook build, and diff check.
+- `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1` selected the public-facing R14
+  feature tree before implementation.
 - `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2` is shipped and the task tree is
   closed:
   - transaction `(latency (min PACKAGE.CONSTANT)
