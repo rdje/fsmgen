@@ -60,7 +60,7 @@ selected.
   broad backlog owner status, future-owner needs are explicit, and focused
   audits prevent the drift from returning`
   Verification: `feature-matrix audit; live-book/spec index audits; mdBook build; git diff check`
-  Commit: `pending this commit`
+  Commit: `087113c3 FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2: sync backlog owner coverage`
 
 ## Current Frontier
 
@@ -102,7 +102,7 @@ selected.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1` | `3720bc7e FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.1: select backlog owner coverage sync` | `selection slice` |
-| `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | `pending this commit: FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2: sync backlog owner coverage` | `owner coverage sync slice` |
+| `FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2` | `087113c3 FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.2: sync backlog owner coverage` | `owner coverage sync slice` |
 
 ## Changelog
 

@@ -45,7 +45,7 @@ rule-owned trigger intermediates from ordinary inferred counters.
   Goal: `Synchronize rule-trigger storage role metadata.`
   Acceptance: `Rule-trigger source and payload-source storage carry advertised roles in schedule JSON, with public contract metadata and docs synchronized.`
   Verification: `perl syntax, focused public storage metadata tests, ISF regression tier, mdBook build, and diff hygiene passed.`
-  Commit: `pending`
+  Commit: `412b8f3c ISF-RULE-TRIGGER-STORAGE-REPORTS.1: report rule trigger storage roles`
 
 ## Current Frontier
 
@@ -77,7 +77,7 @@ rule-owned trigger intermediates from ordinary inferred counters.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-RULE-TRIGGER-STORAGE-REPORTS.1` | `ISF-RULE-TRIGGER-STORAGE-REPORTS.1: report rule trigger storage roles` | `pending commit` |
+| `ISF-RULE-TRIGGER-STORAGE-REPORTS.1` | `412b8f3c ISF-RULE-TRIGGER-STORAGE-REPORTS.1: report rule trigger storage roles` | `completion commit` |
 
 ## Changelog
 

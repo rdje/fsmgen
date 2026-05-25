@@ -93,7 +93,7 @@ with stable diagnostics and public support-accounting visibility.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.1` | `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.1: select duplicate declaration widening` | `selection leaf; no compiler behavior changed` |
-| `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2` | `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2: widen duplicate declaration corpus` | `pending commit` |
+| `R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2` | `77d7eaf1 R12-COMPOSITION-DUPLICATE-DECLARATION-CORPUS-WIDENING.2: widen duplicate declaration corpus` | `completion commit` |
 
 ## Changelog
 

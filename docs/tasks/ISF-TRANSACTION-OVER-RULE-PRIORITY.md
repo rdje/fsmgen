@@ -81,7 +81,7 @@ state-enable name or `current_state` enum symbols as user module inputs.
   validated.`
   Verification: `syntax, focused priority/state-active/public/spec/book checks,
   mdBook build, broad ISF regression, post-closure audits, git diff check`
-  Commit: `pending this commit`
+  Commit: `7a3222a1 ISF-TRANSACTION-OVER-RULE-PRIORITY.2: ship transaction-over-rule priority`
 
 ## Current Frontier
 
@@ -138,7 +138,7 @@ state-enable name or `current_state` enum symbols as user module inputs.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-OVER-RULE-PRIORITY.1` | `71574f34 ISF-TRANSACTION-OVER-RULE-PRIORITY.1: select transaction-over-rule priority` | `selection slice` |
-| `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `pending this commit: ISF-TRANSACTION-OVER-RULE-PRIORITY.2: ship transaction-over-rule priority` | `implementation slice` |
+| `ISF-TRANSACTION-OVER-RULE-PRIORITY.2` | `7a3222a1 ISF-TRANSACTION-OVER-RULE-PRIORITY.2: ship transaction-over-rule priority` | `implementation slice` |
 
 ## Changelog
 

@@ -76,7 +76,7 @@ already used as that child transaction's bounded eventual temporal-contract
   overrides remain accepted; specs, book, public contract, downstream
   handoff, and focused tests are synchronized.`
   Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1366-isf-contract-activation-override-windows.t`; focused contract/public/spec/book tests; `./bin/ci-regression isf --no-book`; post-closure public/spec/book audits; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit: ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2: reject contract-window override specialization`
+  Commit: `c0d21b84 ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2: reject contract-window override specialization`
 
 ## Current Frontier
 
@@ -120,7 +120,7 @@ already used as that child transaction's bounded eventual temporal-contract
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.1` | `8e08ad4b ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.1: select activation override contract-window diagnostics` | Selection slice; no behavior change. |
-| `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` | `pending this commit: ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2: reject contract-window override specialization` | Implementation slice; closes the tree. |
+| `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` | `c0d21b84 ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2: reject contract-window override specialization` | Implementation slice; closes the tree. |
 
 ## Changelog
 

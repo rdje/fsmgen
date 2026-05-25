@@ -48,7 +48,7 @@ handoff storage that appears in `inferred_storage[]`.
   Goal: `Synchronize generated activation handshake storage role metadata.`
   Acceptance: `Generated activation start/done handoff storage carries advertised roles in schedule JSON, with public contract metadata and docs synchronized.`
   Verification: `perl syntax, focused public storage metadata tests, ISF regression tier, mdBook build, and diff hygiene passed.`
-  Commit: `pending`
+  Commit: `bc4b155d ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1: report activation handshake storage roles`
 
 ## Current Frontier
 
@@ -84,7 +84,7 @@ handoff storage that appears in `inferred_storage[]`.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1` | `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1: report activation handshake storage roles` | `pending commit` |
+| `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1` | `bc4b155d ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1: report activation handshake storage roles` | `completion commit` |
 
 ## Changelog
 

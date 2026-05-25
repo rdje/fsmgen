@@ -67,7 +67,7 @@ graph, expression solver, or parent actor resolution requirement.
   dependencies, preserves child-local authored tokens, records resolved
   default literals, rejects unsupported sources, and updates public docs/tests.`
   Verification: `syntax checks; focused transaction/default tests; public/spec/book/backlog audits; full ISF regression gate; mdBook build; diff whitespace check`
-  Commit: `pending this commit`
+  Commit: `f923333b ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2: ship transaction param dependency defaults`
 
 ## Current Frontier
 
@@ -106,7 +106,7 @@ graph, expression solver, or parent actor resolution requirement.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1` | `48fdb245 ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.1: select transaction param dependency defaults` | Selection commit. |
-| `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` | `pending this commit: ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2: ship transaction param dependency defaults` | Implementation leaf. |
+| `ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2` | `f923333b ISF-TRANSACTION-PARAM-DEPENDENCY-DEFAULTS.2: ship transaction param dependency defaults` | Implementation leaf. |
 
 ## Changelog
 

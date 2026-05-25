@@ -67,7 +67,7 @@ reviewable proof surface at a time.
   Goal: `Reject literal-zero divisors in direct .fsm runtime expressions.`
   Acceptance: `Direct .fsm runtime expression parsing rejects numeric and exact-width literal-zero divisor operands for '/', '%', 'div', and 'mod' before HDL emission; nonzero literal divisors and dynamic signal divisors remain accepted; constant-expression and ISF behavior are unchanged except for shared documentation truth; focused tests, corpus/docs accounting, mdBook, and diff checks pass.`
   Verification: `passed: syntax, focused direct/ISF/corpus tests, public report/capability gates, language-surface gates, mdBook build, and diff check`
-  Commit: `pending this commit`
+  Commit: `7c6503c2 DYNAMIC-DIVISOR-SAFETY-FRONTIER.3: ship direct runtime divisor guard`
 
 ## Audit Findings
 
@@ -136,7 +136,7 @@ reviewable proof surface at a time.
 | --- | --- | --- |
 | `DYNAMIC-DIVISOR-SAFETY-FRONTIER.1` | `336b8afd DYNAMIC-DIVISOR-SAFETY-FRONTIER.1: select divisor safety work` | `selection slice` |
 | `DYNAMIC-DIVISOR-SAFETY-FRONTIER.2` | `ef64067c DYNAMIC-DIVISOR-SAFETY-FRONTIER.2: audit divisor safety frontier` | `audit/design slice` |
-| `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` | `pending this commit: DYNAMIC-DIVISOR-SAFETY-FRONTIER.3: ship direct runtime divisor guard` | `implementation slice` |
+| `DYNAMIC-DIVISOR-SAFETY-FRONTIER.3` | `7c6503c2 DYNAMIC-DIVISOR-SAFETY-FRONTIER.3: ship direct runtime divisor guard` | `implementation slice` |
 
 ## Changelog
 

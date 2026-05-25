@@ -61,7 +61,7 @@ including when they shadow an actor parameter of the same name.
   set the implementation frontier, and update roadmap/live docs without
   behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending commit`
+  Commit: `3d20e7ad ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.1: select repeat transaction parameter diagnostic`
 
 - ID: `ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2`
   Status: `done`
@@ -72,7 +72,7 @@ including when they shadow an actor parameter of the same name.
   Verification: LoweringIR/test syntax; focused repeat/public/doc tests;
   broad `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
   `git diff --check`
-  Commit: `pending commit`
+  Commit: `d60fe2ea ISF-REPEAT-TRANSACTION-PARAM-COUNT-DIAGNOSTIC.2: harden repeat transaction parameter diagnostic`
 
 ## Current Frontier
 

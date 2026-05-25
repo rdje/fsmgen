@@ -56,7 +56,7 @@ positive literal watchdog limit is accepted.
   Goal: `implement and document actor-constant watchdog limits`
   Acceptance: `positive actor constants lower as literal watchdog limits; unsupported watchdog tokens fail closed; docs and focused tests are synchronized`
   Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1331-isf-timing-conventions.t`; focused watchdog/timing/storage tests; public/doc audits; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `0caf15fc ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2: ship watchdog actor-constant limits`
 
 ## Current Frontier
 
@@ -93,7 +93,7 @@ positive literal watchdog limit is accepted.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.1` | `62f2e188 ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.1: select watchdog actor-constant limits` | Selection commit. |
-| `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` | `pending this commit: ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2: ship watchdog actor-constant limits` | Implementation and documentation commit. |
+| `ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2` | `0caf15fc ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.2: ship watchdog actor-constant limits` | Implementation and documentation commit. |
 
 ## Changelog
 

@@ -52,7 +52,7 @@ contract, roadmap status, task index, and live docs truthful about the shipped
   passes`
   Verification: `stale-wording source-doc audit; public live-book/spec-index/
   feature-matrix audits; mdBook build; git diff check`
-  Commit: `pending this commit`
+  Commit: `81c5e5d2 ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1: sync storage-port member docs`
 
 ## Current Frontier
 
@@ -87,7 +87,7 @@ contract, roadmap status, task index, and live docs truthful about the shipped
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` | `pending this commit: ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1: sync storage-port member docs` | `documentation-only truth sync` |
+| `ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1` | `81c5e5d2 ISF-STORAGE-PORT-MEMBER-TRUTH-SYNC.1: sync storage-port member docs` | `documentation-only truth sync` |
 
 ## Changelog
 

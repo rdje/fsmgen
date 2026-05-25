@@ -44,7 +44,7 @@ ports materialized in the scheduled `.fsm` review artifact.
   Goal: `Synchronize transaction-local port storage role metadata.`
   Acceptance: `Transaction-local port storage carries the advertised transaction_port role in schedule JSON, with public contract metadata and docs synchronized.`
   Verification: `perl syntax, focused public storage metadata tests, ISF regression tier, mdBook build, and diff hygiene passed.`
-  Commit: `pending`
+  Commit: `635c3307 ISF-TRANSACTION-PORT-STORAGE-REPORTS.1: advertise transaction port storage role`
 
 ## Current Frontier
 
@@ -77,7 +77,7 @@ ports materialized in the scheduled `.fsm` review artifact.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1` | `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1: advertise transaction port storage role` | `pending commit` |
+| `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1` | `635c3307 ISF-TRANSACTION-PORT-STORAGE-REPORTS.1: advertise transaction port storage role` | `completion commit` |
 
 ## Changelog
 

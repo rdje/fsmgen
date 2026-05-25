@@ -46,7 +46,7 @@ fail-closed in transaction-local port width contexts after
   Goal: `Remove the stale mdBook backlog fail-closed wording.`
   Acceptance: `Current mdBook backlog prose matches the shipped transaction-local port package-constant width behavior.`
   Verification: `mdbook build docs/book; feature-backlog/live-book/book-matrix audits with Files=3, Tests=364; git diff --check`
-  Commit: `pending this commit`
+  Commit: `aae67a1f ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1: sync package width book text`
 
 ## Current Frontier
 
@@ -78,7 +78,7 @@ fail-closed in transaction-local port width contexts after
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1` | `pending this commit` | `documentation truth sync` |
+| `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1` | `aae67a1f ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1: sync package width book text` | `documentation truth sync` |
 
 ## Changelog
 

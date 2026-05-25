@@ -56,7 +56,7 @@ that authored metadata without depending on the raw parser actor hash.
   `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
   `prove -Iperl t/1252-isf-actor-phase-stage-report.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1225-isf-stage-contract-schedule-report.t t/1227-isf-schedule-report-freeze-boundary.t t/1250-isf-spec-focused-test-index-audit.t`;
   `mdbook build docs/book`; `git diff --check`
-  Commit: `pending`
+  Commit: `c5848728 ISF-ACTOR-PHASE-STAGE-REPORTS.1: report actor metadata`
 
 ## Current Frontier
 
@@ -94,7 +94,7 @@ that authored metadata without depending on the raw parser actor hash.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ACTOR-PHASE-STAGE-REPORTS.1` | `ISF-ACTOR-PHASE-STAGE-REPORTS.1: report actor metadata` | `pending commit` |
+| `ISF-ACTOR-PHASE-STAGE-REPORTS.1` | `c5848728 ISF-ACTOR-PHASE-STAGE-REPORTS.1: report actor metadata` | `completion commit` |
 
 ## Changelog
 

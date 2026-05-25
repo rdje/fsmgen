@@ -76,7 +76,7 @@ and regression coverage.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1` | `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1: sync assign diagnostic truth` | `pending commit` |
+| `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1` | `de21e65f ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1: sync assign diagnostic truth` | `completion commit` |
 
 ## Changelog
 

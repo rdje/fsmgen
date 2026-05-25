@@ -82,7 +82,7 @@ pending sample aliases.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1` | `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1: allow spawn successor zero-sample waits` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
+| `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1` | `2fdd09b3 ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1: allow spawn successor zero-sample waits` | `completion commit` |
 
 ## Changelog
 

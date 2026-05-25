@@ -72,7 +72,7 @@ It must normalize to the same bounded static instance metadata as:
   Goal: `implement compact static instance alias normalization and coverage`
   Acceptance: `compact static instances lower to the same static actor instance metadata surface as verbose instances while preserving transparent declaration provenance and fail-closed boundaries`
   Verification: `parser/public-contract/test syntax checks`; `prove -Iperl t/1322-isf-actor-network-static.t`; public/doc audit group; ATL fixture group; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `ff958c55 ISF-ATL-COMPACT-INSTANCE-ALIAS.2: ship compact ATL instance alias`
 
 ## Current Frontier
 
@@ -108,7 +108,7 @@ It must normalize to the same bounded static instance metadata as:
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ATL-COMPACT-INSTANCE-ALIAS.1` | `6245e321 ISF-ATL-COMPACT-INSTANCE-ALIAS.1: select compact ATL instance alias` | Selection commit. |
-| `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` | `pending this commit: ISF-ATL-COMPACT-INSTANCE-ALIAS.2: ship compact ATL instance alias` | Implementation commit. |
+| `ISF-ATL-COMPACT-INSTANCE-ALIAS.2` | `ff958c55 ISF-ATL-COMPACT-INSTANCE-ALIAS.2: ship compact ATL instance alias` | Implementation commit. |
 
 ## Changelog
 

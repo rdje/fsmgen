@@ -54,7 +54,7 @@ waits, generated ATL tops, and generated-child route families shipped.
   Goal: `synchronize stale ATL backlog generated-top and deferred-feature prose`
   Acceptance: `book-facing ATL backlog prose matches shipped generated-top behavior and explicit deferrals`
   Verification: `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1332-isf-atl-doc-status-audit.t t/1305-isf-book-feature-matrix-audit.t`; stale-wording `rg` audit; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `f271b6c3 ISF-ATL-BACKLOG-TRUTH-SYNC.2: sync ATL backlog truth`
 
 ## Current Frontier
 
@@ -87,7 +87,7 @@ waits, generated ATL tops, and generated-child route families shipped.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ATL-BACKLOG-TRUTH-SYNC.1` | `aa985588 ISF-ATL-BACKLOG-TRUTH-SYNC.1: select ATL backlog truth sync` | Selection commit. |
-| `ISF-ATL-BACKLOG-TRUTH-SYNC.2` | `pending this commit: ISF-ATL-BACKLOG-TRUTH-SYNC.2: sync ATL backlog truth` | Documentation truth-sync commit. |
+| `ISF-ATL-BACKLOG-TRUTH-SYNC.2` | `f271b6c3 ISF-ATL-BACKLOG-TRUTH-SYNC.2: sync ATL backlog truth` | Documentation truth-sync commit. |
 
 ## Changelog
 

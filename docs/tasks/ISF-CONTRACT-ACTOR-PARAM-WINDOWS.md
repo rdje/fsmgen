@@ -73,7 +73,7 @@ literals.
   Verification: `syntax checks; focused contract/public/doc tests; broad
   ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff
   --check`
-  Commit: `pending commit`
+  Commit: `44c1d3c7 ISF-CONTRACT-ACTOR-PARAM-WINDOWS.2: ship contract actor-param windows`
 
 ## Current Frontier
 

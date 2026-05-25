@@ -65,7 +65,7 @@ literals.
   downstream handoff, and focused tests are synchronized.`
   Verification: focused syntax, latency/public/doc tests, mdBook, diff check,
   and broad ISF regression passed.
-  Commit: `pending commit`
+  Commit: `a6dba694 ISF-LATENCY-ACTOR-PARAM-BOUNDS.2: ship latency actor-param bounds`
 
 ## Current Frontier
 

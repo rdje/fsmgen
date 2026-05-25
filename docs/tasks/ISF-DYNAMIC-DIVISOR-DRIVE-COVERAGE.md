@@ -49,7 +49,7 @@ and inline drive RHS expressions.
   drive coverage gap, set the implementation frontier, and update
   roadmap/live docs without behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending commit`
+  Commit: `9cf0394f ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.1: select divisor drive coverage`
 
 - ID: `ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2`
   Status: `done`
@@ -60,7 +60,7 @@ and inline drive RHS expressions.
   Verification: `perl -Iperl -c t/1308-isf-dynamic-divisor-safety.t`;
   `prove -Iperl t/1308-isf-dynamic-divisor-safety.t`; public/doc audits;
   `mdbook build docs/book`; `git diff --check`
-  Commit: `pending commit`
+  Commit: `ff4e6fd6 ISF-DYNAMIC-DIVISOR-DRIVE-COVERAGE.2: cover divisor drive expressions`
 
 ## Current Frontier
 

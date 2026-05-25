@@ -79,7 +79,7 @@ defaults resolve to positive integer scalar literals.
   book, public contract, downstream handoff, and focused tests are
   synchronized.`
   Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1365-isf-contract-direct-transaction-param-windows.t`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `prove -Iperl t/1215-isf-spawn-parameter-binding.t t/1224-isf-contract-lowering.t t/1364-isf-contract-transaction-param-windows.t t/1365-isf-contract-direct-transaction-param-windows.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t` (`Files=11, Tests=447`); `./bin/ci-regression isf --no-book` (`Files=271, Tests=1729`); post-closure public/spec/book audits (`Files=5, Tests=368`); `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit: ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2: support direct contract transaction-param windows`
+  Commit: `87829ed9 ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2: support direct contract transaction-param windows`
 
 ## Current Frontier
 
@@ -127,7 +127,7 @@ defaults resolve to positive integer scalar literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1` | `ce4d3c2b ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1: select direct contract transaction-param windows` | Selection slice; no behavior change. |
-| `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` | `pending this commit: ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2: support direct contract transaction-param windows` | Implementation slice; closes the tree. |
+| `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` | `87829ed9 ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2: support direct contract transaction-param windows` | Implementation slice; closes the tree. |
 
 ## Changelog
 

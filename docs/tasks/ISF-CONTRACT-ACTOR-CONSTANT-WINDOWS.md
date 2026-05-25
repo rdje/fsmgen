@@ -57,7 +57,7 @@ constants anywhere the shipped literal `within` cycle count is accepted.
   Goal: `implement and document actor-constant temporal-contract windows`
   Acceptance: `positive actor constants lower as literal windows; unsupported window tokens fail closed; docs and focused tests are synchronized`
   Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1224-isf-contract-lowering.t`; focused contract/boundary tests; public/doc audits; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `0aaf0bd1 ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2: ship contract actor-constant windows`
 
 ## Current Frontier
 
@@ -91,7 +91,7 @@ constants anywhere the shipped literal `within` cycle count is accepted.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1` | `8890ca29 ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.1: select contract actor-constant windows` | Selection commit. |
-| `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` | `pending this commit: ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2: ship contract actor-constant windows` | Implementation and documentation commit. |
+| `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2` | `0aaf0bd1 ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS.2: ship contract actor-constant windows` | Implementation and documentation commit. |
 
 ## Changelog
 

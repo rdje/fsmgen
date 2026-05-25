@@ -77,7 +77,7 @@ Ship a bounded `round_robin` arbiter for declared rule users that share a
   Goal: `Select the bounded storage-port round-robin resource slice.`
   Acceptance: `The roadmap, task index, README index, and live docs identify the active implementation leaf, document the exact boundary, and confirm no compiler behavior changed.`
   Verification: `passed: feature-backlog audit, mdBook build, and diff check`
-  Commit: `pending`
+  Commit: `5392418c ISF-STORAGE-PORT-ROUND-ROBIN.1: select storage-port round robin`
 
 - ID: `ISF-STORAGE-PORT-ROUND-ROBIN.2`
   Status: `done`

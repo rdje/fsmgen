@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: Roadmap Maintenance — Task-tree commit evidence truth sync completed
+- Completed `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` and closed the task tree.
+- Completed task files no longer carry stale `pending commit`, `pending this
+  commit`, `pending commit hash`, `pending commit workflow`, or exact
+  `pending` commit-log rows in the audited evidence fields.
+- Remaining pending wording is scoped to descriptive repair-scope prose,
+  templates/workflow examples, or semantic feature wording such as
+  pending-sample behavior.
+- This was documentation-only maintenance; no parser, scheduler, generated
+  `.fsm`, HDL, schedule-report, public API, or runtime behavior changed.
+- Validation passed: stale-evidence field audit; malformed-row audit;
+  feature-backlog/live-book/book matrix audits with `Files=3, Tests=351`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Direct transaction-parameter data-operation widths shipped
 - Completed `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` and closed the task
   tree.

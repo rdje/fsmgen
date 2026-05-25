@@ -75,7 +75,7 @@ intent only from participating rule assignments.
   focused plus broad checks pass`
   Verification: `syntax, focused resource/public/spec/book checks,
   mdBook build, broad ISF regression, post-closure audits, git diff check`
-  Commit: `pending this commit`
+  Commit: `db97f0c1 ISF-OUTPUT-BUNDLE-MEMBER-LIST.2: ship output bundle members`
 
 ## Current Frontier
 
@@ -128,7 +128,7 @@ intent only from participating rule assignments.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-OUTPUT-BUNDLE-MEMBER-LIST.1` | `8706a223 ISF-OUTPUT-BUNDLE-MEMBER-LIST.1: select output bundle members` | `selection slice` |
-| `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` | `pending this commit: ISF-OUTPUT-BUNDLE-MEMBER-LIST.2: ship output bundle members` | `implementation slice` |
+| `ISF-OUTPUT-BUNDLE-MEMBER-LIST.2` | `db97f0c1 ISF-OUTPUT-BUNDLE-MEMBER-LIST.2: ship output bundle members` | `implementation slice` |
 
 ## Changelog
 

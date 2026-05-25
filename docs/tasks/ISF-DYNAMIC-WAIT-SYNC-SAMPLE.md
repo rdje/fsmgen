@@ -83,7 +83,7 @@ not touch the pending sample aliases.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DYNAMIC-WAIT-SYNC-SAMPLE.1` | `ISF-DYNAMIC-WAIT-SYNC-SAMPLE.1: allow sync successor zero-sample waits` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
+| `ISF-DYNAMIC-WAIT-SYNC-SAMPLE.1` | `29adfe2f ISF-DYNAMIC-WAIT-SYNC-SAMPLE.1: allow sync successor zero-sample waits` | `completion commit` |
 
 ## Changelog
 

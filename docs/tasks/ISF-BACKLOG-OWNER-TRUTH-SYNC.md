@@ -50,7 +50,7 @@ task trees have closed.
   wording problem, set the implementation frontier, and update roadmap/live
   docs without behavior changes.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending commit`
+  Commit: `ee5a59e5 ISF-BACKLOG-OWNER-TRUTH-SYNC.1: select backlog owner truth sync`
 
 - ID: `ISF-BACKLOG-OWNER-TRUTH-SYNC.2`
   Status: `done`
@@ -62,7 +62,7 @@ task trees have closed.
   Verification: `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`;
   `prove -Iperl t/1305-isf-book-feature-matrix-audit.t`; `mdbook build
   docs/book`; `git diff --check`; public/doc audits
-  Commit: `pending commit`
+  Commit: `dac334c1 ISF-BACKLOG-OWNER-TRUTH-SYNC.2: sync backlog owner wording`
 
 ## Current Frontier
 

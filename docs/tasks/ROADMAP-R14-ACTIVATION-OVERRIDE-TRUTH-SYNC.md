@@ -49,7 +49,7 @@ diagnostics for generated child temporal contract-window parameters.
   the shipped activation override diagnostic tree without claiming
   override-specialized monitor lowering.`
   Verification: `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check`
-  Commit: `pending this commit: ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1: sync activation override roadmap coverage`
+  Commit: `b249841f ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1: sync activation override roadmap coverage`
 
 ## Current Frontier
 
@@ -82,7 +82,7 @@ diagnostics for generated child temporal contract-window parameters.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1` | `pending this commit: ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1: sync activation override roadmap coverage` | Documentation truth-sync slice; no behavior change. |
+| `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1` | `b249841f ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1: sync activation override roadmap coverage` | Documentation truth-sync slice; no behavior change. |
 
 ## Changelog
 

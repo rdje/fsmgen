@@ -75,7 +75,7 @@ rule users may write.
   synchronized, and focused plus broad checks pass`
   Verification: `syntax, focused resource/public/spec/book checks,
   mdBook build, broad ISF regression, post-closure audits, git diff check`
-  Commit: `pending this commit`
+  Commit: `079ab51d ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2: ship storage members`
 
 ## Current Frontier
 
@@ -126,7 +126,7 @@ rule users may write.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1` | `3c1c656c ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.1: select storage members` | `selection slice` |
-| `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `pending this commit: ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2: ship storage members` | `implementation slice` |
+| `ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2` | `079ab51d ISF-OUTPUT-BUNDLE-STORAGE-MEMBERS.2: ship storage members` | `implementation slice` |
 
 ## Changelog
 

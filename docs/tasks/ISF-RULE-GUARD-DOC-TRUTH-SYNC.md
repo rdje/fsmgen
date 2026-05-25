@@ -52,7 +52,7 @@ forms shipped in the current 13xx ISF test band.
   `prove -Iperl t/1306-isf-rule-guard-doc-truth-audit.t
   t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`;
   `./bin/ci-regression isf --no-book`; `git diff --check`
-  Commit: `pending`
+  Commit: `7e898397 ISF-RULE-GUARD-DOC-TRUTH-SYNC.1: sync rule guard docs`
 
 ## Current Frontier
 
@@ -83,7 +83,7 @@ forms shipped in the current 13xx ISF test band.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-RULE-GUARD-DOC-TRUTH-SYNC.1` | `pending` | `pending` |
+| `ISF-RULE-GUARD-DOC-TRUTH-SYNC.1` | `7e898397 ISF-RULE-GUARD-DOC-TRUTH-SYNC.1: sync rule guard docs` | `completion commit` |
 
 ## Changelog
 

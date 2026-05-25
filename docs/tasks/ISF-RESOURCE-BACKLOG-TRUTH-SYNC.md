@@ -48,7 +48,7 @@ grant/debug storage surface.
   Goal: `Correct resource arbitration and storage-role backlog wording.`
   Acceptance: `The canonical mdBook backlog accurately distinguishes shipped resource arbitration from deferred resource-grant/debug storage.`
   Verification: `mdBook build and diff hygiene passed.`
-  Commit: `pending`
+  Commit: `649bca58 ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1: sync resource backlog truth`
 
 ## Current Frontier
 
@@ -81,7 +81,7 @@ grant/debug storage surface.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1` | `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1: sync resource backlog truth` | `pending commit` |
+| `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1` | `649bca58 ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1: sync resource backlog truth` | `completion commit` |
 
 ## Changelog
 

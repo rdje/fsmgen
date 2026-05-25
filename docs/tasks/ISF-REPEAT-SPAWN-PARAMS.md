@@ -100,8 +100,8 @@ same-body `await_all` re-entry proof.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-REPEAT-SPAWN-PARAMS.1` | `ISF-REPEAT-SPAWN-PARAMS.1: select repeat spawn params contract` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
-| `ISF-REPEAT-SPAWN-PARAMS.2` | `ISF-REPEAT-SPAWN-PARAMS.2: implement repeat spawn params` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
+| `ISF-REPEAT-SPAWN-PARAMS.1` | `09c417cb ISF-REPEAT-SPAWN-PARAMS.1: select repeat spawn params contract` | `completion commit` |
+| `ISF-REPEAT-SPAWN-PARAMS.2` | `52a5e9ed ISF-REPEAT-SPAWN-PARAMS.2: implement repeat spawn params` | `completion commit` |
 
 ## Changelog
 

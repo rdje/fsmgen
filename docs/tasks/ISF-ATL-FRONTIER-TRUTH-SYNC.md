@@ -62,7 +62,7 @@ completed leaves as if they were still selectable frontier work.
   metadata; roadmap, task index, README, and live docs close this maintenance
   tree; focused documentation checks pass.`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending commit`
+  Commit: `0e538e57 ISF-ATL-FRONTIER-TRUTH-SYNC.2: sync ATL frontier truth`
 
 ## Current Frontier
 

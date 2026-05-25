@@ -46,7 +46,7 @@ declared actor output ports.
   intent from explicit declared-output members, and no behavior-bearing code
   changes are made`
   Verification: `focused public-doc audits, mdBook build, git diff check`
-  Commit: `pending this commit`
+  Commit: `fe177b50 ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1: sync output bundle wording`
 
 ## Current Frontier
 
@@ -85,7 +85,7 @@ declared actor output ports.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1` | `pending this commit: ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1: sync output bundle wording` | `documentation truth-sync slice` |
+| `ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1` | `fe177b50 ISF-OUTPUT-BUNDLE-MEANING-TRUTH-SYNC.1: sync output bundle wording` | `documentation truth-sync slice` |
 
 ## Changelog
 

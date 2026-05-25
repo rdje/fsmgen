@@ -59,7 +59,7 @@ rule guard, and actor-owned bank access expression surfaces.
   expressions; focused dynamic-divisor and doc checks pass.`
   Verification: focused syntax, dynamic-divisor, public contract, spec audit,
   book audit, mdBook, and diff checks passed.
-  Commit: `pending commit`
+  Commit: `ea26425b ISF-DYNAMIC-DIVISOR-CONTROL-BANK-COVERAGE.2: cover divisor control bank expressions`
 
 ## Current Frontier
 

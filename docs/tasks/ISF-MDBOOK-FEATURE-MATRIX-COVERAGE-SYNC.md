@@ -50,7 +50,7 @@ coverage.
   `prove -Iperl t/1305-isf-book-feature-matrix-audit.t
   t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`;
   `./bin/ci-regression isf --no-book`; `git diff --check`
-  Commit: `pending`
+  Commit: `e180fd09 ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1: cover stage contracts`
 
 ## Current Frontier
 
@@ -81,7 +81,7 @@ coverage.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1` | `pending` | `pending` |
+| `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1` | `e180fd09 ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1: cover stage contracts` | `completion commit` |
 
 ## Changelog
 

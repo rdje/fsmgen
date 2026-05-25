@@ -69,7 +69,7 @@ reviewable cycle boundary, and each wait reports through the existing
   Goal: `implement sequential multi-event waits after a temporary trigger batch`
   Acceptance: `one parent transaction may trigger distinct static actors in one temporary trigger batch and then wait for multiple actor events in source order while preserving explicit wait states, ports, reports, and HDL evidence`
   Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c t/1322-isf-actor-network-static.t`; `perl -Iperl -c t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t`; `prove -Iperl t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1328-isf-atl-trigger-wait-fixture-coverage.t t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `a4742f19 ISF-ATL-MULTI-EVENT-WAIT.2: ship ATL multi-event waits`
 
 ## Current Frontier
 
@@ -111,7 +111,7 @@ reviewable cycle boundary, and each wait reports through the existing
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ATL-MULTI-EVENT-WAIT.1` | `this commit: ISF-ATL-MULTI-EVENT-WAIT.1: select ATL multi-event waits` | Selection commit. |
-| `ISF-ATL-MULTI-EVENT-WAIT.2` | `pending this commit: ISF-ATL-MULTI-EVENT-WAIT.2: ship ATL multi-event waits` | Implementation commit. |
+| `ISF-ATL-MULTI-EVENT-WAIT.2` | `a4742f19 ISF-ATL-MULTI-EVENT-WAIT.2: ship ATL multi-event waits` | Implementation commit. |
 
 ## Changelog
 

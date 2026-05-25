@@ -86,7 +86,7 @@ current report key family.
   validated.`
   Verification: `syntax, focused resource/public/spec/book checks,
   mdBook build, broad ISF regression, post-closure audits, git diff check`
-  Commit: `pending this commit`
+  Commit: `e643791e ISF-OUTPUT-BUNDLE-RESOURCE-PRIORITY.2: ship output_bundle priority resource`
 
 ## Current Frontier
 

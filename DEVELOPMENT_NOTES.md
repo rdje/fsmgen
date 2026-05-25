@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Commit evidence sync should prefer leaf-subject commits
+- `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` resolves historical completion
+  evidence from git history by preferring commits whose subject starts with
+  the task leaf ID.
+- That matters because later documentation maintenance commits can mention the
+  same leaf ID without being the leaf's original completion commit.
+- Exact `pending` rows in completed commit logs are treated as stale evidence,
+  while prose about pending-sample semantics and current active task wording is
+  left untouched.
+
 ## 2026-05-25: Completed task trees should not keep stale pending evidence
 - `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1` selects a documentation-only
   recovery-quality repair after an audit found many completed task files whose

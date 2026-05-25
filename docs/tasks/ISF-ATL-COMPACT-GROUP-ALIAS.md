@@ -72,7 +72,7 @@ It must normalize to the same bounded report-only group metadata as:
   Goal: `implement compact concurrent group alias normalization and coverage`
   Acceptance: `compact concurrent groups lower to the same report-only static group metadata surface as verbose groups while preserving transparent declaration provenance and fail-closed boundaries`
   Verification: `parser/public-contract/test syntax checks`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1326-isf-atl-pin-ingress-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1328-isf-atl-trigger-wait-fixture-coverage.t t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `26a4c571 ISF-ATL-COMPACT-GROUP-ALIAS.2: ship compact ATL group alias`
 
 ## Current Frontier
 
@@ -108,7 +108,7 @@ It must normalize to the same bounded report-only group metadata as:
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ATL-COMPACT-GROUP-ALIAS.1` | `8c67b523 ISF-ATL-COMPACT-GROUP-ALIAS.1: select compact ATL group alias` | Selection commit. |
-| `ISF-ATL-COMPACT-GROUP-ALIAS.2` | `pending this commit: ISF-ATL-COMPACT-GROUP-ALIAS.2: ship compact ATL group alias` | Implementation commit. |
+| `ISF-ATL-COMPACT-GROUP-ALIAS.2` | `26a4c571 ISF-ATL-COMPACT-GROUP-ALIAS.2: ship compact ATL group alias` | Implementation commit. |
 
 ## Changelog
 

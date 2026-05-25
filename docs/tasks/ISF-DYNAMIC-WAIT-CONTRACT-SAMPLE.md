@@ -82,7 +82,7 @@ arm pulse.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.1` | `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.1: allow contract zero-sample waits` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
+| `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.1` | `c9536253 ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.1: allow contract zero-sample waits` | `completion commit` |
 
 ## Changelog
 

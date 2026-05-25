@@ -77,7 +77,7 @@ per-activation temporal monitor specialization.
   Goal: `Implement same-value activation override acceptance for generated child temporal contract-window parameters.`
   Acceptance: `Lowering accepts same-value contract-window parameter overrides for spawn, generated do, and rule trigger; mismatches still fail closed with a targeted diagnostic; unknown/shape diagnostics keep precedence; generated child monitors and reports remain default-resolved; public docs/book/contract/handoff are synchronized; focused and appropriate broader gates pass.`
   Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1366-isf-contract-activation-override-windows.t`; `prove -Iperl t/1366-isf-contract-activation-override-windows.t`; focused contract/public/spec/book tests; `./bin/ci-regression isf --no-book`; final public/spec/book audits; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `c3b87893 ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2: accept same-value contract-window overrides`
 
 ## Current Frontier
 
@@ -118,7 +118,7 @@ per-activation temporal monitor specialization.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1` | `this commit: ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.1: select same-value contract-window overrides` | `selection leaf; no behavior change` |
-| `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` | `pending this commit: ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2: accept same-value contract-window overrides` | `implementation slice; closes the tree` |
+| `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` | `c3b87893 ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2: accept same-value contract-window overrides` | `implementation slice; closes the tree` |
 
 ## Changelog
 

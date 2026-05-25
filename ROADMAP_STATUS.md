@@ -1,18 +1,22 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `roadmap maintenance`.
-- Active task tree: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC`.
-- Current frontier: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2`.
-- Current roadmap-maintenance selection:
-  `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1` created the active task tree for
-  synchronizing stale `pending commit` evidence in completed task-tree files.
-  The selected follow-up is documentation-only: audit completed task files,
-  replace recoverable stale pending evidence with concrete completion subjects
-  or commit references, leave templates/workflow examples untouched, and keep
-  compiler behavior unchanged. Validation passed:
-  feature-backlog/live-book/book matrix audits with `Files=3, Tests=351`;
-  `mdbook build docs/book`; and `git diff --check`.
+- Active lane: `R14`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Current roadmap-maintenance completion:
+  `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` synchronized stale completed
+  task-tree commit evidence and closed the task tree. Completed task files no
+  longer carry stale `pending commit`, `pending this commit`, `pending commit
+  hash`, `pending commit workflow`, or exact `pending` commit-log rows in the
+  audited evidence fields; remaining pending wording is scoped to descriptive
+  repair-scope prose, templates/workflow examples, or semantic feature wording
+  such as pending-sample behavior. This was documentation-only maintenance and
+  did not change parser, scheduler, generated `.fsm`, HDL, schedule-report,
+  public API, or runtime behavior. Validation passed: stale-evidence field
+  audit; malformed-row audit; feature-backlog/live-book/book matrix audits
+  with `Files=3, Tests=351`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Current R14 direct transaction-parameter data-width implementation:
   `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.3` completed and closed the task tree.
   Direct/non-generated transactions now accept same-transaction scalar

@@ -79,7 +79,7 @@ broader dynamic nonzero proofs.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DYNAMIC-DIVISOR-SAFETY.1` | `ISF-DYNAMIC-DIVISOR-SAFETY.1: reject literal-zero divisors` | `pending commit workflow` |
+| `ISF-DYNAMIC-DIVISOR-SAFETY.1` | `8c995e9e ISF-DYNAMIC-DIVISOR-SAFETY.1: reject literal-zero divisors` | `completion commit` |
 
 ## Changelog
 

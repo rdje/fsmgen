@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC` | `active` | `roadmap maintenance` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` | [docs/tasks/TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.md](docs/tasks/TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC` | `done` | `roadmap maintenance` | `closed` | [docs/tasks/TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.md](docs/tasks/TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.md) |
 | `ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.md](docs/tasks/ISF-DATA-OP-TRANSACTION-PARAM-WIDTHS.md) |
 | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.md](docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.md) |
 | `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.md) |

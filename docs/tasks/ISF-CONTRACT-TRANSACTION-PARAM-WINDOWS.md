@@ -80,7 +80,7 @@ those defaults resolve to positive integer scalar literals.
   contract shapes fail closed; specs, book, public contract, downstream
   handoff, and focused tests are synchronized.`
   Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1364-isf-contract-transaction-param-windows.t`; `perl -Iperl -c t/1224-isf-contract-lowering.t`; `perl -Iperl -c t/1362-isf-contract-package-constant-windows.t`; `prove -Iperl t/1224-isf-contract-lowering.t t/1362-isf-contract-package-constant-windows.t t/1364-isf-contract-transaction-param-windows.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t` (`Files=10, Tests=388`); `./bin/ci-regression isf --no-book` (`Files=270, Tests=1726`); post-closure public/spec/book audits (`Files=5, Tests=368`); `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit: ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2: support contract transaction-param windows`
+  Commit: `fb2088c4 ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2: support contract transaction-param windows`
 
 ## Current Frontier
 
@@ -128,7 +128,7 @@ those defaults resolve to positive integer scalar literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.1` | `5002dea2 ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.1: select contract transaction-param windows` | Selection slice; no behavior change. |
-| `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2` | `pending this commit: ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2: support contract transaction-param windows` | Implementation slice; closes the tree. |
+| `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2` | `fb2088c4 ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2: support contract transaction-param windows` | Implementation slice; closes the tree. |
 
 ## Changelog
 

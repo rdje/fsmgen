@@ -47,7 +47,7 @@ reports and generated artifacts.
   Goal: `Document generated-name stability policy.`
   Acceptance: `Generated-name policy is explicit in the spec, downstream handoff, public contract doc, and book, and the freeze-blocker list is updated.`
   Verification: `mdBook build and diff hygiene passed.`
-  Commit: `pending`
+  Commit: `66d09722 ISF-GENERATED-NAME-POLICY.1: document generated name stability`
 
 ## Current Frontier
 
@@ -80,7 +80,7 @@ reports and generated artifacts.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-GENERATED-NAME-POLICY.1` | `ISF-GENERATED-NAME-POLICY.1: document generated name stability` | `pending commit` |
+| `ISF-GENERATED-NAME-POLICY.1` | `66d09722 ISF-GENERATED-NAME-POLICY.1: document generated name stability` | `completion commit` |
 
 ## Changelog
 

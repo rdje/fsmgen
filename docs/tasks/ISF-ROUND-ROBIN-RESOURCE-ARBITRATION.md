@@ -71,7 +71,7 @@ existing `rule_slot` resource kind.
   expose grants and pointer storage, unsupported combinations fail closed,
   docs are synchronized, and focused plus broader checks pass`
   Verification: `syntax checks; focused resource/report/public-contract tests; public documentation audits; mdBook build; git diff check`
-  Commit: `pending this commit`
+  Commit: `b9873b36 ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2: ship rule-slot round robin`
 
 ## Current Frontier
 
@@ -119,7 +119,7 @@ existing `rule_slot` resource kind.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1` | `434fb8e7 ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.1: select round-robin resources` | `selection slice` |
-| `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | `pending this commit: ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2: ship rule-slot round robin` | `implementation slice` |
+| `ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2` | `b9873b36 ISF-ROUND-ROBIN-RESOURCE-ARBITRATION.2: ship rule-slot round robin` | `implementation slice` |
 
 ## Changelog
 

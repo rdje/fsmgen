@@ -106,7 +106,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/COMPOSITION-WIRING-LISPISH.md` — completed `R11` task tree for canonical Lisp-ish `?wiring` list forms.
 - `docs/tasks/R8-STRICT-SUPPORT-TIER-CUTS.md` — completed `R8` task tree for the latest strict-mode support-tier cut.
 - `docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md` — completed roadmap-maintenance task tree for broad feature-backlog owner coverage synchronization.
-- `docs/tasks/TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.md` — active roadmap-maintenance task tree for synchronizing stale completed task-tree commit evidence.
+- `docs/tasks/TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.md` — completed roadmap-maintenance task tree for synchronizing stale completed task-tree commit evidence.
 - `docs/tasks/ISF-CONFLICT-RESOLUTION.md` — completed `R14` task tree for ISF same-cycle conflict semantics.
 - `docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md` — completed `R14` task tree for covered transaction-over-rule same-target priority.
 - `docs/tasks/ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.md` — completed `R14` documentation truth-sync task tree for stale transaction-over-rule priority mdBook wording.

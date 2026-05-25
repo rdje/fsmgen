@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `roadmap maintenance`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -31,15 +31,16 @@ task-tree corpus remains truthful for review and crash recovery.
   `pending commit hash`, or `pending commit workflow` evidence are audited.
 - Recoverable stale evidence is replaced by concrete completion subjects or
   commit references without changing the task outcome.
-- Any remaining `pending` wording is either in templates/workflow examples,
-  active unfinished leaves, or explicitly justified.
+- Any remaining `pending` wording is either descriptive repair-scope prose,
+  templates/workflow examples, semantic feature wording, or explicitly
+  justified.
 - Focused text audits, `mdbook build docs/book`, and `git diff --check` pass.
 - Each completed leaf is committed through `COMMIT.md`.
 
 ## Task Tree
 
 - ID: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC`
-  Status: `active`
+  Status: `done`
   Goal: `synchronize stale task-tree commit evidence`
   Children: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1`,
   `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2`
@@ -51,21 +52,21 @@ task-tree corpus remains truthful for review and crash recovery.
   set the implementation frontier, and update live docs without behavior
   changes`
   Verification: `feature-backlog/live-book/book matrix audits; mdBook build; git diff check`
-  Commit: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1: select task evidence truth sync`
+  Commit: `1c0163a9 TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1: select task evidence truth sync`
 
 - ID: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2`
-  Status: `pending`
+  Status: `done`
   Goal: `synchronize stale commit evidence across completed task trees`
   Acceptance: `Completed task files no longer carry stale pending commit
   evidence except for explicitly justified placeholders`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `stale-evidence field audit; malformed-row audit; feature-backlog/live-book/book matrix audits; mdBook build; git diff check`
+  Commit: `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2: sync completed task evidence`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `pending` | `The selection leaf is complete; the next step is the bounded evidence audit and repair.` |
+| 1 | `closed` | `done` | `Stale completed task-tree commit evidence has been synchronized.` |
 
 ## Decisions
 
@@ -89,14 +90,21 @@ task-tree corpus remains truthful for review and crash recovery.
 | `2026-05-25` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=3, Tests=351` |
 | `2026-05-25` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1` | `mdbook build docs/book` | `passed` |
 | `2026-05-25` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1` | `git diff --check` | `passed` |
+| `2026-05-25` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `rg stale-evidence field audit` | `passed: no stale commit-evidence field matches` |
+| `2026-05-25` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `rg malformed-row audit` | `passed: no malformed empty commit-log rows` |
+| `2026-05-25` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=3, Tests=351` |
+| `2026-05-25` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-25` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1: select task evidence truth sync` | `selection slice` |
-| `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `pending` | `implementation slice` |
+| `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1` | `1c0163a9 TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.1: select task evidence truth sync` | `selection slice` |
+| `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` | `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2: sync completed task evidence` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-25`: Created and activated the task tree.
+- `2026-05-25`: Synchronized stale completed task-tree commit evidence and
+  closed the task tree.

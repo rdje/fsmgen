@@ -77,7 +77,7 @@ positive-count counter load and zero-count bypass paths.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.1` | `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.1: allow bank predecessor dynamic waits` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
+| `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.1` | `1f400c1e ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.1: allow bank predecessor dynamic waits` | `completion commit` |
 
 ## Changelog
 

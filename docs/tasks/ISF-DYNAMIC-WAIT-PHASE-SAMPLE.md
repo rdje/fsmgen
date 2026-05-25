@@ -79,7 +79,7 @@ transaction-level `(phase ...)` pass-through states.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` | `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1: allow phase successor zero-sample waits` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
+| `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` | `2d4b0e47 ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1: allow phase successor zero-sample waits` | `completion commit` |
 
 ## Changelog
 

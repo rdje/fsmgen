@@ -44,7 +44,7 @@ truth synchronization: duplicated `explicit` wording and an awkward
   Acceptance: `Roadmap wording is clean, live docs are synchronized, and
   focused text checks plus git diff check pass`
   Verification: `focused text checks, git diff --check`
-  Commit: `pending this commit`
+  Commit: `99c51121 ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1: clean output-bundle wording`
 
 ## Current Frontier
 
@@ -76,7 +76,7 @@ truth synchronization: duplicated `explicit` wording and an awkward
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1` | `pending this commit: ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1: clean output-bundle wording` | `roadmap maintenance` |
+| `ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1` | `99c51121 ROADMAP-R14-OUTPUT-BUNDLE-WORDING-CLEANUP.1: clean output-bundle wording` | `roadmap maintenance` |
 
 ## Changelog
 

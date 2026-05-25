@@ -82,7 +82,7 @@ for FSMGen maintainers to reproduce the failure locally.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `DOWNSTREAM-ISSUE-REPRO-FLOW.1` | `DOWNSTREAM-ISSUE-REPRO-FLOW.1: publish issue bundle flow` | `pending commit` |
+| `DOWNSTREAM-ISSUE-REPRO-FLOW.1` | `ff0db498 DOWNSTREAM-ISSUE-REPRO-FLOW.1: publish issue bundle flow` | `completion commit` |
 
 ## Changelog
 

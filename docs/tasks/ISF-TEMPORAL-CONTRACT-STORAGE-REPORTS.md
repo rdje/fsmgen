@@ -45,7 +45,7 @@ lowerer internals.
   Goal: `Report temporal-contract monitor storage role metadata.`
   Acceptance: `Temporal-contract pending/fail registers and age counter carry an advertised role in schedule JSON, with public contract metadata and docs synchronized.`
   Verification: `perl syntax, focused public contract/report tests, ISF regression tier, mdBook build, and diff hygiene passed.`
-  Commit: `pending`
+  Commit: `effe591d ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1: report contract storage roles`
 
 ## Current Frontier
 
@@ -79,7 +79,7 @@ lowerer internals.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1` | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1: report contract storage roles` | `pending commit` |
+| `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1` | `effe591d ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1: report contract storage roles` | `completion commit` |
 
 ## Changelog
 

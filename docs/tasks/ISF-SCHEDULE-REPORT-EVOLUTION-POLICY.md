@@ -44,7 +44,7 @@ families, and `schema_version` evolution.
   Goal: `Document schedule-report evolution rules.`
   Acceptance: `The public docs state additive and breaking schedule-report change rules, and freeze blockers are updated.`
   Verification: `mdBook build and diff hygiene passed.`
-  Commit: `pending`
+  Commit: `743f0ea3 ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1: document report evolution policy`
 
 ## Current Frontier
 
@@ -78,7 +78,7 @@ families, and `schema_version` evolution.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1` | `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1: document report evolution policy` | `pending commit` |
+| `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1` | `743f0ea3 ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1: document report evolution policy` | `completion commit` |
 
 ## Changelog
 

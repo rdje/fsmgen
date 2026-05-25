@@ -44,7 +44,7 @@ runtime dynamic-wait counter storage role so downstream consumers can rely on
   Goal: `Synchronize dynamic-wait counter storage role metadata.`
   Acceptance: `Runtime dynamic wait counter storage carries the advertised dynamic_wait_counter role in schedule JSON, with public contract metadata and docs synchronized.`
   Verification: `perl syntax, focused public storage metadata tests, ISF regression tier, mdBook build, and diff hygiene passed.`
-  Commit: `pending`
+  Commit: `992da4a8 ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1: advertise dynamic wait storage role`
 
 ## Current Frontier
 
@@ -78,7 +78,7 @@ runtime dynamic-wait counter storage role so downstream consumers can rely on
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1` | `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1: advertise dynamic wait storage role` | `pending commit` |
+| `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1` | `992da4a8 ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1: advertise dynamic wait storage role` | `completion commit` |
 
 ## Changelog
 

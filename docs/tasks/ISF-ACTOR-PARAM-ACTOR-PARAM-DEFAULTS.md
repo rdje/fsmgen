@@ -57,7 +57,7 @@ graph.
   Acceptance: `The task-tree owner, implementation frontier, value-domain
   boundary, non-goals, and validation scope are recorded before code changes.`
   Verification: `prove -Iperl t/1256-feature-backlog-status-audit.t`; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `91ed9079 ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1: select actor param dependency defaults`
 
 - ID: `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2`
   Status: `done`
@@ -67,7 +67,7 @@ graph.
   tokens in review/report surfaces, reject unsupported dependency shapes, and
   update public docs/tests.`
   Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1345-isf-actor-param-actor-constants.t`; `perl -Iperl -c t/1346-isf-actor-param-actor-params.t`; focused actor-param/static-value tests with `Files=11, Tests=35`; public/spec/book/backlog audits with `Files=6, Tests=351`; `./bin/ci-regression isf --no-book` with `Files=252, Tests=1688`; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `f8c42035 ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2: ship ordered actor param defaults`
 
 ## Current Frontier
 
@@ -104,7 +104,7 @@ graph.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1` | `91ed9079 ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.1: select actor param dependency defaults` | Selection commit. |
-| `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` | `pending this commit: ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2: ship ordered actor param defaults` | Implementation commit. |
+| `ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2` | `f8c42035 ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.2: ship ordered actor param defaults` | Implementation commit. |
 
 ## Changelog
 

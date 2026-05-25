@@ -44,7 +44,7 @@ transaction port bindings and rule-trigger completion observation.
   Goal: `Synchronize generated activation handoff storage role metadata.`
   Acceptance: `Generated transaction-port handoff storage and rule-trigger done-observe storage carry advertised roles in schedule JSON, with public contract metadata and docs synchronized.`
   Verification: `perl syntax, focused public storage metadata tests, ISF regression tier, mdBook build, and diff hygiene passed.`
-  Commit: `pending`
+  Commit: `3842ca36 ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1: advertise activation handoff storage roles`
 
 ## Current Frontier
 
@@ -78,7 +78,7 @@ transaction port bindings and rule-trigger completion observation.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1` | `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1: advertise activation handoff storage roles` | `pending commit` |
+| `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1` | `3842ca36 ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1: advertise activation handoff storage roles` | `completion commit` |
 
 ## Changelog
 

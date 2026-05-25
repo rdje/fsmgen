@@ -92,7 +92,7 @@ transaction port.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ACTIVATION-BIND-EXPRESSIONS.1` | `ISF-ACTIVATION-BIND-EXPRESSIONS.1: ship binding expressions` | `pending commit workflow` |
+| `ISF-ACTIVATION-BIND-EXPRESSIONS.1` | `95ce4bc2 ISF-ACTIVATION-BIND-EXPRESSIONS.1: ship binding expressions` | `completion commit` |
 
 ## Changelog
 

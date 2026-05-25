@@ -73,7 +73,7 @@ fail-closed or deferred.
   Goal: `Reject unsupported repeat count sources with focused tests and synchronized docs`
   Acceptance: `Only positive literals, positive actor constants, and known-width runtime scalar names are accepted repeat count sources`
   Verification: `syntax`; `focused repeat tests`; `public/doc audits`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book`
-  Commit: `pending`
+  Commit: `0e79c392 ISF-REPEAT-COUNT-SOURCE-BOUNDARY.2: ship repeat count source boundary`
 
 ## Current Frontier
 

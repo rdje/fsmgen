@@ -97,8 +97,8 @@ instance without implying dynamic hardware creation.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-SPAWN-IN-REPEAT.1` | `ISF-SPAWN-IN-REPEAT.1: select repeat spawn contract` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
-| `ISF-SPAWN-IN-REPEAT.2` | `ISF-SPAWN-IN-REPEAT.2: implement repeat spawn await_all` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
+| `ISF-SPAWN-IN-REPEAT.1` | `a220147f ISF-SPAWN-IN-REPEAT.1: select repeat spawn contract` | `completion commit` |
+| `ISF-SPAWN-IN-REPEAT.2` | `b6556a58 ISF-SPAWN-IN-REPEAT.2: implement repeat spawn await_all` | `completion commit` |
 
 ## Changelog
 

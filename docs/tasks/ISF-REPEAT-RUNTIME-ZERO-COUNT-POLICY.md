@@ -64,7 +64,7 @@ instead of silently executing one iteration.
   Goal: `Implement runtime scalar repeat zero-count body bypass with focused tests and synchronized docs`
   Acceptance: `Runtime scalar zero counts skip body execution while nonzero counts preserve existing repeat behavior; docs and public contracts are synchronized`
   Verification: `syntax`; `focused repeat tests`; `public/doc audits`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book`
-  Commit: `pending`
+  Commit: `0f2500fc ISF-REPEAT-RUNTIME-ZERO-COUNT-POLICY.2: ship runtime repeat zero policy`
 
 ## Current Frontier
 

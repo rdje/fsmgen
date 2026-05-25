@@ -96,7 +96,7 @@ public support-accounting visibility.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.1` | `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.1: select ports shape widening` | `selection leaf; no compiler behavior changed` |
-| `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2` | `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2: widen ports shape corpus` | `pending commit` |
+| `R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2` | `9e492a04 R12-COMPOSITION-PORTS-SHAPE-CORPUS-WIDENING.2: widen ports shape corpus` | `completion commit` |
 
 ## Changelog
 

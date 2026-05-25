@@ -83,7 +83,7 @@ positive integer literals.
   Tests=1711; mdbook build docs/book; post-closure public/spec/book audits
   with Files=6, Tests=359; feature-backlog/live-book/book-matrix audits with
   Files=3, Tests=364; git diff --check`
-  Commit: `pending this commit`
+  Commit: `65f84853 ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2: support transaction port package widths`
 
 ## Current Frontier
 
@@ -136,7 +136,7 @@ positive integer literals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1` | `4fa56986: ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1: select transaction port package widths` | `selection slice` |
-| `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` | `pending this commit` | `implementation slice` |
+| `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` | `65f84853 ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2: support transaction port package widths` | `implementation slice` |
 
 ## Changelog
 

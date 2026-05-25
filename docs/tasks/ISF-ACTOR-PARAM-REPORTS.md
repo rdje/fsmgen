@@ -55,7 +55,7 @@ IR.
   `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
   `prove -Iperl t/1253-isf-actor-param-report.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1096-isf-schedule-json-report.t t/1121-isf-public-cli-schedule-report-audit.t t/1227-isf-schedule-report-freeze-boundary.t t/1250-isf-spec-focused-test-index-audit.t`;
   `./bin/ci-regression isf`; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending`
+  Commit: `ec2abf06 ISF-ACTOR-PARAM-REPORTS.1: report actor params`
 
 ## Current Frontier
 
@@ -87,7 +87,7 @@ IR.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ACTOR-PARAM-REPORTS.1` | `ISF-ACTOR-PARAM-REPORTS.1: report actor params` | `pending commit` |
+| `ISF-ACTOR-PARAM-REPORTS.1` | `ec2abf06 ISF-ACTOR-PARAM-REPORTS.1: report actor params` | `completion commit` |
 
 ## Changelog
 

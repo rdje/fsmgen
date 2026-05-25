@@ -93,7 +93,7 @@ and public support-accounting visibility.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.1` | `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.1: select child-structure widening` | `selection leaf; no compiler behavior changed` |
-| `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.2` | `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.2: widen child-structure corpus` | `pending commit` |
+| `R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.2` | `41c26a6d R12-COMPOSITION-CHILD-STRUCTURE-CORPUS-WIDENING.2: widen child-structure corpus` | `completion commit` |
 
 ## Changelog
 

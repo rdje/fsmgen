@@ -49,7 +49,7 @@ accepted loop-body inline subset.
   `prove -Iperl t/1307-isf-loop-body-doc-truth-audit.t
   t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`;
   `./bin/ci-regression isf --no-book`; `git diff --check`
-  Commit: `pending`
+  Commit: `263436db ISF-LOOP-BODY-DOC-TRUTH-SYNC.1: sync loop body docs`
 
 ## Current Frontier
 
@@ -80,7 +80,7 @@ accepted loop-body inline subset.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-LOOP-BODY-DOC-TRUTH-SYNC.1` | `pending` | `pending` |
+| `ISF-LOOP-BODY-DOC-TRUTH-SYNC.1` | `263436db ISF-LOOP-BODY-DOC-TRUTH-SYNC.1: sync loop body docs` | `completion commit` |
 
 ## Changelog
 

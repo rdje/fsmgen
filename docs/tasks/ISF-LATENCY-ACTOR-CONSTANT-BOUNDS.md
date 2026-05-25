@@ -54,7 +54,7 @@ actor constants anywhere the shipped positive literal bound is accepted.
   Goal: `implement and document actor-constant transaction latency bounds`
   Acceptance: `positive actor constants lower as literal latency bounds; unsupported bound tokens fail closed; docs and focused tests are synchronized`
   Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1197-isf-latency-clause-boundary.t`; focused latency/schedule/contract tests; public/doc audits; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending this commit`
+  Commit: `56dc49cc ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2: ship latency actor-constant bounds`
 
 ## Current Frontier
 
@@ -89,7 +89,7 @@ actor constants anywhere the shipped positive literal bound is accepted.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1` | `4cfcce88 ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.1: select latency actor-constant bounds` | Selection commit. |
-| `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` | `pending this commit: ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2: ship latency actor-constant bounds` | Implementation and documentation commit. |
+| `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2` | `56dc49cc ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.2: ship latency actor-constant bounds` | Implementation and documentation commit. |
 
 ## Changelog
 

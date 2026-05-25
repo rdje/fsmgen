@@ -96,7 +96,7 @@ corpus with stable diagnostics and public support-accounting visibility.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.1` | `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.1: select child-kind ports-mapping widening` | `selection leaf; no compiler behavior changed` |
-| `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.2` | `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.2: widen child-kind ports-mapping corpus` | `pending commit` |
+| `R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.2` | `aec5d755 R12-COMPOSITION-CHILD-KIND-PORTS-MAPPING-CORPUS-WIDENING.2: widen child-kind ports-mapping corpus` | `completion commit` |
 
 ## Changelog
 

@@ -74,7 +74,7 @@ accepted.
   Verification: `syntax checks; focused watchdog/public/doc tests; broad
   ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff
   --check`
-  Commit: `pending commit`
+  Commit: `8cdeab60 ISF-WATCHDOG-ACTOR-PARAM-LIMITS.2: ship watchdog actor-param limits`
 
 ## Current Frontier
 

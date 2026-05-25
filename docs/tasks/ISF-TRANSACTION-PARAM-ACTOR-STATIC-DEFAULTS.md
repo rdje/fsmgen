@@ -67,7 +67,7 @@ resolution state.
   literalizes them for child/report publication, preserves enum-token review
   behavior, rejects unsupported sources, and updates public docs/tests.`
   Verification: `syntax checks; focused transaction/static-value tests; public/spec/book/backlog audits; full ISF regression gate; mdBook build; diff whitespace check`
-  Commit: `pending this commit`
+  Commit: `855f5d67 ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2: ship transaction static defaults`
 
 ## Current Frontier
 
@@ -107,7 +107,7 @@ resolution state.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1` | `4774a53c ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.1: select transaction static defaults` | Selection commit. |
-| `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2` | `pending this commit: ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2: ship transaction static defaults` | Implementation leaf. |
+| `ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2` | `855f5d67 ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.2: ship transaction static defaults` | Implementation leaf. |
 
 ## Changelog
 

@@ -54,7 +54,7 @@ boundary for anything not fully shipped.
   `prove -Iperl t/1305-isf-book-feature-matrix-audit.t
   t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`;
   `./bin/ci-regression isf --no-book`; `git diff --check`
-  Commit: `pending`
+  Commit: `afdd2e87 ISF-MDBOOK-FEATURE-MATRIX.1: add ISF book feature matrix`
 
 ## Current Frontier
 
@@ -90,7 +90,7 @@ boundary for anything not fully shipped.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-MDBOOK-FEATURE-MATRIX.1` | `pending` | `pending` |
+| `ISF-MDBOOK-FEATURE-MATRIX.1` | `afdd2e87 ISF-MDBOOK-FEATURE-MATRIX.1: add ISF book feature matrix` | `completion commit` |
 
 ## Changelog
 

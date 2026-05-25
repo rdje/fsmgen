@@ -67,7 +67,7 @@ conversion owner, and public/private boundary.
   Acceptance: `Only concrete redundant conversions or unsafe ownership gaps
   become executable follow-up leaves with verification plans.`
   Verification: `git diff --check`; `mdbook build docs/book`
-  Commit: `pending`
+  Commit: `a9ce7c6b IR-EXPRESSION-AST-OWNERSHIP.3: create expression follow-ups`
 
 ## Current Frontier
 
@@ -188,7 +188,7 @@ changes begin.
 | --- | --- | --- |
 | `IR-EXPRESSION-AST-OWNERSHIP.1` | `74456538 IR-EXPRESSION-AST-OWNERSHIP.1: inventory expression surfaces` | Inventory committed; no compiler behavior changed. |
 | `IR-EXPRESSION-AST-OWNERSHIP.2` | `60d36eb1 IR-EXPRESSION-AST-OWNERSHIP.2: classify expression ownership` | Classification committed; no compiler behavior changed. |
-| `IR-EXPRESSION-AST-OWNERSHIP.3` | `pending` | `pending` |
+| `IR-EXPRESSION-AST-OWNERSHIP.3` | `a9ce7c6b IR-EXPRESSION-AST-OWNERSHIP.3: create expression follow-ups` | `completion commit` |
 
 ## Changelog
 

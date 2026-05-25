@@ -44,7 +44,7 @@ reports and synchronize the public contract/docs.
   Goal: `Add schedule-report schema_version metadata.`
   Acceptance: `Reports emit schema_version 1 and the public contract/docs advertise it.`
   Verification: `perl syntax, focused schedule-report tests, ISF regression tier, mdBook build, and diff hygiene passed.`
-  Commit: `pending`
+  Commit: `954f98cf ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1: add report schema version`
 
 ## Current Frontier
 
@@ -76,7 +76,7 @@ reports and synchronize the public contract/docs.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1` | `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1: add report schema version` | `pending commit` |
+| `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1` | `954f98cf ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1: add report schema version` | `completion commit` |
 
 ## Changelog
 

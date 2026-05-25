@@ -73,7 +73,7 @@ Ship a bounded `transaction_start` resource kind under the existing static
   Verification: `syntax checks; focused resource/report tests; public/spec/book
   audits; mdBook build; broad ISF regression; post-closure audits; git diff
   check`
-  Commit: `pending this commit`
+  Commit: `87425be4 ISF-TRANSACTION-START-RESOURCE-PRIORITY.2: ship transaction-start resources`
 
 ## Current Frontier
 
@@ -122,7 +122,7 @@ Ship a bounded `transaction_start` resource kind under the existing static
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-START-RESOURCE-PRIORITY.1` | `5840396e ISF-TRANSACTION-START-RESOURCE-PRIORITY.1: select transaction-start resources` | `selection slice` |
-| `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `pending this commit: ISF-TRANSACTION-START-RESOURCE-PRIORITY.2: ship transaction-start resources` | `implementation slice` |
+| `ISF-TRANSACTION-START-RESOURCE-PRIORITY.2` | `87425be4 ISF-TRANSACTION-START-RESOURCE-PRIORITY.2: ship transaction-start resources` | `implementation slice` |
 
 ## Changelog
 

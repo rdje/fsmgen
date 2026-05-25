@@ -44,7 +44,7 @@ backlog status audit expectation.
   CI diagnosis, and the Pages deploy failure is identified as already resolved
   by a later successful run or otherwise escalated with evidence`
   Verification: `focused failing audit; live-doc audits; exact local CI script`
-  Commit: `pending this commit`
+  Commit: `9e1c9075 CI-FEATURE-BACKLOG-STATUS-AUDIT.1: fix backlog status audit`
 
 ## Current Frontier
 
@@ -83,7 +83,7 @@ backlog status audit expectation.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` | `pending this commit: CI-FEATURE-BACKLOG-STATUS-AUDIT.1: fix backlog status audit` | `implementation slice` |
+| `CI-FEATURE-BACKLOG-STATUS-AUDIT.1` | `9e1c9075 CI-FEATURE-BACKLOG-STATUS-AUDIT.1: fix backlog status audit` | `implementation slice` |
 
 ## Changelog
 

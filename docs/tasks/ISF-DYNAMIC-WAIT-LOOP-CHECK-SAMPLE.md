@@ -84,7 +84,7 @@ clause in a repeat, while, or until body.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1` | `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1: allow loop decision zero-sample waits` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
+| `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1` | `6a4b0f6a ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1: allow loop decision zero-sample waits` | `completion commit` |
 
 ## Changelog
 

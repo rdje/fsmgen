@@ -78,7 +78,7 @@ actor-owned storage signals.
   Verification: `syntax checks; focused resource/report tests; public/spec/book
   audits; mdBook build; broad ISF regression; post-closure audits; git diff
   check`
-  Commit: `pending this commit`
+  Commit: `c2db0a8a ISF-STORAGE-PORT-RESOURCE-PRIORITY.2: ship storage-port resources`
 
 ## Current Frontier
 
@@ -131,7 +131,7 @@ actor-owned storage signals.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-STORAGE-PORT-RESOURCE-PRIORITY.1` | `8be2a572 ISF-STORAGE-PORT-RESOURCE-PRIORITY.1: select storage-port resources` | `selection slice` |
-| `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `pending this commit: ISF-STORAGE-PORT-RESOURCE-PRIORITY.2: ship storage-port resources` | `implementation slice` |
+| `ISF-STORAGE-PORT-RESOURCE-PRIORITY.2` | `c2db0a8a ISF-STORAGE-PORT-RESOURCE-PRIORITY.2: ship storage-port resources` | `implementation slice` |
 
 ## Changelog
 
