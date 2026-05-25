@@ -127,6 +127,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_transaction_port_binding_keys
     isf_public_interface_schedule_report_transaction_port_binding_actor_endpoint_kind_values
     isf_public_interface_schedule_report_transaction_port_binding_timing_values
+    isf_public_interface_schedule_report_transaction_port_binding_authored_timing_mode_values
     isf_public_interface_schedule_report_transaction_port_binding_site_kind_values
     isf_public_interface_schedule_report_transaction_stage_keys
     isf_public_interface_schedule_report_transaction_stage_kind_values
@@ -252,6 +253,7 @@ sub build_isf_public_interface_contract {
         schedule_report_transaction_port_binding_keys => isf_public_interface_schedule_report_transaction_port_binding_keys(),
         schedule_report_transaction_port_binding_actor_endpoint_kind_values => isf_public_interface_schedule_report_transaction_port_binding_actor_endpoint_kind_values(),
         schedule_report_transaction_port_binding_timing_values => isf_public_interface_schedule_report_transaction_port_binding_timing_values(),
+        schedule_report_transaction_port_binding_authored_timing_mode_values => isf_public_interface_schedule_report_transaction_port_binding_authored_timing_mode_values(),
         schedule_report_transaction_port_binding_site_kind_values => isf_public_interface_schedule_report_transaction_port_binding_site_kind_values(),
         schedule_report_compile_issue_severity_values => isf_public_interface_schedule_report_compile_issue_severity_values(),
         schedule_report_compile_issue_proof_status_values => isf_public_interface_schedule_report_compile_issue_proof_status_values(),
@@ -659,6 +661,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_transaction_port_binding_keys
             schedule_report_transaction_port_binding_actor_endpoint_kind_values
             schedule_report_transaction_port_binding_timing_values
+            schedule_report_transaction_port_binding_authored_timing_mode_values
             schedule_report_transaction_port_binding_site_kind_values
             schedule_report_compile_issue_severity_values
             schedule_report_compile_issue_proof_status_values
@@ -1100,6 +1103,7 @@ sub isf_public_interface_schedule_report_transaction_port_binding_keys {
             actor_expression
             actor_endpoint_kind
             binding_timing
+            authored_timing_mode
             width
             instance
             parent_port
@@ -1129,6 +1133,15 @@ sub isf_public_interface_schedule_report_transaction_port_binding_timing_values 
             generated_live_handoff
             trigger_payload
             done_guarded
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_transaction_port_binding_authored_timing_mode_values {
+    return [
+        qw(
+            snapshot
+            live
         ),
     ];
 }

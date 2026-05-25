@@ -370,10 +370,12 @@ static lowering decisions, not per-cycle runtime traces.
 Transaction port bindings now project as bounded `transaction_port_bindings` entries with
 binding site, owner, target transaction, port role/name, scalar actor signal
 where applicable, formatted actor expression, `actor_endpoint_kind`,
-`binding_timing`, width, and generated handoff signal names where applicable.
+`binding_timing`, `authored_timing_mode`, width, and generated handoff signal
+names where applicable.
 Endpoint kind is `signal`, `literal`, or `expression`. Binding timing is
 `activation_region`, `generated_live_handoff`, `trigger_payload`, or
-`done_guarded`.
+`done_guarded`. Authored timing mode is `snapshot`, `live`, or JSON null when
+no explicit timing clause was authored.
 
 Raw assignment provenance, private assignment indexes, and activation proof internals remain
 private.

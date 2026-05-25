@@ -4630,8 +4630,8 @@ Transaction port binding provenance is emitted as a top-level
 (`do`, `spawn`, or `rule_trigger`), owner, target transaction, direction role,
 transaction port, actor signal when the actor side is a scalar endpoint,
 formatted actor expression, `actor_endpoint_kind`, `binding_timing`, width,
-and the bounded generated signal names that make the scheduled `.fsm` handoff
-reviewable.
+`authored_timing_mode`, and the bounded generated signal names that make the
+scheduled `.fsm` handoff reviewable.
 For generated-child rule-trigger output bindings, `done_signal` names the
 per-trigger done-observer signal that guards the copy back into the actor.
 `actor_endpoint_kind` is `signal` for scalar actor-side endpoints, `literal`
@@ -4642,9 +4642,12 @@ formatted source expression. `binding_timing` is `activation_region` for
 same activation-region copies, `generated_live_handoff` for generated-top
 handoff wiring, `trigger_payload` for rule-trigger input payload
 capture/fan-in, and `done_guarded` for output copies guarded by child
-completion or trigger done observation. Non-applicable generated signals are
-JSON null. This is provenance and review support; it is not raw assignment
-provenance and it does not expose private activation proof state.
+completion or trigger done observation. `authored_timing_mode` is `snapshot`
+or `live` when an input binding explicitly spells `(timing snapshot)` or
+`(timing live)`, and JSON null when no timing clause was authored, including
+output bindings. Non-applicable generated signals are JSON null. This is
+provenance and review support; it is not raw assignment provenance and it does
+not expose private activation proof state.
 Successful priority/resource decisions are emitted as top-level
 `priority_resolutions` and `resource_arbitration` arrays. A
 `priority_resolutions` entry records the target plus bounded winner/loser owner

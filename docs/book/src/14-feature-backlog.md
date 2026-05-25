@@ -2550,16 +2550,15 @@ signal.
 
 Direct/local rule-trigger output bindings, behavior-changing
 snapshot-vs-live timing conversion, additional binding report fields beyond
-the shipped endpoint-kind and binding-timing metadata, and broader static
-conflict diagnostics remain backlog.
+the shipped endpoint-kind, binding-timing, and authored timing-mode metadata,
+and broader static conflict diagnostics remain backlog.
 
-The next selected report-only binding metadata field is
-`authored_timing_mode` on `transaction_port_bindings[]`. It will report
-`snapshot` or `live` when the source binding explicitly includes
-`(timing snapshot)` or `(timing live)`, and JSON `null` when no explicit
-timing clause was authored, including output bindings. This field remains an
-implementation frontier until the owning task tree lands; it does not imply
-behavior-changing timing conversion.
+Schedule reports also publish `authored_timing_mode` on
+`transaction_port_bindings[]`. It reports `snapshot` or `live` when the source
+binding explicitly includes `(timing snapshot)` or `(timing live)`, and JSON
+`null` when no explicit timing clause was authored, including output bindings.
+This is source provenance only; it does not imply behavior-changing timing
+conversion.
 
 The shipped first snapshot-vs-live timing syntax is an optional fourth
 subclause on input bindings: `(input PORT EXPR (timing snapshot))` or
@@ -2583,13 +2582,15 @@ Successful schedule reports now expose bounded `transaction_port_bindings`
 entries for the shipped binding surface. Each entry records the binding site
 kind, owner, target transaction, direction role, port, scalar actor signal
 when applicable, formatted actor expression, `actor_endpoint_kind`,
-`binding_timing`, width, and generated handoff names where they exist.
+`binding_timing`, `authored_timing_mode`, width, and generated handoff names
+where they exist.
 Generated-child rule-trigger output entries report the done-observer signal in
 `done_signal`. The endpoint kind is `signal` for scalar actor-side endpoints,
 `literal` for numeric or exact-width input operands, and `expression` for
 non-empty list-expression input operands. The binding timing is
 `activation_region`, `generated_live_handoff`, `trigger_payload`, or
-`done_guarded`.
+`done_guarded`. The authored timing mode is `snapshot`, `live`, or JSON null
+for no explicit timing clause.
 This is a public summary for downstream tooling, not the raw binding or
 assignment-provenance internals.
 

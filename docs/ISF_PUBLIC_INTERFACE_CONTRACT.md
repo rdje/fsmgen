@@ -2772,7 +2772,7 @@ library_uses entries: library, alias, export, kind, instance, module, scheduled_
 library_uses parameter entries: name, source, value
 library_uses binding entries: role, library_name, parent_name, width
 bank_accesses entries: kind, owner, owner_kind, container_kind, container_name, bank, index, width, depth, scalar_entries, same_cycle_policy, value, target
-transaction_port_bindings entries: site_kind, owner, owner_kind, target_transaction, role, port, actor_signal, actor_expression, actor_endpoint_kind, binding_timing, width, instance, parent_port, child_port, start_signal, done_signal, trigger_source, payload_source
+transaction_port_bindings entries: site_kind, owner, owner_kind, target_transaction, role, port, actor_signal, actor_expression, actor_endpoint_kind, binding_timing, authored_timing_mode, width, instance, parent_port, child_port, start_signal, done_signal, trigger_source, payload_source
 clock_domains entries: name, default, clock, reset, scheduled_fsm, ports, storage, transactions, rules, library_uses, child_instances, crossings, state_count, dt_block_count
 clock_domains child_instances entries: kind, owner, child, instance
 clock_domains crossings entries: event, role, signal, ready
@@ -3048,7 +3048,8 @@ Transaction port binding provenance uses a top-level
 set and records the binding site kind (`do`, `spawn`, or `rule_trigger`),
 owner, target transaction, port role/name, actor signal when the actor side is
 a scalar endpoint, formatted actor expression, `actor_endpoint_kind`,
-`binding_timing`, width, and generated handoff signal names where applicable.
+`binding_timing`, `authored_timing_mode`, width, and generated handoff signal
+names where applicable.
 Parameterized
 rule-trigger entries use the generated trigger instance handoff names and
 preserve the per-rule trigger and payload source names; generated-child
@@ -3059,13 +3060,17 @@ bindings, `actor_signal` is JSON null and
 `actor_endpoint_kind` is `signal`, `literal`, or `expression`.
 `binding_timing` is `activation_region`, `generated_live_handoff`,
 `trigger_payload`, or `done_guarded`. JSON null is used for non-applicable
-handoff fields. The machine-readable contract advertises the entry key set in
+handoff fields. `authored_timing_mode` is `snapshot` or `live` when the source
+binding includes an explicit timing clause, and JSON null otherwise. The
+machine-readable contract advertises the entry key set in
 `schedule_report_transaction_port_binding_keys`, the endpoint-kind value
 family in
 `schedule_report_transaction_port_binding_actor_endpoint_kind_values`, the
 timing value family in
-`schedule_report_transaction_port_binding_timing_values`, and the current
-site-kind values in
+`schedule_report_transaction_port_binding_timing_values`, the authored timing
+mode value family in
+`schedule_report_transaction_port_binding_authored_timing_mode_values`, and
+the current site-kind values in
 `schedule_report_transaction_port_binding_site_kind_values`.
 Successful arbitration metadata uses top-level `priority_resolutions` and
 `resource_arbitration` arrays. `priority_resolutions` records static
@@ -3160,12 +3165,13 @@ These are not stable public interfaces yet:
   input-binding lowering for `do`, `spawn`, and rule-trigger activation sites,
   explicit current-timing `(timing snapshot|live)` assertions on input
   bindings, generated-child rule-trigger scalar output bindings, plus the
-  first conflict/runtime coverage for binding-generated assignments, and
-  bounded `binding_timing` report metadata. Direct/local rule-trigger output
-  bindings, behavior-changing snapshot-vs-live timing conversion, broader
-  static conflict diagnostics, additional report fields beyond endpoint-kind
-  and binding-timing metadata, and full expression width inference remain
-  deferred follow-on port-binding work.
+  first conflict/runtime coverage for binding-generated assignments, bounded
+  `binding_timing` report metadata, and `authored_timing_mode` report
+  metadata. Direct/local rule-trigger output bindings, behavior-changing
+  snapshot-vs-live timing conversion, broader static conflict diagnostics,
+  additional report fields beyond endpoint-kind, binding-timing, and authored
+  timing-mode metadata, and full expression width inference remain deferred
+  follow-on port-binding work.
 - Transaction control-flow behavior beyond shipped static/symbolic actor
   constant, actor parameter, qualified package scalar constant, runtime
   scalar, and runtime expression `(wait N)`, sample-compatible runtime wait pending

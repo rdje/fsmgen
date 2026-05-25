@@ -65,6 +65,7 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_transaction_port_binding_keys
     isf_public_interface_schedule_report_transaction_port_binding_actor_endpoint_kind_values
     isf_public_interface_schedule_report_transaction_port_binding_timing_values
+    isf_public_interface_schedule_report_transaction_port_binding_authored_timing_mode_values
     isf_public_interface_schedule_report_transaction_port_binding_site_kind_values
     isf_public_interface_schedule_report_transaction_loop_keys
     isf_public_interface_schedule_report_transaction_wait_count_kind_values
@@ -207,6 +208,10 @@ sub assert_schedule_report_metadata {
         [
             schedule_report_transaction_port_binding_timing_values =>
                 isf_public_interface_schedule_report_transaction_port_binding_timing_values(),
+        ],
+        [
+            schedule_report_transaction_port_binding_authored_timing_mode_values =>
+                isf_public_interface_schedule_report_transaction_port_binding_authored_timing_mode_values(),
         ],
         [
             schedule_report_transaction_loop_keys =>
@@ -355,6 +360,15 @@ sub assert_schedule_report_metadata {
     assert_unique_scalar_list(
         $contract->{schedule_report_transaction_port_binding_timing_values},
         "$label transaction port binding timing values",
+    );
+    is_deeply(
+        $contract->{schedule_report_transaction_port_binding_authored_timing_mode_values},
+        isf_public_interface_schedule_report_transaction_port_binding_authored_timing_mode_values(),
+        "$label transaction port binding authored timing mode values are exact",
+    );
+    assert_unique_scalar_list(
+        $contract->{schedule_report_transaction_port_binding_authored_timing_mode_values},
+        "$label transaction port binding authored timing mode values",
     );
     is_deeply(
         $contract->{schedule_report_transaction_port_binding_site_kind_values},

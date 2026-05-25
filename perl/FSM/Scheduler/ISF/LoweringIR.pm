@@ -2851,6 +2851,7 @@ sub _transaction_port_binding_entry {
         actor_expression    => _activation_binding_actor_expr_text($binding),
         actor_endpoint_kind => _activation_binding_actor_endpoint_kind($binding),
         binding_timing      => _transaction_port_binding_timing($site_kind, $role, $instance),
+        authored_timing_mode => $binding->{timing_mode},
         width               => ($args{port} || {})->{width} // 1,
         instance            => $instance,
         parent_port         => defined($instance) ? "${instance}_$port" : undef,

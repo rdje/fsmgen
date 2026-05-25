@@ -248,6 +248,7 @@ sub golden_matrix_cases {
                   schedule_report_transaction_port_binding_keys
                   schedule_report_transaction_port_binding_actor_endpoint_kind_values
                   schedule_report_transaction_port_binding_timing_values
+                  schedule_report_transaction_port_binding_authored_timing_mode_values
                   schedule_report_transaction_port_binding_site_kind_values
                 )
             ],
@@ -715,6 +716,9 @@ sub assert_value_branch {
     elsif ($branch eq 'schedule_report_transaction_port_binding_timing_values') {
         @values = map { $_->{binding_timing} } @{$report->{transaction_port_bindings}};
     }
+    elsif ($branch eq 'schedule_report_transaction_port_binding_authored_timing_mode_values') {
+        @values = grep { defined $_ } map { $_->{authored_timing_mode} } @{$report->{transaction_port_bindings}};
+    }
     elsif ($branch eq 'schedule_report_compile_issue_severity_values') {
         @values = map { $_->{severity} } @{$report->{compile_issues}};
     }
@@ -1114,17 +1118,17 @@ sub port_binding_source {
     (on start)
     (do do_child
       (bind
-        (input addr req_addr)
+        (input addr req_addr (timing snapshot))
         (output data resp)))
     (spawn spawn_child as w0
       (bind
-        (input addr req_addr)
+        (input addr req_addr (timing live))
         (output data resp)))
     (complete done))
   (rule fire_work fire
     (trigger work
       (bind
-        (input addr req_addr)))))
+        (input addr req_addr (timing snapshot))))))
 ISF
 }
 

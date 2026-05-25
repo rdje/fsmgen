@@ -268,6 +268,15 @@ ISF
         ],
         'explicit timing syntax preserves the shipped binding timing report classes',
     );
+    is_deeply(
+        [map { $_->{site_kind} . ':' . $_->{port} . ':' . ($_->{authored_timing_mode} // 'null') } @{$report->{transaction_port_bindings}}],
+        [
+            'do:addr:snapshot',
+            'spawn:addr:live',
+            'rule_trigger:work_addr:snapshot',
+        ],
+        'explicit timing syntax reports authored timing modes separately from binding timing',
+    );
 };
 
 subtest 'malformed activation bindings fail closed during lowering' => sub {

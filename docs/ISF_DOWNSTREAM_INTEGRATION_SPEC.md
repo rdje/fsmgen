@@ -980,7 +980,10 @@ Rules:
   numeric/exact-width literal operands, and list-expression operands without
   parsing `actor_expression`, plus `binding_timing` so consumers can classify
   the transfer as `activation_region`, `generated_live_handoff`,
-  `trigger_payload`, or `done_guarded`.
+  `trigger_payload`, or `done_guarded`, plus `authored_timing_mode` so
+  consumers can see explicit `snapshot`/`live` timing assertions without
+  parsing source binding clauses. `authored_timing_mode` is JSON null when no
+  explicit timing clause was authored.
 
 ### 11.3 Sampling, Await, Wait, Completion
 
@@ -3007,8 +3010,8 @@ bank_accesses[]: kind, owner, owner_kind, container_kind, container_name,
   bank, index, width, depth, scalar_entries, same_cycle_policy, value, target
 transaction_port_bindings[]: site_kind, owner, owner_kind, target_transaction,
   role, port, actor_signal, actor_expression, actor_endpoint_kind,
-  binding_timing, width, instance, parent_port, child_port, start_signal,
-  done_signal, trigger_source, payload_source
+  binding_timing, authored_timing_mode, width, instance, parent_port,
+  child_port, start_signal, done_signal, trigger_source, payload_source
 dt_blocks[]: name, kind, assignments
 actor_network: kind, instances, groups, association_schedules,
   group_schedules, data_movements, event_waits, transaction_triggers
@@ -3082,6 +3085,7 @@ transaction_port_bindings.site_kind: do, spawn, rule_trigger
 transaction_port_bindings.actor_endpoint_kind: signal, literal, expression
 transaction_port_bindings.binding_timing: activation_region,
   generated_live_handoff, trigger_payload, done_guarded
+transaction_port_bindings.authored_timing_mode: snapshot, live, or JSON null
 generated_composition.kind: activation_generated_top, spawn_generated_top
 inferred_storage.kind: counter, register
 inferred_storage.role: activation_done_handoff, activation_start_handoff,

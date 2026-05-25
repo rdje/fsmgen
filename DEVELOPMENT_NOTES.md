@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Authored timing mode is source provenance only
+- `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` carries the parsed
+  input binding `timing_mode` into `transaction_port_bindings[]` as
+  `authored_timing_mode`.
+- The JSON emitter publishes the key on every binding entry, using JSON null
+  when no explicit timing clause exists. That keeps the report key set stable
+  while avoiding a fake "implicit" mode.
+- The field deliberately does not participate in lowering decisions. Existing
+  `binding_timing` remains the actual transfer class; `authored_timing_mode`
+  only tells reviewers and downstream tools what the source asserted.
+
 ## 2026-05-25: Authored timing mode should not overload binding_timing
 - `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.1` selects
   `authored_timing_mode` as a separate report field instead of folding source

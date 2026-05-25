@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -42,7 +42,7 @@ generated `.fsm`, HDL, schedule-report schema version, or runtime behavior.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA`
-  Status: `active`
+  Status: `done`
   Goal: `Expose authored timing assertion metadata without changing binding semantics.`
   Children: `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.1`,
   `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2`
@@ -55,17 +55,17 @@ generated `.fsm`, HDL, schedule-report schema version, or runtime behavior.
   Commit: `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.1: select authored timing metadata`
 
 - ID: `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document authored_timing_mode report metadata.`
   Acceptance: `Every transaction_port_bindings[] entry carries authored_timing_mode as snapshot/live/null; public contract metadata and downstream/user docs are synchronized; timing behavior remains unchanged.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused report/public-contract/spec/book tests; ./bin/ci-regression isf --no-book; mdBook build; git diff --check`
+  Commit: `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2: report authored timing metadata`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` | `pending` | Selection leaf is complete; implementation is the next bounded R14 report metadata slice. |
+| `_None_` | `_None_` | `_None_` | Tree closed. |
 
 ## Decisions
 
@@ -94,16 +94,19 @@ generated `.fsm`, HDL, schedule-report schema version, or runtime behavior.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `pass` |
-| `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` | `pending` | `pending` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; syntax checks for focused tests; `prove -Iperl t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t t/1248-isf-rule-trigger-parameter-binding.t t/1140-isf-public-schedule-report-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1255-isf-schedule-report-golden-matrix.t t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1256-feature-backlog-status-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `pass` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.1` | `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.1: select authored timing metadata` | `selection commit` |
-| `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` | `pending` | `pending implementation` |
+| `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` | `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2: report authored timing metadata` | `completion commit` |
 
 ## Changelog
 
 - `2026-05-25`: Created active task tree and completed the selection leaf for
   authored timing mode report metadata.
+- `2026-05-25`: Completed implementation leaf; every
+  `transaction_port_bindings[]` entry now reports `authored_timing_mode` as
+  `snapshot`, `live`, or JSON null.

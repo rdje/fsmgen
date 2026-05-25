@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 authored binding timing metadata shipped
+- Completed `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` and
+  closed the task tree.
+- Every public `transaction_port_bindings[]` schedule-report entry now carries
+  `authored_timing_mode`.
+- Values are `snapshot` or `live` when the source binding explicitly spells
+  `(timing snapshot)` or `(timing live)`, and JSON null when no explicit
+  timing clause was authored, including output bindings.
+- This is additive report/source-provenance metadata only; parser behavior,
+  binding timing, scheduler lowering, generated `.fsm`, HDL, schema version,
+  and runtime behavior did not change.
+- Validation passed: syntax checks; focused report/public-contract/spec/book
+  tests with `Files=12, Tests=392`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1743`; final live-doc/book audits with `Files=4,
+  Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 authored binding timing metadata tree selected
 - Created active task tree
   `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA`.
