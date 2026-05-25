@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 temporal-contract package-constant windows selected
+- Created active task tree `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS`.
+- Completed `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1`; the selected
+  implementation frontier is `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2`.
+- The selected widening will allow bounded eventual temporal-contract
+  `(eventually SIGNAL within PACKAGE.CONSTANT)` windows, plus the nested
+  `(within PACKAGE.CONSTANT)` alias, to use qualified imported package scalar
+  constants when the resolved value is a positive integer literal.
+- Accepted package-constant windows should reuse the existing temporal
+  monitor lowering used by positive literals, actor constants, and actor-local
+  scalar parameter defaults.
+- Schedule reports should keep `temporal_contracts[].within_cycles` as the
+  resolved integer without adding a source-token field.
+- Unqualified package constants, unknown package constants, package aggregate
+  constants, package member/item paths, transaction parameters, runtime
+  signals, arbitrary expressions, package constants in unrelated value
+  domains, reusable-library use-site specialization, generated-top
+  respecialization, dynamic bounds, min/max windows, same-cycle checks, nested
+  contracts, expression operands, global implication forms, and multiple
+  outstanding obligations remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS`.
+- Current frontier: `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2`.
+
 ## 2026-05-25: R14 latency package-constant bounds shipped
 - Completed `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2` and closed the task tree.
 - Transaction `(latency (min PACKAGE.CONSTANT) (max PACKAGE.CONSTANT))`

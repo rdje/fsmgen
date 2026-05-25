@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Contract package constants should not change report shape
+- `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1` selects qualified imported package
+  scalar constants for bounded eventual temporal-contract `within` windows as
+  the next narrow package-constant value-domain widening.
+- Contract windows are static timing metadata in the current scheduler.
+  Accepted package constants should resolve before temporal monitor lowering,
+  matching the existing literal/actor-constant/actor-parameter monitor path.
+- The public report should stay source-token-free for contract windows:
+  `temporal_contracts[].within_cycles` remains the resolved positive integer,
+  while package/import metadata keeps package constants reviewable.
+- Unqualified lookup, aggregate package constants, package member/item paths,
+  transaction parameters, runtime signals, arbitrary expressions,
+  generated-top respecialization, use-site specialization, dynamic windows,
+  min/max windows, nested contracts, and multiple outstanding obligations
+  remain fail-closed or deferred.
+
 ## 2026-05-25: Latency package constants stay report-equivalent to literals
 - `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2` resolves qualified imported package
   scalar constants at the transaction latency min/max boundary.

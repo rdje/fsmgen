@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Temporal-contract package-constant windows selected
+- Created active task tree `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS`.
+- Completed `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.1`; the selected
+  implementation frontier is `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2`.
+- Selected a bounded static temporal-contract window value-domain widening:
+  `(eventually SIGNAL within PACKAGE.CONSTANT)` and the nested
+  `(within PACKAGE.CONSTANT)` alias may use qualified imported package scalar
+  constants when the resolved values are positive integer literals.
+- Accepted package-constant windows should reuse the existing temporal
+  monitor path used by positive literals, actor constants, and actor-local
+  scalar parameter defaults.
+- Schedule reports should keep `temporal_contracts[].within_cycles` as the
+  resolved integer without adding a source-token field.
+- Unqualified package constants, unknown package constants, package aggregate
+  constants, package member/item paths, transaction parameters, runtime
+  signals, arbitrary expressions, package constants in unrelated value
+  domains, reusable-library use-site specialization, generated-top
+  respecialization, dynamic bounds, min/max windows, same-cycle checks, nested
+  contracts, expression operands, global implication forms, and multiple
+  outstanding obligations remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Latency package-constant bounds shipped
 - Completed `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2` and closed the task tree.
 - Transaction `(latency (min PACKAGE.CONSTANT) (max PACKAGE.CONSTANT))`

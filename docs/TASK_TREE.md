@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS` | `active` | `R14` | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` | [docs/tasks/ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.md](docs/tasks/ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.md) |
 
 ## Proposed Task Trees
 
@@ -353,6 +354,7 @@ as done work unless a future task reopens them.
 | Transaction stage lowering and temporal contract lowering | `ISF-STAGES-CONTRACTS` |
 | Temporal-contract actor-constant window counts | `ISF-CONTRACT-ACTOR-CONSTANT-WINDOWS` |
 | Temporal-contract actor-scalar-parameter window counts | `ISF-CONTRACT-ACTOR-PARAM-WINDOWS` |
+| Temporal-contract qualified package scalar-constant window counts | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS` |
 | Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
 | Transaction latency qualified package scalar-constant min/max bounds | `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS` |
