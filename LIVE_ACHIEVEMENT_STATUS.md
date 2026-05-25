@@ -2,6 +2,35 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Latency package-constant bounds shipped
+- Completed `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2` and closed the task tree.
+- Transaction `(latency (min PACKAGE.CONSTANT) (max PACKAGE.CONSTANT))`
+  bounds now accept qualified imported package scalar constants when the
+  owning actor imports `PACKAGE`, the package declares `CONSTANT`, and the
+  constant resolves to a positive integer scalar literal.
+- Accepted package constants reuse the existing static latency path used by
+  positive literals, actor constants, and actor-local scalar parameter
+  defaults.
+- Generated `.fsm` guards, timeout checks, inferred counter widths, and
+  report-visible latency counter storage match the equivalent literal bounds.
+- Package constants resolving to zero keep the existing positive-only
+  latency-bound policy and fail closed before latency counter emission.
+- Unknown package constants, unqualified package constants, package aggregate
+  constants, package member/item paths, ambiguous local-enum/package-constant
+  spellings, package constants inside latency-bound expressions, transaction
+  parameters, runtime signals, arbitrary expressions, package constants in
+  unrelated value domains, reusable-library use-site specialization,
+  generated-top respecialization, stage-local latency, and actor-level stage
+  runtime semantics remain fail closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused latency/public/spec/book tests
+  with `Files=9, Tests=380`; `./bin/ci-regression isf --no-book` with
+  `Files=267, Tests=1719`; post-closure public/spec/book audits with
+  `Files=7, Tests=374`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Latency package-constant bounds selected
 - Created active task tree `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS`.
 - Completed `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.1`; the selected

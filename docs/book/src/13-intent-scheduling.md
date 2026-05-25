@@ -143,8 +143,9 @@ clear lower-layer mapping, and clear runtime behavior.
     (latency (min 2) (max 16))))
 ```
 
-Latency bounds can use named actor constants or actor-local scalar parameter
-defaults when the values are static:
+Latency bounds can use named actor constants, actor-local scalar parameter
+defaults, or qualified imported package scalar constants when the values are
+static:
 
 ```lisp
 (actor bounded_worker
@@ -176,12 +177,30 @@ The actor parameter form uses the same lowering path:
     (latency (min MIN_LAT) (max MAX_LAT))))
 ```
 
-The scheduler resolves `MIN_LAT` and `MAX_LAT` before emitting the existing
-latency counter logic. The generated `.fsm` contains the resolved integer
-guard and timeout values, while `actor_constants[]` or `actor_params[]` still
-reports the authored actor-local declaration. Transaction parameters, runtime
-signals, expressions, unknown symbols, zero-valued constants, and zero-valued
-or non-scalar actor parameters remain invalid latency bounds.
+The package form uses the same static path:
+
+```lisp
+(actor package_bounded_worker
+  (imports
+    (package shared))
+  (interface
+    (input start)
+    (output done))
+  (transaction step
+    (on start)
+    (complete done)
+    (latency (min shared.MIN_LAT) (max shared.MAX_LAT))))
+```
+
+The scheduler resolves `MIN_LAT`, `MAX_LAT`, or `shared.MIN_LAT` and
+`shared.MAX_LAT` before emitting the existing latency counter logic. The
+generated `.fsm` contains the resolved integer guard and timeout values,
+while `actor_constants[]`, `actor_params[]`, or embedded package/import
+metadata still report the authored declaration. Transaction parameters,
+runtime signals, expressions, unknown symbols, unknown or unqualified package
+constants, aggregate package constants, package member/item paths,
+zero-valued constants, and zero-valued or non-scalar actor parameters remain
+invalid latency bounds.
 
 ## Pipeline
 
@@ -968,10 +987,12 @@ The ISF-specific current limitations are:
   Nested contracts and richer temporal forms still fail closed instead of being
   dropped from the scheduled `.fsm`.
 - Transaction `(latency (min N) (max M))` accepts positive decimal literals,
-  declared actor constants, and actor-local scalar parameter defaults that
-  resolve to positive integers. Static symbols are resolved before the
-  existing latency counter lowering path, so generated guards, timeout checks,
-  inferred counter widths, and report-visible storage roles match the
-  equivalent literal bounds. Transaction parameters, runtime interface
-  signals, unknown symbolic names, arbitrary expressions, zero-valued
-  constants, and zero-valued or non-scalar actor parameters fail closed.
+  declared actor constants, actor-local scalar parameter defaults, and
+  qualified imported package scalar constants that resolve to positive
+  integers. Static symbols are resolved before the existing latency counter
+  lowering path, so generated guards, timeout checks, inferred counter widths,
+  and report-visible storage roles match the equivalent literal bounds.
+  Transaction parameters, runtime interface signals, unknown symbolic names,
+  unknown or unqualified package constants, aggregate package constants,
+  package member/item paths, arbitrary expressions, zero-valued constants, and
+  zero-valued or non-scalar actor parameters fail closed.

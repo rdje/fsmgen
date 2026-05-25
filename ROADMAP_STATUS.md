@@ -2,8 +2,33 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS`.
-- Current frontier: `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 latency package-constant bound implementation:
+  `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2` shipped qualified imported package
+  scalar constants as transaction latency min/max bounds and closed the task
+  tree. Transaction `(latency (min PACKAGE.CONSTANT)
+  (max PACKAGE.CONSTANT))` bounds now resolve when the owning actor imports
+  `PACKAGE`, the package declares `CONSTANT`, and the constant resolves to a
+  positive integer scalar literal. Accepted package constants reuse the
+  existing static latency path used by positive literals, actor constants,
+  and actor-local scalar parameter defaults, so generated `.fsm` guards,
+  timeout checks, inferred counter widths, and report-visible latency counter
+  storage match the equivalent literal bounds. Package constants resolving to
+  zero keep the existing positive-only latency-bound policy and fail closed
+  before latency counter emission. Unknown package constants, unqualified
+  package constants, package aggregate constants, package member/item paths,
+  ambiguous local-enum/package-constant spellings, package constants inside
+  expressions, transaction parameters, runtime signals, arbitrary
+  expressions, package constants in unrelated value domains, reusable-library
+  use-site specialization, generated-top respecialization, stage-local
+  latency, and actor-level stage runtime semantics remain fail closed or
+  deferred. The ISF spec, downstream handoff, public contract, mdBook, task
+  tree, README index, roadmap, and live docs are synchronized. Validation
+  passed with syntax checks; focused latency/public/spec/book tests
+  (`Files=9, Tests=380`); `./bin/ci-regression isf --no-book`
+  (`Files=267, Tests=1719`); post-closure public/spec/book audits
+  (`Files=7, Tests=374`); `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 latency package-constant bound selection:
   `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.1` created the active task tree and
   selected the next bounded implementation leaf. Transaction latency
@@ -7657,12 +7682,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS`.
-- Current frontier: `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
 - Completion status:
-  `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.1` selected qualified imported
-  package scalar constants as the next bounded transaction latency min/max
-  bound source. No behavior changed in the selection slice.
+  `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2` shipped qualified imported package
+  scalar constants as transaction latency min/max bounds and closed the task
+  tree.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11118,6 +11143,29 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2` is shipped and the task tree is
+  closed:
+  - transaction `(latency (min PACKAGE.CONSTANT)
+    (max PACKAGE.CONSTANT))` bounds now accept qualified imported package
+    scalar constants when the owning actor imports `PACKAGE`, the package
+    declares `CONSTANT`, and the constant resolves to a positive integer
+    scalar literal,
+  - accepted package constants reuse the existing static latency path used by
+    positive literals, actor constants, and actor-local scalar parameter
+    defaults,
+  - generated `.fsm` guards, timeout checks, inferred counter widths, and
+    report-visible latency counter storage match the equivalent literal
+    bounds,
+  - unknown package constants, unqualified package constants, package
+    aggregates, package member/item paths, ambiguous
+    local-enum/package-constant spellings, zero-valued constants, transaction
+    parameters, runtime signals, arbitrary expressions, unrelated value
+    domains, reusable-library use-site specialization, generated-top
+    respecialization, stage-local latency, and actor-level stage runtime
+    semantics remain deferred or fail closed,
+  - and validation passed through syntax checks, focused
+    latency/public/spec/book tests, the broader ISF regression gate,
+    post-closure public/spec/book audits, mdBook build, and diff check.
 - `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.1` selected the next public-facing R14
   feature tree before implementation:
   - the implementation frontier is

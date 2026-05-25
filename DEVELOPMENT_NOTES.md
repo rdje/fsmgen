@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Latency package constants stay report-equivalent to literals
+- `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.2` resolves qualified imported package
+  scalar constants at the transaction latency min/max boundary.
+- The implementation deliberately resolves the package constant before
+  existing latency counter lowering. That keeps generated guards, timeout
+  checks, counter widths, inferred storage roles, and DT metadata identical to
+  the equivalent literal bound.
+- Unlike waits, latency bounds do not have a dedicated schedule-report source
+  field. The public review surface is the resolved scheduled `.fsm` guard and
+  timeout check plus normal latency counter metadata; package/import metadata
+  keeps the authored package constant visible.
+- The parser has a narrow enum/package-token exemption only for latency
+  `(min ...)` and `(max ...)` scalar values so the lowerer can issue
+  package-specific diagnostics. Package constants inside latency expressions
+  remain rejected by the existing enum/context guard.
+- Unqualified lookup, aggregate package constants, package member/item paths,
+  ambiguous local enum/package spellings, transaction parameters, runtime
+  signals, arbitrary expressions, use-site specialization, generated-top
+  respecialization, and stage-local latency remain fail-closed or deferred.
+
 ## 2026-05-25: Latency package constants should reuse static latency lowering
 - `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.1` selects qualified imported package
   scalar constants for transaction latency min/max bounds as the next narrow

@@ -290,7 +290,9 @@ literal. Constants are emitted into scheduled `.fsm` as `+constants`, appear
 in schedule reports as `actor_constants[]` with the authored value token, and
 are legal symbolic sources for actor parameter defaults, static `(wait NAME)`
 counts, positive transaction latency min/max bounds, and the existing static
-activation-parameter override path. Actor parameter defaults may use declared
+activation-parameter override path. Qualified imported package scalar
+constants are legal static transaction latency min/max sources when they
+resolve to positive integer literals. Actor parameter defaults may use declared
 actor constants by name or earlier actor-local scalar parameter defaults by
 name as scalar defaults or as scalar leaves inside compatible aggregate/list
 defaults; scheduled `.fsm` `+params` and `actor_params[]` preserve the
@@ -2113,8 +2115,10 @@ Current transaction clauses:
 - `(await_all done_port)`
 - `(await_any done_port)`
 - `(complete port)`
-- `(latency (min N) (max M))`, where each bound is a positive decimal
-  literal, actor constant, or actor-local scalar parameter default
+- `(latency (min N|PARAM|CONST|PACKAGE.CONSTANT)
+  (max N|PARAM|CONST|PACKAGE.CONSTANT))`, where each bound is a positive
+  decimal literal, actor constant, actor-local scalar parameter default, or
+  qualified imported package scalar constant
 
 Unsupported transaction clause heads now fail closed during lowering instead
 of being silently ignored. The same applies inside currently lowered body
@@ -2387,18 +2391,21 @@ Current lowering:
 Current lowering:
 - Latency metadata accepts one or both `(min N)` and `(max N)` options.
 - `N` must be a positive decimal integer literal, a declared actor constant
-  whose resolved value is a positive integer, or an actor-local scalar
-  parameter default whose resolved value is a positive integer. Each option
-  may appear at most once, and `min` must be less than or equal to `max` when
-  both are present.
-- Actor constants and actor scalar parameter defaults are resolved before the
-  existing counter lowering path. The emitted `.fsm` guard and timeout checks
-  contain the resolved integer, not a symbolic runtime reference.
+  whose resolved value is a positive integer, an actor-local scalar parameter
+  default whose resolved value is a positive integer, or a qualified imported
+  package scalar constant whose resolved value is a positive integer. Each
+  option may appear at most once, and `min` must be less than or equal to
+  `max` when both are present.
+- Actor constants, actor scalar parameter defaults, and qualified imported
+  package scalar constants are resolved before the existing counter lowering
+  path. The emitted `.fsm` guard and timeout checks contain the resolved
+  integer, not a symbolic runtime reference.
 - Transaction parameters, runtime interface signals, unknown symbolic names,
-  arbitrary expressions, zero-valued constants, and zero-valued or non-scalar
-  actor parameters fail closed. Use-site parameter overrides are excluded
-  because they would require a separate policy for latency counter
-  specialization.
+  unknown or unqualified package constants, aggregate package constants,
+  package member/item paths, arbitrary expressions, zero-valued constants,
+  and zero-valued or non-scalar actor parameters fail closed. Use-site
+  parameter overrides are excluded because they would require a separate
+  policy for latency counter specialization.
 - The scheduler creates a transaction cycle counter, an increment source, and
   latency error wiring without adding an authored transaction state.
 - A valid explicit `max` bound drives the generated counter width and max
@@ -4458,12 +4465,13 @@ scalar parameter, `within_cycles` reports the resolved positive integer and no
 separate source-token field is public. The actor-local declaration remains
 visible through `actor_constants[]` or `actor_params[]`.
 Latency bounds do not have a dedicated public schedule-report entry. When a
-positive actor constant or actor scalar parameter names
-`(latency (min ...))` or `(latency (max ...))`, the report-visible effect is
-the same as the equivalent literal bound: the latency counter storage appears
-in `inferred_storage[]`/`dt_blocks[]` with its resolved width and storage
-role, and `actor_constants[]`/`actor_params[]` still report the actor-local
-declaration.
+positive actor constant, actor scalar parameter, or qualified imported package
+scalar constant names `(latency (min ...))` or `(latency (max ...))`, the
+report-visible effect is the same as the equivalent literal bound: the
+latency counter storage appears in `inferred_storage[]`/`dt_blocks[]` with
+its resolved width and storage role, while `actor_constants[]`,
+`actor_params[]`, and embedded package/import metadata still report the
+authored declarations.
 The reset summary's `kind` value is currently `async` or `sync`, and its
 `polarity` value is currently `active_high` or `active_low`. The
 capability-manifest ISF public contract advertises those value families through
@@ -5366,6 +5374,7 @@ Focused tests:
 - [t/1358-isf-data-op-package-constant-widths.t](../t/1358-isf-data-op-package-constant-widths.t)
 - [t/1359-isf-wait-package-constant-counts.t](../t/1359-isf-wait-package-constant-counts.t)
 - [t/1360-isf-repeat-package-constant-counts.t](../t/1360-isf-repeat-package-constant-counts.t)
+- [t/1361-isf-latency-package-constant-bounds.t](../t/1361-isf-latency-package-constant-bounds.t)
 
 ## 12. Explicitly Deferred
 
@@ -5379,7 +5388,8 @@ Focused tests:
   override, reusable-library use-site override, actor interface width,
   transaction-local port width, actor-owned scalar storage width,
   actor-owned bank storage width, and actor-owned bank storage depth
-  scalar-constant subsets, derived parameter expressions,
+  scalar-constant subsets, transaction latency min/max bound scalar-constant
+  subset, derived parameter expressions,
   transaction-port dimensions beyond positive literals, actor-local scalar
   parameters, actor constants, qualified package scalar constants, and scalar
   type aliases,
@@ -5400,9 +5410,10 @@ Focused tests:
   path package constants, use-site parameter-specialized counter sizing,
   generated-top respecialization, and repeat-body widening remain deferred.
 - Transaction latency bounds beyond the shipped positive decimal literal,
-  positive actor-constant, and positive actor-scalar-parameter
-  `(min ...)`/`(max ...)` shapes: transaction parameters, runtime signals,
-  arbitrary expressions, stage-local latency, non-scalar actor parameters, and
+  positive actor-constant, positive actor-scalar-parameter, and qualified
+  package scalar-constant `(min ...)`/`(max ...)` shapes: transaction
+  parameters, runtime signals, arbitrary expressions, aggregate or path
+  package constants, stage-local latency, non-scalar actor parameters, and
   use-site parameter-specialized counter sizing remain deferred until a
   separate specialization/scheduling policy is selected.
 - Watchdog limits beyond the shipped positive decimal literal, positive

@@ -113,7 +113,7 @@ ISF
     (latency (avg 4))))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'unknown symbolic latency value', qr/\ATransaction 'main': latency min token 'fast' is not a declared actor constant or actor scalar parameter in transaction body/);
+    assert_lower_rejected(<<'ISF', 'unknown symbolic latency value', qr/\ATransaction 'main': latency min token 'fast' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant in transaction body/);
 (actor noninteger_latency
   (clock clk)
   (interface (input start) (output done))
@@ -159,7 +159,7 @@ ISF
     (latency (min MIN_LAT) (max 8))))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'transaction parameter latency bound', qr/\ATransaction 'child': latency min token 'MIN_LAT' is a transaction parameter; latency bounds accept positive integer literals, actor constants, or actor scalar parameters only in transaction body/);
+    assert_lower_rejected(<<'ISF', 'transaction parameter latency bound', qr/\ATransaction 'child': latency min token 'MIN_LAT' is a transaction parameter; latency bounds accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in transaction body/);
 (actor transaction_parameter_latency_bound
   (clock clk)
   (interface (input start) (output done))
@@ -174,7 +174,7 @@ ISF
     (latency (min MIN_LAT) (max 8))))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'transaction parameter latency bound shadows actor parameter', qr/\ATransaction 'child': latency min token 'MIN_LAT' is a transaction parameter; latency bounds accept positive integer literals, actor constants, or actor scalar parameters only in transaction body/);
+    assert_lower_rejected(<<'ISF', 'transaction parameter latency bound shadows actor parameter', qr/\ATransaction 'child': latency min token 'MIN_LAT' is a transaction parameter; latency bounds accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in transaction body/);
 (actor transaction_parameter_latency_shadow
   (clock clk)
   (params
@@ -191,7 +191,7 @@ ISF
     (latency (min MIN_LAT) (max 8))))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'runtime interface latency bound', qr/\ATransaction 'main': latency min token 'delay' is a runtime interface signal; latency bounds accept positive integer literals, actor constants, or actor scalar parameters only in transaction body/);
+    assert_lower_rejected(<<'ISF', 'runtime interface latency bound', qr/\ATransaction 'main': latency min token 'delay' is a runtime interface signal; latency bounds accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in transaction body/);
 (actor runtime_latency_bound
   (clock clk)
   (interface (input start) (input delay) (output done))

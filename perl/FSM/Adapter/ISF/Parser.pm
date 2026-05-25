@@ -3492,6 +3492,27 @@ sub _validate_transaction_enum_member_value_clause {
         return 1;
     }
 
+    if ($head eq 'latency') {
+        for my $option (@{$clause}[1 .. $#$clause]) {
+            if (ref($option) eq 'ARRAY'
+                && @$option == 2
+                && defined($option->[0])
+                && !ref($option->[0])
+                && ($option->[0] eq 'min' || $option->[0] eq 'max'))
+            {
+                _reject_latency_bound_enum_member_value(
+                    $option->[1],
+                    $actor,
+                    $aggregate_roots,
+                    "$context latency $option->[0]",
+                );
+                next;
+            }
+            _reject_enum_member_value_contexts($option, $actor, $aggregate_roots, "$context latency clause");
+        }
+        return 1;
+    }
+
     if ($head eq 'shift_left' || $head eq 'shift_right') {
         _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context $head target");
         _reject_enum_member_value_contexts($clause->[2], $actor, $aggregate_roots, "$context $head bit");
@@ -3634,6 +3655,14 @@ sub _reject_wait_count_enum_member_value {
 }
 
 sub _reject_repeat_count_enum_member_value {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context)
+        if ref($value);
+    return 1 if defined _actor_package_constant_reference($actor, $value);
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context);
+}
+
+sub _reject_latency_bound_enum_member_value {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context)
         if ref($value);

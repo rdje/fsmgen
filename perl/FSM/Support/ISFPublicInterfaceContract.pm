@@ -393,6 +393,7 @@ sub build_isf_public_interface_contract {
             't/1195-isf-sample-clause-boundary.t',
             't/1196-isf-complete-clause-boundary.t',
             't/1197-isf-latency-clause-boundary.t',
+            't/1361-isf-latency-package-constant-bounds.t',
             't/1198-isf-update-clause-boundary.t',
             't/1199-isf-shift-clause-boundary.t',
             't/1200-isf-assemble-clause-boundary.t',

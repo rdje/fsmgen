@@ -1233,16 +1233,20 @@ so `(complete port)` must name exactly one scalar completion target before
 scheduled `.fsm` emission.
 The latency-clause boundary is checked by
 [t/1197-isf-latency-clause-boundary.t](../t/1197-isf-latency-clause-boundary.t)
-so `(latency ...)` accepts positive-integer literal or declared positive
-actor-constant or actor-local scalar-parameter `(min N)` and `(max N)`
-options, rejects duplicates, requires `min <= max` when both are present,
-rejects transaction parameters, runtime interface signals, unknown symbols,
-arbitrary expressions, zero-valued constants, and zero-valued or non-scalar
-actor parameters, and uses valid explicit `max` bounds for the generated
-counter width/max check. Actor-constant and actor-scalar-parameter latency
-bounds resolve to the same generated `.fsm` and schedule-report storage shape
-as the equivalent literal; there is no separate latency-bound source-token
-report field.
+and
+[t/1361-isf-latency-package-constant-bounds.t](../t/1361-isf-latency-package-constant-bounds.t)
+so `(latency ...)` accepts positive-integer literal, declared positive
+actor-constant, actor-local scalar-parameter, or qualified imported package
+scalar-constant `(min N)` and `(max N)` options, rejects duplicates, requires
+`min <= max` when both are present, rejects transaction parameters, runtime
+interface signals, unknown symbols, unknown or unqualified package constants,
+aggregate package constants, package member/item paths, arbitrary
+expressions, zero-valued constants, and zero-valued or non-scalar actor
+parameters, and uses valid explicit `max` bounds for the generated counter
+width/max check. Actor-constant, actor-scalar-parameter, and package scalar
+constant latency bounds resolve to the same generated `.fsm` and
+schedule-report storage shape as the equivalent literal; there is no separate
+latency-bound source-token report field.
 The update-clause boundary is checked by
 [t/1198-isf-update-clause-boundary.t](../t/1198-isf-update-clause-boundary.t)
 so `(update var expr)` has exactly one scalar target and one scalar or list
