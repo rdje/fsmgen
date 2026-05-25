@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 static timing fail-closed checklist synchronized
+- Completed `ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.1` and closed the
+  task tree.
+- Synchronized the downstream fail-closed checklist after the shipped
+  transaction-parameter repeat, wait, latency, and top-level await-local
+  watchdog slices.
+- The checklist now distinguishes shipped same-transaction latency and
+  top-level await-local watchdog parameter sources from still-invalid
+  actor-level, nested control-flow, cross-transaction, zero, and non-scalar
+  parameter sources.
+- Parser behavior, scheduler lowering, generated `.fsm`, HDL, schedule-report
+  payloads, public API, and runtime behavior did not change.
+- Validation passed: focused spec/book/backlog audits with `Files=4,
+  Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 watchdog transaction parameter limits shipped
 - Completed `ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.1` and closed the task tree.
 - Top-level await-local `(watchdog PARAM)` now accepts same-transaction scalar

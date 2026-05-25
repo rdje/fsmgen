@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Static timing checklist must name only unsupported sources
+- `ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.1` keeps the downstream
+  fail-closed checklist aligned with the shipped R14 timing parameter surface.
+- The list now rejects only the still-invalid transaction-parameter watchdog
+  and latency sources instead of implying that every transaction parameter is
+  invalid in those slots.
+- This is documentation-only; no parser, lowerer, report, generated artifact,
+  HDL, public API, or runtime behavior changed.
+
 ## 2026-05-25: Top-level await-local watchdog transaction params stay local
 - `ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.1` widens only the top-level
   await-local watchdog value slot, not actor-level watchdog metadata or

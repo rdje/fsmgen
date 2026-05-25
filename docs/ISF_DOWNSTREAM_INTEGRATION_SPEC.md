@@ -3168,18 +3168,19 @@ Required fail-closed examples:
 - Direct/local rule-trigger output bindings.
 - Literal-zero, actor-constant-zero, and actor-parameter-zero divisor operands
   in shipped runtime division/modulo expression contexts.
-- Watchdog limits that name transaction parameters, runtime interface signals,
-  unknown symbolic names, arbitrary expressions, constants that resolve to
-  zero, actor parameters that resolve to zero or non-scalar values, or distinct
-  per-await limits in one transaction.
+- Watchdog limits that name actor-level transaction parameters,
+  nested-control-flow transaction parameters, cross-transaction parameters,
+  runtime interface signals, unknown symbolic names, arbitrary expressions,
+  constants that resolve to zero, actor/transaction parameters that resolve to
+  zero or non-scalar values, or distinct per-await limits in one transaction.
 - Repeat counts that name cross-transaction parameters, unknown symbolic
   names, arbitrary expressions, malformed scalar tokens, actor/transaction
   parameters that resolve to zero or non-scalar values, or runtime names
   without width evidence.
-- Latency min/max bounds that name transaction parameters, runtime interface
-  signals, unknown symbolic names, arbitrary expressions, constants that
-  resolve to zero, or actor parameters that resolve to zero or non-scalar
-  values.
+- Latency min/max bounds that name cross-transaction parameters, runtime
+  interface signals, unknown symbolic names, arbitrary expressions, constants
+  that resolve to zero, or actor/transaction parameters that resolve to zero
+  or non-scalar values.
 - Temporal contract windows that need activation-site override-specialized
   lowering beyond same-value generated child activation overrides,
   transaction parameters from other transactions, runtime interface signals,

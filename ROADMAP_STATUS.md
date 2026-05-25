@@ -4,6 +4,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 static timing fail-closed checklist truth sync:
+  `ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.1` synchronized downstream
+  fail-closed checklist wording after the shipped transaction-parameter
+  repeat, wait, latency, and top-level await-local watchdog slices and closed
+  the task tree. The checklist now distinguishes shipped same-transaction
+  latency/top-level watchdog parameter sources from still-invalid actor-level,
+  nested control-flow, cross-transaction, zero, and non-scalar parameter
+  sources. This is documentation-only: parser behavior, scheduler lowering,
+  generated `.fsm`, HDL, schedule-report payloads, public API, and runtime
+  behavior did not change. Validation passed: focused spec/book/backlog audits
+  with `Files=4, Tests=366`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Current R14 transaction-parameter top-level await-local watchdog limits:
   `ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.1` shipped same-transaction scalar
   parameter defaults as positive top-level await-local `(watchdog PARAM)`
@@ -8308,13 +8320,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.1` shipped same-transaction scalar
-  parameter defaults as static top-level await-local watchdog override sources.
-  Transaction watchdog params now shadow actor-level static names in the
-  top-level await-local watchdog slot, drive existing watchdog counter width/init
-  lowering from their resolved positive integer value, and fail closed for
-  zero-valued, aggregate/list, actor-level, nested control-flow, or
-  cross-transaction parameter sources.
+  `ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.1` synchronized downstream
+  fail-closed checklist wording so watchdog and latency transaction-parameter
+  entries no longer overstate rejected sources after the shipped R14 timing
+  parameter slices.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11770,6 +11779,17 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.1` is shipped and the task
+  tree is closed:
+  - downstream fail-closed checklist wording now distinguishes shipped
+    same-transaction latency and top-level await-local watchdog parameter
+    sources from still-invalid actor-level, nested control-flow,
+    cross-transaction, zero, and non-scalar parameter sources,
+  - and parser behavior, scheduler lowering, generated `.fsm`, HDL,
+    schedule-report payloads, public API, and runtime behavior did not
+    change.
+  - Validation passed: focused spec/book/backlog audits with `Files=4,
+    Tests=366`; `mdbook build docs/book`; and `git diff --check`.
 - `ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.1` is shipped and the task tree is
   closed:
   - top-level await-local `(watchdog PARAM)` now accepts `PARAM` when it
