@@ -174,6 +174,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.md` — completed `R14` task tree for qualified package scalar constants in actor-owned scalar storage widths.
 - `docs/tasks/ISF-SCALAR-STORAGE-ACTOR-CONSTANT-WIDTHS.md` — completed `R14` task tree for actor-constant-backed actor-owned scalar storage widths.
 - `docs/tasks/ISF-SCALAR-STORAGE-ACTOR-PARAM-WIDTHS.md` — completed `R14` task tree for actor-parameter-backed actor-owned scalar storage widths.
+- `docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.md` — active `R14` task tree for qualified package scalar constants in actor-owned bank storage widths.
 - `docs/tasks/ISF-BANK-STORAGE-ACTOR-CONSTANT-WIDTHS.md` — completed `R14` task tree for actor-constant-backed actor-owned bank storage widths.
 - `docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-WIDTHS.md` — completed `R14` task tree for actor-parameter-backed actor-owned bank storage widths.
 - `docs/tasks/ISF-BANK-STORAGE-ACTOR-CONSTANT-DEPTHS.md` — completed `R14` task tree for actor-constant-backed actor-owned bank storage depths.

@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 bank storage package-constant widths selected
+- Created active task tree `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS`.
+- Completed `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.1`; the selected
+  implementation frontier is `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`.
+- The selected widening will allow actor-owned bank storage
+  `(bank NAME (width PACKAGE.CONSTANT) (depth N|PARAM|CONST))` declarations
+  to use qualified imported package scalar constants for bank element widths
+  when the resolved value is a positive integer literal.
+- Accepted package-constant bank widths will publish as resolved integer
+  widths in parser handoff, scheduled `.fsm`, schedule-report evidence, width
+  evidence, bank access metadata, and generated HDL, matching existing
+  actor-constant and actor-parameter bank storage width behavior.
+- Unqualified package constants, unknown package constants, package aggregate
+  constants, package aggregate scalar-leaf paths, ambiguous local-token
+  spellings, zero-valued constants, runtime signals, arbitrary expressions,
+  package constants in bank depths or other dimension/value domains, and
+  generated-top respecialization remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS`.
+- Current frontier: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`.
+
 ## 2026-05-24: R14 scalar storage package-constant widths shipped
 - Completed `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` and closed the
   task tree.

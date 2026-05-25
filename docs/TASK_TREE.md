@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS` | `active` | `R14` | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` | [docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.md](docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.md) |
 
 ## Proposed Task Trees
 
