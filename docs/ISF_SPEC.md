@@ -315,11 +315,15 @@ count sources in the actor's own schedule. Qualified imported package scalar
 constants are also accepted as static transaction repeat-count sources when
 they resolve to positive integer literals. Same-transaction scalar parameter
 defaults on generated child and direct/non-generated transactions are legal
-bounded eventual contract-window sources when they resolve to positive integer
-literals. Transaction parameters outside same-transaction contract windows,
-runtime interface signals, arbitrary expressions, and use-site activation
-overrides are not actor-parameter-default, latency-bound, watchdog-limit, or
-repeat-count constants. Use-site overrides that target generated child
+static sources in the shipped transaction-local slots: port widths,
+data-operation width evidence, repeat counts, wait counts, latency bounds,
+bounded eventual contract windows, and top-level await-local watchdog limits.
+Positive slots require a resolved positive integer; wait counts allow a
+resolved non-negative integer. Transaction parameters outside those
+same-transaction slots, runtime interface signals, arbitrary expressions, and
+use-site activation overrides are not actor-parameter-default,
+actor-level-watchdog-limit, or general static constants. Use-site overrides
+that target generated child
 contract-window parameters are accepted only when the override resolves to the
 same positive integer cycle count as the child transaction parameter default;
 mismatched overrides fail closed instead of respecializing the already-emitted
@@ -1649,7 +1653,11 @@ Watchdog rules:
   actor-local scalar parameter default, or a qualified imported package scalar
   constant that resolves to a positive integer.
 - `(await port (watchdog M))` overrides the default for that wait.
-- Await-local `M` may use the same static source set as actor-level `N`.
+- Await-local `M` may use the same static source set as actor-level `N`. For
+  top-level transaction awaits, `M` may also use a same-transaction scalar
+  parameter default that resolves to a positive integer. Same-transaction
+  parameters shadow actor-level static names in this value-domain slot and
+  remain local lowering inputs.
   The current scheduled `.fsm` model has one watchdog counter per transaction,
   so one transaction must have a single effective watchdog limit; distinct
   per-await limits in the same transaction fail closed until per-await counter
@@ -2427,12 +2435,16 @@ Current lowering:
   `last_error` with a flopped output assignment (`<-`).
 - Actor-level and await-local watchdog limits may use declared actor
   constants, actor-local scalar parameter defaults, or qualified imported
-  package scalar constants that resolve to positive integers. The generated
-  counter width and init value use the resolved integer. Transaction
-  parameters, runtime signals, unknown symbols, unknown or unqualified package
+  package scalar constants that resolve to positive integers. Top-level
+  await-local watchdog limits may additionally use same-transaction scalar
+  parameter defaults that resolve to positive integers. The generated counter
+  width and init value use the resolved integer. Same-transaction parameters
+  shadow actor-level static names in top-level await-local watchdogs and
+  remain local lowering inputs. Runtime signals, unknown symbols, unknown or unqualified package
   constants, aggregate package constants, package member/item paths, arbitrary
-  expressions, zero-valued constants, zero-valued package constants, and
-  zero-valued or non-scalar actor parameters fail closed.
+  expressions, zero-valued constants, zero-valued package constants,
+  zero-valued or non-scalar actor/transaction parameters, and
+  cross-transaction parameters fail closed.
 
 ### 7.4 Completion
 
@@ -5553,19 +5565,22 @@ Focused tests:
   parameter-specialized counter sizing, generated-top respecialization, and
   repeat-body widening remain deferred.
 - Transaction latency bounds beyond the shipped positive decimal literal,
-  positive actor-constant, positive actor-scalar-parameter, and qualified
-  package scalar-constant `(min ...)`/`(max ...)` shapes: transaction
-  parameters, runtime signals, arbitrary expressions, aggregate or path
-  package constants, stage-local latency, non-scalar actor parameters, and
-  use-site parameter-specialized counter sizing remain deferred until a
-  separate specialization/scheduling policy is selected.
+  same-transaction scalar-parameter, positive actor-constant, positive
+  actor-scalar-parameter, and qualified package scalar-constant
+  `(min ...)`/`(max ...)` shapes: cross-transaction parameters, runtime
+  signals, arbitrary expressions, aggregate or path package constants,
+  stage-local latency, non-scalar actor/transaction parameters, and use-site
+  parameter-specialized counter sizing remain deferred until a separate
+  specialization/scheduling policy is selected.
 - Watchdog limits beyond the shipped positive decimal literal, positive
-  actor-constant, positive actor-scalar-parameter, and qualified package
-  scalar-constant actor-level/await-local shapes: transaction parameters,
-  runtime signals, arbitrary expressions, aggregate or path package constants,
-  distinct per-await limits in one
-  transaction, cross-domain watchdog policy, dynamic watchdog limits, and
-  parameter-specialized watchdog counter sizing remain deferred.
+  actor-constant, positive actor-scalar-parameter, qualified package
+  scalar-constant actor-level/await-local shapes, and same-transaction scalar
+  parameter top-level await-local shapes: actor-level transaction parameters,
+  nested control-flow transaction parameter watchdog limits, runtime signals,
+  arbitrary expressions, aggregate or path package constants, distinct
+  per-await limits in one transaction, cross-domain watchdog policy, dynamic
+  watchdog limits, and parameter-specialized watchdog counter sizing remain
+  deferred.
 - Runtime division/modulo safety beyond literal-zero, actor-constant-zero, and
   actor-parameter-zero divisor rejection: proving arbitrary dynamic scalar
   divisor expressions nonzero remains deferred until range/dataflow evidence

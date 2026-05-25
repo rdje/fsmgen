@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Top-level await-local watchdog transaction params stay local
+- `ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.1` widens only the top-level
+  await-local watchdog value slot, not actor-level watchdog metadata or
+  nested control-flow await watchdog behavior.
+- Watchdog limits remain positive-only. Zero-valued transaction parameters are
+  invalid because the current watchdog counter path loads `limit - 1` and
+  treats zero as timeout, not as a no-op.
+- Transaction-local names intentionally shadow actor-level static names in the
+  top-level await-local watchdog slot. The resolved integer is baked into the
+  existing counter width and init lowering; transaction params are not emitted as
+  scheduled `.fsm` actor parameters.
+
 ## 2026-05-25: Latency transaction params are positive static bounds
 - `ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.1` applies the same transaction-local
   static-value precedence to latency bounds that contract windows,

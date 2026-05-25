@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Watchdog transaction parameter limits shipped
+- Completed `ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.1` and closed the task tree.
+- Top-level await-local `(watchdog PARAM)` now accepts same-transaction scalar
+  parameter defaults when they resolve to positive integer literals.
+- Transaction watchdog params shadow actor-level static names in the
+  top-level await-local watchdog slot and remain local lowering inputs; the
+  resolved integer drives the existing watchdog counter width and init path.
+- Zero-valued, aggregate/list, actor-level, and cross-transaction parameter
+  watchdog limits fail closed before scheduled `.fsm` emission; dynamic
+  watchdog limits and per-await counter specialization remain unsupported.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused watchdog/parameter/public-audit
+  tests with `Files=16, Tests=459`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1748`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Latency transaction parameter bounds shipped
 - Completed `ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.1` and closed the task tree.
 - Transaction `(latency (min PARAM) (max PARAM))` now accepts same-transaction

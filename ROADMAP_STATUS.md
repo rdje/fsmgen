@@ -4,6 +4,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 transaction-parameter top-level await-local watchdog limits:
+  `ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.1` shipped same-transaction scalar
+  parameter defaults as positive top-level await-local `(watchdog PARAM)`
+  limit sources and closed the task tree. Transaction watchdog params now
+  shadow actor-level static names in the top-level await-local watchdog slot,
+  remain local lowering inputs, and drive the existing watchdog counter width
+  and init path from the resolved positive integer value. Zero-valued,
+  aggregate/list, actor-level, nested control-flow, and cross-transaction
+  parameter watchdog limits fail closed before scheduled
+  `.fsm` emission; dynamic watchdog limits and per-await counter
+  specialization remain unsupported. Validation passed: syntax checks;
+  focused watchdog/parameter/public-audit tests with `Files=16, Tests=459`;
+  `./bin/ci-regression isf --no-book` with `Files=274, Tests=1748`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current R14 transaction-parameter latency bounds:
   `ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.1` shipped same-transaction scalar
   parameter defaults as static transaction latency `(min PARAM)` and
@@ -8294,11 +8308,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.1` shipped same-transaction scalar
-  parameter defaults as static transaction latency min/max bound sources.
-  Transaction latency-bound params now shadow actor-level static names, drive
-  existing guard/timeout lowering and min/max validation from their resolved
-  positive integer value, and fail closed for zero-valued, aggregate/list, or
+  `ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.1` shipped same-transaction scalar
+  parameter defaults as static top-level await-local watchdog override sources.
+  Transaction watchdog params now shadow actor-level static names in the
+  top-level await-local watchdog slot, drive existing watchdog counter width/init
+  lowering from their resolved positive integer value, and fail closed for
+  zero-valued, aggregate/list, actor-level, nested control-flow, or
   cross-transaction parameter sources.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
@@ -11755,6 +11770,27 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.1` is shipped and the task tree is
+  closed:
+  - top-level await-local `(watchdog PARAM)` now accepts `PARAM` when it
+    names a same-transaction scalar parameter default that resolves to a
+    positive integer literal,
+  - transaction watchdog params shadow actor-level static names in the
+    top-level await-local watchdog slot and remain local lowering inputs
+    rather than scheduled `.fsm` actor parameters,
+  - the resolved integer drives the existing watchdog counter width and init
+    lowering, and same-valued multiple await-local overrides continue to share
+    the existing one-counter-per-transaction model,
+  - zero-valued, aggregate/list, actor-level, nested control-flow, and
+    cross-transaction parameter watchdog limits fail closed before scheduled
+    `.fsm` emission; dynamic watchdog limits and per-await counter
+    specialization remain unsupported,
+  - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
+    README index, roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused watchdog/parameter/public-audit
+    tests with `Files=16, Tests=459`; `./bin/ci-regression isf --no-book`
+    with `Files=274, Tests=1748`; `mdbook build docs/book`; and
+    `git diff --check`.
 - `ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.1` is shipped and the task tree is
   closed:
   - transaction `(latency (min PARAM) (max PARAM))` now accepts `PARAM` when

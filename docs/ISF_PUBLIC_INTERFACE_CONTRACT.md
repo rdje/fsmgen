@@ -945,7 +945,9 @@ The default timing convention is checked by
 to keep omitted legacy single-clock timing normalized to clock `clk`, async
 active-low reset `rst_n`, and watchdog `65535`, and to keep positive
 actor-constant, actor-scalar-parameter, and qualified package-scalar-constant
-watchdog limits resolved to the same numeric public shape as literals.
+actor-level watchdog limits, plus same-transaction scalar-parameter top-level
+await-local watchdog limits, resolved to the same numeric public shape as
+literals.
 Qualified imported package scalar constants in actor-level and await-local
 watchdog limits are checked by
 [t/1363-isf-watchdog-package-constant-limits.t](../t/1363-isf-watchdog-package-constant-limits.t),
@@ -2476,9 +2478,12 @@ they resolve to positive integers; the parser returns the resolved integer in
 `watchdog` and keeps the authored declaration visible through
 `actor_constants[]`, `actor_params[]`, or package/import metadata and embedded
 package `+constants` entries. Await-local watchdog constants, actor scalar
-parameters, and qualified imported package scalar constants resolve during
-lowering. One transaction still has one watchdog counter, so distinct
-per-await watchdog limits in the same transaction fail closed.
+parameters, qualified imported package scalar constants, and same-transaction
+scalar parameter defaults resolve during lowering. Transaction parameters are
+accepted only on top-level await-local watchdog overrides, where they shadow
+actor-level static names and remain local lowering inputs. One transaction
+still has one watchdog counter, so distinct per-await watchdog limits in the
+same transaction fail closed.
 When `clock_domains` is present, `clock` and `reset` expose the selected
 default-domain timing, and `reset` is null only when that domain omits reset.
 Public multi-domain `lower(...)` emits domain-specific scheduled `.fsm`

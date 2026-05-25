@@ -249,7 +249,11 @@ General source rules:
   defaults, or qualified imported package scalar constants. Static latency
   bounds use positive integer literals, same-transaction scalar parameter
   defaults, actor constants, actor-local scalar parameter defaults, or
-  qualified imported package scalar constants.
+  qualified imported package scalar constants. Top-level await-local watchdog
+  limits use positive integer literals, same-transaction scalar parameter
+  defaults, actor constants, actor-local scalar parameter defaults, or
+  qualified imported package scalar constants; actor-level watchdog limits use
+  the same set except transaction parameters.
 - Numeric and exact-width integer literals are accepted where this document
   says scalar numeric literals are accepted.
 - Runtime expression positions may use scalar tokens, numeric/exact-width
@@ -357,9 +361,12 @@ Rules:
   default, or a qualified imported package scalar constant that resolves to a
   positive integer.
 - Per-await watchdog overrides are supported with `(await port (watchdog M))`;
-  `M` may use the same static source set as actor-level `N`. The current
-  scheduled `.fsm` model has one watchdog counter per transaction, so distinct
-  per-await limits in one transaction fail closed.
+  `M` may use the same static source set as actor-level `N`. Top-level
+  transaction awaits may also use same-transaction scalar parameter defaults.
+  Same-transaction parameter watchdog limits shadow actor-level static names
+  and remain local lowering inputs. The current scheduled `.fsm` model has one
+  watchdog counter per transaction, so distinct per-await limits in one
+  transaction fail closed.
 
 Named domains:
 
@@ -688,13 +695,19 @@ Rules:
   closed.
   Actor-level and await-local watchdog limits may use qualified imported
   package scalar constants when the constant resolves to a positive integer
-  scalar. Package-constant-backed watchdog limits lower through the existing
-  watchdog counter path, publish resolved integer parser/report watchdog
-  values for actor-level limits, and keep package-authored declarations
-  visible through package/import metadata plus embedded package `+constants`
-  entries. Unknown or unqualified package constants, aggregate package
+  scalar. Top-level await-local watchdog limits may also use
+  same-transaction scalar parameter defaults that resolve to positive
+  integers. Package-constant-backed
+  actor-level watchdog limits publish resolved integer parser/report watchdog
+  values. Package-constant-backed await-local limits and top-level
+  transaction-parameter await-local limits lower through the existing watchdog
+  counter path; the transaction parameters remain local lowering inputs, and
+  package-authored declarations stay visible through package/import metadata
+  plus embedded package `+constants` entries. Unknown or unqualified package constants,
+  aggregate package
   constants, package constant member/item paths, ambiguous
-  local-enum/package-constant spellings, zero-valued constants, transaction
+  local-enum/package-constant spellings, zero-valued constants, zero-valued
+  or non-scalar transaction parameters, actor-level or cross-transaction
   parameters, runtime signals, arbitrary expressions, and package constants
   inside watchdog expressions fail closed.
   Generated child transaction scalar parameter defaults and scalar leaves
@@ -1009,15 +1022,18 @@ Await:
 (await ready)
 (await ready (watchdog 1024))
 (await ready (watchdog WD_LIMIT))
+(await ready (watchdog TX_PARAM))
 (await ready (watchdog timing.WD_LIMIT))
 ```
 
 Await waits for a port and uses the actor watchdog unless overridden.
 Actor-level and await-local watchdog constants, actor scalar parameters, and
 qualified imported package scalar constants resolve before counter lowering.
-Reports expose the actor watchdog scalar as the resolved integer, while
-package-authored limits remain visible through package/import metadata and
-embedded package `+constants` entries.
+Top-level await-local watchdogs may also use same-transaction scalar
+parameter defaults; those parameters shadow actor-level static names and
+remain local lowering inputs. Reports expose the actor watchdog scalar as the resolved integer,
+while package-authored limits remain visible through package/import metadata
+and embedded package `+constants` entries.
 
 Wait:
 
@@ -3868,8 +3884,10 @@ For a SPECFORGE-style producer:
   imported package scalar constants for static temporal-contract window
   symbols.
 - Use actor constants, actor-local scalar parameter defaults, or qualified
-  imported package scalar constants for static actor-level and await-local
-  watchdog limits.
+  imported package scalar constants for static actor-level watchdog limits.
+- Use actor constants, actor-local scalar parameter defaults,
+  same-transaction scalar parameter defaults, or qualified imported package
+  scalar constants for static top-level await-local watchdog limits.
 - Use actor constants, actor-local scalar parameter defaults, or qualified
   imported package scalar constants for static wait-count symbols.
 - Treat every fail-closed diagnostic as a source-generation bug.

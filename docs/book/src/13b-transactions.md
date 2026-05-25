@@ -227,16 +227,21 @@ value.
 (await PREADY)                        ;; default watchdog from actor
 (await PREADY (watchdog 100))         ;; per-await override
 (await PREADY (watchdog WD_LIMIT))    ;; actor constant or actor parameter override
+(await PREADY (watchdog TX_LIMIT))    ;; same-transaction parameter override
 ```
 
 **Timing**: 1 to watchdog_limit cycles. Self-looping.
 
 The actor-level `(watchdog N)` and await-local `(watchdog N)` limit may use a
 positive decimal literal, a declared actor constant, or an actor-local scalar
-parameter default that resolves to a positive integer. Actor-level constants
-and actor parameters resolve in the parser-visible watchdog scalar and still
-appear in `actor_constants[]` or `actor_params[]`; await-local constants and
-actor parameters resolve before watchdog counter injection.
+parameter default that resolves to a positive integer. Await-local watchdogs
+on top-level transaction awaits may also use same-transaction scalar parameter
+defaults that resolve to positive integers. Actor-level constants and actor
+parameters resolve in the parser-visible watchdog scalar and still appear in
+`actor_constants[]` or `actor_params[]`; await-local constants, actor
+parameters, and top-level transaction parameters resolve before watchdog
+counter injection. Same-transaction watchdog parameters shadow actor-level
+static names and remain local lowering inputs.
 
 One transaction currently has one watchdog counter. If a transaction contains
 multiple awaits with distinct effective watchdog limits, FSMGen fails closed

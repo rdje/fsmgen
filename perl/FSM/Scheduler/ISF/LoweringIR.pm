@@ -2538,8 +2538,9 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children) 
         next if _transaction_params_used_by_repeat_count($tx, $params);
         next if _transaction_params_used_by_wait_count($tx, $params);
         next if _transaction_params_used_by_latency_bound($tx, $params);
+        next if _transaction_params_used_by_watchdog_limit($tx, $params);
 
-        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, same-transaction wait counts, or same-transaction latency bounds\n";
+        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, same-transaction wait counts, same-transaction latency bounds, or same-transaction top-level await-local watchdog limits\n";
     }
     return 1;
 }
@@ -2613,6 +2614,18 @@ sub _transaction_params_used_by_latency_bound {
     return keys %used ? 1 : 0;
 }
 
+sub _transaction_params_used_by_watchdog_limit {
+    my ($tx, $params) = @_;
+    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return 0 unless keys %declared;
+
+    my %used;
+    _collect_await_watchdog_declared_name_refs($tx->{clauses}, \%declared, \%used);
+    return keys %used ? 1 : 0;
+}
+
 sub _collect_repeat_count_declared_name_refs {
     my ($node, $declared, $used) = @_;
     return unless ref($node) eq 'ARRAY';
@@ -2659,6 +2672,27 @@ sub _collect_latency_bound_declared_name_refs {
     for my $child (@$node) {
         _collect_latency_bound_declared_name_refs($child, $declared, $used)
             if ref($child) eq 'ARRAY';
+    }
+}
+
+sub _collect_await_watchdog_declared_name_refs {
+    my ($clauses, $declared, $used) = @_;
+    return unless ref($clauses) eq 'ARRAY';
+
+    for my $node (@$clauses) {
+        next unless ref($node) eq 'ARRAY'
+            && @$node >= 3
+            && defined($node->[0])
+            && !ref($node->[0])
+            && $node->[0] eq 'await';
+        for my $option (@{$node}[2 .. $#$node]) {
+            next unless ref($option) eq 'ARRAY'
+                && @$option == 2
+                && defined($option->[0])
+                && !ref($option->[0])
+                && $option->[0] eq 'watchdog';
+            _collect_isf_value_declared_name_refs($option->[1], $declared, $used);
+        }
     }
 }
 
@@ -4247,10 +4281,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         }
         elsif ($k eq 'await')    {
             $ha=1; $wdc="${tn}_wd";
-            my $wd_override = _parse_await_wd($cl, $tn);
-            my $wd_limit = defined($wd_override)
-                ? _watchdog_limit_cycles($wd_override, $actor, $tn, 'await watchdog override')
-                : $wd;
+            my $wd_limit = _await_watchdog_limit($cl, $actor, $tn, $wd);
             push @st, _ir_await($cl, $tn, $si++, $wd_limit, [splice @ps]);
         }
         elsif ($k eq 'atl_trigger') { push @st, _ir_atl_trigger($cl, $tn, $si++, [splice @ps]); }
@@ -10591,6 +10622,10 @@ sub _latency_package_constant_bound_cycles {
 
 sub _watchdog_limit_cycles {
     my ($token, $actor, $tn, $label) = @_;
+    my $await_local = $label eq 'await watchdog override';
+    my $accepted_sources = $await_local
+        ? 'positive integer literals, same-transaction scalar parameters, actor constants, actor scalar parameters, or qualified package scalar constants'
+        : 'positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants';
 
     return 0 + $token
         if defined($token) && !ref($token) && $token =~ /\A[1-9][0-9]*\z/;
@@ -10602,6 +10637,16 @@ sub _watchdog_limit_cycles {
     return $package_limit if defined $package_limit;
 
     if (defined($token) && !ref($token) && _is_hdl_identifier($token)) {
+        if ($await_local) {
+            my $transaction_param = _transaction_param_by_name($actor, $tn, $token);
+            if ($transaction_param) {
+                my $param_value = _non_negative_integer_from_literal(_param_resolved_value($transaction_param));
+                confess "Transaction '$tn': watchdog transaction parameter '$token' must resolve to a positive cycle count in $label\n"
+                    unless defined($param_value) && $param_value > 0;
+                return $param_value;
+            }
+        }
+
         my $constant = _actor_constant_by_name($actor, $token);
         if ($constant) {
             my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
@@ -10610,7 +10655,7 @@ sub _watchdog_limit_cycles {
             return $constant_value;
         }
 
-        confess "Transaction '$tn': watchdog token '$token' is a transaction parameter; watchdog limits accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in $label\n"
+        confess "Transaction '$tn': watchdog token '$token' is a transaction parameter; watchdog limits accept $accepted_sources only in $label\n"
             if _transaction_param_by_name($actor, $tn, $token);
 
         my $param = _actor_param_by_name($actor, $token);
@@ -10621,13 +10666,16 @@ sub _watchdog_limit_cycles {
             return $param_value;
         }
 
-        confess "Transaction '$tn': watchdog token '$token' is a runtime interface signal; watchdog limits accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in $label\n"
+        confess "Transaction '$tn': watchdog token '$token' is a runtime interface signal; watchdog limits accept $accepted_sources only in $label\n"
             if _actor_interface_signal_by_name($actor, $token);
 
-        confess "Transaction '$tn': watchdog token '$token' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant in $label\n";
+        my $unknown_sources = $await_local
+            ? 'same-transaction scalar parameter, declared actor constant, actor scalar parameter, or qualified package scalar constant'
+            : 'declared actor constant, actor scalar parameter, or qualified package scalar constant';
+        confess "Transaction '$tn': watchdog token '$token' is not a $unknown_sources in $label\n";
     }
 
-    confess "Transaction '$tn': watchdog limits accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in $label\n";
+    confess "Transaction '$tn': watchdog limits accept $accepted_sources only in $label\n";
 }
 
 sub _watchdog_package_constant_limit_cycles {
@@ -10693,6 +10741,14 @@ sub _parse_await_wd {
         return $option->[1];
     }
     return undef;
+}
+
+sub _await_watchdog_limit {
+    my ($cl, $actor, $tn, $default_limit) = @_;
+    my $wd_override = _parse_await_wd($cl, $tn);
+    return defined($wd_override)
+        ? _watchdog_limit_cycles($wd_override, $actor, $tn, 'await watchdog override')
+        : $default_limit;
 }
 
 sub _wire_do_children {

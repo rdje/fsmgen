@@ -112,7 +112,7 @@ subtest 'direct transaction parameter contract-window diagnostics fail closed' =
     (on start)
     (complete done)))
 ISF
-        qr/Transaction 'main': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, same-transaction wait counts, or same-transaction latency bounds/,
+        qr/Transaction 'main': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, same-transaction wait counts, same-transaction latency bounds, or same-transaction top-level await-local watchdog limits/,
         'unused direct transaction parameters remain outside the supported surface',
     );
 
