@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Storage roles should be evidence-backed metadata
+- `ISF-SCHEDULE-REPORT-STORAGE-ROLES.1` adds roles only where the lowerer has
+  direct assignment provenance: ATL trigger states emit start pulses, and
+  timeout terminal states write the scheduler-owned `last_error` latch.
+- The new `atl_trigger_start_handoff` role lets downstream tooling classify
+  actor-network trigger handoffs without parsing generated names such as
+  `worker_process_start`.
+- The new `scheduler_error_status` role intentionally describes the global
+  timeout status latch, not a specific watchdog or latency counter. Those
+  counters already keep `watchdog_counter` and `latency_counter`.
+- The change is metadata-only. It does not change scheduled `.fsm` generation,
+  HDL generation, timeout semantics, or the private `LoweringIR` boundary.
+
 ## 2026-05-25: Transaction-parameter zero divisors should fail closed
 - `ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.1` extends the shipped runtime
   divisor guard from literal-zero, actor-constant-zero, and actor-parameter-zero

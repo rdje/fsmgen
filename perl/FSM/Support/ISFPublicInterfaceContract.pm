@@ -1760,6 +1760,7 @@ sub isf_public_interface_schedule_report_storage_role_values {
         qw(
             activation_done_handoff
             activation_start_handoff
+            atl_trigger_start_handoff
             completion_pulse
             data_register
             dynamic_wait_counter
@@ -1772,6 +1773,7 @@ sub isf_public_interface_schedule_report_storage_role_values {
             rule_trigger_payload_source
             rule_trigger_source
             sample_alias
+            scheduler_error_status
             temporal_contract_monitor
             transaction_port
             transaction_port_binding

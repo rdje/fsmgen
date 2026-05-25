@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Schedule-report additive storage roles shipped
+- Completed `ISF-SCHEDULE-REPORT-STORAGE-ROLES.1` and closed the task tree.
+- Schedule JSON now reports `atl_trigger_start_handoff` for generated
+  parent-to-child start pulses emitted by static actor-network triggers and
+  trigger-batch lowering.
+- Schedule JSON now reports `scheduler_error_status` for timeout terminal
+  writes to the global `last_error` latch from await watchdogs and latency
+  maximum checks.
+- This is additive report metadata only: scheduled `.fsm`, HDL, state
+  topology, timeout behavior, and private `LoweringIR` internals are
+  unchanged.
+- Validation passed: syntax checks; focused public-contract/report/docs tests
+  with `Files=10, Tests=385`; focused schedule/ATL tests with `Files=4,
+  Tests=11`; focused burst fixture with `Files=1, Tests=3`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1755`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Transaction-parameter zero divisors shipped
 - Completed `ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.1` and closed the
   task tree.

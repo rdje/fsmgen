@@ -464,12 +464,12 @@ Inferred-storage `kind` values are `counter` or `register`, and optional
 `role` values describe stable scheduler purpose when evidence is known.
 
 The current role family is `activation_done_handoff`,
-`activation_start_handoff`, `actor_storage`, `completion_pulse`,
-`data_register`, `dynamic_wait_counter`, `drive_payload`, `drive_request`,
-`extract_field`, `latency_counter`, `repeat_counter`,
+`activation_start_handoff`, `actor_storage`, `atl_trigger_start_handoff`,
+`completion_pulse`, `data_register`, `dynamic_wait_counter`, `drive_payload`,
+`drive_request`, `extract_field`, `latency_counter`, `repeat_counter`,
 `rule_trigger_payload_source`, `rule_trigger_source`, `sample_alias`,
-`temporal_contract_monitor`, `transaction_port`, `transaction_port_binding`,
-`trigger_done_observe`, and `watchdog_counter`.
+`scheduler_error_status`, `temporal_contract_monitor`, `transaction_port`,
+`transaction_port_binding`, `trigger_done_observe`, and `watchdog_counter`.
 
 Runtime dynamic waits use
 `dynamic_wait_counter` for generated sampled-count storage.
@@ -485,6 +485,10 @@ in `inferred_storage[]`.
 Generated activation port-binding handoffs use
 `transaction_port_binding`, and generated rule-trigger completion observation
 uses `trigger_done_observe`.
+
+Static actor-network triggers use `atl_trigger_start_handoff` for generated
+parent-to-child start pulses, while watchdog and latency timeout terminal
+states use `scheduler_error_status` for the global `last_error` status latch.
 
 Transaction-local port storage uses `transaction_port` when a declared port is
 materialized in the scheduled `.fsm` review artifact.

@@ -4,6 +4,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 schedule-report additive storage roles:
+  `ISF-SCHEDULE-REPORT-STORAGE-ROLES.1` shipped two additional public
+  `inferred_storage[].role` families and closed the task tree. Static
+  actor-network `(trigger INSTANCE.TRANSACTION)` and trigger-batch lowering
+  now report generated parent-to-child start pulses as
+  `atl_trigger_start_handoff`; await-watchdog and latency-maximum timeout
+  terminal states now report the global `last_error` latch as
+  `scheduler_error_status`. This is additive schedule JSON metadata only:
+  scheduled `.fsm`, HDL, state topology, timeout behavior, and private
+  `LoweringIR` internals are unchanged. Validation passed: syntax checks;
+  focused public-contract/report/docs tests with `Files=10, Tests=385`;
+  focused schedule/ATL tests with `Files=4, Tests=11`; focused burst fixture
+  with `Files=1, Tests=3`; `./bin/ci-regression isf --no-book` with
+  `Files=275, Tests=1755`; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 dynamic divisor transaction-parameter zero safety:
   `ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.1` shipped zero-valued
   same-transaction scalar parameter defaults as fail-closed runtime
@@ -8344,12 +8358,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.1` closed the
-  same-transaction-parameter-zero runtime divisor gap. Runtime division and
-  modulo expressions now fail closed when the divisor names a
-  same-transaction scalar parameter default resolving to zero, while nonzero
-  same-transaction parameter divisors, dynamic scalar divisors, and existing
-  literal/actor-static behavior remain unchanged.
+  `ISF-SCHEDULE-REPORT-STORAGE-ROLES.1` closed the next additive
+  schedule-report storage-role slice. Static actor-network trigger and
+  trigger-batch start pulses now report `atl_trigger_start_handoff`, and
+  await-watchdog/latency timeout terminal writes to `last_error` now report
+  `scheduler_error_status`. Scheduled `.fsm`, HDL, state topology, timeout
+  behavior, and private `LoweringIR` internals remain unchanged.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11805,6 +11819,25 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-SCHEDULE-REPORT-STORAGE-ROLES.1` is shipped and the task tree is
+  closed:
+  - static actor-network `(trigger INSTANCE.TRANSACTION)` and trigger-batch
+    lowering now report generated parent-to-child start pulses as
+    `atl_trigger_start_handoff`,
+  - await-watchdog and latency-maximum timeout terminal states now report the
+    global `last_error` latch as `scheduler_error_status`,
+  - the new role values are advertised through the public ISF contract,
+    capability manifest metadata, specs, downstream handoff, and mdBook,
+  - this is additive schedule JSON metadata only; scheduled `.fsm`, HDL, state
+    topology, timeout behavior, and private `LoweringIR` internals are
+    unchanged,
+  - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
+    README index, roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused public-contract/report/docs
+    tests with `Files=10, Tests=385`; focused schedule/ATL tests with
+    `Files=4, Tests=11`; focused burst fixture with `Files=1, Tests=3`;
+    `./bin/ci-regression isf --no-book` with `Files=275, Tests=1755`;
+    `mdbook build docs/book`; and `git diff --check`.
 - `ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.1` is shipped and the task tree
   is closed:
   - runtime division/modulo expressions now fail closed when a divisor names a

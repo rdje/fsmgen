@@ -91,7 +91,7 @@ subtest 'Burst-reader fixture lowers to the expected scheduled FSM structure' =>
     my ($last_error) = grep { $_->{name} eq 'last_error' } @{$report->{inferred_storage} || []};
     ok($last_error, 'timeout error storage entry exists');
     is($last_error->{kind}, 'register', 'timeout error storage kind');
-    ok(!exists $last_error->{role}, 'timeout error storage role remains unspecified');
+    is($last_error->{role}, 'scheduler_error_status', 'timeout error storage reports its role');
 
     is_deeply(
         [sort map { $_->{target} } @{$report->{compatible_fanin_groups}}],

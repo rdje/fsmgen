@@ -2824,12 +2824,12 @@ For each `inferred_storage` entry, `kind` is currently one of `counter` or
 `register`. Optional `role` values describe the stable scheduler purpose when
 the lowerer has direct evidence. The current role family is
 `activation_done_handoff`, `activation_start_handoff`, `actor_storage`,
-`completion_pulse`, `data_register`, `dynamic_wait_counter`, `drive_payload`,
-`drive_request`, `extract_field`, `latency_counter`, `repeat_counter`,
-`resource_round_robin_pointer`, `rule_trigger_payload_source`,
-`rule_trigger_source`, `sample_alias`, `temporal_contract_monitor`,
-`transaction_port`, `transaction_port_binding`, `trigger_done_observe`, and
-`watchdog_counter`.
+`atl_trigger_start_handoff`, `completion_pulse`, `data_register`,
+`dynamic_wait_counter`, `drive_payload`, `drive_request`, `extract_field`,
+`latency_counter`, `repeat_counter`, `resource_round_robin_pointer`,
+`rule_trigger_payload_source`, `rule_trigger_source`, `sample_alias`,
+`scheduler_error_status`, `temporal_contract_monitor`, `transaction_port`,
+`transaction_port_binding`, `trigger_done_observe`, and `watchdog_counter`.
 Runtime scalar and runtime expression waits use `dynamic_wait_counter` for
 their generated sampled-count storage. Rule-trigger source pulses use
 `rule_trigger_source`, and per-input trigger payload-source storage uses
@@ -2838,6 +2838,11 @@ uses `activation_start_handoff` and `activation_done_handoff` when those
 one-bit generated handoff signals appear in `inferred_storage[]`. Generated
 activation port-binding handoff storage uses `transaction_port_binding`, and
 generated rule-trigger completion observation uses `trigger_done_observe`.
+Static actor-network transaction triggers use `atl_trigger_start_handoff` for
+the one-cycle parent-to-child start handoff pulses emitted by `(trigger
+INSTANCE.TRANSACTION)` and trigger-batch lowering. Scheduler timeout terminal
+states use `scheduler_error_status` for the global `last_error` latch they
+write when an await watchdog or latency maximum trips.
 Transaction-local port storage uses `transaction_port` when a declared
 transaction port is materialized in the scheduled `.fsm` review artifact.
 Bounded `round_robin` resource arbitration for `rule_slot`, `output_bundle`,

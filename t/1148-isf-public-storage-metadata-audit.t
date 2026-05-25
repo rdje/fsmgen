@@ -243,6 +243,49 @@ subtest 'rule-trigger source storage roles follow advertised metadata' => sub {
     }
 };
 
+subtest 'ATL trigger and timeout-status storage roles follow advertised metadata' => sub {
+    my %role = map { $_ => 1 } @{isf_public_interface_schedule_report_storage_role_values()};
+
+    ok($role{atl_trigger_start_handoff}, 'atl_trigger_start_handoff is an advertised storage role');
+    ok($role{scheduler_error_status}, 'scheduler_error_status is an advertised storage role');
+
+    my $single_trigger_report = report_file(File::Spec->catfile(
+        $FindBin::Bin, '..', 'isf', 'atl_trigger_wait_pipeline.isf',
+    ));
+    my $batch_trigger_report = report_file(File::Spec->catfile(
+        $FindBin::Bin, '..', 'isf', 'atl_trigger_batch_wait_pipeline.isf',
+    ));
+
+    for my $case (
+        [$single_trigger_report, 'worker_process_start'],
+        [$batch_trigger_report,  'reader_capture_start'],
+        [$batch_trigger_report,  'filter_process_start'],
+        [$batch_trigger_report,  'writer_emit_start'],
+    ) {
+        my ($report, $name) = @$case;
+        my $entry = storage_entry($report, $name);
+
+        ok($entry, "ATL report exposes '$name' trigger handoff storage");
+        is($entry->{kind}, 'register', "'$name' trigger handoff storage is a pulse register")
+            if $entry;
+        is($entry->{role}, 'atl_trigger_start_handoff', "'$name' trigger handoff reports its role")
+            if $entry;
+    }
+
+    my $timeout_report = report_file(File::Spec->catfile(
+        $FindBin::Bin, '..', 'isf', 'apb_requester.isf',
+    ));
+    my $last_error = storage_entry($timeout_report, 'last_error');
+
+    ok($last_error, 'APB report exposes last_error timeout-status storage');
+    is($last_error->{kind}, 'register', 'last_error timeout-status storage is a register')
+        if $last_error;
+    is($last_error->{role}, 'scheduler_error_status', 'last_error timeout-status storage reports its role')
+        if $last_error;
+    is($last_error->{width}, 1, 'last_error timeout-status storage reports its known one-bit width')
+        if $last_error;
+};
+
 done_testing();
 
 sub assert_storage_metadata {
@@ -302,6 +345,18 @@ sub report_source {
     my ($source, $label) = @_;
     my $actor = FSM::Adapter::ISF->new()->parse_source($source, $label);
     return decode_json(FSM::Scheduler::ISF->new()->report($actor));
+}
+
+sub report_file {
+    my ($path) = @_;
+    my $actor = FSM::Adapter::ISF->new()->parse_file($path);
+    return decode_json(FSM::Scheduler::ISF->new()->report($actor));
+}
+
+sub storage_entry {
+    my ($report, $name) = @_;
+    my ($entry) = grep { ($_->{name} // '') eq $name } @{$report->{inferred_storage} || []};
+    return $entry;
 }
 
 sub dynamic_wait_source {

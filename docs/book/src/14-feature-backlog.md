@@ -2777,11 +2777,12 @@ optional positive integer widths when width evidence is known.
 `inferred_storage[].kind` remains the coarse storage category (`counter` or
 `register`). The first optional `inferred_storage[].role` slice is shipped for
 storage families with stable lowering evidence: `activation_done_handoff`,
-`activation_start_handoff`, `watchdog_counter`, `latency_counter`,
+`activation_start_handoff`, `atl_trigger_start_handoff`,
+`scheduler_error_status`, `watchdog_counter`, `latency_counter`,
 `repeat_counter`, `dynamic_wait_counter`, `drive_request`, `drive_payload`,
 `sample_alias`, `extract_field`, `data_register`, `completion_pulse`,
-`temporal_contract_monitor`,
-`rule_trigger_source`, `rule_trigger_payload_source`, `transaction_port`,
+`temporal_contract_monitor`, `rule_trigger_source`,
+`rule_trigger_payload_source`, `transaction_port`,
 `transaction_port_binding`, and `trigger_done_observe`.
 
 Declared typed actor-owned storage may also expose optional `type` and

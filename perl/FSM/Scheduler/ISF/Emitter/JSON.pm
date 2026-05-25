@@ -309,6 +309,10 @@ sub _storage_role_for_assignment {
     return 'completion_pulse' if $source_kind eq 'complete_pulse' || $source_kind eq 'timeout_pulse';
     return 'rule_trigger_source' if $source_kind eq 'rule_trigger_source';
     return 'rule_trigger_payload_source' if $source_kind eq 'rule_trigger_payload_source';
+    return 'atl_trigger_start_handoff'
+        if $source_kind eq 'atl_actor_transaction_trigger'
+            || $source_kind eq 'atl_actor_transaction_trigger_batch';
+    return 'scheduler_error_status' if $source_kind eq 'timeout_status';
     return 'data_register' if $source_kind eq 'update'
         || $source_kind eq 'set'
         || $source_kind eq 'shift'

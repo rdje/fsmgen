@@ -3145,12 +3145,12 @@ transaction_port_bindings.authored_timing_mode: snapshot, live, or JSON null
 generated_composition.kind: activation_generated_top, spawn_generated_top
 inferred_storage.kind: counter, register
 inferred_storage.role: activation_done_handoff, activation_start_handoff,
-  actor_storage, completion_pulse, data_register, dynamic_wait_counter,
-  drive_payload, drive_request, extract_field, latency_counter,
-  repeat_counter, resource_round_robin_pointer,
+  actor_storage, atl_trigger_start_handoff, completion_pulse, data_register,
+  dynamic_wait_counter, drive_payload, drive_request, extract_field,
+  latency_counter, repeat_counter, resource_round_robin_pointer,
   rule_trigger_payload_source, rule_trigger_source, sample_alias,
-  temporal_contract_monitor, transaction_port, transaction_port_binding,
-  trigger_done_observe, watchdog_counter
+  scheduler_error_status, temporal_contract_monitor, transaction_port,
+  transaction_port_binding, trigger_done_observe, watchdog_counter
 inferred_storage.type/type_kind: optional bounded authored type token and
   resolved top-level type kind for declared typed actor-owned storage
 dt_blocks.kind: drive, do_port_binding, latency_counter, rule,

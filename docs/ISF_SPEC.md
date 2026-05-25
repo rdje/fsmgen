@@ -4515,13 +4515,14 @@ The capability-manifest ISF public contract advertises these families through
 Each `inferred_storage` entry's `kind` value is currently `counter` or
 `register`. Optional `role` values describe stable scheduler purpose when the
 lowerer has direct evidence: `activation_done_handoff`,
-`activation_start_handoff`, `actor_storage`, `completion_pulse`,
-`data_register`, `dynamic_wait_counter`, `drive_payload`, `drive_request`,
-`extract_field`, `latency_counter`, `repeat_counter`,
+`activation_start_handoff`, `actor_storage`, `atl_trigger_start_handoff`,
+`completion_pulse`, `data_register`, `dynamic_wait_counter`,
+`drive_payload`, `drive_request`, `extract_field`, `latency_counter`,
+`repeat_counter`,
 `resource_round_robin_pointer`, `rule_trigger_payload_source`,
-`rule_trigger_source`, `sample_alias`, `temporal_contract_monitor`,
-`transaction_port`, `transaction_port_binding`, `trigger_done_observe`, and
-`watchdog_counter`.
+`rule_trigger_source`, `sample_alias`, `scheduler_error_status`,
+`temporal_contract_monitor`, `transaction_port`, `transaction_port_binding`,
+`trigger_done_observe`, and `watchdog_counter`.
 Runtime scalar and runtime expression waits use `dynamic_wait_counter` for the
 generated sampled-count storage that backs zero-bypass and decrement-loop
 lowering.
@@ -4534,6 +4535,11 @@ generated handoff signals appear in `inferred_storage[]`.
 Generated activation port-binding handoff storage uses
 `transaction_port_binding`; generated rule-trigger completion observation uses
 `trigger_done_observe`.
+Static actor-network `(trigger INSTANCE.TRANSACTION)` and trigger-batch
+lowering use `atl_trigger_start_handoff` for the generated one-cycle parent
+start pulses. Await watchdog and latency-maximum timeout terminal states use
+`scheduler_error_status` for the global `last_error` latch they write on
+timeout.
 Transaction-local port storage uses `transaction_port` when a declared
 transaction port is materialized in the scheduled `.fsm` review artifact.
 Bounded `round_robin` resource arbitration for `rule_slot`, `output_bundle`,
