@@ -131,8 +131,7 @@ ISF
         'non-scalar actor parameter is rejected',
     );
 
-    assert_parse_rejected(
-        <<'ISF',
+    my $actor = parse_source(<<'ISF', 'transaction-parameter-port-width.isf');
 (actor transaction_parameter_port_width
   (clock clk)
   (interface
@@ -144,9 +143,8 @@ ISF
     (ports
       (input addr (width DATA_W)))))
 ISF
-        qr/\AError: actor 'transaction_parameter_port_width' transaction 'child' port 'addr' width token 'DATA_W' is a transaction parameter; direct transaction-port width parameters remain deferred/,
-        'direct transaction parameters remain outside this port-width slice',
-    );
+    is(transaction_port_width($actor, 'child', 'inputs', 'addr'), 8,
+        'direct transaction parameters are accepted as same-transaction port-width evidence');
 
     assert_parse_rejected(
         <<'ISF',

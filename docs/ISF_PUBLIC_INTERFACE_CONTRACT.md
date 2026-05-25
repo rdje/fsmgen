@@ -697,30 +697,29 @@ forms fail before scheduler lowering.
 Actor-parameter-backed transaction port width declarations are checked by
 [t/1336-isf-transaction-port-actor-param-widths.t](../t/1336-isf-transaction-port-actor-param-widths.t)
 so the same public transaction shell exposes resolved positive integer widths
-for accepted actor-local scalar parameter defaults and rejects direct
-transaction parameters or unsupported symbolic sources before scheduler
-lowering.
+for accepted actor-local scalar parameter defaults and keeps unsupported
+symbolic sources fail-closed before scheduler lowering.
 Actor-constant-backed transaction port width declarations are checked by
 [t/1342-isf-transaction-port-actor-constant-widths.t](../t/1342-isf-transaction-port-actor-constant-widths.t)
 so the same public transaction shell exposes resolved positive integer widths
-for accepted declared actor constants and rejects direct transaction
-parameters or unsupported symbolic sources before scheduler lowering.
+for accepted declared actor constants and keeps unsupported symbolic sources
+fail-closed before scheduler lowering.
 Package-constant-backed transaction port width declarations are checked by
 [t/1357-isf-transaction-port-package-constant-widths.t](../t/1357-isf-transaction-port-package-constant-widths.t)
 so the same public transaction shell exposes resolved positive integer widths
 for accepted qualified imported package scalar constants and rejects unknown,
 unqualified, aggregate, path, ambiguous, zero-valued, runtime, and expression
 sources before scheduler lowering.
-Generated-child same-transaction-parameter-backed transaction port width
-declarations are checked by
+Same-transaction-parameter-backed transaction port width declarations are
+checked by
 [t/1368-isf-transaction-port-transaction-param-widths.t](../t/1368-isf-transaction-port-transaction-param-widths.t)
-so accepted generated child transaction `(ports ...)` entries with
-`(width TX_PARAM)` expose resolved positive integer widths in the parser
-handoff, scheduled child `.fsm` `+size` declarations, generated parent
-handoff storage, `transaction_port_bindings[]` report widths, and HDL port or
-register ranges. Transaction-local names resolve before actor constants and
-actor parameters in this value slot. Direct/non-generated transaction
-parameter port widths, cross-transaction parameter names, zero-valued or
+so accepted generated child and direct/non-generated transaction `(ports ...)`
+entries with `(width TX_PARAM)` expose resolved positive integer widths in the
+parser handoff, scheduled `.fsm` `+size` declarations, generated parent
+handoff storage where applicable, `transaction_port_bindings[]` report widths,
+and HDL port or register ranges. Transaction-local names resolve before actor
+constants and actor parameters in this value slot. Cross-transaction parameter
+names, zero-valued or
 aggregate transaction parameters, forward/self/cyclic transaction-parameter
 defaults, runtime signals, and expressions fail closed in this slice.
 The first activation-binding lowering boundary is checked by
@@ -1607,8 +1606,8 @@ and scalar enum members in activation parameter override values and matching
 leaves inside activation aggregate/list override values, rejects duplicate
 instances, duplicate parameters, unknown overrides, unsupported runtime or
 expression values, non-scalar actor parameters, aggregate shape mismatches,
-and rejects
-parameter declarations on non-generated transactions.
+and rejects parameter declarations on non-generated transactions without a
+supported same-transaction static use.
 The public ISF surface now accepts the scalar type-alias subset plus one
 aggregate storage-carrier subset: actor-local `(types ...)` declarations,
 `(imports (package NAME) ...)` for existing `.fsm` package roots, `(type

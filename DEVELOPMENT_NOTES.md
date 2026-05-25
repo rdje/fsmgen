@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Direct transaction-port width params use a private evidence marker
+- `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` removes the generated-child
+  only gate from parser width normalization and lets direct transactions
+  resolve same-transaction scalar parameter defaults as transaction-local port
+  widths.
+- The parser records `_transaction_param_port_widths` only after a port width
+  has resolved through a declared same-transaction scalar parameter to a
+  positive integer. The lowerer uses that private marker to widen direct
+  transaction `(params ...)` validation only for proven port-width evidence.
+- This mirrors the direct data-operation width gate: an unrelated direct
+  `(params ...)` clause still fails closed, while malformed referenced width
+  values keep the more specific parser diagnostics.
+- The accepted value remains the transaction definition default. Activation
+  overrides, generated child variants, generated-top respecialization, report
+  schema changes, and route/handoff specialization stay outside this slice.
+
 ## 2026-05-25: Generated child port widths use parser-time transaction defaults
 - `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` resolves generated child
   transaction-port `TX_PARAM` widths during parser width normalization, so

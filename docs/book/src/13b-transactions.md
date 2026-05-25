@@ -18,10 +18,10 @@ Today the task-like port model is shipped for `(ports ...)` bindings on `do`,
 
 Transaction port widths may be positive literals, actor-local scalar
 parameter defaults, declared actor constants, or qualified imported package
-scalar constants that resolve to positive integers. Generated child
-transactions may also use same-transaction scalar parameter defaults as port
-widths when they resolve to positive integers; direct transaction parameters
-remain deferred for transaction ports. Omitted widths are one-bit.
+scalar constants that resolve to positive integers. Generated child and
+direct/non-generated transactions may also use same-transaction scalar
+parameter defaults as port widths when they resolve to positive integers.
+Omitted widths are one-bit.
 
 Input bindings may pass scalar actor-side signals, numeric/exact-width
 literals, or non-empty list expressions; output bindings still name scalar

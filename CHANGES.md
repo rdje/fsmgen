@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Direct transaction-parameter transaction-port widths shipped
+- Completed `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` and closed the
+  task tree.
+- Direct/non-generated transaction `(ports ...)` declarations now accept
+  same-transaction scalar parameter defaults as input/output port width
+  evidence when the resolved default is a positive integer.
+- Direct transaction parameter declarations are accepted only when at least
+  one transaction-local port width option references a declared
+  same-transaction parameter; unrelated direct transaction parameters remain
+  fail-closed.
+- Transaction-local names resolve before actor constants and actor parameters;
+  later transaction parameters may derive from earlier scalar transaction
+  parameter defaults.
+- Cross-transaction parameters, zero/aggregate transaction parameters,
+  forward/self/cyclic defaults, runtime signals, arbitrary expressions,
+  activation-site override specialization, generated-top respecialization, and
+  schedule-report key-family changes remain fail-closed or deferred.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook,
+  README index, roadmap, task tree, and live docs.
+- Validation passed: syntax checks; focused transaction-port/public/spec/book
+  tests with `Files=18, Tests=453`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1739`; live-doc/book audits with `Files=3, Tests=364`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Generated-child transaction-parameter transaction-port widths shipped
 - Completed `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2`.
 - Generated child transaction `(ports ...)` declarations now accept

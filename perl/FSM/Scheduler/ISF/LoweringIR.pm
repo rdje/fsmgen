@@ -2531,8 +2531,9 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children) 
         next if $generated_children->{$tx_name};
         next if _transaction_params_used_by_contract_window($tx, $params);
         next if _transaction_params_used_by_data_op_width($tx, $params);
+        next if _transaction_params_used_by_transaction_port_width($tx, $params);
 
-        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, or same-transaction data-operation width evidence\n";
+        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, or same-transaction transaction-port width evidence\n";
     }
     return 1;
 }
@@ -2553,6 +2554,21 @@ sub _transaction_params_used_by_data_op_width {
     my %used;
     _collect_data_op_width_declared_name_refs($tx->{clauses}, \%declared, \%used);
     return keys %used ? 1 : 0;
+}
+
+sub _transaction_params_used_by_transaction_port_width {
+    my ($tx, $params) = @_;
+    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return 0 unless keys %declared;
+
+    my $used = $tx->{_transaction_param_port_widths};
+    return 0 unless ref($used) eq 'HASH';
+    for my $name (keys %$used) {
+        return 1 if $declared{$name};
+    }
+    return 0;
 }
 
 sub _collect_data_op_width_declared_name_refs {

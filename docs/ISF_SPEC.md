@@ -355,10 +355,10 @@ storage. Qualified imported package scalar constants may be used as
 transaction-local ports, actor-owned scalar storage, and actor-owned bank
 storage when the constant resolves to a positive integer; actor-owned bank
 storage also accepts `(depth PACKAGE.CONSTANT)` under the same scalar
-positive-integer rule. Generated child transaction-local ports may use
-`(width TX_PARAM)` when `TX_PARAM` names a same-transaction scalar parameter
-default that resolves to a positive integer. Direct/non-generated transaction
-parameter port widths remain deferred. Explicit data-operation width evidence may use the
+positive-integer rule. Generated child and direct/non-generated
+transaction-local ports may use `(width TX_PARAM)` when `TX_PARAM` names a
+same-transaction scalar parameter default that resolves to a positive
+integer. Explicit data-operation width evidence may use the
 same qualified package scalar constants in `shift_left`/`shift_right`
 `(width PACKAGE.CONSTANT)` options and `assemble`/`extract`
 `(widths PACKAGE.CONSTANT ...)` entries, and may use same-transaction scalar
@@ -2220,13 +2220,12 @@ is `(input name)`, `(output name)`, `(input name (width N))`, or
 `(width PACKAGE.CONSTANT)` are also accepted when the source is an actor-local
 scalar parameter default, declared actor constant, or qualified imported
 package scalar constant that resolves to a positive integer. Generated child
-transactions may also use a same-transaction scalar parameter default with
-`(width TX_PARAM)` when that default resolves to a positive integer. A later
-transaction parameter may reference an earlier scalar transaction parameter
-default, and the transaction-local name resolves before actor constants and
-actor parameters. `name` is a scalar HDL identifier and `N` is a positive
-integer literal. Omitted width means 1. Direct/non-generated transactions do
-not yet accept transaction parameters as transaction-port width sources.
+and direct/non-generated transactions may also use a same-transaction scalar
+parameter default with `(width TX_PARAM)` when that default resolves to a
+positive integer. A later transaction parameter may reference an earlier
+scalar transaction parameter default, and the transaction-local name resolves
+before actor constants and actor parameters. `name` is a scalar HDL
+identifier and `N` is a positive integer literal. Omitted width means 1.
 Runtime interface signals, cross-transaction parameter names, unknown
 symbolic names, unknown or unqualified package constants, package aggregate
 constants, package aggregate scalar-leaf paths, ambiguous
@@ -3389,8 +3388,9 @@ package scalar constants may supply static activation override scalar values
 or scalar leaves inside activation aggregate/list override values. Malformed
 forms, duplicate generated instance names, duplicate parameters, unknown
 targets, unknown override names, unsupported value shapes, unresolved enum
-members, and parameter declarations on non-generated transactions fail before
-misleading scheduled artifacts are emitted. The scheduled child `.fsm` carries
+members, and parameter declarations on non-generated transactions without a
+supported same-transaction static use fail before misleading scheduled
+artifacts are emitted. The scheduled child `.fsm` carries
 the child transaction defaults in a direct `+params` block. Generated child
 transaction defaults backed by actor constants or actor-local scalar parameter
 defaults are published as resolved literal values in that child `+params`
@@ -3443,8 +3443,8 @@ handoff that failed. The current accepted diagnostic families cover malformed
 spawn and `do` syntax, unknown child targets, duplicate instance names, parent
 actor naming conflicts, malformed or duplicate parameter
 declarations/overrides, unknown override names, aggregate/scalar shape
-mismatches, parameter declarations on non-generated transactions, and generated
-handoff port-name conflicts.
+mismatches, unsupported parameter declarations on non-generated transactions,
+and generated handoff port-name conflicts.
 
 If an actor interface already declares a port name reserved for a generated
 handoff, lowering fails before the generated top is emitted. Spawn start/done
@@ -5454,9 +5454,10 @@ Focused tests:
   actor-owned bank storage width, and actor-owned bank storage depth
   scalar-constant subsets, transaction latency min/max bound scalar-constant
   subset, derived parameter expressions,
-  transaction-port dimensions beyond positive literals, generated child
-  same-transaction scalar parameter defaults, actor-local scalar parameters,
-  actor constants, qualified package scalar constants, and scalar type aliases,
+  transaction-port dimensions beyond positive literals, same-transaction
+  scalar parameter defaults on generated child or direct/non-generated
+  transactions, actor-local scalar parameters, actor constants, qualified
+  package scalar constants, and scalar type aliases,
   data-operation width evidence beyond positive literals, actor-local scalar
   parameters, actor constants, qualified package scalar constants, and
   same-transaction scalar parameter defaults on generated child or

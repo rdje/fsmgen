@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Direct transaction-parameter transaction-port widths shipped
+- Completed `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` and closed the
+  task tree.
+- Direct/non-generated transactions now accept same-transaction scalar
+  parameter defaults in transaction-local input/output port width options when
+  the resolved default is a positive integer.
+- Direct transaction parameter declarations are accepted only when at least
+  one transaction-local port width references a declared same-transaction
+  parameter; unrelated direct transaction parameters still fail closed.
+- Transaction-local names resolve before actor constants and actor parameters,
+  and a port-width transaction parameter may derive from an earlier scalar
+  transaction parameter default.
+- Cross-transaction parameters, zero or aggregate transaction parameters,
+  forward/self/cyclic defaults, runtime signals, expressions,
+  activation-site override specialization, generated-top respecialization,
+  and schedule-report key-family changes remain deferred or fail-closed.
+- Validation passed: syntax checks; focused transaction-port/public/spec/book
+  tests with `Files=18, Tests=453`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1739`; live-doc/book audits with `Files=3, Tests=364`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Generated-child transaction-parameter transaction-port widths shipped
 - Completed `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2`.
 - Generated child transactions now accept same-transaction scalar parameter

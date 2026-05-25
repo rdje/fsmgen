@@ -2,29 +2,41 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS`.
-- Current frontier: `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3`.
-- Current R14 generated-child transaction-parameter transaction-port width
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Current R14 direct transaction-parameter transaction-port width
   implementation:
-  `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` shipped generated child
-  same-transaction scalar parameter defaults as transaction-local input/output
-  port width evidence. Generated child `(input NAME (width TX_PARAM))` and
+  `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` shipped
+  direct/non-generated same-transaction scalar parameter defaults as
+  transaction-local input/output port width evidence and closed the task tree.
+  Direct `(input NAME (width TX_PARAM))` and
   `(output NAME (width TX_PARAM))` declarations now resolve the transaction
   parameter default to a positive integer before parser handoff, scheduled
-  child `.fsm` `+size` emission, generated parent handoff storage,
-  `transaction_port_bindings[]` report widths, and HDL port/register
-  projection. Transaction-local names resolve before actor constants and
-  actor parameters and may derive from earlier scalar transaction parameter
-  defaults. Direct/non-generated transaction parameter port widths,
-  cross-transaction parameter names, zero-valued or aggregate/list
+  `.fsm` `+size` emission, and HDL port/register projection. Direct
+  transaction `(params ...)` clauses are accepted only when at least one
+  transaction-local port width references a declared same-transaction
+  parameter, so unrelated direct transaction parameters still fail closed.
+  Transaction-local names resolve before actor constants and actor parameters
+  and may derive from earlier scalar transaction parameter defaults.
+  Cross-transaction parameter names, zero-valued or aggregate/list
   transaction parameters, forward/self/cyclic transaction-parameter defaults,
   runtime signals, arbitrary expressions, activation-site override
   specialization, generated-top respecialization, and schedule-report
   key-family changes remain deferred. Validation passed: syntax checks;
-  focused transaction-port/public/spec/book tests with `Files=13, Tests=382`;
-  `./bin/ci-regression isf --no-book` with `Files=274, Tests=1738`; and
+  focused transaction-port/public/spec/book tests with `Files=18, Tests=453`;
+  `./bin/ci-regression isf --no-book` with `Files=274, Tests=1739`;
   live-doc/book audits with `Files=3, Tests=364`; `mdbook build docs/book`;
   and `git diff --check`.
+- Recent R14 generated-child transaction-parameter transaction-port width
+  implementation:
+  `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` shipped generated child
+  same-transaction scalar parameter defaults as transaction-local input/output
+  port width evidence. Generated child `(input NAME (width TX_PARAM))` and
+  `(output NAME (width TX_PARAM))` declarations resolve the transaction
+  parameter default to a positive integer before parser handoff, scheduled
+  child `.fsm` `+size` emission, generated parent handoff storage,
+  `transaction_port_bindings[]` report widths, and HDL port/register
+  projection.
 - Recent R14 transaction-parameter transaction-port width selection:
   `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1` created the active task
   tree for accepting same-transaction scalar parameter defaults as

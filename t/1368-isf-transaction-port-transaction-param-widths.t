@@ -90,10 +90,46 @@ ISF
         'HDL tag_data width is resolved');
 };
 
-subtest 'direct transaction parameter port widths remain gated in this slice' => sub {
-    assert_parse_rejected(
-        <<'ISF',
+subtest 'direct transaction parameters are valid transaction port widths' => sub {
+    my $actor = parse_source(<<'ISF', 'direct-transaction-port-param-width.isf');
 (actor direct_transaction_port_param_width
+  (clock clk)
+  (interface
+    (input start)
+    (output data (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (params
+      (DATA_W 8)
+      (DERIVED_W DATA_W))
+    (ports
+      (input addr (width DERIVED_W))
+      (output resp (width DATA_W)))
+    (update resp addr)
+    (complete done)))
+ISF
+
+    is(transaction_port_width($actor, 'main', 'inputs', 'addr'), 8,
+        'direct input port width resolves from a transaction parameter default');
+    is(transaction_port_width($actor, 'main', 'outputs', 'resp'), 8,
+        'direct output port width resolves from a transaction parameter default');
+
+    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'direct_transaction_port_param_width.fsm'};
+    like($fsm, qr/\(\+size[\s\S]*\(addr 8\)[\s\S]*\(resp 8\)/,
+        'direct scheduled .fsm uses resolved transaction parameter port widths');
+    unlike($fsm, qr/DATA_W|DERIVED_W/, 'direct transaction parameter port widths leave no scheduled placeholders');
+
+    assert_fsm_reaches_hdl($fsm, 'direct_transaction_port_param_width', qr/\binput\s+wire\s+\[7:0\]\s+addr\b/,
+        'direct HDL addr port width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'direct_transaction_port_param_width', qr/\breg\s+\[7:0\]\s+resp\b/,
+        'direct HDL resp port width is resolved');
+};
+
+subtest 'unrelated direct transaction parameters remain gated' => sub {
+    assert_lower_rejected(
+        <<'ISF',
+(actor unrelated_direct_transaction_port_param
   (clock clk)
   (interface
     (input start)
@@ -101,13 +137,13 @@ subtest 'direct transaction parameter port widths remain gated in this slice' =>
   (transaction main
     (on start)
     (params
-      (DATA_W 8))
+      (UNUSED_W 8))
     (ports
-      (input addr (width DATA_W)))
+      (input addr (width 8)))
     (complete done)))
 ISF
-        qr/\AError: actor 'direct_transaction_port_param_width' transaction 'main' port 'addr' width token 'DATA_W' is a transaction parameter; direct transaction-port width parameters remain deferred/,
-        'direct transaction parameter port widths still fail closed until the direct gate widens',
+        qr/\ATransaction 'main': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, or same-transaction transaction-port width evidence/,
+        'unrelated direct transaction parameters still fail closed',
     );
 };
 
@@ -280,6 +316,20 @@ sub assert_parse_rejected {
     my ($source, $diagnostic_re, $label) = @_;
     my $ok = eval {
         parse_source($source, "$label.isf");
+        1;
+    };
+    my $diagnostic = $@;
+
+    ok(!$ok, "$label fails closed");
+    ok(!ref($diagnostic), "$label diagnostic is scalar");
+    like($diagnostic, $diagnostic_re, "$label diagnostic is targeted");
+}
+
+sub assert_lower_rejected {
+    my ($source, $diagnostic_re, $label) = @_;
+    my $ok = eval {
+        my $actor = parse_source($source, "$label.isf");
+        FSM::Scheduler::ISF->new()->lower($actor);
         1;
     };
     my $diagnostic = $@;

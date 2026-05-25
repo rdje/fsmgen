@@ -219,9 +219,10 @@ constants must be qualified scalar package `+constants` entries, and
 unqualified, aggregate, or package member/item paths fail closed.
 
 A generated child `.fsm` emits the child transaction defaults in `+params`;
-parameter declarations on non-generated transactions fail closed; the parent
-lowerer IR preserves per-instance override lists, and the generated top applies
-those overrides through `?fsmc` `(params ...)` blocks.
+parameter declarations on non-generated transactions without a supported
+same-transaction static use fail closed; the parent lowerer IR preserves
+per-instance override lists, and the generated top applies those overrides
+through `?fsmc` `(params ...)` blocks.
 
 ```lisp
 (parent_main_await_all_4

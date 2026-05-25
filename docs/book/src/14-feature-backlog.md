@@ -376,15 +376,14 @@ aggregate package constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, zero values, runtime signals, and
 expressions remain fail-closed for transaction-local port widths.
 
-Generated child transaction-local port widths may also use
-same-transaction scalar parameter defaults when those defaults resolve to
-positive integers. The accepted `TX_PARAM` source resolves before actor
-constants and actor parameters, may derive from an earlier scalar transaction
-parameter default, and publishes through parser handoff, scheduled child
-`.fsm` port `+size` declarations, generated parent handoff storage,
-`transaction_port_bindings[]` report widths, and HDL port/register ranges.
-Direct/non-generated transaction parameter port widths are still the next
-tracked widening in `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS`.
+Generated child and direct/non-generated transaction-local port widths may
+also use same-transaction scalar parameter defaults when those defaults
+resolve to positive integers. The accepted `TX_PARAM` source resolves before
+actor constants and actor parameters, may derive from an earlier scalar
+transaction parameter default, and publishes through parser handoff, scheduled
+`.fsm` port `+size` declarations, generated parent handoff storage where
+applicable, `transaction_port_bindings[]` report widths, and HDL port/register
+ranges.
 Activation-site override specialization, generated-top respecialization,
 aggregate/list parameters, cross-transaction parameter names, zero-valued
 transaction parameters, forward/self/cyclic transaction-parameter defaults,
@@ -2427,9 +2426,10 @@ Status: shipped base surface; richer output/report surfaces remain backlog.
 
 Transaction `(ports ...)` declarations, actor-parameter-backed,
 actor-constant-backed, qualified package-constant-backed, and generated-child
-same-transaction-parameter-backed transaction port widths, scalar and
-expression-valued input activation bindings, first actor-pin conflict/runtime
-coverage, and bounded schedule-report binding provenance are shipped. The original
+or direct/non-generated same-transaction-parameter-backed transaction port
+widths, scalar and expression-valued input activation bindings, first
+actor-pin conflict/runtime coverage, and bounded schedule-report binding
+provenance are shipped. The original
 `ISF-PORT-BINDING` task tree is complete; expression-valued input bindings are
 tracked by `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 
@@ -2494,11 +2494,9 @@ actor-constant-backed `(width CONST)`, or package-constant-backed
 `(width PACKAGE.CONSTANT)` where the symbolic source names an actor-local
 scalar parameter default, declared actor constant, or qualified imported
 package scalar constant that resolves to a positive integer; omitted width
-means 1. Generated child transactions may also use
+means 1. Generated child and direct/non-generated transactions may also use
 transaction-parameter-backed `(width TX_PARAM)` when `TX_PARAM` names a
 same-transaction scalar parameter default that resolves to a positive integer.
-Direct/non-generated transaction parameters remain outside the shipped
-transaction-port width source set.
 Unknown or unqualified package constants, aggregate package constants,
 package member/item paths, ambiguous local-enum/package-constant spellings,
 zero-valued constants, runtime signals, and arbitrary expressions fail
@@ -3242,9 +3240,8 @@ qualified imported package scalar constants when they resolve to positive
 integers.
 Transaction-local port widths may use actor-local scalar parameter defaults,
 declared actor constants, qualified imported package scalar constants, or
-generated child same-transaction scalar parameter defaults when they resolve
-to positive integers. Direct/non-generated transaction parameter port widths
-remain deferred.
+same-transaction scalar parameter defaults on generated child and
+direct/non-generated transactions when they resolve to positive integers.
 FIFO use-site interface shape specialization and generated-top
 respecialization remain future work.
 

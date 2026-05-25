@@ -924,7 +924,6 @@ sub _finalize_actor_storage_depths($self, $actor) {
 
 sub _finalize_actor_transaction_port_widths($self, $actor) {
     my $actor_name = $actor->{actor_name} // 'unknown';
-    my $generated_children = _actor_generated_child_refs_for_transaction_port_widths($actor);
 
     for my $tx (@{$actor->{transactions} || []}) {
         my $transaction_name = $tx->{name} // 'unknown';
@@ -948,12 +947,11 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
                         && (_is_hdl_identifier($width) || _is_package_constant_reference_shape($width));
 
                 if (_transaction_param_by_name($tx, $width)) {
-                    confess "Error: actor '$actor_name' $context width token '$width' is a transaction parameter; direct transaction-port width parameters remain deferred until the direct transaction validation gate is widened; generated child transaction port widths accept $accepted_sources only\n"
-                        unless $generated_children->{$transaction_name};
                     my $transaction_param = $self->_resolved_transaction_param_by_name_for_width($actor, $tx, $width);
                     my $param_width = _positive_integer_from_literal_value(_param_resolved_value($transaction_param));
                     confess "Error: actor '$actor_name' $context width transaction parameter '$width' must resolve to a positive integer\n"
                         unless defined $param_width;
+                    $tx->{_transaction_param_port_widths}{$width} = 1;
                     $port->{width} = $param_width;
                     next;
                 }
@@ -1008,93 +1006,6 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
     }
 
     return 1;
-}
-
-sub _actor_generated_child_refs_for_transaction_port_widths {
-    my ($actor) = @_;
-    my %generated;
-
-    for my $tx (@{$actor->{transactions} || []}) {
-        _collect_generated_child_refs_from_transaction_body($tx->{clauses}, \%generated);
-    }
-
-    for my $rule (@{$actor->{rules} || []}) {
-        for my $action (@{$rule->{actions} || []}) {
-            next unless ref($action) eq 'ARRAY'
-                && @$action >= 2
-                && defined($action->[0])
-                && !ref($action->[0])
-                && $action->[0] eq 'trigger'
-                && defined($action->[1])
-                && !ref($action->[1])
-                && _activation_clause_has_params($action);
-            $generated{$action->[1]} = 1;
-        }
-    }
-
-    return \%generated;
-}
-
-sub _collect_generated_child_refs_from_transaction_body {
-    my ($clauses, $generated) = @_;
-    return unless ref($clauses) eq 'ARRAY' && ref($generated) eq 'HASH';
-
-    for my $clause (@$clauses) {
-        next unless ref($clause) eq 'ARRAY'
-            && @$clause
-            && defined($clause->[0])
-            && !ref($clause->[0]);
-
-        my $head = $clause->[0];
-        if ($head eq 'spawn' && defined($clause->[1]) && !ref($clause->[1])) {
-            $generated->{$clause->[1]} = 1;
-            next;
-        } elsif ($head eq 'do'
-            && defined($clause->[1])
-            && !ref($clause->[1])
-            && _activation_clause_has_params($clause))
-        {
-            $generated->{$clause->[1]} = 1;
-            next;
-        }
-
-        if ($head eq 'repeat') {
-            _collect_generated_child_refs_from_transaction_body([@{$clause}[2 .. $#$clause]], $generated)
-                if @$clause > 2;
-            next;
-        }
-
-        if ($head eq 'when') {
-            _collect_generated_child_refs_from_transaction_body([@{$clause}[2 .. $#$clause]], $generated)
-                if @$clause > 2;
-            next;
-        }
-
-        if ($head eq 'switch') {
-            for my $branch (@{$clause}[2 .. $#$clause]) {
-                next unless ref($branch) eq 'ARRAY' && @$branch > 1;
-                _collect_generated_child_refs_from_transaction_body([@{$branch}[1 .. $#$branch]], $generated);
-            }
-            next;
-        }
-    }
-
-    return;
-}
-
-sub _activation_clause_has_params {
-    my ($clause) = @_;
-    return 0 unless ref($clause) eq 'ARRAY' && @$clause >= 3;
-
-    for my $subclause (@{$clause}[2 .. $#$clause]) {
-        next unless ref($subclause) eq 'ARRAY'
-            && @$subclause
-            && defined($subclause->[0])
-            && !ref($subclause->[0]);
-        return 1 if $subclause->[0] eq 'params';
-    }
-
-    return 0;
 }
 
 sub _resolved_transaction_param_by_name_for_width($self, $actor, $tx, $name) {
