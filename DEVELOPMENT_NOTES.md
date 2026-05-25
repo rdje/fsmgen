@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Detailed active-lane status must not lag the summary
+- `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.1` keeps the lower
+  `ROADMAP_STATUS.md` recovery section aligned with the top-level current R14
+  entries.
+- The detailed active-lane section is often what a resumed session reads after
+  the status-scale rules, so leaving it pointed at an older slice undermines
+  the same crash-recovery guarantees as a stale task tree.
+- This remains a documentation-only truth sync; it records recent committed
+  facts without selecting or implementing deferred R14 behavior.
+
 ## 2026-05-25: Generated do timing coverage should pin the existing class
 - `ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.1` covers generated blocking
   `do` input bindings in the same focused timing fixture as local `do`,

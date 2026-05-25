@@ -4,6 +4,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 active-lane status sync:
+  `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.1` synchronized the detailed
+  `Current active lane` recovery section and the head of the R14 `Done`
+  section with the latest committed R14 slices. The detailed recovery text no
+  longer points at an older local rule-trigger diagnostic as the latest active
+  lane completion. This is documentation-only truth synchronization: parser
+  behavior, scheduler lowering, generated `.fsm`, HDL, schedule-report
+  payloads, public contract code, tests, and runtime behavior did not change.
+  Validation passed: focused live-doc/book audits; `mdbook build docs/book`;
+  and `git diff --check`.
 - Current R14 generated do binding timing coverage:
   `ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.1` added focused regression
   coverage for already-shipped generated blocking `do` input-binding timing
@@ -8244,11 +8254,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.1` clarified the
-  direct/local rule-trigger output-binding fail-closed diagnostic. This is
-  diagnostic/docs only; generated-child rule-trigger output-binding behavior,
-  scheduler lowering, generated `.fsm`, HDL, schedule-report schema, public
-  API, and runtime behavior are unchanged.
+  `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.1` synchronized this detailed
+  active-lane recovery section and the head of the R14 `Done` section with
+  the latest committed R14 slices. This is documentation-only truth
+  synchronization; parser behavior, scheduler lowering, generated `.fsm`,
+  HDL, schedule-report payloads, public contract code, tests, and runtime
+  behavior are unchanged.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11704,6 +11715,76 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.1` is shipped and the task tree is
+  closed:
+  - the detailed `Current active lane` recovery section now points at this
+    latest status-sync slice instead of an older direct/local rule-trigger
+    diagnostic slice,
+  - the head of this R14 `Done` section now records the latest generated `do`
+    timing coverage, binding timing history sync, rule-trigger output history
+    sync, and direct entry-parameter diagnostic slices,
+  - parser behavior, scheduler lowering, generated `.fsm`, HDL,
+    schedule-report payloads, public contract code, tests, and runtime
+    behavior are unchanged,
+  - and README, task tree, roadmap, and live docs are synchronized.
+  - Validation passed: focused live-doc/book audits; `mdbook build docs/book`;
+    and `git diff --check`.
+- `ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.1` is shipped and the task tree is
+  closed:
+  - generated blocking `do` input bindings now have explicit regression
+    coverage for accepted `(timing live)` assertions and report metadata:
+    `binding_timing => generated_live_handoff` plus
+    `authored_timing_mode => live`,
+  - generated blocking `do` input bindings that request `(timing snapshot)`
+    now have direct fail-closed mismatch coverage against the current
+    generated-live transfer class,
+  - parser behavior, scheduler lowering, generated `.fsm`, HDL,
+    schedule-report schema, public contract code, and runtime behavior are
+    unchanged,
+  - and README, task tree, roadmap, and live docs are synchronized.
+  - Validation passed: syntax check; focused transaction-port binding test;
+    focused port-binding/report/spec/book audits; `mdbook build docs/book`;
+    and `git diff --check`.
+- `ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.1` is shipped and the task
+  tree is closed:
+  - older recovery notes no longer imply all snapshot/live binding timing
+    syntax is deferred,
+  - the docs now distinguish later shipped current-timing
+    `(timing snapshot|live)` assertions and `authored_timing_mode` report
+    metadata from deferred behavior-changing snapshot/live timing conversion,
+  - parser behavior, scheduler lowering, generated `.fsm`, HDL,
+    schedule-report payloads, public contract code, and runtime behavior are
+    unchanged,
+  - and README, task tree, roadmap, and live docs are synchronized.
+  - Validation passed: stale timing wording grep confirmed remaining matches
+    are historical task non-goals or explicit behavior-conversion deferrals;
+    focused live-doc/book audits with `Files=4, Tests=366`; `mdbook build
+    docs/book`; and `git diff --check`.
+- `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.1` is shipped and the
+  task tree is closed:
+  - current mdBook activation-parameter wording and older recovery notes no
+    longer imply all rule-trigger output bindings are unsupported,
+  - the docs now distinguish later shipped scalar generated-child rule-trigger
+    output bindings from deferred direct/local rule-trigger output bindings,
+  - parser behavior, scheduler lowering, generated `.fsm`, HDL,
+    schedule-report payloads, public contract code, and runtime behavior are
+    unchanged,
+  - and README, task tree, roadmap, and live docs are synchronized.
+  - Validation passed: stale broad-output wording grep confirmed remaining
+    matches are direct/local deferrals; focused live-doc/book audits with
+    `Files=4, Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- `ISF-DIRECT-ON-PARAM-DIAGNOSTIC.1` is shipped and the task tree is closed:
+  - direct `(on start (params ...))` still fails before scheduled `.fsm`
+    emission, but the diagnostic now says direct `(on ...)` activation is an
+    entry guard, not a generated activation-site parameter override,
+  - legal `(on start (sample ...))` behavior is unchanged,
+  - generated `.fsm`, HDL, schedule-report schema, public API, and runtime
+    behavior for accepted sources are unchanged,
+  - and the ISF spec, public contract, mdBook, README, task tree, roadmap, and
+    live docs are synchronized.
+  - Validation passed: syntax checks; focused sample/public-doc/book tests
+    with `Files=7, Tests=375`; `mdbook build docs/book`; and
+    `git diff --check`.
 - `ROADMAP-R14-PORT-BINDING-HISTORICAL-TRUTH-SYNC.1` is shipped and the task
   tree is closed:
   - older `ISF-PORT-BINDING.5` recovery notes now point to later shipped

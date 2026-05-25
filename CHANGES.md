@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Active lane status synchronized
+- Completed `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.1` and closed the task tree.
+- The detailed `Current active lane` recovery section in `ROADMAP_STATUS.md`
+  no longer points at an older direct/local rule-trigger diagnostic as the
+  latest active-lane completion.
+- The head of the detailed R14 `Done` section now records the latest generated
+  `do` timing coverage, binding timing history sync, rule-trigger output
+  history sync, and direct entry-parameter diagnostic closures.
+- This is documentation-only truth synchronization; parser behavior, scheduler
+  lowering, generated `.fsm`, HDL, schedule-report payloads, public contract
+  code, tests, and runtime behavior did not change.
+- Validation passed: focused live-doc/book audits; `mdbook build docs/book`;
+  and `git diff --check`.
+
 ### R14 — Generated do binding timing coverage completed
 - Completed `ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.1` and closed the task
   tree.

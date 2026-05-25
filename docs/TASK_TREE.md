@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.md](docs/tasks/ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.md) |
 | `ISF-GENERATED-DO-BINDING-TIMING-COVERAGE` | `done` | `R14` | `closed` | [docs/tasks/ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.md](docs/tasks/ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.md) |
 | `ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.md) |
 | `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.md) |
