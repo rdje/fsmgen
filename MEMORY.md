@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: Hosted strict wiring and diagnostic CI repair selected
+- Created active project-operations task tree
+  `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR`.
+- Completed selection leaf `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1`; the next
+  implementation frontier is `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2`.
+- The selected repair covers GitHub `Perl FSM Regression` run `26386567406`:
+  stale strict-mode `?wiring` slash-link fixtures in HDL generator
+  contract/audit tests, plus a stale direct LHS deconstruct diagnostic
+  expectation for slice-decorated RHS concat text.
+- The selected boundary preserves strict-mode slash-link rejection and does
+  not change `.fsm`, `.isf`, scheduler, generated HDL, public API, or runtime
+  behavior.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=40`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR`.
+- Current frontier: `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2`.
+
 ## 2026-05-25: This-commit task evidence truth sync completed
 - Completed `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` and closed the task
   tree.

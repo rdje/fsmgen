@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Hosted CI strict wiring repair should update fixtures, not policy
+- `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1` selects a repo-side CI repair after
+  GitHub `Perl FSM Regression` run `26386567406` failed on stale local tests.
+- The strict-mode slash-link failures are fixture drift: strict mode is
+  expected to reject legacy `?wiring` `/source/target/` tokens, so tests that
+  exercise strict HDL generation should emit canonical list wiring such as
+  `(=child.out top_out)` or `(connect child.out top_out)`.
+- The direct LHS deconstruct failure is treated as expectation drift unless
+  local reproduction shows otherwise: the current diagnostic preserves the RHS
+  concat operand plus the selected slice range, while the stale expectation
+  only allowed the inner aggregate operand text.
+
 ## 2026-05-25: Closed task trees are completed evidence too
 - `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` treats metadata status values
   `done`, `completed`, and `closed` as completed task-tree states for evidence

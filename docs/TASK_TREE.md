@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR` | `active` | `project operations` | `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` | [docs/tasks/CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.md](docs/tasks/CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.md) |
 
 ## Proposed Task Trees
 

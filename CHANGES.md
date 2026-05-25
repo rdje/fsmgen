@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### Project Operations — Hosted strict wiring and diagnostic CI repair selected
+- Created active task tree `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR`.
+- Completed selection leaf `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.1`; the next
+  implementation frontier is `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2`.
+- Selected a bounded CI repair for GitHub `Perl FSM Regression` run
+  `26386567406`: stale strict-mode `?wiring` slash-link fixtures in HDL
+  generator contract/audit tests and stale direct LHS deconstruct diagnostic
+  expectations for slice-decorated RHS concat text.
+- No `.fsm`, `.isf`, scheduler, generated HDL, public API, or runtime
+  behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=40`; `mdbook build docs/book`; and `git diff --check`.
+
 ### Roadmap Maintenance — This-commit task evidence truth sync completed
 - Completed `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` and closed the task
   tree.
