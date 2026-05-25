@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-WAIT-PACKAGE-CONSTANT-COUNTS` | `active` | `R14` | `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` | [docs/tasks/ISF-WAIT-PACKAGE-CONSTANT-COUNTS.md](docs/tasks/ISF-WAIT-PACKAGE-CONSTANT-COUNTS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-WAIT-PACKAGE-CONSTANT-COUNTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-WAIT-PACKAGE-CONSTANT-COUNTS.md](docs/tasks/ISF-WAIT-PACKAGE-CONSTANT-COUNTS.md) |
 | `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.md](docs/tasks/ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.md) |
 | `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.md](docs/tasks/ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.md) |
 | `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.md](docs/tasks/ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.md) |

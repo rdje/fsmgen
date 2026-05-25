@@ -84,6 +84,10 @@ clear lower-layer mapping, and clear runtime behavior.
   Transaction-local port widths may use the same qualified package scalar
   constant form; parser handoff, scheduled `.fsm` activation handoff storage,
   `transaction_port_bindings[]`, and HDL publish the resolved integer width.
+  Static transaction wait counts may use qualified imported package scalar
+  constants when they resolve to non-negative integers; scheduled `.fsm`
+  fixed wait states and `transaction_waits[]` publish the resolved timing and
+  preserve the authored qualified token in `count_source`.
   Actor-local scalar parameter defaults that resolve to non-negative integer
   literals may also be used as static `(wait NAME)` counts in the owning
   actor schedule.

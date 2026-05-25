@@ -3479,6 +3479,19 @@ sub _validate_transaction_enum_member_value_clause {
         return 1;
     }
 
+    if ($head eq 'wait') {
+        _reject_wait_count_enum_member_value(
+            $clause->[1],
+            $actor,
+            $aggregate_roots,
+            "$context wait count",
+        ) if @$clause >= 2;
+        for my $extra (@{$clause}[2 .. $#$clause]) {
+            _reject_enum_member_value_contexts($extra, $actor, $aggregate_roots, "$context wait clause");
+        }
+        return 1;
+    }
+
     if ($head eq 'shift_left' || $head eq 'shift_right') {
         _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context $head target");
         _reject_enum_member_value_contexts($clause->[2], $actor, $aggregate_roots, "$context $head bit");
@@ -3608,6 +3621,14 @@ sub _validate_transaction_enum_member_value_clause {
 sub _reject_data_op_width_enum_member_value {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     return 1 if ref($value);
+    return 1 if defined _actor_package_constant_reference($actor, $value);
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context);
+}
+
+sub _reject_wait_count_enum_member_value {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context)
+        if ref($value);
     return 1 if defined _actor_package_constant_reference($actor, $value);
     return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context);
 }

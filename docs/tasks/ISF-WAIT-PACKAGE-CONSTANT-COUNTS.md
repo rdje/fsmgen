@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-WAIT-PACKAGE-CONSTANT-COUNTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -51,7 +51,7 @@ non-negative integer literal.
 ## Task Tree
 
 - ID: `ISF-WAIT-PACKAGE-CONSTANT-COUNTS`
-  Status: `active`
+  Status: `done`
   Goal: `Qualified package scalar constants in static transaction wait counts`
   Children: `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.1`,
   `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2`
@@ -64,17 +64,17 @@ non-negative integer literal.
   Commit: `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.1: select wait package counts`
 
 - ID: `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document package scalar constants in static wait counts`
   Acceptance: `Accepted package scalar constants resolve to static wait counts, unsupported sources fail closed, and public docs/tests are synchronized`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks`; focused wait/public/spec/book tests with `Files=8, Tests=398`; `./bin/ci-regression isf --no-book` with `Files=265, Tests=1715`; post-closure public/spec/book audits with `Files=7, Tests=374`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2: support wait package counts`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` | `pending` | Static waits already accept literals, actor constants, and actor-local scalar parameter defaults; package scalar constants are the next bounded static value-domain widening. |
+| 1 | `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` | `done` | Closed: static waits now accept qualified imported package scalar constants in the bounded non-negative integer surface. |
 
 ## Decisions
 
@@ -85,6 +85,11 @@ non-negative integer literal.
 - `2026-05-25`: Preserve static wait timing exactly. Package constants should
   resolve before wait-state construction, so accepted positive counts reuse
   fixed wait-state chains and accepted zero counts remain transparent no-ops.
+- `2026-05-25`: Ship package-constant waits through the existing static wait
+  report contract. Positive counts publish `count_kind: static`, integer
+  `cycles`, and the authored `PACKAGE.CONSTANT` token in `count_source`;
+  zero-valued constants do not create a wait state or `transaction_waits[]`
+  report entry.
 
 ## Open Questions
 
@@ -99,14 +104,18 @@ non-negative integer literal.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.1` | `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `passed`; audits `Files=3, Tests=364` |
+| `2026-05-25` | `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` | syntax checks; `prove -Iperl t/1244-isf-wait-clause-lowering.t t/1359-isf-wait-package-constant-counts.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/ci-regression isf --no-book`; post-closure public/spec/book audits; `mdbook build docs/book`; `git diff --check` | `passed`; focused audits `Files=8, Tests=398`; broad gate `Files=265, Tests=1715`; post-closure audits `Files=7, Tests=374` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.1` | `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.1: select wait package counts` | Selection slice; no behavior change. |
+| `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` | `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2: support wait package counts` | Implementation slice; package scalar constants in static wait counts. |
 
 ## Changelog
 
 - `2026-05-25`: Created task tree and selected
   `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` as the next implementation frontier.
+- `2026-05-25`: Implemented qualified imported package scalar constants in
+  static transaction wait counts and closed the task tree.

@@ -250,6 +250,7 @@ my $expected_tested_by = [
     't/1352-isf-library-use-package-constants.t',
     't/1357-isf-transaction-port-package-constant-widths.t',
     't/1358-isf-data-op-package-constant-widths.t',
+    't/1359-isf-wait-package-constant-counts.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

@@ -5800,7 +5800,9 @@ sub _validate_wait_clause {
                 unless _is_wait_expression_shape($count);
         } else {
             _confess_wait_requires($tn, $label)
-                unless defined(_non_negative_integer_from_literal($count)) || _is_hdl_identifier($count);
+                unless defined(_non_negative_integer_from_literal($count))
+                    || _is_hdl_identifier($count)
+                    || _is_package_constant_reference_shape($count);
         }
     }
 
@@ -5829,6 +5831,31 @@ sub _wait_count_spec {
             cycles => $literal_value,
             source => $count,
         } if defined $literal_value;
+
+        if (my $package_constant = _actor_package_constant_reference($actor, $count)) {
+            my ($package_name, $constant_name, $suffix) = @$package_constant;
+            my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+            if (defined $constant_payload) {
+                confess "Transaction '$tn': wait count token '$count' is ambiguous: it matches local enum member '$count' and imported package constant '$count' in $label\n"
+                    if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
+                confess "Transaction '$tn': wait count package constant '$package_name.$constant_name' aggregate/member path '$count' remains deferred; wait counts accept only qualified package scalar constants in this slice\n"
+                    if $suffix ne '';
+                my $constant_value = _package_constant_scalar_value($constant_payload);
+                my $integer_value = defined($constant_value) && !ref($constant_value)
+                    ? _non_negative_integer_from_literal($constant_value)
+                    : undef;
+                confess "Transaction '$tn': wait count package constant '$package_name.$constant_name' must resolve to a non-negative integer scalar in $label\n"
+                    unless defined $integer_value;
+                return {
+                    kind   => 'static',
+                    cycles => $integer_value,
+                    source => $count,
+                };
+            }
+
+            confess "Transaction '$tn': wait count references unknown package constant '$count' in $label\n"
+                if $suffix eq '' && !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
+        }
 
         if (_is_hdl_identifier($count)) {
             my $constant = _actor_constant_by_name($actor, $count);
@@ -5866,7 +5893,7 @@ sub _wait_count_spec {
                 };
             }
 
-            confess "Transaction '$tn': wait count '$count' is neither a declared actor constant, actor parameter, nor a known-width runtime scalar in $label\n";
+            confess "Transaction '$tn': wait count '$count' is neither a declared actor constant, actor parameter, qualified package scalar constant, nor a known-width runtime scalar in $label\n";
         }
 
         _confess_wait_requires($tn, $label);
@@ -5900,7 +5927,7 @@ sub _wait_count_spec {
 
 sub _confess_wait_requires {
     my ($tn, $label) = @_;
-    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_parameter_or_known_width_runtime_scalar_or_expression)' in $label\n";
+    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression)' in $label\n";
 }
 
 sub _is_wait_expression_shape {

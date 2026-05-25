@@ -2,6 +2,33 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Wait package-constant counts shipped
+- Completed `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` and closed the task tree.
+- Static transaction `(wait PACKAGE.CONSTANT)` counts now accept qualified
+  imported package scalar constants when the owning actor imports `PACKAGE`,
+  the package declares `CONSTANT`, and the constant resolves to a
+  non-negative integer scalar literal.
+- Accepted package-constant waits reuse the existing static wait path: zero
+  counts remain transparent no-ops with no wait state or
+  `transaction_waits[]` report entry, while positive counts emit fixed
+  wait-state chains.
+- Positive package-constant waits report `count_kind: static`, integer
+  `cycles`, and the authored `PACKAGE.CONSTANT` token in `count_source`.
+- Unknown package constants, unqualified package constants, package aggregate
+  constants, package member/item paths, ambiguous local-enum/package-constant
+  spellings, package constants inside wait expressions, transaction
+  parameters, runtime signals, arbitrary expressions, package constants in
+  other value domains, generated-top respecialization, and runtime
+  wait/pending-sample routing changes remain fail closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused wait/public/spec/book tests with
+  `Files=8, Tests=398`; `./bin/ci-regression isf --no-book` with
+  `Files=265, Tests=1715`; post-closure public/spec/book audits with
+  `Files=7, Tests=374`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Wait package-constant counts selected
 - Created active task tree `ISF-WAIT-PACKAGE-CONSTANT-COUNTS`.
 - Completed `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.1`; the selected

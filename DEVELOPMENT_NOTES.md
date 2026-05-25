@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Wait package constants publish authored static sources
+- `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` resolves qualified imported package
+  scalar constants at the static transaction wait-count boundary.
+- The implementation resolves the package constant before wait-state
+  construction, then reuses the existing static wait machinery. That keeps
+  zero-valued constants as transparent no-ops and positive constants as fixed
+  wait-state chains without changing dynamic wait or pending-sample routing.
+- The report keeps the authored `PACKAGE.CONSTANT` token in `count_source`
+  instead of replacing it with the resolved integer. That gives downstream
+  consumers stable provenance while still publishing integer `cycles`.
+- The boundary stays atomic and scalar. Package constants inside wait
+  expressions, unqualified lookup, aggregate package constants, package
+  member/item paths, transaction parameters, runtime signals, generated-top
+  respecialization, and unrelated value domains remain fail-closed or
+  deferred.
+
 ## 2026-05-25: Wait package constants should reuse static wait lowering
 - `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.1` selects qualified imported package
   scalar constants for static transaction wait counts as the next narrow

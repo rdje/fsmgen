@@ -2,8 +2,31 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-WAIT-PACKAGE-CONSTANT-COUNTS`.
-- Current frontier: `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 wait package-constant count implementation:
+  `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` shipped qualified imported package
+  scalar constants as static transaction wait counts and closed the task
+  tree. Static transaction `(wait PACKAGE.CONSTANT)` counts now resolve when
+  the owning actor imports `PACKAGE`, the package declares `CONSTANT`, and
+  the constant resolves to a non-negative integer scalar literal. Accepted
+  zero-valued package constants remain transparent no-ops with no wait state
+  and no `transaction_waits[]` report entry. Accepted positive package
+  constants reuse the existing fixed static wait-state chain and report
+  `count_kind: static`, integer `cycles`, and the authored
+  `PACKAGE.CONSTANT` token in `count_source`. Unknown package constants,
+  unqualified package constants, aggregate package constants, package
+  member/item paths, ambiguous local-enum/package-constant spellings,
+  package constants inside wait expressions, transaction parameters, runtime
+  signals, arbitrary expressions, package constants in other value domains,
+  generated-top respecialization, and runtime wait/pending-sample routing
+  changes remain fail closed or deferred. The ISF spec, downstream handoff,
+  public contract, mdBook, task tree, README index, roadmap, and live docs
+  are synchronized. Validation passed with syntax checks; focused
+  wait/public/spec/book tests (`Files=8, Tests=398`);
+  `./bin/ci-regression isf --no-book` (`Files=265, Tests=1715`);
+  post-closure public/spec/book audits (`Files=7, Tests=374`); `mdbook
+  build docs/book`; and `git diff --check`.
 - Recent R14 wait package-constant count selection:
   `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.1` created the active task tree and
   selected the next bounded implementation leaf. Static transaction

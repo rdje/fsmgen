@@ -737,17 +737,23 @@ The transaction wait boundary is checked by
 [t/1244-isf-wait-clause-lowering.t](../t/1244-isf-wait-clause-lowering.t)
 so `(wait N)` accepts non-negative integer literals and actor constants in
 transaction body contexts, accepts actor-local scalar parameter defaults as
-static wait counts when they resolve to non-negative integer literals, lowers
-positive resolved counts to reviewable fixed wait-state chains, treats
-resolved zero as a transparent no-op, accepts the known-width runtime scalar
-and runtime expression count subsets including
+static wait counts when they resolve to non-negative integer literals, and
+accepts qualified imported package scalar constants as static wait counts
+when they resolve to non-negative integer literals. The package-count slice is
+checked by
+[t/1359-isf-wait-package-constant-counts.t](../t/1359-isf-wait-package-constant-counts.t)
+so accepted package counts keep the authored `PACKAGE.CONSTANT` token in
+`transaction_waits[]`, lower positive resolved counts to reviewable fixed
+wait-state chains, and treat resolved zero as a transparent no-op. The
+runtime wait boundary accepts the known-width runtime scalar and runtime
+expression count subsets including
 consecutive top-level runtime waits and waits after shipped `await`, `stage`,
 `repeat` exit, `await_all`, `await_any`, bank load/store, and loop-decision
 predecessors,
 reaches HDL generation, exposes `actor_constants[]` and
 `actor_params[]` plus `transaction_waits[]` provenance, and rejects malformed,
-unknown, unsupported parameter, unknown-width expression, or unsupported
-dynamic counts.
+unknown, unsupported parameter, unsupported package, unknown-width expression,
+or unsupported dynamic counts.
 Inline `when`, `repeat`, `switch`, `while`, and
 `until` body dynamic waits are covered for the no-pending-sample subset. Branch
 and loop decision states preserve their alternate exits while splitting the
@@ -2836,8 +2842,8 @@ For each `transaction_waits` entry, `transaction` is the authored transaction
 name, `cycles` is the exact positive resolved static wait count or JSON null
 for runtime waits, `count_kind` is `static`, `runtime_scalar`, or
 `runtime_expression`, `count_source` is the literal, actor constant name,
-actor parameter name, runtime scalar source signal, or normalized runtime
-expression text,
+actor parameter name, qualified package constant token, runtime scalar source
+signal, or normalized runtime expression text,
 `entry_state` is the generated wait state, and `exit_state` is the following
 scheduled state after the wait. For consecutive runtime waits, that following
 scheduled state can be the next generated wait entry; the generated edge split
@@ -3073,8 +3079,8 @@ These are not stable public interfaces yet:
   broader static conflict diagnostics, richer report fields, and full
   expression width inference remain deferred follow-on port-binding work.
 - Transaction control-flow behavior beyond shipped static/symbolic actor
-  constant and actor parameter/runtime scalar/runtime expression `(wait N)`,
-  sample-compatible runtime wait pending
+  constant, actor parameter, qualified package scalar constant, runtime
+  scalar, and runtime expression `(wait N)`, sample-compatible runtime wait pending
   samples, and top-level transaction `(while cond body...)` /
   `(until cond body...)` remains non-public except for the documented
   top-level repeat-body local `(do child)` subset, top-level repeat-body
@@ -3106,10 +3112,12 @@ These are not stable public interfaces yet:
   `(do child (params ...) (bind ...))` while generated nested spawns are
   pending before that same later drain.
   Unsupported transaction parameter wait counts, non-scalar actor parameter
-  wait counts, sample-incompatible runtime wait successors, nested loops, and
-  loop bodies containing broader child activation, stages, or contracts need
-  parser, lowering, report, and regression-backed contracts before downstream
-  users can rely on them.
+  wait counts, unqualified or aggregate package constants, package member/item
+  paths, package constants inside wait-count expressions,
+  sample-incompatible runtime wait successors, nested loops, and loop bodies
+  containing broader child activation, stages, or contracts need parser,
+  lowering, report, and regression-backed contracts before downstream users
+  can rely on them.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

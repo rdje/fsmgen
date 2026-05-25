@@ -3182,7 +3182,7 @@ ISF
 };
 
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_parameter_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
 (actor wait_missing_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -3193,7 +3193,7 @@ subtest 'malformed wait clauses fail before scheduled emission' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_parameter_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
 (actor wait_extra_operand
   (clock clk)
   (reset (rst_n async active_low))
@@ -3204,7 +3204,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'negative wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_parameter_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'negative wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_parameter_or_qualified_package_scalar_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
 (actor wait_negative_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -3215,7 +3215,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'unknown dynamic wait count', qr/\ATransaction 'main': wait count 'cycles' is neither a declared actor constant, actor parameter, nor a known-width runtime scalar in transaction body/);
+    assert_lower_rejected(<<'ISF', 'unknown dynamic wait count', qr/\ATransaction 'main': wait count 'cycles' is neither a declared actor constant, actor parameter, qualified package scalar constant, nor a known-width runtime scalar in transaction body/);
 (actor wait_unknown_dynamic_count
   (clock clk)
   (reset (rst_n async active_low))

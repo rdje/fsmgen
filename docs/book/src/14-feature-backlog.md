@@ -2218,11 +2218,13 @@ width and `(wait (<op> ...))` when all referenced operands have known widths
 and the expression-width helper derives a positive result width.
 
 The static lowering is a reviewable fixed scheduled-state chain. No hidden
-wait counter is introduced for the static literal/constant/parameter surface.
-Qualified package scalar constants are the selected next bounded static
-wait-count widening under `ISF-WAIT-PACKAGE-CONSTANT-COUNTS`, but they are not
-part of the shipped wait-count value domain until that implementation leaf
-lands.
+wait counter is introduced for the static literal/constant/parameter/package
+constant surface.
+Qualified package scalar constants are now part of the shipped static
+wait-count surface when they resolve to non-negative integer literals; the
+authored `PACKAGE.CONSTANT` token is preserved in `transaction_waits[]`.
+Unqualified package constants, aggregate constants, package member/item paths,
+and package constants inside wait-count expressions remain fail-closed.
 
 Pending samples before a positive static wait piggyback onto the first wait
 state; pending samples before a zero wait remain pending for the next
@@ -2253,8 +2255,8 @@ Successful reports expose bounded `transaction_waits[]` entries with
 transaction name, `cycles`, `count_kind`, `count_source`, entry state, exit
 state, optional counter signal, and optional counter width. Static waits keep
 an integer `cycles` and preserve the authored literal, actor constant name, or
-actor parameter name in `count_source`; runtime scalar and runtime expression
-waits keep `cycles` null and expose their source/counter metadata with
+actor parameter name, or qualified package constant token in `count_source`;
+runtime scalar and runtime expression waits keep `cycles` null and expose their source/counter metadata with
 `count_kind` `runtime_scalar` or `runtime_expression`. Schedule reports also
 expose actor constants through `actor_constants[]` and actor parameter
 defaults separately through `actor_params[]`.

@@ -276,6 +276,7 @@ ask the counter to decrement at zero.
 
 ```lisp
 (wait 3)
+(wait shared.WAIT_TWO)
 ```
 
 **Timing**: exactly `N` active transaction cycles for static counts, or exactly
@@ -293,6 +294,9 @@ iterate any authored actions.
   on that state's transition to the next transaction clause.
 - `wait N`: emit `N` generated wait states and advance through them
   unconditionally, one per cycle for static counts.
+- `wait PACKAGE.CONSTANT`: resolve the qualified imported package scalar
+  constant as a static non-negative count, preserving the authored qualified
+  token in `transaction_waits[]`.
 - `wait count_signal`: in shipped runtime contexts, bypass on a runtime zero
   count; otherwise snapshot `count_signal` on the predecessor edge and consume
   exactly that many active wait cycles with a generated counter. Consecutive
@@ -320,6 +324,11 @@ on the next state-producing clause.
 
 Static waits do not introduce a hidden wait counter; the scheduled `.fsm`
 review artifact shows the exact fixed state chain for positive waits.
+Static count sources are non-negative integer literals, actor constants,
+actor-local scalar parameter defaults, and qualified imported package scalar
+constants. Package constants must be atomic scalar constants: unqualified
+package constants, aggregate constants, package member/item paths, and package
+constants inside wait-count expressions fail closed.
 
 Top-level runtime waits preserve pending samples with path-specific
 materialization: the positive path samples in the first active wait state,
@@ -386,7 +395,8 @@ Successful schedule reports include `transaction_waits[]` entries with
 Only positive static waits and accepted runtime waits create report entries.
 
 Static waits report the resolved integer in `cycles` and keep the authored
-literal, actor constant name, or actor parameter name in `count_source`;
+literal, actor constant name, actor parameter name, or qualified package
+constant token in `count_source`;
 runtime scalar and runtime expression waits report `cycles` as null and
 expose the source/counter metadata instead.
 
@@ -394,7 +404,9 @@ Expression waits use `count_kind` `runtime_expression` and keep the
 normalized expression in `count_source`.
 
 Malformed waits such as `(wait)`, `(wait 1 2)`, `(wait -1)`, non-scalar or
-non-integer actor parameter counts, transaction parameter counts,
+non-integer actor parameter counts, transaction parameter counts, unknown
+package constants, unqualified or aggregate package constants, package
+member/item paths, package constants inside wait-count expressions,
 unknown-width dynamic counts, unknown-width or malformed expression counts,
 and unsupported runtime contexts fail closed.
 

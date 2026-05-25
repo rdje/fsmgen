@@ -343,7 +343,9 @@ storage also accepts `(depth PACKAGE.CONSTANT)` under the same scalar
 positive-integer rule. Explicit data-operation width evidence may use the
 same qualified package scalar constants in `shift_left`/`shift_right`
 `(width PACKAGE.CONSTANT)` options and `assemble`/`extract`
-`(widths PACKAGE.CONSTANT ...)` entries. `NAME` may be
+`(widths PACKAGE.CONSTANT ...)` entries. Static transaction wait counts may
+also use `(wait PACKAGE.CONSTANT)` when the imported package constant resolves
+to a non-negative integer scalar. `NAME` may be
 local, such as `byte`, or package-qualified, such as `shared.byte`.
 Unknown aliases fail closed. Resolved `list` or `record` aliases are accepted
 only on actor-owned storage variables, for example `(var frame (type
@@ -627,6 +629,11 @@ Qualified package scalar constants used by explicit data-operation width
 evidence resolve to positive integer scheduler width facts that drive
 scheduled `.fsm` shift positions, assemble/extract slice evidence, and
 `inferred_storage[]` report widths.
+Qualified package scalar constants used by static transaction wait counts
+resolve to non-negative integer timing facts: zero counts remain transparent
+no-ops, and positive counts emit fixed scheduled wait-state chains plus
+`transaction_waits[]` entries whose `count_source` preserves the authored
+qualified token.
 Schedule reports expose actor parameter defaults through `actor_params[]` entries with
 each authored parameter `name` and JSON-safe default `value`, preserving
 authored actor constant tokens such as `DEFAULT_WIDTH`, earlier actor
@@ -2623,16 +2630,18 @@ handoff.
 
 ```lisp
 (wait 3)
+(wait shared.WAIT_TWO)
 ```
 
 `(wait N)` is the shipped unconditional transaction-local delay, distinct from
 `(await cond)` and `(repeat count body...)`. It does not test an external
 condition and it does not repeat a body. The shipped static count surface
-accepts a non-negative integer literal, an actor constant name, or an
-actor-local scalar parameter name whose default resolves before lowering to a
-non-negative integer literal. The runtime count surface accepts a known-width
-scalar count name or a known-width non-empty list expression in contexts whose
-predecessor edge can be split safely.
+accepts a non-negative integer literal, an actor constant name, an actor-local
+scalar parameter name whose default resolves before lowering to a non-negative
+integer literal, or a qualified imported package scalar constant that resolves
+to a non-negative integer literal. The runtime count surface accepts a
+known-width scalar count name or a known-width non-empty list expression in
+contexts whose predecessor edge can be split safely.
 
 Cycle semantics:
 - `wait 0` means no delay. It emits no wait state, consumes no active
@@ -2654,13 +2663,16 @@ each state advances unconditionally to the next wait state or to the following
 transaction clause. `(wait 0)` emits no generated state and no
 `transaction_waits[]` entry. A symbolic `(wait NAME)` first resolves `NAME`
 through the actor constant table, then through actor-local scalar parameter
-defaults, and then follows the same rule. No hidden wait counter is introduced
-for this static literal/constant/parameter surface. Pending samples collected
-before a positive wait piggyback onto the first generated wait state using the
-same sample-assignment behavior as drive/await piggybacking. Pending samples
-collected before a zero wait are preserved and materialize on the next
-state-producing clause. The wait surface is accepted at the top level of a
-transaction body and inside the currently shipped inline body contexts:
+defaults, and then follows the same rule. A qualified `(wait PACKAGE.CONSTANT)`
+resolves through the actor's imported package constant metadata and keeps the
+authored qualified token in reports. No hidden wait counter is introduced for
+this static literal/constant/parameter/package-constant surface. Pending
+samples collected before a positive wait piggyback onto the first generated
+wait state using the same sample-assignment behavior as drive/await
+piggybacking. Pending samples collected before a zero wait are preserved and
+materialize on the next state-producing clause. The wait surface is accepted
+at the top level of a transaction body and inside the currently shipped inline
+body contexts:
 `when`, `switch`, `repeat`, `while`, and `until` bodies.
 
 For the runtime surface, `(wait count_signal)` is accepted when `count_signal`
@@ -2837,8 +2849,11 @@ Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.
 - Negative literals, non-integer literals, unknown symbolic names,
   non-scalar or non-integer actor parameter defaults, transaction parameter
-  names, unknown-width dynamic scalar names, malformed or unknown-width dynamic
-  expressions, and unsupported dynamic wait contexts fail closed.
+  names, unknown package constants, unqualified package constants, package
+  aggregate constants, package member/item paths, package constants inside
+  wait-count expressions, unknown-width dynamic scalar names, malformed or
+  unknown-width dynamic expressions, and unsupported dynamic wait contexts
+  fail closed.
 - Waits outside transaction body contexts are invalid.
 
 Successful schedule reports expose a bounded `transaction_waits[]` summary
@@ -2847,7 +2862,8 @@ rather than raw lowering internals. Each entry contains `transaction`,
 `counter_signal`, and `counter_width`. Only positive static waits and accepted
 runtime waits create entries. Static waits report `count_kind` as
 `static`, `cycles` as the resolved positive integer, `count_source` as the
-literal, actor constant name, or actor parameter name, and
+literal, actor constant name, actor parameter name, or qualified package
+constant token, and
 `counter_signal`/`counter_width` as JSON null. Runtime scalar waits report
 `count_kind` as `runtime_scalar`; runtime expression waits report
 `count_kind` as `runtime_expression` and keep the
@@ -4383,6 +4399,7 @@ capability-manifest ISF public contract advertises this through
 `schedule_report_transaction_ordering`.
 The `transaction_waits` array reports the shipped literal `(wait N)` surface,
 actor-constant `(wait NAME)` surface, actor-parameter `(wait NAME)` surface,
+package-constant `(wait PACKAGE.CONSTANT)` surface,
 bounded runtime scalar `(wait count_signal)` surface, and bounded runtime
 expression `(wait (<op> ...))` surface, including accepted top-level, `when`
 body, `repeat` body, `switch` branch, `while` body, and `until` body contexts.
@@ -5337,6 +5354,7 @@ Focused tests:
 - [t/1356-isf-bank-storage-package-constant-depths.t](../t/1356-isf-bank-storage-package-constant-depths.t)
 - [t/1357-isf-transaction-port-package-constant-widths.t](../t/1357-isf-transaction-port-package-constant-widths.t)
 - [t/1358-isf-data-op-package-constant-widths.t](../t/1358-isf-data-op-package-constant-widths.t)
+- [t/1359-isf-wait-package-constant-counts.t](../t/1359-isf-wait-package-constant-counts.t)
 
 ## 12. Explicitly Deferred
 
@@ -5359,10 +5377,11 @@ Focused tests:
   memory-array backend emission, and
   library actors that import other libraries.
 - Unconditional transaction delay beyond the shipped non-negative literal,
-  actor-constant, actor-parameter, bounded runtime scalar, and bounded runtime
-  expression `(wait N)` shapes: unknown-width expressions and any remaining
-  predecessor-edge or sample-incompatible successor splits remain deferred
-  until their timing and diagnostics are implemented.
+  actor-constant, actor-parameter, qualified package scalar constant, bounded
+  runtime scalar, and bounded runtime expression `(wait N)` shapes:
+  unknown-width expressions and any remaining predecessor-edge or
+  sample-incompatible successor splits remain deferred until their timing and
+  diagnostics are implemented.
 - Transaction repeat counts beyond the shipped positive decimal literal,
   positive actor-constant, positive actor-scalar-parameter, and known-width
   runtime scalar shapes: transaction parameters, arbitrary expressions,

@@ -472,6 +472,9 @@ Rules:
   parameter override values.
 - Actor-local scalar parameter defaults may also be used as static
   `(wait NAME)` counts when they resolve to non-negative integer literals.
+  Qualified imported package scalar constants may be used as static
+  `(wait PACKAGE.CONSTANT)` counts when they resolve to non-negative integer
+  literals.
   Transaction `params` and generated activation use-site overrides are not
   wait-count constants.
 
@@ -645,6 +648,17 @@ Rules:
   constants, package constant member/item paths, ambiguous
   local-enum/package-constant spellings, zero-valued constants, transaction
   parameters, runtime signals, and expressions fail closed.
+  Static transaction wait counts may use qualified imported package scalar
+  constants when the constant resolves to a non-negative integer scalar.
+  Package-constant-backed waits lower through the existing static wait path:
+  zero counts emit no wait state and no `transaction_waits[]` entry, while
+  positive counts emit fixed scheduled wait-state chains and report
+  `count_kind: static`, integer `cycles`, and the authored
+  `PACKAGE.CONSTANT` token in `count_source`. Unknown or unqualified package
+  constants, aggregate package constants, package constant member/item paths,
+  ambiguous local-enum/package-constant spellings, transaction parameters,
+  runtime signals, arbitrary expressions, and package constants inside
+  wait-count expressions fail closed.
   Generated child transaction scalar parameter defaults and scalar leaves
   inside generated child transaction aggregate/list parameter defaults may use
   declared actor constants, actor-local scalar parameter defaults, earlier
@@ -945,14 +959,15 @@ Wait:
 (wait 3)
 (wait WAIT_TWO)
 (wait WAIT_PARAM)
+(wait shared.WAIT_TWO)
 (wait count_signal)
 (wait (+ count_a count_b))
 ```
 
 Rules:
 
-- Static literal, actor-constant, and actor-parameter waits are accepted,
-  including zero.
+- Static literal, actor-constant, actor-parameter, and qualified package
+  scalar-constant waits are accepted, including zero.
 - Runtime scalar waits are accepted when the count source has known positive
   width and the predecessor-edge split is implemented. Implemented predecessor
   splits include transaction entry, sequential states, contract arm states,
@@ -1008,6 +1023,9 @@ Rules:
   wait contract.
 - Transaction `params` and generated activation use-site overrides are not
   wait-count constants.
+- Package wait counts must be atomic qualified package scalar constants.
+  Unqualified package constants, aggregate constants, package member/item
+  paths, and package constants inside wait-count expressions fail closed.
 - Reports expose `transaction_waits[]`.
 
 Completion:
@@ -3637,7 +3655,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1351-isf-activation-param-package-constants.t \
   t/1352-isf-library-use-package-constants.t \
   t/1357-isf-transaction-port-package-constant-widths.t \
-  t/1358-isf-data-op-package-constant-widths.t
+  t/1358-isf-data-op-package-constant-widths.t \
+  t/1359-isf-wait-package-constant-counts.t
 
 ./bin/ci-regression isf
 mdbook build docs/book
@@ -3732,8 +3751,8 @@ For a SPECFORGE-style producer:
   latency bound symbols.
 - Use actor constants or actor-local scalar parameter defaults for static
   temporal-contract window symbols.
-- Use actor constants or actor-local scalar parameter defaults for static
-  wait-count symbols.
+- Use actor constants, actor-local scalar parameter defaults, or qualified
+  imported package scalar constants for static wait-count symbols.
 - Treat every fail-closed diagnostic as a source-generation bug.
 - Use `--emit-schedule-json` in tests to confirm schedule/report shape.
 - Use `--check --json` or `--check-json` when a downstream workflow needs a
