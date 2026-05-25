@@ -169,7 +169,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-CONTRACT-ACTOR-PARAM-WINDOWS.md` — completed `R14` task tree for actor-parameter-backed temporal contract windows.
 - `docs/tasks/ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.md` — completed `R14` task tree for qualified package scalar constants in temporal contract windows.
 - `docs/tasks/ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.md` — completed `R14` task tree for generated child same-transaction scalar parameter defaults in temporal contract windows.
-- `docs/tasks/ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.md` — active `R14` task tree for direct transaction same-transaction scalar parameter defaults in temporal contract windows.
+- `docs/tasks/ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.md` — completed `R14` task tree for direct transaction same-transaction scalar parameter defaults in temporal contract windows.
 - `docs/tasks/ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.md` — completed `R14` task tree for positive actor constants in transaction latency bounds.
 - `docs/tasks/ISF-LATENCY-ACTOR-PARAM-BOUNDS.md` — completed `R14` task tree for actor-parameter-backed transaction latency bounds.
 - `docs/tasks/ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.md` — completed `R14` task tree for qualified package scalar constants in transaction latency bounds.

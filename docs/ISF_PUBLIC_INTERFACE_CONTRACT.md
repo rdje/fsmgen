@@ -1052,6 +1052,9 @@ qualified imported package scalar constants in contract windows are checked by
 and same-transaction scalar parameter defaults on generated child
 transactions are checked by
 [t/1364-isf-contract-transaction-param-windows.t](../t/1364-isf-contract-transaction-param-windows.t).
+Same-transaction scalar parameter defaults on direct/non-generated
+transactions are checked by
+[t/1365-isf-contract-direct-transaction-param-windows.t](../t/1365-isf-contract-direct-transaction-param-windows.t).
 The shipped subset is the top-level transaction form
 `(contract name (eventually signal within cycles))`. The older nested
 `(contract name (eventually signal (within cycles)))` spelling remains an
@@ -1059,12 +1062,11 @@ accepted alias; both lower to one arm state plus an always-on monitor DT with
 pending, age, and sticky-fail storage. The `cycles` token may be a positive
 integer literal, a declared actor constant, an actor-local scalar parameter
 default, a qualified imported package scalar constant, or a same-transaction
-scalar parameter default on a generated child transaction that resolves to a
-positive integer. Direct/non-generated transaction parameter declarations and
-activation-site parameter override specialization remain outside the
-contract-window surface. Runtime signals, arbitrary expressions, unknown
-names, unknown or unqualified package constants, aggregate package constants,
-package member/item paths, ambiguous
+scalar parameter default on a generated child or direct/non-generated
+transaction that resolves to a positive integer. Activation-site parameter
+override specialization remains outside the contract-window surface. Runtime
+signals, arbitrary expressions, unknown names, unknown or unqualified package
+constants, aggregate package constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, zero-valued constants, and zero-valued
 or non-scalar actor/transaction parameters remain outside the
 contract-window surface.
@@ -1078,11 +1080,13 @@ The bounded `temporal_contracts` summary projection reports the public trigger,
 observed signal, cycle bound, generated storage names, reset policy, overlap
 policy, and assertion projection status for downstream consumers.
 Actor-constant, actor-scalar-parameter, qualified package-scalar-constant,
-and generated-child transaction-parameter windows all lower as the resolved
-positive integer; no public source-token field is added. The public parent
-schedule report remains parent-scoped for generated child contracts; the
-generated child scheduled `.fsm` is the review artifact for child-local
-temporal monitors.
+generated-child transaction-parameter, and direct transaction-parameter
+windows all lower as the resolved positive integer; no public source-token
+field is added. Direct transaction parameters remain local lowering inputs and
+are not promoted to actor-level `.fsm` `+params`. The public parent schedule
+report remains parent-scoped for generated child contracts; the generated
+child scheduled `.fsm` is the review artifact for child-local temporal
+monitors.
 Unsupported top-level bodies and nested contracts still fail closed with
 targeted diagnostics. Verification-only assertion text is not advertised yet.
 The parser boundary for resource and priority metadata is checked by

@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Direct transaction contract parameters remain local lowering inputs
+- `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` resolves direct
+  transaction-local scalar parameter defaults at the bounded eventual
+  temporal-contract `within` boundary.
+- The validation gate now permits a direct transaction `(params ...)` clause
+  only when the same transaction has a temporal contract window that references
+  one of its declared parameters. That keeps unrelated direct transaction
+  parameter declarations rejected instead of silently accepting a general
+  parameter feature.
+- Direct transaction parameters are not emitted as actor-level `.fsm`
+  `+params` and are not reported through a source-token field. They are
+  compile-time lowering inputs for `temporal_contracts[].within_cycles`.
+- The lowerer resolves a same-transaction direct parameter before actor
+  constants and actor parameters. That mirrors generated child contract-window
+  behavior and keeps the transaction-local scope most specific.
+- Accepted parameters are resolved before existing monitor lowering, so the
+  scheduled arm states, pending/age/fail storage, sticky-fail overlap
+  behavior, reset behavior, and SystemVerilog assertion projection remain
+  identical to the equivalent positive literal window.
+- Activation-site parameter override specialization, cross-transaction
+  parameter references, aggregate/list parameter defaults, runtime signals,
+  arbitrary expressions, dynamic windows, min/max windows, same-cycle checks,
+  nested contracts, and transaction-parameter use in other value domains
+  remain fail-closed or deferred.
+
 ## 2026-05-25: Direct transaction contract parameters should stay boundary-local
 - `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1` selects
   direct/non-generated transaction-local scalar parameter defaults for bounded

@@ -128,6 +128,7 @@ my $expected_tested_by = [
     't/1224-isf-contract-lowering.t',
     't/1362-isf-contract-package-constant-windows.t',
     't/1364-isf-contract-transaction-param-windows.t',
+    't/1365-isf-contract-direct-transaction-param-windows.t',
     't/1225-isf-stage-contract-schedule-report.t',
     't/1226-isf-data-width-storage-report.t',
     't/1227-isf-schedule-report-freeze-boundary.t',

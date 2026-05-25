@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -56,7 +56,7 @@ defaults resolve to positive integer scalar literals.
 ## Task Tree
 
 - ID: `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship direct/non-generated same-transaction scalar parameter defaults as temporal-contract windows.`
   Children: `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1`,
   `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2`
@@ -68,24 +68,24 @@ defaults resolve to positive integer scalar literals.
   transaction-parameter window boundary, preserve non-goals, and update
   roadmap/live docs without behavior changes.`
   Verification: `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check`
-  Commit: `pending this commit: ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1: select direct contract transaction-param windows`
+  Commit: `ce4d3c2b ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1: select direct contract transaction-param windows`
 
 - ID: `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document direct/non-generated same-transaction scalar parameter defaults in temporal-contract windows.`
   Acceptance: `Positive scalar direct transaction parameter defaults lower as
   literal contract windows; unsupported cross-transaction, aggregate/list,
   zero, expression, runtime, and broader contract shapes fail closed; specs,
   book, public contract, downstream handoff, and focused tests are
   synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1365-isf-contract-direct-transaction-param-windows.t`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `prove -Iperl t/1215-isf-spawn-parameter-binding.t t/1224-isf-contract-lowering.t t/1364-isf-contract-transaction-param-windows.t t/1365-isf-contract-direct-transaction-param-windows.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t` (`Files=11, Tests=447`); `./bin/ci-regression isf --no-book` (`Files=271, Tests=1729`); post-closure public/spec/book audits (`Files=5, Tests=368`); `mdbook build docs/book`; `git diff --check`
+  Commit: `pending this commit: ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2: support direct contract transaction-param windows`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` | `pending` | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1` selected the bounded direct transaction scalar parameter source boundary. |
+| 1 | `closed` | `done` | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` shipped the bounded direct transaction scalar parameter source boundary. |
 
 ## Decisions
 
@@ -99,6 +99,13 @@ defaults resolve to positive integer scalar literals.
 - `2026-05-25`: Keep activation-site specialization deferred. A direct
   transaction parameter window uses the transaction definition's resolved
   default in this slice.
+- `2026-05-25`: Keep direct transaction parameters local to the contract
+  window value domain. Direct transaction parameters are not emitted as
+  actor-level `.fsm` `+params`, are not added to schedule reports as source
+  tokens, and remain rejected in repeat counts and other value domains.
+- `2026-05-25`: Continue rejecting direct transaction `(params ...)` clauses
+  that are not referenced by a same-transaction temporal contract window, so
+  this slice does not become general direct transaction-parameter support.
 
 ## Open Questions
 
@@ -113,16 +120,20 @@ defaults resolve to positive integer scalar literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1` | `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `passed`; audits `Files=3, Tests=364` |
+| `2026-05-25` | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` | syntax checks for updated source/tests; focused contract/public/spec/book tests; `./bin/ci-regression isf --no-book`; post-closure public/spec/book audits; `mdbook build docs/book`; `git diff --check` | `passed`; focused `Files=11, Tests=447`; broad `Files=271, Tests=1729`; post-closure audits `Files=5, Tests=368` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1` | `pending this commit: ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1: select direct contract transaction-param windows` | Selection slice; no behavior change. |
-| `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` | `pending` | Implementation slice. |
+| `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1` | `ce4d3c2b ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1: select direct contract transaction-param windows` | Selection slice; no behavior change. |
+| `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` | `pending this commit: ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2: support direct contract transaction-param windows` | Implementation slice; closes the tree. |
 
 ## Changelog
 
 - `2026-05-25`: Created task tree and selected
   `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` as the next implementation
   frontier.
+- `2026-05-25`: Shipped direct/non-generated same-transaction scalar
+  parameter defaults as bounded eventual temporal-contract window sources and
+  closed the task tree.

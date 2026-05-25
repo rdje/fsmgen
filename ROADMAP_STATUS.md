@@ -2,29 +2,36 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS`.
-- Current frontier: `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2`.
-- Recent R14 direct transaction contract-window parameter selection:
-  `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1` created the active task
-  tree and selected the next bounded implementation leaf. Direct/non-generated
-  transaction bounded eventual temporal-contract windows may next use
-  same-transaction scalar parameter defaults when the resolved default is a
-  positive integer scalar literal. Accepted direct transaction parameters
-  should reuse the existing temporal monitor lowering used by positive
-  literals, actor constants, actor-local scalar parameter defaults, qualified
-  package scalar constants, and generated child transaction scalar parameter
-  defaults. Schedule reports should keep
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 direct transaction contract-window parameter implementation:
+  `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` shipped
+  direct/non-generated same-transaction scalar parameter defaults as bounded
+  eventual temporal-contract window sources and closed the task tree. Direct
+  transaction `(params ...)` clauses are now accepted when at least one
+  same-transaction temporal contract window references a declared parameter;
+  otherwise direct transaction params still fail closed. Accepted direct
+  transaction parameters reuse the existing temporal monitor lowering used by
+  positive literals, actor constants, actor-local scalar parameter defaults,
+  qualified package scalar constants, and generated child transaction scalar
+  parameter defaults. Direct transaction parameter names resolve before actor
+  constants and actor parameters in this value-domain slot, so they shadow
+  actor-level static names for contract windows. Schedule reports keep
   `temporal_contracts[].within_cycles` as the resolved integer without adding
-  a source-token field. Activation-site parameter override specialization,
-  transaction parameters from other transactions, non-scalar aggregate/list
-  transaction parameters, forward/self/cyclic transaction parameter defaults,
-  runtime signals, arbitrary expressions, dynamic bounds, min/max windows,
-  same-cycle checks, nested contracts, expression operands, global implication
-  forms, multiple outstanding obligations, and transaction-parameter use in
-  other value domains remain deferred or fail closed. No parser, scheduler,
-  report, generated artifact, HDL, CLI behavior, public API, source, test, or
-  generated behavior changed in this selection slice. Validation passed:
-  feature-backlog/live-book/book matrix audits with `Files=3, Tests=364`;
+  a source-token field. Direct transaction parameters remain local lowering
+  inputs and are not emitted as actor-level `.fsm` `+params`. Activation-site
+  parameter override specialization, transaction parameters from other
+  transactions, non-scalar aggregate/list transaction parameters,
+  forward/self/cyclic transaction parameter defaults, runtime signals,
+  arbitrary expressions, dynamic bounds, min/max windows, same-cycle checks,
+  nested contracts, expression operands, global implication forms, multiple
+  outstanding obligations, and transaction-parameter use in other value
+  domains remain deferred or fail closed. The ISF spec, downstream handoff,
+  public contract, mdBook, task tree, README index, roadmap, and live docs are
+  synchronized. Validation passed: syntax checks; focused
+  contract/public/spec/book tests with `Files=11, Tests=447`;
+  `./bin/ci-regression isf --no-book` with `Files=271, Tests=1729`;
+  post-closure public/spec/book audits with `Files=5, Tests=368`;
   `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 temporal-contract transaction-parameter window implementation:
   `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2` shipped generated child
@@ -7791,17 +7798,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS`.
-- Current frontier: `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
 - Completion status:
-  `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1` selected the next bounded
-  R14 contract-window implementation leaf. Direct/non-generated transaction
-  `(contract ...)` windows may next use same-transaction scalar parameter
-  defaults when they resolve to positive integer scalar literals. This
-  selection slice changes no parser, scheduler, report, generated artifact,
-  HDL, CLI behavior, public API, source, test, or generated behavior.
-  Validation passed: feature-backlog/live-book/book matrix audits with
-  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+  `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` shipped
+  direct/non-generated same-transaction scalar parameter defaults as bounded
+  eventual temporal-contract window sources and closed the task tree. Direct
+  transaction params remain local to this contract-window value domain and are
+  not emitted as actor-level `.fsm` `+params`. Validation passed: syntax
+  checks; focused contract/public/spec/book tests with `Files=11, Tests=447`;
+  `./bin/ci-regression isf --no-book` with `Files=271, Tests=1729`;
+  post-closure public/spec/book audits with `Files=5, Tests=368`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11257,21 +11265,27 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
-- `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1` selected the
-  public-facing R14 feature tree before implementation:
-  - the implementation frontier is
-    `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2`,
-  - the selected source shape is bounded to direct/non-generated
-    transaction-local `(contract NAME (eventually SIGNAL within PARAM))` and
-    nested `(eventually SIGNAL (within PARAM))` windows where `PARAM` is
-    declared on the same transaction and resolves to a positive integer scalar
-    literal,
-  - accepted direct transaction parameters should reuse the existing temporal
-    monitor path used by positive literals, actor constants, actor-local
-    scalar parameter defaults, qualified package scalar constants, and
-    generated child transaction scalar parameter defaults,
-  - schedule reports should keep `temporal_contracts[].within_cycles` as the
-    resolved positive integer without adding a source-token field,
+- `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` is shipped and the task
+  tree is closed:
+  - direct/non-generated bounded eventual temporal-contract windows now accept
+    same-transaction scalar parameter defaults in both supported spellings,
+    `(eventually SIGNAL within PARAM)` and
+    `(eventually SIGNAL (within PARAM))`, when the resolved default is a
+    positive integer scalar literal,
+  - direct transaction `(params ...)` clauses are accepted only when at least
+    one same-transaction temporal contract window references a declared
+    parameter; unrelated direct transaction params still fail closed,
+  - accepted direct transaction parameters reuse the existing temporal monitor
+    path used by positive literals, actor constants, actor-local scalar
+    parameter defaults, qualified package scalar constants, and generated
+    child transaction scalar parameter defaults,
+  - transaction-local names resolve before actor constants and actor
+    parameters for contract windows, so direct transaction parameters shadow
+    actor-level static names in this value-domain slot,
+  - schedule reports keep `temporal_contracts[].within_cycles` as the
+    resolved positive integer without adding a source-token field; direct
+    transaction parameters remain local lowering inputs and are not emitted as
+    actor-level `.fsm` `+params`,
   - activation-site parameter override specialization, transaction parameters
     from other transactions, non-scalar aggregate/list transaction parameters,
     forward/self/cyclic transaction parameter defaults, runtime signals,
@@ -11279,11 +11293,12 @@ Done:
     nested contracts, expression operands, global implication forms, multiple
     outstanding obligations, and transaction-parameter use in other value
     domains remain deferred or fail closed,
-  - and no parser, scheduler, report, generated artifact, HDL, CLI behavior,
-    public API, source, test, or generated behavior changed in this selection
-    slice.
-  - Validation passed: feature-backlog/live-book/book matrix audits with
-    `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+  - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
+    README index, roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused contract/public/spec/book tests
+    with `Files=11, Tests=447`; `./bin/ci-regression isf --no-book` with
+    `Files=271, Tests=1729`; post-closure public/spec/book audits with
+    `Files=5, Tests=368`; `mdbook build docs/book`; and `git diff --check`.
 - `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2` is shipped and the task tree is
   closed:
   - generated child bounded eventual temporal-contract windows now accept

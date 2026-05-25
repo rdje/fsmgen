@@ -1,6 +1,45 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Direct transaction contract parameter windows shipped
+- Completed `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` and closed the
+  task tree.
+- Direct/non-generated bounded eventual temporal-contract windows now accept
+  same-transaction scalar parameter defaults in both supported spellings:
+  `(eventually SIGNAL within PARAM)` and
+  `(eventually SIGNAL (within PARAM))`.
+- Direct transaction `(params ...)` clauses are accepted only when at least
+  one same-transaction temporal contract window references a declared
+  parameter; unrelated direct transaction params still fail closed.
+- Accepted direct transaction parameters require a parameter declared on the
+  same direct transaction and a resolved positive integer scalar literal
+  default.
+- Accepted direct transaction parameters reuse the existing temporal monitor
+  path used by positive literals, actor constants, actor-local scalar
+  parameter defaults, qualified package scalar constants, and generated child
+  transaction scalar parameter defaults. Monitor timing, sticky-fail behavior,
+  reset behavior, and SystemVerilog assertion projection are unchanged.
+- Transaction-local parameter names resolve before actor constants and actor
+  parameters in this value-domain slot, so direct transaction parameters
+  shadow actor-level static names for contract windows.
+- Schedule reports keep `temporal_contracts[].within_cycles` as the resolved
+  positive integer and do not add a source-token field. Direct transaction
+  parameters remain local lowering inputs and are not emitted as actor-level
+  `.fsm` `+params`.
+- Activation-site parameter override specialization, transaction parameters
+  from other transactions, non-scalar aggregate/list transaction parameters,
+  forward/self/cyclic transaction parameter defaults, runtime signals,
+  arbitrary expressions, dynamic bounds, min/max windows, same-cycle checks,
+  nested contracts, expression operands, global implication forms, multiple
+  outstanding obligations, and transaction-parameter use in other value
+  domains remain deferred or fail closed.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused contract/public/spec/book tests
+  with `Files=11, Tests=447`; `./bin/ci-regression isf --no-book` with
+  `Files=271, Tests=1729`; post-closure public/spec/book audits with
+  `Files=5, Tests=368`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Direct transaction contract parameter windows selected
 - Created active task tree `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS`.
 - Completed `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.1`; the selected

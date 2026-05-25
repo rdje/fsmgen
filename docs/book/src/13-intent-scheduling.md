@@ -982,10 +982,11 @@ The ISF-specific current limitations are:
   alias. The `cycles` token may be a positive integer literal or a declared
   actor constant, actor-local scalar parameter default, qualified imported
   package scalar constant, or same-transaction scalar parameter default on a
-  generated child transaction that resolves to a positive integer. Direct or
-  non-generated transaction parameter declarations remain invalid, and
-  activation-site parameter overrides do not respecialize contract windows in
-  this subset. Runtime expressions, arbitrary expressions, unknown or
+  generated child or direct/non-generated transaction that resolves to a
+  positive integer. Direct transaction parameters are local lowering inputs for
+  this contract-window value domain and are not emitted as actor-level `.fsm`
+  `+params`; activation-site parameter overrides do not respecialize contract
+  windows in this subset. Runtime expressions, arbitrary expressions, unknown or
   unqualified package constants, aggregate package constants, package
   member/item paths, ambiguous local-enum/package-constant spellings,
   zero-valued constants, and zero-valued or non-scalar actor/transaction

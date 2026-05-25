@@ -2000,10 +2000,12 @@ window starts on the next cycle and lasts for the specified positive integer
 number of cycles. That window can be authored as a positive literal, a
 declared positive actor constant, an actor-local scalar parameter default, a
 qualified imported package scalar constant, or a same-transaction scalar
-parameter default on a generated child transaction that resolves to a positive
-integer. Direct/non-generated transaction parameter declarations and
-activation-site parameter overrides do not respecialize contract windows in
-the shipped subset. If `done` is seen before the window expires, the
+parameter default on a generated child or direct/non-generated transaction
+that resolves to a positive integer. Direct transaction parameters are local
+lowering inputs for this contract-window value domain and are not emitted as
+actor-level `.fsm` `+params`; activation-site parameter overrides do not
+respecialize contract windows in the shipped subset. If `done` is seen before
+the window expires, the
 obligation clears. If the window expires first, or if the same contract is
 armed again while an obligation is still pending, a generated sticky fail bit
 is set until actor reset.

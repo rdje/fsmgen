@@ -2516,10 +2516,75 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children) 
         next unless @$params;
 
         my $tx_name = $tx->{name};
-        confess "Transaction '$tx_name': params are supported only on generated child transactions\n"
-            unless $generated_children->{$tx_name};
+        next if $generated_children->{$tx_name};
+        next if _transaction_params_used_by_contract_window($tx, $params);
+
+        confess "Transaction '$tx_name': params are supported only on generated child transactions or same-transaction temporal contract windows\n";
     }
     return 1;
+}
+
+sub _transaction_params_used_by_contract_window {
+    my ($tx, $params) = @_;
+    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return 0 unless keys %declared;
+
+    for my $clause (@{$tx->{clauses} || []}) {
+        my $value = _contract_within_value_if_present($clause);
+        return 1 if defined($value) && _isf_value_references_declared_name($value, \%declared);
+    }
+
+    return 0;
+}
+
+sub _contract_within_value_if_present {
+    my ($clause) = @_;
+    return undef unless ref($clause) eq 'ARRAY'
+        && @$clause == 3
+        && defined($clause->[0])
+        && !ref($clause->[0])
+        && $clause->[0] eq 'contract'
+        && defined($clause->[2])
+        && ref($clause->[2]) eq 'ARRAY';
+
+    my $eventual = $clause->[2];
+    return undef unless @$eventual >= 3
+        && defined($eventual->[0])
+        && !ref($eventual->[0])
+        && $eventual->[0] eq 'eventually';
+
+    return $eventual->[3]
+        if @$eventual == 4
+            && defined($eventual->[2])
+            && !ref($eventual->[2])
+            && $eventual->[2] eq 'within'
+            && defined($eventual->[3]);
+
+    return $eventual->[2][1]
+        if @$eventual == 3
+            && defined($eventual->[2])
+            && ref($eventual->[2]) eq 'ARRAY'
+            && @{$eventual->[2]} == 2
+            && defined($eventual->[2][0])
+            && !ref($eventual->[2][0])
+            && $eventual->[2][0] eq 'within'
+            && defined($eventual->[2][1]);
+
+    return undef;
+}
+
+sub _isf_value_references_declared_name {
+    my ($value, $declared) = @_;
+    return 0 unless ref($declared) eq 'HASH';
+    return exists $declared->{$value}
+        if defined($value) && !ref($value);
+    return 0 unless ref($value) eq 'ARRAY';
+    for my $part (@$value) {
+        return 1 if _isf_value_references_declared_name($part, $declared);
+    }
+    return 0;
 }
 
 sub _validate_transaction_port_bindings($self, $actor) {
