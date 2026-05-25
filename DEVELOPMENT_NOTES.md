@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Rule-local trigger output copies need one actor target each
+- `ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` keeps generated
+  rule-trigger output bindings non-blocking, but rejects two copies in the
+  same rule when they target the same actor signal.
+- Distinct actor targets remain accepted. A duplicate actor target would need
+  an authored selection policy because two generated child completions from
+  one rule cannot be statically ordered by the current binding surface.
+
 ## 2026-05-25: Binding report non-claims must not hide shipped base fields
 - `ISF-TRANSACTION-PORT-BINDING-REPORT-WORDING-TRUTH-SYNC.1` clarifies that
   deferred future report expansions are separate from the already-shipped

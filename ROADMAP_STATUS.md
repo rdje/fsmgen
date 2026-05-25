@@ -4,6 +4,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 rule-trigger duplicate output target diagnostic:
+  `ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` rejects multiple
+  generated-child rule-trigger output bindings in one rule when they target
+  the same actor signal and closed the task tree. Generated rule-trigger
+  output bindings to distinct actor targets remain accepted, and direct/local
+  rule-trigger output bindings still fail closed with the missing
+  generated-child completion identity diagnostic. This is fail-closed
+  diagnostic hardening: generated `.fsm`, HDL, schedule-report schema, public
+  API, and runtime behavior for accepted sources did not change. Validation
+  passed: syntax checks; focused rule-trigger/port-binding/report and
+  spec/book tests with `Files=8, Tests=386`; final live-doc/book audits with
+  `Files=4, Tests=366`; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 binding report wording truth sync:
   `ISF-TRANSACTION-PORT-BINDING-REPORT-WORDING-TRUTH-SYNC.1` synchronized
   public contract and mdBook wording so deferred future binding-report
@@ -11629,6 +11641,22 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` is shipped and the
+  task tree is closed:
+  - multiple generated-child rule-trigger output bindings in one rule now
+    fail closed when they target the same actor signal,
+  - generated rule-trigger output bindings to distinct actor targets remain
+    accepted,
+  - direct/local rule-trigger output bindings still fail closed with the
+    missing generated-child completion identity diagnostic,
+  - generated `.fsm`, HDL, schedule-report schema, public API, and runtime
+    behavior for accepted sources are unchanged,
+  - and the public contract, ISF spec, mdBook, task tree, README index,
+    roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused rule-trigger/port-binding/report
+    and spec/book tests with `Files=8, Tests=386`; final live-doc/book audits
+    with `Files=4, Tests=366`; `mdbook build docs/book`; and
+    `git diff --check`.
 - `ISF-TRANSACTION-PORT-BINDING-REPORT-WORDING-TRUTH-SYNC.1` is shipped and
   the task tree is closed:
   - public contract and mdBook wording now distinguish deferred future

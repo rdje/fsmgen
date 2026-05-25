@@ -2096,7 +2096,10 @@ scalar actor targets: the parent handoff DT reads the generated child output
 port through the generated top and copies it to the bound actor signal only
 under that trigger instance's done-observer signal. Direct/local transaction
 rule-trigger output bindings remain rejected because a shared local target has
-no rule-specific completion identity.
+no rule-specific completion identity. Within one rule, generated trigger
+output bindings may not target the same actor signal more than once; this
+fails closed before scheduled `.fsm` emission because the source surface has
+no rule-local output selection policy.
 
 Direct `(on ...)` activation has no corresponding `(params ...)` source shape.
 The only legal nested body clauses in `(on port body...)` are
@@ -2328,11 +2331,13 @@ bindings: the generated trigger handoff DT copies the child output handoff to
 the actor target when that generated trigger instance's done-observer signal
 is high. Multiple rule payloads or output copies for the same port/target
 therefore remain visible as guarded same-LHS assignments instead of being
-silently merged. Direct/local transaction rule-trigger output bindings remain
-deferred because a shared local transaction target has no rule-specific
-completion identity; their diagnostic names the missing generated-child
-completion identity instead of implying all rule-trigger output bindings are
-unsupported.
+silently merged. Multiple generated trigger output bindings in one rule may
+not target the same actor signal, because the binding surface has no
+rule-local output selection policy. Direct/local transaction rule-trigger
+output bindings remain deferred because a shared local transaction target has
+no rule-specific completion identity; their diagnostic names the missing
+generated-child completion identity instead of implying all rule-trigger
+output bindings are unsupported.
 
 The same-cycle visibility rule for the shipped surface is: input payloads are
 emitted in the same activation region as their start/trigger handoff, and

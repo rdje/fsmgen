@@ -3054,8 +3054,10 @@ Parameterized
 rule-trigger entries use the generated trigger instance handoff names and
 preserve the per-rule trigger and payload source names; generated-child
 rule-trigger output entries also report the done-observer signal that guards
-the output copy in `done_signal`. For expression-valued or literal input
-bindings, `actor_signal` is JSON null and
+the output copy in `done_signal`. Within one rule, multiple generated-child
+rule-trigger output bindings may not target the same actor signal because no
+rule-local output selection policy is shipped. For expression-valued or
+literal input bindings, `actor_signal` is JSON null and
 `actor_expression` carries the formatted source expression.
 `actor_endpoint_kind` is `signal`, `literal`, or `expression`.
 `binding_timing` is `activation_region`, `generated_live_handoff`,

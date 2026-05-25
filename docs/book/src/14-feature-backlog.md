@@ -2560,6 +2560,9 @@ identity, and direct/local targets do not provide one yet.
 Within one activation bind block, multiple output bindings to the same actor
 target fail closed with a binding-level diagnostic; no intra-bind output
 selection policy is shipped.
+Within one rule, multiple generated-child rule-trigger output bindings to the
+same actor target also fail closed; no rule-local output selection policy is
+shipped.
 
 Schedule reports also publish `authored_timing_mode` on
 `transaction_port_bindings[]`. It reports `snapshot` or `live` when the source

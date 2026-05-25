@@ -1077,8 +1077,9 @@ does not exist:
   `actor_signal`, `actor_expression`, endpoint kind, binding timing, and
   authored timing mode. The direct/local rule-trigger output-binding
   diagnostic names the missing generated-child completion identity. Duplicate
-  output actor targets inside one bind block fail closed before broader
-  assignment conflict handling.
+  output actor targets inside one bind block, and duplicate generated
+  rule-trigger output actor targets inside one rule, fail closed before
+  broader assignment conflict handling.
 - Nested stages, stage-local compute/action bodies, multiple ready/valid
   endpoints, registered-valid variants, and skid buffers are not shipped.
 - Temporal contracts beyond the top-level bounded eventual subset, including

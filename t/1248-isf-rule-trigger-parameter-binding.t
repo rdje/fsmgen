@@ -277,6 +277,81 @@ ISF
     like(slurp($hdl_path), qr/\blaunch_worker_trigger_0_data\b/, 'HDL contains generated output-binding handoff');
 };
 
+subtest 'generated rule trigger output bindings reject duplicate rule actor targets' => sub {
+    my $accepted = <<'ISF';
+(actor rule_trigger_distinct_output_targets
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input fire)
+    (output done)
+    (output data_a (width 8))
+    (output data_b (width 8)))
+  (transaction parent
+    (on fire)
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (output data (width 8)))
+    (update data 0)
+    (complete done))
+  (rule launch fire
+    (trigger worker
+      (params
+        (WIDTH 8))
+      (bind
+        (output data data_a)))
+    (trigger worker
+      (params
+        (WIDTH 8))
+      (bind
+        (output data data_b)))))
+ISF
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report(parse_source($accepted)));
+    is_deeply(
+        [ map { $_->{owner} . ':' . $_->{role} . ':' . $_->{actor_signal} } @{$report->{transaction_port_bindings}} ],
+        [
+            'launch:output:data_a',
+            'launch:output:data_b',
+        ],
+        'one rule may bind generated trigger outputs to distinct actor targets',
+    );
+
+    assert_parse_or_lower_rejected(<<'ISF', 'duplicate generated trigger output actor target', qr/\ARule 'launch': generated trigger output bindings target actor signal 'data' more than once/);
+(actor rule_trigger_duplicate_output_target
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input fire)
+    (output done)
+    (output data (width 8)))
+  (transaction parent
+    (on fire)
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (output data (width 8)))
+    (update data 0)
+    (complete done))
+  (rule launch fire
+    (trigger worker
+      (params
+        (WIDTH 8))
+      (bind
+        (output data data)))
+    (trigger worker
+      (params
+        (WIDTH 8))
+      (bind
+        (output data data)))))
+ISF
+};
+
 subtest 'rule trigger parameter bindings fail closed for unsupported or ambiguous shapes' => sub {
     assert_parse_or_lower_rejected(<<'ISF', 'unknown trigger override name', qr/trigger instance 'launch_worker_trigger_0' overrides unknown parameter 'MODE'/);
 (actor unknown_trigger_parameter

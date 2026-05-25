@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 rule-trigger duplicate output target diagnostic shipped
+- Completed
+  `ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` and closed the task
+  tree.
+- Within one rule, multiple generated-child rule-trigger output bindings that
+  target the same actor signal now fail closed before scheduled `.fsm`
+  emission.
+- Generated rule-trigger output bindings to distinct actor targets remain
+  accepted, and direct/local rule-trigger output bindings still fail closed
+  with the missing generated-child completion identity diagnostic.
+- This is a fail-closed diagnostic hardening slice; generated `.fsm`, HDL,
+  schedule-report schema, public API, and runtime behavior for accepted
+  sources did not change.
+- Validation passed: syntax checks; focused rule-trigger/port-binding/report
+  and spec/book tests with `Files=8, Tests=386`; final live-doc/book audits
+  with `Files=4, Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 binding report wording truth sync completed
 - Completed
   `ISF-TRANSACTION-PORT-BINDING-REPORT-WORDING-TRUTH-SYNC.1` and closed the

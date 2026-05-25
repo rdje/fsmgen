@@ -2721,16 +2721,18 @@ sub _validate_transaction_port_bindings($self, $actor) {
 
     for my $rule (@{$actor->{rules} || []}) {
         my $rule_name = $rule->{name};
+        my %seen_rule_output_actor_target;
         for my $action (@{$rule->{actions} || []}) {
             next unless ref($action) eq 'ARRAY' && @$action;
             next unless defined($action->[0]) && !ref($action->[0]) && $action->[0] eq 'trigger';
             my $target = $action->[1];
             next unless defined($target) && !ref($target) && exists $transaction_by_name{$target};
+            my $bindings = _activation_bindings_from_clause($action, $rule_name, 'rule trigger');
             _validate_activation_bindings(
                 $actor,
                 undef,
                 $transaction_by_name{$target},
-                _activation_bindings_from_clause($action, $rule_name, 'rule trigger'),
+                $bindings,
                 "Rule '$rule_name': trigger target '$target'",
                 {
                     allow_outputs      => $generated_children{$target} ? 1 : 0,
@@ -2738,6 +2740,13 @@ sub _validate_transaction_port_bindings($self, $actor) {
                     generated_instance => $generated_children{$target} ? 1 : 0,
                 },
             );
+            next unless $generated_children{$target};
+            for my $binding (@$bindings) {
+                next unless $binding->{role} eq 'output';
+                my $actor_signal = $binding->{actor_signal};
+                confess "Rule '$rule_name': generated trigger output bindings target actor signal '$actor_signal' more than once\n"
+                    if $seen_rule_output_actor_target{$actor_signal}++;
+            }
         }
     }
 
