@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: This-commit placeholders need a separate evidence pass
+- `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1` selects the follow-up
+  maintenance pass for historical task-tree evidence that used `this commit`
+  instead of `pending commit`.
+- The previous evidence sync intentionally handled the stale pending-commit
+  class. Keeping this as a separate task preserves review scope and gives the
+  `this commit` and `final gate pending` evidence class its own audit trail.
+- The implementation leaf should prefer the commit whose subject starts with
+  the leaf ID, because later documentation maintenance can mention historical
+  leaf IDs without being their completion commits.
+
 ## 2026-05-25: Commit evidence sync should prefer leaf-subject commits
 - `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` resolves historical completion
   evidence from git history by preferring commits whose subject starts with

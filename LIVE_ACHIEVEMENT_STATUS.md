@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: Roadmap Maintenance — This-commit task evidence truth sync selected
+- Created active task tree `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC`.
+- Completed selection leaf `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1`; the
+  next frontier is `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2`.
+- The selected repair will audit completed task files and replace stale
+  `this commit` placeholders and stale `final gate pending` verification
+  wording with concrete completion evidence where recoverable.
+- This is documentation-only maintenance; no parser, scheduler, generated
+  `.fsm`, HDL, schedule-report, public API, or runtime behavior changed.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=351`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC`.
+- Current frontier: `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2`.
+
 ## 2026-05-25: Roadmap Maintenance — Task-tree commit evidence truth sync completed
 - Completed `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` and closed the task tree.
 - Completed task files no longer carry stale `pending commit`, `pending this

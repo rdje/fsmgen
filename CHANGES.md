@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### Roadmap Maintenance — This-commit task evidence truth sync selected
+- Created active task tree `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC`.
+- Completed selection leaf `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1`; the
+  next frontier is `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2`.
+- Selected a documentation-only repair for completed task files that still
+  carry stale `this commit` placeholders or stale `final gate pending`
+  verification wording.
+- No parser, scheduler, generated `.fsm`, HDL, schedule-report, public API, or
+  runtime behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=351`; `mdbook build docs/book`; and `git diff --check`.
+
 ### Roadmap Maintenance — Task-tree commit evidence truth sync completed
 - Completed `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` and closed the task tree.
 - Synchronized stale commit evidence across completed task files by replacing

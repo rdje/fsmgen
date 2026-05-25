@@ -1,9 +1,17 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active lane: `roadmap maintenance`.
+- Active task tree: `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC`.
+- Current frontier: `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2`.
+- Current roadmap-maintenance selection:
+  `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.1` created the active task tree
+  for synchronizing stale `this commit` placeholders and stale `final gate
+  pending` verification wording in completed task-tree files. This
+  documentation-only selection does not change parser, scheduler, generated
+  `.fsm`, HDL, schedule-report, public API, or runtime behavior. Validation
+  passed: feature-backlog/live-book/book matrix audits with `Files=3,
+  Tests=351`; `mdbook build docs/book`; and `git diff --check`.
 - Current roadmap-maintenance completion:
   `TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.2` synchronized stale completed
   task-tree commit evidence and closed the task tree. Completed task files no
