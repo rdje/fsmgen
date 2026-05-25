@@ -2,8 +2,32 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS`.
-- Current frontier: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 bank storage package-constant depth implementation:
+  `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` shipped the bounded imported
+  package scalar-constant widening for actor-owned bank storage depths and
+  closed the task tree. Actor-owned bank storage
+  `(bank NAME (width N|PARAM|CONST|PACKAGE.CONSTANT)
+  (depth PACKAGE.CONSTANT))` declarations may now use qualified imported
+  package scalar constants for bank depths when the resolved value is a
+  positive integer literal. Parser bank-depth validation now accepts
+  package-constant-shaped qualified tokens for actor-owned bank depths, so
+  package-specific diagnostics can distinguish unknown, unqualified,
+  aggregate, aggregate/member path, ambiguous, zero-valued, runtime, and
+  expression-valued sources. Accepted package-constant bank depths publish as
+  resolved integer depths in parser handoff, scalarized scheduled `.fsm`
+  `+size`, schedule-report evidence, `bank_accesses[]` depth/scalar-entry
+  evidence, and generated HDL register declarations. Package constants in
+  transaction-local port widths, waits, watchdogs, latency bounds, contract
+  windows, repeat counts, generated-top respecialization, and other
+  dimensions/value domains remain deferred or fail closed. The ISF spec,
+  downstream handoff, public contract, mdBook, task tree, README index,
+  roadmap, and live docs are synchronized. Validation passed with syntax
+  checks; focused public/storage/package tests (`Files=11, Tests=35`);
+  `./bin/ci-regression isf --no-book` (`Files=262, Tests=1709`);
+  post-closure public/spec/book/backlog audits (`Files=8, Tests=375`);
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 bank storage package-constant depth selection:
   `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1` created the active task tree
   and selected the next bounded implementation leaf. Actor-owned bank storage
@@ -37,11 +61,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   package-constant bank widths publish as resolved integer widths in parser
   handoff, scalarized scheduled `.fsm` `+size`, schedule-report evidence,
   `bank_accesses[]` width evidence, and generated HDL register ranges.
-  Package constants in actor-owned bank depths, transaction-local port widths,
-  waits, watchdogs, latency bounds, contract windows, repeat counts,
-  generated-top respecialization, and other dimensions/value domains remain
-  deferred or fail closed. The ISF spec, downstream handoff, public contract,
-  mdBook, task tree, README index, roadmap, and live docs are synchronized.
+  Package constants in transaction-local port widths, waits, watchdogs,
+  latency bounds, contract windows, repeat counts, generated-top
+  respecialization, and other dimensions/value domains remain deferred or fail
+  closed. The ISF spec, downstream handoff, public contract, mdBook, task
+  tree, README index, roadmap, and live docs are synchronized.
   Validation passed with syntax checks; focused public/storage/package tests
   (`Files=11, Tests=352`); `./bin/ci-regression isf --no-book`
   (`Files=261, Tests=1707`); post-closure public/spec/book/backlog audits
@@ -59,7 +83,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   constants, unknown package constants, package aggregate constants, package
   aggregate scalar-leaf paths, ambiguous local-token spellings, zero-valued
   constants, runtime signals, arbitrary expressions, package constants in
-  bank depths or other dimension/value domains, and generated-top
+  other dimension/value domains, and generated-top
   respecialization remain deferred or fail closed. No parser, scheduler,
   report, generated artifact, HDL, CLI behavior, public API, source, test, or
   generated behavior changed in this selection slice. Validation passed:
@@ -79,8 +103,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   expression-valued sources. Accepted package-constant scalar storage widths
   publish as resolved integer widths in parser handoff, scheduled `.fsm`
   `+size`, schedule-report evidence, width evidence, and generated HDL
-  register ranges. Package constants in actor-owned bank depths,
-  transaction-local port widths, waits, watchdogs, latency bounds, contract
+  register ranges. Package constants in transaction-local port widths, waits,
+  watchdogs, latency bounds, contract
   windows, repeat counts, generated-top respecialization, and other
   dimensions/value domains remain deferred or fail closed. The ISF spec,
   downstream handoff, public contract, mdBook, task tree, README index,
@@ -7431,13 +7455,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS`.
-- Current frontier: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2`.
-- Completion status: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1`
-  created the active R14 actor-owned bank storage package-constant depth task
-  tree and selected the bounded implementation frontier. No parser,
-  scheduler, report, generated artifact, HDL, CLI behavior, public API,
-  source, test, or generated behavior changed in the selection slice.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2`
+  shipped the bounded R14 actor-owned bank storage package-constant depth
+  widening and closed its task tree. The next PNT behavior-bearing slice must
+  select or create a task tree before code, test, source, generated-artifact,
+  or config changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

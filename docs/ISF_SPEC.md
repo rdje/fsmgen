@@ -1308,8 +1308,9 @@ scalar parameter defaults, declared actor constants, or qualified imported
 package scalar constants that resolve to positive integers, actor-owned bank
 widths may use actor-local scalar parameter defaults, declared actor
 constants, or qualified imported package scalar constants that resolve to
-positive integers, and bank depths may use positive actor-local scalar
-parameter defaults or declared actor constants. The actor has
+positive integers, and bank depths may use actor-local scalar parameter
+defaults, declared actor constants, or qualified imported package scalar
+constants that resolve to positive integers. The actor has
 actor-owned storage, read
 and write pointers, occupancy state, actor-maintained flags, reset ownership,
 and first-class handling of the four request cases every cycle: no request,
@@ -1349,7 +1350,8 @@ Actor-owned bank storage widths may now use actor-local scalar parameter
 defaults, declared actor constants, or qualified imported package scalar
 constants that resolve to positive integers.
 Actor-owned bank storage depths may now use actor-local scalar parameter
-defaults or declared actor constants that resolve to positive integers.
+defaults, declared actor constants, or qualified imported package scalar
+constants that resolve to positive integers.
 Use-site FIFO interface shape, use-site bank-depth
 specialization, generated-top respecialization, arbitrary-depth
 memory-backed FIFO generation beyond the first `DEPTH=4` fixture, automatic
@@ -1357,7 +1359,8 @@ non-zero reset values such as empty=1, standalone transaction/drive exports,
 package/imported constants outside the shipped qualified actor parameter,
 generated-child transaction parameter default, generated activation override,
 reusable-library use-site override, actor interface width, and actor-owned
-scalar storage width and actor-owned bank storage width scalar-constant
+scalar storage width, actor-owned bank storage width, and actor-owned bank
+storage depth scalar-constant
 subsets, derived parameter expressions, and library actors that import other
 libraries remain deferred.
 
@@ -1660,9 +1663,10 @@ clause:
 In this example scalar `PTR_W` may be declared in the same actor's
 `(params ...)` or `(constants ...)` block with a value that resolves to a
 positive integer. Bank width `DATA_W` may likewise be an actor scalar
-parameter or actor constant resolving positive. Bank depth `DEPTH` may also
-be an actor scalar parameter or actor constant resolving positive when a
-symbolic depth source is used.
+parameter, actor constant, or qualified imported package scalar constant
+resolving positive. Bank depth `DEPTH` may also be an actor scalar parameter,
+actor constant, or qualified imported package scalar constant resolving
+positive when a symbolic depth source is used.
 
 The first shipped storage forms are:
 
@@ -1670,8 +1674,9 @@ The first shipped storage forms are:
   internal scalar variable.
 - `(variable name (width N|PARAM|CONST|PACKAGE.CONSTANT))`: verbose alias for
   `(var ...)`.
-- `(bank name (width N|PARAM|CONST) (depth N|PARAM|CONST))`: a fixed-depth
-  actor-owned storage bank.
+- `(bank name (width N|PARAM|CONST|PACKAGE.CONSTANT)
+  (depth N|PARAM|CONST|PACKAGE.CONSTANT))`: a fixed-depth actor-owned
+  storage bank.
 
 Actor-owned scalar storage widths may be positive integer literals,
 actor-local scalar parameter defaults, declared actor constants, or qualified
@@ -1694,17 +1699,18 @@ Storage bank widths may be positive integer literals, actor-local scalar
 parameter defaults, declared actor constants, or qualified imported package
 scalar constants that resolve to positive integer literals. Storage bank
 depths may be positive integer literals, actor-local scalar parameter
-defaults, or declared actor constants that resolve to positive integer
-literals. The parser returns the resolved integer width and depth; scheduled
-`.fsm`, schedule reports, bank access metadata, and generated HDL see the
-same scalarized storage family they would see for equivalent literal values.
+defaults, declared actor constants, or qualified imported package scalar
+constants that resolve to positive integer literals. The parser returns the
+resolved integer width and depth; scheduled `.fsm`, schedule reports, bank
+access metadata, and generated HDL see the same scalarized storage family
+they would see for equivalent literal values.
 Unknown symbolic names, unknown or unqualified package constants, package
 aggregate constants, package aggregate scalar-leaf paths, ambiguous
 local-enum/package-constant spellings, runtime interface signals, zero-valued
 or non-scalar actor parameters, zero-valued actor constants, zero-valued
 package constants, arbitrary storage dimension expressions, dynamic storage
-depth, package-constant-backed bank depths, and memory-array backend emission
-remain deferred or fail closed.
+depth, transaction-local package-constant widths, and memory-array backend
+emission remain deferred or fail closed.
 
 Storage banks lower to deterministic scalar storage element names in the
 scheduled `.fsm` review artifact. For example,
@@ -5303,6 +5309,7 @@ Focused tests:
 - [t/1353-isf-interface-package-constant-widths.t](../t/1353-isf-interface-package-constant-widths.t)
 - [t/1354-isf-scalar-storage-package-constant-widths.t](../t/1354-isf-scalar-storage-package-constant-widths.t)
 - [t/1355-isf-bank-storage-package-constant-widths.t](../t/1355-isf-bank-storage-package-constant-widths.t)
+- [t/1356-isf-bank-storage-package-constant-depths.t](../t/1356-isf-bank-storage-package-constant-depths.t)
 
 ## 12. Explicitly Deferred
 
@@ -5314,8 +5321,9 @@ Focused tests:
   package/imported constants outside the shipped qualified actor parameter,
   generated-child transaction parameter default, generated activation
   override, reusable-library use-site override, actor interface width, and
-  actor-owned scalar storage width and actor-owned bank storage width
-  scalar-constant subsets, derived parameter expressions,
+  actor-owned scalar storage width, actor-owned bank storage width, and
+  actor-owned bank storage depth scalar-constant subsets, derived parameter
+  expressions,
   transaction-port dimensions beyond positive literals, actor-local scalar
   parameters, and scalar type aliases,
   memory-array backend emission, and

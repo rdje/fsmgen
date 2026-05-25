@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-24: R14 bank storage package-constant depths shipped
+- Completed `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` and closed the task
+  tree.
+- Actor-owned bank storage
+  `(bank NAME (width N|PARAM|CONST|PACKAGE.CONSTANT)
+  (depth PACKAGE.CONSTANT))` declarations may now use qualified imported
+  package scalar constants for bank depths when the resolved value is a
+  positive integer literal.
+- Parser bank-depth validation now accepts package-constant-shaped qualified
+  tokens for actor-owned bank depths, so package-specific diagnostics can
+  distinguish unknown, unqualified, aggregate, aggregate/member path,
+  ambiguous, zero-valued, runtime, and expression-valued sources.
+- Accepted package-constant bank depths publish as resolved integer depths in
+  parser handoff, scalarized scheduled `.fsm` `+size`, schedule-report
+  evidence, `bank_accesses[]` depth/scalar-entry evidence, and generated HDL
+  register declarations.
+- Package constants in transaction-local port widths, waits, watchdogs,
+  latency bounds, contract windows, repeat counts, generated-top
+  respecialization, and other dimensions/value domains remain deferred or
+  fail closed.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused public/storage/package tests with
+  `Files=11, Tests=35`; `./bin/ci-regression isf --no-book` with
+  `Files=262, Tests=1709`; post-closure public/spec/book/backlog audits with
+  `Files=8, Tests=375`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 bank storage package-constant depths selected
 - Created active task tree `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS`.
 - Completed `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1`; the selected

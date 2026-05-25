@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Bank storage package constants publish resolved depths
+- `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` resolves qualified imported
+  package scalar constants at the actor-owned bank storage depth boundary.
+- The implementation deliberately reuses the existing bank-depth scalarization
+  contract: package constants are resolved to positive integer depths before
+  the bank signal family is finalized, and storage width finalization still
+  applies afterward so package-constant widths and package-constant depths can
+  compose in one bank declaration.
+- Unsupported package-constant shapes remain fail-closed at the same boundary:
+  unqualified names, unknown constants, aggregates, aggregate/member paths,
+  ambiguous local enum/package spellings, zero-valued constants, runtime
+  signals, and expressions. Transaction-local port widths and other value
+  domains remain deferred rather than silently inheriting this widening.
+
 ## 2026-05-24: Bank depth package constants should reuse depth resolution
 - `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1` selects qualified imported
   package scalar constants for actor-owned bank storage depths as the next

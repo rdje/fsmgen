@@ -135,7 +135,7 @@ ISF
   (storage
     (bank data (width 7) (depth DEPTH))))
 ISF
-        qr/\AError: actor 'unknown_constant_bank_depth' storage bank 'data' depth token 'DEPTH' is not a declared actor scalar parameter or actor constant/,
+        qr/\AError: actor 'unknown_constant_bank_depth' storage bank 'data' depth token 'DEPTH' is not a declared actor scalar parameter, actor constant, or imported package scalar constant/,
         'unknown symbolic depth is rejected',
     );
 
@@ -164,7 +164,7 @@ ISF
   (storage
     (bank data (width 7) (depth (+ DEPTH 1)))))
 ISF
-        qr/\AError: actor 'expression_constant_bank_depth' storage 'data' depth requires '\(depth positive_integer_or_actor_scalar_parameter_or_actor_constant\)'/,
+        qr/\AError: actor 'expression_constant_bank_depth' storage 'data' depth requires '\(depth positive_integer_or_actor_scalar_parameter_or_actor_constant_or_qualified_package_scalar_constant\)'/,
         'depth expressions are rejected at parse time',
     );
 };

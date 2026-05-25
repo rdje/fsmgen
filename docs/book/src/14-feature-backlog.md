@@ -355,7 +355,17 @@ scalarized scheduled `.fsm` `+size` entries, schedule-report evidence,
 `bank_accesses[]` widths, width evidence, and HDL register ranges.
 Unqualified package constants, aggregate package constants, package
 member/item paths, ambiguous local-enum/package-constant spellings, zero
-values, runtime signals, expressions, and package constants in bank depth or
+values, runtime signals, expressions, and package constants in
+transaction-local port width contexts remain fail-closed.
+
+Actor-owned bank storage depths may also use qualified imported package scalar
+constants when the imported package constant resolves to a positive integer.
+Those depths publish as resolved integer parser-handoff bank depths,
+scalarized scheduled `.fsm` `+size` entries, schedule-report evidence,
+`bank_accesses[]` depths and scalarized entries, and HDL register
+declarations. Unqualified package constants, aggregate package constants,
+package member/item paths, ambiguous local-enum/package-constant spellings,
+zero values, runtime signals, expressions, and package constants in
 transaction-local port width contexts remain fail-closed.
 
 Actor parameter defaults accept enum members, declared actor constants, earlier
@@ -3075,15 +3085,20 @@ Shipped actor-owned storage model:
   ...)
 ```
 
-`(var name (width N|PARAM|CONST))` declares one internal actor scalar storage
-value. `(variable ...)` is the verbose scalar-storage alias. Bank width uses
-`(bank name (width N|PARAM|CONST) (depth N|PARAM|CONST))`. `PARAM` must be an
-actor-local scalar parameter default that resolves to a positive integer.
-`CONST` on scalar storage, bank width, or bank depth must be a declared actor
-constant that resolves to a positive integer.
+`(var name (width N|PARAM|CONST|PACKAGE.CONSTANT))` declares one internal actor
+scalar storage value. `(variable ...)` is the verbose scalar-storage alias.
+Bank width and depth use
+`(bank name (width N|PARAM|CONST|PACKAGE.CONSTANT) (depth N|PARAM|CONST|PACKAGE.CONSTANT))`.
+`PARAM` must be an actor-local scalar parameter default that resolves to a
+positive integer. `CONST` on scalar storage, bank width, or bank depth must be
+a declared actor constant that resolves to a positive integer.
+`PACKAGE.CONSTANT` on scalar storage width, bank width, or bank depth must be
+a qualified imported package scalar constant that resolves to a positive
+integer.
 
-`(bank name (width N|PARAM|CONST) (depth N|PARAM|CONST))` remains the fixed-depth
-actor-owned storage form. The FIFO-controller matrix does not use an internal
+`(bank name (width N|PARAM|CONST|PACKAGE.CONSTANT) (depth N|PARAM|CONST|PACKAGE.CONSTANT))`
+remains the fixed-depth actor-owned storage form. The FIFO-controller matrix
+does not use an internal
 bank, but the shipped data-path probe now exercises a depth-4 bank through explicit
 store/load access.
 
@@ -3134,8 +3149,9 @@ evidence. Actor top-level interface port widths may use declared actor
 constants, actor-local scalar parameter defaults, or qualified imported
 package scalar constants when they resolve to positive integers. Actor-owned
 scalar storage widths, actor-owned bank widths, and actor-owned bank depths
-may use declared actor constants or actor-local scalar parameter defaults when
-they resolve to positive integers.
+may use declared actor constants, actor-local scalar parameter defaults, or
+qualified imported package scalar constants when they resolve to positive
+integers.
 Transaction-local port widths may use actor-local scalar parameter defaults or
 declared actor constants when they resolve to positive integers.
 FIFO use-site interface shape specialization and generated-top

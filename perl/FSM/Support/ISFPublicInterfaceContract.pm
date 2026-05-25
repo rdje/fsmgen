@@ -529,6 +529,7 @@ sub build_isf_public_interface_contract {
             't/1340-isf-bank-storage-actor-constant-widths.t',
             't/1355-isf-bank-storage-package-constant-widths.t',
             't/1341-isf-bank-storage-actor-constant-depths.t',
+            't/1356-isf-bank-storage-package-constant-depths.t',
             't/1342-isf-transaction-port-actor-constant-widths.t',
             't/1343-isf-data-op-static-width-sources.t',
             't/1344-isf-assemble-static-part-widths.t',

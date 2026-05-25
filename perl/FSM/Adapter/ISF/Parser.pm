@@ -818,23 +818,46 @@ sub _finalize_actor_storage_depths($self, $actor) {
         my $resolved_depth;
         if (defined($depth) && !ref($depth) && $depth =~ /\A[1-9][0-9]*\z/) {
             $resolved_depth = 0 + $depth;
-        } elsif (defined($depth) && !ref($depth) && _is_hdl_identifier($depth)) {
-            my $param = _actor_param_by_name($actor, $depth);
-            if ($param) {
-                $resolved_depth = _positive_integer_from_literal_value(_param_resolved_value($param));
-                confess "Error: actor '$actor_name' storage bank '$storage_name' depth parameter '$depth' must resolve to a positive integer\n"
+        } elsif (
+            defined($depth)
+            && !ref($depth)
+            && (_is_hdl_identifier($depth) || _is_package_constant_reference_shape($depth))
+        ) {
+            if (my $package_constant = _actor_package_constant_reference($actor, $depth)) {
+                my ($package_name, $constant_name, $suffix) = @$package_constant;
+                my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+                confess "Error: actor '$actor_name' storage bank '$storage_name' references unknown package constant '$depth'\n"
+                    unless defined $constant_payload;
+                confess "Error: actor '$actor_name' storage bank '$storage_name' package constant '$package_name.$constant_name' aggregate/member path '$depth' remains deferred; actor-owned bank storage depths accept only qualified package scalar constants in this slice\n"
+                    if length($suffix);
+                confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is ambiguous: it matches local enum member '$depth' and imported package constant '$depth'\n"
+                    if $depth =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/
+                        && _actor_local_enum_member_exists($actor, $1, $2);
+
+                my $constant_value = _package_constant_scalar_value($constant_payload);
+                $resolved_depth = _positive_integer_from_literal_value($constant_value);
+                confess "Error: actor '$actor_name' storage bank '$storage_name' package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
                     unless defined $resolved_depth;
-            } elsif (my $constant = _actor_constant_by_name($actor, $depth)) {
-                $resolved_depth = _positive_integer_from_literal_value(_constant_resolved_value($constant));
-                confess "Error: actor '$actor_name' storage bank '$storage_name' depth constant '$depth' must resolve to a positive integer\n"
-                    unless defined $resolved_depth;
-            } elsif (_actor_interface_signal_by_name($actor, $depth)) {
-                confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is a runtime interface signal; storage bank depths accept positive integer literals, actor constants, or actor scalar parameters only\n";
+            } elsif (_is_package_constant_reference_shape($depth)) {
+                confess "Error: actor '$actor_name' storage bank '$storage_name' references unknown package constant '$depth'\n";
             } else {
-                confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is not a declared actor scalar parameter or actor constant\n";
+                my $param = _actor_param_by_name($actor, $depth);
+                if ($param) {
+                    $resolved_depth = _positive_integer_from_literal_value(_param_resolved_value($param));
+                    confess "Error: actor '$actor_name' storage bank '$storage_name' depth parameter '$depth' must resolve to a positive integer\n"
+                        unless defined $resolved_depth;
+                } elsif (my $constant = _actor_constant_by_name($actor, $depth)) {
+                    $resolved_depth = _positive_integer_from_literal_value(_constant_resolved_value($constant));
+                    confess "Error: actor '$actor_name' storage bank '$storage_name' depth constant '$depth' must resolve to a positive integer\n"
+                        unless defined $resolved_depth;
+                } elsif (_actor_interface_signal_by_name($actor, $depth)) {
+                    confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is a runtime interface signal; storage bank depths accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only\n";
+                } else {
+                    confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is not a declared actor scalar parameter, actor constant, or imported package scalar constant\n";
+                }
             }
         } else {
-            confess "Error: actor '$actor_name' storage bank '$storage_name' depth must be a positive integer literal, actor constant, or actor scalar parameter\n";
+            confess "Error: actor '$actor_name' storage bank '$storage_name' depth must be a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant\n";
         }
 
         $entry->{depth} = $resolved_depth;
@@ -6314,7 +6337,7 @@ sub _parse_storage($self, $clause, $actor_name) {
                 next;
             }
             if ($option_name eq 'depth') {
-                $parsed_options{depth_value} = _parse_positive_integer_or_actor_scalar_parameter_depth_option(
+                $parsed_options{depth_value} = _parse_actor_storage_depth_option(
                     $option,
                     "Error: actor '$actor_name' storage '$name' depth",
                 );
@@ -6374,15 +6397,17 @@ sub _normalize_storage_kind {
     return undef;
 }
 
-sub _parse_positive_integer_or_actor_scalar_parameter_depth_option {
+sub _parse_actor_storage_depth_option {
     my ($option, $context) = @_;
 
-    confess "$context requires '(depth positive_integer_or_actor_scalar_parameter_or_actor_constant)'\n"
+    confess "$context requires '(depth positive_integer_or_actor_scalar_parameter_or_actor_constant_or_qualified_package_scalar_constant)'\n"
         unless ref($option) eq 'ARRAY'
             && @$option == 2
             && defined($option->[1])
             && !ref($option->[1])
-            && ($option->[1] =~ /\A[1-9][0-9]*\z/ || _is_hdl_identifier($option->[1]));
+            && ($option->[1] =~ /\A[1-9][0-9]*\z/
+                || _is_hdl_identifier($option->[1])
+                || _is_package_constant_reference_shape($option->[1]));
 
     return $option->[1] =~ /\A[1-9][0-9]*\z/
         ? 0 + $option->[1]

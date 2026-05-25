@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -52,7 +52,7 @@ literals.
 ## Task Tree
 
 - ID: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship qualified imported package scalar constants as actor-owned bank storage depths.`
   Children: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1`,
     `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2`
@@ -68,20 +68,23 @@ literals.
   Commit: `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1: select bank storage package-constant depths`
 
 - ID: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document qualified package scalar constants as actor-owned bank storage depths.`
   Acceptance: `Positive imported package scalar constants lower as
   actor-owned bank storage depths; unsupported depth sources fail closed;
   specs, book, public contract, downstream handoff, focused tests, and broader
   ISF gate are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused public/storage/package tests with
+  Files=11, Tests=35; ./bin/ci-regression isf --no-book with Files=262,
+  Tests=1709; post-closure public/spec/book/backlog audits with Files=8,
+  Tests=375; mdbook build docs/book; git diff --check`
+  Commit: `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2: ship bank storage package-constant depths`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` | `pending` | The qualified package-constant actor-owned bank storage depth boundary is selected and ready for implementation. |
+| 1 | `closed` | `done` | The qualified package-constant actor-owned bank storage depth boundary is implemented and documented. |
 
 ## Decisions
 
@@ -95,6 +98,10 @@ literals.
   handoff, scheduled `.fsm`, schedule report/evidence, scalarized storage
   family, bank access metadata, and generated HDL, matching actor-constant and
   actor-parameter bank storage depth behavior.
+- `2026-05-24`: Implement the selected boundary by resolving the qualified
+  package scalar constant before bank signal-family scalarization. Storage
+  width finalization still runs afterward so package-constant widths and
+  package-constant depths can compose in one bank declaration.
 
 ## Open Questions
 
@@ -110,16 +117,19 @@ literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1` | `feature-backlog/live-book/book-matrix audits; mdbook build docs/book; git diff --check` | `passed: Files=3, Tests=364` |
+| `2026-05-24` | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -c t/1356-isf-bank-storage-package-constant-depths.t`; `perl -c t/1144-isf-public-tested-by-metadata-audit.t`; focused public/storage/package tests; `./bin/ci-regression isf --no-book`; post-closure public/spec/book/backlog audits; `mdbook build docs/book`; `git diff --check` | `passed: focused Files=11, Tests=35; full ISF Files=262, Tests=1709; post-closure Files=8, Tests=375` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1` | `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1: select bank storage package-constant depths` | `selection slice` |
-| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` | `pending` | `implementation slice` |
+| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` | `this commit: ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2: ship bank storage package-constant depths` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created task tree and selected qualified imported package
   scalar constants in actor-owned bank storage depths as the next bounded
   static-dimension implementation frontier.
+- `2026-05-24`: Implemented and documented qualified imported package scalar
+  constants in actor-owned bank storage depths, then closed the tree.

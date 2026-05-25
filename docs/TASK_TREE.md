@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS` | `active` | `R14` | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2` | [docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.md](docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.md](docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.md) |
 | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.md](docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.md) |
 | `ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.md](docs/tasks/ISF-SCALAR-STORAGE-PACKAGE-CONSTANT-WIDTHS.md) |
 | `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.md](docs/tasks/ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.md) |

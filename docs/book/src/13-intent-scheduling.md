@@ -77,8 +77,11 @@ clear lower-layer mapping, and clear runtime behavior.
   resolved integer width. Actor-owned bank widths may use the same qualified
   package scalar constant form; parser handoff, scalarized scheduled `.fsm`
   `+size`, `inferred_storage[]`, `bank_accesses[]`, width evidence, and HDL
-  publish the resolved integer width. Bank depths and transaction-local port
-  widths do not inherit that package-constant widening.
+  publish the resolved integer width. Actor-owned bank depths may use the same
+  qualified package scalar constant form; parser handoff, scalarized
+  scheduled `.fsm` `+size`, `inferred_storage[]`, `bank_accesses[]` depth and
+  scalar-entry evidence, and HDL publish the resolved integer depth.
+  Transaction-local port widths do not inherit that package-constant widening.
   Actor-local scalar parameter defaults that resolve to non-negative integer
   literals may also be used as static `(wait NAME)` counts in the owning
   actor schedule.
@@ -620,16 +623,18 @@ The ISF-specific current limitations are:
   positive integers. Actor-owned bank widths may use actor-local scalar
   parameter defaults, declared actor constants, or qualified imported package
   scalar constants that resolve to positive integers. Actor-owned bank depths
-  may use actor-local scalar parameter defaults or declared actor constants
-  that resolve to positive integers.
+  may use actor-local scalar parameter defaults, declared actor constants, or
+  qualified imported package scalar constants that resolve to positive
+  integers.
   Use-site FIFO interface shape, generated-top respecialization,
   arbitrary-depth generation beyond the first
   `DEPTH=4` fixture, automatic non-zero reset values, standalone
   transaction/drive exports, package/imported constants outside the shipped
   qualified actor parameter, generated-child transaction parameter default,
   generated activation override, reusable-library use-site override, and actor
-  interface width, actor-owned scalar storage width, and actor-owned bank
-  storage width scalar-constant subsets, derived parameter expressions, and
+  interface width, actor-owned scalar storage width, actor-owned bank storage
+  width, and actor-owned bank storage depth scalar-constant subsets, derived
+  parameter expressions, and
   nested library imports remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done

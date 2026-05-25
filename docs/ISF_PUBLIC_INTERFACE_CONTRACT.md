@@ -411,8 +411,7 @@ to positive integer bank element widths, scheduled `.fsm` `+size`
 declarations, schedule-report storage and `bank_accesses[]` widths, width
 evidence, and HDL register ranges while unknown, unqualified, aggregate,
 path, ambiguous, zero-valued, runtime, and expression-valued sources fail
-closed. Bank storage depths do not inherit this package-constant bank-width
-widening.
+closed.
 Actor-owned bank storage depths backed by actor-local scalar parameter
 defaults are checked by
 [t/1337-isf-bank-storage-actor-param-depths.t](../t/1337-isf-bank-storage-actor-param-depths.t)
@@ -432,6 +431,16 @@ integer bank depths, deterministic scalarized storage families, scheduled
 depth/scalar-entry metadata, and HDL register declarations while zero-valued
 actor constants, unknown symbolic names, runtime interface signals, arbitrary
 expressions, and duplicate scalarized signal names fail closed.
+Actor-owned bank storage depths backed by qualified imported package scalar
+constants are checked by
+[t/1356-isf-bank-storage-package-constant-depths.t](../t/1356-isf-bank-storage-package-constant-depths.t)
+so accepted `(bank NAME (width W) (depth PACKAGE.CONSTANT))` entries resolve
+to positive integer bank depths, deterministic scalarized storage families,
+scheduled `.fsm` `+size` declarations, schedule-report storage and
+`bank_accesses[]` depth/scalar-entry metadata, and HDL register declarations
+while unknown, unqualified, aggregate, path, ambiguous, zero-valued, runtime,
+and expression-valued sources fail closed. Transaction-local port widths do
+not inherit this bank-depth package-constant widening.
 Transaction-local port widths backed by actor-local scalar parameter defaults
 are checked by
 [t/1336-isf-transaction-port-actor-param-widths.t](../t/1336-isf-transaction-port-actor-param-widths.t)
@@ -2107,10 +2116,10 @@ shell key, but the advertised value-shape string records that `storage` is an
 optional array reference when present. The shipped storage entries include
 scalar declarations authored with preferred `(var ...)` or verbose
 `(variable ...)`, where widths may be positive integer literals or
-actor-local scalar parameters that resolve to positive integers, plus
-fixed-depth `bank` declarations whose widths and depths may use the same
-actor-local scalar parameter source and whose scalarized element names are
-scheduler input.
+actor-local scalar parameters, declared actor constants, or qualified imported
+package scalar constants that resolve to positive integers, plus fixed-depth
+`bank` declarations whose widths and depths may use those same static scalar
+sources and whose scalarized element names are scheduler input.
 Schedule reports still use coarse `kind: register` for generated storage
 class; that report value is not the source vocabulary.
 Actor roots may also carry parser-validated actor-local constants through a
