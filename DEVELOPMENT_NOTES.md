@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Latency transaction params are positive static bounds
+- `ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.1` applies the same transaction-local
+  static-value precedence to latency bounds that contract windows,
+  data-operation widths, transaction-port widths, repeat counts, and wait
+  counts already use.
+- Latency remains positive-only. A zero-valued transaction parameter is still
+  invalid because the latency counter and min/max checks are defined around
+  positive cycle bounds, unlike wait counts where zero is an explicit no-op.
+- Transaction-local names intentionally shadow actor-level static names in the
+  latency-bound slot. The resolved integer is baked into the existing guard
+  and timeout lowering; transaction params are not emitted as scheduled `.fsm`
+  actor parameters.
+
 ## 2026-05-25: Wait transaction params are local static timing inputs
 - `ISF-WAIT-TRANSACTION-PARAM-COUNTS.1` treats same-transaction scalar
   parameter defaults as another static wait-count source after literal,

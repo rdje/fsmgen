@@ -142,7 +142,7 @@ subtest 'unrelated direct transaction parameters remain gated' => sub {
       (input addr (width 8)))
     (complete done)))
 ISF
-        qr/\ATransaction 'main': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, or same-transaction wait counts/,
+        qr/\ATransaction 'main': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, same-transaction wait counts, or same-transaction latency bounds/,
         'unrelated direct transaction parameters still fail closed',
     );
 };

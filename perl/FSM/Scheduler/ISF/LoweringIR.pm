@@ -2537,8 +2537,9 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children) 
         next if _transaction_params_used_by_transaction_port_width($tx, $params);
         next if _transaction_params_used_by_repeat_count($tx, $params);
         next if _transaction_params_used_by_wait_count($tx, $params);
+        next if _transaction_params_used_by_latency_bound($tx, $params);
 
-        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, or same-transaction wait counts\n";
+        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, same-transaction wait counts, or same-transaction latency bounds\n";
     }
     return 1;
 }
@@ -2600,6 +2601,18 @@ sub _transaction_params_used_by_wait_count {
     return keys %used ? 1 : 0;
 }
 
+sub _transaction_params_used_by_latency_bound {
+    my ($tx, $params) = @_;
+    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return 0 unless keys %declared;
+
+    my %used;
+    _collect_latency_bound_declared_name_refs($tx->{clauses}, \%declared, \%used);
+    return keys %used ? 1 : 0;
+}
+
 sub _collect_repeat_count_declared_name_refs {
     my ($node, $declared, $used) = @_;
     return unless ref($node) eq 'ARRAY';
@@ -2624,6 +2637,27 @@ sub _collect_wait_count_declared_name_refs {
 
     for my $child (@$node) {
         _collect_wait_count_declared_name_refs($child, $declared, $used)
+            if ref($child) eq 'ARRAY';
+    }
+}
+
+sub _collect_latency_bound_declared_name_refs {
+    my ($node, $declared, $used) = @_;
+    return unless ref($node) eq 'ARRAY';
+
+    if (@$node >= 2 && defined($node->[0]) && !ref($node->[0]) && $node->[0] eq 'latency') {
+        for my $option (@{$node}[1 .. $#$node]) {
+            next unless ref($option) eq 'ARRAY'
+                && @$option == 2
+                && defined($option->[0])
+                && !ref($option->[0])
+                && ($option->[0] eq 'min' || $option->[0] eq 'max');
+            _collect_isf_value_declared_name_refs($option->[1], $declared, $used);
+        }
+    }
+
+    for my $child (@$node) {
+        _collect_latency_bound_declared_name_refs($child, $declared, $used)
             if ref($child) eq 'ARRAY';
     }
 }
@@ -10489,6 +10523,14 @@ sub _latency_bound_cycles {
     return $package_bound if defined $package_bound;
 
     if (defined($token) && !ref($token) && _is_hdl_identifier($token)) {
+        my $transaction_param = _transaction_param_by_name($actor, $tn, $token);
+        if ($transaction_param) {
+            my $param_value = _non_negative_integer_from_literal(_param_resolved_value($transaction_param));
+            confess "Transaction '$tn': latency $key transaction parameter '$token' must resolve to a positive cycle count in transaction body\n"
+                unless defined($param_value) && $param_value > 0;
+            return $param_value;
+        }
+
         my $constant = _actor_constant_by_name($actor, $token);
         if ($constant) {
             my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
@@ -10496,9 +10538,6 @@ sub _latency_bound_cycles {
                 unless defined($constant_value) && $constant_value > 0;
             return $constant_value;
         }
-
-        confess "Transaction '$tn': latency $key token '$token' is a transaction parameter; latency bounds accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in transaction body\n"
-            if _transaction_param_by_name($actor, $tn, $token);
 
         my $param = _actor_param_by_name($actor, $token);
         if ($param) {
@@ -10508,10 +10547,10 @@ sub _latency_bound_cycles {
             return $param_value;
         }
 
-        confess "Transaction '$tn': latency $key token '$token' is a runtime interface signal; latency bounds accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only in transaction body\n"
+        confess "Transaction '$tn': latency $key token '$token' is a runtime interface signal; latency bounds accept positive integer literals, same-transaction scalar parameters, actor constants, actor scalar parameters, or qualified package scalar constants only in transaction body\n"
             if _actor_interface_signal_by_name($actor, $token);
 
-        confess "Transaction '$tn': latency $key token '$token' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant in transaction body\n";
+        confess "Transaction '$tn': latency $key token '$token' is not a same-transaction scalar parameter, declared actor constant, actor scalar parameter, or qualified package scalar constant in transaction body\n";
     }
 
     confess "Transaction '$tn': latency options must be '(min N)' or '(max N)'\n";

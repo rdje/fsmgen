@@ -1587,16 +1587,18 @@ cross-transaction parameters remain fail-closed for this data-width surface.
 
 The latency clause accepts one or both `(min N)` and `(max N)` options. `N`
 must be a positive integer literal, a declared positive actor constant, an
-actor-local scalar parameter default, or a qualified imported package scalar
-constant that resolves to a positive integer. Each option may appear at most
-once, and `min` must be less than or equal to `max` when both are present.
-Accepted symbolic bounds resolve before counter emission; the generated
-`.fsm` guard and timeout checks contain the resolved integer. A valid explicit
-`max` bound drives the generated counter width and max violation check;
-omitted bounds use scheduler defaults. Unknown or unqualified package
-constants, aggregate package constants, package member/item paths,
-transaction parameters, runtime signals, arbitrary expressions, zero-valued
-constants, and zero-valued or non-scalar actor parameters fail closed.
+actor-local scalar parameter default, a same-transaction scalar parameter
+default, or a qualified imported package scalar constant that resolves to a
+positive integer. Each option may appear at most once, and `min` must be less
+than or equal to `max` when both are present. Accepted symbolic bounds resolve
+before counter emission; the generated `.fsm` guard and timeout checks contain
+the resolved integer. Same-transaction parameters shadow actor-level static
+names and remain local lowering inputs. A valid explicit `max` bound drives
+the generated counter width and max violation check; omitted bounds use
+scheduler defaults. Unknown or unqualified package constants, aggregate
+package constants, package member/item paths, cross-transaction parameters,
+runtime signals, arbitrary expressions, zero-valued constants, and
+zero-valued or non-scalar actor/transaction parameters fail closed.
 
 **What happens**:
 1. Entry state: `(<- (cc 0))` — reset counter

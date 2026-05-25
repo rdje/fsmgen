@@ -4,6 +4,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 transaction-parameter latency bounds:
+  `ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.1` shipped same-transaction scalar
+  parameter defaults as static transaction latency `(min PARAM)` and
+  `(max PARAM)` bound sources and closed the task tree. Transaction
+  latency-bound params now shadow actor-level static names, remain local
+  lowering inputs, and drive the existing latency counter guard, timeout
+  check, and `min <= max` validation from the resolved positive integer
+  value. Zero-valued, aggregate/list, and cross-transaction parameter latency
+  bounds fail closed before scheduled `.fsm` emission; activation-site
+  override specialization remains unsupported. Validation passed: syntax
+  checks; focused latency/parameter/public-audit tests with `Files=16,
+  Tests=455`; `./bin/ci-regression isf --no-book` with `Files=274,
+  Tests=1747`; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 transaction-parameter wait counts:
   `ISF-WAIT-TRANSACTION-PARAM-COUNTS.1` shipped same-transaction scalar
   parameter defaults as static `(wait COUNT)` count sources and closed the
@@ -8281,11 +8294,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-WAIT-TRANSACTION-PARAM-COUNTS.1` shipped same-transaction scalar
-  parameter defaults as static wait-count sources. Transaction wait-count
-  params now shadow actor-level static names, drive fixed wait-state
-  expansion from their resolved non-negative integer value, keep zero-wait
-  no-state/no-report semantics, and fail closed for aggregate/list or
+  `ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.1` shipped same-transaction scalar
+  parameter defaults as static transaction latency min/max bound sources.
+  Transaction latency-bound params now shadow actor-level static names, drive
+  existing guard/timeout lowering and min/max validation from their resolved
+  positive integer value, and fail closed for zero-valued, aggregate/list, or
   cross-transaction parameter sources.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
@@ -11742,6 +11755,25 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.1` is shipped and the task tree is
+  closed:
+  - transaction `(latency (min PARAM) (max PARAM))` now accepts `PARAM` when
+    it names a same-transaction scalar parameter default that resolves to a
+    positive integer literal,
+  - transaction latency-bound params shadow actor-level static names and
+    remain local lowering inputs rather than scheduled `.fsm` actor
+    parameters,
+  - the resolved integer drives the existing latency counter guard, timeout
+    check, generated counter width, and `min <= max` validation,
+  - zero-valued, aggregate/list, and cross-transaction parameter latency
+    bounds fail closed before scheduled `.fsm` emission; activation-site
+    override specialization remains unsupported,
+  - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
+    README index, roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused latency/parameter/public-audit
+    tests with `Files=16, Tests=455`; `./bin/ci-regression isf --no-book`
+    with `Files=274, Tests=1747`; `mdbook build docs/book`; and
+    `git diff --check`.
 - `ISF-WAIT-TRANSACTION-PARAM-COUNTS.1` is shipped and the task tree is
   closed:
   - `(wait COUNT)` now accepts `COUNT` when it names a same-transaction scalar

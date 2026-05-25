@@ -2461,18 +2461,21 @@ Current lowering:
 - Latency metadata accepts one or both `(min N)` and `(max N)` options.
 - `N` must be a positive decimal integer literal, a declared actor constant
   whose resolved value is a positive integer, an actor-local scalar parameter
-  default whose resolved value is a positive integer, or a qualified imported
-  package scalar constant whose resolved value is a positive integer. Each
+  default whose resolved value is a positive integer, a same-transaction
+  scalar parameter default whose resolved value is a positive integer, or a
+  qualified imported package scalar constant whose resolved value is a positive integer. Each
   option may appear at most once, and `min` must be less than or equal to
   `max` when both are present.
-- Actor constants, actor scalar parameter defaults, and qualified imported
-  package scalar constants are resolved before the existing counter lowering
-  path. The emitted `.fsm` guard and timeout checks contain the resolved
-  integer, not a symbolic runtime reference.
-- Transaction parameters, runtime interface signals, unknown symbolic names,
-  unknown or unqualified package constants, aggregate package constants,
-  package member/item paths, arbitrary expressions, zero-valued constants,
-  and zero-valued or non-scalar actor parameters fail closed. Use-site
+- Same-transaction scalar parameter defaults, actor constants, actor scalar
+  parameter defaults, and qualified imported package scalar constants are
+  resolved before the existing counter lowering path. The emitted `.fsm` guard
+  and timeout checks contain the resolved integer, not a symbolic runtime
+  reference. Same-transaction parameters shadow actor-level static names in
+  this value-domain slot and remain local lowering inputs.
+- Runtime interface signals, unknown symbolic names, unknown or unqualified
+  package constants, aggregate package constants, package member/item paths,
+  arbitrary expressions, zero-valued constants, zero-valued or non-scalar
+  actor/transaction parameters, and cross-transaction parameters fail closed. Use-site
   parameter overrides are excluded because they would require a separate
   policy for latency counter specialization.
 - The scheduler creates a transaction cycle counter, an increment source, and

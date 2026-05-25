@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.md` — completed `R14` task tree for same-transaction scalar parameter defaults in latency bounds.
 - `docs/tasks/ISF-WAIT-TRANSACTION-PARAM-COUNTS.md` — completed `R14` task tree for same-transaction scalar parameter defaults in wait counts.
 - `docs/tasks/R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT.md` — completed `R11` task tree for auditing the top-boundary convention/connect-by-name frontier.
 - `docs/tasks/R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT.md` — completed `R11` task tree for auditing the portable synthesizable-type frontier.

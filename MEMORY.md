@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 latency transaction parameter bounds shipped
+- Completed `ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.1` and closed the task tree.
+- Transaction `(latency (min PARAM) (max PARAM))` now accepts same-transaction
+  scalar parameter defaults when they resolve to positive integer literals.
+- Transaction latency-bound params shadow actor-level static names and remain
+  local lowering inputs; the resolved integer drives the existing latency
+  counter guard, timeout check, and `min <= max` validation.
+- Zero-valued, aggregate/list, and cross-transaction parameter latency bounds
+  fail closed before scheduled `.fsm` emission; activation-site override
+  specialization remains unsupported.
+- Validation passed: syntax checks; focused latency/parameter/public-audit
+  tests with `Files=16, Tests=455`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1747`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 wait transaction parameter counts shipped
 - Completed `ISF-WAIT-TRANSACTION-PARAM-COUNTS.1` and closed the task tree.
 - `(wait COUNT)` now accepts `COUNT` when it names a same-transaction scalar

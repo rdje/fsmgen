@@ -247,9 +247,9 @@ General source rules:
   Static wait counts use non-negative integer literals, same-transaction
   scalar parameter defaults, actor constants, actor-local scalar parameter
   defaults, or qualified imported package scalar constants. Static latency
-  bounds use positive integer literals, actor
-  constants, actor-local scalar parameter defaults, or qualified imported
-  package scalar constants.
+  bounds use positive integer literals, same-transaction scalar parameter
+  defaults, actor constants, actor-local scalar parameter defaults, or
+  qualified imported package scalar constants.
 - Numeric and exact-width integer literals are accepted where this document
   says scalar numeric literals are accepted.
 - Runtime expression positions may use scalar tokens, numeric/exact-width
@@ -894,8 +894,8 @@ Transaction clauses currently supported:
 (await_all done_port)
 (await_any done_port)
 (complete port)
-(latency (min N|PARAM|CONST|PACKAGE.CONSTANT)
-         (max N|PARAM|CONST|PACKAGE.CONSTANT))
+(latency (min N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)
+         (max N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT))
                                   ;; bounds resolve to positive integers
 (stage ...)
 (contract name (eventually signal within N|PARAM|CONST|PACKAGE.CONSTANT))
@@ -1924,18 +1924,21 @@ Latency:
 
 Rules:
 
-- `min` and `max` are positive integer literals, declared actor constants, or
-  actor-local scalar parameter defaults, or qualified imported package scalar
-  constants that resolve to positive integers.
+- `min` and `max` are positive integer literals, same-transaction scalar
+  parameter defaults, declared actor constants, actor-local scalar parameter
+  defaults, or qualified imported package scalar constants that resolve to
+  positive integers.
 - Duplicate options and `min > max` fail closed.
-- Actor constants, actor scalar parameter defaults, and qualified imported
-  package scalar constants resolve before the existing counter/error lowering
-  path, so generated `.fsm` guard and timeout checks contain the resolved
-  integer.
-- Transaction parameters, runtime interface signals, unknown symbolic names,
-  unknown or unqualified package constants, aggregate package constants,
-  package member/item paths, arbitrary expressions, zero-valued constants, and
-  zero-valued or non-scalar actor parameters remain invalid latency bounds.
+- Same-transaction scalar parameter defaults, actor constants, actor scalar
+  parameter defaults, and qualified imported package scalar constants resolve
+  before the existing counter/error lowering path, so generated `.fsm` guard
+  and timeout checks contain the resolved integer. Same-transaction parameters
+  shadow actor-level static names and remain local lowering inputs.
+- Runtime interface signals, unknown symbolic names, unknown or unqualified
+  package constants, aggregate package constants, package member/item paths,
+  arbitrary expressions, zero-valued constants, zero-valued or non-scalar
+  actor/transaction parameters, and cross-transaction parameters remain
+  invalid latency bounds.
 - Latency metadata lowers to counters/error checks where supported and reports
   through `dt_blocks[]`/`inferred_storage[]`; there is no separate
   latency-bound source-token report field.

@@ -104,7 +104,7 @@ ISF
     (complete done)
     (latency (min LAT_MIN) (max 8))))
 ISF
-        qr/Transaction 'main': latency min token 'LAT_MIN' is not a declared actor constant, actor scalar parameter, or qualified package scalar constant in transaction body/,
+        qr/Transaction 'main': latency min token 'LAT_MIN' is not a same-transaction scalar parameter, declared actor constant, actor scalar parameter, or qualified package scalar constant in transaction body/,
         'unqualified package constants are rejected as latency bounds',
     );
 
