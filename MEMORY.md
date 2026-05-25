@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 same-domain generated-do post-do await_any shipped
+- Completed `ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.1` and closed the task
+  tree.
+- Branch-contained nested repeats now accept the same-domain generated-do
+  post-do multi-pending `await_any` analogue: a repeat directly inside a
+  top-level `when` body or top-level `switch` branch may run multiple
+  generated spawns, then `(do child (params ...) [(bind ...)] (domain NAME))`,
+  then post-do `(await_any done)`, and then mandatory same-body
+  `(await_all done)` before nested repeat re-entry.
+- The generated do instance must complete before the post-do observation, the
+  `await_any` leaves the pending generated-spawn done set live, and the later
+  `await_all` drains every outstanding generated child.
+- Generated-composition, domain partition, and schedule-report clock-domain
+  summaries preserve declared same-domain ownership metadata without implying
+  CDC.
+- New spawn after the do before the drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred.
+- Public ISF specs, downstream handoff, public contract, mdBook, feature
+  matrix audit, roadmap, task tree, README index, and live docs are
+  synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t`; focused book/public audits with
+  `Files=3, Tests=333`; broader repeat/child regression with `Files=4,
+  Tests=74`; `./bin/ci-regression isf --no-book` with `Files=275,
+  Tests=1764`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 static-zero repeat mdBook wording synchronized
 - Completed `ISF-MDBOOK-STATIC-ZERO-REPEAT-TRUTH-SYNC.1` and closed the task
   tree.
@@ -9103,10 +9132,10 @@ This is the live continuity document for fast session recovery after crashes, re
   binding handoffs for that lexical do site, keeps every generated-spawn done
   handoff live through the generated do and `await_any`, and drains every
   pending generated child before the nested repeat check can loop.
-- Domain metadata on generated-do post-do `await_any`, the switch-contained
-  bound analogue, new spawn after the do before drain, cross-domain
-  activation, deeper branch/loop nesting, and broader outstanding-child
-  semantics remain fail-closed.
+- At that time, the domain-metadata post-do generated-do analogue and the
+  switch-contained bound analogue remained fail-closed, along with new spawn
+  after the do before drain, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child semantics.
 - The ISF spec, downstream integration handoff, public contract, mdBook,
   task tree, roadmap, live docs, and audits now describe the shipped subset
   and remaining deferrals.

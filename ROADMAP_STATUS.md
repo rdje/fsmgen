@@ -4,6 +4,26 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 same-domain generated-do post-do await_any:
+  `ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.1` shipped the branch-contained
+  same-domain generated-do post-do multi-pending `await_any` analogue and
+  closed the task tree. A repeat directly inside a top-level `when` body or
+  top-level `switch` branch may now run multiple generated spawns, then a
+  static-parameter generated blocking `do` with optional bind handoffs and
+  declared same-domain metadata, then post-do `(await_any done)` as an
+  observation point, and then the mandatory same-body `(await_all done)` drain
+  before nested repeat re-entry. The generated do instance must complete
+  before the observation; generated-spawn done handoffs remain live for the
+  later drain; generated-composition, domain partition, and schedule-report
+  clock-domain summaries retain the declared ownership metadata without
+  implying CDC. New spawn after the do before the drain, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  lifetime semantics remain fail-closed/deferred. Validation passed: syntax
+  checks; `prove -Iperl t/1215-isf-spawn-parameter-binding.t`; focused
+  book/public audits with `Files=3, Tests=333`; broader repeat/child
+  regression with `Files=4, Tests=74`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1764`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Current R14 mdBook static-zero repeat truth sync:
   `ISF-MDBOOK-STATIC-ZERO-REPEAT-TRUTH-SYNC.1` synchronized stale ISF
   introduction wording in the mdBook and closed the task tree. The book no
@@ -4519,10 +4539,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(await_all done)` before nested repeat re-entry. Generated-top input/output
   binding handoffs are wired for the generated do instance, that instance
   must complete before the observation, and generated-spawn done handoffs
-  remain live for the later drain. Domain metadata on generated-do post-do
-  `await_any`, spawn-after-do, cross-domain activation, deeper branch/loop
-  nesting, and broader outstanding-child semantics remain fail-closed. The
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION` task tree is closed.
+  remain live for the later drain. At that time, domain metadata on
+  generated-do post-do `await_any` remained fail-closed; it is now shipped by
+  `ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.1`. Spawn-after-do, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  semantics remain fail-closed. The `ISF-REPEAT-BODY-CHILD-ACTIVATION` task
+  tree is closed.
 - R14 ATL completed axis: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2` shipped the
   first behavior-bearing actor-transaction trigger subset after `.4.3.2`
   shipped actor-event waits. A top-level actor can declare exactly one static

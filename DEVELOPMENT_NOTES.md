@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Same-domain generated do can precede post-do await_any
+- `ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.1` completes the same-domain
+  metadata analogue of the shipped static-parameter and bound generated-do
+  post-do `await_any` subsets.
+- The lowerer now treats branch-contained same-domain generated `do` the same
+  way it treats the bound generated-do precedent: the generated do may run
+  while multiple generated spawns remain pending, but only inside a repeat
+  directly in a top-level `when` body or top-level `switch` branch, only before
+  a post-do multi-pending `(await_any done)` observation, and only when a
+  later same-body `(await_all done)` drains the same generated-spawn set before
+  nested repeat re-entry.
+- The domain subclause remains ownership metadata. It records the generated
+  do instance in generated-composition, domain partition, and schedule-report
+  clock-domain summaries, but it does not introduce CDC behavior or relax the
+  same-domain validation model.
+- The post-do `await_any` is still an observation point. It waits until either
+  pending generated spawn is done, does not clear any pending generated-spawn
+  done handoff, and leaves the later `await_all` as the mandatory drain.
+- New spawn after the do before the drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime policy remain
+  deferred.
+
 ## 2026-05-25: The ISF introduction must not lag shipped repeat pruning
 - `ISF-MDBOOK-STATIC-ZERO-REPEAT-TRUTH-SYNC.1` is documentation-only.
 - The feature matrix, transaction chapter, lowering reference, downstream
@@ -4704,9 +4726,10 @@ This document captures engineering rationale, design constraints, and working de
   implementation therefore stays intentionally narrow: one validation
   symmetry fix plus focused coverage proving binding handoffs, generated do
   completion ordering, post-do observation, and later drain behavior.
-- Domain-qualified generated-do post-do `await_any`, post-do spawn, deeper
-  nesting, cross-domain activation, and broader outstanding-child lifetime
-  semantics remain separate future work with their own task-tree ownership.
+- At that time, the domain-metadata post-do generated-do analogue, post-do
+  spawn, deeper nesting, cross-domain activation, and broader
+  outstanding-child lifetime semantics were separate future work with their
+  own task-tree ownership.
 
 ## 2026-05-20: ATL source-expression ordering gets the same diagnostic policy
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` selects the source-expression
@@ -6448,10 +6471,10 @@ This document captures engineering rationale, design constraints, and working de
   start/done handoff and generated-top input/output binding handoffs. Its
   fresh done pulse is required before the post-do `await_any`; that
   `await_any` observes the generated-spawn done set without clearing it.
-- Domain metadata on generated-do post-do `await_any`, the switch-contained
-  bound analogue, new spawn after the do before drain, cross-domain
-  activation, deeper branch/loop nesting, and broader outstanding-child
-  semantics remain separate contracts.
+- At that time, the domain-metadata post-do generated-do analogue and the
+  switch-contained bound analogue were separate contracts, along with new
+  spawn after the do before drain, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child semantics.
 - The next leaf is selection-only: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`
   must pick one bounded frontier before any additional behavior change.
 ## 2026-05-18: when-contained bound generated do before post-do await_any is the next subset

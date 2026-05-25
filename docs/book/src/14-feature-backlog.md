@@ -720,13 +720,15 @@ lexical site, wires generated-top binding handoffs once, waits for the
 instance's fresh done handoff before the branch-owned repeat check, and
 leaves the pending generated-spawn done set live for the later drain.
 
-Generated `do` after a prior multi-pending `await_any`, `await_any` after the
-do, new nested `spawn` after the do before the drain, cross-domain
-repeat-body `do`, generated/spawn nested activation beyond the documented
-branch-contained generated `do` cases and the branch-contained spawned cases,
-deeper branch repeat activation, loop-contained repeat activation, and
-broader outstanding-child lifetime semantics beyond the mandatory-drain
-subset remain backlog.
+Generated `do` after a prior multi-pending `await_any` and generated `do`
+before post-do multi-pending `await_any` have shipped only for the documented
+branch-contained generated-child, static-parameter, bound, and same-domain
+metadata variants. New nested `spawn` after the do before the drain,
+cross-domain repeat-body `do`, generated/spawn nested activation beyond the
+documented branch-contained generated `do` cases and the branch-contained
+spawned cases, deeper branch repeat activation, loop-contained repeat
+activation, and broader outstanding-child lifetime semantics beyond the
+mandatory-drain subset remain backlog.
 
 The shipped branch-contained generated nested do subsets still keep
 unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
@@ -1049,10 +1051,20 @@ generated do instance, requires that instance's fresh done handoff before the
 observation, and leaves the pending generated-spawn done set live for the
 later drain.
 
-Domain metadata on generated-do post-do `await_any`, new spawn after the do
-before the drain, cross-domain activation, deeper branch/loop nesting, and
-broader outstanding-child semantics remain backlog until their own leaves
-select and ship them.
+The same-domain generated-do post-do `await_any` analogue is now shipped for
+both top-level `when` body and top-level `switch` branch nested repeats: a
+static-parameter generated `(do child (params ...) [(bind ...)] (domain
+NAME))` may run while multiple generated spawns remain pending, then use
+post-do `(await_any done)` as an observation point before the later same-body
+`(await_all done)` drain.
+
+That subset preserves generated-top parameter binding, optional input/output
+binding handoffs, and declared same-domain ownership metadata for the
+generated do instance; the post-do `await_any` does not clear the pending
+generated-spawn done set. New spawn after the do before the drain,
+cross-domain activation, deeper branch/loop nesting, and broader
+outstanding-child semantics remain backlog until their own leaves select and
+ship them.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. Known-width runtime

@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Same-domain generated-do post-do await_any shipped
+- Completed `ISF-REPEAT-GENDO-DOMAIN-POST-AWAITANY.1` and closed the task
+  tree.
+- A repeat directly inside a top-level `when` body or top-level `switch`
+  branch may now run multiple generated spawns, then a static-parameter
+  generated blocking `do` with optional bind handoffs and declared same-domain
+  metadata, then post-do `(await_any done)` as an observation point, and then
+  a mandatory same-body `(await_all done)` drain before nested repeat re-entry.
+- The generated do instance must complete before the post-do observation;
+  the `await_any` does not clear the pending generated-spawn done set, and
+  the later `await_all` still drains every outstanding generated child.
+- Generated-composition, domain partition, and schedule-report clock-domain
+  summaries retain declared ownership metadata without implying CDC.
+- New spawn after the do before the drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, feature matrix
+  audit, task tree, README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t`; focused book/public audits with
+  `Files=3, Tests=333`; broader repeat/child regression with `Files=4,
+  Tests=74`; `./bin/ci-regression isf --no-book` with `Files=275,
+  Tests=1764`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Static-zero repeat mdBook wording synchronized
 - Completed `ISF-MDBOOK-STATIC-ZERO-REPEAT-TRUTH-SYNC.1` and closed the task
   tree.
@@ -8471,9 +8495,10 @@ This is the persistent technical change history for FSMGen.
   generated-spawn done set live through the observation, preserves
   source-order samples around spawn/do/await_any/await_all, and drains every
   generated spawn before nested repeat re-entry.
-- Domain metadata on generated-do post-do `await_any`, the switch-contained
-  bound analogue, spawn-after-do before the drain, cross-domain activation,
-  deeper nesting, and broader outstanding-child semantics remain fail-closed.
+- At that time, the domain-metadata post-do generated-do analogue and the
+  switch-contained bound analogue remained fail-closed, along with
+  spawn-after-do before the drain, cross-domain activation, deeper nesting,
+  and broader outstanding-child semantics.
 - Synchronized the ISF spec, downstream integration spec, public contract,
   task tree, roadmap board, live docs, doc audits, and mdBook.
 - Opened `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` as the next selection leaf

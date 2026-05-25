@@ -1414,9 +1414,14 @@ Rules:
   observation and later-drain contract while also wiring the generated-top
   input/output binding handoffs for the generated do instance.
 
-  Domain-qualified generated-do post-do `await_any`, new nested `spawn` after
-  the do before the drain, deeper branch/loop nesting, and cross-domain
-  activation remain fail-closed.
+  Top-level `when` body and top-level `switch` branch static-parameter
+  same-domain generated `(do child (params ...) [(bind ...)] (domain NAME))`
+  support the same post-do observation and later-drain contract while also
+  retaining declared ownership metadata in generated-composition,
+  domain-partition, and schedule-report clock-domain summaries.
+
+  New nested `spawn` after the do before the drain, deeper branch/loop
+  nesting, and cross-domain activation remain fail-closed.
 
   Cross-domain repeat-body `do`, broader outstanding-child semantics,
   `stage`, `contract`, deeper branch nesting, nested `while`, and nested

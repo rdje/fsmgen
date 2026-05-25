@@ -1573,9 +1573,13 @@ also supports static-parameter bound generated
 generated-top input/output binding handoffs for that generated do instance
 while preserving the same later-drain contract. The top-level `switch` branch
 subset supports the same static-parameter bound generated-do post-do
-`await_any` observation and later-drain contract. Domain-qualified
-generated-do post-do `await_any` and new spawn after the do before the drain
-remain outside the public shipped subset.
+`await_any` observation and later-drain contract. The top-level `when` body
+and top-level `switch` branch same-domain generated
+`(do child (params ...) [(bind ...)] (domain NAME))` subsets support the same
+post-do `await_any` observation and later-drain contract while retaining
+declared ownership metadata in generated-composition, domain-partition, and
+schedule-report clock-domain summaries. New spawn after the do before the
+drain remains outside the public shipped subset.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. In the top-level `when` body and top-level

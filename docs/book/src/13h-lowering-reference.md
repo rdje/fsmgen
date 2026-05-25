@@ -1214,9 +1214,13 @@ the authored static parameter override in the generated top. Top-level
 `when` body and top-level `switch` branch static-parameter bound generated
 `(do child (params ...) (bind ...))` shares that post-do observation and
 later-drain contract while lowering also wires the generated-top input/output
-binding handoffs for the generated do instance. Domain-qualified generated-do
-post-do `await_any` and a new nested spawn after the do before the drain
-remain fail-closed.
+binding handoffs for the generated do instance. Top-level `when` body and
+top-level `switch` branch same-domain generated
+`(do child (params ...) [(bind ...)] (domain NAME))` share that post-do
+observation and later-drain contract while lowering also retains declared
+ownership metadata in generated-composition, domain-partition, and
+schedule-report clock-domain summaries. A new nested spawn after the do
+before the drain remains fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
