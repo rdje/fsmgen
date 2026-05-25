@@ -2553,6 +2553,14 @@ snapshot-vs-live timing conversion, additional binding report fields beyond
 the shipped endpoint-kind and binding-timing metadata, and broader static
 conflict diagnostics remain backlog.
 
+The next selected report-only binding metadata field is
+`authored_timing_mode` on `transaction_port_bindings[]`. It will report
+`snapshot` or `live` when the source binding explicitly includes
+`(timing snapshot)` or `(timing live)`, and JSON `null` when no explicit
+timing clause was authored, including output bindings. This field remains an
+implementation frontier until the owning task tree lands; it does not imply
+behavior-changing timing conversion.
+
 The shipped first snapshot-vs-live timing syntax is an optional fourth
 subclause on input bindings: `(input PORT EXPR (timing snapshot))` or
 `(input PORT EXPR (timing live))`. This is current-timing-only: `snapshot`

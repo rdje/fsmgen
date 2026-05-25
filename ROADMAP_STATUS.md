@@ -2,8 +2,20 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA`.
+- Current frontier: `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2`.
+- Current R14 authored binding timing metadata selection:
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.1` created the
+  active task tree for authored timing assertion report metadata. The selected
+  public report key is `authored_timing_mode` on
+  `transaction_port_bindings[]` entries. It will report `snapshot` or `live`
+  when the source binding explicitly spells `(timing snapshot)` or
+  `(timing live)`, and JSON `null` when no explicit timing clause was
+  authored, including output bindings. This selection does not change parser
+  behavior, scheduler lowering, generated `.fsm`, HDL, schedule-report
+  payloads, schema version, public API, or runtime behavior yet. The next
+  frontier is implementation and public documentation synchronization in
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2`.
 - Current R14 transaction-port binding timing syntax implementation:
   `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` shipped explicit
   current-timing input-binding syntax and closed the task tree. Input bindings
@@ -8099,15 +8111,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA`.
+- Current frontier: `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2`.
 - Completion status:
-  `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` shipped explicit
-  current-timing `(timing snapshot)` / `(timing live)` input-binding syntax and
-  closed the task tree. The syntax is accepted only where it matches the
-  already-shipped binding timing class; mismatches, malformed timing clauses,
-  and output-binding timing clauses fail closed. Scheduler lowering, generated
-  `.fsm`, HDL, schedule-report schema, and runtime behavior are unchanged.
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.1` selected
+  `authored_timing_mode` as the next additive report field for authored
+  transaction input-binding timing assertions. The next frontier is
+  implementation; parser behavior, scheduler lowering, generated `.fsm`, HDL,
+  schedule-report payloads, schema version, public API, and runtime behavior
+  are unchanged by the selection slice.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

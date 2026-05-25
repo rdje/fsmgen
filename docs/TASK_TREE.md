@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA` | `active` | `R14` | `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.md) |
 
 ## Proposed Task Trees
 

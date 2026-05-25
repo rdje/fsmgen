@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Authored binding timing metadata tree selected
+- Created active task tree
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA`.
+- Completed selection leaf
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.1`; the next
+  implementation frontier is
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.2`.
+- Selected public report key `authored_timing_mode` for
+  `transaction_port_bindings[]` entries.
+- The selected field will report `snapshot` or `live` when the source binding
+  explicitly spells `(timing snapshot)` or `(timing live)`, and JSON `null`
+  when no explicit timing clause was authored, including output bindings.
+- No parser behavior, scheduler lowering, generated `.fsm`, HDL,
+  schedule-report payloads, schema version, public API, or runtime behavior
+  changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits; `mdbook
+  build docs/book`; and `git diff --check`.
+
 ### R14 — Binding timing syntax shipped
 - Completed `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` and closed the
   task tree.

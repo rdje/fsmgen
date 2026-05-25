@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Authored timing mode should not overload binding_timing
+- `ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.1` selects
+  `authored_timing_mode` as a separate report field instead of folding source
+  syntax into `binding_timing`.
+- `binding_timing` is the actual transfer class already used by downstream
+  tools: `activation_region`, `generated_live_handoff`, `trigger_payload`, or
+  `done_guarded`. `authored_timing_mode` is source provenance:
+  `snapshot`, `live`, or JSON `null` when the author omitted the timing
+  clause.
+- Keeping the two fields separate avoids implying that current-timing syntax
+  performs behavior-changing conversion.
+
 ## 2026-05-25: Timing syntax validates authored intent against current wiring
 - `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` accepts an optional fourth
   `(timing snapshot)` or `(timing live)` subclause on input bindings, records
