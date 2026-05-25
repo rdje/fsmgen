@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 duplicate output binding target diagnostic shipped
+- Completed
+  `ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` and
+  closed the task tree.
+- Multiple output bindings in one activation bind block that target the same
+  actor signal now fail closed before scheduled `.fsm` emission.
+- Input binding fan-out and accepted single-output binding behavior are
+  unchanged.
+- This is a fail-closed diagnostic hardening slice; generated `.fsm`, HDL,
+  schedule-report schema, public API, and runtime behavior for accepted
+  sources did not change.
+- Validation passed: syntax checks; focused transaction-port/conflict/spec/book
+  tests with `Files=7, Tests=381`; final live-doc/book audits with
+  `Files=4, Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 local rule-trigger output diagnostic hardened
 - Completed `ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.1` and closed
   the task tree.

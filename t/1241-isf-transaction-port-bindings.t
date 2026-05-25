@@ -382,6 +382,27 @@ ISF
     (complete done)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'duplicate output actor target', qr/\ATransaction 'parent': do target 'child' output bindings target actor signal 'resp' more than once/);
+(actor duplicate_output_actor_target
+  (clock clk)
+  (interface (input start) (output done) (output resp (width 8)))
+  (transaction child
+    (ports
+      (output data (width 8))
+      (output sideband (width 8)))
+    (on child_start)
+    (update data 0)
+    (update sideband 0)
+    (complete child_done))
+  (transaction parent
+    (on start)
+    (do child
+      (bind
+        (output data resp)
+        (output sideband resp)))
+    (complete done)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'local live timing mismatch', qr/\ATransaction 'parent': do target 'child' input binding for port 'addr' requested timing 'live', but this activation currently uses 'activation_region'/);
 (actor local_live_timing
   (clock clk)

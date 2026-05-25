@@ -1074,7 +1074,9 @@ does not exist:
   additional binding reports beyond endpoint-kind, binding-timing, and
   authored timing-mode metadata, and broader static binding conflict
   diagnostics are not shipped. The direct/local rule-trigger output-binding
-  diagnostic names the missing generated-child completion identity.
+  diagnostic names the missing generated-child completion identity. Duplicate
+  output actor targets inside one bind block fail closed before broader
+  assignment conflict handling.
 - Nested stages, stage-local compute/action bodies, multiple ready/valid
   endpoints, registered-valid variants, and skid buffers are not shipped.
 - Temporal contracts beyond the top-level bounded eventual subset, including

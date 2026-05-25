@@ -4,6 +4,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 duplicate output binding target diagnostic:
+  `ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1`
+  rejects multiple output bindings in one activation bind block when they
+  target the same actor signal and closed the task tree. Input binding fan-out
+  and accepted single-output binding behavior are unchanged. This is
+  fail-closed diagnostic hardening: generated `.fsm`, HDL, schedule-report
+  schema, public API, and runtime behavior for accepted sources did not
+  change. Validation passed: syntax checks; focused
+  transaction-port/conflict/spec/book tests with `Files=7, Tests=381`; final
+  live-doc/book audits with `Files=4, Tests=366`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Current R14 local rule-trigger output-binding diagnostic hardening:
   `ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.1` clarified the
   direct/local rule-trigger output-binding fail-closed diagnostic and closed
@@ -11607,6 +11618,23 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` is
+  shipped and the task tree is closed:
+  - multiple output bindings in one activation bind block now fail closed when
+    they target the same actor signal,
+  - the diagnostic names the activation context and duplicated actor target
+    before scheduled `.fsm` emission,
+  - input binding fan-out, accepted single-output binding behavior, generated
+    `.fsm`, HDL, schedule-report schema, public API, and runtime behavior for
+    accepted sources are unchanged,
+  - broader cross-activation assignment conflicts remain owned by the existing
+    conflict machinery,
+  - and the ISF spec, mdBook, task tree, README index, roadmap, and live docs
+    are synchronized.
+  - Validation passed: syntax checks; focused
+    transaction-port/conflict/spec/book tests with `Files=7, Tests=381`; final
+    live-doc/book audits with `Files=4, Tests=366`; `mdbook build docs/book`;
+    and `git diff --check`.
 - `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE.2` is shipped and the task tree
   is closed:
   - generated child activation-site overrides on `spawn`, generated blocking

@@ -177,6 +177,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md` — completed `R14` task tree for activation-site override diagnostics on generated child temporal contract-window parameters.
 - `docs/tasks/ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.md` — completed `R14` roadmap-maintenance task tree for activation override diagnostic coverage synchronization.
 - `docs/tasks/ROADMAP-R14-LATEST-SLICE-TRUTH-SYNC.md` — completed `R14` roadmap-maintenance task tree for latest R14 slice roadmap truth synchronization.
+- `docs/tasks/ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.md` — completed `R14` task tree for duplicate output-binding actor-target diagnostics.
 - `docs/tasks/ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.md` — completed `R14` task tree for direct/local rule-trigger output-binding diagnostic hardening.
 - `docs/tasks/ISF-AUTHORED-TIMING-METADATA-DOC-TRUTH-SYNC.md` — completed `R14` documentation truth-sync task tree for authored binding timing metadata wording.
 - `docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.md` — completed `R14` task tree for authored transaction-port binding timing request report metadata.

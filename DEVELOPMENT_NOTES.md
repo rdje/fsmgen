@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Duplicate output binding targets fail before assignment conflict
+- `ISF-TRANSACTION-PORT-BINDING-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.1` keeps
+  the duplicate-target check activation-local: two output bindings in the same
+  bind block to one actor target have no source-level selection policy, so the
+  compiler rejects them before scheduled `.fsm` emission.
+- Input binding fan-out remains allowed, and broader cross-activation output
+  conflicts remain owned by the existing conflict machinery and runtime
+  selector checks.
+
 ## 2026-05-25: Direct/local trigger output diagnostics should name identity
 - `ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.1` keeps direct/local
   rule-trigger output bindings rejected, but aligns the diagnostic with the

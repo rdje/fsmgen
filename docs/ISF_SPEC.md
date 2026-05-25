@@ -2362,6 +2362,9 @@ same-target rule/transaction conflicts involving spawned output bindings enter
 the existing fail-closed rule/transaction path, while accepted spawn-output and
 rule-trigger input fan-in reaches the SystemVerilog backend's verification-only
 selector assertions.
+Within a single activation bind block, multiple output bindings may not target
+the same actor signal; this fails closed before broader assignment conflict
+analysis because no intra-bind output selection policy is shipped.
 
 ### 7.2 Sampling and Variables
 

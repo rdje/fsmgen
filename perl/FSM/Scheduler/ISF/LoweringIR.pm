@@ -5120,6 +5120,7 @@ sub _parse_activation_bind_clause {
 
     my @bindings;
     my %seen;
+    my %seen_output_actor_target;
     for my $entry (@{$clause}[1 .. $#$clause]) {
         confess "$context bind entries must be '(input port expr [(timing snapshot|live)])' or '(output port signal)'\n"
             unless ref($entry) eq 'ARRAY' && (@$entry == 3 || @$entry == 4);
@@ -5137,6 +5138,8 @@ sub _parse_activation_bind_clause {
         if ($role eq 'output') {
             confess "$context output bind actor target must be a scalar HDL identifier\n"
                 unless _is_hdl_identifier($actor_endpoint);
+            confess "$context output bindings target actor signal '$actor_endpoint' more than once\n"
+                if $seen_output_actor_target{$actor_endpoint}++;
         } else {
             confess "$context input bind expression must be a scalar signal, numeric/exact-width literal, or non-empty list expression\n"
                 unless _is_activation_input_binding_expr_shape($actor_endpoint);
