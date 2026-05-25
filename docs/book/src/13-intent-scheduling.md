@@ -608,8 +608,9 @@ The ISF-specific current limitations are:
   `DEPTH=4` fixture, automatic non-zero reset values, standalone
   transaction/drive exports, package/imported constants outside the shipped
   qualified actor parameter, generated-child transaction parameter default,
-  and generated activation override scalar-constant subsets, derived parameter
-  expressions, and nested library imports remain backlog work.
+  generated activation override, and reusable-library use-site override
+  scalar-constant subsets, derived parameter expressions, and nested library
+  imports remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn and blocking `do` parameter declaration,
@@ -710,10 +711,12 @@ The ISF-specific current limitations are:
   aggregate package constants, and package member/item paths fail closed.
 
   Reusable-library use-site parameter overrides may also use importing-actor
-  constants, importing-actor scalar parameter defaults, and enum members as
-  scalar values or scalar leaves inside compatible aggregate/list override
-  values; those static names resolve to literal generated-top bindings and
-  `library_uses[]` report values.
+  constants, importing-actor scalar parameter defaults, enum members, and
+  qualified imported package scalar constants as scalar values or scalar leaves
+  inside compatible aggregate/list override values; those static names resolve
+  to literal generated-top/generated-composition bindings and `library_uses[]`
+  report values. Unqualified package constants, aggregate package constants,
+  and package member/item paths fail closed.
 
   Example use-site specialization:
 

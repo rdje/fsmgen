@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -54,7 +54,7 @@ package scalar constants by qualified name, for example
 ## Task Tree
 
 - ID: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship bounded package scalar constants in reusable-library use-site parameter overrides.`
   Children: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1`,
     `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2`
@@ -68,18 +68,18 @@ package scalar constants by qualified name, for example
   Commit: `this commit: ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1: select library use package constants`
 
 - ID: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement package scalar constants as reusable-library use-site parameter override values.`
   Acceptance: `Lowering behavior, diagnostics, public contracts, focused
   tests, mdBook, downstream handoff, and broader ISF gate are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `this commit: ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2: ship library use package constants`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` | `pending` | The package-constant reusable-library use-site override boundary is selected and ready for implementation. |
+| 1 | `closed` | `done` | The package-constant reusable-library use-site override implementation shipped and the tree is closed. |
 
 ## Decisions
 
@@ -107,16 +107,21 @@ package scalar constants by qualified name, for example
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-24` | `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` | syntax checks; focused reusable-library/package tests with `Files=8, Tests=21`; public/spec/book/backlog audits with `Files=7, Tests=352`; `./bin/ci-regression isf --no-book` with `Files=258, Tests=1701`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1` | `this commit: ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1: select library use package constants` | `selection slice` |
-| `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` | `pending` | `implementation slice` |
+| `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` | `this commit: ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2: ship library use package constants` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created task tree and selected the bounded package scalar
   constants in reusable-library use-site parameter overrides implementation
   frontier.
+- `2026-05-24`: Shipped qualified imported package scalar constants in
+  reusable-library use-site parameter overrides, resolved those values to
+  literal generated-top/generated-composition and `library_uses[]` bindings,
+  and closed the task tree.

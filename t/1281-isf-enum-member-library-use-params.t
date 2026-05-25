@@ -264,7 +264,7 @@ ISF
       (input trigger trigger)
       (output fired fired))))
 ISF
-        qr/use 'rx' parameter 'MODE' uses unsupported parameter value 'TOP_WIDTH'; reusable-library use-site parameter overrides accept numeric, exact-width, actor-constant, actor scalar parameter, enum member, and aggregate\/list literal values only/,
+        qr/use 'rx' parameter 'MODE' uses unsupported parameter value 'TOP_WIDTH'; reusable-library use-site parameter overrides accept numeric, exact-width, actor-constant, actor scalar parameter, enum member, qualified package scalar constant, and aggregate\/list literal values only/,
         'unknown symbolic use-site overrides remain rejected',
     );
 
@@ -287,7 +287,7 @@ ISF
       (input trigger trigger)
       (output fired fired))))
 ISF
-        qr/use 'rx' parameter 'MODE' value 'trigger' is a runtime interface signal; reusable-library use-site parameter overrides accept static literals, actor constants, actor scalar parameters, enum members, and aggregate\/list literals only/,
+        qr/use 'rx' parameter 'MODE' value 'trigger' is a runtime interface signal; reusable-library use-site parameter overrides accept static literals, actor constants, actor scalar parameters, enum members, qualified package scalar constants, and aggregate\/list literals only/,
         'runtime signal-looking use-site overrides remain rejected',
     );
 

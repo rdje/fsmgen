@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Library use package constants publish literal specialized values
+- `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` keeps reusable-library use-site
+  package constants on the importer-side specialization boundary. The parser
+  resolves `PACKAGE.CONSTANT` to a scalar numeric or exact-width literal
+  before generated-top/generated-composition publication, so downstream
+  generated tops and `library_uses[]` reports remain self-contained.
+- The parser validation change is intentionally narrow: reusable-library
+  use-site parameter override values may pass package-constant-shaped
+  qualified tokens to the package resolver, but unrelated enum/member and
+  expression contexts do not inherit this widening.
+- The shipped surface remains qualified and scalar only. Unknown package
+  constants, unqualified package constants, aggregate constants, package
+  member/item paths, local-enum/package-constant ambiguity, runtime signals,
+  unsupported actor values, and arbitrary expressions continue to fail closed
+  or stay deferred.
+
 ## 2026-05-24: Library use package constants should specialize at the importer
 - `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1` selects qualified imported package
   scalar constants for reusable-library use-site parameter overrides as the

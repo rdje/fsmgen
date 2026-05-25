@@ -5476,7 +5476,7 @@ sub _validate_use_params($self, $actor, $use, $exported_actor) {
 
 sub _resolve_library_use_param_value($self, $actor, $value, $context) {
     if (!ref($value)) {
-        confess "Error: $context uses undefined parameter value; reusable-library use-site parameter overrides accept numeric, exact-width, actor-constant, actor scalar parameter, enum member, and aggregate/list literal values only\n"
+        confess "Error: $context uses undefined parameter value; reusable-library use-site parameter overrides accept numeric, exact-width, actor-constant, actor scalar parameter, enum member, qualified package scalar constant, and aggregate/list literal values only\n"
             unless defined($value);
         return _clone_isf_value($value)
             if _is_numeric_or_exact_width_literal($value);
@@ -5495,10 +5495,29 @@ sub _resolve_library_use_param_value($self, $actor, $value, $context) {
                 return _clone_isf_value($resolved_value);
             }
 
-            confess "Error: $context value '$value' is a runtime interface signal; reusable-library use-site parameter overrides accept static literals, actor constants, actor scalar parameters, enum members, and aggregate/list literals only\n"
+            confess "Error: $context value '$value' is a runtime interface signal; reusable-library use-site parameter overrides accept static literals, actor constants, actor scalar parameters, enum members, qualified package scalar constants, and aggregate/list literals only\n"
                 if _actor_interface_signal_by_name($actor, $value);
 
-            confess "Error: $context uses unsupported parameter value '$value'; reusable-library use-site parameter overrides accept numeric, exact-width, actor-constant, actor scalar parameter, enum member, and aggregate/list literal values only\n";
+            confess "Error: $context uses unsupported parameter value '$value'; reusable-library use-site parameter overrides accept numeric, exact-width, actor-constant, actor scalar parameter, enum member, qualified package scalar constant, and aggregate/list literal values only\n";
+        }
+        if (my $package_constant = _actor_package_constant_reference($actor, $value)) {
+            my ($package_name, $constant_name, $suffix) = @$package_constant;
+            my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+            if (defined $constant_payload) {
+                confess "Error: $context token '$value' is ambiguous: it matches local enum member '$value' and imported package constant '$value'\n"
+                    if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
+                confess "Error: $context package constant '$package_name.$constant_name' aggregate/member path '$value' remains deferred; reusable-library use-site parameter overrides accept only qualified package scalar constants in this slice\n"
+                    if $suffix ne '';
+                my $resolved_value = _package_constant_scalar_value($constant_payload);
+                confess "Error: $context package constant '$package_name.$constant_name' must resolve to a scalar numeric or exact-width literal value\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return _clone_isf_value($resolved_value);
+            }
+
+            confess "Error: $context references unknown package constant '$value'\n"
+                if $suffix eq '' && !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
         }
         if (_is_enum_member_reference($value)) {
             my $resolved_value = $self->_resolve_actor_enum_member_value($actor, $value);
@@ -5509,7 +5528,7 @@ sub _resolve_library_use_param_value($self, $actor, $value, $context) {
             return _clone_isf_value($resolved_value);
         }
 
-        confess "Error: $context uses unsupported parameter value '$value'; reusable-library use-site parameter overrides accept numeric, exact-width, actor-constant, actor scalar parameter, enum member, and aggregate/list literal values only\n";
+        confess "Error: $context uses unsupported parameter value '$value'; reusable-library use-site parameter overrides accept numeric, exact-width, actor-constant, actor scalar parameter, enum member, qualified package scalar constant, and aggregate/list literal values only\n";
     }
 
     confess "Error: $context uses unsupported parameter value shape; reusable-library use-site parameter overrides accept non-empty aggregate/list literal values only\n"
@@ -5732,14 +5751,22 @@ sub _is_library_namespace {
         && $value =~ /\A[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*\z/;
 }
 
+sub _is_package_constant_reference_shape {
+    my ($value) = @_;
+    return defined($value)
+        && !ref($value)
+        && $value =~ /\A[A-Za-z_]\w*\.[A-Za-z_]\w*(?:\.[A-Za-z_]\w*|\[\d+\])*\z/;
+}
+
 sub _validate_isf_param_value {
     my ($value, $context) = @_;
     if (!ref($value)) {
-        confess "$context uses unsupported parameter value '$value'; first ISF library parameter binding accepts numeric, exact-width, actor-constant, actor scalar parameter, enum member, and aggregate/list literals only\n"
+        confess "$context uses unsupported parameter value '$value'; first ISF library parameter binding accepts numeric, exact-width, actor-constant, actor scalar parameter, enum member, qualified package scalar constant, and aggregate/list literals only\n"
             unless defined($value)
                 && (_is_numeric_or_exact_width_literal($value)
                     || _is_hdl_identifier($value)
-                    || _is_enum_member_reference($value));
+                    || _is_enum_member_reference($value)
+                    || _is_package_constant_reference_shape($value));
         return 1;
     }
 

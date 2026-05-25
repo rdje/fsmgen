@@ -2,6 +2,32 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-24: R14 — Reusable-library use-site package constants shipped
+- Completed `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` and closed the task tree.
+- Reusable-library use-site parameter override scalar values and scalar
+  leaves inside compatible aggregate/list override values may now reference
+  qualified imported package scalar constants such as `shared.DEFAULT_WIDTH`.
+- Parser reusable-library use-site parameter validation now accepts
+  package-constant-shaped qualified tokens so the package-specific resolver
+  can issue targeted unknown, aggregate, path, ambiguity, and value-domain
+  diagnostics.
+- Reusable-library use-site publication resolves package constants to literal
+  generated-top/generated-composition bindings and `library_uses[]` report
+  values, matching the existing importer-side specialization model.
+- Unknown package constants, unqualified package constants, package aggregate
+  constants, package member/item paths, ambiguous local-enum versus
+  package-constant spellings, runtime signals, unsupported actor values,
+  arbitrary expressions, and package constants outside this use-site override
+  surface remain fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused reusable-library/package tests
+  with `Files=8, Tests=21`; public/spec/book/backlog audits with `Files=7,
+  Tests=352`; `./bin/ci-regression isf --no-book` with `Files=258,
+  Tests=1701`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-24: R14 — Reusable-library use-site package constants selected
 - Created active task tree `ISF-LIBRARY-USE-PACKAGE-CONSTANTS`.
 - Completed `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1`; the selected

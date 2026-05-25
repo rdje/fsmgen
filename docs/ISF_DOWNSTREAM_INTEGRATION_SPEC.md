@@ -603,8 +603,12 @@ Rules:
   literal generated-top bindings and generated-composition report values;
   unqualified package constants, aggregate package constants, and package
   member/item paths fail closed. Reusable-library use-site parameter overrides
-  may also use local or package-qualified enum members as scalar values or
-  scalar leaves inside compatible aggregate/list override values. Duplicate
+  may also use local or package-qualified enum members or qualified imported
+  package scalar constants as scalar values or scalar leaves inside compatible
+  aggregate/list override values. Package-constant-backed use-site overrides
+  resolve to literal generated-top/generated-composition bindings and
+  `library_uses[]` report values; unqualified package constants, aggregate
+  package constants, and package member/item paths fail closed. Duplicate
   overrides, unknown overrides, and shape mismatches fail closed.
 - Schedule reports expose actor parameter defaults through `actor_params[]`
   entries with `name` and JSON-safe default `value`, preserving authored actor
@@ -1321,10 +1325,10 @@ Rules:
   matching scalar leaves inside activation aggregate/list override values.
 - Reusable-library use-site overrides may use numeric/exact-width literals,
   importing-actor constants, importing-actor scalar parameter defaults, local
-  enum members, package-qualified enum members, and compatible aggregate/list
-  literals with those scalar leaves. All non-literal leaves resolve to literal
-  values before generated-top emission and before `library_uses[]` report
-  publication.
+  enum members, package-qualified enum members, qualified imported package
+  scalar constants, and compatible aggregate/list literals with those scalar
+  leaves. All non-literal leaves resolve to literal values before generated-top
+  emission and before `library_uses[]` report publication.
 - Spawned children and parameterized/generated blocking `do` activations lower
   through generated composition.
 - Parameterized rule triggers lower through generated child activation
@@ -2983,7 +2987,8 @@ Required fail-closed examples:
   scalar parameter default or aggregate/list default leaf, scalar activation
   parameter override, activation aggregate/list override leaf,
   reusable-library use-site parameter override value or leaf, actor-static
-  library use-site override value or leaf, transaction
+  library use-site override value or leaf, package-constant-backed library
+  use-site override value or leaf, transaction
   condition scalar value or expression operand, transaction `set` RHS
   scalar/expression operand, transaction `switch` selector/branch-value, rule
   guard scalar/expression operand, rule assignment RHS scalar/expression
@@ -3547,7 +3552,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1348-isf-transaction-param-transaction-params.t \
   t/1349-isf-actor-param-package-constants.t \
   t/1350-isf-transaction-param-package-constants.t \
-  t/1351-isf-activation-param-package-constants.t
+  t/1351-isf-activation-param-package-constants.t \
+  t/1352-isf-library-use-package-constants.t
 
 ./bin/ci-regression isf
 mdbook build docs/book
@@ -3601,7 +3607,8 @@ The following are not public shipped integration surfaces today:
   expressions beyond actor-local scalar parameter defaults.
 - Derived parameter expressions and package/imported constants outside the
   shipped qualified actor parameter, generated-child transaction parameter
-  default, and generated activation override scalar-constant subsets.
+  default, generated activation override, and reusable-library use-site
+  override scalar-constant subsets.
 - General memory-array HDL emission for actor-owned banks.
 - Arbitrary CDC, payload CDC, reset CDC, level sampling across domains, or
   FIFO-like cross-domain storage.

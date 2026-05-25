@@ -215,7 +215,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-ACTIVATION-PARAM-ACTOR-PARAMS.md` — completed `R14` task tree for actor-local scalar parameter defaults as generated activation parameter override values.
 - `docs/tasks/ISF-ACTIVATION-PARAM-VALUE-DOMAIN-DOC-TRUTH-SYNC.md` — completed `R14` documentation truth-sync task tree for activation parameter value-domain prose.
 - `docs/tasks/ISF-LIBRARY-USE-ACTOR-STATIC-VALUES.md` — completed `R14` task tree for actor static values in reusable-library use-site parameter overrides.
-- `docs/tasks/ISF-LIBRARY-USE-PACKAGE-CONSTANTS.md` — active `R14` task tree for package scalar constants in reusable-library use-site parameter overrides.
+- `docs/tasks/ISF-LIBRARY-USE-PACKAGE-CONSTANTS.md` — completed `R14` task tree for package scalar constants in reusable-library use-site parameter overrides.
 - `docs/tasks/ISF-ACTOR-PARAM-ACTOR-CONSTANT-DEFAULTS.md` — completed `R14` task tree for actor constants in actor parameter defaults.
 - `docs/tasks/ISF-ACTOR-PARAM-ACTOR-PARAM-DEFAULTS.md` — completed `R14` task tree for ordered actor-parameter-backed actor parameter defaults.
 - `docs/tasks/ISF-TRANSACTION-PARAM-ACTOR-STATIC-DEFAULTS.md` — completed `R14` task tree for actor-static generated-child transaction parameter defaults.

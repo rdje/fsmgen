@@ -596,16 +596,22 @@ aggregate constants, and package aggregate member/item paths remain
 fail-closed in activation overrides.
 Reusable-library use-site parameter overrides may use importing-actor
 constants, importing-actor scalar parameter defaults, and local or
-package-qualified enum members as scalar override values or as scalar leaves
-inside compatible aggregate/list override values. Actor constants and earlier
+package-qualified enum members, and qualified imported package scalar constants
+as scalar override values or as scalar leaves inside compatible aggregate/list
+override values. Reusable-library use-site package constants resolve to literal
+generated-top/generated-composition bindings and `library_uses[]` report
+values. Unknown package constants, unqualified package constants, package
+aggregate constants, and package aggregate member/item paths remain fail-closed
+in reusable-library use-site overrides. Actor constants and earlier
 scalar actor parameters used as actor parameter defaults resolve internally
 before scalar actor-parameter consumers run while preserving the authored
 token in scheduled `.fsm` and `actor_params[]`. Actor constants, actor scalar
 parameters, enum members, and qualified package constants used by activation
 sites resolve to literal values before generated-top emission. Actor constants,
-actor scalar parameters, and enum members used by reusable-library use sites resolve to
-literal values before generated-top emission and `library_uses[]`
-schedule-report publication where that report surface exists. Schedule
+actor scalar parameters, enum members, and qualified package constants used by
+reusable-library use sites resolve to literal values before generated-top
+emission and `library_uses[]` schedule-report publication where that report
+surface exists. Schedule
 reports expose actor parameter defaults through `actor_params[]` entries with
 each authored parameter `name` and JSON-safe default `value`, preserving
 authored actor constant tokens such as `DEFAULT_WIDTH`, earlier actor
@@ -1337,10 +1343,11 @@ Use-site FIFO interface shape, use-site bank-depth
 specialization, generated-top respecialization, arbitrary-depth
 memory-backed FIFO generation beyond the first `DEPTH=4` fixture, automatic
 non-zero reset values such as empty=1, standalone transaction/drive exports,
-package/imported constants outside the shipped qualified actor parameter and
-generated-child transaction parameter default, and generated activation
-override scalar-constant subsets, derived parameter expressions, and library
-actors that import other libraries remain deferred.
+package/imported constants outside the shipped qualified actor parameter,
+generated-child transaction parameter default, generated activation override,
+and reusable-library use-site override scalar-constant subsets, derived
+parameter expressions, and library actors that import other libraries remain
+deferred.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -1996,8 +2003,10 @@ Unqualified package constants, package aggregate constants, and package
 member/item paths remain fail-closed. Reusable-library use-site parameter overrides
 follow the same static value rule for scalar values and aggregate/list leaves:
 numeric/exact-width literals, importing-actor constants, importing-actor
-scalar parameter defaults, and local/package enum members resolve before
-generated-top `?fsmc` emission and `library_uses[]` report publication.
+scalar parameter defaults, local/package enum members, and qualified imported
+package scalar constants resolve before generated-top `?fsmc` emission and
+`library_uses[]` report publication. Unqualified package constants, package
+aggregate constants, and package member/item paths remain fail-closed.
 Unknown names, unknown enum members, non-scalar actor parameters, transaction
 parameters, runtime signals, and arbitrary expressions remain fail-closed.
 
@@ -5264,6 +5273,7 @@ Focused tests:
 - [t/1349-isf-actor-param-package-constants.t](../t/1349-isf-actor-param-package-constants.t)
 - [t/1350-isf-transaction-param-package-constants.t](../t/1350-isf-transaction-param-package-constants.t)
 - [t/1351-isf-activation-param-package-constants.t](../t/1351-isf-activation-param-package-constants.t)
+- [t/1352-isf-library-use-package-constants.t](../t/1352-isf-library-use-package-constants.t)
 
 ## 12. Explicitly Deferred
 
@@ -5272,9 +5282,9 @@ Focused tests:
   rule-guard/disjoint-rule/FIFO-controller-matrix/bank-access/fixed FIFO
   library fixture/catalog slices:
   standalone transaction/drive exports,
-  package/imported constants outside the shipped qualified actor parameter and
-  generated-child transaction parameter default, and generated activation
-  override scalar-constant subsets,
+  package/imported constants outside the shipped qualified actor parameter,
+  generated-child transaction parameter default, generated activation
+  override, and reusable-library use-site override scalar-constant subsets,
   derived parameter expressions,
   transaction-port dimensions beyond positive literals, actor-local scalar
   parameters, and scalar type aliases,
@@ -5410,7 +5420,8 @@ Focused tests:
   aggregate/list leaves backed by qualified imported package scalar constants,
   reusable-library use-site parameter override
   enum member values and leaves plus importing-actor constant/scalar-parameter
-  values and leaves, inline drive assignment RHS enum member
+  values and leaves and qualified imported package scalar constants, inline
+  drive assignment RHS enum member
   values and expression operands, actor-owned aggregate storage variable carriers,
   transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
   aggregate leaf operands, transaction condition aggregate leaf values and

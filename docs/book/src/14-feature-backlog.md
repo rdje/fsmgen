@@ -356,14 +356,19 @@ qualified scalar package `+constants` entries; unqualified package constants,
 aggregate package constants, and package member/item paths remain fail-closed.
 
 Reusable-library use-site parameter overrides may use importing-actor
-constants, importing-actor scalar parameter defaults, and enum members as
-scalar values or scalar leaves inside compatible aggregate/list override
-values.
+constants, importing-actor scalar parameter defaults, enum members, and
+qualified imported package scalar constants as scalar values or scalar leaves
+inside compatible aggregate/list override values. Package-constant-backed
+use-site overrides resolve to literal generated-top/generated-composition
+bindings and `library_uses[]` report values; unqualified package constants,
+aggregate package constants, package member/item paths, and ambiguous
+local-enum/package-constant spellings remain fail-closed.
 
 Actor constant names, actor-local scalar parameter default names, scalar enum
 members, and qualified imported package scalar constants on activation sites
 are resolved to literal values before generated-top emission. Reusable-library
-use-site values also resolve before `library_uses[]` report publication.
+use-site values, including qualified imported package scalar constants, also
+resolve before `library_uses[]` report publication.
 
 Runtime signals and arbitrary expressions remain outside the shipped value
 domain.
@@ -1841,8 +1846,9 @@ members.
 
 Reusable-library use-site parameter override values and aggregate/list leaves
 may consume importing-actor constants, importing-actor scalar parameter
-defaults, and local or package-qualified enum members too, resolving to
-literal generated-top bindings and `library_uses[]` report values.
+defaults, local or package-qualified enum members, and qualified imported
+package scalar constants too, resolving to literal generated-top bindings and
+`library_uses[]` report values.
 
 Transaction `set` RHS clauses may read scalar aggregate leaves from declared
 aggregate storage carriers, such as `frame.mode` or `lanes[0]`, either

@@ -536,6 +536,7 @@ sub build_isf_public_interface_contract {
             't/1349-isf-actor-param-package-constants.t',
             't/1350-isf-transaction-param-package-constants.t',
             't/1351-isf-activation-param-package-constants.t',
+            't/1352-isf-library-use-package-constants.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

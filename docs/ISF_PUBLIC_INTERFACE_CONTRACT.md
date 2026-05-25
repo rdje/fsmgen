@@ -1740,6 +1740,15 @@ overrides, literal generated-top bindings, `library_uses[]` schedule-report
 values, strict CLI HDL generation, unknown-member diagnostics, runtime-signal
 rejection, non-scalar actor-parameter rejection, and the unknown-symbolic
 use-site boundary.
+Reusable-library use-site parameter override package scalar constants are
+checked by
+[t/1352-isf-library-use-package-constants.t](../t/1352-isf-library-use-package-constants.t),
+covering qualified imported package scalar constants, aggregate/list leaves,
+literal generated-top bindings, `library_uses[]` schedule-report values,
+strict CLI HDL generation, and fail-closed diagnostics for unknown package
+constants, unqualified package constants, aggregate package constants,
+package member/item paths, and ambiguous local-enum/package-constant
+spellings.
 Scalar rule assignment RHS enum member values are checked by
 [t/1272-isf-enum-member-rule-values.t](../t/1272-isf-enum-member-rule-values.t),
 covering local and package enum member explicit `(set port value)` and shorthand
@@ -1954,6 +1963,14 @@ export kind is `actor`. A use such as
 namespaced exported actor, validates instance-local parameter overrides and
 explicit clock/reset/interface bindings, and emits a specialized child
 scheduled `.fsm` artifact named `<importing_actor>__<instance>.fsm`.
+Use-site parameter override scalar values and compatible aggregate/list leaves
+may use numeric/exact-width literals, importing-actor constants,
+importing-actor scalar parameter defaults, local/package enum members, and
+qualified imported package scalar constants. Those static use-site values
+resolve to literal generated-top/generated-composition bindings and
+`library_uses[]` report values; unqualified package constants, aggregate
+package constants, package member/item paths, and ambiguous
+local-enum/package-constant spellings fail closed.
 `parse_file(...)` resolves external library files from the importing source
 directory, `FSMLIB`, and the current directory, checking both dotted and
 path-like file names such as `common.pulse.isf` and `common/pulse.isf`.

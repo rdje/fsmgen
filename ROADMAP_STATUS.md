@@ -2,8 +2,31 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS`.
-- Current frontier: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 reusable-library use-site package-constant implementation:
+  `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2` shipped the bounded imported package
+  scalar-constant widening for reusable-library use-site parameter overrides
+  and closed the task tree. Reusable-library use-site parameter override
+  scalar values and scalar leaves inside compatible aggregate/list override
+  values may now reference qualified imported package scalar constants such as
+  `shared.DEFAULT_WIDTH`. Parser reusable-library use-site parameter
+  validation now accepts package-constant-shaped qualified tokens so the
+  package-specific resolver can issue targeted unknown, aggregate, path,
+  ambiguity, and value-domain diagnostics. Use-site publication resolves
+  package constants to literal generated-top/generated-composition bindings
+  and `library_uses[]` report values, matching the existing importer-side
+  specialization model. Unknown package constants, unqualified package
+  constants, package aggregate constants, package member/item paths,
+  ambiguous local-enum versus package-constant spellings, runtime signals,
+  unsupported actor values, arbitrary expressions, and package constants
+  outside this use-site override surface remain fail-closed or deferred. The
+  ISF spec, downstream handoff, public contract, mdBook, task tree, README
+  index, roadmap, and live docs are synchronized. Validation passed with
+  syntax checks; focused reusable-library/package tests (`Files=8,
+  Tests=21`); public/spec/book/backlog audits (`Files=7, Tests=352`);
+  `./bin/ci-regression isf --no-book` (`Files=258, Tests=1701`);
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 reusable-library use-site package-constant selection:
   `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1` created the active task tree and
   selected the next bounded implementation leaf. Reusable-library use-site
@@ -7262,14 +7285,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS`.
-- Current frontier: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2`.
-- Completion status: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.1`
-  selected the next bounded R14 implementation tree. The next leaf will allow
-  reusable-library use-site parameter overrides to use qualified imported
-  package scalar constants while publishing resolved literal
-  generated-top/generated-composition bindings and `library_uses[]` report
-  values.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-LIBRARY-USE-PACKAGE-CONSTANTS.2`
+  shipped the bounded R14 reusable-library use-site package-constant widening
+  and closed its task tree. The next PNT behavior-bearing slice must select or
+  create a task tree before code, test, source, generated-artifact, or config
+  changes.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
