@@ -2,8 +2,20 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS`.
+- Current frontier: `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2`.
+- Current R14 generated rule-trigger output-binding selection:
+  `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.1` created the active task tree
+  for generated-child rule-trigger output bindings. The selected surface is
+  intentionally bounded to rule triggers whose target is a generated child,
+  because those activations have a unique per-trigger generated instance and a
+  completion observation signal. Direct/local transaction rule-trigger output
+  bindings remain fail-closed until a separate task selects an unambiguous
+  completion-identity contract for shared local transaction instances. This
+  selection slice does not change parser behavior, scheduler lowering,
+  generated `.fsm`, HDL, public syntax, runtime semantics, or schedule-report
+  payloads yet. The next frontier is implementation and public documentation
+  synchronization in `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2`.
 - Current R14 transaction-port binding endpoint-kind report implementation:
   `ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.2` added
   `actor_endpoint_kind` to every public `transaction_port_bindings[]` report

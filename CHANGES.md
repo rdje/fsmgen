@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Generated rule-trigger output-binding tree selected
+- Created active task tree
+  `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS`.
+- Completed selection leaf
+  `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.1`; the next implementation
+  frontier is `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2`.
+- Selected generated-child rule-trigger output bindings as the next bounded
+  port-binding surface, using the existing per-trigger generated instance and
+  completion observation as the output-copy identity.
+- Direct/local transaction rule-trigger output bindings remain deferred and
+  fail-closed until a separate task selects an unambiguous completion-identity
+  contract for shared local transaction instances.
+- No parser, scheduler, generated `.fsm`, HDL, public syntax, runtime
+  behavior, or schedule-report payload changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ### Bootstrap — import tree snapshot refreshed
 - Rebuilt the source-derived [bin/fsmgen](bin/fsmgen) transitive
   project-owned `FSM::...` import closure.

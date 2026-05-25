@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Generated rule-trigger output-binding tree selected
+- Created active task tree
+  `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS`.
+- Completed selection leaf
+  `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.1`; the next implementation
+  frontier is `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2`.
+- The selected surface is generated-child rule-trigger output bindings only,
+  using the unique generated instance and completion observation for the
+  output-copy identity.
+- Direct/local transaction rule-trigger output bindings remain fail-closed
+  until a separate task selects a safe completion-identity contract.
+- This selection slice does not change parser behavior, scheduler lowering,
+  generated `.fsm`, HDL, public syntax, runtime behavior, or schedule-report
+  payloads yet.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS`.
+- Current frontier: `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2`.
+
 ## 2026-05-25: Bootstrap — import tree snapshot refreshed
 - Completed the README/SESSION_BOOTSTRAP startup import-tree refresh.
 - Rebuilt the source-derived [bin/fsmgen](bin/fsmgen) transitive

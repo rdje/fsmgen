@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Generated rule-trigger output bindings need per-trigger identity
+- `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.1` selects generated-child rule
+  triggers as the next bounded output-binding surface.
+- Generated rule triggers already materialize a unique generated child
+  instance for each rule trigger and observe that instance's done signal in
+  the parent. That gives an output binding a concrete completion identity:
+  copy the child output port to the scalar actor target when that specific
+  generated trigger instance completes.
+- Direct/local transaction rule triggers are deliberately left out. They share
+  one transaction instance and one target done pulse, so copying output ports
+  back to a rule-specific actor target would need an explicit completion
+  association policy before it can be signoff-quality.
+- This selection preserves the existing `(bind ...)` syntax and does not
+  change parser, scheduler, generated `.fsm`, HDL, public API, schedule-report
+  payload, or runtime behavior yet.
+
 ## 2026-05-25: import-tree bootstrap refresh keeps architecture notes measured
 - The README/SESSION_BOOTSTRAP startup pass rebuilt the project-owned
   transitive `FSM::...` closure reachable from [bin/fsmgen](bin/fsmgen)

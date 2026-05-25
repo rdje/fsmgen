@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 generated rule-trigger output-binding tree selected
+- Created active task tree
+  `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS`.
+- Completed selection leaf
+  `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.1`; the next implementation
+  frontier is `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2`.
+- The selected surface is generated-child rule-trigger output bindings only.
+  Each accepted trigger has a unique generated child instance and completion
+  observation signal, so an output binding can copy the child output port into
+  a scalar actor signal when that instance completes without making the rule
+  wait in-line.
+- Direct/local transaction rule-trigger output bindings remain fail-closed
+  until a separate task selects a safe completion-identity contract for shared
+  local transaction instances.
+- This selection slice does not change parser behavior, scheduler lowering,
+  generated `.fsm`, HDL, public syntax, runtime behavior, or schedule-report
+  payloads yet.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS`.
+- Current frontier: `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2`.
+
 ## 2026-05-25: Bootstrap import-tree snapshot refreshed
 - Completed the README/SESSION_BOOTSTRAP startup import-tree refresh.
 - Rebuilt the source-derived project-owned transitive `FSM::...` closure from

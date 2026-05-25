@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS` | `active` | `R14` | `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.2` | [docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md](docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md) |
 
 ## Proposed Task Trees
 
@@ -419,6 +420,7 @@ as done work unless a future task reopens them.
 | ISF enum/type/aggregate parity with existing `.fsm` semantic machinery | `ISF-TYPE-AGGREGATE-PARITY` |
 | Actor-owned scalar storage source vocabulary | `ISF-STORAGE-VAR-SURFACE`, `ISF-STORAGE-VAR-ALIASES` |
 | Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
+| Generated-child rule-trigger output bindings | `ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS` |
 | Expression-valued activation input bindings | `ISF-ACTIVATION-BIND-EXPRESSIONS` |
 | Remaining repeat-body child activation widening: `await_any` after generated `do`, new spawn after `do` before drain, cross-domain activation, deeper branch/loop nesting, and broader outstanding-child semantics | `ISF-REPEAT-BODY-CHILD-ACTIVATION` |
 | Actor Transfer Level (`ATL`) actor-network orchestration: top-level actor-as-network structure, actor/transaction triggers, event sync, actor-to-actor and pin-to-actor data movement, concurrent actor groups, and network-level scheduling/reporting | `ISF-ACTOR-NETWORK-ORCHESTRATION`, `ISF-ATL-MULTI-EVENT-WAIT` |
