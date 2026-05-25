@@ -197,8 +197,11 @@ reviewable `.fsm` signals with conflict checks.
 
 ## Open Questions
 
-- Should rule-trigger output bindings remain unsupported, lower as completion
-  callbacks, or require a separate awaited rule/transaction composition form?
+- Later R14 slices answered the rule-trigger output-binding question for the
+  generated-child subset: scalar generated-child rule-trigger output bindings
+  lower through done-observer-guarded copies. Direct/local rule-trigger output
+  bindings remain deferred because shared local targets still have no
+  rule-specific completion identity.
 - Should expression-valued input bindings gain an explicit `(width N)` option
   or be modeled through named variables only?
 - Which report fields are useful enough to publish without freezing raw

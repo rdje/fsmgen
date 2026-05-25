@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 rule-trigger output history synchronized
+- Completed `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.1` and
+  closed the task tree.
+- Current mdBook activation-parameter wording and older recovery notes no
+  longer imply all rule-trigger output bindings are unsupported.
+- The docs now distinguish later shipped scalar generated-child rule-trigger
+  output bindings from deferred direct/local rule-trigger output bindings.
+- This is documentation-only truth synchronization; parser behavior, scheduler
+  lowering, generated `.fsm`, HDL, schedule-report payloads, public contract
+  code, and runtime behavior did not change.
+- Validation passed: stale broad-output wording grep confirmed remaining
+  matches are direct/local deferrals; focused live-doc/book audits with
+  `Files=4, Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 direct entry parameter diagnostic hardened
 - Completed `ISF-DIRECT-ON-PARAM-DIAGNOSTIC.1` and closed the task tree.
 - Direct `(on start (params ...))` still fails before scheduled `.fsm`
@@ -13145,8 +13161,11 @@ This is the live continuity document for fast session recovery after crashes, re
   routes those sources to the generated instance start and input handoff
   ports. The generated child `done` handoff is wired for composition
   consistency but does not gate the rule.
-- Rule-trigger output bindings remain rejected because rules do not wait for
-  transaction completion.
+- At this historical slice, rule-trigger output bindings still remained
+  rejected because rules do not wait for transaction completion. Later R14
+  slices shipped scalar generated-child rule-trigger output bindings using a
+  per-trigger done-observer signal; direct/local rule-trigger output bindings
+  remain rejected behind the completion-identity boundary.
 - The current frontier is `ISF-ACTIVATION-PARAM-OVERRIDES.4`, specifying the
   direct transaction activation parameter boundary.
 ## 2026-05-16: ISF rule-trigger parameter override contract selected
@@ -13162,7 +13181,9 @@ This is the live continuity document for fast session recovery after crashes, re
 - The rule-trigger implementation must preserve the shipped trigger pulse and
   input payload timing: rule DTs keep per-rule trigger/payload sources, and a
   generated handoff DT routes those sources to the generated instance start
-  and input handoff ports. Output bindings remain unsupported.
+  and input handoff ports. At this selection point output bindings remained
+  unsupported; later R14 slices shipped generated-child rule-trigger output
+  bindings while keeping direct/local targets deferred.
 - This slice is documentation/specification only. Compiler behavior, accepted
   public syntax, report shape, and HDL output are unchanged.
 - The current frontier is `ISF-ACTIVATION-PARAM-OVERRIDES.3`, implementing

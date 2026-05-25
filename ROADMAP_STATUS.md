@@ -4,6 +4,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 rule-trigger output history truth sync:
+  `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.1` synchronized current
+  mdBook activation-parameter wording and older recovery notes that still said
+  rule-trigger output bindings were wholly unsupported. They now distinguish
+  later shipped scalar generated-child rule-trigger output bindings from
+  deferred direct/local targets. This is documentation-only truth
+  synchronization: parser behavior, scheduler lowering, generated `.fsm`,
+  HDL, schedule-report payloads, public contract code, and runtime behavior
+  did not change. Validation passed: stale broad-output wording grep
+  confirmed remaining matches are direct/local deferrals; focused live-doc/book
+  audits with `Files=4, Tests=366`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Current R14 direct entry parameter diagnostic hardening:
   `ISF-DIRECT-ON-PARAM-DIAGNOSTIC.1` makes direct
   `(on ... (params ...))` reject with a targeted diagnostic that says direct
@@ -5762,7 +5774,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `{rule}_{transaction}_trigger_{ordinal}`, preserving current rule-trigger
   pulse and input-payload timing. The generated top applies overrides through
   `?fsmc` params; schedule JSON reports `activation_kind => trigger` and
-  parameter binding provenance. Rule-trigger output bindings remain rejected.
+  parameter binding provenance. At this historical slice rule-trigger output
+  bindings remained rejected; later R14 slices shipped scalar generated-child
+  rule-trigger output bindings while keeping direct/local targets deferred.
   `ISF-ACTIVATION-PARAM-OVERRIDES.4` specified that direct `(on ...)`
   activation is not a parameter-override site because it is the transaction's
   own entry guard rather than a caller-owned generated instance. `(on start

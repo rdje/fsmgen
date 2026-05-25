@@ -509,8 +509,11 @@ handoff ports under that source.
 The generated top applies the static `(params ...)` overrides on the child
 `?fsmc` instance.
 
-The rule wires but does not await the generated child `done` handoff, and
-output bindings remain unsupported.
+The rule wires but does not await the generated child `done` handoff.
+Generated-child rule-trigger output bindings can copy a scalar child output
+handoff back into an actor target under that trigger instance's done-observer
+signal. Direct/local rule-trigger output bindings remain unsupported because a
+shared local transaction target has no rule-specific completion identity.
 
 Scalar enum member override values are resolved to literal generated-top
 parameter bindings for the shipped spawn, generated blocking `do`, and

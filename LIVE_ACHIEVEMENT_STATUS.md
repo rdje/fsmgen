@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Rule-trigger output history synchronized
+- Completed `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.1` and
+  closed the task tree.
+- Current mdBook activation-parameter wording and older recovery notes no
+  longer imply all rule-trigger output bindings are unsupported.
+- The docs now distinguish later shipped scalar generated-child rule-trigger
+  output bindings from deferred direct/local rule-trigger output bindings.
+- This is documentation-only truth synchronization; parser behavior, scheduler
+  lowering, generated `.fsm`, HDL, schedule-report payloads, public contract
+  code, and runtime behavior did not change.
+- Validation passed: stale broad-output wording grep confirmed remaining
+  matches are direct/local deferrals; focused live-doc/book audits with
+  `Files=4, Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Direct entry parameter diagnostic hardened
 - Completed `ISF-DIRECT-ON-PARAM-DIAGNOSTIC.1` and closed the task tree.
 - Direct `(on start (params ...))` still fails before scheduled `.fsm`
@@ -11527,8 +11543,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   generated child `done` handoff is wired for composition consistency but does
   not make the rule wait for completion.
 - Schedule JSON reports trigger activations with
-  `activation_kind => trigger` and parameter binding provenance. Output
-  bindings remain unsupported.
+  `activation_kind => trigger` and parameter binding provenance. At this
+  historical slice output bindings remained unsupported; later R14 slices
+  shipped the generated-child subset while keeping direct/local targets
+  deferred.
 - The active frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.4`,
   specifying the direct transaction activation parameter boundary.
 
@@ -11542,8 +11560,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `{rule}_{transaction}_trigger_{ordinal}` and specialized through generated
   top `?fsmc` params.
 - The implementation must preserve current rule-trigger pulse and input
-  payload timing through generated handoff DTs. Rule-trigger output bindings
-  remain unsupported.
+  payload timing through generated handoff DTs. At this selection point
+  rule-trigger output bindings remained unsupported; later R14 slices shipped
+  generated-child rule-trigger output bindings while keeping direct/local
+  targets deferred.
 - This slice is specification-only. Compiler behavior, accepted public syntax,
   report shape, and HDL output are unchanged.
 - The active frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.3`,

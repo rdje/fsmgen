@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.md) |
 | `ISF-DIRECT-ON-PARAM-DIAGNOSTIC` | `done` | `R14` | `closed` | [docs/tasks/ISF-DIRECT-ON-PARAM-DIAGNOSTIC.md](docs/tasks/ISF-DIRECT-ON-PARAM-DIAGNOSTIC.md) |
 | `ROADMAP-R14-PORT-BINDING-HISTORICAL-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-PORT-BINDING-HISTORICAL-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-PORT-BINDING-HISTORICAL-TRUTH-SYNC.md) |
 | `ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.md](docs/tasks/ISF-RULE-TRIGGER-DUPLICATE-OUTPUT-TARGET-DIAGNOSTIC.md) |

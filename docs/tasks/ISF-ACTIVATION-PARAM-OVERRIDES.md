@@ -118,10 +118,14 @@ direct transaction activation boundary.
   trigger timing: rule DTs still emit one-cycle trigger sources and input
   payload sources, and generated handoff DTs route those sources to the
   generated instance start and input handoff ports.
-- `2026-05-16`: Rule-trigger output bindings remain unsupported for the
-  parameterized path because a rule does not wait for transaction completion.
-  The generated child `done` handoff is still wired and reported for uniform
-  generated composition.
+- `2026-05-16`: Rule-trigger output bindings were unsupported for the
+  parameterized path when this tree shipped because a rule does not wait for
+  transaction completion. Later R14 slices shipped scalar generated-child
+  rule-trigger output bindings by using the generated trigger instance's
+  done-observer signal; direct/local rule-trigger output bindings remain
+  deferred because shared local targets still have no rule-specific completion
+  identity. The generated child `done` handoff is still wired and reported for
+  uniform generated composition.
 - `2026-05-16`: The public sync scope for `.2` is documentation-only: spec,
   mdBook, task tree, roadmap, and live docs. Public contract code and manifest
   metadata remain unchanged until implementation introduces or changes bounded

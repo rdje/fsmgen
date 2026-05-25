@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Rule-trigger output history synchronized
+- Completed `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.1` and
+  closed the task tree.
+- Current mdBook activation-parameter wording and older recovery notes no
+  longer imply all rule-trigger output bindings are unsupported.
+- The docs now distinguish later shipped scalar generated-child rule-trigger
+  output bindings from deferred direct/local rule-trigger output bindings.
+- This is documentation-only truth synchronization; parser behavior, scheduler
+  lowering, generated `.fsm`, HDL, schedule-report payloads, public contract
+  code, and runtime behavior did not change.
+- Validation passed: stale broad-output wording grep confirmed remaining
+  matches are direct/local deferrals; focused live-doc/book audits with
+  `Files=4, Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Direct entry parameter diagnostic hardened
 - Completed `ISF-DIRECT-ON-PARAM-DIAGNOSTIC.1` and closed the task tree.
 - Direct `(on start (params ...))` still fails before scheduled `.fsm`
@@ -11778,7 +11792,9 @@ This is the persistent technical change history for FSMGen.
   binding provenance, and generated trigger port-binding handoff metadata.
 - Added [t/1248-isf-rule-trigger-parameter-binding.t](t/1248-isf-rule-trigger-parameter-binding.t)
   and advertised it in the ISF public contract tested-by provenance.
-  Rule-trigger output bindings remain fail-closed.
+  Rule-trigger output bindings remained fail-closed at this historical slice;
+  later R14 slices shipped generated-child rule-trigger output bindings while
+  keeping direct/local targets deferred.
 ### R14 — ISF rule-trigger parameter override contract selected
 - Completed `ISF-ACTIVATION-PARAM-OVERRIDES.2`.
 - Specified the future parameterized rule-trigger source shape as
@@ -11790,7 +11806,8 @@ This is the persistent technical change history for FSMGen.
   apply overrides through the existing `?fsmc` `(params ...)` surface.
 - Recorded that the implementation must preserve current rule-trigger pulse
   and input payload timing by routing per-rule trigger/payload sources through
-  a generated handoff DT. Rule-trigger output bindings remain unsupported.
+  a generated handoff DT. Rule-trigger output bindings remained unsupported at
+  this selection point; later R14 slices shipped the generated-child subset.
 - Updated the ISF spec, mdBook transaction/rule/lowering/backlog chapters,
   task tree, roadmap, and live docs. This is specification-only; compiler
   behavior, accepted public syntax, report shape, and HDL output are unchanged.

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Rule-trigger output history must name the split
+- `ROADMAP-R14-RULE-TRIGGER-OUTPUT-HISTORY-TRUTH-SYNC.1` keeps older
+  activation-parameter notes useful by naming the later generated-child
+  output-binding shipment.
+- The important distinction is now generated-child versus direct/local:
+  generated-child rule triggers have a per-trigger done-observer signal for
+  output copies, while direct/local targets still lack a rule-specific
+  completion identity.
+
 ## 2026-05-25: Direct on-entry params deserve a specific diagnostic
 - `ISF-DIRECT-ON-PARAM-DIAGNOSTIC.1` keeps direct `(on ...)` entry activation
   outside the activation-parameter override surface, but avoids reporting that
@@ -214,8 +223,9 @@ This document captures engineering rationale, design constraints, and working de
   `signal`, `literal`, or `expression` directly keeps the public JSON surface
   easier to consume without exposing raw `LoweringIR` assignment internals.
 - The selection deliberately leaves binding timing and lowering untouched.
-  Rule-trigger output bindings and explicit snapshot-vs-live spelling are
-  separate semantic features and need their own task-tree-owned contracts.
+  Later R14 slices shipped generated-child rule-trigger output bindings;
+  direct/local rule-trigger output bindings and explicit behavior-changing
+  snapshot-vs-live conversion still need their own task-tree-owned contracts.
 
 ## 2026-05-25: Direct transaction-port width params use a private evidence marker
 - `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` removes the generated-child
@@ -8405,9 +8415,10 @@ This document captures engineering rationale, design constraints, and working de
   `(ports ...)`, `do`/`spawn` input and output bindings, rule-trigger input
   bindings, actor-side scalar/literal/expression input payloads, and bounded
   `transaction_port_bindings[]` report provenance are documented as shipped.
-- Rule-trigger output bindings, snapshot-vs-live binding timing selection,
-  richer binding reports, and broader static binding conflict diagnostics
-  remain explicit backlog.
+- Later R14 slices shipped generated-child rule-trigger output bindings.
+  Direct/local rule-trigger output bindings, behavior-changing snapshot-vs-live
+  binding timing selection, richer binding reports, and broader static binding
+  conflict diagnostics remain explicit backlog.
 ## 2026-05-16: the ISF feature matrix must call out stage and contract features
 - `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1` expands the book matrix because
   shipped stage lowering and temporal contract assertion projection are
