@@ -2,6 +2,27 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Transaction-parameter transaction-port width tree selected
+- Created active task tree
+  `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS`.
+- Completed selection leaf
+  `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1`; the next implementation
+  frontier is `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2`.
+- The selected surface will allow same-transaction scalar parameter defaults
+  to act as transaction-local input/output port width evidence when the
+  resolved default is a positive integer.
+- The implementation sequence is generated-child first, then direct/non-
+  generated transaction validation. Activation-site override specialization,
+  generated-top respecialization, aggregate/list parameters, runtime signals,
+  arbitrary expressions, and schedule-report key-family changes remain
+  deferred.
+- No parser, scheduler, generated `.fsm`, HDL, schedule-report, public API, or
+  runtime behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS`.
+- Current frontier: `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2`.
+
 ## 2026-05-25: Roadmap Maintenance — This-commit task evidence truth sync completed
 - Completed `TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.2` and closed the task
   tree.

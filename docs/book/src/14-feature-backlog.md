@@ -376,6 +376,15 @@ aggregate package constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, zero values, runtime signals, and
 expressions remain fail-closed for transaction-local port widths.
 
+The next tracked transaction-port width widening is
+`ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS`: same-transaction scalar
+parameter defaults as static transaction-local input/output port width
+evidence. The selected implementation order is generated-child transactions
+first, then direct/non-generated transaction validation. Activation-site
+override specialization, generated-top respecialization, aggregate/list
+parameters, runtime signals, arbitrary expressions, and schedule-report
+key-family changes remain outside that selected surface.
+
 Explicit data-operation width evidence may also use qualified imported
 package scalar constants when the imported package constant resolves to a
 positive integer. Those values publish as resolved scheduler width facts for

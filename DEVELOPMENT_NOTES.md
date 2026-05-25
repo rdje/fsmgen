@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Transaction parameters are the next static transaction-port width source
+- `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1` selects the next bounded
+  transaction-port width source after actor parameters, actor constants,
+  qualified package constants, and same-transaction data-operation width
+  parameters were shipped.
+- The selected value remains definition-local: the width comes from the
+  transaction parameter default, not from activation-site overrides.
+- The generated-child leaf is first because generated child transaction
+  parameters already have publication and validation paths. Direct
+  transactions need a separate validation gate so unrelated direct
+  `(params ...)` clauses do not become silently accepted.
+
 ## 2026-05-25: Full CI is required after strict support-tier cuts
 - `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` confirms there was no hosted-only
   dependency behind GitHub `Perl FSM Regression` run `26386567406`; the same

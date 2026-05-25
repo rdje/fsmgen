@@ -2,8 +2,23 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS`.
+- Current frontier: `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2`.
+- Current R14 transaction-parameter transaction-port width selection:
+  `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1` created the active task
+  tree for accepting same-transaction scalar parameter defaults as
+  transaction-local input/output port width evidence. The selected
+  implementation sequence is generated-child first, then direct/non-generated
+  transaction validation. The selected surface is bounded to
+  `(input NAME (width TX_PARAM))` and `(output NAME (width TX_PARAM))` when
+  the transaction parameter default resolves to a positive integer. Runtime
+  signals, arbitrary expressions, aggregate/list parameters, activation-site
+  override specialization, generated-top respecialization, and
+  schedule-report key-family changes remain deferred. This selection leaf
+  does not change parser, scheduler, generated `.fsm`, HDL, schedule-report,
+  public API, or runtime behavior. Validation passed:
+  feature-backlog/live-book/book matrix audits with `Files=3, Tests=364`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current project-operations completion:
   `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` repaired the latest hosted
   `Perl FSM Regression` failure and closed the task tree. GitHub run

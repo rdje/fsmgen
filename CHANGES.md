@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Transaction-parameter transaction-port width tree selected
+- Created active task tree
+  `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS`.
+- Completed selection leaf
+  `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1`; the next implementation
+  frontier is `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2`.
+- Selected a bounded follow-up for same-transaction scalar parameter defaults
+  as transaction-local input/output port width evidence.
+- The selected implementation order is generated-child transactions first,
+  then direct/non-generated transaction validation.
+- No parser, scheduler, generated `.fsm`, HDL, schedule-report, public API, or
+  runtime behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ### Project Operations — Hosted strict wiring and diagnostic CI repair completed
 - Completed `CI-STRICT-WIRING-DIAGNOSTIC-REPAIR.2` and closed the task tree.
 - Reproduced GitHub `Perl FSM Regression` run `26386567406` locally with the
