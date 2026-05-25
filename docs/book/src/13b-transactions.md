@@ -490,7 +490,11 @@ For `(repeat 8 (drive scl 1) (drive scl 0))`:
 
 The form is exact: `(repeat count body...)`, with a scalar non-empty count and
 at least one body clause. Malformed missing or nested counts fail before
-counter construction.
+counter construction. `count` may be a positive literal, same-transaction
+scalar parameter default, positive actor constant, positive actor scalar
+parameter default, qualified package scalar constant, or known-width runtime
+scalar. Same-transaction parameter counts resolve to a positive integer for
+counter width and load that resolved value in the scheduled `.fsm`.
 
 **What happens**:
 1. Init state: `(<= (cnt N))` — load counter via D-input

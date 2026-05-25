@@ -1346,20 +1346,23 @@ Repeat counter width inference is checked by
 so positive decimal literal counts use the minimum width for the loaded count,
 positive actor constants, actor scalar parameter defaults, and qualified
 imported package scalar constants use their resolved integer value as width
-evidence while preserving the authored load token, and sampled/runtime names
-continue to use known source width. Package-constant repeat counts are checked
-by
+evidence while preserving the authored load token, same-transaction scalar
+parameter defaults use their resolved positive integer as width evidence and
+scheduled `.fsm` load value, and sampled/runtime names continue to use known
+source width. Package-constant repeat counts are checked by
 [t/1360-isf-repeat-package-constant-counts.t](../t/1360-isf-repeat-package-constant-counts.t).
 The same boundary test also checks that literal zero repeat counts and actor
-constants, actor scalar parameters, or package scalar constants resolving to
-zero fail closed before scheduled `.fsm` emission.
+constants, actor scalar parameters, same-transaction scalar parameters, or
+package scalar constants resolving to zero fail closed before scheduled
+`.fsm` emission.
 Known-width runtime scalar repeat counts now split the repeat init edge:
 nonzero values enter the repeat body, while zero values bypass the body and
 repeat check to the state after the repeat region. Unknown names, non-scalar
-actor parameters, transaction parameters, unqualified package constants,
-aggregate package constants, package member/item paths, malformed scalar
-tokens, package constants inside repeat-count expressions, and
-expression-valued counts fail closed before scheduled `.fsm` emission.
+actor parameters, non-scalar transaction parameters, cross-transaction
+parameters, unqualified package constants, aggregate package constants,
+package member/item paths, malformed scalar tokens, package constants inside
+repeat-count expressions, and expression-valued counts fail closed before
+scheduled `.fsm` emission.
 The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, the top-level

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Repeat transaction params are local static count inputs
+- `ISF-REPEAT-TRANSACTION-PARAM-COUNTS.1` treats same-transaction scalar
+  parameter defaults like other static repeat-count sources for width
+  inference, but not for emitted symbol identity.
+- Actor constants, actor params, and package constants can preserve authored
+  load tokens because those names survive into the scheduled `.fsm` review
+  artifact. Transaction params are local lowering inputs, so the repeat init
+  state loads the resolved integer instead.
+- Transaction-local names intentionally shadow actor-level static names in
+  the repeat-count slot, matching the existing same-transaction static-width
+  and contract-window precedence policy.
+
 ## 2026-05-25: Detailed active-lane status must not lag the summary
 - `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.1` keeps the lower
   `ROADMAP_STATUS.md` recovery section aligned with the top-level current R14

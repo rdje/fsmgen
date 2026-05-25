@@ -169,7 +169,7 @@ ISF
     (complete done)))
 ISF
         'unrelated-direct-transaction-parameter-data-op-width.isf',
-        qr/\ATransaction 'main': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, or same-transaction transaction-port width evidence/,
+        qr/\ATransaction 'main': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, or same-transaction repeat counts/,
         'unrelated direct transaction parameter',
     );
 

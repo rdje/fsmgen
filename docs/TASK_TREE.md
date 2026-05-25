@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-TRANSACTION-PARAM-COUNTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNTS.md](docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNTS.md) |
 | `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.md](docs/tasks/ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.md) |
 | `ISF-GENERATED-DO-BINDING-TIMING-COVERAGE` | `done` | `R14` | `closed` | [docs/tasks/ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.md](docs/tasks/ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.md) |
 | `ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.md) |
@@ -403,6 +404,7 @@ as done work unless a future task reopens them.
 | Actor-level and await-local watchdog qualified package scalar-constant limits | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS` |
 | Transaction repeat actor-scalar-parameter counts | `ISF-REPEAT-ACTOR-PARAM-COUNTS` |
 | Transaction repeat qualified package scalar-constant counts | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS` |
+| Transaction repeat same-transaction scalar-parameter counts | `ISF-REPEAT-TRANSACTION-PARAM-COUNTS` |
 | Temporal-contract monitor storage schedule-report roles | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` |
 | Temporal-contract SystemVerilog assertion projection | `ISF-TEMPORAL-CONTRACT-ASSERTIONS` |
 | Actor-level phase/stage schedule-report metadata | `ISF-ACTOR-PHASE-STAGE-REPORTS` |

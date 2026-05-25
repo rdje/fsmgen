@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 repeat transaction parameter counts shipped
+- Completed `ISF-REPEAT-TRANSACTION-PARAM-COUNTS.1` and closed the task tree.
+- `(repeat COUNT body...)` now accepts `COUNT` when it names a
+  same-transaction scalar parameter default that resolves to a positive
+  integer.
+- Transaction repeat-count params shadow actor-level static names, provide
+  counter-width evidence from the resolved positive integer, and load that
+  resolved integer in scheduled `.fsm`.
+- Zero-valued transaction params and aggregate/list transaction params fail
+  closed before scheduled `.fsm` emission; cross-transaction params remain
+  unsupported.
+- Validation passed: syntax checks; focused repeat/parameter-surface tests
+  with `Files=7, Tests=80`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1745`; focused public/spec/book audits with `Files=4,
+  Tests=366`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 active lane status synchronized
 - Completed `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.1` and closed the task tree.
 - The detailed `Current active lane` recovery section in `ROADMAP_STATUS.md`

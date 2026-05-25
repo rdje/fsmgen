@@ -108,6 +108,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/FEATURE-BACKLOG-OWNER-COVERAGE-SYNC.md` — completed roadmap-maintenance task tree for broad feature-backlog owner coverage synchronization.
 - `docs/tasks/TASK-TREE-COMMIT-EVIDENCE-TRUTH-SYNC.md` — completed roadmap-maintenance task tree for synchronizing stale completed task-tree commit evidence.
 - `docs/tasks/TASK-TREE-THIS-COMMIT-EVIDENCE-TRUTH-SYNC.md` — completed roadmap-maintenance task tree for synchronizing stale `this commit` completed task-tree evidence.
+- `docs/tasks/ISF-REPEAT-TRANSACTION-PARAM-COUNTS.md` — completed `R14` task tree for same-transaction scalar parameter defaults in repeat counts.
 - `docs/tasks/ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.md` — completed `R14` roadmap-maintenance task tree for detailed active-lane roadmap status truth sync.
 - `docs/tasks/ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.md` — completed `R14` task tree for generated blocking `do` binding timing regression coverage.
 - `docs/tasks/ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.md` — completed `R14` roadmap-maintenance task tree for binding timing history truth sync.

@@ -112,7 +112,7 @@ subtest 'direct transaction parameter contract-window diagnostics fail closed' =
     (on start)
     (complete done)))
 ISF
-        qr/Transaction 'main': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, or same-transaction transaction-port width evidence/,
+        qr/Transaction 'main': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, or same-transaction repeat counts/,
         'unused direct transaction parameters remain outside the supported surface',
     );
 
@@ -200,28 +200,6 @@ ISF
         'direct transaction parameters from other transactions are not visible',
     );
 
-    assert_lower_rejected(
-        <<'ISF',
-(actor direct_transaction_parameter_repeat_remains_deferred
-  (clock clk)
-  (reset rst_n)
-  (interface
-    (input start)
-    (input ack)
-    (output done)
-    (output pulse))
-  (transaction main
-    (params
-      (ACK_WINDOW 4))
-    (on start)
-    (contract ack_seen (eventually ack (within ACK_WINDOW)))
-    (repeat ACK_WINDOW
-      (drive pulse 1))
-    (complete done)))
-ISF
-        qr/Transaction 'main': repeat count transaction parameter 'ACK_WINDOW' remains deferred/,
-        'direct transaction parameters do not widen repeat counts',
-    );
 };
 
 done_testing();

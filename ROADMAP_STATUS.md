@@ -4,6 +4,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 transaction-parameter repeat counts:
+  `ISF-REPEAT-TRANSACTION-PARAM-COUNTS.1` shipped same-transaction scalar
+  parameter defaults as static `(repeat COUNT body...)` count sources and
+  closed the task tree. Transaction repeat-count params now shadow actor-level
+  static names, provide counter-width evidence from their resolved positive
+  integer value, and load that resolved integer in scheduled `.fsm` because
+  transaction params are local lowering inputs. Zero-valued and non-scalar
+  transaction params fail closed before scheduled emission; cross-transaction
+  params remain unsupported. Validation passed: syntax checks; focused
+  repeat/parameter-surface tests with `Files=7, Tests=80`;
+  `./bin/ci-regression isf --no-book` with `Files=274, Tests=1745`;
+  focused public/spec/book audits with `Files=4, Tests=366`; `mdbook build
+  docs/book`; and `git diff --check`.
 - Current R14 active-lane status sync:
   `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.1` synchronized the detailed
   `Current active lane` recovery section and the head of the R14 `Done`
@@ -8254,12 +8267,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.1` synchronized this detailed
-  active-lane recovery section and the head of the R14 `Done` section with
-  the latest committed R14 slices. This is documentation-only truth
-  synchronization; parser behavior, scheduler lowering, generated `.fsm`,
-  HDL, schedule-report payloads, public contract code, tests, and runtime
-  behavior are unchanged.
+  `ISF-REPEAT-TRANSACTION-PARAM-COUNTS.1` shipped same-transaction scalar
+  parameter defaults as static repeat-count sources. Transaction repeat-count
+  params now provide resolved counter-width evidence and scheduled `.fsm`
+  load values, while zero-valued, non-scalar, and cross-transaction parameter
+  count sources fail closed.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11715,6 +11727,24 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-REPEAT-TRANSACTION-PARAM-COUNTS.1` is shipped and the task tree is
+  closed:
+  - `(repeat COUNT body...)` now accepts `COUNT` when it names a
+    same-transaction scalar parameter default that resolves to a positive
+    integer,
+  - transaction repeat-count params shadow actor-level static names,
+  - the repeat counter width uses the resolved positive integer and scheduled
+    `.fsm` loads that resolved value because transaction params are local
+    lowering inputs,
+  - zero-valued transaction params and aggregate/list transaction params fail
+    closed before scheduled `.fsm` emission; cross-transaction params remain
+    unsupported,
+  - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
+    README index, roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused repeat/parameter-surface tests
+    with `Files=7, Tests=80`; `./bin/ci-regression isf --no-book` with
+    `Files=274, Tests=1745`; focused public/spec/book audits with `Files=4,
+    Tests=366`; `mdbook build docs/book`; and `git diff --check`.
 - `ROADMAP-R14-ACTIVE-LANE-STATUS-SYNC.1` is shipped and the task tree is
   closed:
   - the detailed `Current active lane` recovery section now points at this

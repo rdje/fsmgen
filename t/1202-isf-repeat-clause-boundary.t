@@ -80,6 +80,56 @@ ISF
         'nonzero runtime repeat count still enters the existing body path');
 };
 
+subtest 'same-transaction scalar parameter repeat counts lower as static counts' => sub {
+    my $result = lower_source(<<'ISF');
+(actor repeat_transaction_param_count
+  (clock clk)
+  (interface
+    (input start)
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (params
+      (COUNT 3))
+    (on start)
+    (repeat COUNT
+      (drive tick))
+    (complete done)))
+ISF
+
+    my $fsm = $result->{files}{'repeat_transaction_param_count.fsm'};
+    like($fsm, qr/\(main_cnt 2\)/, 'transaction parameter repeat count supplies counter width');
+    like($fsm, qr/\(main_repeat_init_1\n\s+\(<= \(main_cnt 3\)\)/,
+        'transaction parameter repeat count loads the resolved static value');
+
+    my $shadowed = lower_source(<<'ISF');
+(actor repeat_transaction_param_shadow_count
+  (clock clk)
+  (params
+    (COUNT 3))
+  (interface
+    (input start)
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (params
+      (COUNT 4))
+    (on start)
+    (repeat COUNT
+      (drive tick))
+    (complete done)))
+ISF
+
+    my $shadowed_fsm = $shadowed->{files}{'repeat_transaction_param_shadow_count.fsm'};
+    like($shadowed_fsm, qr/\(main_cnt 3\)/, 'transaction parameter repeat count shadows actor parameter width evidence');
+    like($shadowed_fsm, qr/\(main_repeat_init_1\n\s+\(<= \(main_cnt 4\)\)/,
+        'transaction parameter repeat count shadows actor parameter load value');
+};
+
 subtest 'malformed repeat clauses fail before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'missing repeat count', qr/\ATransaction 'main': repeat requires '\(repeat count body\.\.\.\)' in transaction body/);
 (actor repeat_missing_count
@@ -154,8 +204,8 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'transaction parameter repeat count', qr/\ATransaction 'worker': repeat count transaction parameter 'COUNT' remains deferred; use a known-width runtime scalar, positive actor constant, actor scalar parameter, or qualified package scalar constant/);
-(actor repeat_transaction_param_count
+    assert_lower_rejected(<<'ISF', 'aggregate transaction parameter repeat count', qr/\ATransaction 'worker': repeat count transaction parameter 'COUNT' must resolve to a positive integer literal/);
+(actor repeat_aggregate_transaction_param_count
   (clock clk)
   (interface (input start) (output flag) (output done))
   (drive tick
@@ -167,28 +217,7 @@ ISF
     (complete done))
   (transaction worker
     (params
-      (COUNT 3))
-    (repeat COUNT
-      (drive tick))
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'transaction parameter shadows actor parameter repeat count', qr/\ATransaction 'worker': repeat count transaction parameter 'COUNT' remains deferred; use a known-width runtime scalar, positive actor constant, actor scalar parameter, or qualified package scalar constant/);
-(actor repeat_transaction_param_shadow_count
-  (clock clk)
-  (params
-    (COUNT 3))
-  (interface (input start) (output flag) (output done))
-  (drive tick
-    (flag 1))
-  (transaction parent
-    (on start)
-    (spawn worker as w0)
-    (await_all done)
-    (complete done))
-  (transaction worker
-    (params
-      (COUNT 4))
+      (COUNT (3 4)))
     (repeat COUNT
       (drive tick))
     (complete done)))
@@ -203,6 +232,21 @@ ISF
   (transaction main
     (on start)
     (repeat -1
+      (drive tick))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'transaction parameter zero repeat count', qr/\ATransaction 'main': repeat count 'COUNT' is statically zero; zero-count repeat semantics remain deferred/);
+(actor repeat_transaction_param_zero
+  (clock clk)
+  (interface (input start) (output flag) (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (params
+      (COUNT 0))
+    (on start)
+    (repeat COUNT
       (drive tick))
     (complete done)))
 ISF

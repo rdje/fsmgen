@@ -2495,16 +2495,19 @@ Current lowering:
 - The repeat check state decrements with `<-` and loops while the counter is
   nonzero.
 - Repeat counter width is inferred. Positive decimal literal counts use the
-  minimum width that can represent the loaded count; positive actor constants
-  and actor scalar parameter defaults use their resolved integer value as
-  width evidence while preserving the authored load token; known-width runtime
-  scalar names use their known interface, storage, or sample-derived width.
-  Unknown names, non-scalar or zero-valued actor parameters, transaction
-  parameters, malformed scalar tokens, and expression-valued counts fail
-  closed before counter emission.
+  minimum width that can represent the loaded count; positive actor constants,
+  actor scalar parameter defaults, and qualified package scalar constants use
+  their resolved integer value as width evidence while preserving the authored
+  load token; same-transaction scalar parameter defaults use their resolved
+  positive integer value as width evidence and as the scheduled `.fsm` load
+  value; known-width runtime scalar names use their known interface, storage,
+  or sample-derived width. Unknown names, non-scalar or zero-valued
+  actor/transaction parameters, cross-transaction parameters, malformed scalar
+  tokens, and expression-valued counts fail closed before counter emission.
 - Repeat counts that are statically known to be zero, either as literal zero
-  or as an actor constant or actor scalar parameter resolving to zero, fail
-  closed before scheduled `.fsm` emission.
+  or as an actor constant, actor scalar parameter, same-transaction scalar
+  parameter, or package scalar constant resolving to zero, fail closed before
+  scheduled `.fsm` emission.
 - Known-width runtime scalar repeat counts split the repeat init edge:
   nonzero values enter the repeat body, while zero values bypass the body and
   repeat check to the state after the repeat region.
@@ -2686,16 +2689,20 @@ Positive literal counts give statically reviewable loop bounds. Actor
 constants, actor scalar parameter defaults, and qualified imported package
 scalar constants resolving to positive integers are static width evidence for
 the repeat counter, but the scheduled `.fsm` still loads the authored count
-token. Literal zero counts and actor constants, actor scalar parameters, or
-package scalar constants resolving to zero fail closed under the bounded
-static zero-count policy. Named counts may be dynamic scalar signals when
-their width is known; those known-width runtime scalar counts skip the repeat
-body and repeat check when the runtime value is zero. Unknown count names,
-unqualified package constants, package aggregate constants, package
-member/item paths, non-scalar actor parameters, transaction parameters,
-expression-valued counts, package constants inside repeat-count expressions,
-and generated-top respecialization fail closed or remain deferred outside the
-shipped repeat count-source policy. Repeat-body local `do` and repeat-body spawn
+token. Same-transaction scalar parameter repeat counts also provide static
+width evidence when they resolve to positive integers, but the scheduled `.fsm`
+loads the resolved integer because transaction parameters are local lowering
+inputs. Literal zero counts and actor constants, actor scalar parameters,
+transaction parameters, or package scalar constants resolving to zero fail
+closed under the bounded static zero-count policy. Named counts may be dynamic
+scalar signals when their width is known; those known-width runtime scalar
+counts skip the repeat body and repeat check when the runtime value is zero.
+Unknown count names, unqualified package constants, package aggregate
+constants, package member/item paths, non-scalar actor parameters, non-scalar
+transaction parameters, cross-transaction parameters, expression-valued counts,
+package constants inside repeat-count expressions, and generated-top
+respecialization fail closed or remain deferred outside the shipped repeat
+count-source policy. Repeat-body local `do` and repeat-body spawn
 support preserve the
 same runtime-counter rule: the loop reactivates a local child only after its
 fresh done pulse, or reactivates a lexically named static spawn child instance
@@ -5526,11 +5533,13 @@ Focused tests:
   sample-incompatible successor splits remain deferred until their timing and
   diagnostics are implemented.
 - Transaction repeat counts beyond the shipped positive decimal literal,
-  positive actor-constant, positive actor-scalar-parameter, qualified package
-  scalar constant, and known-width runtime scalar shapes: transaction
-  parameters, arbitrary expressions, non-scalar actor parameters, aggregate or
-  path package constants, use-site parameter-specialized counter sizing,
-  generated-top respecialization, and repeat-body widening remain deferred.
+  positive actor-constant, positive actor-scalar-parameter,
+  same-transaction scalar-parameter, qualified package scalar constant, and
+  known-width runtime scalar shapes: cross-transaction parameters,
+  non-scalar or zero-valued actor/transaction parameters, arbitrary
+  expressions, aggregate or path package constants, use-site
+  parameter-specialized counter sizing, generated-top respecialization, and
+  repeat-body widening remain deferred.
 - Transaction latency bounds beyond the shipped positive decimal literal,
   positive actor-constant, positive actor-scalar-parameter, and qualified
   package scalar-constant `(min ...)`/`(max ...)` shapes: transaction

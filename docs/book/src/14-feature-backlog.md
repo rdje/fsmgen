@@ -1053,17 +1053,21 @@ select and ship them.
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. Known-width runtime
 scalar counts now bypass the repeat body and repeat check when the runtime
-value is zero. Unknown count names, non-scalar actor parameters, transaction
-parameters, expression-valued counts, and generated-top repeat-count
-respecialization fail closed or remain backlog, so fully general dynamic
-repeat counts are still not a frozen public contract. Actor-constant and
-actor-scalar-parameter repeat counts, plus qualified imported package scalar
-constant repeat counts, are now static width evidence only when they resolve
-to positive integers: the counter width uses the resolved value while
-scheduled `.fsm` still loads the authored count token. Static zero repeat
-counts, whether literal zero or actor constants/actor parameters/package
-scalar constants resolving to zero, fail closed before scheduled `.fsm`
-emission. Unqualified package constants, aggregate package constants, package
+value is zero. Unknown count names, non-scalar actor parameters, non-scalar
+transaction parameters, cross-transaction parameters, expression-valued counts,
+and generated-top repeat-count respecialization fail closed or remain backlog,
+so fully general dynamic repeat counts are still not a frozen public contract.
+Actor-constant and actor-scalar-parameter repeat counts, plus qualified
+imported package scalar constant repeat counts, are now static width evidence
+only when they resolve to positive integers: the counter width uses the
+resolved value while scheduled `.fsm` still loads the authored count token.
+Same-transaction scalar parameter repeat counts also provide static width
+evidence when they resolve to positive integers, but the scheduled `.fsm`
+loads the resolved integer because transaction parameters are local lowering
+inputs. Static zero repeat counts, whether literal zero or
+actor/transaction parameters, actor constants, or package scalar constants
+resolving to zero, fail closed before scheduled `.fsm` emission. Unqualified
+package constants, aggregate package constants, package
 member/item paths, and package constants inside repeat-count expressions
 remain fail-closed.
 

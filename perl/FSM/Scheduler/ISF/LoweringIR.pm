@@ -2535,8 +2535,9 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children) 
         next if _transaction_params_used_by_contract_window($tx, $params);
         next if _transaction_params_used_by_data_op_width($tx, $params);
         next if _transaction_params_used_by_transaction_port_width($tx, $params);
+        next if _transaction_params_used_by_repeat_count($tx, $params);
 
-        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, or same-transaction transaction-port width evidence\n";
+        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, or same-transaction repeat counts\n";
     }
     return 1;
 }
@@ -2572,6 +2573,32 @@ sub _transaction_params_used_by_transaction_port_width {
         return 1 if $declared{$name};
     }
     return 0;
+}
+
+sub _transaction_params_used_by_repeat_count {
+    my ($tx, $params) = @_;
+    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return 0 unless keys %declared;
+
+    my %used;
+    _collect_repeat_count_declared_name_refs($tx->{clauses}, \%declared, \%used);
+    return keys %used ? 1 : 0;
+}
+
+sub _collect_repeat_count_declared_name_refs {
+    my ($node, $declared, $used) = @_;
+    return unless ref($node) eq 'ARRAY';
+
+    if (@$node >= 2 && defined($node->[0]) && !ref($node->[0]) && $node->[0] eq 'repeat') {
+        _collect_isf_value_declared_name_refs($node->[1], $declared, $used);
+    }
+
+    for my $child (@$node) {
+        _collect_repeat_count_declared_name_refs($child, $declared, $used)
+            if ref($child) eq 'ARRAY';
+    }
 }
 
 sub _collect_data_op_width_declared_name_refs {
@@ -3866,8 +3893,11 @@ sub _register_repeat_counters {
 }
 
 sub _repeat_count_width {
-    my ($count, $widths, $actor) = @_;
+    my ($count, $widths, $actor, $tn) = @_;
     return 8 if ref($count);
+    my $transaction_param_value = _transaction_param_repeat_count_value($count, $actor, $tn);
+    return _repeat_count_width_for_integer($transaction_param_value)
+        if defined $transaction_param_value;
     return $widths->{$count}
         if defined($count) && exists($widths->{$count}) && $widths->{$count} > 0;
     my $constant_value = _actor_constant_repeat_count_value($count, $actor);
@@ -3887,8 +3917,11 @@ sub _repeat_count_width {
 }
 
 sub _static_repeat_count_value {
-    my ($count, $actor) = @_;
+    my ($count, $actor, $tn) = @_;
     return undef unless defined($count) && !ref($count);
+
+    my $transaction_param_value = _transaction_param_repeat_count_value($count, $actor, $tn);
+    return $transaction_param_value if defined $transaction_param_value;
 
     my $literal_value = _non_negative_integer_from_literal($count);
     return $literal_value if defined $literal_value;
@@ -3949,13 +3982,34 @@ sub _package_constant_repeat_count_value {
         : undef;
 }
 
+sub _transaction_param_repeat_count_value {
+    my ($count, $actor, $tn) = @_;
+    return undef unless defined($tn) && defined($count) && !ref($count) && _is_hdl_identifier($count);
+
+    my $param = _transaction_param_by_name($actor, $tn, $count);
+    return undef unless $param;
+
+    my $param_value = exists($param->{resolved_value})
+        ? $param->{resolved_value}
+        : $param->{value};
+    return _non_negative_integer_from_literal($param_value)
+        if defined($param_value) && !ref($param_value);
+
+    return undef;
+}
+
+sub _repeat_count_load_value {
+    my ($count, $actor, $tn) = @_;
+
+    my $transaction_param_value = _transaction_param_repeat_count_value($count, $actor, $tn);
+    return $transaction_param_value if defined $transaction_param_value;
+
+    return $count;
+}
+
 sub _reject_static_zero_repeat_count {
     my ($count, $actor, $tn) = @_;
-    return 1
-        if defined($count) && !ref($count) && _is_hdl_identifier($count)
-            && _transaction_param_by_name($actor, $tn, $count);
-
-    my $static_value = _static_repeat_count_value($count, $actor);
+    my $static_value = _static_repeat_count_value($count, $actor, $tn);
     return 1 unless defined($static_value) && $static_value == 0;
 
     confess "Transaction '$tn': repeat count '$count' is statically zero; zero-count repeat semantics remain deferred\n";
@@ -3966,7 +4020,10 @@ sub _validate_repeat_count_source {
 
     if (defined($count) && !ref($count) && _is_hdl_identifier($count)
         && _transaction_param_by_name($actor, $tn, $count)) {
-        confess "Transaction '$tn': repeat count transaction parameter '$count' remains deferred; use a known-width runtime scalar, positive actor constant, actor scalar parameter, or qualified package scalar constant\n";
+        my $param_value = _transaction_param_repeat_count_value($count, $actor, $tn);
+        return 1 if defined($param_value) && $param_value > 0;
+
+        confess "Transaction '$tn': repeat count transaction parameter '$count' must resolve to a positive integer literal\n";
     }
 
     if (my $package_constant = _actor_package_constant_reference($actor, $count)) {
@@ -3990,7 +4047,7 @@ sub _validate_repeat_count_source {
             if $suffix eq '' && !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
     }
 
-    my $static_value = _static_repeat_count_value($count, $actor);
+    my $static_value = _static_repeat_count_value($count, $actor, $tn);
     return 1 if defined($static_value) && $static_value > 0;
 
     if (defined($count) && !ref($count) && _is_hdl_identifier($count)) {
@@ -4000,7 +4057,7 @@ sub _validate_repeat_count_source {
         if (_actor_param_by_name($actor, $count)) {
             confess "Transaction '$tn': repeat count actor parameter '$count' must resolve to a positive integer literal\n";
         }
-        return 1 if defined _runtime_repeat_count_source($count, $widths, $actor);
+        return 1 if defined _runtime_repeat_count_source($count, $widths, $actor, $tn);
 
         confess "Transaction '$tn': repeat count '$count' is neither a declared positive actor constant, actor scalar parameter, qualified package scalar constant, nor a known-width runtime scalar\n";
     }
@@ -4009,9 +4066,9 @@ sub _validate_repeat_count_source {
 }
 
 sub _runtime_repeat_count_source {
-    my ($count, $widths, $actor) = @_;
+    my ($count, $widths, $actor, $tn) = @_;
     return undef unless defined($count) && !ref($count) && _is_hdl_identifier($count);
-    return undef if defined _static_repeat_count_value($count, $actor);
+    return undef if defined _static_repeat_count_value($count, $actor, $tn);
     return undef if _actor_param_by_name($actor, $count);
     return undef unless ref($widths) eq 'HASH'
         && exists($widths->{$count})
@@ -7479,12 +7536,13 @@ sub _ir_repeat {
     my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters; my @spawn_done_ports;
     _reject_static_zero_repeat_count($cl->[1], $actor, $tn);
     _validate_repeat_count_source($cl->[1], $widths, $actor, $tn);
-    my $width = _repeat_count_width($cl->[1], $widths, $actor);
-    my $runtime_count_source = _runtime_repeat_count_source($cl->[1], $widths, $actor);
+    my $width = _repeat_count_width($cl->[1], $widths, $actor, $tn);
+    my $runtime_count_source = _runtime_repeat_count_source($cl->[1], $widths, $actor, $tn);
+    my $repeat_count_load_value = _repeat_count_load_value($cl->[1], $actor, $tn);
     push @s, {
         name => "${tn}_repeat_init_".$$ir++,
         kind => 'repeat_init',
-        assignments => [{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],
+        assignments => [{lhs=>$ctr,rhs=>$repeat_count_load_value,op=>'<='}],
         transitions => [],
         repeat_counter => $ctr,
         repeat_count_source => $cl->[1],

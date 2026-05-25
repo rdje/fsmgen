@@ -1062,9 +1062,11 @@ same-body `await_any` when exactly one spawn is pending.
 A dynamic scalar count is therefore compatible with the hardware model when
 its width is known, but it makes loop latency runtime-dependent and forces
 the zero-count policy to be explicit. Literal zero repeat counts and actor
-constants or actor scalar parameters resolving to zero fail closed before
-scheduled `.fsm` emission. Known-width runtime scalar counts bypass the body
-and repeat check when the runtime value is zero.
+constants, actor scalar parameters, same-transaction scalar parameters, or
+package scalar constants resolving to zero fail closed before scheduled
+`.fsm` emission. Same-transaction scalar parameter counts resolve to a
+positive integer static load value. Known-width runtime scalar counts bypass
+the body and repeat check when the runtime value is zero.
 
 For repeat-body spawn, the generated top still instantiates one static child
 instance for the lexical spawn name.

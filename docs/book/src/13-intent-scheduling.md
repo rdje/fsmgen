@@ -91,10 +91,12 @@ clear lower-layer mapping, and clear runtime behavior.
   constants when they resolve to non-negative integers; scheduled `.fsm`
   fixed wait states and `transaction_waits[]` publish the resolved timing and
   preserve the authored qualified token in `count_source`.
-  Static transaction repeat counts may use qualified imported package scalar
-  constants when they resolve to positive integers; the repeat counter width
-  uses the resolved value and the scheduled `.fsm` load preserves the authored
-  qualified token.
+  Static transaction repeat counts may use same-transaction scalar parameter
+  defaults and qualified imported package scalar constants when they resolve
+  to positive integers; the repeat counter width uses the resolved value.
+  Package constants preserve the authored qualified token in the scheduled
+  `.fsm` load, while transaction parameters load the resolved integer because
+  they are local lowering inputs.
   Actor-local scalar parameter defaults that resolve to non-negative integer
   literals may also be used as static `(wait NAME)` counts in the owning
   actor schedule.
