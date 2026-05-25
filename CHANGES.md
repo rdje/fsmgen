@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-24
+### R14 — Bank storage package-constant depths selected
+- Created active task tree `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS`.
+- Completed `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1`; the selected
+  implementation frontier is `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2`.
+- Selected a bounded actor-owned bank storage depth value-domain widening:
+  `(bank NAME (width N|PARAM|CONST) (depth PACKAGE.CONSTANT))` declarations
+  may use qualified imported package scalar constants for bank depths when the
+  resolved value is a positive integer literal.
+- Accepted package-constant bank depths should publish as resolved integer
+  depths in parser handoff, scheduled `.fsm`, schedule-report evidence,
+  scalarized storage families, bank access metadata, and generated HDL,
+  matching actor-constant and actor-parameter bank storage depth behavior.
+- Unqualified package constants, unknown package constants, package aggregate
+  constants, package aggregate scalar-leaf paths, ambiguous local-token
+  spellings, zero-valued constants, runtime signals, arbitrary expressions,
+  package constants in other dimension/value domains, and generated-top
+  respecialization remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Bank storage package-constant widths shipped
 - Completed `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` and closed the task
   tree.

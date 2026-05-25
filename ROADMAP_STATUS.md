@@ -2,8 +2,27 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS`.
+- Current frontier: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2`.
+- Recent R14 bank storage package-constant depth selection:
+  `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1` created the active task tree
+  and selected the next bounded implementation leaf. Actor-owned bank storage
+  `(bank NAME (width N|PARAM|CONST) (depth PACKAGE.CONSTANT))` declarations
+  may next use qualified imported package scalar constants for bank depths
+  when the resolved value is a positive integer literal. Accepted
+  package-constant bank depths should publish as resolved integer depths in
+  parser handoff, scheduled `.fsm`, schedule-report evidence, scalarized
+  storage families, bank access metadata, and generated HDL, matching existing
+  actor-constant and actor-parameter bank storage depth behavior. Unqualified
+  package constants, unknown package constants, package aggregate constants,
+  package aggregate scalar-leaf paths, ambiguous local-token spellings,
+  zero-valued constants, runtime signals, arbitrary expressions, package
+  constants in other dimension/value domains, and generated-top
+  respecialization remain deferred or fail closed. No parser, scheduler,
+  report, generated artifact, HDL, CLI behavior, public API, source, test, or
+  generated behavior changed in this selection slice. Validation passed:
+  feature-backlog/live-book/book-matrix audits with `Files=3, Tests=364`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 bank storage package-constant width implementation:
   `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2` shipped the bounded imported
   package scalar-constant widening for actor-owned bank storage widths and
@@ -7412,13 +7431,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
-- Completion status: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.2`
-  shipped the bounded R14 actor-owned bank storage package-constant width
-  widening and closed its task tree. The next PNT behavior-bearing slice must
-  select or create a task tree before code, test, source, generated-artifact,
-  or config changes.
+- Active task tree: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS`.
+- Current frontier: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.2`.
+- Completion status: `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.1`
+  created the active R14 actor-owned bank storage package-constant depth task
+  tree and selected the bounded implementation frontier. No parser,
+  scheduler, report, generated artifact, HDL, CLI behavior, public API,
+  source, test, or generated behavior changed in the selection slice.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
