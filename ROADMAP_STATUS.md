@@ -2,8 +2,20 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX`.
+- Current frontier: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`.
+- Current R14 transaction-port binding timing syntax selection:
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1` created the active task tree
+  for explicit input-binding timing syntax. The selected spelling is a fourth
+  per-input-binding subclause: `(input PORT EXPR (timing snapshot))` or
+  `(input PORT EXPR (timing live))`. `snapshot` means activation or trigger
+  payload capture; `live` means generated-top live handoff wiring. The first
+  implementation boundary is current-timing-only: accept explicit spelling
+  only where it matches the already-shipped timing class, reject mismatched
+  mode/site combinations fail-closed, and do not change scheduler lowering,
+  generated `.fsm`, HDL, schedule-report schema, or runtime behavior. The next
+  frontier is implementation and public documentation synchronization in
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`.
 - Current R14 transaction-port binding timing metadata implementation:
   `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` added public
   `binding_timing` metadata to every `transaction_port_bindings[]` schedule
@@ -8075,18 +8087,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX`.
+- Current frontier: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`.
 - Completion status:
-  `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` shipped additive
-  `binding_timing` metadata for every public `transaction_port_bindings[]`
-  entry and closed the task tree. Values are `activation_region`,
-  `generated_live_handoff`, `trigger_payload`, and `done_guarded`. ISF syntax,
-  binding timing, scheduler lowering, generated `.fsm`, HDL, schema version,
-  and runtime behavior did not change. Validation passed: syntax checks;
-  focused report/public-contract/spec/book tests with `Files=11, Tests=386`;
-  `./bin/ci-regression isf --no-book` with `Files=274, Tests=1742`;
-  `mdbook build docs/book`; and `git diff --check`.
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1` selected explicit
+  snapshot/live timing syntax for transaction input bindings. The first
+  implementation boundary is current-timing-only and must not change
+  scheduler lowering, generated `.fsm`, HDL, schedule-report schema, or
+  runtime behavior. The next frontier is
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

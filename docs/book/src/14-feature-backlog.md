@@ -2553,6 +2553,14 @@ selection, additional binding report fields beyond the shipped endpoint-kind
 and binding-timing metadata, and broader static conflict diagnostics remain
 backlog.
 
+The selected first snapshot-vs-live timing syntax is an optional fourth
+subclause on input bindings: `(input PORT EXPR (timing snapshot))` or
+`(input PORT EXPR (timing live))`. The first implementation boundary is
+current-timing-only: `snapshot` may spell activation/trigger payload capture,
+`live` may spell generated-top live handoff wiring, and mismatched mode/site
+combinations must fail closed until a separate storage/wiring conversion
+design exists.
+
 Actor pin binding now uses the same assignment/conflict path as ordinary ISF
 drives where it has shipped coverage. Spawn output bindings carry parent
 transaction ownership in provenance, so a spawned child output bound to an

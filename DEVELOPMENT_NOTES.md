@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Timing syntax starts as current-timing-only
+- `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1` selects explicit
+  `(timing snapshot)` / `(timing live)` input-binding syntax, but deliberately
+  does not select behavior-changing timing conversion.
+- Keeping the first implementation current-timing-only lets authors document
+  intent and gives the compiler a place to reject mismatched assumptions
+  before a later slice designs extra capture storage or continuous local
+  wiring.
+
 ## 2026-05-25: Binding timing metadata is report-only
 - `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` computes
   `binding_timing` from the existing binding site, role, and generated

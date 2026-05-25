@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX` | `active` | `R14` | `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2` | [docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.md](docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.md) |
 
 ## Proposed Task Trees
 

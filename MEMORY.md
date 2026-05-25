@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 binding timing syntax tree selected
+- Created active task tree `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX`.
+- Completed selection leaf
+  `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.1`; the next implementation
+  frontier is `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`.
+- Selected per-input-binding syntax:
+  `(input PORT EXPR (timing snapshot))` and
+  `(input PORT EXPR (timing live))`.
+- The first implementation boundary is current-timing-only: accept explicit
+  spelling only where it matches shipped binding timing, reject mismatches,
+  and do not change scheduler lowering, generated `.fsm`, HDL, schedule-report
+  schema, or runtime behavior.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX`.
+- Current frontier: `ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.2`.
+
 ## 2026-05-25: R14 binding timing metadata shipped
 - Completed `ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.2` and closed the
   task tree.
