@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: Bootstrap — Static-zero repeat import-tree measurement refresh shipped
+- Completed `BIN-FSMGEN-IMPORT-TREE-STATIC-ZERO-REPEAT-REFRESH.1` and closed
+  the task tree.
+- Rebuilt the live project-owned `FSM::...` import closure reachable from
+  `bin/fsmgen`; topology remains unchanged at `196` reachable project files
+  total and `195` reachable `.pm` packages with the same family counts.
+- Refreshed the stale `perl/FSM/Scheduler/ISF/LoweringIR.pm` measured line
+  count in `docs/BIN_FSMGEN_IMPORT_TREE.md` after the latest R14 static-zero
+  repeat child-activation pruning work; the current count is `11048`.
+- Parser behavior, scheduler lowering, generated `.fsm`, HDL, public API,
+  tests, and runtime behavior did not change.
+- Validation passed: import-closure recount; stale measured-value grep;
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Static zero repeat specialized child activation pruning shipped
 - Completed `ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE.1` and closed
   the task tree.

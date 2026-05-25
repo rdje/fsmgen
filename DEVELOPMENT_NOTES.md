@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Static-zero repeat pruning only changed import-tree measurements
+- `BIN-FSMGEN-IMPORT-TREE-STATIC-ZERO-REPEAT-REFRESH.1` reran the session
+  bootstrap import-tree audit before opening another behavior slice.
+- The project-owned `FSM::...` closure reachable from `bin/fsmgen` still
+  measures `196` project files and `195` `.pm` packages with unchanged family
+  counts. The runtime-spine topology therefore did not need a structural
+  architecture-note update.
+- The latest static-zero repeat child-activation pruning work increased
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` to `11048` lines, so the measured
+  snapshot in `docs/BIN_FSMGEN_IMPORT_TREE.md` was refreshed without changing
+  compiler behavior.
+
 ## 2026-05-25: Static zero specialized activations are dead payloads
 - `ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE.1` completes the immediate
   static-zero child-activation pruning follow-up after the plain `do`/`spawn`

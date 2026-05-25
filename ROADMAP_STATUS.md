@@ -4,6 +4,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current bootstrap import-tree static-zero repeat refresh:
+  `BIN-FSMGEN-IMPORT-TREE-STATIC-ZERO-REPEAT-REFRESH.1` refreshed the saved
+  `bin/fsmgen` import-tree architecture note and closed the task tree after
+  the latest R14 static-zero repeat child-activation pruning work. The
+  bootstrap audit re-read the session entrypoints and rebuilt the live
+  project-owned `FSM::...` import closure. The topology remains unchanged at
+  `196` project files and `195` `.pm` packages with the same family counts.
+  The stale measured `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count is now
+  recorded as `11048`. This was documentation-only: parser behavior,
+  scheduler lowering, generated `.fsm`, HDL, public API, tests, and runtime
+  behavior did not change. Validation passed: import-closure recount; stale
+  measured-value grep; `git diff --check`.
 - Current R14 static zero repeat specialized child activation pruning:
   `ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE.1` shipped specialized
   static-zero repeat child-activation pruning and closed the task tree.

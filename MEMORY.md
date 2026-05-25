@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: Bootstrap import-tree static-zero repeat measurement refresh shipped
+- Completed `BIN-FSMGEN-IMPORT-TREE-STATIC-ZERO-REPEAT-REFRESH.1` and closed
+  the task tree.
+- Re-read the session entrypoints and rebuilt the live project-owned
+  `FSM::...` import closure reachable from `bin/fsmgen`.
+- The import topology remains unchanged from the saved note: `196` reachable
+  project files total, `195` reachable `.pm` packages, and the same family
+  counts.
+- Refreshed the stale `perl/FSM/Scheduler/ISF/LoweringIR.pm` measured line
+  count in `docs/BIN_FSMGEN_IMPORT_TREE.md` after the latest R14 static-zero
+  repeat child-activation pruning work; the current count is `11048`.
+- This was documentation-only: parser behavior, scheduler lowering, generated
+  `.fsm`, HDL, public API, tests, and runtime behavior did not change.
+- Validation passed: import-closure recount; stale measured-value grep;
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 static zero repeat specialized child activation pruning shipped
 - Completed `ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE.1` and closed
   the task tree.
