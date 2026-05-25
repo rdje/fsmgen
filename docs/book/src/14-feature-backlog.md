@@ -355,8 +355,7 @@ scalarized scheduled `.fsm` `+size` entries, schedule-report evidence,
 `bank_accesses[]` widths, width evidence, and HDL register ranges.
 Unqualified package constants, aggregate package constants, package
 member/item paths, ambiguous local-enum/package-constant spellings, zero
-values, runtime signals, expressions, and package constants in
-transaction-local port width contexts remain fail-closed.
+values, runtime signals, and expressions remain fail-closed for bank widths.
 
 Actor-owned bank storage depths may also use qualified imported package scalar
 constants when the imported package constant resolves to a positive integer.
@@ -365,8 +364,17 @@ scalarized scheduled `.fsm` `+size` entries, schedule-report evidence,
 `bank_accesses[]` depths and scalarized entries, and HDL register
 declarations. Unqualified package constants, aggregate package constants,
 package member/item paths, ambiguous local-enum/package-constant spellings,
-zero values, runtime signals, expressions, and package constants in
-transaction-local port width contexts remain fail-closed.
+zero values, runtime signals, and expressions remain fail-closed for bank
+depths.
+
+Transaction-local port widths may also use qualified imported package scalar
+constants when the imported package constant resolves to a positive integer.
+Those widths publish as resolved integer parser-handoff port widths,
+scheduled `.fsm` activation handoff storage, `transaction_port_bindings[]`
+report widths, and HDL register ranges. Unqualified package constants,
+aggregate package constants, package member/item paths, ambiguous
+local-enum/package-constant spellings, zero values, runtime signals, and
+expressions remain fail-closed for transaction-local port widths.
 
 Actor parameter defaults accept enum members, declared actor constants, earlier
 scalar actor parameter defaults, and qualified imported package scalar

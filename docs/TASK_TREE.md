@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.md](docs/tasks/ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.md) |
 | `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.md](docs/tasks/ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.md) |
 | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.md](docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-DEPTHS.md) |
 | `ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.md](docs/tasks/ISF-BANK-STORAGE-PACKAGE-CONSTANT-WIDTHS.md) |

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Book backlog package-width text must track shipped dimensions
+- `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1` is a documentation
+  truth-sync slice after the transaction-port package-constant width
+  implementation.
+- The static value-domain summary in the mdBook feature backlog must describe
+  actor interface widths, scalar storage widths, bank widths, bank depths, and
+  transaction-local port widths as separate shipped package-constant surfaces.
+  Older bank-width/depth prose must not keep saying transaction-local port
+  package constants fail closed after that support ships.
+
 ## 2026-05-25: Transaction port package constants publish resolved widths
 - `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` resolves qualified imported
   package scalar constants at the transaction-local port width boundary.

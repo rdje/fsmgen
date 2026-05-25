@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Transaction port package width book truth sync
+- Completed `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1` and
+  closed the documentation truth-sync task tree.
+- Removed stale mdBook feature-backlog prose that still said package
+  constants fail closed in transaction-local port width contexts.
+- The current book now states that transaction-local port widths accept
+  qualified imported package scalar constants when they resolve to positive
+  integers, publish resolved parser handoff, scheduled `.fsm`,
+  `transaction_port_bindings[]`, and HDL widths, and keep unsupported package
+  shapes, zero values, runtime signals, and expressions fail-closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this documentation
+  truth-sync slice.
+- Validation passed: `mdbook build docs/book`;
+  feature-backlog/live-book/book-matrix audits with `Files=3, Tests=364`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Transaction port package-constant widths shipped
 - Completed `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` and closed the
   task tree.

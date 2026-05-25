@@ -4,6 +4,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Recent R14 transaction port package width book truth sync:
+  `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1` removed stale
+  mdBook feature-backlog prose that still said package constants fail closed
+  in transaction-local port width contexts. The current book now states that
+  transaction-local port widths accept qualified imported package scalar
+  constants when they resolve to positive integers, publish resolved parser
+  handoff/scheduled `.fsm`/`transaction_port_bindings[]`/HDL widths, and keep
+  unsupported package shapes, zero values, runtime signals, and expressions
+  fail-closed. No parser, scheduler, report, generated artifact, HDL, CLI
+  behavior, public API, source, test, or generated behavior changed in this
+  documentation truth-sync slice. Validation passed: `mdbook build
+  docs/book`; feature-backlog/live-book/book-matrix audits (`Files=3,
+  Tests=364`); and `git diff --check`.
 - Recent R14 transaction port package-constant width implementation:
   `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` shipped qualified
   imported package scalar constants as transaction-local port widths and
@@ -7499,16 +7512,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - Active task tree: `none`.
 - Current frontier: `none`.
-- Completion status: `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2`
-  shipped qualified imported package scalar constants as transaction-local
-  port widths and closed the task tree. Transaction-local `(ports ...)`
-  input/output widths now accept `(width PACKAGE.CONSTANT)` when the owning
-  actor imports the package and the package constant resolves to a positive
-  integer scalar. Accepted widths publish as resolved integers in parser
-  handoff, scheduled `.fsm` activation handoff storage,
-  `transaction_port_bindings[]`, and HDL. Unsupported package-constant shapes,
-  transaction parameters, runtime signals, and arbitrary expressions remain
-  fail-closed.
+- Completion status:
+  `ISF-TRANSACTION-PORT-PACKAGE-WIDTH-BOOK-TRUTH-SYNC.1` synchronized stale
+  mdBook feature-backlog wording after
+  `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` shipped qualified imported
+  package scalar constants as transaction-local port widths. No behavior
+  changed in the truth-sync slice.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
