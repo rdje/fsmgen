@@ -171,6 +171,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.md` — completed `R14` task tree for generated child same-transaction scalar parameter defaults in temporal contract windows.
 - `docs/tasks/ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.md` — completed `R14` task tree for direct transaction same-transaction scalar parameter defaults in temporal contract windows.
 - `docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md` — completed `R14` task tree for activation-site override diagnostics on generated child temporal contract-window parameters.
+- `docs/tasks/ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.md` — completed `R14` roadmap-maintenance task tree for activation override diagnostic coverage synchronization.
 - `docs/tasks/ISF-LATENCY-ACTOR-CONSTANT-BOUNDS.md` — completed `R14` task tree for positive actor constants in transaction latency bounds.
 - `docs/tasks/ISF-LATENCY-ACTOR-PARAM-BOUNDS.md` — completed `R14` task tree for actor-parameter-backed transaction latency bounds.
 - `docs/tasks/ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS.md` — completed `R14` task tree for qualified package scalar constants in transaction latency bounds.

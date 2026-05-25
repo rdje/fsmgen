@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.md) |
 | `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md](docs/tasks/ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.md) |
 | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.md](docs/tasks/ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.md) |
 | `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.md](docs/tasks/ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.md) |
@@ -361,6 +362,7 @@ as done work unless a future task reopens them.
 | Temporal-contract qualified package scalar-constant window counts | `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS` |
 | Temporal-contract generated child same-transaction scalar parameter window counts | `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS` |
 | Temporal-contract direct transaction same-transaction scalar parameter window counts | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS` |
+| Activation-site override diagnostics for generated child temporal contract-window parameters | `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS` |
 | Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
 | Transaction latency qualified package scalar-constant min/max bounds | `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS` |

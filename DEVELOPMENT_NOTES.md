@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: R14 objective coverage must include the activation override diagnostic tree
+- `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1` fixes a documentation ledger
+  gap left after the activation override diagnostic implementation commit.
+- The lower R14 detail now records the shipped behavior, while the task-tree
+  objective coverage table identifies
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS` as the owner for generated child
+  temporal contract-window override diagnostics.
+- This was deliberately documentation-only; the behavior, tests, and public
+  contract were already shipped by
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2`.
+
 ## 2026-05-25: Activation override diagnostics stay at the generated activation gate
 - `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` reuses the existing generated
   activation parameter validation pass for the new contract-window

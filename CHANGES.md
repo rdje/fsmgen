@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Activation override roadmap truth sync completed
+- Completed `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1` and closed the
+  one-leaf documentation truth-sync task tree.
+- Synchronized the lower R14 `Done` detail and R14 ISF objective coverage
+  table with the shipped activation-site override diagnostic behavior.
+- This was documentation-only roadmap maintenance; no parser, scheduler,
+  generated `.fsm`, HDL, schedule-report, or public API behavior changed.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Activation override contract-window diagnostics shipped
 - Completed `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` and closed the task
   tree.

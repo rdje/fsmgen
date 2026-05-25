@@ -4,6 +4,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Recent R14 activation override roadmap truth sync:
+  `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1` synchronized the lower R14
+  done detail and the task-tree objective coverage table after
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` shipped. This is
+  documentation-only roadmap maintenance and does not change parser,
+  scheduler, generated `.fsm`, HDL, schedule-report, or public API behavior.
+  Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 activation override contract-window diagnostic implementation:
   `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` shipped targeted fail-closed
   diagnostics for generated child activation-site parameter overrides that
@@ -7830,14 +7838,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` shipped targeted fail-closed
-  diagnostics for activation-site overrides of generated child transaction
-  parameters used by child temporal-contract windows and closed the task tree.
-  Full override-specialized temporal monitor lowering remains deferred.
-  Validation passed: syntax checks; focused contract/public/spec/book tests
-  with `Files=13, Tests=452`; `./bin/ci-regression isf --no-book` with
-  `Files=272, Tests=1731`; post-closure public/spec/book audits with
-  `Files=5, Tests=368`; `mdbook build docs/book`; and `git diff --check`.
+  `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1` synchronized the lower R14
+  done detail and task-tree objective coverage table after the activation
+  override diagnostic implementation. No behavior changed in this
+  documentation-only maintenance slice. Validation passed:
+  feature-backlog/live-book/book matrix audits with `Files=3, Tests=364`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11293,6 +11299,26 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` is shipped and the task tree is
+  closed:
+  - generated child activation-site parameter overrides now fail closed with a
+    targeted diagnostic when `spawn`, generated blocking `do`, or rule
+    `trigger` overrides a child transaction parameter used by that child
+    transaction's bounded eventual temporal-contract window,
+  - the diagnostic runs after existing unknown-parameter and parameter-shape
+    checks, so those earlier diagnostics remain stable,
+  - overrides of generated child parameters that are not used by temporal
+    contract windows remain accepted, and generated child contract windows
+    with no activation override continue to lower from the transaction
+    definition's resolved default,
+  - full per-activation override-specialized temporal monitor lowering
+    remains deferred,
+  - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
+    README index, roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused contract/public/spec/book tests
+    with `Files=13, Tests=452`; `./bin/ci-regression isf --no-book` with
+    `Files=272, Tests=1731`; post-closure public/spec/book audits with
+    `Files=5, Tests=368`; `mdbook build docs/book`; and `git diff --check`.
 - `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS.2` is shipped and the task
   tree is closed:
   - direct/non-generated bounded eventual temporal-contract windows now accept

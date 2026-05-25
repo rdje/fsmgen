@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Activation override roadmap truth sync completed
+- Completed `ROADMAP-R14-ACTIVATION-OVERRIDE-TRUTH-SYNC.1` and closed the
+  one-leaf documentation truth-sync task tree.
+- The lower R14 `Done` detail now includes the shipped
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` diagnostic behavior.
+- The R14 ISF objective coverage table now maps activation-site override
+  diagnostics for generated child temporal contract-window parameters to
+  `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS`.
+- This was documentation-only roadmap maintenance; no parser, scheduler,
+  generated `.fsm`, HDL, schedule-report, or public API behavior changed.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Activation override contract-window diagnostics shipped
 - Completed `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS.2` and closed the task
   tree.
