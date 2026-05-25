@@ -323,12 +323,15 @@ resolved non-negative integer. Transaction parameters outside those
 same-transaction slots, runtime interface signals, arbitrary expressions, and
 use-site activation overrides are not actor-parameter-default,
 actor-level-watchdog-limit, or general static constants. Use-site overrides
-that target generated child
-contract-window parameters are accepted only when the override resolves to the
-same positive integer cycle count as the child transaction parameter default;
-mismatched overrides fail closed instead of respecializing the already-emitted
-temporal monitor. Other override-specialized static timing logic remains
-unshipped.
+that target generated child contract-window parameters are accepted only when
+the override resolves to the same positive integer cycle count as the child
+transaction parameter default; mismatched overrides fail closed instead of
+respecializing the already-emitted temporal monitor. Use-site overrides that
+target generated child static timing parameters used by repeat counts, wait
+counts, latency bounds, or top-level await-local watchdog limits follow the
+same default-resolved rule: same-value overrides are accepted, while
+mismatched overrides fail closed until per-activation static timing
+specialization is selected.
 Actor constants and actor-local scalar parameter defaults are also accepted as
 static default values for generated child transaction parameters; the lowerer
 resolves those parent actor names to literal child `+params` and
@@ -2440,7 +2443,12 @@ Current lowering:
   parameter defaults that resolve to positive integers. The generated counter
   width and init value use the resolved integer. Same-transaction parameters
   shadow actor-level static names in top-level await-local watchdogs and
-  remain local lowering inputs. Runtime signals, unknown symbols, unknown or unqualified package
+  remain local lowering inputs. Generated child activation overrides for a
+  transaction parameter used by a top-level await-local watchdog are accepted
+  only when the override resolves to the same positive integer value as the
+  child default; mismatches fail closed because the child watchdog counter is
+  generated from the default-resolved scheduled `.fsm`. Runtime signals,
+  unknown symbols, unknown or unqualified package
   constants, aggregate package constants, package member/item paths, arbitrary
   expressions, zero-valued constants, zero-valued package constants,
   zero-valued or non-scalar actor/transaction parameters, and
@@ -2487,9 +2495,11 @@ Current lowering:
 - Runtime interface signals, unknown symbolic names, unknown or unqualified
   package constants, aggregate package constants, package member/item paths,
   arbitrary expressions, zero-valued constants, zero-valued or non-scalar
-  actor/transaction parameters, and cross-transaction parameters fail closed. Use-site
-  parameter overrides are excluded because they would require a separate
-  policy for latency counter specialization.
+  actor/transaction parameters, and cross-transaction parameters fail closed.
+  Generated child activation overrides for a latency-bound transaction
+  parameter are accepted only when the override resolves to the same positive
+  integer as the child default; mismatches fail closed because per-activation
+  latency counter specialization remains deferred.
 - The scheduler creates a transaction cycle counter, an increment source, and
   latency error wiring without adding an authored transaction state.
 - A valid explicit `max` bound drives the generated counter width and max
@@ -2521,6 +2531,10 @@ Current lowering:
   or sample-derived width. Unknown names, non-scalar or zero-valued
   actor/transaction parameters, cross-transaction parameters, malformed scalar
   tokens, and expression-valued counts fail closed before counter emission.
+- Generated child activation overrides for a repeat-count transaction
+  parameter are accepted only when the override resolves to the same positive
+  integer as the child default; mismatches fail closed because per-activation
+  repeat counter specialization remains deferred.
 - Repeat counts that are statically known to be zero, either as literal zero
   or as an actor constant, actor scalar parameter, same-transaction scalar
   parameter, or package scalar constant resolving to zero, fail closed before
@@ -3883,7 +3897,11 @@ rule `trigger` that target a generated child parameter used by the child
 contract window are accepted only when the override resolves to the same
 positive integer cycle count as the child transaction parameter default.
 Mismatched overrides fail closed with a targeted diagnostic; override
-specialization of generated child contract windows remains deferred. Runtime
+specialization of generated child contract windows remains deferred. The same
+generated-child activation rule applies to transaction parameters used by
+static timing lowering for repeat counts, wait counts, latency bounds, and
+top-level await-local watchdog limits: same-value overrides remain accepted,
+while mismatches fail closed before scheduled artifacts are emitted. Runtime
 signals, arbitrary expressions, unknown names, unknown or unqualified package
 constants, package aggregate constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, zero-valued constants, and zero-valued
@@ -5524,6 +5542,7 @@ Focused tests:
 - [t/1366-isf-contract-activation-override-windows.t](../t/1366-isf-contract-activation-override-windows.t)
 - [t/1367-isf-data-op-transaction-param-widths.t](../t/1367-isf-data-op-transaction-param-widths.t)
 - [t/1368-isf-transaction-port-transaction-param-widths.t](../t/1368-isf-transaction-port-transaction-param-widths.t)
+- [t/1369-isf-timing-param-activation-override-gates.t](../t/1369-isf-timing-param-activation-override-gates.t)
 
 ## 12. Explicitly Deferred
 
@@ -5554,24 +5573,31 @@ Focused tests:
   qualified package scalar constant, bounded runtime scalar, and bounded
   runtime expression `(wait N)` shapes:
   unknown-width expressions and any remaining predecessor-edge or
-  sample-incompatible successor splits remain deferred until their timing and
-  diagnostics are implemented.
+  sample-incompatible successor splits, plus per-activation wait-state
+  specialization beyond same-value generated child activation overrides,
+  remain deferred until their timing and diagnostics are implemented.
+  Mismatched generated child activation overrides for wait-count parameters
+  fail closed.
 - Transaction repeat counts beyond the shipped positive decimal literal,
   positive actor-constant, positive actor-scalar-parameter,
   same-transaction scalar-parameter, qualified package scalar constant, and
   known-width runtime scalar shapes: cross-transaction parameters,
   non-scalar or zero-valued actor/transaction parameters, arbitrary
   expressions, aggregate or path package constants, use-site
-  parameter-specialized counter sizing, generated-top respecialization, and
-  repeat-body widening remain deferred.
+  parameter-specialized counter sizing beyond same-value generated child
+  activation overrides, generated-top respecialization, and repeat-body
+  widening remain deferred. Mismatched generated child activation overrides
+  for repeat-count parameters fail closed.
 - Transaction latency bounds beyond the shipped positive decimal literal,
   same-transaction scalar-parameter, positive actor-constant, positive
   actor-scalar-parameter, and qualified package scalar-constant
   `(min ...)`/`(max ...)` shapes: cross-transaction parameters, runtime
   signals, arbitrary expressions, aggregate or path package constants,
   stage-local latency, non-scalar actor/transaction parameters, and use-site
-  parameter-specialized counter sizing remain deferred until a separate
-  specialization/scheduling policy is selected.
+  parameter-specialized counter sizing beyond same-value generated child
+  activation overrides remain deferred until a separate
+  specialization/scheduling policy is selected. Mismatched generated child
+  activation overrides for latency-bound parameters fail closed.
 - Watchdog limits beyond the shipped positive decimal literal, positive
   actor-constant, positive actor-scalar-parameter, qualified package
   scalar-constant actor-level/await-local shapes, and same-transaction scalar
@@ -5579,8 +5605,10 @@ Focused tests:
   nested control-flow transaction parameter watchdog limits, runtime signals,
   arbitrary expressions, aggregate or path package constants, distinct
   per-await limits in one transaction, cross-domain watchdog policy, dynamic
-  watchdog limits, and parameter-specialized watchdog counter sizing remain
-  deferred.
+  watchdog limits, and parameter-specialized watchdog counter sizing beyond
+  same-value generated child activation overrides remain deferred. Mismatched
+  generated child activation overrides for top-level await-local watchdog
+  parameters fail closed.
 - Runtime division/modulo safety beyond literal-zero, actor-constant-zero, and
   actor-parameter-zero divisor rejection: proving arbitrary dynamic scalar
   divisor expressions nonzero remains deferred until range/dataflow evidence

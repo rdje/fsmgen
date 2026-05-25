@@ -938,6 +938,11 @@ Rules:
   accepted only when the override resolves to the same positive integer cycle
   count as the child transaction parameter default. Mismatched overrides fail
   closed until override-specialized contract-window lowering is shipped.
+  Overrides that target generated child parameters used by static timing
+  lowering for repeat counts, wait counts, latency bounds, or top-level
+  await-local watchdog limits are accepted only when they resolve to the same
+  integer value as the child transaction parameter default. Mismatches fail
+  closed until per-activation static timing specialization is shipped.
 
 ### 11.2 Transaction Ports And Bindings
 
@@ -1107,6 +1112,9 @@ Rules:
   `.fsm` emission. Dynamic divisor nonzero proof remains outside the shipped
   wait contract.
 - Generated activation use-site overrides are not wait-count constants.
+  Overrides of generated child wait-count parameters must preserve the child
+  default value; mismatches fail closed until per-activation wait-state
+  specialization is shipped.
 - Non-scalar or cross-transaction parameter wait counts fail closed.
 - Package wait counts must be atomic qualified package scalar constants.
   Unqualified package constants, aggregate constants, package member/item
@@ -1166,6 +1174,9 @@ member/item paths, non-scalar actor parameters, non-scalar transaction
 parameters, cross-transaction parameters, malformed scalar tokens, package
 constants inside repeat-count expressions, and expression-valued counts fail
 closed before scheduled `.fsm` emission.
+Generated child activation overrides for repeat-count transaction parameters
+must preserve the child default value; mismatches fail closed until
+per-activation repeat counter specialization is shipped.
 
 Switch:
 
@@ -1254,6 +1265,9 @@ Rules:
 
   Static parameter overrides specialize the one lexical generated child
   instance and are not per-iteration runtime values.
+  If an override targets a generated child parameter consumed by static timing
+  lowering, only same-value overrides are accepted; mismatches fail closed
+  before generated artifacts are emitted.
 
   Input and output bindings reuse the same generated-top handoff model as
   top-level spawn: handoff ports are generated once for the static child
@@ -1931,6 +1945,11 @@ expressions, unknown names, unknown or unqualified package constants,
 aggregate package constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, zero-valued constants, and zero-valued
 or non-scalar actor/transaction parameters remain invalid contract windows.
+Generated child activation overrides that target transaction parameters used
+by static timing lowering for repeat counts, wait counts, latency bounds, or
+top-level await-local watchdog limits are accepted only when they preserve the
+child default value; mismatches fail closed until per-activation static timing
+specialization is shipped.
 
 Latency:
 
@@ -1955,6 +1974,10 @@ Rules:
   arbitrary expressions, zero-valued constants, zero-valued or non-scalar
   actor/transaction parameters, and cross-transaction parameters remain
   invalid latency bounds.
+- Generated child activation overrides for a latency-bound transaction
+  parameter are accepted only when they resolve to the same positive integer
+  as the child default. Mismatches fail closed until per-activation latency
+  counter specialization is shipped.
 - Latency metadata lowers to counters/error checks where supported and reports
   through `dt_blocks[]`/`inferred_storage[]`; there is no separate
   latency-bound source-token report field.
@@ -3181,6 +3204,10 @@ Required fail-closed examples:
   interface signals, unknown symbolic names, arbitrary expressions, constants
   that resolve to zero, or actor/transaction parameters that resolve to zero
   or non-scalar values.
+- Generated child activation overrides that change child transaction
+  parameters consumed by repeat, wait, latency, or top-level await-local
+  watchdog lowering. Same-value overrides are accepted; mismatches fail closed
+  until per-activation static timing specialization is shipped.
 - Temporal contract windows that need activation-site override-specialized
   lowering beyond same-value generated child activation overrides,
   transaction parameters from other transactions, runtime interface signals,
@@ -3788,7 +3815,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1358-isf-data-op-package-constant-widths.t \
   t/1359-isf-wait-package-constant-counts.t \
   t/1360-isf-repeat-package-constant-counts.t \
-  t/1367-isf-data-op-transaction-param-widths.t
+  t/1367-isf-data-op-transaction-param-widths.t \
+  t/1369-isf-timing-param-activation-override-gates.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

@@ -2643,6 +2643,11 @@ window are accepted only when they resolve to the same positive integer cycle
 count as the child transaction parameter default. Mismatched overrides fail
 closed with a targeted diagnostic. Full override-specialized contract-window
 lowering remains backlog.
+Generated child activation overrides that target transaction parameters used
+by static timing lowering for repeat counts, wait counts, latency bounds, or
+top-level await-local watchdog limits now use the same default-preserving
+gate: same-value overrides are accepted, while mismatches fail closed until
+per-activation static timing specialization is shipped.
 
 Reaching the clause emits one arm state; the generated scheduled `.fsm`
 monitor tracks pending/age/fail storage, clears on actor reset, and sets a

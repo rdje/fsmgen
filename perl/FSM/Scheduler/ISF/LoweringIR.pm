@@ -2474,6 +2474,8 @@ sub _validate_child_transaction_refs($self, $actor) {
         } @$declared_param_list;
         my $contract_window_params =
             _transaction_contract_window_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $static_timing_params =
+            _transaction_static_timing_param_names($transaction_by_name{$target}, $declared_param_list);
         for my $override (@{_activation_parameter_overrides($clause, $tx_name, $label, $constant_values, $actor)}) {
             my $name = $override->{name};
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
@@ -2483,6 +2485,9 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides contract-window parameter '$name' on child '$target'; activation-site parameter override-specialized contract windows remain deferred\n"
                 if $contract_window_params->{$name}
                     && !_activation_override_preserves_contract_window_param($declared_params{$name}, $override);
+            confess "Transaction '$tx_name': $keyword instance '$instance' overrides static-timing parameter '$name' on child '$target'; activation-site parameter override-specialized static timing remains deferred\n"
+                if $static_timing_params->{$name}
+                    && !_activation_override_preserves_static_timing_param($declared_params{$name}, $override);
         }
     }
 
@@ -2510,6 +2515,8 @@ sub _validate_child_transaction_refs($self, $actor) {
         } @$declared_param_list;
         my $contract_window_params =
             _transaction_contract_window_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $static_timing_params =
+            _transaction_static_timing_param_names($transaction_by_name{$target}, $declared_param_list);
         for my $override (@{$ref->{parameter_overrides} || []}) {
             my $name = $override->{name};
             confess "Rule '$rule_name': trigger instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
@@ -2519,6 +2526,9 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Rule '$rule_name': trigger instance '$instance' overrides contract-window parameter '$name' on child '$target'; activation-site parameter override-specialized contract windows remain deferred\n"
                 if $contract_window_params->{$name}
                     && !_activation_override_preserves_contract_window_param($declared_params{$name}, $override);
+            confess "Rule '$rule_name': trigger instance '$instance' overrides static-timing parameter '$name' on child '$target'; activation-site parameter override-specialized static timing remains deferred\n"
+                if $static_timing_params->{$name}
+                    && !_activation_override_preserves_static_timing_param($declared_params{$name}, $override);
         }
     }
 
@@ -2580,50 +2590,85 @@ sub _transaction_params_used_by_transaction_port_width {
 
 sub _transaction_params_used_by_repeat_count {
     my ($tx, $params) = @_;
-    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
-
-    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
-    return 0 unless keys %declared;
-
-    my %used;
-    _collect_repeat_count_declared_name_refs($tx->{clauses}, \%declared, \%used);
-    return keys %used ? 1 : 0;
+    return keys %{_transaction_repeat_count_param_names($tx, $params)} ? 1 : 0;
 }
 
 sub _transaction_params_used_by_wait_count {
     my ($tx, $params) = @_;
-    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
-
-    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
-    return 0 unless keys %declared;
-
-    my %used;
-    _collect_wait_count_declared_name_refs($tx->{clauses}, \%declared, \%used);
-    return keys %used ? 1 : 0;
+    return keys %{_transaction_wait_count_param_names($tx, $params)} ? 1 : 0;
 }
 
 sub _transaction_params_used_by_latency_bound {
     my ($tx, $params) = @_;
-    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
-
-    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
-    return 0 unless keys %declared;
-
-    my %used;
-    _collect_latency_bound_declared_name_refs($tx->{clauses}, \%declared, \%used);
-    return keys %used ? 1 : 0;
+    return keys %{_transaction_latency_bound_param_names($tx, $params)} ? 1 : 0;
 }
 
 sub _transaction_params_used_by_watchdog_limit {
     my ($tx, $params) = @_;
-    return 0 unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+    return keys %{_transaction_watchdog_limit_param_names($tx, $params)} ? 1 : 0;
+}
+
+sub _transaction_static_timing_param_names {
+    my ($tx, $params) = @_;
+
+    my %used;
+    for my $names (
+        _transaction_repeat_count_param_names($tx, $params),
+        _transaction_wait_count_param_names($tx, $params),
+        _transaction_latency_bound_param_names($tx, $params),
+        _transaction_watchdog_limit_param_names($tx, $params),
+    ) {
+        $used{$_} = 1 for keys %$names;
+    }
+    return \%used;
+}
+
+sub _transaction_repeat_count_param_names {
+    my ($tx, $params) = @_;
+    return {} unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
 
     my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
-    return 0 unless keys %declared;
+    return {} unless keys %declared;
+
+    my %used;
+    _collect_repeat_count_declared_name_refs($tx->{clauses}, \%declared, \%used);
+    return \%used;
+}
+
+sub _transaction_wait_count_param_names {
+    my ($tx, $params) = @_;
+    return {} unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return {} unless keys %declared;
+
+    my %used;
+    _collect_wait_count_declared_name_refs($tx->{clauses}, \%declared, \%used);
+    return \%used;
+}
+
+sub _transaction_latency_bound_param_names {
+    my ($tx, $params) = @_;
+    return {} unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return {} unless keys %declared;
+
+    my %used;
+    _collect_latency_bound_declared_name_refs($tx->{clauses}, \%declared, \%used);
+    return \%used;
+}
+
+sub _transaction_watchdog_limit_param_names {
+    my ($tx, $params) = @_;
+    return {} unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return {} unless keys %declared;
 
     my %used;
     _collect_await_watchdog_declared_name_refs($tx->{clauses}, \%declared, \%used);
-    return keys %used ? 1 : 0;
+    return \%used;
 }
 
 sub _collect_repeat_count_declared_name_refs {
@@ -2751,13 +2796,23 @@ sub _transaction_contract_window_param_names {
 
 sub _activation_override_preserves_contract_window_param {
     my ($declared_param, $override) = @_;
+    return _activation_override_preserves_static_integer_param($declared_param, $override);
+}
+
+sub _activation_override_preserves_static_timing_param {
+    my ($declared_param, $override) = @_;
+    return _activation_override_preserves_static_integer_param($declared_param, $override);
+}
+
+sub _activation_override_preserves_static_integer_param {
+    my ($declared_param, $override) = @_;
     return 0 unless ref($declared_param) eq 'HASH' && ref($override) eq 'HASH';
 
-    my $declared_cycles = _non_negative_integer_from_literal(_param_resolved_value($declared_param));
-    my $override_cycles = _non_negative_integer_from_literal($override->{value});
-    return 0 unless defined($declared_cycles) && defined($override_cycles);
+    my $declared_value = _non_negative_integer_from_literal(_param_resolved_value($declared_param));
+    my $override_value = _non_negative_integer_from_literal($override->{value});
+    return 0 unless defined($declared_value) && defined($override_value);
 
-    return $declared_cycles == $override_cycles ? 1 : 0;
+    return $declared_value == $override_value ? 1 : 0;
 }
 
 sub _contract_within_value_if_present {

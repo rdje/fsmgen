@@ -81,6 +81,13 @@ parameter values to the same transaction must lower to distinct specialized
 transaction instances or cloned scheduled regions. They must not share one
 mutable parameter signal written at runtime.
 
+Generated child parameters consumed by default-resolved static timing lowering
+have a stricter gate until full per-activation specialization exists.
+Overrides that target repeat counts, wait counts, latency bounds, or
+top-level await-local watchdog limits are accepted only when they resolve to
+the same integer value as the child transaction parameter default; mismatches
+fail closed before scheduled artifacts are emitted.
+
 For rule triggers, a parameterized trigger also uses distinct generated
 hardware. The generated instance name is
 `{rule}_{transaction}_trigger_{ordinal}` so repeated lexical trigger sites do
@@ -242,6 +249,9 @@ parameters resolve in the parser-visible watchdog scalar and still appear in
 parameters, and top-level transaction parameters resolve before watchdog
 counter injection. Same-transaction watchdog parameters shadow actor-level
 static names and remain local lowering inputs.
+Generated child activation overrides for top-level await-local watchdog
+transaction parameters must preserve the child default value; mismatches fail
+closed until per-activation watchdog specialization is shipped.
 
 One transaction currently has one watchdog counter. If a transaction contains
 multiple awaits with distinct effective watchdog limits, FSMGen fails closed
@@ -416,11 +426,15 @@ Expression waits use `count_kind` `runtime_expression` and keep the
 normalized expression in `count_source`.
 
 Malformed waits such as `(wait)`, `(wait 1 2)`, `(wait -1)`, non-scalar or
-non-integer actor parameter counts, transaction parameter counts, unknown
-package constants, unqualified or aggregate package constants, package
+non-integer actor parameter counts, non-scalar or cross-transaction
+transaction parameter counts, unknown package constants, unqualified or
+aggregate package constants, package
 member/item paths, package constants inside wait-count expressions,
 unknown-width dynamic counts, unknown-width or malformed expression counts,
 and unsupported runtime contexts fail closed.
+Generated child activation overrides for wait-count transaction parameters
+must preserve the child default value; mismatches fail closed until
+per-activation wait-state specialization is shipped.
 
 Inline dynamic waits are supported in `when` and `repeat` bodies, `switch`
 branches, and `while`/`until` bodies for the no-pending-sample subset.
@@ -500,6 +514,9 @@ scalar parameter default, positive actor constant, positive actor scalar
 parameter default, qualified package scalar constant, or known-width runtime
 scalar. Same-transaction parameter counts resolve to a positive integer for
 counter width and load that resolved value in the scheduled `.fsm`.
+Generated child activation overrides for repeat-count transaction parameters
+must preserve the child default value; mismatches fail closed until
+per-activation repeat counter specialization is shipped.
 
 **What happens**:
 1. Init state: `(<= (cnt N))` — load counter via D-input
@@ -1604,6 +1621,9 @@ scheduler defaults. Unknown or unqualified package constants, aggregate
 package constants, package member/item paths, cross-transaction parameters,
 runtime signals, arbitrary expressions, zero-valued constants, and
 zero-valued or non-scalar actor/transaction parameters fail closed.
+Generated child activation overrides for latency-bound transaction parameters
+must preserve the child default value; mismatches fail closed until
+per-activation latency counter specialization is shipped.
 
 **What happens**:
 1. Entry state: `(<- (cc 0))` — reset counter

@@ -4,6 +4,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 generated-child static timing parameter override gates:
+  `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES.1` shipped generated child
+  activation override gates for static timing transaction parameters and
+  closed the task tree. Activation-site overrides on `spawn`, generated
+  blocking `do`, and rule `trigger` now fail closed when they would change a
+  child transaction parameter consumed by repeat, wait, latency, or top-level
+  await-local watchdog lowering. Same-value overrides remain accepted because
+  the child scheduled `.fsm` stays default-resolved; full per-activation
+  static timing specialization remains deferred. Validation passed: syntax
+  checks; focused timing/activation/public-audit tests with `Files=15,
+  Tests=450`; `./bin/ci-regression isf --no-book` with `Files=275,
+  Tests=1751`; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 static timing fail-closed checklist truth sync:
   `ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.1` synchronized downstream
   fail-closed checklist wording after the shipped transaction-parameter
@@ -8320,10 +8332,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.1` synchronized downstream
-  fail-closed checklist wording so watchdog and latency transaction-parameter
-  entries no longer overstate rejected sources after the shipped R14 timing
-  parameter slices.
+  `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES.1` closed the generated-child
+  activation override gap for transaction parameters consumed by static timing
+  lowering, failing closed on mismatched repeat, wait, latency, and top-level
+  await-local watchdog overrides while preserving same-value overrides.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

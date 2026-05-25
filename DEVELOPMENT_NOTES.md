@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Generated child static timing overrides need same-value gates
+- `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES.1` applies the same safety rule
+  used for generated child contract-window parameters to the other static
+  timing consumers that resolve transaction parameters before child `.fsm`
+  emission.
+- Repeat, wait, latency, and top-level await-local watchdog parameters are
+  local lowering inputs. A generated child scheduled `.fsm` is emitted from
+  the child definition's default-resolved integer, so a mismatched activation
+  override would imply per-activation specialization that does not exist yet.
+- Same-value overrides remain safe and accepted because they preserve the
+  child default-resolved artifact while keeping the generated top's authored
+  override publication intact.
+
 ## 2026-05-25: Static timing checklist must name only unsupported sources
 - `ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.1` keeps the downstream
   fail-closed checklist aligned with the shipped R14 timing parameter surface.

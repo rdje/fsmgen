@@ -1086,6 +1086,10 @@ Activation-site same-value override acceptance and mismatch diagnostics for
 generated child transaction parameters used by child contract windows are
 checked by
 [t/1366-isf-contract-activation-override-windows.t](../t/1366-isf-contract-activation-override-windows.t).
+Activation-site same-value override acceptance and mismatch diagnostics for
+generated child transaction parameters used by static timing lowering are
+checked by
+[t/1369-isf-timing-param-activation-override-gates.t](../t/1369-isf-timing-param-activation-override-gates.t).
 The shipped subset is the top-level transaction form
 `(contract name (eventually signal within cycles))`. The older nested
 `(contract name (eventually signal (within cycles)))` spelling remains an
@@ -1310,6 +1314,10 @@ check. Transaction-parameter, actor-constant, actor-scalar-parameter, and
 package scalar constant latency bounds resolve to the same generated `.fsm` and
 schedule-report storage shape as the equivalent literal; there is no separate
 latency-bound source-token report field.
+Generated child activation overrides for latency-bound transaction parameters
+are accepted only when they resolve to the same positive integer as the child
+default; mismatches fail closed until per-activation latency counter
+specialization is shipped.
 The update-clause boundary is checked by
 [t/1198-isf-update-clause-boundary.t](../t/1198-isf-update-clause-boundary.t)
 so `(update var expr)` has exactly one scalar target and one scalar or list
@@ -1361,6 +1369,10 @@ The same boundary test also checks that literal zero repeat counts and actor
 constants, actor scalar parameters, same-transaction scalar parameters, or
 package scalar constants resolving to zero fail closed before scheduled
 `.fsm` emission.
+Generated child activation overrides for repeat-count transaction parameters
+are accepted only when they resolve to the same positive integer as the child
+default; mismatches fail closed until per-activation repeat counter
+specialization is shipped.
 Known-width runtime scalar repeat counts now split the repeat init edge:
 nonzero values enter the repeat body, while zero values bypass the body and
 repeat check to the state after the repeat region. Unknown names, non-scalar
@@ -2484,6 +2496,10 @@ accepted only on top-level await-local watchdog overrides, where they shadow
 actor-level static names and remain local lowering inputs. One transaction
 still has one watchdog counter, so distinct per-await watchdog limits in the
 same transaction fail closed.
+Generated child activation overrides for top-level await-local watchdog
+transaction parameters are accepted only when they resolve to the same
+positive integer as the child default; mismatches fail closed until
+per-activation watchdog counter specialization is shipped.
 When `clock_domains` is present, `clock` and `reset` expose the selected
 default-domain timing, and `reset` is null only when that domain omits reset.
 Public multi-domain `lower(...)` emits domain-specific scheduled `.fsm`
@@ -3222,6 +3238,10 @@ These are not stable public interfaces yet:
   top-level branch subsets additionally support static-parameter generated
   `(do child (params ...) (bind ...))` while generated nested spawns are
   pending before that same later drain.
+  Generated child activation overrides for wait-count transaction parameters
+  are accepted only when they resolve to the same non-negative integer as the
+  child default; mismatches fail closed until per-activation wait-state
+  specialization is shipped.
   Unsupported non-scalar or cross-transaction parameter wait counts,
   non-scalar actor parameter wait counts, unqualified or aggregate package constants, package member/item
   paths, package constants inside wait-count expressions,

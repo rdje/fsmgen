@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Static timing override gates shipped
+- Completed `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES.1` and closed the
+  task tree.
+- Generated child activation overrides on `spawn`, generated blocking `do`,
+  and rule `trigger` now fail closed when they would change a child
+  transaction parameter consumed by repeat, wait, latency, or top-level
+  await-local watchdog lowering.
+- Same-value overrides remain accepted because the child scheduled `.fsm`
+  stays default-resolved; full per-activation static timing specialization
+  remains deferred.
+- Validation passed: syntax checks; focused timing/activation/public-audit
+  tests with `Files=15, Tests=450`; `./bin/ci-regression isf --no-book` with
+  `Files=275, Tests=1751`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Static timing fail-closed checklist synchronized
 - Completed `ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.1` and closed the
   task tree.

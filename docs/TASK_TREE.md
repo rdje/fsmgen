@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES` | `done` | `R14` | `closed` | [docs/tasks/ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES.md](docs/tasks/ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES.md) |
 | `ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC` | `done` | `R14 documentation truth sync` | `closed` | [docs/tasks/ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.md](docs/tasks/ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.md) |
 | `ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS` | `done` | `R14` | `closed` | [docs/tasks/ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.md](docs/tasks/ISF-WATCHDOG-TRANSACTION-PARAM-LIMITS.md) |
 | `ISF-LATENCY-TRANSACTION-PARAM-BOUNDS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.md](docs/tasks/ISF-LATENCY-TRANSACTION-PARAM-BOUNDS.md) |
@@ -392,6 +393,7 @@ as done work unless a future task reopens them.
 | Temporal-contract direct transaction same-transaction scalar parameter window counts | `ISF-CONTRACT-DIRECT-TRANSACTION-PARAM-WINDOWS` |
 | Activation-site override diagnostics for generated child temporal contract-window parameters | `ISF-CONTRACT-ACTIVATION-OVERRIDE-WINDOWS` |
 | Same-value activation-site overrides for generated child temporal contract-window parameters | `ISF-CONTRACT-ACTIVATION-OVERRIDE-SAME-VALUE` |
+| Activation-site override gates for generated child static timing parameters | `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES` |
 | Transaction latency actor-constant min/max bounds | `ISF-LATENCY-ACTOR-CONSTANT-BOUNDS` |
 | Transaction latency actor-scalar-parameter min/max bounds | `ISF-LATENCY-ACTOR-PARAM-BOUNDS` |
 | Transaction latency qualified package scalar-constant min/max bounds | `ISF-LATENCY-PACKAGE-CONSTANT-BOUNDS` |
