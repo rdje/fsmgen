@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Generated do timing coverage should pin the existing class
+- `ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.1` covers generated blocking
+  `do` input bindings in the same focused timing fixture as local `do`,
+  `spawn`, and rule-trigger bindings.
+- Generated blocking `do` activations with activation-site parameters already
+  use generated-top live handoff wiring, so `(timing live)` is the only
+  current-timing assertion that should pass for that site.
+- The paired `(timing snapshot)` rejection keeps the current-timing-only
+  contract honest until a separate design explicitly chooses any
+  behavior-changing snapshot/live conversion.
+
 ## 2026-05-25: Binding timing history must separate syntax from conversion
 - `ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.1` keeps older notes from
   implying that all snapshot/live binding timing work remains deferred.

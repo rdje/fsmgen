@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 generated do binding timing coverage completed
+- Completed `ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.1` and closed the task
+  tree.
+- Generated blocking `do` input bindings now have explicit regression coverage
+  for accepted `(timing live)` assertions and report metadata:
+  `binding_timing => generated_live_handoff` plus
+  `authored_timing_mode => live`.
+- Generated blocking `do` input bindings that request `(timing snapshot)` now
+  have direct fail-closed mismatch coverage against the current generated-live
+  transfer class.
+- This is coverage-only behavior preservation; parser behavior, scheduler
+  lowering, generated `.fsm`, HDL, schedule-report schema, public contract
+  code, and runtime behavior did not change.
+- Validation passed: syntax check; focused transaction-port binding test;
+  focused port-binding/report/spec/book audits; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 binding timing history synchronized
 - Completed `ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.1` and closed
   the task tree.

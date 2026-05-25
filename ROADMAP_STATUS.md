@@ -4,6 +4,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 generated do binding timing coverage:
+  `ISF-GENERATED-DO-BINDING-TIMING-COVERAGE.1` added focused regression
+  coverage for already-shipped generated blocking `do` input-binding timing
+  assertions and closed the task tree. A parameterized generated `do` binding
+  with `(timing live)` is now explicitly covered as
+  `binding_timing => generated_live_handoff` and
+  `authored_timing_mode => live`; a generated `do` binding that requests
+  `(timing snapshot)` now has direct mismatch coverage. This is
+  coverage-only behavior preservation: parser behavior, scheduler lowering,
+  generated `.fsm`, HDL, schedule-report schema, public contract code, and
+  runtime behavior did not change. Validation passed: syntax check; focused
+  transaction-port binding test; focused port-binding/report/spec/book
+  audits; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 binding timing history truth sync:
   `ROADMAP-R14-BINDING-TIMING-HISTORICAL-TRUTH-SYNC.1` synchronized older
   recovery notes that still treated explicit snapshot/live binding timing

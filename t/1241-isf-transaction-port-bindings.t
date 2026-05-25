@@ -214,6 +214,7 @@ subtest 'explicit input binding timing syntax accepts current timing classes' =>
     (output done))
   (storage
     (var local_sink (width 8))
+    (var generated_sink (width 8))
     (var spawn_sink (width 8))
     (var work_sink (width 8)))
   (transaction local_child
@@ -222,6 +223,13 @@ subtest 'explicit input binding timing syntax accepts current timing classes' =>
     (on local_child_start)
     (update local_sink addr)
     (complete local_child_done))
+  (transaction generated_child
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8)))
+    (update generated_sink addr)
+    (complete done))
   (transaction spawned_child
     (ports
       (input addr (width 8)))
@@ -238,6 +246,11 @@ subtest 'explicit input binding timing syntax accepts current timing classes' =>
     (do local_child
       (bind
         (input addr req_addr (timing snapshot))))
+    (do generated_child
+      (params
+        (WIDTH 8))
+      (bind
+        (input addr req_addr (timing live))))
     (spawn spawned_child as w0
       (bind
         (input addr req_addr (timing live))))
@@ -253,6 +266,8 @@ ISF
     my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
     my $fsm = $lowered->{files}{'explicit_binding_timing.fsm'};
     like($fsm, qr/\(= \(addr req_addr\)\)/, 'snapshot timing keeps local do input assignment');
+    like($fsm, qr/\(-parent_generated_child_do_1_port_bindings\s+\(= \(parent_generated_child_do_1_addr> req_addr\)\)\s+\)/s,
+        'live timing keeps generated do input handoff');
     like($fsm, qr/\(-w0_port_bindings\s+\(= \(w0_addr> req_addr\)\)\s+\)/s,
         'live timing keeps generated-top spawn input handoff');
     like($fsm, qr/\(<- \(fire_rule_work_work_addr req_addr\)\)/,
@@ -263,6 +278,7 @@ ISF
         [map { $_->{site_kind} . ':' . $_->{port} . ':' . $_->{binding_timing} } @{$report->{transaction_port_bindings}}],
         [
             'do:addr:activation_region',
+            'do:addr:generated_live_handoff',
             'spawn:addr:generated_live_handoff',
             'rule_trigger:work_addr:trigger_payload',
         ],
@@ -272,6 +288,7 @@ ISF
         [map { $_->{site_kind} . ':' . $_->{port} . ':' . ($_->{authored_timing_mode} // 'null') } @{$report->{transaction_port_bindings}}],
         [
             'do:addr:snapshot',
+            'do:addr:live',
             'spawn:addr:live',
             'rule_trigger:work_addr:snapshot',
         ],
@@ -428,6 +445,26 @@ ISF
   (transaction parent
     (on start)
     (spawn child as w0
+      (bind (input addr req_addr (timing snapshot))))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'generated do snapshot timing mismatch', qr/\ATransaction 'parent': do target 'child' input binding for port 'addr' requested timing 'snapshot', but this activation currently uses 'generated_live_handoff'/);
+(actor generated_do_snapshot_timing
+  (clock clk)
+  (interface (input start) (input req_addr (width 8)) (output done))
+  (storage (var sink (width 8)))
+  (transaction child
+    (params
+      (WIDTH 8))
+    (ports (input addr (width 8)))
+    (update sink addr)
+    (complete done))
+  (transaction parent
+    (on start)
+    (do child
+      (params
+        (WIDTH 8))
       (bind (input addr req_addr (timing snapshot))))
     (complete done)))
 ISF
