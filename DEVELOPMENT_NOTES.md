@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-24: Interface package constants publish resolved widths
+- `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2` resolves qualified imported
+  package scalar constants at the actor interface width boundary. The public
+  parser shell, scheduled `.fsm` `+size`, schedule evidence, and HDL port
+  ranges all carry the resolved positive integer width, matching the existing
+  actor-constant and actor-parameter interface-width surfaces.
+- The parser still treats package constants as explicit imports, not as
+  namespace pollution. Unqualified names do not search imported packages, and
+  aggregate constants or aggregate member/item paths remain deferred rather
+  than being coerced into dimension values.
+- This slice intentionally leaves package constants out of storage widths,
+  bank dimensions, transaction-port widths, waits, watchdogs, latency bounds,
+  contract windows, repeat counts, and generated-top respecialization so each
+  future dimension/value domain can be reviewed with its own diagnostics and
+  report contract.
+
 ## 2026-05-24: Interface package constants should reuse width resolution
 - `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1` selects qualified imported package
   scalar constants for actor top-level interface port widths as the next

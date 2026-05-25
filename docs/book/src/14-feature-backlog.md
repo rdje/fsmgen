@@ -330,6 +330,15 @@ generated-composition report values; unqualified package constants, aggregate
 package constants, package member/item paths, and ambiguous
 local-enum/package-constant spellings remain fail-closed.
 
+Actor top-level interface port widths may use qualified imported package
+scalar constants too, when the imported package constant resolves to a
+positive integer. Those widths publish as resolved integer parser-handoff
+widths, scheduled `.fsm` `+size` entries, schedule-report evidence, and HDL
+port ranges. Unqualified package constants, aggregate package constants,
+package member/item paths, ambiguous local-enum/package-constant spellings,
+zero values, runtime signals, and expressions remain fail-closed for
+interface widths.
+
 Actor parameter defaults accept enum members, declared actor constants, earlier
 scalar actor parameter defaults, and qualified imported package scalar
 constants in their shipped scalar and aggregate/list leaf positions. Actor
@@ -3102,10 +3111,12 @@ depth-1 element may be useful as a register slice or holding element, but it
 does not exercise FIFO depth, pointers, or occupancy semantics. The first
 fixture is fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and
 `OCC_WIDTH=3`. Those parameters are emitted as provenance and use-site binding
-evidence. Actor top-level interface port widths, actor-owned scalar storage
-widths, actor-owned bank widths, and actor-owned bank depths may use declared
-actor constants or actor-local scalar parameter defaults when they resolve to
-positive integers.
+evidence. Actor top-level interface port widths may use declared actor
+constants, actor-local scalar parameter defaults, or qualified imported
+package scalar constants when they resolve to positive integers. Actor-owned
+scalar storage widths, actor-owned bank widths, and actor-owned bank depths
+may use declared actor constants or actor-local scalar parameter defaults when
+they resolve to positive integers.
 Transaction-local port widths may use actor-local scalar parameter defaults or
 declared actor constants when they resolve to positive integers.
 FIFO use-site interface shape specialization and generated-top

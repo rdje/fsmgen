@@ -170,8 +170,9 @@ The current bounded parser handoff also advertises the `interface` subshape:
 non-empty scalar `name` plus positive integer `width`, with omitted source
 widths normalized to `1`. Actor top-level interface `(width PARAM)` and
 `(width CONST)` entries are accepted when the symbolic name is an actor-local
-scalar parameter default or declared actor constant that resolves to a positive
-integer; the parser handoff still exposes the resolved integer width.
+scalar parameter default, declared actor constant, or qualified imported
+package scalar constant that resolves to a positive integer; the parser
+handoff still exposes the resolved integer width.
 It also advertises the transaction-entry shell: `transactions` is an array of
 entries with scalar `name` and `clauses` array fields. Those shapes are
 live-contract metadata for scheduler-consumable actors, not a freeze of the
@@ -611,7 +612,10 @@ sites resolve to literal values before generated-top emission. Actor constants,
 actor scalar parameters, enum members, and qualified package constants used by
 reusable-library use sites resolve to literal values before generated-top
 emission and `library_uses[]` schedule-report publication where that report
-surface exists. Schedule
+surface exists. Qualified package scalar constants used by actor top-level
+interface widths resolve to positive integer parser-handoff widths, scheduled
+`.fsm` `+size` entries, schedule-report evidence, and HDL port ranges.
+Schedule
 reports expose actor parameter defaults through `actor_params[]` entries with
 each authored parameter `name` and JSON-safe default `value`, preserving
 authored actor constant tokens such as `DEFAULT_WIDTH`, earlier actor
@@ -1297,11 +1301,12 @@ register/holding element and would hide the real storage and concurrency
 requirements. The shipped reusable FIFO actor target is fixed-shape
 `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Those parameters
 are provenance and binding evidence in this fixture; actor top-level
-interface widths may use actor-local scalar parameter defaults or declared
-actor constants that resolve to positive integers, actor-owned scalar storage
-widths and bank widths may use the same positive actor-local scalar parameter
-defaults or declared actor constants, and bank depths may use positive
-actor-local scalar parameter defaults or declared actor constants. The actor has
+interface widths may use actor-local scalar parameter defaults, declared actor
+constants, or qualified imported package scalar constants that resolve to
+positive integers, actor-owned scalar storage widths and bank widths may use
+the same positive actor-local scalar parameter defaults or declared actor
+constants, and bank depths may use positive actor-local scalar parameter
+defaults or declared actor constants. The actor has
 actor-owned storage, read
 and write pointers, occupancy state, actor-maintained flags, reset ownership,
 and first-class handling of the four request cases every cycle: no request,
@@ -1332,7 +1337,8 @@ entry 0. The reusable FIFO fixture models the internal data bank through
 `(bank data (width 8) (depth 4))`, `(store data wr_ptr data_in)`, and
 `(load data rd_ptr as data_out)`.
 Actor top-level interface widths may now use actor-local scalar parameter
-defaults or declared actor constants that resolve to positive integers.
+defaults, declared actor constants, or qualified imported package scalar
+constants that resolve to positive integers.
 Actor-owned scalar storage widths may now use actor-local scalar parameter
 defaults or declared actor constants that resolve to positive integers.
 Actor-owned bank storage widths may now use actor-local scalar parameter
@@ -1345,9 +1351,9 @@ memory-backed FIFO generation beyond the first `DEPTH=4` fixture, automatic
 non-zero reset values such as empty=1, standalone transaction/drive exports,
 package/imported constants outside the shipped qualified actor parameter,
 generated-child transaction parameter default, generated activation override,
-and reusable-library use-site override scalar-constant subsets, derived
-parameter expressions, and library actors that import other libraries remain
-deferred.
+reusable-library use-site override, and actor interface width scalar-constant
+subsets, derived parameter expressions, and library actors that import other
+libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -5274,6 +5280,7 @@ Focused tests:
 - [t/1350-isf-transaction-param-package-constants.t](../t/1350-isf-transaction-param-package-constants.t)
 - [t/1351-isf-activation-param-package-constants.t](../t/1351-isf-activation-param-package-constants.t)
 - [t/1352-isf-library-use-package-constants.t](../t/1352-isf-library-use-package-constants.t)
+- [t/1353-isf-interface-package-constant-widths.t](../t/1353-isf-interface-package-constant-widths.t)
 
 ## 12. Explicitly Deferred
 
@@ -5284,8 +5291,8 @@ Focused tests:
   standalone transaction/drive exports,
   package/imported constants outside the shipped qualified actor parameter,
   generated-child transaction parameter default, generated activation
-  override, and reusable-library use-site override scalar-constant subsets,
-  derived parameter expressions,
+  override, reusable-library use-site override, and actor interface width
+  scalar-constant subsets, derived parameter expressions,
   transaction-port dimensions beyond positive literals, actor-local scalar
   parameters, and scalar type aliases,
   memory-array backend emission, and

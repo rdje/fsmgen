@@ -660,8 +660,34 @@ sub _finalize_actor_interface_widths($self, $actor) {
                     && $width =~ /\A[1-9][0-9]*\z/;
 
             my $port_name = $port->{name};
-            confess "Error: actor '$actor_name' interface port '$port_name' width must be a positive integer literal, actor constant, or actor scalar parameter\n"
-                unless defined($width) && !ref($width) && _is_hdl_identifier($width);
+            my $accepted_sources = 'positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant';
+            confess "Error: actor '$actor_name' interface port '$port_name' width must be a $accepted_sources\n"
+                unless defined($width)
+                    && !ref($width)
+                    && (_is_hdl_identifier($width) || _is_package_constant_reference_shape($width));
+
+            if (my $package_constant = _actor_package_constant_reference($actor, $width)) {
+                my ($package_name, $constant_name, $suffix) = @$package_constant;
+                my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+                confess "Error: actor '$actor_name' interface port '$port_name' references unknown package constant '$width'\n"
+                    unless defined $constant_payload;
+                confess "Error: actor '$actor_name' interface port '$port_name' package constant '$package_name.$constant_name' aggregate/member path '$width' remains deferred; actor interface widths accept only qualified package scalar constants in this slice\n"
+                    if length($suffix);
+                confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is ambiguous: it matches local enum member '$width' and imported package constant '$width'\n"
+                    if $width =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/
+                        && _actor_local_enum_member_exists($actor, $1, $2);
+
+                my $constant_value = _package_constant_scalar_value($constant_payload);
+                my $constant_width = _positive_integer_from_literal_value($constant_value);
+                confess "Error: actor '$actor_name' interface port '$port_name' package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
+                    unless defined $constant_width;
+                $port->{width} = $constant_width;
+                next;
+            }
+
+            if (_is_package_constant_reference_shape($width)) {
+                confess "Error: actor '$actor_name' interface port '$port_name' references unknown package constant '$width'\n";
+            }
 
             my $param = _actor_param_by_name($actor, $width);
             if ($param) {
@@ -681,10 +707,10 @@ sub _finalize_actor_interface_widths($self, $actor) {
                 next;
             }
 
-            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is a runtime interface signal; actor interface widths accept positive integer literals, actor constants, actor scalar parameters, or type aliases only\n"
+            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is a runtime interface signal; actor interface widths accept positive integer literals, actor constants, actor scalar parameters, qualified package scalar constants, or type aliases only\n"
                 if _actor_interface_signal_by_name($actor, $width);
 
-            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is not a declared actor scalar parameter or actor constant\n";
+            confess "Error: actor '$actor_name' interface port '$port_name' width token '$width' is not a declared actor scalar parameter, actor constant, or imported package scalar constant\n";
         }
     }
 
@@ -6180,11 +6206,13 @@ sub _parse_interface($self, $clause) {
             confess "Error: interface port '$name' has duplicate '$option_name' option\n"
                 if $seen_options{$option_name}++;
             if (ref($prop) eq 'ARRAY' && $prop->[0] eq 'width') {
-                confess "Error: interface port '$name' width must be a positive integer, actor constant, or actor scalar parameter\n"
+                confess "Error: interface port '$name' width must be a positive integer, actor constant, actor scalar parameter, or qualified package scalar constant\n"
                     unless @$prop == 2
                         && defined($prop->[1])
                         && !ref($prop->[1])
-                        && ($prop->[1] =~ /\A[1-9][0-9]*\z/ || _is_hdl_identifier($prop->[1]));
+                        && ($prop->[1] =~ /\A[1-9][0-9]*\z/
+                            || _is_hdl_identifier($prop->[1])
+                            || _is_package_constant_reference_shape($prop->[1]));
                 $width = $prop->[1];
                 next;
             }

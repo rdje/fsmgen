@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-24`
 - Last updated: `2026-05-24`
@@ -52,7 +52,7 @@ to positive integer literals.
 ## Task Tree
 
 - ID: `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship qualified imported package scalar constants as actor top-level interface widths.`
   Children: `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1`,
     `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2`
@@ -67,20 +67,20 @@ to positive integer literals.
   Commit: `this commit: ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1: select interface package-constant widths`
 
 - ID: `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document qualified package scalar constants as actor interface port widths.`
   Acceptance: `Positive imported package scalar constants lower as actor
   top-level interface widths; unsupported width sources fail closed; specs,
   book, public contract, downstream handoff, focused tests, and broader ISF
   gate are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `this commit: ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2: ship interface package-constant widths`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2` | `pending` | The qualified package-constant actor interface width boundary is selected and ready for implementation. |
+| 1 | `closed` | `done` | The qualified package-constant actor interface width implementation shipped and the tree is closed. |
 
 ## Decisions
 
@@ -112,16 +112,21 @@ to positive integer literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-24` | `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-24` | `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2` | syntax checks; focused public/interface/package tests with `Files=10, Tests=350`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book` with `Files=259, Tests=1703`; post-closure public/spec/book/backlog audits with `Files=7, Tests=374`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1` | `this commit: ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.1: select interface package-constant widths` | `selection slice` |
-| `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2` | `pending` | `implementation slice` |
+| `ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2` | `this commit: ISF-INTERFACE-PACKAGE-CONSTANT-WIDTHS.2: ship interface package-constant widths` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-24`: Created task tree and selected qualified imported package
   scalar constants in actor top-level interface port widths as the next
   bounded static-dimension implementation frontier.
+- `2026-05-24`: Shipped qualified imported package scalar constants in actor
+  top-level interface port widths, resolved those widths to positive integer
+  parser handoff, scheduled `.fsm`, report, and HDL surfaces, and closed the
+  task tree.

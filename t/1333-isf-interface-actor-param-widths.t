@@ -105,7 +105,7 @@ ISF
   (interface
     (output data_out (width DATA_W))))
 ISF
-        qr/\AError: actor 'unknown_parameter_width' interface port 'data_out' width token 'DATA_W' is not a declared actor scalar parameter or actor constant/,
+        qr/\AError: actor 'unknown_parameter_width' interface port 'data_out' width token 'DATA_W' is not a declared actor scalar parameter, actor constant, or imported package scalar constant/,
         'unknown symbolic width is rejected',
     );
 

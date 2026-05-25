@@ -632,6 +632,13 @@ so accepted `(width CONST)` entries resolve to positive integer public port
 widths, scheduled `.fsm` `+size` declarations, and HDL port ranges while
 zero-valued actor constants, unknown symbolic names, runtime interface
 signals, and arbitrary expressions fail closed.
+Actor top-level interface widths backed by qualified imported package scalar
+constants are checked by
+[t/1353-isf-interface-package-constant-widths.t](../t/1353-isf-interface-package-constant-widths.t)
+so accepted `(width PACKAGE.CONSTANT)` entries resolve to positive integer
+public port widths, scheduled `.fsm` `+size` declarations, schedule reports,
+and HDL port ranges while unknown, unqualified, aggregate, path, ambiguous,
+zero-valued, runtime, and expression-valued sources fail closed.
 The interface-port boundary is checked by
 [t/1188-isf-interface-port-boundary.t](../t/1188-isf-interface-port-boundary.t)
 so port names are unique across both input and output directions before an
