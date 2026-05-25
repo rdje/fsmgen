@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: Bootstrap — Import-tree measurement refresh shipped
+- Completed `BIN-FSMGEN-IMPORT-TREE-BOOTSTRAP-REFRESH.1` and closed the task
+  tree.
+- Rebuilt the live project-owned `FSM::...` import closure reachable from
+  `bin/fsmgen`; topology remains unchanged at `196` reachable project files
+  total and `195` reachable `.pm` packages.
+- Refreshed stale measured line counts in `docs/BIN_FSMGEN_IMPORT_TREE.md`
+  after recent R14 scheduler/parser work.
+- Parser behavior, scheduler lowering, generated `.fsm`, HDL, public API,
+  tests, and runtime behavior did not change.
+- Validation passed: import-closure recount; stale measured-value grep;
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 — Repeat zero roadmap status synchronized
 - Completed `ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.1` and closed the task
   tree.

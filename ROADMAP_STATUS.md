@@ -4,6 +4,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current bootstrap import-tree refresh:
+  `BIN-FSMGEN-IMPORT-TREE-BOOTSTRAP-REFRESH.1` refreshed the saved
+  `bin/fsmgen` import-tree architecture note and closed the task tree. The
+  bootstrap audit re-read the session entrypoints and rebuilt the live
+  project-owned `FSM::...` import closure. The topology remains unchanged at
+  `196` project files and `195` `.pm` packages; stale measured line counts in
+  `docs/BIN_FSMGEN_IMPORT_TREE.md` were refreshed after recent R14
+  scheduler/parser work. This was documentation-only: parser behavior,
+  scheduler lowering, generated `.fsm`, HDL, public API, tests, and runtime
+  behavior did not change. Validation passed: import-closure recount; stale
+  measured-value grep; `git diff --check`.
 - Current R14 repeat zero status truth sync:
   `ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.1` synchronized current
   roadmap/live-status repeat-count wording and closed the task tree. Current

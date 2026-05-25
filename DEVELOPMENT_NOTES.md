@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Bootstrap import-tree counts are topology plus measurement
+- `BIN-FSMGEN-IMPORT-TREE-BOOTSTRAP-REFRESH.1` reran the session bootstrap
+  import-tree audit before opening a new behavior slice.
+- The project-owned `FSM::...` closure reachable from `bin/fsmgen` still
+  measures `196` project files and `195` `.pm` packages with unchanged family
+  counts. That means no runtime-spine topology update was needed.
+- The line-count measurements inside `docs/BIN_FSMGEN_IMPORT_TREE.md` were
+  stale after recent R14 repeat/scheduler/public-contract work, so the saved
+  architecture note was refreshed without changing any compiler behavior.
+
 ## 2026-05-25: Roadmap current status must show superseded zero-repeat policy
 - `ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.1` is documentation-only cleanup
   after `ISF-STATIC-ZERO-REPEAT-NOOP.1`.

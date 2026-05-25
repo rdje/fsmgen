@@ -12,9 +12,11 @@ Refresh this document at the start of a later session whenever the effective ent
 
 Current baseline:
 - Reviewed on `2026-05-25`.
-- Startup bootstrap refreshed on `2026-05-25`; the live static trace still
-  includes the R14 `.isf` intent-scheduling path and the selected line-count
-  measurements below were refreshed from source.
+- Startup bootstrap refreshed again on `2026-05-25`; the live static trace
+  still includes the R14 `.isf` intent-scheduling path, the topology remains
+  at the same project-owned closure counts, and the selected line-count
+  measurements below were refreshed from source after the latest R14 repeat
+  scheduler/parser work.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
 - Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `196` project files total, `195` `.pm` packages.
@@ -257,13 +259,13 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm): `172`
 - [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm): `172`
 - [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm): `100`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `7960`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `8078`
 - [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm): `99`
-- [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm): `477`
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `10483`
+- [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm): `479`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `10870`
 - [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm): `504`
 - [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm): `499`
-- [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `994`
+- [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `1001`
 - [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm): `34`
 - [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm): `267`
 - [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm): `62`
@@ -280,15 +282,15 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Support/NormalizedSemanticReport.pm](perl/FSM/Support/NormalizedSemanticReport.pm): `383`
 
 Current largest reachable files by line count:
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `10483`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `7960`
-- [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3742`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `10870`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `8078`
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3745`
 - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `2447`
-- [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm): `2429`
-- [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2001`
+- [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm): `2431`
+- [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2032`
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm): `1827`
 - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm): `1695`
-- [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm): `1471`
+- [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm): `1485`
 - [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm): `1443`
 - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm): `1301`
 - [perl/FSM/HDL/ASTFactorization.pm](perl/FSM/HDL/ASTFactorization.pm): `1219`
