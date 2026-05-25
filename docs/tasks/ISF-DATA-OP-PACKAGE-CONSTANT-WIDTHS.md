@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -54,7 +54,7 @@ The initial implementation surface is the shipped explicit-width family:
 ## Task Tree
 
 - ID: `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS`
-  Status: `active`
+  Status: `done`
   Goal: `Qualified package scalar constants in explicit data-operation width evidence`
   Children: `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1`,
   `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2`
@@ -67,17 +67,17 @@ The initial implementation surface is the shipped explicit-width family:
   Commit: `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1: select data op package widths`
 
 - ID: `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document package scalar constants in explicit data-operation width evidence`
   Acceptance: `Accepted package scalar constants resolve to positive integer widths for shift/assemble/extract explicit width evidence, unsupported sources fail closed, and public docs/tests are synchronized`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks`; focused data-op/public/spec/book tests with `Files=16, Tests=392`; `./bin/ci-regression isf --no-book` with `Files=264, Tests=1713`; post-closure public/spec/book audits with `Files=7, Tests=374`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2: support data op package widths`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` | `pending` | Implementation follows the selected R14 public-facing package-constant width frontier. |
+| 1 | `closed` | `done` | All leaves are complete. |
 
 ## Decisions
 
@@ -88,6 +88,12 @@ The initial implementation surface is the shipped explicit-width family:
   concrete positive integer publication paths. Keeping this slice on explicit
   `(width ...)` / `(widths ...)` evidence avoids broad inference changes while
   improving author-facing reuse of imported package constants.
+- `2026-05-25`: Keep the shipped behavior honest about publication surfaces:
+  package-constant data-operation widths publish to scheduled `.fsm` shift
+  positions, assemble/extract width facts, and `inferred_storage[]` report
+  widths. The current backend HDL path still follows the existing data-op
+  width-evidence contract and is not widened to promise register range
+  projection for inferred data-op storage in this slice.
 
 ## Open Questions
 
@@ -102,17 +108,19 @@ The initial implementation surface is the shipped explicit-width family:
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1` | `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `passed`; audits `Files=3, Tests=364` |
-| `2026-05-25` | `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` | `pending` | `pending` |
+| `2026-05-25` | `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -c t/1358-isf-data-op-package-constant-widths.t`; focused data-op/public/spec/book `prove`; `./bin/ci-regression isf --no-book`; post-closure public/spec/book audits; `mdbook build docs/book`; `git diff --check` | `passed`; focused `Files=16, Tests=392`; broad `Files=264, Tests=1713`; post-closure `Files=7, Tests=374` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1` | `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1: select data op package widths` | Selection slice; no behavior change. |
-| `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` | `pending` | `pending` |
+| `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` | `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2: support data op package widths` | Implementation and documentation slice; closes tree. |
 
 ## Changelog
 
 - `2026-05-25`: Created task tree and selected
   `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` as the next implementation
   frontier.
+- `2026-05-25`: Implemented `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` and
+  closed the task tree.

@@ -151,7 +151,7 @@ ISF
 };
 
 subtest 'malformed assemble clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'assemble without parts', qr/\Aassemble requires '\(assemble part\.\.\. as target \[\(widths N\|PARAM\|CONST\.\.\.\)\]\)'/);
+    assert_lower_rejected(<<'ISF', 'assemble without parts', qr/\Aassemble requires '\(assemble part\.\.\. as target \[\(widths N\|PARAM\|CONST\|PACKAGE\.CONSTANT\.\.\.\)\]\)'/);
 (actor assemble_without_parts
   (clock clk)
   (interface (input start) (output packet) (output done))
@@ -161,7 +161,7 @@ subtest 'malformed assemble clauses fail before scheduled emission' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'assemble without as keyword', qr/\Aassemble requires '\(assemble part\.\.\. as target \[\(widths N\|PARAM\|CONST\.\.\.\)\]\)'/);
+    assert_lower_rejected(<<'ISF', 'assemble without as keyword', qr/\Aassemble requires '\(assemble part\.\.\. as target \[\(widths N\|PARAM\|CONST\|PACKAGE\.CONSTANT\.\.\.\)\]\)'/);
 (actor assemble_without_as
   (clock clk)
   (interface (input start) (input header) (output packet) (output done))
@@ -191,7 +191,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'extra assemble operand after target', qr/\Aassemble optional arguments must be '\(widths N\|PARAM\|CONST\.\.\.\)'/);
+    assert_lower_rejected(<<'ISF', 'extra assemble operand after target', qr/\Aassemble optional arguments must be '\(widths N\|PARAM\|CONST\|PACKAGE\.CONSTANT\.\.\.\)'/);
 (actor extra_assemble_operand
   (clock clk)
   (interface (input start) (input header) (output packet) (output done))
@@ -211,7 +211,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'assemble unknown option', qr/\Aassemble optional arguments must be '\(widths N\|PARAM\|CONST\.\.\.\)'/);
+    assert_lower_rejected(<<'ISF', 'assemble unknown option', qr/\Aassemble optional arguments must be '\(widths N\|PARAM\|CONST\|PACKAGE\.CONSTANT\.\.\.\)'/);
 (actor assemble_unknown_option
   (clock clk)
   (interface (input start) (input header) (output packet) (output done))

@@ -3329,7 +3329,7 @@ sub _as_index {
 sub _parse_assemble_clause {
     my ($cl, $actor, $tn) = @_;
     my $as_idx = _as_index($cl, 2);
-    confess "assemble requires '(assemble part... as target [(widths N|PARAM|CONST...)])'\n"
+    confess "assemble requires '(assemble part... as target [(widths N|PARAM|CONST|PACKAGE.CONSTANT...)])'\n"
         unless defined $as_idx && $as_idx > 1 && ($as_idx == $#$cl - 1 || $as_idx == $#$cl - 2);
 
     my @parts = @{$cl}[1 .. $as_idx - 1];
@@ -3339,7 +3339,7 @@ sub _parse_assemble_clause {
 
     if ($as_idx == $#$cl - 2) {
         my $option = $cl->[$as_idx + 2];
-        confess "assemble optional arguments must be '(widths N|PARAM|CONST...)'\n"
+        confess "assemble optional arguments must be '(widths N|PARAM|CONST|PACKAGE.CONSTANT...)'\n"
             unless ref($option) eq 'ARRAY'
                 && @$option >= 1
                 && defined($option->[0])
@@ -3348,7 +3348,7 @@ sub _parse_assemble_clause {
         $saw_widths = 1;
         @raw_explicit_widths = @{$option}[1 .. $#$option];
         for my $width (@raw_explicit_widths) {
-            confess "assemble widths must be positive integer literals, actor constants, or actor scalar parameters\n"
+            confess "assemble widths must be positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants\n"
                 if !defined($width) || ref($width) || !length($width);
         }
     }
@@ -3444,7 +3444,7 @@ sub _parse_extract_clause {
                 if @$item == 1 || grep { !defined($_) || ref($_) } @$item;
             confess "extract accepts at most one '(widths ...)' option\n"
                 if $saw_widths;
-            confess "extract optional arguments must be '(widths N|PARAM|CONST...)'\n"
+            confess "extract optional arguments must be '(widths N|PARAM|CONST|PACKAGE.CONSTANT...)'\n"
                 unless @$item >= 2
                     && defined($item->[0])
                     && !ref($item->[0])
@@ -3452,7 +3452,7 @@ sub _parse_extract_clause {
             $saw_widths = 1;
             @raw_explicit_widths = @{$item}[1 .. $#$item];
             for my $width (@raw_explicit_widths) {
-                confess "extract widths must be positive integer literals, actor constants, or actor scalar parameters\n"
+                confess "extract widths must be positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants\n"
                     if !defined($width) || ref($width) || !length($width);
             }
             next;
@@ -3558,14 +3558,16 @@ sub _parse_shift_width {
 
     for my $idx (3 .. $#$cl) {
         my $option = $cl->[$idx];
-        confess "$keyword optional arguments must be '(width N|PARAM|CONST)'\n"
+        confess "$keyword optional arguments must be '(width N|PARAM|CONST|PACKAGE.CONSTANT)'\n"
             unless ref($option) eq 'ARRAY' && @$option == 2 && $option->[0] eq 'width';
-        confess "$keyword accepts at most one '(width N|PARAM|CONST)' option\n"
+        confess "$keyword accepts at most one '(width N|PARAM|CONST|PACKAGE.CONSTANT)' option\n"
             if defined $width;
-        confess "$keyword width must be a positive integer literal, actor constant, or actor scalar parameter\n"
+        confess "$keyword width must be a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant\n"
             if !defined($option->[1]) || ref($option->[1]) || !length($option->[1]);
-        confess "$keyword width must be a positive integer literal, actor constant, or actor scalar parameter\n"
-            unless $option->[1] =~ /\A[1-9][0-9]*\z/ || _is_hdl_identifier($option->[1]);
+        confess "$keyword width must be a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant\n"
+            unless $option->[1] =~ /\A[1-9][0-9]*\z/
+                || _is_hdl_identifier($option->[1])
+                || _is_package_constant_reference_shape($option->[1]);
         $width = $option->[1] =~ /\A[1-9][0-9]*\z/ ? 0 + $option->[1] : $option->[1];
     }
 
@@ -3581,10 +3583,35 @@ sub _static_data_width_evidence_value {
     return 0 + $token
         if !ref($token) && $token =~ /\A[1-9][0-9]*\z/;
 
-    confess "$context must be a positive integer literal, actor constant, or actor scalar parameter\n"
-        if ref($token) || !length($token) || !_is_hdl_identifier($token);
+    my $accepted_sources = 'positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants';
 
-    confess "Transaction '$tn': $context token '$token' is a transaction parameter; data-operation width evidence accepts positive integer literals, actor constants, or actor scalar parameters only\n"
+    confess "$context must be a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant\n"
+        if ref($token)
+            || !length($token)
+            || (!_is_hdl_identifier($token) && !_is_package_constant_reference_shape($token));
+
+    if (my $package_constant = _actor_package_constant_reference($actor, $token)) {
+        my ($package_name, $constant_name, $suffix) = @$package_constant;
+        my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+        if (defined $constant_payload) {
+            confess "Transaction '$tn': $context token '$token' is ambiguous: it matches local enum member '$token' and imported package constant '$token'\n"
+                if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
+            confess "Transaction '$tn': $context package constant '$package_name.$constant_name' aggregate/member path '$token' remains deferred; data-operation width evidence accepts only qualified package scalar constants in this slice\n"
+                if $suffix ne '';
+            my $constant_value = _package_constant_scalar_value($constant_payload);
+            my $integer_value = defined($constant_value) && !ref($constant_value)
+                ? _non_negative_integer_from_literal($constant_value)
+                : undef;
+            confess "Transaction '$tn': $context package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
+                unless defined($integer_value) && $integer_value > 0;
+            return $integer_value;
+        }
+
+        confess "Transaction '$tn': $context references unknown package constant '$token'\n"
+            if $suffix eq '' && !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
+    }
+
+    confess "Transaction '$tn': $context token '$token' is a transaction parameter; data-operation width evidence accepts $accepted_sources only\n"
         if _transaction_param_by_name($actor, $tn, $token);
 
     my $constant = _actor_constant_by_name($actor, $token);
@@ -3603,10 +3630,10 @@ sub _static_data_width_evidence_value {
         return $param_value;
     }
 
-    confess "Transaction '$tn': $context token '$token' is a runtime interface signal; data-operation width evidence accepts positive integer literals, actor constants, or actor scalar parameters only\n"
+    confess "Transaction '$tn': $context token '$token' is a runtime interface signal; data-operation width evidence accepts $accepted_sources only\n"
         if _actor_interface_signal_by_name($actor, $token);
 
-    confess "Transaction '$tn': $context token '$token' is not a declared actor constant or actor scalar parameter\n";
+    confess "Transaction '$tn': $context token '$token' is not a declared actor constant, actor scalar parameter, or imported package scalar constant\n";
 }
 
 sub _register_counter_width {
@@ -4085,8 +4112,8 @@ sub _validate_shift_clause {
     my ($clause, $tn, $label) = @_;
     my $keyword = $clause->[0];
     my $shape = $keyword eq 'shift_left'
-        ? '(shift_left reg bit [(width N|PARAM|CONST)])'
-        : '(shift_right reg bit [(width N|PARAM|CONST)])';
+        ? '(shift_left reg bit [(width N|PARAM|CONST|PACKAGE.CONSTANT)])'
+        : '(shift_right reg bit [(width N|PARAM|CONST|PACKAGE.CONSTANT)])';
 
     confess "Transaction '$tn': $keyword requires '$shape' in $label\n"
         unless @$clause >= 3
@@ -4954,6 +4981,13 @@ sub _is_package_constant_path_reference_shape {
     return defined($value)
         && !ref($value)
         && $value =~ /\A[A-Za-z_]\w*\.[A-Za-z_]\w*(?:\.[A-Za-z_]\w*|\[\d+\])+\z/;
+}
+
+sub _is_package_constant_reference_shape {
+    my ($value) = @_;
+    return defined($value)
+        && !ref($value)
+        && $value =~ /\A[A-Za-z_]\w*\.[A-Za-z_]\w*(?:\.[A-Za-z_]\w*|\[\d+\])*\z/;
 }
 
 sub _is_activation_input_binding_expr_shape {
@@ -6461,7 +6495,7 @@ sub _ir_shift_right {
             && $explicit_width != $known_width;
 
     my $width = defined($explicit_width) ? $explicit_width : $known_width;
-    confess "shift_right width for '$reg' is unknown; add an interface width or '(width N|PARAM|CONST)' option\n"
+    confess "shift_right width for '$reg' is unknown; add an interface width or '(width N|PARAM|CONST|PACKAGE.CONSTANT)' option\n"
         unless defined($width) && $width > 0;
 
     my $insert = $width - 1;

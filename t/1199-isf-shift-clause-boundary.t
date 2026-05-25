@@ -52,7 +52,7 @@ ISF
 };
 
 subtest 'malformed shift clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'missing shift_left bit', qr/\ATransaction 'main': shift_left requires '\(shift_left reg bit \[\(width N\|PARAM\|CONST\)\]\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing shift_left bit', qr/\ATransaction 'main': shift_left requires '\(shift_left reg bit \[\(width N\|PARAM\|CONST\|PACKAGE\.CONSTANT\)\]\)' in transaction body/);
 (actor missing_shift_left_bit
   (clock clk)
   (interface (input start) (input din) (output reg_out) (output done))
@@ -62,7 +62,7 @@ subtest 'malformed shift clauses fail before scheduled emission' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'nested shift_left register', qr/\ATransaction 'main': shift_left requires '\(shift_left reg bit \[\(width N\|PARAM\|CONST\)\]\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'nested shift_left register', qr/\ATransaction 'main': shift_left requires '\(shift_left reg bit \[\(width N\|PARAM\|CONST\|PACKAGE\.CONSTANT\)\]\)' in transaction body/);
 (actor nested_shift_left_register
   (clock clk)
   (interface (input start) (input din) (output reg_out) (output done))
@@ -72,7 +72,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'malformed shift_left width option', qr/\Ashift_left optional arguments must be '\(width N\|PARAM\|CONST\)'/);
+    assert_lower_rejected(<<'ISF', 'malformed shift_left width option', qr/\Ashift_left optional arguments must be '\(width N\|PARAM\|CONST\|PACKAGE\.CONSTANT\)'/);
 (actor extra_shift_left_operand
   (clock clk)
   (interface (input start) (input din) (output reg_out) (output done))
@@ -82,7 +82,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'missing shift_right bit', qr/\ATransaction 'main': shift_right requires '\(shift_right reg bit \[\(width N\|PARAM\|CONST\)\]\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing shift_right bit', qr/\ATransaction 'main': shift_right requires '\(shift_right reg bit \[\(width N\|PARAM\|CONST\|PACKAGE\.CONSTANT\)\]\)' in transaction body/);
 (actor missing_shift_right_bit
   (clock clk)
   (interface (input start) (input din) (output reg_out) (output done))
@@ -92,7 +92,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'nested shift_right bit', qr/\ATransaction 'main': shift_right requires '\(shift_right reg bit \[\(width N\|PARAM\|CONST\)\]\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'nested shift_right bit', qr/\ATransaction 'main': shift_right requires '\(shift_right reg bit \[\(width N\|PARAM\|CONST\|PACKAGE\.CONSTANT\)\]\)' in transaction body/);
 (actor nested_shift_right_bit
   (clock clk)
   (interface (input start) (input din) (output reg_out) (output done))

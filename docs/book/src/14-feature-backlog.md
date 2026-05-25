@@ -376,6 +376,17 @@ aggregate package constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, zero values, runtime signals, and
 expressions remain fail-closed for transaction-local port widths.
 
+Explicit data-operation width evidence may also use qualified imported
+package scalar constants when the imported package constant resolves to a
+positive integer. Those values publish as resolved scheduler width facts for
+`shift_left` and `shift_right` `(width ...)` options, `assemble` and `extract`
+`(widths ...)` entries, scheduled `.fsm` shift positions and extract slices,
+and `inferred_storage[]` report widths. Unqualified package constants,
+aggregate package constants, package member/item paths, ambiguous
+local-enum/package-constant spellings, zero values, transaction parameters,
+runtime signals, and expressions remain fail-closed for data-operation width
+evidence.
+
 Actor parameter defaults accept enum members, declared actor constants, earlier
 scalar actor parameter defaults, and qualified imported package scalar
 constants in their shipped scalar and aggregate/list leaf positions. Actor
@@ -2604,11 +2615,13 @@ Goal: infer widths for data operations in more cases without requiring
 explicit width options, and keep accepted lowering free of width placeholders.
 
 Current boundary: `shift_left` and `shift_right` accept
-`(width N|PARAM|CONST)`, `assemble` accepts
-`(widths N|PARAM|CONST...)` after the target, and `extract` accepts
-`(widths N|PARAM|CONST...)` as explicit assertions. `PARAM` names an
-actor-local scalar parameter default that resolves to a positive integer, and
-`CONST` names a declared actor constant that resolves to a positive integer.
+`(width N|PARAM|CONST|PACKAGE.CONSTANT)`, `assemble` accepts
+`(widths N|PARAM|CONST|PACKAGE.CONSTANT...)` after the target, and `extract`
+accepts `(widths N|PARAM|CONST|PACKAGE.CONSTANT...)` as explicit assertions.
+`PARAM` names an actor-local scalar parameter default that resolves to a
+positive integer, `CONST` names a declared actor constant that resolves to a
+positive integer, and `PACKAGE.CONSTANT` names a qualified imported package
+scalar constant that resolves to a positive integer.
 `shift_left` uses the optional width only as register-width evidence; plain
 widthless `shift_left` remains accepted because no insertion-position width
 is needed.
@@ -2626,6 +2639,13 @@ explicit part widths, known target-width mismatches, and non-positive
 single-part inferred remainders. Two or more unknown parts remain backlog for
 inference and are accepted only as non-evidence concat operands unless
 explicit widths make them known.
+
+Unknown package constants, unqualified package constants, aggregate package
+constants, package member/item paths, ambiguous local-enum/package-constant
+spellings, transaction parameters, runtime signals, arbitrary expressions,
+zero-valued constants, non-scalar values, use-site overrides, and generated-top
+respecialization remain outside the shipped data-operation width-evidence
+surface.
 
 Schedule reports now expose positive integer `width` metadata for inferred
 scheduler counters and register storage with known ISF width evidence.

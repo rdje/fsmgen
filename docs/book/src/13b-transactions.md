@@ -1530,8 +1530,14 @@ scheduled `.fsm` emission. Dynamic scalar divisors lower unchanged; full
 runtime nonzero proof is still backlog.
 
 Shift operations are also exact scalar forms:
-`(shift_left reg bit [(width N)])` and
-`(shift_right reg bit [(width N)])`.
+`(shift_left reg bit [(width N|PARAM|CONST|PACKAGE.CONSTANT)])` and
+`(shift_right reg bit [(width N|PARAM|CONST|PACKAGE.CONSTANT)])`.
+
+The optional width value can be a positive literal, actor-local scalar
+parameter default, declared actor constant, or qualified imported package
+scalar constant that resolves to a positive integer. `assemble` and `extract`
+use the same source set in ordered
+`(widths N|PARAM|CONST|PACKAGE.CONSTANT...)` lists.
 
 **What happens**:
 1. `(<- (var expr))` — variable modified, takes effect next cycle (flopped)
@@ -1579,5 +1585,5 @@ counter width and max violation check; omitted bounds use scheduler defaults.
 | `(when cond body...)` | 1 + body | Decision + inline body |
 | `(switch sig (v b)... (default b))` | 1 + body | Decision + inline branch |
 | `(set/update var expr)` | 1 | Flopped assignment |
-| `(shift_left reg bit [(width N)])` | 1 | Flopped assignment |
+| `(shift_left reg bit [(width N|PARAM|CONST|PACKAGE.CONSTANT)])` | 1 | Flopped assignment |
 | `(latency (min N) (max M))` | 0 | Verification logic only |

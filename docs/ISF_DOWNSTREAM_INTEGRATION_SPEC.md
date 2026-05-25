@@ -635,6 +635,16 @@ Rules:
   constants, aggregate package constants, package constant member/item paths,
   ambiguous local-enum/package-constant spellings, zero-valued constants,
   runtime signals, and expressions fail closed.
+  Explicit data-operation width evidence may use qualified imported package
+  scalar constants under the same imported-package and positive-integer scalar
+  requirements. Package-constant-backed `shift_left` and `shift_right`
+  `(width ...)` options, plus `assemble` and `extract` `(widths ...)` entries,
+  publish as resolved scheduler width evidence for scheduled `.fsm` shift
+  positions, assemble/extract width facts, and `inferred_storage[]` report
+  widths. Unknown or unqualified package constants, aggregate package
+  constants, package constant member/item paths, ambiguous
+  local-enum/package-constant spellings, zero-valued constants, transaction
+  parameters, runtime signals, and expressions fail closed.
   Generated child transaction scalar parameter defaults and scalar leaves
   inside generated child transaction aggregate/list parameter defaults may use
   declared actor constants, actor-local scalar parameter defaults, earlier
@@ -820,13 +830,13 @@ Transaction clauses currently supported:
 (store bank index value)
 (load bank index as target)
 (shift_left reg bit)
-(shift_left reg bit (width N|PARAM|CONST))
+(shift_left reg bit (width N|PARAM|CONST|PACKAGE.CONSTANT))
 (shift_right reg bit)
-(shift_right reg bit (width N|PARAM|CONST))
+(shift_right reg bit (width N|PARAM|CONST|PACKAGE.CONSTANT))
 (assemble part... as target)
-(assemble part... as target (widths N|PARAM|CONST...))
+(assemble part... as target (widths N|PARAM|CONST|PACKAGE.CONSTANT...))
 (extract word as field...)
-(extract word as field... (widths N|PARAM|CONST...))
+(extract word as field... (widths N|PARAM|CONST|PACKAGE.CONSTANT...))
 (do transaction [(domain NAME)] [(params ...)] [(bind ...)])
 (spawn transaction as instance [(params ...)] [(bind ...)] [(domain NAME)])
 (await_all done_port)
@@ -1294,13 +1304,13 @@ Supported forms:
 (set target expr)
 (update target expr)
 (shift_left reg bit)
-(shift_left reg bit (width N|PARAM|CONST))
+(shift_left reg bit (width N|PARAM|CONST|PACKAGE.CONSTANT))
 (shift_right reg bit)
-(shift_right reg bit (width N|PARAM|CONST))
+(shift_right reg bit (width N|PARAM|CONST|PACKAGE.CONSTANT))
 (assemble part... as target)
-(assemble part... as target (widths N|PARAM|CONST...))
+(assemble part... as target (widths N|PARAM|CONST|PACKAGE.CONSTANT...))
 (extract word as field...)
-(extract word as field... (widths N|PARAM|CONST...))
+(extract word as field... (widths N|PARAM|CONST|PACKAGE.CONSTANT...))
 ```
 
 Rules:
@@ -1309,26 +1319,33 @@ Rules:
 - `update` is the older transaction-local assignment spelling.
 - Shift/extract/assemble forms use known width evidence and fail closed on
   contradictory or missing width evidence where exact lowering requires it.
-  `shift_left` accepts optional `(width N|PARAM|CONST)` as width evidence for
-  the shifted register, but plain `shift_left` remains accepted without width
-  evidence because left insertion does not require a computed MSB position.
-  `shift_right` accepts the same explicit source set for its inserted-bit
-  position. `PARAM` must name an actor-local scalar parameter default that
-  resolves to a positive integer, and `CONST` must name a declared actor
-  constant that resolves to a positive integer.
+  `shift_left` accepts optional `(width N|PARAM|CONST|PACKAGE.CONSTANT)` as
+  width evidence for the shifted register, but plain `shift_left` remains
+  accepted without width evidence because left insertion does not require a
+  computed MSB position. `shift_right` accepts the same explicit source set
+  for its inserted-bit position. `PARAM` must name an actor-local scalar
+  parameter default that resolves to a positive integer, `CONST` must name a
+  declared actor constant that resolves to a positive integer, and
+  `PACKAGE.CONSTANT` must name a qualified imported package scalar constant
+  that resolves to a positive integer.
 - `assemble` can infer exactly one missing part width from a known target
   width and known sibling part widths. It also accepts one optional trailing
-  `(widths N|PARAM|CONST...)` list after the target to supply ordered part
-  widths, with one positive entry per part. Explicit assemble part widths use
-  the same accepted static source set as shift/extract width options and must
-  not conflict with known part widths. Two or more unknown parts still lower
-  only as non-evidence concat operands unless explicit widths make them known;
-  non-positive inferred remainders fail closed.
+  `(widths N|PARAM|CONST|PACKAGE.CONSTANT...)` list after the target to
+  supply ordered part widths, with one positive entry per part. Explicit
+  assemble part widths use the same accepted static source set as
+  shift/extract width options and must not conflict with known part widths.
+  Two or more unknown parts still lower only as non-evidence concat operands
+  unless explicit widths make them known; non-positive inferred remainders
+  fail closed.
 - `extract` emits concrete slices, not placeholder bounds. It can infer
   exactly one missing destination field width from a known source word width
   and known sibling field widths. Explicit `(widths ...)` entries may mix
-  positive integer literals, actor-local scalar parameters, and declared actor
-  constants that resolve to positive integers. Two or more unknown fields,
+  positive integer literals, actor-local scalar parameters, declared actor
+  constants, and qualified imported package scalar constants that resolve to
+  positive integers. Unknown or unqualified package constants, aggregate
+  package constants, package member/item paths, ambiguous
+  local-enum/package-constant spellings, runtime signals, transaction
+  parameters, and expressions fail closed. Two or more unknown fields,
   non-positive inferred remainders, and known source/field total mismatches
   fail closed.
 
@@ -3619,7 +3636,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1350-isf-transaction-param-package-constants.t \
   t/1351-isf-activation-param-package-constants.t \
   t/1352-isf-library-use-package-constants.t \
-  t/1357-isf-transaction-port-package-constant-widths.t
+  t/1357-isf-transaction-port-package-constant-widths.t \
+  t/1358-isf-data-op-package-constant-widths.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

@@ -2,8 +2,29 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS`.
-- Current frontier: `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 data-operation package-constant width implementation:
+  `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` shipped qualified imported package
+  scalar constants as explicit data-operation width evidence and closed the
+  task tree. `shift_left` and `shift_right` `(width PACKAGE.CONSTANT)`
+  options, plus `assemble` and `extract` `(widths PACKAGE.CONSTANT ...)`
+  entries, now resolve when the owning actor imports `PACKAGE`, the package
+  declares `CONSTANT`, and the constant resolves to a positive integer scalar
+  literal. Accepted package constants publish through the existing scheduler
+  width-evidence path: scheduled `.fsm` shift positions, assemble/extract
+  width facts and slices, and `inferred_storage[]` report widths. Unknown
+  package constants, unqualified package constants, aggregate package
+  constants, package member/item paths, ambiguous local-enum/package-constant
+  spellings, zero-valued constants, transaction parameters, runtime signals,
+  arbitrary expressions, package constants in unrelated value domains, and
+  generated-top respecialization remain fail closed or deferred. The ISF spec,
+  downstream handoff, public contract, mdBook, task tree, README index,
+  roadmap, and live docs are synchronized. Validation passed with syntax
+  checks; focused data-op/public/spec/book tests (`Files=16, Tests=392`);
+  `./bin/ci-regression isf --no-book` (`Files=264, Tests=1713`);
+  post-closure public/spec/book audits (`Files=7, Tests=374`);
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 data-operation package-constant width selection:
   `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1` created the active task tree and
   selected the next bounded implementation leaf. Explicit data-operation width
@@ -10991,6 +11012,25 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` is shipped and the task tree is
+  closed:
+  - `shift_left` and `shift_right` `(width PACKAGE.CONSTANT)` options are now
+    accepted when `PACKAGE.CONSTANT` is a qualified imported package scalar
+    constant that resolves to a positive integer,
+  - `assemble` and `extract` `(widths PACKAGE.CONSTANT ...)` entries accept
+    the same package scalar constants as ordered explicit width evidence,
+  - accepted package constants publish through the existing scheduler
+    width-evidence path, including scheduled `.fsm` shift positions,
+    assemble/extract width facts and slices, and `inferred_storage[]` report
+    widths,
+  - unknown package constants, unqualified package constants, package
+    aggregates, package member/item paths, ambiguous
+    local-enum/package-constant spellings, zero-valued constants, transaction
+    parameters, runtime signals, arbitrary expressions, unrelated value
+    domains, generated-top respecialization, and backend register-range
+    widening for inferred data-op storage remain deferred or fail closed,
+  - and validation passed through syntax checks, focused data-op/public/spec/book
+    tests, the broader ISF regression gate, mdBook build, and diff check.
 - `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1` selected the next public-facing R14
   feature tree before implementation:
   - the implementation frontier is

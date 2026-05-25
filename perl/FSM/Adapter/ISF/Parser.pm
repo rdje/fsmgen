@@ -3479,6 +3479,76 @@ sub _validate_transaction_enum_member_value_clause {
         return 1;
     }
 
+    if ($head eq 'shift_left' || $head eq 'shift_right') {
+        _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context $head target");
+        _reject_enum_member_value_contexts($clause->[2], $actor, $aggregate_roots, "$context $head bit");
+        for my $option (@{$clause}[3 .. $#$clause]) {
+            if (ref($option) eq 'ARRAY'
+                && @$option == 2
+                && defined($option->[0])
+                && !ref($option->[0])
+                && $option->[0] eq 'width')
+            {
+                _reject_data_op_width_enum_member_value(
+                    $option->[1],
+                    $actor,
+                    $aggregate_roots,
+                    "$context $head width",
+                );
+                next;
+            }
+            _reject_enum_member_value_contexts($option, $actor, $aggregate_roots, "$context $head clause");
+        }
+        return 1;
+    }
+
+    if ($head eq 'assemble') {
+        for my $item (@{$clause}[1 .. $#$clause]) {
+            if (ref($item) eq 'ARRAY'
+                && @$item >= 1
+                && defined($item->[0])
+                && !ref($item->[0])
+                && $item->[0] eq 'widths')
+            {
+                for my $width (@{$item}[1 .. $#$item]) {
+                    _reject_data_op_width_enum_member_value(
+                        $width,
+                        $actor,
+                        $aggregate_roots,
+                        "$context assemble width",
+                    );
+                }
+                next;
+            }
+            _reject_enum_member_value_contexts($item, $actor, $aggregate_roots, "$context assemble clause");
+        }
+        return 1;
+    }
+
+    if ($head eq 'extract') {
+        _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context extract word");
+        for my $item (@{$clause}[3 .. $#$clause]) {
+            if (ref($item) eq 'ARRAY'
+                && @$item >= 1
+                && defined($item->[0])
+                && !ref($item->[0])
+                && $item->[0] eq 'widths')
+            {
+                for my $width (@{$item}[1 .. $#$item]) {
+                    _reject_data_op_width_enum_member_value(
+                        $width,
+                        $actor,
+                        $aggregate_roots,
+                        "$context extract width",
+                    );
+                }
+                next;
+            }
+            _reject_enum_member_value_contexts($item, $actor, $aggregate_roots, "$context extract field");
+        }
+        return 1;
+    }
+
     if ($head eq 'switch') {
         _validate_transaction_switch_enum_member_value(
             $clause->[1],
@@ -3533,6 +3603,13 @@ sub _validate_transaction_enum_member_value_clause {
     }
 
     return _reject_enum_member_value_contexts($clause, $actor, $aggregate_roots, $context);
+}
+
+sub _reject_data_op_width_enum_member_value {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+    return 1 if ref($value);
+    return 1 if defined _actor_package_constant_reference($actor, $value);
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context);
 }
 
 sub _validate_transaction_condition_enum_member_values {

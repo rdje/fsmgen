@@ -1,6 +1,35 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Data-operation package-constant widths shipped
+- Completed `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` and closed the task
+  tree.
+- `shift_left` and `shift_right` `(width PACKAGE.CONSTANT)` options, plus
+  `assemble` and `extract` `(widths PACKAGE.CONSTANT ...)` entries, now accept
+  qualified imported package scalar constants when the owning actor imports
+  `PACKAGE`, the package declares `CONSTANT`, and the constant resolves to a
+  positive integer scalar literal.
+- Parser enum-member validation now exempts only those explicit
+  data-operation width-evidence slots for imported package-constant-shaped
+  tokens, leaving dotted enum-looking values in other transaction contexts
+  fail-closed.
+- Accepted package constants publish through the existing scheduler
+  width-evidence path: scheduled `.fsm` shift positions, assemble/extract
+  width facts and slices, and `inferred_storage[]` report widths. Backend HDL
+  register-range projection for inferred data-op storage remains outside this
+  slice.
+- Unknown package constants, unqualified package constants, aggregate package
+  constants, package member/item paths, ambiguous local-enum/package-constant
+  spellings, zero-valued constants, transaction parameters, runtime signals,
+  arbitrary expressions, package constants in other value domains, and
+  generated-top respecialization remain deferred or fail closed.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused data-op/public/spec/book tests
+  with `Files=16, Tests=392`; `./bin/ci-regression isf --no-book` with
+  `Files=264, Tests=1713`; post-closure public/spec/book audits with
+  `Files=7, Tests=374`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Data-operation package-constant widths selected
 - Created active task tree `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS`.
 - Completed `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1`; the selected

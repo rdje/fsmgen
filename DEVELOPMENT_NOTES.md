@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Data-operation package constants publish scheduler width evidence
+- `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` resolves qualified imported package
+  scalar constants at the explicit data-operation width-evidence boundary.
+- The parser needed a narrow exemption in transaction enum-member validation:
+  dotted package-constant-looking tokens are allowed only inside
+  `shift_left`/`shift_right` `(width ...)` and `assemble`/`extract`
+  `(widths ...)` evidence slots. Other dotted enum-looking values still follow
+  the existing fail-closed enum/context policy.
+- The implementation intentionally reuses the existing scheduler width-evidence
+  publication path rather than widening backend register-range inference.
+  Accepted package constants affect scheduled `.fsm` shift positions,
+  assemble/extract width facts and slices, and `inferred_storage[]` report
+  widths. HDL generation is smoke-tested for accepted shift/assemble sources,
+  but this slice does not claim backend range projection for inferred data-op
+  storage.
+- The supported source remains explicit and scalar. Unknown or unqualified
+  package constants, aggregate package constants, package member/item paths,
+  ambiguous local-enum/package-constant spellings, zero-valued constants,
+  transaction parameters, runtime signals, arbitrary expressions, unrelated
+  value domains, generated-top respecialization, and package namespace
+  pollution remain fail-closed or deferred.
+
 ## 2026-05-25: Data-operation package constants should reuse explicit width resolution
 - `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.1` selects qualified imported package
   scalar constants for explicit data-operation width evidence as the next

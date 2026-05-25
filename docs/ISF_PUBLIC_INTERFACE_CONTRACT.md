@@ -357,6 +357,11 @@ roles and widths are checked by
 [t/1226-isf-data-width-storage-report.t](../t/1226-isf-data-width-storage-report.t)
 for sampled aliases, extracted fields, assembled targets, explicit-width
 shift registers, and completion pulses.
+Package-constant-backed data-operation width evidence is checked by
+[t/1358-isf-data-op-package-constant-widths.t](../t/1358-isf-data-op-package-constant-widths.t)
+so qualified imported package scalar constants can back explicit shift
+`(width ...)`, assemble `(widths ...)`, and extract `(widths ...)` evidence
+when they resolve to positive integers.
 Actor-owned fixed storage declarations are checked by
 [t/1232-isf-actor-storage-declarations.t](../t/1232-isf-actor-storage-declarations.t)
 for parser shape, authored `(var ...)` / `(variable ...)` scalar storage
@@ -995,16 +1000,16 @@ Verilog no-assertion boundary remain regression-backed after ISF lowers through
 scheduled `.fsm` into HDL.
 The explicit-width `shift_right` data-operation path is checked by
 [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
-so explicit `(width N|PARAM|CONST)` fills otherwise missing register-width
+so explicit `(width N|PARAM|CONST|PACKAGE.CONSTANT)` fills otherwise missing register-width
 evidence, known-width shifts do not need the option, conflicting explicit
 widths fail closed, and accepted `shift_right` source no longer emits
 placeholder `WIDTH` terms.
 The explicit-width `shift_left` data-operation path is checked by
 [t/1318-isf-shift-left-explicit-width.t](../t/1318-isf-shift-left-explicit-width.t)
-so optional `(width N|PARAM|CONST)` fills missing register-width evidence for
-later data operations and schedule-report storage metadata, conflicting
-explicit widths fail closed, and ordinary widthless `shift_left` source
-remains accepted.
+so optional `(width N|PARAM|CONST|PACKAGE.CONSTANT)` fills missing
+register-width evidence for later data operations and schedule-report storage
+metadata, conflicting explicit widths fail closed, and ordinary widthless
+`shift_left` source remains accepted.
 The explicit-width `extract` data-operation path is checked by
 [t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
 so authors can avoid placeholder slice bounds when extract field widths are
@@ -1012,15 +1017,18 @@ not declared elsewhere.
 Static data-operation width sources are checked by
 [t/1343-isf-data-op-static-width-sources.t](../t/1343-isf-data-op-static-width-sources.t),
 so `shift_left`, `shift_right`, and `extract` explicit width evidence may use
-positive integer literals, actor-local scalar parameter defaults, or declared
-actor constants that resolve to positive integers. Unsupported transaction
-parameters, runtime interface signals, unknown names, arbitrary expressions,
-zero values, and aggregate values fail closed.
+positive integer literals, actor-local scalar parameter defaults, declared
+actor constants, or qualified imported package scalar constants that resolve
+to positive integers. Unsupported transaction parameters, runtime interface
+signals, unknown names, unknown or unqualified package constants, aggregate
+package constants, package member/item paths, ambiguous
+local-enum/package-constant spellings, arbitrary expressions, zero values, and
+aggregate values fail closed.
 Assemble static part widths are checked by
 [t/1344-isf-assemble-static-part-widths.t](../t/1344-isf-assemble-static-part-widths.t),
-so `(assemble part... as target (widths N|PARAM|CONST...))` supplies ordered
-part-width evidence from the same accepted static source set while preserving
-the emitted concat assignment shape.
+so `(assemble part... as target (widths N|PARAM|CONST|PACKAGE.CONSTANT...))`
+supplies ordered part-width evidence from the same accepted static source set
+while preserving the emitted concat assignment shape.
 The single-missing-field `extract` inference path is checked by
 [t/1101-isf-extract-slices.t](../t/1101-isf-extract-slices.t), so one
 unknown destination field can derive its width from a known source word and
@@ -1236,14 +1244,15 @@ expression payload, and nested expression payloads are formatted as `.fsm`
 expressions instead of Perl reference strings.
 The shift-clause boundary is checked by
 [t/1199-isf-shift-clause-boundary.t](../t/1199-isf-shift-clause-boundary.t)
-so `(shift_left reg bit [(width N|PARAM|CONST)])` and
-`(shift_right reg bit [(width N|PARAM|CONST)])` require scalar register/bit
-operands before scheduled `.fsm` emission.
+so `(shift_left reg bit [(width N|PARAM|CONST|PACKAGE.CONSTANT)])` and
+`(shift_right reg bit [(width N|PARAM|CONST|PACKAGE.CONSTANT)])` require
+scalar register/bit operands before scheduled `.fsm` emission.
 The assemble-clause boundary is checked by
 [t/1200-isf-assemble-clause-boundary.t](../t/1200-isf-assemble-clause-boundary.t)
-so `(assemble part... as target [(widths N|PARAM|CONST...)])` requires one or
-more scalar parts, one scalar target, and any optional trailing width list to
-match the part count before scheduled `.fsm` emission. The same regression
+so `(assemble part... as target [(widths N|PARAM|CONST|PACKAGE.CONSTANT...)])`
+requires one or more scalar parts, one scalar target, and any optional
+trailing width list to match the part count before scheduled `.fsm` emission.
+The same regression
 covers the width-evidence boundary: explicit widths derive target evidence for
 later data operations, known part-width sums must match any already-known
 target width, and when exactly one part width is missing, a known target width
@@ -1252,7 +1261,7 @@ remainder. Multiple unknown parts remain non-evidence concat operands unless
 explicit widths make them known.
 The extract-clause boundary is checked by
 [t/1201-isf-extract-clause-boundary.t](../t/1201-isf-extract-clause-boundary.t)
-so `(extract word as field... [(widths N|PARAM|CONST...)])` requires one
+so `(extract word as field... [(widths N|PARAM|CONST|PACKAGE.CONSTANT...)])` requires one
 scalar source word, one or more scalar fields, and at most one ordered
 positive static-width `(widths ...)` option before scheduled `.fsm` emission.
 The exact-slice extraction behavior is checked by
@@ -1612,6 +1621,12 @@ activation parameter override scalar values or scalar leaves inside compatible
 aggregate/list override values. Those overrides resolve to literal generated-top
 bindings and generated-composition report values; authored package-constant
 tokens are not published in activation override bindings.
+Qualified imported package scalar constants are also public as explicit
+data-operation width evidence for `shift_left`, `shift_right`, `assemble`,
+and `extract` when they resolve to positive integers. Those width evidence
+tokens resolve inside scheduler publication and appear as concrete scheduled
+`.fsm` shift positions, assemble/extract width facts, and
+`inferred_storage[]` report widths; unsupported package shapes fail closed.
 Earlier actor-local scalar parameter defaults are public as scalar actor
 parameter defaults or scalar leaves inside actor aggregate/list parameter
 defaults. Source order is the only dependency model: the referenced actor

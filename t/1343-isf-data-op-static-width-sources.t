@@ -210,7 +210,7 @@ ISF
     (complete done)))
 ISF
         'unknown-data-op-width.isf',
-        qr/\ATransaction 'main': shift_right width token 'SHREG_W' is not a declared actor constant or actor scalar parameter/,
+        qr/\ATransaction 'main': shift_right width token 'SHREG_W' is not a declared actor constant, actor scalar parameter, or imported package scalar constant/,
         'unknown symbolic width',
     );
 
@@ -228,7 +228,7 @@ ISF
     (complete done)))
 ISF
         'expression-data-op-width.isf',
-        qr/\Ashift_right width must be a positive integer literal, actor constant, or actor scalar parameter/,
+        qr/\Ashift_right width must be a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant/,
         'expression width',
     );
 };

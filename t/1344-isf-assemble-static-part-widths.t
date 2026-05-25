@@ -170,7 +170,7 @@ ISF
     (complete done)))
 ISF
         'unknown-assemble-part-width.isf',
-        qr/\ATransaction 'main': assemble width for 'payload' token 'PAYLOAD_W' is not a declared actor constant or actor scalar parameter/,
+        qr/\ATransaction 'main': assemble width for 'payload' token 'PAYLOAD_W' is not a declared actor constant, actor scalar parameter, or imported package scalar constant/,
         'unknown symbolic width',
     );
 
@@ -187,7 +187,7 @@ ISF
     (complete done)))
 ISF
         'expression-assemble-part-width.isf',
-        qr/\Aassemble widths must be positive integer literals, actor constants, or actor scalar parameters/,
+        qr/\Aassemble widths must be positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants/,
         'expression width',
     );
 };
