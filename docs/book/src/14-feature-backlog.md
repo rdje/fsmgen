@@ -2219,6 +2219,10 @@ and the expression-width helper derives a positive result width.
 
 The static lowering is a reviewable fixed scheduled-state chain. No hidden
 wait counter is introduced for the static literal/constant/parameter surface.
+Qualified package scalar constants are the selected next bounded static
+wait-count widening under `ISF-WAIT-PACKAGE-CONSTANT-COUNTS`, but they are not
+part of the shipped wait-count value domain until that implementation leaf
+lands.
 
 Pending samples before a positive static wait piggyback onto the first wait
 state; pending samples before a zero wait remain pending for the next

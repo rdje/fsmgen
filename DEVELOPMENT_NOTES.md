@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Wait package constants should reuse static wait lowering
+- `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.1` selects qualified imported package
+  scalar constants for static transaction wait counts as the next narrow
+  package-constant value-domain widening.
+- Accepted package constants should resolve before wait-state construction and
+  reuse the existing literal/actor-constant/actor-parameter static wait path.
+  That keeps positive waits as fixed scheduled-state chains and keeps zero
+  waits as transparent no-ops.
+- The boundary stays explicit and static. Runtime wait counters, runtime
+  expressions, pending-sample routing, unqualified lookup, aggregate package
+  constants, package member/item paths, transaction parameters, generated-top
+  respecialization, and unrelated value domains remain fail-closed or
+  deferred.
+
 ## 2026-05-25: Data-operation package constants publish scheduler width evidence
 - `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` resolves qualified imported package
   scalar constants at the explicit data-operation width-evidence boundary.

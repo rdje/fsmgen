@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-WAIT-PACKAGE-CONSTANT-COUNTS` | `active` | `R14` | `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2` | [docs/tasks/ISF-WAIT-PACKAGE-CONSTANT-COUNTS.md](docs/tasks/ISF-WAIT-PACKAGE-CONSTANT-COUNTS.md) |
 
 ## Proposed Task Trees
 

@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Wait package-constant counts selected
+- Created active task tree `ISF-WAIT-PACKAGE-CONSTANT-COUNTS`.
+- Completed `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.1`; the selected
+  implementation frontier is `ISF-WAIT-PACKAGE-CONSTANT-COUNTS.2`.
+- Selected a bounded static transaction wait-count value-domain widening:
+  `(wait PACKAGE.CONSTANT)` may use a qualified imported package scalar
+  constant when the resolved value is a non-negative integer literal.
+- Accepted package-constant waits should reuse the existing static wait path:
+  zero counts remain transparent no-ops, positive counts emit fixed
+  wait-state chains, and `transaction_waits[]` reports keep `count_kind:
+  static`, integer `cycles`, and the authored `PACKAGE.CONSTANT` token in
+  `count_source`.
+- Unqualified package constants, unknown package constants, package aggregate
+  constants, package member/item paths, transaction parameters, runtime
+  signals, arbitrary expressions, package constants in other value domains,
+  generated-top respecialization, and runtime wait/pending-sample routing
+  changes remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Data-operation package-constant widths shipped
 - Completed `ISF-DATA-OP-PACKAGE-CONSTANT-WIDTHS.2` and closed the task
   tree.
