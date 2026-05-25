@@ -2165,13 +2165,13 @@ expose bounded per-domain and event-crossing metadata through
 `clock_domains[]` and `crossings[]`. Plain generated HDL for accepted
 SystemVerilog/Verilog-family event-crossing actors now emits the generated top
 and a concrete generated acknowledged-event CDC child when each emitted domain
-artifact satisfies the current scheduled `.fsm` clock/reset HDL contract.
+artifact satisfies the current scheduled `.fsm` HDL contract, including
+clock-only no-reset domain artifacts.
 No-reset event-crossing actors are accepted for lowering, in-process
 `report(...)`, and `--emit-schedule-json`; their generated CDC interface
 metadata publishes `SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`.
-Plain HDL generation for those no-reset domain artifacts still fails closed
-with the current incomplete `+system` diagnostic because direct scheduled
-`.fsm` HDL generation still requires a clock plus reset declaration.
+Plain HDL generation for those no-reset domain artifacts emits reset-free
+domain modules and a generated CDC child without absent reset ports.
 The current shipped reusable library catalog contains `common.fifo.fifo` with
 source [isf/common/fifo.isf](../isf/common/fifo.isf), import fixture
 [isf/fifo_library_use.isf](../isf/fifo_library_use.isf), fixed parameters
@@ -2622,11 +2622,10 @@ accepted event-crossing actors writes the generated domain/top `.fsm`
 artifacts, then emits SystemVerilog/Verilog-family HDL containing the
 generated multi-domain top and concrete acknowledged-event CDC child modules
 for accepted crossings when each emitted domain artifact satisfies the current
-scheduled `.fsm` clock/reset HDL contract.
-No-reset event-crossing actors remain public lower/report/schedule-JSON
-fixtures, not HDL fixtures: their generated CDC metadata marks source and
-destination resets absent, and the plain HDL path fails closed under the
-current reset-required scheduled `.fsm` backend contract.
+scheduled `.fsm` HDL contract. No-reset event-crossing actors are public
+lower/report/schedule-JSON and HDL fixtures: their generated CDC metadata
+marks source and destination resets absent, their domain modules omit reset
+ports, and their generated CDC child omits absent reset ports.
 `--emit-schedule-json` succeeds for accepted multi-domain actors.
 The strict CLI success-shape field advertises that accepted `--strict
 file.isf` generation follows the public HDL-generation success shape and keeps
@@ -3157,8 +3156,8 @@ CDC child modules.
 When a crossing's source or destination domain omits reset ownership, generated
 CDC interface metadata marks the corresponding reset as absent. Schedule
 reports and `--emit-schedule-json` preserve that no-reset crossing metadata,
-but plain HDL generation remains fail-closed until direct scheduled `.fsm`
-HDL supports no-reset domain artifacts.
+and plain HDL generation omits the absent reset ports from both the domain
+modules and generated CDC child.
 
 The schedule report is not yet a frozen full schema. Downstream consumers should
 use the advertised contract metadata instead of assuming every current field,

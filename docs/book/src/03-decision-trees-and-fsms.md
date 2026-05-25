@@ -96,7 +96,7 @@ Use `?dt:name` for a standalone decision tree, especially when the logic is:
 The current `?dt:name` contract is intentionally narrower than `?fsm:name`.
 
 Accepted top-level content for `?dt:name` currently includes explicit
-`+system` with HDL-compatible clock/reset names, `+size`, `+constants`,
+`+system` with an HDL-compatible clock name and optional reset name, `+size`, `+constants`,
 `+enums`, `+define`, `+params`, bounded
 `+types`, bounded `+import`, canonical `(:= (signal value))` directives, and
 non-state DT blocks such as `(-route ...)`. Regular FSM-state blocks such as
@@ -108,7 +108,9 @@ is authored, the current generator exposes implicit `clk` and asynchronous
 active-low `rst_n`.
 
 With explicit `+system`, standalone `?dt` roots are direct module roots with
-the authored system contract. A canonical async reset example is:
+the authored system contract. A clock-only `+system` emits reset-free
+sequential HDL with no reset port or reset branch. A canonical async reset
+example is:
 
 ```lisp
 (?dt:standalone_dt_explicit_system

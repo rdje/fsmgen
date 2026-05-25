@@ -2245,14 +2245,16 @@ package FSM::CoreAST::FSMModule;
     sub effective_system_contract($self) {
         my $explicit = $self->explicit_system_contract;
         if (ref($explicit) eq 'HASH') {
-            my $reset_keyword = (
-                $explicit->{reset_keyword}
-                // _reset_keyword_from_name($explicit->{reset} // '')
-            );
-            my ($reset_kind, $reset_active_level) = _reset_policy_from_keyword($reset_keyword);
+            my $has_reset = defined($explicit->{reset}) && !ref($explicit->{reset}) && length($explicit->{reset});
+            my $reset_keyword = $has_reset
+                ? ($explicit->{reset_keyword} // _reset_keyword_from_name($explicit->{reset}))
+                : undef;
+            my ($reset_kind, $reset_active_level) = $has_reset
+                ? _reset_policy_from_keyword($reset_keyword)
+                : (undef, undef);
             return {
                 clock => ($explicit->{clock} // 'clk'),
-                reset => ($explicit->{reset} // 'rst_n'),
+                reset => ($has_reset ? $explicit->{reset} : undef),
                 reset_keyword => $reset_keyword,
                 reset_kind => $reset_kind,
                 reset_active_level => $reset_active_level,

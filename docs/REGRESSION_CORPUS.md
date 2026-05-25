@@ -96,7 +96,7 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   condition suffixes. It also covers malformed top-level source roots,
   malformed action and guard forms, malformed test branches, malformed test
   selectors, duplicate default test-selector branches, and malformed `+system`
-  sections such as incomplete sections, duplicate clock/reset entries,
+  sections such as missing clock entries, duplicate clock/reset entries,
   malformed entry structures, invalid clock/reset
   identifiers, malformed direct/composition source names, malformed structured
   `?fsm` root bodies and body items, malformed state or standalone-DT names,

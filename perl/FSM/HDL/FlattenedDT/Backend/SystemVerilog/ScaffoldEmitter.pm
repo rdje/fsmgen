@@ -160,11 +160,15 @@ sub generate_state_register ($self, $fsm_module) {
 
     $hdl .= "  // State sequential logic\n";
     $hdl .= "  always_ff @($event_control) begin\n";
-    $hdl .= "    if ($reset_condition) begin\n";
-    $hdl .= "      current_state <= $state_plan->{reset_state_name};\n";
-    $hdl .= "    end else begin\n";
-    $hdl .= "      current_state <= next_state;\n";
-    $hdl .= "    end\n";
+    if (defined($reset_condition) && length($reset_condition)) {
+        $hdl .= "    if ($reset_condition) begin\n";
+        $hdl .= "      current_state <= $state_plan->{reset_state_name};\n";
+        $hdl .= "    end else begin\n";
+        $hdl .= "      current_state <= next_state;\n";
+        $hdl .= "    end\n";
+    } else {
+        $hdl .= "      current_state <= next_state;\n";
+    }
     $hdl .= "  end\n\n";
 
     return $hdl;

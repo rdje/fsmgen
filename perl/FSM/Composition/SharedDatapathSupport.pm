@@ -432,13 +432,20 @@ sub augment_plan ($class, %args) {
             push @runtime_lines,
                 "    end",
                 "",
-                "    always_ff @(" . $class->_sequential_event_control($clock_name, $reset_name, $reset_policy) . ") begin",
-                "      if (" . $class->_reset_condition_expr($reset_name, $reset_policy) . ") begin",
-                "        ${lifted_register_signal} <= $candidate->{reset_value};",
-                "      end else begin",
-                "        ${lifted_register_signal} <= ${lifted_next_signal};",
-                "      end",
-                "    end";
+                "    always_ff @(" . $class->_sequential_event_control($clock_name, $reset_name, $reset_policy) . ") begin";
+            my $reset_condition = $class->_reset_condition_expr($reset_name, $reset_policy);
+            if (defined($reset_condition) && length($reset_condition)) {
+                push @runtime_lines,
+                    "      if ($reset_condition) begin",
+                    "        ${lifted_register_signal} <= $candidate->{reset_value};",
+                    "      end else begin",
+                    "        ${lifted_register_signal} <= ${lifted_next_signal};",
+                    "      end";
+            } else {
+                push @runtime_lines,
+                    "      ${lifted_register_signal} <= ${lifted_next_signal};";
+            }
+            push @runtime_lines, "    end";
         }
 
         for my $contributor (@{$candidate->{contributors} || []}) {
@@ -639,6 +646,16 @@ sub _system_contracts_from_payload ($class, $payload) {
 sub _reset_policy_from_system_contract ($class, $system_contract) {
     return undef unless ref($system_contract) eq 'HASH';
 
+    my $reset_name = $system_contract->{reset};
+    unless (defined($reset_name) && !ref($reset_name) && length($reset_name)) {
+        return {
+            present => 0,
+            kind => 'none',
+            active_level => undef,
+            keyword => undef,
+        };
+    }
+
     my $reset_keyword = $system_contract->{reset_keyword} // '';
     my $reset_kind = $system_contract->{reset_kind}
         // ($reset_keyword eq 'sreset' ? 'sync' : 'async');
@@ -647,6 +664,7 @@ sub _reset_policy_from_system_contract ($class, $system_contract) {
         : ($reset_kind eq 'sync' ? 1 : 0);
 
     return {
+        present => 1,
         kind => $reset_kind,
         active_level => $reset_active_level,
         keyword => $reset_keyword,
@@ -655,13 +673,14 @@ sub _reset_policy_from_system_contract ($class, $system_contract) {
 
 sub _sequential_event_control ($class, $clock_name, $reset_name, $reset_policy) {
     return "posedge $clock_name"
-        if (($reset_policy->{kind} || '') eq 'sync');
+        if !$reset_policy->{present} || (($reset_policy->{kind} || '') eq 'sync');
 
     my $reset_edge = ($reset_policy->{active_level} || 0) ? 'posedge' : 'negedge';
     return "posedge $clock_name or $reset_edge $reset_name";
 }
 
 sub _reset_condition_expr ($class, $reset_name, $reset_policy) {
+    return undef unless $reset_policy->{present};
     return ($reset_policy->{active_level} || 0) ? $reset_name : "!$reset_name";
 }
 

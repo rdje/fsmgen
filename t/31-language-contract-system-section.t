@@ -125,19 +125,36 @@ FSM
     ok($adapter->{signal_manager}->get_signal('rst_n')->is_reset, 'areset form still registers rst_n as a reset signal');
 };
 
-subtest 'incomplete +system sections are rejected explicitly' => sub {
-    my $error = parse_failure(<<'FSM');
-(?fsm:incomplete_system
+subtest 'clock-only +system sections are accepted as explicit no-reset contracts' => sub {
+    my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
+(?fsm:clock_only_system
   (+system
     (clock clk)
   )
   (-dt
-    (A = 1)
+    (A <= 1)
   )
 )
 FSM
 
-    like($error, qr/Incomplete '\+system' section/, 'incomplete +system section gets a targeted diagnostic');
+    is($fsm_module->attributes->{system_contract}{clock}, 'clk', '+system stores the clock-only contract clock name');
+    ok(!defined($fsm_module->attributes->{system_contract}{reset}), '+system records no reset name for clock-only contracts');
+    ok(!defined($fsm_module->attributes->{system_contract}{reset_keyword}), '+system records no reset keyword for clock-only contracts');
+    is($fsm_module->clock_domains->{default}, 'clk', '+system seeds the default clock domain');
+    ok(!exists($fsm_module->reset_domains->{default}), '+system does not seed a default reset domain');
+
+    my $clock_signal = $adapter->{signal_manager}->get_signal('clk');
+    ok($clock_signal && $clock_signal->is_clock, 'clk is registered as a clock signal');
+    ok(!$adapter->{signal_manager}->get_signal('rst_n'), 'no implicit reset signal is registered');
+
+    my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
+    like($hdl, qr/module\s+clock_only_system\b/s, 'clock-only system contract generates HDL');
+    like($hdl, qr/\binput\s+wire\s+clk\b/s, 'clock-only HDL declares the clock port');
+    unlike($hdl, qr/\binput\s+wire\s+(?:rst_n|reset|rstn)\b/s, 'clock-only HDL does not declare a reset port');
+    like($hdl, qr/always_ff\s*@\(posedge\s+clk\)\s+begin\s+(?!if\s*\()/s,
+        'clock-only HDL emits reset-free state sequencing');
+    unlike($hdl, qr/\bif\s*\(\s*!?rst_n\s*\)|\bif\s*\(\s*!?reset\s*\)|\bif\s*\(\s*!?rstn\s*\)/s,
+        'clock-only HDL does not emit a reset branch');
 };
 
 done_testing();

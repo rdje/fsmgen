@@ -188,16 +188,15 @@ When a domain intentionally omits a reset, the generated CDC metadata marks the
 absence with `SOURCE_RESET_PRESENT 0d0` or `DEST_RESET_PRESENT 0d0`. The
 `isf/clock_domain_no_reset_event_crossing.isf` fixture proves that lower-result
 review artifacts, in-process schedule reports, and `--emit-schedule-json`
-preserve this metadata. Plain HDL generation for that fixture still fails
-closed because current direct scheduled `.fsm` HDL requires each domain artifact
-to declare both a clock and a reset.
+preserve this metadata. Plain HDL generation for that fixture emits reset-free
+domain modules and a generated CDC child without absent reset ports.
 
 Plain `.isf` HDL generation now writes the generated `.fsm` artifacts and then
 feeds the generated top through the normal composition HDL path. For accepted
-event-crossing actors on SystemVerilog/Verilog-family targets, with
-reset-declared domains that satisfy the scheduled `.fsm` backend contract, the
-final HDL contains the domain modules, the concrete generated CDC module, and
-the generated top that instantiates all of them.
+event-crossing actors on SystemVerilog/Verilog-family targets, including
+clock-only no-reset domains, the final HDL contains the domain modules, the
+concrete generated CDC module, and the generated top that instantiates all of
+them.
 
 The remaining fail-closed boundaries are deliberate: direct cross-domain data
 reads or writes are still illegal, multi-bit payload transfer is not part of

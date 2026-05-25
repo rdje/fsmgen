@@ -587,8 +587,8 @@ Public `report(...)` now exposes those domain artifacts and accepted event cross
 in schedule JSON, and plain HDL generation for accepted event-crossing actors
 now emits the generated top plus concrete acknowledged-event CDC child modules
 for accepted crossings on SystemVerilog/Verilog-family targets when each
-emitted domain artifact satisfies the current scheduled `.fsm` clock/reset HDL
-contract.
+emitted domain artifact satisfies the current scheduled `.fsm` HDL contract,
+including clock-only no-reset domains.
 
 The file-backed `isf/clock_domain_dual_event_crossing.isf` fixture now covers two
 opposite-direction event crossings in one top, proving repeated CDC child
@@ -597,9 +597,8 @@ generation without adding payload or ordering semantics.
 The file-backed `isf/clock_domain_no_reset_event_crossing.isf` fixture covers
 the same acknowledged-event schedule/report surface when both domains
 intentionally omit resets. It proves generated CDC metadata such as
-`SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`, and it documents the
-current HDL boundary: direct HDL generation still fails closed for no-reset
-domain `.fsm` artifacts.
+`SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`, reset-free domain
+HDL, and a generated CDC child that omits absent reset ports.
 
 Direct cross-domain reads, writes, triggers, activations, bindings, and multi-domain
 drive reuse remain illegal unless a shipped CDC primitive or protocol actor

@@ -779,10 +779,20 @@ subtest 'no-reset event-crossing fixture emits reset-absent CDC metadata' => sub
         ],
     );
 
-    ok(!$success, 'no-reset event fixture HDL generation fails closed');
-    like(join('', @{$stderr_buf || []}), qr/Incomplete '\+system' section/,
-        'no-reset event fixture HDL diagnostic names the current reset-required system contract');
-    ok(!-f $out_path, 'no-reset event fixture does not write misleading HDL output');
+    ok($success, 'no-reset event fixture HDL generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'no-reset event fixture HDL generation keeps stderr empty');
+    ok(-f $out_path, 'no-reset event fixture writes HDL output');
+    my $hdl = read_file($out_path);
+    like($hdl, qr/module\s+clock_domain_no_reset_event_crossing_top\b/,
+        'no-reset HDL contains the generated multi-domain top');
+    like($hdl, qr/module\s+clock_domain_no_reset_event_crossing__cdc_event_req_seen\b/,
+        'no-reset HDL contains the concrete generated CDC child');
+    unlike($hdl, qr/\binput\s+wire\s+(?:source_reset|dest_reset)\b/,
+        'no-reset CDC child does not expose absent reset ports');
+    like($hdl, qr/always_ff\s*@\(posedge\s+bus_clk\)\s+begin\s+(?!if\s*\()/s,
+        'no-reset bus domain emits clock-only sequential logic');
+    like($hdl, qr/always_ff\s*@\(posedge\s+core_clk\)\s+begin\s+(?!if\s*\()/s,
+        'no-reset core domain emits clock-only sequential logic');
 };
 
 subtest 'direct unowned cross-domain references fail closed before emission' => sub {

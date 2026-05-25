@@ -788,7 +788,7 @@ sub parse_system_section($self, $system_ast) {
 
     Carp::confess
         "The active '+system' contract currently supports a shared system declaration ".
-        "with '(clock name)' plus '(sreset reset)' or '(areset rst_n)'. ".
+        "with '(clock name)' and an optional reset declaration via '(sreset reset)' or '(areset rst_n)'. ".
         supported_boundary_hint()
         unless ref($system_entries) eq 'ARRAY' && @$system_entries;
 
@@ -798,7 +798,7 @@ sub parse_system_section($self, $system_ast) {
     for my $entry (@$system_entries) {
         Carp::confess
             "Unsupported '+system' entry structure. ".
-            "The active contract currently supports only '(clock name)' plus one reset declaration via '(sreset reset)' or '(areset rst_n)' inside '+system'. ".
+            "The active contract currently supports only '(clock name)' plus at most one reset declaration via '(sreset reset)' or '(areset rst_n)' inside '+system'. ".
             supported_boundary_hint()
             unless ref($entry) eq 'ARRAY' && @$entry == 2;
 
@@ -807,19 +807,19 @@ sub parse_system_section($self, $system_ast) {
 
         Carp::confess
             "Unsupported '+system' entry '$directive'. ".
-            "The active contract currently supports only '(clock name)' plus '(sreset reset)' or '(areset rst_n)'. ".
+            "The active contract currently supports only '(clock name)' plus optional '(sreset reset)' or '(areset rst_n)'. ".
             supported_boundary_hint()
             unless defined $directive && !ref($directive);
 
         Carp::confess
             "Unsupported '+system' entry structure. ".
-            "The active contract currently supports only '(clock name)' plus one reset declaration via '(sreset reset)' or '(areset rst_n)' inside '+system'. ".
+            "The active contract currently supports only '(clock name)' plus at most one reset declaration via '(sreset reset)' or '(areset rst_n)' inside '+system'. ".
             supported_boundary_hint()
             unless defined $resolved_name && !ref($resolved_name);
 
         Carp::confess
             "Duplicate '+system' entry '$directive'. ".
-            "The active contract currently expects exactly one '(clock clk)' and one reset declaration. ".
+            "The active contract currently expects exactly one '(clock clk)' and at most one reset declaration. ".
             supported_boundary_hint()
             if $seen{$directive}++;
 
@@ -851,16 +851,16 @@ sub parse_system_section($self, $system_ast) {
         } else {
             Carp::confess
                 "Unsupported '+system' entry '$directive'. ".
-                "The active contract currently supports only '(clock name)' plus '(sreset reset)' or '(areset rst_n)'. ".
+                "The active contract currently supports only '(clock name)' plus optional '(sreset reset)' or '(areset rst_n)'. ".
                 supported_boundary_hint();
         }
     }
 
     Carp::confess
         "Incomplete '+system' section. ".
-        "The active contract currently expects exactly one '(clock name)' entry and one reset declaration. ".
+        "The active contract currently expects exactly one '(clock name)' entry. ".
         supported_boundary_hint()
-        unless $parsed{clock} && $parsed{reset};
+        unless $parsed{clock};
 
     my $fsm_module = $self->{fsm_module};
     $fsm_module->{attributes}{system_contract} = {
@@ -871,7 +871,8 @@ sub parse_system_section($self, $system_ast) {
         reset_active_level => $parsed{reset_active_level},
     };
     $fsm_module->{clock_domains}{default} = $parsed{clock};
-    $fsm_module->{reset_domains}{default} = $parsed{reset};
+    $fsm_module->{reset_domains}{default} = $parsed{reset}
+        if defined($parsed{reset}) && length($parsed{reset});
 
     $self->{signal_manager}->register_signal(
         $parsed{clock},
@@ -879,12 +880,14 @@ sub parse_system_section($self, $system_ast) {
         width => 1,
         attributes => { is_system_signal => 1 },
     );
-    $self->{signal_manager}->register_signal(
-        $parsed{reset},
-        type => 'reset',
-        width => 1,
-        attributes => { is_system_signal => 1 },
-    );
+    if (defined($parsed{reset}) && length($parsed{reset})) {
+        $self->{signal_manager}->register_signal(
+            $parsed{reset},
+            type => 'reset',
+            width => 1,
+            attributes => { is_system_signal => 1 },
+        );
+    }
 }
 
 sub unwrap_scalar_token($self, $value) {

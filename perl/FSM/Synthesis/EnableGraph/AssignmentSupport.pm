@@ -814,11 +814,15 @@ sub generate_unified_pulse_delay_logic ($self, $lhs, $lhs_analysis) {
 
     if ($delay_cycles == 0) {
         $hdl .= "  always_ff @($event_control) begin\n";
-        $hdl .= "    if ($reset_condition) begin\n";
-        $hdl .= "      $lhs_name <= $rest_level;\n";
-        $hdl .= "    end else begin\n";
-        $hdl .= "      $lhs_name <= ($request_expr) ? $pulse_level : $rest_level;\n";
-        $hdl .= "    end\n";
+        if (defined($reset_condition) && length($reset_condition)) {
+            $hdl .= "    if ($reset_condition) begin\n";
+            $hdl .= "      $lhs_name <= $rest_level;\n";
+            $hdl .= "    end else begin\n";
+            $hdl .= "      $lhs_name <= ($request_expr) ? $pulse_level : $rest_level;\n";
+            $hdl .= "    end\n";
+        } else {
+            $hdl .= "      $lhs_name <= ($request_expr) ? $pulse_level : $rest_level;\n";
+        }
         $hdl .= "  end\n";
         return $hdl;
     }
@@ -833,16 +837,18 @@ sub generate_unified_pulse_delay_logic ($self, $lhs, $lhs_analysis) {
         : '{' . $delay_cycles . "{1'b0}}";
 
     $hdl .= "  always_ff @($event_control) begin\n";
-    $hdl .= "    if ($reset_condition) begin\n";
-    $hdl .= "      $lhs_name <= $rest_level;\n";
-    $hdl .= "      $pipe_name <= $pipe_reset;\n";
-    $hdl .= "    end else begin\n";
+    if (defined($reset_condition) && length($reset_condition)) {
+        $hdl .= "    if ($reset_condition) begin\n";
+        $hdl .= "      $lhs_name <= $rest_level;\n";
+        $hdl .= "      $pipe_name <= $pipe_reset;\n";
+        $hdl .= "    end else begin\n";
+    }
     $hdl .= "      $lhs_name <= $rest_level;\n";
     $hdl .= "      if ($pipe_tap) begin\n";
     $hdl .= "        $lhs_name <= $pulse_level;\n";
     $hdl .= "      end\n";
     $hdl .= "      $pipe_name <= $shift_rhs;\n";
-    $hdl .= "    end\n";
+    $hdl .= "    end\n" if defined($reset_condition) && length($reset_condition);
     $hdl .= "  end\n";
 
     return $hdl;
@@ -971,11 +977,15 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
         );
 
         $hdl .= "  always_ff @($event_control) begin\n";
-        $hdl .= "    if ($reset_condition) begin\n";
-        $hdl .= "      $lhs_name <= $reset_value;\n";
-        $hdl .= "    end else begin\n";
-        $hdl .= "      $lhs_name <= ${lhs_name}_next;\n";
-        $hdl .= "    end\n";
+        if (defined($reset_condition) && length($reset_condition)) {
+            $hdl .= "    if ($reset_condition) begin\n";
+            $hdl .= "      $lhs_name <= $reset_value;\n";
+            $hdl .= "    end else begin\n";
+            $hdl .= "      $lhs_name <= ${lhs_name}_next;\n";
+            $hdl .= "    end\n";
+        } else {
+            $hdl .= "      $lhs_name <= ${lhs_name}_next;\n";
+        }
         $hdl .= "  end\n";
 
     } elsif ($assignment_type eq 'register_in' || $assignment_type eq 'register_in_dual') {
@@ -1007,11 +1017,15 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
         );
 
         $hdl .= "  always_ff @($event_control) begin\n";
-        $hdl .= "    if ($reset_condition) begin\n";
-        $hdl .= "      ${lhs_name}_q <= $reset_value;\n";
-        $hdl .= "    end else begin\n";
-        $hdl .= "      ${lhs_name}_q <= $lhs_name;\n";
-        $hdl .= "    end\n";
+        if (defined($reset_condition) && length($reset_condition)) {
+            $hdl .= "    if ($reset_condition) begin\n";
+            $hdl .= "      ${lhs_name}_q <= $reset_value;\n";
+            $hdl .= "    end else begin\n";
+            $hdl .= "      ${lhs_name}_q <= $lhs_name;\n";
+            $hdl .= "    end\n";
+        } else {
+            $hdl .= "      ${lhs_name}_q <= $lhs_name;\n";
+        }
         $hdl .= "  end\n";
     } else {
         die "[AssignmentSupport.pm][generate_unified_flop_mux()] Unsupported flop assignment_type '$assignment_type' for LHS '$lhs_name'";

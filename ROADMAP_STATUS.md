@@ -4,6 +4,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 no-reset scheduled `.fsm` HDL support:
+  `NO-RESET-SCHEDULED-FSM-HDL.1` shipped explicit clock-only `+system`
+  contracts through Verilog-family HDL and closed the task tree. Direct
+  scheduled `.fsm` parsing now accepts `(+system (clock NAME))` as an explicit
+  no-reset contract; generated HDL exposes the clock but no reset port and
+  emits clock-only sequential blocks with no reset branch. Reset-bearing
+  `sreset`, `areset`, and legacy `asreset` behavior remains unchanged. The ISF
+  no-reset acknowledged-event CDC fixture now reaches generated SystemVerilog
+  through reset-free domain modules, a generated top, and a concrete CDC child
+  that omits absent reset ports. Validation passed: syntax checks; focused
+  direct-system/ISF CDC tests with `Files=4, Tests=24`; focused public-contract
+  and book audits with `Files=6, Tests=359`; `./bin/ci-regression quick` with
+  `Files=8, Tests=145`; `./bin/ci-regression isf --no-book` with `Files=275,
+  Tests=1756`; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 no-reset CDC fixture coverage:
   `ISF-CDC-NO-RESET-FIXTURE.1` shipped a file-backed
   `isf/clock_domain_no_reset_event_crossing.isf` fixture and closed the task
@@ -11,12 +25,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   artifacts plus a generated top and CDC child; the generated CDC interface
   metadata records `SOURCE_RESET_PRESENT 0d0` and
   `DEST_RESET_PRESENT 0d0`; in-process and CLI schedule JSON preserve the
-  crossing metadata. Plain HDL generation for this no-reset fixture remains
-  deliberately fail-closed with the current incomplete `+system` diagnostic
-  because direct scheduled `.fsm` HDL still requires clock plus reset
-  declarations. Validation passed: syntax check; focused clock-domain/book
-  audits with `Files=4, Tests=376`; `./bin/ci-regression isf --no-book` with
-  `Files=275, Tests=1756`; `mdbook build docs/book`; and `git diff --check`.
+  crossing metadata. The later `NO-RESET-SCHEDULED-FSM-HDL.1` slice promoted
+  the fixture to generated HDL coverage by adding reset-free scheduled `.fsm`
+  backend support. Validation for the original fixture slice passed: syntax
+  check; focused clock-domain/book audits with `Files=4, Tests=376`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1756`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current R14 data-operation width backlog truth sync:
   `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` synchronized one stale mdBook
   backlog sentence and closed the task tree. The data-operation width backlog
@@ -8384,12 +8398,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-CDC-NO-RESET-FIXTURE.1` closed a no-reset acknowledged-event CDC
-  fixture hardening slice. The new fixture proves lower-result review
-  artifacts, in-process schedule reports, and CLI schedule JSON preserve
-  absent source/destination reset metadata while current plain HDL generation
-  still fails closed under the reset-required scheduled `.fsm` backend
-  contract.
+  `NO-RESET-SCHEDULED-FSM-HDL.1` closed explicit clock-only scheduled `.fsm`
+  HDL support. The no-reset acknowledged-event CDC fixture now reaches
+  generated HDL through reset-free domain modules and a generated CDC child
+  that omits absent reset ports.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11845,6 +11857,24 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `NO-RESET-SCHEDULED-FSM-HDL.1` is shipped and the task tree is closed:
+  - direct scheduled `.fsm` parsing accepts explicit clock-only `+system`
+    contracts such as `(+system (clock clk))`,
+  - Verilog-family HDL for no-reset scheduled modules exposes the clock but no
+    reset port and emits clock-only sequential blocks with no reset branch,
+  - reset-bearing `sreset`, `areset`, and legacy `asreset` behavior remains
+    unchanged,
+  - the no-reset acknowledged-event CDC fixture now reaches generated
+    SystemVerilog through reset-free domain modules, the generated top, and a
+    concrete CDC child that omits absent reset ports,
+  - and the direct language docs, ISF spec, downstream handoff, public
+    contract, mdBook, regression corpus docs, task tree, README index,
+    roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused direct-system/ISF CDC tests with
+    `Files=4, Tests=24`; focused public-contract/book audits with `Files=6,
+    Tests=359`; `./bin/ci-regression quick` with `Files=8, Tests=145`;
+    `./bin/ci-regression isf --no-book` with `Files=275, Tests=1756`;
+    `mdbook build docs/book`; and `git diff --check`.
 - `ISF-CDC-NO-RESET-FIXTURE.1` is shipped and the task tree is closed:
   - the file-backed `isf/clock_domain_no_reset_event_crossing.isf` fixture now
     covers two no-reset clock domains with one acknowledged event crossing,
@@ -11853,9 +11883,9 @@ Done:
   - generated CDC metadata records `SOURCE_RESET_PRESENT 0d0` and
     `DEST_RESET_PRESENT 0d0`, and in-process plus CLI schedule JSON preserve
     the no-reset crossing metadata,
-  - plain HDL generation for this no-reset fixture remains fail-closed with
-    the current incomplete `+system` diagnostic because direct scheduled
-    `.fsm` HDL still requires clock plus reset declarations,
+  - the slice originally locked the then-current HDL fail-closed boundary; the
+    later `NO-RESET-SCHEDULED-FSM-HDL.1` slice promoted this fixture to
+    generated HDL coverage,
   - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
     README index, roadmap, and live docs are synchronized.
   - Validation passed: syntax check; focused clock-domain/book audits with

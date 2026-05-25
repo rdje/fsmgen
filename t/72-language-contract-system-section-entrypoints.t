@@ -108,14 +108,17 @@ FSM
     like(read_file($out_path), qr/always_ff \@\(posedge clk or negedge rst_n\) begin\s+if \(!rst_n\) begin/s, 'CLI output emits asynchronous active-low reset behavior for areset');
 };
 
-subtest 'pipeline and CLI do not emit HDL for incomplete +system sections' => sub {
-    my $fsm_path = write_fsm('incomplete_system_section.fsm', <<'FSM');
-(?fsm:incomplete_system
+subtest 'pipeline and CLI emit HDL for clock-only no-reset +system sections' => sub {
+    my $fsm_path = write_fsm('clock_only_system_section.fsm', <<'FSM');
+(?fsm:clock_only_system
   (+system
     (clock clk)
   )
+  (+size
+    (A 1)
+  )
   (-dt
-    (A = 1)
+    (A <= 1)
   )
 )
 FSM
@@ -124,21 +127,23 @@ FSM
         target_language => 'systemverilog',
         debug => 0,
     );
-    my $pipeline_error = eval {
+    my $pipeline_result = eval {
         $pipeline->generate_hdl_from_file($fsm_path);
-        undef;
     };
-    $pipeline_error = $@ if !$pipeline_error;
-    ok($pipeline_error, 'pipeline rejects incomplete +system section');
-    like($pipeline_error, qr/Incomplete '\+system' section/, 'pipeline surfaces the explicit incomplete-+system boundary');
+    my $pipeline_error = $@;
+    is($pipeline_error, '', 'pipeline accepts clock-only +system sections');
+    like($pipeline_result->{hdl_code}, qr/\binput\s+wire\s+clk\b/s, 'pipeline declares the authored clock port');
+    unlike($pipeline_result->{hdl_code}, qr/\binput\s+wire\s+(?:rst_n|reset|rstn)\b/s, 'pipeline does not declare a reset port');
+    like($pipeline_result->{hdl_code}, qr/always_ff\s*@\(posedge\s+clk\)\s+begin\s+(?!if\s*\()/s,
+        'pipeline emits clock-only sequential logic');
 
-    my $out_path = File::Spec->catfile($tempdir, 'incomplete_system_section.sv');
+    my $out_path = File::Spec->catfile($tempdir, 'clock_only_system_section.sv');
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '-o', $out_path, '--quiet', $fsm_path],
     );
 
-    ok(!$success, 'CLI rejects incomplete +system section');
-    ok(!-e $out_path, 'CLI does not emit output for incomplete +system section');
+    ok($success, 'CLI accepts clock-only +system sections');
+    ok(-e $out_path, 'CLI emits output for clock-only +system sections');
 
     my $combined_output = join(
         '',
@@ -147,7 +152,13 @@ FSM
         ($error_message || ''),
     );
 
-    like($combined_output, qr/Incomplete '\+system' section/, 'CLI surfaces the explicit incomplete-+system boundary');
+    unlike($combined_output, qr/Incomplete '\+system' section|Error parsing FSM/s,
+        'CLI output does not report an incomplete +system section');
+    my $cli_hdl = read_file($out_path);
+    like($cli_hdl, qr/\binput\s+wire\s+clk\b/s, 'CLI output declares the authored clock port');
+    unlike($cli_hdl, qr/\binput\s+wire\s+(?:rst_n|reset|rstn)\b/s, 'CLI output does not declare a reset port');
+    like($cli_hdl, qr/always_ff\s*@\(posedge\s+clk\)\s+begin\s+(?!if\s*\()/s,
+        'CLI output emits clock-only sequential logic');
 };
 
 done_testing();

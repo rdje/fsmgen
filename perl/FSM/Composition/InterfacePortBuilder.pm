@@ -44,10 +44,11 @@ sub build_realized_child_interface_ports ($class, $module_info) {
             implicit => 1,
         },
     );
-    my %system_port_type = (
-        ($system_contract->{clock} => 'clock'),
-        ($system_contract->{reset} => 'reset'),
-    );
+    my %system_port_type;
+    $system_port_type{$system_contract->{clock}} = 'clock'
+        if defined($system_contract->{clock}) && !ref($system_contract->{clock}) && length($system_contract->{clock});
+    $system_port_type{$system_contract->{reset}} = 'reset'
+        if defined($system_contract->{reset}) && !ref($system_contract->{reset}) && length($system_contract->{reset});
 
     if (ref($child_structural_rtl_ir->{ports}) eq 'ARRAY' && @{$child_structural_rtl_ir->{ports}}) {
         for my $entry (@{$child_structural_rtl_ir->{ports}}) {

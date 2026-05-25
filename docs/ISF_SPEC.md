@@ -1470,10 +1470,10 @@ Multi-clock boundary:
   Generated HDL for accepted event-crossing actors now emits the generated top
   and concrete acknowledged-event CDC child modules for accepted crossings on
   SystemVerilog/Verilog-family targets when each emitted domain artifact
-  satisfies the current scheduled `.fsm` clock/reset HDL contract. No-reset
-  domains participate in lowering and schedule-report metadata, including
-  absent-reset CDC metadata, but plain HDL generation for those domain artifacts
-  still fails closed under the current direct `.fsm` clock/reset contract.
+  satisfies the current scheduled `.fsm` HDL contract. Clock-only no-reset
+  domain artifacts are accepted by the direct backend; their generated CDC
+  metadata records absent resets and the concrete CDC child omits absent reset
+  ports.
 - Direct reads or writes between domains are not accepted by implication. A
   shipped CDC primitive or protocol actor must provide specified runtime
   behavior, lowering, diagnostics, and report metadata before such crossings
@@ -1549,7 +1549,7 @@ Selected source model and current implementation status:
   event crossings appear in `crossings[]`. The plain HDL path for accepted
   event-crossing actors emits the generated top and concrete acknowledged-event
   CDC child for SystemVerilog/Verilog-family targets when each emitted domain
-  artifact satisfies the current scheduled `.fsm` clock/reset HDL contract.
+  artifact satisfies the current scheduled `.fsm` HDL contract.
 
 Selected reset ownership model and current implementation status:
 - Existing actor-level `(clock clk)` plus optional actor-level `(reset ...)`
@@ -1566,8 +1566,8 @@ Selected reset ownership model and current implementation status:
 - Each domain owns zero or one reset. A domain with no reset clause has no
   generated reset for its clocked state. Current lower/report/schedule-JSON
   paths preserve that absence; current direct scheduled `.fsm` HDL generation
-  still requires a clock plus reset declaration, so no-reset multi-domain HDL
-  fails closed rather than emitting misleading output.
+  accepts the clock-only contract and emits reset-free sequential blocks for
+  no-reset domain artifacts.
 - Domain reset payloads reuse the shipped reset value rules: flat
   `(reset name)` is synchronous with inferred polarity; list forms may include
   `async`, `active_low`, or `active_high`; and reset names must be scalar.
@@ -1662,10 +1662,10 @@ Selected lowering artifact strategy and current implementation status:
   counts plus artifact names under `clock_domains[]`. Plain HDL generation for
   accepted event-crossing actors emits the generated top and concrete
   acknowledged-event CDC child on SystemVerilog/Verilog-family targets when
-  each emitted domain artifact satisfies the current scheduled `.fsm`
-  clock/reset HDL contract. No-reset event-crossing fixtures are supported for
-  scheduled `.fsm` review artifacts and schedule reports only; the direct HDL
-  backend still fails closed on the reset-required `+system` contract.
+  each emitted domain artifact satisfies the current scheduled `.fsm` HDL
+  contract. No-reset event-crossing fixtures are supported for scheduled
+  `.fsm` review artifacts, schedule reports, and generated HDL; their domain
+  modules and generated CDC child omit absent reset ports.
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.
@@ -4901,8 +4901,8 @@ bounded schedule-report metadata.
 [isf/clock_domain_no_reset_event_crossing.isf](../isf/clock_domain_no_reset_event_crossing.isf)
 hardens the CDC fixture surface for domains that intentionally omit reset
 declarations. It proves lower/report and CLI schedule-JSON propagation of
-absent-reset CDC metadata, and it locks the current plain-HDL fail-closed
-boundary for no-reset domain artifacts.
+absent-reset CDC metadata, clock-only domain HDL, and a generated CDC child
+without absent reset ports.
 The [isf/fifo_library_use.isf](../isf/fifo_library_use.isf) fixture now has
 file-backed strict reusable-library coverage for importer/child/generated-top
 scheduled `.fsm` artifacts, fixed FIFO parameter overrides, use-site bindings,

@@ -17,7 +17,7 @@ You are usually writing:
 
 - `?fsm:name`: state-machine root
 - `?dt:name`: standalone decision-tree root
-- `+system`: clock/reset declaration section
+- `+system`: clock declaration section with optional reset policy
 - `+size`: width/type declaration section
 - `+constants`, `+enums`, `+types`: symbol and type sections
 - `:=`: init/reset directive

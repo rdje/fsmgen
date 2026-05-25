@@ -35,7 +35,7 @@ The current integration status is `bounded_public`:
 - Accepted multi-domain event-crossing sources lower to generated domain/top
   artifacts and can reach SystemVerilog/Verilog-family HDL with concrete CDC
   child modules when the emitted domain artifacts satisfy the scheduled `.fsm`
-  clock/reset HDL contract.
+  HDL contract, including clock-only no-reset domains.
 - Public syntax, public lower-result shape, and public schedule-report key
   families are regression-backed.
 
@@ -419,12 +419,12 @@ Rules:
   acknowledgement latency. No same-cycle relationship is promised.
 - Generated HDL for accepted event crossings emits the generated top and
   concrete acknowledged-event CDC child modules for SystemVerilog/Verilog-family
-  targets when each domain artifact satisfies the scheduled `.fsm` clock/reset
-  HDL contract.
-- No-reset event crossings are accepted for lower-result review artifacts and
-  schedule JSON. Their generated CDC metadata marks absent source/destination
-  resets, and current plain HDL generation fails closed because direct
-  scheduled `.fsm` HDL still requires clock plus reset declarations.
+  targets when each domain artifact satisfies the scheduled `.fsm` HDL
+  contract. Clock-only no-reset domain artifacts are accepted by that backend.
+- No-reset event crossings are accepted for lower-result review artifacts,
+  schedule JSON, and plain generated HDL. Their generated CDC metadata marks
+  absent source/destination resets, and generated CDC child modules omit the
+  absent reset ports.
 
 ## 8. Interface, Storage, Constants
 

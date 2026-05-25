@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — No-reset scheduled FSM HDL shipped
+- Completed `NO-RESET-SCHEDULED-FSM-HDL.1` and closed the task tree.
+- Direct scheduled `.fsm` parsing now accepts explicit clock-only `+system`
+  contracts as no-reset system contracts.
+- Verilog-family HDL for no-reset scheduled modules exposes the clock but no
+  reset port and emits clock-only sequential blocks with no reset branch.
+- Reset-bearing `sreset`, `areset`, and legacy `asreset` behavior remains
+  unchanged.
+- The ISF no-reset acknowledged-event CDC fixture now reaches generated
+  SystemVerilog through reset-free domain modules, a generated top, and a
+  concrete CDC child that omits absent reset ports.
+- Public direct-language docs, ISF docs, downstream handoff, public contract,
+  mdBook, regression corpus docs, task tree, README index, roadmap, and live
+  docs are synchronized.
+- Validation passed: syntax checks; focused direct-system/ISF CDC tests with
+  `Files=4, Tests=24`; focused public-contract/book audits with `Files=6,
+  Tests=359`; `./bin/ci-regression quick` with `Files=8, Tests=145`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1756`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — No-reset CDC fixture coverage shipped
 - Completed `ISF-CDC-NO-RESET-FIXTURE.1` and closed the task tree.
 - Added `isf/clock_domain_no_reset_event_crossing.isf` as a no-reset
@@ -9,9 +29,9 @@ This is the persistent technical change history for FSMGen.
   generated top CDC child wiring, absent-reset CDC metadata
   (`SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`), in-process
   schedule report metadata, and CLI schedule JSON parity.
-- Plain HDL generation for the no-reset fixture remains fail-closed with the
-  current incomplete `+system` diagnostic because direct scheduled `.fsm` HDL
-  still requires clock plus reset declarations.
+- The subsequent `NO-RESET-SCHEDULED-FSM-HDL.1` slice promotes the no-reset
+  fixture to generated HDL coverage by adding reset-free scheduled `.fsm`
+  backend support.
 - The ISF spec, downstream handoff, public contract, mdBook, task tree,
   README index, roadmap, and live docs are synchronized.
 - Validation passed: syntax check; focused clock-domain/book audits with

@@ -3367,7 +3367,7 @@ projects bounded domain and event-crossing metadata, and accepted
 event-crossing actors now reach generated SystemVerilog/Verilog-family HDL for
 the generated top plus concrete acknowledged-event CDC child modules for
 accepted crossings when each emitted domain artifact satisfies the current
-scheduled `.fsm` clock/reset HDL contract.
+scheduled `.fsm` HDL contract, including clock-only no-reset domains.
 
 Different clock signal names, library clock/reset bindings, and generated-top
 system-port links are not CDC semantics by themselves.
@@ -3379,13 +3379,13 @@ hardening slice now adds
 which covers two opposite-direction acknowledged event crossings in one
 generated top with two CDC children, report metadata, and generated HDL.
 [isf/clock_domain_no_reset_event_crossing.isf](../../isf/clock_domain_no_reset_event_crossing.isf)
-now covers the no-reset acknowledged-event schedule/report path, including
-absent-reset CDC metadata and the current fail-closed HDL boundary for no-reset
-domain artifacts.
+now covers the no-reset acknowledged-event schedule/report and HDL path,
+including absent-reset CDC metadata, reset-free domain modules, and a generated
+CDC child without absent reset ports.
 
-Remaining backlog still needs no-reset scheduled `.fsm` HDL support, richer CDC
-fixture matrices for payload-like protocol actors, dual-clock FIFO-like actors,
-and broader reset/no-reset protocol combinations.
+Remaining backlog still needs richer CDC fixture matrices for payload-like
+protocol actors, dual-clock FIFO-like actors, and broader reset/no-reset
+protocol combinations.
 
 Outside that shipped event primitive, direct same-cycle reads or writes across
 domains must not be inferred from ordinary signal access.

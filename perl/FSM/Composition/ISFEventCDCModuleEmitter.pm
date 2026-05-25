@@ -35,10 +35,6 @@ sub hdl_code_for_loaded_metadata ($class, %args) {
     my $marker_param = MARKER_PARAM;
     return undef unless exists $params{$marker_param};
 
-    _assert_supported_target($module_name, $metadata_path, $target_language);
-    _assert_marker($module_name, $metadata_path, \%params);
-    _assert_interface($module_name, $metadata_path, $interface_ports);
-
     my %policy = (
         source_reset => {
             present     => _required_bool_param($module_name, $metadata_path, \%params, 'SOURCE_RESET_PRESENT'),
@@ -54,7 +50,10 @@ sub hdl_code_for_loaded_metadata ($class, %args) {
         },
     );
 
+    _assert_supported_target($module_name, $metadata_path, $target_language);
+    _assert_marker($module_name, $metadata_path, \%params);
     _assert_reset_policy_shape($module_name, $metadata_path, \%policy);
+    _assert_interface($module_name, $metadata_path, $interface_ports, \%policy);
     return _emit_module($module_name, \%policy);
 }
 
@@ -80,16 +79,18 @@ sub _assert_marker ($module_name, $metadata_path, $params) {
         unless $value == 1;
 }
 
-sub _assert_interface ($module_name, $metadata_path, $interface_ports) {
+sub _assert_interface ($module_name, $metadata_path, $interface_ports, $policy) {
     my %expected = (
         source_clk   => { direction => 'input',  width => 1, type => 'clock' },
         dest_clk     => { direction => 'input',  width => 1, type => 'clock' },
-        source_reset => { direction => 'input',  width => 1, type => 'reset' },
-        dest_reset   => { direction => 'input',  width => 1, type => 'reset' },
         request      => { direction => 'input',  width => 1, type => 'data'  },
         ready        => { direction => 'output', width => 1, type => 'data'  },
         pulse        => { direction => 'output', width => 1, type => 'data'  },
     );
+    $expected{source_reset} = { direction => 'input', width => 1, type => 'reset' }
+        if $policy->{source_reset}{present};
+    $expected{dest_reset} = { direction => 'input', width => 1, type => 'reset' }
+        if $policy->{dest_reset}{present};
 
     my %ports = map { (_port_name($_) => $_) } @$interface_ports;
     for my $name (sort keys %expected) {
@@ -157,15 +158,22 @@ sub _param_bool_value ($param) {
 }
 
 sub _emit_module ($module_name, $policy) {
+    my @ports = (
+        "    input wire source_clk",
+    );
+    push @ports, "    input wire source_reset"
+        if $policy->{source_reset}{present};
+    push @ports, "    input wire dest_clk";
+    push @ports, "    input wire dest_reset"
+        if $policy->{dest_reset}{present};
+    push @ports,
+        "    input wire request",
+        "    output wire ready",
+        "    output reg pulse";
+
     my @lines = (
         "module $module_name (",
-        "    input wire source_clk,",
-        "    input wire source_reset,",
-        "    input wire dest_clk,",
-        "    input wire dest_reset,",
-        "    input wire request,",
-        "    output wire ready,",
-        "    output reg pulse",
+        join(",\n", @ports),
         ");",
         "",
         "    reg source_toggle = 1'b0;",

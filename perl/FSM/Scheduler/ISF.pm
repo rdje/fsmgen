@@ -379,8 +379,10 @@ sub _emit_crossing_rtlif($actor, $crossing, $partition) {
     push @lines, '  )';
     push @lines, '  source_clk:clock';
     push @lines, '  dest_clk:clock';
-    push @lines, '  source_reset:reset';
-    push @lines, '  dest_reset:reset';
+    push @lines, '  source_reset:reset'
+        if ref($source_domain->{reset}) eq 'HASH';
+    push @lines, '  dest_reset:reset'
+        if ref($dest_domain->{reset}) eq 'HASH';
     push @lines, '  request<:data';
     push @lines, '  ready>:data';
     push @lines, '  pulse>:data';

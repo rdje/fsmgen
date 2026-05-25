@@ -38,7 +38,7 @@ top scope, each domain artifact, and accepted event crossing metadata;
 accepted event-crossing actors now emit SystemVerilog/Verilog-family HDL with
 the generated top and concrete acknowledged-event CDC child modules for
 accepted crossings when each emitted domain artifact satisfies the current
-scheduled `.fsm` clock/reset HDL contract.
+scheduled `.fsm` HDL contract, including clock-only no-reset domains.
 
 ## Multi-Domain Actor -> Domain FSMs + CDC Top
 
@@ -156,10 +156,9 @@ ordering relationship between the event channels.
 
 The file-backed `isf/clock_domain_no_reset_event_crossing.isf` fixture covers
 domains that omit reset declarations. Lowering and schedule reports preserve
-the generated CDC metadata with absent source and destination resets; current
-plain HDL generation for that fixture remains fail-closed because no-reset
-domain `.fsm` artifacts do not satisfy the direct backend's clock/reset
-`+system` contract.
+the generated CDC metadata with absent source and destination resets; plain
+HDL generation emits reset-free domain modules and a generated CDC child that
+omits the absent reset ports.
 
 The generated CDC HDL is a toggle/acknowledge synchronizer. In outline, it
 contains:
@@ -203,11 +202,10 @@ artifact, and feeds that top through the existing composition HDL pipeline.
 The final SystemVerilog/Verilog-family output contains the two generated
 domain modules, the generated CDC module, and the generated top module.
 
-The source model can record domains without resets for `lower(...)` and
-`report(...)`. The fully generated HDL path shown here is exercised through
-reset-declared domains because the existing scheduled `.fsm` HDL backend still
-expects a complete `+system` clock/reset contract for each emitted domain
-artifact.
+The source model can record domains without resets for `lower(...)`,
+`report(...)`, and generated HDL. Clock-only domain artifacts emit reset-free
+sequential blocks, and generated CDC children omit reset ports for endpoints
+whose domains do not declare resets.
 
 ## Interface → +size
 

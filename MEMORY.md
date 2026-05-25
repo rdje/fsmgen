@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 no-reset scheduled FSM HDL shipped
+- Completed `NO-RESET-SCHEDULED-FSM-HDL.1` and closed the task tree.
+- Direct scheduled `.fsm` parsing now accepts explicit clock-only `+system`
+  contracts such as `(+system (clock clk))` as no-reset system contracts.
+- Verilog-family HDL for no-reset scheduled modules exposes the clock but no
+  reset port and emits clock-only sequential blocks with no reset branch.
+- Reset-bearing `sreset`, `areset`, and legacy `asreset` behavior remains
+  unchanged.
+- The ISF no-reset acknowledged-event CDC fixture now reaches generated
+  SystemVerilog through reset-free bus/core domain modules, a generated top,
+  and a concrete CDC child that omits absent reset ports.
+- Public direct-language docs, ISF docs, downstream handoff, public contract,
+  mdBook, regression corpus docs, roadmap, task tree, README index, and live
+  docs are synchronized.
+- Validation passed: syntax checks; focused direct-system/ISF CDC tests with
+  `Files=4, Tests=24`; focused public-contract/book audits with `Files=6,
+  Tests=359`; `./bin/ci-regression quick` with `Files=8, Tests=145`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1756`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 no-reset CDC fixture coverage shipped
 - Completed `ISF-CDC-NO-RESET-FIXTURE.1` and closed the task tree.
 - Added `isf/clock_domain_no_reset_event_crossing.isf` as a file-backed
@@ -9,9 +31,9 @@ This is the live continuity document for fast session recovery after crashes, re
   emission, CDC child wiring, absent-reset `?rtlif` metadata
   (`SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`), in-process
   schedule report metadata, and CLI `--emit-schedule-json` parity.
-- Plain HDL generation for this no-reset fixture remains deliberately
-  fail-closed with the current incomplete `+system` diagnostic because direct
-  scheduled `.fsm` HDL still requires clock plus reset declarations.
+- The subsequent `NO-RESET-SCHEDULED-FSM-HDL.1` slice promotes this fixture to
+  generated HDL coverage by adding reset-free scheduled `.fsm` backend
+  support.
 - Public specs, downstream handoff, public contract, mdBook, roadmap, task
   tree, README index, and live docs are synchronized.
 - Validation passed: syntax check; focused clock-domain/book audits with

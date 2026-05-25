@@ -147,6 +147,16 @@ Return the normalized reset policy for one semantic FSM/DT module.
 
 sub effective_reset_policy ($self, $fsm_module = undef) {
     my $system_contract = $self->effective_system_contract($fsm_module);
+    my $reset_name = $system_contract->{reset};
+    unless (defined($reset_name) && !ref($reset_name) && length($reset_name)) {
+        return {
+            present => 0,
+            kind => 'none',
+            active_level => undef,
+            keyword => undef,
+        };
+    }
+
     my $reset_keyword = $system_contract->{reset_keyword} // '';
     my $reset_kind = $system_contract->{reset_kind}
         // ($reset_keyword eq 'sreset' ? 'sync' : 'async');
@@ -155,6 +165,7 @@ sub effective_reset_policy ($self, $fsm_module = undef) {
         : ($reset_kind eq 'sync' ? 1 : 0);
 
     return {
+        present => 1,
         kind => $reset_kind,
         active_level => $reset_active_level,
         keyword => $reset_keyword,
@@ -173,7 +184,7 @@ sub sequential_event_control ($self, $fsm_module = undef) {
     my $reset_policy = $self->effective_reset_policy($fsm_module);
 
     return "posedge $clock_name"
-        if $reset_policy->{kind} eq 'sync';
+        if !$reset_policy->{present} || $reset_policy->{kind} eq 'sync';
 
     my $reset_edge = $reset_policy->{active_level} ? 'posedge' : 'negedge';
     return "posedge $clock_name or $reset_edge $reset_name";
@@ -189,6 +200,7 @@ sub reset_condition_expr ($self, $fsm_module = undef) {
     my $reset_name = $self->effective_reset_name($fsm_module);
     my $reset_policy = $self->effective_reset_policy($fsm_module);
 
+    return undef unless $reset_policy->{present};
     return $reset_policy->{active_level} ? $reset_name : "!$reset_name";
 }
 
@@ -317,20 +329,21 @@ sub build_module_declaration_plan ($self, $fsm_module) {
     my $reset_name = $system_contract->{reset};
     my @base_ports;
     if ($system_contract->{declare_ports} // 1) {
-        @base_ports = (
+        push @base_ports,
             {
                 direction => 'input',
                 storage => 'wire',
                 name => $clock_name,
                 width => 1,
-            },
+            };
+        push @base_ports,
             {
                 direction => 'input',
                 storage => 'wire',
                 name => $reset_name,
                 width => 1,
-            },
-        );
+            }
+            if defined($reset_name) && !ref($reset_name) && length($reset_name);
     }
 
     my $signals = $fsm_module->signals;
@@ -342,8 +355,12 @@ sub build_module_declaration_plan ($self, $fsm_module) {
     my %seen_signals;
     my %port_directions;
     if ($system_contract->{declare_ports} // 1) {
-        %seen_signals = ($clock_name => 1, $reset_name => 1);
-        %port_directions = ($clock_name => 'input', $reset_name => 'input');
+        %seen_signals = ($clock_name => 1);
+        %port_directions = ($clock_name => 'input');
+        if (defined($reset_name) && !ref($reset_name) && length($reset_name)) {
+            $seen_signals{$reset_name} = 1;
+            $port_directions{$reset_name} = 'input';
+        }
     }
     my %driven_signals = $ctx->{enable_graph_assignment_support}->get_driven_signals();
 

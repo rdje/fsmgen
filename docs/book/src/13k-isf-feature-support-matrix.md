@@ -706,8 +706,8 @@ the event safely across the domain boundary.
 `isf/clock_domain_no_reset_event_crossing.isf` covers the acknowledged-event
 schedule/report surface when both domains omit resets. The generated CDC
 metadata records `SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`, and
-the current HDL path fails closed with the reset-required scheduled `.fsm`
-contract instead of emitting HDL for no-reset domain artifacts.
+the HDL path emits clock-only domain modules plus a generated CDC child without
+absent reset ports.
 
 ### Transaction Body
 

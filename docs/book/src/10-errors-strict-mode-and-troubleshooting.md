@@ -374,7 +374,7 @@ FSMGen should fail closed when a source uses syntax outside the active
 contract. Current out-of-support examples include:
 
 - malformed `+system` sections, including duplicate clock/reset entries,
-  malformed clock/reset identifiers, and incomplete system declarations
+  malformed clock/reset identifiers, and missing clock declarations
 - unsupported top-level directive sections such as `(+clock clk)`,
   `(+areset rst_n)`, or `(+bogus ...)`
 - unsupported tagged wrappers such as `?define:legacy_template` and other
