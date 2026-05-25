@@ -1108,9 +1108,9 @@ Rules:
   decision/check clones that preserve the original repeat counter decrement
   or while/until condition branch behavior.
 - Wait-count division and modulo expressions reject literal-zero,
-  actor-constant-zero, and actor-parameter-zero divisors before scheduled
-  `.fsm` emission. Dynamic divisor nonzero proof remains outside the shipped
-  wait contract.
+  actor-constant-zero, actor-parameter-zero, and
+  same-transaction-parameter-zero divisors before scheduled `.fsm` emission.
+  Dynamic divisor nonzero proof remains outside the shipped wait contract.
 - Generated activation use-site overrides are not wait-count constants.
   Overrides of generated child wait-count parameters must preserve the child
   default value; mismatches fail closed until per-activation wait-state
@@ -3189,8 +3189,9 @@ Required fail-closed examples:
 - Unsupported `(on ...)` body forms such as `(params ...)`.
 - Rule triggers targeting unknown transactions.
 - Direct/local rule-trigger output bindings.
-- Literal-zero, actor-constant-zero, and actor-parameter-zero divisor operands
-  in shipped runtime division/modulo expression contexts.
+- Literal-zero, actor-constant-zero, actor-parameter-zero, and
+  same-transaction-parameter-zero divisor operands in shipped runtime
+  division/modulo expression contexts.
 - Watchdog limits that name actor-level transaction parameters,
   nested-control-flow transaction parameters, cross-transaction parameters,
   runtime interface signals, unknown symbolic names, arbitrary expressions,
@@ -3884,8 +3885,10 @@ The following are not public shipped integration surfaces today:
 - Direct `(on ...)` activation parameter overrides.
 - Snapshot-vs-live binding timing selection beyond the shipped binding timing.
 - Proof that every dynamic division/modulo divisor is nonzero. Literal-zero,
-  actor-constant-zero, and actor-parameter-zero divisors are rejected, but
-  arbitrary runtime scalar nonzero proof is not a public shipped surface yet.
+  actor-constant-zero, actor-parameter-zero, and
+  same-transaction-parameter-zero divisors are rejected, but arbitrary runtime
+  scalar nonzero proof and use-site-specialized parameter divisor proof are
+  not public shipped surfaces yet.
 - A formal frozen EBNF grammar artifact or JSON Schema artifact. This document
   and the manifest are the current integration contract; a machine grammar or
   schema should be produced by a future task if required.

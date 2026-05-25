@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Transaction-parameter zero divisors should fail closed
+- `ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.1` extends the shipped runtime
+  divisor guard from literal-zero, actor-constant-zero, and actor-parameter-zero
+  operands to same-transaction scalar parameter defaults that resolve to zero.
+- The guard is intentionally conservative: a zero default is unsafe unless a
+  later specialization proof can show every use site supplies a nonzero value.
+  That proof is not part of the current generated child activation model.
+- Transaction-local names shadow actor-level static names in transaction
+  expression contexts, matching the existing static timing and width value
+  domains. Nonzero transaction parameters remain authored symbolic divisors
+  where the scheduled child `.fsm` already carries the declaration.
+
 ## 2026-05-25: Generated child static timing overrides need same-value gates
 - `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES.1` applies the same safety rule
   used for generated child contract-window parameters to the other static

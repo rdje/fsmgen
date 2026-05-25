@@ -298,6 +298,78 @@ subtest 'actor enum-resolved zero parameter modulo divisor fails closed' => sub 
 ISF
 };
 
+subtest 'transaction zero parameter division divisor in transaction RHS fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'transaction_param_division_by_zero', qr/\AError: transaction 'main' set RHS expression '\(\/ numerator DEN\)' uses transaction parameter zero divisor 'DEN' in division/);
+(actor transaction_param_division_by_zero
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input numerator (width 8))
+    (output out (width 8)))
+  (transaction main
+    (on start)
+    (params
+      (DEN 0))
+    (set out (/ numerator DEN))))
+ISF
+};
+
+subtest 'derived transaction zero parameter modulo divisor in nested body fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'transaction_param_derived_modulo_by_zero', qr/\AError: transaction 'main' when body set RHS expression '\(% numerator DEN\)' uses transaction parameter zero divisor 'DEN' in modulo/);
+(actor transaction_param_derived_modulo_by_zero
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input ready)
+    (input numerator (width 8))
+    (output out (width 8)))
+  (transaction main
+    (on start)
+    (params
+      (ZERO 0)
+      (DEN ZERO))
+    (when ready
+      (set out (% numerator DEN)))))
+ISF
+};
+
+subtest 'nonzero transaction parameter shadows actor zero parameter divisor' => sub {
+    my $result = lower_source(<<'ISF', 'transaction_param_shadow_divisor_ok');
+(actor transaction_param_shadow_divisor_ok
+  (clock clk)
+  (reset rst)
+  (params
+    (DEN 0))
+  (interface
+    (input start)
+    (input numerator (width 8))
+    (output out (width 8))
+    (output done))
+  (transaction parent
+    (on start)
+    (spawn child as c0
+      (bind
+        (input numerator numerator)
+        (output result out)))
+    (complete done))
+  (transaction child
+    (ports
+      (input numerator (width 8))
+      (output result (width 8)))
+    (params
+      (DEN 2))
+    (set result (/ numerator DEN))))
+ISF
+
+    my $child_fsm = $result->{files}{'child.fsm'};
+    like($child_fsm, qr{\(\+params\s+\(DEN 2\)\s+\)}s,
+        'scheduled child .fsm preserves nonzero transaction parameter declaration');
+    like($child_fsm, qr{\(<- \(result>? \(/ numerator DEN\)\)\)},
+        'scheduled child .fsm preserves nonzero transaction parameter divisor expression');
+};
+
 subtest 'dynamic divisor lowers unchanged' => sub {
     my $result = lower_source(<<'ISF', 'dynamic_divisor_ok');
 (actor dynamic_divisor_ok

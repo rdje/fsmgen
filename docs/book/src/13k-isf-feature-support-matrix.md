@@ -46,7 +46,7 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 | Transaction entry | shipped | `(transaction NAME (on START ...) body...)`, direct entry samples, transaction ports, and parameter declarations where generated-child behavior owns them. | Entry logic generates start/idle behavior, captures accepted samples, and records transaction order in schedule reports. Unsupported entry-body forms fail closed. |
 | Transaction ports and activation bindings | shipped bounded surface | Transaction `(ports ...)` declarations with `(width N\|TX_PARAM\|PARAM\|CONST\|PACKAGE.CONSTANT)` entries, where `TX_PARAM` is a same-transaction scalar parameter default on a generated child or direct/non-generated transaction, `PARAM` is an actor-local scalar parameter default, `CONST` is a declared actor constant, and `PACKAGE.CONSTANT` is a qualified imported package scalar constant that resolves to a positive integer, plus activation-site `(bind ...)` blocks on `do`, `spawn`, and rule `trigger` where documented. Input bindings may add `(timing snapshot)` for current activation/trigger payload capture or `(timing live)` for current generated-top live handoff wiring. | Ports materialize as transaction-local data/control boundaries and generated handoff assignments using resolved positive integer widths. Reports expose bounded `transaction_port_bindings[]` provenance, including `actor_endpoint_kind` values `signal`, `literal`, or `expression`, `binding_timing` values `activation_region`, `generated_live_handoff`, `trigger_payload`, or `done_guarded`, and `authored_timing_mode` as `snapshot`, `live`, or JSON null; generated-child rule-trigger output bindings report the done-observer signal that guards the copy back to the actor target. `TX_PARAM` names resolve before actor constants and actor parameters and may derive from earlier scalar transaction parameter defaults. Cross-transaction parameter names, unknown/unqualified/aggregate/path package constants, ambiguous local-enum/package-constant tokens, runtime signals, zero/non-scalar params, zero-valued constants, arbitrary expressions, direct/local rule-trigger output bindings, behavior-changing snapshot-vs-live timing conversion, and mismatched timing mode/site combinations remain backlog or fail closed. |
 | Transaction assignments | shipped | `(set TARGET EXPR)` and `(update VAR EXPR)` with scalar targets and expression payloads in the documented value domain. | Assignments lower to scheduled `.fsm` state assignments with correct flopped/combinational semantics for the form. Scalar aggregate leaves and enum members are accepted only in shipped contexts. |
-| Runtime expression divisor safety | shipped bounded surface | Division and modulo in shipped runtime expression contexts such as transaction RHS, wait counts, activation input bindings, rule guards/actions, drive bodies/calls, inline drives, and bank access index/value expressions. | Numeric/exact-width literal-zero, actor-constant-zero, and actor-parameter-zero divisors fail closed before scheduled `.fsm` emission. Nonzero literal, actor-constant, actor-parameter, and dynamic scalar divisors lower unchanged; full dynamic nonzero proof remains backlog. |
+| Runtime expression divisor safety | shipped bounded surface | Division and modulo in shipped runtime expression contexts such as transaction RHS, wait counts, activation input bindings, rule guards/actions, drive bodies/calls, inline drives, and bank access index/value expressions. | Numeric/exact-width literal-zero, actor-constant-zero, actor-parameter-zero, and same-transaction-parameter-zero divisors fail closed before scheduled `.fsm` emission. Nonzero literal, actor-constant, actor-parameter, same-transaction-parameter, and dynamic scalar divisors lower unchanged; full dynamic nonzero proof and use-site-specialized parameter divisor proof remain backlog. |
 | Named and inline drives | shipped | Actor-level `(drive NAME [(PARAM ...)] body...)`; transaction body `(drive NAME actual...)`; inline drive assignments where documented. | A named drive emits a non-state DT. A drive call consumes one state and transfers actuals through generated drive parameter signals. Inline drive assignments become state assignments. |
 | Await and latency | shipped | `(await PORT)`, top-level await-local `(watchdog N\|TX_PARAM\|PARAM\|CONST\|PACKAGE.CONSTANT)` overrides where each bound resolves to a positive integer, actor watchdogs using positive decimal literals, declared positive actor constants, actor-local scalar parameter defaults, or qualified imported package scalar constants, and transaction `(latency (min N\|TX_PARAM\|PARAM\|CONST\|PACKAGE.CONSTANT) (max N\|TX_PARAM\|PARAM\|CONST\|PACKAGE.CONSTANT))` where each latency bound resolves to a positive integer. | Awaits lower to wait/test states and watchdog counters when configured. One transaction has one watchdog counter, so distinct per-await limits in one transaction fail closed. Latency counters and schedule-report storage metadata are emitted for the supported shapes. Transaction parameter top-level await-local watchdog limits and latency bounds shadow actor-level static names and remain local lowering inputs. Generated child activation overrides for watchdog/latency timing parameters are accepted only when they preserve the child default value; mismatches fail closed. Runtime signals, arbitrary expressions, unknown symbols, unknown/unqualified/aggregate/path package constants, zero-valued constants, zero-valued or non-scalar actor/transaction parameters, actor-level or nested control-flow transaction watchdog parameters, and cross-transaction parameters fail closed as latency bounds or watchdog limits. |
 | Static and dynamic waits | shipped bounded surface | `(wait N)`, `(wait 0)`, actor-constant wait counts, actor-parameter wait counts, same-transaction scalar parameter wait counts, qualified package scalar-constant wait counts, accepted runtime wait count expressions, consecutive runtime waits, bank access predecessors, and pending-sample runtime waits in documented contexts. | Static waits create explicit wait states unless zero-count bypass semantics apply. Runtime waits use generated counters. Transaction parameter waits shadow actor-level static names in their owning transaction and remain local lowering inputs. Generated child activation overrides for wait-count transaction parameters are accepted only when they preserve the child default value; mismatches fail closed. Bank `load`/`store` predecessors keep their guarded scalarized assignments while splitting the following runtime count edge. Pending samples use a first active wait state on positive paths and sample-preserving zero-count clones for compatible successors such as drives, awaits, static waits, completion, independent scalar setters, independent shifts, independent assemble states, independent extract states, independent bank loads, independent bank stores, top-level await_all/await_any sync states, top-level spawn states, top-level transaction phase states, top-level ready/valid stages, top-level contract arm states, and loop decision states. Consecutive top-level runtime waits carry pending samples through zero-count links with generated downstream wait-entry clones when needed. |
@@ -866,19 +866,23 @@ The shipped aggregate path is scalar-leaf based. `frame.mode` and
 storage and the paths resolve to scalar leaves.
 
 Runtime expression divisor safety is fail-closed for literal zero, fixed actor
-constants that resolve to zero, and actor scalar parameters whose defaults
-resolve to zero:
+constants that resolve to zero, actor scalar parameters whose defaults resolve
+to zero, and same-transaction scalar parameters whose defaults resolve to
+zero:
 
 ```lisp
 (constants (ZERO 0) (DEN 2))
 (params (ZERO_P 0) (DEN_P 2))
+;; inside a transaction: (params (TX_ZERO 0) (TX_DEN 2))
 (set out (/ numerator divisor))  ;; accepted: dynamic divisor, no proof yet
 (set out (/ numerator 8'd2))     ;; accepted: nonzero literal divisor
 (set out (/ numerator DEN))      ;; accepted: nonzero actor constant divisor
 (set out (/ numerator DEN_P))    ;; accepted: nonzero actor parameter divisor
+(set out (/ numerator TX_DEN))   ;; accepted when TX_DEN is a nonzero same-transaction parameter
 (set out (/ numerator 0))        ;; rejected before scheduled .fsm emission
 (set out (/ numerator ZERO))     ;; rejected before scheduled .fsm emission
 (set out (/ numerator ZERO_P))   ;; rejected before scheduled .fsm emission
+(set out (/ numerator TX_ZERO))  ;; rejected when TX_ZERO resolves to zero
 ```
 
 ### Bank Store And Load
@@ -1048,8 +1052,10 @@ does not exist:
   inside repeat bodies remain outside the shipped repeat-body subset.
   In short, cross-domain activation inside repeat bodies is not shipped.
 - Dynamic division/modulo nonzero proof is not shipped. Literal-zero,
-  actor-constant-zero, and actor-parameter-zero divisors are rejected, but
-  arbitrary runtime scalar divisors are emitted unchanged.
+  actor-constant-zero, actor-parameter-zero, and
+  same-transaction-parameter-zero divisors are rejected, but arbitrary runtime
+  scalar divisors and nonzero use-site-specialized parameter divisors are
+  emitted unchanged.
 - Enum members are not writable targets, and enum members in expression
   operator position fail closed.
 - Aggregate interface ports, transaction-local aggregate ports, aggregate

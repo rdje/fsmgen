@@ -3291,9 +3291,14 @@ sub _validate_actor_enum_member_value_contexts($self, $actor) {
 }
 
 sub _validate_actor_literal_zero_divisors($self, $actor) {
-    my $zero_divisors = _actor_zero_divisor_names($actor);
+    my $actor_zero_divisors = _actor_zero_divisor_names($actor);
 
     for my $tx (@{$actor->{transactions} || []}) {
+        my $zero_divisors = $self->_transaction_zero_divisor_names(
+            $actor,
+            $tx,
+            $actor_zero_divisors,
+        );
         _validate_transaction_literal_zero_divisors(
             $tx->{clauses},
             $actor,
@@ -3303,14 +3308,14 @@ sub _validate_actor_literal_zero_divisors($self, $actor) {
     }
 
     for my $rule (@{$actor->{rules} || []}) {
-        _validate_rule_literal_zero_divisors($rule, $zero_divisors);
+        _validate_rule_literal_zero_divisors($rule, $actor_zero_divisors);
     }
 
     for my $drive_name (sort keys %{$actor->{drives} || {}}) {
         _validate_drive_literal_zero_divisors(
             $drive_name,
             $actor->{drives}{$drive_name},
-            $zero_divisors,
+            $actor_zero_divisors,
         );
     }
 
@@ -3338,6 +3343,106 @@ sub _actor_zero_divisor_names {
     }
 
     return \%zero_divisors;
+}
+
+sub _transaction_zero_divisor_names {
+    my ($self, $actor, $tx, $actor_zero_divisors) = @_;
+    my %zero_divisors = ref($actor_zero_divisors) eq 'HASH'
+        ? %$actor_zero_divisors
+        : ();
+    return \%zero_divisors unless ref($tx) eq 'HASH';
+
+    my @param_clauses = grep {
+        ref($_) eq 'ARRAY' && @$_ && defined($_->[0]) && !ref($_->[0]) && $_->[0] eq 'params'
+    } @{$tx->{clauses} || []};
+    return \%zero_divisors unless @param_clauses == 1;
+
+    my $params_clause = $param_clauses[0];
+    my %seen;
+    my $malformed;
+    for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
+        if (!(ref($entry) eq 'ARRAY' && @$entry == 2)) {
+            $malformed = 1;
+            next;
+        }
+        my $name = $entry->[0];
+        if (!(defined($name) && !ref($name) && length($name))) {
+            $malformed = 1;
+            next;
+        }
+        delete $zero_divisors{$name};
+        $malformed = 1 if $seen{$name}++;
+    }
+    return \%zero_divisors if $malformed;
+
+    my %earlier_scalar_transaction_param_values;
+    for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
+        my ($name, $value) = @$entry;
+        my ($has_scalar_value, $resolved_value) =
+            $self->_resolve_transaction_param_scalar_value_for_zero_divisor(
+                $value,
+                $actor,
+                \%earlier_scalar_transaction_param_values,
+            );
+
+        if ($has_scalar_value) {
+            $earlier_scalar_transaction_param_values{$name} = _clone_isf_value($resolved_value);
+            $zero_divisors{$name} = 'transaction parameter'
+                if _is_literal_zero_value($resolved_value);
+            next;
+        }
+
+        delete $earlier_scalar_transaction_param_values{$name};
+    }
+
+    return \%zero_divisors;
+}
+
+sub _resolve_transaction_param_scalar_value_for_zero_divisor {
+    my ($self, $value, $actor, $earlier_scalar_transaction_param_values) = @_;
+    return (0, undef) if ref($value);
+    return (0, undef) unless defined($value);
+
+    return (1, _clone_isf_value($value))
+        if _is_numeric_or_exact_width_literal($value);
+
+    if (exists($earlier_scalar_transaction_param_values->{$value})) {
+        return (1, _clone_isf_value($earlier_scalar_transaction_param_values->{$value}));
+    }
+
+    if (my $package_constant = _actor_package_constant_reference($actor, $value)) {
+        my ($package_name, $constant_name, $suffix) = @$package_constant;
+        if ($suffix eq '') {
+            my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+            my $resolved_value = _package_constant_scalar_value($constant_payload);
+            return (1, _clone_isf_value($resolved_value))
+                if defined($resolved_value) && !ref($resolved_value) && _is_numeric_or_exact_width_literal($resolved_value);
+        }
+        return (0, undef);
+    }
+
+    if (_is_enum_member_reference($value)) {
+        my $resolved_value = $self->_resolve_actor_enum_member_value($actor, $value);
+        return (1, _clone_isf_value($resolved_value))
+            if defined($resolved_value) && !ref($resolved_value) && _is_numeric_or_exact_width_literal($resolved_value);
+        return (0, undef);
+    }
+
+    if (_is_hdl_identifier($value)) {
+        if (my $constant = _actor_constant_by_name($actor, $value)) {
+            my $resolved_value = _constant_resolved_value($constant);
+            return (1, _clone_isf_value($resolved_value))
+                if defined($resolved_value) && !ref($resolved_value) && _is_numeric_or_exact_width_literal($resolved_value);
+        }
+
+        if (my $param = _actor_param_by_name($actor, $value)) {
+            my $resolved_value = _param_resolved_value($param);
+            return (1, _clone_isf_value($resolved_value))
+                if defined($resolved_value) && !ref($resolved_value) && _is_numeric_or_exact_width_literal($resolved_value);
+        }
+    }
+
+    return (0, undef);
 }
 
 sub _validate_transaction_literal_zero_divisors {

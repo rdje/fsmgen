@@ -42,12 +42,14 @@ before HDL emission, and direct `.fsm` runtime expressions reject
 numeric/exact-width literal-zero divisors before HDL emission. ISF runtime
 expression contexts now reject numeric/exact-width literal-zero divisors and
 actor-level constants that resolve to zero, plus actor-local scalar parameter
-defaults that resolve to zero, before scheduled `.fsm` emission. Nonzero
-literal divisors, nonzero actor-constant divisors, nonzero actor-parameter
-divisors, and dynamic scalar divisors are emitted unchanged; FSMGen does not
-yet prove every dynamic divisor nonzero. Nonzero actor parameters and
-transaction parameters remain outside this safety proof because they are
-overrideable specialization values, not fixed actor constants.
+defaults that resolve to zero, plus same-transaction scalar parameter defaults
+that resolve to zero, before scheduled `.fsm` emission. Nonzero literal
+divisors, nonzero actor-constant divisors, nonzero actor-parameter divisors,
+nonzero same-transaction parameter divisors, and dynamic scalar divisors are
+emitted unchanged; FSMGen does not yet prove every dynamic divisor nonzero.
+Nonzero actor parameters and nonzero transaction parameters remain outside a
+full nonzero proof because they are overrideable specialization values, not
+fixed actor constants.
 
 ## Aggregate Types And Data
 

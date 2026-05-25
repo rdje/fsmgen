@@ -4,6 +4,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 dynamic divisor transaction-parameter zero safety:
+  `ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.1` shipped zero-valued
+  same-transaction scalar parameter defaults as fail-closed runtime
+  division/modulo divisors and closed the task tree. Transaction-local names
+  shadow actor-level static names in the owning transaction expression
+  context. Nonzero same-transaction parameters, nonzero actor parameters,
+  nonzero actor constants, nonzero literals, and dynamic scalar divisors keep
+  their shipped behavior; arbitrary dynamic nonzero proof and
+  use-site-specialized parameter divisor proof remain deferred. Validation
+  passed: syntax checks; focused dynamic-divisor/public-doc tests with
+  `Files=6, Tests=360`; `./bin/ci-regression isf --no-book` with
+  `Files=275, Tests=1754`; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 generated-child static timing parameter override gates:
   `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES.1` shipped generated child
   activation override gates for static timing transaction parameters and
@@ -8332,10 +8344,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES.1` closed the generated-child
-  activation override gap for transaction parameters consumed by static timing
-  lowering, failing closed on mismatched repeat, wait, latency, and top-level
-  await-local watchdog overrides while preserving same-value overrides.
+  `ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.1` closed the
+  same-transaction-parameter-zero runtime divisor gap. Runtime division and
+  modulo expressions now fail closed when the divisor names a
+  same-transaction scalar parameter default resolving to zero, while nonzero
+  same-transaction parameter divisors, dynamic scalar divisors, and existing
+  literal/actor-static behavior remain unchanged.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11791,6 +11805,38 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.1` is shipped and the task tree
+  is closed:
+  - runtime division/modulo expressions now fail closed when a divisor names a
+    same-transaction scalar parameter default that resolves to zero,
+  - transaction-local names shadow actor-level static names in the owning
+    transaction expression context,
+  - nonzero same-transaction parameter divisors, nonzero actor-parameter
+    divisors, dynamic scalar divisors, nonzero actor constants, and nonzero
+    literals keep their shipped behavior,
+  - arbitrary dynamic nonzero proof and use-site-specialized parameter divisor
+    proof remain deferred,
+  - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
+    README index, roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused dynamic-divisor/public-doc tests
+    with `Files=6, Tests=360`; `./bin/ci-regression isf --no-book` with
+    `Files=275, Tests=1754`; `mdbook build docs/book`; and
+    `git diff --check`.
+- `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES.1` is shipped and the task tree
+  is closed:
+  - generated child activation overrides on `spawn`, generated blocking `do`,
+    and rule `trigger` now fail closed when they would change a child
+    transaction parameter consumed by repeat, wait, latency, or top-level
+    await-local watchdog lowering,
+  - same-value overrides remain accepted because the child scheduled `.fsm`
+    stays default-resolved,
+  - full per-activation static timing specialization remains deferred,
+  - and the ISF spec, downstream handoff, public contract, mdBook, task tree,
+    README index, roadmap, and live docs are synchronized.
+  - Validation passed: syntax checks; focused timing/activation/public-audit
+    tests with `Files=15, Tests=450`; `./bin/ci-regression isf --no-book`
+    with `Files=275, Tests=1751`; `mdbook build docs/book`; and
+    `git diff --check`.
 - `ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.1` is shipped and the task
   tree is closed:
   - downstream fail-closed checklist wording now distinguishes shipped

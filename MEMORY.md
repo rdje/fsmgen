@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 transaction-parameter zero divisors shipped
+- Completed `ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.1` and closed the
+  task tree.
+- Runtime division and modulo expressions now fail closed when a divisor names
+  a same-transaction scalar parameter default that resolves to zero.
+- Transaction-local names shadow actor-level static names in the owning
+  transaction expression context.
+- Nonzero same-transaction parameter divisors, nonzero actor-parameter
+  divisors, dynamic scalar divisors, nonzero actor constants, and nonzero
+  literals keep their shipped behavior; arbitrary dynamic nonzero proof and
+  use-site-specialized parameter divisor proof remain deferred.
+- Public specs, downstream handoff, mdBook, roadmap, task tree, README index,
+  and live docs are synchronized.
+- Validation passed: syntax checks; focused dynamic-divisor/public-doc tests
+  with `Files=6, Tests=360`; `./bin/ci-regression isf --no-book` with
+  `Files=275, Tests=1754`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 static timing override gates shipped
 - Completed `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-GATES.1` and closed the
   task tree.
