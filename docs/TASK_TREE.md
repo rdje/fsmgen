@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE` | `done` | `R14` | `closed` | [docs/tasks/ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE.md](docs/tasks/ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE.md) |
 | `ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE` | `done` | `R14` | `closed` | [docs/tasks/ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.md](docs/tasks/ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.md) |
 | `BIN-FSMGEN-IMPORT-TREE-BOOTSTRAP-REFRESH` | `done` | `bootstrap architecture maintenance` | `closed` | [docs/tasks/BIN-FSMGEN-IMPORT-TREE-BOOTSTRAP-REFRESH.md](docs/tasks/BIN-FSMGEN-IMPORT-TREE-BOOTSTRAP-REFRESH.md) |
 | `ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC` | `done` | `R14 roadmap maintenance` | `closed` | [docs/tasks/ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.md](docs/tasks/ROADMAP-R14-REPEAT-ZERO-STATUS-TRUTH-SYNC.md) |

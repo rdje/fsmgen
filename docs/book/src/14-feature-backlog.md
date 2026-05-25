@@ -1072,12 +1072,14 @@ lowering inputs. Static zero repeat counts, whether literal zero or
 actor/transaction parameters, actor constants, or package scalar constants
 resolving to zero, lower as transparent no-op regions with no counter, repeat
 init/check state, repeat-body state, or `transaction_loops[]` entry when the
-body contains no activation or contains only plain child activation sites that
-can be pruned with the skipped body. Plain `(do child)` and plain
+body contains no activation or contains only valid child activation sites that
+can be pruned with the skipped body. `(do child)` and
 `(spawn child as inst)` sites emit no generated child/top, activation
 instance, local handoff, or loop report artifact when the target is not
-otherwise live. Parameterized, bound, or domain-annotated static-zero child
-activation remains backlog until specialization-payload pruning is specified.
+otherwise live. Syntactically valid parameterized, bound, or
+domain-annotated static-zero child activations are now pruned the same way
+after activation subclause shape validation; only malformed activation
+subclause syntax remains fail-closed in dead zero-count bodies.
 Unqualified
 package constants, aggregate package constants, package
 member/item paths, and package constants inside repeat-count expressions

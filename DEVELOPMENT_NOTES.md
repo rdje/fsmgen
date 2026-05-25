@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Static zero specialized activations are dead payloads
+- `ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE.1` completes the immediate
+  static-zero child-activation pruning follow-up after the plain `do`/`spawn`
+  slice.
+- The design treats parameter, binding, and domain subclauses under a
+  statically zero repeat as unreachable payload. Their list shape still has to
+  be valid, but the payload is not validated against child parameter, port, or
+  domain declarations because no child artifact or generated top is emitted.
+- This keeps the validation boundary coherent: malformed syntax remains an
+  authoring error, while dead specialization data does not force generated
+  child review artifacts for a zero-iteration body.
+- Live paths remain unchanged. Positive static counts, runtime counts,
+  nonzero repeat-body generated-child scheduling, and activation payload
+  validation for live activations still use the existing stricter paths.
+
 ## 2026-05-25: Static zero child activation pruning must prove dead artifacts
 - `ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.1` narrows the remaining static-zero
   repeat limitation after the earlier no-op slice.
@@ -8,11 +23,11 @@ This document captures engineering rationale, design constraints, and working de
   separates live child-action references from static-zero child-action
   references, and prunes only target transactions that are reachable solely
   through skipped zero-count activations.
-- The implementation deliberately keeps parameterized, bound, and
-  domain-annotated activation sites fail-closed. Those sites carry
-  specialization payload that a later slice needs to either discard explicitly
-  or validate as unreachable without weakening generated-child review
-  artifacts.
+- At shipment time, the implementation deliberately kept parameterized,
+  bound, and domain-annotated activation sites fail-closed. The later
+  `ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE.1` slice treats those
+  syntactically valid subclauses as dead payloads without weakening live
+  generated-child review artifacts.
 - Positive static counts, runtime counts, and repeat-body re-entry validation
   stay unchanged. This keeps the slice limited to provably dead zero-count
   artifacts rather than widening live child scheduling semantics.

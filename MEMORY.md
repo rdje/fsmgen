@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 static zero repeat specialized child activation pruning shipped
+- Completed `ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE.1` and closed
+  the task tree.
+- Syntactically valid parameterized, bound, or domain-annotated `do` and
+  `spawn` child activations inside statically zero repeat bodies now lower as
+  dead payloads after activation subclause shape validation.
+- The pruned path emits no repeat counter, repeat init/check state,
+  repeat-body state, generated child `.fsm`, generated top `.fsm`,
+  activation instance, local child start/done handoff, or
+  `transaction_loops[]` entry.
+- Target transactions referenced by nonzero/live child activations, rule
+  triggers, or explicit external entry guards are preserved.
+- Malformed activation subclause syntax inside static-zero repeat bodies still
+  fails closed through the existing activation clause shape diagnostics.
+- Positive static repeat counts, known-width runtime repeat counts, and
+  existing repeat-body child activation re-entry validation are unchanged.
+- Public ISF specs, downstream handoff, public contract, public contract code,
+  mdBook, roadmap, task tree, README index, and live docs are synchronized.
+- Validation passed: syntax checks; focused repeat/parameter/child-boundary
+  tests with `Files=4, Tests=72`; focused public/book audits with `Files=5,
+  Tests=334`; `./bin/ci-regression isf --no-book` with `Files=275,
+  Tests=1759`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 static zero repeat child activation pruning shipped
 - Completed `ISF-STATIC-ZERO-REPEAT-CHILD-PRUNE.1` and closed the task tree.
 - Plain `(spawn child as inst)` and plain `(do child)` clauses inside
@@ -12,9 +37,11 @@ This is the live continuity document for fast session recovery after crashes, re
   `transaction_loops[]` entry.
 - Target transactions referenced by nonzero/live child activations, rule
   triggers, or explicit external entry guards are preserved.
-- Parameterized, bound, or domain-annotated child activation sites inside
-  static-zero repeat bodies remain fail-closed until specialization-payload
-  pruning is specified.
+- At shipment time, parameterized, bound, or domain-annotated child
+  activation sites inside static-zero repeat bodies remained fail-closed; the
+  later `ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE.1` slice accepts
+  those specialized forms as dead payloads after activation subclause shape
+  validation.
 - Positive static repeat counts, known-width runtime repeat counts, and
   existing repeat-body child activation re-entry validation are unchanged.
 - Public ISF specs, downstream handoff, public contract, public contract code,

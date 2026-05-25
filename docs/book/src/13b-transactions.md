@@ -524,9 +524,10 @@ pruned with the skipped body: no local child handoff, generated child `.fsm`,
 generated top, activation instance, or loop report entry is emitted. If the
 target transaction is otherwise live or has an explicit actor-input entry
 guard, that transaction remains available; only the zero-count activation is
-removed. Parameterized, bound, or domain-annotated static-zero child
-activations remain fail-closed until specialization-payload pruning is
-specified.
+removed. Syntactically valid parameterized, bound, or domain-annotated
+static-zero child activations are pruned the same way after activation
+subclause shape validation; their dead payloads are not validated against
+child parameter, port, or domain declarations.
 Generated child activation overrides for repeat-count transaction parameters
 must preserve the child default value; mismatches fail closed until
 per-activation repeat counter specialization is shipped.
@@ -555,16 +556,17 @@ width evidence while preserving the authored count token in the scheduled
 `.fsm` load. Static zero counts from literal zero, actor constants, actor
 scalar parameters, same-transaction scalar parameters, or package scalar
 constants lower as transparent no-op regions with no repeat counter or loop
-report entry when the body contains no activation or contains only plain
-child activation sites pruned with the skipped body. Named dynamic counts use
+report entry when the body contains no activation or contains only child
+activation sites whose valid subclauses can be pruned with the skipped body.
+Named dynamic counts use
 their known interface or sample-derived width and bypass the body when the
 runtime value is zero.
 Unknown names, unqualified package constants, aggregate package constants,
 package member/item paths, non-scalar actor parameters, non-scalar
 transaction parameters, cross-transaction parameters, malformed scalar
 tokens, package constants inside repeat-count expressions, expression-valued
-counts, and parameterized/bound/domain-annotated static-zero child
-activations fail closed before scheduled `.fsm` emission.
+counts, and malformed static-zero child activation subclause syntax fail
+closed before scheduled `.fsm` emission.
 Repeats nested in switch branches declare the same transaction counter,
 widened to the largest branch requirement.
 
@@ -1285,8 +1287,9 @@ or package scalar constants lower as transparent no-op regions with no
 counter, repeat init/check state, repeat-body state, or `transaction_loops[]`
 entry. Plain static-zero repeat-body `do` and `spawn` child activations are
 pruned with no generated child/top or local handoff artifact when their
-targets are not otherwise live; specialized child activations still fail
-closed until specialization-payload pruning is specified. A named count may
+targets are not otherwise live; syntactically valid specialized child
+activations are pruned the same way after activation subclause shape
+validation. A named count may
 be a dynamic scalar signal when its
 width is known. Dynamic counts make latency data-dependent rather than
 statically fixed; verification and reports need either a known width-derived

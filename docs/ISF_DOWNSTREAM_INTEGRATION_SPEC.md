@@ -1175,9 +1175,11 @@ plain `(spawn child as inst)` clauses in statically zero repeat bodies are
 pruned with the skipped body: no local child handoff, generated child `.fsm`,
 generated top, activation instance, or loop report entry is published. A
 target transaction that is otherwise live or explicitly actor-input guarded
-is preserved; only the zero-count activation disappears. Parameterized,
-bound, or domain-annotated zero-count child activations remain fail-closed
-until specialization-payload pruning is specified.
+is preserved; only the zero-count activation disappears. Syntactically valid
+parameterized, bound, or domain-annotated zero-count child activations are
+pruned the same way after activation subclause shape validation; their dead
+payloads are not validated against child parameter, port, or domain
+declarations.
 Known-width
 sampled/interface names use their known source width and now split the repeat
 init edge: nonzero values enter the repeat body, while zero values bypass the
@@ -3213,9 +3215,8 @@ Required fail-closed examples:
 - Repeat counts that name cross-transaction parameters, unknown symbolic
   names, arbitrary expressions, malformed scalar tokens, actor/transaction
   parameters that resolve to non-scalar values, runtime names without width
-  evidence, or statically zero bodies containing parameterized, bound, or
-  domain-annotated child activation before specialization-payload pruning is
-  specified.
+  evidence, or statically zero bodies containing malformed child activation
+  subclause syntax.
 - Latency min/max bounds that name cross-transaction parameters, runtime
   interface signals, unknown symbolic names, arbitrary expressions, constants
   that resolve to zero, or actor/transaction parameters that resolve to zero

@@ -391,9 +391,9 @@ ISF
         'externally guarded child transaction remains in the parent scheduled module');
 };
 
-subtest 'statically zero repeat specialized child activations remain fail closed' => sub {
-    assert_lower_rejected(<<'ISF', 'zero repeat parameterized spawn body', qr/\ATransaction 'main': statically zero repeat spawn target 'child' with activation subclauses remains fail-closed until specialization-payload pruning is specified/);
-(actor zero_repeat_parameterized_spawn_body
+subtest 'statically zero repeat specialized child activations prune unreachable artifacts' => sub {
+    assert_static_zero_child_activation_pruned(<<'ISF', 'zero repeat parameterized spawn body', 'zero_repeat_parameterized_spawn_pruned.fsm');
+(actor zero_repeat_parameterized_spawn_pruned
   (clock clk)
   (interface (input start) (output done))
   (transaction main
@@ -409,21 +409,43 @@ subtest 'statically zero repeat specialized child activations remain fail closed
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'zero repeat domain do body', qr/\ATransaction 'main': statically zero repeat do target 'child' with activation subclauses remains fail-closed until specialization-payload pruning is specified/);
-(actor zero_repeat_domain_do_body
+    assert_static_zero_child_activation_pruned(<<'ISF', 'zero repeat specialized do body', 'zero_repeat_specialized_do_pruned.fsm');
+(actor zero_repeat_specialized_do_pruned
   (clock-domains
     (domain core (clock clk) :default))
-  (interface (input start) (output done))
+  (interface (input start) (input src) (output sink) (output done))
   (transaction main
     (domain core)
     (on start)
     (repeat 0
       (do child
+        (params
+          (WIDTH 16))
+        (bind
+          (input din src)
+          (output dout sink))
         (domain core)))
     (complete done))
   (transaction child
+    (params
+      (WIDTH 8))
     (domain core)
-    (on child_start)
+    (complete done)))
+ISF
+};
+
+subtest 'statically zero repeat malformed specialized child activations remain fail closed' => sub {
+    assert_lower_rejected(<<'ISF', 'zero repeat malformed spawn subclause', qr/\ATransaction 'main': spawn has unsupported 'foo' subclause in repeat body/);
+(actor zero_repeat_malformed_spawn_subclause
+  (clock clk)
+  (interface (input start) (output done))
+  (transaction main
+    (on start)
+    (repeat 0
+      (spawn child as c0
+        (foo bar)))
+    (complete done))
+  (transaction child
     (complete done)))
 ISF
 };

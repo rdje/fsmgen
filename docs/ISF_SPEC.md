@@ -682,9 +682,10 @@ with the skipped body: they emit no local start/done handoff, generated child
 scheduled `.fsm`, generated top, activation instance, or loop report entry.
 If the target transaction is otherwise live or has an explicit actor-input
 entry guard, that transaction remains available; only the statically skipped
-activation is pruned. Parameterized, bound, or domain-annotated static-zero
-child activations remain fail-closed until specialization-payload pruning is
-specified.
+activation is pruned. Syntactically valid parameterized, bound, or
+domain-annotated static-zero child activations are pruned the same way; their
+dead payload subclauses are shape-validated but are not validated against
+child parameter, port, or domain declarations.
 Schedule reports expose actor parameter defaults through `actor_params[]` entries with
 each authored parameter `name` and JSON-safe default `value`, preserving
 authored actor constant tokens such as `DEFAULT_WIDTH`, earlier actor
@@ -2569,11 +2570,11 @@ Current lowering:
   or as an actor constant, actor scalar parameter, same-transaction scalar
   parameter, or package scalar constant resolving to zero, lower as
   transparent no-op regions with no counter, repeat init/check state,
-  repeat-body state, or `transaction_loops[]` entry. Plain `do` and `spawn`
-  child activations inside such a body are pruned with no child/top artifacts
-  when the target is not otherwise live; parameterized, bound, or
-  domain-annotated child activations still fail closed until
-  specialization-payload pruning is specified.
+  repeat-body state, or `transaction_loops[]` entry. `do` and `spawn` child
+  activations inside such a body are pruned with no child/top artifacts when
+  the target is not otherwise live; syntactically valid parameterized, bound,
+  or domain-annotated activation subclauses are treated as dead payloads after
+  shape validation.
 - Known-width runtime scalar repeat counts split the repeat init edge:
   nonzero values enter the repeat body, while zero values bypass the body and
   repeat check to the state after the repeat region.
@@ -2763,9 +2764,9 @@ parameters, same-transaction scalar parameters, or package scalar constants
 lower as transparent no-op regions with no counter, repeat init/check state,
 repeat-body state, or `transaction_loops[]` entry. Plain `do` and `spawn`
 child activations inside statically zero repeat bodies are pruned with the
-unreachable body when their targets are not otherwise live; parameterized,
-bound, or domain-annotated static-zero child activations fail closed until
-specialization-payload pruning is specified. Named counts
+unreachable body when their targets are not otherwise live. Syntactically
+valid parameterized, bound, or domain-annotated static-zero child activations
+are pruned the same way after activation subclause shape validation. Named counts
 may be dynamic scalar signals when their width is known; those known-width
 runtime scalar counts skip the repeat body and repeat check when the runtime
 value is zero.

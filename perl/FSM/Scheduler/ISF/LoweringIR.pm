@@ -62,7 +62,7 @@ my %TRANSACTION_CONTEXT_LABEL = (
 );
 
 sub build_module($self, $actor) {
-    $self->_validate_static_zero_repeat_child_activation_prune_subset($actor);
+    $self->_validate_static_zero_repeat_child_activation_prune_surface($actor);
     $self->_validate_child_transaction_refs($actor);
     $self->_validate_activation_domain_names($actor);
     my %generated_children = $self->_collect_generated_child_transaction_refs($actor);
@@ -1730,7 +1730,7 @@ sub _push_repeat_body_child_action_refs {
     }
 }
 
-sub _validate_static_zero_repeat_child_activation_prune_subset($self, $actor) {
+sub _validate_static_zero_repeat_child_activation_prune_surface($self, $actor) {
     my %transactions = map { $_->{name} => 1 } @{$actor->{transactions} || []};
 
     for my $tx (@{$actor->{transactions} || []}) {
@@ -1746,12 +1746,6 @@ sub _validate_static_zero_repeat_child_activation_prune_subset($self, $actor) {
                 unless defined($target) && !ref($target) && length($target);
             confess "Transaction '$tx_name': $keyword target '$target' is not a declared transaction\n"
                 unless $transactions{$target};
-
-            my @subclauses = $keyword eq 'spawn'
-                ? @{$clause}[4 .. $#$clause]
-                : @{$clause}[2 .. $#$clause];
-            confess "Transaction '$tx_name': statically zero repeat $keyword target '$target' with activation subclauses remains fail-closed until specialization-payload pruning is specified\n"
-                if @subclauses;
         }
     }
 
