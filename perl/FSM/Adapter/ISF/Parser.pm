@@ -924,6 +924,7 @@ sub _finalize_actor_storage_depths($self, $actor) {
 
 sub _finalize_actor_transaction_port_widths($self, $actor) {
     my $actor_name = $actor->{actor_name} // 'unknown';
+    my $generated_children = _actor_generated_child_refs_for_transaction_port_widths($actor);
 
     for my $tx (@{$actor->{transactions} || []}) {
         my $transaction_name = $tx->{name} // 'unknown';
@@ -940,14 +941,22 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
                 my $port_name = $port->{name};
                 my $context = "transaction '$transaction_name' port '$port_name'";
 
-                my $accepted_sources = 'positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants';
-                confess "Error: actor '$actor_name' $context width must be a positive integer literal, actor constant, actor scalar parameter, or qualified package scalar constant\n"
+                my $accepted_sources = 'positive integer literals, same-transaction scalar parameters, actor constants, actor scalar parameters, or qualified package scalar constants';
+                confess "Error: actor '$actor_name' $context width must be a positive integer literal, same-transaction scalar parameter, actor constant, actor scalar parameter, or qualified package scalar constant\n"
                     unless defined($width)
                         && !ref($width)
                         && (_is_hdl_identifier($width) || _is_package_constant_reference_shape($width));
 
-                confess "Error: actor '$actor_name' $context width token '$width' is a transaction parameter; transaction port widths accept $accepted_sources only; use '(type NAME)' for type aliases\n"
-                    if _transaction_param_by_name($tx, $width);
+                if (_transaction_param_by_name($tx, $width)) {
+                    confess "Error: actor '$actor_name' $context width token '$width' is a transaction parameter; direct transaction-port width parameters remain deferred until the direct transaction validation gate is widened; generated child transaction port widths accept $accepted_sources only\n"
+                        unless $generated_children->{$transaction_name};
+                    my $transaction_param = $self->_resolved_transaction_param_by_name_for_width($actor, $tx, $width);
+                    my $param_width = _positive_integer_from_literal_value(_param_resolved_value($transaction_param));
+                    confess "Error: actor '$actor_name' $context width transaction parameter '$width' must resolve to a positive integer\n"
+                        unless defined $param_width;
+                    $port->{width} = $param_width;
+                    next;
+                }
 
                 if (my $package_constant = _actor_package_constant_reference($actor, $width)) {
                     my ($package_name, $constant_name, $suffix) = @$package_constant;
@@ -993,12 +1002,283 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
                 confess "Error: actor '$actor_name' $context width token '$width' is a runtime interface signal; transaction port widths accept $accepted_sources only; use '(type NAME)' for type aliases\n"
                     if _actor_interface_signal_by_name($actor, $width);
 
-                confess "Error: actor '$actor_name' $context width token '$width' is not a declared actor scalar parameter, actor constant, or imported package scalar constant; use '(type NAME)' for type aliases\n";
+                confess "Error: actor '$actor_name' $context width token '$width' is not a same-transaction scalar parameter, declared actor scalar parameter, actor constant, or imported package scalar constant; use '(type NAME)' for type aliases\n";
             }
         }
     }
 
     return 1;
+}
+
+sub _actor_generated_child_refs_for_transaction_port_widths {
+    my ($actor) = @_;
+    my %generated;
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        _collect_generated_child_refs_from_transaction_body($tx->{clauses}, \%generated);
+    }
+
+    for my $rule (@{$actor->{rules} || []}) {
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY'
+                && @$action >= 2
+                && defined($action->[0])
+                && !ref($action->[0])
+                && $action->[0] eq 'trigger'
+                && defined($action->[1])
+                && !ref($action->[1])
+                && _activation_clause_has_params($action);
+            $generated{$action->[1]} = 1;
+        }
+    }
+
+    return \%generated;
+}
+
+sub _collect_generated_child_refs_from_transaction_body {
+    my ($clauses, $generated) = @_;
+    return unless ref($clauses) eq 'ARRAY' && ref($generated) eq 'HASH';
+
+    for my $clause (@$clauses) {
+        next unless ref($clause) eq 'ARRAY'
+            && @$clause
+            && defined($clause->[0])
+            && !ref($clause->[0]);
+
+        my $head = $clause->[0];
+        if ($head eq 'spawn' && defined($clause->[1]) && !ref($clause->[1])) {
+            $generated->{$clause->[1]} = 1;
+            next;
+        } elsif ($head eq 'do'
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && _activation_clause_has_params($clause))
+        {
+            $generated->{$clause->[1]} = 1;
+            next;
+        }
+
+        if ($head eq 'repeat') {
+            _collect_generated_child_refs_from_transaction_body([@{$clause}[2 .. $#$clause]], $generated)
+                if @$clause > 2;
+            next;
+        }
+
+        if ($head eq 'when') {
+            _collect_generated_child_refs_from_transaction_body([@{$clause}[2 .. $#$clause]], $generated)
+                if @$clause > 2;
+            next;
+        }
+
+        if ($head eq 'switch') {
+            for my $branch (@{$clause}[2 .. $#$clause]) {
+                next unless ref($branch) eq 'ARRAY' && @$branch > 1;
+                _collect_generated_child_refs_from_transaction_body([@{$branch}[1 .. $#$branch]], $generated);
+            }
+            next;
+        }
+    }
+
+    return;
+}
+
+sub _activation_clause_has_params {
+    my ($clause) = @_;
+    return 0 unless ref($clause) eq 'ARRAY' && @$clause >= 3;
+
+    for my $subclause (@{$clause}[2 .. $#$clause]) {
+        next unless ref($subclause) eq 'ARRAY'
+            && @$subclause
+            && defined($subclause->[0])
+            && !ref($subclause->[0]);
+        return 1 if $subclause->[0] eq 'params';
+    }
+
+    return 0;
+}
+
+sub _resolved_transaction_param_by_name_for_width($self, $actor, $tx, $name) {
+    for my $param (@{$self->_transaction_param_declarations_for_static_widths($actor, $tx)}) {
+        return $param if ($param->{name} // '') eq $name;
+    }
+
+    return undef;
+}
+
+sub _transaction_param_declarations_for_static_widths($self, $actor, $tx) {
+    return [] unless ref($tx) eq 'HASH';
+
+    my $tx_name = $tx->{name} // 'unknown';
+    my @param_clauses = grep {
+        ref($_) eq 'ARRAY' && @$_ && defined($_->[0]) && !ref($_->[0]) && $_->[0] eq 'params'
+    } @{$tx->{clauses} || []};
+
+    confess "Transaction '$tx_name': transaction parameters allow at most one '(params ...)' clause\n"
+        if @param_clauses > 1;
+    return [] unless @param_clauses;
+
+    my $params_clause = $param_clauses[0];
+    confess "Transaction '$tx_name': params require '(params (NAME value) ...)'\n"
+        unless @$params_clause >= 2;
+
+    my @params;
+    my %seen;
+    my %declared_transaction_params;
+    my %earlier_scalar_transaction_param_values;
+    for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
+        next unless ref($entry) eq 'ARRAY' && @$entry >= 1;
+        my $declared_name = $entry->[0];
+        next unless defined($declared_name) && !ref($declared_name);
+        $declared_transaction_params{$declared_name}++;
+    }
+
+    for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
+        confess "Transaction '$tx_name': params entries require '(NAME value)'\n"
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+        my ($param_name, $value) = @$entry;
+        confess "Transaction '$tx_name': parameter names must be scalar HDL identifiers\n"
+            unless _is_hdl_identifier($param_name);
+        confess "Transaction '$tx_name': duplicate parameter '$param_name'\n"
+            if $seen{$param_name}++;
+
+        my ($published_value, $resolved_value, $has_resolved_value) =
+            $self->_resolve_transaction_param_default_value_for_static_width(
+                $value,
+                "Transaction '$tx_name': parameter '$param_name'",
+                $actor,
+                \%declared_transaction_params,
+                \%earlier_scalar_transaction_param_values,
+            );
+        my %param = (
+            name  => $param_name,
+            value => _clone_isf_value($published_value),
+        );
+        $param{resolved_value} = _clone_isf_value($resolved_value)
+            if $has_resolved_value;
+        push @params, \%param;
+        _record_earlier_scalar_transaction_param_value_for_static_width(\%earlier_scalar_transaction_param_values, \%param);
+    }
+
+    return \@params;
+}
+
+sub _resolve_transaction_param_default_value_for_static_width($self, $value, $context, $actor, $transaction_param_names, $earlier_scalar_transaction_params) {
+    $transaction_param_names ||= {};
+    $earlier_scalar_transaction_params ||= {};
+
+    if (!ref($value)) {
+        confess "$context uses undefined parameter value; transaction parameter defaults accept numeric, exact-width, aggregate/list, earlier scalar transaction parameter, actor constant, actor scalar parameter, scalar enum member, and qualified package scalar constant literals only\n"
+            unless defined($value);
+
+        return (_clone_isf_value($value), _clone_isf_value($value), 0)
+            if defined($value) && _is_numeric_or_exact_width_literal($value);
+
+        if (my $package_constant = _actor_package_constant_reference($actor, $value)) {
+            my ($package_name, $constant_name, $suffix) = @$package_constant;
+            my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+            if (defined $constant_payload) {
+                confess "$context token '$value' is ambiguous: it matches local enum member '$value' and imported package constant '$value'\n"
+                    if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
+                confess "$context package constant '$package_name.$constant_name' aggregate/member path '$value' remains deferred; transaction parameter defaults accept only qualified package scalar constants in this slice\n"
+                    if $suffix ne '';
+                my $resolved_value = _package_constant_scalar_value($constant_payload);
+                confess "$context package constant '$package_name.$constant_name' must resolve to a scalar numeric or exact-width literal value\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return (_clone_isf_value($value), _clone_isf_value($resolved_value), 1);
+            }
+
+            confess "$context references unknown package constant '$value'\n"
+                if $suffix eq '' && !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
+        }
+
+        if (_is_enum_member_reference($value)) {
+            my $resolved_value = $self->_resolve_actor_enum_member_value($actor, $value);
+            confess "$context references unknown enum member '$value'\n"
+                unless defined($resolved_value) && !ref($resolved_value);
+            confess "$context enum member '$value' must resolve to a non-negative integer literal value\n"
+                unless _is_non_negative_integer_literal_value($resolved_value);
+            return (_clone_isf_value($value), _clone_isf_value($resolved_value), 1);
+        }
+
+        if (_is_hdl_identifier($value)) {
+            if (exists $earlier_scalar_transaction_params->{$value}) {
+                my $resolved_value = $earlier_scalar_transaction_params->{$value};
+                return (_clone_isf_value($value), _clone_isf_value($resolved_value), 1);
+            }
+
+            confess "$context transaction parameter '$value' must reference an earlier scalar transaction parameter default\n"
+                if $transaction_param_names->{$value};
+
+            if (my $constant = _actor_constant_by_name($actor, $value)) {
+                my $resolved_value = _constant_resolved_value($constant);
+                confess "$context actor constant '$value' must resolve to a scalar numeric or exact-width literal value\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return (_clone_isf_value($resolved_value), _clone_isf_value($resolved_value), 1);
+            }
+
+            if (my $param = _actor_param_by_name($actor, $value)) {
+                my $resolved_value = _param_resolved_value($param);
+                confess "$context actor parameter '$value' must resolve to a scalar numeric or exact-width literal value\n"
+                    unless defined($resolved_value)
+                        && !ref($resolved_value)
+                        && _is_numeric_or_exact_width_literal($resolved_value);
+                return (_clone_isf_value($resolved_value), _clone_isf_value($resolved_value), 1);
+            }
+
+            confess "$context token '$value' is a runtime interface signal; transaction parameter defaults accept literals, earlier scalar transaction parameters, declared actor constants, actor scalar parameters, enum members, and qualified package scalar constants only\n"
+                if _actor_interface_signal_by_name($actor, $value);
+
+            confess "$context token '$value' is not an earlier scalar transaction parameter, declared actor constant, actor scalar parameter, enum member, or qualified package scalar constant\n";
+        }
+
+        confess "$context uses unsupported parameter value '$value'; transaction parameter defaults accept numeric, exact-width, aggregate/list, earlier scalar transaction parameter, actor constant, actor scalar parameter, scalar enum member, and qualified package scalar constant literals only\n";
+    }
+
+    confess "$context uses unsupported parameter value shape; transaction parameter defaults accept non-empty aggregate/list literals\n"
+        unless ref($value) eq 'ARRAY' && @$value;
+
+    my @published;
+    my @resolved;
+    my $has_resolved_leaf = 0;
+    for my $item (@$value) {
+        my ($published_item, $resolved_item, $item_has_resolved_leaf) =
+            $self->_resolve_transaction_param_default_value_for_static_width(
+                $item,
+                $context,
+                $actor,
+                $transaction_param_names,
+                $earlier_scalar_transaction_params,
+            );
+        push @published, $published_item;
+        push @resolved, $resolved_item;
+        $has_resolved_leaf ||= $item_has_resolved_leaf;
+    }
+
+    return (\@published, \@resolved, $has_resolved_leaf);
+}
+
+sub _record_earlier_scalar_transaction_param_value_for_static_width {
+    my ($earlier_scalar_transaction_param_values, $param) = @_;
+    return unless ref($earlier_scalar_transaction_param_values) eq 'HASH';
+    return unless ref($param) eq 'HASH';
+
+    my $name = $param->{name};
+    return unless defined($name) && !ref($name) && length($name);
+    return if ref($param->{value});
+
+    my $resolved_value = exists($param->{resolved_value})
+        ? $param->{resolved_value}
+        : $param->{value};
+    return unless defined($resolved_value)
+        && !ref($resolved_value)
+        && _is_numeric_or_exact_width_literal($resolved_value);
+
+    $earlier_scalar_transaction_param_values->{$name} = _clone_isf_value($resolved_value);
+    return;
 }
 
 sub _resolve_actor_param_static_leaf_values($self, $actor, $value, $context, $earlier_scalar_param_values) {
@@ -6720,7 +7000,7 @@ sub _parse_actor_storage_width_option {
 sub _parse_transaction_port_width_option {
     my ($option, $context) = @_;
 
-    confess "$context requires '(width positive_integer_or_actor_scalar_parameter_or_actor_constant_or_qualified_package_scalar_constant)'\n"
+    confess "$context requires '(width positive_integer_or_same_transaction_scalar_parameter_or_actor_scalar_parameter_or_actor_constant_or_qualified_package_scalar_constant)'\n"
         unless ref($option) eq 'ARRAY'
             && @$option == 2
             && defined($option->[1])

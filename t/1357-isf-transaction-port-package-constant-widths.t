@@ -130,7 +130,7 @@ ISF
     (ports
       (input addr (width DEFAULT_WIDTH)))))
 ISF
-        qr/actor 'unqualified_package_constant_transaction_port_width' transaction 'child' port 'addr' width token 'DEFAULT_WIDTH' is not a declared actor scalar parameter, actor constant, or imported package scalar constant/,
+        qr/actor 'unqualified_package_constant_transaction_port_width' transaction 'child' port 'addr' width token 'DEFAULT_WIDTH' is not a same-transaction scalar parameter, declared actor scalar parameter, actor constant, or imported package scalar constant/,
         'unqualified package constants are rejected as transaction port widths',
     );
 
@@ -216,7 +216,7 @@ ISF
     (ports
       (input addr (width WIDTH)))))
 ISF
-        qr/actor 'runtime_package_constant_transaction_port_width' transaction 'child' port 'addr' width token 'WIDTH' is a runtime interface signal; transaction port widths accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only/,
+        qr/actor 'runtime_package_constant_transaction_port_width' transaction 'child' port 'addr' width token 'WIDTH' is a runtime interface signal; transaction port widths accept positive integer literals, same-transaction scalar parameters, actor constants, actor scalar parameters, or qualified package scalar constants only/,
         'runtime interface signals are rejected as transaction port widths',
     );
 
@@ -231,7 +231,7 @@ ISF
     (ports
       (input addr (width (+ shared.DEFAULT_WIDTH 1))))))
 ISF
-        qr/transaction 'child' port 'addr' width requires '\(width positive_integer_or_actor_scalar_parameter_or_actor_constant_or_qualified_package_scalar_constant\)'/,
+        qr/transaction 'child' port 'addr' width requires '\(width positive_integer_or_same_transaction_scalar_parameter_or_actor_scalar_parameter_or_actor_constant_or_qualified_package_scalar_constant\)'/,
         'width expressions remain rejected at parse time',
     );
 };

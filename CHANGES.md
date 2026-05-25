@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Generated-child transaction-parameter transaction-port widths shipped
+- Completed `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2`.
+- Generated child transaction `(ports ...)` declarations now accept
+  same-transaction scalar parameter defaults as input/output port width
+  evidence when the resolved default is a positive integer.
+- Resolved widths publish through parser handoff, scheduled child `.fsm`
+  `+size`, generated parent handoff storage, `transaction_port_bindings[]`
+  report widths, and HDL port/register ranges.
+- Transaction-local names resolve before actor constants and actor parameters;
+  later transaction parameters may derive from earlier scalar transaction
+  parameter defaults.
+- Direct/non-generated transaction parameter port widths remain deferred to
+  `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3`. Cross-transaction
+  parameters, zero/aggregate transaction parameters, forward/self/cyclic
+  defaults, runtime signals, arbitrary expressions, activation-site override
+  specialization, generated-top respecialization, and schedule-report
+  key-family changes remain fail-closed or deferred.
+- Added focused coverage and synchronized public `tested_by` metadata, the
+  ISF spec, downstream handoff, public contract, mdBook, roadmap, and task
+  tree.
+- Validation passed: syntax checks; focused transaction-port/public/spec/book
+  tests with `Files=13, Tests=382`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1738`; live-doc/book audits with `Files=3, Tests=364`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Transaction-parameter transaction-port width tree selected
 - Created active task tree
   `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS`.

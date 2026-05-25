@@ -69,10 +69,10 @@ default is a positive integer.
   runtime behavior.`
   Verification: `feature-backlog/live-book/book matrix audits; mdBook build;
   git diff check`
-  Commit: `pending this commit`
+  Commit: `ab4537a4 ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1: select transaction port params`
 
 - ID: `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Accept generated child same-transaction scalar parameter defaults as
   transaction-port width evidence.`
   Acceptance: `Generated child transactions accept positive resolved
@@ -80,8 +80,8 @@ default is a positive integer.
   publish resolved integer widths through parser handoff, scheduled .fsm,
   activation handoff storage, schedule reports, and HDL, and keep unsupported
   transaction parameter values fail-closed.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused transaction-port/public/spec/book tests; ISF no-book regression; live-doc/book audits; mdBook build; git diff check`
+  Commit: `pending this commit`
 
 - ID: `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3`
   Status: `pending`
@@ -98,8 +98,7 @@ default is a positive integer.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` | `pending` | `The selection leaf established task-tree ownership; generated child transaction-port widths are the first bounded implementation surface.` |
-| 2 | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` | `pending` | `Direct/non-generated transaction validation should widen only after the generated child path is proven.` |
+| 1 | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` | `pending` | `Generated child transaction-port parameter widths are implemented; direct/non-generated transaction validation is the remaining bounded widening.` |
 
 ## Decisions
 
@@ -115,6 +114,11 @@ default is a positive integer.
   width is the transaction definition default; per-activation width
   specialization would require generated child variants or generated-top
   respecialization.
+- `2026-05-25`: Implement the generated-child leaf at parser width-normalization
+  time and keep the direct transaction gate closed. The parser resolves
+  generated child `TX_PARAM` widths to positive integers before handoff, while
+  direct/non-generated transaction-parameter port widths still fail closed
+  until the direct validation leaf deliberately widens that surface.
 
 ## Open Questions
 
@@ -131,13 +135,19 @@ default is a positive integer.
 | `2026-05-25` | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=3, Tests=364` |
 | `2026-05-25` | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1` | `mdbook build docs/book` | `passed` |
 | `2026-05-25` | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1` | `git diff --check` | `passed` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm perl/FSM/Support/ISFPublicInterfaceContract.pm t/1368-isf-transaction-port-transaction-param-widths.t t/1240-isf-transaction-port-declarations.t t/1336-isf-transaction-port-actor-param-widths.t t/1342-isf-transaction-port-actor-constant-widths.t t/1357-isf-transaction-port-package-constant-widths.t` | `passed` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` | `prove -Iperl t/1368-isf-transaction-port-transaction-param-widths.t t/1240-isf-transaction-port-declarations.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t t/1336-isf-transaction-port-actor-param-widths.t t/1342-isf-transaction-port-actor-constant-widths.t t/1357-isf-transaction-port-package-constant-widths.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=13, Tests=382` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` | `./bin/ci-regression isf --no-book` | `passed: Files=274, Tests=1738` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=3, Tests=364` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1` | `pending this commit` | `selection slice` |
-| `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` | `pending` | `generated-child implementation slice` |
+| `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1` | `ab4537a4 ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1: select transaction port params` | `selection slice` |
+| `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` | `pending this commit` | `generated-child implementation slice` |
 | `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3` | `pending` | `direct/non-generated implementation slice` |
 
 ## Changelog
@@ -146,3 +156,6 @@ default is a positive integer.
   same-transaction scalar parameter defaults in transaction-local port widths.
 - `2026-05-25`: Closed selection validation with feature-backlog/live-book
   audits and mdBook build passing.
+- `2026-05-25`: Implemented generated child same-transaction scalar parameter
+  defaults as transaction-local port width evidence. Direct/non-generated
+  transaction parameter port widths remain deferred for `.3`.

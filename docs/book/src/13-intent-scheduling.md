@@ -84,6 +84,10 @@ clear lower-layer mapping, and clear runtime behavior.
   Transaction-local port widths may use the same qualified package scalar
   constant form; parser handoff, scheduled `.fsm` activation handoff storage,
   `transaction_port_bindings[]`, and HDL publish the resolved integer width.
+  Generated child transaction-local port widths may also use
+  same-transaction scalar parameter defaults that resolve to positive
+  integers; direct/non-generated transaction parameter port widths remain
+  deferred.
   Static transaction wait counts may use qualified imported package scalar
   constants when they resolve to non-negative integers; scheduled `.fsm`
   fixed wait states and `transaction_waits[]` publish the resolved timing and
@@ -677,8 +681,11 @@ The ISF-specific current limitations are:
   runtime-signal values, arbitrary expressions, non-scalar actor parameters as
   override values, and richer generated-child surfaces remain backlog work.
 - Transaction-local `(ports ...)` declarations are parser-public metadata and
-  can use positive literal widths or actor-local scalar parameter defaults
-  that resolve to positive integers. They can be bound at activation sites
+  can use positive literal widths, actor-local scalar parameter defaults,
+  actor constants, qualified package scalar constants, or generated child
+  same-transaction scalar parameter defaults that resolve to positive
+  integers. Direct/non-generated transaction parameter port widths remain
+  deferred. Ports can be bound at activation sites
   with scalar, literal, or list-expression input `(bind ...)` sources. `do`
   supports input and output bindings in the parent await state. `spawn`
   supports input and output bindings through hidden generated-top handoffs and

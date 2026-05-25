@@ -548,6 +548,7 @@ sub build_isf_public_interface_contract {
             't/1351-isf-activation-param-package-constants.t',
             't/1352-isf-library-use-package-constants.t',
             't/1357-isf-transaction-port-package-constant-widths.t',
+            't/1368-isf-transaction-port-transaction-param-widths.t',
             't/1358-isf-data-op-package-constant-widths.t',
             't/1359-isf-wait-package-constant-counts.t',
             't/1360-isf-repeat-package-constant-counts.t',

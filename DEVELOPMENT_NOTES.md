@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Generated child port widths use parser-time transaction defaults
+- `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2` resolves generated child
+  transaction-port `TX_PARAM` widths during parser width normalization, so
+  the public actor shell, lowerer, schedule reports, generated handoffs, and
+  HDL all consume the same positive integer width.
+- The parser keeps the direct/non-generated gate closed for this leaf. This
+  avoids silently accepting unrelated direct transaction `(params ...)`
+  clauses through the port-width surface before the explicit direct
+  validation leaf is implemented.
+- The resolver mirrors the existing generated child transaction-parameter
+  default domain for static scalar defaults: numeric/exact-width literals,
+  actor constants, actor scalar parameters, scalar enum members, qualified
+  package scalar constants, and earlier scalar transaction parameters may
+  feed the default, but the final port width must be a positive scalar
+  integer.
+- Transaction-local precedence is intentional. A generated child transaction
+  parameter named `DATA_W` shadows an actor constant or actor parameter named
+  `DATA_W` inside `(width DATA_W)` on that same transaction's port
+  declaration.
+
 ## 2026-05-25: Transaction parameters are the next static transaction-port width source
 - `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.1` selects the next bounded
   transaction-port width source after actor parameters, actor constants,

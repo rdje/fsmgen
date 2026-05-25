@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-25: R14 — Generated-child transaction-parameter transaction-port widths shipped
+- Completed `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.2`.
+- Generated child transactions now accept same-transaction scalar parameter
+  defaults in transaction-local input/output port width options when the
+  resolved default is a positive integer.
+- The resolved integer width flows through parser handoff, scheduled generated
+  child `.fsm` `+size` declarations, generated parent handoff storage,
+  `transaction_port_bindings[]` report widths, and HDL port/register ranges.
+- Transaction-local names resolve before actor constants and actor parameters,
+  and a port-width transaction parameter may derive from an earlier scalar
+  transaction parameter default.
+- Direct/non-generated transaction parameter port widths remain the active
+  frontier; cross-transaction parameters, zero or aggregate transaction
+  parameters, forward/self/cyclic defaults, runtime signals, expressions,
+  activation-site override specialization, generated-top respecialization,
+  and schedule-report key-family changes remain deferred or fail-closed.
+- Validation passed: syntax checks; focused transaction-port/public/spec/book
+  tests with `Files=13, Tests=382`; `./bin/ci-regression isf --no-book` with
+  `Files=274, Tests=1738`; live-doc/book audits with `Files=3, Tests=364`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS`.
+- Current frontier: `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS.3`.
+
 ## 2026-05-25: R14 — Transaction-parameter transaction-port width tree selected
 - Created active task tree
   `ISF-TRANSACTION-PORT-TRANSACTION-PARAM-WIDTHS`.
