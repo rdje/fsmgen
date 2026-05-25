@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 temporal-contract transaction-parameter windows selected
+- Created active task tree `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS`.
+- Completed `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.1`; the selected
+  implementation frontier is `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2`.
+- The selected widening will allow bounded eventual temporal-contract
+  `(eventually SIGNAL within PARAM)` windows, plus the nested
+  `(within PARAM)` alias, to use same-transaction scalar parameter defaults
+  when the resolved default is a positive integer literal.
+- Accepted transaction-parameter windows should reuse the existing temporal
+  monitor lowering used by positive literals, actor constants, actor-local
+  scalar parameter defaults, and qualified package scalar constants.
+- Schedule reports should keep `temporal_contracts[].within_cycles` as the
+  resolved integer without adding a source-token field.
+- Activation-site parameter override specialization, transaction parameters
+  from other transactions, non-scalar aggregate/list transaction parameters,
+  forward/self/cyclic transaction parameter defaults, runtime signals,
+  arbitrary expressions, dynamic bounds, min/max windows, same-cycle checks,
+  nested contracts, expression operands, global implication forms, and
+  multiple outstanding obligations remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS`.
+- Current frontier: `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2`.
+
 ## 2026-05-25: R14 watchdog package-constant limits shipped
 - Completed `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` and closed the task tree.
 - Actor-level `(watchdog PACKAGE.CONSTANT)` and await-local

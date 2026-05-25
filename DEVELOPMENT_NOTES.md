@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Contract transaction parameters should reuse static monitor lowering
+- `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.1` selects same-transaction scalar
+  parameter defaults for bounded eventual temporal-contract `within` windows.
+- Contract windows are static timing metadata in the current scheduler.
+  Accepted transaction parameters should resolve before temporal monitor
+  lowering, matching the existing literal/actor-constant/actor-parameter and
+  package-constant monitor paths.
+- The report should stay source-token-free for contract windows:
+  `temporal_contracts[].within_cycles` remains the resolved positive integer.
+- This slice deliberately does not claim activation-site parameter override
+  specialization. A transaction parameter window uses the transaction
+  definition's resolved default until a later generated-child specialization
+  slice proves a broader policy.
+- Transaction parameters from other transactions, non-scalar aggregate/list
+  values, forward/self/cyclic defaults, runtime signals, arbitrary
+  expressions, dynamic windows, min/max windows, nested contracts, same-cycle
+  checks, and multiple outstanding obligations remain fail-closed or deferred.
+
 ## 2026-05-25: Watchdog package constants stay report-equivalent to literals
 - `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` resolves qualified imported package
   scalar constants at the actor-level and await-local watchdog-limit boundary.

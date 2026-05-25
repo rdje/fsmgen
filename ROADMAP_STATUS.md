@@ -2,8 +2,28 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS`.
+- Current frontier: `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2`.
+- Recent R14 temporal-contract transaction-parameter window selection:
+  `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.1` created the active task tree and
+  selected the next bounded implementation leaf. Bounded eventual
+  temporal-contract windows may next use same-transaction scalar parameter
+  defaults when the resolved default is a positive integer literal. Accepted
+  transaction parameters should reuse the existing temporal monitor lowering
+  used by positive literals, actor constants, actor-local scalar parameter
+  defaults, and qualified package scalar constants. Schedule reports should
+  keep `temporal_contracts[].within_cycles` as the resolved integer without
+  adding a source-token field. Activation-site parameter override
+  specialization, transaction parameters from other transactions, non-scalar
+  aggregate/list transaction parameters, forward/self/cyclic transaction
+  parameter defaults, runtime signals, arbitrary expressions, dynamic bounds,
+  min/max windows, same-cycle checks, nested contracts, expression operands,
+  global implication forms, and multiple outstanding obligations remain
+  deferred or fail closed. No parser, scheduler, report, generated artifact,
+  HDL, CLI behavior, public API, source, test, or generated behavior changed
+  in this selection slice. Validation passed: feature-backlog/live-book/book
+  matrix audits with `Files=3, Tests=364`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Recent R14 watchdog package-constant limit implementation:
   `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` shipped qualified imported package
   scalar constants as actor-level and await-local watchdog limits and closed
@@ -7741,11 +7761,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `none`.
-- Current frontier: `none`.
+- Active task tree: `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS`.
+- Current frontier: `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2`.
 - Completion status:
-  `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS` is closed after shipping qualified
-  package scalar constants as actor-level and await-local watchdog limits.
+  `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.1` selected the next bounded R14
+  contract-window implementation leaf. Transaction `(contract ...)` windows
+  may next use same-transaction scalar parameter defaults when they resolve to
+  positive integer scalar literals. This selection slice changed no parser,
+  scheduler, report, generated artifact, HDL, CLI behavior, public API,
+  source, test, or generated behavior. Validation passed:
+  feature-backlog/live-book/book matrix audits with `Files=3, Tests=364`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11201,6 +11227,30 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.1` selected the public-facing R14
+  feature tree before implementation:
+  - the implementation frontier is
+    `ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS.2`,
+  - the selected source shape is bounded to transaction-local
+    `(contract NAME (eventually SIGNAL within PARAM))` and nested
+    `(eventually SIGNAL (within PARAM))` windows where `PARAM` is declared on
+    the same transaction and resolves to a positive integer scalar literal,
+  - accepted transaction parameters should reuse the existing temporal monitor
+    path used by positive literals, actor constants, actor-local scalar
+    parameter defaults, and qualified package scalar constants,
+  - schedule reports should keep `temporal_contracts[].within_cycles` as the
+    resolved positive integer without adding a source-token field,
+  - activation-site parameter override specialization, transaction parameters
+    from other transactions, non-scalar aggregate/list transaction parameters,
+    forward/self/cyclic transaction parameter defaults, runtime signals,
+    arbitrary expressions, dynamic bounds, min/max windows, same-cycle checks,
+    nested contracts, expression operands, global implication forms, and
+    multiple outstanding obligations remain deferred or fail closed,
+  - and no parser, scheduler, report, generated artifact, HDL, CLI behavior,
+    public API, source, test, or generated behavior changed in this selection
+    slice.
+  - Validation passed: feature-backlog/live-book/book matrix audits with
+    `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
 - `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` is shipped and the task tree is
   closed:
   - actor-level `(watchdog PACKAGE.CONSTANT)` and await-local

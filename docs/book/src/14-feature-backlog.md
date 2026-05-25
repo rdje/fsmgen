@@ -2550,6 +2550,11 @@ binding or assignment-provenance internals.
 
 Status: partially shipped; broader contract forms remain backlog.
 
+Active task-tree owner:
+`ISF-CONTRACT-TRANSACTION-PARAM-WINDOWS` is selected for the next bounded
+contract-window widening. Until that implementation leaf lands, transaction
+parameter windows remain backlog and continue to fail closed.
+
 Goal: lower transaction `(contract ...)` temporal assertions into generated
 checks or equivalent scheduled artifacts.
 
