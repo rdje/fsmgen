@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-25: R14 data-operation width backlog synchronized
+- Completed `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` and closed the task
+  tree.
+- The mdBook feature backlog no longer implies that every transaction
+  parameter is fail-closed for explicit data-operation width evidence.
+- The wording now preserves the shipped same-transaction scalar parameter
+  support while still rejecting unrelated/cross-transaction parameters,
+  zero-valued transaction parameters, aggregate/list transaction parameters,
+  activation-site override-specialized data widths, runtime signals, and
+  expressions.
+- Parser behavior, scheduler lowering, generated `.fsm`, HDL,
+  schedule-report payloads, public contract code, and runtime behavior did not
+  change.
+- Validation passed: focused backlog/book audits with `Files=2, Tests=341`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-25: R14 schedule-report additive storage roles shipped
 - Completed `ISF-SCHEDULE-REPORT-STORAGE-ROLES.1` and closed the task tree.
 - Schedule JSON now reports `atl_trigger_start_handoff` for generated

@@ -399,9 +399,11 @@ positive integer. Those values publish as resolved scheduler width facts for
 `(widths ...)` entries, scheduled `.fsm` shift positions and extract slices,
 and `inferred_storage[]` report widths. Unqualified package constants,
 aggregate package constants, package member/item paths, ambiguous
-local-enum/package-constant spellings, zero values, transaction parameters,
-runtime signals, and expressions remain fail-closed for data-operation width
-evidence.
+local-enum/package-constant spellings, zero-valued constants, unrelated or
+cross-transaction parameters, zero-valued transaction parameters,
+aggregate/list transaction parameters, activation-site override-specialized
+data widths, runtime signals, and expressions remain fail-closed for
+data-operation width evidence.
 
 Actor parameter defaults accept enum members, declared actor constants, earlier
 scalar actor parameter defaults, and qualified imported package scalar

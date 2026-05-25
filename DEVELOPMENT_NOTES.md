@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Backlog wording must preserve shipped data-width sources
+- `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` is documentation-only. It repairs a
+  broad backlog sentence that predated same-transaction scalar parameter
+  support for explicit data-operation width evidence.
+- The important distinction is not "all transaction parameters" versus
+  accepted widths. The shipped surface accepts same-transaction scalar
+  parameter defaults that resolve to positive integers, while unrelated,
+  cross-transaction, zero-valued, aggregate/list, activation-site-specialized,
+  runtime, and expression sources remain outside the evidence surface.
+
 ## 2026-05-25: Storage roles should be evidence-backed metadata
 - `ISF-SCHEDULE-REPORT-STORAGE-ROLES.1` adds roles only where the lowerer has
   direct assignment provenance: ATL trigger states emit start pulses, and

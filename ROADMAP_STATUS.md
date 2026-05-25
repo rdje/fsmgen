@@ -4,6 +4,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 data-operation width backlog truth sync:
+  `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` synchronized one stale mdBook
+  backlog sentence and closed the task tree. The data-operation width backlog
+  no longer implies that all transaction parameters fail closed; it now
+  distinguishes shipped same-transaction scalar parameter defaults from
+  still-invalid unrelated/cross-transaction parameters, zero-valued
+  transaction parameters, aggregate/list transaction parameters,
+  activation-site override-specialized data widths, runtime signals, and
+  expressions. This is documentation-only: parser behavior, scheduler
+  lowering, generated `.fsm`, HDL, schedule-report payloads, public contract
+  code, and runtime behavior did not change. Validation passed: focused
+  backlog/book audits with `Files=2, Tests=341`; `mdbook build docs/book`;
+  and `git diff --check`.
 - Current R14 schedule-report additive storage roles:
   `ISF-SCHEDULE-REPORT-STORAGE-ROLES.1` shipped two additional public
   `inferred_storage[].role` families and closed the task tree. Static
@@ -8358,12 +8371,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active task tree: `none`.
 - Current frontier: `none`.
 - Completion status:
-  `ISF-SCHEDULE-REPORT-STORAGE-ROLES.1` closed the next additive
-  schedule-report storage-role slice. Static actor-network trigger and
-  trigger-batch start pulses now report `atl_trigger_start_handoff`, and
-  await-watchdog/latency timeout terminal writes to `last_error` now report
-  `scheduler_error_status`. Scheduled `.fsm`, HDL, state topology, timeout
-  behavior, and private `LoweringIR` internals remain unchanged.
+  `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` closed a documentation-only
+  mdBook backlog truth sync. The data-operation width backlog now
+  distinguishes shipped same-transaction scalar parameter defaults from
+  still-invalid unrelated/cross-transaction parameters, zero-valued
+  transaction parameters, aggregate/list transaction parameters,
+  activation-site override-specialized data widths, runtime signals, and
+  expressions.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -11819,6 +11833,22 @@ Deliverables:
   implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
+- `ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.1` is shipped and the task tree is
+  closed:
+  - the mdBook feature backlog no longer implies that every transaction
+    parameter is fail-closed for explicit data-operation width evidence,
+  - the wording now preserves the shipped same-transaction scalar parameter
+    surface while still rejecting unrelated/cross-transaction parameters,
+    zero-valued transaction parameters, aggregate/list transaction parameters,
+    activation-site override-specialized data widths, runtime signals, and
+    expressions,
+  - parser behavior, scheduler lowering, generated `.fsm`, HDL,
+    schedule-report payloads, public contract code, and runtime behavior did
+    not change,
+  - and the mdBook, task tree, README index, roadmap, and live docs are
+    synchronized.
+  - Validation passed: focused backlog/book audits with `Files=2, Tests=341`;
+    `mdbook build docs/book`; and `git diff --check`.
 - `ISF-SCHEDULE-REPORT-STORAGE-ROLES.1` is shipped and the task tree is
   closed:
   - static actor-network `(trigger INSTANCE.TRANSACTION)` and trigger-batch

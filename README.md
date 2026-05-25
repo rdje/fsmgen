@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/ISF-DATA-OP-WIDTH-BACKLOG-TRUTH-SYNC.md` — completed `R14` documentation truth-sync task tree for data-operation width backlog wording.
 - `docs/tasks/ISF-SCHEDULE-REPORT-STORAGE-ROLES.md` — completed `R14` task tree for additive schedule-report storage-role metadata.
 - `docs/tasks/ISF-DYNAMIC-DIVISOR-TRANSACTION-PARAM-ZERO.md` — completed `R14` task tree for same-transaction-parameter-zero runtime divisor safety.
 - `docs/tasks/ISF-STATIC-TIMING-FAIL-CLOSED-LIST-TRUTH-SYNC.md` — completed `R14` documentation truth-sync task tree for static timing fail-closed checklist wording.
