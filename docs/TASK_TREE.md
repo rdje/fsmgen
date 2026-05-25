@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS` | `active` | `R14` | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.2` | [docs/tasks/ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.md](docs/tasks/ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.md) |
 
 ## Proposed Task Trees
 
@@ -368,6 +369,7 @@ as done work unless a future task reopens them.
 | Actor-owned bank storage actor-scalar-parameter depths | `ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS` |
 | Transaction-local port actor-scalar-parameter widths | `ISF-TRANSACTION-PORT-ACTOR-PARAM-WIDTHS` |
 | Actor-level and await-local watchdog actor-scalar-parameter limits | `ISF-WATCHDOG-ACTOR-PARAM-LIMITS` |
+| Actor-level and await-local watchdog qualified package scalar-constant limits | `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS` |
 | Transaction repeat actor-scalar-parameter counts | `ISF-REPEAT-ACTOR-PARAM-COUNTS` |
 | Transaction repeat qualified package scalar-constant counts | `ISF-REPEAT-PACKAGE-CONSTANT-COUNTS` |
 | Temporal-contract monitor storage schedule-report roles | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` |

@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Watchdog package constants should reuse static counter lowering
+- `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.1` selects qualified imported package
+  scalar constants for actor-level and await-local watchdog limits as the next
+  narrow package-constant value-domain widening.
+- Watchdog limits are static timing metadata in the current scheduler.
+  Accepted package constants should resolve before watchdog counter emission,
+  then reuse the existing literal/actor-constant/actor-parameter watchdog
+  path.
+- The positive-only boundary remains unchanged. Package constants resolving
+  to zero should fail closed, matching literal zero, actor constants resolving
+  to zero, and actor scalar parameters resolving to zero.
+- The report should stay source-token-free for watchdog limits: public
+  watchdog fields remain resolved integers, while package/import metadata
+  keeps package constants reviewable.
+- Unqualified lookup, aggregate package constants, package member/item paths,
+  transaction parameters, runtime signals, arbitrary expressions, distinct
+  per-await limits in one transaction, cross-domain watchdog policy,
+  generated-top respecialization, and use-site specialization remain
+  fail-closed or deferred.
+
 ## 2026-05-25: Contract package constants reuse temporal monitor semantics
 - `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` resolves qualified imported
   package scalar constants at the bounded eventual temporal-contract

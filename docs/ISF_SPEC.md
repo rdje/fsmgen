@@ -5427,10 +5427,10 @@ Focused tests:
   separate specialization/scheduling policy is selected.
 - Watchdog limits beyond the shipped positive decimal literal, positive
   actor-constant, and positive actor-scalar-parameter actor-level/await-local
-  shapes: transaction parameters, runtime signals, arbitrary expressions,
-  distinct per-await limits in one transaction, cross-domain watchdog policy,
-  dynamic watchdog limits, and parameter-specialized watchdog counter sizing
-  remain deferred.
+  shapes: qualified package scalar constants, transaction parameters, runtime
+  signals, arbitrary expressions, distinct per-await limits in one
+  transaction, cross-domain watchdog policy, dynamic watchdog limits, and
+  parameter-specialized watchdog counter sizing remain deferred.
 - Runtime division/modulo safety beyond literal-zero, actor-constant-zero, and
   actor-parameter-zero divisor rejection: proving arbitrary dynamic scalar
   divisor expressions nonzero remains deferred until range/dataflow evidence

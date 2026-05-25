@@ -190,6 +190,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-BANK-STORAGE-ACTOR-PARAM-DEPTHS.md` — completed `R14` task tree for actor-parameter-backed actor-owned bank storage depths.
 - `docs/tasks/ISF-WATCHDOG-ACTOR-CONSTANT-LIMITS.md` — completed `R14` task tree for positive actor constants in watchdog limits.
 - `docs/tasks/ISF-WATCHDOG-ACTOR-PARAM-LIMITS.md` — completed `R14` task tree for actor-parameter-backed watchdog limits.
+- `docs/tasks/ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS.md` — active `R14` task tree for qualified package scalar constants in watchdog limits.
 - `docs/tasks/ISF-REPEAT-ACTOR-CONSTANT-WIDTHS.md` — completed `R14` task tree for actor constants as repeat counter width evidence.
 - `docs/tasks/ISF-REPEAT-ACTOR-PARAM-COUNTS.md` — completed `R14` task tree for actor-parameter-backed repeat counts.
 - `docs/tasks/ISF-REPEAT-PACKAGE-CONSTANT-COUNTS.md` — completed `R14` task tree for qualified package scalar constants in static transaction repeat counts.

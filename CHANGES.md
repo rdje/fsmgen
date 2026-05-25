@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Watchdog package-constant limits selected
+- Created active task tree `ISF-WATCHDOG-PACKAGE-CONSTANT-LIMITS`.
+- Selected a bounded static watchdog-limit value-domain widening:
+  actor-level `(watchdog PACKAGE.CONSTANT)` and await-local
+  `(await ready (watchdog PACKAGE.CONSTANT))` limits may use qualified
+  imported package scalar constants when the resolved values are positive
+  integer literals.
+- Accepted package-constant watchdog limits should reuse the existing watchdog
+  counter path used by positive literals, actor constants, and actor-local
+  scalar parameter defaults.
+- Schedule reports and public parser shells should keep watchdog limits as
+  resolved integers without adding a source-token field.
+- Unqualified package constants, unknown package constants, package aggregate
+  constants, package member/item paths, transaction parameters, runtime
+  signals, arbitrary expressions, package constants in unrelated value
+  domains, reusable-library use-site specialization, generated-top
+  respecialization, distinct per-await limits in one transaction,
+  cross-domain watchdog policy, dynamic watchdog limits, and per-await
+  counter reset semantics remain deferred or fail closed.
+- No parser, scheduler, report, generated artifact, HDL, CLI behavior, public
+  API, source, test, or generated behavior changed in this selection slice.
+- Validation passed: feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Temporal-contract package-constant windows shipped
 - Completed `ISF-CONTRACT-PACKAGE-CONSTANT-WINDOWS.2` and closed the task tree.
 - Bounded eventual temporal-contract windows now accept qualified imported
