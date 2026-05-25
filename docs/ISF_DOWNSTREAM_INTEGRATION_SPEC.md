@@ -221,11 +221,11 @@ General source rules:
   and transaction-local port widths also accept declared actor constants and
   actor-local scalar parameter defaults that resolve to positive integers.
   Actor top-level interface port widths, actor-owned scalar storage widths,
-  actor-owned bank storage widths, and actor-owned bank storage depths
-  additionally accept qualified imported package scalar constants that resolve
-  to positive integers; the parser handoff, scheduled `.fsm`, schedule
+  actor-owned bank storage widths, actor-owned bank storage depths, and
+  transaction-local port widths additionally accept qualified imported package
+  scalar constants that resolve to positive integers; the parser handoff,
+  scheduled `.fsm`, activation handoff storage where applicable, schedule
   report, and generated HDL publish the resolved integer width or depth.
-  Transaction-local port widths do not inherit that package constant widening.
 - Actor constants use non-negative integer literals or enum member references
   that resolve to non-negative integers. Actor parameter scalar defaults may
   also use earlier actor-local scalar parameter defaults by name, preserving
@@ -615,8 +615,7 @@ Rules:
   evidence, and HDL register ranges. Unqualified package constants, aggregate
   package constants, package constant member/item paths, ambiguous
   local-enum/package-constant spellings, zero-valued constants, runtime
-  signals, expressions, and package constants in transaction-local port width
-  contexts fail closed.
+  signals, and expressions fail closed.
   Actor-owned bank storage depths may also use qualified imported package
   scalar constants under the same imported-package and positive-integer scalar
   requirements. Package-constant-backed bank depths publish as resolved
@@ -626,8 +625,16 @@ Rules:
   resolved scalarized family. Unqualified package constants, aggregate package
   constants, package constant member/item paths, ambiguous
   local-enum/package-constant spellings, zero-valued constants, runtime
-  signals, expressions, and package constants in transaction-local port width
-  contexts fail closed.
+  signals, and expressions fail closed.
+  Transaction-local port widths may use qualified imported package scalar
+  constants under the same imported-package and positive-integer scalar
+  requirements. Package-constant-backed transaction port widths publish as
+  resolved integer parser-handoff port widths, scheduled `.fsm` `+size`
+  entries for activation handoff storage, `transaction_port_bindings[]`
+  report widths, and HDL register ranges. Unknown or unqualified package
+  constants, aggregate package constants, package constant member/item paths,
+  ambiguous local-enum/package-constant spellings, zero-valued constants,
+  runtime signals, and expressions fail closed.
   Generated child transaction scalar parameter defaults and scalar leaves
   inside generated child transaction aggregate/list parameter defaults may use
   declared actor constants, actor-local scalar parameter defaults, earlier
@@ -851,13 +858,15 @@ Rules:
 
 ### 11.2 Transaction Ports And Bindings
 
-Transaction ports, assuming actor-level `(params (DATA_W 8))` or
-`(constants (DATA_W 8))`:
+Transaction ports, assuming actor-level `(params (DATA_W 8))`,
+`(constants (DATA_W 8))`, or an imported package constant such as
+`shared.DATA_W`:
 
 ```lisp
 (ports
   (input addr (width 8))
-  (output data (width DATA_W)))
+  (output data (width DATA_W))
+  (input mask (width shared.DATA_W)))
 ```
 
 Activation bindings:
@@ -882,9 +891,10 @@ Rules:
 
 - Port directions are `input` and `output`.
 - Width defaults to `1`. Explicit widths may be positive integer literals,
-  actor-local scalar parameter defaults, or declared actor constants that
-  resolve to positive integers. The parser returns resolved integer widths in
-  the public transaction shell.
+  actor-local scalar parameter defaults, declared actor constants, or
+  qualified imported package scalar constants that resolve to positive
+  integers. The parser returns resolved integer widths in the public
+  transaction shell.
 - Port names are unique across directions.
 - Input bindings may pass scalar signals, numeric/exact-width literals, or
   non-empty list expressions.
@@ -1424,13 +1434,12 @@ Rules:
   and actor-owned bank storage may use actor-local scalar parameter defaults
   or declared actor constants that resolve to positive integers as
   `(width PARAM)` / `(width CONST)` sources. Actor interface ports,
-  actor-owned scalar storage, and actor-owned bank storage widths may also use
-  qualified imported package scalar constants as `(width PACKAGE.CONSTANT)`
-  sources when the resolved value is a positive integer; actor-owned bank
-  storage depths may use qualified imported package scalar constants as
-  `(depth PACKAGE.CONSTANT)` sources when the resolved value is a positive
-  integer. Transaction-local ports remain outside the package-constant width
-  subset.
+  transaction-local ports, actor-owned scalar storage, and actor-owned bank
+  storage widths may also use qualified imported package scalar constants as
+  `(width PACKAGE.CONSTANT)` sources when the resolved value is a positive
+  integer; actor-owned bank storage depths may use qualified imported package
+  scalar constants as `(depth PACKAGE.CONSTANT)` sources when the resolved
+  value is a positive integer.
 - Actor-owned storage variables may also use `(type NAME)` when `NAME`
   resolves to a packed aggregate `list` or `record` alias. The first aggregate
   carrier subset is anchored on declared actor-owned storage roots.
@@ -3609,7 +3618,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1349-isf-actor-param-package-constants.t \
   t/1350-isf-transaction-param-package-constants.t \
   t/1351-isf-activation-param-package-constants.t \
-  t/1352-isf-library-use-package-constants.t
+  t/1352-isf-library-use-package-constants.t \
+  t/1357-isf-transaction-port-package-constant-widths.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

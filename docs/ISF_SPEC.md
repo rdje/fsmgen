@@ -335,7 +335,12 @@ actor-owned scalar storage variables, and actor-owned bank storage. Type and
 width options are mutually exclusive. `PARAM` may name an actor-local scalar
 parameter default that resolves to a positive integer on actor interface ports,
 transaction-local ports, actor-owned scalar storage, and actor-owned bank
-storage. `NAME` may be
+storage. Qualified imported package scalar constants may be used as
+`(width PACKAGE.CONSTANT)` sources on actor interface ports,
+transaction-local ports, actor-owned scalar storage, and actor-owned bank
+storage when the constant resolves to a positive integer; actor-owned bank
+storage also accepts `(depth PACKAGE.CONSTANT)` under the same scalar
+positive-integer rule. `NAME` may be
 local, such as `byte`, or package-qualified, such as `shared.byte`.
 Unknown aliases fail closed. Resolved `list` or `record` aliases are accepted
 only on actor-owned storage variables, for example `(var frame (type
@@ -1709,8 +1714,7 @@ aggregate constants, package aggregate scalar-leaf paths, ambiguous
 local-enum/package-constant spellings, runtime interface signals, zero-valued
 or non-scalar actor parameters, zero-valued actor constants, zero-valued
 package constants, arbitrary storage dimension expressions, dynamic storage
-depth, transaction-local package-constant widths, and memory-array backend
-emission remain deferred or fail closed.
+depth, and memory-array backend emission remain deferred or fail closed.
 
 Storage banks lower to deterministic scalar storage element names in the
 scheduled `.fsm` review artifact. For example,
@@ -2156,27 +2160,33 @@ connect transactions; the compiler lowers the ISF boundary into explicit
 scheduled `.fsm` handoff assignments and reviewable generated-top wiring.
 
 Shipped transaction declaration shape, assuming actor-level
-`(params (DATA_W 32))` or `(constants (DATA_W 32))`:
+`(params (DATA_W 32))`, `(constants (DATA_W 32))`, or imported package
+constant `shared.DATA_W`:
 
 ```lisp
 (transaction read_word
   (ports
     (input  addr (width 32))
-    (output data (width DATA_W)))
+    (output data (width DATA_W))
+    (input  mask (width shared.DATA_W)))
   ...)
 ```
 
 Each transaction may contain at most one `(ports ...)` clause. Each port entry
 is `(input name)`, `(output name)`, `(input name (width N))`, or
-`(output name (width N))`; `(width PARAM)` and `(width CONST)` are also
-accepted when the symbol names an actor-local scalar parameter default or
-declared actor constant that resolves to a positive integer. `name` is a scalar
-HDL identifier and `N` is a positive integer literal. Omitted width means 1.
-Transaction parameters, runtime interface signals, unknown symbolic names,
-zero-valued or non-scalar actor parameters, zero-valued actor constants, and
-arbitrary expressions are rejected as port widths. Port names are unique across
-both directions within the transaction. The parser returns the normalized
-transaction-shell shape with resolved integer widths:
+`(output name (width N))`; `(width PARAM)`, `(width CONST)`, and
+`(width PACKAGE.CONSTANT)` are also accepted when the source is an actor-local
+scalar parameter default, declared actor constant, or qualified imported
+package scalar constant that resolves to a positive integer. `name` is a
+scalar HDL identifier and `N` is a positive integer literal. Omitted width
+means 1. Transaction parameters, runtime interface signals, unknown symbolic
+names, unknown or unqualified package constants, package aggregate constants,
+package aggregate scalar-leaf paths, ambiguous local-enum/package-constant
+spellings, zero-valued or non-scalar actor parameters, zero-valued actor
+constants, zero-valued package constants, and arbitrary expressions are
+rejected as port widths. Port names are unique across both directions within
+the transaction. The parser returns the normalized transaction-shell shape
+with resolved integer widths:
 
 ```lisp
 ports = {
@@ -5310,6 +5320,7 @@ Focused tests:
 - [t/1354-isf-scalar-storage-package-constant-widths.t](../t/1354-isf-scalar-storage-package-constant-widths.t)
 - [t/1355-isf-bank-storage-package-constant-widths.t](../t/1355-isf-bank-storage-package-constant-widths.t)
 - [t/1356-isf-bank-storage-package-constant-depths.t](../t/1356-isf-bank-storage-package-constant-depths.t)
+- [t/1357-isf-transaction-port-package-constant-widths.t](../t/1357-isf-transaction-port-package-constant-widths.t)
 
 ## 12. Explicitly Deferred
 
@@ -5320,12 +5331,13 @@ Focused tests:
   standalone transaction/drive exports,
   package/imported constants outside the shipped qualified actor parameter,
   generated-child transaction parameter default, generated activation
-  override, reusable-library use-site override, actor interface width, and
-  actor-owned scalar storage width, actor-owned bank storage width, and
-  actor-owned bank storage depth scalar-constant subsets, derived parameter
-  expressions,
+  override, reusable-library use-site override, actor interface width,
+  transaction-local port width, actor-owned scalar storage width,
+  actor-owned bank storage width, and actor-owned bank storage depth
+  scalar-constant subsets, derived parameter expressions,
   transaction-port dimensions beyond positive literals, actor-local scalar
-  parameters, and scalar type aliases,
+  parameters, actor constants, qualified package scalar constants, and scalar
+  type aliases,
   memory-array backend emission, and
   library actors that import other libraries.
 - Unconditional transaction delay beyond the shipped non-negative literal,

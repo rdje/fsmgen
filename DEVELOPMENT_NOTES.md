@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-25: Transaction port package constants publish resolved widths
+- `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` resolves qualified imported
+  package scalar constants at the transaction-local port width boundary.
+- The implementation deliberately writes the resolved positive integer width
+  into the public transaction shell before scheduler lowering. That keeps the
+  scheduler, scheduled `.fsm`, activation handoff storage, reports, and HDL on
+  the same resolved-width path used by positive literals, actor constants, and
+  actor-local scalar parameter defaults.
+- Package constants remain explicit and scalar only. Unqualified package
+  lookup, package aggregates, package member/item paths, ambiguous local
+  enum/package spellings, zero-valued constants, transaction parameters,
+  runtime interface signals, arbitrary expressions, use-site
+  respecialization, and unrelated value domains fail closed or stay deferred.
+
 ## 2026-05-25: Transaction port package constants should reuse port-width resolution
 - `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1` selects qualified imported
   package scalar constants for transaction-local port widths as the next

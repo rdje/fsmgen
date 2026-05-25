@@ -81,7 +81,9 @@ clear lower-layer mapping, and clear runtime behavior.
   qualified package scalar constant form; parser handoff, scalarized
   scheduled `.fsm` `+size`, `inferred_storage[]`, `bank_accesses[]` depth and
   scalar-entry evidence, and HDL publish the resolved integer depth.
-  Transaction-local port widths do not inherit that package-constant widening.
+  Transaction-local port widths may use the same qualified package scalar
+  constant form; parser handoff, scheduled `.fsm` activation handoff storage,
+  `transaction_port_bindings[]`, and HDL publish the resolved integer width.
   Actor-local scalar parameter defaults that resolve to non-negative integer
   literals may also be used as static `(wait NAME)` counts in the owning
   actor schedule.
@@ -659,7 +661,7 @@ The ISF-specific current limitations are:
 - Width-bearing actor interface ports, transaction-local ports, and
   actor-owned storage entries may use scalar type aliases through `(type
   NAME)`, mutually exclusive with `(width N)`, `(width PARAM)`, or
-  `(width CONST)` where supported.
+  `(width CONST)` or `(width PACKAGE.CONSTANT)` where supported.
 
   Actor-owned storage variables may also use packed `list` or `record`
   aliases as whole-root aggregate carriers.

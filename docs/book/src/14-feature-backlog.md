@@ -2381,10 +2381,11 @@ decision/body/exit states, and body clause count.
 
 Status: shipped base surface; richer output/report surfaces remain backlog.
 
-Transaction `(ports ...)` declarations, actor-parameter-backed and
-actor-constant-backed transaction port widths, scalar and expression-valued
-input activation bindings, first actor-pin conflict/runtime coverage, and
-bounded schedule-report binding provenance are shipped. The original
+Transaction `(ports ...)` declarations, actor-parameter-backed,
+actor-constant-backed, and qualified package-constant-backed transaction port
+widths, scalar and expression-valued input activation bindings, first
+actor-pin conflict/runtime coverage, and bounded schedule-report binding
+provenance are shipped. The original
 `ISF-PORT-BINDING` task tree is complete; expression-valued input bindings are
 tracked by `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 
@@ -2445,13 +2446,18 @@ Shipped declaration shape:
 The parser accepts at most one `(ports ...)` clause per transaction. Each port
 has direction `input` or `output`, a scalar HDL identifier name, and optional
 positive integer `(width N)`, actor-parameter-backed `(width PARAM)`, or
-actor-constant-backed `(width CONST)` where the symbolic source names an
-actor-local scalar parameter default or declared actor constant that resolves
-to a positive integer; omitted width means 1. Transaction parameters remain
-outside the shipped width source set. The normalized public transaction shell has
-`ports.inputs[]` and `ports.outputs[]` entries with `name` and resolved integer
-`width`. The declaration is not a scheduler body clause; behavior comes from
-transaction states/rules that use the port and activation sites that bind it.
+actor-constant-backed `(width CONST)`, or package-constant-backed
+`(width PACKAGE.CONSTANT)` where the symbolic source names an actor-local
+scalar parameter default, declared actor constant, or qualified imported
+package scalar constant that resolves to a positive integer; omitted width
+means 1. Transaction parameters remain outside the shipped width source set.
+Unknown or unqualified package constants, aggregate package constants,
+package member/item paths, ambiguous local-enum/package-constant spellings,
+zero-valued constants, runtime signals, and arbitrary expressions fail
+closed. The normalized public transaction shell has `ports.inputs[]` and
+`ports.outputs[]` entries with `name` and resolved integer `width`. The
+declaration is not a scheduler body clause; behavior comes from transaction
+states/rules that use the port and activation sites that bind it.
 
 Shipped binding shape:
 
@@ -3152,8 +3158,9 @@ scalar storage widths, actor-owned bank widths, and actor-owned bank depths
 may use declared actor constants, actor-local scalar parameter defaults, or
 qualified imported package scalar constants when they resolve to positive
 integers.
-Transaction-local port widths may use actor-local scalar parameter defaults or
-declared actor constants when they resolve to positive integers.
+Transaction-local port widths may use actor-local scalar parameter defaults,
+declared actor constants, or qualified imported package scalar constants when
+they resolve to positive integers.
 FIFO use-site interface shape specialization and generated-top
 respecialization remain future work.
 

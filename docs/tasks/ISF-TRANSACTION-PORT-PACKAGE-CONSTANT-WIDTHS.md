@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-25`
 - Last updated: `2026-05-25`
@@ -56,7 +56,7 @@ positive integer literals.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship qualified imported package scalar constants as transaction-local port widths.`
   Children: `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1`,
     `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2`
@@ -69,23 +69,27 @@ positive integer literals.
   update roadmap/live docs without behavior changes.`
   Verification: `feature-backlog/live-book/book-matrix audits with Files=3,
   Tests=364; mdbook build docs/book; git diff --check`
-  Commit: `pending this commit`
+  Commit: `4fa56986: ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1: select transaction port package widths`
 
 - ID: `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and document qualified package scalar constants as transaction-local port widths.`
   Acceptance: `Positive imported package scalar constants lower as
   transaction-local port widths; unsupported width sources fail closed; specs,
   book, public contract, downstream handoff, focused tests, and broader ISF
   gate are synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused transaction/package/public tests with
+  Files=13, Tests=360; ./bin/ci-regression isf --no-book with Files=263,
+  Tests=1711; mdbook build docs/book; post-closure public/spec/book audits
+  with Files=6, Tests=359; feature-backlog/live-book/book-matrix audits with
+  Files=3, Tests=364; git diff --check`
+  Commit: `pending this commit`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` | `pending` | Transaction-local port widths are the next explicit package-constant dimension deferral after actor interface, scalar storage, bank width, and bank depth package constants. |
+| 1 | `closed` | `done` | Qualified imported package scalar constants now ship for transaction-local port widths. |
 
 ## Decisions
 
@@ -102,6 +106,10 @@ positive integer literals.
   generated HDL, matching actor-constant and actor-parameter transaction port
   width behavior rather than preserving package tokens in generated width
   fields.
+- `2026-05-25`: The implementation reuses the existing actor package-constant
+  resolver at transaction-port finalization time, then stores the resolved
+  integer width in the public transaction shell so the scheduler, scheduled
+  `.fsm`, reports, and HDL do not need a separate package-token width path.
 
 ## Open Questions
 
@@ -117,16 +125,26 @@ positive integer literals.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-25` | `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1` | `feature-backlog/live-book/book-matrix audits; mdbook build docs/book; git diff --check` | `passed: Files=3, Tests=364` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; perl -c t/1357-isf-transaction-port-package-constant-widths.t; perl -c t/1144-isf-public-tested-by-metadata-audit.t` | `passed` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` | `prove -Iperl t/1240-isf-transaction-port-declarations.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t t/1336-isf-transaction-port-actor-param-widths.t t/1342-isf-transaction-port-actor-constant-widths.t t/1353-isf-interface-package-constant-widths.t t/1356-isf-bank-storage-package-constant-depths.t t/1357-isf-transaction-port-package-constant-widths.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=13, Tests=360` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` | `./bin/ci-regression isf --no-book` | `passed: Files=263, Tests=1711` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` | `mdbook build docs/book; prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t; git diff --check` | `passed: audits Files=6, Tests=359` |
+| `2026-05-25` | `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` | `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t` | `passed: Files=3, Tests=364` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1` | `pending this commit` | `selection slice` |
-| `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` | `pending` | `implementation slice` |
+| `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1` | `4fa56986: ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1: select transaction port package widths` | `selection slice` |
+| `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` | `pending this commit` | `implementation slice` |
 
 ## Changelog
 
 - `2026-05-25`: Created task tree and selected qualified imported package
   scalar constants in transaction-local port widths as the next bounded
   static-dimension implementation frontier.
+- `2026-05-25`: Implemented and documented qualified imported package scalar
+  constants in transaction-local port widths, added fail-closed diagnostics and
+  focused regression coverage, synchronized the ISF spec, downstream handoff,
+  public contract, mdBook, roadmap, task index, and live docs, and closed the
+  task tree.

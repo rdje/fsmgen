@@ -1,6 +1,35 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-25
+### R14 — Transaction port package-constant widths shipped
+- Completed `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` and closed the
+  task tree.
+- Transaction-local `(ports ...)` declarations now accept
+  `(input NAME (width PACKAGE.CONSTANT))` and
+  `(output NAME (width PACKAGE.CONSTANT))` when the owning actor imports
+  `PACKAGE`, the package declares `CONSTANT`, and the constant resolves to a
+  positive integer scalar literal.
+- Parser transaction-port width validation now accepts package-constant-shaped
+  qualified tokens, resolves imported package scalar constants before
+  actor-local parameter/constant fallback, and keeps package-specific
+  diagnostics for unknown, unqualified, aggregate, member/item path,
+  ambiguous, zero-valued, runtime, and expression-valued sources.
+- Accepted package-constant transaction port widths publish as resolved
+  integer widths in public parser handoff, scheduled `.fsm` activation
+  handoff storage, `transaction_port_bindings[]` reports, CLI outdir review
+  artifacts, and generated HDL register ranges.
+- Transaction-parameter-backed widths, package aggregate/path widths, runtime
+  interface signals, arbitrary expressions, package constants outside this
+  transaction-port-width surface, and generated-top respecialization remain
+  fail-closed or deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, task tree,
+  README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; focused transaction/package/public tests
+  with `Files=13, Tests=360`; `./bin/ci-regression isf --no-book` with
+  `Files=263, Tests=1711`; post-closure public/spec/book audits with
+  `Files=6, Tests=359`; feature-backlog/live-book/book-matrix audits with
+  `Files=3, Tests=364`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Transaction port package-constant widths selected
 - Created active task tree
   `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS`.

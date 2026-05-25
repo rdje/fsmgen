@@ -439,8 +439,7 @@ to positive integer bank depths, deterministic scalarized storage families,
 scheduled `.fsm` `+size` declarations, schedule-report storage and
 `bank_accesses[]` depth/scalar-entry metadata, and HDL register declarations
 while unknown, unqualified, aggregate, path, ambiguous, zero-valued, runtime,
-and expression-valued sources fail closed. Transaction-local port widths do
-not inherit this bank-depth package-constant widening.
+and expression-valued sources fail closed.
 Transaction-local port widths backed by actor-local scalar parameter defaults
 are checked by
 [t/1336-isf-transaction-port-actor-param-widths.t](../t/1336-isf-transaction-port-actor-param-widths.t)
@@ -460,6 +459,15 @@ scheduled `.fsm` `+size` declarations, activation handoff widths,
 transaction parameters, unknown symbolic names, runtime interface signals,
 zero-valued actor constants, non-scalar actor constants, and arbitrary
 expressions fail closed.
+Transaction-local port widths backed by qualified imported package scalar
+constants are checked by
+[t/1357-isf-transaction-port-package-constant-widths.t](../t/1357-isf-transaction-port-package-constant-widths.t)
+so accepted transaction `(ports ...)` `(input NAME (width PACKAGE.CONSTANT))`
+and `(output NAME (width PACKAGE.CONSTANT))` entries resolve to positive
+integer port widths, scheduled `.fsm` `+size` declarations, activation
+handoff widths, `transaction_port_bindings[]` report widths, and HDL register
+ranges while unknown, unqualified, aggregate, path, ambiguous, zero-valued,
+runtime, and expression-valued sources fail closed.
 Rule expression guards are checked by
 [t/1233-isf-rule-expression-guards.t](../t/1233-isf-rule-expression-guards.t)
 for shorthand and long-form guard normalization, scheduled `.fsm` DT-DTE
@@ -691,6 +699,12 @@ Actor-constant-backed transaction port width declarations are checked by
 so the same public transaction shell exposes resolved positive integer widths
 for accepted declared actor constants and rejects transaction parameters or
 unsupported symbolic sources before scheduler lowering.
+Package-constant-backed transaction port width declarations are checked by
+[t/1357-isf-transaction-port-package-constant-widths.t](../t/1357-isf-transaction-port-package-constant-widths.t)
+so the same public transaction shell exposes resolved positive integer widths
+for accepted qualified imported package scalar constants and rejects unknown,
+unqualified, aggregate, path, ambiguous, zero-valued, runtime, and expression
+sources before scheduler lowering.
 The first activation-binding lowering boundary is checked by
 [t/1241-isf-transaction-port-bindings.t](../t/1241-isf-transaction-port-bindings.t)
 so `do`, `spawn`, and rule-trigger input bindings accept scalar signals,
@@ -2337,11 +2351,12 @@ The current public parser handoff also advertises a bounded transaction-entry
 shell: `transactions` is an array of entries with unique non-empty scalar
 `name`, `ports.inputs[]` / `ports.outputs[]` entries that carry resolved
 positive integer `width` values, `clauses` array fields, and optional scalar
-`domain` ownership metadata. Transaction-local `(width PARAM)` and
-`(width CONST)` entries are accepted only when the symbol names an actor-local
-scalar parameter default or declared actor constant that resolves to a positive
-integer; the public port entry carries the resolved integer width, not the
-authored token. The machine-readable contract advertises this through
+`domain` ownership metadata. Transaction-local `(width PARAM)`,
+`(width CONST)`, and `(width PACKAGE.CONSTANT)` entries are accepted only when
+the source names an actor-local scalar parameter default, declared actor
+constant, or qualified imported package scalar constant that resolves to a
+positive integer; the public port entry carries the resolved integer width,
+not the authored token. The machine-readable contract advertises this through
 `actor_shell_transaction_shape`. The `clauses` array is a scheduler-consumable
 container; its payload contents are intentionally not frozen as a public API by
 this field.

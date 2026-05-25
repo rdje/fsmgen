@@ -2,8 +2,31 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`.
-- Active task tree: `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS`.
-- Current frontier: `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Recent R14 transaction port package-constant width implementation:
+  `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2` shipped qualified
+  imported package scalar constants as transaction-local port widths and
+  closed the task tree. Transaction-local `(ports ...)`
+  `(input NAME (width PACKAGE.CONSTANT))` and
+  `(output NAME (width PACKAGE.CONSTANT))` declarations now parse and lower
+  when the owning actor imports `PACKAGE`, the package declares `CONSTANT`,
+  and the constant resolves to a positive integer scalar literal. Accepted
+  package-constant transaction port widths publish as resolved integer widths
+  in public parser handoff, scheduled `.fsm` activation handoff storage,
+  `transaction_port_bindings[]` reports, and generated HDL register ranges.
+  Unknown package constants, unqualified package constants, package aggregate
+  constants, package member/item paths, ambiguous local-enum/package-constant
+  spellings, zero-valued constants, runtime signals, arbitrary expressions,
+  transaction-parameter width sources, and package constants outside this
+  transaction-port-width surface remain fail closed or deferred. The ISF spec,
+  downstream handoff, public contract, mdBook, task tree, README index,
+  roadmap, and live docs are synchronized. Validation passed with syntax
+  checks; focused transaction/package/public tests (`Files=13, Tests=360`);
+  `./bin/ci-regression isf --no-book` (`Files=263, Tests=1711`);
+  post-closure public/spec/book audits (`Files=6, Tests=359`);
+  feature-backlog/live-book/book-matrix audits (`Files=3, Tests=364`);
+  `mdbook build docs/book`; and `git diff --check`.
 - Recent R14 transaction port package-constant width selection:
   `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1` created the active task
   tree and selected the next bounded implementation leaf. Transaction-local
@@ -7474,14 +7497,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- Active task tree: `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS`.
-- Current frontier: `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2`.
-- Completion status: `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.1`
-  created the active R14 task tree for transaction-local port package-constant
-  widths. The selected implementation leaf may next allow transaction-local
-  `(ports ...)` input/output widths to use qualified imported package scalar
-  constants when they resolve to positive integers. No behavior changed in the
-  selection slice.
+- Active task tree: `none`.
+- Current frontier: `none`.
+- Completion status: `ISF-TRANSACTION-PORT-PACKAGE-CONSTANT-WIDTHS.2`
+  shipped qualified imported package scalar constants as transaction-local
+  port widths and closed the task tree. Transaction-local `(ports ...)`
+  input/output widths now accept `(width PACKAGE.CONSTANT)` when the owning
+  actor imports the package and the package constant resolves to a positive
+  integer scalar. Accepted widths publish as resolved integers in parser
+  handoff, scheduled `.fsm` activation handoff storage,
+  `transaction_port_bindings[]`, and HDL. Unsupported package-constant shapes,
+  transaction parameters, runtime signals, and arbitrary expressions remain
+  fail-closed.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

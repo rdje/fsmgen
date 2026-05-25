@@ -220,25 +220,6 @@ ISF
         'depth expressions remain rejected at parse time',
     );
 
-    assert_parse_file_rejected(
-        $dir,
-        'transaction_port_width_package_constant.isf',
-        <<'ISF',
-(actor transaction_port_width_package_constant
-  (imports
-    (package shared))
-  (interface
-    (input start)
-    (output done))
-  (transaction child
-    (ports
-      (input addr (width shared.DEFAULT_DEPTH)))
-    (on start)
-    (complete done)))
-ISF
-        qr/transaction 'child' port 'addr' width requires '\(width positive_integer_or_actor_scalar_parameter_or_actor_constant\)'/,
-        'transaction-local port widths do not inherit this bank-depth package constant widening',
-    );
 };
 
 done_testing();
