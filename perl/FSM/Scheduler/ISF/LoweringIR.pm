@@ -6465,7 +6465,8 @@ sub _validate_repeat_body_spawn_subset {
                 && $keyword eq 'await_any'
                 && @pending_spawns > 1
                 && (!$awaiting_multi_pending_drain
-                    || (($spawn_after_generated_do_kind_before_drain // '') eq 'generated-child do'
+                    || ((($spawn_after_generated_do_kind_before_drain // '') eq 'generated-child do'
+                            || ($spawn_after_generated_do_kind_before_drain // '') eq 'generated do with static params')
                         && $pending_generated_do_before_drain
                         && !$pending_local_do_before_drain));
             confess "Transaction '$tn': $pending_generated_do_label nested repeat spawn after $spawn_after_generated_do_kind_before_drain while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the later spawn remains deferred\n"

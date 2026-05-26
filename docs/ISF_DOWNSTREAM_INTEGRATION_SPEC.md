@@ -1457,6 +1457,15 @@ Rules:
   its deterministic generated do instance's fresh done handoff and preserves
   static generated-top parameter binding.
 
+  Those static-parameter generated-do subsets may also start one or more
+  later generated nested spawns before the mandatory same-body `(await_all
+  done)` drain, either when no multi-pending `(await_any done)` observation is
+  active before the later spawn or after the generated do follows a prior
+  multi-pending observation. The prior-observation form may run a second
+  post-spawn multi-pending `(await_any done)` observation before that final
+  drain; both observations leave the pre-do and post-do generated-spawn done
+  handoffs live for the final `await_all`.
+
   Top-level `when` body and top-level `switch` branch static-parameter bound
   generated `(do child (params ...) (bind ...))` support the same post-do
   observation and later-drain contract while also wiring the generated-top
@@ -1507,16 +1516,19 @@ Rules:
   final `await_all` still covers both pre-do and post-do generated spawns
   before nested repeat re-entry.
 
-  Plain generated-child, static-parameter, bound generated-do, and
-  same-domain generated-do do-then-spawn subsets may also run a post-spawn
-  multi-pending `(await_any done)` observation before the mandatory same-body
-  `(await_all done)` drain, provided no prior multi-pending `await_any`
-  observation is active before the later spawn. The post-spawn observation
-  does not drain the outstanding generated-spawn set; the final `await_all`
-  still covers both pre-do and post-do generated spawns before nested repeat
-  re-entry.
+  Plain generated-child and static-parameter generated-do do-then-spawn
+  subsets may also run a second post-spawn multi-pending `(await_any done)`
+  observation after a prior multi-pending observation before the generated do,
+  provided the mandatory same-body `(await_all done)` still follows. Bound
+  generated-do and same-domain generated-do do-then-spawn subsets may run a
+  post-spawn multi-pending `(await_any done)` observation before the mandatory
+  same-body `(await_all done)` drain only when no prior multi-pending
+  `await_any` observation is active before the later spawn. The post-spawn
+  observation does not drain the outstanding generated-spawn set; the final
+  `await_all` still covers both pre-do and post-do generated spawns before
+  nested repeat re-entry.
 
-  A second post-spawn `await_any` in specialized generated-do
+  A second post-spawn `await_any` in bound and same-domain generated-do
   prior-observation forms, deeper branch/loop nesting, and cross-domain
   activation remain fail-closed.
 

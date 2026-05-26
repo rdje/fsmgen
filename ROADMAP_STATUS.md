@@ -1,9 +1,35 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14`.
+- Active lane: `none`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 static-parameter generated-do prior-await_any then spawn plus
+  second await_any:
+  `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` shipped
+  the static-parameter generated-do analogue of the local-do and plain
+  generated-child repeated-observation prior-observation shapes and closed
+  the task tree. A repeat directly inside a top-level `when` body or
+  top-level `switch` branch may now run generated spawns, observe one done
+  pulse through multi-pending `(await_any done)`, run static-parameter
+  generated blocking `(do child (params ...))`, start one or more later
+  generated spawns after the deterministic generated do instance's fresh done
+  handoff, observe a second post-spawn multi-pending `(await_any done)`, and
+  drain every generated spawn through same-body `(await_all done)` before
+  nested repeat re-entry. Both `await_any` clauses leave the outstanding
+  generated-spawn done set live, static generated-top parameter overrides
+  remain scoped to the generated do instance, and the final `await_all`
+  drains generated spawns from both sides of the generated `do`. Bound
+  generated-do, same-domain generated-do, missing drains, cross-domain
+  activation, deeper branch/loop nesting, CDC behavior, and broader
+  outstanding-child lifetime semantics remain fail-closed/deferred.
+  Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t` with `Files=3, Tests=713`;
+  live path audits with `Files=2, Tests=29`; stale-doc grep; `mdbook build
+  docs/book`; `./bin/ci-regression isf --no-book` with `Files=275,
+  Tests=1932`; and `git diff --check`.
 - Current bootstrap import-tree refresh:
   `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-SECOND-AWAITANY-REFRESH.1` refreshed the
   saved `bin/fsmgen` import-tree architecture note after the R14

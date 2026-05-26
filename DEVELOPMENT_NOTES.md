@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Static-parameter generated do after prior awaitany can run a second post-spawn awaitany
+- `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` widens the
+  static-parameter generated-do prior-observation do-then-spawn proof to
+  permit a second observation before the final drain.
+- The accepted path remains branch-contained: the repeat must be directly
+  inside a top-level `when` body or top-level `switch` branch, use generated
+  `(do child (params ...))`, and end with same-body `await_all` before nested
+  repeat re-entry.
+- The first multi-pending `await_any` observes a pre-do generated child, the
+  generated `do` waits for its deterministic generated do instance's fresh
+  done handoff while preserving static generated-top parameter overrides, the
+  later generated spawn joins the same outstanding generated-spawn set, and
+  the second post-spawn `await_any` observes without consuming that set.
+- The validator change is intentionally limited to static-parameter generated
+  activation. Bound generated-do and same-domain generated-do variants still
+  require the direct-to-`await_all` prior-observation path until their binding
+  handoff and ownership metadata lifetimes are proven for the second-
+  observation shape.
+- Missing same-body `await_all` remains fail-closed. The second observation
+  does not make the nested repeat check reachable; only the final `await_all`
+  drains every pre-do and post-do generated spawn.
+
 ## 2026-05-26: Bootstrap import-tree refresh after generated-child second awaitany stays documentation-only
 - `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-SECOND-AWAITANY-REFRESH.1` exists to
   satisfy the `SESSION_BOOTSTRAP.md` architecture audit after the R14

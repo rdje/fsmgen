@@ -1207,19 +1207,20 @@ deterministic generated do instance must complete before the later generated
 spawn starts, generated-top input/output binding handoffs remain scoped to
 the bound or same-domain generated do instance, declared ownership metadata
 remains scoped to the same-domain generated do instance, and the final drain
-covers every pre-do and post-do generated spawn. The local-do and plain
-generated-child prior-observation shapes may also run a second post-spawn
-`(await_any done)` before that mandatory drain; both observations leave the
-outstanding generated-spawn done set live until the final drain covers every
-pre-do and post-do generated spawn. Static-parameter, bound, and same-domain
-generated-do second post-spawn `await_any` prior-observation variants,
-cross-domain activation, deeper nesting, and broader outstanding-child
-lifetime rules remain backlog.
+covers every pre-do and post-do generated spawn. The local-do, plain
+generated-child, and static-parameter generated-do prior-observation shapes
+may also run a second post-spawn `(await_any done)` before that mandatory
+drain; both observations leave the outstanding generated-spawn done set live
+until the final drain covers every pre-do and post-do generated spawn. Bound
+and same-domain generated-do second post-spawn `await_any`
+prior-observation variants, cross-domain activation, deeper nesting, and
+broader outstanding-child lifetime rules remain backlog.
 
-The top-level `when` body branch-contained plain generated-child
-prior-observation shape and the top-level `switch` branch analogue both allow
-the generated-child `(do child)` to follow a multi-pending `(await_any done)`,
-start later generated spawns after the deterministic do handoff, run a second
+The top-level `when` body branch-contained plain generated-child and
+static-parameter generated-do prior-observation shapes and the top-level
+`switch` branch analogues allow the generated-child `(do child)` or generated
+`(do child (params ...))` to follow a multi-pending `(await_any done)`, start
+later generated spawns after the deterministic do handoff, run a second
 post-spawn `(await_any done)`, and then use same-body `(await_all done)` to
 drain every pre-do and post-do generated spawn.
 

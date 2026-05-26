@@ -2,6 +2,32 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-26: R14 — Static-parameter generated do after prior awaitany then spawn plus second awaitany shipped
+- Completed `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`
+  and closed the task tree.
+- Branch-contained nested repeats now accept generated spawns, prior
+  multi-pending `(await_any done)`, static-parameter generated blocking
+  `(do child (params ...))`, later generated spawn, second post-spawn
+  multi-pending `(await_any done)`, and mandatory same-body
+  `(await_all done)` before nested repeat re-entry for repeats directly
+  inside top-level `when` bodies or top-level `switch` branches.
+- Both `await_any` clauses observe generated children without clearing the
+  outstanding generated-spawn done set; the deterministic generated do
+  instance preserves static generated-top parameter overrides and completes
+  before the later generated spawn starts; the final `await_all` drains
+  generated spawns from both sides of the generated `do`.
+- Bound and same-domain generated `do` variants of this second post-spawn
+  `await_any` prior-observation shape, missing drains, cross-domain
+  activation, deeper branch/loop nesting, CDC behavior, and broader
+  outstanding-child lifetime semantics remain fail-closed/deferred.
+- Validation passed: syntax checks; focused scheduler/doc audits with
+  `Files=3, Tests=713`; live path audits with `Files=2, Tests=29`;
+  stale-doc grep; `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1932`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: Bootstrap architecture maintenance — R14 generated-child second-awaitany import-tree refreshed
 - Completed `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-SECOND-AWAITANY-REFRESH.1`
   and closed the task tree.

@@ -246,11 +246,13 @@ run static-parameter same-domain generated `(do child (params ...) [(bind
 ...)] (domain NAME))` in that interval; the domain annotation is metadata for
 the generated do instance and does not imply CDC.
 
-Static-parameter, bound, and same-domain generated `do` after prior
-multi-pending `await_any` may start a later generated spawn only when the
-path advances directly to the mandatory same-body `await_all` drain. A
-second post-spawn `await_any` for those specialized generated-do
-prior-observation shapes remains fail-closed.
+Static-parameter generated `do` after prior multi-pending `await_any` may
+start a later generated spawn, run a second post-spawn `await_any`, and then
+advance to the mandatory same-body `await_all` drain. Bound and same-domain
+generated `do` after prior multi-pending `await_any` may start a later
+generated spawn only when the path advances directly to that mandatory drain;
+their second post-spawn `await_any` prior-observation shapes remain
+fail-closed.
 
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases and

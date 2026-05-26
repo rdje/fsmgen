@@ -185,6 +185,10 @@ for my $path (@loop_docs) {
         "$path documents the shipped top-level when-body nested repeat generated static-parameter do after multi-pending await_any then generated spawn subset",
     );
     ok(
+        documents_branch_prior_await_any_static_parameter_do_then_spawn_second_await_any($content, 'when'),
+        "$path documents the shipped top-level when-body nested repeat generated static-parameter do after multi-pending await_any then generated spawn and second await_any subset",
+    );
+    ok(
         documents_branch_post_do_await_any($content, 'when', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated static-parameter do before post-do multi-pending await_any subset",
     );
@@ -298,6 +302,10 @@ for my $path (@loop_docs) {
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter do after multi-pending await_any then generated spawn subset",
     );
     ok(
+        documents_branch_prior_await_any_static_parameter_do_then_spawn_second_await_any($content, 'switch'),
+        "$path documents the shipped top-level switch-branch nested repeat generated static-parameter do after multi-pending await_any then generated spawn and second await_any subset",
+    );
+    ok(
         documents_branch_post_do_await_any($content, 'switch', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter do before post-do multi-pending await_any subset",
     );
@@ -333,6 +341,10 @@ for my $path (@loop_docs) {
     ok(
         !documents_stale_generated_child_prior_await_any_second_post_spawn_deferral($content),
         "$path does not re-defer shipped generated-child prior-awaitany second post-spawn await_any subsets",
+    );
+    ok(
+        !documents_stale_static_parameter_prior_await_any_second_post_spawn_deferral($content),
+        "$path does not re-defer shipped static-parameter prior-awaitany second post-spawn await_any subsets",
     );
     like(
         $content,
@@ -584,6 +596,52 @@ sub documents_branch_prior_await_any_generated_child_do_then_spawn_second_await_
     return 0;
 }
 
+sub documents_branch_prior_await_any_static_parameter_do_then_spawn_second_await_any {
+    my ($content, $branch) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    my @anchors = $branch eq 'switch'
+        ? (
+            'top-level switch branch',
+            'top-level switch-branch',
+            'switch-contained',
+            'static-parameter generated-do',
+        )
+        : (
+            'top-level when body',
+            'top-level when-body',
+            'when-contained',
+            'static-parameter generated-do',
+        );
+
+    for my $anchor (@anchors) {
+        my $offset = index($normalized, $anchor);
+        while ($offset >= 0) {
+            my $window = substr($normalized, $offset, 9000);
+            return 1
+                if ($branch ne 'switch' || index($window, 'switch') >= 0)
+                && ($branch ne 'when' || index($window, 'when') >= 0)
+                && ($window =~ /static(?:[-\s]+parameter| params)|\(params \.\.\.\)/)
+                && index($window, 'generated') >= 0
+                && index($window, 'do') >= 0
+                && index($window, 'prior') >= 0
+                && index($window, 'multi-pending') >= 0
+                && index($window, 'await_any') >= 0
+                && $window =~ /later\s+generated(?:\s+nested)?\s+spawns?/
+                && index($window, 'second') >= 0
+                && index($window, 'post-spawn') >= 0
+                && index($window, 'await_all') >= 0
+                && index($window, 'pre-do') >= 0
+                && index($window, 'post-do') >= 0
+                && index($window, 'drain') >= 0;
+            $offset = index($normalized, $anchor, $offset + 1);
+        }
+    }
+
+    return 0;
+}
+
 sub documents_stale_prior_await_any_spawn_after_do_deferral {
     my ($content) = @_;
     my $normalized = lc $content;
@@ -649,7 +707,9 @@ sub documents_stale_generated_child_prior_await_any_second_post_spawn_deferral {
                 if index($window, 'prior') >= 0
                 && index($window, 'second') >= 0
                 && index($window, 'await_any') >= 0
-                && index($window, 'fail-closed') >= 0;
+                && index($window, 'fail-closed') >= 0
+                && index($window, 'bound') < 0
+                && index($window, 'same-domain') < 0;
             $offset = index($normalized, $anchor, $offset + 1);
         }
     }
@@ -658,6 +718,44 @@ sub documents_stale_generated_child_prior_await_any_second_post_spawn_deferral {
         'a second post-spawn await_any in generated-child prior-observation shapes remains backlog',
         'a second post-spawn await_any in generated-child prior-observation shapes remains fail-closed',
         'generated-child prior-observation second post-spawn await_any remains fail-closed',
+    ) {
+        return 1 if index($normalized, $phrase) >= 0;
+    }
+
+    return 0;
+}
+
+sub documents_stale_static_parameter_prior_await_any_second_post_spawn_deferral {
+    my ($content) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    for my $anchor (
+        'static-parameter generated do',
+        'static-parameter generated-do',
+        'generated do with static params',
+        'static params after multi-pending await_any',
+    ) {
+        my $offset = index($normalized, $anchor);
+        while ($offset >= 0) {
+            my $window = substr($normalized, $offset, 1800);
+            return 1
+                if index($window, 'prior') >= 0
+                && index($window, 'second') >= 0
+                && index($window, 'await_any') >= 0
+                && index($window, 'fail-closed') >= 0
+                && index($window, 'bound') < 0
+                && index($window, 'same-domain') < 0;
+            $offset = index($normalized, $anchor, $offset + 1);
+        }
+    }
+
+    for my $phrase (
+        'a second post-spawn await_any in static-parameter generated-do prior-observation shapes remains backlog',
+        'a second post-spawn await_any in static-parameter generated-do prior-observation shapes remains fail-closed',
+        'static-parameter generated-do second post-spawn await_any prior-observation variants remain backlog',
+        'static-parameter generated-do second post-spawn await_any prior-observation variants remain fail-closed',
+        'static-parameter, bound, and same-domain generated-do second post-spawn await_any prior-observation variants',
     ) {
         return 1 if index($normalized, $phrase) >= 0;
     }
