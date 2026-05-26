@@ -15665,3 +15665,16 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `git diff --check`.
 - Next bounded slice: bound BEFORE-POST-DO-AWAITANY missing-drain coverage
   (when-body only; switch-branch already exists).
+
+## 2026-05-27: Bound when-body before-post-do await_any missing-drain coverage shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-REPEAT-GENDO-BOUND-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-BOUND-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  added the when-body `assert_lower_rejected` regression for the bound
+  generated `(do worker (params ...) (bind ...))` before post-do
+  multi-pending `(await_any done)` without final `(await_all done)` shape.
+- Public behavior changed: no; test-only.
+- Focused validation passed: `prove -Iperl t/1215` (Files=1, Tests=100);
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
+  `git diff --check`.
+- Next bounded slice: domain BEFORE-POST-DO-AWAITANY missing-drain coverage.

@@ -32656,3 +32656,13 @@ It is an exact-delay pulse request:
   [`ISF-REPEAT-GENDO-PARAM-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-PARAM-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.md)
   adds two regressions in `t/1215` matching the existing validator confess
   at `LoweringIR.pm:6551`. Test-only.
+
+## 2026-05-27: bound when-body before-post-do await_any missing-drain coverage
+- Continued the R14 lane with the when-body `assert_lower_rejected`
+  regression for the bound generated `(do worker (params ...) (bind ...))`
+  before post-do multi-pending `(await_any done)` without final same-body
+  `(await_all done)` drain shape. The switch counterpart already lived at
+  line ~12061. The slice
+  [`ISF-REPEAT-GENDO-BOUND-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-BOUND-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  adds one regression matching the existing validator confess at
+  `LoweringIR.pm:6551`. Test-only.

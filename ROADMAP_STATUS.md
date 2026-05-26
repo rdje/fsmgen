@@ -14326,3 +14326,8 @@ Exit criteria:
   locking of `LoweringIR.pm:6551` for the `'generated do with static
   params'` kind. Bound/domain analogues remain as the next independently
   reviewable follow-ups (bound switch-branch already exists at line 12061).
+- `R14`: BEFORE-POST-DO-AWAITANY missing-drain coverage now also spans the
+  bound generated-do shape on the when-body subset (switch already
+  existed). Test-only locking of `LoweringIR.pm:6551` for the `'generated
+  do with static params and bindings'` kind. Domain analogue remains as
+  the next independent follow-up.

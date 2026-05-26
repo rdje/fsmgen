@@ -11509,6 +11509,49 @@ ISF
     (complete done)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'when nested repeat bound generated do before post-do multi-pending await_any without drain', qr/when-body nested repeat generated do with static params and bindings while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor when_nested_repeat_bound_generated_do_before_post_do_multi_pending_await_any_without_drain
+  (clock clk)
+  (interface
+    (input start)
+    (input cond)
+    (input loops (width 3))
+    (input payload0 (width 8))
+    (input payload1 (width 8))
+    (input req_addr (width 8))
+    (output result0 (width 8))
+    (output result1 (width 8))
+    (output resp (width 8))
+    (output done))
+  (transaction parent
+    (on start)
+    (when cond
+      (repeat loops
+        (spawn worker as w0
+          (bind
+            (input data payload0)
+            (output resp result0)))
+        (spawn worker as w1
+          (bind
+            (input data payload1)
+            (output resp result1)))
+        (do worker
+          (params
+            (WIDTH 16))
+          (bind
+            (input data req_addr)
+            (output resp resp)))
+        (await_any done)))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (complete done)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'when nested repeat local do while spawn pending with await_any drain', qr/when-body nested repeat local do while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the do remains deferred/);
 (actor when_nested_repeat_local_do_while_spawn_pending_with_await_any
   (clock clk)

@@ -30036,3 +30036,6 @@ This is the persistent technical change history for FSMGen.
 
 ### static-parameter before-post-do await_any missing-drain coverage
 - Added when-body and switch-branch `assert_lower_rejected` regressions in [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t) for the static-parameter generated `(do worker (params ...))` before post-do multi-pending `(await_any done)` observation without final same-body `(await_all done)` drain shape, matching the existing validator confess at [perl/FSM/Scheduler/ISF/LoweringIR.pm:6551](perl/FSM/Scheduler/ISF/LoweringIR.pm) for the `'generated do with static params'` kind. Test-only.
+
+### bound when-body before-post-do await_any missing-drain coverage
+- Added one when-body `assert_lower_rejected` regression in [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t) for the bound generated `(do worker (params ...) (bind ...))` before post-do multi-pending `(await_any done)` observation without final same-body `(await_all done)` drain shape. The switch counterpart already exists; this slice closes the symmetric when-body gap. The regression matches the existing validator confess at [perl/FSM/Scheduler/ISF/LoweringIR.pm:6551](perl/FSM/Scheduler/ISF/LoweringIR.pm) for the `'generated do with static params and bindings'` kind. Test-only.

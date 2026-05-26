@@ -36998,3 +36998,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   static params'` kind.
 - Test-only. Validation: focused `prove` + `mdbook build` + ISF CI all pass.
 - Active task tree: `none`.
+
+## 2026-05-27: R14 defensive missing-drain coverage shipped for bound when-body before-post-do await_any
+- Completed
+  `ISF-REPEAT-GENDO-BOUND-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`.
+- Added one when-body `assert_lower_rejected` regression in `t/1215` for
+  the bound generated `(do worker (params ...) (bind ...))` before post-do
+  multi-pending `(await_any done)` without final `(await_all done)` drain
+  shape. The switch counterpart already lives at line ~12061.
+- Test-only. Validation: focused `prove` + `mdbook build` + ISF CI all pass.
+- Active task tree: `none`.
