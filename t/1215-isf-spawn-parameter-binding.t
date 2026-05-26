@@ -10971,6 +10971,63 @@ ISF
     (complete done)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'when nested repeat domain generated do after multi-pending await_any then spawn with second await_any without drain', qr/when-body nested repeat generated do with static params and same-domain metadata while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor when_nested_repeat_domain_generated_do_after_multi_pending_await_any_then_spawn_with_second_await_any_without_drain
+  (clock-domains
+    (domain core (clock clk) (reset rst_n)))
+  (interface
+    (input start (domain core))
+    (input cond (domain core))
+    (input loops (width 3) (domain core))
+    (input payload0 (width 8) (domain core))
+    (input payload1 (width 8) (domain core))
+    (input payload2 (width 8) (domain core))
+    (input req_addr (width 8) (domain core))
+    (output result0 (width 8) (domain core))
+    (output result1 (width 8) (domain core))
+    (output result2 (width 8) (domain core))
+    (output resp (width 8) (domain core))
+    (output done (domain core)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (when cond
+      (repeat loops
+        (spawn worker as w0
+          (bind
+            (input data payload0)
+            (output resp result0))
+          (domain core))
+        (spawn worker as w1
+          (bind
+            (input data payload1)
+            (output resp result1))
+          (domain core))
+        (await_any done)
+        (do worker
+          (params
+            (WIDTH 16))
+          (bind
+            (input data req_addr)
+            (output resp resp))
+          (domain core))
+        (spawn worker as w2
+          (bind
+            (input data payload2)
+            (output resp result2))
+          (domain core))
+        (await_any done)))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (complete done)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'when nested repeat domain generated do while spawn pending without drain', qr/when-body nested repeat generated do with static params and same-domain metadata while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
 (actor when_nested_repeat_domain_generated_do_while_spawn_pending_without_drain
   (clock-domains
@@ -11553,6 +11610,64 @@ ISF
               (input data payload2)
               (output resp result2))
             (domain core)))))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat domain generated do after multi-pending await_any then spawn with second await_any without drain', qr/switch-branch nested repeat generated do with static params and same-domain metadata while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor switch_nested_repeat_domain_generated_do_after_multi_pending_await_any_then_spawn_with_second_await_any_without_drain
+  (clock-domains
+    (domain core (clock clk) (reset rst_n)))
+  (interface
+    (input start (domain core))
+    (input mode (domain core))
+    (input loops (width 3) (domain core))
+    (input payload0 (width 8) (domain core))
+    (input payload1 (width 8) (domain core))
+    (input payload2 (width 8) (domain core))
+    (input req_addr (width 8) (domain core))
+    (output result0 (width 8) (domain core))
+    (output result1 (width 8) (domain core))
+    (output result2 (width 8) (domain core))
+    (output resp (width 8) (domain core))
+    (output done (domain core)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0
+            (bind
+              (input data payload0)
+              (output resp result0))
+            (domain core))
+          (spawn worker as w1
+            (bind
+              (input data payload1)
+              (output resp result1))
+            (domain core))
+          (await_any done)
+          (do worker
+            (params
+              (WIDTH 16))
+            (bind
+              (input data req_addr)
+              (output resp resp))
+            (domain core))
+          (spawn worker as w2
+            (bind
+              (input data payload2)
+              (output resp result2))
+            (domain core))
+          (await_any done))))
     (complete done))
   (transaction worker
     (domain core)

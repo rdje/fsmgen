@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-26: R14 defensive missing-drain coverage shipped for same-domain second-awaitany
+- Completed `ISF-REPEAT-GENDO-DOMAIN-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1`
+  and closed the task tree.
+- Added one `when`-body and one `switch`-branch `assert_lower_rejected`
+  regression in `t/1215-isf-spawn-parameter-binding.t` for the same-domain
+  generated-do prior-`await_any` then spawn then second post-spawn
+  `await_any` without final same-body `(await_all done)` shape. Both
+  regressions match the existing validator confess at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the
+  `'generated do with static params and same-domain metadata'` kind.
+- This slice is test-only. Parser, scheduler, backend, generated `.fsm`,
+  HDL, public API, manifests, and runtime behavior are unchanged.
+- README, task tree, roadmap, change history, development notes, and live
+  achievement status are synchronized. The mdBook source is unchanged
+  because no user-visible behavior changed.
+- Validation passed: `prove -Iperl t/1215-isf-spawn-parameter-binding.t`
+  with `Files=1, Tests=100`; `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: Bootstrap import-tree measurement refreshed after same-domain generated-do second awaitany
 - Completed `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-DOMAIN-SECOND-AWAITANY-REFRESH.1`
   and closed the task tree.

@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Defensive missing-drain coverage for same-domain second-awaitany stays test-only
+- `ISF-REPEAT-GENDO-DOMAIN-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1` adds
+  two `assert_lower_rejected` regressions for the same-domain generated-do
+  prior-`await_any` then spawn then second post-spawn `await_any` shape
+  *without* a final same-body `(await_all done)` drain. The shapes mirror
+  the new accepted fixtures from
+  `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` but
+  intentionally omit the drain.
+- The validator at `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` already
+  rejects these shapes through the generic
+  `pending_generated_do_kind_before_drain` confess path; this slice locks
+  that behavior in regression instead of widening it.
+- The slice is intentionally narrow. The matching missing-drain regression
+  cases for plain/param/bound and the switch-branch generated-child
+  variant remain candidates for separate slices so each stays
+  independently reviewable.
+
 ## 2026-05-26: Bootstrap import-tree refresh after same-domain generated-do second awaitany stays documentation-only
 - `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-DOMAIN-SECOND-AWAITANY-REFRESH.1` exists
   to satisfy the architecture audit after the R14 same-domain generated-do

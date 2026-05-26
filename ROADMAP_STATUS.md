@@ -4,6 +4,21 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `none`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 defensive missing-drain coverage:
+  `ISF-REPEAT-GENDO-DOMAIN-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1` added
+  defensive missing-drain regression coverage for the same-domain
+  generated-do prior-`await_any` then spawn then second post-spawn
+  `await_any` without final same-body `(await_all done)` shape, and closed
+  the task tree. Both the top-level `when`-body and top-level `switch`-branch
+  variants now have an `assert_lower_rejected` regression that locks the
+  existing validator confess at `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551`
+  for the `'generated do with static params and same-domain metadata'`
+  kind. This slice is test-only and did not change parser, scheduler,
+  backend, generated `.fsm`, HDL, public API, manifests, or runtime
+  behavior. Validation passed: `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=100`;
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; and
+  `git diff --check`.
 - Current bootstrap import-tree refresh:
   `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-DOMAIN-SECOND-AWAITANY-REFRESH.1`
   refreshed the saved `bin/fsmgen` import-tree architecture note after the

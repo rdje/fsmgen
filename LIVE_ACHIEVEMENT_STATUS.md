@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-26: R14 — Defensive missing-drain coverage shipped for same-domain second-awaitany
+- Completed `ISF-REPEAT-GENDO-DOMAIN-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1`
+  and closed the task tree.
+- Added one `when`-body and one `switch`-branch `assert_lower_rejected`
+  regression in `t/1215-isf-spawn-parameter-binding.t` for same-domain
+  generated-do prior-`await_any` then spawn then second post-spawn
+  `await_any` without final same-body `(await_all done)`. Both regressions
+  match the existing validator confess at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the
+  `'generated do with static params and same-domain metadata'` kind.
+- Test-only; no behavior, parser, scheduler, backend, generated `.fsm`,
+  HDL, public API, or runtime change.
+- Validation passed: `prove -Iperl t/1215-isf-spawn-parameter-binding.t`
+  with `Files=1, Tests=100`; `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: Bootstrap architecture maintenance — R14 same-domain generated-do second-awaitany import-tree refreshed
 - Completed `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-DOMAIN-SECOND-AWAITANY-REFRESH.1`
   and closed the task tree.

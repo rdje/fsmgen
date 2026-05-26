@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-26
+### R14 — Defensive missing-drain coverage shipped for same-domain second-awaitany
+- Completed `ISF-REPEAT-GENDO-DOMAIN-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1`
+  and closed the task tree.
+- Added one `when`-body and one `switch`-branch `assert_lower_rejected`
+  regression in `t/1215-isf-spawn-parameter-binding.t` for the same-domain
+  generated-do prior-`await_any` then spawn then second post-spawn
+  `await_any` without final same-body `(await_all done)` shape.
+- Both new regressions match the existing validator confess at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the
+  `'generated do with static params and same-domain metadata'` kind.
+- This slice is test-only; it does not change parser, scheduler, backend,
+  generated `.fsm`, HDL, public API, manifests, tests beyond the new
+  regressions, or runtime behavior. The mdBook source is unchanged because
+  no user-visible behavior changed.
+- Validation passed: `prove -Iperl t/1215-isf-spawn-parameter-binding.t`
+  with `Files=1, Tests=100`; `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; and `git diff --check`.
+
 ### Bootstrap architecture maintenance — R14 same-domain generated-do second-awaitany import-tree measurement refreshed
 - Completed `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-DOMAIN-SECOND-AWAITANY-REFRESH.1`
   and closed the task tree.
