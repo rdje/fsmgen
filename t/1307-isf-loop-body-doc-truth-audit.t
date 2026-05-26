@@ -230,6 +230,10 @@ for my $path (@loop_docs) {
         documents_branch_prior_await_any_do_then_spawn($content, 'when', qr/(?:same[-\s]+domain|domain name)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated static-parameter same-domain do after multi-pending await_any then generated spawn subset",
     );
+    ok(
+        documents_branch_prior_await_any_domain_do_then_spawn_second_await_any($content, 'when'),
+        "$path documents the shipped top-level when-body nested repeat generated static-parameter same-domain do after multi-pending await_any then generated spawn and second await_any subset",
+    );
     like(
         $content,
         qr/switch(?:`|\s|-|branch)[\s\S]{0,1600}(?:same[-\s]+domain|domain NAME)[\s\S]{0,1200}generated(?:\s+nested)?\s+spawns?[\s\S]{0,800}pending[\s\S]{0,800}await_all[\s\S]{0,300}drain/i,
@@ -242,6 +246,10 @@ for my $path (@loop_docs) {
     ok(
         documents_branch_prior_await_any_do_then_spawn($content, 'switch', qr/(?:same[-\s]+domain|domain name)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter same-domain do after multi-pending await_any then generated spawn subset",
+    );
+    ok(
+        documents_branch_prior_await_any_domain_do_then_spawn_second_await_any($content, 'switch'),
+        "$path documents the shipped top-level switch-branch nested repeat generated static-parameter same-domain do after multi-pending await_any then generated spawn and second await_any subset",
     );
     like(
         $content,
@@ -357,6 +365,10 @@ for my $path (@loop_docs) {
     ok(
         !documents_stale_bound_prior_await_any_second_post_spawn_deferral($content),
         "$path does not re-defer shipped bound prior-awaitany second post-spawn await_any subsets",
+    );
+    ok(
+        !documents_stale_domain_prior_await_any_second_post_spawn_deferral($content),
+        "$path does not re-defer shipped same-domain prior-awaitany second post-spawn await_any subsets",
     );
     like(
         $content,
@@ -703,6 +715,55 @@ sub documents_branch_prior_await_any_bound_do_then_spawn_second_await_any {
     return 0;
 }
 
+sub documents_branch_prior_await_any_domain_do_then_spawn_second_await_any {
+    my ($content, $branch) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    my @anchors = $branch eq 'switch'
+        ? (
+            'top-level switch branch',
+            'top-level switch-branch',
+            'switch-contained',
+            'same-domain generated-do',
+            'same-domain metadata',
+        )
+        : (
+            'top-level when body',
+            'top-level when-body',
+            'when-contained',
+            'same-domain generated-do',
+            'same-domain metadata',
+        );
+
+    for my $anchor (@anchors) {
+        my $offset = index($normalized, $anchor);
+        while ($offset >= 0) {
+            my $window = substr($normalized, $offset, 9600);
+            return 1
+                if ($branch ne 'switch' || index($window, 'switch') >= 0)
+                && ($branch ne 'when' || index($window, 'when') >= 0)
+                && ($window =~ /static(?:[-\s]+parameter| params)|\(params \.\.\.\)/)
+                && ($window =~ /(?:same[-\s]+domain|domain name|domain metadata)/)
+                && index($window, 'generated') >= 0
+                && index($window, 'do') >= 0
+                && index($window, 'prior') >= 0
+                && index($window, 'multi-pending') >= 0
+                && index($window, 'await_any') >= 0
+                && $window =~ /later\s+generated(?:\s+nested)?\s+spawns?/
+                && index($window, 'second') >= 0
+                && index($window, 'post-spawn') >= 0
+                && index($window, 'await_all') >= 0
+                && index($window, 'pre-do') >= 0
+                && index($window, 'post-do') >= 0
+                && index($window, 'drain') >= 0;
+            $offset = index($normalized, $anchor, $offset + 1);
+        }
+    }
+
+    return 0;
+}
+
 sub documents_stale_prior_await_any_spawn_after_do_deferral {
     my ($content) = @_;
     my $normalized = lc $content;
@@ -854,6 +915,45 @@ sub documents_stale_bound_prior_await_any_second_post_spawn_deferral {
         'bound generated-do second post-spawn await_any prior-observation variants remain fail-closed',
         'bound and same-domain generated-do second post-spawn await_any prior-observation variants',
         'second post-spawn await_any in bound and same-domain generated-do prior-observation shapes remains fail-closed',
+    ) {
+        return 1 if index($normalized, $phrase) >= 0;
+    }
+
+    return 0;
+}
+
+sub documents_stale_domain_prior_await_any_second_post_spawn_deferral {
+    my ($content) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    for my $anchor (
+        'same-domain generated-do',
+        'generated do with static params and same-domain metadata',
+        'same-domain metadata',
+    ) {
+        my $offset = index($normalized, $anchor);
+        while ($offset >= 0) {
+            my $window = substr($normalized, $offset, 2200);
+            return 1
+                if index($window, 'prior') >= 0
+                && index($window, 'second') >= 0
+                && index($window, 'await_any') >= 0
+                && ($window =~ /(?:fail-closed|backlog|outside|deferred)/)
+                && index($window, 'cross-domain') < 0
+                && index($window, 'missing') < 0
+                && index($window, 'deeper') < 0
+                && index($window, 'cdc') < 0;
+            $offset = index($normalized, $anchor, $offset + 1);
+        }
+    }
+
+    for my $phrase (
+        'a second post-spawn await_any in same-domain generated-do prior-observation shapes remains backlog',
+        'a second post-spawn await_any in same-domain generated-do prior-observation shapes remains fail-closed',
+        'same-domain generated-do second post-spawn await_any prior-observation variants remain backlog',
+        'same-domain generated-do second post-spawn await_any prior-observation variants remain fail-closed',
+        'second post-spawn await_any in same-domain generated-do prior-observation shapes remains fail-closed',
     ) {
         return 1 if index($normalized, $phrase) >= 0;
     }

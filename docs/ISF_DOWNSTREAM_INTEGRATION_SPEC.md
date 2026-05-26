@@ -1506,8 +1506,11 @@ Rules:
   gates the later spawn state, declared ownership metadata remains scoped to
   the generated do instance, and the final drain covers both pre-do and
   post-do generated spawns before nested repeat re-entry. In the
-  prior-observation form, a second multi-pending `(await_any done)` after the
-  later spawn remains fail-closed.
+  prior-observation form, a second post-spawn multi-pending
+  `(await_any done)` may run before the mandatory final drain; both
+  observations leave all pre-do and post-do generated-spawn done handoffs live
+  for that final `await_all`, and declared ownership metadata stays scoped to
+  the generated do instance.
 
   Those same-domain generated-do do-then-spawn subsets may also run a
   post-spawn multi-pending `(await_any done)` observation before the
@@ -1518,22 +1521,16 @@ Rules:
   final `await_all` still covers both pre-do and post-do generated spawns
   before nested repeat re-entry.
 
-  Plain generated-child, static-parameter generated-do, and bound
-  generated-do do-then-spawn
+  Plain generated-child, static-parameter generated-do, bound generated-do,
+  and same-domain generated-do do-then-spawn
   subsets may also run a second post-spawn multi-pending `(await_any done)`
   observation after a prior multi-pending observation before the generated do,
-  provided the mandatory same-body `(await_all done)` still follows.
-  Same-domain generated-do do-then-spawn subsets may run a post-spawn
-  multi-pending `(await_any done)` observation before the mandatory same-body
-  `(await_all done)` drain only when no prior multi-pending `await_any`
-  observation is active before the later spawn. The post-spawn observation
-  does not drain the outstanding generated-spawn set; the final `await_all`
-  still covers both pre-do and post-do generated spawns before nested repeat
-  re-entry.
+  provided the mandatory same-body `(await_all done)` still follows. The
+  post-spawn observation does not drain the outstanding generated-spawn set;
+  the final `await_all` still covers both pre-do and post-do generated spawns
+  before nested repeat re-entry.
 
-  A second post-spawn `await_any` in same-domain generated-do
-  prior-observation forms, deeper branch/loop nesting, and cross-domain
-  activation remain fail-closed.
+  Deeper branch/loop nesting and cross-domain activation remain fail-closed.
 
   Cross-domain repeat-body `do`, broader outstanding-child semantics,
   `stage`, `contract`, deeper branch nesting, nested `while`, and nested

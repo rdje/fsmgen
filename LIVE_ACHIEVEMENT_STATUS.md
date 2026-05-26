@@ -2,6 +2,33 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-26: R14 — Same-domain generated do after prior awaitany then spawn plus second awaitany shipped
+- Completed `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`
+  and closed the task tree.
+- Branch-contained nested repeats now accept generated spawns, prior
+  multi-pending `(await_any done)`, same-domain generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))`, later generated
+  spawn, second post-spawn multi-pending `(await_any done)`, and mandatory
+  same-body `(await_all done)` before nested repeat re-entry for repeats
+  directly inside top-level `when` bodies or top-level `switch` branches.
+- Both `await_any` clauses observe generated children without clearing the
+  outstanding generated-spawn done set; the deterministic generated do
+  instance preserves static generated-top parameter overrides, optional
+  generated-top input/output binding handoffs, and declared same-domain
+  ownership metadata, then completes before the later generated spawn
+  starts; the final `await_all` drains generated spawns from both sides of
+  the generated `do`.
+- Missing same-body `(await_all done)` drain, cross-domain activation,
+  deeper branch/loop nesting, CDC behavior, and broader outstanding-child
+  lifetime semantics remain fail-closed/deferred.
+- Validation passed: syntax checks; focused behavior with
+  `t/1215-isf-spawn-parameter-binding.t`; feature matrix audit with
+  `t/1305-isf-book-feature-matrix-audit.t`; loop-body doc audit with
+  `t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: Bootstrap architecture maintenance — R14 bound generated-do second-awaitany import-tree refreshed
 - Completed `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-BOUND-SECOND-AWAITANY-REFRESH.1`
   and closed the task tree.

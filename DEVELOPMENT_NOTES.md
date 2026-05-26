@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Same-domain generated do after prior awaitany can run a second post-spawn awaitany
+- `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` widens the
+  same-domain generated-do prior-observation do-then-spawn proof to permit a
+  second observation before the final drain.
+- The accepted path remains branch-contained: the repeat must be directly
+  inside a top-level `when` body or top-level `switch` branch, use generated
+  `(do child (params ...) [(bind ...)] (domain NAME))`, and end with
+  same-body `await_all` before nested repeat re-entry.
+- The first multi-pending `await_any` observes a pre-do generated child, the
+  same-domain generated `do` waits for its deterministic generated do
+  instance's fresh done handoff while preserving static generated-top
+  parameter overrides, optional generated-top input/output binding handoffs,
+  and declared same-domain ownership metadata, the later generated spawn
+  joins the same outstanding generated-spawn set, and the second post-spawn
+  `await_any` observes without consuming that set.
+- The ownership-metadata-lifetime proof is straightforward because
+  `(domain NAME)` is static frontend metadata on the generated child
+  definition and the generated `do` instance: it does not change across the
+  multi-pending observation window the way runtime state could. The bound
+  and static-parameter shapes already preserve static parameter overrides
+  and generated-top binding handoffs through both observations; declared
+  same-domain ownership is the same lifetime class.
+- Missing same-body `await_all` remains fail-closed. The second observation
+  does not make the nested repeat check reachable; only the final `await_all`
+  drains every pre-do and post-do generated spawn.
+
 ## 2026-05-26: Bootstrap import-tree refresh after bound generated-do second awaitany stays documentation-only
 - `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-BOUND-SECOND-AWAITANY-REFRESH.1` exists
   to satisfy the `SESSION_BOOTSTRAP.md` architecture audit after the R14

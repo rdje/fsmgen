@@ -4,7 +4,33 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `none`.
 - Active task tree: `none`.
 - Current frontier: `none`.
-- Current R14 bound generated-do prior-await_any then spawn plus second
+- Current R14 same-domain generated-do prior-await_any then spawn plus second
+  await_any:
+  `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` shipped
+  the same-domain generated-do analogue of the local-do, plain
+  generated-child, static-parameter generated-do, and bound generated-do
+  repeated-observation prior-observation shapes and closed the task tree. A
+  repeat directly inside a top-level `when` body or top-level `switch` branch
+  may now run generated spawns, observe one done pulse through multi-pending
+  `(await_any done)`, run same-domain generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))`, start one or more
+  later generated spawns after the deterministic generated do instance's
+  fresh done handoff, observe a second post-spawn multi-pending
+  `(await_any done)`, and drain every generated spawn through same-body
+  `(await_all done)` before nested repeat re-entry. Both `await_any` clauses
+  leave the outstanding generated-spawn done set live, static generated-top
+  parameter overrides, optional generated-top input/output binding handoffs,
+  and declared same-domain ownership metadata remain scoped to the generated
+  do instance, and the final `await_all` drains generated spawns from both
+  sides of the generated `do`. Missing same-body `(await_all done)` drain,
+  cross-domain activation, deeper branch/loop nesting, CDC behavior, and
+  broader outstanding-child lifetime semantics remain fail-closed/deferred.
+  Validation passed: syntax checks; focused behavior with
+  `t/1215-isf-spawn-parameter-binding.t`; feature matrix audit with
+  `t/1305-isf-book-feature-matrix-audit.t`; loop-body doc audit with
+  `t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; and `git diff --check`.
+- Previous R14 bound generated-do prior-await_any then spawn plus second
   await_any:
   `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` shipped
   the bound generated-do analogue of the local-do, plain generated-child, and

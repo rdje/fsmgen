@@ -3909,6 +3909,181 @@ ISF
         'unrelated domains do not receive prior-await_any same-domain do-then-spawn metadata');
 };
 
+subtest 'when body nested repeat domain generated do after multi-pending await_any can run before later generated spawn, second await_any, and await_all' => sub {
+    my $source = <<'ISF';
+(actor when_repeat_domain_do_after_await_any_then_spawn_second_await_any
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain aux  (clock aux_clk) (reset aux_rst_n)))
+  (interface
+    (input start (domain core))
+    (input cond (domain core))
+    (input loops (width 3) (domain core))
+    (input payload0 (width 8) (domain core))
+    (input payload1 (width 8) (domain core))
+    (input payload2 (width 8) (domain core))
+    (input req_addr (width 8) (domain core))
+    (input status (domain core))
+    (output done (domain core))
+    (output worker_done (domain core))
+    (output spawn_resp0 (width 8) (domain core))
+    (output spawn_resp1 (width 8) (domain core))
+    (output spawn_resp2 (width 8) (domain core))
+    (output resp (width 8) (domain core)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (when cond
+      (repeat loops
+        (sample status as before)
+        (spawn worker as w0
+          (params
+            (WIDTH 16))
+          (bind
+            (input addr payload0)
+            (output data spawn_resp0))
+          (domain core))
+        (spawn worker as w1
+          (params
+            (WIDTH 24))
+          (bind
+            (input addr payload1)
+            (output data spawn_resp1))
+          (domain core))
+        (await_any done)
+        (sample status as after_any)
+        (do worker
+          (params
+            (WIDTH 32))
+          (bind
+            (input addr req_addr)
+            (output data resp))
+          (domain core))
+        (sample status as after_do)
+        (spawn worker as w2
+          (params
+            (WIDTH 40))
+          (bind
+            (input addr payload2)
+            (output data spawn_resp2))
+          (domain core))
+        (await_any done)
+        (await_all done)))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete worker_done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 4,
+        'when-body prior-await_any domain second-await_any subset records all generated instances');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{w0}, 'when-body prior-await_any domain second-await_any subset preserves first pre-do spawn');
+    ok($instances{w1}, 'when-body prior-await_any domain second-await_any subset preserves second pre-do spawn');
+    ok($instances{parent_worker_repeat_do_0}, 'when-body prior-await_any domain second-await_any subset records generated do instance');
+    ok($instances{w2}, 'when-body prior-await_any domain second-await_any subset preserves post-do spawn');
+    is($instances{w0}{domain}, 'core',
+        'when-body prior-await_any domain second-await_any subset preserves first pre-do spawn domain metadata');
+    is($instances{w1}{domain}, 'core',
+        'when-body prior-await_any domain second-await_any subset preserves second pre-do spawn domain metadata');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'when-body prior-await_any domain second-await_any subset preserves do activation provenance');
+    is($instances{parent_worker_repeat_do_0}{domain}, 'core',
+        'when-body prior-await_any domain second-await_any subset preserves same-domain metadata on the do instance');
+    is($instances{w2}{domain}, 'core',
+        'when-body prior-await_any domain second-await_any subset preserves post-do spawn domain metadata');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [{ name => 'WIDTH', value => '32' }],
+        'when-body prior-await_any domain second-await_any subset preserves static parameter overrides on the do instance');
+    is_deeply(
+        $instances{parent_worker_repeat_do_0}{port_bindings},
+        [
+            {
+                role             => 'input',
+                child_port       => 'addr',
+                parent_port      => 'parent_worker_repeat_do_0_addr',
+                actor_signal     => 'req_addr',
+                actor_expr       => 'req_addr',
+                actor_expression => 'req_addr',
+                width            => 8,
+            },
+            {
+                role             => 'output',
+                child_port       => 'data',
+                parent_port      => 'parent_worker_repeat_do_0_data',
+                actor_signal     => 'resp',
+                actor_expr       => 'resp',
+                actor_expression => 'resp',
+                width            => 8,
+            },
+        ],
+        'when-body prior-await_any domain second-await_any subset exposes do-site binding handoffs',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $core_fsm = $lowered->{files}{'when_repeat_domain_do_after_await_any_then_spawn_second_await_any__domain_core.fsm'};
+    my $top_fsm = $lowered->{files}{'when_repeat_domain_do_after_await_any_then_spawn_second_await_any_top.fsm'};
+
+    ok(defined($core_fsm), 'when-body prior-await_any domain second-await_any core-domain scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'when-body prior-await_any domain second-await_any domain top .fsm is emitted');
+    like($core_fsm, qr/\(parent_when_\d+[\s\S]*\(=1 \(-> parent_repeat_init_\d+\)\)/,
+        'when true path enters the prior-await_any domain second-await_any nested repeat region');
+    like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
+        'second same-domain pre-do generated spawn advances to the prior await_any observation for second-await_any');
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+        'prior await_any observes either same-domain pre-do generated child before domain do');
+    like($core_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
+        'same-domain generated do after prior await_any keeps input and output binding handoffs reviewable before second await_any');
+    like($core_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'same-domain generated do completes before the later generated spawn in the second-await_any subset');
+    like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
+        'post-do same-domain generated spawn advances to the second await_any observation');
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+        'second await_any observes any pre-do or post-do same-domain generated child without draining the set');
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+        'await_all after the second await_any drains pre-do and post-do same-domain generated spawns before nested repeat re-entry');
+    like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_after_await_any_then_spawn_second_await_any__domain_core\)/,
+        'domain top instantiates the prior-await_any second-await_any core-domain scheduled artifact');
+    like($top_fsm, qr{/core\.resp/resp/},
+        'domain top exposes the prior-await_any second-await_any core-domain do output handoff result');
+
+    my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
+    is_deeply(
+        [ sort map { $_->{kind} . ':' . $_->{owner} . ':' . $_->{child} . ':' . $_->{instance} } @{$ir_domain{core}{child_instances}} ],
+        [
+            'do:parent:worker:parent_worker_repeat_do_0',
+            'spawn:parent:worker:w0',
+            'spawn:parent:worker:w1',
+            'spawn:parent:worker:w2',
+        ],
+        'domain partition groups pre-do spawns, same-domain do, and post-do spawn after prior await_any with second await_any',
+    );
+    is_deeply($ir_domain{aux}{child_instances}, [],
+        'domain partition keeps unrelated domains free of prior-await_any same-domain second-await_any metadata');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    my %reported_domain = map { $_->{name} => $_ } @{$report->{clock_domains}};
+    is_deeply(
+        [ sort map { $_->{kind} . ':' . $_->{owner} . ':' . $_->{child} . ':' . $_->{instance} } @{$reported_domain{core}{child_instances}} ],
+        [
+            'do:parent:worker:parent_worker_repeat_do_0',
+            'spawn:parent:worker:w0',
+            'spawn:parent:worker:w1',
+            'spawn:parent:worker:w2',
+        ],
+        'clock-domain report metadata groups pre-do spawns, same-domain do, and post-do spawn after prior await_any with second await_any',
+    );
+    is_deeply($reported_domain{aux}{child_instances}, [],
+        'unrelated domains do not receive prior-await_any same-domain second-await_any metadata');
+};
+
 subtest 'when body nested repeat domain generated do can run while generated spawn is pending before await_all' => sub {
     my $source = <<'ISF';
 (actor when_repeat_domain_do_while_spawn_pending
@@ -8247,6 +8422,184 @@ ISF
         'unrelated domains do not receive switch prior-await_any same-domain do-then-spawn metadata');
 };
 
+subtest 'switch branch nested repeat domain generated do after multi-pending await_any can run before later generated spawn, second await_any, and await_all' => sub {
+    my $source = <<'ISF';
+(actor switch_repeat_domain_do_after_await_any_then_spawn_second_await_any
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain aux  (clock aux_clk) (reset aux_rst_n)))
+  (interface
+    (input start (domain core))
+    (input mode (width 2) (domain core))
+    (input loops (width 3) (domain core))
+    (input payload0 (width 8) (domain core))
+    (input payload1 (width 8) (domain core))
+    (input payload2 (width 8) (domain core))
+    (input req_addr (width 8) (domain core))
+    (input status (domain core))
+    (output done (domain core))
+    (output worker_done (domain core))
+    (output spawn_resp0 (width 8) (domain core))
+    (output spawn_resp1 (width 8) (domain core))
+    (output spawn_resp2 (width 8) (domain core))
+    (output resp (width 8) (domain core)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (sample status as before)
+          (spawn worker as w0
+            (params
+              (WIDTH 16))
+            (bind
+              (input addr payload0)
+              (output data spawn_resp0))
+            (domain core))
+          (spawn worker as w1
+            (params
+              (WIDTH 24))
+            (bind
+              (input addr payload1)
+              (output data spawn_resp1))
+            (domain core))
+          (await_any done)
+          (sample status as after_any)
+          (do worker
+            (params
+              (WIDTH 32))
+            (bind
+              (input addr req_addr)
+              (output data resp))
+            (domain core))
+          (sample status as after_do)
+          (spawn worker as w2
+            (params
+              (WIDTH 40))
+            (bind
+              (input addr payload2)
+              (output data spawn_resp2))
+            (domain core))
+          (await_any done)
+          (await_all done)))
+      (1
+        (sample status as other)))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete worker_done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 4,
+        'switch-branch prior-await_any domain second-await_any subset records all generated instances');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{w0}, 'switch-branch prior-await_any domain second-await_any subset preserves first pre-do spawn');
+    ok($instances{w1}, 'switch-branch prior-await_any domain second-await_any subset preserves second pre-do spawn');
+    ok($instances{parent_worker_repeat_do_0}, 'switch-branch prior-await_any domain second-await_any subset records generated do instance');
+    ok($instances{w2}, 'switch-branch prior-await_any domain second-await_any subset preserves post-do spawn');
+    is($instances{w0}{domain}, 'core',
+        'switch-branch prior-await_any domain second-await_any subset preserves first pre-do spawn domain metadata');
+    is($instances{w1}{domain}, 'core',
+        'switch-branch prior-await_any domain second-await_any subset preserves second pre-do spawn domain metadata');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'switch-branch prior-await_any domain second-await_any subset preserves do activation provenance');
+    is($instances{parent_worker_repeat_do_0}{domain}, 'core',
+        'switch-branch prior-await_any domain second-await_any subset preserves same-domain metadata on the do instance');
+    is($instances{w2}{domain}, 'core',
+        'switch-branch prior-await_any domain second-await_any subset preserves post-do spawn domain metadata');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [{ name => 'WIDTH', value => '32' }],
+        'switch-branch prior-await_any domain second-await_any subset preserves static parameter overrides on the do instance');
+    is_deeply(
+        $instances{parent_worker_repeat_do_0}{port_bindings},
+        [
+            {
+                role             => 'input',
+                child_port       => 'addr',
+                parent_port      => 'parent_worker_repeat_do_0_addr',
+                actor_signal     => 'req_addr',
+                actor_expr       => 'req_addr',
+                actor_expression => 'req_addr',
+                width            => 8,
+            },
+            {
+                role             => 'output',
+                child_port       => 'data',
+                parent_port      => 'parent_worker_repeat_do_0_data',
+                actor_signal     => 'resp',
+                actor_expr       => 'resp',
+                actor_expression => 'resp',
+                width            => 8,
+            },
+        ],
+        'switch-branch prior-await_any domain second-await_any subset exposes do-site binding handoffs',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $core_fsm = $lowered->{files}{'switch_repeat_domain_do_after_await_any_then_spawn_second_await_any__domain_core.fsm'};
+    my $top_fsm = $lowered->{files}{'switch_repeat_domain_do_after_await_any_then_spawn_second_await_any_top.fsm'};
+
+    ok(defined($core_fsm), 'switch-branch prior-await_any domain second-await_any core-domain scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'switch-branch prior-await_any domain second-await_any domain top .fsm is emitted');
+    like($core_fsm, qr/\(parent_switch_\d+[\s\S]*\(=0 \(-> parent_repeat_init_\d+\)\)/,
+        'matching switch branch enters the prior-await_any domain second-await_any nested repeat region');
+    like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
+        'second switch same-domain pre-do generated spawn advances to the prior await_any observation for second-await_any');
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+        'switch prior await_any observes either same-domain pre-do generated child before domain do');
+    like($core_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
+        'switch same-domain generated do after prior await_any keeps input and output binding handoffs reviewable before second await_any');
+    like($core_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'switch same-domain generated do completes before the later generated spawn in the second-await_any subset');
+    like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
+        'switch post-do same-domain generated spawn advances to the second await_any observation');
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+        'switch second await_any observes any pre-do or post-do same-domain generated child without draining the set');
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+        'switch await_all after the second await_any drains pre-do and post-do same-domain generated spawns before nested repeat re-entry');
+    like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_after_await_any_then_spawn_second_await_any__domain_core\)/,
+        'domain top instantiates the switch prior-await_any second-await_any core-domain scheduled artifact');
+    like($top_fsm, qr{/core\.resp/resp/},
+        'domain top exposes the switch prior-await_any second-await_any core-domain do output handoff result');
+
+    my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
+    is_deeply(
+        [ sort map { $_->{kind} . ':' . $_->{owner} . ':' . $_->{child} . ':' . $_->{instance} } @{$ir_domain{core}{child_instances}} ],
+        [
+            'do:parent:worker:parent_worker_repeat_do_0',
+            'spawn:parent:worker:w0',
+            'spawn:parent:worker:w1',
+            'spawn:parent:worker:w2',
+        ],
+        'domain partition groups switch pre-do spawns, same-domain do, and post-do spawn after prior await_any with second await_any',
+    );
+    is_deeply($ir_domain{aux}{child_instances}, [],
+        'domain partition keeps unrelated domains free of switch prior-await_any same-domain second-await_any metadata');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    my %reported_domain = map { $_->{name} => $_ } @{$report->{clock_domains}};
+    is_deeply(
+        [ sort map { $_->{kind} . ':' . $_->{owner} . ':' . $_->{child} . ':' . $_->{instance} } @{$reported_domain{core}{child_instances}} ],
+        [
+            'do:parent:worker:parent_worker_repeat_do_0',
+            'spawn:parent:worker:w0',
+            'spawn:parent:worker:w1',
+            'spawn:parent:worker:w2',
+        ],
+        'clock-domain report metadata groups switch pre-do spawns, same-domain do, and post-do spawn after prior await_any with second await_any',
+    );
+    is_deeply($reported_domain{aux}{child_instances}, [],
+        'unrelated domains do not receive switch prior-await_any same-domain second-await_any metadata');
+};
+
 subtest 'switch branch nested repeat domain generated do can run while generated spawn is pending before await_all' => sub {
     my $source = <<'ISF';
 (actor switch_repeat_domain_do_while_spawn_pending
@@ -10618,64 +10971,6 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'when nested repeat domain generated do after multi-pending await_any then spawn with second await_any', qr/when-body nested repeat spawn after generated do with static params and same-domain metadata while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the later spawn remains deferred/);
-(actor when_nested_repeat_domain_generated_do_after_multi_pending_await_any_then_spawn_with_second_await_any
-  (clock-domains
-    (domain core (clock clk) (reset rst_n)))
-  (interface
-    (input start (domain core))
-    (input cond (domain core))
-    (input loops (width 3) (domain core))
-    (input payload0 (width 8) (domain core))
-    (input payload1 (width 8) (domain core))
-    (input payload2 (width 8) (domain core))
-    (input req_addr (width 8) (domain core))
-    (output result0 (width 8) (domain core))
-    (output result1 (width 8) (domain core))
-    (output result2 (width 8) (domain core))
-    (output resp (width 8) (domain core))
-    (output done (domain core)))
-  (transaction parent
-    (domain core)
-    (on start)
-    (when cond
-      (repeat loops
-        (spawn worker as w0
-          (bind
-            (input data payload0)
-            (output resp result0))
-          (domain core))
-        (spawn worker as w1
-          (bind
-            (input data payload1)
-            (output resp result1))
-          (domain core))
-        (await_any done)
-        (do worker
-          (params
-            (WIDTH 16))
-          (bind
-            (input data req_addr)
-            (output resp resp))
-          (domain core))
-        (spawn worker as w2
-          (bind
-            (input data payload2)
-            (output resp result2))
-          (domain core))
-        (await_any done)
-        (await_all done)))
-    (complete done))
-  (transaction worker
-    (domain core)
-    (params
-      (WIDTH 8))
-    (ports
-      (input data (width 8))
-      (output resp (width 8)))
-    (complete done)))
-ISF
-
     assert_lower_rejected(<<'ISF', 'when nested repeat domain generated do while spawn pending without drain', qr/when-body nested repeat generated do with static params and same-domain metadata while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
 (actor when_nested_repeat_domain_generated_do_while_spawn_pending_without_drain
   (clock-domains
@@ -11258,65 +11553,6 @@ ISF
               (input data payload2)
               (output resp result2))
             (domain core)))))
-    (complete done))
-  (transaction worker
-    (domain core)
-    (params
-      (WIDTH 8))
-    (ports
-      (input data (width 8))
-      (output resp (width 8)))
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'switch nested repeat domain generated do after multi-pending await_any then spawn with second await_any', qr/switch-branch nested repeat spawn after generated do with static params and same-domain metadata while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the later spawn remains deferred/);
-(actor switch_nested_repeat_domain_generated_do_after_multi_pending_await_any_then_spawn_with_second_await_any
-  (clock-domains
-    (domain core (clock clk) (reset rst_n)))
-  (interface
-    (input start (domain core))
-    (input mode (domain core))
-    (input loops (width 3) (domain core))
-    (input payload0 (width 8) (domain core))
-    (input payload1 (width 8) (domain core))
-    (input payload2 (width 8) (domain core))
-    (input req_addr (width 8) (domain core))
-    (output result0 (width 8) (domain core))
-    (output result1 (width 8) (domain core))
-    (output result2 (width 8) (domain core))
-    (output resp (width 8) (domain core))
-    (output done (domain core)))
-  (transaction parent
-    (domain core)
-    (on start)
-    (switch mode
-      (0
-        (repeat loops
-          (spawn worker as w0
-            (bind
-              (input data payload0)
-              (output resp result0))
-            (domain core))
-          (spawn worker as w1
-            (bind
-              (input data payload1)
-              (output resp result1))
-            (domain core))
-          (await_any done)
-          (do worker
-            (params
-              (WIDTH 16))
-            (bind
-              (input data req_addr)
-              (output resp resp))
-            (domain core))
-          (spawn worker as w2
-            (bind
-              (input data payload2)
-              (output resp result2))
-            (domain core))
-          (await_any done)
-          (await_all done))))
     (complete done))
   (transaction worker
     (domain core)

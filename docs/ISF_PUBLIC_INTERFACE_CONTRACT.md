@@ -1523,7 +1523,10 @@ observation is active before the later spawn or after the generated do
 follows a prior multi-pending observation; the generated do instance's fresh
 done handoff gates the later spawn state and declared ownership metadata
 remains scoped to the generated do instance. In the prior-observation form, a
-second `await_any` after that later spawn remains fail-closed. Plain
+second post-spawn multi-pending `await_any` may run before the mandatory
+final `await_all` drain; both observations leave the pre-do and post-do
+generated-spawn done set live for that final drain, and declared ownership
+metadata stays scoped to the generated do instance. Plain
 generated-child, static-parameter, bound, same-domain, and local-do
 do-then-spawn subsets may also run a post-spawn multi-pending `await_any`
 observation before the mandatory same-body `await_all` drain, provided no
@@ -1544,10 +1547,10 @@ multi-pending `await_any`, and still require the final same-body `await_all`
 to drain the same outstanding generated-spawn set. Bound generated-do
 do-then-spawn subsets support the same prior-observation repeated-`await_any`
 path, including the final same-body `await_all` drain. Same-domain
-generated-do do-then-spawn subsets support that same direct-to-`await_all`
-prior-observation path while preserving
-declared ownership metadata on the generated do instance; their second
-post-spawn `await_any` prior-observation form remains fail-closed.
+generated-do do-then-spawn subsets support that same prior-observation
+repeated-`await_any` path while preserving declared ownership metadata on
+the generated do instance; both observations leave the pre-do and post-do
+generated-spawn done set live for the final same-body `await_all` drain.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus
@@ -1656,10 +1659,12 @@ subsets may also start one or more later generated spawns, run a post-spawn
 multi-pending `await_any` observation, and then use the mandatory same-body
 `await_all` drain when no prior multi-pending `await_any` observation is
 active before the later spawn; declared ownership metadata remains scoped to
-the generated do instance. A second post-spawn `await_any` after same-domain
-generated `do` when a multi-pending `await_any` observation is active before
-the later spawn remains outside the public shipped repeated-observation
-subset.
+the generated do instance. Those same same-domain generated-do subsets may
+also run that second post-spawn multi-pending `await_any` observation after
+the same-domain generated do follows a prior multi-pending `await_any`
+observation, provided the mandatory same-body `await_all` still drains the
+outstanding generated-spawn set and declared ownership metadata remains
+scoped to the generated do instance.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. In the top-level `when` body and top-level
@@ -1717,10 +1722,8 @@ one or more later generated nested spawns before the mandatory same-body
 before the later spawn or after the generated do follows a prior multi-pending
 observation; declared ownership metadata remains scoped to the generated do
 instance. Later `await_any` after a post-do spawn remains public for local do,
-generated-child do, static-parameter generated do, and bound generated do
-with or without a prior multi-pending observation. Same-domain generated-do
-second `await_any` forms after a prior multi-pending observation remain
-outside the public shipped subset.
+generated-child do, static-parameter generated do, bound generated do, and
+same-domain generated do with or without a prior multi-pending observation.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent
