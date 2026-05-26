@@ -32666,3 +32666,17 @@ It is an exact-delay pulse request:
   [`ISF-REPEAT-GENDO-BOUND-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-BOUND-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.md)
   adds one regression matching the existing validator confess at
   `LoweringIR.pm:6551`. Test-only.
+
+## 2026-05-27: same-domain before-post-do await_any missing-drain coverage — matrix complete
+- Continued the R14 lane with when-body and switch-branch
+  `assert_lower_rejected` regressions for the same-domain generated
+  `(do worker (params ...) (bind ...) (domain core))` before post-do
+  multi-pending `(await_any done)` without final `(await_all done)` drain
+  shape. The slice
+  [`ISF-REPEAT-GENDO-DOMAIN-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-DOMAIN-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  adds two regressions matching the existing validator confess at
+  `LoweringIR.pm:6551`.
+- With this slice the BEFORE-POST-DO-AWAITANY missing-drain matrix is
+  complete across the five generated-do families (local-do, plain,
+  static-parameter, bound, same-domain) on both branch-contained subsets.
+- Test-only.

@@ -37008,3 +37008,17 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   shape. The switch counterpart already lives at line ~12061.
 - Test-only. Validation: focused `prove` + `mdbook build` + ISF CI all pass.
 - Active task tree: `none`.
+
+## 2026-05-27: R14 defensive missing-drain coverage shipped for same-domain before-post-do await_any — matrix complete
+- Completed
+  `ISF-REPEAT-GENDO-DOMAIN-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`.
+- Added when-body and switch-branch `assert_lower_rejected` regressions in
+  `t/1215` for the same-domain generated `(do worker (params ...) (bind
+  ...) (domain core))` before post-do multi-pending `(await_any done)`
+  without final `(await_all done)` drain shape, matching the existing
+  validator confess at `LoweringIR.pm:6551` for the `'generated do with
+  static params and same-domain metadata'` kind.
+- With this slice the BEFORE-POST-DO-AWAITANY missing-drain matrix is
+  complete across the five generated-do families (local-do, plain,
+  static-parameter, bound, same-domain) on both branch-contained subsets.
+- Test-only. Active task tree: `none`.

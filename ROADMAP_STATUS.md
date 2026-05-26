@@ -14331,3 +14331,9 @@ Exit criteria:
   existed). Test-only locking of `LoweringIR.pm:6551` for the `'generated
   do with static params and bindings'` kind. Domain analogue remains as
   the next independent follow-up.
+- `R14`: BEFORE-POST-DO-AWAITANY missing-drain regression coverage is now
+  complete across all five generated-do families on both branch-contained
+  subsets after `ISF-REPEAT-GENDO-DOMAIN-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`
+  added when-body and switch-branch `assert_lower_rejected` regressions
+  for the same-domain shape. Test-only locking of `LoweringIR.pm:6551`
+  for the `'generated do with static params and same-domain metadata'` kind.

@@ -11552,6 +11552,55 @@ ISF
     (complete done)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'when nested repeat domain generated do before post-do multi-pending await_any without drain', qr/when-body nested repeat generated do with static params and same-domain metadata while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor when_nested_repeat_domain_generated_do_before_post_do_multi_pending_await_any_without_drain
+  (clock-domains
+    (domain core (clock clk) (reset rst_n)))
+  (interface
+    (input start (domain core))
+    (input cond (domain core))
+    (input loops (width 3) (domain core))
+    (input payload0 (width 8) (domain core))
+    (input payload1 (width 8) (domain core))
+    (input req_addr (width 8) (domain core))
+    (output result0 (width 8) (domain core))
+    (output result1 (width 8) (domain core))
+    (output resp (width 8) (domain core))
+    (output done (domain core)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (when cond
+      (repeat loops
+        (spawn worker as w0
+          (bind
+            (input data payload0)
+            (output resp result0))
+          (domain core))
+        (spawn worker as w1
+          (bind
+            (input data payload1)
+            (output resp result1))
+          (domain core))
+        (do worker
+          (params
+            (WIDTH 16))
+          (bind
+            (input data req_addr)
+            (output resp resp))
+          (domain core))
+        (await_any done)))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (complete done)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'when nested repeat local do while spawn pending with await_any drain', qr/when-body nested repeat local do while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the do remains deferred/);
 (actor when_nested_repeat_local_do_while_spawn_pending_with_await_any
   (clock clk)
@@ -12455,6 +12504,56 @@ ISF
   (transaction worker
     (params
       (WIDTH 8))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat domain generated do before post-do multi-pending await_any without drain', qr/switch-branch nested repeat generated do with static params and same-domain metadata while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor switch_nested_repeat_domain_generated_do_before_post_do_multi_pending_await_any_without_drain
+  (clock-domains
+    (domain core (clock clk) (reset rst_n)))
+  (interface
+    (input start (domain core))
+    (input mode (domain core))
+    (input loops (width 3) (domain core))
+    (input payload0 (width 8) (domain core))
+    (input payload1 (width 8) (domain core))
+    (input req_addr (width 8) (domain core))
+    (output result0 (width 8) (domain core))
+    (output result1 (width 8) (domain core))
+    (output resp (width 8) (domain core))
+    (output done (domain core)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0
+            (bind
+              (input data payload0)
+              (output resp result0))
+            (domain core))
+          (spawn worker as w1
+            (bind
+              (input data payload1)
+              (output resp result1))
+            (domain core))
+          (do worker
+            (params
+              (WIDTH 16))
+            (bind
+              (input data req_addr)
+              (output resp resp))
+            (domain core))
+          (await_any done))))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
     (complete done)))
 ISF
 

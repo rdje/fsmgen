@@ -30039,3 +30039,10 @@ This is the persistent technical change history for FSMGen.
 
 ### bound when-body before-post-do await_any missing-drain coverage
 - Added one when-body `assert_lower_rejected` regression in [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t) for the bound generated `(do worker (params ...) (bind ...))` before post-do multi-pending `(await_any done)` observation without final same-body `(await_all done)` drain shape. The switch counterpart already exists; this slice closes the symmetric when-body gap. The regression matches the existing validator confess at [perl/FSM/Scheduler/ISF/LoweringIR.pm:6551](perl/FSM/Scheduler/ISF/LoweringIR.pm) for the `'generated do with static params and bindings'` kind. Test-only.
+
+### same-domain before-post-do await_any missing-drain coverage
+- Added when-body and switch-branch `assert_lower_rejected` regressions in [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t) for the same-domain generated `(do worker (params ...) (bind ...) (domain core))` before post-do multi-pending `(await_any done)` observation without final same-body `(await_all done)` drain shape, matching the existing validator confess at [perl/FSM/Scheduler/ISF/LoweringIR.pm:6551](perl/FSM/Scheduler/ISF/LoweringIR.pm) for the `'generated do with static params and same-domain metadata'` kind.
+- With this slice the BEFORE-POST-DO-AWAITANY missing-drain matrix is
+  complete across the five generated-do families (local-do, plain,
+  static-parameter, bound, same-domain) on both branch-contained subsets.
+  Test-only.

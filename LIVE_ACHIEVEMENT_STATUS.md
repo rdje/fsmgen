@@ -15678,3 +15678,20 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
   `git diff --check`.
 - Next bounded slice: domain BEFORE-POST-DO-AWAITANY missing-drain coverage.
+
+## 2026-05-27: Same-domain before-post-do await_any missing-drain coverage shipped — matrix complete
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-REPEAT-GENDO-DOMAIN-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-DOMAIN-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  added when-body and switch-branch `assert_lower_rejected` regressions
+  for the same-domain `(do worker (params ...) (bind ...) (domain core))`
+  before post-do multi-pending `(await_any done)` without final
+  `(await_all done)` shape. With this slice the BEFORE-POST-DO-AWAITANY
+  missing-drain matrix is complete across the five generated-do families
+  on both branch-contained subsets.
+- Public behavior changed: no; test-only.
+- Focused validation passed: `prove -Iperl t/1215` (Files=1, Tests=100);
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
+  `git diff --check`.
+- Next bounded slice: hand off to whichever R14 ISF feature lane the roadmap
+  selects next.
