@@ -1191,6 +1191,15 @@ later spawn state, generated-top binding handoffs stay scoped to the do
 instance, and the observation leaves both pre-do and post-do generated-spawn
 done handoffs live for the final drain.
 
+When no multi-pending `await_any` observation is active before the later
+spawn, the same top-level branch-contained nested-repeat forms may also run a
+post-spawn multi-pending `await_any` observation after a same-domain generated
+`(do child (params ...) [(bind ...)] (domain NAME))` and a later generated
+spawn. The generated do instance's fresh done handoff gates the later spawn
+state, declared ownership metadata remains scoped to the generated do
+instance, and the final same-body `await_all` drains both pre-do and post-do
+generated-spawn done handoffs.
+
 When no multi-pending `await_any` observation is active before the drain, that
 bound generated do may also be followed by one or more additional generated
 nested spawns before the mandatory same-body `await_all` drain. The generated

@@ -1621,11 +1621,15 @@ top-level `switch` branch same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` subsets support the same
 post-do `await_any` observation and later-drain contract while retaining
 declared ownership metadata in generated-composition, domain-partition, and
-schedule-report clock-domain summaries. Same-domain generated-do
-do-then-spawn with post-spawn `await_any`; new spawn after generated `do`
-when a multi-pending `await_any` observation is active before the drain; after
-plain generated-child `do` when a multi-pending `await_any` observation is
-active before the drain; and after local `do` when a multi-pending `await_any`
+schedule-report clock-domain summaries. Those same-domain generated-do
+subsets may also start one or more later generated spawns, run a post-spawn
+multi-pending `await_any` observation, and then use the mandatory same-body
+`await_all` drain when no prior multi-pending `await_any` observation is
+active before the later spawn; declared ownership metadata remains scoped to
+the generated do instance. New spawn after generated `do` when a multi-
+pending `await_any` observation is active before the drain; after plain
+generated-child `do` when a multi-pending `await_any` observation is active
+before the drain; and after local `do` when a multi-pending `await_any`
 observation is active before the drain remain outside the public shipped
 subset.
 In the documented top-level `when` body and top-level `switch` branch nested

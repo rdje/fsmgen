@@ -1475,13 +1475,23 @@ Rules:
   the generated do instance, and the final drain covers both pre-do and
   post-do generated spawns before nested repeat re-entry.
 
-  Plain generated-child, static-parameter, and bound generated-do
-  do-then-spawn subsets may also run a post-spawn multi-pending `(await_any
-  done)` observation before the mandatory same-body `(await_all done)` drain,
-  provided no prior multi-pending `await_any` observation is active before the
-  later spawn. The post-spawn observation does not drain the outstanding
-  generated-spawn set; the final `await_all` still covers both pre-do and
-  post-do generated spawns before nested repeat re-entry.
+  Those same-domain generated-do do-then-spawn subsets may also run a
+  post-spawn multi-pending `(await_any done)` observation before the
+  mandatory same-body `(await_all done)` drain when no prior multi-pending
+  `await_any` observation is active before the later spawn. The post-spawn
+  observation does not drain the outstanding generated-spawn set, declared
+  ownership metadata remains scoped to the generated do instance, and the
+  final `await_all` still covers both pre-do and post-do generated spawns
+  before nested repeat re-entry.
+
+  Plain generated-child, static-parameter, bound generated-do, and
+  same-domain generated-do do-then-spawn subsets may also run a post-spawn
+  multi-pending `(await_any done)` observation before the mandatory same-body
+  `(await_all done)` drain, provided no prior multi-pending `await_any`
+  observation is active before the later spawn. The post-spawn observation
+  does not drain the outstanding generated-spawn set; the final `await_all`
+  still covers both pre-do and post-do generated spawns before nested repeat
+  re-entry.
 
   New nested `spawn` after generated `do` when a multi-pending `await_any`
   observation is active before the drain; after plain generated-child `do`

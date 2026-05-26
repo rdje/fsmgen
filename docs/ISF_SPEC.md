@@ -2753,9 +2753,15 @@ Current lowering:
   nested spawns before the mandatory same-body `await_all`; the generated do
   instance's fresh done handoff gates the later spawn state, declared
   ownership metadata remains scoped to the generated do instance, and the
-  final drain covers both pre-do and post-do generated spawns. New nested
-  `spawn` after generated `do` when a multi-pending `await_any` observation is
-  active before the drain; after plain generated-child `do` when a
+  final drain covers both pre-do and post-do generated spawns. Those same-
+  domain generated-do do-then-spawn subsets may also run a post-spawn
+  multi-pending `(await_any done)` observation before that final same-body
+  `await_all` drain when no prior multi-pending `await_any` observation is
+  active before the later spawn; the observation leaves both pre-do and
+  post-do generated-spawn done handoffs live while preserving declared
+  ownership metadata. New nested `spawn` after generated `do` when a
+  multi-pending `await_any` observation is active before the drain; after
+  plain generated-child `do` when a
   multi-pending `await_any` observation is active before the drain; or after
   local `do` when a multi-pending
   `await_any` observation is active before the drain, deeper branch/loop

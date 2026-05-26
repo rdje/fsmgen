@@ -776,12 +776,17 @@ multi-pending `(await_any done)` observation is active before the drain, those
 same-domain generated-do subsets may also start one or more later generated
 nested spawns before the mandatory same-body `(await_all done)` drain; the
 generated do instance's fresh done handoff gates the later spawn state and
-declared ownership metadata remains scoped to the generated do instance.
-Same-domain generated-do do-then-spawn with post-spawn `await_any` remains
-fail-closed. New nested `spawn` after generated `do` when a multi-pending
-`await_any` observation is active before the drain; after plain
-generated-child `do` when a multi-pending `await_any` observation is active
-before the drain; or after local `do` when a
+declared ownership metadata remains scoped to the generated do instance. That
+same same-domain generated-do do-then-spawn shape may also run a post-spawn
+multi-pending `(await_any done)` observation before the final same-body
+`(await_all done)` drain when no prior multi-pending `(await_any done)`
+observation is active before the later spawn; the post-spawn observation
+leaves both pre-do and post-do generated-spawn done handoffs live while
+retaining declared ownership metadata for the generated do instance. New
+nested `spawn` after generated `do` when a multi-pending `await_any`
+observation is active before the drain; after plain generated-child `do` when
+a multi-pending `await_any` observation is active before the drain; or after
+local `do` when a
 multi-pending `await_any` observation is active before the drain, remains
 fail-closed.
 

@@ -6442,7 +6442,8 @@ sub _validate_repeat_body_spawn_subset {
                 && $spawn_after_generated_do_before_drain
                 && (($spawn_after_generated_do_kind_before_drain // '') eq 'generated-child do'
                     || ($spawn_after_generated_do_kind_before_drain // '') eq 'generated do with static params'
-                    || ($spawn_after_generated_do_kind_before_drain // '') eq 'generated do with static params and bindings')
+                    || ($spawn_after_generated_do_kind_before_drain // '') eq 'generated do with static params and bindings'
+                    || ($spawn_after_generated_do_kind_before_drain // '') eq 'generated do with static params and same-domain metadata')
                 && $keyword eq 'await_any'
                 && @pending_spawns > 1
                 && !$awaiting_multi_pending_drain;

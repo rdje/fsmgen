@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Same-domain generated do-then-spawn can feed post-spawn awaitany
+- `ISF-REPEAT-GENDO-DOMAIN-SPAWN-AFTER-DO-POST-AWAITANY.1` completes the
+  current generated-do do-then-spawn post-observation series by extending the
+  bound generated-do proof to declared same-domain metadata.
+- The accepted path is limited to generated `(do child (params ...) [(bind
+  ...)] (domain NAME))` inside a repeat directly in a top-level `when` body or
+  top-level `switch` branch, after at least one generated spawn is already
+  pending, with no active multi-pending `await_any` observation before the
+  later generated spawn.
+- The generated do site owns one deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` instance, preserves static
+  generated-top parameter binding, optional generated-top input/output binding
+  handoffs, and declared same-domain ownership metadata, and waits for that
+  instance's fresh done handoff before starting any later generated spawn.
+- The domain annotation remains metadata only. It preserves generated-
+  composition, domain partition, and schedule-report ownership evidence
+  without adding CDC behavior or relaxing cross-domain fail-closed policy.
+- The post-spawn `await_any` is observation-only. It may advance on either the
+  pre-do or post-do generated child done handoff, but it leaves the
+  outstanding generated-spawn set live for the mandatory same-body
+  `await_all`.
+
 ## 2026-05-26: Bound generated do-then-spawn can feed post-spawn awaitany
 - `ISF-REPEAT-GENDO-BOUND-SPAWN-AFTER-DO-POST-AWAITANY.1` extends the
   do-then-spawn post-observation proof from plain generated-child, local do,
@@ -18,9 +40,10 @@ This document captures engineering rationale, design constraints, and working de
   pre-do or post-do generated child done handoff, but it leaves the
   outstanding generated-spawn set live for the mandatory same-body
   `await_all`.
-- Same-domain generated-do forms remain deferred for this post-spawn
-  observation shape because declared ownership metadata needs its own
-  reviewable lifetime proof.
+- At that checkpoint, same-domain generated-do forms remained deferred for
+  this post-spawn observation shape because declared ownership metadata needed
+  its own reviewable lifetime proof; the later same-domain generated-do slice
+  shipped that metadata analogue.
 
 ## 2026-05-26: Static-parameter generated do-then-spawn can feed post-spawn awaitany
 - `ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO-POST-AWAITANY.1` extends the
