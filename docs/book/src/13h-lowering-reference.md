@@ -1192,12 +1192,21 @@ also lower static-parameter generated `(do child (params ...)
 input/output binding handoffs once and leaves pending generated-spawn done
 handoffs live until the later drain.
 
-When no multi-pending `await_any` observation is active before the later
-spawn, that same bound generated-do do-then-spawn shape may also run a
-post-spawn multi-pending `await_any` observation before the final same-body
-`await_all` drain. The generated do instance's fresh done handoff gates the
-later spawn state, generated-top binding handoffs stay scoped to the do
-instance, and the observation leaves both pre-do and post-do generated-spawn
+That same bound generated-do shape may also start one or more later generated
+spawns before the final same-body `await_all` drain, either when no
+multi-pending `await_any` observation is active before the later spawn or
+after the generated do follows a prior multi-pending observation. The
+generated do instance's fresh done handoff gates the later spawn state,
+generated-top binding handoffs stay scoped to the do instance, and the final
+drain observes both pre-do and post-do generated-spawn done handoffs. In the
+prior-observation form, a second multi-pending `await_any` after the later
+spawn remains fail-closed. When no multi-pending `await_any` observation is
+active before the later spawn, that same bound generated-do do-then-spawn
+shape may also run a post-spawn multi-pending `await_any` observation before
+the final same-body `await_all` drain. The generated do instance's fresh done
+handoff gates the later spawn state, generated-top binding handoffs stay
+scoped to the do instance, and the observation leaves both pre-do and post-do
+generated-spawn
 done handoffs live for the final drain.
 
 When no multi-pending `await_any` observation is active before the later

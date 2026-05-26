@@ -185,6 +185,10 @@ for my $path (@loop_docs) {
         "$path documents the shipped top-level when-body nested repeat generated static-parameter bound do after multi-pending await_any subset",
     );
     ok(
+        documents_branch_prior_await_any_do_then_spawn($content, 'when', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/(?:bind|binding|handoff)/, qr/generated/, qr/\bdo\b/),
+        "$path documents the shipped top-level when-body nested repeat generated static-parameter bound do after multi-pending await_any then generated spawn subset",
+    );
+    ok(
         documents_branch_generated_do_pending_spawn(
             $content,
             'when',
@@ -280,6 +284,10 @@ for my $path (@loop_docs) {
     ok(
         documents_branch_await_any_before_do($content, 'switch', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/(?:bind|binding|handoff)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do after multi-pending await_any subset",
+    );
+    ok(
+        documents_branch_prior_await_any_do_then_spawn($content, 'switch', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/(?:bind|binding|handoff)/, qr/generated/, qr/\bdo\b/),
+        "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do after multi-pending await_any then generated spawn subset",
     );
     ok(
         documents_branch_generated_do_pending_spawn(

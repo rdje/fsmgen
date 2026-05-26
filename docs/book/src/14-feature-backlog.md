@@ -1156,10 +1156,10 @@ bound and same-domain generated-do do-then-spawn post-spawn `await_any`
 variants, active-prior-`await_any` spawn-after-do variants, cross-domain
 activation, deeper nesting, and broader outstanding-child lifetime rules
 remained backlog; later slices shipped the bound and same-domain post-spawn
-`await_any` analogues plus the local-do, plain generated-child, and
-static-parameter generated-do prior-active-`await_any` analogues while
-keeping bound and same-domain generated-do active-prior spawn-after-do
-variants deferred.
+`await_any` analogues plus the local-do, plain generated-child,
+static-parameter generated-do, and bound generated-do prior-active-
+`await_any` analogues while keeping same-domain generated-do active-prior
+spawn-after-do variants deferred.
 
 The branch-contained bound generated-do-then-spawn post-spawn `await_any`
 analogue is also shipped for top-level `when` bodies and top-level `switch`
@@ -1175,10 +1175,10 @@ drain. At that checkpoint, same-domain generated-do do-then-spawn post-spawn
 `await_any` variants, active-prior-`await_any` spawn-after-do variants,
 cross-domain activation, deeper nesting, and broader outstanding-child
 lifetime rules remained backlog; later slices shipped the same-domain
-post-spawn `await_any` analogue plus the local-do, plain generated-child, and
-static-parameter generated-do prior-active-`await_any` analogues while keeping
-bound and same-domain generated-do active-prior spawn-after-do variants
-deferred.
+post-spawn `await_any` analogue plus the local-do, plain generated-child,
+static-parameter generated-do, and bound generated-do prior-active-
+`await_any` analogues while keeping same-domain generated-do active-prior
+spawn-after-do variants deferred.
 
 The branch-contained same-domain generated-do-then-spawn post-spawn
 `await_any` analogue is also shipped for top-level `when` bodies and
@@ -1193,20 +1193,23 @@ complete before the later generated spawn starts; the post-spawn observation
 leaves both pre-do and post-do generated-spawn done handoffs live for the
 final drain.
 
-The branch-contained local-do, plain generated-child, and static-parameter
-generated-do prior-active-`await_any` spawn-after-do analogues are shipped for
-top-level `when` bodies and top-level `switch` branches. A nested repeat may
-run generated spawns, observe one done pulse through multi-pending
-`(await_any done)`, run local blocking `(do child)`, plain generated-child
-`(do child)`, or static-parameter generated `(do child (params ...))`, start
-one or more later generated spawns, and then use the mandatory same-body
-`(await_all done)` drain before the nested repeat check can loop. The local
-child or deterministic generated do instance must complete before the later
-generated spawn starts, and the final drain covers every generated spawn from
-both sides of the `do`. Bound and same-domain generated-do active-prior-
-`await_any` spawn-after-do variants, a second post-spawn `await_any` in these
-prior-observation shapes, cross-domain activation, deeper nesting, and
-broader outstanding-child lifetime rules remain backlog.
+The branch-contained local-do, plain generated-child, static-parameter
+generated-do, and bound generated-do prior-active-`await_any`
+spawn-after-do analogues are shipped for top-level `when` bodies and
+top-level `switch` branches. A nested repeat may run generated spawns,
+observe one done pulse through multi-pending `(await_any done)`, run local
+blocking `(do child)`, plain generated-child `(do child)`, static-parameter
+generated `(do child (params ...))`, or bound generated
+`(do child (params ...) (bind ...))`, start one or more later generated
+spawns, and then use the mandatory same-body `(await_all done)` drain before
+the nested repeat check can loop. The local child or deterministic generated
+do instance must complete before the later generated spawn starts, generated-
+top input/output binding handoffs remain scoped to the bound generated do
+instance, and the final drain covers every generated spawn from both sides of
+the `do`. Same-domain generated-do active-prior-`await_any` spawn-after-do
+variants, a second post-spawn `await_any` in these prior-observation shapes,
+cross-domain activation, deeper nesting, and broader outstanding-child
+lifetime rules remain backlog.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. Known-width runtime

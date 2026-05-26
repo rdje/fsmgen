@@ -2740,13 +2740,16 @@ Current lowering:
   bound generated `(do child (params ...) (bind ...))` support the same
   post-do multi-pending observation and later-drain contract while also
   wiring the generated-top input/output binding handoffs for the generated do
-  instance. When no multi-pending `await_any` observation is active before the
-  drain, those bound generated-do subsets may also start one or more later
-  generated nested spawns before the mandatory same-body `await_all`; the
-  generated do instance's fresh done handoff gates the later spawn state,
+  instance. Those bound generated-do subsets may also start one or more later
+  generated nested spawns before the mandatory same-body `await_all`, either
+  when no multi-pending `await_any` observation is active before the later
+  spawn or after the generated do follows a prior multi-pending observation;
+  the generated do instance's fresh done handoff gates the later spawn state,
   generated-top binding handoffs stay scoped to the do instance, and the final
-  drain covers both pre-do and post-do generated spawns. Those same bound
-  generated-do do-then-spawn subsets may also run a post-spawn multi-pending
+  drain covers both pre-do and post-do generated spawns. In the
+  prior-observation form, a second multi-pending `(await_any done)` after the
+  later spawn remains fail-closed. Those same bound generated-do
+  do-then-spawn subsets may also run a post-spawn multi-pending
   `(await_any done)` observation before that final same-body `await_all`
   drain when no prior multi-pending `await_any` observation is active before
   the later spawn; the observation leaves both pre-do and post-do generated-
@@ -2768,10 +2771,9 @@ Current lowering:
   `await_all` drain when no prior multi-pending `await_any` observation is
   active before the later spawn; the observation leaves both pre-do and
   post-do generated-spawn done handoffs live while preserving declared
-  ownership metadata. New nested `spawn` after bound or same-domain generated
-  `do` when a multi-pending `await_any` observation is active before the
-  drain, deeper branch/loop nesting, and cross-domain activation remain
-  fail-closed.
+  ownership metadata. New nested `spawn` after same-domain generated `do`
+  when a multi-pending `await_any` observation is active before the drain,
+  deeper branch/loop nesting, and cross-domain activation remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a

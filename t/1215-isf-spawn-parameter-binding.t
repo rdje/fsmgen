@@ -2723,6 +2723,165 @@ ISF
     );
 };
 
+subtest 'when body nested repeat bound generated do after multi-pending await_any can run before later generated spawn and await_all' => sub {
+    my $source = <<'ISF';
+(actor when_repeat_bound_do_after_await_any_then_spawn
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input cond)
+    (input loops (width 3))
+    (input payload0 (width 8))
+    (input payload1 (width 8))
+    (input payload2 (width 8))
+    (input req_addr (width 8))
+    (input status)
+    (output done)
+    (output spawn_resp0 (width 8))
+    (output spawn_resp1 (width 8))
+    (output spawn_resp2 (width 8))
+    (output resp (width 8)))
+  (transaction parent
+    (on start)
+    (when cond
+      (repeat loops
+        (sample status as before)
+        (spawn worker as w0
+          (params
+            (WIDTH 16))
+          (bind
+            (input addr payload0)
+            (output data spawn_resp0)))
+        (spawn worker as w1
+          (params
+            (WIDTH 24))
+          (bind
+            (input addr payload1)
+            (output data spawn_resp1)))
+        (await_any done)
+        (sample status as after_any)
+        (do worker
+          (params
+            (WIDTH 32))
+          (bind
+            (input addr req_addr)
+            (output data resp)))
+        (sample status as after_do)
+        (spawn worker as w2
+          (params
+            (WIDTH 40))
+          (bind
+            (input addr payload2)
+            (output data spawn_resp2)))
+        (await_all done)))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 4,
+        'when-body prior-await_any bound-do-then-spawn subset records all generated instances');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{w0}, 'when-body prior-await_any bound subset preserves first pre-do spawn');
+    ok($instances{w1}, 'when-body prior-await_any bound subset preserves second pre-do spawn');
+    ok($instances{parent_worker_repeat_do_0}, 'when-body prior-await_any bound subset records generated do instance');
+    ok($instances{w2}, 'when-body prior-await_any bound subset preserves post-do spawn');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'when-body prior-await_any bound subset preserves do activation provenance');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [{ name => 'WIDTH', value => '32' }],
+        'when-body prior-await_any bound subset preserves static parameter overrides on the do instance');
+    is_deeply(
+        $instances{parent_worker_repeat_do_0}{port_bindings},
+        [
+            {
+                role             => 'input',
+                child_port       => 'addr',
+                parent_port      => 'parent_worker_repeat_do_0_addr',
+                actor_signal     => 'req_addr',
+                actor_expr       => 'req_addr',
+                actor_expression => 'req_addr',
+                width            => 8,
+            },
+            {
+                role             => 'output',
+                child_port       => 'data',
+                parent_port      => 'parent_worker_repeat_do_0_data',
+                actor_signal     => 'resp',
+                actor_expr       => 'resp',
+                actor_expression => 'resp',
+                width            => 8,
+            },
+        ],
+        'when-body prior-await_any bound subset exposes do-site binding handoffs',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'when_repeat_bound_do_after_await_any_then_spawn.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'when_repeat_bound_do_after_await_any_then_spawn_top.fsm'};
+
+    ok(defined($parent_fsm), 'when-body prior-await_any bound-do-then-spawn parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'generated child scheduled .fsm is emitted once for prior-await_any bound-do-then-spawn');
+    ok(defined($top_fsm), 'when-body prior-await_any bound-do-then-spawn generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_when_\d+[\s\S]*\(=1 \(-> parent_repeat_init_\d+\)\)/,
+        'when true path enters the prior-await_any bound-do-then-spawn nested repeat region');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'first bound pre-do generated spawn starts before the second pre-do spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
+        'second bound pre-do generated spawn advances to the prior await_any observation');
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+        'prior await_any observes either pre-do generated child before bound do');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'sample after prior await_any materializes before the bound generated do');
+    like($parent_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
+        'bound generated do after prior await_any keeps input and output binding handoffs reviewable');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'bound generated do after prior await_any completes before the later generated spawn');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample after bound generated do materializes before the post-do generated spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'post-do generated spawn advances directly to the mandatory drain for bound do');
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+        'await_all drains pre-do and post-do generated spawns for bound do');
+    like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
+        'generated top keeps the first pre-do spawn parameter override for bound prior-await_any subset');
+    like($top_fsm, qr/\(\?fsmc:w1 worker\s+\(params\s+\(WIDTH 24\)\s+\)\s+\)/s,
+        'generated top keeps the second pre-do spawn parameter override for bound prior-await_any subset');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker\s+\(params\s+\(WIDTH 32\)\s+\)\s+\)/s,
+        'generated top applies static parameter override to the bound generated do instance before later spawn');
+    like($top_fsm, qr/\(\?fsmc:w2 worker\s+\(params\s+\(WIDTH 40\)\s+\)\s+\)/s,
+        'generated top keeps the post-do spawn parameter override for bound prior-await_any subset');
+    like($top_fsm, qr/\(when_repeat_bound_do_after_await_any_then_spawn\.parent_worker_repeat_do_0_addr parent_worker_repeat_do_0\.addr\)/,
+        'generated top wires bound do input handoff after prior await_any');
+    like($top_fsm, qr/\(parent_worker_repeat_do_0\.data when_repeat_bound_do_after_await_any_then_spawn\.parent_worker_repeat_do_0_data\)/,
+        'generated top wires bound do output handoff after prior await_any');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} } @{$report->{transaction_port_bindings}} ],
+        [
+            'spawn:w0:addr',
+            'spawn:w0:data',
+            'spawn:w1:addr',
+            'spawn:w1:data',
+            'do:parent_worker_repeat_do_0:addr',
+            'do:parent_worker_repeat_do_0:data',
+            'spawn:w2:addr',
+            'spawn:w2:data',
+        ],
+        'report exposes pre-do spawns, bound do, and post-do spawn port-binding provenance after prior await_any',
+    );
+};
+
 subtest 'when body nested repeat bound generated do can run before post-do multi-pending await_any before await_all' => sub {
     my $source = <<'ISF';
 (actor when_repeat_bound_do_before_await_any
@@ -6336,6 +6495,168 @@ ISF
     );
 };
 
+subtest 'switch branch nested repeat bound generated do after multi-pending await_any can run before later generated spawn and await_all' => sub {
+    my $source = <<'ISF';
+(actor switch_repeat_bound_do_after_await_any_then_spawn
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input mode (width 2))
+    (input loops (width 3))
+    (input payload0 (width 8))
+    (input payload1 (width 8))
+    (input payload2 (width 8))
+    (input req_addr (width 8))
+    (input status)
+    (output done)
+    (output spawn_resp0 (width 8))
+    (output spawn_resp1 (width 8))
+    (output spawn_resp2 (width 8))
+    (output resp (width 8)))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (sample status as before)
+          (spawn worker as w0
+            (params
+              (WIDTH 16))
+            (bind
+              (input addr payload0)
+              (output data spawn_resp0)))
+          (spawn worker as w1
+            (params
+              (WIDTH 24))
+            (bind
+              (input addr payload1)
+              (output data spawn_resp1)))
+          (await_any done)
+          (sample status as after_any)
+          (do worker
+            (params
+              (WIDTH 32))
+            (bind
+              (input addr req_addr)
+              (output data resp)))
+          (sample status as after_do)
+          (spawn worker as w2
+            (params
+              (WIDTH 40))
+            (bind
+              (input addr payload2)
+              (output data spawn_resp2)))
+          (await_all done)))
+      (1
+        (sample status as other)))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 4,
+        'switch-branch prior-await_any bound-do-then-spawn subset records all generated instances');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{w0}, 'switch-branch prior-await_any bound subset preserves first pre-do spawn');
+    ok($instances{w1}, 'switch-branch prior-await_any bound subset preserves second pre-do spawn');
+    ok($instances{parent_worker_repeat_do_0}, 'switch-branch prior-await_any bound subset records generated do instance');
+    ok($instances{w2}, 'switch-branch prior-await_any bound subset preserves post-do spawn');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'switch-branch prior-await_any bound subset preserves do activation provenance');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [{ name => 'WIDTH', value => '32' }],
+        'switch-branch prior-await_any bound subset preserves static parameter overrides on the do instance');
+    is_deeply(
+        $instances{parent_worker_repeat_do_0}{port_bindings},
+        [
+            {
+                role             => 'input',
+                child_port       => 'addr',
+                parent_port      => 'parent_worker_repeat_do_0_addr',
+                actor_signal     => 'req_addr',
+                actor_expr       => 'req_addr',
+                actor_expression => 'req_addr',
+                width            => 8,
+            },
+            {
+                role             => 'output',
+                child_port       => 'data',
+                parent_port      => 'parent_worker_repeat_do_0_data',
+                actor_signal     => 'resp',
+                actor_expr       => 'resp',
+                actor_expression => 'resp',
+                width            => 8,
+            },
+        ],
+        'switch-branch prior-await_any bound subset exposes do-site binding handoffs',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'switch_repeat_bound_do_after_await_any_then_spawn.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'switch_repeat_bound_do_after_await_any_then_spawn_top.fsm'};
+
+    ok(defined($parent_fsm), 'switch-branch prior-await_any bound-do-then-spawn parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'generated child scheduled .fsm is emitted once for switch prior-await_any bound-do-then-spawn');
+    ok(defined($top_fsm), 'switch-branch prior-await_any bound-do-then-spawn generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_switch_\d+[\s\S]*\(=0 \(-> parent_repeat_init_\d+\)\)/,
+        'matching switch branch enters the prior-await_any bound-do-then-spawn nested repeat region');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'first switch bound pre-do generated spawn starts before the second pre-do spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
+        'second switch bound pre-do generated spawn advances to the prior await_any observation');
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+        'switch prior await_any observes either pre-do generated child before bound do');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'sample after switch prior await_any materializes before the bound generated do');
+    like($parent_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
+        'switch bound generated do after prior await_any keeps input and output binding handoffs reviewable');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'switch bound generated do after prior await_any completes before the later generated spawn');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample after switch bound generated do materializes before the post-do generated spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'switch post-do generated spawn advances directly to the mandatory drain for bound do');
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+        'await_all drains switch pre-do and post-do generated spawns for bound do');
+    like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
+        'generated top keeps the first switch pre-do spawn parameter override for bound prior-await_any subset');
+    like($top_fsm, qr/\(\?fsmc:w1 worker\s+\(params\s+\(WIDTH 24\)\s+\)\s+\)/s,
+        'generated top keeps the second switch pre-do spawn parameter override for bound prior-await_any subset');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker\s+\(params\s+\(WIDTH 32\)\s+\)\s+\)/s,
+        'generated top applies static parameter override to the switch bound generated do instance before later spawn');
+    like($top_fsm, qr/\(\?fsmc:w2 worker\s+\(params\s+\(WIDTH 40\)\s+\)\s+\)/s,
+        'generated top keeps the switch post-do spawn parameter override for bound prior-await_any subset');
+    like($top_fsm, qr/\(switch_repeat_bound_do_after_await_any_then_spawn\.parent_worker_repeat_do_0_addr parent_worker_repeat_do_0\.addr\)/,
+        'generated top wires switch bound do input handoff after prior await_any');
+    like($top_fsm, qr/\(parent_worker_repeat_do_0\.data switch_repeat_bound_do_after_await_any_then_spawn\.parent_worker_repeat_do_0_data\)/,
+        'generated top wires switch bound do output handoff after prior await_any');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} } @{$report->{transaction_port_bindings}} ],
+        [
+            'spawn:w0:addr',
+            'spawn:w0:data',
+            'spawn:w1:addr',
+            'spawn:w1:data',
+            'do:parent_worker_repeat_do_0:addr',
+            'do:parent_worker_repeat_do_0:data',
+            'spawn:w2:addr',
+            'spawn:w2:data',
+        ],
+        'report exposes switch pre-do spawns, bound do, and post-do spawn port-binding provenance after prior await_any',
+    );
+};
+
 subtest 'switch branch nested repeat bound generated do can run before post-do multi-pending await_any before await_all' => sub {
     my $source = <<'ISF';
 (actor switch_repeat_bound_do_before_await_any
@@ -9007,6 +9328,106 @@ ISF
     (complete done)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'when nested repeat bound generated do after multi-pending await_any then spawn without drain', qr/when-body nested repeat generated do with static params and bindings while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor when_nested_repeat_bound_generated_do_after_multi_pending_await_any_then_spawn_without_drain
+  (clock clk)
+  (interface
+    (input start)
+    (input cond)
+    (input loops (width 3))
+    (input payload0 (width 8))
+    (input payload1 (width 8))
+    (input payload2 (width 8))
+    (input req_addr (width 8))
+    (output done)
+    (output spawn_resp0 (width 8))
+    (output spawn_resp1 (width 8))
+    (output spawn_resp2 (width 8))
+    (output resp (width 8)))
+  (transaction parent
+    (on start)
+    (when cond
+      (repeat loops
+        (spawn worker as w0
+          (bind
+            (input addr payload0)
+            (output data spawn_resp0)))
+        (spawn worker as w1
+          (bind
+            (input addr payload1)
+            (output data spawn_resp1)))
+        (await_any done)
+        (do worker
+          (params
+            (WIDTH 16))
+          (bind
+            (input addr req_addr)
+            (output data resp)))
+        (spawn worker as w2
+          (bind
+            (input addr payload2)
+            (output data spawn_resp2)))))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'when nested repeat bound generated do after multi-pending await_any then spawn with second await_any', qr/when-body nested repeat spawn after generated do with static params and bindings while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the later spawn remains deferred/);
+(actor when_nested_repeat_bound_generated_do_after_multi_pending_await_any_then_spawn_with_second_await_any
+  (clock clk)
+  (interface
+    (input start)
+    (input cond)
+    (input loops (width 3))
+    (input payload0 (width 8))
+    (input payload1 (width 8))
+    (input payload2 (width 8))
+    (input req_addr (width 8))
+    (output done)
+    (output spawn_resp0 (width 8))
+    (output spawn_resp1 (width 8))
+    (output spawn_resp2 (width 8))
+    (output resp (width 8)))
+  (transaction parent
+    (on start)
+    (when cond
+      (repeat loops
+        (spawn worker as w0
+          (bind
+            (input addr payload0)
+            (output data spawn_resp0)))
+        (spawn worker as w1
+          (bind
+            (input addr payload1)
+            (output data spawn_resp1)))
+        (await_any done)
+        (do worker
+          (params
+            (WIDTH 16))
+          (bind
+            (input addr req_addr)
+            (output data resp)))
+        (spawn worker as w2
+          (bind
+            (input addr payload2)
+            (output data spawn_resp2)))
+        (await_any done)
+        (await_all done)))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (complete done)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'when nested repeat generated-child do after multi-pending await_any then spawn without drain', qr/when-body nested repeat generated-child do while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
 (actor when_nested_repeat_generated_child_do_after_multi_pending_await_any_then_spawn_without_drain
   (clock clk)
@@ -9584,6 +10005,108 @@ ISF
             (bind
               (input data req_addr)
               (output resp resp))))))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat bound generated do after multi-pending await_any then spawn without drain', qr/switch-branch nested repeat generated do with static params and bindings while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor switch_nested_repeat_bound_generated_do_after_multi_pending_await_any_then_spawn_without_drain
+  (clock clk)
+  (interface
+    (input start)
+    (input mode)
+    (input loops (width 3))
+    (input payload0 (width 8))
+    (input payload1 (width 8))
+    (input payload2 (width 8))
+    (input req_addr (width 8))
+    (output result0 (width 8))
+    (output result1 (width 8))
+    (output result2 (width 8))
+    (output resp (width 8))
+    (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0
+            (bind
+              (input data payload0)
+              (output resp result0)))
+          (spawn worker as w1
+            (bind
+              (input data payload1)
+              (output resp result1)))
+          (await_any done)
+          (do worker
+            (params
+              (WIDTH 16))
+            (bind
+              (input data req_addr)
+              (output resp resp)))
+          (spawn worker as w2
+            (bind
+              (input data payload2)
+              (output resp result2))))))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat bound generated do after multi-pending await_any then spawn with second await_any', qr/switch-branch nested repeat spawn after generated do with static params and bindings while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the later spawn remains deferred/);
+(actor switch_nested_repeat_bound_generated_do_after_multi_pending_await_any_then_spawn_with_second_await_any
+  (clock clk)
+  (interface
+    (input start)
+    (input mode)
+    (input loops (width 3))
+    (input payload0 (width 8))
+    (input payload1 (width 8))
+    (input payload2 (width 8))
+    (input req_addr (width 8))
+    (output result0 (width 8))
+    (output result1 (width 8))
+    (output result2 (width 8))
+    (output resp (width 8))
+    (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0
+            (bind
+              (input data payload0)
+              (output resp result0)))
+          (spawn worker as w1
+            (bind
+              (input data payload1)
+              (output resp result1)))
+          (await_any done)
+          (do worker
+            (params
+              (WIDTH 16))
+            (bind
+              (input data req_addr)
+              (output resp resp)))
+          (spawn worker as w2
+            (bind
+              (input data payload2)
+              (output resp result2)))
+          (await_any done)
+          (await_all done))))
     (complete done))
   (transaction worker
     (params
