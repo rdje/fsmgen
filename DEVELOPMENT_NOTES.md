@@ -32552,3 +32552,20 @@ It is an exact-delay pulse request:
   backend, public API, or runtime change. The param and bound SECOND-AWAITANY
   missing-drain coverage slices remain as separate independently reviewable
   follow-ups.
+
+## 2026-05-26: static-parameter generated-do second-awaitany missing-drain coverage
+- Continued the active R14 lane by adding the when-body and switch-branch
+  defensive regression coverage for the static-parameter generated
+  `(do child (params ...))` prior-`await_any` then spawn then second
+  post-spawn `await_any` without final same-body `(await_all done)` shape.
+- The slice
+  [`ISF-REPEAT-GENDO-PARAM-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-PARAM-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  adds two `assert_lower_rejected` regressions in
+  [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t)
+  matching the existing validator confess at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the
+  `'generated do with static params'` kind.
+- This slice is test-only: no parser, validator, lowering, schedule report,
+  backend, public API, or runtime change. The bound SECOND-AWAITANY
+  missing-drain coverage slice remains as the next independently reviewable
+  follow-up.

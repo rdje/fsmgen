@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/ISF-REPEAT-GENDO-PARAM-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.md` — completed `R14` task tree for defensive missing-drain regression coverage of the static-parameter generated `(do child (params ...))` prior-`await_any` plus second post-spawn `await_any` shape on both branch-contained subsets.
 - `docs/tasks/ISF-REPEAT-GENDO-PLAIN-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.md` — completed `R14` task tree for defensive missing-drain regression coverage of the plain generated-child `(do child)` prior-`await_any` plus second post-spawn `await_any` shape on the switch-branch subset.
 - `docs/tasks/ISF-REPEAT-GENDO-DOMAIN-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.md` — completed `R14` task tree for defensive missing-drain regression coverage of the same-domain generated `do` prior-`await_any` plus second post-spawn `await_any` shape.
 - `docs/tasks/BIN-FSMGEN-IMPORT-TREE-R14-GENDO-DOMAIN-SECOND-AWAITANY-REFRESH.md` — completed bootstrap architecture-maintenance task tree for refreshing the `bin/fsmgen` import-tree note after the R14 same-domain generated-do prior-`await_any` plus second post-spawn `await_any` repeat-body slice.

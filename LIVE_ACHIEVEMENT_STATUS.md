@@ -15549,3 +15549,19 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
   `git diff --check`.
 - Next bounded slice: param missing-drain SECOND-AWAITANY coverage.
+
+## 2026-05-26: Static-parameter generated-do second-awaitany missing-drain coverage shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-REPEAT-GENDO-PARAM-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-PARAM-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  added when-body and switch-branch `assert_lower_rejected` regressions for
+  the static-parameter generated `(do child (params ...))` prior-`await_any`
+  then spawn then second post-spawn `await_any` without final same-body
+  `(await_all done)` shape, matching the existing validator confess at
+  `LoweringIR.pm:6551` for the `'generated do with static params'` kind.
+- Public behavior changed: no; test-only.
+- Focused validation passed:
+  `prove -Iperl t/1215-isf-spawn-parameter-binding.t` (Files=1, Tests=100);
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
+  `git diff --check`.
+- Next bounded slice: bound missing-drain SECOND-AWAITANY coverage.

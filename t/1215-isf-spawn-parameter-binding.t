@@ -10840,6 +10840,29 @@ ISF
     (complete done)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'when nested repeat parameterized generated do after multi-pending await_any then spawn with second await_any without drain', qr/when-body nested repeat generated do with static params while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor when_nested_repeat_parameterized_generated_do_after_multi_pending_await_any_then_spawn_with_second_await_any_without_drain
+  (clock clk)
+  (interface (input start) (input cond) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (when cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (await_any done)
+        (do worker
+          (params
+            (WIDTH 16)))
+        (spawn worker as w2)
+        (await_any done)))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (complete done)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'when nested repeat bound generated do after multi-pending await_any without drain', qr/when-body nested repeat generated do with static params and bindings while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
 (actor when_nested_repeat_bound_generated_do_after_multi_pending_await_any_without_drain
   (clock clk)
@@ -11450,6 +11473,30 @@ ISF
           (do worker
             (params
               (WIDTH 16))))))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat parameterized generated do after multi-pending await_any then spawn with second await_any without drain', qr/switch-branch nested repeat generated do with static params while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor switch_nested_repeat_parameterized_generated_do_after_multi_pending_await_any_then_spawn_with_second_await_any_without_drain
+  (clock clk)
+  (interface (input start) (input mode) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0)
+          (spawn worker as w1)
+          (await_any done)
+          (do worker
+            (params
+              (WIDTH 16)))
+          (spawn worker as w2)
+          (await_any done))))
     (complete done))
   (transaction worker
     (params

@@ -14267,3 +14267,13 @@ Exit criteria:
   the `when`-body counterpart already existed in `t/1215`. Test-only locking
   of `LoweringIR.pm:6551`. Param and bound missing-drain SECOND-AWAITANY
   remain as separate independently reviewable slices.
+- `R14`: defensive missing-drain regression coverage now spans the
+  static-parameter generated-do SECOND-AWAITANY shape on both branch-contained
+  subsets. `ISF-REPEAT-GENDO-PARAM-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1`
+  added when-body and switch-branch `assert_lower_rejected` regressions for
+  the static-parameter generated `(do child (params ...))` prior-`await_any`
+  then spawn then second post-spawn `await_any` without final same-body
+  `(await_all done)` shape. Test-only locking of `LoweringIR.pm:6551` for the
+  `'generated do with static params'` kind. The bound missing-drain
+  SECOND-AWAITANY slice remains as the next independently reviewable
+  follow-up.
