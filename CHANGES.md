@@ -1,6 +1,32 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-26
+### R14 — Static-parameter generated do after prior awaitany then spawn before drain shipped
+- Completed `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` and
+  closed the task tree.
+- A repeat directly inside a top-level `when` body or top-level `switch`
+  branch may now run generated spawns, observe one done pulse through
+  multi-pending `(await_any done)`, run generated blocking
+  `(do child (params ...))`, start one or more later generated spawns after
+  the generated do instance's fresh done handoff, and drain every generated
+  spawn through same-body `(await_all done)` before nested repeat re-entry.
+- The prior `await_any` does not clear the outstanding generated-spawn done
+  set; the generated do preserves static generated-top parameter binding; the
+  final `await_all` drains generated spawns from both sides of the generated
+  `do`.
+- Bound generated-do and same-domain generated-do prior-observation
+  spawn-after-do variants, repeated post-spawn `await_any`, missing drains,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics remain fail-closed/deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, feature matrix
+  audit, task tree, README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=86`; focused
+  book/public audits with `Files=4, Tests=563`; live-doc audits with
+  `Files=4, Tests=588`; broader repeat/child regression with `Files=4,
+  Tests=100`; `./bin/ci-regression isf --no-book` with `Files=275,
+  Tests=1864`; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Prior-awaitany spawn-after-do docs truth-synced
 - Completed `ISF-REPEAT-PRIOR-AWAITANY-SPAWN-AFTER-DO-TRUTH-SYNC.1` and
   closed the task tree.
@@ -11,10 +37,12 @@ This is the persistent technical change history for FSMGen.
   documented branch-contained local/plain prior-observation do-then-spawn
   paths are clearly shipped only when they advance directly to mandatory
   same-body `(await_all done)`.
-- Kept specialized generated-do prior-observation spawn-after-do variants,
-  second post-spawn `await_any`, missing drains, cross-domain activation,
-  deeper nesting, and broader outstanding-child lifetime behavior explicitly
-  fail-closed/deferred.
+- At that checkpoint, kept static-parameter, bound, and same-domain
+  generated-do prior-observation spawn-after-do variants, second post-spawn
+  `await_any`, missing drains, cross-domain activation, deeper nesting, and
+  broader outstanding-child lifetime behavior explicitly fail-closed/deferred;
+  the later `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice
+  shipped the static-parameter analogue.
 - Added loop-body doc-truth audit checks for the shipped local/plain
   prior-observation do-then-spawn wording and for rejecting the stale
   fail-closed sentence.

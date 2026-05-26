@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Static-parameter generated do after prior awaitany can precede a later generated spawn
+- `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` extends the
+  shipped local and plain generated-child prior-observation do-then-spawn
+  proofs to the first specialized generated-do form.
+- The accepted path is limited to generated `(do child (params ...))` inside
+  a repeat directly in a top-level `when` body or top-level `switch` branch,
+  after a multi-pending `await_any` observation and before the mandatory
+  same-body `await_all` drain.
+- The prior `await_any` remains observation-only. It may advance on any
+  generated child done handoff, but it leaves the outstanding generated-spawn
+  set live across the generated do instance and the later generated spawn.
+- The generated do site owns the deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` instance, preserves the static
+  generated-top parameter override for that generated do instance, and must
+  observe that instance's fresh done handoff before the later generated spawn
+  starts.
+- Bound generated-do and same-domain generated-do variants stay deferred for
+  this prior-observation spawn-after-do shape because generated-top binding
+  handoffs and domain ownership metadata still need separate lifetime proofs.
+  A second multi-pending `await_any` after the later spawn remains fail-closed.
+
 ## 2026-05-26: Prior-awaitany spawn-after-do docs truth sync
 - `ISF-REPEAT-PRIOR-AWAITANY-SPAWN-AFTER-DO-TRUTH-SYNC.1` is
   documentation/audit truth sync only; it does not change parser, lowering,
@@ -12,10 +33,13 @@ This document captures engineering rationale, design constraints, and working de
   repeats directly inside top-level `when` bodies or top-level `switch`
   branches, only when the do completes before the later generated spawn, and
   only when the path advances directly to same-body `await_all`.
-- Specialized generated-do prior-observation do-then-spawn remains deferred
-  because static-parameter, binding, and same-domain metadata lifetimes need
-  separate proof. A second post-spawn multi-pending `await_any` still remains
-  fail-closed for these prior-observation shapes.
+- At that checkpoint, static-parameter, binding, and same-domain generated-do
+  prior-observation do-then-spawn remained deferred because those metadata
+  lifetimes needed separate proof. The later
+  `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice shipped the
+  static-parameter analogue; binding, same-domain metadata, and a second
+  post-spawn multi-pending `await_any` still remain fail-closed for these
+  prior-observation shapes.
 - The audit uses bounded normalized-text windows rather than document-wide
   greedy regexes, following the same performance constraint as the prior
   loop-body audit hardening.

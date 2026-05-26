@@ -1,5 +1,36 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-26: R14 static-parameter generated do after prior awaitany then spawn before drain shipped
+- Completed `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` and
+  closed the task tree.
+- Branch-contained nested repeats now accept the static-parameter generated-do
+  prior-observation spawn-after-do analogue: a repeat directly inside a
+  top-level `when` body or top-level `switch` branch may run generated
+  spawns, observe one done pulse through multi-pending `(await_any done)`,
+  run generated blocking `(do child (params ...))`, start one or more later
+  generated spawns after the generated do instance's fresh done handoff, and
+  drain every generated spawn through same-body `(await_all done)` before
+  nested repeat re-entry.
+- The prior `await_any` does not clear the outstanding generated-spawn done
+  set. The generated do preserves its static generated-top parameter
+  override on the deterministic generated do instance, and the final
+  `await_all` drains generated spawns from both sides of the generated `do`.
+- Bound generated-do and same-domain generated-do prior-observation
+  spawn-after-do variants, second post-spawn `await_any`, missing drains,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics remain fail-closed/deferred.
+- Public ISF specs, downstream handoff, public contract, mdBook, feature
+  matrix audit, roadmap, task tree, README index, and live docs are
+  synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=86`; focused
+  book/public audits with `Files=4, Tests=563`; live-doc audits with
+  `Files=4, Tests=588`; broader repeat/child regression with `Files=4,
+  Tests=100`; `./bin/ci-regression isf --no-book` with `Files=275,
+  Tests=1864`; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 prior-awaitany spawn-after-do docs truth-synced
 - Completed `ISF-REPEAT-PRIOR-AWAITANY-SPAWN-AFTER-DO-TRUTH-SYNC.1` and
   closed the task tree.
@@ -11,9 +42,12 @@ This is the live continuity document for fast session recovery after crashes, re
   prior-observation do-then-spawn paths are shipped only when they advance
   directly to mandatory same-body `(await_all done)`; a second post-spawn
   `await_any` remains fail-closed.
-- Specialized generated-do prior-observation spawn-after-do variants,
-  missing drains, cross-domain activation, deeper nesting, and broader
-  outstanding-child lifetime behavior remain fail-closed/deferred.
+- At that checkpoint, static-parameter, bound, and same-domain generated-do
+  prior-observation spawn-after-do variants, missing drains, cross-domain
+  activation, deeper nesting, and broader outstanding-child lifetime behavior
+  remained fail-closed/deferred; the later
+  `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice shipped the
+  static-parameter analogue.
 - `t/1307-isf-loop-body-doc-truth-audit.t` now pins the shipped local/plain
   prior-observation do-then-spawn wording and rejects the stale fail-closed
   sentence.

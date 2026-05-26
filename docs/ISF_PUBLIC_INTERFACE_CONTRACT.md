@@ -1521,9 +1521,13 @@ observation is active before the later spawn; the final drain still covers
 both pre-do and post-do generated spawns. Local-do do-then-spawn subsets may
 also start the later spawn after the local `do` follows a prior multi-pending
 `await_any` observation, but a second `await_any` after that later spawn
-remains fail-closed. New nested `spawn` after specialized generated `do` while a
-multi-pending `await_any` observation is active before the drain remains
-fail-closed.
+remains fail-closed. Static-parameter generated-do do-then-spawn subsets may
+also start the later spawn after the generated do follows a prior
+multi-pending `await_any` observation, but that prior-observation path
+advances directly to same-body `await_all` and a second `await_any` after the
+later spawn remains fail-closed. New nested `spawn` after bound or
+same-domain generated `do` while a multi-pending `await_any` observation is
+active before the drain remains fail-closed.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus
@@ -1629,9 +1633,9 @@ subsets may also start one or more later generated spawns, run a post-spawn
 multi-pending `await_any` observation, and then use the mandatory same-body
 `await_all` drain when no prior multi-pending `await_any` observation is
 active before the later spawn; declared ownership metadata remains scoped to
-the generated do instance. New spawn after specialized generated `do` when a
-multi-pending `await_any` observation is active before the drain remains
-outside the public shipped subset.
+the generated do instance. New spawn after bound or same-domain generated
+`do` when a multi-pending `await_any` observation is active before the drain
+remains outside the public shipped subset.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. In the top-level `when` body and top-level

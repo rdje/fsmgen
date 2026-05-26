@@ -1498,9 +1498,9 @@ Rules:
   still covers both pre-do and post-do generated spawns before nested repeat
   re-entry.
 
-  New nested `spawn` after specialized generated `do` when a multi-pending
-  `await_any` observation is active before the drain, deeper branch/loop
-  nesting, and cross-domain activation remain fail-closed.
+  New nested `spawn` after bound or same-domain generated `do` when a
+  multi-pending `await_any` observation is active before the drain, deeper
+  branch/loop nesting, and cross-domain activation remain fail-closed.
 
   Cross-domain repeat-body `do`, broader outstanding-child semantics,
   `stage`, `contract`, deeper branch nesting, nested `while`, and nested
@@ -2002,7 +2002,14 @@ Rules:
   top parameter binding, consumes only its deterministic generated do
   instance's fresh done handoff, does not clear pending generated spawn
   handoffs, and the same later `await_all` drain still gates nested repeat
-  re-entry on every outstanding generated child.
+  re-entry on every outstanding generated child. That static-parameter
+  generated do may also be followed by one or more additional generated spawns
+  before that later same-body `await_all`, either with no active
+  multi-pending `await_any` observation before the later spawn or after the
+  generated do follows a prior multi-pending observation. In the prior-
+  observation form, the path advances directly to the mandatory same-body
+  `await_all`; a second multi-pending `await_any` after the later spawn
+  remains fail-closed.
 - Samples after repeat-body spawn lower before the same-body `await_all`,
   single-pending `await_any`, or multi-pending `await_any` drain sync state
   that keeps the repeat check unreachable until outstanding spawned children
