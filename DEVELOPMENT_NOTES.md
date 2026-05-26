@@ -32647,3 +32647,12 @@ It is an exact-delay pulse request:
   adds two `assert_lower_rejected` regressions in `t/1215` matching the
   existing validator confess at `LoweringIR.pm:6551` for the
   `'generated-child do'` kind. Test-only.
+
+## 2026-05-27: static-parameter before-post-do await_any missing-drain coverage
+- Continued the R14 lane with when-body and switch-branch
+  `assert_lower_rejected` regressions for the static-parameter generated
+  `(do worker (params ...))` before post-do multi-pending `(await_any done)`
+  without final same-body `(await_all done)` drain shape. The slice
+  [`ISF-REPEAT-GENDO-PARAM-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-PARAM-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  adds two regressions in `t/1215` matching the existing validator confess
+  at `LoweringIR.pm:6551`. Test-only.

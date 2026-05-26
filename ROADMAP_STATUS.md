@@ -14321,3 +14321,8 @@ Exit criteria:
   contained subsets. Test-only locking of `LoweringIR.pm:6551` for the
   `'generated-child do'` kind. Param/bound/domain analogues remain as
   independent follow-up slices.
+- `R14`: BEFORE-POST-DO-AWAITANY missing-drain coverage now also spans the
+  static-parameter family on both branch-contained subsets. Test-only
+  locking of `LoweringIR.pm:6551` for the `'generated do with static
+  params'` kind. Bound/domain analogues remain as the next independently
+  reviewable follow-ups (bound switch-branch already exists at line 12061).

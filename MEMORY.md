@@ -36986,3 +36986,15 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   with `Files=1, Tests=100`; `mdbook build docs/book`;
   `./bin/ci-regression isf --no-book`; and `git diff --check`.
 - Active task tree: `none`.
+
+## 2026-05-27: R14 defensive missing-drain coverage shipped for static-parameter before-post-do await_any
+- Completed
+  `ISF-REPEAT-GENDO-PARAM-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`.
+- Added when-body and switch-branch `assert_lower_rejected` regressions in
+  `t/1215-isf-spawn-parameter-binding.t` for the static-parameter generated
+  `(do worker (params ...))` before post-do multi-pending `(await_any done)`
+  without final `(await_all done)` drain shape, matching the existing
+  validator confess at `LoweringIR.pm:6551` for the `'generated do with
+  static params'` kind.
+- Test-only. Validation: focused `prove` + `mdbook build` + ISF CI all pass.
+- Active task tree: `none`.
