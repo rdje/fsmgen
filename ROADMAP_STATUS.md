@@ -4,6 +4,21 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current bootstrap import-tree refresh:
+  `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-SECOND-AWAITANY-REFRESH.1` refreshed the
+  saved `bin/fsmgen` import-tree architecture note after the R14
+  generated-child second-`await_any` slice and closed the task tree. The live
+  static trace still measures `196` project-owned files and `195` `.pm`
+  packages with unchanged family counts; the recorded
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count is now `11141`. This
+  maintenance slice was documentation-only and did not change parser,
+  scheduler, backend, generated `.fsm`, HDL, public API, tests, or runtime
+  behavior. Validation passed: import-closure recount with `total=196` and
+  `pm=195`; largest-file recount showing `LoweringIR.pm` at `11141`;
+  targeted stale-value grep; `prove -Iperl
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1332-isf-atl-doc-status-audit.t` with `Files=2, Tests=403`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current R14 generated-child prior-await_any then spawn plus second
   await_any:
   `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` is the
@@ -28,14 +43,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   repeat/child regression with `Files=4, Tests=108`;
   `./bin/ci-regression isf --no-book` with `Files=275, Tests=1917`;
   `mdbook build docs/book`; and `git diff --check`.
-- Current bootstrap import-tree refresh:
+- Previous bootstrap import-tree refresh:
   `BIN-FSMGEN-IMPORT-TREE-R14-REPEAT-REFRESH.1` refreshed the saved
   `bin/fsmgen` import-tree architecture note after the latest R14 repeat-body
   child-activation slices and closed the task tree. The live static trace
   still measures `196`
   project-owned files and `195` `.pm` packages with unchanged family counts;
-  the stale saved bootstrap baseline is now `2026-05-26`, and the recorded
-  `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count is now `11137`. This
+  at that checkpoint the stale saved bootstrap baseline became `2026-05-26`,
+  and the recorded `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count became
+  `11137`. The later
+  `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-SECOND-AWAITANY-REFRESH.1` maintenance
+  slice superseded that measurement with `11141`. This
   maintenance slice was documentation-only and did not change parser,
   scheduler, backend, generated `.fsm`, HDL, public API, tests, or runtime
   behavior. Validation passed: import-closure recount with `total=196` and

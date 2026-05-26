@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Bootstrap import-tree refresh after generated-child second awaitany stays documentation-only
+- `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-SECOND-AWAITANY-REFRESH.1` exists to
+  satisfy the `SESSION_BOOTSTRAP.md` architecture audit after the R14
+  generated-child second-`await_any` repeat-body work.
+- The live import topology did not move: the `bin/fsmgen` static trace still
+  reaches `196` project-owned files and `195` `.pm` packages with the same
+  family counts.
+- The saved note was stale only because it still recorded
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` at `11137` lines. The current
+  measured count is `11141`.
+- No mdBook source update is warranted for this leaf because the project
+  behavior, public ISF syntax, diagnostics, manifests, generated artifacts,
+  and user workflows did not change.
+
 ## 2026-05-26: Generated-child do after prior awaitany can run a second post-spawn awaitany
 - `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` widens the
   plain generated-child prior-observation do-then-spawn proof to permit a
@@ -32,8 +46,10 @@ This document captures engineering rationale, design constraints, and working de
   this slice.
 - The saved note was still stale because it named the May 25 static-zero
   repeat refresh as the latest baseline and still recorded
-  `perl/FSM/Scheduler/ISF/LoweringIR.pm` at `11048` lines. The current
-  measured count is `11137`.
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` at `11048` lines. At that
+  checkpoint, the measured count became `11137`; the later
+  `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-SECOND-AWAITANY-REFRESH.1` slice
+  superseded it with `11141`.
 - No mdBook update is warranted for this leaf because the project behavior,
   public ISF syntax, diagnostics, manifests, generated artifacts, and user
   workflows did not change.
