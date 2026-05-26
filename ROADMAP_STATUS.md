@@ -4,6 +4,28 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 static-parameter generated-do do-then-spawn post-await_any:
+  `ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO-POST-AWAITANY.1` shipped the
+  static-parameter generated-do do-then-spawn post-spawn `await_any` analogue
+  and closed the task tree. A repeat directly inside a top-level `when` body
+  or top-level `switch` branch may now run an initial generated spawn,
+  generated blocking `(do child (params ...))`, one or more later generated
+  spawns, post-spawn multi-pending `(await_any done)`, and mandatory
+  same-body `(await_all done)` before nested repeat re-entry. The generated
+  do instance must complete before the later generated spawn starts; it
+  preserves static generated-top parameter binding; the post-spawn
+  `await_any` observes either pre-do or post-do generated child without
+  clearing the outstanding generated-spawn done set; and the final
+  `await_all` drains both pre-do and post-do generated children. Bound and
+  same-domain generated-do post-spawn `await_any`, prior active
+  multi-pending `await_any`, missing drains, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred. Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=76`; focused
+  book/public audits with `Files=3, Tests=365`; broader repeat/child
+  regression with `Files=4, Tests=90`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1812`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Current R14 local-do do-then-spawn post-await_any:
   `ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO-POST-AWAITANY.1` shipped the local-do
   do-then-spawn post-spawn `await_any` analogue and closed the task tree. A
@@ -14,11 +36,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   The local child must complete before the later generated spawn starts; the
   post-spawn `await_any` observes either pre-do or post-do generated child
   without clearing the outstanding generated-spawn done set; and the final
-  `await_all` drains both pre-do and post-do generated children. Specialized
-  generated-do post-spawn `await_any`, prior active multi-pending
-  `await_any`, missing drains, cross-domain activation, deeper branch/loop
-  nesting, and broader outstanding-child lifetime semantics remain
-  fail-closed/deferred. Validation passed: syntax checks; `prove -Iperl
+  `await_all` drains both pre-do and post-do generated children. At that
+  checkpoint, specialized generated-do post-spawn `await_any`, prior active
+  multi-pending `await_any`, missing drains, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime semantics
+  remained fail-closed/deferred; the later
+  `ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO-POST-AWAITANY.1` slice shipped the
+  static-parameter generated-do analogue. Validation passed: syntax checks; `prove -Iperl
   t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=74`; focused
   book/public audits with `Files=3, Tests=361`; broader repeat/child
   regression with `Files=4, Tests=88`; `./bin/ci-regression isf --no-book`

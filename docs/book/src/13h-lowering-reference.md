@@ -1171,7 +1171,10 @@ static-parameter generated do may also be followed by one or more additional
 generated nested spawns before the mandatory same-body `await_all` drain. The
 generated do instance's fresh done handoff gates the later spawn state, and
 the final drain observes both pre-do and post-do generated-spawn done
-handoffs.
+handoffs. That same static-parameter generated-do do-then-spawn shape may
+also run a post-spawn multi-pending `await_any` observation before the final
+same-body `await_all` drain when no prior multi-pending `await_any`
+observation is active before the later spawn.
 
 Top-level `when` body and top-level `switch` branch nested-repeat forms may
 also lower static-parameter generated `(do child (params ...)

@@ -6437,10 +6437,11 @@ sub _validate_repeat_body_spawn_subset {
                     && $spawn_after_local_do_before_drain
                     && $keyword eq 'await_any'
                     && !$allowed_local_spawn_after_do_before_post_await_any;
-            my $allowed_generated_child_spawn_after_do_before_post_await_any =
+            my $allowed_generated_do_spawn_after_do_before_post_await_any =
                 defined($pending_generated_do_label)
                 && $spawn_after_generated_do_before_drain
-                && (($spawn_after_generated_do_kind_before_drain // '') eq 'generated-child do')
+                && (($spawn_after_generated_do_kind_before_drain // '') eq 'generated-child do'
+                    || ($spawn_after_generated_do_kind_before_drain // '') eq 'generated do with static params')
                 && $keyword eq 'await_any'
                 && @pending_spawns > 1
                 && !$awaiting_multi_pending_drain;
@@ -6448,7 +6449,7 @@ sub _validate_repeat_body_spawn_subset {
                 if defined $pending_generated_do_label
                     && $spawn_after_generated_do_before_drain
                     && $keyword eq 'await_any'
-                    && !$allowed_generated_child_spawn_after_do_before_post_await_any;
+                    && !$allowed_generated_do_spawn_after_do_before_post_await_any;
             my $allowed_branch_local_do_before_post_await_any =
                 ($when_body_repeat || $switch_branch_repeat)
                 && $pending_local_do_before_drain

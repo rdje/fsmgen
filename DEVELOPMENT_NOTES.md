@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Static-parameter generated do-then-spawn can feed post-spawn awaitany
+- `ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO-POST-AWAITANY.1` extends the
+  do-then-spawn post-observation proof from plain generated-child and local
+  do to the first specialized generated-do form.
+- The accepted path is limited to generated `(do child (params ...))` inside a
+  repeat directly in a top-level `when` body or top-level `switch` branch,
+  after at least one generated spawn is already pending, with no active
+  multi-pending `await_any` observation before the later generated spawn.
+- The generated do site owns one deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` instance, preserves its static
+  generated-top parameter binding, and waits for that instance's fresh done
+  handoff before starting any later generated spawn.
+- The post-spawn `await_any` is observation-only. It may advance on either the
+  pre-do or post-do generated child done handoff, but it leaves the
+  outstanding generated-spawn set live for the mandatory same-body
+  `await_all`.
+- Bound and same-domain generated-do forms remain deferred for this
+  post-spawn observation shape because generated-top binding handoffs and
+  domain ownership metadata need separate reviewable lifetime proofs.
+
 ## 2026-05-26: Local do-then-spawn can feed post-spawn awaitany
 - `ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO-POST-AWAITANY.1` narrows the remaining
   do-then-spawn post-observation backlog after the plain generated-child

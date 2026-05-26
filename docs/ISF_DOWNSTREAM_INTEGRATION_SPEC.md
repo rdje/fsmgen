@@ -1376,7 +1376,12 @@ Rules:
   more later generated nested spawns before the mandatory same-body
   `(await_all done)` drain. The generated do instance's fresh done handoff
   gates the later spawn state, and the final drain covers both pre-do and
-  post-do generated spawns before nested repeat re-entry.
+  post-do generated spawns before nested repeat re-entry. That same
+  static-parameter generated-do do-then-spawn shape may also run a post-spawn
+  multi-pending `(await_any done)` observation before the final same-body
+  `(await_all done)` drain when no prior multi-pending `(await_any done)`
+  observation is active before the later spawn; the observation leaves both
+  pre-do and post-do generated-spawn done handoffs live.
 
   The top-level `when` body and top-level `switch` branch subsets may also
   place that static-parameter generated `do` after a prior multi-pending

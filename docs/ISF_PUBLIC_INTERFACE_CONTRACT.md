@@ -1601,7 +1601,11 @@ waits for its deterministic generated do instance's fresh done handoff and
 the later same-body `await_all` still drains every pending generated spawn
 before nested repeat re-entry. The top-level `switch` branch subset supports
 the same static-parameter generated-do post-do `await_any` observation and
-later same-body `await_all` drain contract. The top-level `when` body subset
+later same-body `await_all` drain contract. Those static-parameter
+generated-do subsets may also start one or more later generated spawns, run a
+post-spawn multi-pending `await_any` observation, and then use the mandatory
+same-body `await_all` drain when no prior multi-pending `await_any`
+observation is active before the later spawn. The top-level `when` body subset
 also supports static-parameter bound generated
 `(do child (params ...) (bind ...))` before post-do `await_any`, wiring the
 generated-top input/output binding handoffs for that generated do instance
