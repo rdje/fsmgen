@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Bound generated do after prior awaitany can run a second post-spawn awaitany
+- `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` widens the
+  bound generated-do prior-observation do-then-spawn proof to permit a second
+  observation before the final drain.
+- The accepted path remains branch-contained: the repeat must be directly
+  inside a top-level `when` body or top-level `switch` branch, use generated
+  `(do child (params ...) (bind ...))`, and end with same-body `await_all`
+  before nested repeat re-entry.
+- The first multi-pending `await_any` observes a pre-do generated child, the
+  generated `do` waits for its deterministic generated do instance's fresh
+  done handoff while preserving static generated-top parameter overrides and
+  generated-top input/output binding handoffs, the later generated spawn
+  joins the same outstanding generated-spawn set, and the second post-spawn
+  `await_any` observes without consuming that set.
+- The validator change is intentionally limited to static-parameter generated
+  activation with binding handoffs. Same-domain generated-do variants still
+  require the direct-to-`await_all` prior-observation path until ownership
+  metadata lifetimes are proven for the second-observation shape.
+- Missing same-body `await_all` remains fail-closed. The second observation
+  does not make the nested repeat check reachable; only the final `await_all`
+  drains every pre-do and post-do generated spawn.
+
 ## 2026-05-26: Static-parameter generated do after prior awaitany can run a second post-spawn awaitany
 - `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` widens the
   static-parameter generated-do prior-observation do-then-spawn proof to
@@ -13,11 +35,13 @@ This document captures engineering rationale, design constraints, and working de
   done handoff while preserving static generated-top parameter overrides, the
   later generated spawn joins the same outstanding generated-spawn set, and
   the second post-spawn `await_any` observes without consuming that set.
-- The validator change is intentionally limited to static-parameter generated
-  activation. Bound generated-do and same-domain generated-do variants still
-  require the direct-to-`await_all` prior-observation path until their binding
-  handoff and ownership metadata lifetimes are proven for the second-
-  observation shape.
+- The validator change in this earlier slice was intentionally limited to
+  static-parameter generated activation. The bound generated-do analogue has
+  since shipped in
+  `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`;
+  same-domain generated-do variants still require the direct-to-`await_all`
+  prior-observation path until ownership metadata lifetimes are proven for
+  the second-observation shape.
 - Missing same-body `await_all` remains fail-closed. The second observation
   does not make the nested repeat check reachable; only the final `await_all`
   drains every pre-do and post-do generated spawn.
@@ -49,11 +73,12 @@ This document captures engineering rationale, design constraints, and working de
   fresh done handoff, the later generated spawn joins the same outstanding
   generated-spawn set, and the second post-spawn `await_any` observes without
   consuming that set.
-- The validator change is intentionally limited to plain generated-child
-  activation. Static-parameter, bound, and same-domain generated-do variants
-  still require the direct-to-`await_all` prior-observation path until their
-  parameter, binding, and ownership metadata lifetimes are proven for the
-  second-observation shape.
+- The validator change in this earlier slice was intentionally limited to
+  plain generated-child activation. Static-parameter and bound generated-do
+  second-observation analogues have since shipped; same-domain generated-do
+  variants still require the direct-to-`await_all` prior-observation path
+  until ownership metadata lifetimes are proven for the second-observation
+  shape.
 - Missing same-body `await_all` remains fail-closed. The second observation
   does not make the nested repeat check reachable; only the final `await_all`
   drains every pre-do and post-do generated spawn.
@@ -207,10 +232,12 @@ This document captures engineering rationale, design constraints, and working de
   instance's fresh done handoff before the later generated spawn starts. The
   later spawn joins the same generated-spawn done set, and the final same-body
   `await_all` drains every generated spawn before nested repeat re-entry.
-- Static-parameter, bound, and same-domain generated-do variants stay deferred
-  for this prior-observation spawn-after-do shape because their parameter,
-  binding, or ownership metadata lifetimes need separate proofs. A second
-  multi-pending `await_any` after the later spawn remains fail-closed.
+- At that checkpoint, static-parameter, bound, and same-domain generated-do
+  variants stayed deferred for this prior-observation spawn-after-do shape
+  because their parameter, binding, or ownership metadata lifetimes needed
+  separate proofs. Later slices shipped those direct-to-drain variants and
+  then the static-parameter and bound second-observation analogues; the
+  same-domain second-observation shape remains fail-closed.
 - The loop-body doc-truth audit now uses bounded-window marker matching for
   generated static-parameter pending-spawn wording so backlog prose changes do
   not trigger document-wide regex backtracking.

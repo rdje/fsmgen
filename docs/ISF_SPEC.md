@@ -2755,13 +2755,16 @@ Current lowering:
   the generated do instance's fresh done handoff gates the later spawn state,
   generated-top binding handoffs stay scoped to the do instance, and the final
   drain covers both pre-do and post-do generated spawns. In the
-  prior-observation form, a second multi-pending `(await_any done)` after the
-  later spawn remains fail-closed. Those same bound generated-do
-  do-then-spawn subsets may also run a post-spawn multi-pending
-  `(await_any done)` observation before that final same-body `await_all`
-  drain when no prior multi-pending `await_any` observation is active before
-  the later spawn; the observation leaves both pre-do and post-do generated-
-  spawn done handoffs live. Top-level `when` body and top-level `switch`
+  prior-observation form, those same bound generated-do do-then-spawn subsets
+  may also run a second post-spawn multi-pending `(await_any done)`
+  observation before that final same-body `await_all` drain; both
+  observations leave all pre-do and post-do generated-spawn done handoffs live
+  for the final drain. Those same bound generated-do do-then-spawn subsets may
+  also run a post-spawn multi-pending `(await_any done)` observation before
+  that final same-body `await_all` drain when no prior multi-pending
+  `await_any` observation is active before the later spawn; the observation
+  leaves both pre-do and post-do generated-spawn done handoffs live. Top-level
+  `when` body and top-level `switch`
   branch nested repeat
   static-parameter same-domain generated
   `(do child (params ...) [(bind ...)] (domain NAME))` support the same
@@ -2782,9 +2785,8 @@ Current lowering:
   prior multi-pending `await_any` observation is active before the later
   spawn; the observation leaves both pre-do and post-do generated-spawn done
   handoffs live while preserving declared ownership metadata. A second
-  post-spawn `await_any` in bound and same-domain generated-do
-  prior-observation forms, deeper branch/loop nesting, and cross-domain
-  activation remain fail-closed.
+  post-spawn `await_any` in same-domain generated-do prior-observation forms,
+  deeper branch/loop nesting, and cross-domain activation remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a

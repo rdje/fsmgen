@@ -1,5 +1,41 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-26: R14 bound generated do after prior awaitany then spawn plus second awaitany shipped
+- Completed `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`
+  and closed the task tree.
+- Branch-contained nested repeats now accept the bound generated-do
+  repeated-observation prior-observation do-then-spawn shape: a repeat
+  directly inside a top-level `when` body or top-level `switch` branch may
+  run generated spawns, observe one done pulse through multi-pending
+  `(await_any done)`, run generated blocking
+  `(do child (params ...) (bind ...))`, start one or more later generated
+  spawns after the deterministic generated do instance's fresh done handoff
+  and generated-top binding handoffs, observe a second post-spawn
+  multi-pending `(await_any done)`, and still drain every generated spawn
+  through same-body `(await_all done)` before nested repeat re-entry.
+- Both `await_any` clauses are observation-only for the generated-spawn done
+  set. The generated `do` owns the deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` instance, preserves static
+  generated-top parameter overrides and generated-top input/output binding
+  handoffs for that instance, and gates the later generated spawn on that
+  instance's fresh done handoff; the final `await_all` drains generated
+  spawns from both sides of the generated `do`.
+- Same-domain generated `do` variants of this second post-spawn `await_any`
+  prior-observation shape, missing drains, cross-domain activation, deeper
+  branch/loop nesting, CDC behavior, and broader outstanding-child lifetime
+  semantics remain fail-closed/deferred.
+- Public ISF specs, downstream handoff, public contract, mdBook, feature
+  matrix audit, loop-body doc-truth audit, roadmap, task tree, README index,
+  and live docs are synchronized.
+- Validation passed: syntax checks; focused behavior `Files=1, Tests=98`;
+  feature matrix audit `Files=1, Tests=403`; loop-body doc audit
+  `Files=1, Tests=225`; public tested-by audit `Files=2, Tests=4`; live path
+  audits `Files=4, Tests=657`; repeat/child regression `Files=4, Tests=112`;
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book` with
+  `Files=275, Tests=1945`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 static-parameter generated do after prior awaitany then spawn plus second awaitany shipped
 - Completed `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`
   and closed the task tree.
@@ -18,10 +54,12 @@ This is the live continuity document for fast session recovery after crashes, re
   generated-top parameter overrides for that instance, and gates the later
   generated spawn on that instance's fresh done handoff; the final
   `await_all` drains generated spawns from both sides of the generated `do`.
-- Bound and same-domain generated `do` variants of this second post-spawn
-  `await_any` prior-observation shape, missing drains, cross-domain
-  activation, deeper branch/loop nesting, CDC behavior, and broader
-  outstanding-child lifetime semantics remain fail-closed/deferred.
+- The bound analogue has since shipped in
+  `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`.
+  Same-domain generated `do` variants of this second post-spawn `await_any`
+  prior-observation shape, missing drains, cross-domain activation, deeper
+  branch/loop nesting, CDC behavior, and broader outstanding-child lifetime
+  semantics remain fail-closed/deferred.
 - Public ISF specs, downstream handoff, public contract, mdBook, feature
   matrix audit, loop-body doc-truth audit, roadmap, task tree, README index,
   and live docs are synchronized.
@@ -76,10 +114,12 @@ This is the live continuity document for fast session recovery after crashes, re
   generated spawn on that instance's fresh done handoff; the final
   `await_all` drains generated spawns from both sides of the generated-child
   `do`.
-- Static-parameter, bound, and same-domain generated `do` variants of this
-  second post-spawn `await_any` prior-observation shape, missing drains,
-  cross-domain activation, deeper branch/loop nesting, CDC behavior, and
-  broader outstanding-child lifetime semantics remain fail-closed/deferred.
+- At that checkpoint, static-parameter, bound, and same-domain generated
+  `do` variants of this second post-spawn `await_any` prior-observation
+  shape remained fail-closed/deferred. Later slices shipped the
+  static-parameter and bound analogues; same-domain generated `do`, missing
+  drains, cross-domain activation, deeper branch/loop nesting, CDC behavior,
+  and broader outstanding-child lifetime semantics remain fail-closed/deferred.
 - Public ISF specs, downstream handoff, public contract, mdBook, feature
   matrix audit, loop-body doc-truth audit, roadmap, task tree, README index,
   and live docs are synchronized.
@@ -140,10 +180,12 @@ This is the live continuity document for fast session recovery after crashes, re
   `do`.
 - The plain generated-child analogue has since shipped in
   `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`.
-  Static-parameter, bound, and same-domain generated `do` variants of this
-  second post-spawn `await_any` prior-observation shape, missing drains,
-  cross-domain activation, deeper branch/loop nesting, CDC behavior, and
-  broader outstanding-child lifetime semantics remain fail-closed/deferred.
+  At that checkpoint, static-parameter, bound, and same-domain generated `do`
+  variants of this second post-spawn `await_any` prior-observation shape
+  remained fail-closed/deferred. Later slices shipped the static-parameter and
+  bound analogues; same-domain generated `do`, missing drains, cross-domain
+  activation, deeper branch/loop nesting, CDC behavior, and broader
+  outstanding-child lifetime semantics remain fail-closed/deferred.
 - Public ISF specs, downstream handoff, public contract, mdBook, feature
   matrix audit, loop-body doc-truth audit, roadmap, task tree, README index,
   and live docs are synchronized.

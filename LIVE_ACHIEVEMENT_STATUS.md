@@ -2,6 +2,34 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-26: R14 — Bound generated do after prior awaitany then spawn plus second awaitany shipped
+- Completed `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`
+  and closed the task tree.
+- Branch-contained nested repeats now accept generated spawns, prior
+  multi-pending `(await_any done)`, bound generated blocking
+  `(do child (params ...) (bind ...))`, later generated spawn, second
+  post-spawn multi-pending `(await_any done)`, and mandatory same-body
+  `(await_all done)` before nested repeat re-entry for repeats directly
+  inside top-level `when` bodies or top-level `switch` branches.
+- Both `await_any` clauses observe generated children without clearing the
+  outstanding generated-spawn done set; the deterministic generated do
+  instance preserves static generated-top parameter overrides and generated
+  top binding handoffs, then completes before the later generated spawn
+  starts; the final `await_all` drains generated spawns from both sides of the
+  generated `do`.
+- Same-domain generated `do` variants of this second post-spawn `await_any`
+  prior-observation shape, missing drains, cross-domain activation, deeper
+  branch/loop nesting, CDC behavior, and broader outstanding-child lifetime
+  semantics remain fail-closed/deferred.
+- Validation passed: syntax checks; focused behavior `Files=1, Tests=98`;
+  feature matrix audit `Files=1, Tests=403`; loop-body doc audit
+  `Files=1, Tests=225`; public tested-by audit `Files=2, Tests=4`; live path
+  audits `Files=4, Tests=657`; repeat/child regression `Files=4, Tests=112`;
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book` with
+  `Files=275, Tests=1945`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 — Static-parameter generated do after prior awaitany then spawn plus second awaitany shipped
 - Completed `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`
   and closed the task tree.
@@ -16,10 +44,12 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   instance preserves static generated-top parameter overrides and completes
   before the later generated spawn starts; the final `await_all` drains
   generated spawns from both sides of the generated `do`.
-- Bound and same-domain generated `do` variants of this second post-spawn
-  `await_any` prior-observation shape, missing drains, cross-domain
-  activation, deeper branch/loop nesting, CDC behavior, and broader
-  outstanding-child lifetime semantics remain fail-closed/deferred.
+- The bound analogue has since shipped in
+  `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`.
+  Same-domain generated `do` variants of this second post-spawn `await_any`
+  prior-observation shape, missing drains, cross-domain activation, deeper
+  branch/loop nesting, CDC behavior, and broader outstanding-child lifetime
+  semantics remain fail-closed/deferred.
 - Validation passed: syntax checks; focused scheduler/doc audits with
   `Files=3, Tests=713`; live path audits with `Files=2, Tests=29`;
   stale-doc grep; `mdbook build docs/book`;
@@ -62,10 +92,12 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   instance completes before the later generated spawn starts; the final
   `await_all` drains generated spawns from both sides of the generated-child
   `do`.
-- Static-parameter, bound, and same-domain generated `do` variants of this
-  second post-spawn `await_any` prior-observation shape, missing drains,
-  cross-domain activation, deeper branch/loop nesting, CDC behavior, and
-  broader outstanding-child lifetime semantics remain fail-closed/deferred.
+- At that checkpoint, static-parameter, bound, and same-domain generated
+  `do` variants of this second post-spawn `await_any` prior-observation
+  shape remained fail-closed/deferred. Later slices shipped the
+  static-parameter and bound analogues; same-domain generated `do`, missing
+  drains, cross-domain activation, deeper branch/loop nesting, CDC behavior,
+  and broader outstanding-child lifetime semantics remain fail-closed/deferred.
 - Validation passed: syntax checks; `prove -Iperl
   t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=94`;
   `prove -Iperl t/1305-isf-book-feature-matrix-audit.t` with `Files=1,
@@ -115,10 +147,12 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   from both sides of the local `do`.
 - The plain generated-child analogue has since shipped in
   `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`.
-  Static-parameter, bound, and same-domain generated `do` variants of this
-  second post-spawn `await_any` prior-observation shape, missing drains,
-  cross-domain activation, deeper branch/loop nesting, CDC behavior, and
-  broader outstanding-child lifetime semantics remain fail-closed/deferred.
+  At that checkpoint, static-parameter, bound, and same-domain generated `do`
+  variants of this second post-spawn `await_any` prior-observation shape
+  remained fail-closed/deferred. Later slices shipped the static-parameter and
+  bound analogues; same-domain generated `do`, missing drains, cross-domain
+  activation, deeper branch/loop nesting, CDC behavior, and broader
+  outstanding-child lifetime semantics remain fail-closed/deferred.
 - Validation passed: syntax checks; `prove -Iperl
   t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=92`; focused
   doc audits with `Files=2, Tests=591`; focused book/public audits with

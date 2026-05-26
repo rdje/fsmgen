@@ -727,13 +727,15 @@ leaves the pending generated-spawn done set live for the later drain.
 Generated `do` after a prior multi-pending `await_any` and generated `do`
 before post-do multi-pending `await_any` have shipped only for the documented
 branch-contained generated-child, static-parameter, bound, and same-domain
-metadata variants. Local-do and plain generated-child do-then-spawn after a
-prior multi-pending `await_any` have shipped only for the documented
-branch-contained forms that advance directly to same-body `await_all`.
-Specialized generated-do then-spawn after a prior multi-pending `await_any`,
-cross-domain repeat-body `do`, generated/spawn nested activation beyond the
-documented branch-contained generated `do` cases and the branch-contained
-spawned cases,
+metadata variants. Local-do, plain generated-child, static-parameter
+generated-do, and bound generated-do do-then-spawn after a prior
+multi-pending `await_any` have shipped only for the documented
+branch-contained forms that may include a second post-spawn `await_any`
+before the mandatory same-body `await_all` drain. Same-domain generated-do
+then-spawn after a prior multi-pending `await_any` remains limited to the
+documented direct-to-`await_all` path. Cross-domain repeat-body `do`,
+generated/spawn nested activation beyond the documented branch-contained
+generated `do` cases and the branch-contained spawned cases,
 deeper branch repeat activation, loop-contained repeat activation, and broader
 outstanding-child lifetime semantics beyond the mandatory-drain subset remain
 backlog.
@@ -1208,13 +1210,13 @@ spawn starts, generated-top input/output binding handoffs remain scoped to
 the bound or same-domain generated do instance, declared ownership metadata
 remains scoped to the same-domain generated do instance, and the final drain
 covers every pre-do and post-do generated spawn. The local-do, plain
-generated-child, and static-parameter generated-do prior-observation shapes
-may also run a second post-spawn `(await_any done)` before that mandatory
-drain; both observations leave the outstanding generated-spawn done set live
-until the final drain covers every pre-do and post-do generated spawn. Bound
-and same-domain generated-do second post-spawn `await_any`
-prior-observation variants, cross-domain activation, deeper nesting, and
-broader outstanding-child lifetime rules remain backlog.
+generated-child, static-parameter generated-do, and bound generated-do
+prior-observation shapes may also run a second post-spawn
+`(await_any done)` before that mandatory drain; both observations leave the
+outstanding generated-spawn done set live until the final drain covers every
+pre-do and post-do generated spawn. Same-domain generated-do second
+post-spawn `await_any` prior-observation variants, cross-domain activation,
+deeper nesting, and broader outstanding-child lifetime rules remain backlog.
 
 The top-level `when` body branch-contained plain generated-child and
 static-parameter generated-do prior-observation shapes and the top-level
