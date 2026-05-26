@@ -14288,3 +14288,14 @@ Exit criteria:
   and same-domain generated-do families. Test-only locking of
   `LoweringIR.pm:6551` for the `'generated do with static params and
   bindings'` kind.
+- `R14`: defensive missing-drain regression coverage now spans the plain
+  generated-child SPAWN-AFTER-DO ("prior-`await_any` then spawn without
+  drain") shape on both branch-contained subsets.
+  `ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.1` added the
+  switch-branch `assert_lower_rejected` regression for the plain
+  generated-child `(do worker)` prior-`await_any` then later generated spawn
+  without final same-body `(await_all done)` drain shape; the when-body
+  counterpart already lived in `t/1215`. Test-only locking of
+  `LoweringIR.pm:6551` for the `'generated-child do'` kind. The
+  static-parameter switch-branch SPAWN-AFTER-DO missing-drain coverage
+  remains as the next independently reviewable follow-up.

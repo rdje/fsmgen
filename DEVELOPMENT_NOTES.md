@@ -32588,3 +32588,21 @@ It is an exact-delay pulse request:
   generated-child, static-parameter, bound, and same-domain.
 - This slice is test-only: no parser, validator, lowering, schedule report,
   backend, public API, or runtime change.
+
+## 2026-05-26: plain generated-child switch-branch spawn-after-do missing-drain coverage
+- Continued the active R14 lane by adding the switch-branch defensive
+  regression coverage for the plain generated-child `(do worker)`
+  prior-`await_any` then later generated spawn without final same-body
+  `(await_all done)` drain shape. The when-body counterpart already
+  existed in `t/1215`; this slice closes the symmetric gap.
+- The slice
+  [`ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.md)
+  adds one `assert_lower_rejected` regression in
+  [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t)
+  matching the existing validator confess at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the
+  `'generated-child do'` kind.
+- This slice is test-only: no parser, validator, lowering, schedule report,
+  backend, public API, or runtime change. The static-parameter
+  switch-branch SPAWN-AFTER-DO missing-drain coverage slice remains as the
+  next independently reviewable follow-up.

@@ -30012,3 +30012,9 @@ This is the persistent technical change history for FSMGen.
   `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` slice
   shipped. No parser, scheduler, backend, generated `.fsm`, HDL, public API,
   manifests, or runtime behavior change.
+
+### plain generated-child switch-branch spawn-after-do missing-drain coverage
+- Added one switch-branch `assert_lower_rejected` regression in [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t) for the plain generated-child `(do worker)` prior-`await_any` then later generated spawn without final same-body `(await_all done)` drain shape. The matching when-body assertion already lives in `t/1215`; this slice closes the symmetric switch-branch gap. The regression matches the existing validator confess at [perl/FSM/Scheduler/ISF/LoweringIR.pm:6551](perl/FSM/Scheduler/ISF/LoweringIR.pm) for the `'generated-child do'` kind.
+- This is test-only locking of the missing-drain fail-closed contract.
+  No parser, scheduler, backend, generated `.fsm`, HDL, public API,
+  manifests, or runtime behavior change.

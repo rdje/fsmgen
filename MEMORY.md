@@ -36905,3 +36905,25 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `./bin/ci-regression isf --no-book`; and `git diff --check`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+
+## 2026-05-26: R14 defensive missing-drain coverage shipped for plain generated-child switch-branch spawn-after-do
+- Completed `ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.1`
+  and closed the task tree.
+- Added one switch-branch `assert_lower_rejected` regression in
+  `t/1215-isf-spawn-parameter-binding.t` for the plain generated-child
+  `(do worker)` prior-`await_any` then later generated spawn without final
+  same-body `(await_all done)` drain shape. The when-body counterpart
+  already exists in `t/1215` at line ~10785; this slice closes the
+  symmetric switch-branch gap. The regression matches the existing
+  validator confess at `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the
+  `'generated-child do'` kind.
+- This slice is test-only. Parser, scheduler, backend, generated `.fsm`,
+  HDL, public API, manifests, and runtime behavior are unchanged.
+- README, task tree, roadmap, change history, development notes, and live
+  achievement status are synchronized. The mdBook source is unchanged
+  because no user-visible behavior changed.
+- Validation passed: `prove -Iperl t/1215-isf-spawn-parameter-binding.t`
+  with `Files=1, Tests=100`; `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.

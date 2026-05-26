@@ -15583,3 +15583,21 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
   `git diff --check`.
 - Next bounded slice: pick the next R14 ISF feature lane.
+
+## 2026-05-26: Plain generated-child switch-branch spawn-after-do missing-drain coverage shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.md)
+  added the switch-branch `assert_lower_rejected` regression for the plain
+  generated-child `(do worker)` prior-`await_any` then later generated
+  spawn without final same-body `(await_all done)` drain shape, matching
+  the existing validator confess at `LoweringIR.pm:6551` for the
+  `'generated-child do'` kind. The when-body counterpart already lived in
+  `t/1215`.
+- Public behavior changed: no; test-only.
+- Focused validation passed:
+  `prove -Iperl t/1215-isf-spawn-parameter-binding.t` (Files=1, Tests=100);
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
+  `git diff --check`.
+- Next bounded slice: static-parameter switch-branch SPAWN-AFTER-DO
+  missing-drain coverage.
