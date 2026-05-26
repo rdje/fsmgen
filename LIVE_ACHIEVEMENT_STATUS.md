@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-26: Bootstrap architecture maintenance — R14 repeat import-tree refreshed
+- Completed `BIN-FSMGEN-IMPORT-TREE-R14-REPEAT-REFRESH.1` and closed the
+  task tree.
+- Rebuilt the live `bin/fsmgen` import closure: `196` project-owned files,
+  `195` `.pm` packages, and unchanged family counts.
+- Refreshed `docs/BIN_FSMGEN_IMPORT_TREE.md` to the `2026-05-26` bootstrap
+  baseline and updated the recorded `perl/FSM/Scheduler/ISF/LoweringIR.pm`
+  line count to `11137`.
+- This was documentation-only architecture maintenance with no behavior,
+  parser, scheduler, backend, generated `.fsm`, HDL, public API, or runtime
+  change.
+- Validation passed: import-closure recount with `total=196` and `pm=195`;
+  largest-file recount showing `LoweringIR.pm` at `11137`; targeted
+  stale-value greps; `prove -Iperl
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1332-isf-atl-doc-status-audit.t` with `Files=2, Tests=399`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 — Local do after prior awaitany then spawn plus second awaitany shipped
 - Completed `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` and
   closed the task tree.
@@ -504,7 +524,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   total and `195` reachable `.pm` packages with the same family counts.
 - Refreshed the stale `perl/FSM/Scheduler/ISF/LoweringIR.pm` measured line
   count in `docs/BIN_FSMGEN_IMPORT_TREE.md` after the latest R14 static-zero
-  repeat child-activation pruning work; the current count is `11048`.
+  repeat child-activation pruning work; the then-current count was `11048`.
 - Parser behavior, scheduler lowering, generated `.fsm`, HDL, public API,
   tests, and runtime behavior did not change.
 - Validation passed: import-closure recount; stale measured-value grep;

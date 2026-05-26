@@ -4,6 +4,22 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current bootstrap import-tree refresh:
+  `BIN-FSMGEN-IMPORT-TREE-R14-REPEAT-REFRESH.1` refreshed the saved
+  `bin/fsmgen` import-tree architecture note after the latest R14 repeat-body
+  child-activation slices and closed the task tree. The live static trace
+  still measures `196`
+  project-owned files and `195` `.pm` packages with unchanged family counts;
+  the stale saved bootstrap baseline is now `2026-05-26`, and the recorded
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count is now `11137`. This
+  maintenance slice was documentation-only and did not change parser,
+  scheduler, backend, generated `.fsm`, HDL, public API, tests, or runtime
+  behavior. Validation passed: import-closure recount with `total=196` and
+  `pm=195`; largest-file recount showing `LoweringIR.pm` at `11137`;
+  targeted stale-value greps; `prove -Iperl
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1332-isf-atl-doc-status-audit.t` with `Files=2, Tests=399`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current R14 local-do prior-await_any then spawn plus second await_any:
   `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` shipped the
   first repeated-observation prior-observation do-then-spawn shape and closed
@@ -424,11 +440,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   bootstrap audit re-read the session entrypoints and rebuilt the live
   project-owned `FSM::...` import closure. The topology remains unchanged at
   `196` project files and `195` `.pm` packages with the same family counts.
-  The stale measured `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count is now
-  recorded as `11048`. This was documentation-only: parser behavior,
-  scheduler lowering, generated `.fsm`, HDL, public API, tests, and runtime
-  behavior did not change. Validation passed: import-closure recount; stale
-  measured-value grep; `git diff --check`.
+  The stale measured `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count was
+  recorded at that checkpoint as `11048`. This was documentation-only:
+  parser behavior, scheduler lowering, generated `.fsm`, HDL, public API,
+  tests, and runtime behavior did not change. Validation passed:
+  import-closure recount; stale measured-value grep; `git diff --check`.
 - Current R14 static zero repeat specialized child activation pruning:
   `ISF-STATIC-ZERO-REPEAT-SPECIALIZED-CHILD-PRUNE.1` shipped specialized
   static-zero repeat child-activation pruning and closed the task tree.

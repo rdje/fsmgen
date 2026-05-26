@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Bootstrap import-tree refresh stays documentation-only
+- `BIN-FSMGEN-IMPORT-TREE-R14-REPEAT-REFRESH.1` exists to satisfy the
+  `SESSION_BOOTSTRAP.md` architecture audit after recent R14 repeat-body
+  child-activation work.
+- The live import topology did not move: the `bin/fsmgen` static trace still
+  reaches `196` project-owned files and `195` `.pm` packages with the same
+  family counts. That means there is no architecture-seam decision hidden in
+  this slice.
+- The saved note was still stale because it named the May 25 static-zero
+  repeat refresh as the latest baseline and still recorded
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` at `11048` lines. The current
+  measured count is `11137`.
+- No mdBook update is warranted for this leaf because the project behavior,
+  public ISF syntax, diagnostics, manifests, generated artifacts, and user
+  workflows did not change.
+
 ## 2026-05-26: Local do after prior awaitany can run a second post-spawn awaitany
 - `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` widens the
   shipped local prior-observation do-then-spawn proof to permit a second
