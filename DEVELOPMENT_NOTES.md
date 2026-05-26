@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Bootstrap import-tree refresh after bound generated-do second awaitany stays documentation-only
+- `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-BOUND-SECOND-AWAITANY-REFRESH.1` exists
+  to satisfy the `SESSION_BOOTSTRAP.md` architecture audit after the R14
+  static-parameter and bound generated-do prior-`await_any` plus second
+  post-spawn `await_any` repeat-body slices each grew the saved
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` hotspot by one line.
+- The live import topology did not move: the `bin/fsmgen` static trace still
+  reaches `196` project-owned files and `195` `.pm` packages with the same
+  family counts.
+- The saved note was stale only because it still recorded
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` at `11141` lines. The current
+  measured count is `11143`.
+- No mdBook source update is warranted for this leaf because the project
+  behavior, public ISF syntax, diagnostics, manifests, generated artifacts,
+  and user workflows did not change.
+
 ## 2026-05-26: Bound generated do after prior awaitany can run a second post-spawn awaitany
 - `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` widens the
   bound generated-do prior-observation do-then-spawn proof to permit a second
@@ -54,8 +70,10 @@ This document captures engineering rationale, design constraints, and working de
   reaches `196` project-owned files and `195` `.pm` packages with the same
   family counts.
 - The saved note was stale only because it still recorded
-  `perl/FSM/Scheduler/ISF/LoweringIR.pm` at `11137` lines. The current
-  measured count is `11141`.
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` at `11137` lines. At that
+  checkpoint, the measured count became `11141`; the later
+  `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-BOUND-SECOND-AWAITANY-REFRESH.1` slice
+  superseded it with `11143`.
 - No mdBook source update is warranted for this leaf because the project
   behavior, public ISF syntax, diagnostics, manifests, generated artifacts,
   and user workflows did not change.

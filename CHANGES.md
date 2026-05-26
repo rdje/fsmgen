@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-26
+### Bootstrap architecture maintenance — R14 bound generated-do second-awaitany import-tree measurement refreshed
+- Completed `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-BOUND-SECOND-AWAITANY-REFRESH.1`
+  and closed the task tree.
+- Rebuilt the live `bin/fsmgen` project-owned `FSM::...` import closure:
+  topology remains `196` project files total, `195` `.pm` packages, and the
+  same family counts.
+- Updated `docs/BIN_FSMGEN_IMPORT_TREE.md` to keep the `2026-05-26`
+  bootstrap baseline current after the R14 static-parameter and bound
+  generated-do prior-`await_any` plus second post-spawn `await_any`
+  repeat-body slices each added one line to the saved
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` hotspot, refreshing the recorded
+  line count to `11143`.
+- This maintenance slice is documentation-only; it does not change parser,
+  scheduler, backend, generated `.fsm`, HDL, public API, tests, or runtime
+  behavior. The mdBook source is unchanged because no user-visible behavior
+  changed.
+- Validation passed: import-closure recount with `total=196` and `pm=195`;
+  largest-file recount showing `LoweringIR.pm` at `11143`; targeted
+  stale-value grep; `prove -Iperl
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1332-isf-atl-doc-status-audit.t` with `Files=2, Tests=403`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Bound generated do after prior awaitany then spawn plus second awaitany shipped
 - Completed `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`
   and closed the task tree.

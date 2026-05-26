@@ -59,12 +59,31 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   docs/book`; `./bin/ci-regression isf --no-book` with `Files=275,
   Tests=1932`; and `git diff --check`.
 - Current bootstrap import-tree refresh:
+  `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-BOUND-SECOND-AWAITANY-REFRESH.1`
+  refreshed the saved `bin/fsmgen` import-tree architecture note after the
+  R14 static-parameter and bound generated-do prior-`await_any` plus second
+  post-spawn `await_any` repeat-body slices each added one line to the
+  recorded `perl/FSM/Scheduler/ISF/LoweringIR.pm` hotspot, and closed the
+  task tree. The live static trace still measures `196` project-owned files
+  and `195` `.pm` packages with unchanged family counts; the recorded
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count is now `11143`. This
+  maintenance slice was documentation-only and did not change parser,
+  scheduler, backend, generated `.fsm`, HDL, public API, tests, or runtime
+  behavior. Validation passed: import-closure recount with `total=196` and
+  `pm=195`; largest-file recount showing `LoweringIR.pm` at `11143`;
+  targeted stale-value grep; `prove -Iperl
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1332-isf-atl-doc-status-audit.t` with `Files=2, Tests=403`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Previous bootstrap import-tree refresh:
   `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-SECOND-AWAITANY-REFRESH.1` refreshed the
   saved `bin/fsmgen` import-tree architecture note after the R14
   generated-child second-`await_any` slice and closed the task tree. The live
-  static trace still measures `196` project-owned files and `195` `.pm`
-  packages with unchanged family counts; the recorded
-  `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count is now `11141`. This
+  static trace still measured `196` project-owned files and `195` `.pm`
+  packages with unchanged family counts; at that checkpoint the recorded
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count became `11141`. The later
+  `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-BOUND-SECOND-AWAITANY-REFRESH.1`
+  maintenance slice superseded that measurement with `11143`. This
   maintenance slice was documentation-only and did not change parser,
   scheduler, backend, generated `.fsm`, HDL, public API, tests, or runtime
   behavior. Validation passed: import-closure recount with `total=196` and
