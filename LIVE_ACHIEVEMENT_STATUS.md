@@ -15636,3 +15636,18 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `git diff --check`.
 - Next bounded slice: plain generated-child BEFORE-POST-DO-AWAITANY
   missing-drain coverage.
+
+## 2026-05-27: Plain generated-child before-post-do await_any missing-drain coverage shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-REPEAT-GENDO-PLAIN-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-PLAIN-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  added when-body and switch-branch `assert_lower_rejected` regressions
+  for the plain generated-child `(do worker)` before post-do multi-pending
+  `(await_any done)` without final `(await_all done)` shape.
+- Public behavior changed: no; test-only.
+- Focused validation passed:
+  `prove -Iperl t/1215-isf-spawn-parameter-binding.t` (Files=1, Tests=100);
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
+  `git diff --check`.
+- Next bounded slice: static-parameter BEFORE-POST-DO-AWAITANY missing-drain
+  coverage.

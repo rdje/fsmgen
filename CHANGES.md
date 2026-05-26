@@ -30030,3 +30030,6 @@ This is the persistent technical change history for FSMGen.
 - Test-only locking of the missing-drain fail-closed contract. No parser,
   scheduler, backend, generated `.fsm`, HDL, public API, manifests, or
   runtime behavior change.
+
+### plain generated-child before-post-do await_any missing-drain coverage
+- Added when-body and switch-branch `assert_lower_rejected` regressions in [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t) for the plain generated-child `(do worker)` before post-do multi-pending `(await_any done)` observation without final same-body `(await_all done)` drain shape, matching the existing validator confess at [perl/FSM/Scheduler/ISF/LoweringIR.pm:6551](perl/FSM/Scheduler/ISF/LoweringIR.pm) for the `'generated-child do'` kind. Test-only.

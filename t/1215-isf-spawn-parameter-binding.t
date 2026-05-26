@@ -11471,6 +11471,23 @@ ISF
     (complete done)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'when nested repeat generated-child do before post-do multi-pending await_any without drain', qr/when-body nested repeat generated-child do while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor when_nested_repeat_generated_child_do_before_post_do_multi_pending_await_any_without_drain
+  (clock clk)
+  (interface (input start) (input cond) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (when cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (do worker)
+        (await_any done)))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'when nested repeat local do while spawn pending with await_any drain', qr/when-body nested repeat local do while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the do remains deferred/);
 (actor when_nested_repeat_local_do_while_spawn_pending_with_await_any
   (clock clk)
@@ -12334,6 +12351,24 @@ ISF
   (transaction worker
     (complete done))
   (transaction local_worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat generated-child do before post-do multi-pending await_any without drain', qr/switch-branch nested repeat generated-child do while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor switch_nested_repeat_generated_child_do_before_post_do_multi_pending_await_any_without_drain
+  (clock clk)
+  (interface (input start) (input mode) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0)
+          (spawn worker as w1)
+          (do worker)
+          (await_any done))))
+    (complete done))
+  (transaction worker
     (complete done)))
 ISF
 

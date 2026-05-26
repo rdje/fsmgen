@@ -14316,3 +14316,8 @@ Exit criteria:
   local-do label. Plain/param/bound/domain analogues remain as separate
   independently reviewable slices (only bound switch-branch coverage
   exists today).
+- `R14`: defensive missing-drain regression coverage now also spans the
+  plain generated-child BEFORE-POST-DO-AWAITANY shape on both branch-
+  contained subsets. Test-only locking of `LoweringIR.pm:6551` for the
+  `'generated-child do'` kind. Param/bound/domain analogues remain as
+  independent follow-up slices.

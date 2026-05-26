@@ -36969,3 +36969,20 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `./bin/ci-regression isf --no-book`; and `git diff --check`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+
+## 2026-05-27: R14 defensive missing-drain coverage shipped for plain generated-child before-post-do await_any
+- Completed
+  `ISF-REPEAT-GENDO-PLAIN-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`
+  and closed the task tree.
+- Added one when-body and one switch-branch `assert_lower_rejected`
+  regression in `t/1215-isf-spawn-parameter-binding.t` for the plain
+  generated-child `(do worker)` before post-do multi-pending
+  `(await_any done)` observation without final same-body
+  `(await_all done)` drain shape. Both regressions match the existing
+  validator confess at `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the
+  `'generated-child do'` kind.
+- This slice is test-only.
+- Validation passed: `prove -Iperl t/1215-isf-spawn-parameter-binding.t`
+  with `Files=1, Tests=100`; `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; and `git diff --check`.
+- Active task tree: `none`.

@@ -32637,3 +32637,13 @@ It is an exact-delay pulse request:
   matching the existing validator confess at
   `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the local-do label.
 - This slice is test-only.
+
+## 2026-05-27: plain generated-child before-post-do await_any missing-drain coverage
+- Continued the active R14 lane by adding when-body and switch-branch
+  defensive regression coverage for the plain generated-child `(do worker)`
+  before post-do multi-pending `(await_any done)` without final same-body
+  `(await_all done)` drain. The slice
+  [`ISF-REPEAT-GENDO-PLAIN-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-PLAIN-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  adds two `assert_lower_rejected` regressions in `t/1215` matching the
+  existing validator confess at `LoweringIR.pm:6551` for the
+  `'generated-child do'` kind. Test-only.
