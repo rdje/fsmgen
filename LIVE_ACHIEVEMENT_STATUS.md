@@ -15709,3 +15709,23 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Next bounded slice:
   `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2` (validator gate +
   `t/1370` regression + doc-surface updates).
+
+## 2026-05-27: Data-op activation-override width gate shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2`](docs/tasks/ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.md)
+  widened the validator activation-site default-preserving gate from
+  timing-parameter contexts to data-operation width contexts
+  (`shift_left`, `shift_right`, `assemble`, `extract`). Mismatched
+  activation overrides on a generated child's transaction parameter
+  consumed by a data-op width now fail closed with a targeted
+  `static-width parameter` diagnostic.
+- Public behavior changed: yes — previously-silently-accepted
+  mismatched overrides for data-op width parameters now fail closed.
+  Same-value overrides keep working; unrelated overrides keep working;
+  static-timing/contract precedence preserved.
+- Focused validation passed: `prove -Iperl t/1370 t/1369 t/1367 t/1366
+  t/1305 t/1307` (Files=6, Tests=715); `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; `git diff --check`.
+- Next bounded slice: hand off to whichever R14 ISF feature lane the
+  roadmap selects next.

@@ -3364,6 +3364,11 @@ Required fail-closed examples:
   parameters consumed by repeat, wait, latency, or top-level await-local
   watchdog lowering. Same-value overrides are accepted; mismatches fail closed
   until per-activation static timing specialization is shipped.
+- Generated child activation overrides that change child transaction
+  parameters consumed by data-operation widths (`shift_left`, `shift_right`,
+  `assemble`, `extract`). Same-value overrides are accepted; mismatches fail
+  closed with a targeted `static-width parameter` diagnostic until
+  per-activation data-op width specialization is shipped.
 - Temporal contract windows that need activation-site override-specialized
   lowering beyond same-value generated child activation overrides,
   transaction parameters from other transactions, runtime interface signals,

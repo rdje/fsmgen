@@ -3405,8 +3405,12 @@ generated child or direct/non-generated transactions that resolve to positive
 integers. Accepted package constants must be imported, qualified as
 `PACKAGE.CONSTANT`, and scalar package `+constants` entries. Accepted
 transaction parameters are resolved from the transaction definition's default
-before scheduled `.fsm` emission; generated child activation-site override
-specialization remains fail-closed. Unqualified package constants, unknown package
+before scheduled `.fsm` emission. Activation-site overrides on `spawn`,
+generated blocking `do`, or rule `trigger` that target a generated child
+parameter used by a data-op width are accepted only when they resolve to
+the same value as the child transaction parameter default; mismatched
+overrides fail closed with a targeted diagnostic, and full
+override-specialized data-op width lowering remains backlog. Unqualified package constants, unknown package
 constants, package aggregate constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, unrelated or cross-transaction
 parameters, runtime signals, unknown names, arbitrary expressions, zero
@@ -5686,6 +5690,7 @@ Focused tests:
 - [t/1367-isf-data-op-transaction-param-widths.t](../t/1367-isf-data-op-transaction-param-widths.t)
 - [t/1368-isf-transaction-port-transaction-param-widths.t](../t/1368-isf-transaction-port-transaction-param-widths.t)
 - [t/1369-isf-timing-param-activation-override-gates.t](../t/1369-isf-timing-param-activation-override-gates.t)
+- [t/1370-isf-data-op-activation-override-width-gate.t](../t/1370-isf-data-op-activation-override-width-gate.t)
 
 ## 12. Explicitly Deferred
 

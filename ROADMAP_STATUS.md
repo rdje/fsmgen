@@ -14348,3 +14348,13 @@ Exit criteria:
   timing gate already prevents. `.1: select` lands the task tree;
   `.2: ship` will land the validator gate plus regression test
   `t/1370-isf-data-op-activation-override-width-gate.t`.
+- `R14`: data-op activation-override width gate now ships. The validator
+  at `perl/FSM/Scheduler/ISF/LoweringIR.pm` fails closed on mismatched
+  activation overrides for generated child transaction parameters used
+  by `shift_left`/`shift_right`/`assemble`/`extract` widths, matching the
+  existing default-preserving gate for static-timing and contract-window
+  parameters. Same-value overrides remain accepted. Regression covered
+  by `t/1370-isf-data-op-activation-override-width-gate.t`. Doc surfaces
+  in `ISF_SPEC.md`, `ISF_PUBLIC_INTERFACE_CONTRACT.md`,
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and
+  `docs/book/src/14-feature-backlog.md` are aligned.

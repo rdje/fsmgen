@@ -2672,6 +2672,8 @@ sub _validate_child_transaction_refs($self, $actor) {
             _transaction_contract_window_param_names($transaction_by_name{$target}, $declared_param_list);
         my $static_timing_params =
             _transaction_static_timing_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $data_op_width_params =
+            _transaction_data_op_width_param_names($transaction_by_name{$target}, $declared_param_list);
         for my $override (@{_activation_parameter_overrides($clause, $tx_name, $label, $constant_values, $actor)}) {
             my $name = $override->{name};
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
@@ -2684,6 +2686,9 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides static-timing parameter '$name' on child '$target'; activation-site parameter override-specialized static timing remains deferred\n"
                 if $static_timing_params->{$name}
                     && !_activation_override_preserves_static_timing_param($declared_params{$name}, $override);
+            confess "Transaction '$tx_name': $keyword instance '$instance' overrides static-width parameter '$name' on child '$target'; activation-site parameter override-specialized data-op widths remain deferred\n"
+                if $data_op_width_params->{$name}
+                    && !_activation_override_preserves_data_op_width_param($declared_params{$name}, $override);
         }
     }
 
@@ -2713,6 +2718,8 @@ sub _validate_child_transaction_refs($self, $actor) {
             _transaction_contract_window_param_names($transaction_by_name{$target}, $declared_param_list);
         my $static_timing_params =
             _transaction_static_timing_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $data_op_width_params =
+            _transaction_data_op_width_param_names($transaction_by_name{$target}, $declared_param_list);
         for my $override (@{$ref->{parameter_overrides} || []}) {
             my $name = $override->{name};
             confess "Rule '$rule_name': trigger instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
@@ -2725,6 +2732,9 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Rule '$rule_name': trigger instance '$instance' overrides static-timing parameter '$name' on child '$target'; activation-site parameter override-specialized static timing remains deferred\n"
                 if $static_timing_params->{$name}
                     && !_activation_override_preserves_static_timing_param($declared_params{$name}, $override);
+            confess "Rule '$rule_name': trigger instance '$instance' overrides static-width parameter '$name' on child '$target'; activation-site parameter override-specialized data-op widths remain deferred\n"
+                if $data_op_width_params->{$name}
+                    && !_activation_override_preserves_data_op_width_param($declared_params{$name}, $override);
         }
     }
 
@@ -2992,12 +3002,29 @@ sub _transaction_contract_window_param_names {
     return \%used;
 }
 
+sub _transaction_data_op_width_param_names {
+    my ($tx, $params) = @_;
+    return {} unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return {} unless keys %declared;
+
+    my %used;
+    _collect_data_op_width_declared_name_refs($tx->{clauses}, \%declared, \%used);
+    return \%used;
+}
+
 sub _activation_override_preserves_contract_window_param {
     my ($declared_param, $override) = @_;
     return _activation_override_preserves_static_integer_param($declared_param, $override);
 }
 
 sub _activation_override_preserves_static_timing_param {
+    my ($declared_param, $override) = @_;
+    return _activation_override_preserves_static_integer_param($declared_param, $override);
+}
+
+sub _activation_override_preserves_data_op_width_param {
     my ($declared_param, $override) = @_;
     return _activation_override_preserves_static_integer_param($declared_param, $override);
 }

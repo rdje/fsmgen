@@ -37042,3 +37042,40 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   in t/1370 + doc surfaces).
 - Active task tree: `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE`.
 - Current frontier: `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2`.
+
+## 2026-05-27: R14 data-op activation-override width gate shipped
+- Completed
+  `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2` and closed the active
+  task tree.
+- `perl/FSM/Scheduler/ISF/LoweringIR.pm` now fails closed when a
+  generated-child activation (`spawn`, generated blocking `do`, or rule
+  `trigger`) passes a parameter override whose name matches a child
+  transaction parameter used as a data-op width
+  (`shift_left`/`shift_right`/`assemble`/`extract`) and whose value
+  differs from the child default. Same-value overrides remain accepted.
+  The new diagnostic is `Transaction '<tn>': <kind> instance '<inst>'
+  overrides static-width parameter '<name>' on child '<child>';
+  activation-site parameter override-specialized data-op widths remain
+  deferred` (or the analogous `Rule '<rn>': trigger instance ...` form).
+- Implementation reuses the existing `_collect_data_op_width_declared_name_refs`
+  helper through a new `_transaction_data_op_width_param_names`, and the
+  same `_activation_override_preserves_static_integer_param` underlying
+  preserve-check used by the timing/contract gates.
+- Added regression `t/1370-isf-data-op-activation-override-width-gate.t`
+  with three subtests covering: mismatched overrides for all four
+  data-op contexts across spawn/do/trigger; same-value overrides remaining
+  accepted for all four; unrelated-param overrides still accepted; and the
+  existing static-timing gate taking precedence when the same parameter
+  backs both a wait count and a data-op width.
+- Doc surfaces synchronized: `docs/ISF_SPEC.md` data-operation width
+  paragraph, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` activation-override
+  test-coverage section, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` deferred
+  list, and `docs/book/src/14-feature-backlog.md` activation-override gate
+  description. `docs/book/src/13k-isf-feature-support-matrix.md` data
+  manipulation row 56 already said "activation-site override-specialized
+  ... widths fail closed", so no edit there.
+- Validation passed: `prove -Iperl t/1370 t/1369 t/1367 t/1366 t/1305 t/1307`
+  with `Files=6, Tests=715`; `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.

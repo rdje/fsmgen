@@ -78,21 +78,21 @@ the diagnostic surface uniform.
 ## Task Tree
 
 - ID: `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE`
-  Status: `pending`
+  Status: `done`
   Goal: `Widen the activation-site override-specialized default-preserving gate to data-op widths.`
   Children:
     `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.1`,
     `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2`
 
 - ID: `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the gate widening: task-tree owner, scope, boundaries, regression target, doc-sync targets.`
   Acceptance: `Task tree exists and is committed before any validator change.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the gate: validator change in LoweringIR.pm, focused regression in t/1370, doc updates where data-op width contexts describe transaction-param backing.`
   Acceptance: `Validator rejects mismatched overrides for all four data-op width contexts (shift_left/shift_right/assemble/extract) across spawn, generated do, and rule trigger; same-value overrides accepted; existing wait/repeat/latency/watchdog/contract gate unchanged; t/1370 passes; ISF CI passes; doc surfaces are aligned with shipped behavior.`
   Verification: `prove -Iperl t/1370-isf-data-op-activation-override-width-gate.t t/1369-isf-timing-param-activation-override-gates.t t/1367-isf-data-op-transaction-param-widths.t; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
@@ -102,8 +102,7 @@ the diagnostic surface uniform.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.1` | `pending` | Selects the gate-widening slice before code change. |
-| 2 | `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2` | `pending` | Ships the validator gate and regression after `.1` lands. |
+| 1 | `closed` | `done` | Both leaves shipped; `.2` landed the validator gate, regression `t/1370`, and doc-surface synchronization. |
 
 ## Decisions
 
@@ -135,14 +134,14 @@ the diagnostic surface uniform.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-27` | `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.1` | TBD | TBD |
-| `2026-05-27` | `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2` | TBD | TBD |
+| `2026-05-27` | `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; mdBook built clean; selection-only commit, no behavior change |
+| `2026-05-27` | `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2` | `prove -Iperl t/1370 t/1369 t/1367 t/1366 t/1305 t/1307`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `PASS`; focused `Files=6, Tests=715`; mdBook built clean; ISF CI passed; whitespace clean |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.1` | `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.1: select data-op activation-override width gate` | `pending commit hash` |
+| `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.1` | `fd12f04c ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.1: select data-op activation-override width gate` | Selection commit (task tree + live docs registration). |
 | `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2` | `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2: ship data-op activation-override width gate` | `pending commit hash` |
 
 ## Changelog
@@ -150,3 +149,12 @@ the diagnostic surface uniform.
 - `2026-05-27`: Created active R14 task tree to widen the activation-site
   override-specialized default-preserving gate from timing parameters to
   data-op width parameters.
+- `2026-05-27`: Shipped `.2`. Validator at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` now fails closed on mismatched
+  generated-child activation overrides for transaction parameters used
+  by `shift_left`/`shift_right`/`assemble`/`extract` widths. Same-value
+  overrides remain accepted. New regression `t/1370` covers the four
+  data-op contexts across spawn/do/trigger plus same-value,
+  unrelated-param, and existing-timing-precedence cases. Doc surfaces
+  synchronized in `ISF_SPEC.md`, `ISF_PUBLIC_INTERFACE_CONTRACT.md`,
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and `14-feature-backlog.md`.

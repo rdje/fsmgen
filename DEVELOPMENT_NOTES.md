@@ -32699,3 +32699,27 @@ It is an exact-delay pulse request:
   transaction-param backing.
 - Same-value overrides remain accepted; only mismatches fail closed.
 - This selection commit changes no code.
+
+## 2026-05-27: data-op activation-override width gate shipped
+- Continued the active R14 lane by shipping
+  [`ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2`](docs/tasks/ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.md):
+  widened the activation-site parameter override-specialized
+  default-preserving gate at `perl/FSM/Scheduler/ISF/LoweringIR.pm` from
+  the timing-parameter contexts (wait, repeat, latency, watchdog,
+  contract) to data-operation width contexts (`shift_left`,
+  `shift_right`, `assemble`, `extract`).
+- Mismatched activation overrides for generated-child transaction
+  parameters used by data-op widths now fail closed with a targeted
+  `static-width parameter` diagnostic. Same-value overrides remain
+  accepted; unrelated-param overrides remain accepted; existing
+  static-timing/contract-window diagnostics take precedence when the same
+  parameter backs both a timing context and a data-op width context.
+- New regression `t/1370-isf-data-op-activation-override-width-gate.t`
+  covers all four data-op contexts across spawn/do/trigger plus
+  same-value, unrelated-param, and timing-precedence cases.
+- Doc surfaces in `ISF_SPEC.md`, `ISF_PUBLIC_INTERFACE_CONTRACT.md`,
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and
+  `docs/book/src/14-feature-backlog.md` are aligned with the shipped
+  gate; `docs/book/src/13k-isf-feature-support-matrix.md` data
+  manipulation row already documented `activation-site
+  override-specialized ... widths fail closed`.
