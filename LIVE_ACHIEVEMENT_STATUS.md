@@ -15601,3 +15601,22 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `git diff --check`.
 - Next bounded slice: static-parameter switch-branch SPAWN-AFTER-DO
   missing-drain coverage.
+
+## 2026-05-26: Static-parameter switch-branch spawn-after-do missing-drain coverage shipped — matrix complete
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.md)
+  added the switch-branch `assert_lower_rejected` regression for the
+  static-parameter generated `(do worker (params ...))` prior-`await_any`
+  then later generated spawn without final same-body `(await_all done)`
+  drain shape, matching the existing validator confess at
+  `LoweringIR.pm:6551` for the `'generated do with static params'` kind.
+  With this slice the SPAWN-AFTER-DO without-drain matrix is complete
+  across the five generated-do families on both branch-contained subsets.
+- Public behavior changed: no; test-only.
+- Focused validation passed:
+  `prove -Iperl t/1215-isf-spawn-parameter-binding.t` (Files=1, Tests=100);
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
+  `git diff --check`.
+- Next bounded slice: pick the next R14 ISF feature lane or audit a
+  different coverage matrix.

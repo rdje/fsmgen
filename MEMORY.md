@@ -36927,3 +36927,26 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `./bin/ci-regression isf --no-book`; and `git diff --check`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+
+## 2026-05-26: R14 defensive missing-drain coverage shipped for static-parameter switch-branch spawn-after-do — matrix complete
+- Completed `ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.1`
+  and closed the task tree.
+- Added one switch-branch `assert_lower_rejected` regression in
+  `t/1215-isf-spawn-parameter-binding.t` for the static-parameter
+  generated `(do worker (params ...))` prior-`await_any` then later
+  generated spawn without final same-body `(await_all done)` drain shape.
+  The when-body counterpart already exists in `t/1215` at line ~10714.
+  The regression matches the existing validator confess at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the `'generated do with
+  static params'` kind.
+- With this slice, the SPAWN-AFTER-DO without-drain matrix is complete
+  across all five generated-do families on both branch-contained subsets.
+- This slice is test-only. No parser/validator/lowering/backend/runtime
+  change.
+- README, task tree, roadmap, change history, development notes, and live
+  achievement status are synchronized.
+- Validation passed: `prove -Iperl t/1215-isf-spawn-parameter-binding.t`
+  with `Files=1, Tests=100`; `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.

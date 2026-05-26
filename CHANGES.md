@@ -30018,3 +30018,9 @@ This is the persistent technical change history for FSMGen.
 - This is test-only locking of the missing-drain fail-closed contract.
   No parser, scheduler, backend, generated `.fsm`, HDL, public API,
   manifests, or runtime behavior change.
+
+### static-parameter switch-branch spawn-after-do missing-drain coverage
+- Added one switch-branch `assert_lower_rejected` regression in [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t) for the static-parameter generated `(do worker (params ...))` prior-`await_any` then later generated spawn without final same-body `(await_all done)` drain shape. The matching when-body assertion already lives in `t/1215`; this slice closes the symmetric switch-branch gap and completes the SPAWN-AFTER-DO without-drain matrix across all five generated-do families. The regression matches the existing validator confess at [perl/FSM/Scheduler/ISF/LoweringIR.pm:6551](perl/FSM/Scheduler/ISF/LoweringIR.pm) for the `'generated do with static params'` kind.
+- Test-only locking of the missing-drain fail-closed contract. No parser,
+  scheduler, backend, generated `.fsm`, HDL, public API, manifests, or
+  runtime behavior change.

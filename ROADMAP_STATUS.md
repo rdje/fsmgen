@@ -14299,3 +14299,11 @@ Exit criteria:
   `LoweringIR.pm:6551` for the `'generated-child do'` kind. The
   static-parameter switch-branch SPAWN-AFTER-DO missing-drain coverage
   remains as the next independently reviewable follow-up.
+- `R14`: defensive missing-drain regression coverage now spans the
+  static-parameter SPAWN-AFTER-DO ("prior-`await_any` then spawn without
+  drain") shape on both branch-contained subsets, completing the
+  SPAWN-AFTER-DO without-drain matrix across all five generated-do
+  families. `ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.1`
+  added the switch-branch `assert_lower_rejected` regression; the when-body
+  counterpart already lived in `t/1215`. Test-only locking of
+  `LoweringIR.pm:6551` for the `'generated do with static params'` kind.

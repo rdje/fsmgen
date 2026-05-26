@@ -32606,3 +32606,20 @@ It is an exact-delay pulse request:
   backend, public API, or runtime change. The static-parameter
   switch-branch SPAWN-AFTER-DO missing-drain coverage slice remains as the
   next independently reviewable follow-up.
+
+## 2026-05-26: static-parameter switch-branch spawn-after-do missing-drain coverage — matrix complete
+- Continued the active R14 lane by adding the switch-branch defensive
+  regression coverage for the static-parameter generated
+  `(do worker (params ...))` prior-`await_any` then later generated spawn
+  without final same-body `(await_all done)` drain shape. The when-body
+  counterpart already existed.
+- The slice
+  [`ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO-MISSING-DRAIN-COVERAGE.md)
+  adds one `assert_lower_rejected` regression in
+  [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t)
+  matching the existing validator confess at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the
+  `'generated do with static params'` kind.
+- With this slice the SPAWN-AFTER-DO without-drain matrix is complete
+  across the five generated-do families on both branch-contained subsets.
+- This slice is test-only.
