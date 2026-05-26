@@ -1521,7 +1521,7 @@ observation is active before the later spawn; the final drain still covers
 both pre-do and post-do generated spawns. Local-do do-then-spawn subsets may
 also start the later spawn after the local `do` follows a prior multi-pending
 `await_any` observation, but a second `await_any` after that later spawn
-remains fail-closed. New nested `spawn` after generated `do` while a
+remains fail-closed. New nested `spawn` after specialized generated `do` while a
 multi-pending `await_any` observation is active before the drain remains
 fail-closed.
 The shipped repeat-body child-activation subset is

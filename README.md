@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/ISF-REPEAT-PRIOR-AWAITANY-SPAWN-AFTER-DO-TRUTH-SYNC.md` — completed `R14` documentation/audit truth-sync task tree for prior-`await_any` spawn-after-do repeat wording.
 - `docs/tasks/ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.md` — completed `R14` task tree for branch-contained plain generated-child `do` after prior multi-pending `await_any`, later generated `spawn`, and same-body drain.
 - `docs/tasks/ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-AFTER-DO.md` — completed `R14` task tree for branch-contained local `do` after prior multi-pending `await_any`, later generated `spawn`, and same-body drain.
 - `docs/tasks/ISF-REPEAT-GENDO-DOMAIN-SPAWN-AFTER-DO-POST-AWAITANY.md` — completed `R14` task tree for branch-contained same-domain generated `do` followed by generated `spawn`, post-spawn `await_any`, and same-body drain.

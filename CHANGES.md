@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-26
+### R14 — Prior-awaitany spawn-after-do docs truth-synced
+- Completed `ISF-REPEAT-PRIOR-AWAITANY-SPAWN-AFTER-DO-TRUTH-SYNC.1` and
+  closed the task tree.
+- Removed stale ISF spec wording that still re-deferred local-do and plain
+  generated-child prior-observation spawn-after-do repeat shapes after those
+  shapes shipped.
+- Synchronized the downstream integration handoff and public contract so the
+  documented branch-contained local/plain prior-observation do-then-spawn
+  paths are clearly shipped only when they advance directly to mandatory
+  same-body `(await_all done)`.
+- Kept specialized generated-do prior-observation spawn-after-do variants,
+  second post-spawn `await_any`, missing drains, cross-domain activation,
+  deeper nesting, and broader outstanding-child lifetime behavior explicitly
+  fail-closed/deferred.
+- Added loop-body doc-truth audit checks for the shipped local/plain
+  prior-observation do-then-spawn wording and for rejecting the stale
+  fail-closed sentence.
+- Validation passed: `perl -Iperl -c
+  t/1307-isf-loop-body-doc-truth-audit.t`; `prove -Iperl
+  t/1307-isf-loop-body-doc-truth-audit.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1144-isf-public-tested-by-metadata-audit.t` with `Files=4, Tests=552`;
+  stale wording grep; `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Generated-child do after prior awaitany then spawn before drain shipped
 - Completed `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` and
   closed the task tree.

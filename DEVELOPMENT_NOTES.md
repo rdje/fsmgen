@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Prior-awaitany spawn-after-do docs truth sync
+- `ISF-REPEAT-PRIOR-AWAITANY-SPAWN-AFTER-DO-TRUTH-SYNC.1` is
+  documentation/audit truth sync only; it does not change parser, lowering,
+  generated artifacts, HDL, reports, or runtime behavior.
+- The stale sentence was too broad: it still named local-do and plain
+  generated-child prior-observation do-then-spawn as fail-closed after the
+  dedicated local/plain slices shipped those paths.
+- The corrected contract keeps the narrow lifetime proof explicit. Local and
+  plain generated-child prior-observation do-then-spawn are shipped only for
+  repeats directly inside top-level `when` bodies or top-level `switch`
+  branches, only when the do completes before the later generated spawn, and
+  only when the path advances directly to same-body `await_all`.
+- Specialized generated-do prior-observation do-then-spawn remains deferred
+  because static-parameter, binding, and same-domain metadata lifetimes need
+  separate proof. A second post-spawn multi-pending `await_any` still remains
+  fail-closed for these prior-observation shapes.
+- The audit uses bounded normalized-text windows rather than document-wide
+  greedy regexes, following the same performance constraint as the prior
+  loop-body audit hardening.
+
 ## 2026-05-26: Generated-child do after prior awaitany can precede a later generated spawn
 - `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` combines the
   shipped generated-child-do-after-`await_any` lifetime proof with the shipped

@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-26: R14 prior-awaitany spawn-after-do docs truth-synced
+- Completed `ISF-REPEAT-PRIOR-AWAITANY-SPAWN-AFTER-DO-TRUTH-SYNC.1` and
+  closed the task tree.
+- Corrected stale current-doc wording that still described local-do and plain
+  generated-child prior-observation spawn-after-do repeat shapes as
+  fail-closed after those shapes shipped.
+- The ISF spec, downstream integration handoff, and public contract now
+  consistently state that documented branch-contained local/plain
+  prior-observation do-then-spawn paths are shipped only when they advance
+  directly to mandatory same-body `(await_all done)`; a second post-spawn
+  `await_any` remains fail-closed.
+- Specialized generated-do prior-observation spawn-after-do variants,
+  missing drains, cross-domain activation, deeper nesting, and broader
+  outstanding-child lifetime behavior remain fail-closed/deferred.
+- `t/1307-isf-loop-body-doc-truth-audit.t` now pins the shipped local/plain
+  prior-observation do-then-spawn wording and rejects the stale fail-closed
+  sentence.
+- Validation passed: `perl -Iperl -c
+  t/1307-isf-loop-body-doc-truth-audit.t`; `prove -Iperl
+  t/1307-isf-loop-body-doc-truth-audit.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1144-isf-public-tested-by-metadata-audit.t` with `Files=4, Tests=552`;
+  stale wording grep; `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 generated-child do after prior awaitany then spawn before drain shipped
 - Completed `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` and
   closed the task tree.

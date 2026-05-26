@@ -120,12 +120,20 @@ for my $path (@loop_docs) {
         "$path documents the shipped top-level when-body nested repeat local do after multi-pending await_any subset",
     );
     ok(
+        documents_branch_prior_await_any_do_then_spawn($content, 'when', qr/\blocal\b/, qr/\bdo\b/),
+        "$path documents the shipped top-level when-body nested repeat local do after multi-pending await_any then generated spawn subset",
+    );
+    ok(
         documents_branch_post_do_await_any($content, 'when', qr/\blocal\b/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat local do before post-do multi-pending await_any subset",
     );
     ok(
         documents_branch_await_any_before_do($content, 'switch', qr/\blocal\b/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat local do after multi-pending await_any subset",
+    );
+    ok(
+        documents_branch_prior_await_any_do_then_spawn($content, 'switch', qr/\blocal\b/, qr/\bdo\b/),
+        "$path documents the shipped top-level switch-branch nested repeat local do after multi-pending await_any then generated spawn subset",
     );
     ok(
         documents_branch_post_do_await_any($content, 'switch', qr/\blocal\b/, qr/\bdo\b/),
@@ -139,6 +147,10 @@ for my $path (@loop_docs) {
     ok(
         documents_branch_await_any_before_do($content, 'when', qr/generated-child/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated-child do after multi-pending await_any subset",
+    );
+    ok(
+        documents_branch_prior_await_any_do_then_spawn($content, 'when', qr/generated-child/, qr/\bdo\b/),
+        "$path documents the shipped top-level when-body nested repeat generated-child do after multi-pending await_any then generated spawn subset",
     );
     ok(
         documents_branch_post_do_await_any($content, 'when', qr/generated-child/, qr/\bdo\b/),
@@ -230,6 +242,10 @@ for my $path (@loop_docs) {
         "$path documents the shipped top-level switch-branch nested repeat generated-child do after multi-pending await_any subset",
     );
     ok(
+        documents_branch_prior_await_any_do_then_spawn($content, 'switch', qr/generated-child/, qr/\bdo\b/),
+        "$path documents the shipped top-level switch-branch nested repeat generated-child do after multi-pending await_any then generated spawn subset",
+    );
+    ok(
         documents_branch_post_do_await_any($content, 'switch', qr/generated-child/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated-child do before post-do multi-pending await_any subset",
     );
@@ -265,6 +281,10 @@ for my $path (@loop_docs) {
             qr/(?:bind|binding|handoff)/,
         ),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do while generated spawn pending subset",
+    );
+    ok(
+        !documents_stale_prior_await_any_spawn_after_do_deferral($content),
+        "$path does not re-defer shipped local/plain generated-child prior-awaitany spawn-after-do subsets",
     );
     like(
         $content,
@@ -367,6 +387,79 @@ sub documents_branch_await_any_before_do {
             && index($window, 'drain') >= 0
             && index($window, 'pending') >= 0;
         $offset = index($normalized, $anchor, $offset + 1);
+    }
+
+    return 0;
+}
+
+sub documents_branch_prior_await_any_do_then_spawn {
+    my ($content, $branch, @markers) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    my @anchors = $branch eq 'switch'
+        ? (
+            'top-level switch branch',
+            'top-level switch branches',
+            'switch-contained',
+            'branch-contained local-do',
+            'branch-contained generated-child',
+        )
+        : (
+            'top-level when body',
+            'top-level when bodies',
+            'when-contained',
+            'branch-contained local-do',
+            'branch-contained generated-child',
+        );
+
+    for my $anchor (@anchors) {
+        my $offset = index($normalized, $anchor);
+        while ($offset >= 0) {
+            my $window = substr($normalized, $offset, 7000);
+            my $matches_markers = 1;
+            for my $marker (@markers) {
+                if ($window !~ $marker) {
+                    $matches_markers = 0;
+                    last;
+                }
+            }
+            return 1
+                if $matches_markers
+                && ($branch ne 'switch' || index($window, 'switch') >= 0)
+                && ($branch ne 'when' || index($window, 'when') >= 0)
+                && index($window, 'prior') >= 0
+                && index($window, 'multi-pending') >= 0
+                && index($window, 'await_any') >= 0
+                && $window =~ /later\s+generated(?:\s+nested)?\s+spawns?/
+                && index($window, 'await_all') >= 0
+                && index($window, 'pre-do') >= 0
+                && index($window, 'post-do') >= 0
+                && (index($window, 'second') >= 0 || index($window, 'directly') >= 0)
+                && index($window, 'fail-closed') >= 0;
+            $offset = index($normalized, $anchor, $offset + 1);
+        }
+    }
+
+    return 0;
+}
+
+sub documents_stale_prior_await_any_spawn_after_do_deferral {
+    my ($content) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    my $offset = index($normalized, 'new nested spawn after generated do');
+    while ($offset >= 0) {
+        my $window = substr($normalized, $offset, 900);
+        return 1
+            if index($window, 'multi-pending await_any observation is active before the drain') >= 0
+            && (
+                index($window, 'after plain generated-child do') >= 0
+                || index($window, 'after local do') >= 0
+            )
+            && index($window, 'remain fail-closed') >= 0;
+        $offset = index($normalized, 'new nested spawn after generated do', $offset + 1);
     }
 
     return 0;

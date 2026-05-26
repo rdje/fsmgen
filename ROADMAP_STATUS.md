@@ -4,6 +4,23 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 prior-await_any spawn-after-do truth sync:
+  `ISF-REPEAT-PRIOR-AWAITANY-SPAWN-AFTER-DO-TRUTH-SYNC.1` closed a
+  documentation/audit truth-sync gap after local-do and plain generated-child
+  prior-observation spawn-after-do shapes shipped. The ISF spec, downstream
+  handoff, and public contract no longer re-defer those shipped local/plain
+  paths, and the loop-body doc-truth audit now pins both the shipped
+  prior-observation do-then-spawn wording and the absence of the stale
+  fail-closed sentence. Specialized generated-do prior-observation variants,
+  second post-spawn `await_any`, missing-drain, cross-domain, deeper-nesting,
+  and broader outstanding-child lifetime behavior remain
+  fail-closed/deferred. Validation passed: `perl -Iperl -c
+  t/1307-isf-loop-body-doc-truth-audit.t`; `prove -Iperl
+  t/1307-isf-loop-body-doc-truth-audit.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1144-isf-public-tested-by-metadata-audit.t` with `Files=4, Tests=552`;
+  stale wording grep; `mdbook build docs/book`; and `git diff --check`.
 - Current R14 generated-child prior-await_any then spawn before drain:
   `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` shipped the plain
   generated-child prior-observation spawn-after-do analogue and closed the

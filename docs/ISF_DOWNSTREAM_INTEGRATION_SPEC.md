@@ -1969,11 +1969,15 @@ Rules:
   observation. In both cases, the local do consumes only the local child's
   fresh done pulse; it does not clear pending generated child done handoffs,
   and a later same-body `await_all` drain still gates nested repeat re-entry
-  on every outstanding generated child. When that path has no multi-pending
-  `await_any` observation before the drain, the same local do may also be
+  on every outstanding generated child. That same local do may also be
   followed by one or more additional generated spawns before that later
-  same-body `await_all`; those later spawns join the outstanding generated
-  child set and must be drained with the pre-do generated spawns.
+  same-body `await_all`, either with no active multi-pending `await_any`
+  observation before the later spawn or after the local `do` follows a prior
+  multi-pending observation. Those later spawns join the outstanding generated
+  child set and must be drained with the pre-do generated spawns. In the
+  prior-observation form, the path advances directly to the mandatory
+  same-body `await_all`; a second multi-pending `await_any` after the later
+  spawn remains fail-closed.
 - In the documented top-level `when` body and top-level `switch` branch nested
   subsets, a plain generated-child `(do child)` may also run while generated
   nested spawns are pending when the target child has already been emitted as a
@@ -1982,11 +1986,15 @@ Rules:
   `await_any` observation. That generated do consumes only its deterministic
   generated do instance's fresh done handoff; it does not clear pending
   generated spawn handoffs, and the same later `await_all` drain still gates
-  nested repeat re-entry on every outstanding generated child. When no
-  multi-pending `await_any` observation is active before the drain, that
-  plain generated-child do may also be followed by one or more additional
-  generated spawns before that later same-body `await_all`; the generated do
-  instance must complete before the later spawn starts.
+  nested repeat re-entry on every outstanding generated child. That plain
+  generated-child do may also be followed by one or more additional generated
+  spawns before that later same-body `await_all`, either with no active
+  multi-pending `await_any` observation before the later spawn or after the
+  generated-child `do` follows a prior multi-pending observation. The
+  generated do instance must complete before the later spawn starts. In the
+  prior-observation form, the path advances directly to the mandatory
+  same-body `await_all`; a second multi-pending `await_any` after the later
+  spawn remains fail-closed.
 - In the documented top-level `when` body and top-level `switch` branch nested
   subsets, static-parameter generated `(do child (params ...))` may also run
   while generated nested spawns are pending, including after a prior multi-
