@@ -1152,10 +1152,26 @@ observation point, and then same-body `(await_all done)` before the nested
 repeat check can loop. The generated do instance preserves static
 generated-top parameter binding and must complete before the later generated
 spawn starts; the post-spawn observation leaves both pre-do and post-do
-generated-spawn done handoffs live for the final drain. Bound and same-domain
-generated-do do-then-spawn post-spawn `await_any` variants,
-active-prior-`await_any` spawn-after-do variants, cross-domain activation,
-deeper nesting, and broader outstanding-child lifetime rules remain backlog.
+generated-spawn done handoffs live for the final drain. At that checkpoint,
+bound and same-domain generated-do do-then-spawn post-spawn `await_any`
+variants, active-prior-`await_any` spawn-after-do variants, cross-domain
+activation, deeper nesting, and broader outstanding-child lifetime rules
+remained backlog.
+
+The branch-contained bound generated-do-then-spawn post-spawn `await_any`
+analogue is also shipped for top-level `when` bodies and top-level `switch`
+branches. A nested repeat may run an initial generated spawn, bound generated
+blocking `(do child (params ...) (bind ...))`, one or more later generated
+spawns, post-spawn multi-pending `(await_any done)` as an observation point,
+and then same-body `(await_all done)` before the nested repeat check can
+loop. The generated do instance preserves static generated-top parameter
+binding and generated-top input/output binding handoffs, and it must complete
+before the later generated spawn starts; the post-spawn observation leaves
+both pre-do and post-do generated-spawn done handoffs live for the final
+drain. Same-domain generated-do do-then-spawn post-spawn `await_any`
+variants, active-prior-`await_any` spawn-after-do variants, cross-domain
+activation, deeper nesting, and broader outstanding-child lifetime rules
+remain backlog.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. Known-width runtime

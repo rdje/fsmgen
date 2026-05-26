@@ -1,6 +1,33 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-26
+### R14 — Bound generated do then spawn post-awaitany shipped
+- Completed `ISF-REPEAT-GENDO-BOUND-SPAWN-AFTER-DO-POST-AWAITANY.1` and
+  closed the task tree.
+- A repeat directly inside a top-level `when` body or top-level `switch`
+  branch may now run an initial generated spawn, then bound generated
+  blocking `(do child (params ...) (bind ...))`, then one or more additional
+  generated spawns, then post-spawn multi-pending `(await_any done)`, and then
+  mandatory same-body `(await_all done)` before nested repeat re-entry.
+- The generated do instance must complete before the later generated spawn
+  starts; it preserves static generated-top parameter binding and
+  generated-top input/output binding handoffs; the post-spawn `await_any`
+  observes either pre-do or post-do generated child without clearing the
+  outstanding generated-spawn done set; the final `await_all` drains both
+  pre-do and post-do generated children.
+- Same-domain generated-do post-spawn `await_any`, prior active
+  multi-pending `await_any`, missing drains, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, feature matrix
+  audit, task tree, README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=78`; focused
+  book/public audits with `Files=3, Tests=369`; broader repeat/child
+  regression with `Files=4, Tests=92`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1818`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ### R14 — Static-parameter generated do then spawn post-awaitany shipped
 - Completed `ISF-REPEAT-GENDO-PARAM-SPAWN-AFTER-DO-POST-AWAITANY.1` and
   closed the task tree.
@@ -14,10 +41,12 @@ This is the persistent technical change history for FSMGen.
   `await_any` observes either pre-do or post-do generated child without
   clearing the outstanding generated-spawn done set; the final `await_all`
   drains both pre-do and post-do generated children.
-- Bound and same-domain generated-do post-spawn `await_any`, prior active
-  multi-pending `await_any`, missing drains, cross-domain activation, deeper
-  branch/loop nesting, and broader outstanding-child lifetime semantics remain
-  fail-closed/deferred.
+- At that checkpoint, bound and same-domain generated-do post-spawn
+  `await_any`, prior active multi-pending `await_any`, missing drains,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics remained fail-closed/deferred; the
+  later `ISF-REPEAT-GENDO-BOUND-SPAWN-AFTER-DO-POST-AWAITANY.1` slice shipped
+  the bound generated-do analogue.
 - The ISF spec, downstream handoff, public contract, mdBook, feature matrix
   audit, task tree, README index, roadmap, and live docs are synchronized.
 - Validation passed: syntax checks; `prove -Iperl

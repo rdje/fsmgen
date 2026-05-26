@@ -1452,6 +1452,15 @@ Rules:
   observation and later-drain contract while also wiring the generated-top
   input/output binding handoffs for the generated do instance.
 
+  When no multi-pending `(await_any done)` observation is active before the
+  later spawn, those bound generated-do do-then-spawn subsets may also run a
+  post-spawn multi-pending `(await_any done)` observation before the
+  mandatory same-body `(await_all done)` drain. The generated do instance's
+  fresh done handoff gates the later spawn state, generated-top binding
+  handoffs stay scoped to the do instance, and the post-spawn observation
+  leaves both pre-do and post-do generated-spawn done handoffs live for the
+  final drain.
+
   Top-level `when` body and top-level `switch` branch static-parameter
   same-domain generated `(do child (params ...) [(bind ...)] (domain NAME))`
   support the same post-do observation and later-drain contract while also
@@ -1466,13 +1475,13 @@ Rules:
   the generated do instance, and the final drain covers both pre-do and
   post-do generated spawns before nested repeat re-entry.
 
-  Plain generated-child do-then-spawn subsets may also run a post-spawn
-  multi-pending `(await_any done)` observation before the mandatory same-body
-  `(await_all done)` drain, provided no prior multi-pending `await_any`
-  observation is active before the later spawn. The post-spawn observation
-  does not drain the outstanding generated-spawn set; the final `await_all`
-  still covers both pre-do and post-do generated spawns before nested repeat
-  re-entry.
+  Plain generated-child, static-parameter, and bound generated-do
+  do-then-spawn subsets may also run a post-spawn multi-pending `(await_any
+  done)` observation before the mandatory same-body `(await_all done)` drain,
+  provided no prior multi-pending `await_any` observation is active before the
+  later spawn. The post-spawn observation does not drain the outstanding
+  generated-spawn set; the final `await_all` still covers both pre-do and
+  post-do generated spawns before nested repeat re-entry.
 
   New nested `spawn` after generated `do` when a multi-pending `await_any`
   observation is active before the drain; after plain generated-child `do`
