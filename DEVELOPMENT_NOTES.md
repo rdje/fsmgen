@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Bootstrap import-tree refresh after same-domain generated-do second awaitany stays documentation-only
+- `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-DOMAIN-SECOND-AWAITANY-REFRESH.1` exists
+  to satisfy the architecture audit after the R14 same-domain generated-do
+  prior-`await_any` plus second post-spawn `await_any` repeat-body slice
+  grew the saved `perl/FSM/Scheduler/ISF/LoweringIR.pm` hotspot by one line.
+- The live import topology did not move: the `bin/fsmgen` static trace still
+  reaches `196` project-owned files and `195` `.pm` packages with the same
+  family counts.
+- The saved note was stale only because it still recorded
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` at `11143` lines. The current
+  measured count is `11144`.
+- No mdBook source update is warranted for this leaf because the project
+  behavior, public ISF syntax, diagnostics, manifests, generated artifacts,
+  and user workflows did not change.
+
 ## 2026-05-26: Same-domain generated do after prior awaitany can run a second post-spawn awaitany
 - `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` widens the
   same-domain generated-do prior-observation do-then-spawn proof to permit a

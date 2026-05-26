@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/BIN-FSMGEN-IMPORT-TREE-R14-GENDO-DOMAIN-SECOND-AWAITANY-REFRESH.md` — completed bootstrap architecture-maintenance task tree for refreshing the `bin/fsmgen` import-tree note after the R14 same-domain generated-do prior-`await_any` plus second post-spawn `await_any` repeat-body slice.
 - `docs/tasks/ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.md` — completed `R14` task tree for branch-contained same-domain generated `do` after prior multi-pending `await_any`, later generated `spawn`, second post-spawn `await_any`, and same-body drain.
 - `docs/tasks/BIN-FSMGEN-IMPORT-TREE-R14-GENDO-BOUND-SECOND-AWAITANY-REFRESH.md` — completed bootstrap architecture-maintenance task tree for refreshing the `bin/fsmgen` import-tree note after the R14 static-parameter and bound generated-do prior-`await_any` plus second post-spawn `await_any` repeat-body slices.
 - `docs/tasks/ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.md` — completed `R14` task tree for branch-contained bound generated `do` after prior multi-pending `await_any`, later generated `spawn`, second post-spawn `await_any`, and same-body drain.

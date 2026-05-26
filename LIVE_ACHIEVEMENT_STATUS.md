@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-26: Bootstrap architecture maintenance — R14 same-domain generated-do second-awaitany import-tree refreshed
+- Completed `BIN-FSMGEN-IMPORT-TREE-R14-GENDO-DOMAIN-SECOND-AWAITANY-REFRESH.1`
+  and closed the task tree.
+- Rebuilt the live `bin/fsmgen` import closure: `196` project-owned files,
+  `195` `.pm` packages, and unchanged family counts.
+- Refreshed `docs/BIN_FSMGEN_IMPORT_TREE.md` to keep the `2026-05-26`
+  bootstrap baseline current and updated the recorded
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count to `11144` after the R14
+  same-domain generated-do prior-`await_any` plus second post-spawn
+  `await_any` repeat-body slice added one line.
+- This was documentation-only architecture maintenance with no behavior,
+  parser, scheduler, backend, generated `.fsm`, HDL, public API, or runtime
+  change.
+- Validation passed: import-closure recount with `total=196` and `pm=195`;
+  largest-file recount showing `LoweringIR.pm` at `11144`; targeted
+  stale-value grep; `prove -Iperl
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1332-isf-atl-doc-status-audit.t` with `Files=2, Tests=411`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 — Same-domain generated do after prior awaitany then spawn plus second awaitany shipped
 - Completed `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`
   and closed the task tree.
