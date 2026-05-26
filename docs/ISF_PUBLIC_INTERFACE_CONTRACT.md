@@ -1513,9 +1513,15 @@ observation is active before the drain, those same-domain generated-do
 subsets may also start one or more later generated nested spawns before the
 mandatory same-body `await_all`; the generated do instance's fresh done
 handoff gates the later spawn state and declared ownership metadata remains
-scoped to the generated do instance. `await_any` after a later post-do spawn
-and new nested `spawn` after generated `do` while a multi-pending `await_any`
-observation is active before the drain remain fail-closed.
+scoped to the generated do instance. Plain generated-child do-then-spawn
+subsets may also run a post-spawn multi-pending `await_any` observation before
+the mandatory same-body `await_all` drain, provided no prior multi-pending
+`await_any` observation is active before the later spawn; the final drain
+still covers both pre-do and post-do generated spawns. For local,
+static-parameter, bound, and same-domain generated do, `await_any` after a
+later post-do spawn remains fail-closed. New nested `spawn` after generated
+`do` while a multi-pending `await_any` observation is active before the drain
+remains fail-closed.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus

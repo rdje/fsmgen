@@ -1156,7 +1156,9 @@ plain generated-child do may also be followed by one or more additional
 generated nested spawns before the mandatory same-body `await_all` drain. The
 generated do instance's fresh done handoff gates the later spawn state, and
 the later `await_all` drains both pre-do and post-do generated-spawn done
-handoffs.
+handoffs. That same plain generated-child do-then-spawn shape may also run a
+post-spawn multi-pending `await_any` observation before the final drain; the
+observation leaves both pre-do and post-do generated-spawn done handoffs live.
 
 The same top-level branch-contained nested-repeat forms may lower
 static-parameter generated `(do child (params ...))` in that interval; the
@@ -1251,12 +1253,13 @@ observation is active before the drain, those same-domain generated-do
 subsets may also be followed by one or more additional generated nested
 spawns before the mandatory same-body `await_all` drain; lowering keeps
 declared ownership metadata scoped to the generated do instance and drains
-both pre-do and post-do generated-spawn done handoffs. A new nested spawn
-after generated do when a multi-pending `await_any` observation is active
-before the drain; after plain generated-child do when a multi-pending
-`await_any` observation is active before the drain; or after local do when a
-multi-pending `await_any` observation is active before the drain, remains
-fail-closed.
+both pre-do and post-do generated-spawn done handoffs. For local,
+static-parameter, bound, and same-domain generated do, `await_any` after a
+later post-do spawn remains fail-closed. A new nested spawn after generated do
+when a multi-pending `await_any` observation is active before the drain; after
+plain generated-child do when a multi-pending `await_any` observation is
+active before the drain; or after local do when a multi-pending `await_any`
+observation is active before the drain, remains fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1526,7 +1529,10 @@ spawn:
 The generated top instantiates `w0`, `parent_worker_repeat_do_0`, and `w1`.
 The later generated spawn starts only after the generated do instance's done
 handoff, and the nested repeat check remains unreachable until same-body
-`await_all` drains both generated spawns.
+`await_all` drains both generated spawns. The shipped post-spawn `await_any`
+variant inserts an `await_any` observation after `parent_spawn_4` and before
+that final `await_all`; it observes either generated child without clearing
+the outstanding generated-spawn set.
 
 When the pending operation is local plain `do`, the later-spawn variant keeps
 the local and generated lifetimes separate:

@@ -2699,7 +2699,12 @@ Current lowering:
   supports the same post-do multi-pending `(await_any done)` observation and
   later-drain contract while generated nested spawns remain pending before
   the same-body `await_all` drain; the generated-child do waits for its
-  deterministic generated do instance's fresh done handoff.
+  deterministic generated do instance's fresh done handoff. When no prior
+  multi-pending `await_any` observation is active before the later spawn,
+  those plain generated-child do subsets may also start one or more later
+  generated nested spawns, run a post-spawn multi-pending `(await_any done)`
+  observation, and then use the mandatory same-body `await_all` to drain both
+  pre-do and post-do generated spawns before nested repeat re-entry.
   Top-level `when` body and top-level `switch` branch nested repeat
   static-parameter generated
   `(do child (params ...))` support the same post-do multi-pending

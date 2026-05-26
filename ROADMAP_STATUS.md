@@ -4,6 +4,27 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 plain generated-child do-then-spawn post-await_any:
+  `ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO-POST-AWAITANY.1` shipped the plain
+  generated-child do-then-spawn post-spawn `await_any` analogue and closed the
+  task tree. A repeat directly inside a top-level `when` body or top-level
+  `switch` branch may now run an initial generated spawn, then plain
+  generated-child blocking `(do child)`, then one or more later generated
+  spawns, then post-spawn multi-pending `(await_any done)`, and finally
+  mandatory same-body `(await_all done)` before nested repeat re-entry. The
+  generated do instance must complete before the later generated spawn starts;
+  the post-spawn `await_any` observes either pre-do or post-do generated child
+  without clearing the outstanding generated-spawn done set; and the final
+  `await_all` drains both pre-do and post-do generated children. Local-do and
+  specialized generated-do post-spawn `await_any`, prior active
+  multi-pending `await_any`, missing drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred. Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=72`; focused
+  book/public audits with `Files=3, Tests=358`; broader repeat/child
+  regression with `Files=4, Tests=86`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1801`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Current R14 branch-contained same-domain generated-do spawn-after-do:
   `ISF-REPEAT-GENDO-DOMAIN-SPAWN-AFTER-DO.1` shipped the same-domain
   generated-do followed by later generated spawn analogue and closed the task
