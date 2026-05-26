@@ -6426,10 +6426,17 @@ sub _validate_repeat_body_spawn_subset {
         if ($keyword eq 'await_all' || $keyword eq 'await_any') {
             confess "Transaction '$tn': repeat-body $keyword is supported only after repeat-body spawn clauses\n"
                 unless @pending_spawns;
+            my $allowed_local_spawn_after_do_before_post_await_any =
+                defined($pending_local_do_label)
+                && $spawn_after_local_do_before_drain
+                && $keyword eq 'await_any'
+                && @pending_spawns > 1
+                && !$awaiting_multi_pending_drain;
             confess "Transaction '$tn': $pending_local_do_label nested repeat spawn after local do while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the later spawn remains deferred\n"
                 if defined $pending_local_do_label
                     && $spawn_after_local_do_before_drain
-                    && $keyword eq 'await_any';
+                    && $keyword eq 'await_any'
+                    && !$allowed_local_spawn_after_do_before_post_await_any;
             my $allowed_generated_child_spawn_after_do_before_post_await_any =
                 defined($pending_generated_do_label)
                 && $spawn_after_generated_do_before_drain

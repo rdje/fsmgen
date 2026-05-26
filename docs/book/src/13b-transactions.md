@@ -668,11 +668,15 @@ loop.
 That local do target remains in the parent scheduled module, waits for its
 own fresh local done pulse, and does not clear the generated-spawn done set.
 When no multi-pending `(await_any done)` observation is active before the
-drain, the same branch-contained local-do path may then start one or more
-additional generated nested spawns before the mandatory same-body
+later generated spawn, the same branch-contained local-do path may then start
+one or more additional generated nested spawns before the mandatory same-body
 `(await_all done)` drain. The later spawn joins the outstanding generated
 child set, and the `await_all` drain observes both the pre-do and post-do
-generated spawns before the nested repeat check can loop.
+generated spawns before the nested repeat check can loop. That same local-do
+do-then-spawn path may also run a post-spawn multi-pending `(await_any done)`
+observation before the final same-body `(await_all done)` drain. The
+post-spawn observation leaves both pre-do and post-do generated-spawn done
+handoffs live for that final drain.
 
 The top-level `when` body and top-level `switch` branch forms also support
 plain generated-child `(do child)` in that pending-spawn interval when the

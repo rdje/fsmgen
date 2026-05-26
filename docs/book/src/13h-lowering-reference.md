@@ -1253,9 +1253,12 @@ observation is active before the drain, those same-domain generated-do
 subsets may also be followed by one or more additional generated nested
 spawns before the mandatory same-body `await_all` drain; lowering keeps
 declared ownership metadata scoped to the generated do instance and drains
-both pre-do and post-do generated-spawn done handoffs. For local,
-static-parameter, bound, and same-domain generated do, `await_any` after a
-later post-do spawn remains fail-closed. A new nested spawn after generated do
+both pre-do and post-do generated-spawn done handoffs. For local do,
+`await_any` after a later post-do spawn is shipped when no prior multi-pending
+`await_any` observation is active before that later spawn; lowering inserts
+the observation after the later spawn and still requires a final same-body
+`await_all` drain. For static-parameter, bound, and same-domain generated do,
+`await_any` after a later post-do spawn remains fail-closed. A new nested spawn after generated do
 when a multi-pending `await_any` observation is active before the drain; after
 plain generated-child do when a multi-pending `await_any` observation is
 active before the drain; or after local do when a multi-pending `await_any`

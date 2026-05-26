@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Local do-then-spawn can feed post-spawn awaitany
+- `ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO-POST-AWAITANY.1` narrows the remaining
+  do-then-spawn post-observation backlog after the plain generated-child
+  precedent.
+- The accepted path is limited to local plain `(do child)` inside a repeat
+  directly in a top-level `when` body or top-level `switch` branch, after at
+  least one generated spawn is already pending, with no active multi-pending
+  `await_any` observation before the later generated spawn.
+- The local child stays in the parent scheduled module and uses the existing
+  local start/done pulse. That fresh done pulse gates the later generated
+  spawn, so the later spawn cannot overlap the blocking local child body.
+- The post-spawn `await_any` is observation-only. It may advance on either the
+  pre-do or post-do generated child done handoff, but it leaves the outstanding
+  generated-spawn set live for the mandatory same-body `await_all`.
+- Specialized generated-do forms remain deferred for this post-spawn
+  observation shape because static parameter, binding, and domain metadata
+  need their own reviewable lifetime proofs after this local handoff case.
+
 ## 2026-05-26: Plain generated-child do-then-spawn can feed post-spawn awaitany
 - `ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO-POST-AWAITANY.1` narrows the
   remaining do-then-spawn post-observation backlog to the plain generated-child

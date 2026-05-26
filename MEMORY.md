@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-26: R14 local do then spawn post-awaitany shipped
+- Completed `ISF-REPEAT-LOCALDO-SPAWN-AFTER-DO-POST-AWAITANY.1` and closed
+  the task tree.
+- Branch-contained nested repeats now accept the local-do do-then-spawn
+  post-spawn `await_any` analogue: a repeat directly inside a top-level
+  `when` body or top-level `switch` branch may run an initial generated
+  spawn, local blocking `(do child)`, one or more later generated spawns,
+  post-spawn multi-pending `(await_any done)`, and mandatory same-body
+  `(await_all done)` before nested repeat re-entry.
+- The local child must complete before the later generated spawn starts. The
+  post-spawn `await_any` observes either pre-do or post-do generated child
+  without clearing the outstanding generated-spawn done set, and the final
+  `await_all` drains both pre-do and post-do generated children.
+- Specialized generated-do post-spawn `await_any`, prior active
+  multi-pending `await_any`, missing drains, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred.
+- Public ISF specs, downstream handoff, public contract, mdBook, feature
+  matrix audit, roadmap, task tree, README index, and live docs are
+  synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=74`; focused
+  book/public audits with `Files=3, Tests=361`; broader repeat/child
+  regression with `Files=4, Tests=88`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1806`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 plain generated-child do then spawn post-awaitany shipped
 - Completed `ISF-REPEAT-GENDO-PLAIN-SPAWN-AFTER-DO-POST-AWAITANY.1` and
   closed the task tree.
