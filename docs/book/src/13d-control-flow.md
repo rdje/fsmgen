@@ -212,10 +212,11 @@ child)` in a repeat directly inside a top-level `when` body or a top-level
 top-level branch-contained repeat when the target child is already emitted as
 a generated child by another activation site.
 
-The top-level `when` local-do pending-spawn form may also follow a prior
-multi-pending `await_any` observation; the top-level `switch` local-do form
-and both generated-child pending-spawn forms still require no prior
-multi-pending `await_any` observation.
+The top-level `when` and `switch` local-do pending-spawn forms may also
+follow a prior multi-pending `await_any` observation. The matching plain
+generated-child pending-spawn forms may also follow a prior multi-pending
+`await_any` observation when the generated do instance completes before the
+later generated spawn.
 
 Every pending-spawn `do` form requires a later same-body `await_all` drain
 before the nested repeat check can loop.
@@ -245,9 +246,11 @@ run static-parameter same-domain generated `(do child (params ...) [(bind
 ...)] (domain NAME))` in that interval; the domain annotation is metadata for
 the generated do instance and does not imply CDC.
 
-Generated `do` after prior multi-pending `await_any`, switch-contained local
-`do` after prior multi-pending `await_any`, new spawn after the generated do
-before the drain, and await-any-after-do forms remain fail-closed.
+Static-parameter, bound, and same-domain generated `do` after prior
+multi-pending `await_any` may start a later generated spawn only when the
+path advances directly to the mandatory same-body `await_all` drain. A
+second post-spawn `await_any` for those specialized generated-do
+prior-observation shapes remains fail-closed.
 
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases and

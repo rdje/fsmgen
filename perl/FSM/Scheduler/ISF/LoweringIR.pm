@@ -6464,7 +6464,10 @@ sub _validate_repeat_body_spawn_subset {
                     || ($spawn_after_generated_do_kind_before_drain // '') eq 'generated do with static params and same-domain metadata')
                 && $keyword eq 'await_any'
                 && @pending_spawns > 1
-                && !$awaiting_multi_pending_drain;
+                && (!$awaiting_multi_pending_drain
+                    || (($spawn_after_generated_do_kind_before_drain // '') eq 'generated-child do'
+                        && $pending_generated_do_before_drain
+                        && !$pending_local_do_before_drain));
             confess "Transaction '$tn': $pending_generated_do_label nested repeat spawn after $spawn_after_generated_do_kind_before_drain while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the later spawn remains deferred\n"
                 if defined $pending_generated_do_label
                     && $spawn_after_generated_do_before_drain
@@ -6522,7 +6525,8 @@ sub _validate_repeat_body_spawn_subset {
                     && !$allowed_branch_generated_child_do_before_post_await_any
                     && !$allowed_branch_static_parameter_generated_do_before_post_await_any
                     && !$allowed_branch_static_bound_generated_do_before_post_await_any
-                    && !$allowed_branch_static_domain_generated_do_before_post_await_any;
+                    && !$allowed_branch_static_domain_generated_do_before_post_await_any
+                    && !$allowed_generated_do_spawn_after_do_before_post_await_any;
             if ($keyword eq 'await_any' && @pending_spawns > 1) {
                 $awaiting_multi_pending_drain = 1;
                 next;

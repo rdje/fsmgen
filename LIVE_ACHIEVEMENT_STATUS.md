@@ -2,6 +2,36 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-26: R14 — Generated-child do after prior awaitany then spawn plus second awaitany shipped
+- Completed `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`
+  and closed the task tree.
+- Branch-contained nested repeats now accept generated spawns, prior
+  multi-pending `(await_any done)`, plain generated-child blocking
+  `(do child)`, later generated spawn, second post-spawn multi-pending
+  `(await_any done)`, and mandatory same-body `(await_all done)` before
+  nested repeat re-entry for repeats directly inside top-level `when`
+  bodies or top-level `switch` branches.
+- Both `await_any` clauses observe generated children without clearing the
+  outstanding generated-spawn done set; the deterministic generated do
+  instance completes before the later generated spawn starts; the final
+  `await_all` drains generated spawns from both sides of the generated-child
+  `do`.
+- Static-parameter, bound, and same-domain generated `do` variants of this
+  second post-spawn `await_any` prior-observation shape, missing drains,
+  cross-domain activation, deeper branch/loop nesting, CDC behavior, and
+  broader outstanding-child lifetime semantics remain fail-closed/deferred.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=94`;
+  `prove -Iperl t/1305-isf-book-feature-matrix-audit.t` with `Files=1,
+  Tests=397`; `prove -Iperl t/1307-isf-loop-body-doc-truth-audit.t` with
+  `Files=1, Tests=207`; focused book/public audits with `Files=2, Tests=4`;
+  live-doc audits with `Files=4, Tests=633`; broader repeat/child regression
+  with `Files=4, Tests=108`; `./bin/ci-regression isf --no-book` with
+  `Files=275, Tests=1917`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: Bootstrap architecture maintenance — R14 repeat import-tree refreshed
 - Completed `BIN-FSMGEN-IMPORT-TREE-R14-REPEAT-REFRESH.1` and closed the
   task tree.
@@ -35,11 +65,12 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   outstanding generated-spawn done set; the local child completes before the
   later generated spawn starts; the final `await_all` drains generated spawns
   from both sides of the local `do`.
-- Plain generated-child, static-parameter, bound, and same-domain generated
-  `do` variants of this second post-spawn `await_any` prior-observation
-  shape, missing drains, cross-domain activation, deeper branch/loop nesting,
-  CDC behavior, and broader outstanding-child lifetime semantics remain
-  fail-closed/deferred.
+- The plain generated-child analogue has since shipped in
+  `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`.
+  Static-parameter, bound, and same-domain generated `do` variants of this
+  second post-spawn `await_any` prior-observation shape, missing drains,
+  cross-domain activation, deeper branch/loop nesting, CDC behavior, and
+  broader outstanding-child lifetime semantics remain fail-closed/deferred.
 - Validation passed: syntax checks; `prove -Iperl
   t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=92`; focused
   doc audits with `Files=2, Tests=591`; focused book/public audits with

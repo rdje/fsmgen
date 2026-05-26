@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.md](docs/tasks/ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.md) |
 | `BIN-FSMGEN-IMPORT-TREE-R14-REPEAT-REFRESH` | `done` | `bootstrap architecture maintenance` | `closed` | [docs/tasks/BIN-FSMGEN-IMPORT-TREE-R14-REPEAT-REFRESH.md](docs/tasks/BIN-FSMGEN-IMPORT-TREE-R14-REPEAT-REFRESH.md) |
 | `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.md](docs/tasks/ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.md) |
 | `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.md](docs/tasks/ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.md) |

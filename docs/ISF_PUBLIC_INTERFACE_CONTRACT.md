@@ -1526,8 +1526,12 @@ the final drain still covers both pre-do and post-do generated spawns.
 Local-do do-then-spawn subsets may also run that second post-spawn
 multi-pending `await_any` after the local `do` follows a prior multi-pending
 `await_any` observation, provided the final same-body `await_all` drains the
-same outstanding generated-spawn set. Static-parameter generated-do
-do-then-spawn subsets may
+same outstanding generated-spawn set. Plain generated-child do-then-spawn
+subsets may also run that second post-spawn multi-pending `await_any` after
+the generated-child `do` follows a prior multi-pending `await_any`
+observation, provided the generated do instance completes before the later
+spawn and the final same-body `await_all` drains the same outstanding
+generated-spawn set. Static-parameter generated-do do-then-spawn subsets may
 also start the later spawn after the generated do follows a prior
 multi-pending `await_any` observation. Bound generated-do do-then-spawn
 subsets support the same direct-to-`await_all` prior-observation path, and a
@@ -1658,8 +1662,10 @@ generated nested spawns before the mandatory same-body `await_all`, either
 with no active multi-pending `await_any` before the later spawn or after the
 generated-child `do` follows a prior multi-pending observation; the generated
 do instance's fresh done handoff gates the later spawn state. In the
-prior-observation form, a second multi-pending `await_any` after the later
-spawn remains fail-closed. In
+prior-observation form, those branch-contained plain generated-child paths
+may also run a second post-spawn multi-pending `await_any` observation before
+the mandatory same-body `await_all` drain. Both observations leave the
+outstanding generated-spawn done set live for that final drain. In
 the documented top-level `when` body and top-level `switch` branch nested subsets,
 static-parameter generated `(do child (params ...))` may also run while
 generated nested spawns are pending. In both top-level branch-contained
@@ -1700,10 +1706,10 @@ one or more later generated nested spawns before the mandatory same-body
 `await_all`, either when no multi-pending `await_any` observation is active
 before the later spawn or after the generated do follows a prior multi-pending
 observation; declared ownership metadata remains scoped to the generated do
-instance. In generated-child and generated-do prior-observation forms, a
-second `await_any` after the later spawn remains outside the public shipped
-subset. Later `await_any` after a post-do spawn remains public for local do
-with or without a prior multi-pending observation, and for generated-child or
+instance. In specialized generated-do prior-observation forms, a second
+`await_any` after the later spawn remains outside the public shipped subset.
+Later `await_any` after a post-do spawn remains public for local do with or
+without a prior multi-pending observation, and for generated-child or
 generated-do paths only when no prior multi-pending observation is active
 before the later spawn.
 The count is a runtime counter load value, not a hardware-elaboration count:

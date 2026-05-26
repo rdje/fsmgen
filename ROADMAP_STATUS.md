@@ -4,6 +4,30 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 generated-child prior-await_any then spawn plus second
+  await_any:
+  `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` is the
+  completed plain generated-child analogue of the shipped local-do
+  repeated-observation prior-observation shape and closed the task tree. A
+  repeat directly inside a top-level `when` body or top-level `switch` branch
+  may now run generated spawns, observe one done pulse through multi-pending
+  `(await_any done)`, run plain generated-child blocking `(do child)`, start
+  one or more later generated spawns after the deterministic generated do
+  instance's fresh done handoff, observe a second post-spawn multi-pending
+  `(await_any done)`, and drain every generated spawn through same-body
+  `(await_all done)` before nested repeat re-entry. Both `await_any` clauses
+  leave the outstanding generated-spawn done set live, and the final
+  `await_all` drains generated spawns from both sides of the generated-child
+  `do`. Static-parameter, bound, and same-domain generated-do variants,
+  missing drains, cross-domain activation, deeper branch/loop nesting, CDC
+  behavior, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred. Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=94`; focused
+  doc audits with `Files=2, Tests=604`; focused book/public audits with
+  `Files=2, Tests=4`; live-doc audits with `Files=4, Tests=633`; broader
+  repeat/child regression with `Files=4, Tests=108`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1917`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current bootstrap import-tree refresh:
   `BIN-FSMGEN-IMPORT-TREE-R14-REPEAT-REFRESH.1` refreshed the saved
   `bin/fsmgen` import-tree architecture note after the latest R14 repeat-body
@@ -32,11 +56,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(await_all done)` before nested repeat re-entry. Both `await_any` clauses
   are observation-only for the outstanding generated-spawn done set, and the
   final `await_all` drains generated spawns from both sides of the local
-  `do`. Plain generated-child, static-parameter, bound, and same-domain
-  generated `do` variants of this second post-spawn `await_any`
-  prior-observation shape, missing-drain, cross-domain, deeper-nesting, CDC,
-  and broader outstanding-child lifetime behavior remain
-  fail-closed/deferred. Validation passed: syntax checks; `prove -Iperl
+  `do`. The plain generated-child analogue has since shipped in
+  `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1`;
+  static-parameter, bound, and same-domain generated `do` variants of this
+  second post-spawn `await_any` prior-observation shape, missing-drain,
+  cross-domain, deeper-nesting, CDC, and broader outstanding-child lifetime
+  behavior remain fail-closed/deferred. Validation passed: syntax checks;
+  `prove -Iperl
   t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=92`; focused
   doc audits with `Files=2, Tests=591`; focused book/public audits with
   `Files=4, Tests=595`; live-doc audits with `Files=4, Tests=620`;

@@ -161,6 +161,10 @@ for my $path (@loop_docs) {
         "$path documents the shipped top-level when-body nested repeat generated-child do after multi-pending await_any then generated spawn subset",
     );
     ok(
+        documents_branch_prior_await_any_generated_child_do_then_spawn_second_await_any($content, 'when'),
+        "$path documents the shipped top-level when-body nested repeat generated-child do after multi-pending await_any then generated spawn and second await_any subset",
+    );
+    ok(
         documents_branch_post_do_await_any($content, 'when', qr/generated-child/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated-child do before post-do multi-pending await_any subset",
     );
@@ -270,6 +274,10 @@ for my $path (@loop_docs) {
         "$path documents the shipped top-level switch-branch nested repeat generated-child do after multi-pending await_any then generated spawn subset",
     );
     ok(
+        documents_branch_prior_await_any_generated_child_do_then_spawn_second_await_any($content, 'switch'),
+        "$path documents the shipped top-level switch-branch nested repeat generated-child do after multi-pending await_any then generated spawn and second await_any subset",
+    );
+    ok(
         documents_branch_post_do_await_any($content, 'switch', qr/generated-child/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated-child do before post-do multi-pending await_any subset",
     );
@@ -321,6 +329,10 @@ for my $path (@loop_docs) {
     ok(
         !documents_stale_local_prior_await_any_second_post_spawn_deferral($content),
         "$path does not re-defer shipped local prior-awaitany second post-spawn await_any subsets",
+    );
+    ok(
+        !documents_stale_generated_child_prior_await_any_second_post_spawn_deferral($content),
+        "$path does not re-defer shipped generated-child prior-awaitany second post-spawn await_any subsets",
     );
     like(
         $content,
@@ -527,6 +539,51 @@ sub documents_branch_prior_await_any_local_do_then_spawn_second_await_any {
     return 0;
 }
 
+sub documents_branch_prior_await_any_generated_child_do_then_spawn_second_await_any {
+    my ($content, $branch) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    my @anchors = $branch eq 'switch'
+        ? (
+            'top-level switch branch',
+            'top-level switch-branch',
+            'switch-contained',
+            'branch-contained plain generated-child',
+        )
+        : (
+            'top-level when body',
+            'top-level when-body',
+            'when-contained',
+            'branch-contained plain generated-child',
+        );
+
+    for my $anchor (@anchors) {
+        my $offset = index($normalized, $anchor);
+        while ($offset >= 0) {
+            my $window = substr($normalized, $offset, 8200);
+            return 1
+                if ($branch ne 'switch' || index($window, 'switch') >= 0)
+                && ($branch ne 'when' || index($window, 'when') >= 0)
+                && index($window, 'plain generated-child') >= 0
+                && index($window, 'do') >= 0
+                && index($window, 'prior') >= 0
+                && index($window, 'multi-pending') >= 0
+                && index($window, 'await_any') >= 0
+                && $window =~ /later\s+generated(?:\s+nested)?\s+spawns?/
+                && index($window, 'second') >= 0
+                && index($window, 'post-spawn') >= 0
+                && index($window, 'await_all') >= 0
+                && index($window, 'pre-do') >= 0
+                && index($window, 'post-do') >= 0
+                && index($window, 'drain') >= 0;
+            $offset = index($normalized, $anchor, $offset + 1);
+        }
+    }
+
+    return 0;
+}
+
 sub documents_stale_prior_await_any_spawn_after_do_deferral {
     my ($content) = @_;
     my $normalized = lc $content;
@@ -568,6 +625,39 @@ sub documents_stale_local_prior_await_any_second_post_spawn_deferral {
         'local-do do-then-spawn subsets may also start the later spawn after the local do follows a prior multi-pending await_any observation, but a second await_any after that later spawn remains fail-closed',
         'in the prior-observation form, that local-do do-then-spawn path advances directly to the mandatory same-body await_all drain and a second multi-pending await_any after the later spawn remains fail-closed',
         'a second post-spawn await_any in local-do prior-observation shapes remains backlog',
+    ) {
+        return 1 if index($normalized, $phrase) >= 0;
+    }
+
+    return 0;
+}
+
+sub documents_stale_generated_child_prior_await_any_second_post_spawn_deferral {
+    my ($content) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    for my $anchor (
+        'plain generated-child do may also be followed',
+        'plain generated-child do-then-spawn subsets may also start',
+        'generated-child do follows a prior multi-pending observation',
+    ) {
+        my $offset = index($normalized, $anchor);
+        while ($offset >= 0) {
+            my $window = substr($normalized, $offset, 1400);
+            return 1
+                if index($window, 'prior') >= 0
+                && index($window, 'second') >= 0
+                && index($window, 'await_any') >= 0
+                && index($window, 'fail-closed') >= 0;
+            $offset = index($normalized, $anchor, $offset + 1);
+        }
+    }
+
+    for my $phrase (
+        'a second post-spawn await_any in generated-child prior-observation shapes remains backlog',
+        'a second post-spawn await_any in generated-child prior-observation shapes remains fail-closed',
+        'generated-child prior-observation second post-spawn await_any remains fail-closed',
     ) {
         return 1 if index($normalized, $phrase) >= 0;
     }

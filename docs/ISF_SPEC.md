@@ -2667,8 +2667,12 @@ Current lowering:
   observation. The generated do instance's fresh done handoff gates the later
   spawn state, and the later `await_all` drains both pre-do and post-do
   generated spawns before nested repeat re-entry. In the prior-observation
-  form, a second multi-pending `(await_any done)` after the later spawn
-  remains fail-closed. Top-level
+  form, those branch-contained plain generated-child paths may also run a
+  second post-spawn multi-pending `(await_any done)` observation before the
+  mandatory same-body `(await_all done)` drain. Both `await_any` observations
+  leave the outstanding generated-spawn done set live, and the final
+  `await_all` drains both pre-do and post-do generated spawns before nested
+  repeat re-entry. Top-level
   `when` body and top-level `switch` branch nested repeats also accept
   static-parameter generated `(do child (params ...))` in that same
   pending-spawn interval; the generated do site owns one deterministic
@@ -2778,9 +2782,9 @@ Current lowering:
   prior multi-pending `await_any` observation is active before the later
   spawn; the observation leaves both pre-do and post-do generated-spawn done
   handoffs live while preserving declared ownership metadata. A second
-  post-spawn `await_any` in generated-child and generated-do
-  prior-observation forms, deeper branch/loop nesting, and cross-domain
-  activation remain fail-closed.
+  post-spawn `await_any` in specialized generated-do prior-observation
+  forms, deeper branch/loop nesting, and cross-domain activation remain
+  fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a

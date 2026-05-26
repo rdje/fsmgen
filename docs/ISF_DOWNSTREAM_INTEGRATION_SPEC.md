@@ -1366,9 +1366,11 @@ Rules:
   generated-child `do` follows a prior multi-pending observation. The
   generated do instance must complete before the later generated spawn starts,
   and the final `await_all` drains both the pre-do and post-do generated
-  spawns before nested repeat re-entry. In the prior-observation form, a
-  second multi-pending `(await_any done)` after the later spawn remains
-  fail-closed.
+  spawns before nested repeat re-entry. In the prior-observation form, those
+  branch-contained plain generated-child paths may also run a second
+  post-spawn multi-pending `(await_any done)` observation before the mandatory
+  same-body `(await_all done)` drain. Both `await_any` observations leave the
+  outstanding generated-spawn done set live for that final drain.
 
   Top-level `when` body and top-level `switch` branch nested-repeat generated
   `(do child (params ...))` may also run in that pending interval when the
@@ -1514,7 +1516,7 @@ Rules:
   still covers both pre-do and post-do generated spawns before nested repeat
   re-entry.
 
-  A second post-spawn `await_any` in generated-child and generated-do
+  A second post-spawn `await_any` in specialized generated-do
   prior-observation forms, deeper branch/loop nesting, and cross-domain
   activation remain fail-closed.
 
