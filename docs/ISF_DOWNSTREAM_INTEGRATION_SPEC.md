@@ -1336,13 +1336,16 @@ Rules:
   The later generated spawn is added to the same outstanding generated child
   set after the local child's fresh done pulse, and the later `await_all`
   drains both pre-do and post-do generated spawns before nested repeat
-  re-entry. In the prior-observation form, a second multi-pending
-  `(await_any done)` after the later spawn remains fail-closed. That same
-  local-do do-then-spawn shape may also run a post-spawn multi-pending
-  `(await_any done)` observation before the final same-body `(await_all
-  done)` drain, provided no prior multi-pending observation is active before
-  the later spawn. The post-spawn observation leaves both pre-do and post-do
-  generated-spawn done handoffs live.
+  re-entry. In the prior-observation form, those branch-contained local-do
+  paths may also run a second post-spawn multi-pending `(await_any done)`
+  observation before the mandatory same-body `(await_all done)` drain. Both
+  observations leave the outstanding generated-spawn done set live, and the
+  final `await_all` drains generated spawns from both sides of the local
+  `do`. That same local-do do-then-spawn shape may also run a post-spawn
+  multi-pending `(await_any done)` observation before the final same-body
+  `(await_all done)` drain when no prior multi-pending observation is active
+  before the later spawn. The post-spawn observation leaves both pre-do and
+  post-do generated-spawn done handoffs live.
 
   The top-level `when` body and top-level `switch` branch nested-repeat
   subsets also accept a plain generated-child `(do child)` in that pending
@@ -1511,8 +1514,9 @@ Rules:
   still covers both pre-do and post-do generated spawns before nested repeat
   re-entry.
 
-  A second post-spawn `await_any` in the prior-observation form, deeper
-  branch/loop nesting, and cross-domain activation remain fail-closed.
+  A second post-spawn `await_any` in generated-child and generated-do
+  prior-observation forms, deeper branch/loop nesting, and cross-domain
+  activation remain fail-closed.
 
   Cross-domain repeat-body `do`, broader outstanding-child semantics,
   `stage`, `contract`, deeper branch nesting, nested `while`, and nested
@@ -1987,9 +1991,11 @@ Rules:
   observation before the later spawn or after the local `do` follows a prior
   multi-pending observation. Those later spawns join the outstanding generated
   child set and must be drained with the pre-do generated spawns. In the
-  prior-observation form, the path advances directly to the mandatory
-  same-body `await_all`; a second multi-pending `await_any` after the later
-  spawn remains fail-closed.
+  prior-observation form, those local-do paths may also run a second
+  post-spawn multi-pending `await_any` before the mandatory same-body
+  `await_all`; both observations leave the outstanding generated-spawn done
+  set live, and the final drain covers every pre-do and post-do generated
+  spawn.
 - In the documented top-level `when` body and top-level `switch` branch nested
   subsets, a plain generated-child `(do child)` may also run while generated
   nested spawns are pending when the target child has already been emitted as a

@@ -1207,9 +1207,14 @@ deterministic generated do instance must complete before the later generated
 spawn starts, generated-top input/output binding handoffs remain scoped to
 the bound or same-domain generated do instance, declared ownership metadata
 remains scoped to the same-domain generated do instance, and the final drain
-covers every generated spawn from both sides of the `do`. A second post-spawn
-`await_any` in these prior-observation shapes, cross-domain activation,
-deeper nesting, and broader outstanding-child lifetime rules remain backlog.
+covers every pre-do and post-do generated spawn. The local-do
+prior-observation shape may also run a second post-spawn `(await_any done)`
+before that mandatory drain; both observations leave the outstanding
+generated-spawn done set live until the final drain covers every pre-do and
+post-do generated spawn. The generated-child, static-parameter, bound, and
+same-domain generated-do second post-spawn `await_any` variants, cross-domain
+activation, deeper nesting, and broader outstanding-child lifetime rules
+remain backlog.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. Known-width runtime

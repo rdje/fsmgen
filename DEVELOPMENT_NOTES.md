@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Local do after prior awaitany can run a second post-spawn awaitany
+- `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` widens the
+  shipped local prior-observation do-then-spawn proof to permit a second
+  observation before the final drain.
+- The accepted path remains branch-contained: the repeat must be directly
+  inside a top-level `when` body or top-level `switch` branch, use local plain
+  `(do child)`, and end with same-body `await_all` before nested repeat
+  re-entry.
+- The first multi-pending `await_any` observes a pre-do generated child, the
+  local `do` waits for the local child's fresh done pulse, the later
+  generated spawn joins the same outstanding generated-spawn set, and the
+  second post-spawn `await_any` observes without consuming that set.
+- The validator change is intentionally local-only: generated-child and
+  generated-do variants still reject the same prior-observation plus second
+  post-spawn `await_any` shape until their generated-instance parameter,
+  binding, ownership, and lifetime surfaces are proven separately.
+- Missing same-body `await_all` remains fail-closed. The second observation
+  does not make the nested repeat check reachable; only the final `await_all`
+  drains every pre-do and post-do generated spawn.
+
 ## 2026-05-26: Same-domain generated do after prior awaitany can precede a later generated spawn
 - `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` extends the bound
   prior-observation do-then-spawn proof to declared same-domain ownership

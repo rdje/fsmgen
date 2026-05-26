@@ -1142,8 +1142,9 @@ multi-pending `await_any` before the later spawn or after the local `do`
 follows a prior multi-pending observation. The local child's fresh done
 handoff gates the later spawn state, and the later `await_all` drains both the
 pre-do and post-do generated-spawn done handoffs. In the prior-observation
-form, a second multi-pending `await_any` after the later spawn remains
-fail-closed.
+form, lowering may insert a second post-spawn multi-pending `await_any` before
+the mandatory same-body `await_all`; both observations leave the outstanding
+generated-spawn done set live for that final drain.
 
 The top-level `when` body and top-level `switch` branch nested-repeat forms
 may also lower a plain generated-child `(do child)` in that pending-spawn
@@ -1304,12 +1305,12 @@ generated-child, static-parameter, bound, and same-domain do-then-spawn
 subsets may run `await_any` after a later post-do spawn when no prior
 multi-pending `await_any` observation is active before that later spawn;
 lowering inserts the observation after the later spawn and still requires a
-final same-body `await_all` drain. Local do and plain generated-child do may
-also start the later generated spawn after a prior multi-pending observation,
-as can static-parameter, bound, and same-domain generated do; those
+final same-body `await_all` drain. Local do may also run that second
+post-spawn `await_any` after a prior multi-pending observation, while plain
+generated-child do and static-parameter, bound, and same-domain generated do
 prior-observation paths advance directly to the same-body `await_all` drain
-after the later spawn. A second post-spawn `await_any` in the
-prior-observation forms remains fail-closed.
+after the later spawn. A second post-spawn `await_any` in generated-child and
+generated-do prior-observation forms remains fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches

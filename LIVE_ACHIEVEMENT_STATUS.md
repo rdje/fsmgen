@@ -2,6 +2,34 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-26: R14 — Local do after prior awaitany then spawn plus second awaitany shipped
+- Completed `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` and
+  closed the task tree.
+- Branch-contained nested repeats now accept generated spawns, prior
+  multi-pending `(await_any done)`, local blocking `(do child)`, later
+  generated spawn, second post-spawn multi-pending `(await_any done)`, and
+  mandatory same-body `(await_all done)` before nested repeat re-entry for
+  repeats directly inside top-level `when` bodies or top-level `switch`
+  branches.
+- Both `await_any` clauses observe generated children without clearing the
+  outstanding generated-spawn done set; the local child completes before the
+  later generated spawn starts; the final `await_all` drains generated spawns
+  from both sides of the local `do`.
+- Plain generated-child, static-parameter, bound, and same-domain generated
+  `do` variants of this second post-spawn `await_any` prior-observation
+  shape, missing drains, cross-domain activation, deeper branch/loop nesting,
+  CDC behavior, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=92`; focused
+  doc audits with `Files=2, Tests=591`; focused book/public audits with
+  `Files=4, Tests=595`; live-doc audits with `Files=4, Tests=620`;
+  broader repeat/child regression with `Files=4, Tests=106`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1902`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 — Same-domain generated do after prior awaitany then spawn before drain shipped
 - Completed `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` and
   closed the task tree.
