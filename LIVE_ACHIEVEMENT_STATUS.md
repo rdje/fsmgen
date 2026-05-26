@@ -15494,3 +15494,23 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Focused validation passed:
   `prove -I perl t/331-check-failure-diagnostic-contract.t t/457-check-failure-diagnostic-contract-defensive-copy-boundary-audit.t t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t t/1011-check-failure-diagnostic-contract-full-surface-json-roundtrip-audit.t`.
 - Next bounded slice: continue public report full-surface stability audits.
+
+## 2026-05-26: Prior-observation second post-spawn await_any book truth sync
+- Roadmap lane: `R14 documentation truth sync`.
+- Completed slice:
+  [`ISF-REPEAT-GENDO-PRIOR-AWAITANY-SECOND-AWAITANY-TRUTH-SYNC.1`](docs/tasks/ISF-REPEAT-GENDO-PRIOR-AWAITANY-SECOND-AWAITANY-TRUTH-SYNC.md)
+  closes the picky-audit-identified gap between the already-shipped validator
+  contract at `perl/FSM/Scheduler/ISF/LoweringIR.pm:6470` and the mdBook
+  chapters `13h-lowering-reference.md`, `13b-transactions.md`, and
+  `13k-isf-feature-support-matrix.md`, plus the
+  `documents_stale_domain_prior_await_any_second_post_spawn_deferral` helper
+  and the `@prior_observation_second_await_any_truth_docs` audit list in
+  `t/1307-isf-loop-body-doc-truth-audit.t`.
+- Public behavior changed: no; doc/test sync only.
+- Focused validation passed:
+  `prove -Iperl t/1215-isf-spawn-parameter-binding.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t` (Files=3, Tests=803);
+  `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice: hand off to whichever R14 ISF feature lane the roadmap
+  selects next.

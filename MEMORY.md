@@ -36770,3 +36770,46 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   public schedule-report metadata audits, `mdbook build docs/book`, and
   `git diff --check`, plus `./bin/ci-regression isf --no-book` (Files=228,
   Tests=1341).
+- The shipped R14 prior-observation second post-spawn `(await_any done)`
+  contract for top-level when-body and switch-branch nested-repeat
+  generated-child, static-parameter, bound, and same-domain generated-do
+  do-then-spawn forms had drifted out of sync with the book and the
+  `t/1307-isf-loop-body-doc-truth-audit.t` audit. The validator at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6470` accepts the second observation
+  for all four families before the mandatory same-body `(await_all done)`
+  drain, but `13h-lowering-reference.md`, `13b-transactions.md`, and
+  `13k-isf-feature-support-matrix.md` still claimed those four families'
+  prior-observation second `await_any` remained fail-closed, and the t/1307
+  `documents_stale_domain_prior_await_any_second_post_spawn_deferral` helper
+  used an orthogonal exclusion list (`cross-domain`, `missing`, `deeper`,
+  `cdc`) over a 2200-char window that swallowed the legitimate stale
+  detection in 13b. The truth-doc audit list also excluded
+  `13h-lowering-reference.md`, so the book chapter most directly about
+  loop-body lowering was outside the doc-truth contract.
+- The doc/test sync slice
+  `ISF-REPEAT-GENDO-PRIOR-AWAITANY-SECOND-AWAITANY-TRUTH-SYNC.1`
+  closes that gap: it tightens the same-domain stale-detector to a
+  phrase-anchored 700-char window with no orthogonal exclusions, adds
+  `13h-lowering-reference.md` to a separate
+  `@prior_observation_second_await_any_truth_docs` list that runs the six
+  stale-detectors and ten positive-wording helpers, and rewrites the stale
+  paragraphs in `13b-transactions.md` (static-parameter, bound, same-domain,
+  generated-child summary), `13h-lowering-reference.md` (the four family
+  paragraphs plus the chapter summary), and `13k-isf-feature-support-matrix.md`
+  (row 61 inline narrative inside the when-body and switch-branch shipped
+  list, plus the two post-row summary sentences) to the positive
+  shipped-with-final-drain wording already used by `ISF_SPEC.md`,
+  `ISF_PUBLIC_INTERFACE_CONTRACT.md`, `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `13d-control-flow.md`, and `14-feature-backlog.md`.
+- That slice is doc/test sync only: no parser, validator, lowering, schedule
+  report, backend, public API, or runtime change. Pre-slice t/1307 passed at
+  234 tests despite the live 13b stale wording, which was the proof that the
+  helper bug was real; post-slice t/1307 fails on stale wording when
+  introduced (proof-by-reverting one paragraph) and passes at 298 tests on
+  the corrected book.
+- Lesson for future loop-body lowering slices: keep the book-side audit list
+  in t/1307 in step with the actually-edited chapter set. When a shipped
+  behavior covers four kinds of generated-do plus local-do, the stale-detector
+  for the broadest family (same-domain) must not borrow a narrower-family
+  exclusion shape; it should use a phrase-level anchor and a tight window
+  instead.

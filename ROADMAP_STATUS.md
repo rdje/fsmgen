@@ -14221,3 +14221,25 @@ Exit criteria:
   `FSM::Synthesis::EnableGraph::FactorizationSupport` now narrows to
   substitution synchronization and live-usage evidence instead of owning the
   whole factorization family.
+- `R14`: the prior-observation second post-spawn `(await_any done)` book
+  truth contract is now aligned with the shipped validator. The
+  `ISF-REPEAT-GENDO-PRIOR-AWAITANY-SECOND-AWAITANY-TRUTH-SYNC.1` slice
+  tightens the `t/1307-isf-loop-body-doc-truth-audit.t` same-domain
+  stale-detector (phrase-level anchors, 700-char window, no orthogonal
+  exclusions), adds `docs/book/src/13h-lowering-reference.md` to the doc-truth
+  audit list with sixteen focused positive-wording and stale-wording checks
+  across the five generated-do families in both branch-contained contexts,
+  and rewrites the stale paragraphs in `13b-transactions.md`,
+  `13h-lowering-reference.md`, and `13k-isf-feature-support-matrix.md` so the
+  book reflects the shipped accept-with-mandatory-drain contract that
+  `ISF_SPEC.md`, `ISF_PUBLIC_INTERFACE_CONTRACT.md`,
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `13d-control-flow.md`, and
+  `14-feature-backlog.md` already documented.
+- This is doc/test sync only: no parser, validator, lowering, schedule
+  report, backend, public API, or runtime change. The slice exists because
+  the earlier shipping commits for the four generated-do families
+  (`d9432d91`, `d23c6d74`, `ae6c7d64`, `edcd447c`) each missed
+  `13h-lowering-reference.md`, accumulated three contradictions inside
+  `13k-isf-feature-support-matrix.md`, and inherited a same-domain
+  stale-detector helper whose exclusion list swallowed legitimate stale
+  wording in `13b-transactions.md`.

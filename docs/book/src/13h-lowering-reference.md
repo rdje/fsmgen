@@ -1161,12 +1161,12 @@ either with no active multi-pending `await_any` before the later spawn or
 after the generated-child `do` follows a prior multi-pending observation. The
 generated do instance's fresh done handoff gates the later spawn state, and
 the later `await_all` drains both pre-do and post-do generated-spawn done
-handoffs. In the prior-observation form, a second multi-pending `await_any`
-after the later spawn remains fail-closed. That same plain generated-child
-do-then-spawn shape may also run a post-spawn multi-pending `await_any`
-observation before the final drain when no prior multi-pending observation is
-active before the later spawn; the observation leaves both pre-do and post-do
-generated-spawn done handoffs live.
+handoffs. That same plain generated-child do-then-spawn shape may also run a
+post-spawn multi-pending `await_any` observation before the final drain in
+either branch: when no prior multi-pending observation is active before the
+later spawn, or after the generated-child `do` follows a prior multi-pending
+observation. Both `await_any` observations leave the outstanding
+generated-spawn done set live for that final drain.
 
 The same top-level branch-contained nested-repeat forms may lower
 static-parameter generated `(do child (params ...))` in that interval; the
@@ -1180,11 +1180,13 @@ drain, either with no active multi-pending `await_any` before the later spawn
 or after the generated do follows a prior multi-pending observation. The
 generated do instance's fresh done handoff gates the later spawn state, and
 the final drain observes both pre-do and post-do generated-spawn done
-handoffs. In the prior-observation form, a second multi-pending `await_any`
-after the later spawn remains fail-closed. That same static-parameter
-generated-do do-then-spawn shape may also run a post-spawn multi-pending
-`await_any` observation before the final same-body `await_all` drain when no
-prior multi-pending `await_any` observation is active before the later spawn.
+handoffs. That same static-parameter generated-do do-then-spawn shape may also
+run a post-spawn multi-pending `await_any` observation before the final
+same-body `await_all` drain in either branch: when no prior multi-pending
+`await_any` observation is active before the later spawn, or after the
+generated do follows a prior multi-pending observation. Both `await_any`
+observations leave the outstanding generated-spawn done set live for that
+final drain.
 
 Top-level `when` body and top-level `switch` branch nested-repeat forms may
 also lower static-parameter generated `(do child (params ...)
@@ -1199,16 +1201,15 @@ multi-pending `await_any` observation is active before the later spawn or
 after the generated do follows a prior multi-pending observation. The
 generated do instance's fresh done handoff gates the later spawn state,
 generated-top binding handoffs stay scoped to the do instance, and the final
-drain observes both pre-do and post-do generated-spawn done handoffs. In the
-prior-observation form, a second multi-pending `await_any` after the later
-spawn remains fail-closed. When no multi-pending `await_any` observation is
-active before the later spawn, that same bound generated-do do-then-spawn
-shape may also run a post-spawn multi-pending `await_any` observation before
-the final same-body `await_all` drain. The generated do instance's fresh done
-handoff gates the later spawn state, generated-top binding handoffs stay
-scoped to the do instance, and the observation leaves both pre-do and post-do
-generated-spawn
-done handoffs live for the final drain.
+drain observes both pre-do and post-do generated-spawn done handoffs. That
+same bound generated-do do-then-spawn shape may also run a post-spawn
+multi-pending `await_any` observation before the final same-body `await_all`
+drain in either branch: when no prior multi-pending `await_any` observation
+is active before the later spawn, or after the generated do follows a prior
+multi-pending observation. Both `await_any` observations leave the
+outstanding generated-spawn done set live for that final drain, and
+generated-top binding handoffs remain scoped to the do instance across the
+post-spawn observation.
 
 The same top-level branch-contained nested-repeat forms may also start one or
 more later generated spawns after a same-domain generated `(do child (params
@@ -1217,12 +1218,14 @@ observation is active before the later spawn or after the generated do follows
 a prior multi-pending observation. The generated do instance's fresh done
 handoff gates the later spawn state, declared ownership metadata remains
 scoped to the generated do instance, and the final same-body `await_all`
-drains both pre-do and post-do generated-spawn done handoffs. In the
-prior-observation form, a second multi-pending `await_any` after the later
-spawn remains fail-closed. When no multi-pending `await_any` observation is
-active before the later spawn, that same same-domain do-then-spawn shape may
-also run a post-spawn multi-pending `await_any` observation before the final
-same-body `await_all` drain.
+drains both pre-do and post-do generated-spawn done handoffs. That same
+same-domain do-then-spawn shape may also run a post-spawn multi-pending
+`await_any` observation before the final same-body `await_all` drain in
+either branch: when no prior multi-pending `await_any` observation is active
+before the later spawn, or after the generated do follows a prior
+multi-pending observation. Both `await_any` observations leave the
+outstanding generated-spawn done set live for that final drain while
+retaining declared ownership metadata on the generated do instance.
 
 When no multi-pending `await_any` observation is active before the drain, that
 bound generated do may also be followed by one or more additional generated
@@ -1298,19 +1301,14 @@ spawns before the mandatory same-body `await_all` drain, either when no
 multi-pending `await_any` observation is active before the later spawn or
 after the generated do follows a prior multi-pending observation; lowering
 keeps declared ownership metadata scoped to the generated do instance and
-drains both pre-do and post-do generated-spawn done handoffs. In the
-prior-observation form, a second multi-pending `await_any` after the later
-spawn remains fail-closed. Local-do, plain
+drains both pre-do and post-do generated-spawn done handoffs. Local-do, plain
 generated-child, static-parameter, bound, and same-domain do-then-spawn
-subsets may run `await_any` after a later post-do spawn when no prior
-multi-pending `await_any` observation is active before that later spawn;
-lowering inserts the observation after the later spawn and still requires a
-final same-body `await_all` drain. Local do may also run that second
-post-spawn `await_any` after a prior multi-pending observation, while plain
-generated-child do and static-parameter, bound, and same-domain generated do
-prior-observation paths advance directly to the same-body `await_all` drain
-after the later spawn. A second post-spawn `await_any` in generated-child and
-generated-do prior-observation forms remains fail-closed.
+subsets may run a second post-spawn multi-pending `await_any` observation
+before the mandatory same-body `await_all` drain in either branch: when no
+prior multi-pending `await_any` observation is active before the later spawn,
+or after the local or generated do follows a prior multi-pending observation.
+Both `await_any` observations leave the outstanding generated-spawn done set
+live for that final drain.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches

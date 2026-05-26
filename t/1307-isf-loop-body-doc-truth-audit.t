@@ -13,6 +13,13 @@ my @loop_docs = qw(
     docs/book/src/13b-transactions.md
 );
 
+my @prior_observation_second_await_any_truth_docs = qw(
+    docs/ISF_SPEC.md
+    docs/book/src/14-feature-backlog.md
+    docs/book/src/13b-transactions.md
+    docs/book/src/13h-lowering-reference.md
+);
+
 for my $path (@loop_docs) {
     my $content = read_repo_file($path);
     like(
@@ -374,6 +381,74 @@ for my $path (@loop_docs) {
         $content,
         qr/(?:top-level\s+switch-branch\s+nested\s+repeat\s+local\s+`?\(do child\)`?|repeat(?:-body| body).*top-level\s+`?switch`?\s+branch.*local.*do)/si,
         "$path documents the shipped top-level switch-branch nested repeat local do subset",
+    );
+}
+
+for my $path (@prior_observation_second_await_any_truth_docs) {
+    my $content = read_repo_file($path);
+    ok(
+        !documents_stale_prior_await_any_spawn_after_do_deferral($content),
+        "$path does not re-defer shipped prior-awaitany spawn-after-do subsets (truth-doc audit)",
+    );
+    ok(
+        !documents_stale_local_prior_await_any_second_post_spawn_deferral($content),
+        "$path does not re-defer shipped local prior-awaitany second post-spawn await_any subsets (truth-doc audit)",
+    );
+    ok(
+        !documents_stale_generated_child_prior_await_any_second_post_spawn_deferral($content),
+        "$path does not re-defer shipped generated-child prior-awaitany second post-spawn await_any subsets (truth-doc audit)",
+    );
+    ok(
+        !documents_stale_static_parameter_prior_await_any_second_post_spawn_deferral($content),
+        "$path does not re-defer shipped static-parameter prior-awaitany second post-spawn await_any subsets (truth-doc audit)",
+    );
+    ok(
+        !documents_stale_bound_prior_await_any_second_post_spawn_deferral($content),
+        "$path does not re-defer shipped bound prior-awaitany second post-spawn await_any subsets (truth-doc audit)",
+    );
+    ok(
+        !documents_stale_domain_prior_await_any_second_post_spawn_deferral($content),
+        "$path does not re-defer shipped same-domain prior-awaitany second post-spawn await_any subsets (truth-doc audit)",
+    );
+    ok(
+        documents_branch_prior_await_any_local_do_then_spawn_second_await_any($content, 'when'),
+        "$path documents the shipped top-level when-body nested repeat local do after multi-pending await_any then generated spawn and second await_any subset (truth-doc audit)",
+    );
+    ok(
+        documents_branch_prior_await_any_local_do_then_spawn_second_await_any($content, 'switch'),
+        "$path documents the shipped top-level switch-branch nested repeat local do after multi-pending await_any then generated spawn and second await_any subset (truth-doc audit)",
+    );
+    ok(
+        documents_branch_prior_await_any_generated_child_do_then_spawn_second_await_any($content, 'when'),
+        "$path documents the shipped top-level when-body nested repeat generated-child do after multi-pending await_any then generated spawn and second await_any subset (truth-doc audit)",
+    );
+    ok(
+        documents_branch_prior_await_any_generated_child_do_then_spawn_second_await_any($content, 'switch'),
+        "$path documents the shipped top-level switch-branch nested repeat generated-child do after multi-pending await_any then generated spawn and second await_any subset (truth-doc audit)",
+    );
+    ok(
+        documents_branch_prior_await_any_static_parameter_do_then_spawn_second_await_any($content, 'when'),
+        "$path documents the shipped top-level when-body nested repeat generated static-parameter do after multi-pending await_any then generated spawn and second await_any subset (truth-doc audit)",
+    );
+    ok(
+        documents_branch_prior_await_any_static_parameter_do_then_spawn_second_await_any($content, 'switch'),
+        "$path documents the shipped top-level switch-branch nested repeat generated static-parameter do after multi-pending await_any then generated spawn and second await_any subset (truth-doc audit)",
+    );
+    ok(
+        documents_branch_prior_await_any_bound_do_then_spawn_second_await_any($content, 'when'),
+        "$path documents the shipped top-level when-body nested repeat generated static-parameter bound do after multi-pending await_any then generated spawn and second await_any subset (truth-doc audit)",
+    );
+    ok(
+        documents_branch_prior_await_any_bound_do_then_spawn_second_await_any($content, 'switch'),
+        "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do after multi-pending await_any then generated spawn and second await_any subset (truth-doc audit)",
+    );
+    ok(
+        documents_branch_prior_await_any_domain_do_then_spawn_second_await_any($content, 'when'),
+        "$path documents the shipped top-level when-body nested repeat generated static-parameter same-domain do after multi-pending await_any then generated spawn and second await_any subset (truth-doc audit)",
+    );
+    ok(
+        documents_branch_prior_await_any_domain_do_then_spawn_second_await_any($content, 'switch'),
+        "$path documents the shipped top-level switch-branch nested repeat generated static-parameter same-domain do after multi-pending await_any then generated spawn and second await_any subset (truth-doc audit)",
     );
 }
 
@@ -928,22 +1003,20 @@ sub documents_stale_domain_prior_await_any_second_post_spawn_deferral {
     $normalized =~ s/`//g;
 
     for my $anchor (
-        'same-domain generated-do',
+        'same-domain generated-do subsets may also start',
+        'same-domain do-then-spawn shape',
         'generated do with static params and same-domain metadata',
-        'same-domain metadata',
+        'same-domain metadata prior-observation',
+        'same-domain generated-do prior-observation',
     ) {
         my $offset = index($normalized, $anchor);
         while ($offset >= 0) {
-            my $window = substr($normalized, $offset, 2200);
+            my $window = substr($normalized, $offset, 700);
             return 1
                 if index($window, 'prior') >= 0
                 && index($window, 'second') >= 0
                 && index($window, 'await_any') >= 0
-                && ($window =~ /(?:fail-closed|backlog|outside|deferred)/)
-                && index($window, 'cross-domain') < 0
-                && index($window, 'missing') < 0
-                && index($window, 'deeper') < 0
-                && index($window, 'cdc') < 0;
+                && index($window, 'fail-closed') >= 0;
             $offset = index($normalized, $anchor, $offset + 1);
         }
     }

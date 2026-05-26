@@ -32470,3 +32470,50 @@ It is an exact-delay pulse request:
 - This complements the earlier shared-leaf and unmatched-failure audits by
   locking the public report-shell boundary itself instead of only the nested
   objects under it.
+
+## 2026-05-26: prior-observation second post-spawn `await_any` book truth sync
+- Continued the active R14 lane by closing the picky-audit-identified gap
+  between the already-shipped validator behavior at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6470` and the loop-body
+  doc-truth audit, mdBook chapter `13h-lowering-reference.md`,
+  `13b-transactions.md`, and `13k-isf-feature-support-matrix.md`.
+- The shipped contract accepts a second post-spawn multi-pending
+  `(await_any done)` observation in the prior-multi-pending-observation form
+  for the top-level when-body and switch-branch nested-repeat generated-child,
+  static-parameter, bound, and same-domain generated-do do-then-spawn forms,
+  provided the mandatory same-body `(await_all done)` drain still follows
+  before the nested repeat check can loop. The earlier shipping commits
+  `d9432d91`, `d23c6d74`, `ae6c7d64`, and `edcd447c` each updated `ISF_SPEC`,
+  `ISF_PUBLIC_INTERFACE_CONTRACT`, `ISF_DOWNSTREAM_INTEGRATION_SPEC`,
+  `13d-control-flow.md`, and `14-feature-backlog.md` but missed
+  `13h-lowering-reference.md` and `13b-transactions.md`, and left three
+  internal contradictions inside `13k-isf-feature-support-matrix.md`.
+- The slice
+  [`ISF-REPEAT-GENDO-PRIOR-AWAITANY-SECOND-AWAITANY-TRUTH-SYNC.1`](docs/tasks/ISF-REPEAT-GENDO-PRIOR-AWAITANY-SECOND-AWAITANY-TRUTH-SYNC.md)
+  closes that gap with three bounded edits and one test-side fix:
+  - tightens
+    `documents_stale_domain_prior_await_any_second_post_spawn_deferral` in
+    [t/1307-isf-loop-body-doc-truth-audit.t](t/1307-isf-loop-body-doc-truth-audit.t)
+    to use phrase-level anchors and a 700-character window without the
+    orthogonal `cross-domain`/`missing`/`deeper`/`cdc` exclusions that
+    swallowed legitimate stale wording inside `13b-transactions.md`,
+  - adds
+    [docs/book/src/13h-lowering-reference.md](docs/book/src/13h-lowering-reference.md)
+    to a focused `@prior_observation_second_await_any_truth_docs` list with
+    sixteen new positive-wording and stale-wording assertions across the five
+    generated-do families in both branch-contained contexts,
+  - rewrites the stale paragraphs in
+    [docs/book/src/13b-transactions.md](docs/book/src/13b-transactions.md),
+    [docs/book/src/13h-lowering-reference.md](docs/book/src/13h-lowering-reference.md),
+    and the three contradiction sites in
+    [docs/book/src/13k-isf-feature-support-matrix.md](docs/book/src/13k-isf-feature-support-matrix.md)
+    to the positive shipped-with-mandatory-drain wording already used by
+    `ISF_SPEC.md`, `ISF_PUBLIC_INTERFACE_CONTRACT.md`,
+    `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `13d-control-flow.md`, and
+    `14-feature-backlog.md`.
+- This slice is doc/test sync only: no parser, validator, lowering, schedule
+  report, backend, public API, or runtime change. The helper bug was proved
+  before the book updates landed: with only the helper fix applied, t/1307
+  failed on the live 13b stale same-domain wording (the proof the original
+  helper was too lenient); after the book updates, all 298 t/1307 assertions
+  pass cleanly.
