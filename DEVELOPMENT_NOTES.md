@@ -32534,3 +32534,21 @@ It is an exact-delay pulse request:
   failed on the live 13b stale same-domain wording (the proof the original
   helper was too lenient); after the book updates, all 298 t/1307 assertions
   pass cleanly.
+
+## 2026-05-26: plain generated-child switch-branch second-awaitany missing-drain coverage
+- Continued the active R14 lane by adding the switch-branch defensive
+  regression coverage for the plain generated-child `(do worker)`
+  prior-`await_any` then spawn then second post-spawn `await_any` without
+  final same-body `(await_all done)` shape. The when-body counterpart
+  already existed in `t/1215`; this slice closes the symmetric gap.
+- The slice
+  [`ISF-REPEAT-GENDO-PLAIN-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-PLAIN-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  adds one `assert_lower_rejected` regression in
+  [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t)
+  matching the existing validator confess at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the `'generated-child do'`
+  kind.
+- This slice is test-only: no parser, validator, lowering, schedule report,
+  backend, public API, or runtime change. The param and bound SECOND-AWAITANY
+  missing-drain coverage slices remain as separate independently reviewable
+  follow-ups.

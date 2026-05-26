@@ -14258,3 +14258,12 @@ Exit criteria:
   `13k-isf-feature-support-matrix.md`, and inherited a same-domain
   stale-detector helper whose exclusion list swallowed legitimate stale
   wording in `13b-transactions.md`.
+- `R14`: defensive missing-drain regression coverage now spans the plain
+  generated-child SECOND-AWAITANY shape on both branch-contained subsets.
+  `ISF-REPEAT-GENDO-PLAIN-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1` added
+  the `switch`-branch `assert_lower_rejected` regression for the plain
+  generated-child `(do worker)` prior-`await_any` then spawn then second
+  post-spawn `await_any` without final same-body `(await_all done)` shape;
+  the `when`-body counterpart already existed in `t/1215`. Test-only locking
+  of `LoweringIR.pm:6551`. Param and bound missing-drain SECOND-AWAITANY
+  remain as separate independently reviewable slices.
