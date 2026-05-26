@@ -1629,10 +1629,9 @@ subsets may also start one or more later generated spawns, run a post-spawn
 multi-pending `await_any` observation, and then use the mandatory same-body
 `await_all` drain when no prior multi-pending `await_any` observation is
 active before the later spawn; declared ownership metadata remains scoped to
-the generated do instance. New spawn after generated `do` when a multi-
-pending `await_any` observation is active before the drain, and after plain
-generated-child `do` when a multi-pending `await_any` observation is active
-before the drain, remain outside the public shipped subset.
+the generated do instance. New spawn after specialized generated `do` when a
+multi-pending `await_any` observation is active before the drain remains
+outside the public shipped subset.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. In the top-level `when` body and top-level
@@ -1640,10 +1639,13 @@ nested spawns are pending. In the top-level `when` body and top-level
 prior multi-pending `await_any` observation. The generated do uses only its
 deterministic generated do instance's start/done handoff and leaves the
 generated-spawn done set live until the later same-body `await_all` drain.
-When no multi-pending `await_any` observation is active before the drain,
-that plain generated-child do may also be followed by one or more additional
-generated nested spawns before the mandatory same-body `await_all`; the
-generated do instance's fresh done handoff gates the later spawn state. In
+That plain generated-child do may also be followed by one or more additional
+generated nested spawns before the mandatory same-body `await_all`, either
+with no active multi-pending `await_any` before the later spawn or after the
+generated-child `do` follows a prior multi-pending observation; the generated
+do instance's fresh done handoff gates the later spawn state. In the
+prior-observation form, a second multi-pending `await_any` after the later
+spawn remains fail-closed. In
 the documented top-level `when` body and top-level `switch` branch nested subsets,
 static-parameter generated `(do child (params ...))` may also run while
 generated nested spawns are pending. In both top-level branch-contained

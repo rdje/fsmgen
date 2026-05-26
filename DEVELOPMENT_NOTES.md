@@ -1,5 +1,29 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Generated-child do after prior awaitany can precede a later generated spawn
+- `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` combines the
+  shipped generated-child-do-after-`await_any` lifetime proof with the shipped
+  plain generated-child do-then-spawn proof.
+- The accepted path is limited to plain generated-child `(do child)` inside a
+  repeat directly in a top-level `when` body or top-level `switch` branch,
+  after a multi-pending `await_any` observation and before the mandatory
+  same-body `await_all` drain.
+- The prior `await_any` remains observation-only. It may advance on any
+  generated child done handoff, but it leaves the outstanding generated-spawn
+  set live across the generated do instance and the later generated spawn.
+- The generated do site owns the deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` instance and must observe that
+  instance's fresh done handoff before the later generated spawn starts. The
+  later spawn joins the same generated-spawn done set, and the final same-body
+  `await_all` drains every generated spawn before nested repeat re-entry.
+- Static-parameter, bound, and same-domain generated-do variants stay deferred
+  for this prior-observation spawn-after-do shape because their parameter,
+  binding, or ownership metadata lifetimes need separate proofs. A second
+  multi-pending `await_any` after the later spawn remains fail-closed.
+- The loop-body doc-truth audit now uses bounded-window marker matching for
+  generated static-parameter pending-spawn wording so backlog prose changes do
+  not trigger document-wide regex backtracking.
+
 ## 2026-05-26: Local do after prior awaitany can precede a later generated spawn
 - `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` combines the shipped
   local-do-after-`await_any` lifetime proof with the shipped local-do-

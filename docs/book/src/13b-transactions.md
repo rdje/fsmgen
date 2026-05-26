@@ -687,14 +687,18 @@ target child is already emitted as a generated child by another activation
 site. That generated do site owns one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
 fresh done handoff, and does not clear the pending generated-spawn done set.
-When no multi-pending `(await_any done)` observation is active before the
-drain, that same plain generated-child do may then start one or more
-additional generated nested spawns before the mandatory same-body
-`(await_all done)` drain. The generated do instance must complete before the
-later spawn starts, and the `await_all` drain observes both pre-do and
-post-do generated spawns before the nested repeat check can loop. The same
+That same plain generated-child do may then start one or more additional
+generated nested spawns before the mandatory same-body `(await_all done)`
+drain, either with no active multi-pending `(await_any done)` before the later
+spawn or after the generated-child `do` follows a prior multi-pending
+observation. The generated do instance must complete before the later spawn
+starts, and the `await_all` drain observes both pre-do and post-do generated
+spawns before the nested repeat check can loop. In the prior-observation
+form, a second multi-pending `(await_any done)` after the later spawn remains
+fail-closed. The same
 plain generated-child do-then-spawn shape may also run a post-spawn
-multi-pending `(await_any done)` observation before that final drain; the
+multi-pending `(await_any done)` observation before that final drain when no
+prior multi-pending observation is active before the later spawn; the
 observation leaves both pre-do and post-do generated-spawn done handoffs live
 for the later same-body `await_all`.
 
@@ -786,10 +790,8 @@ multi-pending `(await_any done)` observation before the final same-body
 observation is active before the later spawn; the post-spawn observation
 leaves both pre-do and post-do generated-spawn done handoffs live while
 retaining declared ownership metadata for the generated do instance. New
-nested `spawn` after generated `do` when a multi-pending `await_any`
-observation is active before the drain, or after plain generated-child `do`
-when a multi-pending `await_any` observation is active before the drain,
-remains fail-closed.
+nested `spawn` after specialized generated `do` when a multi-pending
+`await_any` observation is active before the drain remains fail-closed.
 
 The top-level `switch` branch nested repeat plain generated-child `(do
 child)` subset supports the same post-do multi-pending observation and
@@ -1563,18 +1565,25 @@ The top-level `when` body and top-level `switch` branch forms also permit the
 documented local plain `(do child)` while generated nested spawns are pending
 before a later same-body `await_all` drain; both branch-contained forms also
 permit that local do after a prior multi-pending `await_any` observation.
-When no multi-pending `await_any` observation is active, both
-branch-contained forms also permit that local do to be followed by additional
-generated nested `spawn` sites before the same later `await_all` drain.
+Both branch-contained forms also permit that local do to be followed by
+additional generated nested `spawn` sites before the same later `await_all`
+drain, either when no multi-pending `await_any` observation is active before
+the later spawn or after the local `do` follows a prior multi-pending
+observation. In the prior-observation form, a second multi-pending
+`await_any` after the later spawn remains fail-closed.
 
 Both branch-contained forms also permit the documented plain generated-child
 `(do child)` while generated nested spawns are pending before that same later
 drain.
-When no multi-pending `await_any` observation is active, both
-branch-contained forms also permit that plain generated-child do to be
+Both branch-contained forms also permit that plain generated-child do to be
 followed by additional generated nested `spawn` sites before the same later
-`await_all` drain. That same plain generated-child do-then-spawn shape may
-also run post-spawn multi-pending `await_any` before the final drain.
+`await_all` drain, either when no multi-pending `await_any` observation is
+active before the later spawn or after the generated-child `do` follows a
+prior multi-pending observation. In the prior-observation form, a second
+multi-pending `await_any` after the later spawn remains fail-closed. That
+same plain generated-child do-then-spawn shape may also run post-spawn
+multi-pending `await_any` before the final drain when no prior multi-pending
+observation is active before the later spawn.
 
 The top-level `when` body and top-level `switch` branch nested repeat
 generated-child `(do child)` subsets also permit a prior multi-pending

@@ -144,9 +144,12 @@ for my $path (@loop_docs) {
         documents_branch_post_do_await_any($content, 'when', qr/generated-child/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated-child do before post-do multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
+    ok(
+        documents_branch_generated_do_pending_spawn(
+            $content,
+            'when',
+            qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/,
+        ),
         "$path documents the shipped top-level when-body nested repeat generated static-parameter do while generated spawn pending subset",
     );
     ok(
@@ -165,9 +168,13 @@ for my $path (@loop_docs) {
         documents_branch_await_any_before_do($content, 'when', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/(?:bind|binding|handoff)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated static-parameter bound do after multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*bind.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
+    ok(
+        documents_branch_generated_do_pending_spawn(
+            $content,
+            'when',
+            qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/,
+            qr/(?:bind|binding|handoff)/,
+        ),
         "$path documents the shipped top-level when-body nested repeat generated static-parameter bound do while generated spawn pending subset",
     );
     like(
@@ -226,9 +233,12 @@ for my $path (@loop_docs) {
         documents_branch_post_do_await_any($content, 'switch', qr/generated-child/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated-child do before post-do multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
+    ok(
+        documents_branch_generated_do_pending_spawn(
+            $content,
+            'switch',
+            qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/,
+        ),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter do while generated spawn pending subset",
     );
     ok(
@@ -247,9 +257,13 @@ for my $path (@loop_docs) {
         documents_branch_await_any_before_do($content, 'switch', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/(?:bind|binding|handoff)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do after multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*bind.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
+    ok(
+        documents_branch_generated_do_pending_spawn(
+            $content,
+            'switch',
+            qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/,
+            qr/(?:bind|binding|handoff)/,
+        ),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do while generated spawn pending subset",
     );
     like(
@@ -352,6 +366,38 @@ sub documents_branch_await_any_before_do {
             && index($window, 'await_all') >= 0
             && index($window, 'drain') >= 0
             && index($window, 'pending') >= 0;
+        $offset = index($normalized, $anchor, $offset + 1);
+    }
+
+    return 0;
+}
+
+sub documents_branch_generated_do_pending_spawn {
+    my ($content, $branch, @markers) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    my $anchor = $branch eq 'switch'
+        ? 'top-level switch branch'
+        : 'top-level when body';
+    my $offset = index($normalized, $anchor);
+    while ($offset >= 0) {
+        my $window = substr($normalized, $offset, 4200);
+        my $matches_markers = 1;
+        for my $marker (@markers) {
+            if ($window !~ $marker) {
+                $matches_markers = 0;
+                last;
+            }
+        }
+        return 1
+            if $matches_markers
+            && $window =~ /\bgenerated\b/
+            && $window =~ /\bdo\b/
+            && $window =~ /generated(?:\s+nested)?\s+spawn/
+            && index($window, 'pending') >= 0
+            && index($window, 'await_all') >= 0
+            && index($window, 'drain') >= 0;
         $offset = index($normalized, $anchor, $offset + 1);
     }
 

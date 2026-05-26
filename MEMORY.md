@@ -1,5 +1,40 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-26: R14 generated-child do after prior awaitany then spawn before drain shipped
+- Completed `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` and
+  closed the task tree.
+- Branch-contained nested repeats now accept the plain generated-child
+  prior-observation spawn-after-do analogue: a repeat directly inside a
+  top-level `when` body or top-level `switch` branch may run generated
+  spawns, observe one done pulse through multi-pending `(await_any done)`,
+  run plain generated-child blocking `(do child)`, start one or more later
+  generated spawns after the generated do instance's fresh done handoff, and
+  drain every generated spawn through same-body `(await_all done)` before
+  nested repeat re-entry.
+- The prior `await_any` does not clear the outstanding generated-spawn done
+  set, the deterministic generated do instance must complete before the later
+  generated spawn starts, and the final `await_all` drains generated spawns
+  from both sides of the generated-child `do`.
+- Specialized generated-do prior-observation spawn-after-do variants,
+  repeated post-spawn `await_any`, missing drains, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child lifetime
+  semantics remain fail-closed/deferred.
+- The loop-body doc-truth audit now uses bounded-window marker matching for
+  generated static-parameter do while generated spawns are pending, avoiding
+  document-wide greedy backtracking in the backlog chapter.
+- Public ISF specs, downstream handoff, public contract, mdBook, feature
+  matrix audit, roadmap, task tree, README index, and live docs are
+  synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=84`; focused
+  book/public audits with `Files=3, Tests=381`; broader repeat/child
+  regression with `Files=4, Tests=98`; `prove -Iperl
+  t/1307-isf-loop-body-doc-truth-audit.t` with `Files=1, Tests=156`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1836`;
+  `mdbook build docs/book`; and `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 local do after prior awaitany then spawn before drain shipped
 - Completed `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` and closed
   the task tree.

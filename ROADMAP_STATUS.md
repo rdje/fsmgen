@@ -4,6 +4,25 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 generated-child prior-await_any then spawn before drain:
+  `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` shipped the plain
+  generated-child prior-observation spawn-after-do analogue and closed the
+  task tree. A repeat directly inside a top-level `when` body or top-level
+  `switch` branch may now run generated spawns, observe one done pulse
+  through multi-pending `(await_any done)`, run plain generated-child
+  blocking `(do child)`, start a later generated spawn after the generated do
+  instance's fresh done handoff, and drain every generated spawn through
+  same-body `(await_all done)` before nested repeat re-entry. Specialized
+  generated-do variants, repeated post-spawn `await_any`, missing drains,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics remain fail-closed/deferred.
+  Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=84`; focused
+  book/public audits with `Files=3, Tests=381`; broader repeat/child
+  regression with `Files=4, Tests=98`; `prove -Iperl
+  t/1307-isf-loop-body-doc-truth-audit.t` with `Files=1, Tests=156`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1836`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current R14 local-do prior-await_any then spawn before drain:
   `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` shipped the local-do
   prior-observation spawn-after-do analogue and closed the task tree. A repeat
@@ -12,9 +31,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(await_any done)`, run local blocking `(do child)`, start a later generated
   spawn after the local child's fresh done pulse, and drain every generated
   spawn through same-body `(await_all done)` before nested repeat re-entry.
-  Generated-do variants, repeated post-spawn `await_any`, missing drains,
-  cross-domain activation, deeper branch/loop nesting, and broader
-  outstanding-child lifetime semantics remain fail-closed/deferred.
+  At that checkpoint, plain generated-child and specialized generated-do
+  variants, repeated post-spawn `await_any`, missing drains, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  lifetime semantics remained fail-closed/deferred; the later
+  `ISF-REPEAT-GENDO-PLAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice shipped the
+  plain generated-child analogue.
   Validation passed: syntax checks; `prove -Iperl
   t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=82`; focused
   book/public audits with `Files=3, Tests=377`; broader repeat/child

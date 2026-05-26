@@ -1356,13 +1356,16 @@ Rules:
   The generated do site owns one deterministic
   `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
   fresh done handoff, and leaves the generated-spawn done set live for the
-  later same-body `(await_all done)` drain.
-  When no multi-pending `(await_any done)` observation is active before the
-  drain, that plain generated-child do may then start one or more additional
-  generated nested spawns before the mandatory same-body `(await_all done)`
-  drain. The generated do instance must complete before the later generated
-  spawn starts, and the final `await_all` drains both the pre-do and post-do
-  generated spawns before nested repeat re-entry.
+  later same-body `(await_all done)` drain. That plain generated-child do may
+  then start one or more additional generated nested spawns before the
+  mandatory same-body `(await_all done)` drain, either with no active
+  multi-pending `(await_any done)` before the later spawn or after the
+  generated-child `do` follows a prior multi-pending observation. The
+  generated do instance must complete before the later generated spawn starts,
+  and the final `await_all` drains both the pre-do and post-do generated
+  spawns before nested repeat re-entry. In the prior-observation form, a
+  second multi-pending `(await_any done)` after the later spawn remains
+  fail-closed.
 
   Top-level `when` body and top-level `switch` branch nested-repeat generated
   `(do child (params ...))` may also run in that pending interval when the
@@ -1495,10 +1498,9 @@ Rules:
   still covers both pre-do and post-do generated spawns before nested repeat
   re-entry.
 
-  New nested `spawn` after generated `do` when a multi-pending `await_any`
-  observation is active before the drain, after plain generated-child `do`
-  when a multi-pending `await_any` observation is active before the drain,
-  deeper branch/loop nesting, and cross-domain activation remain fail-closed.
+  New nested `spawn` after specialized generated `do` when a multi-pending
+  `await_any` observation is active before the drain, deeper branch/loop
+  nesting, and cross-domain activation remain fail-closed.
 
   Cross-domain repeat-body `do`, broader outstanding-child semantics,
   `stage`, `contract`, deeper branch nesting, nested `while`, and nested
