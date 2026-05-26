@@ -4,6 +4,23 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 local-do prior-await_any then spawn before drain:
+  `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` shipped the local-do
+  prior-observation spawn-after-do analogue and closed the task tree. A repeat
+  directly inside a top-level `when` body or top-level `switch` branch may now
+  run generated spawns, observe one done pulse through multi-pending
+  `(await_any done)`, run local blocking `(do child)`, start a later generated
+  spawn after the local child's fresh done pulse, and drain every generated
+  spawn through same-body `(await_all done)` before nested repeat re-entry.
+  Generated-do variants, repeated post-spawn `await_any`, missing drains,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics remain fail-closed/deferred.
+  Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=82`; focused
+  book/public audits with `Files=3, Tests=377`; broader repeat/child
+  regression with `Files=4, Tests=96`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1830`; `mdbook build docs/book`; and
+  `git diff --check`.
 - Current R14 same-domain generated-do do-then-spawn post-await_any:
   `ISF-REPEAT-GENDO-DOMAIN-SPAWN-AFTER-DO-POST-AWAITANY.1` shipped the
   same-domain generated-do do-then-spawn post-spawn `await_any` analogue and
@@ -18,9 +35,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   ownership metadata; the post-spawn `await_any` observes either pre-do or
   post-do generated child without clearing the outstanding generated-spawn
   done set; and the final `await_all` drains both pre-do and post-do generated
-  children. Prior active multi-pending `await_any`, missing drains,
-  cross-domain activation, deeper branch/loop nesting, and broader
-  outstanding-child lifetime semantics remain fail-closed/deferred.
+  children. At that checkpoint, prior active multi-pending `await_any`,
+  missing drains, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child lifetime semantics remained fail-closed/deferred;
+  the later `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice
+  shipped the local-do prior-observation spawn-after-do analogue.
   Validation passed: syntax checks; `prove -Iperl
   t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=80`; focused
   book/public audits with `Files=3, Tests=373`; broader repeat/child

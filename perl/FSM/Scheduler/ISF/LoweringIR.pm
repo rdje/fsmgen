@@ -6255,8 +6255,15 @@ sub _validate_repeat_body_spawn_subset {
         if ($keyword eq 'spawn') {
             confess "Transaction '$tn': repeat-body spawn is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n"
                 unless $top_level_repeat || $when_body_repeat || $switch_branch_repeat;
+            my $allowed_branch_spawn_after_prior_await_any_local_do_before_drain =
+                ($when_body_repeat || $switch_branch_repeat)
+                && $awaiting_multi_pending_drain
+                && $pending_local_do_before_drain
+                && !$pending_generated_do_before_drain
+                && @pending_spawns;
             confess "Transaction '$tn': repeat-body spawn cannot follow multi-pending await_any before same-body await_all drains outstanding children\n"
-                if $awaiting_multi_pending_drain;
+                if $awaiting_multi_pending_drain
+                    && !$allowed_branch_spawn_after_prior_await_any_local_do_before_drain;
             my $allowed_branch_spawn_after_local_do_before_drain =
                 ($when_body_repeat || $switch_branch_repeat)
                 && $pending_local_do_before_drain

@@ -1091,10 +1091,9 @@ generated do instance; the post-do `await_any` does not clear the pending
 generated-spawn done set. New spawn after generated `do` when a multi-pending
 `await_any` observation is active before the drain, new spawn after plain
 generated-child `do` when a multi-pending `await_any` observation is active
-before the drain, new spawn after local `do` when a multi-pending `await_any`
-observation is active before the drain, cross-domain activation, deeper
-branch/loop nesting, and broader outstanding-child semantics remain backlog
-until their own leaves select and ship them.
+before the drain, cross-domain activation, deeper branch/loop nesting, and
+broader outstanding-child semantics remain backlog until their own leaves
+select and ship them.
 
 The branch-contained local-do-then-spawn-before-drain analogue is now shipped
 for top-level `when` bodies and top-level `switch` branches. A nested repeat
@@ -1156,7 +1155,9 @@ generated-spawn done handoffs live for the final drain. At that checkpoint,
 bound and same-domain generated-do do-then-spawn post-spawn `await_any`
 variants, active-prior-`await_any` spawn-after-do variants, cross-domain
 activation, deeper nesting, and broader outstanding-child lifetime rules
-remained backlog.
+remained backlog; later slices shipped the bound, same-domain, and local-do
+prior-active-`await_any` analogues while keeping generated-child and
+specialized generated-do active-prior spawn-after-do variants deferred.
 
 The branch-contained bound generated-do-then-spawn post-spawn `await_any`
 analogue is also shipped for top-level `when` bodies and top-level `switch`
@@ -1171,7 +1172,9 @@ both pre-do and post-do generated-spawn done handoffs live for the final
 drain. At that checkpoint, same-domain generated-do do-then-spawn post-spawn
 `await_any` variants, active-prior-`await_any` spawn-after-do variants,
 cross-domain activation, deeper nesting, and broader outstanding-child
-lifetime rules remained backlog.
+lifetime rules remained backlog; later slices shipped the same-domain and
+local-do prior-active-`await_any` analogues while keeping generated-child and
+specialized generated-do active-prior spawn-after-do variants deferred.
 
 The branch-contained same-domain generated-do-then-spawn post-spawn
 `await_any` analogue is also shipped for top-level `when` bodies and
@@ -1184,9 +1187,20 @@ preserves static generated-top parameter binding, optional generated-top
 input/output binding handoffs, and declared ownership metadata, and it must
 complete before the later generated spawn starts; the post-spawn observation
 leaves both pre-do and post-do generated-spawn done handoffs live for the
-final drain. Active-prior-`await_any` spawn-after-do variants, cross-domain
-activation, deeper nesting, and broader outstanding-child lifetime rules
-remain backlog.
+final drain.
+
+The branch-contained local-do prior-active-`await_any` spawn-after-do
+analogue is shipped for top-level `when` bodies and top-level `switch`
+branches. A nested repeat may run generated spawns, observe one done pulse
+through multi-pending `(await_any done)`, run local blocking `(do child)`,
+start one or more later generated spawns, and then use the mandatory
+same-body `(await_all done)` drain before the nested repeat check can loop.
+The local child must complete before the later generated spawn starts, and
+the final drain covers every generated spawn from both sides of the local
+`do`. Generated-child and specialized generated-do active-prior-`await_any`
+spawn-after-do variants, a second post-spawn `await_any` in the local-do
+prior-observation shape, cross-domain activation, deeper nesting, and broader
+outstanding-child lifetime rules remain backlog.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. Known-width runtime

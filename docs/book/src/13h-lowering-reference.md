@@ -1136,11 +1136,14 @@ That local do uses the parent-module start/done contract and does not consume
 the generated-spawn done set; the later `await_all` still gates the nested
 repeat check on every outstanding generated child.
 
-When no multi-pending `await_any` observation is active before the drain, that
-local do may also be followed by one or more additional generated nested
-spawns before the mandatory same-body `await_all` drain. The local child's
-fresh done handoff gates the later spawn state, and the later `await_all`
-drains both the pre-do and post-do generated-spawn done handoffs.
+That local do may also be followed by one or more additional generated nested
+spawns before the mandatory same-body `await_all` drain, either with no active
+multi-pending `await_any` before the later spawn or after the local `do`
+follows a prior multi-pending observation. The local child's fresh done
+handoff gates the later spawn state, and the later `await_all` drains both the
+pre-do and post-do generated-spawn done handoffs. In the prior-observation
+form, a second multi-pending `await_any` after the later spawn remains
+fail-closed.
 
 The top-level `when` body and top-level `switch` branch nested-repeat forms
 may also lower a plain generated-child `(do child)` in that pending-spawn
@@ -1273,16 +1276,17 @@ observation is active before the drain, those same-domain generated-do
 subsets may also be followed by one or more additional generated nested
 spawns before the mandatory same-body `await_all` drain; lowering keeps
 declared ownership metadata scoped to the generated do instance and drains
-both pre-do and post-do generated-spawn done handoffs. For local do,
-`await_any` after a later post-do spawn is shipped when no prior multi-pending
-`await_any` observation is active before that later spawn; lowering inserts
-the observation after the later spawn and still requires a final same-body
-`await_all` drain. For static-parameter, bound, and same-domain generated do,
-`await_any` after a later post-do spawn remains fail-closed. A new nested spawn after generated do
-when a multi-pending `await_any` observation is active before the drain; after
+both pre-do and post-do generated-spawn done handoffs. Local-do, plain
+generated-child, static-parameter, bound, and same-domain do-then-spawn
+subsets may run `await_any` after a later post-do spawn when no prior
+multi-pending `await_any` observation is active before that later spawn;
+lowering inserts the observation after the later spawn and still requires a
+final same-body `await_all` drain. Local do may also start the later generated
+spawn after a prior multi-pending observation, but that path advances directly
+to the same-body `await_all` drain. A new nested spawn after generated do when
+a multi-pending `await_any` observation is active before the drain, or after
 plain generated-child do when a multi-pending `await_any` observation is
-active before the drain; or after local do when a multi-pending `await_any`
-observation is active before the drain, remains fail-closed.
+active before the drain, remains fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches

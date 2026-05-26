@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-26: R14 local do after prior awaitany then spawn before drain shipped
+- Completed `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` and closed
+  the task tree.
+- Branch-contained nested repeats now accept the local-do prior-observation
+  spawn-after-do analogue: a repeat directly inside a top-level `when` body
+  or top-level `switch` branch may run generated spawns, observe one done
+  pulse through multi-pending `(await_any done)`, run local blocking
+  `(do child)`, start one or more later generated spawns after the local
+  child's fresh done pulse, and drain every generated spawn through same-body
+  `(await_all done)` before nested repeat re-entry.
+- The prior `await_any` does not clear the outstanding generated-spawn done
+  set, the local do remains in the parent scheduled module, and the final
+  `await_all` drains generated spawns from both sides of the local `do`.
+- Generated-do prior-observation spawn-after-do variants, repeated
+  post-spawn `await_any`, missing drains, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred.
+- Public ISF specs, downstream handoff, public contract, mdBook, feature
+  matrix audit, roadmap, task tree, README index, and live docs are
+  synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=82`; focused
+  book/public audits with `Files=3, Tests=377`; broader repeat/child
+  regression with `Files=4, Tests=96`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1830`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 same-domain generated do then spawn post-awaitany shipped
 - Completed `ISF-REPEAT-GENDO-DOMAIN-SPAWN-AFTER-DO-POST-AWAITANY.1` and
   closed the task tree.
@@ -17,9 +46,11 @@ This is the live continuity document for fast session recovery after crashes, re
   post-do generated child without clearing the outstanding generated-spawn
   done set, and the final `await_all` drains both pre-do and post-do
   generated children.
-- Prior active multi-pending `await_any`, missing drains, cross-domain
-  activation, deeper branch/loop nesting, and broader outstanding-child
-  lifetime semantics remain fail-closed/deferred.
+- At that checkpoint, prior active multi-pending `await_any`, missing drains,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics remained fail-closed/deferred; the
+  later `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice shipped
+  the local-do prior-observation spawn-after-do analogue.
 - Public ISF specs, downstream handoff, public contract, mdBook, feature
   matrix audit, roadmap, task tree, README index, and live docs are
   synchronized.

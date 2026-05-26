@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-26
+### R14 — Local do after prior awaitany then spawn before drain shipped
+- Completed `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` and closed
+  the task tree.
+- A repeat directly inside a top-level `when` body or top-level `switch`
+  branch may now run generated spawns, observe one done pulse through
+  multi-pending `(await_any done)`, run local blocking `(do child)`, start one
+  or more later generated spawns after the local child's fresh done pulse, and
+  drain every generated spawn through same-body `(await_all done)` before
+  nested repeat re-entry.
+- The prior `await_any` does not clear the outstanding generated-spawn done
+  set; the local do stays in the parent scheduled module; the final
+  `await_all` drains generated spawns from both sides of the local `do`.
+- Generated-do prior-observation spawn-after-do variants, repeated
+  post-spawn `await_any`, missing drains, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime semantics remain
+  fail-closed/deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, feature matrix
+  audit, task tree, README index, roadmap, and live docs are synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=82`; focused
+  book/public audits with `Files=3, Tests=377`; broader repeat/child
+  regression with `Files=4, Tests=96`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1830`; `mdbook build docs/book`; and
+  `git diff --check`.
+
 ### R14 — Same-domain generated do then spawn post-awaitany shipped
 - Completed `ISF-REPEAT-GENDO-DOMAIN-SPAWN-AFTER-DO-POST-AWAITANY.1` and
   closed the task tree.
@@ -17,9 +42,11 @@ This is the persistent technical change history for FSMGen.
   post-do generated child without clearing the outstanding generated-spawn
   done set; the final `await_all` drains both pre-do and post-do generated
   children.
-- Prior active multi-pending `await_any`, missing drains, cross-domain
-  activation, deeper branch/loop nesting, and broader outstanding-child
-  lifetime semantics remain fail-closed/deferred.
+- At that checkpoint, prior active multi-pending `await_any`, missing drains,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics remained fail-closed/deferred; the
+  later `ISF-REPEAT-LOCALDO-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice shipped
+  the local-do prior-observation spawn-after-do analogue.
 - The ISF spec, downstream handoff, public contract, mdBook, feature matrix
   audit, task tree, README index, roadmap, and live docs are synchronized.
 - Validation passed: syntax checks; `prove -Iperl
