@@ -14307,3 +14307,12 @@ Exit criteria:
   added the switch-branch `assert_lower_rejected` regression; the when-body
   counterpart already lived in `t/1215`. Test-only locking of
   `LoweringIR.pm:6551` for the `'generated do with static params'` kind.
+- `R14`: defensive missing-drain regression coverage now also spans the
+  local-do BEFORE-POST-DO-AWAITANY ("local-do then post-do multi-pending
+  `await_any` without final drain") shape on both branch-contained subsets.
+  `ISF-REPEAT-LOCALDO-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`
+  added when-body and switch-branch `assert_lower_rejected` regressions
+  matching the existing validator confess at `LoweringIR.pm:6551` for the
+  local-do label. Plain/param/bound/domain analogues remain as separate
+  independently reviewable slices (only bound switch-branch coverage
+  exists today).

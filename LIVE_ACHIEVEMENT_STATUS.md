@@ -15620,3 +15620,19 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `git diff --check`.
 - Next bounded slice: pick the next R14 ISF feature lane or audit a
   different coverage matrix.
+
+## 2026-05-27: Local-do before-post-do await_any missing-drain coverage shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-REPEAT-LOCALDO-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-LOCALDO-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  added when-body and switch-branch `assert_lower_rejected` regressions for
+  the local `(do local_worker)` then post-do multi-pending `(await_any done)`
+  without final `(await_all done)` shape, matching the existing validator
+  confess at `LoweringIR.pm:6551` for the local-do label.
+- Public behavior changed: no; test-only.
+- Focused validation passed:
+  `prove -Iperl t/1215-isf-spawn-parameter-binding.t` (Files=1, Tests=100);
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book`;
+  `git diff --check`.
+- Next bounded slice: plain generated-child BEFORE-POST-DO-AWAITANY
+  missing-drain coverage.

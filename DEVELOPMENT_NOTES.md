@@ -32623,3 +32623,17 @@ It is an exact-delay pulse request:
 - With this slice the SPAWN-AFTER-DO without-drain matrix is complete
   across the five generated-do families on both branch-contained subsets.
 - This slice is test-only.
+
+## 2026-05-27: local-do before-post-do await_any missing-drain coverage
+- Continued the active R14 lane by adding when-body and switch-branch
+  defensive regression coverage for the local `(do local_worker)` after
+  two pending generated spawns and before a post-do multi-pending
+  `(await_any done)` observation without final same-body `(await_all done)`
+  drain shape.
+- The slice
+  [`ISF-REPEAT-LOCALDO-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-LOCALDO-BEFORE-POST-DO-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  adds two `assert_lower_rejected` regressions in
+  [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t)
+  matching the existing validator confess at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the local-do label.
+- This slice is test-only.

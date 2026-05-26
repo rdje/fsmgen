@@ -30024,3 +30024,9 @@ This is the persistent technical change history for FSMGen.
 - Test-only locking of the missing-drain fail-closed contract. No parser,
   scheduler, backend, generated `.fsm`, HDL, public API, manifests, or
   runtime behavior change.
+
+### local-do before-post-do await_any missing-drain coverage
+- Added one when-body and one switch-branch `assert_lower_rejected` regression in [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t) for the local `(do local_worker)` after two pending generated spawns and before a post-do multi-pending `(await_any done)` observation without final same-body `(await_all done)` drain shape. Both regressions match the existing validator confess at [perl/FSM/Scheduler/ISF/LoweringIR.pm:6551](perl/FSM/Scheduler/ISF/LoweringIR.pm) for the local-do label.
+- Test-only locking of the missing-drain fail-closed contract. No parser,
+  scheduler, backend, generated `.fsm`, HDL, public API, manifests, or
+  runtime behavior change.
