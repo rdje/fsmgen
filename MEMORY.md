@@ -37022,3 +37022,23 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   complete across the five generated-do families (local-do, plain,
   static-parameter, bound, same-domain) on both branch-contained subsets.
 - Test-only. Active task tree: `none`.
+
+## 2026-05-27: R14 active task tree selected — data-op activation-override width gate
+- Created and registered active task tree
+  [`ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE`](docs/tasks/ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.md)
+  picked from the activation-override matrix.
+- Probed current behavior: a parent `(spawn worker as w0 (params (W 16)))`
+  against `(transaction worker (params (W 8)) (shift_left reg_out bit_in
+  (width W)))` is silently accepted today, but the same shape for
+  wait/repeat/latency/watchdog/contract is fail-closed via the existing gate
+  at `perl/FSM/Scheduler/ISF/LoweringIR.pm`. The gate is currently missing
+  for data-op widths.
+- Goal: widen the gate to `(shift_left)`, `(shift_right)`, `(assemble)`,
+  and `(extract)` width parameters. Same-value overrides remain accepted;
+  mismatches fail closed with a targeted diagnostic mirroring the timing
+  gate wording.
+- Two-commit pattern: `.1: select` (creates the task tree, registers it,
+  no code change), then `.2: ship` (validator change + focused regression
+  in t/1370 + doc surfaces).
+- Active task tree: `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE`.
+- Current frontier: `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2`.

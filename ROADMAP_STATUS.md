@@ -14337,3 +14337,14 @@ Exit criteria:
   added when-body and switch-branch `assert_lower_rejected` regressions
   for the same-domain shape. Test-only locking of `LoweringIR.pm:6551`
   for the `'generated do with static params and same-domain metadata'` kind.
+- `R14`: active task tree
+  `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE` is now selected. Goal: widen
+  the activation-site parameter override-specialized default-preserving
+  gate at `perl/FSM/Scheduler/ISF/LoweringIR.pm` from the timing-parameter
+  contexts (wait, repeat, latency, watchdog, contract) to data-operation
+  width contexts (shift_left, shift_right, assemble, extract). Current
+  behavior silently accepts mismatched activation overrides for the
+  data-op width contexts, which is the same silent-no-op hazard the
+  timing gate already prevents. `.1: select` lands the task tree;
+  `.2: ship` will land the validator gate plus regression test
+  `t/1370-isf-data-op-activation-override-width-gate.t`.

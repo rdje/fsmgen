@@ -32680,3 +32680,22 @@ It is an exact-delay pulse request:
   complete across the five generated-do families (local-do, plain,
   static-parameter, bound, same-domain) on both branch-contained subsets.
 - Test-only.
+
+## 2026-05-27: selected R14 data-op activation-override width gate
+- Picked the next R14 active task tree from the activation-override matrix
+  gap: data-op widths (`shift_left`, `shift_right`, `assemble`, `extract`)
+  backed by generated-child transaction parameters do not yet fail closed
+  when a parent activation passes a mismatched override, even though
+  `wait`, `repeat`, `latency`, `(watchdog)`, and `(contract ... within)`
+  do. Probed current behavior: `(spawn worker as w0 (params (W 16)))`
+  against `(transaction worker (params (W 8)) (shift_left reg_out bit_in
+  (width W)))` is silently accepted today.
+- The slice
+  [`ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE`](docs/tasks/ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.md)
+  follows the two-commit pattern used by recent feature slices: `.1: select`
+  registers the task tree, `.2: ship` lands the validator gate plus a
+  focused regression test `t/1370-isf-data-op-activation-override-width-gate.t`
+  and the doc-surface updates where data-op width descriptions mention
+  transaction-param backing.
+- Same-value overrides remain accepted; only mismatches fail closed.
+- This selection commit changes no code.

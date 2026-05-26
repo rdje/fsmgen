@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE` | `pending` | `R14` | `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.2` | [docs/tasks/ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.md](docs/tasks/ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.md) |
 
 ## Proposed Task Trees
 

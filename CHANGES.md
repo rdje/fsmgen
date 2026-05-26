@@ -30046,3 +30046,6 @@ This is the persistent technical change history for FSMGen.
   complete across the five generated-do families (local-do, plain,
   static-parameter, bound, same-domain) on both branch-contained subsets.
   Test-only.
+
+### active R14 task tree selected: data-op activation-override width gate
+- Created and registered active task tree [docs/tasks/ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.md](docs/tasks/ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE.md) to widen the existing activation-site parameter override-specialized default-preserving gate at [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm) from the timing-parameter contexts to data-operation width contexts (`shift_left`, `shift_right`, `assemble`, `extract`). Selection commit only; no code, parser, scheduler, lowering, schedule report, backend, public API, or runtime change.
