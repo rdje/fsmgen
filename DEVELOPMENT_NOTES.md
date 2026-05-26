@@ -32569,3 +32569,22 @@ It is an exact-delay pulse request:
   backend, public API, or runtime change. The bound SECOND-AWAITANY
   missing-drain coverage slice remains as the next independently reviewable
   follow-up.
+
+## 2026-05-26: bound generated-do second-awaitany missing-drain coverage — matrix complete
+- Continued the active R14 lane by adding the when-body and switch-branch
+  defensive regression coverage for the bound generated
+  `(do child (params ...) (bind ...))` prior-`await_any` then spawn then
+  second post-spawn `await_any` without final same-body `(await_all done)`
+  shape.
+- The slice
+  [`ISF-REPEAT-GENDO-BOUND-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1`](docs/tasks/ISF-REPEAT-GENDO-BOUND-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.md)
+  adds two `assert_lower_rejected` regressions in
+  [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t)
+  matching the existing validator confess at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm:6551` for the
+  `'generated do with static params and bindings'` kind.
+- With this slice, the SECOND-AWAITANY missing-drain regression matrix is
+  complete across the five generated-do families: local-do, plain
+  generated-child, static-parameter, bound, and same-domain.
+- This slice is test-only: no parser, validator, lowering, schedule report,
+  backend, public API, or runtime change.

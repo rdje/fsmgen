@@ -14277,3 +14277,14 @@ Exit criteria:
   `'generated do with static params'` kind. The bound missing-drain
   SECOND-AWAITANY slice remains as the next independently reviewable
   follow-up.
+- `R14`: defensive missing-drain regression coverage now spans all five
+  SECOND-AWAITANY families across both branch-contained subsets.
+  `ISF-REPEAT-GENDO-BOUND-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1` added
+  when-body and switch-branch `assert_lower_rejected` regressions for the
+  bound generated `(do child (params ...) (bind ...))` prior-`await_any` then
+  spawn then second post-spawn `await_any` without final same-body
+  `(await_all done)` shape, completing the SECOND-AWAITANY missing-drain
+  matrix across local-do, plain generated-child, static-parameter, bound,
+  and same-domain generated-do families. Test-only locking of
+  `LoweringIR.pm:6551` for the `'generated do with static params and
+  bindings'` kind.

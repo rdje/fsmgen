@@ -30002,3 +30002,13 @@ This is the persistent technical change history for FSMGen.
   the `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` slice
   shipped. No parser, scheduler, backend, generated `.fsm`, HDL, public API,
   manifests, or runtime behavior change.
+
+### bound generated-do second-awaitany missing-drain coverage
+- Added one when-body and one switch-branch `assert_lower_rejected` regression in [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t) for the bound generated `(do child (params ...) (bind ...))` prior-`await_any` then spawn then second post-spawn `await_any` without final same-body `(await_all done)` shape. Both regressions match the existing validator confess at [perl/FSM/Scheduler/ISF/LoweringIR.pm:6551](perl/FSM/Scheduler/ISF/LoweringIR.pm) for the `'generated do with static params and bindings'` kind.
+- With this slice the SECOND-AWAITANY missing-drain matrix is complete
+  across the local-do, plain generated-child, static-parameter, bound, and
+  same-domain generated-do families. This is test-only locking of the
+  missing-drain fail-closed contract that the
+  `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-SECOND-AWAITANY.1` slice
+  shipped. No parser, scheduler, backend, generated `.fsm`, HDL, public API,
+  manifests, or runtime behavior change.
