@@ -1246,12 +1246,17 @@ top-level `switch` branch same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` share that post-do
 observation and later-drain contract while lowering also retains declared
 ownership metadata in generated-composition, domain-partition, and
-schedule-report clock-domain summaries. A new nested spawn after same-domain
-generated do; after generated do when a multi-pending `await_any` observation
-is active before the drain; after plain generated-child do when a
-multi-pending `await_any` observation is active before the drain; or after
-local do when a multi-pending `await_any` observation is active before the
-drain, remains fail-closed.
+schedule-report clock-domain summaries. When no multi-pending `await_any`
+observation is active before the drain, those same-domain generated-do
+subsets may also be followed by one or more additional generated nested
+spawns before the mandatory same-body `await_all` drain; lowering keeps
+declared ownership metadata scoped to the generated do instance and drains
+both pre-do and post-do generated-spawn done handoffs. A new nested spawn
+after generated do when a multi-pending `await_any` observation is active
+before the drain; after plain generated-child do when a multi-pending
+`await_any` observation is active before the drain; or after local do when a
+multi-pending `await_any` observation is active before the drain, remains
+fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches

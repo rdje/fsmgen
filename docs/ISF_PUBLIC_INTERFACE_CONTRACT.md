@@ -1508,9 +1508,14 @@ top-level `switch` branch nested subsets additionally support static-
 parameter same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` after a prior
 multi-pending `await_any`, with declared ownership metadata and the same later
-same-body `await_all` drain requirement. `await_any` after a later post-do
-spawn and new nested `spawn` after same-domain generated `do` before the
-drain remain fail-closed.
+same-body `await_all` drain requirement. When no multi-pending `await_any`
+observation is active before the drain, those same-domain generated-do
+subsets may also start one or more later generated nested spawns before the
+mandatory same-body `await_all`; the generated do instance's fresh done
+handoff gates the later spawn state and declared ownership metadata remains
+scoped to the generated do instance. `await_any` after a later post-do spawn
+and new nested `spawn` after generated `do` while a multi-pending `await_any`
+observation is active before the drain remain fail-closed.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus
@@ -1646,9 +1651,13 @@ instance; generated-composition/domain partition metadata and schedule JSON
 CDC. In the top-level `when` body and top-level `switch` branch subsets, that
 same-domain generated do may also run after a prior multi-pending `await_any`
 observation, still requiring the later same-body `await_all` drain before
-nested repeat re-entry. Later `await_any` after a post-do spawn and new spawn
-after same-domain generated do before the drain remain outside the public
-shipped subset.
+nested repeat re-entry. When no multi-pending `await_any` observation is
+active before the drain, that same-domain generated do may also be followed by
+one or more later generated nested spawns before the mandatory same-body
+`await_all`; declared ownership metadata remains scoped to the generated do
+instance. Later `await_any` after a post-do spawn and new spawn after generated
+do while a multi-pending `await_any` observation is active before the drain
+remain outside the public shipped subset.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent

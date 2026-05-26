@@ -6268,7 +6268,8 @@ sub _validate_repeat_body_spawn_subset {
                 && $pending_generated_do_before_drain
                 && (($pending_generated_do_kind_before_drain // '') eq 'generated-child do'
                     || ($pending_generated_do_kind_before_drain // '') eq 'generated do with static params'
-                    || ($pending_generated_do_kind_before_drain // '') eq 'generated do with static params and bindings')
+                    || ($pending_generated_do_kind_before_drain // '') eq 'generated do with static params and bindings'
+                    || ($pending_generated_do_kind_before_drain // '') eq 'generated do with static params and same-domain metadata')
                 && @pending_spawns;
             confess "Transaction '$tn': $pending_local_do_label nested repeat spawn cannot follow local do while generated spawns are pending; drain with same-body '(await_all done)' before spawning again\n"
                 if defined $pending_local_do_label

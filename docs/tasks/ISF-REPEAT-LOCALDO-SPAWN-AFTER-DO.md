@@ -19,8 +19,9 @@ more additional generated nested spawns before the mandatory same-body
 
 ## Non-Goals
 
-- Do not allow a new spawn after generated-child, static-parameter, bound, or
-  same-domain generated `do` before the drain.
+- Keep new spawn after generated-child, static-parameter, bound, or
+  same-domain generated `do` before the drain deferred to their own
+  generated-do follow-up leaves.
 - Do not allow a new spawn after any `do` once a multi-pending `(await_any
   done)` observation is active.
 - Do not allow missing drains, single-pending post-do `await_any` widening,

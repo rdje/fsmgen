@@ -21,7 +21,8 @@ spawns before the mandatory same-body `(await_all done)` drain.
 
 - Keep later spawn after bound generated `do` deferred to
   `ISF-REPEAT-GENDO-BOUND-SPAWN-AFTER-DO`, and keep later spawn after
-  same-domain generated `do` before the drain fail-closed.
+  same-domain generated `do` deferred to
+  `ISF-REPEAT-GENDO-DOMAIN-SPAWN-AFTER-DO`.
 - Do not allow later spawn after local or generated `do` when a multi-pending
   `(await_any done)` observation is active before the drain.
 - Do not allow `(await_any done)` after the later generated spawn.

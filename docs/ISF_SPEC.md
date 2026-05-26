@@ -2727,11 +2727,17 @@ Current lowering:
   `(do child (params ...) [(bind ...)] (domain NAME))` support the same
   post-do multi-pending observation and later-drain contract while also
   retaining declared ownership metadata in generated-composition,
-  domain-partition, and schedule-report clock-domain summaries. New nested
-  `spawn` after same-domain generated `do`; after generated `do` when a
-  multi-pending `await_any` observation is active before the drain; after
-  plain generated-child `do` when a multi-pending `await_any` observation is
-  active before the drain; or after local `do` when a multi-pending
+  domain-partition, and schedule-report clock-domain summaries. When no
+  multi-pending `await_any` observation is active before the drain, those
+  same-domain generated-do subsets may also start one or more later generated
+  nested spawns before the mandatory same-body `await_all`; the generated do
+  instance's fresh done handoff gates the later spawn state, declared
+  ownership metadata remains scoped to the generated do instance, and the
+  final drain covers both pre-do and post-do generated spawns. New nested
+  `spawn` after generated `do` when a multi-pending `await_any` observation is
+  active before the drain; after plain generated-child `do` when a
+  multi-pending `await_any` observation is active before the drain; or after
+  local `do` when a multi-pending
   `await_any` observation is active before the drain, deeper branch/loop
   nesting, and cross-domain activation remain fail-closed.
   Top-level

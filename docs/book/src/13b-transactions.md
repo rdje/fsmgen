@@ -754,12 +754,17 @@ The top-level `when` body and top-level `switch` branch nested repeat
 same-domain generated `(do child (params ...) [(bind ...)] (domain NAME))`
 subsets support the same post-do observation and later-drain contract while
 retaining declared ownership metadata in generated-composition,
-domain-partition, and schedule-report clock-domain summaries. New nested
-`spawn` after same-domain generated `do`; after generated `do` when a
-multi-pending `await_any` observation is active before the drain; after plain
-generated-child `do` when a multi-pending `await_any` observation is active
-before the drain; or after local `do` when a multi-pending `await_any`
-observation is active before the drain, remains fail-closed.
+domain-partition, and schedule-report clock-domain summaries. When no
+multi-pending `(await_any done)` observation is active before the drain, those
+same-domain generated-do subsets may also start one or more later generated
+nested spawns before the mandatory same-body `(await_all done)` drain; the
+generated do instance's fresh done handoff gates the later spawn state and
+declared ownership metadata remains scoped to the generated do instance. New
+nested `spawn` after generated `do` when a multi-pending `await_any`
+observation is active before the drain; after plain generated-child `do` when
+a multi-pending `await_any` observation is active before the drain; or after
+local `do` when a multi-pending `await_any` observation is active before the
+drain, remains fail-closed.
 
 The top-level `switch` branch nested repeat plain generated-child `(do
 child)` subset supports the same post-do multi-pending observation and

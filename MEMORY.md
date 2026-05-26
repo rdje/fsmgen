@@ -1,5 +1,35 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-26: R14 same-domain generated do then spawn before drain shipped
+- Completed `ISF-REPEAT-GENDO-DOMAIN-SPAWN-AFTER-DO.1` and closed the task
+  tree.
+- Branch-contained nested repeats now accept the same-domain generated-do-
+  then-later-spawn analogue: a repeat directly inside a top-level `when` body
+  or top-level `switch` branch may run an initial generated spawn, generated
+  blocking `(do child (params ...) [(bind ...)] (domain NAME))`, one or more
+  later generated spawns, and then mandatory same-body `(await_all done)`
+  before nested repeat re-entry.
+- The generated do instance must complete before the later generated spawn
+  starts. The generated do preserves static generated-top parameter
+  overrides, optional input/output binding handoffs, and declared same-domain
+  ownership metadata; the later spawn joins the outstanding generated-spawn
+  set; and the final `await_all` drains both pre-do and post-do generated
+  children.
+- Post/active multi-pending `await_any`, cross-domain activation, missing
+  drains, deeper branch/loop nesting, and broader outstanding-child lifetime
+  semantics remain fail-closed/deferred.
+- Public ISF specs, downstream handoff, public contract, mdBook, feature
+  matrix audit, roadmap, task tree, README index, and live docs are
+  synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=70`; focused
+  book/public audits with `Files=3, Tests=354`; broader repeat/child
+  regression with `Files=4, Tests=84`; `./bin/ci-regression isf --no-book`
+  with `Files=275, Tests=1795`; `mdbook build docs/book`; and
+  `git diff --check`.
+- Active task tree: `none`.
+- Current frontier: `none`.
+
 ## 2026-05-26: R14 bound generated do then spawn before drain shipped
 - Completed `ISF-REPEAT-GENDO-BOUND-SPAWN-AFTER-DO.1` and closed the task
   tree.
@@ -14,10 +44,10 @@ This is the live continuity document for fast session recovery after crashes, re
   override and input/output binding handoffs, the later spawn joins the
   outstanding generated-spawn set, and the final `await_all` drains both
   pre-do and post-do generated children.
-- Same-domain generated-do spawn-after-do, generated or local spawn-after-do
-  with post-do or active multi-pending `await_any`, missing drains,
-  cross-domain activation, deeper branch/loop nesting, and broader
-  outstanding-child lifetime semantics remain fail-closed/deferred.
+- At that checkpoint, same-domain generated-do spawn-after-do, generated or
+  local spawn-after-do with post-do or active multi-pending `await_any`,
+  missing drains, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child lifetime semantics remained fail-closed/deferred.
 - Public ISF specs, downstream handoff, public contract, mdBook, feature
   matrix audit, roadmap, task tree, README index, and live docs are
   synchronized.

@@ -1448,11 +1448,19 @@ Rules:
   retaining declared ownership metadata in generated-composition,
   domain-partition, and schedule-report clock-domain summaries.
 
-  New nested `spawn` after same-domain generated `do`; after generated `do`
-  when a multi-pending `await_any` observation is active before the drain;
-  after plain generated-child `do` when a multi-pending `await_any`
-  observation is active before the drain; or after local `do` when a
-  multi-pending `await_any` observation is active before the drain, deeper
+  When no multi-pending `(await_any done)` observation is active before the
+  drain, those same-domain generated-do subsets may also be followed by one
+  or more later generated nested spawns before the mandatory same-body
+  `(await_all done)` drain. The generated do instance's fresh done handoff
+  gates the later spawn state, declared ownership metadata remains scoped to
+  the generated do instance, and the final drain covers both pre-do and
+  post-do generated spawns before nested repeat re-entry.
+
+  New nested `spawn` after generated `do` when a multi-pending `await_any`
+  observation is active before the drain; after plain generated-child `do`
+  when a multi-pending `await_any` observation is active before the drain; or
+  after local `do` when a multi-pending `await_any` observation is active
+  before the drain, deeper
   branch/loop nesting, and cross-domain activation remain fail-closed.
 
   Cross-domain repeat-body `do`, broader outstanding-child semantics,
