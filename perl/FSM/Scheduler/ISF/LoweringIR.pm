@@ -6268,7 +6268,8 @@ sub _validate_repeat_body_spawn_subset {
                 && $pending_generated_do_before_drain
                 && (($pending_generated_do_kind_before_drain // '') eq 'generated-child do'
                     || ($pending_generated_do_kind_before_drain // '') eq 'generated do with static params'
-                    || ($pending_generated_do_kind_before_drain // '') eq 'generated do with static params and bindings')
+                    || ($pending_generated_do_kind_before_drain // '') eq 'generated do with static params and bindings'
+                    || ($pending_generated_do_kind_before_drain // '') eq 'generated do with static params and same-domain metadata')
                 && @pending_spawns;
             confess "Transaction '$tn': repeat-body spawn cannot follow multi-pending await_any before same-body await_all drains outstanding children\n"
                 if $awaiting_multi_pending_drain

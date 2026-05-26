@@ -1209,14 +1209,19 @@ scoped to the do instance, and the observation leaves both pre-do and post-do
 generated-spawn
 done handoffs live for the final drain.
 
-When no multi-pending `await_any` observation is active before the later
-spawn, the same top-level branch-contained nested-repeat forms may also run a
-post-spawn multi-pending `await_any` observation after a same-domain generated
-`(do child (params ...) [(bind ...)] (domain NAME))` and a later generated
-spawn. The generated do instance's fresh done handoff gates the later spawn
-state, declared ownership metadata remains scoped to the generated do
-instance, and the final same-body `await_all` drains both pre-do and post-do
-generated-spawn done handoffs.
+The same top-level branch-contained nested-repeat forms may also start one or
+more later generated spawns after a same-domain generated `(do child (params
+...) [(bind ...)] (domain NAME))`, either when no multi-pending `await_any`
+observation is active before the later spawn or after the generated do follows
+a prior multi-pending observation. The generated do instance's fresh done
+handoff gates the later spawn state, declared ownership metadata remains
+scoped to the generated do instance, and the final same-body `await_all`
+drains both pre-do and post-do generated-spawn done handoffs. In the
+prior-observation form, a second multi-pending `await_any` after the later
+spawn remains fail-closed. When no multi-pending `await_any` observation is
+active before the later spawn, that same same-domain do-then-spawn shape may
+also run a post-spawn multi-pending `await_any` observation before the final
+same-body `await_all` drain.
 
 When no multi-pending `await_any` observation is active before the drain, that
 bound generated do may also be followed by one or more additional generated
@@ -1286,21 +1291,25 @@ top-level `switch` branch same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` share that post-do
 observation and later-drain contract while lowering also retains declared
 ownership metadata in generated-composition, domain-partition, and
-schedule-report clock-domain summaries. When no multi-pending `await_any`
-observation is active before the drain, those same-domain generated-do
+schedule-report clock-domain summaries. Those same-domain generated-do
 subsets may also be followed by one or more additional generated nested
-spawns before the mandatory same-body `await_all` drain; lowering keeps
-declared ownership metadata scoped to the generated do instance and drains
-both pre-do and post-do generated-spawn done handoffs. Local-do, plain
+spawns before the mandatory same-body `await_all` drain, either when no
+multi-pending `await_any` observation is active before the later spawn or
+after the generated do follows a prior multi-pending observation; lowering
+keeps declared ownership metadata scoped to the generated do instance and
+drains both pre-do and post-do generated-spawn done handoffs. In the
+prior-observation form, a second multi-pending `await_any` after the later
+spawn remains fail-closed. Local-do, plain
 generated-child, static-parameter, bound, and same-domain do-then-spawn
 subsets may run `await_any` after a later post-do spawn when no prior
 multi-pending `await_any` observation is active before that later spawn;
 lowering inserts the observation after the later spawn and still requires a
 final same-body `await_all` drain. Local do and plain generated-child do may
 also start the later generated spawn after a prior multi-pending observation,
-but those paths advance directly to the same-body `await_all` drain. A new
-nested spawn after specialized generated do when a multi-pending `await_any`
-observation is active before the drain remains fail-closed.
+as can static-parameter, bound, and same-domain generated do; those
+prior-observation paths advance directly to the same-body `await_all` drain
+after the later spawn. A second post-spawn `await_any` in the
+prior-observation forms remains fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches

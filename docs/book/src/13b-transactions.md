@@ -784,20 +784,22 @@ The top-level `when` body and top-level `switch` branch nested repeat
 same-domain generated `(do child (params ...) [(bind ...)] (domain NAME))`
 subsets support the same post-do observation and later-drain contract while
 retaining declared ownership metadata in generated-composition,
-domain-partition, and schedule-report clock-domain summaries. When no
-multi-pending `(await_any done)` observation is active before the drain, those
+domain-partition, and schedule-report clock-domain summaries. Those
 same-domain generated-do subsets may also start one or more later generated
-nested spawns before the mandatory same-body `(await_all done)` drain; the
-generated do instance's fresh done handoff gates the later spawn state and
-declared ownership metadata remains scoped to the generated do instance. That
-same same-domain generated-do do-then-spawn shape may also run a post-spawn
+nested spawns before the mandatory same-body `(await_all done)` drain, either
+when no multi-pending `(await_any done)` observation is active before the
+later spawn or after the generated do follows a prior multi-pending
+observation; the generated do instance's fresh done handoff gates the later
+spawn state and declared ownership metadata remains scoped to the generated
+do instance. In the prior-observation form, a second multi-pending
+`(await_any done)` after the later spawn remains fail-closed. That same
+same-domain generated-do do-then-spawn shape may also run a post-spawn
 multi-pending `(await_any done)` observation before the final same-body
 `(await_all done)` drain when no prior multi-pending `(await_any done)`
 observation is active before the later spawn; the post-spawn observation
 leaves both pre-do and post-do generated-spawn done handoffs live while
-retaining declared ownership metadata for the generated do instance. New
-nested `spawn` after bound or same-domain generated `do` when a multi-pending
-`await_any` observation is active before the drain remains fail-closed.
+retaining declared ownership metadata for the generated do instance. A second
+post-spawn `await_any` in the prior-observation form remains fail-closed.
 
 The top-level `switch` branch nested repeat plain generated-child `(do
 child)` subset supports the same post-do multi-pending observation and

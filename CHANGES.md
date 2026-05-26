@@ -1,6 +1,35 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-26
+### R14 — Same-domain generated do after prior awaitany then spawn before drain shipped
+- Completed `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` and
+  closed the task tree.
+- A repeat directly inside a top-level `when` body or top-level `switch`
+  branch may now run generated spawns, observe one done pulse through
+  multi-pending `(await_any done)`, run same-domain generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))`, start one or more
+  later generated spawns after the generated do instance's fresh done
+  handoff, and drain every generated spawn through same-body `(await_all
+  done)` before nested repeat re-entry.
+- The prior `await_any` does not clear the outstanding generated-spawn done
+  set; the generated do preserves static generated-top parameter binding,
+  optional generated-top input/output binding handoffs, and declared
+  same-domain ownership metadata; the final `await_all` drains generated
+  spawns from both sides of the generated `do`.
+- A second post-spawn `await_any`, missing drains, cross-domain activation,
+  deeper branch/loop nesting, CDC behavior, and broader outstanding-child
+  lifetime semantics remain fail-closed/deferred.
+- The ISF spec, downstream handoff, public contract, mdBook, feature matrix
+  audit, loop-body doc-truth audit, task tree, README index, roadmap, and live
+  docs are synchronized.
+- Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=90`; focused
+  doc audits with `Files=2, Tests=579`; focused book/public audits with
+  `Files=4, Tests=583`; live-doc audits with `Files=4, Tests=608`;
+  broader repeat/child regression with `Files=4, Tests=104`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1888`;
+  `mdbook build docs/book`; and `git diff --check`.
+
 ### R14 — Bound generated do after prior awaitany then spawn before drain shipped
 - Completed `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` and
   closed the task tree.

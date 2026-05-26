@@ -1,9 +1,31 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14`.
+- Active lane: `none`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+- Current R14 same-domain generated-do prior-await_any then spawn before
+  drain:
+  `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` shipped the
+  same-domain generated-do prior-observation spawn-after-do analogue and
+  closed the task tree. A repeat directly inside a top-level `when` body or
+  top-level `switch` branch may now run generated spawns, observe one done
+  pulse through multi-pending `(await_any done)`, run same-domain generated
+  blocking `(do child (params ...) [(bind ...)] (domain NAME))`, start one or
+  more later generated spawns after the generated do instance's fresh done
+  handoff, and drain every generated spawn through same-body `(await_all
+  done)` before nested repeat re-entry. The generated do preserves static
+  generated-top parameter binding, optional generated-top input/output
+  binding handoffs, and declared same-domain ownership metadata. Second
+  post-spawn `await_any`, missing-drain, cross-domain, deeper-nesting, CDC,
+  and broader outstanding-child lifetime behavior remain fail-closed/deferred.
+  Validation passed: syntax checks; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=90`; focused
+  doc audits with `Files=2, Tests=579`; focused book/public audits with
+  `Files=4, Tests=583`; live-doc audits with `Files=4, Tests=608`;
+  broader repeat/child regression with `Files=4, Tests=104`;
+  `./bin/ci-regression isf --no-book` with `Files=275, Tests=1888`;
+  `mdbook build docs/book`; and `git diff --check`.
 - Current R14 bound generated-do prior-await_any then spawn before drain:
   `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` shipped the bound
   generated-do prior-observation spawn-after-do analogue and closed the task
@@ -14,9 +36,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   spawns after the generated do instance's fresh done handoff and
   generated-top input/output binding handoffs, and drain every generated
   spawn through same-body `(await_all done)` before nested repeat re-entry.
-  Same-domain generated-do, second post-spawn `await_any`, missing-drain,
-  cross-domain, deeper-nesting, and broader outstanding-child lifetime behavior remain
-  fail-closed/deferred. Validation passed: syntax checks; `prove -Iperl
+  At that checkpoint, same-domain generated-do, second post-spawn
+  `await_any`, missing-drain, cross-domain, deeper-nesting, and broader
+  outstanding-child lifetime behavior remained fail-closed/deferred; the
+  later `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice
+  shipped the same-domain generated-do analogue. Validation passed: syntax checks; `prove -Iperl
   t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=88`; focused
   doc audits with `Files=2, Tests=569`; focused book/public audits with
   `Files=4, Tests=573`; live-doc audits with `Files=4, Tests=598`;
@@ -39,8 +63,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   missing-drain, cross-domain, deeper-nesting, and broader outstanding-child
   lifetime behavior remained fail-closed/deferred; the later
   `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice shipped the
-  bound generated-do analogue while same-domain generated-do remains
-  deferred. Validation passed: syntax checks; `prove -Iperl
+  bound generated-do analogue and the later
+  `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice shipped
+  the same-domain generated-do analogue. Validation passed: syntax checks; `prove -Iperl
   t/1215-isf-spawn-parameter-binding.t` with `Files=1, Tests=86`; focused
   book/public audits with `Files=4, Tests=563`; live-doc audits with
   `Files=4, Tests=588`; broader repeat/child regression with `Files=4,
@@ -60,7 +85,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-REPEAT-GENDO-PARAM-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice shipped the
   static-parameter generated-do analogue and the later
   `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice shipped the
-  bound analogue while same-domain remains deferred. Validation passed:
+  bound analogue and the later
+  `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` slice shipped
+  the same-domain analogue. Validation passed:
   `perl -Iperl -c
   t/1307-isf-loop-body-doc-truth-audit.t`; `prove -Iperl
   t/1307-isf-loop-body-doc-truth-audit.t

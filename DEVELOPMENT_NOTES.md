@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-26: Same-domain generated do after prior awaitany can precede a later generated spawn
+- `ISF-REPEAT-GENDO-DOMAIN-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` extends the bound
+  prior-observation do-then-spawn proof to declared same-domain ownership
+  metadata.
+- The accepted path is limited to same-domain generated
+  `(do child (params ...) [(bind ...)] (domain NAME))` inside a repeat
+  directly in a top-level `when` body or top-level `switch` branch, after a
+  multi-pending `await_any` observation and before the mandatory same-body
+  `await_all` drain.
+- The prior `await_any` remains observation-only. It may advance on any
+  generated child done handoff, but it leaves the outstanding generated-spawn
+  set live across the same-domain generated do instance and the later
+  generated spawn.
+- The generated do site owns the deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` instance, preserves the static
+  generated-top parameter override, optional generated-top input/output
+  binding handoffs, and declared same-domain ownership metadata for that
+  generated do instance, and must observe that instance's fresh done handoff
+  before the later generated spawn starts.
+- The same-domain metadata remains ownership/report metadata only. This slice
+  does not introduce CDC semantics or cross-domain activation, and a second
+  multi-pending `await_any` after the later spawn remains fail-closed.
+
 ## 2026-05-26: Bound generated do after prior awaitany can precede a later generated spawn
 - `ISF-REPEAT-GENDO-BOUND-PRIOR-AWAITANY-SPAWN-AFTER-DO.1` extends the
   static-parameter prior-observation do-then-spawn proof to generated-top

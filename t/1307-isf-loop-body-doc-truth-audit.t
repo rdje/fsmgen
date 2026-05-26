@@ -206,6 +206,10 @@ for my $path (@loop_docs) {
         documents_branch_await_any_before_do($content, 'when', qr/(?:same[-\s]+domain|domain name)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated static-parameter same-domain do after multi-pending await_any subset",
     );
+    ok(
+        documents_branch_prior_await_any_do_then_spawn($content, 'when', qr/(?:same[-\s]+domain|domain name)/, qr/generated/, qr/\bdo\b/),
+        "$path documents the shipped top-level when-body nested repeat generated static-parameter same-domain do after multi-pending await_any then generated spawn subset",
+    );
     like(
         $content,
         qr/switch(?:`|\s|-|branch)[\s\S]{0,1600}(?:same[-\s]+domain|domain NAME)[\s\S]{0,1200}generated(?:\s+nested)?\s+spawns?[\s\S]{0,800}pending[\s\S]{0,800}await_all[\s\S]{0,300}drain/i,
@@ -214,6 +218,10 @@ for my $path (@loop_docs) {
     ok(
         documents_branch_await_any_before_do($content, 'switch', qr/(?:same[-\s]+domain|domain name)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter same-domain do after multi-pending await_any subset",
+    );
+    ok(
+        documents_branch_prior_await_any_do_then_spawn($content, 'switch', qr/(?:same[-\s]+domain|domain name)/, qr/generated/, qr/\bdo\b/),
+        "$path documents the shipped top-level switch-branch nested repeat generated static-parameter same-domain do after multi-pending await_any then generated spawn subset",
     );
     like(
         $content,
@@ -300,7 +308,7 @@ for my $path (@loop_docs) {
     );
     ok(
         !documents_stale_prior_await_any_spawn_after_do_deferral($content),
-        "$path does not re-defer shipped local/plain generated-child prior-awaitany spawn-after-do subsets",
+        "$path does not re-defer shipped prior-awaitany spawn-after-do subsets",
     );
     like(
         $content,
@@ -420,6 +428,7 @@ sub documents_branch_prior_await_any_do_then_spawn {
             'switch-contained',
             'branch-contained local-do',
             'branch-contained generated-child',
+            'branch-contained same-domain',
         )
         : (
             'top-level when body',
@@ -427,6 +436,7 @@ sub documents_branch_prior_await_any_do_then_spawn {
             'when-contained',
             'branch-contained local-do',
             'branch-contained generated-child',
+            'branch-contained same-domain',
         );
 
     for my $anchor (@anchors) {
@@ -476,6 +486,16 @@ sub documents_stale_prior_await_any_spawn_after_do_deferral {
             )
             && index($window, 'remain fail-closed') >= 0;
         $offset = index($normalized, 'new nested spawn after generated do', $offset + 1);
+    }
+
+    for my $phrase (
+        'prior-active-await_any same-domain generated-do spawn-after-do remains fail-closed',
+        'same-domain generated-do active-prior spawn-after-do variants deferred',
+        'same-domain generated-do active-prior spawn-after-do variants remain',
+        'new nested spawn after same-domain generated do when a multi-pending await_any observation is active before the drain',
+        'spawn after same-domain generated do while a multi-pending await_any observation is active before the drain remains fail-closed',
+    ) {
+        return 1 if index($normalized, $phrase) >= 0;
     }
 
     return 0;
