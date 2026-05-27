@@ -37099,3 +37099,42 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   surfaces).
 - Active task tree: `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE`.
 - Current frontier: `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2`.
+
+## 2026-05-27: R14 transaction port activation-override width gate shipped
+- Completed
+  `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2` and closed
+  the active task tree.
+- `perl/FSM/Scheduler/ISF/LoweringIR.pm` now fails closed when a
+  generated-child activation (`spawn`, generated blocking `do`, or rule
+  `trigger`) passes a parameter override whose name matches a child
+  transaction parameter used as a transaction port width
+  (`(ports (input/output NAME (width PARAM)))`) and whose value differs
+  from the child default. Same-value overrides remain accepted. New
+  diagnostic: `<keyword> instance '<inst>' overrides static port-width
+  parameter '<name>' on child '<child>'; activation-site parameter
+  override-specialized transaction port widths remain deferred`.
+- Implementation reuses the parser-precomputed
+  `$tx->{_transaction_param_port_widths}` map through a new
+  `_transaction_port_width_param_names` helper, and the same
+  `_activation_override_preserves_static_integer_param` underlying
+  preserve-check used by the timing/contract/data-op gates. New
+  `_activation_override_preserves_port_width_param` alias.
+- Added regression `t/1371-isf-transaction-port-activation-override-width-gate.t`
+  with three subtests covering: mismatched overrides for input port
+  (spawn), output port (do), input port (rule trigger); same-value
+  overrides accepted for input/output/trigger contexts; unrelated-param
+  overrides accepted; existing data-op `static-width parameter`
+  diagnostic taking precedence when the same parameter backs both a
+  port width and a `shift_left` width.
+- Doc surfaces synchronized: `docs/ISF_SPEC.md` activation-overrides
+  paragraph notes the new gate; `t/1371` registered in the spec
+  focused-tests list (so `t/1250-isf-spec-focused-test-index-audit.t`
+  stays green); `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` adds the
+  `t/1371` reference; `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` deferred
+  list gets the port-width activation-override row; and
+  `docs/book/src/14-feature-backlog.md` activation-override gate
+  paragraph notes the new context.
+- Validation passed: `prove -Iperl t/1371 t/1370 t/1369 t/1368 t/1250
+  t/1305 t/1307` with `Files=7, Tests=718`; `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; `git diff --check`.
+- Active task tree: `none`.

@@ -15742,3 +15742,21 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Next bounded slice:
   `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2` (validator
   gate + `t/1371` regression + doc-surface updates).
+
+## 2026-05-27: Transaction port activation-override width gate shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2`](docs/tasks/ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.md)
+  widened the validator activation-site default-preserving gate to
+  transaction port width contexts. Mismatched activation overrides on a
+  generated child's transaction parameter consumed by a port width now
+  fail closed with a targeted `static port-width parameter` diagnostic.
+- Public behavior changed: yes — previously-silently-accepted
+  mismatched overrides for transaction port width parameters now fail
+  closed. Same-value overrides keep working; unrelated overrides keep
+  working; data-op-width and static-timing precedence preserved.
+- Focused validation passed: `prove -Iperl t/1371 t/1370 t/1369 t/1368
+  t/1250 t/1305 t/1307` (Files=7, Tests=718); `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; `git diff --check`.
+- Next bounded slice: hand off to whichever R14 ISF feature lane the
+  roadmap selects next.

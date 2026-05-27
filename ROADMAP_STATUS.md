@@ -14365,3 +14365,13 @@ Exit criteria:
   silently accept mismatched parent activation overrides. The slice
   reuses the parser-precomputed `_transaction_param_port_widths` map
   and follows the established default-preserving gate template.
+- `R14`: transaction port activation-override width gate now ships. The
+  validator at `perl/FSM/Scheduler/ISF/LoweringIR.pm` fails closed on
+  mismatched activation overrides for generated child transaction
+  parameters used by transaction port widths, matching the existing
+  default-preserving gate for static-timing/contract-window/data-op-width
+  parameters. Same-value overrides remain accepted. Regression covered
+  by `t/1371-isf-transaction-port-activation-override-width-gate.t`. Doc
+  surfaces in `ISF_SPEC.md`, `ISF_PUBLIC_INTERFACE_CONTRACT.md`,
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and
+  `docs/book/src/14-feature-backlog.md` are aligned.

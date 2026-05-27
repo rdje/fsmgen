@@ -4036,7 +4036,12 @@ specialization of generated child contract windows remains deferred. The same
 generated-child activation rule applies to transaction parameters used by
 static timing lowering for repeat counts, wait counts, latency bounds, and
 top-level await-local watchdog limits: same-value overrides remain accepted,
-while mismatches fail closed before scheduled artifacts are emitted. Runtime
+while mismatches fail closed before scheduled artifacts are emitted. The same
+rule also applies to transaction parameters used by data-operation widths
+(`shift_left`, `shift_right`, `assemble`, `extract`) and by transaction port
+widths (`(ports (input/output NAME (width PARAM)))`): same-value overrides
+remain accepted, while mismatches fail closed with targeted `static-width
+parameter` and `static port-width parameter` diagnostics respectively. Runtime
 signals, arbitrary expressions, unknown names, unknown or unqualified package
 constants, package aggregate constants, package member/item paths, ambiguous
 local-enum/package-constant spellings, zero-valued constants, and zero-valued
@@ -5691,6 +5696,7 @@ Focused tests:
 - [t/1368-isf-transaction-port-transaction-param-widths.t](../t/1368-isf-transaction-port-transaction-param-widths.t)
 - [t/1369-isf-timing-param-activation-override-gates.t](../t/1369-isf-timing-param-activation-override-gates.t)
 - [t/1370-isf-data-op-activation-override-width-gate.t](../t/1370-isf-data-op-activation-override-width-gate.t)
+- [t/1371-isf-transaction-port-activation-override-width-gate.t](../t/1371-isf-transaction-port-activation-override-width-gate.t)
 
 ## 12. Explicitly Deferred
 

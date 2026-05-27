@@ -32742,3 +32742,24 @@ It is an exact-delay pulse request:
   and doc-surface updates.
 - Same-value overrides remain accepted; only mismatches fail closed.
 - This selection commit changes no code.
+
+## 2026-05-27: transaction port activation-override width gate shipped
+- Continued the active R14 lane by shipping
+  [`ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2`](docs/tasks/ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.md):
+  widened the activation-site parameter override-specialized
+  default-preserving gate at `perl/FSM/Scheduler/ISF/LoweringIR.pm` to
+  transaction port width contexts.
+- Mismatched activation overrides for generated-child transaction
+  parameters used by transaction port widths now fail closed with a
+  targeted `static port-width parameter` diagnostic. Same-value
+  overrides remain accepted; unrelated-param overrides remain accepted;
+  existing static-width (data-op) diagnostic takes precedence when the
+  same parameter backs both a port width and a data-op width context.
+- New regression `t/1371-isf-transaction-port-activation-override-width-gate.t`
+  covers spawn/do/trigger across input and output port directions plus
+  same-value, unrelated-param, and data-op-precedence cases.
+- Doc surfaces in `ISF_SPEC.md` (gate paragraph + focused-tests list),
+  `ISF_PUBLIC_INTERFACE_CONTRACT.md`,
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and
+  `docs/book/src/14-feature-backlog.md` are aligned with the shipped
+  gate.

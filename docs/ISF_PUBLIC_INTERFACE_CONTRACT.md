@@ -1097,6 +1097,10 @@ Activation-site same-value override acceptance and mismatch diagnostics for
 generated child transaction parameters used by data-operation widths
 (`shift_left`, `shift_right`, `assemble`, `extract`) are checked by
 [t/1370-isf-data-op-activation-override-width-gate.t](../t/1370-isf-data-op-activation-override-width-gate.t).
+Activation-site same-value override acceptance and mismatch diagnostics for
+generated child transaction parameters used by transaction port widths
+(`(ports (input/output NAME (width PARAM)))`) are checked by
+[t/1371-isf-transaction-port-activation-override-width-gate.t](../t/1371-isf-transaction-port-activation-override-width-gate.t).
 The shipped subset is the top-level transaction form
 `(contract name (eventually signal within cycles))`. The older nested
 `(contract name (eventually signal (within cycles)))` spelling remains an

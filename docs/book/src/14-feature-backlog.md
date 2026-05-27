@@ -2836,7 +2836,12 @@ default-preserving gate now also covers transaction parameters used by
 data-operation widths (`shift_left`, `shift_right`, `assemble`, `extract`)
 on generated children: mismatched activation-site overrides fail closed with
 a targeted `static-width parameter` diagnostic until per-activation
-data-op width specialization is shipped.
+data-op width specialization is shipped. The same default-preserving gate
+now also covers transaction parameters used by transaction port widths
+(`(ports (input/output NAME (width PARAM)))`): mismatched activation-site
+overrides fail closed with a targeted `static port-width parameter`
+diagnostic until per-activation transaction port width specialization is
+shipped.
 
 Reaching the clause emits one arm state; the generated scheduled `.fsm`
 monitor tracks pending/age/fail storage, clears on actor reset, and sets a

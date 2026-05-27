@@ -3369,6 +3369,12 @@ Required fail-closed examples:
   `assemble`, `extract`). Same-value overrides are accepted; mismatches fail
   closed with a targeted `static-width parameter` diagnostic until
   per-activation data-op width specialization is shipped.
+- Generated child activation overrides that change child transaction
+  parameters consumed by transaction port widths
+  (`(ports (input/output NAME (width PARAM)))`). Same-value overrides are
+  accepted; mismatches fail closed with a targeted `static port-width
+  parameter` diagnostic until per-activation transaction port width
+  specialization is shipped.
 - Temporal contract windows that need activation-site override-specialized
   lowering beyond same-value generated child activation overrides,
   transaction parameters from other transactions, runtime interface signals,
