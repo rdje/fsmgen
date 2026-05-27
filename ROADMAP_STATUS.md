@@ -14383,3 +14383,12 @@ Exit criteria:
   different domain from the calling transaction. The broader
   cross-domain do implementation remains a separate future leaf of the
   same tree.
+- `R14`: cross-domain repeat-body do diagnostic precision now ships.
+  Validator emits a targeted "cross-domain repeat-body do remains
+  deferred" diagnostic when a `(do TARGET (domain X))` annotation
+  accompanies a cross-domain target, replacing the misleading
+  same-domain-feature `(params)` requirement message at the three
+  nested-repeat sites. Regression covered by `t/1372`; t/1247
+  expectations refreshed; doc surfaces aligned. Broader cross-domain
+  repeat-body do lowering (CDC sync wrappers, generated-top
+  integration) remains a future leaf of the same tree.

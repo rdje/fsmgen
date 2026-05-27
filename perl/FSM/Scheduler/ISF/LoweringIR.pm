@@ -2608,7 +2608,7 @@ sub _validate_child_transaction_refs($self, $actor) {
         my $target   = $ref->{target};
         my $label    = $ref->{label};
         my $repeat_parent_label = $ref->{repeat_parent_label} // '';
-        _validate_repeat_body_do_subset($ref);
+        _validate_repeat_body_do_subset($ref, $actor);
 
         if ($keyword eq 'do'
             && $label eq 'repeat body'
@@ -4788,7 +4788,7 @@ sub _validate_supported_transaction_clauses {
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'when', \%next_depths, $generated_children, $actor);
         } elsif ($keyword eq 'repeat') {
             _validate_repeat_clause($clause, $tn, $label);
-            _validate_repeat_body_spawn_subset($clause, $tn, $label, $context_depths, $generated_children)
+            _validate_repeat_body_spawn_subset($clause, $tn, $label, $context_depths, $generated_children, $actor)
                 unless ref($actor) eq 'HASH' && _is_static_zero_repeat_count($clause->[1], $actor, $tn);
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'repeat', $context_depths, $generated_children, $actor);
         } elsif ($keyword eq 'while' || $keyword eq 'until') {
@@ -5428,6 +5428,23 @@ sub _repeat_body_do_uses_domain {
         return 1 if $subclause->[0] eq 'domain';
     }
     return 0;
+}
+
+sub _repeat_body_do_is_cross_domain_attempt {
+    my ($actor, $calling_tx_name, $target_tx_name) = @_;
+    return 0 unless ref($actor) eq 'HASH';
+    return 0 unless _actor_has_clock_domains($actor);
+    my $default_domain = $actor->{clock_domains}{default};
+    my ($calling_domain, $target_domain);
+    for my $tx (@{$actor->{transactions} || []}) {
+        next unless ref($tx) eq 'HASH';
+        $calling_domain = _domain_for_entry($tx, $default_domain)
+            if defined($tx->{name}) && $tx->{name} eq $calling_tx_name;
+        $target_domain = _domain_for_entry($tx, $default_domain)
+            if defined($tx->{name}) && $tx->{name} eq $target_tx_name;
+    }
+    return 0 unless defined($calling_domain) && defined($target_domain);
+    return $calling_domain ne $target_domain ? 1 : 0;
 }
 
 sub _spawn_parameter_overrides {
@@ -6279,7 +6296,7 @@ sub _validate_repeat_clause {
 }
 
 sub _validate_repeat_body_spawn_subset {
-    my ($clause, $tn, $label, $context_depths, $generated_children) = @_;
+    my ($clause, $tn, $label, $context_depths, $generated_children, $actor) = @_;
     $context_depths ||= {};
     $generated_children ||= {};
     my @pending_spawns;
@@ -6396,6 +6413,15 @@ sub _validate_repeat_body_spawn_subset {
                         && ($subclause->[0] eq 'params' || $subclause->[0] eq 'bind' || $subclause->[0] eq 'domain');
             }
             my $nested_do_label = $when_body_repeat ? 'when-body' : $switch_branch_repeat ? 'switch-branch' : undef;
+            if ($uses_domain
+                    && _repeat_body_do_is_cross_domain_attempt($actor, $tn, $target)) {
+                my $context_label = $when_body_repeat
+                    ? 'when-body nested repeat'
+                    : $switch_branch_repeat
+                        ? 'switch-branch nested repeat'
+                        : 'repeat-body';
+                confess "Transaction '$tn': $context_label generated do target '$target' is in a different clock domain than the calling transaction; cross-domain repeat-body do remains deferred\n";
+            }
             if ($when_body_repeat) {
                 confess "Transaction '$tn': when-body nested repeat generated do bindings require static '(params ...)' overrides in the current nested generated blocking-do subset\n"
                     if $uses_bindings && !$uses_generated_params;
@@ -6624,18 +6650,26 @@ sub _validate_repeat_body_spawn_subset {
 }
 
 sub _validate_repeat_body_do_subset {
-    my ($ref) = @_;
+    my ($ref, $actor) = @_;
     return 1 unless ref($ref) eq 'HASH'
         && ($ref->{keyword} // '') eq 'do'
         && ($ref->{label} // '') eq 'repeat body';
 
     my $tn = $ref->{tx_name};
     my $clause = $ref->{clause};
+    my $target = $ref->{target};
     if (my $nested_do_label = _nested_repeat_local_do_label($ref->{repeat_parent_label})) {
         my @subclauses = ref($clause) eq 'ARRAY' ? @{$clause}[2 .. $#$clause] : ();
         my $uses_generated_params = _repeat_body_do_uses_generated_params($clause);
         my $uses_bindings = _repeat_body_do_uses_bindings($clause);
         my $uses_domain = _repeat_body_do_uses_domain($clause);
+
+        if ($uses_domain && _repeat_body_do_is_cross_domain_attempt($actor, $tn, $target)) {
+            my $context_label = $nested_do_label eq 'when-body'
+                ? 'when-body nested repeat'
+                : 'switch-branch nested repeat';
+            confess "Transaction '$tn': $context_label generated do target '$target' is in a different clock domain than the calling transaction; cross-domain repeat-body do remains deferred\n";
+        }
 
         if ($nested_do_label eq 'when-body') {
             for my $subclause (@subclauses) {
@@ -6679,6 +6713,10 @@ sub _validate_repeat_body_do_subset {
                 && defined($subclause->[0])
                 && !ref($subclause->[0])
                 && ($subclause->[0] eq 'params' || $subclause->[0] eq 'bind' || $subclause->[0] eq 'domain');
+    }
+
+    if ($uses_domain && _repeat_body_do_is_cross_domain_attempt($actor, $tn, $target)) {
+        confess "Transaction '$tn': repeat-body generated do target '$target' is in a different clock domain than the calling transaction; cross-domain repeat-body do remains deferred\n";
     }
 
     confess "Transaction '$tn': repeat-body generated do bindings require static '(params ...)' overrides in the current generated blocking-do subset\n"

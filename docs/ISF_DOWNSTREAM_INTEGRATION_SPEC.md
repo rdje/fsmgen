@@ -3375,6 +3375,14 @@ Required fail-closed examples:
   accepted; mismatches fail closed with a targeted `static port-width
   parameter` diagnostic until per-activation transaction port width
   specialization is shipped.
+- Cross-domain repeat-body `do`: a `(do TARGET (domain X))` annotation
+  where the target transaction is in a different clock domain than the
+  calling transaction now fails closed with a targeted "cross-domain
+  repeat-body do remains deferred" diagnostic instead of the generic
+  same-domain-feature `(params)` requirement message. Cross-domain do
+  without the `(domain ...)` annotation still emits the generic
+  clock-domain violation message. Cross-domain repeat-body do lowering
+  itself remains backlog.
 - Temporal contract windows that need activation-site override-specialized
   lowering beyond same-value generated child activation overrides,
   transaction parameters from other transactions, runtime interface signals,

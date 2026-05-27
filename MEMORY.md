@@ -37157,3 +37157,40 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   change + `t/1372` regression + doc surfaces).
 - Active task tree: `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION`.
 - Current frontier: `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2`.
+
+## 2026-05-27: R14 cross-domain repeat-body do diagnostic precision shipped
+- Completed
+  `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2` and closed
+  the active task tree.
+- `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits the targeted
+  diagnostic `Transaction '<tn>': <context> generated do target
+  '<target>' is in a different clock domain than the calling
+  transaction; cross-domain repeat-body do remains deferred` at all
+  three nested-repeat sites (top-level repeat-body, when-body nested,
+  switch-branch nested) when the `(domain ...)` annotation accompanies
+  a cross-domain target.
+- New helper `_repeat_body_do_is_cross_domain_attempt` reuses
+  `_actor_has_clock_domains` + `_domain_for_entry` to compute
+  cross-domain status from the calling and target transaction domains.
+  `_validate_repeat_body_spawn_subset` now takes `$actor` as a sixth
+  parameter; `_validate_repeat_body_do_subset` takes it as a second.
+- New regression `t/1372-isf-cross-domain-repeat-body-do-diagnostic.t`
+  covers the three nested-repeat sites plus the same-domain
+  still-rejected case (verifying the existing `(params)` requirement
+  still fires) and the no-annotation falls-through case (verifying the
+  generic clock-domain violation still fires).
+- `t/1247-isf-clock-domain-partition.t` expectations refreshed for the
+  three cross-domain rejection assertions (now expect the new targeted
+  diagnostic instead of the generic clock-domain violation).
+- Doc surfaces synchronized: `docs/ISF_SPEC.md` (focused-tests list
+  registers t/1372), `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` (deferred
+  list adds the cross-domain repeat-body do row), and
+  `docs/book/src/14-feature-backlog.md` (cross-domain repeat-body do
+  paragraph notes the targeted diagnostic).
+- Validation passed: `prove -Iperl t/1247 t/1372 t/1250` with
+  `Files=3, Tests=17`; `mdbook build docs/book`; `./bin/ci-regression
+  isf --no-book`; `git diff --check`.
+- Active task tree: `none`. Broader cross-domain repeat-body do
+  implementation (CDC sync wrappers, generated-top integration,
+  schedule-report extensions) remains as a future leaf of the same
+  tree per the task tree decisions section.

@@ -732,9 +732,15 @@ generated-do, bound generated-do, and same-domain generated-do
 do-then-spawn after a prior multi-pending `await_any` have shipped only for
 the documented branch-contained forms that may include a second post-spawn
 `await_any` before the mandatory same-body `await_all` drain. Cross-domain
-repeat-body `do`, generated/spawn nested activation beyond the documented
-branch-contained generated `do` cases and the branch-contained spawned
-cases,
+repeat-body `do` lowering itself remains backlog, but the diagnostic is
+now targeted: a `(do TARGET (domain X))` annotation where the target
+transaction is in a different clock domain than the calling transaction
+fails closed with a "cross-domain repeat-body do remains deferred"
+message instead of the misleading same-domain-feature `(params)`
+requirement message. Cross-domain do without the `(domain ...)`
+annotation still surfaces the generic clock-domain violation message.
+Generated/spawn nested activation beyond the documented branch-contained
+generated `do` cases and the branch-contained spawned cases,
 deeper branch repeat activation, loop-contained repeat activation, and broader
 outstanding-child lifetime semantics beyond the mandatory-drain subset remain
 backlog.

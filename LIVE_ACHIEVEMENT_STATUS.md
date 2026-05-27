@@ -15775,3 +15775,21 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Next bounded slice:
   `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2` (validator
   change + `t/1372` regression + doc-surface updates).
+
+## 2026-05-27: Cross-domain repeat-body do diagnostic precision shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2`](docs/tasks/ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.md)
+  shipped the targeted cross-domain repeat-body do diagnostic at all
+  three nested-repeat sites, refreshed `t/1247` expectations, and
+  synchronized `ISF_SPEC.md`/`ISF_DOWNSTREAM_INTEGRATION_SPEC.md`/
+  `14-feature-backlog.md`.
+- Public behavior changed: yes — the diagnostic for cross-domain
+  repeat-body do with `(domain ...)` annotation is now precise instead
+  of misleadingly suggesting `(params)`. Same-domain rejections and
+  no-annotation rejections unchanged.
+- Focused validation passed: `prove -Iperl t/1247 t/1372 t/1250`
+  (Files=3, Tests=17); `mdbook build docs/book`;
+  `./bin/ci-regression isf --no-book`; `git diff --check`.
+- Next bounded slice: another item from the backlog (broader
+  cross-domain do lowering remains a future leaf of this same tree).

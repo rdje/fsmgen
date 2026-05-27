@@ -60,21 +60,21 @@ a misleading params-required hint.
 ## Task Tree
 
 - ID: `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION`
-  Status: `pending`
+  Status: `done`
   Goal: `Sharpen the cross-domain repeat-body do diagnostic without changing accepted behavior.`
   Children:
     `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.1`,
     `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2`
 
 - ID: `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the targeted diagnostic slice; record scope, boundaries, regression target, and doc-sync targets.`
   Acceptance: `Task tree exists and is committed before any validator change.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the targeted diagnostic at the three validator sites plus regression t/1372 plus doc updates.`
   Acceptance: `Cross-domain (domain ...) annotations get the targeted diagnostic; same-domain rejections unchanged; t/1372 passes; ISF CI passes.`
   Verification: `prove -Iperl t/1372 t/1215 t/1250 t/1305; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
@@ -84,8 +84,7 @@ a misleading params-required hint.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.1` | `pending` | Selects the slice before validator change. |
-| 2 | `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2` | `pending` | Ships the targeted diagnostic and regression. |
+| 1 | `closed` | `done` | Both leaves shipped; `.2` landed the targeted diagnostic at all three nested-repeat sites, regression `t/1372`, doc-surface updates, and t/1247 expectation refresh. |
 
 ## Decisions
 
@@ -110,14 +109,14 @@ a misleading params-required hint.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-27` | `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.1` | TBD | TBD |
-| `2026-05-27` | `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2` | TBD | TBD |
+| `2026-05-27` | `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; selection-only commit |
+| `2026-05-27` | `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2` | `prove -Iperl t/1247 t/1372 t/1250`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `PASS`; focused 3-file `Files=3, Tests=17`; mdBook clean; ISF CI passed; t/1247 expectations refreshed for new targeted diagnostic |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.1` | `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.1: select cross-domain repeat-body do diagnostic precision` | `pending commit hash` |
+| `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.1` | `13a8a8da ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.1: select cross-domain repeat-body do diagnostic precision` | Selection commit. |
 | `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2` | `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2: ship cross-domain repeat-body do diagnostic precision` | `pending commit hash` |
 
 ## Changelog
@@ -126,3 +125,20 @@ a misleading params-required hint.
   repeat-body do diagnostic precision slice. Cross-domain repeat-body do
   itself remains deferred; this slice ships the user-visible diagnostic
   improvement and registers the broader implementation as a future leaf.
+- `2026-05-27`: Shipped `.2`. Validator at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits the targeted
+  diagnostic `Transaction '<tn>': <context> generated do target '<target>'
+  is in a different clock domain than the calling transaction;
+  cross-domain repeat-body do remains deferred` for all three
+  nested-repeat sites (top-level repeat-body, when-body nested,
+  switch-branch nested) when the `(domain ...)` annotation accompanies a
+  cross-domain target. New helper
+  `_repeat_body_do_is_cross_domain_attempt` reuses
+  `_actor_has_clock_domains` and `_domain_for_entry` to compute
+  cross-domain status. New regression `t/1372` covers the three
+  nested-repeat sites plus the same-domain still-rejected case and the
+  no-annotation falls-through case. `t/1247` expectations refreshed for
+  the new targeted diagnostic. Doc surfaces synchronized in `ISF_SPEC.md`
+  (focused-tests list), `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` (deferred
+  list), and `docs/book/src/14-feature-backlog.md` (cross-domain
+  repeat-body do paragraph).

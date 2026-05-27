@@ -32777,3 +32777,26 @@ It is an exact-delay pulse request:
   The broader implementation remains a separate future leaf of the same
   tree.
 - This selection commit changes no code.
+
+## 2026-05-27: cross-domain repeat-body do diagnostic precision shipped
+- Shipped
+  [`ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2`](docs/tasks/ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.md):
+  validator at `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits a
+  targeted diagnostic for cross-domain repeat-body do attempts at all
+  three nested-repeat sites.
+- The new helper `_repeat_body_do_is_cross_domain_attempt` resolves
+  the calling and target transaction domains via the existing
+  `_actor_has_clock_domains` / `_domain_for_entry` helpers. The check
+  fires only when the `(domain ...)` annotation is present and the
+  target's domain differs from the calling transaction's domain;
+  cross-domain do without the annotation continues to surface the
+  generic clock-domain violation later in lowering.
+- `_validate_repeat_body_spawn_subset` and `_validate_repeat_body_do_subset`
+  both received `$actor` so they can look up domains. Both call sites
+  pass it through.
+- New regression `t/1372` plus refreshed `t/1247` expectations lock the
+  new diagnostic; no other test regressed.
+- Doc surfaces aligned in `ISF_SPEC.md` (focused-tests),
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` (deferred list), and
+  `14-feature-backlog.md` (paragraph wording). Broader cross-domain
+  repeat-body do lowering remains a future leaf.

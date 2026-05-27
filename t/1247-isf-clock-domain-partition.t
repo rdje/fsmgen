@@ -177,7 +177,7 @@ ISF
         'schedule report groups the repeat-body generated do instance with its declared owner domain',
     );
 
-    assert_lower_rejected(<<'ISF', 'repeat generated do cross-domain metadata', qr/ISF clock-domain violation: transaction 'parent' do target 'worker' references transaction in domain 'bus' from domain 'core' without a crossing primitive/);
+    assert_lower_rejected(<<'ISF', 'repeat generated do cross-domain metadata', qr/Transaction 'parent': repeat-body generated do target 'worker' is in a different clock domain than the calling transaction; cross-domain repeat-body do remains deferred/);
 (actor repeat_generated_do_cross_domain
   (clock-domains
     (domain core (clock clk) (reset rst_n) :default)
@@ -270,7 +270,7 @@ ISF
         'schedule report groups the when-body repeat generated do instance with its declared owner domain',
     );
 
-    assert_lower_rejected(<<'ISF', 'when repeat generated do cross-domain metadata', qr/ISF clock-domain violation: transaction 'parent' do target 'worker' references transaction in domain 'bus' from domain 'core' without a crossing primitive/);
+    assert_lower_rejected(<<'ISF', 'when repeat generated do cross-domain metadata', qr/Transaction 'parent': when-body nested repeat generated do target 'worker' is in a different clock domain than the calling transaction; cross-domain repeat-body do remains deferred/);
 (actor when_repeat_generated_do_cross_domain
   (clock-domains
     (domain core (clock clk) (reset rst_n) :default)
@@ -366,7 +366,7 @@ ISF
         'schedule report groups the switch-branch repeat generated do instance with its declared owner domain',
     );
 
-    assert_lower_rejected(<<'ISF', 'switch repeat generated do cross-domain metadata', qr/ISF clock-domain violation: transaction 'parent' do target 'worker' references transaction in domain 'bus' from domain 'core' without a crossing primitive/);
+    assert_lower_rejected(<<'ISF', 'switch repeat generated do cross-domain metadata', qr/Transaction 'parent': switch-branch nested repeat generated do target 'worker' is in a different clock domain than the calling transaction; cross-domain repeat-body do remains deferred/);
 (actor switch_repeat_generated_do_cross_domain
   (clock-domains
     (domain core (clock clk) (reset rst_n) :default)
