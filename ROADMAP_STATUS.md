@@ -14358,3 +14358,10 @@ Exit criteria:
   in `ISF_SPEC.md`, `ISF_PUBLIC_INTERFACE_CONTRACT.md`,
   `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and
   `docs/book/src/14-feature-backlog.md` are aligned.
+- `R14`: next active task tree selected —
+  `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE`. Probed and
+  confirmed the same silent-no-op hazard the data-op width gate just
+  closed: transaction port widths backed by child transaction params
+  silently accept mismatched parent activation overrides. The slice
+  reuses the parser-precomputed `_transaction_param_port_widths` map
+  and follows the established default-preserving gate template.

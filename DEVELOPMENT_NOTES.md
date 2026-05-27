@@ -32723,3 +32723,22 @@ It is an exact-delay pulse request:
   gate; `docs/book/src/13k-isf-feature-support-matrix.md` data
   manipulation row already documented `activation-site
   override-specialized ... widths fail closed`.
+
+## 2026-05-27: selected R14 transaction port activation-override width gate
+- Picked the next R14 active task tree from the activation-override
+  matrix: transaction port widths backed by child transaction params do
+  not yet fail closed when a parent activation passes a mismatched
+  override, even though the same gate is shipped for
+  wait/repeat/latency/watchdog/contract/data-op. Probed with a minimal
+  fixture: `(spawn worker as w0 (params (W 16)) (bind ...))` against
+  `(transaction worker (params (W 8)) (ports (input data (width W))
+  (output result (width W))) ...)` silently accepts the activation when
+  the parent signals match the child W=8 default.
+- The slice
+  [`ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE`](docs/tasks/ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.md)
+  reuses the same two-commit pattern as the data-op width gate that
+  just shipped: `.1: select` registers the task tree, `.2: ship` lands
+  the validator gate plus `t/1371-isf-transaction-port-activation-override-width-gate.t`
+  and doc-surface updates.
+- Same-value overrides remain accepted; only mismatches fail closed.
+- This selection commit changes no code.

@@ -37079,3 +37079,23 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `./bin/ci-regression isf --no-book`; `git diff --check`.
 - Active task tree: `none`.
 - Current frontier: `none`.
+
+## 2026-05-27: R14 active task tree selected — transaction port activation-override width gate
+- Created and registered active task tree
+  [`ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE`](docs/tasks/ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.md)
+  picked from the activation-override matrix.
+- Probed current behavior: a parent `(spawn worker as w0 (params (W 16))
+  (bind ...))` against `(transaction worker (params (W 8)) (ports (input
+  data (width W)) (output result (width W))) ...)` is silently accepted
+  today when the parent signals happen to match the child default
+  (W=8), even though the override is intended to specialize the child to
+  16-bit operation. Same silent-no-op hazard the data-op width gate just
+  closed.
+- Goal: widen the gate to transaction port widths. Same-value overrides
+  remain accepted; mismatches fail closed with a targeted `static
+  port-width parameter` diagnostic.
+- Two-commit pattern: `.1: select` (creates task tree, no code), then
+  `.2: ship` (validator change + focused regression in t/1371 + doc
+  surfaces).
+- Active task tree: `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE`.
+- Current frontier: `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2`.

@@ -15729,3 +15729,16 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `./bin/ci-regression isf --no-book`; `git diff --check`.
 - Next bounded slice: hand off to whichever R14 ISF feature lane the
   roadmap selects next.
+
+## 2026-05-27: Selected R14 transaction port activation-override width gate
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE`](docs/tasks/ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.md).
+- Goal: widen the activation-site parameter override-specialized
+  default-preserving gate to transaction port width contexts.
+- Public behavior changed: no; this `.1: select` commit only registers
+  the task tree.
+- Focused validation passed: `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice:
+  `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2` (validator
+  gate + `t/1371` regression + doc-surface updates).
