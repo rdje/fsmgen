@@ -32800,3 +32800,19 @@ It is an exact-delay pulse request:
   `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` (deferred list), and
   `14-feature-backlog.md` (paragraph wording). Broader cross-domain
   repeat-body do lowering remains a future leaf.
+
+## 2026-05-27: active R14 task tree selected — static-timing override sub-axis diagnostic precision
+- The activation-site parameter override-specialized default-preserving
+  gate family currently rejects mismatched overrides on
+  `(repeat NAME)` / `(wait NAME)` / `(latency (min NAME) ...)` /
+  top-level await `(watchdog NAME)` parameters using one aggregated
+  "static-timing parameter" diagnostic. That message hides which
+  sub-axis the override actually impinges on, so an author cannot
+  tell which deferred feature lane is blocking their override.
+- The slice
+  [`ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.md)
+  splits the aggregated gate into four sub-axis-specific gates that
+  each emit a targeted diagnostic. No new acceptance is introduced;
+  this is a strictly diagnostic-precision slice. The broader
+  implementation of each sub-axis remains separately deferred.
+- This selection commit changes no code.

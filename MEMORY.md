@@ -37194,3 +37194,25 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   implementation (CDC sync wrappers, generated-top integration,
   schedule-report extensions) remains as a future leaf of the same
   tree per the task tree decisions section.
+
+## 2026-05-27: R14 active task tree selected — static-timing override sub-axis diagnostic precision
+- Created and registered active task tree
+  [`ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.md).
+- Probed current behavior: a `(do worker (params (LOOPS 4)))` override
+  on a child whose `LOOPS` is consumed only by `(repeat LOOPS ...)`
+  currently emits "static-timing parameter ... activation-site
+  parameter override-specialized static timing remains deferred"
+  because `_transaction_static_timing_param_names` aggregates four
+  distinct sub-axes (repeat-count, wait-count, latency-bound,
+  watchdog-limit) into one set checked by a single gate.
+- Slice scope: split the single static-timing gate into four sub-axis
+  gates at the two activation-override sites (spawn/do and rule
+  trigger). Each sub-axis emits its own targeted diagnostic naming the
+  axis ("repeat-count parameter", "wait-count parameter",
+  "latency-bound parameter", "watchdog-limit parameter") and its own
+  deferral phrase. Same-value paths unchanged.
+- Two-commit pattern: `.1: select` (this slice), `.2: ship` (validator
+  split + `t/1373` regression + `t/1369`/`t/1370` refresh + doc
+  surfaces).
+- Active task tree: `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION`.
+- Current frontier: `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2`.

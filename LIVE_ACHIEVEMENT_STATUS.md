@@ -15793,3 +15793,20 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `./bin/ci-regression isf --no-book`; `git diff --check`.
 - Next bounded slice: another item from the backlog (broader
   cross-domain do lowering remains a future leaf of this same tree).
+
+## 2026-05-27: Selected R14 static-timing override sub-axis diagnostic precision
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.md).
+- Goal: split the aggregated static-timing override gate into four
+  sub-axis-specific gates (repeat-count, wait-count, latency-bound,
+  watchdog-limit) at the spawn/do and rule-trigger activation sites.
+  Each sub-axis emits its own targeted diagnostic and its own
+  deferral phrase. Same-value paths unchanged.
+- Public behavior changed: no; `.1: select` commit only registers
+  the task tree.
+- Focused validation passed: `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice:
+  `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2`
+  (validator split + `t/1373` regression + `t/1369`/`t/1370`
+  refresh + doc-surface updates).

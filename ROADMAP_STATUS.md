@@ -14392,3 +14392,13 @@ Exit criteria:
   expectations refreshed; doc surfaces aligned. Broader cross-domain
   repeat-body do lowering (CDC sync wrappers, generated-top
   integration) remains a future leaf of the same tree.
+- `R14`: next active task tree selected —
+  `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION`. Splits
+  the single static-timing override gate into four sub-axis-specific
+  gates (repeat-count, wait-count, latency-bound, watchdog-limit) at
+  the two activation-override sites. Probed and confirmed the current
+  aggregated "static-timing parameter ... static timing remains
+  deferred" message hides which axis the override impinges on; each
+  sub-axis will emit its own targeted diagnostic instead. Same-value
+  paths unchanged; broader implementation of each sub-axis remains a
+  separate future lane.

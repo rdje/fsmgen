@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION` | `pending` | `R14` | `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2` | [docs/tasks/ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.md](docs/tasks/ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.md) |
 
 ## Proposed Task Trees
 
