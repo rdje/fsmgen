@@ -14375,3 +14375,11 @@ Exit criteria:
   surfaces in `ISF_SPEC.md`, `ISF_PUBLIC_INTERFACE_CONTRACT.md`,
   `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and
   `docs/book/src/14-feature-backlog.md` are aligned.
+- `R14`: next active task tree selected —
+  `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION`. Sharpens the
+  cross-domain repeat-body do diagnostic without changing accepted
+  behavior. Probed and confirmed the current misleading "requires
+  (params)" message when a `(domain ...)` annotation actually names a
+  different domain from the calling transaction. The broader
+  cross-domain do implementation remains a separate future leaf of the
+  same tree.

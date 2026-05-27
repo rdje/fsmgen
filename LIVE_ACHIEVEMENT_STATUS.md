@@ -15760,3 +15760,18 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `./bin/ci-regression isf --no-book`; `git diff --check`.
 - Next bounded slice: hand off to whichever R14 ISF feature lane the
   roadmap selects next.
+
+## 2026-05-27: Selected R14 cross-domain repeat-body do diagnostic precision
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.md).
+- Goal: emit a targeted "cross-domain repeat-body do remains deferred"
+  diagnostic when a `(do TARGET (domain X))` annotation names a domain
+  different from the calling transaction's domain. Broader cross-domain
+  `do` implementation remains a future leaf.
+- Public behavior changed: no; `.1: select` commit only registers the
+  task tree.
+- Focused validation passed: `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice:
+  `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2` (validator
+  change + `t/1372` regression + doc-surface updates).

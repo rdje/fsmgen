@@ -37138,3 +37138,22 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   t/1305 t/1307` with `Files=7, Tests=718`; `mdbook build docs/book`;
   `./bin/ci-regression isf --no-book`; `git diff --check`.
 - Active task tree: `none`.
+
+## 2026-05-27: R14 active task tree selected — cross-domain repeat-body do diagnostic precision
+- Created and registered active task tree
+  [`ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.md).
+- Probed current behavior: `(do worker (domain aux))` with `worker` in
+  `aux` and calling transaction in `core` currently emits "repeat-body
+  generated do domain metadata requires static '(params ...)' overrides"
+  because the validator treats every `(domain ...)` annotation as a
+  same-domain feature attempt. Misleading.
+- Slice scope: improve the diagnostic at the three nested-repeat sites
+  (top-level repeat-body, when-body nested, switch-branch nested) to
+  emit "cross-domain repeat-body do remains deferred" when the
+  annotation names a domain different from the calling transaction's
+  domain. The broader cross-domain `do` implementation (CDC sync
+  wrappers, generated-top integration) remains a separate future leaf.
+- Two-commit pattern: `.1: select` (this slice), `.2: ship` (validator
+  change + `t/1372` regression + doc surfaces).
+- Active task tree: `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION`.
+- Current frontier: `ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.2`.

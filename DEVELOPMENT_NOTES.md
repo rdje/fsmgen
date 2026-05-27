@@ -32763,3 +32763,17 @@ It is an exact-delay pulse request:
   `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and
   `docs/book/src/14-feature-backlog.md` are aligned with the shipped
   gate.
+
+## 2026-05-27: selected R14 cross-domain repeat-body do diagnostic precision
+- Picked the next R14 active task tree from the Spawn Inside Repeat
+  Bodies deferred list. Cross-domain repeat-body `do` is fail-closed
+  overall, but the diagnostic for the common attempt — `(do TARGET
+  (domain X))` where `X` is the target's different domain — currently
+  fires through the same-domain feature gate with a misleading
+  "requires (params)" message.
+- The slice
+  [`ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-CROSS-DOMAIN-REPEAT-BODY-DO-DIAGNOSTIC-PRECISION.md)
+  ships only the diagnostic precision (no broader cross-domain support).
+  The broader implementation remains a separate future leaf of the same
+  tree.
+- This selection commit changes no code.
