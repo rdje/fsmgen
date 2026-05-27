@@ -31,7 +31,7 @@ subtest 'mismatched static timing parameter activation overrides fail closed' =>
     (wait DELAY)
     (complete done)))
 ISF
-        qr/Transaction 'parent': spawn instance 'w0' overrides static-timing parameter 'DELAY' on child 'worker'; activation-site parameter override-specialized static timing remains deferred/,
+        qr/Transaction 'parent': spawn instance 'w0' overrides wait-count parameter 'DELAY' on child 'worker'; activation-site parameter override-specialized wait counts remain deferred/,
         'spawn override that changes a wait-count parameter is rejected',
     );
 
@@ -56,7 +56,7 @@ ISF
       (wait 1))
     (complete done)))
 ISF
-        qr/Transaction 'parent': do instance 'parent_worker_do_0' overrides static-timing parameter 'ITER' on child 'worker'; activation-site parameter override-specialized static timing remains deferred/,
+        qr/Transaction 'parent': do instance 'parent_worker_do_0' overrides repeat-count parameter 'ITER' on child 'worker'; activation-site parameter override-specialized repeat counts remain deferred/,
         'generated do override that changes a repeat-count parameter is rejected',
     );
 
@@ -78,7 +78,7 @@ ISF
       (params
         (LAT 2)))))
 ISF
-        qr/Rule 'launch': trigger instance 'launch_worker_trigger_0' overrides static-timing parameter 'LAT' on child 'worker'; activation-site parameter override-specialized static timing remains deferred/,
+        qr/Rule 'launch': trigger instance 'launch_worker_trigger_0' overrides latency-bound parameter 'LAT' on child 'worker'; activation-site parameter override-specialized latency bounds remain deferred/,
         'rule trigger override that changes a latency-bound parameter is rejected',
     );
 
@@ -103,7 +103,7 @@ ISF
     (await ack (watchdog WD_LIMIT))
     (complete done)))
 ISF
-        qr/Transaction 'parent': spawn instance 'w0' overrides static-timing parameter 'WD_LIMIT' on child 'worker'; activation-site parameter override-specialized static timing remains deferred/,
+        qr/Transaction 'parent': spawn instance 'w0' overrides watchdog-limit parameter 'WD_LIMIT' on child 'worker'; activation-site parameter override-specialized watchdog limits remain deferred/,
         'spawn override that changes a top-level await-local watchdog parameter is rejected',
     );
 };

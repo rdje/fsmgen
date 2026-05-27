@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-27`
 - Last updated: `2026-05-27`
@@ -89,8 +89,7 @@ learn exactly which deferred feature is blocking their override.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.1` | `pending` | Selection commit must land before the validator change so the slice is owned through `COMMIT.md`. |
-| 2 | `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2` | `pending` | Ship the four sub-axis gates plus regressions plus doc sync. |
+| 1 | `closed` | `done` | Both leaves shipped. `.2` landed the four sub-axis-specific gates at the spawn/do and rule-trigger activation sites, regression `t/1373`, refreshed `t/1369` + `t/1370` expectations, and doc-surface updates. |
 
 ## Decisions
 
@@ -122,14 +121,14 @@ learn exactly which deferred feature is blocking their override.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-27` | `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-27` | `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2` | `prove -Iperl t/1369 t/1370 t/1373 t/1250`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `pending` |
+| `2026-05-27` | `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; selection-only commit |
+| `2026-05-27` | `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2` | `prove -Iperl t/1369 t/1370 t/1373` (Files=3, Tests=12); `./bin/ci-regression isf --no-book` (Files=279, Tests=2037); `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.1` | `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.1: select static-timing override sub-axis diagnostic precision` | `pending commit hash` |
+| `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.1` | `2ae1690e ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.1: select static-timing override sub-axis diagnostic precision` | Selection commit. |
 | `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2` | `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2: ship static-timing override sub-axis diagnostic precision` | `pending commit hash` |
 
 ## Changelog
@@ -138,3 +137,28 @@ learn exactly which deferred feature is blocking their override.
   override sub-axis diagnostic precision slice. Aggregated
   static-timing diagnostic remains in place until `.2` ships the four
   sub-axis-specific gates.
+- `2026-05-27`: Shipped `.2`. Validator at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits four sub-axis-specific
+  diagnostics at both activation-override sites (spawn/do and rule
+  trigger). The single `$static_timing_params` check was replaced with
+  four sub-axis checks computed from the existing per-axis helpers
+  (`_transaction_repeat_count_param_names`,
+  `_transaction_wait_count_param_names`,
+  `_transaction_latency_bound_param_names`,
+  `_transaction_watchdog_limit_param_names`). The aggregator helper
+  `_transaction_static_timing_param_names` was removed (no remaining
+  callers) and the single
+  `_activation_override_preserves_static_timing_param` was replaced by
+  four sub-axis preserves helpers
+  (`_activation_override_preserves_repeat_count_param`,
+  `_activation_override_preserves_wait_count_param`,
+  `_activation_override_preserves_latency_bound_param`,
+  `_activation_override_preserves_watchdog_limit_param`) all delegating
+  to the shared `_activation_override_preserves_static_integer_param`
+  value-equality check. New regression `t/1373` covers the four
+  sub-axes across the three keyword sites plus same-value acceptance
+  and unknown/shape precedence. `t/1369` and `t/1370` expectations
+  refreshed for the targeted diagnostics. Doc surfaces synchronized in
+  `ISF_SPEC.md` (focused-tests + sub-axis paragraph),
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` (sub-axis note), and
+  `14-feature-backlog.md` (sub-axis sentence).

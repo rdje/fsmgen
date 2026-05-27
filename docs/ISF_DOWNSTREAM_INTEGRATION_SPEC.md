@@ -946,7 +946,11 @@ Rules:
   lowering for repeat counts, wait counts, latency bounds, or top-level
   await-local watchdog limits are accepted only when they resolve to the same
   integer value as the child transaction parameter default. Mismatches fail
-  closed until per-activation static timing specialization is shipped.
+  closed until per-activation static timing specialization is shipped. Each
+  sub-axis emits its own targeted diagnostic (`repeat-count parameter`,
+  `wait-count parameter`, `latency-bound parameter`, `watchdog-limit
+  parameter`) and its own deferral phrase so the author can identify which
+  deferred lane is blocking the override.
 
 ### 11.2 Transaction Ports And Bindings
 

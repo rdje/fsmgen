@@ -15810,3 +15810,25 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2`
   (validator split + `t/1373` regression + `t/1369`/`t/1370`
   refresh + doc-surface updates).
+
+## 2026-05-27: Static-timing override sub-axis diagnostic precision shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2`](docs/tasks/ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.md)
+  shipped the four sub-axis-specific diagnostics at both
+  activation-override sites (spawn/do and rule trigger), added
+  regression `t/1373`, refreshed `t/1369` and `t/1370` expectations,
+  and synchronized `ISF_SPEC.md`/`ISF_DOWNSTREAM_INTEGRATION_SPEC.md`/
+  `14-feature-backlog.md`.
+- Public behavior changed: yes — mismatched overrides on repeat-count,
+  wait-count, latency-bound, and watchdog-limit parameters now each
+  emit their own targeted diagnostic instead of one aggregated
+  `static-timing parameter` message. Same-value paths and
+  unknown/shape precedence unchanged.
+- Focused validation passed: `prove -Iperl t/1369 t/1370 t/1373`
+  (Files=3, Tests=12); `./bin/ci-regression isf --no-book`
+  (Files=279, Tests=2037); `mdbook build docs/book`;
+  `git diff --check`.
+- Next bounded slice: another item from the backlog (broader
+  implementation of each sub-axis remains separately deferred per
+  their own future lanes).

@@ -269,8 +269,8 @@ ISF
     (shift_left reg_out bit_in (width DELAY))
     (complete done)))
 ISF
-        qr/Transaction 'parent': spawn instance 'w0' overrides static-timing parameter 'DELAY' on child 'worker'; activation-site parameter override-specialized static timing remains deferred/,
-        'static-timing diagnostic takes precedence when the same parameter backs both a wait count and a data-op width',
+        qr/Transaction 'parent': spawn instance 'w0' overrides wait-count parameter 'DELAY' on child 'worker'; activation-site parameter override-specialized wait counts remain deferred/,
+        'wait-count diagnostic takes precedence when the same parameter backs both a wait count and a data-op width',
     );
 };
 

@@ -333,7 +333,9 @@ target generated child static timing parameters used by repeat counts, wait
 counts, latency bounds, or top-level await-local watchdog limits follow the
 same default-resolved rule: same-value overrides are accepted, while
 mismatched overrides fail closed until per-activation static timing
-specialization is selected.
+specialization is selected. Each sub-axis emits its own targeted diagnostic
+(repeat-count, wait-count, latency-bound, watchdog-limit) so authors can
+identify which deferred lane is blocking the override.
 Actor constants and actor-local scalar parameter defaults are also accepted as
 static default values for generated child transaction parameters; the lowerer
 resolves those parent actor names to literal child `+params` and
@@ -5698,6 +5700,7 @@ Focused tests:
 - [t/1370-isf-data-op-activation-override-width-gate.t](../t/1370-isf-data-op-activation-override-width-gate.t)
 - [t/1371-isf-transaction-port-activation-override-width-gate.t](../t/1371-isf-transaction-port-activation-override-width-gate.t)
 - [t/1372-isf-cross-domain-repeat-body-do-diagnostic.t](../t/1372-isf-cross-domain-repeat-body-do-diagnostic.t)
+- [t/1373-isf-timing-param-sub-axis-diagnostic.t](../t/1373-isf-timing-param-sub-axis-diagnostic.t)
 
 ## 12. Explicitly Deferred
 

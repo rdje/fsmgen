@@ -2670,8 +2670,14 @@ sub _validate_child_transaction_refs($self, $actor) {
         } @$declared_param_list;
         my $contract_window_params =
             _transaction_contract_window_param_names($transaction_by_name{$target}, $declared_param_list);
-        my $static_timing_params =
-            _transaction_static_timing_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $repeat_count_params =
+            _transaction_repeat_count_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $wait_count_params =
+            _transaction_wait_count_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $latency_bound_params =
+            _transaction_latency_bound_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $watchdog_limit_params =
+            _transaction_watchdog_limit_param_names($transaction_by_name{$target}, $declared_param_list);
         my $data_op_width_params =
             _transaction_data_op_width_param_names($transaction_by_name{$target}, $declared_param_list);
         my $port_width_params =
@@ -2685,9 +2691,18 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides contract-window parameter '$name' on child '$target'; activation-site parameter override-specialized contract windows remain deferred\n"
                 if $contract_window_params->{$name}
                     && !_activation_override_preserves_contract_window_param($declared_params{$name}, $override);
-            confess "Transaction '$tx_name': $keyword instance '$instance' overrides static-timing parameter '$name' on child '$target'; activation-site parameter override-specialized static timing remains deferred\n"
-                if $static_timing_params->{$name}
-                    && !_activation_override_preserves_static_timing_param($declared_params{$name}, $override);
+            confess "Transaction '$tx_name': $keyword instance '$instance' overrides repeat-count parameter '$name' on child '$target'; activation-site parameter override-specialized repeat counts remain deferred\n"
+                if $repeat_count_params->{$name}
+                    && !_activation_override_preserves_repeat_count_param($declared_params{$name}, $override);
+            confess "Transaction '$tx_name': $keyword instance '$instance' overrides wait-count parameter '$name' on child '$target'; activation-site parameter override-specialized wait counts remain deferred\n"
+                if $wait_count_params->{$name}
+                    && !_activation_override_preserves_wait_count_param($declared_params{$name}, $override);
+            confess "Transaction '$tx_name': $keyword instance '$instance' overrides latency-bound parameter '$name' on child '$target'; activation-site parameter override-specialized latency bounds remain deferred\n"
+                if $latency_bound_params->{$name}
+                    && !_activation_override_preserves_latency_bound_param($declared_params{$name}, $override);
+            confess "Transaction '$tx_name': $keyword instance '$instance' overrides watchdog-limit parameter '$name' on child '$target'; activation-site parameter override-specialized watchdog limits remain deferred\n"
+                if $watchdog_limit_params->{$name}
+                    && !_activation_override_preserves_watchdog_limit_param($declared_params{$name}, $override);
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides static-width parameter '$name' on child '$target'; activation-site parameter override-specialized data-op widths remain deferred\n"
                 if $data_op_width_params->{$name}
                     && !_activation_override_preserves_data_op_width_param($declared_params{$name}, $override);
@@ -2721,8 +2736,14 @@ sub _validate_child_transaction_refs($self, $actor) {
         } @$declared_param_list;
         my $contract_window_params =
             _transaction_contract_window_param_names($transaction_by_name{$target}, $declared_param_list);
-        my $static_timing_params =
-            _transaction_static_timing_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $repeat_count_params =
+            _transaction_repeat_count_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $wait_count_params =
+            _transaction_wait_count_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $latency_bound_params =
+            _transaction_latency_bound_param_names($transaction_by_name{$target}, $declared_param_list);
+        my $watchdog_limit_params =
+            _transaction_watchdog_limit_param_names($transaction_by_name{$target}, $declared_param_list);
         my $data_op_width_params =
             _transaction_data_op_width_param_names($transaction_by_name{$target}, $declared_param_list);
         my $port_width_params =
@@ -2736,9 +2757,18 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Rule '$rule_name': trigger instance '$instance' overrides contract-window parameter '$name' on child '$target'; activation-site parameter override-specialized contract windows remain deferred\n"
                 if $contract_window_params->{$name}
                     && !_activation_override_preserves_contract_window_param($declared_params{$name}, $override);
-            confess "Rule '$rule_name': trigger instance '$instance' overrides static-timing parameter '$name' on child '$target'; activation-site parameter override-specialized static timing remains deferred\n"
-                if $static_timing_params->{$name}
-                    && !_activation_override_preserves_static_timing_param($declared_params{$name}, $override);
+            confess "Rule '$rule_name': trigger instance '$instance' overrides repeat-count parameter '$name' on child '$target'; activation-site parameter override-specialized repeat counts remain deferred\n"
+                if $repeat_count_params->{$name}
+                    && !_activation_override_preserves_repeat_count_param($declared_params{$name}, $override);
+            confess "Rule '$rule_name': trigger instance '$instance' overrides wait-count parameter '$name' on child '$target'; activation-site parameter override-specialized wait counts remain deferred\n"
+                if $wait_count_params->{$name}
+                    && !_activation_override_preserves_wait_count_param($declared_params{$name}, $override);
+            confess "Rule '$rule_name': trigger instance '$instance' overrides latency-bound parameter '$name' on child '$target'; activation-site parameter override-specialized latency bounds remain deferred\n"
+                if $latency_bound_params->{$name}
+                    && !_activation_override_preserves_latency_bound_param($declared_params{$name}, $override);
+            confess "Rule '$rule_name': trigger instance '$instance' overrides watchdog-limit parameter '$name' on child '$target'; activation-site parameter override-specialized watchdog limits remain deferred\n"
+                if $watchdog_limit_params->{$name}
+                    && !_activation_override_preserves_watchdog_limit_param($declared_params{$name}, $override);
             confess "Rule '$rule_name': trigger instance '$instance' overrides static-width parameter '$name' on child '$target'; activation-site parameter override-specialized data-op widths remain deferred\n"
                 if $data_op_width_params->{$name}
                     && !_activation_override_preserves_data_op_width_param($declared_params{$name}, $override);
@@ -2824,21 +2854,6 @@ sub _transaction_params_used_by_latency_bound {
 sub _transaction_params_used_by_watchdog_limit {
     my ($tx, $params) = @_;
     return keys %{_transaction_watchdog_limit_param_names($tx, $params)} ? 1 : 0;
-}
-
-sub _transaction_static_timing_param_names {
-    my ($tx, $params) = @_;
-
-    my %used;
-    for my $names (
-        _transaction_repeat_count_param_names($tx, $params),
-        _transaction_wait_count_param_names($tx, $params),
-        _transaction_latency_bound_param_names($tx, $params),
-        _transaction_watchdog_limit_param_names($tx, $params),
-    ) {
-        $used{$_} = 1 for keys %$names;
-    }
-    return \%used;
 }
 
 sub _transaction_repeat_count_param_names {
@@ -3046,7 +3061,22 @@ sub _activation_override_preserves_contract_window_param {
     return _activation_override_preserves_static_integer_param($declared_param, $override);
 }
 
-sub _activation_override_preserves_static_timing_param {
+sub _activation_override_preserves_repeat_count_param {
+    my ($declared_param, $override) = @_;
+    return _activation_override_preserves_static_integer_param($declared_param, $override);
+}
+
+sub _activation_override_preserves_wait_count_param {
+    my ($declared_param, $override) = @_;
+    return _activation_override_preserves_static_integer_param($declared_param, $override);
+}
+
+sub _activation_override_preserves_latency_bound_param {
+    my ($declared_param, $override) = @_;
+    return _activation_override_preserves_static_integer_param($declared_param, $override);
+}
+
+sub _activation_override_preserves_watchdog_limit_param {
     my ($declared_param, $override) = @_;
     return _activation_override_preserves_static_integer_param($declared_param, $override);
 }

@@ -37216,3 +37216,47 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   surfaces).
 - Active task tree: `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION`.
 - Current frontier: `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2`.
+
+## 2026-05-27: R14 static-timing override sub-axis diagnostic precision shipped
+- Completed
+  `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2` and closed
+  the active task tree.
+- `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits four sub-axis-specific
+  diagnostics at the two activation-override sites (spawn/do and rule
+  trigger) instead of one aggregated "static-timing parameter ... static
+  timing remains deferred" message:
+    * `repeat-count parameter ... repeat counts remain deferred`
+    * `wait-count parameter ... wait counts remain deferred`
+    * `latency-bound parameter ... latency bounds remain deferred`
+    * `watchdog-limit parameter ... watchdog limits remain deferred`
+- Each gate computes its sub-axis param set via the existing per-axis
+  helpers (`_transaction_repeat_count_param_names`,
+  `_transaction_wait_count_param_names`,
+  `_transaction_latency_bound_param_names`,
+  `_transaction_watchdog_limit_param_names`) and uses a sub-axis
+  preserves helper that delegates to the shared
+  `_activation_override_preserves_static_integer_param` value-equality
+  check. The aggregator helper `_transaction_static_timing_param_names`
+  was removed (no remaining callers); the
+  `_activation_override_preserves_static_timing_param` helper was
+  replaced by four sub-axis preserves helpers mirroring the existing
+  contract/data-op/port pattern.
+- New regression `t/1373-isf-timing-param-sub-axis-diagnostic.t` covers
+  all four sub-axes at all three keyword sites (spawn/do/trigger) plus
+  same-value acceptance and unknown/shape precedence negative controls.
+- `t/1369-isf-timing-param-activation-override-gates.t` expectations
+  refreshed for the four cases (DELAY/ITER/LAT/WD_LIMIT) to expect their
+  sub-axis-specific diagnostics. `t/1370-isf-data-op-activation-override-width-gate.t`
+  cross-axis precedence assertion refreshed to expect the wait-count
+  diagnostic for its DELAY case.
+- Doc surfaces synchronized: `docs/ISF_SPEC.md` (focused-tests list
+  registers t/1373; sub-axis diagnostic paragraph), `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`
+  (sub-axis diagnostic note), and `docs/book/src/14-feature-backlog.md`
+  (sub-axis diagnostic sentence).
+- Validation passed: `prove -Iperl t/1369 t/1370 t/1373` with
+  `Files=3, Tests=12`; `./bin/ci-regression isf --no-book` with
+  `Files=279, Tests=2037`; `mdbook build docs/book`; `git diff --check`.
+- Active task tree: `none`. Broader implementation of each sub-axis
+  (per-activation static timing specialization for repeat counts, wait
+  counts, latency bounds, watchdog limits) remains separately deferred
+  per their own future lanes.

@@ -14402,3 +14402,14 @@ Exit criteria:
   sub-axis will emit its own targeted diagnostic instead. Same-value
   paths unchanged; broader implementation of each sub-axis remains a
   separate future lane.
+- `R14`: static-timing override sub-axis diagnostic precision now ships.
+  Validator emits four sub-axis-specific diagnostics at the spawn/do and
+  rule-trigger activation sites: `repeat-count parameter ... repeat
+  counts remain deferred`, `wait-count parameter ... wait counts remain
+  deferred`, `latency-bound parameter ... latency bounds remain deferred`,
+  and `watchdog-limit parameter ... watchdog limits remain deferred`.
+  Same-value acceptance and unknown/shape precedence unchanged.
+  Regression covered by `t/1373`; `t/1369` and `t/1370` expectations
+  refreshed; doc surfaces aligned in `ISF_SPEC.md`,
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and `14-feature-backlog.md`.
+  Broader implementation of each sub-axis remains separately deferred.

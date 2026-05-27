@@ -30075,3 +30075,16 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: static-timing override sub-axis diagnostic precision
 - Created and registered active task tree [docs/tasks/ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.md](docs/tasks/ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.md) to split the single static-timing override gate into four sub-axis-specific gates (repeat-count, wait-count, latency-bound, watchdog-limit). Each sub-axis will emit its own targeted diagnostic naming the axis and its own deferral phrase, so authors can tell which deferred lane is blocking their override. Selection commit only; no code change.
+
+### static-timing override sub-axis diagnostic precision shipped
+- `perl/FSM/Scheduler/ISF/LoweringIR.pm` now splits the aggregated static-timing override gate at both activation-override sites (spawn/do and rule trigger) into four sub-axis-specific gates, each emitting its own targeted diagnostic:
+    * `repeat-count parameter '<name>' on child '<child>'; activation-site parameter override-specialized repeat counts remain deferred`
+    * `wait-count parameter '<name>' on child '<child>'; activation-site parameter override-specialized wait counts remain deferred`
+    * `latency-bound parameter '<name>' on child '<child>'; activation-site parameter override-specialized latency bounds remain deferred`
+    * `watchdog-limit parameter '<name>' on child '<child>'; activation-site parameter override-specialized watchdog limits remain deferred`
+- Each gate computes its sub-axis param set via the existing per-axis helpers (`_transaction_repeat_count_param_names`, `_transaction_wait_count_param_names`, `_transaction_latency_bound_param_names`, `_transaction_watchdog_limit_param_names`) and uses a sub-axis preserves helper that delegates to the shared `_activation_override_preserves_static_integer_param` value-equality check. Same-value overrides keep working; unknown/shape precedence preserved.
+- Removed the no-longer-used aggregator helper `_transaction_static_timing_param_names` and the single `_activation_override_preserves_static_timing_param` (replaced by four sub-axis preserves helpers).
+- Added regression [t/1373-isf-timing-param-sub-axis-diagnostic.t](t/1373-isf-timing-param-sub-axis-diagnostic.t) covering all four sub-axes across spawn/do/rule-trigger plus same-value acceptance and unknown/shape precedence negative controls.
+- Refreshed [t/1369-isf-timing-param-activation-override-gates.t](t/1369-isf-timing-param-activation-override-gates.t) expectations for the four cases (DELAY/ITER/LAT/WD_LIMIT) and the cross-axis precedence assertion in [t/1370-isf-data-op-activation-override-width-gate.t](t/1370-isf-data-op-activation-override-width-gate.t).
+- Doc surfaces synchronized in [docs/ISF_SPEC.md](docs/ISF_SPEC.md) (focused-tests list + sub-axis diagnostic paragraph), [docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md) (sub-axis note), and [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md) (sub-axis sentence).
+- Broader implementation of each sub-axis (per-activation static timing specialization for repeat counts, wait counts, latency bounds, watchdog limits) remains separately deferred per their own future lanes.

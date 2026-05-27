@@ -2837,7 +2837,11 @@ Generated child activation overrides that target transaction parameters used
 by static timing lowering for repeat counts, wait counts, latency bounds, or
 top-level await-local watchdog limits now use the same default-preserving
 gate: same-value overrides are accepted, while mismatches fail closed until
-per-activation static timing specialization is shipped. The same
+per-activation static timing specialization is shipped. Each sub-axis now
+emits its own targeted diagnostic (`repeat-count parameter`, `wait-count
+parameter`, `latency-bound parameter`, or `watchdog-limit parameter`) and
+its own deferral phrase so the author can identify which deferred lane is
+blocking the override. The same
 default-preserving gate now also covers transaction parameters used by
 data-operation widths (`shift_left`, `shift_right`, `assemble`, `extract`)
 on generated children: mismatched activation-site overrides fail closed with

@@ -32816,3 +32816,28 @@ It is an exact-delay pulse request:
   this is a strictly diagnostic-precision slice. The broader
   implementation of each sub-axis remains separately deferred.
 - This selection commit changes no code.
+
+## 2026-05-27: static-timing override sub-axis diagnostic precision shipped
+- Shipped
+  [`ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2`](docs/tasks/ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.md):
+  validator at `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits four
+  sub-axis-specific diagnostics at both activation-override sites
+  instead of one aggregated `static-timing parameter` message.
+- The two gate sites (spawn/do path and rule trigger path) now compute
+  four sub-axis param sets via the existing per-axis helpers, then
+  check each axis independently. The first sub-axis whose set contains
+  the overridden name and whose value mismatches the default fires its
+  targeted diagnostic.
+- The aggregator `_transaction_static_timing_param_names` was removed
+  (no remaining callers). The shared
+  `_activation_override_preserves_static_integer_param` value-equality
+  check is reused by four new sub-axis preserves helpers, mirroring
+  the existing per-gate pattern for contract/data-op/port widths.
+- Multi-axis params (one parameter feeding more than one sub-axis)
+  trip the first matching sub-axis gate; the new behavior matches the
+  previous "first match wins" semantics but with sub-axis specificity.
+- New regression `t/1373` plus refreshed `t/1369` and `t/1370`
+  expectations lock the new diagnostics; full ISF CI passes at
+  `Files=279, Tests=2037`. Doc surfaces aligned across `ISF_SPEC.md`
+  (focused-tests + paragraph), `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`
+  (sub-axis note), and `14-feature-backlog.md` (sub-axis sentence).
