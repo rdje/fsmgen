@@ -30220,3 +30220,6 @@ This is the persistent technical change history for FSMGen.
 ### G5 13-intent examples shipped
 - Added "Happy-Path Examples" section to [docs/book/src/13-intent-scheduling.md](docs/book/src/13-intent-scheduling.md) with blinker + handshake_intent.
 - t/1376 27 → 29.
+
+### active R14 task tree selected: G2 low-density examples
+- Created [docs/tasks/ISF-G2-LOW-DENSITY-EXAMPLES.md](docs/tasks/ISF-G2-LOW-DENSITY-EXAMPLES.md) for audit gap G2.

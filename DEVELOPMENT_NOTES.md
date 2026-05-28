@@ -33336,3 +33336,6 @@ It is an exact-delay pulse request:
 
 ## 2026-05-29: G5 13-intent examples shipped
 - 2 fixtures. t/1376 27 → 29.
+
+## 2026-05-29: active R14 — G2 low-density examples
+- constants_demo, bank_demo, dataop_demo pre-validated to lower.

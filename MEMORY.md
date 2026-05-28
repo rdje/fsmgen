@@ -37801,3 +37801,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Added "Happy-Path Examples" section before "Quick Example" in
   13-intent-scheduling.md with blinker + handshake_intent.
 - t/1376 fixture count 27 → 29.
+
+## 2026-05-29: R14 active task tree — G2 low-density examples
+- ISF-G2-LOW-DENSITY-EXAMPLES adds constants_demo, bank_demo,
+  dataop_demo to 13a, 13e, 13e.

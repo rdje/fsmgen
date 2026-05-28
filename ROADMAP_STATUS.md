@@ -14583,3 +14583,5 @@ Exit criteria:
 - `R14`: G5 13-intent examples now ship. Two fixtures
   (blinker, handshake_intent) added before "Quick Example".
   t/1376 27 → 29.
+- `R14`: next active tree — `ISF-G2-LOW-DENSITY-EXAMPLES`.
+  Three fixtures for constants, bank, and dataop axes.

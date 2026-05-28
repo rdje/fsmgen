@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-G2-LOW-DENSITY-EXAMPLES` | `pending` | `R14` | `ISF-G2-LOW-DENSITY-EXAMPLES.2` | [docs/tasks/ISF-G2-LOW-DENSITY-EXAMPLES.md](docs/tasks/ISF-G2-LOW-DENSITY-EXAMPLES.md) |
 
 ## Proposed Task Trees
 

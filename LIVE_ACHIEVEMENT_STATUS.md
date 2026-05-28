@@ -16216,3 +16216,6 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-29: G5 13-intent examples shipped
 - 2 fixtures; t/1376 27 → 29.
+
+## 2026-05-29: Selected R14 G2 low-density examples
+- ISF-G2-LOW-DENSITY-EXAMPLES.
