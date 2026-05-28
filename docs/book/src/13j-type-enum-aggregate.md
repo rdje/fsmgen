@@ -210,3 +210,40 @@ Strict HDL generation is part of the shipped contract for the listed forms.
 
 When a form is accepted, the scheduled `.fsm` review artifact is the source of
 truth for how the ISF syntax reached the backend.
+
+## Aggregate Package Constants Fail Closed
+
+A qualified imported package constant `pkg.NAME` works only when
+`NAME` is a scalar entry. Aggregate or member paths
+(`pkg.AGG.member`, `pkg.LIST.idx`, etc.) fail closed across every
+shipped consumer with a `remains deferred` diagnostic naming the
+consumer axis. The rejected source shape is a package whose
+constant is an aggregate, paired with an actor that reaches into a
+member path:
+
+```text
+;; in a sibling shared.fsm file:
+(?pkg:shared
+  (+constants
+    (CONFIG ((lat 4) (depth 8)))))
+
+;; in the actor:
+(transaction worker
+  (on start)
+  (wait shared.CONFIG.lat)        ;; <-- aggregate/member path
+  (complete done))
+```
+
+The validator emits
+`Transaction 'worker': wait count package constant 'shared.CONFIG'
+aggregate/member path 'shared.CONFIG.lat' remains deferred; wait
+counts accept only qualified package scalar constants in this
+slice`. The same `remains deferred` phrase fires from the matching
+axis-specific helper for repeat counts, latency bounds, watchdog
+limits, contract windows, data-operation widths, activation
+parameter overrides, actor parameter defaults, and transaction
+parameter defaults. The deferred lane is aggregate/member-path
+resolution against the constant-symbol table; until it ships,
+authors must pre-resolve the member to a scalar `pkg.CONSTANT` (for
+example `(+constants (CONFIG_LAT 4))`) or use a same-transaction
+constant or parameter default instead.

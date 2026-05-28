@@ -631,6 +631,55 @@ generated ATL child `.fsm` artifacts, generated ATL tops, route mux/storage,
 trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure,
 compact movement aliases, or permanent actor grouping.
 
+Two-child data routes have two fail-closed shapes that the current
+subset rejects with targeted diagnostics. The first is **repeated
+activation**: the parent transaction triggers the source or sink
+child more than once across the route segment, so the route's
+exactly-one-trigger requirement no longer holds.
+
+```text
+(transaction parent
+  (on start)
+  (trigger producer.run)
+  (await producer.done)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (trigger producer.run)             ;; <-- second activation of the source
+  (complete done))
+```
+
+The validator emits `parent two-child data route requires exactly
+one transaction trigger per source and sink child in the current
+subset; repeated activation remains deferred`. The deferred lane is
+multi-activation routes; until it ships, each source/sink child
+must be triggered exactly once within the route segment.
+
+The second is **pre/post route parent work**: the parent does
+other transaction-body work either before or after the route
+segment in the same transaction, so the route segment is no longer
+the only executable parent work.
+
+```text
+(transaction parent
+  (on start)
+  (wait 4)                          ;; <-- pre-route parent work
+  (trigger producer.run)
+  (await producer.done)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (trigger consumer.run)
+  (await consumer.done)
+  (complete done))
+```
+
+The validator emits `parent two-child data route requires the route
+segment to be the only executable parent transaction-body work in
+the current subset; pre/post route parent work remains deferred`.
+The deferred lane is broader parent-transaction integration; until
+it ships, the route segment must be the only executable
+transaction body content (the entry guard plus completion are
+allowed because they are not transaction-body work).
+
 The scalar pin-ingress ATL fixture is shipped as
 `isf/atl_pin_ingress_pipeline.isf`. It uses the same drive-body movement
 syntax to move a top-level actor input into an actor in the network:

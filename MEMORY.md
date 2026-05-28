@@ -37676,3 +37676,35 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   routes), and 13b (await_any).
 - Two-commit pattern. `.1` is this selection; `.2` ships the
   examples.
+
+## 2026-05-29: R14 G3 remaining-deferred examples shipped
+- Completed `ISF-DIAGNOSTIC-EXAMPLES-G3.2`. Added 4 representative
+  examples for the remaining `remains deferred` template families:
+    * **13j**: one package-constant aggregate/member path example
+      (paired with a sibling `?pkg:shared` block) showing a
+      `shared.CONFIG.lat` aggregate path rejected as a wait
+      count; lane note explains every consumer axis uses the same
+      mechanic.
+    * **13f**: two two-child data route examples (repeated
+      activation + pre/post parent work) near the existing data-
+      route prose.
+    * **13d**: one await_any-after-do/spawn example placed in the
+      deeper-nested section so the audit's anchored-distance
+      checks for the missing-drain matrix in 13b remain intact.
+- All four examples use non-(actor) `lisp` blocks for the rejected
+  fragments and are followed by the verbatim diagnostic plus a
+  deferred-lane note. Audit script still reports 20 complete
+  fixtures lower cleanly + 0 failures.
+- Validation: re-audit script clean; `prove -Iperl t/1305 t/1307
+  t/1332` (Files=3, Tests=709); `mdbook build docs/book`;
+  `git diff --check`.
+- During this slice the user reiterated that examples must lower
+  properly (users copy-paste them). Adopted a stricter convention:
+  `lisp` blocks contain only accept-path fixtures that lower
+  cleanly; `text` blocks contain schematics and rejected-shape
+  illustrations. Converted 11 rejection-fragment blocks across
+  13b/13d/13f/13j (5 from the prior G1 complement diagnostic-
+  examples slice + 4 added by G3) from `lisp` to `text`. Audit
+  script still reports 20 complete fixtures lower cleanly + 0
+  failures.
+- Active task tree: `none`.

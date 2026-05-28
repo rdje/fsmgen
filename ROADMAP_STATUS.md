@@ -14529,3 +14529,15 @@ Exit criteria:
   addressing audit gap G3. Four representative examples will
   cover package-constant aggregate, two-child data route, and
   await_any-after-do/spawn `remains deferred` template families.
+- `R14`: G3 remaining-deferred examples now ship. Added a
+  package-constant aggregate example to 13j (paired with a
+  sibling `?pkg:shared` block), two two-child data route examples
+  to 13f (repeated activation + pre/post parent work), and one
+  await_any-after-do/spawn example to 13d. Audits `t/1305`,
+  `t/1307`, `t/1332` still pass. Adopted convention: `lisp` blocks
+  reserved for accept-path fixtures that lower cleanly; `text`
+  blocks for schematics and rejected-shape illustrations.
+  Converted 11 rejection-fragment blocks accordingly. The user
+  has separately requested a build-gate test that extracts every
+  `lisp` block and verifies it lowers — that lands as a follow-up
+  task tree.

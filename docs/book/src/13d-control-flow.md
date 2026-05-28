@@ -214,7 +214,7 @@ The loop-contained rejected shape is a `(repeat ...)` nested inside a
 `(while ...)` or `(until ...)` body whose body contains a `do` or
 `spawn` clause:
 
-```lisp
+```text
 (transaction parent
   (on start)
   (while cond                ;; loop wraps the repeat
@@ -237,7 +237,7 @@ The deeper-nested rejected shape is a `(repeat ...)` reached through
 more than one branch ancestor — either two `(when ...)` clauses
 nested directly, or a `(when ...)` inside a `(switch ...)` case:
 
-```lisp
+```text
 (transaction parent
   (on start)
   (when cond1
@@ -255,6 +255,39 @@ repeat-body lowering, which would extend the branch-contained
 shipped subset to additional nesting depths. The generic
 "supported only for top-level repeat clauses..." message remains as
 a safety-net fallback for shapes not yet classified.
+
+The branch-contained shipped subsets accept one multi-pending
+`(await_any done)` observation that the same body's later
+`(await_all done)` drains. They reject a **second** post-spawn
+`(await_any done)` observation between the first observation and
+the drain. The rejected shape adds a second observation after the
+later spawn:
+
+```text
+(transaction parent
+  (on start)
+  (when cond
+    (repeat n
+      (spawn worker as w0)
+      (await_any done)           ;; <-- prior observation; accepted
+      (do helper)
+      (spawn worker as w1)
+      (await_any done)           ;; <-- second observation; fail closed
+      (await_all done))))        ;; (drain still arrives later)
+```
+
+The validator emits `Transaction 'parent': when-body nested repeat
+spawn after local do while generated spawns are pending requires
+same-body '(await_all done)' drain; '(await_any done)' after the
+later spawn remains deferred`. The diagnostic phrase varies by the
+intervening do kind (`local do`, `generated-child do`, `generated
+do with static params`, `generated do with static params and
+bindings`, `generated do with static params and same-domain
+metadata`) and by the outer branch (`when-body` vs
+`switch-branch`), but the rejection rule is uniform. The deferred
+lane is the second observation after the later spawn; until it
+ships, authors must end the pending-spawn interval with the
+same-body drain (no intervening second observation).
 
 `do` while a nested spawn is pending is shipped for a local plain `(do
 child)` in a repeat directly inside a top-level `when` body or a top-level

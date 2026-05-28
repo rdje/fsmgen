@@ -256,7 +256,7 @@ rejected shape is a parent that activates a child whose
 `(params (WD_LIMIT N))` default feeds an `(await ack (watchdog WD_LIMIT))`
 clause, when the activation site passes a different value:
 
-```lisp
+```text
 (transaction parent
   (on start)
   (spawn worker as w0
@@ -463,7 +463,7 @@ a parent transaction that activates a child whose `(params (DELAY N))`
 default feeds a `(wait DELAY)` clause, when the activation site passes a
 different value:
 
-```lisp
+```text
 (transaction parent
   (on start)
   (spawn worker as w0
@@ -584,7 +584,7 @@ shape is a parent that activates a child whose `(params (ITER N))`
 default feeds a `(repeat ITER ...)` clause, when the activation site
 passes a different value:
 
-```lisp
+```text
 (transaction parent
   (on start)
   (do worker
@@ -1486,7 +1486,7 @@ rejected shape is a repeat-body generated `(do TARGET (domain X))`
 where `X` names a domain different from the calling transaction's
 domain:
 
-```lisp
+```text
 (clock-domains
   (domain core (clock clk) (reset rst_n) :default)
   (domain aux (clock aux_clk) (reset aux_rst_n)))
@@ -1873,7 +1873,7 @@ shape is a rule-trigger activation whose child default `(params (LAT N))`
 feeds a `(latency (min LAT) (max LAT))` clause, when the activation site
 passes a different value:
 
-```lisp
+```text
 (transaction worker
   (params
     (LAT 4))                 ;; child default drives the latency window

@@ -30175,3 +30175,9 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: G3 remaining-deferred diagnostic examples
 - Created [docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md) addressing audit gap G3. Four representative examples will cover package-constant aggregate/member path, two-child data route, and await_any-after-do/spawn `remains deferred` template families. Examples land in 13j, 13g, and 13b. Selection commit only.
+
+### G3 remaining-deferred diagnostic examples shipped
+- Added 4 representative `text`-tagged rejection-shape illustrations covering the three remaining "remains deferred" template families: package-constant aggregate/member path in [docs/book/src/13j-type-enum-aggregate.md](docs/book/src/13j-type-enum-aggregate.md); repeated activation and pre/post route parent work in [docs/book/src/13f-composition.md](docs/book/src/13f-composition.md); second `await_any` after the later do/spawn in [docs/book/src/13d-control-flow.md](docs/book/src/13d-control-flow.md). Each example shows the rejected source fragment, the verbatim diagnostic text, and a one-sentence note naming the deferred lane.
+- Adopted convention: `lisp` blocks reserved for accept-path fixtures that lower cleanly; `text` blocks for schematics and rejected-shape illustrations. The user noted that users will copy-paste examples, so anything in a `lisp` block must actually compile. Converted 11 prior rejection-fragment blocks across 13b/13d/13f/13j from `lisp` to `text` (7 from the prior G1 complement diagnostic-examples slice + 4 added by G3).
+- Re-audit reports 256 lisp blocks, 236 fragments, 20 complete fixtures lower cleanly, 0 parse failures, 0 lower failures.
+- Audits [t/1305](t/1305-isf-book-feature-matrix-audit.t), [t/1307](t/1307-isf-loop-body-doc-truth-audit.t), [t/1332](t/1332-isf-atl-doc-status-audit.t) reverified clean.

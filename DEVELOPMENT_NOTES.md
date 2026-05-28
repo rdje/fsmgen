@@ -33205,3 +33205,27 @@ It is an exact-delay pulse request:
   deferred-lane note. The audit script classifies non-(actor)
   blocks as fragments, so these do not affect the
   "lowers-cleanly" count.
+
+## 2026-05-29: G3 remaining-deferred examples shipped + block-tag convention adopted
+- Shipped
+  [`ISF-DIAGNOSTIC-EXAMPLES-G3.2`](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md):
+  added 4 rejection-shape illustrations across 13j (package-
+  constant aggregate), 13f (two-child route × 2), and 13d
+  (await_any-after-do/spawn).
+- During the slice the user reiterated that examples must lower
+  properly because users will copy-paste them. Adopted a
+  convention: `lisp` blocks reserved for accept-path fixtures that
+  lower cleanly; `text` blocks for schematics and rejected-shape
+  illustrations. Converted 11 rejection-fragment blocks across
+  13b/13d/13f/13j (7 from the prior G1 complement slice + 4 added
+  by G3) from `lisp` to `text` using a Perl one-liner. The
+  conversion preserves the educational content but stops the
+  `lisp` tag from advertising parseability for rejected shapes.
+- The user also requested a build-gate test that extracts every
+  `lisp` block and verifies it lowers. That lands as a separate
+  follow-up slice (`ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE`).
+- The 13d-control-flow.md await_any example needed to land outside
+  the 13b missing-drain anchor windows that t/1307 audits with
+  9600-char bounded distance checks. Initial placement in 13b
+  pushed audit phrases out of range; relocation to 13d resolved
+  it.

@@ -16123,3 +16123,21 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Public behavior changed: no; `.1: select` only.
 - Validation: `mdbook build docs/book`; `git diff --check`.
 - Next: `ISF-DIAGNOSTIC-EXAMPLES-G3.2`.
+
+## 2026-05-29: G3 remaining-deferred examples shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-DIAGNOSTIC-EXAMPLES-G3.2`](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md)
+  added 4 rejection-shape illustrations + converted 11 prior
+  rejection-fragment blocks from `lisp` to `text` after the user
+  reiterated that `lisp`-tagged examples must lower cleanly.
+- Public behavior changed: no — book content + block-tag
+  convention only.
+- Focused validation passed: re-audit script (20 OK, 0 failures);
+  `prove -Iperl t/1305 t/1307 t/1332` (Files=3, Tests=709);
+  `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice: the user requested a build-gate test that
+  extracts every `lisp` block and verifies it lowers; that lands
+  as `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE`. After that, continue
+  the G2-G8 queue (G7 13d accept-path or G2 low-density clause
+  keywords).

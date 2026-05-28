@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DIAGNOSTIC-EXAMPLES-G3`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`
@@ -92,8 +92,7 @@ Total: 4 new examples (1 + 2 + 1).
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DIAGNOSTIC-EXAMPLES-G3.1` | `pending` | Selection commit first. |
-| 2 | `ISF-DIAGNOSTIC-EXAMPLES-G3.2` | `pending` | Ship the four examples. |
+| 1 | `closed` | `done` | Both leaves shipped. `.2` added the 4 examples; audit and `t/1307` reverified clean. |
 
 ## Decisions
 
@@ -115,16 +114,26 @@ Total: 4 new examples (1 + 2 + 1).
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-29` | `ISF-DIAGNOSTIC-EXAMPLES-G3.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-29` | `ISF-DIAGNOSTIC-EXAMPLES-G3.2` | re-run audit; `prove -Iperl t/1305 t/1307 t/1332`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-29` | `ISF-DIAGNOSTIC-EXAMPLES-G3.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; selection-only commit |
+| `2026-05-29` | `ISF-DIAGNOSTIC-EXAMPLES-G3.2` | re-audit (0 failures); `prove -Iperl t/1305 t/1307 t/1332` (Files=3, Tests=709); `mdbook build docs/book`; `git diff --check` | `PASS` (await_any example placed in 13d after `t/1307` failed initial placement in 13b) |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DIAGNOSTIC-EXAMPLES-G3.1` | `ISF-DIAGNOSTIC-EXAMPLES-G3.1: select remaining-deferred examples` | `pending` |
-| `ISF-DIAGNOSTIC-EXAMPLES-G3.2` | `ISF-DIAGNOSTIC-EXAMPLES-G3.2: ship remaining-deferred examples` | `pending` |
+| `ISF-DIAGNOSTIC-EXAMPLES-G3.1` | `b8ff20f5 ISF-DIAGNOSTIC-EXAMPLES-G3.1: select remaining-deferred diagnostic examples` | Selection commit. |
+| `ISF-DIAGNOSTIC-EXAMPLES-G3.2` | `ISF-DIAGNOSTIC-EXAMPLES-G3.2: ship remaining-deferred diagnostic examples` | `pending` |
 
 ## Changelog
 
 - `2026-05-29`: Created task tree for audit gap G3.
+- `2026-05-29`: Shipped `.2`. Added 4 representative examples
+  (13j package-constant aggregate, 13f two-child route × 2, 13d
+  await_any-after-do/spawn). The 13d placement was deliberate —
+  initial 13b placement broke the t/1307 anchored-distance audit
+  windows. During the slice the user reiterated that examples
+  must lower properly; adopted convention `lisp` blocks reserved
+  for accept-path fixtures only, `text` blocks for schematics and
+  rejected-shape illustrations. Converted 11 prior rejection-
+  fragment blocks across 13b/13d/13f/13j accordingly. Audit
+  reports 20 complete fixtures lower cleanly + 0 failures.
