@@ -247,3 +247,62 @@ rejects non-positive single-part inferred remainders.
 Each cycle: SCL high → sample `sda_in` into `rdata` LSB → SCL low.
 
 After 8 cycles: `rdata` contains the full byte.
+
+## Complete Accept-Path Examples
+
+### Bank Storage Access
+
+```lisp
+(actor bank_demo
+  (storage
+    (bank ram (width 8) (depth 4)))
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input wr_addr (width 2))
+    (input wr_data (width 8))
+    (output rd_data (width 8))
+    (output done))
+  (transaction tx
+    (on start)
+    (store ram wr_addr wr_data)
+    (load ram wr_addr as rd_data)
+    (complete done)))
+```
+
+**Walkthrough.** `(storage (bank ram (width 8) (depth 4)))`
+declares one actor-owned 4-deep, 8-bit bank `ram`. The transaction
+writes one cell with `(store ram wr_addr wr_data)` and reads it
+back into the output `rd_data` with `(load ram wr_addr as rd_data)`.
+The lowered schedule emits one cycle for the store, one for the
+load, and one for the completion drive. `bank_accesses[]` in the
+schedule report records both accesses and the scheduled `.fsm`
+carries a scalarized `+size` family for the four cells.
+
+### Data Assembly And Extraction
+
+```lisp
+(actor dataop_demo
+  (storage
+    (var packed (width 8))
+    (var lo (width 4))
+    (var hi (width 4)))
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (output done))
+  (transaction tx
+    (on start)
+    (assemble lo hi as packed (widths 4 4))
+    (complete done)))
+```
+
+**Walkthrough.** Three storage variables: `lo` (4-bit), `hi`
+(4-bit), and `packed` (8-bit). `(assemble lo hi as packed (widths 4
+4))` concatenates `lo` (LSBs) and `hi` (MSBs) into `packed`. The
+`(widths ...)` option asserts the per-field widths so the lowerer
+can place each field at a concrete bit position. The transaction
+runs the assembly once and completes. The reverse direction uses
+`(extract packed (widths 4 4) (as lo hi))` — not shown here.

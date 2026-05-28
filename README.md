@@ -83,7 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
-- `docs/tasks/ISF-G2-LOW-DENSITY-EXAMPLES.md` — active `R14` task tree adding constants_demo, bank_demo, dataop_demo examples.
+- `docs/tasks/ISF-G2-LOW-DENSITY-EXAMPLES.md` — completed `R14` task tree that added constants_demo (13a), bank_demo + dataop_demo (13e) examples.
 - `docs/tasks/ISF-G5-13-INTENT-EXAMPLES.md` — completed `R14` task tree that added blinker + handshake_intent examples to 13-intent-scheduling.md.
 - `docs/tasks/ISF-G6-13J-EXAMPLES.md` — completed `R14` task tree that added 3 complete actor examples (type_alias_demo, enum_demo, aggregate_storage_demo) to 13j.
 - `docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md` — completed `R14` task tree that added 4 complete accept-path control-flow actor examples (when/switch+default/while/until) to 13d.

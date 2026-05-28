@@ -30223,3 +30223,8 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: G2 low-density examples
 - Created [docs/tasks/ISF-G2-LOW-DENSITY-EXAMPLES.md](docs/tasks/ISF-G2-LOW-DENSITY-EXAMPLES.md) for audit gap G2.
+
+### G2 low-density examples shipped
+- Added constants_demo example to [docs/book/src/13a-actor-interface.md](docs/book/src/13a-actor-interface.md).
+- Added bank_demo + dataop_demo examples to [docs/book/src/13e-data-manipulation.md](docs/book/src/13e-data-manipulation.md).
+- t/1376 29 → 32.
