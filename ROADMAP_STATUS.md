@@ -14557,3 +14557,11 @@ Exit criteria:
   `SPECFORGE_FEEDBACK_RESPONSE.md` are stale relative to the
   recent sub-axis diagnostic, loop-contained, deeper-nested, and
   `t/1376` shipped surface.
+- `R14`: downstream/contract handoff sync now ships.
+  `ISF_PUBLIC_INTERFACE_CONTRACT.md` activation-override section
+  references `t/1372-1376` and carries sub-axis, loop-contained,
+  deeper-nested, and book-lowering-gate wording.
+  `SPECFORGE_FEEDBACK_RESPONSE.md` carries a dated addendum
+  summarizing the targeted diagnostic surface, the lisp/text
+  block convention, the build gate, the cookbook recipes, and
+  the current audit set.

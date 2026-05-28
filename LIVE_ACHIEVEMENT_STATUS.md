@@ -16177,3 +16177,21 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   addendum to `SPECFORGE_FEEDBACK_RESPONSE.md`.
 - Public behavior changed: no (.1 select).
 - Next: `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2`.
+
+## 2026-05-29: Downstream/contract handoff sync shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2`](docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md)
+  brought both stale downstream/contract docs up to date.
+- `ISF_PUBLIC_INTERFACE_CONTRACT.md` activation-override section
+  now references `t/1372-1376` and carries sub-axis,
+  loop-contained, deeper-nested, and book-lowering-gate wording.
+- `SPECFORGE_FEEDBACK_RESPONSE.md` got a dated addendum
+  summarising the targeted diagnostic surface, the lisp/text
+  block convention, the build gate, the cookbook recipes, and
+  the current audit set.
+- Public behavior changed: no — doc surfaces only.
+- Focused validation passed: `prove -Iperl t/1305 t/1307 t/1332
+  t/1376` (Files=4, Tests=711); `mdbook build docs/book`;
+  `git diff --check`.
+- Next: continue the G2-G8 queue.

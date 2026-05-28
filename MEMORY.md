@@ -37751,3 +37751,19 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Created `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC` to propagate the
   diagnostic-precision and book-coverage shipped surface to both
   documents.
+
+## 2026-05-29: R14 downstream/contract handoff sync shipped
+- Completed `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2`.
+- `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` activation-override
+  section gained `t/1372`, `t/1373`, `t/1374`, `t/1375`, `t/1376`
+  references along with sub-axis, loop-contained, deeper-nested,
+  and book-lowering-gate wording.
+- `docs/SPECFORGE_FEEDBACK_RESPONSE.md` gained a dated addendum
+  summarizing the targeted rejection diagnostics, the
+  `lisp` vs `text` block convention, the book example correctness
+  build gate, the cookbook ISF recipes, and the current audit
+  set.
+- Validation: `prove -Iperl t/1305 t/1307 t/1332 t/1376`
+  (Files=4, Tests=711); `mdbook build docs/book`;
+  `git diff --check`.
+- Active task tree: `none`.

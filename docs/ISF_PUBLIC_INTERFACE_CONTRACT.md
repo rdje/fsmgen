@@ -1101,6 +1101,29 @@ Activation-site same-value override acceptance and mismatch diagnostics for
 generated child transaction parameters used by transaction port widths
 (`(ports (input/output NAME (width PARAM)))`) are checked by
 [t/1371-isf-transaction-port-activation-override-width-gate.t](../t/1371-isf-transaction-port-activation-override-width-gate.t).
+The static-timing override gate emits four sub-axis-specific
+diagnostics — `repeat-count parameter`, `wait-count parameter`,
+`latency-bound parameter`, and `watchdog-limit parameter` — each
+with its own deferral phrase (`... repeat counts remain deferred`,
+`... wait counts remain deferred`, etc.). The sub-axis split is
+checked by
+[t/1373-isf-timing-param-sub-axis-diagnostic.t](../t/1373-isf-timing-param-sub-axis-diagnostic.t).
+Cross-domain repeat-body `do` rejection emits a targeted
+`cross-domain repeat-body do remains deferred` diagnostic and is
+checked by
+[t/1372-isf-cross-domain-repeat-body-do-diagnostic.t](../t/1372-isf-cross-domain-repeat-body-do-diagnostic.t).
+Loop-contained repeat-body `do`/`spawn` emits a targeted
+`loop-contained repeat-body <do|spawn> remains deferred`
+diagnostic and is checked by
+[t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t).
+Deeper-nested repeat-body `do`/`spawn` (deeper-when or
+when-inside-switch) emits a targeted `deeper-nested repeat-body
+<do|spawn> remains deferred` diagnostic and is checked by
+[t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t](../t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t).
+Every `lisp`-tagged example in the ISF book chapters
+(`12-cookbook.md`, `13*.md`, `14-feature-backlog.md`) is required
+to parse and lower cleanly, enforced by
+[t/1376-isf-book-example-lowering-audit.t](../t/1376-isf-book-example-lowering-audit.t).
 The shipped subset is the top-level transaction form
 `(contract name (eventually signal within cycles))`. The older nested
 `(contract name (eventually signal (within cycles)))` spelling remains an

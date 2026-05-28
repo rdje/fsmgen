@@ -33285,3 +33285,22 @@ It is an exact-delay pulse request:
   [`ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC`](docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md)
   propagates the shipped surface to both docs.
 - This selection commit changes neither doc.
+
+## 2026-05-29: downstream/contract handoff sync shipped
+- Shipped
+  [`ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2`](docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md):
+  both stale documents are now current.
+- `ISF_PUBLIC_INTERFACE_CONTRACT.md` activation-override
+  paragraph was extended in-place — the change adds a single
+  cohesive paragraph after the existing
+  `t/1366/1369/1370/1371` references that lists `t/1372-t/1376`
+  with one sentence per new test naming the diagnostic and the
+  deferred lane. No restructuring of the document.
+- `SPECFORGE_FEEDBACK_RESPONSE.md` got a single dated addendum at
+  the end of the file. Original responses remain unchanged so
+  the document's historical record is preserved.
+- Audit set is now consistently referenced across
+  ISF_DOWNSTREAM_INTEGRATION_SPEC.md, ISF_PUBLIC_INTERFACE_CONTRACT.md,
+  SPECFORGE_FEEDBACK_RESPONSE.md, ISF_SPEC.md focused-tests list,
+  and the audit doc at
+  `docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md`.

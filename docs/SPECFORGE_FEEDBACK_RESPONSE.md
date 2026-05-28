@@ -350,3 +350,87 @@ project policies:
   check JSON diagnostics;
 - future accepted adapter-facing behavior should be backed by tests before it
   is treated as stable.
+
+## 2026-05-29: Diagnostic-Precision And Book-Coverage Status
+
+This addendum records the diagnostic-precision and book-coverage
+work shipped on the `R14` ISF lane this cycle, so a downstream
+consumer such as SPECFORGE can read the current rejection surface
+without diving into commit history.
+
+### Targeted rejection diagnostics
+
+Each phrase below is the verbatim text the validator emits.
+
+- **`Transaction '<tn>': repeat-body generated do target '<target>'
+  is in a different clock domain than the calling transaction;
+  cross-domain repeat-body do remains deferred`** — fires when a
+  repeat-body `(do TARGET (domain X))` annotation names a domain
+  different from the calling transaction's. Same diagnostic with
+  `when-body nested repeat` / `switch-branch nested repeat` prefix
+  for the nested-repeat sites. Locked by
+  [`t/1372-isf-cross-domain-repeat-body-do-diagnostic.t`](../t/1372-isf-cross-domain-repeat-body-do-diagnostic.t).
+- **Activation-override sub-axis diagnostics**: the previously
+  aggregated "static-timing parameter" gate now splits into four
+  sub-axis diagnostics — `repeat-count parameter`, `wait-count
+  parameter`, `latency-bound parameter`, and `watchdog-limit
+  parameter` — each paired with the matching `... repeat counts
+  remain deferred`, `... wait counts remain deferred`, `... latency
+  bounds remain deferred`, `... watchdog limits remain deferred`
+  phrase. Locked by
+  [`t/1373-isf-timing-param-sub-axis-diagnostic.t`](../t/1373-isf-timing-param-sub-axis-diagnostic.t).
+- **`Transaction '<tn>': loop-contained repeat-body <do|spawn>
+  remains deferred`** — fires when a `(repeat ...)` containing
+  `do` or `spawn` is nested inside `(while ...)` or `(until ...)`.
+  Locked by
+  [`t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t`](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t).
+- **`Transaction '<tn>': deeper-nested repeat-body <do|spawn>
+  remains deferred`** — fires for deeper-when nesting and
+  when-inside-switch nesting. Locked by
+  [`t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t`](../t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t).
+
+### Book example correctness build gate
+
+`docs/book/src/12-cookbook.md`, `13*.md`, and
+`14-feature-backlog.md` now distinguish `lisp` and `text` code
+blocks by intent:
+
+- `lisp` blocks are accept-path fixtures and must parse + lower
+  cleanly through `FSM::Adapter::ISF` + `FSM::Scheduler::ISF`.
+- `text` blocks are schematics, elided actor bodies, or
+  rejected-shape illustrations and are not validated.
+
+The convention is enforced by
+[`t/1376-isf-book-example-lowering-audit.t`](../t/1376-isf-book-example-lowering-audit.t),
+which extracts every `lisp` block from the 13 ISF book chapters
+and verifies parse + lower for any block starting with `(actor`.
+Any lowering failure blocks the test suite. Current state: 20
+complete fixtures lower cleanly, 236 fragments correctly skipped.
+
+### Cookbook ISF recipes
+
+`docs/book/src/12-cookbook.md` recipes 9-13 cover the core ISF
+authoring surface (basic actor, spawn, parameterized blocking do
+with same-value override, rule trigger, repeat-body local do).
+Each recipe includes a `**Walkthrough.**` paragraph that names
+every top-level clause used by the recipe in source order and
+explains its contribution to the lowered schedule.
+
+### Audit set
+
+The current ISF book/spec audit family is:
+
+- [`t/1305-isf-book-feature-matrix-audit.t`](../t/1305-isf-book-feature-matrix-audit.t)
+  — feature-matrix consistency.
+- [`t/1307-isf-loop-body-doc-truth-audit.t`](../t/1307-isf-loop-body-doc-truth-audit.t)
+  — loop-body doc truth.
+- [`t/1332-isf-atl-doc-status-audit.t`](../t/1332-isf-atl-doc-status-audit.t)
+  — ATL doc status.
+- [`t/1376-isf-book-example-lowering-audit.t`](../t/1376-isf-book-example-lowering-audit.t)
+  — book example lowering.
+- [`t/1250-isf-spec-focused-test-index-audit.t`](../t/1250-isf-spec-focused-test-index-audit.t)
+  — focused-tests list consistency with the actual `t/*.t` set.
+
+`docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md` records the
+broader audit plus example-correctness addendum that surfaced
+this work.

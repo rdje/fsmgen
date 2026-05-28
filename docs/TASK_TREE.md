@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC` | `pending` | `R14` | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2` | [docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md](docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md](docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md) |
 | `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE` | `done` | `R14` | `closed` | [docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md](docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md) |
 | `ISF-DIAGNOSTIC-EXAMPLES-G3` | `done` | `R14` | `closed` | [docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md) |
 | `ISF-COOKBOOK-WALKTHROUGHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md](docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md) |

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`
@@ -87,8 +87,7 @@ relevant wording and test references to both docs.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.1` | `pending` | Selection commit. |
-| 2 | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2` | `pending` | Ship the prose updates. |
+| 1 | `closed` | `done` | Both leaves shipped. `.2` updated both docs and reverified audits. |
 
 ## Decisions
 
@@ -108,14 +107,14 @@ relevant wording and test references to both docs.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-29` | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-29` | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2` | `prove -Iperl t/1305 t/1307 t/1332 t/1376`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-29` | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; selection-only commit |
+| `2026-05-29` | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2` | `prove -Iperl t/1305 t/1307 t/1332 t/1376` (Files=4, Tests=711); `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.1` | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.1: select downstream/contract handoff sync` | `pending` |
+| `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.1` | `a2d12eb0 ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.1: select downstream/contract handoff sync` | Selection commit. |
 | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2` | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2: ship downstream/contract handoff sync` | `pending` |
 
 ## Changelog
@@ -123,3 +122,13 @@ relevant wording and test references to both docs.
 - `2026-05-29`: Created per user question whether handoff
   documents for downstream consumers and public API contract
   stabilization were updated.
+- `2026-05-29`: Shipped `.2`.
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` activation-override
+  section now references `t/1372` (cross-domain), `t/1373`
+  (sub-axes), `t/1374` (loop-contained), `t/1375` (deeper-nested),
+  and `t/1376` (book-example lowering) plus the matching
+  diagnostic wording. `docs/SPECFORGE_FEEDBACK_RESPONSE.md` gained
+  a dated "Diagnostic-Precision And Book-Coverage Status" addendum
+  summarizing the targeted rejection diagnostics, the
+  `lisp` vs `text` block convention, the book example lowering
+  build gate, the cookbook ISF recipes, and the current audit set.
