@@ -14575,3 +14575,6 @@ Exit criteria:
 - `R14`: next active tree — `ISF-G6-13J-EXAMPLES`. Three
   fixtures (type_alias_demo, enum_demo, aggregate_storage_demo)
   for 13j.
+- `R14`: G6 13j examples now ship. 13j gains a "Complete
+  Accept-Path Examples" section with three fixtures. t/1376
+  fixture count 24 → 27.

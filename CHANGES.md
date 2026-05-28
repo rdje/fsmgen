@@ -30209,3 +30209,7 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: G6 13j examples
 - Created [docs/tasks/ISF-G6-13J-EXAMPLES.md](docs/tasks/ISF-G6-13J-EXAMPLES.md) for audit gap G6.
+
+### G6 13j examples shipped
+- Added "Complete Accept-Path Examples" section at the end of [docs/book/src/13j-type-enum-aggregate.md](docs/book/src/13j-type-enum-aggregate.md) with three actor fixtures (`type_alias_demo`, `enum_demo`, `aggregate_storage_demo`) each followed by a Walkthrough.
+- t/1376 now reports 27 fixtures lower cleanly (was 24).

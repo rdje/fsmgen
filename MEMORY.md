@@ -37787,3 +37787,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Created `ISF-G6-13J-EXAMPLES` for audit gap G6. Three actor
   fixtures (type_alias_demo, enum_demo, aggregate_storage_demo)
   pre-validated to lower.
+
+## 2026-05-29: R14 G6 13j examples shipped
+- Added "Complete Accept-Path Examples" section at end of 13j with
+  type_alias_demo + enum_demo + aggregate_storage_demo, each with
+  Walkthrough. t/1376 fixture count 24 → 27.

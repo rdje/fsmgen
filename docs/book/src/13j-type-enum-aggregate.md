@@ -247,3 +247,95 @@ resolution against the constant-symbol table; until it ships,
 authors must pre-resolve the member to a scalar `pkg.CONSTANT` (for
 example `(+constants (CONFIG_LAT 4))`) or use a same-transaction
 constant or parameter default instead.
+
+## Complete Accept-Path Examples
+
+The chapter so far has shown schematic forms and table entries.
+The actors below are self-contained, copy-pasteable fixtures that
+each exercise one of the shipped type/enum/aggregate axes.
+
+### Scalar type alias
+
+```lisp
+(actor type_alias_demo
+  (types
+    (type byte (bits 8)))
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input data (type byte))
+    (output done))
+  (transaction tx
+    (on start
+      (sample data as captured))
+    (wait 2)
+    (complete done)))
+```
+
+**Walkthrough.** `(types (type byte (bits 8)))` declares one
+actor-local scalar alias `byte` resolving to an 8-bit value.
+`(input data (type byte))` uses that alias in place of `(width 8)`,
+which keeps the authored intent (`byte`) visible in the scheduled
+`.fsm` `+size` review entries. The transaction samples the input
+into local register `captured` at entry, waits two cycles, and
+completes. The lowered FSM carries the alias as a typed `+size`
+entry rather than a raw width.
+
+### Local enum
+
+```lisp
+(actor enum_demo
+  (enums
+    (mode (IDLE 0) (BUSY 1) (DONE 2)))
+  (constants
+    (DEFAULT_STATE mode.IDLE))
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (output done))
+  (transaction tx
+    (on start)
+    (wait 4)
+    (complete done)))
+```
+
+**Walkthrough.** `(enums (mode ...))` declares one enum family
+`mode` with three members. Enum members are addressed dot-qualified
+(`mode.IDLE`, `mode.BUSY`, `mode.DONE`). `(constants (DEFAULT_STATE
+mode.IDLE))` uses the enum-member token as a constant value: the
+authored `mode.IDLE` is preserved in the scheduled `.fsm`
+`+constants` and `actor_constants[]` entries while the resolved
+integer is available internally for static comparisons and waits.
+The transaction itself is the minimal on/wait/complete skeleton —
+the enum only contributes review metadata in this example.
+
+### Aggregate storage carrier
+
+```lisp
+(actor aggregate_storage_demo
+  (types
+    (type frame_t (record (mode (bits 2)) (flag bit))))
+  (storage
+    (var frame (type frame_t)))
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (output done))
+  (transaction tx
+    (on start)
+    (wait 2)
+    (complete done)))
+```
+
+**Walkthrough.** `(type frame_t (record (mode (bits 2)) (flag
+bit)))` declares a packed record alias with two members. `(storage
+(var frame (type frame_t)))` declares one actor-owned scalar
+storage `frame` whose width comes from the packed sum (`2 + 1 = 3`
+bits). Aggregate carriers are accepted in actor-owned storage; they
+are not yet accepted as interface or transaction ports. The
+scheduled `.fsm` keeps the alias `frame_t` in typed `+size`
+entries and the schedule report exposes the storage item with its
+packed width, authored type, and resolved `type_kind` (`record`).

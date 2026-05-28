@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-G6-13J-EXAMPLES`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`

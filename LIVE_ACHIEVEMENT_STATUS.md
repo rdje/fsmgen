@@ -16207,3 +16207,6 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-29: Selected R14 G6 13j examples
 - `ISF-G6-13J-EXAMPLES`. Three fixtures for 13j.
+
+## 2026-05-29: G6 13j examples shipped
+- 3 fixtures added; t/1376 24 → 27. Audits clean.

@@ -33326,3 +33326,7 @@ It is an exact-delay pulse request:
 ## 2026-05-29: active R14 task tree — G6 13j examples
 - Three actor fixtures (type_alias_demo, enum_demo,
   aggregate_storage_demo) pre-validated to lower.
+
+## 2026-05-29: G6 13j examples shipped
+- Section added to 13j with three fixtures and Walkthroughs.
+- t/1376 fixture count 24 → 27.
