@@ -30117,3 +30117,8 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: loop-contained and deeper-nested diagnostic doc-truth sync
 - Created and registered active task tree [docs/tasks/ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.md](docs/tasks/ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.md) to synchronize book chapters 13b/13d/13h/13k with the new targeted diagnostics shipped by the loop-contained and deeper-nested diagnostic-precision slices. Selection commit only; no code or test change.
+
+### loop-contained and deeper-nested diagnostic doc-truth sync shipped
+- Updated [docs/book/src/13b-transactions.md](docs/book/src/13b-transactions.md) (deeper-branch/loop-contained deferral paragraph), [docs/book/src/13d-control-flow.md](docs/book/src/13d-control-flow.md) (deeper-branch/loop-contained reject sentence), [docs/book/src/13h-lowering-reference.md](docs/book/src/13h-lowering-reference.md) (deeper-branch/loop-contained reject paragraph), and [docs/book/src/13k-isf-feature-support-matrix.md](docs/book/src/13k-isf-feature-support-matrix.md) (cross-domain/loop-contained/deeper-branch deferral sentence) to mention the new targeted diagnostics.
+- Audits [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t), [t/1307-isf-loop-body-doc-truth-audit.t](t/1307-isf-loop-body-doc-truth-audit.t), and [t/1332-isf-atl-doc-status-audit.t](t/1332-isf-atl-doc-status-audit.t) reverified clean after the prose updates.
+- Pure doc-truth sync. Validator already emits the targeted diagnostics in production; this slice only updates the prose that describes them.

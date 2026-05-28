@@ -608,7 +608,15 @@ accept declared same-domain `(domain NAME)` metadata when static `(params
 ...)` overrides are present.
 
 Deeper branch nesting and loop-contained repeats remain outside both nested
-subsets.
+subsets. Loop-contained repeat-body `do` and `spawn` (a `(repeat ...)`
+nested inside `(while ...)` or `(until ...)` whose body contains a `do`
+or `spawn`) fail closed with a targeted `loop-contained repeat-body
+<do|spawn> remains deferred` diagnostic. Deeper-nested repeat-body `do`
+and `spawn` (deeper-when nesting or when-inside-switch nesting) fail
+closed with a targeted `deeper-nested repeat-body <do|spawn> remains
+deferred` diagnostic. The original generic "supported only for
+top-level..." message remains as a safety-net fallback for shapes not
+yet classified.
 
 The shipped repeat-body clause surface also includes generated blocking `(do
 child)` when the target child is already emitted as a generated child by

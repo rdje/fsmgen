@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-27`
 - Last updated: `2026-05-27`
@@ -71,8 +71,7 @@ deferrals in passing.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.1` | `pending` | Selection commit must land before the book changes so the slice is owned through `COMMIT.md`. |
-| 2 | `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2` | `pending` | Ship the synchronized book prose plus live-doc updates. |
+| 1 | `closed` | `done` | Both leaves shipped. `.2` updated the four target chapters and reverified the audits. |
 
 ## Decisions
 
@@ -95,14 +94,14 @@ deferrals in passing.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-27` | `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-27` | `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2` | `prove -Iperl t/1305 t/1307 t/1332`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-27` | `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; selection-only commit |
+| `2026-05-27` | `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2` | `prove -Iperl t/1305 t/1307 t/1332` (Files=3, Tests=709); `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.1` | `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.1: select loop-contained and deeper-nested diagnostic doc-truth sync` | `pending commit hash` |
+| `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.1` | `2c77d31a ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.1: select loop-contained and deeper-nested diagnostic doc-truth sync` | Selection commit. |
 | `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2` | `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2: ship loop-contained and deeper-nested diagnostic doc-truth sync` | `pending commit hash` |
 
 ## Changelog
@@ -111,3 +110,11 @@ deferrals in passing.
   targeted-diagnostic synchronization to book chapters 13b/13d/13h/13k.
   Other doc surfaces were already synchronized when the
   diagnostic-precision slices shipped.
+- `2026-05-27`: Shipped `.2`. Updated `13b-transactions.md` (deeper-
+  branch/loop-contained deferral paragraph), `13d-control-flow.md`
+  (deeper-branch/loop-contained reject sentence),
+  `13h-lowering-reference.md` (deeper-branch/loop-contained reject
+  paragraph), and `13k-isf-feature-support-matrix.md`
+  (cross-domain/loop-contained/deeper-branch deferral sentence) to
+  mention the new targeted diagnostics. Audits `t/1305`, `t/1307`,
+  `t/1332` reverified clean.

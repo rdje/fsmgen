@@ -15939,3 +15939,17 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Next bounded slice:
   `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2`
   (book prose updates + audit reverification).
+
+## 2026-05-27: Loop-contained and deeper-nested diagnostic doc-truth sync shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2`](docs/tasks/ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.md)
+  updated the four book chapters that mention deeper-branch and
+  loop-contained repeat deferrals to also describe the new targeted
+  diagnostics. Doc-truth coverage for the targeted-diagnostic
+  shipped surface is now complete.
+- Public behavior changed: no — pure doc-truth sync.
+- Focused validation passed: `prove -Iperl t/1305 t/1307 t/1332`
+  (Files=3, Tests=709); `mdbook build docs/book`;
+  `git diff --check`.
+- Next bounded slice: another item from the backlog.

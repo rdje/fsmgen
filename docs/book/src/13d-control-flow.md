@@ -204,7 +204,11 @@ Those branch-contained nested spawns reuse the static generated-child handoff
 model and preserve source-order samples before the spawn or sync states.
 
 Both branch-contained bound nested generated `do` subsets still reject deeper
-branch nesting and loop-contained repeats.
+branch nesting and loop-contained repeats. Loop-contained and
+deeper-nested repeat-body `do`/`spawn` now emit targeted diagnostics
+(`loop-contained repeat-body <do|spawn> remains deferred` and
+`deeper-nested repeat-body <do|spawn> remains deferred`) so authors
+can identify which deferred lane is blocking their case.
 
 `do` while a nested spawn is pending is shipped for a local plain `(do
 child)` in a repeat directly inside a top-level `when` body or a top-level

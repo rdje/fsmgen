@@ -32963,3 +32963,17 @@ It is an exact-delay pulse request:
   diagnostics in production; this slice only updates the prose that
   describes them.
 - This selection commit changes no code.
+
+## 2026-05-27: loop-contained and deeper-nested diagnostic doc-truth sync shipped
+- Shipped
+  [`ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2`](docs/tasks/ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.md):
+  the four book chapters that mention deeper-branch/loop-contained
+  repeat deferrals now also describe the new targeted diagnostics.
+- Updated 13b (transactions paragraph), 13d (control-flow sentence),
+  13h (lowering-reference paragraph), and 13k (feature-support-matrix
+  sentence). Each chapter previously named only the deferral; each
+  now also names the targeted diagnostic phrase.
+- Audits `t/1305`, `t/1307`, `t/1332` reverified at `Files=3,
+  Tests=709`. The doc-truth coverage for the targeted-diagnostic
+  shipped surface is now complete across both the spec and book
+  surfaces.

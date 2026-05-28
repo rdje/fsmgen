@@ -14466,3 +14466,10 @@ Exit criteria:
   deeper-nested precision slices. Other doc surfaces (`14-feature-backlog.md`,
   `ISF_SPEC.md`, `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`) were already
   synchronized when those slices shipped.
+- `R14`: loop-contained and deeper-nested diagnostic doc-truth sync
+  now ships. Book chapters `13b-transactions.md`,
+  `13d-control-flow.md`, `13h-lowering-reference.md`, and
+  `13k-isf-feature-support-matrix.md` updated to mention the new
+  targeted diagnostics. Audits `t/1305`, `t/1307`, `t/1332` still
+  pass. Doc-truth coverage for the targeted-diagnostic shipped
+  surface is now complete.

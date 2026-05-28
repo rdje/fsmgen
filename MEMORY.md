@@ -37417,3 +37417,25 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   prose updates + audit reverification).
 - Active task tree: `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC`.
 - Current frontier: `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2`.
+
+## 2026-05-27: R14 loop-contained and deeper-nested diagnostic doc-truth sync shipped
+- Completed
+  `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2`
+  and closed the active task tree.
+- Updated four book chapters to mention the new targeted diagnostics
+  shipped by the prior loop-contained and deeper-nested precision
+  slices:
+    * `docs/book/src/13b-transactions.md` (deeper-branch/loop-contained
+      deferral paragraph)
+    * `docs/book/src/13d-control-flow.md` (deeper-branch/loop-contained
+      reject sentence)
+    * `docs/book/src/13h-lowering-reference.md` (deeper-branch/
+      loop-contained reject paragraph)
+    * `docs/book/src/13k-isf-feature-support-matrix.md`
+      (cross-domain/loop-contained/deeper-branch deferral sentence)
+- Pure doc-truth sync. Validator already emits the targeted
+  diagnostics in production; this slice only updates the prose that
+  describes them.
+- Validation passed: `prove -Iperl t/1305 t/1307 t/1332` with
+  `Files=3, Tests=709`; `mdbook build docs/book`; `git diff --check`.
+- Active task tree: `none`.

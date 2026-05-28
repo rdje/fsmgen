@@ -1428,6 +1428,14 @@ are present.
 Both nested subsets reject deeper branch nesting, loop-contained repeats, and
 generated/spawned nested activation beyond the documented branch-contained
 generated `do` cases and the branch-contained generated-spawn cases.
+Loop-contained repeat-body `do` and `spawn` (a `(repeat ...)` nested
+inside `(while ...)` or `(until ...)`) emit a targeted `loop-contained
+repeat-body <do|spawn> remains deferred` diagnostic. Deeper-nested
+repeat-body `do` and `spawn` (deeper-when nesting or when-inside-switch
+nesting) emit a targeted `deeper-nested repeat-body <do|spawn> remains
+deferred` diagnostic. The original generic "supported only for
+top-level..." message remains as a safety-net fallback for shapes not
+yet classified.
 
 Representative repeat-body spawn lowering uses the static generated instance
 handoff, then an optional sample state, before the repeat check:

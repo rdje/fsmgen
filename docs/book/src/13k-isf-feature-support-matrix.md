@@ -962,6 +962,11 @@ contract when they resolve to non-negative integer literals.
 Generated or spawned nested child activation, cross-domain repeat-body `do`,
 deeper branch repeat activation, loop-contained repeat activation, and nested
 `stage` or `contract` clauses remain outside the shipped repeat-body subset.
+Cross-domain, loop-contained, and deeper-nested repeat-body `do`/`spawn`
+each now emit their own targeted `<axis> repeat-body <do|spawn> remains
+deferred` diagnostic so authors can identify which deferred lane is
+blocking their specific case; the original generic "supported only for
+top-level..." message remains as a safety-net fallback.
 
 <details>
 <summary>Repeat-body audit markers</summary>
