@@ -33342,3 +33342,5 @@ It is an exact-delay pulse request:
 
 ## 2026-05-29: G2 low-density examples shipped
 - 3 fixtures. t/1376 29 → 32.
+
+## 2026-05-29: G4 selected

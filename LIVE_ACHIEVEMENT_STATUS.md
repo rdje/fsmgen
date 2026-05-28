@@ -16222,3 +16222,6 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-29: G2 low-density examples shipped
 - 3 fixtures; t/1376 29 → 32.
+
+## 2026-05-29: Selected R14 G4 backlog truth-sync
+- ISF-G4-BACKLOG-TRUTH-SYNC.

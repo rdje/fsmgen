@@ -37809,3 +37809,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 ## 2026-05-29: R14 G2 low-density examples shipped
 - Added constants_demo to 13a, bank_demo + dataop_demo to 13e.
 - t/1376 29 → 32.
+
+## 2026-05-29: R14 G4 backlog truth-sync — selected
+- ISF-G4-BACKLOG-TRUTH-SYNC adds a dated status snapshot to
+  14-feature-backlog.md.

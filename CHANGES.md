@@ -30228,3 +30228,6 @@ This is the persistent technical change history for FSMGen.
 - Added constants_demo example to [docs/book/src/13a-actor-interface.md](docs/book/src/13a-actor-interface.md).
 - Added bank_demo + dataop_demo examples to [docs/book/src/13e-data-manipulation.md](docs/book/src/13e-data-manipulation.md).
 - t/1376 29 → 32.
+
+### active R14 task tree selected: G4 backlog truth-sync
+- Created [docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md).

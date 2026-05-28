@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-G4-BACKLOG-TRUTH-SYNC` | `pending` | `R14` | `ISF-G4-BACKLOG-TRUTH-SYNC.2` | [docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md) |
 
 ## Proposed Task Trees
 
