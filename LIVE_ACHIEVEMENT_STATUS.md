@@ -15832,3 +15832,20 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Next bounded slice: another item from the backlog (broader
   implementation of each sub-axis remains separately deferred per
   their own future lanes).
+
+## 2026-05-27: Selected R14 loop-contained repeat-body activation diagnostic precision
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.md).
+- Goal: emit a targeted `loop-contained repeat-body <do|spawn>
+  remains deferred` diagnostic when a `(repeat ...)` with `do` or
+  `spawn` body clauses is nested inside `(while ...)` or `(until
+  ...)`. Other unsupported nested-repeat cases keep their existing
+  generic message. Broader loop-contained implementation remains a
+  future leaf.
+- Public behavior changed: no; `.1: select` commit only registers
+  the task tree.
+- Focused validation passed: `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice:
+  `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`
+  (validator change + `t/1374` regression + doc-surface updates).

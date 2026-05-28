@@ -32841,3 +32841,25 @@ It is an exact-delay pulse request:
   `Files=279, Tests=2037`. Doc surfaces aligned across `ISF_SPEC.md`
   (focused-tests + paragraph), `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`
   (sub-axis note), and `14-feature-backlog.md` (sub-axis sentence).
+
+## 2026-05-27: active R14 task tree selected — loop-contained repeat-body activation diagnostic precision
+- Authors who wrap a `(repeat ...)` with a `do` or `spawn` body inside
+  a `(while ...)` or `(until ...)` currently get the generic
+  "repeat-body do is supported only for top-level repeat clauses,
+  top-level when-body nested repeat clauses, or top-level switch-branch
+  nested repeat clauses" diagnostic. The same generic message also
+  fires for deeper when nesting and when-inside-switch cases, so the
+  author cannot tell which deferred lane is blocking their particular
+  case.
+- The slice
+  [`ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.md)
+  emits a targeted `loop-contained repeat-body <do|spawn> remains
+  deferred` diagnostic when the validator detects positive `while` or
+  `until` depth in `$context_depths`. Other unsupported nested-repeat
+  cases keep their existing generic message — they may receive their
+  own diagnostic-precision lanes later.
+- New helper `_repeat_body_context_is_loop_contained($context_depths)`
+  centralises the loop-depth check; both unsupported-repeat-body entry
+  points (do at `LoweringIR.pm:6430`, spawn at `LoweringIR.pm:6362`)
+  call it before the existing generic confess.
+- This selection commit changes no code.

@@ -14413,3 +14413,13 @@ Exit criteria:
   refreshed; doc surfaces aligned in `ISF_SPEC.md`,
   `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and `14-feature-backlog.md`.
   Broader implementation of each sub-axis remains separately deferred.
+- `R14`: next active task tree selected —
+  `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`.
+  Sharpens the diagnostic when a `(repeat ...)` containing `do` or
+  `spawn` body clauses is nested inside `(while ...)` or `(until ...)`.
+  The generic "supported only for top-level..." message currently fires
+  for loop-contained, deeper when nesting, and when-inside-switch cases
+  alike. The slice ships a targeted `loop-contained repeat-body
+  <do|spawn> remains deferred` for the loop-contained subset; other
+  unsupported nested-repeat cases keep the generic message. Broader
+  loop-contained implementation remains a separate future leaf.

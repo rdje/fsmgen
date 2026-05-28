@@ -37260,3 +37260,26 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   (per-activation static timing specialization for repeat counts, wait
   counts, latency bounds, watchdog limits) remains separately deferred
   per their own future lanes.
+
+## 2026-05-27: R14 active task tree selected — loop-contained repeat-body activation diagnostic precision
+- Created and registered active task tree
+  [`ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.md).
+- Probed current behavior: `(while cond (repeat loops (do worker)))`
+  and `(while cond (repeat loops (spawn worker as w0) (await_all done)))`
+  currently emit the generic "repeat-body do is supported only for
+  top-level repeat clauses, top-level when-body nested repeat clauses,
+  or top-level switch-branch nested repeat clauses" (symmetric for
+  `spawn`). The same generic message also fires for deeper when
+  nesting and when-inside-switch — the author cannot tell which
+  deferred lane is blocking their specific case.
+- Slice scope: emit a targeted `loop-contained repeat-body <do|spawn>
+  remains deferred` diagnostic when the validator detects positive
+  `while` or `until` depth in `$context_depths`. Other unsupported
+  nested-repeat cases keep their existing generic message.
+- New helper `_repeat_body_context_is_loop_contained` checks
+  `$context_depths->{while}` and `$context_depths->{until}` for
+  positive depth.
+- Two-commit pattern: `.1: select` (this slice), `.2: ship` (validator
+  change + `t/1374` regression + doc surfaces).
+- Active task tree: `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`.
+- Current frontier: `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`.
