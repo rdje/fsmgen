@@ -32884,3 +32884,26 @@ It is an exact-delay pulse request:
   `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` (loop-contained note in nested
   subset paragraph), and `14-feature-backlog.md` (loop-contained
   sentence).
+
+## 2026-05-27: active R14 task tree selected — deeper-nested repeat-body activation diagnostic precision
+- After the loop-contained slice landed, the only remaining unsupported
+  cases reaching the generic "repeat-body do/spawn is supported only
+  for top-level repeat clauses..." message at the two repeat-body
+  subset entry points are deeper-when nesting (`label='when body'` +
+  `$context_depths->{when} > 1`) and when-inside-switch nesting
+  (`label='when body'` + `$context_depths->{switch} >= 1` +
+  `$context_depths->{when} >= 1`).
+- The slice
+  [`ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.md)
+  emits a targeted `deeper-nested repeat-body <do|spawn> remains
+  deferred` for both deeper-nested sub-cases at both gate sites.
+  Loop-contained fires its existing targeted diagnostic first; the
+  generic message remains as a safety-net fallback for future shapes
+  not yet classified.
+- The check reuses the existing `_context_depths_match_exactly` and
+  `_repeat_body_context_is_loop_contained` helpers without
+  introducing a new helper. The deeper-nested condition is "after the
+  three accepted contexts are excluded and after loop-contained is
+  excluded, the remaining unsupported case is deeper-nested" — that
+  collapses to a residual branch in the existing gate code.
+- This selection commit changes no code.

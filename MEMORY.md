@@ -37317,3 +37317,20 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Active task tree: `none`. Broader loop-contained repeat activation
   (extending the shipped subset to actually support `repeat` inside
   `while`/`until` bodies) remains a future leaf of this same tree.
+
+## 2026-05-27: R14 active task tree selected — deeper-nested repeat-body activation diagnostic precision
+- Created and registered active task tree
+  [`ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.md).
+- After the prior loop-contained slice landed, the only remaining
+  unsupported cases reaching the generic "repeat-body do/spawn is
+  supported only for top-level repeat clauses..." message are
+  deeper-when nesting and when-inside-switch nesting.
+- Slice scope: emit a targeted `deeper-nested repeat-body <do|spawn>
+  remains deferred` diagnostic for those two cases at both repeat-body
+  subset entry points. Loop-contained still fires its existing
+  targeted diagnostic first; the generic message remains as a
+  safety-net fallback.
+- Two-commit pattern: `.1: select` (this slice), `.2: ship` (validator
+  change + `t/1375` regression + `t/1215` refresh + doc surfaces).
+- Active task tree: `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`.
+- Current frontier: `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`.

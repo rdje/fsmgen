@@ -15869,3 +15869,20 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Next bounded slice: another item from the backlog (broader
   loop-contained repeat activation implementation remains a future
   leaf of this same tree).
+
+## 2026-05-27: Selected R14 deeper-nested repeat-body activation diagnostic precision
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`](docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.md).
+- Goal: emit a targeted `deeper-nested repeat-body <do|spawn>
+  remains deferred` diagnostic for deeper-when and when-inside-switch
+  cases at the two repeat-body subset entry points. Loop-contained
+  unchanged; generic message kept as safety-net fallback. Broader
+  deeper-nested implementation remains a future leaf.
+- Public behavior changed: no; `.1: select` commit only registers
+  the task tree.
+- Focused validation passed: `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice:
+  `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`
+  (validator change + `t/1375` regression + `t/1215` refresh + doc
+  updates).

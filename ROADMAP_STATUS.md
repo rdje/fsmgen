@@ -14432,3 +14432,11 @@ Exit criteria:
   `ISF_SPEC.md`, `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and
   `14-feature-backlog.md`. Broader loop-contained implementation
   remains a future leaf of the same tree.
+- `R14`: next active task tree selected —
+  `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`.
+  Sharpens the remaining generic "supported only for top-level..."
+  diagnostic by emitting a targeted `deeper-nested repeat-body
+  <do|spawn> remains deferred` for deeper-when and when-inside-switch
+  cases at both repeat-body subset entry points. Loop-contained
+  unchanged; generic message kept as safety-net fallback. Broader
+  deeper-nested implementation remains a future leaf.
