@@ -14495,3 +14495,7 @@ Exit criteria:
   ISF being the primary authoring surface. The audit is doc-only;
   downstream coverage slices will each be owned by separate task
   trees driven from the queue.
+- `R14`: next active task tree selected — `ISF-COOKBOOK-RECIPES-G1`
+  addressing audit gap G1. Five ISF recipes (basic actor, spawn,
+  parameterized blocking do, rule trigger, repeat-body generated do)
+  will land as cookbook recipes 9-13 in the existing recipe style.

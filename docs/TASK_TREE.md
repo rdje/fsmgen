@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-COOKBOOK-RECIPES-G1` | `pending` | `R14` | `ISF-COOKBOOK-RECIPES-G1.2` | [docs/tasks/ISF-COOKBOOK-RECIPES-G1.md](docs/tasks/ISF-COOKBOOK-RECIPES-G1.md) |
 
 ## Proposed Task Trees
 

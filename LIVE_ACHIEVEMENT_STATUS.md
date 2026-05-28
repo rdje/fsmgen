@@ -16002,3 +16002,16 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `git diff --check`.
 - Next bounded slice: the user selects the next coverage slice
   from the audit queue.
+
+## 2026-05-27: Selected R14 G1 cookbook ISF recipes
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-COOKBOOK-RECIPES-G1`](docs/tasks/ISF-COOKBOOK-RECIPES-G1.md).
+- Goal: add five ISF recipes to cookbook chapter 12 spanning the
+  core authoring surface (basic actor, spawn, parameterized
+  blocking do, rule trigger, repeat-body generated do).
+- Public behavior changed: no; `.1: select` commit only registers
+  the task tree.
+- Focused validation passed: `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice: `ISF-COOKBOOK-RECIPES-G1.2` (recipes +
+  parse/lower validation + audit reverification).

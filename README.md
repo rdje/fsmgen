@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/ISF-COOKBOOK-RECIPES-G1.md` — active `R14` task tree addressing audit gap G1 by adding five ISF recipes to cookbook chapter 12 (basic actor, spawn, parameterized blocking do, rule trigger, repeat-body generated do).
 - `docs/tasks/ISF-MDBOOK-COVERAGE-AUDIT.md` — completed `R14` doc-only task tree that published `docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md` identifying eight gap categories (G1-G8) and a prioritized slice queue for closing the coverage gap between the codebase and the mdBook.
 - `docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md` — completed `R14` task tree that added user-facing `.fsm` source examples to book chapters 13b (five examples) and 13d (two examples) for the seven targeted diagnostics shipped this session (cross-domain repeat-body do, four activation-override sub-axes, loop-contained, deeper-nested).
 - `docs/tasks/ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.md` — completed `R14` task tree that extended the targeted-diagnostic synchronization for the loop-contained and deeper-nested slices to book chapters `13b-transactions.md`, `13d-control-flow.md`, `13h-lowering-reference.md`, and `13k-isf-feature-support-matrix.md`.

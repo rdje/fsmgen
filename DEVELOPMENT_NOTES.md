@@ -33046,3 +33046,28 @@ It is an exact-delay pulse request:
   task tree.
 - The audit is doc-only. No coverage slice was automatically
   shipped from the report.
+
+## 2026-05-27: active R14 task tree selected — G1 cookbook ISF recipes
+- Audit gap G1 (cookbook chapter has zero ISF recipes) is the
+  highest-impact gap for new readers. The slice
+  [`ISF-COOKBOOK-RECIPES-G1`](docs/tasks/ISF-COOKBOOK-RECIPES-G1.md)
+  adds five recipes following the existing cookbook style.
+- The five recipes are chosen to span the core ISF authoring
+  surface:
+    1. **Basic actor**: minimum-viable ISF actor with one
+       transaction (on/wait/complete).
+    2. **Spawn**: parent activates a generated child via spawn,
+       drains with same-body await_all.
+    3. **Parameterized blocking do**: do call with same-value
+       parameter override (within the accept-path of the
+       activation-override gate).
+    4. **Rule trigger**: rule activates a worker via trigger with
+       parameter override.
+    5. **Repeat-body generated do**: top-level repeat-body plain
+       generated-child do (within the shipped subset).
+- Each recipe must parse and lower cleanly through
+  `FSM::Adapter::ISF` and `FSM::Scheduler::ISF`. The .2 commit
+  validates this before shipping.
+- Cross-domain and aggregate recipes deliberately excluded to keep
+  each recipe small; those land in the broader gap slices (G6, G7).
+- This selection commit changes no code.

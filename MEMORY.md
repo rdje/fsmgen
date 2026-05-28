@@ -37511,3 +37511,19 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   selects the next coverage slice from the queue.
 - Validation passed: `mdbook build docs/book`; `git diff --check`.
 - Active task tree: `none`.
+
+## 2026-05-27: R14 active task tree selected — G1 cookbook ISF recipes
+- Created and registered active task tree
+  [`ISF-COOKBOOK-RECIPES-G1`](docs/tasks/ISF-COOKBOOK-RECIPES-G1.md)
+  addressing audit gap G1.
+- Cookbook chapter currently contains zero ISF recipes despite ISF
+  being the primary authoring layer. Five recipes selected
+  (basic actor, spawn, parameterized blocking do, rule trigger,
+  repeat-body generated do) to span the core surface.
+- Each recipe will be a complete, copyable `.isf` source that
+  parses and lowers cleanly. Style matches the existing 8 `.fsm`
+  recipes (numbered heading, code block, "Use this when:" list).
+- Two-commit pattern: `.1: select` (this slice), `.2: ship` (the
+  five recipes + live-doc sync + audit reverification).
+- Active task tree: `ISF-COOKBOOK-RECIPES-G1`.
+- Current frontier: `ISF-COOKBOOK-RECIPES-G1.2`.
