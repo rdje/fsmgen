@@ -33071,3 +33071,24 @@ It is an exact-delay pulse request:
 - Cross-domain and aggregate recipes deliberately excluded to keep
   each recipe small; those land in the broader gap slices (G6, G7).
 - This selection commit changes no code.
+
+## 2026-05-27: G1 cookbook ISF recipes shipped
+- Shipped
+  [`ISF-COOKBOOK-RECIPES-G1.2`](docs/tasks/ISF-COOKBOOK-RECIPES-G1.md):
+  added five ISF recipes (9-13) to
+  `docs/book/src/12-cookbook.md`. Each recipe was validated by
+  writing the fixture to a temporary `.isf` file and verifying
+  parse + lower success through the full ISF stack before commit.
+- Recipe choices kept deliberately small: every fixture is under
+  20 lines and uses only one or two shipped feature axes per
+  recipe. Cross-domain, aggregates, contracts, and rule trigger
+  overrides are deferred to later slices so the cookbook stays
+  approachable as the new-user landing page.
+- The "Blocking Do Call With Parameter Override" recipe (number
+  11) uses a same-value `(DELAY 4)` override against a `(DELAY 4)`
+  default — this exercises the activation-override gate's
+  accept-path, since same-value overrides are the one shape that
+  survives the gate.
+- Audits `t/1305`, `t/1307`, `t/1332` reverified at `Files=3,
+  Tests=709`. The G1 gap from the mdBook coverage audit is now
+  closed.

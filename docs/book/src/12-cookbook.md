@@ -188,3 +188,139 @@ Use this when:
 
 - generation succeeds but the emitted HDL looks suspicious
 - a failure summary needs more local context
+
+## 9. A Small ISF Actor
+
+```lisp
+(actor counter_actor
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (output done))
+  (transaction tick
+    (on start)
+    (wait 8)
+    (complete done)))
+```
+
+Use this when:
+
+- you want the minimum-viable ISF actor that compiles end-to-end
+- you need a starting skeleton for `on` → body → `complete`
+- you want to verify your toolchain on a one-transaction design
+
+## 10. Generated Child Via Spawn
+
+```lisp
+(actor spawn_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (output done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (await_all done)
+    (complete done))
+  (transaction worker
+    (complete done)))
+```
+
+Use this when:
+
+- you want one parent transaction to activate a separate child
+- the child can run on its own and signal back through `done`
+- you need a generated-composition top in addition to the parent
+  scheduled module
+
+The `spawn` clause names the child instance (`w0`). The parent
+waits with `await_all done` before completing.
+
+## 11. Blocking Do Call With Parameter Override
+
+```lisp
+(actor do_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (output done))
+  (transaction parent
+    (on start)
+    (do worker
+      (params (DELAY 4)))
+    (complete done))
+  (transaction worker
+    (params (DELAY 4))
+    (wait DELAY)
+    (complete done)))
+```
+
+Use this when:
+
+- you want a parameterized worker whose timing constants are
+  authored once and passed through at the call site
+- the parent should block until the child finishes (the `do`
+  semantics)
+- the call-site value matches the child default (mismatched
+  overrides fail closed until per-activation specialization is
+  shipped)
+
+## 12. Rule-Triggered Transaction
+
+```lisp
+(actor rule_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input fire)
+    (output done))
+  (transaction worker
+    (wait 4)
+    (complete done))
+  (rule launch fire
+    (trigger worker)))
+```
+
+Use this when:
+
+- you want an actor-level rule to activate a transaction once per
+  pulse on `fire`
+- the transaction does not need to be called from another
+  transaction body
+- you want one rule per trigger source
+
+The rule emits a one-cycle trigger source and the generated handoff
+drives the worker's start.
+
+## 13. Repeat-Body With Generated Do
+
+```lisp
+(actor repeat_do_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input n (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat n
+      (do worker))
+    (complete done))
+  (transaction worker
+    (complete done)))
+```
+
+Use this when:
+
+- you want to call a child transaction N times in sequence
+- the child's `done` pulse gates the next iteration
+- the count is a runtime-known input (`n`) bounded to a known
+  width
+
+This pattern uses a local `(do worker)` inside the top-level
+repeat. Each iteration starts the worker and waits for its fresh
+`done` pulse before the repeat check loops.

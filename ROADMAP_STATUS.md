@@ -14499,3 +14499,7 @@ Exit criteria:
   addressing audit gap G1. Five ISF recipes (basic actor, spawn,
   parameterized blocking do, rule trigger, repeat-body generated do)
   will land as cookbook recipes 9-13 in the existing recipe style.
+- `R14`: G1 cookbook ISF recipes now ship. Five recipes
+  (9-13) added to `12-cookbook.md`. Each verified to parse + lower
+  cleanly via `FSM::Adapter::ISF` and `FSM::Scheduler::ISF` before
+  commit. Audits `t/1305`, `t/1307`, `t/1332` still pass.

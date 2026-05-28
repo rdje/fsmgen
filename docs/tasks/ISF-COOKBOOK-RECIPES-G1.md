@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-COOKBOOK-RECIPES-G1`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-27`
 - Last updated: `2026-05-27`
@@ -83,8 +83,7 @@ list).
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COOKBOOK-RECIPES-G1.1` | `pending` | Selection commit must land before the cookbook change so the slice is owned through `COMMIT.md`. |
-| 2 | `ISF-COOKBOOK-RECIPES-G1.2` | `pending` | Ship the five recipes plus live-doc updates. |
+| 1 | `closed` | `done` | Both leaves shipped. `.2` added recipes 9-13 to cookbook chapter 12; each verified to parse+lower cleanly. Audits reverified. |
 
 ## Decisions
 
@@ -108,14 +107,14 @@ list).
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-27` | `ISF-COOKBOOK-RECIPES-G1.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-27` | `ISF-COOKBOOK-RECIPES-G1.2` | each recipe parses/lowers; `prove -Iperl t/1305 t/1307 t/1332`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-27` | `ISF-COOKBOOK-RECIPES-G1.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; selection-only commit |
+| `2026-05-27` | `ISF-COOKBOOK-RECIPES-G1.2` | each of recipes 9-13 parses+lowers (5/5 OK); `prove -Iperl t/1305 t/1307 t/1332` (Files=3, Tests=709); `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-COOKBOOK-RECIPES-G1.1` | `ISF-COOKBOOK-RECIPES-G1.1: select cookbook ISF recipes` | `pending commit hash` |
+| `ISF-COOKBOOK-RECIPES-G1.1` | `bc32972e ISF-COOKBOOK-RECIPES-G1.1: select cookbook ISF recipes` | Selection commit. |
 | `ISF-COOKBOOK-RECIPES-G1.2` | `ISF-COOKBOOK-RECIPES-G1.2: ship cookbook ISF recipes` | `pending commit hash` |
 
 ## Changelog
@@ -123,3 +122,11 @@ list).
 - `2026-05-27`: Created task tree addressing audit gap G1.
   Cookbook ISF recipes will land as recipes 9-13 following the
   existing `.fsm` recipe style.
+- `2026-05-27`: Shipped `.2`. Added recipes 9-13 to
+  `docs/book/src/12-cookbook.md`. Each verified to parse via
+  `FSM::Adapter::ISF` and lower via `FSM::Scheduler::ISF` before
+  commit. Recipe contents: basic actor (on/wait/complete),
+  spawn-await_all, parameterized blocking do, rule trigger, and
+  top-level repeat-body local do. Audits `t/1305`, `t/1307`,
+  `t/1332` reverified clean. The G1 gap from
+  `ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md` is now closed.

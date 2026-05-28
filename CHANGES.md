@@ -30139,3 +30139,8 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: G1 cookbook ISF recipes
 - Created and registered active task tree [docs/tasks/ISF-COOKBOOK-RECIPES-G1.md](docs/tasks/ISF-COOKBOOK-RECIPES-G1.md) addressing audit gap G1 (cookbook chapter has zero ISF recipes). Five recipes selected to span the core ISF surface (basic actor, spawn, parameterized blocking do, rule trigger, repeat-body generated do). Selection commit only; no book or code change.
+
+### G1 cookbook ISF recipes shipped
+- Added five ISF recipes (numbered 9-13) to [docs/book/src/12-cookbook.md](docs/book/src/12-cookbook.md): "A Small ISF Actor", "Generated Child Via Spawn", "Blocking Do Call With Parameter Override", "Rule-Triggered Transaction", and "Repeat-Body With Generated Do". Each recipe follows the existing cookbook style (numbered heading, code block, "Use this when:" bullets) and was verified to parse via `FSM::Adapter::ISF` and lower via `FSM::Scheduler::ISF` before commit.
+- Audits [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t), [t/1307-isf-loop-body-doc-truth-audit.t](t/1307-isf-loop-body-doc-truth-audit.t), and [t/1332-isf-atl-doc-status-audit.t](t/1332-isf-atl-doc-status-audit.t) reverified clean.
+- Closes audit gap G1 from [docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md](docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md).

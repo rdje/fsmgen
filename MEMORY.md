@@ -37527,3 +37527,25 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   five recipes + live-doc sync + audit reverification).
 - Active task tree: `ISF-COOKBOOK-RECIPES-G1`.
 - Current frontier: `ISF-COOKBOOK-RECIPES-G1.2`.
+
+## 2026-05-27: R14 G1 cookbook ISF recipes shipped
+- Completed `ISF-COOKBOOK-RECIPES-G1.2` and closed the active
+  task tree.
+- Added five ISF recipes (numbered 9-13) to
+  `docs/book/src/12-cookbook.md`:
+    9. A Small ISF Actor (basic transaction with on/wait/complete)
+    10. Generated Child Via Spawn (parent + worker + await_all
+        drain)
+    11. Blocking Do Call With Parameter Override (same-value
+        DELAY override on the activation-override gate accept path)
+    12. Rule-Triggered Transaction (rule fires worker)
+    13. Repeat-Body With Generated Do (top-level repeat with
+        local do worker)
+- Each recipe was verified to parse via `FSM::Adapter::ISF` and
+  lower via `FSM::Scheduler::ISF` before commit. Each follows the
+  existing cookbook style (numbered heading, code block, "Use this
+  when:" bullets).
+- Validation passed: `prove -Iperl t/1305 t/1307 t/1332` with
+  `Files=3, Tests=709`; each of recipes 9-13 parses+lowers OK;
+  `mdbook build docs/book`; `git diff --check`.
+- Active task tree: `none`.

@@ -16015,3 +16015,18 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Focused validation passed: `mdbook build docs/book`; `git diff --check`.
 - Next bounded slice: `ISF-COOKBOOK-RECIPES-G1.2` (recipes +
   parse/lower validation + audit reverification).
+
+## 2026-05-27: G1 cookbook ISF recipes shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-COOKBOOK-RECIPES-G1.2`](docs/tasks/ISF-COOKBOOK-RECIPES-G1.md)
+  added five ISF recipes (9-13) to cookbook chapter 12. Each
+  recipe was verified to parse and lower cleanly through the
+  full ISF stack before commit.
+- Public behavior changed: no — pure book content.
+- Focused validation passed: `prove -Iperl t/1305 t/1307 t/1332`
+  (Files=3, Tests=709); each recipe parses+lowers; `mdbook build
+  docs/book`; `git diff --check`.
+- Next bounded slice: audit gap G3 (remaining `remains deferred`
+  diagnostics without book example) or G7 (13d accept-path
+  examples) per the audit queue.
