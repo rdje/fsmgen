@@ -16225,3 +16225,5 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-29: Selected R14 G4 backlog truth-sync
 - ISF-G4-BACKLOG-TRUTH-SYNC.
+
+## 2026-05-29: G4 shipped

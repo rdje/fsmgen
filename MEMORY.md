@@ -37813,3 +37813,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 ## 2026-05-29: R14 G4 backlog truth-sync — selected
 - ISF-G4-BACKLOG-TRUTH-SYNC adds a dated status snapshot to
   14-feature-backlog.md.
+
+## 2026-05-29: R14 G4 backlog truth-sync shipped
+- Added "### 2026-05-29 Status Snapshot" subsection to
+  14-feature-backlog.md summarizing recent shipped surface.

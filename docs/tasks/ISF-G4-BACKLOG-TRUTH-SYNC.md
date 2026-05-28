@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-G4-BACKLOG-TRUTH-SYNC`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 
 ## Goal

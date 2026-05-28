@@ -30231,3 +30231,6 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: G4 backlog truth-sync
 - Created [docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md).
+
+### G4 backlog truth-sync shipped
+- Added "### 2026-05-29 Status Snapshot" subsection to [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md).

@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-G4-BACKLOG-TRUTH-SYNC` | `pending` | `R14` | `ISF-G4-BACKLOG-TRUTH-SYNC.2` | [docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-G4-BACKLOG-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md) |
 | `ISF-G2-LOW-DENSITY-EXAMPLES` | `done` | `R14` | `closed` | [docs/tasks/ISF-G2-LOW-DENSITY-EXAMPLES.md](docs/tasks/ISF-G2-LOW-DENSITY-EXAMPLES.md) |
 | `ISF-G5-13-INTENT-EXAMPLES` | `done` | `R14` | `closed` | [docs/tasks/ISF-G5-13-INTENT-EXAMPLES.md](docs/tasks/ISF-G5-13-INTENT-EXAMPLES.md) |
 | `ISF-G6-13J-EXAMPLES` | `done` | `R14` | `closed` | [docs/tasks/ISF-G6-13J-EXAMPLES.md](docs/tasks/ISF-G6-13J-EXAMPLES.md) |

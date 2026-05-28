@@ -8,6 +8,40 @@ When another chapter mentions a limitation of that kind, the item must also be
 listed here. Local chapters may keep short contextual notes, but this chapter
 is the consolidated review list.
 
+### 2026-05-29 Status Snapshot
+
+Recent surfaces added since the last consolidated walkthrough of
+this chapter:
+
+- **Targeted rejection diagnostics**: cross-domain repeat-body `do`
+  remains deferred (`t/1372`); four sub-axis activation-override
+  gates — `repeat-count parameter`, `wait-count parameter`,
+  `latency-bound parameter`, `watchdog-limit parameter` — each with
+  its own deferral phrase (`t/1373`); loop-contained repeat-body
+  `<do|spawn>` remains deferred (`t/1374`); deeper-nested
+  repeat-body `<do|spawn>` remains deferred (`t/1375`).
+- **Book example correctness build gate**: every `lisp`-tagged book
+  example must parse + lower (`t/1376`). Current state: 32
+  complete fixtures lower cleanly.
+- **Cookbook ISF recipes**: `docs/book/src/12-cookbook.md` now
+  carries recipes 9-13 covering basic actor, spawn, parameterized
+  blocking do (same-value override), rule trigger, and repeat-body
+  generated do. Each recipe carries a `**Walkthrough.**` paragraph.
+- **Block-tag convention**: `lisp` blocks are reserved for
+  accept-path fixtures that lower cleanly; `text` blocks are for
+  schematics, elided actor bodies, and rejected-shape
+  illustrations.
+- **Handoff documents**: `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` and
+  `docs/SPECFORGE_FEEDBACK_RESPONSE.md` are now current with the
+  recent diagnostic surface.
+- **Coverage audit**: a comprehensive mdBook coverage audit lives
+  at `docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md` with
+  per-chapter coverage metrics and a prioritized slice queue.
+
+The status markers below predate this snapshot and remain
+chapter-internal categorisations; they have not been
+retroactively renormalized.
+
 Top-level backlog category ownership is tracked in
 [docs/TASK_TREE.md](../../TASK_TREE.md). A category marked there as
 `future task tree required` is not an implementation permission slip;

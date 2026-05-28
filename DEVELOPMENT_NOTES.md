@@ -33344,3 +33344,6 @@ It is an exact-delay pulse request:
 - 3 fixtures. t/1376 29 → 32.
 
 ## 2026-05-29: G4 selected
+
+## 2026-05-29: G4 shipped
+- Status snapshot added.

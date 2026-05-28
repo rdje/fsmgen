@@ -14588,3 +14588,4 @@ Exit criteria:
 - `R14`: G2 low-density examples now ship. constants_demo (13a),
   bank_demo + dataop_demo (13e). t/1376 29 → 32.
 - `R14`: next active tree — `ISF-G4-BACKLOG-TRUTH-SYNC`.
+- `R14`: G4 backlog truth-sync now ships.
