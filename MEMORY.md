@@ -37549,3 +37549,24 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `Files=3, Tests=709`; each of recipes 9-13 parses+lowers OK;
   `mdbook build docs/book`; `git diff --check`.
 - Active task tree: `none`.
+
+## 2026-05-29: R14 example-correctness audit addendum published
+- After the cookbook ISF recipes shipped, the user added a stricter
+  requirement: every `.isf` example in the book must lower cleanly
+  to FSM, and every example must be thoroughly explained.
+- Ran a focused audit over 275 `lisp` code blocks across
+  `12-cookbook.md`, `13*.md`, and `14-feature-backlog.md`. Results:
+  243 fragments (don't start with `(actor`), 17 complete fixtures
+  lower cleanly, 14 fail parse, 1 parses but fails lower.
+- Categorized 15 failing complete-looking blocks: 8 ellipsis
+  shorthand cases (use `...)` to abbreviate), 4 multi-file
+  references (3 library imports + 1 package import), 1 multi-actor
+  block, 1 intentional fail-closed illustration (keep), 1 real
+  broken example (`setup_phase` not defined in
+  `13-intent-scheduling.md` block #1).
+- Audit findings appended to
+  `docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md` as the
+  example-correctness addendum.
+- Doc-only. Remediation slice
+  `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX` will own the actual fixes.
+- Active task tree: `none`.

@@ -415,3 +415,88 @@ two-commit `.1 select` / `.2 ship` pattern, so the queue lands as
 Per the user's instruction (audit only), no slice is automatically
 shipped from this report. The user reviews the recommended queue and
 selects the next slice to start as a new task tree.
+
+## Addendum — example correctness audit (2026-05-29)
+
+After the cookbook ISF recipes (G1) shipped, the user added a
+stricter requirement: every `.isf` example in the book must lower
+cleanly to FSM, and every example must be thoroughly explained. A
+follow-up audit extracted every `lisp` code block from
+`12-cookbook.md`, `13*.md`, and `14-feature-backlog.md` and
+attempted to parse each via `FSM::Adapter::ISF` and lower it via
+`FSM::Scheduler::ISF`.
+
+Results (275 lisp blocks scanned):
+
+| Category | Count |
+| --- | --- |
+| Fragments (don't start with `(actor`) | 243 |
+| Complete fixtures that lower cleanly | 17 |
+| Complete-looking fixtures that fail parse | 14 |
+| Complete-looking fixtures that parse but fail lower | 1 |
+
+Failure categorization (likely cause):
+
+| Cause | Count | Disposition |
+| --- | --- | --- |
+| Ellipsis `...)` masquerading as a complete actor | 8 | **Fix needed** — either expand or strip the `(actor ...)` framing |
+| External library reference (`(imports (library ...))`) | 3 | **Fix needed** — embed the library, annotate as multi-file, or use a non-lisp block |
+| External package import (`(imports (package ...))`) | 1 | **Fix needed** — embed the package or annotate |
+| Multiple `(actor ...)` roots in one block | 1 | **Fix needed** — split into separate blocks |
+| Intentional fail-closed illustration (drive arity) | 1 | **Keep** — it documents the validator constraint |
+| Real broken example (`setup_phase` not defined) | 1 | **Fix needed** — supply the missing drive |
+
+Specific issues (15 total):
+
+1. `docs/book/src/13-intent-scheduling.md` block #1 — `apb_transfer`
+   transaction's `drive 'setup_phase'` is not defined. Real bug.
+2. `docs/book/src/13-intent-scheduling.md` block #4 — package
+   import without embedded package source.
+3. `docs/book/src/13a-actor-interface.md` block #1 — ellipsis
+   shorthand at end of actor body.
+4. `docs/book/src/13a-actor-interface.md` block #11 — ellipsis
+   shorthand.
+5. `docs/book/src/13c-drive-blocks.md` block #12 — ellipsis
+   shorthand.
+6. `docs/book/src/13f-composition.md` block #11 — library import
+   (`common.fifo`).
+7. `docs/book/src/13f-composition.md` block #23 — library import
+   (`common.packet`).
+8. `docs/book/src/13h-lowering-reference.md` block #1 — interface
+   port placeholder uses scalar.
+9. `docs/book/src/13h-lowering-reference.md` block #3 — ellipsis
+   shorthand.
+10. `docs/book/src/13j-type-enum-aggregate.md` block #1 — ellipsis
+    shorthand.
+11. `docs/book/src/13j-type-enum-aggregate.md` block #2 — ellipsis
+    shorthand.
+12. `docs/book/src/14-feature-backlog.md` block #2 — drive arity
+    violation. Intentional illustration; keep.
+13. `docs/book/src/14-feature-backlog.md` block #7 — library
+    import.
+14. `docs/book/src/14-feature-backlog.md` block #8 — multiple
+    actors in one block.
+15. `docs/book/src/14-feature-backlog.md` block #9 — ellipsis
+    shorthand.
+
+Recommended remediation slice (a new task tree
+`ISF-BOOK-EXAMPLE-CORRECTNESS-FIX`):
+
+- For each ellipsis case (8 blocks): either expand the example to a
+  complete actor or convert the block to a non-`lisp` text block
+  (e.g., \`\`\`text) so it does not advertise itself as a parseable
+  fixture. The choice depends on whether the block aims to teach a
+  syntactic shape (text) or a complete construct (expand).
+- For each multi-file case (4 blocks total — library/package/multi-
+  actor): either embed the supporting fixture inside the same block
+  using a `;; ---` separator, or convert the block to `text` with a
+  one-line lead-in naming the missing piece.
+- For the one real bug at `13-intent-scheduling.md` block #1: add
+  the missing `(drive setup_phase ...)` clause or rework the
+  example so it parses standalone.
+- For the intentional fail-closed illustration at
+  `14-feature-backlog.md` block #2: leave as-is and add a one-line
+  comment marker so future audits skip it.
+
+This addendum is itself doc-only. The remediation slice will own
+the actual fixes through `COMMIT.md`.

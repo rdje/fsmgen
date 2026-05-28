@@ -33092,3 +33092,23 @@ It is an exact-delay pulse request:
 - Audits `t/1305`, `t/1307`, `t/1332` reverified at `Files=3,
   Tests=709`. The G1 gap from the mdBook coverage audit is now
   closed.
+
+## 2026-05-29: example-correctness audit addendum
+- After G1 shipped, the user added a stricter requirement: every
+  `.isf` example in the book must lower cleanly to FSM, and every
+  example must be thoroughly explained.
+- Wrote `/tmp/audit_book_examples_v2.pl` (not committed; a one-shot
+  audit script). It scans every `lisp` block in the book, attempts
+  parse + lower, and classifies failures by likely cause (ellipsis,
+  library import, package import, multi-actor, real bug).
+- The audit found 15 failing complete-looking blocks across 7
+  chapters. Most (8/15) are ellipsis shorthand — examples that use
+  `...)` to abbreviate the actor body. Per the user's strict
+  requirement, these need either to be expanded into complete
+  fixtures or converted to non-`lisp` text blocks so they don't
+  advertise themselves as parseable.
+- Library/package imports (4/15) can be either embedded inline
+  with a `;; ---` separator or annotated as multi-file.
+- The remediation slice
+  (`ISF-BOOK-EXAMPLE-CORRECTNESS-FIX`) will resolve each issue
+  per the disposition listed in the audit addendum.

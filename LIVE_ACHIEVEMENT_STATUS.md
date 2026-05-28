@@ -16030,3 +16030,22 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Next bounded slice: audit gap G3 (remaining `remains deferred`
   diagnostics without book example) or G7 (13d accept-path
   examples) per the audit queue.
+
+## 2026-05-29: Example-correctness audit addendum published
+- Roadmap lane: `R14`.
+- Triggered by the user's new requirement that every `.isf`
+  example in the book must lower cleanly to FSM.
+- Scanned 275 `lisp` blocks across `12-cookbook.md`, `13*.md`,
+  and `14-feature-backlog.md`. Found 15 failing complete-looking
+  blocks (8 ellipsis shorthand, 4 multi-file references, 1
+  multi-actor block, 1 intentional fail-closed illustration to
+  keep, 1 real broken example).
+- Audit findings appended to the existing
+  [`docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md`](docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md)
+  as the example-correctness addendum.
+- Public behavior changed: no — doc-only.
+- Next bounded slice: `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX` (resolve
+  each issue per the disposition listed in the addendum), then
+  continue with the G2-G8 queue with the stricter
+  "lowers-cleanly-and-fully-explained" standard for all new
+  examples.
