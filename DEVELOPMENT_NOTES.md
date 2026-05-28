@@ -33112,3 +33112,26 @@ It is an exact-delay pulse request:
 - The remediation slice
   (`ISF-BOOK-EXAMPLE-CORRECTNESS-FIX`) will resolve each issue
   per the disposition listed in the audit addendum.
+
+## 2026-05-29: active R14 task tree selected — example-correctness fix
+- The audit addendum identified 14 failing complete-looking blocks
+  plus 1 lower failure. The slice
+  [`ISF-BOOK-EXAMPLE-CORRECTNESS-FIX`](docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md)
+  ships the fixes.
+- Disposition decisions:
+    * Ellipsis fragments → convert `lisp` block tag to `text`.
+      Rationale: the `lisp` tag advertises a parseable shape, so
+      a fragment that uses `...)` to abbreviate violates the
+      user's correctness standard. Converting to `text` preserves
+      the educational value (the shape is still visible) without
+      promising parseability.
+    * Library/package imports → embed inline using `;; ---`
+      separator. Rationale: keeps the example copy-pasteable.
+    * Real bug at 13-intent-scheduling.md #1 → supply the missing
+      `(drive setup_phase ...)` so the example actually compiles.
+    * Multi-actor block at 14-feature-backlog #8 → split or embed,
+      whichever preserves the surrounding prose intent.
+    * Intentional fail-closed illustration at 14-feature-backlog
+      #2 → annotate with `;; FAIL-CLOSED EXAMPLE` marker so future
+      audits classify it correctly.
+- This selection commit changes no code or book content.

@@ -14503,3 +14503,8 @@ Exit criteria:
   (9-13) added to `12-cookbook.md`. Each verified to parse + lower
   cleanly via `FSM::Adapter::ISF` and `FSM::Scheduler::ISF` before
   commit. Audits `t/1305`, `t/1307`, `t/1332` still pass.
+- `R14`: example-correctness audit addendum published and remediation
+  task tree `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX` selected. Addendum
+  found 14 parse-fail + 1 lower-fail blocks across 7 chapters
+  (mostly ellipsis shorthand and multi-file references). Remediation
+  will resolve each per disposition.

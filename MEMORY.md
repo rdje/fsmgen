@@ -37570,3 +37570,23 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Doc-only. Remediation slice
   `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX` will own the actual fixes.
 - Active task tree: `none`.
+
+## 2026-05-29: R14 active task tree selected — example-correctness fix
+- Created and registered active task tree
+  [`ISF-BOOK-EXAMPLE-CORRECTNESS-FIX`](docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md)
+  addressing the 14 parse-fail and 1 lower-fail issues from the
+  audit addendum.
+- Plan per issue category:
+    * Ellipsis fragments (8): convert `lisp` block to `text` block
+      (the fragment is teaching a shape, not a complete fixture).
+    * Library/package imports (4): embed the supporting fixture
+      inline using a `;; ---` separator.
+    * Multi-actor block (1): split or embed.
+    * Real bug (1): supply the missing drive in
+      `13-intent-scheduling.md` block #1.
+    * Intentional fail-closed illustration (1): annotate with a
+      `;; FAIL-CLOSED EXAMPLE` marker.
+- Two-commit pattern: `.1: select` (this slice), `.2: ship` (the
+  14 fixes + audit reverification).
+- Active task tree: `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX`.
+- Current frontier: `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2`.

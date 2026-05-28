@@ -16049,3 +16049,18 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   continue with the G2-G8 queue with the stricter
   "lowers-cleanly-and-fully-explained" standard for all new
   examples.
+
+## 2026-05-29: Selected R14 example-correctness fix
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-BOOK-EXAMPLE-CORRECTNESS-FIX`](docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md).
+- Goal: resolve the 14 parse-fail and 1 lower-fail issues
+  identified in the audit addendum. Plan per category: convert
+  ellipsis fragments to text blocks, embed library/package
+  fixtures inline, supply the missing drive, annotate the
+  intentional fail-closed illustration.
+- Public behavior changed: no; `.1: select` commit only registers
+  the task tree.
+- Focused validation passed: `mdbook build docs/book`;
+  `git diff --check`.
+- Next bounded slice: `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2`.
