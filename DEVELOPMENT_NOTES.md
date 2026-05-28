@@ -33333,3 +33333,6 @@ It is an exact-delay pulse request:
 
 ## 2026-05-29: G5 13-intent examples selected
 - blinker + handshake_intent fixtures pre-validated to lower.
+
+## 2026-05-29: G5 13-intent examples shipped
+- 2 fixtures. t/1376 27 → 29.

@@ -130,6 +130,72 @@ clear lower-layer mapping, and clear runtime behavior.
   and the schedule report carries a `compile_issues` field. Broader conflict,
   deadlock, and resource diagnostics are still being expanded.
 
+## Happy-Path Examples
+
+Before the longer APB walkthrough, here are two minimal complete
+fixtures that exercise the IAL1 happy path: a one-output blinker
+and a request/ack handshake. Both lower cleanly through the ISF
+stack and are useful as starting skeletons.
+
+### Blinker
+
+```lisp
+(actor blinker
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (output led))
+  (transaction blink
+    (on start)
+    (drive led_on)
+    (wait 16)
+    (drive led_off)
+    (complete done))
+  (drive led_on
+    (led 1))
+  (drive led_off
+    (led 0)))
+```
+
+**Walkthrough.** `(on start)` arms the transaction. `(drive led_on)`
+invokes the parameterless drive that sets `led = 1`. `(wait 16)`
+inserts a 16-cycle delay (the schedule sits in a wait region
+without producing new outputs). `(drive led_off)` clears the
+output. `(complete done)` raises the implicit `done` completion
+and returns to idle.
+
+### Request/Ack Handshake
+
+```lisp
+(actor handshake_intent
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (output req)
+    (input ack)
+    (output done))
+  (transaction tx
+    (on start)
+    (drive raise_req)
+    (await ack)
+    (drive lower_req)
+    (complete done))
+  (drive raise_req
+    (req 1))
+  (drive lower_req
+    (req 0)))
+```
+
+**Walkthrough.** `(drive raise_req)` raises the request output.
+`(await ack)` blocks the transaction until the input `ack` is
+asserted; the schedule's await region carries a watchdog counter
+based on the actor-level watchdog default. `(drive lower_req)`
+releases the request once the acknowledge arrives. The sequence
+shows the classic four-cycle handshake pattern (raise → wait for
+ack → lower → idle) authored at intent level.
+
 ## Quick Example
 
 ```lisp

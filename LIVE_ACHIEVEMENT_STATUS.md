@@ -16213,3 +16213,6 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-29: Selected R14 G5 13-intent examples
 - ISF-G5-13-INTENT-EXAMPLES. Two fixtures for 13-intent-scheduling.md.
+
+## 2026-05-29: G5 13-intent examples shipped
+- 2 fixtures; t/1376 27 → 29.

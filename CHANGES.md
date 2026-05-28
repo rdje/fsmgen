@@ -30216,3 +30216,7 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: G5 13-intent examples
 - Created [docs/tasks/ISF-G5-13-INTENT-EXAMPLES.md](docs/tasks/ISF-G5-13-INTENT-EXAMPLES.md) for audit gap G5.
+
+### G5 13-intent examples shipped
+- Added "Happy-Path Examples" section to [docs/book/src/13-intent-scheduling.md](docs/book/src/13-intent-scheduling.md) with blinker + handshake_intent.
+- t/1376 27 → 29.

@@ -37796,3 +37796,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 ## 2026-05-29: R14 G5 13-intent examples — selected
 - `ISF-G5-13-INTENT-EXAMPLES` adds blinker + handshake_intent
   examples to 13-intent-scheduling.md.
+
+## 2026-05-29: R14 G5 13-intent examples shipped
+- Added "Happy-Path Examples" section before "Quick Example" in
+  13-intent-scheduling.md with blinker + handshake_intent.
+- t/1376 fixture count 27 → 29.

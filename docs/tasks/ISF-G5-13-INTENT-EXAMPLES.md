@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-G5-13-INTENT-EXAMPLES`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 
 ## Goal
