@@ -16141,3 +16141,15 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   as `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE`. After that, continue
   the G2-G8 queue (G7 13d accept-path or G2 low-density clause
   keywords).
+
+## 2026-05-29: Selected R14 book-example lowering build gate
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE`](docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md).
+- Goal: add `t/1376-isf-book-example-lowering-audit.t` to enforce
+  that every `lisp`-tagged book example parses and lowers
+  cleanly. Build fails on any lowering error.
+- Public behavior changed: no (test-only).
+- Focused validation: `mdbook build docs/book`;
+  `git diff --check`.
+- Next: `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.2`.

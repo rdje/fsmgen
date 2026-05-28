@@ -33229,3 +33229,22 @@ It is an exact-delay pulse request:
   9600-char bounded distance checks. Initial placement in 13b
   pushed audit phrases out of range; relocation to 13d resolved
   it.
+
+## 2026-05-29: active R14 task tree selected — book-example lowering build gate
+- The user directive: "Examples in the book need to be extracted
+  and lowered when building the book and should block the build
+  if any of them fail to lower."
+- The slice
+  [`ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE`](docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md)
+  turns the existing `/tmp/audit_book_examples_v2.pl` one-shot
+  script into a permanent regression test
+  `t/1376-isf-book-example-lowering-audit.t`.
+- Test logic: walk `12-cookbook.md`, `13*.md`, and
+  `14-feature-backlog.md`; extract every `lisp` block; for each
+  block whose first non-blank character starts an `(actor ...)`,
+  attempt parse via `FSM::Adapter::ISF` and lower via
+  `FSM::Scheduler::ISF`; fail the test on any parse or lower
+  error.
+- The convention adopted by the previous slice (`text` for
+  rejection illustrations, `lisp` only for accept-path fixtures)
+  is now enforced by CI.

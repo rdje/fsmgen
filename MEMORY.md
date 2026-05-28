@@ -37708,3 +37708,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   script still reports 20 complete fixtures lower cleanly + 0
   failures.
 - Active task tree: `none`.
+
+## 2026-05-29: R14 active task tree selected — book-example lowering build gate
+- Created `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE` per the user's
+  directive that book examples must lower properly and any failure
+  must block the build.
+- Slice scope: add `t/1376-isf-book-example-lowering-audit.t` that
+  extracts every `lisp` block from `12-cookbook.md`, `13*.md`,
+  `14-feature-backlog.md`, attempts parse+lower of each block
+  starting with `(actor`, and fails any block that doesn't lower.
+- Two-commit pattern. `.1` is this selection.

@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE` | `pending` | `R14` | `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.2` | [docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md](docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md) |
 
 ## Proposed Task Trees
 

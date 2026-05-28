@@ -30181,3 +30181,6 @@ This is the persistent technical change history for FSMGen.
 - Adopted convention: `lisp` blocks reserved for accept-path fixtures that lower cleanly; `text` blocks for schematics and rejected-shape illustrations. The user noted that users will copy-paste examples, so anything in a `lisp` block must actually compile. Converted 11 prior rejection-fragment blocks across 13b/13d/13f/13j from `lisp` to `text` (7 from the prior G1 complement diagnostic-examples slice + 4 added by G3).
 - Re-audit reports 256 lisp blocks, 236 fragments, 20 complete fixtures lower cleanly, 0 parse failures, 0 lower failures.
 - Audits [t/1305](t/1305-isf-book-feature-matrix-audit.t), [t/1307](t/1307-isf-loop-body-doc-truth-audit.t), [t/1332](t/1332-isf-atl-doc-status-audit.t) reverified clean.
+
+### active R14 task tree selected: book-example lowering build gate
+- Created [docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md](docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md) per the user directive that book examples must lower properly and any lowering failure must block the build. Slice adds `t/1376-isf-book-example-lowering-audit.t` extracting every `lisp` block and verifying parse+lower. Selection commit only.

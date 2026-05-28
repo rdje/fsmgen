@@ -14541,3 +14541,8 @@ Exit criteria:
   has separately requested a build-gate test that extracts every
   `lisp` block and verifies it lowers — that lands as a follow-up
   task tree.
+- `R14`: next active task tree selected —
+  `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE`. Adds
+  `t/1376-isf-book-example-lowering-audit.t` that extracts every
+  `lisp` block and verifies it lowers, blocking the test suite on
+  any failure.
