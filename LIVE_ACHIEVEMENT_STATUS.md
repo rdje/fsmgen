@@ -16112,3 +16112,14 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   standard. Next is gap G3 (remaining `remains deferred`
   diagnostics without book example) or G7 (13d accept-path
   examples).
+
+## 2026-05-29: Selected R14 G3 remaining-deferred examples
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-DIAGNOSTIC-EXAMPLES-G3`](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md).
+- Goal: add 4 representative examples (package-constant
+  aggregate, two-child data route × 2, await_any-after-do/spawn)
+  per audit gap G3.
+- Public behavior changed: no; `.1: select` only.
+- Validation: `mdbook build docs/book`; `git diff --check`.
+- Next: `ISF-DIAGNOSTIC-EXAMPLES-G3.2`.

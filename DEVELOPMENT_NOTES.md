@@ -33189,3 +33189,19 @@ It is an exact-delay pulse request:
 - The new prose pattern is the model for all future book example
   enhancements under the "every example shall be thoroughly
   explained" standard.
+
+## 2026-05-29: active R14 task tree selected — G3 remaining-deferred examples
+- Audit gap G3 covers three template families that the prior
+  `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE` slice did not example:
+  package-constant aggregate/member path (9 sub-axes), two-child
+  data route (4 sub-cases), and await_any-after-do/spawn (4
+  sub-cases).
+- One representative example per family suffices for package-
+  constant and await_any because the rejection mechanic is uniform;
+  two-child data route gets two examples because its sub-cases are
+  visually distinct.
+- Total: 4 new examples. Each is a non-(actor) rejection fragment
+  in a `lisp` block followed by the verbatim diagnostic and a
+  deferred-lane note. The audit script classifies non-(actor)
+  blocks as fragments, so these do not affect the
+  "lowers-cleanly" count.

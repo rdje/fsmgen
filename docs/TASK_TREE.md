@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DIAGNOSTIC-EXAMPLES-G3` | `pending` | `R14` | `ISF-DIAGNOSTIC-EXAMPLES-G3.2` | [docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md) |
 
 ## Proposed Task Trees
 

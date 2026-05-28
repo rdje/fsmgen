@@ -37666,3 +37666,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `Files=3, Tests=709`; `mdbook build docs/book`;
   `git diff --check`.
 - Active task tree: `none`.
+
+## 2026-05-29: R14 active task tree selected — G3 remaining-deferred examples
+- Created `ISF-DIAGNOSTIC-EXAMPLES-G3` addressing audit gap G3.
+- Adds 4 representative examples covering: package-constant
+  aggregate/member path (1), two-child data route (2), and
+  await_any-after-do/spawn (1).
+- Examples land in 13j (package aggregate), 13g (two-child
+  routes), and 13b (await_any).
+- Two-commit pattern. `.1` is this selection; `.2` ships the
+  examples.

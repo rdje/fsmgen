@@ -14525,3 +14525,7 @@ Exit criteria:
   names each top-level clause in source order and explains its
   contribution to the schedule. Audits `t/1305`, `t/1307`,
   `t/1332` still pass.
+- `R14`: next active task tree selected — `ISF-DIAGNOSTIC-EXAMPLES-G3`
+  addressing audit gap G3. Four representative examples will
+  cover package-constant aggregate, two-child data route, and
+  await_any-after-do/spawn `remains deferred` template families.

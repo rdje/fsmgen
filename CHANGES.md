@@ -30172,3 +30172,6 @@ This is the persistent technical change history for FSMGen.
 ### cookbook walkthroughs shipped
 - Added a `**Walkthrough.**` paragraph beneath the "Use this when:" list for each of cookbook recipes 9-13 in [docs/book/src/12-cookbook.md](docs/book/src/12-cookbook.md). Each walkthrough names every top-level clause used by the recipe in source order and explains its contribution to the schedule (clock/reset polarity, port widths, transaction entry guards, repeat counter loading, the generated-child vs local vs rule-trigger distinctions, and accept-path vs fail-closed semantics for parameter overrides).
 - Audits [t/1305](t/1305-isf-book-feature-matrix-audit.t), [t/1307](t/1307-isf-loop-body-doc-truth-audit.t), [t/1332](t/1332-isf-atl-doc-status-audit.t) reverified clean.
+
+### active R14 task tree selected: G3 remaining-deferred diagnostic examples
+- Created [docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md) addressing audit gap G3. Four representative examples will cover package-constant aggregate/member path, two-child data route, and await_any-after-do/spawn `remains deferred` template families. Examples land in 13j, 13g, and 13b. Selection commit only.
