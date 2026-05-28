@@ -32863,3 +32863,24 @@ It is an exact-delay pulse request:
   points (do at `LoweringIR.pm:6430`, spawn at `LoweringIR.pm:6362`)
   call it before the existing generic confess.
 - This selection commit changes no code.
+
+## 2026-05-27: loop-contained repeat-body activation diagnostic precision shipped
+- Shipped
+  [`ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`](docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.md):
+  validator at `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits a
+  targeted `loop-contained repeat-body <do|spawn> remains deferred`
+  diagnostic at both unsupported-repeat-body subset entry points when
+  the validator detects positive `while` or `until` depth in
+  `$context_depths`.
+- New helper `_repeat_body_context_is_loop_contained` placed next to
+  `_context_depths_match_exactly`. It returns true when `while` or
+  `until` depth is positive. Both gate sites call it before the
+  existing generic confess; non-loop unsupported cases fall through
+  to the generic message unchanged.
+- New regression `t/1374` covers the four loop-contained cases plus
+  negative-control deeper-when and when-inside-switch cases. Full ISF
+  CI passes at `Files=280, Tests=2040`. Doc surfaces aligned across
+  `ISF_SPEC.md` (focused-tests + paragraph),
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` (loop-contained note in nested
+  subset paragraph), and `14-feature-backlog.md` (loop-contained
+  sentence).

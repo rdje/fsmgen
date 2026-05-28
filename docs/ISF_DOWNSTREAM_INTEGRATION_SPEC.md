@@ -1247,7 +1247,10 @@ Rules:
   overrides are present.
 
   Deeper branch nesting and loop-contained repeats remain outside both nested
-  subsets.
+  subsets. Loop-contained repeat-body `do` and `spawn` now emit a
+  targeted `loop-contained repeat-body <do|spawn> remains deferred`
+  diagnostic instead of the generic "supported only for top-level..."
+  message.
 
   Top-level repeat bodies also accept generated blocking `(do child)` when
   the target child is already emitted as a generated child by another

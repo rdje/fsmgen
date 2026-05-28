@@ -610,6 +610,14 @@ it may also carry declared same-domain `(domain NAME)` metadata when static
 params are present.
 
 It rejects deeper branch nesting and loop-contained repeat activation.
+Loop-contained repeat-body `do` and `spawn` (a `(repeat ...)` nested
+inside `(while ...)` or `(until ...)` whose body contains a `do` or
+`spawn` clause) now fail closed with a targeted `loop-contained
+repeat-body <do|spawn> remains deferred` diagnostic instead of the
+generic "supported only for top-level repeat clauses..." message;
+other unsupported nested-repeat cases (deeper when nesting,
+when-inside-switch) keep the generic message. Broader loop-contained
+implementation remains backlog.
 
 A top-level repeat body may use `(spawn child as inst [(params ...)] [(bind
 ...)] [(domain NAME)])` clauses when the same repeat body reaches `(await_all

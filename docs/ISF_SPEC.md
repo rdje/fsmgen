@@ -5701,6 +5701,7 @@ Focused tests:
 - [t/1371-isf-transaction-port-activation-override-width-gate.t](../t/1371-isf-transaction-port-activation-override-width-gate.t)
 - [t/1372-isf-cross-domain-repeat-body-do-diagnostic.t](../t/1372-isf-cross-domain-repeat-body-do-diagnostic.t)
 - [t/1373-isf-timing-param-sub-axis-diagnostic.t](../t/1373-isf-timing-param-sub-axis-diagnostic.t)
+- [t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t)
 
 ## 12. Explicitly Deferred
 

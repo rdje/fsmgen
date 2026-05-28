@@ -6359,8 +6359,11 @@ sub _validate_repeat_body_spawn_subset {
         next unless defined($keyword) && !ref($keyword);
 
         if ($keyword eq 'spawn') {
-            confess "Transaction '$tn': repeat-body spawn is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n"
-                unless $top_level_repeat || $when_body_repeat || $switch_branch_repeat;
+            if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat)) {
+                confess "Transaction '$tn': loop-contained repeat-body spawn remains deferred\n"
+                    if _repeat_body_context_is_loop_contained($context_depths);
+                confess "Transaction '$tn': repeat-body spawn is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n";
+            }
             my $allowed_branch_spawn_after_prior_await_any_local_do_before_drain =
                 ($when_body_repeat || $switch_branch_repeat)
                 && $awaiting_multi_pending_drain
@@ -6427,8 +6430,11 @@ sub _validate_repeat_body_spawn_subset {
         }
 
         if ($keyword eq 'do') {
-            confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n"
-                unless $top_level_repeat || $when_body_repeat || $switch_branch_repeat;
+            if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat)) {
+                confess "Transaction '$tn': loop-contained repeat-body do remains deferred\n"
+                    if _repeat_body_context_is_loop_contained($context_depths);
+                confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n";
+            }
             my $uses_generated_params = _repeat_body_do_uses_generated_params($body_clause);
             my $uses_bindings = _repeat_body_do_uses_bindings($body_clause);
             my $uses_domain = _repeat_body_do_uses_domain($body_clause);
@@ -6775,6 +6781,14 @@ sub _context_depths_match_exactly {
     }
 
     return 1;
+}
+
+sub _repeat_body_context_is_loop_contained {
+    my ($context_depths) = @_;
+    return 0 unless ref($context_depths) eq 'HASH';
+    return 1 if ($context_depths->{while} // 0) > 0;
+    return 1 if ($context_depths->{until} // 0) > 0;
+    return 0;
 }
 
 sub _validate_loop_clause {

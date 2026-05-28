@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-27`
 - Last updated: `2026-05-27`
@@ -88,8 +88,7 @@ remains backlog.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1` | `pending` | Selection commit must land before the validator change so the slice is owned through `COMMIT.md`. |
-| 2 | `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2` | `pending` | Ship the targeted diagnostic plus regression plus doc sync. |
+| 1 | `closed` | `done` | Both leaves shipped. `.2` landed the targeted loop-contained diagnostic at the two repeat-body subset entry points (do, spawn), regression `t/1374`, and doc-surface updates. |
 
 ## Decisions
 
@@ -126,14 +125,14 @@ remains backlog.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-27` | `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-27` | `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2` | `prove -Iperl t/1215 t/1374 t/1250`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `pending` |
+| `2026-05-27` | `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; selection-only commit |
+| `2026-05-27` | `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2` | `prove -Iperl t/1215 t/1374` (Files=2, Tests=103); `./bin/ci-regression isf --no-book` (Files=280, Tests=2040); `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1` | `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1: select loop-contained repeat-body activation diagnostic precision` | `pending commit hash` |
+| `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1` | `9a7417f7 ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1: select loop-contained repeat-body activation diagnostic precision` | Selection commit. |
 | `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2` | `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2: ship loop-contained repeat-body activation diagnostic precision` | `pending commit hash` |
 
 ## Changelog
@@ -143,3 +142,18 @@ remains backlog.
   Loop-contained repeat activation itself remains deferred; this
   slice ships the user-visible diagnostic improvement and registers
   the broader implementation as a future leaf.
+- `2026-05-27`: Shipped `.2`. Validator at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits the targeted
+  diagnostics `Transaction '<tn>': loop-contained repeat-body do
+  remains deferred` and `... loop-contained repeat-body spawn remains
+  deferred` at the two unsupported-repeat-body subset entry points
+  when the validator detects positive `while` or `until` depth in
+  `$context_depths`. New helper `_repeat_body_context_is_loop_contained`
+  centralises the depth check. Other unsupported nested-repeat cases
+  fall through to the existing generic message. New regression
+  `t/1374` covers do×while, do×until, spawn×while, spawn×until and
+  the negative-control deeper-when / when-inside-switch cases. Doc
+  surfaces synchronized in `ISF_SPEC.md` (focused-tests),
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` (loop-contained note in the
+  nested subset paragraph), and `14-feature-backlog.md`
+  (loop-contained sentence in Spawn Inside Repeat Bodies).

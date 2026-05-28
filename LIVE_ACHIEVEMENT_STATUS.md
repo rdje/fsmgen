@@ -15849,3 +15849,23 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Next bounded slice:
   `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`
   (validator change + `t/1374` regression + doc-surface updates).
+
+## 2026-05-27: Loop-contained repeat-body activation diagnostic precision shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`](docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.md)
+  shipped the targeted loop-contained repeat-body do/spawn diagnostic
+  at the two unsupported-repeat-body subset entry points, added
+  regression `t/1374`, and synchronized `ISF_SPEC.md`/
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`/`14-feature-backlog.md`.
+- Public behavior changed: yes — loop-contained
+  `(repeat ... (do|spawn ...))` now fails closed with a targeted
+  diagnostic instead of the generic "supported only for top-level..."
+  message. Other unsupported nested-repeat cases unchanged.
+- Focused validation passed: `prove -Iperl t/1374 t/1215`
+  (Files=2, Tests=103); `./bin/ci-regression isf --no-book`
+  (Files=280, Tests=2040); `mdbook build docs/book`;
+  `git diff --check`.
+- Next bounded slice: another item from the backlog (broader
+  loop-contained repeat activation implementation remains a future
+  leaf of this same tree).

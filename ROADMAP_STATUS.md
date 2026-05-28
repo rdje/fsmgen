@@ -14423,3 +14423,12 @@ Exit criteria:
   <do|spawn> remains deferred` for the loop-contained subset; other
   unsupported nested-repeat cases keep the generic message. Broader
   loop-contained implementation remains a separate future leaf.
+- `R14`: loop-contained repeat-body activation diagnostic precision now
+  ships. Validator emits targeted `loop-contained repeat-body
+  <do|spawn> remains deferred` diagnostics at the two repeat-body
+  subset entry points when `while` or `until` depth is positive in
+  `$context_depths`. Other unsupported nested-repeat cases unchanged.
+  Regression covered by `t/1374`; doc surfaces aligned in
+  `ISF_SPEC.md`, `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and
+  `14-feature-backlog.md`. Broader loop-contained implementation
+  remains a future leaf of the same tree.

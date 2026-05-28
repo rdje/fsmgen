@@ -37283,3 +37283,37 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   change + `t/1374` regression + doc surfaces).
 - Active task tree: `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`.
 - Current frontier: `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`.
+
+## 2026-05-27: R14 loop-contained repeat-body activation diagnostic precision shipped
+- Completed
+  `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`
+  and closed the active task tree.
+- `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits targeted
+  `Transaction '<tn>': loop-contained repeat-body do remains deferred`
+  and `... loop-contained repeat-body spawn remains deferred`
+  diagnostics at the two unsupported-repeat-body subset entry points
+  (do at the previous `LoweringIR.pm:6430`, spawn at the previous
+  `LoweringIR.pm:6362`) when the validator detects positive `while` or
+  `until` depth in `$context_depths`. Other unsupported nested-repeat
+  cases (deeper when nesting, when-inside-switch) keep the existing
+  generic "supported only for top-level repeat clauses..." message.
+- New helper `_repeat_body_context_is_loop_contained` placed next to
+  `_context_depths_match_exactly` returns true when
+  `$context_depths->{while}` or `$context_depths->{until}` is
+  positive.
+- New regression `t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t`
+  covers four loop-contained cases (do×while, do×until, spawn×while,
+  spawn×until) plus negative-control cases verifying deeper-when and
+  when-inside-switch still emit the generic diagnostic.
+- Doc surfaces synchronized: `docs/ISF_SPEC.md` (focused-tests list
+  registers `t/1374`), `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`
+  (loop-contained note in the nested-do/spawn subset paragraph), and
+  `docs/book/src/14-feature-backlog.md` (loop-contained sentence in
+  the Spawn Inside Repeat Bodies section).
+- Validation passed: `prove -Iperl t/1374 t/1215` with
+  `Files=2, Tests=103`; `./bin/ci-regression isf --no-book` with
+  `Files=280, Tests=2040`; `mdbook build docs/book`;
+  `git diff --check`.
+- Active task tree: `none`. Broader loop-contained repeat activation
+  (extending the shipped subset to actually support `repeat` inside
+  `while`/`until` bodies) remains a future leaf of this same tree.
