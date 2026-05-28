@@ -14487,3 +14487,11 @@ Exit criteria:
   `13d-control-flow.md` (loop-contained, deeper-nested). Each shows
   the rejected `.fsm` shape, verbatim diagnostic, and deferred-lane
   note. Audits `t/1305`, `t/1307`, `t/1332` still pass.
+- `R14`: mdBook coverage audit now published.
+  `ISF-MDBOOK-COVERAGE-AUDIT.1` produced
+  `docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md` identifying
+  eight gap categories (G1-G8) and a prioritized slice queue.
+  Highest-impact gap: cookbook chapter has zero ISF recipes despite
+  ISF being the primary authoring surface. The audit is doc-only;
+  downstream coverage slices will each be owned by separate task
+  trees driven from the queue.

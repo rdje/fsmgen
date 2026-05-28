@@ -15985,3 +15985,20 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Next bounded slice: another item from the backlog (a broader
   audit of feature-example coverage across the book is a future
   task tree).
+
+## 2026-05-27: mdBook coverage audit published
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-MDBOOK-COVERAGE-AUDIT.1`](docs/tasks/ISF-MDBOOK-COVERAGE-AUDIT.md)
+  produced
+  [`docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md`](docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md)
+  — a comprehensive one-shot audit of the FSMGen mdBook against
+  the shipped codebase surface.
+- Eight gap categories (G1-G8) and a prioritized slice queue.
+  Highest-impact finding: cookbook chapter has zero ISF recipes
+  despite ISF being the primary authoring layer.
+- Public behavior changed: no — pure doc audit.
+- Focused validation passed: `mdbook build docs/book`;
+  `git diff --check`.
+- Next bounded slice: the user selects the next coverage slice
+  from the audit queue.

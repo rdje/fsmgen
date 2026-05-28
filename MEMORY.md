@@ -37479,3 +37479,35 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Validation passed: `prove -Iperl t/1305 t/1307 t/1332` with
   `Files=3, Tests=709`; `mdbook build docs/book`; `git diff --check`.
 - Active task tree: `none`.
+
+## 2026-05-27: R14 mdBook coverage audit published
+- Completed `ISF-MDBOOK-COVERAGE-AUDIT.1` and closed the
+  single-leaf task tree.
+- Produced
+  `docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md`
+  — a comprehensive one-shot audit of the FSMGen mdBook against the
+  shipped codebase surface. Triggered by the user noting that
+  "documentation is as important as code; the mdBook is the only
+  window through which a non-technical user can understand what
+  FSMGen does and how it does it."
+- Audit methodology: validator rejection-path inventory (1003
+  confess sites in the ISF stack), accept-path keyword frequency
+  inventory across 13*.md, per-chapter coverage metrics
+  (lines/headings/examples), and a backlog status spot-check.
+- Eight gap categories identified (G1-G8) and prioritized into a
+  recommended slice queue:
+    G1. Cookbook chapter has zero ISF recipes (highest impact).
+    G2. Low-density coverage for shipped clause keywords (types,
+        ports, contract, store/load, stage, etc.).
+    G3. `remains deferred` diagnostics without book example
+        (package-constant aggregate, two-child data route,
+        repeat-body await_any after do/spawn).
+    G4. Backlog status accuracy drift.
+    G5. 13-intent-scheduling.md reads prose-heavy.
+    G6. 13j-type-enum-aggregate.md light on examples.
+    G7. 13d-control-flow.md light for the control-flow surface.
+    G8. Heading density and cross-references.
+- Audit is doc-only; no slice was automatically shipped. The user
+  selects the next coverage slice from the queue.
+- Validation passed: `mdbook build docs/book`; `git diff --check`.
+- Active task tree: `none`.

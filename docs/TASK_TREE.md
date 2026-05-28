@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-MDBOOK-COVERAGE-AUDIT` | `done` | `R14` | `closed` | [docs/tasks/ISF-MDBOOK-COVERAGE-AUDIT.md](docs/tasks/ISF-MDBOOK-COVERAGE-AUDIT.md) |
 | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md) |
 | `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.md](docs/tasks/ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.md) |
 | `BIN-FSMGEN-IMPORT-TREE-R14-DIAGNOSTIC-PRECISION-REFRESH` | `done` | `R14` | `closed` | [docs/tasks/BIN-FSMGEN-IMPORT-TREE-R14-DIAGNOSTIC-PRECISION-REFRESH.md](docs/tasks/BIN-FSMGEN-IMPORT-TREE-R14-DIAGNOSTIC-PRECISION-REFRESH.md) |

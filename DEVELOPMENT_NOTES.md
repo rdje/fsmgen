@@ -33018,3 +33018,31 @@ It is an exact-delay pulse request:
 - Audits `t/1305`, `t/1307`, `t/1332` reverified at `Files=3,
   Tests=709`. The example coverage for the seven targeted
   diagnostics shipped this session is now complete.
+
+## 2026-05-27: mdBook coverage audit published
+- Published
+  [`docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md`](docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md)
+  after the user flagged that the book has not been thoroughly
+  synced with the codebase (documentation is as important as code).
+- Methodology combined four passes:
+    1. Validator rejection-path inventory — 446 confess sites in
+       LoweringIR, 502 in the parser, plus emitter and driver
+       sites (~1003 total). Classified by phrase family
+       (`remains deferred`, `requires`, `supports only`, etc.).
+    2. Accept-path keyword inventory — 36 ISF clause keywords
+       counted across 13*.md to estimate coverage density.
+    3. Per-chapter coverage map — lines, heading count, and
+       `lisp`/`fsm` example count for each 13*.md chapter.
+    4. Backlog status spot-check — 43 `Status:` markers in
+       14-feature-backlog.md surveyed.
+- Eight gap categories surfaced (G1-G8). The most surprising
+  finding: the cookbook chapter (`12-cookbook.md`) contains zero
+  ISF recipes — `spawn`/`rule`/`trigger`/`transaction` mention
+  count is zero — despite ISF being the primary authoring layer
+  for new work.
+- The audit recommended a prioritized slice queue ranging from
+  highest impact (cookbook ISF recipes) to structural polish
+  (heading density). Each numbered item maps to one downstream
+  task tree.
+- The audit is doc-only. No coverage slice was automatically
+  shipped from the report.
