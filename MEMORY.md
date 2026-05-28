@@ -37792,3 +37792,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Added "Complete Accept-Path Examples" section at end of 13j with
   type_alias_demo + enum_demo + aggregate_storage_demo, each with
   Walkthrough. t/1376 fixture count 24 → 27.
+
+## 2026-05-29: R14 G5 13-intent examples — selected
+- `ISF-G5-13-INTENT-EXAMPLES` adds blinker + handshake_intent
+  examples to 13-intent-scheduling.md.

@@ -14578,3 +14578,5 @@ Exit criteria:
 - `R14`: G6 13j examples now ship. 13j gains a "Complete
   Accept-Path Examples" section with three fixtures. t/1376
   fixture count 24 → 27.
+- `R14`: next active tree — `ISF-G5-13-INTENT-EXAMPLES`. Two
+  happy-path actor fixtures for 13-intent-scheduling.md.

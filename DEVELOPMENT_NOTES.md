@@ -33330,3 +33330,6 @@ It is an exact-delay pulse request:
 ## 2026-05-29: G6 13j examples shipped
 - Section added to 13j with three fixtures and Walkthroughs.
 - t/1376 fixture count 24 → 27.
+
+## 2026-05-29: G5 13-intent examples selected
+- blinker + handshake_intent fixtures pre-validated to lower.

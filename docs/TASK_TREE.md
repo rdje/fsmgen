@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-G5-13-INTENT-EXAMPLES` | `pending` | `R14` | `ISF-G5-13-INTENT-EXAMPLES.2` | [docs/tasks/ISF-G5-13-INTENT-EXAMPLES.md](docs/tasks/ISF-G5-13-INTENT-EXAMPLES.md) |
 
 ## Proposed Task Trees
 
