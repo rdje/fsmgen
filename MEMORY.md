@@ -37736,3 +37736,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   with `Files=5, Tests=713`; `mdbook build docs/book`;
   `git diff --check`.
 - Active task tree: `none`.
+
+## 2026-05-29: R14 active task tree selected — downstream/contract handoff sync
+- The user asked whether the handoff documents for downstream
+  consumers (SPECFORGE, ...) and the public API contract
+  stabilization documents were updated.
+- Audit: `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` was kept current
+  during the recent slices, but
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` references only
+  `t/1366/1369/1370/1371` for the activation-override gate family
+  and does not yet mention `t/1372-1376` or the sub-axis
+  diagnostic wording. `docs/SPECFORGE_FEEDBACK_RESPONSE.md` has
+  zero matches for any of the new diagnostics.
+- Created `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC` to propagate the
+  diagnostic-precision and book-coverage shipped surface to both
+  documents.

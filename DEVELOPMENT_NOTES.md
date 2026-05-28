@@ -33267,3 +33267,21 @@ It is an exact-delay pulse request:
   `t/1332`, `t/1376`) that together enforce: feature matrix
   consistency, loop-body doc truth, ATL doc status, and book
   example lowering.
+
+## 2026-05-29: active R14 task tree selected — downstream/contract handoff sync
+- The user asked whether handoff documents for downstream consumers
+  (SPECFORGE) and the public API contract stabilization documents
+  were updated. Audit results:
+    * `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`: kept current during
+      the recent slices (cross-domain, sub-axes, loop-contained,
+      deeper-nested all mentioned).
+    * `ISF_PUBLIC_INTERFACE_CONTRACT.md`: stale. References only
+      `t/1366/1369/1370/1371` for the activation-override gate
+      family. Does not mention sub-axis split, loop-contained,
+      deeper-nested, or `t/1372-1376`.
+    * `SPECFORGE_FEEDBACK_RESPONSE.md`: stale. Zero matches for
+      any new diagnostic phrase.
+- The slice
+  [`ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC`](docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md)
+  propagates the shipped surface to both docs.
+- This selection commit changes neither doc.

@@ -16166,3 +16166,14 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   t/1250` (Files=5, Tests=713); `mdbook build docs/book`;
   `git diff --check`.
 - Next bounded slice: continue the G2-G8 queue.
+
+## 2026-05-29: Selected R14 downstream/contract handoff sync
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC`](docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md).
+- Goal: propagate the recent diagnostic surface (sub-axis,
+  loop-contained, deeper-nested, t/1372-1376) to
+  `ISF_PUBLIC_INTERFACE_CONTRACT.md` and add a current-status
+  addendum to `SPECFORGE_FEEDBACK_RESPONSE.md`.
+- Public behavior changed: no (.1 select).
+- Next: `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2`.

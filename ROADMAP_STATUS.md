@@ -14550,3 +14550,10 @@ Exit criteria:
   extracts every `lisp` block from 13 chapters and verifies
   parse+lower; 20 complete fixtures currently lower cleanly, 236
   fragments correctly skipped. Audits + ISF CI clean.
+- `R14`: next active task tree selected —
+  `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC` per the user question
+  whether handoff and contract docs were updated. Audit found
+  `ISF_PUBLIC_INTERFACE_CONTRACT.md` and
+  `SPECFORGE_FEEDBACK_RESPONSE.md` are stale relative to the
+  recent sub-axis diagnostic, loop-contained, deeper-nested, and
+  `t/1376` shipped surface.

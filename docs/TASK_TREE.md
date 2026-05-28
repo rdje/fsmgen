@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC` | `pending` | `R14` | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2` | [docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md](docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md) |
 
 ## Proposed Task Trees
 

@@ -30190,3 +30190,6 @@ This is the persistent technical change history for FSMGen.
 - Registered `t/1376` in [docs/ISF_SPEC.md](docs/ISF_SPEC.md) focused-tests list.
 - Current state: 20 complete fixtures lower cleanly + 236 fragments correctly skipped (don't start with `(actor`). No parse or lower failures.
 - Audits `t/1305`, `t/1307`, `t/1332`, `t/1250` all pass alongside the new `t/1376`.
+
+### active R14 task tree selected: downstream/contract handoff sync
+- Created [docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md](docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md) per the user question whether handoff documents for downstream consumers (SPECFORGE, ...) and the public API contract stabilization documents were updated. Audit found [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md) references only `t/1366/1369/1370/1371` for the activation-override gate family and [docs/SPECFORGE_FEEDBACK_RESPONSE.md](docs/SPECFORGE_FEEDBACK_RESPONSE.md) has zero matches for any of the new diagnostics. Slice will propagate `t/1372-1376` references and sub-axis/loop-contained/deeper-nested wording. Selection commit only.
