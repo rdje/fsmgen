@@ -32931,3 +32931,21 @@ It is an exact-delay pulse request:
   (focused-tests), `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`
   (deeper-nested note), and `14-feature-backlog.md` (deeper-nested
   sentence).
+
+## 2026-05-27: bootstrap import-tree count refreshed after diagnostic-precision slices
+- The four R14 diagnostic-precision slices that landed since the
+  prior bootstrap refresh added cumulative validator code to
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` (one helper plus three gate
+  sites for cross-domain; four sub-axis preserves helpers plus
+  four-way gate split at two sites for static-timing; one helper
+  plus two gate sites each for loop-contained and deeper-nested).
+- The recorded line count in `docs/BIN_FSMGEN_IMPORT_TREE.md` moves
+  from `11144` to `11309` (+165) at both occurrences (per-file
+  listing and largest-reachable-files summary).
+- Topology unchanged: no new module added; `total reachable project
+  files: 196`, `reachable .pm packages: 195`, `bin/fsmgen: 1175`.
+- Consolidating four slice refreshes into a single
+  `BIN-FSMGEN-IMPORT-TREE-R14-DIAGNOSTIC-PRECISION-REFRESH` task
+  tree avoids four separate maintenance commits while preserving
+  the historical-record invariant: existing task-tree entries
+  naming `11144` are dated snapshots and remain untouched.

@@ -15908,3 +15908,19 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Next bounded slice: another item from the backlog (broader
   deeper-nested repeat activation implementation remains a future
   leaf of this same tree).
+
+## 2026-05-27: Bootstrap import-tree count refreshed after diagnostic-precision slices
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`BIN-FSMGEN-IMPORT-TREE-R14-DIAGNOSTIC-PRECISION-REFRESH.1`](docs/tasks/BIN-FSMGEN-IMPORT-TREE-R14-DIAGNOSTIC-PRECISION-REFRESH.md)
+  refreshed the recorded `perl/FSM/Scheduler/ISF/LoweringIR.pm`
+  line count from `11144` to `11309` (+165) after the four R14
+  diagnostic-precision slices added cumulative validator code.
+  Topology unchanged at `total=196`, `pm=195`, `bin/fsmgen=1175`.
+- Public behavior changed: no — doc-only architecture maintenance.
+- Focused validation passed:
+  `wc -l perl/FSM/Scheduler/ISF/LoweringIR.pm` confirms `11309`;
+  `wc -l bin/fsmgen` confirms `1175`; stale `11144` grep clean
+  against the live import-tree note; `mdbook build docs/book`;
+  `git diff --check`.
+- Next bounded slice: another item from the backlog.

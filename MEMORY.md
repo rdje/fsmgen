@@ -37375,3 +37375,26 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Active task tree: `none`. Broader deeper-nested repeat activation
   (extending the shipped subset to actually support deeper-when and
   when-inside-switch nesting) remains a future leaf of this same tree.
+
+## 2026-05-27: Bootstrap import-tree count refreshed after diagnostic-precision slices
+- Completed `BIN-FSMGEN-IMPORT-TREE-R14-DIAGNOSTIC-PRECISION-REFRESH.1`
+  and closed the single-leaf task tree.
+- Refreshed `docs/BIN_FSMGEN_IMPORT_TREE.md` recorded
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count from `11144` to
+  `11309` (+165) at both the per-file listing and the
+  largest-reachable-files summary. The +165 covers the four R14
+  diagnostic-precision slices that landed since the prior bootstrap
+  refresh (cross-domain repeat-body do, static-timing override
+  sub-axes, loop-contained repeat-body do/spawn, deeper-nested
+  repeat-body do/spawn).
+- Topology unchanged: `total=196` project-owned files, `pm=195`
+  packages, `bin/fsmgen=1175` lines. No new module added or removed
+  by the diagnostic-precision slices.
+- Doc-only architecture maintenance. Parser, scheduler, backend,
+  generated `.fsm`, HDL, public API, manifests, tests, and runtime
+  behavior unchanged.
+- Validation passed: `wc -l perl/FSM/Scheduler/ISF/LoweringIR.pm`
+  confirms `11309`; `wc -l bin/fsmgen` confirms `1175`; targeted
+  stale-`11144` grep clean against the live import-tree note;
+  `mdbook build docs/book`; `git diff --check`.
+- Active task tree: `none`.

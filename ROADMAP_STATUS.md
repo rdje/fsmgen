@@ -14450,3 +14450,12 @@ Exit criteria:
   `ISF_SPEC.md`, `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and
   `14-feature-backlog.md`. Broader deeper-nested implementation
   remains a future leaf.
+- `R14`: bootstrap import-tree note refreshed.
+  `BIN-FSMGEN-IMPORT-TREE-R14-DIAGNOSTIC-PRECISION-REFRESH.1`
+  consolidated the maintenance refresh after the four R14
+  diagnostic-precision slices (cross-domain repeat-body do,
+  static-timing override sub-axes, loop-contained repeat-body
+  do/spawn, deeper-nested repeat-body do/spawn). Recorded
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count updated from
+  `11144` to `11309` (+165). Topology unchanged at `total=196`,
+  `pm=195`, `bin/fsmgen=1175`. Doc-only architecture maintenance.
