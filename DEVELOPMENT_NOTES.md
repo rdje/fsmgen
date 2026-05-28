@@ -33304,3 +33304,13 @@ It is an exact-delay pulse request:
   SPECFORGE_FEEDBACK_RESPONSE.md, ISF_SPEC.md focused-tests list,
   and the audit doc at
   `docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md`.
+
+## 2026-05-29: active R14 task tree selected — G7 13d accept-path examples
+- Audit gap G7 — 13d-control-flow.md has only 12 examples for the
+  full when/switch/repeat/while/until/do/spawn surface (two were
+  added by an earlier slice).
+- The slice
+  [`ISF-G7-13D-ACCEPT-PATH-EXAMPLES`](docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md)
+  adds 4 complete accept-path actor fixtures (when_demo,
+  switch_demo, while_demo, until_demo). Each was pre-validated to
+  parse + lower before being framed in the task tree.

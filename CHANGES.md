@@ -30198,3 +30198,6 @@ This is the persistent technical change history for FSMGen.
 - [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md): activation-override section gained `t/1372` (cross-domain), `t/1373` (timing-param sub-axes), `t/1374` (loop-contained), `t/1375` (deeper-nested), and `t/1376` (book-example lowering) references plus matching sub-axis, loop-contained, deeper-nested, and book-lowering-gate wording.
 - [docs/SPECFORGE_FEEDBACK_RESPONSE.md](docs/SPECFORGE_FEEDBACK_RESPONSE.md): appended a dated "Diagnostic-Precision And Book-Coverage Status" addendum summarizing the targeted rejection diagnostics, the `lisp` vs `text` block convention, the book example lowering build gate, the cookbook ISF recipes, and the current audit set (`t/1305`, `t/1307`, `t/1332`, `t/1376`, `t/1250`).
 - Audits `t/1305`, `t/1307`, `t/1332`, `t/1376` reverified clean (Files=4, Tests=711).
+
+### active R14 task tree selected: G7 13d accept-path examples
+- Created [docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md](docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md) for audit gap G7. Slice adds 4 complete accept-path actor examples (when/switch+default/while/until) to 13d. Selection commit only.

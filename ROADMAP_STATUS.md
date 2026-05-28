@@ -14565,3 +14565,6 @@ Exit criteria:
   summarizing the targeted diagnostic surface, the lisp/text
   block convention, the build gate, the cookbook recipes, and
   the current audit set.
+- `R14`: next active task tree — `ISF-G7-13D-ACCEPT-PATH-EXAMPLES`
+  for audit gap G7. Four complete accept-path actor examples
+  (when, switch+default, while, until) will land in 13d.

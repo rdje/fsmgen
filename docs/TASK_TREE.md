@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-G7-13D-ACCEPT-PATH-EXAMPLES` | `pending` | `R14` | `ISF-G7-13D-ACCEPT-PATH-EXAMPLES.2` | [docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md](docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md) |
 
 ## Proposed Task Trees
 

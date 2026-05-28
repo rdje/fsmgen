@@ -37767,3 +37767,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   (Files=4, Tests=711); `mdbook build docs/book`;
   `git diff --check`.
 - Active task tree: `none`.
+
+## 2026-05-29: R14 active task tree selected — G7 13d accept-path examples
+- Created `ISF-G7-13D-ACCEPT-PATH-EXAMPLES` addressing audit gap
+  G7. Adds 4 complete accept-path actor examples to
+  `13d-control-flow.md`: `when_demo`, `switch_demo`, `while_demo`,
+  `until_demo`. Each carries a Walkthrough paragraph and is
+  pre-validated to lower cleanly.

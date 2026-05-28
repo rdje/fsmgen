@@ -16195,3 +16195,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   t/1376` (Files=4, Tests=711); `mdbook build docs/book`;
   `git diff --check`.
 - Next: continue the G2-G8 queue.
+
+## 2026-05-29: Selected R14 G7 13d accept-path examples
+- Active tree: `ISF-G7-13D-ACCEPT-PATH-EXAMPLES`. Adds 4 complete
+  accept-path actor fixtures + walkthroughs to 13d.
+- `.1` is this selection commit.
