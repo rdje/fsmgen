@@ -37817,3 +37817,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 ## 2026-05-29: R14 G4 backlog truth-sync shipped
 - Added "### 2026-05-29 Status Snapshot" subsection to
   14-feature-backlog.md summarizing recent shipped surface.
+
+## 2026-05-29: R14 G8 heading density — selected
+- ISF-G8-HEADING-DENSITY adds sub-headings to long Pipeline
+  section of 13-intent-scheduling.md.

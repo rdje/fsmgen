@@ -30234,3 +30234,6 @@ This is the persistent technical change history for FSMGen.
 
 ### G4 backlog truth-sync shipped
 - Added "### 2026-05-29 Status Snapshot" subsection to [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md).
+
+### active R14 task tree selected: G8 heading density
+- Created [docs/tasks/ISF-G8-HEADING-DENSITY.md](docs/tasks/ISF-G8-HEADING-DENSITY.md).

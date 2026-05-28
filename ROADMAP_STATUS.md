@@ -14589,3 +14589,4 @@ Exit criteria:
   bank_demo + dataop_demo (13e). t/1376 29 → 32.
 - `R14`: next active tree — `ISF-G4-BACKLOG-TRUTH-SYNC`.
 - `R14`: G4 backlog truth-sync now ships.
+- `R14`: next active tree — `ISF-G8-HEADING-DENSITY`.

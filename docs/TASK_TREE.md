@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-G8-HEADING-DENSITY` | `pending` | `R14` | `ISF-G8-HEADING-DENSITY.2` | [docs/tasks/ISF-G8-HEADING-DENSITY.md](docs/tasks/ISF-G8-HEADING-DENSITY.md) |
 
 ## Proposed Task Trees
 

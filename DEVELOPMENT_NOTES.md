@@ -33347,3 +33347,5 @@ It is an exact-delay pulse request:
 
 ## 2026-05-29: G4 shipped
 - Status snapshot added.
+
+## 2026-05-29: G8 selected
