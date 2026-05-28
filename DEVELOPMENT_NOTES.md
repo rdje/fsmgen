@@ -33156,3 +33156,19 @@ It is an exact-delay pulse request:
   parse+lower as standalone fixtures.
 - Re-running the audit script reports 263 blocks total: 243
   fragments, 20 complete fixtures lower cleanly, 0 failures.
+
+## 2026-05-29: active R14 task tree selected — cookbook walkthroughs
+- The user's standard "every example shall be thoroughly explained"
+  applies to all current and future book examples. The cookbook
+  ISF recipes shipped in G1 cover use cases but do not walk through
+  each clause.
+- The slice
+  [`ISF-COOKBOOK-WALKTHROUGHS`](docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md)
+  adds a "Walkthrough" sub-section per recipe that names each
+  top-level clause and explains what it contributes to the
+  lowered schedule.
+- Walkthrough scope: limit to the clauses each specific recipe
+  uses. Avoid duplicating definitions across recipes. A future
+  "shared clauses reference" appendix can collect the common
+  vocabulary if needed.
+- This selection commit changes no book content.

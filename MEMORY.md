@@ -37627,3 +37627,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `prove -Iperl t/1305 t/1307 t/1332` with `Files=3, Tests=709`;
   `mdbook build docs/book`; `git diff --check`.
 - Active task tree: `none`.
+
+## 2026-05-29: R14 active task tree selected — cookbook walkthroughs
+- Created and registered active task tree
+  [`ISF-COOKBOOK-WALKTHROUGHS`](docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md)
+  responding to the user's standard that examples must be
+  thoroughly explained.
+- Cookbook recipes 9-13 currently include the `.isf` source and a
+  "Use this when:" usage list but no clause-by-clause walkthrough.
+  This slice adds a "Walkthrough" sub-section per recipe that names
+  each top-level clause and explains what it contributes to the
+  lowered schedule.
+- Two-commit pattern: `.1: select` (this slice), `.2: ship` (the
+  five walkthroughs).
+- Active task tree: `ISF-COOKBOOK-WALKTHROUGHS`.
+- Current frontier: `ISF-COOKBOOK-WALKTHROUGHS.2`.

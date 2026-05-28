@@ -16082,3 +16082,16 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   walkthrough explanations (task #34), then proceed with audit
   gaps G2-G8 under the stricter "every example lowers cleanly and
   is thoroughly explained" standard.
+
+## 2026-05-29: Selected R14 cookbook walkthroughs
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-COOKBOOK-WALKTHROUGHS`](docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md).
+- Goal: add clause-by-clause walkthroughs to cookbook recipes
+  9-13 so each recipe teaches the syntax in addition to
+  illustrating a use case.
+- Public behavior changed: no; `.1: select` commit only registers
+  the task tree.
+- Focused validation passed: `mdbook build docs/book`;
+  `git diff --check`.
+- Next bounded slice: `ISF-COOKBOOK-WALKTHROUGHS.2`.

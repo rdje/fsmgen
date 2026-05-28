@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-COOKBOOK-WALKTHROUGHS` | `pending` | `R14` | `ISF-COOKBOOK-WALKTHROUGHS.2` | [docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md](docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md) |
 
 ## Proposed Task Trees
 

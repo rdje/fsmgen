@@ -30165,3 +30165,6 @@ This is the persistent technical change history for FSMGen.
 - Re-audit reports 263 lisp blocks total: 243 fragments, 20 complete fixtures lower cleanly, 0 parse failures, 0 lower failures (was 17 OK + 15 failing).
 - Audits [t/1305](t/1305-isf-book-feature-matrix-audit.t), [t/1307](t/1307-isf-loop-body-doc-truth-audit.t), [t/1332](t/1332-isf-atl-doc-status-audit.t) reverified clean.
 - Closes the example-correctness addendum gap from [docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md](docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md).
+
+### active R14 task tree selected: cookbook walkthroughs
+- Created and registered active task tree [docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md](docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md) to add clause-by-clause walkthroughs to cookbook recipes 9-13, responding to the user's standard that examples must be thoroughly explained. Selection commit only.

@@ -14516,3 +14516,7 @@ Exit criteria:
   converted to `text` blocks. Re-audit reports 20 complete fixtures
   lower cleanly, 0 failures. Audits `t/1305`, `t/1307`, `t/1332`
   still pass.
+- `R14`: next active task tree selected — `ISF-COOKBOOK-WALKTHROUGHS`.
+  Cookbook recipes 9-13 will gain clause-by-clause walkthroughs so
+  each recipe teaches the syntax in addition to illustrating a use
+  case.
