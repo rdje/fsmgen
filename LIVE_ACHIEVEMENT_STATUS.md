@@ -16200,3 +16200,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Active tree: `ISF-G7-13D-ACCEPT-PATH-EXAMPLES`. Adds 4 complete
   accept-path actor fixtures + walkthroughs to 13d.
 - `.1` is this selection commit.
+
+## 2026-05-29: G7 13d accept-path examples shipped
+- 4 fixtures added; t/1376 now reports 24 complete fixtures lower
+  cleanly (was 20). Audits clean.

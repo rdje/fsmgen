@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-G7-13D-ACCEPT-PATH-EXAMPLES` | `pending` | `R14` | `ISF-G7-13D-ACCEPT-PATH-EXAMPLES.2` | [docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md](docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-G7-13D-ACCEPT-PATH-EXAMPLES` | `done` | `R14` | `closed` | [docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md](docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md) |
 | `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md](docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md) |
 | `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE` | `done` | `R14` | `closed` | [docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md](docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md) |
 | `ISF-DIAGNOSTIC-EXAMPLES-G3` | `done` | `R14` | `closed` | [docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md) |

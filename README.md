@@ -83,7 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
-- `docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md` — active `R14` task tree adding 4 complete accept-path control-flow actor examples (when/switch+default/while/until) to 13d.
+- `docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md` — completed `R14` task tree that added 4 complete accept-path control-flow actor examples (when/switch+default/while/until) to 13d.
 - `docs/tasks/ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.md` — completed `R14` task tree that propagated the recent diagnostic surface (cross-domain, sub-axis, loop-contained, deeper-nested, `t/1372-1376`) to `ISF_PUBLIC_INTERFACE_CONTRACT.md` and `SPECFORGE_FEEDBACK_RESPONSE.md`.
 - `docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md` — completed `R14` task tree that added `t/1376-isf-book-example-lowering-audit.t`. The test extracts every `lisp`-tagged book block and verifies it parses + lowers; failures block the test suite. 20 fixtures currently lower cleanly.
 - `docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md` — completed `R14` task tree that added 4 representative examples for the remaining `remains deferred` template families and adopted the `lisp` vs `text` block-tag convention (`lisp` for accept-path fixtures only).

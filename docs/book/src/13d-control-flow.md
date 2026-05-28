@@ -377,3 +377,111 @@ byte left after each bit.
 
 Both branch repeats exit to the same post-switch STOP sequence when their
 repeat checks complete.
+
+## Complete Accept-Path Examples
+
+The fragments above show clause-level syntax. The four actors
+below are complete, self-contained fixtures that each illustrate
+one control-flow form end-to-end. Each parses and lowers cleanly,
+so it can be copy-pasted as a starting skeleton.
+
+### `(when ...)` with a body
+
+```lisp
+(actor when_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input mode)
+    (output done))
+  (transaction tx
+    (on start)
+    (when mode
+      (wait 4))
+    (complete done)))
+```
+
+**Walkthrough.** `(on start)` opens the transaction on the input
+pulse. `(when mode (wait 4))` introduces a conditional region: the
+schedule branches based on the sampled value of port `mode`. When
+`mode` is asserted the schedule sits in the wait region for four
+cycles; otherwise the wait body is skipped and the transaction
+falls straight through to `(complete done)`. The `done` output
+pulses one cycle and the transaction returns to idle.
+
+### `(switch ...)` with `(default ...)`
+
+```lisp
+(actor switch_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input opcode (width 2))
+    (output done))
+  (transaction tx
+    (on start)
+    (switch opcode
+      (0 (wait 2))
+      (1 (wait 4))
+      (default (wait 1)))
+    (complete done)))
+```
+
+**Walkthrough.** `(input opcode (width 2))` adds a two-bit input.
+`(switch opcode ...)` dispatches on the sampled value: case `0`
+waits 2 cycles, case `1` waits 4 cycles, and the `default` branch
+covers every other value (here `2` and `3`) with a 1-cycle wait.
+The lowered decision tree negates the union of the explicit case
+predicates, so the `default` branch is unreachable only when the
+explicit cases are exhaustive for the signal width. All branches
+exit to the same post-switch state, which here is `(complete done)`.
+
+### `(while ...)` pre-test loop
+
+```lisp
+(actor while_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input cond)
+    (output done))
+  (transaction tx
+    (on start)
+    (while cond
+      (wait 2))
+    (complete done)))
+```
+
+**Walkthrough.** `(while cond body...)` is a pre-test loop: the
+guard `cond` is evaluated *before* the first body iteration. If
+`cond` is zero on entry the body never runs and the schedule
+proceeds to `(complete done)`. Otherwise each iteration waits two
+cycles, then the guard is re-evaluated. The body runs zero or more
+times. There is no implicit counter; the loop terminates only
+when `cond` becomes zero.
+
+### `(until ...)` post-test loop
+
+```lisp
+(actor until_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input cond)
+    (output done))
+  (transaction tx
+    (on start)
+    (until cond
+      (wait 2))
+    (complete done)))
+```
+
+**Walkthrough.** `(until cond body...)` is the post-test variant:
+the body runs *first*, then the guard `cond` is checked. The body
+therefore runs at least once. Iterations stop when `cond` is
+asserted at the end of a body iteration. Same shape as `while`
+otherwise.

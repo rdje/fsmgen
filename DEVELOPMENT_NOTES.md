@@ -33314,3 +33314,11 @@ It is an exact-delay pulse request:
   adds 4 complete accept-path actor fixtures (when_demo,
   switch_demo, while_demo, until_demo). Each was pre-validated to
   parse + lower before being framed in the task tree.
+
+## 2026-05-29: G7 13d accept-path examples shipped
+- Section "Complete Accept-Path Examples" at the bottom of 13d
+  collects the four fixtures with Walkthroughs. The earlier
+  clause-level fragments in the chapter remain; they show
+  syntactic shape, while the new section provides end-to-end
+  copy-pasteable starting points.
+- t/1376 fixture count: 20 → 24.

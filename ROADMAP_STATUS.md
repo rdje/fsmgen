@@ -14568,3 +14568,7 @@ Exit criteria:
 - `R14`: next active task tree — `ISF-G7-13D-ACCEPT-PATH-EXAMPLES`
   for audit gap G7. Four complete accept-path actor examples
   (when, switch+default, while, until) will land in 13d.
+- `R14`: G7 13d accept-path examples now ship. Four actor
+  fixtures (when_demo, switch_demo, while_demo, until_demo)
+  added to 13d with Walkthroughs. t/1376 reports 24 fixtures
+  lower cleanly (was 20).

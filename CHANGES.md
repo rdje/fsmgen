@@ -30201,3 +30201,8 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: G7 13d accept-path examples
 - Created [docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md](docs/tasks/ISF-G7-13D-ACCEPT-PATH-EXAMPLES.md) for audit gap G7. Slice adds 4 complete accept-path actor examples (when/switch+default/while/until) to 13d. Selection commit only.
+
+### G7 13d accept-path examples shipped
+- Added "Complete Accept-Path Examples" section at the end of [docs/book/src/13d-control-flow.md](docs/book/src/13d-control-flow.md) with four self-contained actor fixtures (`when_demo`, `switch_demo`, `while_demo`, `until_demo`). Each is followed by a Walkthrough paragraph.
+- `t/1376` reports 24 complete fixtures lower cleanly (was 20).
+- All ISF book audits clean.

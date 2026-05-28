@@ -37774,3 +37774,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `13d-control-flow.md`: `when_demo`, `switch_demo`, `while_demo`,
   `until_demo`. Each carries a Walkthrough paragraph and is
   pre-validated to lower cleanly.
+
+## 2026-05-29: R14 G7 13d accept-path examples shipped
+- Completed `.2`. Added "Complete Accept-Path Examples" section
+  at end of `13d-control-flow.md` with 4 actor fixtures
+  (`when_demo`, `switch_demo`, `while_demo`, `until_demo`) each
+  with a Walkthrough paragraph.
+- t/1376 now reports 24 complete fixtures lower cleanly (was 20).
+- Validation: `prove t/1305 t/1307 t/1332 t/1376` PASS.
