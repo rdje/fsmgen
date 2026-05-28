@@ -14459,3 +14459,10 @@ Exit criteria:
   `perl/FSM/Scheduler/ISF/LoweringIR.pm` line count updated from
   `11144` to `11309` (+165). Topology unchanged at `total=196`,
   `pm=195`, `bin/fsmgen=1175`. Doc-only architecture maintenance.
+- `R14`: next active task tree selected —
+  `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC`.
+  Synchronizes book chapters 13b/13d/13h/13k to mention the new
+  targeted diagnostics shipped by the loop-contained and
+  deeper-nested precision slices. Other doc surfaces (`14-feature-backlog.md`,
+  `ISF_SPEC.md`, `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`) were already
+  synchronized when those slices shipped.

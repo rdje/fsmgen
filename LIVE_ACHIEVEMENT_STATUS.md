@@ -15924,3 +15924,18 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   against the live import-tree note; `mdbook build docs/book`;
   `git diff --check`.
 - Next bounded slice: another item from the backlog.
+
+## 2026-05-27: Selected R14 loop-contained and deeper-nested diagnostic doc-truth sync
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC`](docs/tasks/ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.md).
+- Goal: extend the targeted-diagnostic synchronization for the
+  loop-contained and deeper-nested slices to book chapters
+  `13b-transactions.md`, `13d-control-flow.md`,
+  `13h-lowering-reference.md`, and `13k-isf-feature-support-matrix.md`.
+- Public behavior changed: no; `.1: select` commit only registers
+  the task tree.
+- Focused validation passed: `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice:
+  `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2`
+  (book prose updates + audit reverification).

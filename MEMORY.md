@@ -37398,3 +37398,22 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   stale-`11144` grep clean against the live import-tree note;
   `mdbook build docs/book`; `git diff --check`.
 - Active task tree: `none`.
+
+## 2026-05-27: R14 active task tree selected — loop-contained and deeper-nested diagnostic doc-truth sync
+- Created and registered active task tree
+  [`ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC`](docs/tasks/ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.md).
+- Book chapters `13b-transactions.md`, `13d-control-flow.md`,
+  `13h-lowering-reference.md`, and `13k-isf-feature-support-matrix.md`
+  currently mention deeper-branch and loop-contained repeat deferrals
+  in passing but pre-date the new targeted diagnostics shipped by
+  `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION` and
+  `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`.
+- Slice scope: doc-only sync extending the targeted-diagnostic
+  references to the four book chapters. The
+  `14-feature-backlog.md`, `ISF_SPEC.md`, and
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` surfaces were already
+  synchronized when those slices shipped.
+- Two-commit pattern: `.1: select` (this slice), `.2: ship` (book
+  prose updates + audit reverification).
+- Active task tree: `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC`.
+- Current frontier: `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2`.

@@ -32949,3 +32949,17 @@ It is an exact-delay pulse request:
   tree avoids four separate maintenance commits while preserving
   the historical-record invariant: existing task-tree entries
   naming `11144` are dated snapshots and remain untouched.
+
+## 2026-05-27: active R14 task tree selected — loop-contained and deeper-nested diagnostic doc-truth sync
+- The targeted-diagnostic synchronization for the loop-contained and
+  deeper-nested slices reached `14-feature-backlog.md`, `ISF_SPEC.md`,
+  and `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` when each slice shipped,
+  but the four book chapters that mention these deferrals in passing
+  (`13b-transactions.md`, `13d-control-flow.md`,
+  `13h-lowering-reference.md`, `13k-isf-feature-support-matrix.md`)
+  pre-date the new wording. This slice extends the sync to those
+  chapters.
+- Pure doc-truth sync. The validator already emits the targeted
+  diagnostics in production; this slice only updates the prose that
+  describes them.
+- This selection commit changes no code.
