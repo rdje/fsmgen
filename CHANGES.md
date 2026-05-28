@@ -30184,3 +30184,9 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: book-example lowering build gate
 - Created [docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md](docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md) per the user directive that book examples must lower properly and any lowering failure must block the build. Slice adds `t/1376-isf-book-example-lowering-audit.t` extracting every `lisp` block and verifying parse+lower. Selection commit only.
+
+### book-example lowering build gate shipped
+- Added [t/1376-isf-book-example-lowering-audit.t](t/1376-isf-book-example-lowering-audit.t) that walks `docs/book/src/12-cookbook.md`, `13*.md`, and `14-feature-backlog.md`, extracts every `lisp` block, and for each block starting with `(actor` calls `FSM::Adapter::ISF->parse_source` + `FSM::Scheduler::ISF->lower`. Any parse or lower error fails the test and blocks the test suite.
+- Registered `t/1376` in [docs/ISF_SPEC.md](docs/ISF_SPEC.md) focused-tests list.
+- Current state: 20 complete fixtures lower cleanly + 236 fragments correctly skipped (don't start with `(actor`). No parse or lower failures.
+- Audits `t/1305`, `t/1307`, `t/1332`, `t/1250` all pass alongside the new `t/1376`.

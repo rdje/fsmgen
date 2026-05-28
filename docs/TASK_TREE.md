@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE` | `pending` | `R14` | `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.2` | [docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md](docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE` | `done` | `R14` | `closed` | [docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md](docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md) |
 | `ISF-DIAGNOSTIC-EXAMPLES-G3` | `done` | `R14` | `closed` | [docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md) |
 | `ISF-COOKBOOK-WALKTHROUGHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md](docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md) |
 | `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX` | `done` | `R14` | `closed` | [docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md](docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md) |

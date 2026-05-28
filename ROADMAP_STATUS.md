@@ -14546,3 +14546,7 @@ Exit criteria:
   `t/1376-isf-book-example-lowering-audit.t` that extracts every
   `lisp` block and verifies it lowers, blocking the test suite on
   any failure.
+- `R14`: book-example lowering build gate now ships. `t/1376`
+  extracts every `lisp` block from 13 chapters and verifies
+  parse+lower; 20 complete fixtures currently lower cleanly, 236
+  fragments correctly skipped. Audits + ISF CI clean.

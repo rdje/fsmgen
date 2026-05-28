@@ -83,7 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
-- `docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md` — active `R14` task tree adding `t/1376-isf-book-example-lowering-audit.t` that extracts every `lisp`-tagged book block and verifies it parses + lowers; failures block the test suite.
+- `docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md` — completed `R14` task tree that added `t/1376-isf-book-example-lowering-audit.t`. The test extracts every `lisp`-tagged book block and verifies it parses + lowers; failures block the test suite. 20 fixtures currently lower cleanly.
 - `docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-G3.md` — completed `R14` task tree that added 4 representative examples for the remaining `remains deferred` template families and adopted the `lisp` vs `text` block-tag convention (`lisp` for accept-path fixtures only).
 - `docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md` — completed `R14` task tree that added clause-by-clause walkthroughs to cookbook ISF recipes 9-13.
 - `docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md` — completed `R14` task tree that fixed 14 broken ISF examples identified in the example-correctness audit addendum. Re-audit reports 20 complete fixtures lower cleanly, 0 failures.

@@ -33248,3 +33248,22 @@ It is an exact-delay pulse request:
 - The convention adopted by the previous slice (`text` for
   rejection illustrations, `lisp` only for accept-path fixtures)
   is now enforced by CI.
+
+## 2026-05-29: book-example lowering build gate shipped
+- Shipped
+  [`ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.2`](docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md):
+  added `t/1376-isf-book-example-lowering-audit.t` and registered
+  it in the ISF_SPEC focused-tests list.
+- Test design: walks a fixed list of 13 chapters; for each lisp
+  block whose body starts with `(actor`, calls
+  `FSM::Adapter::ISF->parse_source($code, "book-example: $chapter
+  block #$idx")` and `FSM::Scheduler::ISF->lower($actor)`. Either
+  failure pushes a "$chapter block #$idx ($phase): $msg" entry
+  into the failures list and the test fails with a `diag` listing
+  every failure. Fragments (blocks that don't start with
+  `(actor`) are counted via a separate counter and reported in a
+  summary diag.
+- The book audit family now has four tests (`t/1305`, `t/1307`,
+  `t/1332`, `t/1376`) that together enforce: feature matrix
+  consistency, loop-body doc truth, ATL doc status, and book
+  example lowering.

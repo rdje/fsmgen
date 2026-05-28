@@ -16153,3 +16153,16 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Focused validation: `mdbook build docs/book`;
   `git diff --check`.
 - Next: `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.2`.
+
+## 2026-05-29: Book-example lowering build gate shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.2`](docs/tasks/ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.md)
+  added `t/1376` and registered it in the ISF_SPEC focused-tests
+  list. The test enforces that every `lisp`-tagged book example
+  lowers cleanly. Build fails on any lowering error.
+- Public behavior changed: no — test addition only.
+- Focused validation: `prove -Iperl t/1376 t/1305 t/1307 t/1332
+  t/1250` (Files=5, Tests=713); `mdbook build docs/book`;
+  `git diff --check`.
+- Next bounded slice: continue the G2-G8 queue.

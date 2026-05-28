@@ -37718,3 +37718,21 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `14-feature-backlog.md`, attempts parse+lower of each block
   starting with `(actor`, and fails any block that doesn't lower.
 - Two-commit pattern. `.1` is this selection.
+
+## 2026-05-29: R14 book-example lowering build gate shipped
+- Completed `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.2`.
+- Added `t/1376-isf-book-example-lowering-audit.t` and registered
+  it in `docs/ISF_SPEC.md` focused-tests list.
+- The test walks 13 book chapters (12-cookbook.md, 13-13k, and
+  14-feature-backlog.md), extracts every `lisp` block, and for
+  each block starting with `(actor` calls
+  `FSM::Adapter::ISF->parse_source` + `FSM::Scheduler::ISF->lower`.
+  Failures emit the chapter + block index + diagnostic via
+  `Test::More::diag` and fail the test.
+- Current state: 20 complete fixtures lower cleanly + 236
+  fragments correctly skipped (don't start with `(actor`). No
+  parse or lower failures.
+- Validation: `prove -Iperl t/1376 t/1305 t/1307 t/1332 t/1250`
+  with `Files=5, Tests=713`; `mdbook build docs/book`;
+  `git diff --check`.
+- Active task tree: `none`.
