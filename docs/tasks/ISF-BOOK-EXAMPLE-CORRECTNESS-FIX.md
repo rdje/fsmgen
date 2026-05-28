@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`
@@ -78,8 +78,7 @@ the book to lower cleanly to FSM.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.1` | `pending` | Selection commit must land first. |
-| 2 | `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2` | `pending` | Ship the 14 fixes. |
+| 1 | `closed` | `done` | Both leaves shipped. `.2` resolved all 15 failing blocks; re-audit reports 0 failures. |
 
 ## Decisions
 
@@ -109,15 +108,15 @@ the book to lower cleanly to FSM.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-29` | `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-29` | `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2` | re-run audit; `prove -Iperl t/1305 t/1307 t/1332`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-29` | `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; selection-only commit |
+| `2026-05-29` | `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2` | re-run audit (0 failures, 20 complete fixtures OK); `prove -Iperl t/1305 t/1307 t/1332` (Files=3, Tests=709); `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.1` | `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.1: select example-correctness fix` | `pending` |
-| `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2` | `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2: ship example-correctness fix` | `pending` |
+| `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.1` | `9b99202d ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.1: select example-correctness fix` | Selection commit. |
+| `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2` | `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2: ship example-correctness fix` | `pending commit hash` |
 
 ## Changelog
 
@@ -127,3 +126,14 @@ the book to lower cleanly to FSM.
   library/package fixtures inline; supply missing drive in the
   real-bug case; annotate the intentional fail-closed
   illustration.
+- `2026-05-29`: Shipped `.2`. Resolved all 15 failing blocks
+  across 7 chapters. The real-bug case at
+  `13-intent-scheduling.md` was fixed by adding the missing
+  `(drive setup_phase ...)` clause to the APB requester actor.
+  The "Complete Example — APB Interface" block in `13a` and the
+  I2C example in `13c` were expanded into working actors so the
+  chapter delivers on its "complete example" promise. The
+  remaining 11 ellipsis/library/multi-file blocks were converted
+  to `text` blocks with one-line lead-ins naming the elided piece.
+  Re-audit reports 20 complete fixtures lower cleanly, 0 parse
+  failures, 0 lower failures (was 17 OK + 15 failing).

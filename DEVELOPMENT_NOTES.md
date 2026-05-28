@@ -33135,3 +33135,24 @@ It is an exact-delay pulse request:
       #2 → annotate with `;; FAIL-CLOSED EXAMPLE` marker so future
       audits classify it correctly.
 - This selection commit changes no code or book content.
+
+## 2026-05-29: example-correctness fix shipped
+- Shipped
+  [`ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2`](docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md):
+  resolved all 15 failing blocks across 7 chapters.
+- The real-bug case at `13-intent-scheduling.md` (apb_requester
+  using an undefined `setup_phase` drive) was fixed by adding
+  `(drive setup_phase (PADDR addr) (PWRITE wr) (PWDATA wdata)
+  (PSEL 1) (PENABLE 0))`. The transaction can now consume
+  `(drive setup_phase)` because the drive is declared.
+- The "Complete Example" sections in 13a (APB requester) and 13c
+  (i2c_master) were expanded into working actors rather than
+  abbreviated with `...)`. This honours the user's standard that
+  every example must lower cleanly.
+- Other failing blocks were converted to `text` blocks with
+  one-line lead-ins. The `text` tag preserves the educational
+  content (the shape is still visible) without promising
+  parseability. Reserved `lisp` for actors that actually
+  parse+lower as standalone fixtures.
+- Re-running the audit script reports 263 blocks total: 243
+  fragments, 20 complete fixtures lower cleanly, 0 failures.

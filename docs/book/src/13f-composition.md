@@ -285,9 +285,11 @@ The first shipped root shape is:
 
 Actor roots import libraries with `(imports (library name as alias) ...)` and
 instantiate exported actors with `(use alias.actor as instance ...)`. Use-site
-parameter overrides are instance-local, and bindings are explicit:
+parameter overrides are instance-local, and bindings are explicit
+(the example assumes the sibling `isf/common/fifo.isf` library is on
+the search path):
 
-```lisp
+```text
 (actor fifo_library_use
   (clock clk)
   (reset (rst_n async active_low))
@@ -724,9 +726,11 @@ child `.fsm` artifacts and generated ATL tops.
 Sibling-root child type resolution remains deferred.
 
 The selected future source contract for ATL actor type resolution is explicit
-library qualification:
+library qualification (the example assumes a sibling `common.packet`
+library on the search path; ATL actor type resolution is still on the
+backlog so this fixture documents the future shape):
 
-```lisp
+```text
 (actor packet_system
   (clock clk)
   (interface (input start) (output done))

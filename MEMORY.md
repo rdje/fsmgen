@@ -37590,3 +37590,40 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   14 fixes + audit reverification).
 - Active task tree: `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX`.
 - Current frontier: `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2`.
+
+## 2026-05-29: R14 example-correctness fix shipped
+- Completed `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2` and closed the
+  active task tree.
+- Resolved all 14 parse-fail and 1 lower-fail blocks identified by
+  the audit addendum. Per-issue actions:
+    * **`13-intent-scheduling.md` block #1**: supplied the missing
+      `(drive setup_phase ...)` clause so `apb_requester` lowers.
+    * **`13-intent-scheduling.md` block #4 (package import)**: split
+      into two blocks — a `lisp` `(?pkg:shared ...)` plus a `text`
+      actor block. The actor block annotates that `shared.fsm` must
+      sit on the search path.
+    * **`13a-actor-interface.md` block #1**: converted to `text`
+      (schematic with ellipsis).
+    * **`13a-actor-interface.md` block #11**: expanded the "Complete
+      Example — APB Interface" with working drives + a transaction
+      body so it parses+lowers.
+    * **`13c-drive-blocks.md` block #12 (i2c_master)**: expanded into
+      a working actor with full interface and parameterized
+      drives.
+    * **`13f-composition.md` blocks #11, #23**: converted to `text`
+      (library imports require sibling files).
+    * **`13h-lowering-reference.md` blocks #1, #3**: converted to
+      `text` (intentionally schematic).
+    * **`13j-type-enum-aggregate.md` blocks #1, #2**: converted to
+      `text` (schematic).
+    * **`14-feature-backlog.md` block #2 (feed_crc arity)**: converted
+      to `text` with a "backlog illustration" lead-in.
+    * **`14-feature-backlog.md` blocks #7, #8, #9**: converted to
+      `text` (library/multi-actor/ellipsis).
+- Re-audit reports 263 blocks total: 243 fragments, **20 complete
+  fixtures that lower cleanly, 0 parse failures, 0 lower failures**.
+  (Was 17 complete OK + 15 failing.)
+- Validation passed: re-run of the audit script (zero failures);
+  `prove -Iperl t/1305 t/1307 t/1332` with `Files=3, Tests=709`;
+  `mdbook build docs/book`; `git diff --check`.
+- Active task tree: `none`.

@@ -14508,3 +14508,11 @@ Exit criteria:
   found 14 parse-fail + 1 lower-fail blocks across 7 chapters
   (mostly ellipsis shorthand and multi-file references). Remediation
   will resolve each per disposition.
+- `R14`: example-correctness fix now ships. All 15 failing blocks
+  resolved: 1 real bug fixed (`13-intent-scheduling.md` `apb_requester`
+  now declares `(drive setup_phase ...)`); 2 actor blocks expanded
+  into complete working fixtures (`13a` APB requester, `13c`
+  `i2c_master`); remaining 11 ellipsis/library/multi-file blocks
+  converted to `text` blocks. Re-audit reports 20 complete fixtures
+  lower cleanly, 0 failures. Audits `t/1305`, `t/1307`, `t/1332`
+  still pass.

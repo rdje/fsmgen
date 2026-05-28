@@ -145,8 +145,12 @@ clear lower-layer mapping, and clear runtime behavior.
     (output PADDR   (width 32))
     (input  PREADY))
 
-  (drive (psel val)   (PSEL val))
-  (drive (penable val) (PENABLE val))
+  (drive (psel val)     (PSEL val))
+  (drive (penable val)   (PENABLE val))
+  (drive setup_phase
+    (PADDR addr)
+    (PSEL 1)
+    (PENABLE 0))
 
   (transaction apb_transfer
     (on start
@@ -192,9 +196,22 @@ The actor parameter form uses the same lowering path:
     (latency (min MIN_LAT) (max MAX_LAT))))
 ```
 
-The package form uses the same static path:
+The package form uses the same static path. The `(?pkg:shared ...)`
+root that holds the constants lives in a sibling `shared.fsm` file
+that the parser discovers beside the `.isf` source, through any
+`--path DIR` root, or via the `FSMLIB` search path. First the
+package file (`shared.fsm`):
 
 ```lisp
+(?pkg:shared
+  (+constants
+    (MIN_LAT 2)
+    (MAX_LAT 5'd16)))
+```
+
+Then the actor that imports it (`package_bounded_worker.isf`):
+
+```text
 (actor package_bounded_worker
   (imports
     (package shared))

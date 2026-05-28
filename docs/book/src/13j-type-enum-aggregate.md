@@ -11,9 +11,11 @@ and package machinery that direct `.fsm` roots already use.
 
 ## Declarations And Imports
 
-Actor-local declarations are written in the actor body:
+Actor-local declarations are written in the actor body. Schematic
+shape (the actor body continues with `(interface ...)` and one or
+more `(transaction ...)` clauses):
 
-```lisp
+```text
 (actor typed_actor
   (types
     (type byte (bits 8))
@@ -28,7 +30,7 @@ Actor-local declarations are written in the actor body:
 
 Existing `.fsm` package roots can be imported by name:
 
-```lisp
+```text
 (actor package_typed_actor
   (imports
     (package shared))

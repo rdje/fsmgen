@@ -6,7 +6,9 @@ This chapter shows the exact generated `.fsm` for each construct.
 
 ## Actor → Module
 
-```lisp
+Schematic shape (placeholders shown with `...`):
+
+```text
 (actor name
   (clock clk)
   (reset (rst_n async active_low))
@@ -18,7 +20,7 @@ This chapter shows the exact generated `.fsm` for each construct.
 
 ↓
 
-```lisp
+```text
 (?fsm:name
   (+system (clock clk) (areset rst_n))
   (+size ... inferred signals ...)
@@ -44,7 +46,7 @@ scheduled `.fsm` HDL contract, including clock-only no-reset domains.
 
 For a reset-declared two-domain actor with one event crossing:
 
-```lisp
+```text
 (actor clock_domain_event_crossing
   (clock-domains
     (domain bus  (clock bus_clk)  (reset bus_rst_n) :default)

@@ -121,14 +121,26 @@ For concurrent execution, put actions in one drive:
 
 ## I2C Example
 
+The I2C transfer uses parameterized drives for `scl` and `sda` and
+combines them through the protocol's START condition, data clocking,
+and STOP condition.
+
 ```lisp
 (actor i2c_master
-  ...
-  (drive (scl val) (scl val))
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input  start)
+    (input  data (width 8))
+    (output scl_out)
+    (output sda_out)
+    (output done))
+
+  (drive (scl val) (scl_out val))
   (drive (sda val) (sda_out val))
 
   (transaction i2c_transfer
-    (on start ...)
+    (on start)
     ;; START condition: SDA low while SCL high
     (drive sda 0) (drive scl 1) (drive scl 0)
 
@@ -139,5 +151,10 @@ For concurrent execution, put actions in one drive:
     (drive scl 0) (drive sda 0) (drive scl 1) (drive sda 1)
     (complete done)))
 ```
+
+Each `(drive scl X)` or `(drive sda X)` resolves through the
+parameterized drive definition above. The transaction body lists the
+protocol cycles in source order; the scheduler maps each call onto a
+cycle in the lowered `.fsm`.
 
 Each `(drive ...)` is one cycle. The order controls timing.

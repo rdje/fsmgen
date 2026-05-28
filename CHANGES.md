@@ -30152,3 +30152,16 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: example-correctness fix
 - Created and registered active task tree [docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md](docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md) to resolve the 14 parse-fail and 1 lower-fail issues identified in the audit addendum. Per-category plan: convert ellipsis fragments to text blocks; embed library/package fixtures inline; supply the missing drive in `13-intent-scheduling.md` block #1; annotate the intentional fail-closed illustration. Selection commit only; no book change.
+
+### example-correctness fix shipped
+- Resolved all 15 failing blocks across 7 chapters:
+    * [docs/book/src/13-intent-scheduling.md](docs/book/src/13-intent-scheduling.md): real-bug fix — added `(drive setup_phase ...)` clause to `apb_requester` so the example lowers; package-import block split into a `lisp` `?pkg:shared` plus a `text` actor block.
+    * [docs/book/src/13a-actor-interface.md](docs/book/src/13a-actor-interface.md): expanded "Complete Example — APB Interface" with working drives and a transaction body; converted the schematic actor placeholder to `text`.
+    * [docs/book/src/13c-drive-blocks.md](docs/book/src/13c-drive-blocks.md): expanded the I2C example into a complete actor with interface, drives, and a transaction body.
+    * [docs/book/src/13f-composition.md](docs/book/src/13f-composition.md): converted library-import examples to `text` with lead-ins noting the required sibling fixture.
+    * [docs/book/src/13h-lowering-reference.md](docs/book/src/13h-lowering-reference.md): converted schematic actor placeholders to `text`.
+    * [docs/book/src/13j-type-enum-aggregate.md](docs/book/src/13j-type-enum-aggregate.md): converted schematic declarations to `text`.
+    * [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md): converted backlog illustrations and library imports to `text` with lead-in annotations.
+- Re-audit reports 263 lisp blocks total: 243 fragments, 20 complete fixtures lower cleanly, 0 parse failures, 0 lower failures (was 17 OK + 15 failing).
+- Audits [t/1305](t/1305-isf-book-feature-matrix-audit.t), [t/1307](t/1307-isf-loop-body-doc-truth-audit.t), [t/1332](t/1332-isf-atl-doc-status-audit.t) reverified clean.
+- Closes the example-correctness addendum gap from [docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md](docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md).

@@ -1909,9 +1909,11 @@ to the same actor instance, generated handoff signal conflicts, fan-in,
 fan-out, cross-clock triggers, and broader concurrent group behavior stay
 fail-closed/deferred.
 
-Direct actor-body proposal:
+Direct actor-body proposal (backlog illustration; uses syntax that
+is still on the deferred list, so the validator rejects this fixture
+today — kept here to document the future direction):
 
-```lisp
+```text
 (actor packet_pipe
   (clock clk)
   (reset (rst_n async active_low))
@@ -3325,9 +3327,12 @@ Shipped source model for actor exports:
     ... reusable actor body ...))
 ```
 
-Shipped use model for actor exports:
+Shipped use model for actor exports (the example assumes the
+sibling `isf/common/fifo.isf` library is on the search path; see the
+`isf/fifo_library_use.isf` fixture in the repo for a self-contained
+working pair):
 
-```lisp
+```text
 (actor top
   (imports
     (library common.fifo as fifo_lib))
@@ -3363,9 +3368,11 @@ unqualified symbol pollution. The first shipped export target should be
 reusable actors. Standalone transaction templates and standalone drive helpers
 need their own binding rules before they become public library exports.
 
-Shipped specialization and binding model:
+Shipped specialization and binding model (schematic — the FIFO
+actor's body is elided with `...`; the importing actor must live in
+a separate file so the parser sees one top-level actor per source):
 
-```lisp
+```text
 (actor fifo
   (params
     (WIDTH 8)
@@ -3437,9 +3444,10 @@ die when their immediate work is done. Actors, transactions, DTs, and rules
 may be inactive, but while the design is powered, clocked, and released from
 reset, their logic remains present.
 
-Shipped actor-owned storage model:
+Shipped actor-owned storage model (schematic — the actor body
+continues with `(interface ...)`, `(transaction ...)`, and so on):
 
-```lisp
+```text
 (actor fifo
   (storage
     (var rd_ptr (width 2))

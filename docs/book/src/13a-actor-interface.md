@@ -2,7 +2,7 @@
 
 ## Actor Declaration
 
-```lisp
+```text
 (actor apb_requester
   (clock clk)
   (reset (rst_n async active_low))
@@ -383,7 +383,25 @@ accepted storage entry spellings.
     (input  PREADY)
     (input  PRDATA  (width 32))
     (input  PSLVERR))
-  ...)
+
+  (drive (psel val)     (PSEL val))
+  (drive (penable val)  (PENABLE val))
+  (drive setup_phase
+    (PADDR addr)
+    (PWRITE wr)
+    (PWDATA wdata)
+    (PSEL 1)
+    (PENABLE 0))
+
+  (transaction apb_transfer
+    (on start
+      (sample req_addr  as addr)
+      (sample req_write as wr)
+      (sample req_wdata as wdata))
+    (drive setup_phase)
+    (drive penable 1)
+    (await PREADY)
+    (complete done)))
 ```
 
 **Generated .fsm**:

@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX` | `pending` | `R14` | `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2` | [docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md](docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX` | `done` | `R14` | `closed` | [docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md](docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md) |
 | `ISF-COOKBOOK-RECIPES-G1` | `done` | `R14` | `closed` | [docs/tasks/ISF-COOKBOOK-RECIPES-G1.md](docs/tasks/ISF-COOKBOOK-RECIPES-G1.md) |
 | `ISF-MDBOOK-COVERAGE-AUDIT` | `done` | `R14` | `closed` | [docs/tasks/ISF-MDBOOK-COVERAGE-AUDIT.md](docs/tasks/ISF-MDBOOK-COVERAGE-AUDIT.md) |
 | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md) |

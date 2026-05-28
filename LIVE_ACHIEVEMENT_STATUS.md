@@ -16064,3 +16064,21 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Focused validation passed: `mdbook build docs/book`;
   `git diff --check`.
 - Next bounded slice: `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2`.
+
+## 2026-05-29: Example-correctness fix shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2`](docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md)
+  resolved all 15 failing blocks across 7 book chapters. Real bug
+  fix in `13-intent-scheduling.md`; two complete-example expansions
+  in `13a` and `13c`; 11 ellipsis/library/multi-file blocks
+  converted to `text` with lead-ins.
+- Public behavior changed: no — book content only.
+- Focused validation passed: re-run of the audit script reports
+  20 complete fixtures lower cleanly + 0 failures (was 17 OK + 15
+  failing); `prove -Iperl t/1305 t/1307 t/1332` (Files=3,
+  Tests=709); `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice: enhance cookbook recipes 9-13 with
+  walkthrough explanations (task #34), then proceed with audit
+  gaps G2-G8 under the stricter "every example lowers cleanly and
+  is thoroughly explained" standard.
