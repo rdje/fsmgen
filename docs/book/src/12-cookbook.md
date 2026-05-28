@@ -210,6 +210,17 @@ Use this when:
 - you need a starting skeleton for `on` → body → `complete`
 - you want to verify your toolchain on a one-transaction design
 
+**Walkthrough.** `(actor counter_actor ...)` opens an ISF actor
+named `counter_actor` — the unit of compilation that lowers to one
+scheduled `.fsm` module. `(clock clk)` and `(reset rst_n)` declare
+the actor's clock and reset polarity (the `_n` suffix is read as
+active-low). `(interface ...)` enumerates the actor-level ports:
+`(input start)` and `(output done)` are both one bit wide. The
+single transaction `tick` has three clauses: `(on start)` says the
+transaction entry waits for the input `start`; `(wait 8)` inserts an
+eight-cycle wait before the next clause; `(complete done)` raises
+the output port `done` and returns to idle.
+
 ## 10. Generated Child Via Spawn
 
 ```lisp
@@ -237,6 +248,18 @@ Use this when:
 
 The `spawn` clause names the child instance (`w0`). The parent
 waits with `await_all done` before completing.
+
+**Walkthrough.** Two transactions live in this actor: `parent` and
+`worker`. `worker` is a self-contained transaction that just
+completes — by being referenced via `spawn`, the lowerer marks it
+as a generated child and emits a separate `worker.fsm` plus a
+composition top that wires `parent` and `worker` together.
+`(spawn worker as w0)` is the activation site: it names the lexical
+instance `w0` of the `worker` child in the generated top.
+`(await_all done)` blocks the `parent` transaction until every
+outstanding spawned child reports `done`. With one spawned
+instance, that is equivalent to waiting for `w0.done`. The trailing
+`(complete done)` then raises the actor's own `done` output.
 
 ## 11. Blocking Do Call With Parameter Override
 
@@ -268,6 +291,20 @@ Use this when:
   overrides fail closed until per-activation specialization is
   shipped)
 
+**Walkthrough.** `worker` is declared with `(params (DELAY 4))` —
+a transaction-local scalar parameter whose default value is `4`.
+The body uses it as `(wait DELAY)`, so the schedule sleeps for
+`DELAY` cycles before completing. `parent` activates the worker
+with `(do worker (params (DELAY 4)))`. The `(do ...)` form is a
+blocking call: the parent state waits for the child's `done`
+handoff before advancing. The activation-site `(params ...)`
+override lists per-instance parameter values. The override value
+`4` matches the child's declared default `4`, so this same-value
+override is accepted. A different value (for example `(DELAY 2)`)
+would fail closed with the targeted
+`wait-count parameter ... wait counts remain deferred` diagnostic
+because per-activation wait-count specialization has not shipped.
+
 ## 12. Rule-Triggered Transaction
 
 ```lisp
@@ -294,6 +331,16 @@ Use this when:
 
 The rule emits a one-cycle trigger source and the generated handoff
 drives the worker's start.
+
+**Walkthrough.** A `(rule NAME GUARD body...)` clause is an
+actor-level rule whose body fires when `GUARD` is asserted. Here
+`(rule launch fire ...)` triggers whenever the input port `fire`
+pulses. The body `(trigger worker)` activates a generated instance
+of the `worker` child. Like `spawn`, `trigger` makes `worker` a
+generated child so the composition top wires the rule's one-cycle
+source signal into the worker's start port. The rule does not
+itself wait for `worker.done`; the worker raises the actor-level
+`done` output when it completes via `(complete done)`.
 
 ## 13. Repeat-Body With Generated Do
 
@@ -324,3 +371,16 @@ Use this when:
 This pattern uses a local `(do worker)` inside the top-level
 repeat. Each iteration starts the worker and waits for its fresh
 `done` pulse before the repeat check loops.
+
+**Walkthrough.** `(input n (width 3))` adds a 3-bit input port that
+carries the runtime loop count. Inside `parent`, `(repeat n body...)`
+lowers to a counter region that loads `n` once on entry and
+decrements until zero. The body `(do worker)` is a local blocking
+call — `worker` is referenced only inside the repeat body, so the
+lowerer keeps it in the parent scheduled module rather than
+emitting a separate generated child. Each iteration waits for the
+local worker's `done` pulse before the repeat check evaluates and
+either loops or falls through to `(complete done)`. The runtime
+guard "zero `n` bypasses the body" is provided by the standard
+repeat-counter init: if `n` arrives as zero, the schedule skips
+straight to the next clause.

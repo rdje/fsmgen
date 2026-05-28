@@ -14520,3 +14520,8 @@ Exit criteria:
   Cookbook recipes 9-13 will gain clause-by-clause walkthroughs so
   each recipe teaches the syntax in addition to illustrating a use
   case.
+- `R14`: cookbook walkthroughs now ship. Each of recipes 9-13 in
+  `12-cookbook.md` carries a `**Walkthrough.**` paragraph that
+  names each top-level clause in source order and explains its
+  contribution to the schedule. Audits `t/1305`, `t/1307`,
+  `t/1332` still pass.

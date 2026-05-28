@@ -37642,3 +37642,27 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   five walkthroughs).
 - Active task tree: `ISF-COOKBOOK-WALKTHROUGHS`.
 - Current frontier: `ISF-COOKBOOK-WALKTHROUGHS.2`.
+
+## 2026-05-29: R14 cookbook walkthroughs shipped
+- Completed `ISF-COOKBOOK-WALKTHROUGHS.2` and closed the active
+  task tree.
+- Added clause-by-clause walkthrough paragraphs to cookbook
+  recipes 9-13 in `docs/book/src/12-cookbook.md`. Each walkthrough
+  begins with `**Walkthrough.**` and names each top-level clause
+  used by the recipe in source order, explaining what it
+  contributes to the lowered schedule.
+- Recipe 9 walks through actor/clock/reset/interface/transaction/
+  on/wait/complete.
+- Recipe 10 walks through the spawn → await_all → complete
+  pattern and explains the generated-child distinction.
+- Recipe 11 walks through transaction-local params, the blocking
+  do call, and the same-value override semantics including the
+  fail-closed targeted diagnostic for mismatched overrides.
+- Recipe 12 walks through the rule/trigger pair and explains
+  the rule's one-cycle source plus the worker's separate done.
+- Recipe 13 walks through the runtime-width input, the repeat
+  counter, and the local do call's per-iteration synchronization.
+- Validation passed: `prove -Iperl t/1305 t/1307 t/1332` with
+  `Files=3, Tests=709`; `mdbook build docs/book`;
+  `git diff --check`.
+- Active task tree: `none`.

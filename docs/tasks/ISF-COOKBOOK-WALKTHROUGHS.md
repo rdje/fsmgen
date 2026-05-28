@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-COOKBOOK-WALKTHROUGHS`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`
@@ -74,8 +74,7 @@ each recipe so the reader learns the syntax by reading the example.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COOKBOOK-WALKTHROUGHS.1` | `pending` | Selection commit must land first. |
-| 2 | `ISF-COOKBOOK-WALKTHROUGHS.2` | `pending` | Ship the five walkthroughs. |
+| 1 | `closed` | `done` | Both leaves shipped. `.2` added clause walkthroughs to recipes 9-13. |
 
 ## Decisions
 
@@ -100,14 +99,14 @@ each recipe so the reader learns the syntax by reading the example.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-29` | `ISF-COOKBOOK-WALKTHROUGHS.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-29` | `ISF-COOKBOOK-WALKTHROUGHS.2` | `prove -Iperl t/1305 t/1307 t/1332`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-29` | `ISF-COOKBOOK-WALKTHROUGHS.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; selection-only commit |
+| `2026-05-29` | `ISF-COOKBOOK-WALKTHROUGHS.2` | `prove -Iperl t/1305 t/1307 t/1332` (Files=3, Tests=709); `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-COOKBOOK-WALKTHROUGHS.1` | `ISF-COOKBOOK-WALKTHROUGHS.1: select cookbook walkthroughs` | `pending` |
+| `ISF-COOKBOOK-WALKTHROUGHS.1` | `2eaa48b6 ISF-COOKBOOK-WALKTHROUGHS.1: select cookbook walkthroughs` | Selection commit. |
 | `ISF-COOKBOOK-WALKTHROUGHS.2` | `ISF-COOKBOOK-WALKTHROUGHS.2: ship cookbook walkthroughs` | `pending` |
 
 ## Changelog
@@ -115,3 +114,11 @@ each recipe so the reader learns the syntax by reading the example.
 - `2026-05-29`: Created task tree to add clause-by-clause
   walkthroughs to the five ISF cookbook recipes. Walkthroughs make
   the recipes self-teaching rather than mere illustrations.
+- `2026-05-29`: Shipped `.2`. Added a `**Walkthrough.**` paragraph
+  beneath the "Use this when:" list for each of recipes 9-13.
+  Each walkthrough names every top-level clause used by the
+  recipe in source order and explains its contribution to the
+  schedule (clock/reset polarity, port widths, transaction entry
+  guard, repeat counter initialization, generated-child vs local
+  vs rule-trigger differences, accept-path vs fail-closed
+  semantics for parameter overrides).

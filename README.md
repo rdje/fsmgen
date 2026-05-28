@@ -83,7 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
-- `docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md` — active `R14` task tree adding clause-by-clause walkthroughs to cookbook ISF recipes 9-13.
+- `docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md` — completed `R14` task tree that added clause-by-clause walkthroughs to cookbook ISF recipes 9-13.
 - `docs/tasks/ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.md` — completed `R14` task tree that fixed 14 broken ISF examples identified in the example-correctness audit addendum. Re-audit reports 20 complete fixtures lower cleanly, 0 failures.
 - `docs/tasks/ISF-COOKBOOK-RECIPES-G1.md` — completed `R14` task tree that addressed audit gap G1 by adding five ISF recipes to cookbook chapter 12 (basic actor, spawn, parameterized blocking do, rule trigger, repeat-body generated do).
 - `docs/tasks/ISF-MDBOOK-COVERAGE-AUDIT.md` — completed `R14` doc-only task tree that published `docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md` identifying eight gap categories (G1-G8) and a prioritized slice queue for closing the coverage gap between the codebase and the mdBook.

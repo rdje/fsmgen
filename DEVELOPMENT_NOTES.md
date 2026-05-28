@@ -33172,3 +33172,20 @@ It is an exact-delay pulse request:
   "shared clauses reference" appendix can collect the common
   vocabulary if needed.
 - This selection commit changes no book content.
+
+## 2026-05-29: cookbook walkthroughs shipped
+- Shipped
+  [`ISF-COOKBOOK-WALKTHROUGHS.2`](docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md):
+  added clause walkthroughs to recipes 9-13.
+- Walkthrough pattern is `**Walkthrough.** <text>` placed after
+  the "Use this when:" bullet list. The prose narrates each
+  top-level clause in source order. The pattern is intentionally
+  uniform so a reader skimming the cookbook can predict where to
+  find the explanation.
+- The recipe 11 walkthrough was crafted to also tell the reader
+  about the activation-override fail-closed diagnostic. This gives
+  the cookbook a foothold for the broader "fail-closed semantics"
+  doc surface without forcing the reader to leave the chapter.
+- The new prose pattern is the model for all future book example
+  enhancements under the "every example shall be thoroughly
+  explained" standard.

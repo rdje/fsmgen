@@ -30168,3 +30168,7 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: cookbook walkthroughs
 - Created and registered active task tree [docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md](docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md) to add clause-by-clause walkthroughs to cookbook recipes 9-13, responding to the user's standard that examples must be thoroughly explained. Selection commit only.
+
+### cookbook walkthroughs shipped
+- Added a `**Walkthrough.**` paragraph beneath the "Use this when:" list for each of cookbook recipes 9-13 in [docs/book/src/12-cookbook.md](docs/book/src/12-cookbook.md). Each walkthrough names every top-level clause used by the recipe in source order and explains its contribution to the schedule (clock/reset polarity, port widths, transaction entry guards, repeat counter loading, the generated-child vs local vs rule-trigger distinctions, and accept-path vs fail-closed semantics for parameter overrides).
+- Audits [t/1305](t/1305-isf-book-feature-matrix-audit.t), [t/1307](t/1307-isf-loop-body-doc-truth-audit.t), [t/1332](t/1332-isf-atl-doc-status-audit.t) reverified clean.

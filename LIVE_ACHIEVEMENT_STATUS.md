@@ -16095,3 +16095,20 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Focused validation passed: `mdbook build docs/book`;
   `git diff --check`.
 - Next bounded slice: `ISF-COOKBOOK-WALKTHROUGHS.2`.
+
+## 2026-05-29: Cookbook walkthroughs shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-COOKBOOK-WALKTHROUGHS.2`](docs/tasks/ISF-COOKBOOK-WALKTHROUGHS.md)
+  added clause-by-clause walkthrough paragraphs to cookbook
+  recipes 9-13. Each walkthrough names every top-level clause and
+  explains its contribution to the schedule.
+- Public behavior changed: no — book content only.
+- Focused validation passed: `prove -Iperl t/1305 t/1307 t/1332`
+  (Files=3, Tests=709); `mdbook build docs/book`;
+  `git diff --check`.
+- Next bounded slice: continue the G2-G8 queue under the stricter
+  "every example lowers cleanly and is thoroughly explained"
+  standard. Next is gap G3 (remaining `remains deferred`
+  diagnostics without book example) or G7 (13d accept-path
+  examples).
