@@ -315,9 +315,13 @@ FSM::Scheduler::ISF::LoweringIR   ← typed IR
     └──► Emitter::JSON  → schedule report
 ```
 
+### Schedule Report
+
 The schedule report is generated from the same IR as the `.fsm` text.
 
 The current APB report shape is regression-covered.
+
+### Public Interface Contract
 
 The bounded downstream-facing
 ISF API contract is advertised through `--capability-manifest` at
@@ -342,6 +346,8 @@ parser, scheduler, CLI, lower-result, or schedule-report changes, and those
 feature slices must move the matching public contract and manifest audit tests
 with the implementation.
 
+### Constructor And Facade Validation
+
 The public adapter and scheduler constructors reject malformed option lists and unsupported
 option names, require exact class invocants, and currently accept only `debug`.
 
@@ -355,6 +361,8 @@ The scheduler facade validates method receivers and the
 public actor shell before calling private LoweringIR, and the manifest
 advertises the required `actor_name`, `transactions`, and `interface` shell keys
 plus their public value shapes without freezing the full raw actor hash.
+
+### Parser Handoff Shape
 
 The current parser handoff also advertises a bounded `interface` subshape:
 `inputs` and `outputs` arrays whose port entries expose unique non-empty scalar

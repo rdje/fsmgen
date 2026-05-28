@@ -37821,3 +37821,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 ## 2026-05-29: R14 G8 heading density — selected
 - ISF-G8-HEADING-DENSITY adds sub-headings to long Pipeline
   section of 13-intent-scheduling.md.
+
+## 2026-05-29: R14 G8 heading density shipped
+- Added 4 ### subheadings to Pipeline section of
+  13-intent-scheduling.md: Schedule Report, Public Interface
+  Contract, Constructor And Facade Validation, Parser Handoff
+  Shape.

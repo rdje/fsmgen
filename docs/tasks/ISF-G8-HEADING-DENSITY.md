@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-G8-HEADING-DENSITY`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 
 ## Goal

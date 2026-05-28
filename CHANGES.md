@@ -30237,3 +30237,6 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: G8 heading density
 - Created [docs/tasks/ISF-G8-HEADING-DENSITY.md](docs/tasks/ISF-G8-HEADING-DENSITY.md).
+
+### G8 heading density shipped
+- Added 4 `###` sub-headings to the Pipeline section of [docs/book/src/13-intent-scheduling.md](docs/book/src/13-intent-scheduling.md): Schedule Report, Public Interface Contract, Constructor And Facade Validation, Parser Handoff Shape.

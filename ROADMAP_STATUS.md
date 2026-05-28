@@ -14590,3 +14590,5 @@ Exit criteria:
 - `R14`: next active tree — `ISF-G4-BACKLOG-TRUTH-SYNC`.
 - `R14`: G4 backlog truth-sync now ships.
 - `R14`: next active tree — `ISF-G8-HEADING-DENSITY`.
+- `R14`: G8 heading density now ships. 4 subheadings added to
+  Pipeline section of 13-intent-scheduling.md.
