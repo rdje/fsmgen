@@ -33322,3 +33322,7 @@ It is an exact-delay pulse request:
   syntactic shape, while the new section provides end-to-end
   copy-pasteable starting points.
 - t/1376 fixture count: 20 → 24.
+
+## 2026-05-29: active R14 task tree — G6 13j examples
+- Three actor fixtures (type_alias_demo, enum_demo,
+  aggregate_storage_demo) pre-validated to lower.

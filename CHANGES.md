@@ -30206,3 +30206,6 @@ This is the persistent technical change history for FSMGen.
 - Added "Complete Accept-Path Examples" section at the end of [docs/book/src/13d-control-flow.md](docs/book/src/13d-control-flow.md) with four self-contained actor fixtures (`when_demo`, `switch_demo`, `while_demo`, `until_demo`). Each is followed by a Walkthrough paragraph.
 - `t/1376` reports 24 complete fixtures lower cleanly (was 20).
 - All ISF book audits clean.
+
+### active R14 task tree selected: G6 13j examples
+- Created [docs/tasks/ISF-G6-13J-EXAMPLES.md](docs/tasks/ISF-G6-13J-EXAMPLES.md) for audit gap G6.

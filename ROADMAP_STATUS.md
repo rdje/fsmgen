@@ -14572,3 +14572,6 @@ Exit criteria:
   fixtures (when_demo, switch_demo, while_demo, until_demo)
   added to 13d with Walkthroughs. t/1376 reports 24 fixtures
   lower cleanly (was 20).
+- `R14`: next active tree — `ISF-G6-13J-EXAMPLES`. Three
+  fixtures (type_alias_demo, enum_demo, aggregate_storage_demo)
+  for 13j.

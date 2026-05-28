@@ -37782,3 +37782,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   with a Walkthrough paragraph.
 - t/1376 now reports 24 complete fixtures lower cleanly (was 20).
 - Validation: `prove t/1305 t/1307 t/1332 t/1376` PASS.
+
+## 2026-05-29: R14 active task tree — G6 13j type/enum/aggregate examples
+- Created `ISF-G6-13J-EXAMPLES` for audit gap G6. Three actor
+  fixtures (type_alias_demo, enum_demo, aggregate_storage_demo)
+  pre-validated to lower.

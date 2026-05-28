@@ -16204,3 +16204,6 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 ## 2026-05-29: G7 13d accept-path examples shipped
 - 4 fixtures added; t/1376 now reports 24 complete fixtures lower
   cleanly (was 20). Audits clean.
+
+## 2026-05-29: Selected R14 G6 13j examples
+- `ISF-G6-13J-EXAMPLES`. Three fixtures for 13j.
