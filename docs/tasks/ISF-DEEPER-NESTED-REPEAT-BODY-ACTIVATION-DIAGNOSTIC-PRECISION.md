@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-27`
 - Last updated: `2026-05-27`
@@ -93,8 +93,7 @@ any future shape not yet classified.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1` | `pending` | Selection commit must land before the validator change so the slice is owned through `COMMIT.md`. |
-| 2 | `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2` | `pending` | Ship the targeted diagnostic plus regression plus doc sync. |
+| 1 | `closed` | `done` | Both leaves shipped. `.2` landed the targeted deeper-nested diagnostic, regression `t/1375`, t/1215 + t/1374 expectation refresh, and doc-surface updates. |
 
 ## Decisions
 
@@ -124,14 +123,14 @@ any future shape not yet classified.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-27` | `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-27` | `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2` | `prove -Iperl t/1215 t/1374 t/1375`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `pending` |
+| `2026-05-27` | `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; selection-only commit |
+| `2026-05-27` | `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2` | `prove -Iperl t/1215 t/1374 t/1375` (Files=3, Tests=108); `./bin/ci-regression isf --no-book` (Files=281, Tests=2045); `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1` | `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1: select deeper-nested repeat-body activation diagnostic precision` | `pending commit hash` |
+| `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1` | `57710c2a ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1: select deeper-nested repeat-body activation diagnostic precision` | Selection commit. |
 | `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2` | `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2: ship deeper-nested repeat-body activation diagnostic precision` | `pending commit hash` |
 
 ## Changelog
@@ -141,3 +140,21 @@ any future shape not yet classified.
   as the follow-on to the loop-contained slice. Deeper-nested repeat
   activation itself remains deferred; this slice ships only the
   diagnostic improvement.
+- `2026-05-27`: Shipped `.2`. Validator at
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits the targeted
+  diagnostic `Transaction '<tn>': deeper-nested repeat-body <do|spawn>
+  remains deferred` for deeper-when and when-inside-switch nesting at
+  both repeat-body subset entry points. New helper
+  `_repeat_body_context_is_deeper_nested($label, $context_depths)`
+  reuses `_repeat_body_context_is_loop_contained` for the
+  loop-contained exclusion. Loop-contained still fires its existing
+  targeted diagnostic first; the generic message remains as a
+  safety-net fallback. New regression `t/1375` covers four
+  deeper-nested cases plus negative-control loop-contained.
+  `t/1215` expectations refreshed for the three deeper-nested cases
+  that previously matched the generic message; `t/1374`
+  negative-control assertions refreshed to expect the new
+  deeper-nested diagnostic. Doc surfaces synchronized in
+  `ISF_SPEC.md` (focused-tests),
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` (deeper-nested note), and
+  `14-feature-backlog.md` (deeper-nested sentence).

@@ -14440,3 +14440,13 @@ Exit criteria:
   cases at both repeat-body subset entry points. Loop-contained
   unchanged; generic message kept as safety-net fallback. Broader
   deeper-nested implementation remains a future leaf.
+- `R14`: deeper-nested repeat-body activation diagnostic precision now
+  ships. Validator emits a targeted `deeper-nested repeat-body
+  <do|spawn> remains deferred` at the two repeat-body subset entry
+  points for deeper-when and when-inside-switch nesting.
+  Loop-contained continues to fire first; generic message retained as
+  safety-net fallback. Regression covered by `t/1375`; `t/1215` and
+  `t/1374` expectations refreshed; doc surfaces aligned in
+  `ISF_SPEC.md`, `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and
+  `14-feature-backlog.md`. Broader deeper-nested implementation
+  remains a future leaf.

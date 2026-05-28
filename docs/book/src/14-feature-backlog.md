@@ -614,10 +614,13 @@ Loop-contained repeat-body `do` and `spawn` (a `(repeat ...)` nested
 inside `(while ...)` or `(until ...)` whose body contains a `do` or
 `spawn` clause) now fail closed with a targeted `loop-contained
 repeat-body <do|spawn> remains deferred` diagnostic instead of the
-generic "supported only for top-level repeat clauses..." message;
-other unsupported nested-repeat cases (deeper when nesting,
-when-inside-switch) keep the generic message. Broader loop-contained
-implementation remains backlog.
+generic "supported only for top-level repeat clauses..." message.
+Deeper-nested repeat-body `do` and `spawn` (deeper-when nesting or
+when-inside-switch nesting) now fail closed with a targeted
+`deeper-nested repeat-body <do|spawn> remains deferred` diagnostic;
+the original generic message remains as a safety-net fallback for
+shapes not yet classified. Broader loop-contained and deeper-nested
+implementations remain backlog.
 
 A top-level repeat body may use `(spawn child as inst [(params ...)] [(bind
 ...)] [(domain NAME)])` clauses when the same repeat body reaches `(await_all

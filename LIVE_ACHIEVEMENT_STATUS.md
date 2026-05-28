@@ -15886,3 +15886,25 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`
   (validator change + `t/1375` regression + `t/1215` refresh + doc
   updates).
+
+## 2026-05-27: Deeper-nested repeat-body activation diagnostic precision shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`](docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.md)
+  shipped the targeted deeper-nested repeat-body do/spawn diagnostic
+  at the two unsupported-repeat-body subset entry points, added
+  regression `t/1375`, refreshed `t/1215` and `t/1374` expectations,
+  and synchronized `ISF_SPEC.md`/
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`/`14-feature-backlog.md`.
+- Public behavior changed: yes — deeper-when nesting and
+  when-inside-switch nesting now fail closed with a targeted
+  diagnostic instead of the generic "supported only for top-level..."
+  message. Loop-contained continues to fire its targeted diagnostic
+  first; generic message retained as safety-net fallback.
+- Focused validation passed: `prove -Iperl t/1215 t/1374 t/1375`
+  (Files=3, Tests=108); `./bin/ci-regression isf --no-book`
+  (Files=281, Tests=2045); `mdbook build docs/book`;
+  `git diff --check`.
+- Next bounded slice: another item from the backlog (broader
+  deeper-nested repeat activation implementation remains a future
+  leaf of this same tree).

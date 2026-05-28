@@ -10396,7 +10396,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'double nested when repeat do', qr/repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses/);
+    assert_lower_rejected(<<'ISF', 'double nested when repeat do', qr/deeper-nested repeat-body do remains deferred/);
 (actor double_nested_when_repeat_do
   (clock clk)
   (interface (input start) (input cond) (input inner_cond) (input loops (width 3)) (output done))
@@ -10468,7 +10468,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested when repeat do', qr/repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses/);
+    assert_lower_rejected(<<'ISF', 'switch nested when repeat do', qr/deeper-nested repeat-body do remains deferred/);
 (actor switch_nested_when_repeat_do
   (clock clk)
   (interface (input start) (input mode) (input cond) (input loops (width 3)) (output done))
@@ -10484,7 +10484,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested when repeat spawn', qr/repeat-body spawn is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses/);
+    assert_lower_rejected(<<'ISF', 'switch nested when repeat spawn', qr/deeper-nested repeat-body spawn remains deferred/);
 (actor switch_nested_when_repeat_spawn
   (clock clk)
   (interface (input start) (input cond) (input mode) (input loops (width 3)) (output done))

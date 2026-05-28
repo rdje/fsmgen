@@ -32907,3 +32907,27 @@ It is an exact-delay pulse request:
   excluded, the remaining unsupported case is deeper-nested" — that
   collapses to a residual branch in the existing gate code.
 - This selection commit changes no code.
+
+## 2026-05-27: deeper-nested repeat-body activation diagnostic precision shipped
+- Shipped
+  [`ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`](docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.md):
+  validator at `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits a
+  targeted `deeper-nested repeat-body <do|spawn> remains deferred`
+  diagnostic at both unsupported-repeat-body subset entry points for
+  deeper-when nesting and when-inside-switch nesting.
+- The implementation added a small helper
+  `_repeat_body_context_is_deeper_nested($label, $context_depths)`
+  rather than relying on inline conditions. It centralises the
+  nesting-shape check and reuses `_repeat_body_context_is_loop_contained`
+  for the loop-contained exclusion. The structure makes future
+  splits (e.g., distinguishing deeper-when from when-inside-switch)
+  straightforward.
+- The shipped diagnostic chain at each gate site is: loop-contained
+  first, deeper-nested next, generic message last (safety-net
+  fallback for shapes not yet classified).
+- New regression `t/1375` plus refreshed `t/1215` and `t/1374`
+  expectations lock the new diagnostic; full ISF CI passes at
+  `Files=281, Tests=2045`. Doc surfaces aligned across `ISF_SPEC.md`
+  (focused-tests), `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`
+  (deeper-nested note), and `14-feature-backlog.md` (deeper-nested
+  sentence).

@@ -1250,7 +1250,10 @@ Rules:
   subsets. Loop-contained repeat-body `do` and `spawn` now emit a
   targeted `loop-contained repeat-body <do|spawn> remains deferred`
   diagnostic instead of the generic "supported only for top-level..."
-  message.
+  message. Deeper-nested repeat-body `do` and `spawn` (deeper-when
+  nesting or when-inside-switch nesting) emit a targeted
+  `deeper-nested repeat-body <do|spawn> remains deferred` diagnostic;
+  the generic message remains as a safety-net fallback.
 
   Top-level repeat bodies also accept generated blocking `(do child)` when
   the target child is already emitted as a generated child by another

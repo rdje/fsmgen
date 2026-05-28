@@ -100,7 +100,7 @@ ISF
     );
 };
 
-subtest 'non-loop unsupported nested-repeat cases keep the generic diagnostic' => sub {
+subtest 'non-loop unsupported nested-repeat cases route through the deeper-nested diagnostic, not the loop-contained one' => sub {
     assert_lower_rejected(
         <<'ISF',
 (actor double_nested_when_repeat_do_probe
@@ -119,8 +119,8 @@ subtest 'non-loop unsupported nested-repeat cases keep the generic diagnostic' =
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses/,
-        'deeper when nesting still emits the generic diagnostic',
+        qr/Transaction 'parent': deeper-nested repeat-body do remains deferred/,
+        'deeper when nesting routes through the deeper-nested diagnostic',
     );
 
     assert_lower_rejected(
@@ -143,8 +143,8 @@ ISF
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': repeat-body spawn is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses/,
-        'when-inside-switch still emits the generic diagnostic',
+        qr/Transaction 'parent': deeper-nested repeat-body spawn remains deferred/,
+        'when-inside-switch routes through the deeper-nested diagnostic',
     );
 };
 

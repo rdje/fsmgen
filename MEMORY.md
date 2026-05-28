@@ -37334,3 +37334,44 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   change + `t/1375` regression + `t/1215` refresh + doc surfaces).
 - Active task tree: `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`.
 - Current frontier: `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`.
+
+## 2026-05-27: R14 deeper-nested repeat-body activation diagnostic precision shipped
+- Completed
+  `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`
+  and closed the active task tree.
+- `perl/FSM/Scheduler/ISF/LoweringIR.pm` now emits the targeted
+  diagnostic `Transaction '<tn>': deeper-nested repeat-body <do|spawn>
+  remains deferred` at the two unsupported-repeat-body subset entry
+  points (do, spawn) when the validator detects deeper-when nesting
+  or when-inside-switch nesting. Loop-contained continues to fire its
+  existing targeted diagnostic first; the generic "supported only for
+  top-level..." message is retained as a safety-net fallback for
+  shapes not yet classified.
+- New helper `_repeat_body_context_is_deeper_nested($label,
+  $context_depths)` placed next to
+  `_repeat_body_context_is_loop_contained` returns true when the
+  context is not loop-contained and the label/depth combination
+  indicates deeper-when nesting (`when_depth > 1`) or
+  when-inside-switch nesting (`switch_depth >= 1 && when_depth >= 1`
+  with `label='when body'`).
+- New regression `t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t`
+  covers four deeper-nested cases (deeper-when do/spawn,
+  when-inside-switch do/spawn) plus a negative-control loop-contained
+  case verifying the loop-contained diagnostic still fires first.
+- `t/1215-isf-spawn-parameter-binding.t` expectations refreshed for
+  the three deeper-nested cases that previously matched the generic
+  message. `t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t`
+  negative-control assertions refreshed to expect the new
+  deeper-nested diagnostic.
+- Doc surfaces synchronized: `docs/ISF_SPEC.md` (focused-tests list
+  registers `t/1375`), `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`
+  (deeper-nested note in the nested-do/spawn subset paragraph), and
+  `docs/book/src/14-feature-backlog.md` (deeper-nested sentence in
+  the Spawn Inside Repeat Bodies section).
+- Validation passed: `prove -Iperl t/1215 t/1374 t/1375` with
+  `Files=3, Tests=108`; `./bin/ci-regression isf --no-book` with
+  `Files=281, Tests=2045`; `mdbook build docs/book`;
+  `git diff --check`.
+- Active task tree: `none`. Broader deeper-nested repeat activation
+  (extending the shipped subset to actually support deeper-when and
+  when-inside-switch nesting) remains a future leaf of this same tree.

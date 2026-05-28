@@ -6362,6 +6362,8 @@ sub _validate_repeat_body_spawn_subset {
             if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat)) {
                 confess "Transaction '$tn': loop-contained repeat-body spawn remains deferred\n"
                     if _repeat_body_context_is_loop_contained($context_depths);
+                confess "Transaction '$tn': deeper-nested repeat-body spawn remains deferred\n"
+                    if _repeat_body_context_is_deeper_nested($label, $context_depths);
                 confess "Transaction '$tn': repeat-body spawn is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n";
             }
             my $allowed_branch_spawn_after_prior_await_any_local_do_before_drain =
@@ -6433,6 +6435,8 @@ sub _validate_repeat_body_spawn_subset {
             if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat)) {
                 confess "Transaction '$tn': loop-contained repeat-body do remains deferred\n"
                     if _repeat_body_context_is_loop_contained($context_depths);
+                confess "Transaction '$tn': deeper-nested repeat-body do remains deferred\n"
+                    if _repeat_body_context_is_deeper_nested($label, $context_depths);
                 confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n";
             }
             my $uses_generated_params = _repeat_body_do_uses_generated_params($body_clause);
@@ -6788,6 +6792,26 @@ sub _repeat_body_context_is_loop_contained {
     return 0 unless ref($context_depths) eq 'HASH';
     return 1 if ($context_depths->{while} // 0) > 0;
     return 1 if ($context_depths->{until} // 0) > 0;
+    return 0;
+}
+
+sub _repeat_body_context_is_deeper_nested {
+    my ($label, $context_depths) = @_;
+    return 0 unless defined($label);
+    return 0 unless ref($context_depths) eq 'HASH';
+    return 0 if _repeat_body_context_is_loop_contained($context_depths);
+    my $when_depth = $context_depths->{when} // 0;
+    my $switch_depth = $context_depths->{switch} // 0;
+    if ($label eq 'when body') {
+        return 1 if $when_depth > 1;
+        return 1 if $switch_depth >= 1;
+        return 0;
+    }
+    if ($label eq 'switch branch') {
+        return 1 if $switch_depth > 1;
+        return 1 if $when_depth >= 1;
+        return 0;
+    }
     return 0;
 }
 
