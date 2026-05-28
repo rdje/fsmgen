@@ -14480,3 +14480,10 @@ Exit criteria:
   slices paraphrased the deferrals but did not give authors a shape
   they can point to. Activation-override examples land in 13b;
   loop-contained and deeper-nested examples land in 13d.
+- `R14`: book examples for new targeted diagnostics now ship. Five
+  examples added to `13b-transactions.md` (cross-domain repeat-body
+  do, repeat-count override, wait-count override, latency-bound
+  override, watchdog-limit override) and two examples added to
+  `13d-control-flow.md` (loop-contained, deeper-nested). Each shows
+  the rejected `.fsm` shape, verbatim diagnostic, and deferred-lane
+  note. Audits `t/1305`, `t/1307`, `t/1332` still pass.

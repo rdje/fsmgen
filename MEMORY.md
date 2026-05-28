@@ -37458,3 +37458,24 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   examples + audit reverification).
 - Active task tree: `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE`.
 - Current frontier: `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2`.
+
+## 2026-05-27: R14 book examples for new targeted diagnostics shipped
+- Completed `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2` and closed the
+  active task tree.
+- Added user-facing `.fsm` source examples to book chapters for each
+  of the seven targeted diagnostics shipped this session:
+    * `docs/book/src/13b-transactions.md` — five examples for
+      cross-domain repeat-body do, repeat-count override gate,
+      wait-count override gate, watchdog-limit override gate, and
+      latency-bound override gate. Each example shows the rejected
+      `.fsm` shape, the verbatim diagnostic text, and a one-sentence
+      note naming the deferred lane.
+    * `docs/book/src/13d-control-flow.md` — two examples for
+      loop-contained repeat-body and deeper-nested repeat-body, both
+      covering `do` plus the symmetric `spawn` rejection wording.
+- Pure book-content slice. Validator already emits the diagnostics;
+  the regressions are already locked in `t/1369`, `t/1370`,
+  `t/1372`, `t/1373`, `t/1374`, `t/1375`.
+- Validation passed: `prove -Iperl t/1305 t/1307 t/1332` with
+  `Files=3, Tests=709`; `mdbook build docs/book`; `git diff --check`.
+- Active task tree: `none`.

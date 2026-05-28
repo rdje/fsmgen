@@ -15968,3 +15968,20 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Next bounded slice:
   `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2` (book example
   fragments + audit reverification).
+
+## 2026-05-27: Book examples for new targeted diagnostics shipped
+- Roadmap lane: `R14`.
+- Completed slice:
+  [`ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2`](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md)
+  added seven user-facing `.fsm` source examples to the book
+  (five in 13b for cross-domain repeat-body do plus the four
+  activation-override sub-axis gates; two in 13d for loop-contained
+  and deeper-nested). Each example shows the rejected shape,
+  verbatim diagnostic, and deferred-lane note.
+- Public behavior changed: no — pure book-content slice.
+- Focused validation passed: `prove -Iperl t/1305 t/1307 t/1332`
+  (Files=3, Tests=709); `mdbook build docs/book`;
+  `git diff --check`.
+- Next bounded slice: another item from the backlog (a broader
+  audit of feature-example coverage across the book is a future
+  task tree).

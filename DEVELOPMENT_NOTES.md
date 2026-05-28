@@ -32996,3 +32996,25 @@ It is an exact-delay pulse request:
   existing "deeper branch nesting and loop-contained repeats remain
   outside both nested subsets" sentence.
 - This selection commit changes no code.
+
+## 2026-05-27: book examples for new targeted diagnostics shipped
+- Shipped
+  [`ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2`](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md):
+  added seven user-facing `.fsm` source examples to the book.
+- 13b-transactions.md received five examples: cross-domain
+  repeat-body do (next to the existing "Domain annotations are
+  accepted only as declared same-domain ownership metadata"
+  paragraph), and one each for the four activation-override sub-axis
+  gates (wait-count, repeat-count, watchdog-limit, latency-bound)
+  next to the existing "must preserve the child default value"
+  paragraphs.
+- 13d-control-flow.md received two examples (loop-contained and
+  deeper-nested) immediately following the existing reject sentence
+  for those shapes.
+- Each example structure is uniform: a minimal `.fsm` fragment
+  showing the rejected shape, the verbatim diagnostic text, and a
+  one-sentence note naming the deferred lane. This pattern is
+  reusable for future example-coverage slices.
+- Audits `t/1305`, `t/1307`, `t/1332` reverified at `Files=3,
+  Tests=709`. The example coverage for the seven targeted
+  diagnostics shipped this session is now complete.

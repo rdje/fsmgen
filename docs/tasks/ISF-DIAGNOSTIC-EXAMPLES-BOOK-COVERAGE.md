@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-27`
 - Last updated: `2026-05-27`
@@ -93,8 +93,7 @@ Targeted diagnostics covered by this slice:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.1` | `pending` | Selection commit must land before the book changes so the slice is owned through `COMMIT.md`. |
-| 2 | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2` | `pending` | Ship the seven examples plus live-doc updates. |
+| 1 | `closed` | `done` | Both leaves shipped. `.2` added seven examples to 13b (five) and 13d (two), each with rejected `.fsm` shape, verbatim diagnostic, and deferred-lane note. Audits reverified clean. |
 
 ## Decisions
 
@@ -130,14 +129,14 @@ Targeted diagnostics covered by this slice:
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-27` | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-27` | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2` | `prove -Iperl t/1305 t/1307 t/1332`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-27` | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.1` | `mdbook build docs/book`; `git diff --check` | `PASS`; selection-only commit |
+| `2026-05-27` | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2` | `prove -Iperl t/1305 t/1307 t/1332` (Files=3, Tests=709); `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.1` | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.1: select book examples for new targeted diagnostics` | `pending commit hash` |
+| `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.1` | `0662a08e ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.1: select book examples for new targeted diagnostics` | Selection commit. |
 | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2` | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2: ship book examples for new targeted diagnostics` | `pending commit hash` |
 
 ## Changelog
@@ -148,3 +147,12 @@ Targeted diagnostics covered by this slice:
   validator (which emits the diagnostics) and the book (which
   currently only paraphrases the deferrals without showing the
   source shape that triggers each one).
+- `2026-05-27`: Shipped `.2`. Added five examples to
+  `13b-transactions.md` (cross-domain repeat-body do, repeat-count
+  override gate, wait-count override gate, latency-bound override
+  gate, watchdog-limit override gate) and two examples to
+  `13d-control-flow.md` (loop-contained repeat-body, deeper-nested
+  repeat-body). Each example shows the rejected `.fsm` shape,
+  verbatim diagnostic text, and a one-sentence note naming the
+  deferred lane. Audits `t/1305`, `t/1307`, `t/1332` reverified at
+  `Files=3, Tests=709`.

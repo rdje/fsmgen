@@ -251,7 +251,31 @@ counter injection. Same-transaction watchdog parameters shadow actor-level
 static names and remain local lowering inputs.
 Generated child activation overrides for top-level await-local watchdog
 transaction parameters must preserve the child default value; mismatches fail
-closed until per-activation watchdog specialization is shipped.
+closed until per-activation watchdog specialization is shipped. The
+rejected shape is a parent that activates a child whose
+`(params (WD_LIMIT N))` default feeds an `(await ack (watchdog WD_LIMIT))`
+clause, when the activation site passes a different value:
+
+```lisp
+(transaction parent
+  (on start)
+  (spawn worker as w0
+    (params
+      (WD_LIMIT 2)))         ;; <-- override mismatches the default
+  (complete done))
+(transaction worker
+  (params
+    (WD_LIMIT 4))            ;; child default drives the watchdog init
+  (await ack (watchdog WD_LIMIT))
+  (complete done))
+```
+
+The validator emits
+`Transaction 'parent': spawn instance 'w0' overrides watchdog-limit
+parameter 'WD_LIMIT' on child 'worker'; activation-site parameter
+override-specialized watchdog limits remain deferred`. The deferred
+lane is per-activation watchdog specialization, which would
+respecialize the child's watchdog counter per call site.
 
 One transaction currently has one watchdog counter. If a transaction contains
 multiple awaits with distinct effective watchdog limits, FSMGen fails closed
@@ -434,7 +458,32 @@ unknown-width dynamic counts, unknown-width or malformed expression counts,
 and unsupported runtime contexts fail closed.
 Generated child activation overrides for wait-count transaction parameters
 must preserve the child default value; mismatches fail closed until
-per-activation wait-state specialization is shipped.
+per-activation wait-state specialization is shipped. The rejected shape is
+a parent transaction that activates a child whose `(params (DELAY N))`
+default feeds a `(wait DELAY)` clause, when the activation site passes a
+different value:
+
+```lisp
+(transaction parent
+  (on start)
+  (spawn worker as w0
+    (params
+      (DELAY 2)))            ;; <-- override mismatches the default
+  (complete done))
+(transaction worker
+  (params
+    (DELAY 4))               ;; child default
+  (wait DELAY)
+  (complete done))
+```
+
+The validator emits
+`Transaction 'parent': spawn instance 'w0' overrides wait-count
+parameter 'DELAY' on child 'worker'; activation-site parameter
+override-specialized wait counts remain deferred`. Same-value
+overrides (for example `(DELAY 4)`) keep working; the deferred lane is
+per-activation wait-state specialization that would respecialize the
+child's wait expansion per call site.
 
 Inline dynamic waits are supported in `when` and `repeat` bodies, `switch`
 branches, and `while`/`until` bodies for the no-pending-sample subset.
@@ -530,7 +579,32 @@ subclause shape validation; their dead payloads are not validated against
 child parameter, port, or domain declarations.
 Generated child activation overrides for repeat-count transaction parameters
 must preserve the child default value; mismatches fail closed until
-per-activation repeat counter specialization is shipped.
+per-activation repeat counter specialization is shipped. The rejected
+shape is a parent that activates a child whose `(params (ITER N))`
+default feeds a `(repeat ITER ...)` clause, when the activation site
+passes a different value:
+
+```lisp
+(transaction parent
+  (on start)
+  (do worker
+    (params
+      (ITER 2)))             ;; <-- override mismatches the default
+  (complete done))
+(transaction worker
+  (params
+    (ITER 4))                ;; child default drives the loop count
+  (repeat ITER
+    (wait 1))
+  (complete done))
+```
+
+The validator emits
+`Transaction 'parent': do instance 'parent_worker_do_0' overrides
+repeat-count parameter 'ITER' on child 'worker'; activation-site
+parameter override-specialized repeat counts remain deferred`. The
+deferred lane is per-activation repeat counter specialization, which
+would respecialize the child's loop counter per call site.
 
 **What happens**:
 1. Init state: `(<= (cnt N))` — load counter via D-input
@@ -1407,7 +1481,43 @@ Binding handoff ports are generated once for the lexical instance and wired
 in the generated top just like top-level spawn bindings.
 
 Domain annotations are accepted only as declared same-domain ownership
-metadata; cross-domain activation remains a CDC/backlog item.
+metadata; cross-domain activation remains a CDC/backlog item. The
+rejected shape is a repeat-body generated `(do TARGET (domain X))`
+where `X` names a domain different from the calling transaction's
+domain:
+
+```lisp
+(clock-domains
+  (domain core (clock clk) (reset rst_n) :default)
+  (domain aux (clock aux_clk) (reset aux_rst_n)))
+(transaction parent
+  (domain core)              ;; calling transaction is in core
+  (on start)
+  (repeat loops
+    (do worker
+      (params (ITER 4))
+      (domain aux)))         ;; <-- target is in aux, not core
+  (complete done))
+(transaction worker
+  (domain aux)               ;; target lives in aux
+  (params (ITER 4))
+  (repeat ITER
+    (wait 1))
+  (complete done))
+```
+
+The validator emits
+`Transaction 'parent': repeat-body generated do target 'worker' is
+in a different clock domain than the calling transaction;
+cross-domain repeat-body do remains deferred`. The same diagnostic
+fires with `when-body nested repeat` or `switch-branch nested repeat`
+prefixes when the cross-domain `do` is nested inside a top-level
+`when` body or `switch` branch. The deferred lane is cross-domain
+repeat-body `do` lowering, which would require CDC sync wrappers,
+generated-top CDC instantiation, and schedule-report extensions.
+A `(do TARGET (domain X))` clause without a cross-domain mismatch
+(target in the same domain as the calling transaction) keeps working
+as same-domain ownership metadata.
 
 Samples around repeat-body spawn are accepted only when the same-body sync
 that consumes the spawned done ports still appears before the repeat check.
@@ -1758,7 +1868,28 @@ runtime signals, arbitrary expressions, zero-valued constants, and
 zero-valued or non-scalar actor/transaction parameters fail closed.
 Generated child activation overrides for latency-bound transaction parameters
 must preserve the child default value; mismatches fail closed until
-per-activation latency counter specialization is shipped.
+per-activation latency counter specialization is shipped. The rejected
+shape is a rule-trigger activation whose child default `(params (LAT N))`
+feeds a `(latency (min LAT) (max LAT))` clause, when the activation site
+passes a different value:
+
+```lisp
+(transaction worker
+  (params
+    (LAT 4))                 ;; child default drives the latency window
+  (latency (min LAT) (max LAT))
+  (complete done))
+(rule launch fire
+  (trigger worker
+    (params
+      (LAT 2))))             ;; <-- override mismatches the default
+```
+
+The validator emits
+`Rule 'launch': trigger instance 'launch_worker_trigger_0' overrides
+latency-bound parameter 'LAT' on child 'worker'; activation-site
+parameter override-specialized latency bounds remain deferred`. The
+deferred lane is per-activation latency counter specialization.
 
 **What happens**:
 1. Entry state: `(<- (cc 0))` — reset counter

@@ -210,6 +210,52 @@ deeper-nested repeat-body `do`/`spawn` now emit targeted diagnostics
 `deeper-nested repeat-body <do|spawn> remains deferred`) so authors
 can identify which deferred lane is blocking their case.
 
+The loop-contained rejected shape is a `(repeat ...)` nested inside a
+`(while ...)` or `(until ...)` body whose body contains a `do` or
+`spawn` clause:
+
+```lisp
+(transaction parent
+  (on start)
+  (while cond                ;; loop wraps the repeat
+    (repeat loops
+      (do worker)))          ;; <-- not yet supported in a loop body
+  (complete done))
+```
+
+The validator emits
+`Transaction 'parent': loop-contained repeat-body do remains
+deferred`. The symmetric form using `(spawn worker as w0)` plus
+`(await_all done)` inside the repeat body emits
+`Transaction 'parent': loop-contained repeat-body spawn remains
+deferred`. `(until ...)` produces the same diagnostic as `(while
+...)`. The deferred lane is loop-contained repeat-body lowering,
+which would integrate the loop pre-test (or post-test) with the
+nested-repeat re-entry proof.
+
+The deeper-nested rejected shape is a `(repeat ...)` reached through
+more than one branch ancestor — either two `(when ...)` clauses
+nested directly, or a `(when ...)` inside a `(switch ...)` case:
+
+```lisp
+(transaction parent
+  (on start)
+  (when cond1
+    (when cond2              ;; second when wraps the repeat
+      (repeat loops
+        (do worker))))       ;; <-- not yet supported at deeper nesting
+  (complete done))
+```
+
+The validator emits
+`Transaction 'parent': deeper-nested repeat-body do remains
+deferred`. The same diagnostic also fires for a `(switch sel (case 0
+(when cond (repeat ...))))` shape. The deferred lane is deeper-nested
+repeat-body lowering, which would extend the branch-contained
+shipped subset to additional nesting depths. The generic
+"supported only for top-level repeat clauses..." message remains as
+a safety-net fallback for shapes not yet classified.
+
 `do` while a nested spawn is pending is shipped for a local plain `(do
 child)` in a repeat directly inside a top-level `when` body or a top-level
 `switch` branch, and for a plain generated-child `(do child)` in either

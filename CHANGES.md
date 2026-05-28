@@ -30125,3 +30125,9 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: book examples for new targeted diagnostics
 - Created and registered active task tree [docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md) after audit confirmed the seven targeted diagnostics shipped this session lack user-facing `.fsm` source examples in book chapters. Selection commit only; no book or code change.
+
+### book examples for new targeted diagnostics shipped
+- Added user-facing `.fsm` source examples to [docs/book/src/13b-transactions.md](docs/book/src/13b-transactions.md) (five examples covering cross-domain repeat-body do, repeat-count override gate, wait-count override gate, latency-bound override gate, and watchdog-limit override gate) and [docs/book/src/13d-control-flow.md](docs/book/src/13d-control-flow.md) (two examples covering loop-contained and deeper-nested repeat-body do/spawn).
+- Each example shows the rejected `.fsm` shape, the verbatim diagnostic text emitted by the validator, and a one-sentence note naming the deferred lane that would need to ship to accept the case.
+- Audits [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t), [t/1307-isf-loop-body-doc-truth-audit.t](t/1307-isf-loop-body-doc-truth-audit.t), and [t/1332-isf-atl-doc-status-audit.t](t/1332-isf-atl-doc-status-audit.t) reverified clean after the prose updates.
+- Pure book-content slice. Validator already emits the diagnostics; regressions are already locked in `t/1369`, `t/1370`, `t/1372`, `t/1373`, `t/1374`, `t/1375`.
