@@ -32977,3 +32977,22 @@ It is an exact-delay pulse request:
   Tests=709`. The doc-truth coverage for the targeted-diagnostic
   shipped surface is now complete across both the spec and book
   surfaces.
+
+## 2026-05-27: active R14 task tree selected — book examples for new targeted diagnostics
+- The prior doc-truth-sync slice extended PROSE that names the
+  targeted diagnostics to chapters 13b/13d/13h/13k. A subsequent
+  audit found that the book still lacks user-facing `.fsm` source
+  examples that an author can point to as "this is the shape that
+  triggers this rejection".
+- The seven targeted diagnostics shipped this session
+  (`cross-domain repeat-body do`, four activation-override sub-axes,
+  loop-contained, deeper-nested) each need an example fragment plus
+  verbatim diagnostic text plus a one-sentence deferred-lane note in
+  the chapter where the feature is already discussed.
+- Activation-override examples go in `13b-transactions.md` next to
+  the existing "Generated child activation overrides for ... must
+  preserve the child default value" paragraphs. Loop-contained and
+  deeper-nested examples go in `13d-control-flow.md` next to the
+  existing "deeper branch nesting and loop-contained repeats remain
+  outside both nested subsets" sentence.
+- This selection commit changes no code.

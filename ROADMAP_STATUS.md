@@ -14473,3 +14473,10 @@ Exit criteria:
   targeted diagnostics. Audits `t/1305`, `t/1307`, `t/1332` still
   pass. Doc-truth coverage for the targeted-diagnostic shipped
   surface is now complete.
+- `R14`: next active task tree selected —
+  `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE`. Adds user-facing `.fsm`
+  source examples to book chapters for each of the seven targeted
+  diagnostics shipped this session. The prior precision/truth-sync
+  slices paraphrased the deferrals but did not give authors a shape
+  they can point to. Activation-override examples land in 13b;
+  loop-contained and deeper-nested examples land in 13d.

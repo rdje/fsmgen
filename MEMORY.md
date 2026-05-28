@@ -37439,3 +37439,22 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Validation passed: `prove -Iperl t/1305 t/1307 t/1332` with
   `Files=3, Tests=709`; `mdbook build docs/book`; `git diff --check`.
 - Active task tree: `none`.
+
+## 2026-05-27: R14 active task tree selected — book examples for new targeted diagnostics
+- Created and registered active task tree
+  [`ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE`](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md).
+- Audit found that the seven targeted diagnostics shipped this
+  session (`cross-domain repeat-body do`, four activation-override
+  sub-axes, loop-contained, deeper-nested) lack user-facing `.fsm`
+  source examples in book chapters. The prior precision and
+  truth-sync slices paraphrased the deferrals but did not give
+  authors a shape they can point to.
+- Slice scope: add a minimal `.fsm` source fragment, verbatim
+  diagnostic text, and a one-sentence deferred-lane note for each of
+  the seven diagnostics. Activation-override examples land in
+  `13b-transactions.md`; loop-contained and deeper-nested examples
+  land in `13d-control-flow.md`.
+- Two-commit pattern: `.1: select` (this slice), `.2: ship` (book
+  examples + audit reverification).
+- Active task tree: `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE`.
+- Current frontier: `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2`.

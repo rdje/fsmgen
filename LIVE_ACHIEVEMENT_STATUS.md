@@ -15953,3 +15953,18 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   (Files=3, Tests=709); `mdbook build docs/book`;
   `git diff --check`.
 - Next bounded slice: another item from the backlog.
+
+## 2026-05-27: Selected R14 book examples for new targeted diagnostics
+- Roadmap lane: `R14`.
+- Active task tree:
+  [`ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE`](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md).
+- Goal: add user-facing `.fsm` source examples to book chapters
+  showing the rejected shape for each of the seven targeted
+  diagnostics shipped this session. Activation-override examples in
+  13b; loop-contained and deeper-nested examples in 13d.
+- Public behavior changed: no; `.1: select` commit only registers
+  the task tree.
+- Focused validation passed: `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice:
+  `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2` (book example
+  fragments + audit reverification).

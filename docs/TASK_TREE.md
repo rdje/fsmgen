@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE` | `pending` | `R14` | `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2` | [docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md](docs/tasks/ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.md) |
 
 ## Proposed Task Trees
 
