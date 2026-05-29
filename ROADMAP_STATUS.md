@@ -14640,3 +14640,11 @@ Exit criteria:
   locked by `t/1378` (3 subtests). Doc/test only; no parser/runtime
   change. Next: PNT into the user-confirmed scheduler-frontier item #1
   (loop-contained repeat-body local-do lowering).
+- `R14`: active task tree — `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING`
+  (scheduler-frontier #1, user-confirmed). Enables a plain local `(do child)`
+  inside a `(repeat ...)` directly contained in one `(while ...)`/`(until ...)`
+  body to lower (currently fails `loop-contained repeat-body do remains
+  deferred`). Probed: validator-only gate relaxation — `_ir_repeat`/
+  `_expand_loop_body` already lower a repeat-body local do correctly; spawn,
+  generated-do, and deeper nesting stay deferred. `.2` ships the change +
+  `t/1379` golden + doc sync.

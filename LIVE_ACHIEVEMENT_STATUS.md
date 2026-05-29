@@ -16289,3 +16289,12 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `mdbook build docs/book` clean; `git diff --check` clean.
 - Next: PNT into scheduler-frontier item #1 (loop-contained repeat-body
   local-do lowering), user-confirmed.
+
+## 2026-05-29: Selected R14 loop-contained repeat-body local-do lowering (scheduler-frontier #1)
+- Active tree: `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING`. Enables a
+  plain local `(do child)` inside a `(repeat ...)` directly contained in one
+  `(while ...)`/`(until ...)` body to lower. Probed: validator-only gate
+  relaxation (lowering already correct); spawn/generated-do/deeper nesting
+  stay deferred.
+- `.1` is this selection commit (no code/test/doc change yet). `.2` ships the
+  validator change + `t/1379` golden + book/spec doc sync.

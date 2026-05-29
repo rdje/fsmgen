@@ -37969,3 +37969,24 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   one of t/1376's 33 gated fixtures.
 - Validation: `prove -Iperl t/1378 t/1376 t/1305 t/1307 t/1332` PASS;
   `mdbook build docs/book` clean; `git diff --check` clean. Tree complete.
+
+## 2026-05-29: R14 active task tree selected — loop-contained repeat-body local-do lowering
+- Scheduler-frontier #1, user-confirmed after the SPECFORGE slice. Goal:
+  let a plain local `(do child)` inside a `(repeat N ...)` that sits
+  directly in one `(while ...)`/`(until ...)` body lower cleanly instead
+  of failing `loop-contained repeat-body do remains deferred`.
+- Probed the lowerer: the fail-closed is VALIDATOR-ONLY
+  (`_validate_repeat_body_spawn_subset`, LoweringIR.pm ~L6434). `_ir_repeat`
+  + `_expand_loop_body` already lower a repeat-body local `(do)` correctly
+  (repeat_init → blocking-do → repeat_check, wrapped by loop entry/check);
+  for a plain local do the 4 untreaded `_ir_repeat` params are not consumed
+  (only used for generated-child/spawn). So this is a gate relaxation, NOT a
+  lowering change.
+- Outer-loop semantics unambiguous: while/until back-edge re-enters at
+  repeat_init, re-seeding the counter each iteration → "run the repeat N
+  times per loop iteration." No semantics decision to escalate.
+- Scope: plain local do only (no params/bind/domain, child not generated),
+  directly in a single loop (context_depths exactly {while=>1}/{until=>1}).
+  spawn + generated-do + deeper nesting stay deferred. Created
+  `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING`. `.2` ships the
+  validator change + t/1379 golden + doc sync. `.1` is selection only.

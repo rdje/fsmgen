@@ -33437,3 +33437,28 @@ It is an exact-delay pulse request:
     surface because it is the one fact that turns SPECFORGE's
     `ceil(log2(member_count))` choice from a guess into a sanctioned
     emission rule.
+
+## 2026-05-29: selected R14 loop-contained repeat-body local-do lowering (scheduler-frontier #1)
+- Read the lowerer before committing to a plan. Key finding that shaped the
+  scope: the `loop-contained repeat-body do remains deferred` fail-closed is
+  purely in the validator (`_validate_repeat_body_spawn_subset`). The actual
+  lowering (`_ir_repeat` invoked from `_expand_loop_body` for `while`/`until`
+  bodies) already emits a correct schedule for a repeat-body local `(do)`:
+  `repeat_init` (seeds the counter) → blocking-do state → `repeat_check`
+  (decrements, loops back to the first body state), all wrapped by the loop
+  entry/check states.
+- Verified the four trailing `_ir_repeat` parameters that `_expand_loop_body`
+  does not thread (`$spawn_refs`, `$constant_values`, `$generated_children`,
+  `$repeat_do_ordinal_ref`) are only consumed for generated-child/spawn paths;
+  `_repeat_do_ref_from_clause` uses `$ordinal` only inside `if ($generated_child)`.
+  So a plain local do lowers identically with or without them — confirming a
+  validator-only relaxation rather than a lowering rewrite. (An earlier scan
+  flagged the missing params as a showstopper; that is true only for the
+  generated-do/spawn cases, which stay deferred here.)
+- Semantics decision recorded as non-blocking: the loop back-edge re-enters at
+  `repeat_init`, so each loop iteration re-seeds the repeat counter — the only
+  sensible reading of `(while cond (repeat N (do child)))`. No user input needed.
+- Conservative scope mirrors the when-body/switch-branch precedent: only a
+  repeat directly inside a single loop (`context_depths` exactly
+  `{while=>1}`/`{until=>1}`) and only a plain local do; spawn, generated-do,
+  await-sync, and deeper nesting stay fail-closed with targeted diagnostics.
