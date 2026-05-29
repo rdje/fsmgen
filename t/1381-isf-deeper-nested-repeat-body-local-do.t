@@ -87,8 +87,9 @@ ISF
 # NOTE: same-domain generated do at deeper branch nesting is now SUPPORTED
 # (see t/1382). This subtest covers the deferral that remains for the local-do
 # scope: spawn at deeper branch nesting.
-subtest 'deeper-nested spawn stays deferred' => sub {
-    # spawn stays deferred (unchanged)
+# NOTE: the basic deeper-nested spawn + same-body (await_all done) subset is now
+# SUPPORTED (see t/1383). An UNDRAINED deeper-nested spawn stays deferred.
+subtest 'undrained deeper-nested spawn stays deferred' => sub {
     my $spawn = <<'ISF';
 (actor when_when_spawn
   (clock clk)
@@ -101,16 +102,15 @@ subtest 'deeper-nested spawn stays deferred' => sub {
     (when c1
       (when c2
         (repeat loops
-          (spawn worker as w0)
-          (await_all done))))
+          (spawn worker as w0))))
     (complete done))
   (transaction worker
     (complete done)))
 ISF
     my $ok2 = eval { parse_lower($spawn, 'spawn.isf'); 1 };
-    ok(!$ok2, 'deeper-nested spawn is rejected');
-    like($@, qr/Transaction 'parent': deeper-nested repeat-body spawn remains deferred/,
-        'deeper-nested spawn stays deferred');
+    ok(!$ok2, 'undrained deeper-nested spawn is rejected');
+    like($@, qr/Transaction 'parent': deeper-nested repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
+        'an undrained deeper-nested spawn stays deferred');
 };
 
 done_testing();

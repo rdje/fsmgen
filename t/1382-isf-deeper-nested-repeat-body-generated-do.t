@@ -157,16 +157,15 @@ ISF
     (when c1
       (when c2
         (repeat loops
-          (spawn worker as w0)
-          (await_all done))))
+          (spawn worker as w0))))
     (complete done))
   (transaction worker
     (complete done)))
 ISF
     my $ok2 = eval { parse_lower($spawn, 'spawn.isf'); 1 };
-    ok(!$ok2, 'deeper-nested spawn is rejected');
-    like($@, qr/deeper-nested repeat-body spawn remains deferred/,
-        'spawn at deeper nesting stays deferred');
+    ok(!$ok2, 'undrained deeper-nested spawn is rejected');
+    like($@, qr/deeper-nested repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
+        'an undrained spawn at deeper nesting stays deferred');
 };
 
 done_testing();

@@ -14705,3 +14705,14 @@ Exit criteria:
   repeat. Gate relaxation + a new drain-requirement rule for these contexts
   (the existing mandatory-drain rule is top-level-only); complex spawn variants
   and cross-domain stay deferred. `.2` ships it + `t/1383`.
+- `R14`: `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-REPEAT-BODY-SPAWN-LOWERING` is
+  **completed** (`.2` shipped). The basic `(spawn ...)` + same-body
+  `(await_all done)`/single-pending `(await_any done)` drain inside a
+  loop-contained or deeper-nested repeat now lowers (drain schedule verified;
+  child instantiated in `_top`), at lowering + composition parity with the
+  top-level repeat-body spawn (the full-HDL `--check-json` composition-wiring
+  limitation is pre-existing and applies equally — out of scope). Gate
+  relaxation + a drain-requirement rule + multi-pending await_any deferral.
+  Undrained / multi-pending spawn and cross-domain stay deferred. Locked by
+  `t/1383` (+ 7 test files repointed to the undrained-spawn deferral). Next:
+  cross-domain generated do (loop/deeper).

@@ -384,9 +384,9 @@ Each phrase below is the verbatim text the validator emits.
   `(do child (params ...))` (with `(bind ...)`/`(domain NAME)` when static
   params are present) inside a `(repeat ...)` directly in a single
   `(while ...)`/`(until ...)` body lower; a generated `do` instantiates its
-  child in the `_top` composition. Inside a loop-contained repeat, `spawn`
-  still fires `Transaction '<tn>': loop-contained repeat-body spawn remains
-  deferred`, a cross-domain generated `do` fires `Transaction '<tn>':
+  child in the `_top` composition. (The basic `spawn` + same-body drain subset
+  is also shipped — see the spawn entry below.) Inside a loop-contained repeat,
+  a cross-domain generated `do` fires `Transaction '<tn>':
   repeat-body generated do target '<child>' is in a different clock domain
   than the calling transaction; cross-domain repeat-body do remains deferred`,
   and a repeat reached through an additional branch/loop ancestor fires
@@ -400,14 +400,30 @@ Each phrase below is the verbatim text the validator emits.
   now shipped.** A plain local `(do child)` and a same-domain generated
   `(do child (params ...))` inside a `(repeat ...)` reached through deeper
   branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) lower; a
-  generated `do` instantiates its child in the `_top` composition. A
-  deeper-nested cross-domain generated `do` fires `cross-domain repeat-body do
-  remains deferred`, and a deeper-nested `spawn` fires `Transaction '<tn>':
-  deeper-nested repeat-body spawn remains deferred`. Locked by
+  generated `do` instantiates its child in the `_top` composition. (The basic
+  `spawn` + same-body drain subset is also shipped at deeper nesting — see the
+  spawn entry below.) A deeper-nested cross-domain generated `do` fires
+  `cross-domain repeat-body do remains deferred`. Locked by
   [`t/1381-isf-deeper-nested-repeat-body-local-do.t`](../t/1381-isf-deeper-nested-repeat-body-local-do.t),
   [`t/1382-isf-deeper-nested-repeat-body-generated-do.t`](../t/1382-isf-deeper-nested-repeat-body-generated-do.t),
   and
   [`t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t`](../t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t).
+- **Loop-contained / deeper-nested repeat-body `spawn` (+ same-body drain) is
+  now shipped at the lowering + composition level.** The basic `(spawn child as
+  inst)` + same-body `(await_all done)` (or single-pending `(await_any done)`)
+  drain inside a loop-contained or deeper-nested repeat lowers; the spawn is
+  drained before `repeat_check` loops / the loop re-enters, and the child is
+  instantiated in the `_top`. This matches the already-shipped top-level
+  repeat-body spawn — including its **pre-existing full-HDL limitation**:
+  `--check-json` fails for repeat-body spawn at any nesting because the
+  composition planner references the repeat-count / loop-condition parent inputs
+  as child endpoints (`instance '<inst>' has no port named 'loops'/'cond'`; see
+  `docs/COMPOSITION_SCOPE.md`). An undrained spawn fires `... repeat-body spawn
+  requires same-body '(await_all done)' or single-pending '(await_any done)'`, a
+  multi-pending `(await_any done)` fires `... repeat-body multi-pending
+  '(await_any done)' remains deferred`, and a cross-domain spawn target stays
+  deferred. Locked by
+  [`t/1383-isf-loop-and-deeper-repeat-body-spawn.t`](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t).
 
 ### Book example correctness build gate
 

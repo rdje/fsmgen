@@ -63,7 +63,9 @@ ISF
     );
 };
 
-subtest 'loop-contained repeat-body spawn emits the targeted diagnostic' => sub {
+# The basic loop-contained repeat-body spawn + same-body (await_all done) subset
+# is now SUPPORTED (see t/1383). An UNDRAINED loop-contained spawn stays deferred.
+subtest 'undrained loop-contained repeat-body spawn emits the targeted diagnostic' => sub {
     assert_lower_rejected(
         <<'ISF',
 (actor while_repeat_spawn_probe
@@ -76,14 +78,13 @@ subtest 'loop-contained repeat-body spawn emits the targeted diagnostic' => sub 
     (on start)
     (while cond
       (repeat loops
-        (spawn worker as w0)
-        (await_all done)))
+        (spawn worker as w0)))
     (complete done))
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': loop-contained repeat-body spawn remains deferred/,
-        'while-contained repeat-body spawn is rejected with the targeted diagnostic',
+        qr/Transaction 'parent': loop-contained repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
+        'undrained while-contained repeat-body spawn is rejected with the drain-requirement diagnostic',
     );
 
     assert_lower_rejected(
@@ -98,14 +99,13 @@ ISF
     (on start)
     (until cond
       (repeat loops
-        (spawn worker as w0)
-        (await_all done)))
+        (spawn worker as w0)))
     (complete done))
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': loop-contained repeat-body spawn remains deferred/,
-        'until-contained repeat-body spawn is rejected with the targeted diagnostic',
+        qr/Transaction 'parent': loop-contained repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
+        'undrained until-contained repeat-body spawn is rejected with the drain-requirement diagnostic',
     );
 };
 
@@ -138,6 +138,8 @@ ISF
         'deeper when nesting cross-domain do routes through the cross-domain diagnostic',
     );
 
+    # Basic deeper-nested spawn + await_all is now supported (t/1383); an
+    # UNDRAINED deeper-nested spawn still routes through the drain-requirement.
     assert_lower_rejected(
         <<'ISF',
 (actor switch_nested_when_repeat_spawn_probe
@@ -152,14 +154,13 @@ ISF
       (0
         (when cond
           (repeat loops
-            (spawn worker as w0)
-            (await_all done)))))
+            (spawn worker as w0)))))
     (complete done))
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': deeper-nested repeat-body spawn remains deferred/,
-        'when-inside-switch routes through the deeper-nested diagnostic',
+        qr/Transaction 'parent': deeper-nested repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
+        'undrained when-inside-switch spawn routes through the deeper-nested drain-requirement diagnostic',
     );
 };
 

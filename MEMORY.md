@@ -38130,3 +38130,26 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   across loop iterations to be confirmed by golden .fsm in `.2`. Created
   `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-REPEAT-BODY-SPAWN-LOWERING`. `.2` ships
   gate + drain rule + t/1383. [[frontier-pnt-autonomy]].
+
+## 2026-05-29: R14 shipped — loop-contained/deeper-nested repeat-body spawn lowering (frontier #5)
+- `.2` shipped. Validator: spawn gate admits `$loop_body_repeat`/
+  `$deeper_nested_repeat` (lifted `$deeper_nested_repeat` to function scope);
+  added a drain-requirement rule (undrained loop/deeper spawn → confess) AND a
+  multi-pending await_any deferral at the await_any site; the basic
+  spawn + same-body await_all/single-await_any subset lowers, reusing `_ir_repeat`'s
+  spawn machinery. Verified drain schedule: spawn(assert _start) →
+  await_all(wait _done) → repeat_check → re-run/while_check (drains before loop
+  re-entry).
+- IMPORTANT honesty correction: repeat-body spawn is a LOWERING + COMPOSITION
+  feature, NOT full-HDL — even top-level `(repeat N (spawn w)(await_all done))`
+  fails `--check-json` ("instance 'w0' has no port named 'loops'") because the
+  composition planner references the repeat-count/loop-condition parent inputs
+  as child endpoints (pre-existing, COMPOSITION_SCOPE.md). My loop-contained
+  case fails the SAME way ("...'cond'"). So I did NOT claim HDL; the deliverable
+  is lowering+composition parity with top-level repeat-spawn (drain schedule +
+  child instantiated). Tests assert the schedule, not --check-json.
+- Cascade: lifting the spawn deferral broke 7 test files asserting "...spawn
+  remains deferred" — all repointed to the UNDRAINED spawn (drain-requirement
+  message). Added `t/1383`. Audit set (15 files, 980) + broad regression (123
+  files, 957) PASS. Tree complete. Remaining frontier: cross-domain generated
+  do (loop/deeper), and the undrained/multi-pending spawn-drain variants.

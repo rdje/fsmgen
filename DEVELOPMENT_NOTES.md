@@ -33606,3 +33606,23 @@ It is an exact-delay pulse request:
   `$switch_branch_repeat`, so they naturally skip loop/deeper contexts — those
   variations stay deferred without extra work (the supported-subset is just
   spawn + same-body drain).
+
+## 2026-05-29: shipped R14 loop-contained/deeper-nested repeat-body spawn lowering (frontier #5)
+- The headline lesson: verify the FULL pipeline, not just lowering. Lowering
+  succeeded for loop-contained spawn, but `bin/fsmgen --check-json` revealed the
+  composition planner mis-wires the repeat-count/loop-condition parent inputs as
+  child endpoints — and the SAME failure exists for the already-shipped
+  top-level repeat-body spawn. So repeat-body spawn is a lowering + composition
+  feature, not full-HDL-clean, at any nesting. I corrected the slice's
+  acceptance (and the docs) to claim only lowering + composition parity, and
+  pointed the limitation at docs/COMPOSITION_SCOPE.md. NOT claiming HDL when the
+  reference can't HDL-emit is the honest call.
+- The single drain-requirement rule (`@pending_spawns` non-empty at repeat end →
+  confess) elegantly rejects both an undrained spawn and a multi-pending
+  await_any that lacks a later await_all (await_any with >1 pending does not
+  clear `@pending_spawns`). I added an explicit multi-pending-await_any deferral
+  at the await_any site too, to keep the loop/deeper scope to exactly the basic
+  spawn + same-body await_all / single-pending await_any subset.
+- Cascade discipline confirmed again: lifting the spawn deferral broke 7 test
+  files; grepping all of t/ for the lifted message found them, and each was
+  repointed to the undrained-spawn drain-requirement (still a real deferral).

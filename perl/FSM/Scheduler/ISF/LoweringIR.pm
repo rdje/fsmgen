@@ -6404,6 +6404,10 @@ sub _validate_repeat_body_spawn_subset {
     my $loop_body_repeat = ($label eq 'while body' || $label eq 'until body')
         && (_context_depths_match_exactly($context_depths, { while => 1 })
             || _context_depths_match_exactly($context_depths, { until => 1 }));
+    # A repeat reached through deeper branch nesting (when+ -> repeat,
+    # switch -> when+ -> repeat). Returns 0 for loop-contained and top-level/
+    # single-branch contexts, so this is exactly the deeper branch case.
+    my $deeper_nested_repeat = _repeat_body_context_is_deeper_nested($label, $context_depths) ? 1 : 0;
     my $pending_local_do_label = $when_body_repeat
         ? 'when-body'
         : $switch_branch_repeat
@@ -6421,7 +6425,13 @@ sub _validate_repeat_body_spawn_subset {
         next unless defined($keyword) && !ref($keyword);
 
         if ($keyword eq 'spawn') {
-            if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat)) {
+            # A repeat directly in a single while/until body ($loop_body_repeat),
+            # or reached through deeper branch nesting ($deeper_nested_repeat),
+            # supports the basic spawn + same-body '(await_all done)' (or
+            # single-pending '(await_any done)') subset. The mandatory drain is
+            # enforced at the end of this routine; multi-pending '(await_any)' in
+            # these contexts is deferred at the await_any site below.
+            if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat || $loop_body_repeat || $deeper_nested_repeat)) {
                 confess "Transaction '$tn': loop-contained repeat-body spawn remains deferred\n"
                     if _repeat_body_context_is_loop_contained($context_depths);
                 confess "Transaction '$tn': deeper-nested repeat-body spawn remains deferred\n"
@@ -6506,11 +6516,8 @@ sub _validate_repeat_body_spawn_subset {
             # (bind ...)/(domain NAME)] do. Cross-domain generated do and spawn
             # stay deferred (handled by the cross-domain check below / the spawn
             # branch). A repeat reached through a loop ancestor (loop-contained)
-            # routes through the loop-contained deferral.
-            my $deeper_nested_repeat =
-                !($top_level_repeat || $when_body_repeat || $switch_branch_repeat || $loop_body_repeat)
-                && !_repeat_body_context_is_loop_contained($context_depths)
-                && _repeat_body_context_is_deeper_nested($label, $context_depths);
+            # routes through the loop-contained deferral. ($deeper_nested_repeat
+            # is computed once at function scope.)
             if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat || $loop_body_repeat)) {
                 confess "Transaction '$tn': loop-contained repeat-body do remains deferred\n"
                     if _repeat_body_context_is_loop_contained($context_depths);
@@ -6729,6 +6736,10 @@ sub _validate_repeat_body_spawn_subset {
                     && !$allowed_branch_static_domain_generated_do_before_post_await_any
                     && !$allowed_generated_do_spawn_after_do_before_post_await_any;
             if ($keyword eq 'await_any' && @pending_spawns > 1) {
+                confess "Transaction '$tn': loop-contained repeat-body multi-pending '(await_any done)' remains deferred; drain with same-body '(await_all done)'\n"
+                    if $loop_body_repeat;
+                confess "Transaction '$tn': deeper-nested repeat-body multi-pending '(await_any done)' remains deferred; drain with same-body '(await_all done)'\n"
+                    if $deeper_nested_repeat;
                 $awaiting_multi_pending_drain = 1;
                 next;
             }
@@ -6758,6 +6769,10 @@ sub _validate_repeat_body_spawn_subset {
         if $switch_branch_repeat && @pending_spawns;
     confess "Transaction '$tn': repeat-body spawn requires same-body '(await_all done)' before the repeat check can loop\n"
         if $top_level_repeat && @pending_spawns;
+    confess "Transaction '$tn': loop-contained repeat-body spawn requires same-body '(await_all done)' or single-pending '(await_any done)' before the repeat check can loop\n"
+        if $loop_body_repeat && @pending_spawns;
+    confess "Transaction '$tn': deeper-nested repeat-body spawn requires same-body '(await_all done)' or single-pending '(await_any done)' before the repeat check can loop\n"
+        if $deeper_nested_repeat && @pending_spawns;
 
     return 1;
 }

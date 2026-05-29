@@ -686,18 +686,23 @@ A plain local `(do child)` and a same-domain generated `(do child (params ...))`
 `(repeat ...)` that sits directly in a single `(while ...)` or `(until ...)`
 body now lower, reusing the proven repeat schedule inside the loop body (see the
 control-flow chapter); a generated `do` instantiates its child in the `_top`
-composition. Inside a loop-contained repeat, `spawn` and a cross-domain
-generated `do` still fail closed: the spawn form emits the targeted
-`loop-contained repeat-body spawn remains deferred` diagnostic, and a
-cross-domain generated `do` emits `cross-domain repeat-body do remains
-deferred`. A repeat reached through an extra loop ancestor (for
-example `(while c1 (when c2 (repeat ...)))`) still emits `loop-contained
-repeat-body do remains deferred`. A plain local `(do child)` and a same-domain
-generated `(do child (params ...))` at deeper branch nesting (`when⁺ → repeat`,
-`switch → when⁺ → repeat`) also lower (a generated `do` instantiates its child
-in the `_top`); a deeper-nested cross-domain generated `do` fails closed with
-`cross-domain repeat-body do remains deferred` and a deeper-nested `spawn` with
-`deeper-nested repeat-body spawn remains deferred`. The original generic "supported only for
+composition. The basic `spawn` + same-body `(await_all done)` (or single-pending
+`(await_any done)`) subset also lowers in a loop-contained repeat (the spawn is
+drained before the repeat check / loop re-entry; lowering + composition parity
+with the top-level repeat-body spawn). An undrained loop-contained spawn fails
+closed (`loop-contained repeat-body spawn requires same-body '(await_all done)'
+or single-pending '(await_any done)'`), a multi-pending `(await_any done)` is
+deferred (`loop-contained repeat-body multi-pending '(await_any done)' remains
+deferred`), and a cross-domain generated `do` fails closed (`cross-domain
+repeat-body do remains deferred`). A repeat reached through an extra loop
+ancestor (for example `(while c1 (when c2 (repeat ...)))`) still emits
+`loop-contained repeat-body do remains deferred`. A plain local `(do child)`, a
+same-domain generated `(do child (params ...))`, and the basic spawn + drain
+subset at deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`)
+also lower; a deeper-nested cross-domain generated `do` fails closed with
+`cross-domain repeat-body do remains deferred` and an undrained deeper-nested
+`spawn` with `deeper-nested repeat-body spawn requires same-body '(await_all
+done)' or single-pending '(await_any done)'`. The original generic "supported only for
 top-level..." message remains as a safety-net fallback for shapes not
 yet classified.
 

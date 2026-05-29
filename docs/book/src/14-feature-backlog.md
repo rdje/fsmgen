@@ -17,20 +17,20 @@ this chapter:
   remains deferred (`t/1372`); four sub-axis activation-override
   gates — `repeat-count parameter`, `wait-count parameter`,
   `latency-bound parameter`, `watchdog-limit parameter` — each with
-  its own deferral phrase (`t/1373`); loop-contained repeat-body
-  `spawn` and cross-domain generated `do` remain deferred (`t/1374`);
-  deeper-nested repeat-body cross-domain generated `do` and `spawn` remain
-  deferred (`t/1375`).
-- **Loop-contained repeat-body `do`**: a plain local `(do child)` (`t/1379`)
-  and a same-domain generated `(do child (params ...))` (`t/1380`, which
-  instantiates the child in the `_top`) inside a `(repeat ...)` directly in a
-  single `(while ...)`/`(until ...)` body now lower; loop-contained `spawn`
+  its own deferral phrase (`t/1373`); undrained / multi-pending / cross-domain
+  loop-contained and deeper-nested repeat-body spawn-drain variants remain
+  deferred (`t/1374`/`t/1375`).
+- **Loop-contained repeat-body `do`/`spawn`**: a plain local `(do child)`
+  (`t/1379`), a same-domain generated `(do child (params ...))` (`t/1380`, child
+  instantiated in the `_top`), and the basic `spawn` + same-body `(await_all
+  done)`/single-pending `(await_any done)` subset (`t/1383`) inside a
+  `(repeat ...)` directly in a single `(while ...)`/`(until ...)` body now lower;
+  undrained / multi-pending spawn and cross-domain generated `do` stay deferred.
+- **Deeper-nested repeat-body `do`/`spawn`**: a plain local `(do child)`
+  (`t/1381`), a same-domain generated `(do child (params ...))` (`t/1382`), and
+  the basic spawn + drain subset (`t/1383`) at deeper branch nesting (`when⁺ →
+  repeat`, `switch → when⁺ → repeat`) now lower; undrained / multi-pending spawn
   and cross-domain generated `do` stay deferred.
-- **Deeper-nested repeat-body `do`**: a plain local `(do child)` (`t/1381`)
-  and a same-domain generated `(do child (params ...))` (`t/1382`, which
-  instantiates the child in the `_top`) at deeper branch nesting (`when⁺ →
-  repeat`, `switch → when⁺ → repeat`) now lower; deeper-nested cross-domain
-  generated `do` and `spawn` stay deferred.
 - **Book example correctness build gate**: every `lisp`-tagged book
   example must parse + lower (`t/1376`). Current state: 36
   complete fixtures lower cleanly.
@@ -659,20 +659,26 @@ subsets. A plain local `(do child)` (`t/1379`) and a same-domain generated
 `(do child (params ...))` (`t/1380`) inside a `(repeat ...)` directly in a
 single `(while ...)`/`(until ...)` body now lower (reusing the proven repeat
 schedule inside the loop body; a generated `do` instantiates its child in the
-`_top` composition). Inside a loop-contained repeat, `spawn` still fails closed
-with `loop-contained repeat-body spawn remains deferred`, and a cross-domain
-generated `do` fails closed with `cross-domain repeat-body do remains
-deferred`; a repeat reached through an additional loop ancestor still
-emits `loop-contained repeat-body do remains deferred`. A plain local
-`(do child)` (`t/1381`) and a same-domain generated `(do child (params ...))`
-(`t/1382`, which instantiates its child in the `_top`) at deeper branch nesting
-(`when⁺ → repeat`, `switch → when⁺ → repeat`) also lower; a deeper-nested
-cross-domain generated `do` fails closed with `cross-domain repeat-body do
-remains deferred` and a deeper-nested `spawn` with `deeper-nested repeat-body
-spawn remains deferred`; the original generic message remains as a safety-net
-fallback for shapes not yet classified. Loop-contained `spawn`, cross-domain
-generated `do`, deeper-nested `spawn`, and broader implementations remain
-backlog.
+`_top` composition). The basic `spawn` + same-body `(await_all done)` (or
+single-pending `(await_any done)`) subset (`t/1383`) also lowers in a
+loop-contained repeat (lowering + composition parity with the top-level
+repeat-body spawn). An undrained loop-contained spawn fails closed
+(`loop-contained repeat-body spawn requires same-body '(await_all done)' or
+single-pending '(await_any done)'`), a multi-pending `(await_any done)` is
+deferred (`loop-contained repeat-body multi-pending '(await_any done)' remains
+deferred`), and a cross-domain generated `do` fails closed (`cross-domain
+repeat-body do remains deferred`); a repeat reached through an additional loop
+ancestor still emits `loop-contained repeat-body do remains deferred`. A plain
+local `(do child)` (`t/1381`), a same-domain generated `(do child (params ...))`
+(`t/1382`), and the basic spawn + drain subset (`t/1383`) at deeper branch
+nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) also lower; a
+deeper-nested cross-domain generated `do` fails closed with `cross-domain
+repeat-body do remains deferred` and an undrained deeper-nested `spawn` with
+`deeper-nested repeat-body spawn requires same-body '(await_all done)' or
+single-pending '(await_any done)'`; the original generic message remains as a
+safety-net fallback for shapes not yet classified. Undrained / multi-pending /
+cross-domain loop-contained and deeper-nested spawn-drain variants, and broader
+implementations, remain backlog.
 
 A top-level repeat body may use `(spawn child as inst [(params ...)] [(bind
 ...)] [(domain NAME)])` clauses when the same repeat body reaches `(await_all
@@ -803,10 +809,11 @@ message instead of the misleading same-domain-feature `(params)`
 requirement message. Cross-domain do without the `(domain ...)`
 annotation still surfaces the generic clock-domain violation message.
 Generated/spawn nested activation beyond the documented branch-contained
-generated `do` cases and the branch-contained spawned cases,
-deeper-nested `spawn`, loop-contained repeat-body `spawn`, and cross-domain
-generated `do` (the plain local `(do child)` and same-domain generated
-`(do child (params ...))` loop-contained AND deeper-nested cases are shipped),
+generated `do` cases and the branch-contained spawned cases, and cross-domain
+generated `do` (the plain local `(do child)`, same-domain generated
+`(do child (params ...))`, and basic `spawn` + same-body drain loop-contained
+AND deeper-nested cases are shipped at the lowering + composition level — the
+undrained / multi-pending / cross-domain spawn-drain variants stay deferred),
 and broader outstanding-child lifetime semantics beyond the mandatory-drain
 subset remain backlog.
 

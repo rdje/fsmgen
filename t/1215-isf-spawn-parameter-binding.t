@@ -10495,7 +10495,9 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested when repeat spawn', qr/deeper-nested repeat-body spawn remains deferred/);
+    # Basic deeper-nested spawn + await_all is now supported (t/1383); an
+    # UNDRAINED deeper-nested spawn still routes through the drain-requirement.
+    assert_lower_rejected(<<'ISF', 'undrained switch nested when repeat spawn', qr/deeper-nested repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/);
 (actor switch_nested_when_repeat_spawn
   (clock clk)
   (interface (input start) (input cond) (input mode) (input loops (width 3)) (output done))
@@ -10505,8 +10507,7 @@ ISF
       (0
         (when cond
           (repeat loops
-            (spawn worker as w0)
-            (await_all done)))))
+            (spawn worker as w0)))))
     (complete done))
   (transaction worker
     (complete done)))

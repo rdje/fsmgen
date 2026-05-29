@@ -41,7 +41,9 @@ ISF
     );
 };
 
-subtest 'deeper-when-nested repeat-body spawn emits the targeted diagnostic' => sub {
+# The basic deeper-nested spawn + same-body (await_all done) subset is now
+# SUPPORTED (see t/1383). An UNDRAINED deeper-nested spawn stays deferred.
+subtest 'undrained deeper-when-nested repeat-body spawn emits the targeted diagnostic' => sub {
     assert_lower_rejected(
         <<'ISF',
 (actor deeper_when_repeat_spawn_probe
@@ -55,14 +57,13 @@ subtest 'deeper-when-nested repeat-body spawn emits the targeted diagnostic' => 
     (when cond1
       (when cond2
         (repeat loops
-          (spawn worker as w0)
-          (await_all done))))
+          (spawn worker as w0))))
     (complete done))
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': deeper-nested repeat-body spawn remains deferred/,
-        'when-inside-when repeat-body spawn is rejected with the deeper-nested diagnostic',
+        qr/Transaction 'parent': deeper-nested repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
+        'undrained when-inside-when repeat-body spawn is rejected with the deeper-nested drain-requirement diagnostic',
     );
 };
 
@@ -94,7 +95,7 @@ ISF
     );
 };
 
-subtest 'when-inside-switch repeat-body spawn emits the targeted diagnostic' => sub {
+subtest 'undrained when-inside-switch repeat-body spawn emits the targeted diagnostic' => sub {
     assert_lower_rejected(
         <<'ISF',
 (actor when_in_switch_repeat_spawn_probe
@@ -109,14 +110,13 @@ subtest 'when-inside-switch repeat-body spawn emits the targeted diagnostic' => 
       (0
         (when cond
           (repeat loops
-            (spawn worker as w0)
-            (await_all done)))))
+            (spawn worker as w0)))))
     (complete done))
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': deeper-nested repeat-body spawn remains deferred/,
-        'when-inside-switch-case repeat-body spawn is rejected with the deeper-nested diagnostic',
+        qr/Transaction 'parent': deeper-nested repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
+        'undrained when-inside-switch-case repeat-body spawn is rejected with the deeper-nested drain-requirement diagnostic',
     );
 };
 

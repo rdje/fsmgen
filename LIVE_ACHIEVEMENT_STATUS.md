@@ -16379,3 +16379,19 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   Gate relaxation + a new drain-requirement rule (the existing one is
   top-level-only); complex spawn variants and cross-domain stay deferred. `.1`
   selection; `.2` ships + `t/1383` with drain-semantics golden evidence.
+
+## 2026-05-29: Completed R14 loop-contained/deeper-nested repeat-body spawn lowering (frontier #5)
+- Tree `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-REPEAT-BODY-SPAWN-LOWERING` is
+  `done`. The basic `(spawn ...)` + same-body drain inside a loop-contained or
+  deeper-nested repeat now lowers (drain before repeat_check / loop re-entry;
+  child instantiated in `_top`), at lowering + composition parity with the
+  top-level repeat-body spawn. Public behavior changed: yes. Gate relaxation +
+  drain-requirement rule + multi-pending await_any deferral. Undrained /
+  multi-pending spawn and cross-domain stay deferred. Full-HDL `--check-json`
+  composition-wiring limitation is pre-existing (top-level too) — out of scope,
+  not claimed.
+- Verification: audit set (15 files, 980) PASS; broad regression (123 files,
+  957) PASS; drain schedule golden-verified in `t/1383`; `mdbook build` clean;
+  `git diff --check` clean.
+- Next: cross-domain generated do (loop/deeper), plus the undrained/multi-pending
+  spawn-drain variants if pursued.

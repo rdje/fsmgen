@@ -271,31 +271,44 @@ blocking-do state asserts the instance `_start` and awaits its `_done`, exactly
 like a top-level repeat-body generated `do`. The `_top` composition
 instantiates the child with the resolved parameter overrides.
 
-### Loop-contained repeat-body `spawn` and cross-domain `do` (deferred)
+### Loop-contained / deeper-nested repeat-body `spawn` (+ same-body drain)
 
-Inside a loop-contained repeat, `spawn` and a **cross-domain** generated `do`
-still fail closed with targeted diagnostics:
+The basic `(spawn child as inst)` + same-body `(await_all done)` (or
+single-pending `(await_any done)`) subset lowers inside a loop-contained or
+deeper-nested repeat:
 
 ```text
 (transaction parent
   (on start)
-  (while cond                  ;; loop wraps the repeat
+  (while cond
     (repeat loops
-      (spawn worker as w0)     ;; <-- spawn not yet supported in a loop body
-      (await_all done)))
+      (spawn worker as w0)
+      (await_all done)))      ;; drains w0 before repeat_check / loop re-entry
   (complete done))
 ```
 
-The validator emits `Transaction 'parent': loop-contained repeat-body spawn
-remains deferred` for the spawn form, and `cross-domain repeat-body do remains
-deferred` for a generated `do` whose target is in a different clock domain.
-Bindings or domain metadata without static `(params ...)` emit
-`repeat-body generated do bindings require static '(params ...)' overrides`.
-A repeat wrapped by both a loop and a branch (for example
+The lowered schedule mirrors the proven top-level repeat-body spawn: the spawn
+asserts the instance `_start`, the same-body `await_all` drains the instance
+`_done` before `repeat_check` loops (and before the outer loop re-enters at
+`repeat_init`), and the child is instantiated in the `_top` composition. (Like
+the top-level repeat-body spawn, this is a lowering + composition-planning
+subset; the full-HDL `--check-json` path has a pre-existing composition-wiring
+limitation that applies equally to the top-level case — see
+`docs/COMPOSITION_SCOPE.md`.)
+
+An **undrained** spawn (no same-body `await_all`/single-pending `await_any`
+before the repeat check) stays deferred: `Transaction 'parent': loop-contained
+repeat-body spawn requires same-body '(await_all done)' or single-pending
+'(await_any done)' before the repeat check can loop` (and the `deeper-nested
+...` form). A **multi-pending** `(await_any done)` (two or more outstanding
+children observed by an `await_any`) stays deferred in these contexts:
+`loop-contained repeat-body multi-pending '(await_any done)' remains deferred`.
+A **cross-domain** generated `do` stays deferred (`cross-domain repeat-body do
+remains deferred`); bindings or domain metadata without static `(params ...)`
+emit `repeat-body generated do bindings require static '(params ...)'
+overrides`. A repeat wrapped by both a loop and a branch (for example
 `(while c1 (when c2 (repeat ...)))`) still routes through
-`Transaction 'parent': loop-contained repeat-body do remains deferred`. The
-remaining deferred lanes would extend the loop-contained subset to
-outstanding-child spawn drains and deeper nesting.
+`Transaction 'parent': loop-contained repeat-body do remains deferred`.
 
 ### Deeper-nested repeat-body local `do`
 
@@ -330,12 +343,17 @@ unsupported clause, so the reachable deeper-nested shapes are exactly these.)
 A same-domain **generated** `do` (static `(params ...)`, with `(bind ...)`/
 `(domain NAME)` when params are present) also lowers at deeper branch nesting
 and instantiates its child in the `_top` composition, exactly like the
-loop-contained and top-level generated-`do` cases. A deeper-nested
-**cross-domain** generated `do` stays deferred and emits `cross-domain
-repeat-body do remains deferred`; a deeper-nested `spawn` emits
-`Transaction 'parent': deeper-nested repeat-body spawn remains deferred`. The
-generic "supported only for top-level repeat clauses..." message remains as a
-safety-net fallback for shapes not yet classified.
+loop-contained and top-level generated-`do` cases. The basic `spawn` +
+same-body `(await_all done)` (or single-pending `(await_any done)`) subset
+likewise lowers at deeper branch nesting (see the loop-contained spawn section
+above). A deeper-nested **cross-domain** generated `do` stays deferred and emits
+`cross-domain repeat-body do remains deferred`; an **undrained** deeper-nested
+`spawn` emits `Transaction 'parent': deeper-nested repeat-body spawn requires
+same-body '(await_all done)' or single-pending '(await_any done)' before the
+repeat check can loop`, and a multi-pending `(await_any done)` emits
+`deeper-nested repeat-body multi-pending '(await_any done)' remains deferred`.
+The generic "supported only for top-level repeat clauses..." message remains as
+a safety-net fallback for shapes not yet classified.
 
 The branch-contained shipped subsets accept one multi-pending
 `(await_any done)` observation that the same body's later

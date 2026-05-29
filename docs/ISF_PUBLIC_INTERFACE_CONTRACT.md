@@ -1119,24 +1119,33 @@ generated `do` instantiates its child in the `_top` composition. The
 accept-path schedules are checked by
 [t/1379-isf-loop-contained-repeat-body-local-do.t](../t/1379-isf-loop-contained-repeat-body-local-do.t)
 and [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t).
-Loop-contained repeat-body `spawn` emits a targeted
-`loop-contained repeat-body spawn remains deferred` diagnostic, a
-loop-contained cross-domain generated `do` emits `cross-domain repeat-body do
-remains deferred`, and a repeat reached through an additional loop
-ancestor emits `loop-contained repeat-body do remains deferred`; these are
-checked by
-[t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t)
-and [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t).
-A plain local `(do child)` and a same-domain generated `(do child (params ...))`
-at deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) also
-lower; a generated `do` instantiates its child in the `_top` (checked by
-[t/1381-isf-deeper-nested-repeat-body-local-do.t](../t/1381-isf-deeper-nested-repeat-body-local-do.t)
-and [t/1382-isf-deeper-nested-repeat-body-generated-do.t](../t/1382-isf-deeper-nested-repeat-body-generated-do.t)).
+The basic `(spawn child as inst)` + same-body `(await_all done)` (or
+single-pending `(await_any done)`) drain also lowers inside a loop-contained or
+deeper-nested repeat (lowering + composition parity with the top-level
+repeat-body spawn; the full-HDL composition-wiring limitation is pre-existing
+and applies equally there). An undrained loop-contained spawn emits
+`loop-contained repeat-body spawn requires same-body '(await_all done)' or
+single-pending '(await_any done)'`, a multi-pending `(await_any done)` emits
+`loop-contained repeat-body multi-pending '(await_any done)' remains deferred`,
+a loop-contained cross-domain generated `do` emits `cross-domain repeat-body do
+remains deferred`, and a repeat reached through an additional loop ancestor
+emits `loop-contained repeat-body do remains deferred`; these are checked by
+[t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t),
+[t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t),
+and [t/1383-isf-loop-and-deeper-repeat-body-spawn.t](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t).
+A plain local `(do child)`, a same-domain generated `(do child (params ...))`,
+and the basic spawn + drain subset at deeper branch nesting (`when⁺ → repeat`,
+`switch → when⁺ → repeat`) also lower; a generated `do` instantiates its child
+in the `_top` (checked by
+[t/1381-isf-deeper-nested-repeat-body-local-do.t](../t/1381-isf-deeper-nested-repeat-body-local-do.t),
+[t/1382-isf-deeper-nested-repeat-body-generated-do.t](../t/1382-isf-deeper-nested-repeat-body-generated-do.t),
+and [t/1383-isf-loop-and-deeper-repeat-body-spawn.t](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t)).
 A deeper-nested cross-domain generated `do` emits `cross-domain repeat-body do
-remains deferred` and a deeper-nested `spawn` emits `deeper-nested repeat-body
-spawn remains deferred`, checked by
+remains deferred` and an undrained deeper-nested `spawn` emits `deeper-nested
+repeat-body spawn requires same-body '(await_all done)' or single-pending
+'(await_any done)'`, checked by
 [t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t](../t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t)
-and [t/1382-isf-deeper-nested-repeat-body-generated-do.t](../t/1382-isf-deeper-nested-repeat-body-generated-do.t).
+and [t/1383-isf-loop-and-deeper-repeat-body-spawn.t](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t).
 Every `lisp`-tagged example in the ISF book chapters
 (`12-cookbook.md`, `13*.md`, `14-feature-backlog.md`) is required
 to parse and lower cleanly, enforced by
@@ -1473,11 +1482,13 @@ overrides are present; the generated top wires those input/output binding
 handoffs once for the lexical nested do site. When-contained and
 switch-contained generated nested `do` also accept `(domain NAME)` as declared
 same-domain metadata when static `(params ...)` overrides are present. Deeper
-branch nesting remains outside both nested subsets. A plain local `(do child)`
-and a same-domain generated `(do child (params ...))` inside a `(repeat ...)`
-directly in a single `(while ...)`/`(until ...)` body are their own shipped
-subset (a generated `do` instantiates its child in the `_top`); loop-contained
-`spawn` and cross-domain generated `do` stay deferred. Generated
+branch nesting remains outside both nested subsets. A plain local `(do child)`,
+a same-domain generated `(do child (params ...))`, and the basic `(spawn ...)` +
+same-body `(await_all done)`/single-pending `(await_any done)` drain inside a
+`(repeat ...)` directly in a single `(while ...)`/`(until ...)` body (and at
+deeper branch nesting) are their own shipped subsets (a generated `do`
+instantiates its child in the `_top`); undrained spawn, multi-pending
+`(await_any done)`, and cross-domain generated `do` stay deferred. Generated
 repeat-body `do` emits one generated child instance for the lexical do site,
 applies the parameter override once in the generated top, wires optional
 binding handoff ports once for that generated instance, records same-domain

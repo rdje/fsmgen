@@ -92,11 +92,12 @@ ISF
         'until_check exits to done when cond holds, else re-runs the repeat block');
 };
 
-# NOTE: same-domain generated do in a loop-contained repeat is now SUPPORTED
-# (see t/1380). This subtest covers the deferrals that remain for the local-do
-# scope: spawn, and a repeat reached through an extra branch ancestor.
-subtest 'loop-contained repeat-body spawn and deeper nesting stay deferred' => sub {
-    # Spawn stays deferred (unchanged)
+# NOTE: same-domain generated do (t/1380) and the basic spawn + same-body
+# (await_all done) subset (t/1383) in a loop-contained repeat are now SUPPORTED.
+# This subtest covers deferrals that remain: an UNDRAINED spawn, and a repeat
+# reached through an extra branch ancestor.
+subtest 'undrained loop-contained repeat-body spawn and deeper nesting stay deferred' => sub {
+    # An undrained spawn (no same-body await_all/await_any) stays deferred.
     my $spawn = <<'ISF';
 (actor while_repeat_spawn
   (clock clk)
@@ -108,16 +109,15 @@ subtest 'loop-contained repeat-body spawn and deeper nesting stay deferred' => s
     (on start)
     (while cond
       (repeat loops
-        (spawn worker as w0)
-        (await_all done)))
+        (spawn worker as w0)))
     (complete done))
   (transaction worker
     (complete done)))
 ISF
     my $ok2 = eval { parse_lower($spawn, 'spawn.isf'); 1 };
-    ok(!$ok2, 'loop-contained repeat-body spawn is rejected');
-    like($@, qr/Transaction 'parent': loop-contained repeat-body spawn remains deferred/,
-        'spawn in a loop-contained repeat stays deferred');
+    ok(!$ok2, 'undrained loop-contained repeat-body spawn is rejected');
+    like($@, qr/Transaction 'parent': loop-contained repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
+        'an undrained spawn in a loop-contained repeat stays deferred');
 
     # when-inside-while local do stays deferred via the loop-contained diagnostic
     my $when_in_while = <<'ISF';

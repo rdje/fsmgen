@@ -2619,11 +2619,16 @@ Current lowering:
   shipped subset accepts a plain local `(do child)` and a same-domain generated
   `(do child (params ...))` inside a `(repeat ...)` reached through deeper
   branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`); the generated
-  `do` instantiates its child in the `_top`. Inside a loop-contained repeat,
-  `spawn` stays deferred (`loop-contained repeat-body spawn remains deferred`)
-  and a cross-domain generated `do` stays deferred (`cross-domain repeat-body do
-  remains deferred`); at deeper branch nesting, `spawn` stays deferred
-  (`deeper-nested repeat-body spawn remains deferred`) and a cross-domain
+  `do` instantiates its child in the `_top`. A further shipped subset accepts
+  the basic `(spawn child as inst)` + same-body `(await_all done)` (or
+  single-pending `(await_any done)`) drain inside a loop-contained or
+  deeper-nested repeat (lowering + composition parity with the top-level
+  repeat-body spawn — the same pre-existing full-HDL composition-wiring
+  limitation applies). Inside a loop-contained or deeper-nested repeat, an
+  undrained spawn stays deferred (`loop-contained`/`deeper-nested repeat-body
+  spawn requires same-body '(await_all done)' or single-pending '(await_any
+  done)'`), a multi-pending `(await_any done)` stays deferred
+  (`... multi-pending '(await_any done)' remains deferred`), and a cross-domain
   generated `do` stays deferred (`cross-domain repeat-body do remains
   deferred`).
   Repeats directly inside a top-level
@@ -5723,6 +5728,7 @@ Focused tests:
 - [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t)
 - [t/1381-isf-deeper-nested-repeat-body-local-do.t](../t/1381-isf-deeper-nested-repeat-body-local-do.t)
 - [t/1382-isf-deeper-nested-repeat-body-generated-do.t](../t/1382-isf-deeper-nested-repeat-body-generated-do.t)
+- [t/1383-isf-loop-and-deeper-repeat-body-spawn.t](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t)
 
 ## 12. Explicitly Deferred
 

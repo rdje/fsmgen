@@ -1252,18 +1252,26 @@ Rules:
   (reusing the proven repeat schedule inside the loop body); a generated `do`
   instantiates its child in the `_top` composition. A plain local `(do child)`
   inside a `(repeat ...)` reached through deeper branch nesting (`when⁺ →
-  repeat`, `switch → when⁺ → repeat`) also lowers. Inside a loop-contained
-  repeat, `spawn` emits the targeted `loop-contained repeat-body spawn remains
-  deferred` diagnostic and a cross-domain generated `do` emits `cross-domain
-  repeat-body do remains deferred` (bindings/domain without static `(params ...)`
-  emit the bindings/domain-require-params diagnostic); a repeat reached through
-  an additional loop ancestor still emits `loop-contained repeat-body do
-  remains deferred`. A plain local `(do child)` and a same-domain generated
-  `(do child (params ...))` at deeper branch nesting (`when⁺ → repeat`,
-  `switch → when⁺ → repeat`) also lower (the generated `do` instantiates its
-  child in the `_top`); a deeper-nested cross-domain generated `do` emits
-  `cross-domain repeat-body do remains deferred` and a deeper-nested `spawn`
-  emits `deeper-nested repeat-body spawn remains deferred`;
+  repeat`, `switch → when⁺ → repeat`) also lowers. The basic `(spawn child as
+  inst)` + same-body `(await_all done)` (or single-pending `(await_any done)`)
+  drain also lowers inside a loop-contained or deeper-nested repeat (lowering +
+  composition parity with the top-level repeat-body spawn; the same pre-existing
+  full-HDL composition-wiring limitation applies). Inside a loop-contained
+  repeat, an undrained spawn emits `loop-contained repeat-body spawn requires
+  same-body '(await_all done)' or single-pending '(await_any done)'`, a
+  multi-pending `(await_any done)` emits `loop-contained repeat-body
+  multi-pending '(await_any done)' remains deferred`, and a cross-domain
+  generated `do` emits `cross-domain repeat-body do remains deferred`
+  (bindings/domain without static `(params ...)` emit the
+  bindings/domain-require-params diagnostic); a repeat reached through an
+  additional loop ancestor still emits `loop-contained repeat-body do remains
+  deferred`. A plain local `(do child)`, a same-domain generated `(do child
+  (params ...))`, and the basic spawn + drain subset at deeper branch nesting
+  (`when⁺ → repeat`, `switch → when⁺ → repeat`) also lower (the generated `do`
+  instantiates its child in the `_top`); a deeper-nested cross-domain generated
+  `do` emits `cross-domain repeat-body do remains deferred` and an undrained
+  deeper-nested `spawn` emits `deeper-nested repeat-body spawn requires same-body
+  '(await_all done)' or single-pending '(await_any done)'`;
   the generic message remains as a safety-net fallback.
 
   Top-level repeat bodies also accept generated blocking `(do child)` when
@@ -1983,12 +1991,13 @@ Rules:
   ...)] (domain NAME))` in that pending interval.
 
   Beyond those branch-contained spawn/generated-do subsets, a plain local
-  `(do child)` and a same-domain generated `(do child (params ...))` at deeper
-  branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) are their own
-  shipped subset, and loop-contained repeats accept a plain local `(do child)`
-  and a same-domain generated `(do child (params ...))` (their own shipped
-  subset described above) — loop-contained `spawn`, deeper-nested `spawn`, and
-  cross-domain generated `do` stay deferred.
+  `(do child)`, a same-domain generated `(do child (params ...))`, and the basic
+  `(spawn ...)` + same-body `(await_all done)`/single-pending `(await_any done)`
+  drain at deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`)
+  are their own shipped subset, and loop-contained repeats accept the same
+  (their own shipped subset described above) — undrained spawn, multi-pending
+  `(await_any done)`, and cross-domain generated `do` stay deferred in both
+  contexts.
 
   Top-level repeat bodies may also use `(do child (params ...))` with static
   parameter overrides; that form creates one generated child activation
