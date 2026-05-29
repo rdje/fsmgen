@@ -33590,3 +33590,19 @@ It is an exact-delay pulse request:
   child-ref validation pass keyed on `repeat_parent_label` (so its prefix reads
   "when-body nested repeat"), not the clause-tree gate; the actionable suffix
   (`cross-domain repeat-body do remains deferred`) is what tests/emitters key on.
+
+## 2026-05-29: selected R14 loop-contained/deeper-nested repeat-body spawn lowering (frontier #5)
+- The spawn slice differs from the do slices in one important way: spawn carries
+  a MANDATORY-DRAIN obligation (a spawned child must be drained by a same-body
+  await_all before the repeat re-loops, or it leaks). The existing
+  drain-requirement rule is gated on `$top_level_repeat` only, with parallel
+  rules for when-body/switch-branch — but NONE for loop_body/deeper_nested. So
+  unlike the do slices (where the gate relaxation was sufficient or near-so), a
+  spawn gate relaxation MUST be paired with a drain-requirement rule for the new
+  contexts, else an undrained loop/deeper spawn would be wrongly accepted and
+  mislower. This is the headline design point for `.2`.
+- The complex spawn-sequencing rules (multi-pending await_any, spawn-after-do,
+  await_any-as-observation) are all gated on `$when_body_repeat`/
+  `$switch_branch_repeat`, so they naturally skip loop/deeper contexts — those
+  variations stay deferred without extra work (the supported-subset is just
+  spawn + same-body drain).

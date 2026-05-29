@@ -38115,3 +38115,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   (still deferred). Audit set (14 files, 977) + broad regression (119 files,
   950) PASS. Tree complete. Remaining frontier: loop-contained spawn,
   deeper-nested spawn, cross-domain generated do.
+
+## 2026-05-29: R14 active tree selected — loop-contained/deeper-nested repeat-body spawn lowering (frontier #5)
+- Goal: basic `(spawn child as inst)` + same-body `(await_all done)` (and
+  single-pending `await_any`) inside a loop-contained or deeper-nested repeat.
+- Probed (Explore): the spawn gate (~L6424) defers it; threading is done;
+  `_ir_repeat` already lowers spawn/await_all. KEY non-obvious finding: the
+  mandatory-drain rule (~L6759 "repeat-body spawn requires await_all") is gated
+  on `$top_level_repeat` only, so the gate relaxation alone would wrongly accept
+  an UNDRAINED loop/deeper spawn — `.2` MUST add a drain-requirement rule for
+  these contexts. Complex variants (multi-pending await_any, spawn-after-do)
+  are gated on when/switch and skip loop/deeper, so they stay deferred. Spawn
+  instance naming matches the proven top-level repeat-spawn; drain semantics
+  across loop iterations to be confirmed by golden .fsm in `.2`. Created
+  `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-REPEAT-BODY-SPAWN-LOWERING`. `.2` ships
+  gate + drain rule + t/1383. [[frontier-pnt-autonomy]].

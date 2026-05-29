@@ -16372,3 +16372,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   950) PASS; `--check-json` clean + 3 SV modules; `mdbook build` clean;
   `git diff --check` clean.
 - Next: loop-contained spawn, deeper-nested spawn, cross-domain generated do.
+
+## 2026-05-29: Selected R14 loop-contained/deeper-nested repeat-body spawn lowering (frontier #5)
+- Active tree: `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-REPEAT-BODY-SPAWN-LOWERING`.
+  Basic spawn + same-body drain inside a loop-contained or deeper-nested repeat.
+  Gate relaxation + a new drain-requirement rule (the existing one is
+  top-level-only); complex spawn variants and cross-domain stay deferred. `.1`
+  selection; `.2` ships + `t/1383` with drain-semantics golden evidence.

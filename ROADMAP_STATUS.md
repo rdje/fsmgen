@@ -14699,3 +14699,9 @@ Exit criteria:
   threading through the nested branch recursions, validator relaxation.
   Cross-domain generated do and spawn stay deferred. Next: loop-contained
   spawn, deeper-nested spawn, cross-domain generated do.
+- `R14`: active task tree — `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-REPEAT-BODY-SPAWN-LOWERING`
+  (scheduler-frontier #5). Basic `(spawn ...)` + same-body `(await_all done)`
+  (and single-pending `await_any`) inside a loop-contained or deeper-nested
+  repeat. Gate relaxation + a new drain-requirement rule for these contexts
+  (the existing mandatory-drain rule is top-level-only); complex spawn variants
+  and cross-domain stay deferred. `.2` ships it + `t/1383`.
