@@ -14743,3 +14743,11 @@ Exit criteria:
   `loop_contained_repeat_multi_await_any`); `t/1376` count 36 → 38. All shipped
   repeat-body-activation frontier shapes now have copy-pasteable book examples.
   Doc-only; audit set PASS.
+- `R14`: `ISF-FULL-WIDTH-INFERENCE` is **completed** (activated → probed →
+  fail-closed terminal recorded → closed). The probe found no decidable
+  multi-unknown data-op width sub-case beyond the shipped single-missing
+  inference (2+-unknown is underdetermined → correctly fail-closed); locked by
+  `t/1385`. This drains the last PNT-eligible R14 implementation item — the
+  remaining R14 work is status-gated (richer CDC crossing primitives: backlog,
+  not activated; IAL2: non-R14), requiring an explicit roadmap activation
+  decision.

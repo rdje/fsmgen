@@ -33651,3 +33651,18 @@ It is an exact-delay pulse request:
   `do` — deferred at top-level too, hence net-new CDC lowering, a different
   roadmap lane — plus the pre-existing repeat-spawn full-HDL composition-wiring
   limitation. Neither is a nesting extension.
+
+## 2026-05-30: R14 ISF-FULL-WIDTH-INFERENCE — fail-closed terminal recorded (honest no-op outcome)
+- A Proposed tree gated on "find a decidable sub-case." The probe (reading the
+  inference at LoweringIR.pm:4124/4134/4233/4244) confirmed there is none beyond
+  the shipped single-missing inference: the only multi-part decidable case is
+  one-unknown (inferred); 2+-unknown is underdetermined (returns unknowns →
+  fail-closed); and the "two-unknown-one-evidenced" idea collapses to
+  single-missing because evidence makes a part `known` (not in @unknown_indices).
+- The honest, correct outcome was therefore a NO-OP feature-wise: no new
+  inference. But it is still a real deliverable — I locked the fail-closed
+  boundary executably (`t/1385`: partial-(widths) count-mismatch and
+  underdetermined sum-conflict for assemble/extract) and closed an open Proposed
+  tree. Recording a fail-closed terminal with a test is the right way to retire
+  a backlog inference idea: future readers see WHY it's fail-closed, with a
+  guard that fails if someone "fixes" it incorrectly.

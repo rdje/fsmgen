@@ -38195,3 +38195,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `loop_contained_repeat_multi_await_any` (multi-pending await_any + await_all).
   t/1376 count 36→38; audit set (6 files, 853) PASS. Tree complete. All shipped
   repeat-body-activation frontier shapes now have copy-pasteable book examples.
+
+## 2026-05-30: R14 — ISF-FULL-WIDTH-INFERENCE activated, probed, recorded fail-closed terminal, closed
+- Activated the Proposed tree and ran its .1 probe. Read the assemble/extract
+  width inference (LoweringIR.pm ~L4100-4140/4220-4248): single-missing IS
+  inferred (shipped); `@unknown_indices >= 2` returns unknowns → fail-closed.
+  The hypothesized "two-unknown-one-evidenced" decidable sub-case DOESN'T exist
+  — an evidenced part has a defined width so it's not in @unknown_indices,
+  reducing to the shipped single-missing case. So NO decidable multi-unknown
+  sub-case; fail-closed is the correct terminal. Locked the boundary with
+  `t/1385` (partial-(widths) count-mismatch + underdetermined sum-conflict for
+  assemble/extract) and CLOSED the tree.
+- This drains the last PNT-eligible R14 item. Remaining R14 work is
+  status-gated: richer CDC crossing primitives (backlog, not activated — a
+  net-new synchronizer feature) and IAL2 (non-R14). Activating the CDC lane is
+  a roadmap decision.

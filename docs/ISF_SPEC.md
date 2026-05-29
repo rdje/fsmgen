@@ -5732,6 +5732,7 @@ Focused tests:
 - [t/1382-isf-deeper-nested-repeat-body-generated-do.t](../t/1382-isf-deeper-nested-repeat-body-generated-do.t)
 - [t/1383-isf-loop-and-deeper-repeat-body-spawn.t](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t)
 - [t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t](../t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t)
+- [t/1385-isf-multi-unknown-width-fail-closed-terminal.t](../t/1385-isf-multi-unknown-width-fail-closed-terminal.t)
 
 ## 12. Explicitly Deferred
 

@@ -16428,3 +16428,13 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   runnable `lisp` examples to `13d`; `t/1376` count 36 → 38. All six shipped
   repeat-body-activation frontier shapes now have copy-pasteable book examples.
   Doc-only. Audit set (6 files, 853) PASS; mdBook + diff-check clean.
+
+## 2026-05-30: Completed R14 ISF-FULL-WIDTH-INFERENCE (fail-closed terminal recorded)
+- Activated the Proposed tree, ran its `.1` probe, found no decidable
+  multi-unknown width sub-case beyond the shipped single-missing inference,
+  recorded the fail-closed terminal, locked it with `t/1385`, and closed the
+  tree. Public behavior changed: no (terminal record + lock).
+- This drains the last PNT-eligible R14 implementation item; remaining R14 work
+  is status-gated (richer CDC crossing primitives: backlog; IAL2: non-R14).
+- Verification: `prove -Iperl t/1385 t/1344 t/1101 t/1250` PASS; `mdbook build`
+  clean; `git diff --check` clean.
