@@ -38180,3 +38180,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   deferred at top-level too → net-new CDC lowering (a separate roadmap feature,
   NOT a nesting extension). Also pre-existing: the repeat-spawn full-HDL
   composition-wiring limitation (COMPOSITION_SCOPE.md).
+
+## 2026-05-30: R14 active tree — runnable book examples for frontier spawn + multi-pending await_any
+- Nesting frontier exhausted; next bounded R14 value is book example-coverage of
+  the shipped features (the user's primary review surface). 13d has runnable
+  examples for local-do/generated-do/deeper-local-do; spawn + multi-pending are
+  only prose/text. Adding runnable `lisp` `(actor ...)` examples for
+  loop-contained spawn+await_all and multi-pending await_any+drain (both lower
+  cleanly → t/1376 gates them; count 36→38). Created
+  `ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES`. Doc-only.
+  [[frontier-pnt-autonomy]].

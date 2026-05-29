@@ -16414,3 +16414,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `do`) is net-new CDC lowering, not a nesting extension.
 - Verification: audit set (8 files, 859) PASS; broad regression PASS; `mdbook
   build` clean; `git diff --check` clean.
+
+## 2026-05-30: Selected R14 runnable book examples for frontier spawn + multi-pending await_any
+- Active tree: `ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES`. Adds runnable
+  `lisp` examples to `13d` for the shipped loop-contained spawn + `(await_all
+  done)` and multi-pending `(await_any done)` + drain features (the only
+  frontier shapes still prose/`text`-only). Doc-only; `t/1376` gates them.
+  `.1` selection; `.2` ships.

@@ -14732,3 +14732,9 @@ Exit criteria:
   and deeper-nested contexts. The remaining repeat-body deferral (cross-domain
   `do`) is deferred at top-level too → net-new CDC lowering, a separate roadmap
   effort, not a nesting extension.
+- `R14`: active task tree — `ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES`
+  (book example-coverage). Adds runnable `lisp` examples to `13d` for the
+  shipped loop-contained spawn + same-body `(await_all done)` and the
+  multi-pending `(await_any done)` + drain features (the only frontier shapes
+  still documented only with prose/`text`). Doc-only; `t/1376` gates the new
+  examples (count 36 → 38).
