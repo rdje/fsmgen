@@ -33418,3 +33418,22 @@ It is an exact-delay pulse request:
   name and the scalar type alias are distinct namespaces; co-declaring
   the same name in both is the supported mechanism, not a conflict. The
   rule will be locked with t/1378 so the contract is executable.
+
+## 2026-05-29: shipped R14 ISF enum↔type relationship clarity (SPECFORGE ask)
+- `.2` shipped doc/test only; no parser/lowerer/runtime change. Design
+  choices worth recording:
+  - The 13j accept-path example was written as a runnable `lisp`
+    `(actor ...)` block (`enum_with_type`) so `t/1376` lowers it as one
+    of its 33 gated fixtures — the example cannot silently rot. The
+    fail-closed counter-example (`enum_not_a_type`) is a `text` block,
+    not `lisp`, so the lowering gate never tries to lower the
+    intentionally-rejected source.
+  - t/1378 asserts behavior through the public adapter+scheduler path
+    (`FSM::Adapter::ISF->parse_source` then `FSM::Scheduler::ISF->lower`)
+    rather than a CLI string match, so the lock survives diagnostic
+    rewording while still pinning the `references unknown type 'mode'`
+    substring that SPECFORGE keys on.
+  - Recorded the not-cross-validated width corollary explicitly in every
+    surface because it is the one fact that turns SPECFORGE's
+    `ceil(log2(member_count))` choice from a guess into a sanctioned
+    emission rule.

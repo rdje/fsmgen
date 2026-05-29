@@ -1853,6 +1853,23 @@ expressions, inline drive assignment RHS scalar values, and scalar operands
 inside inline drive RHS expressions in this slice, using local `mode.BUSY` or package-qualified
 `shared.mode.BUSY` spelling and resolving to non-negative integer literal
 values before lowering.
+An actor-local `(enums (NAME ...))` declaration establishes only the enum
+member-value family `NAME`; it does **not** also establish a scalar type
+alias named `NAME`. Using `(type NAME)` on a width-bearing interface port,
+transaction port, or storage variable when only `(enums (NAME ...))` is
+declared fails closed as an unknown type alias. To make an enum name usable
+as a width-bearing type, co-declare a backing `(types (type NAME (bits k)))`
+alongside `(enums (NAME ...))`. Co-declaring the same `NAME` in both
+`(types ...)` and `(enums ...)` is accepted — they occupy distinct
+declaration roles (the `(type)` carries the scalar width alias; the
+`(enums)` carries the member values) and the co-declaration is not a
+redeclaration conflict. The backing `(bits k)` width is the author's
+assertion and is not cross-validated against enum member magnitudes;
+downstream emitters that recover dense `0..N-1` enums should choose
+`k = ceil(log2(member_count))`. Actor-local `(types ...)`, `(enums ...)`,
+and `(constants ...)` declarations need not be referenced to be
+contract-valid; unreferenced declarations lower cleanly and are preserved
+in the corresponding scheduled `.fsm` review sections.
 Declared actor constants are public as scalar actor parameter defaults or
 scalar leaves inside actor aggregate/list parameter defaults. Those defaults
 preserve authored constant tokens in scheduled `.fsm` `+params` and

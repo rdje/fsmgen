@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`
@@ -89,32 +89,32 @@ intended mechanism.
 ## Task Tree
 
 - ID: `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY`
-  Status: `pending`
+  Status: `done`
   Goal: `Document + lock the actor-local enum↔type relationship for SPECFORGE.`
   Children:
     `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.1`,
     `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2`
 
 - ID: `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the slice; record probed ground truth and doc-sync targets.`
   Acceptance: `Task tree committed before any doc/test change.`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `18791272`
 
 - ID: `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Document the rule across contract/book/downstream/response docs + add t/1378; validate.`
   Acceptance: `t/1378 passes; book audits green; response recorded.`
   Verification: `prove -Iperl t/1378 t/1376 t/1305 t/1307 t/1332; mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `ship commit (this slice)`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.1` | `pending` | Selection commit before any doc/test change. |
-| 2 | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2` | `pending` | Ship the documentation + regression. |
+| 1 | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.1` | `done` | Selection commit `18791272`. |
+| 2 | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2` | `done` | Documentation + `t/1378` regression shipped; tree closed. |
 
 ## Decisions
 
@@ -131,17 +131,26 @@ intended mechanism.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-29` | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-29` | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2` | `prove -Iperl t/1378 t/1376 t/1305 t/1307 t/1332`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-29` | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-29` | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2` | `prove -Iperl t/1378 t/1376 t/1305 t/1307 t/1332` (Files=5, Tests=714, PASS); `mdbook build docs/book` (clean); `git diff --check` (clean) | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.1` | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.1: select ISF enum-type relationship clarity` | `pending commit hash` |
-| `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2` | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2: ship ISF enum-type relationship clarity` | `pending commit hash` |
+| `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.1` | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.1: select ISF enum-type relationship clarity` | `18791272` |
+| `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2` | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2: ship ISF enum-type relationship clarity` | `ship commit (this slice)` |
 
 ## Changelog
 
 - `2026-05-29`: Created in response to the SPECFORGE 2026-05-29 clarity
   request on the actor-local `(types)`↔`(enums)` relationship.
+- `2026-05-29`: `.1` selection committed (`18791272`).
+- `2026-05-29`: `.2` shipped. Documented the rule in
+  `ISF_PUBLIC_INTERFACE_CONTRACT.md`, `13j-type-enum-aggregate.md` (new
+  "Enum names are not type aliases" subsection + runnable accept-path
+  `enum_with_type` example), `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`
+  §11.6.1, and a dated reply in `SPECFORGE_FEEDBACK_RESPONSE.md` answering
+  all three questions and correcting the pending "enums-standalone"
+  reading. Added `t/1378-isf-enum-type-relationship.t` (3 subtests, PASS).
+  Validation green; tree closed.

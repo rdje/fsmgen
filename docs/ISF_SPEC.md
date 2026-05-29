@@ -5704,6 +5704,7 @@ Focused tests:
 - [t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t)
 - [t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t](../t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t)
 - [t/1376-isf-book-example-lowering-audit.t](../t/1376-isf-book-example-lowering-audit.t)
+- [t/1378-isf-enum-type-relationship.t](../t/1378-isf-enum-type-relationship.t)
 
 ## 12. Explicitly Deferred
 

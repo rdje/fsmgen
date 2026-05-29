@@ -144,6 +144,60 @@ targets also remain rejected because enum members are constants, not writable
 storage or output names. Unsupported enum references fail before scheduled
 `.fsm` emission with diagnostics that name the unsupported context.
 
+### Enum names are not type aliases
+
+An `(enums (NAME ...))` declaration establishes only the enum member-value
+family `NAME`. It does **not** also establish a scalar type alias named
+`NAME`. Writing `(type NAME)` on a width-bearing interface port, transaction
+port, or storage variable when only `(enums (NAME ...))` is declared fails
+closed:
+
+```text
+(actor enum_not_a_type
+  (enums (mode (IDLE 0) (BUSY 1)))
+  (interface
+    (input start)
+    (output state_out (type mode))   ;; <-- ERROR: unknown type 'mode'
+    (output done))
+  ...)
+```
+
+> `Error: actor 'enum_not_a_type' interface port 'state_out' references
+> unknown type 'mode'`
+
+To use an enum name as a width-bearing type, **co-declare a backing scalar
+type alias** `(types (type NAME (bits k)))` alongside `(enums (NAME ...))`.
+Co-declaring the same `NAME` in both `(types ...)` and `(enums ...)` is
+accepted and is the intended mechanism — they are distinct declaration roles
+(the `(type)` provides the width alias used by `(type NAME)`; the `(enums)`
+provides the member values used by `mode.BUSY`-style references), so this is
+not a redeclaration conflict:
+
+```lisp
+(actor enum_with_type
+  (clock clk)
+  (reset rst_n)
+  (types (type mode (bits 1)))
+  (enums (mode (IDLE 0) (BUSY 1)))
+  (interface
+    (input start)
+    (output state_out (type mode))
+    (output done))
+  (transaction tx
+    (on start)
+    (complete done)))
+```
+
+The backing `(bits k)` width is the author's assertion and is **not**
+cross-validated against enum member magnitudes — `(type mode (bits 1))` is
+accepted even with a member value that needs more bits. A downstream emitter
+recovering a dense `0..N-1` enum should choose `k = ceil(log2(member_count))`.
+
+Actor-local `(types ...)`, `(enums ...)`, and `(constants ...)` declarations
+need **not** be referenced to be contract-valid: an unreferenced declaration
+lowers cleanly and is preserved in the corresponding scheduled `.fsm` review
+section.
+
 ## Aggregate Leaf Values
 
 Aggregate member and item paths are valid only when the root is a declared

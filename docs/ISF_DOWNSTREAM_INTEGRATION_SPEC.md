@@ -1802,6 +1802,23 @@ Rules:
   declaration fail closed.
 - Actor-local `(enums ...)` declarations are preserved into scheduled `.fsm`
   as `+enums`.
+- An `(enums (NAME ...))` declaration establishes only the member-value family
+  `NAME`; it does **not** also establish a scalar type alias `NAME`. Using
+  `(type NAME)` on a width-bearing interface port, transaction-local port, or
+  storage variable when only `(enums (NAME ...))` is declared fails closed as
+  `references unknown type 'NAME'`. To use an enum name as a width-bearing
+  type, co-declare a backing scalar alias `(types (type NAME (bits k)))`
+  alongside `(enums (NAME ...))`. Co-declaring the same `NAME` in both
+  `(types ...)` and `(enums ...)` is accepted and is the intended mechanism —
+  the two occupy distinct declaration roles (the `(type)` supplies the width
+  alias consumed by `(type NAME)`; the `(enums)` supplies the member values
+  consumed by `NAME.MEMBER`) and is not a redeclaration conflict. The backing
+  `(bits k)` width is the author's assertion and is **not** cross-validated
+  against enum member magnitudes; a downstream emitter recovering a dense
+  `0..N-1` enum should pick `k = ceil(log2(member_count))`. Actor-local
+  `(types ...)`, `(enums ...)`, and `(constants ...)` declarations need not be
+  referenced to be contract-valid — an unreferenced declaration lowers cleanly
+  and is preserved in its scheduled `.fsm` review section.
 - Actor constants may consume local enum members such as `mode.BUSY` and
   package enum members such as `shared.mode.BUSY`. Unknown enum families or
   members fail closed before generated artifacts are emitted.

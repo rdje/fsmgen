@@ -14633,3 +14633,10 @@ Exit criteria:
   auto type alias; co-declaring (type NAME)+(enums NAME) is the accepted
   mechanism; unreferenced decls are valid; co-declared width is not
   cross-validated against members. `.2` documents this + adds t/1378.
+- `R14`: `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY` is **completed** (`.2`
+  shipped). The rule is documented in the public-interface contract, 13j
+  (with a runnable accept-path example), the downstream-integration spec
+  §11.6.1, and a dated reply in `SPECFORGE_FEEDBACK_RESPONSE.md`, and is
+  locked by `t/1378` (3 subtests). Doc/test only; no parser/runtime
+  change. Next: PNT into the user-confirmed scheduler-frontier item #1
+  (loop-contained repeat-body local-do lowering).

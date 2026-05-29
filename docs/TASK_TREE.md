@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY` | `pending` | `R14` | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2` | [docs/tasks/ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.md](docs/tasks/ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.md) |
+| _(none active)_ | | | | |
 
 ## Proposed Task Trees
 
@@ -59,6 +59,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.md](docs/tasks/ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.md) |
 | `R14-ASPECT-COVERAGE-AUDIT` | `done` | `R14` | `closed` | [docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md](docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md) |
 | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE` | `done` | `R14` | `closed` | [docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md](docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md) |
 | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS` | `done` | `R14` | `closed` | [docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md](docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md) |

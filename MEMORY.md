@@ -37953,3 +37953,19 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   ISF_PUBLIC_INTERFACE_CONTRACT.md, 13j, ISF_DOWNSTREAM_INTEGRATION_SPEC.md,
   responds in SPECFORGE_FEEDBACK_RESPONSE.md, and adds t/1378 locking the
   3 behaviors. Doc/test only; no parser/runtime change.
+
+## 2026-05-29: R14 shipped — ISF enum↔type relationship clarity (SPECFORGE ask)
+- `.2` shipped. Documented the rule in all four target docs:
+  ISF_PUBLIC_INTERFACE_CONTRACT.md (actor-local decls), 13j (new "Enum
+  names are not type aliases" subsection + runnable accept-path
+  `enum_with_type` example), ISF_DOWNSTREAM_INTEGRATION_SPEC.md §11.6.1,
+  and a dated reply in SPECFORGE_FEEDBACK_RESPONSE.md answering all three
+  SPECFORGE questions and correcting the pending "enums-standalone"
+  reading (standalone is fine only when the enum name is never used as a
+  width-bearing type).
+- Added `t/1378-isf-enum-type-relationship.t` (3 subtests, PASS) locking:
+  enum-name-as-type without backing `(type)` rejected; co-declaration
+  accepted; unreferenced decls accepted. The 13j example also lowers as
+  one of t/1376's 33 gated fixtures.
+- Validation: `prove -Iperl t/1378 t/1376 t/1305 t/1307 t/1332` PASS;
+  `mdbook build docs/book` clean; `git diff --check` clean. Tree complete.

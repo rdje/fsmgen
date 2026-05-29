@@ -16278,3 +16278,14 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Active tree: `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY`. Probed ground truth
   for the 3 SPECFORGE questions; `.2` documents + locks with t/1378.
 - `.1` is this selection commit (no doc/test change yet).
+
+## 2026-05-29: Completed R14 ISF enum↔type relationship clarity (SPECFORGE ask)
+- Tree `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY` is `done`. Documented the
+  actor-local `(types)`↔`(enums)` rule in the public-interface contract,
+  13j (runnable accept-path example), downstream-integration spec
+  §11.6.1, and a dated SPECFORGE response; locked by `t/1378` (3
+  subtests). Public behavior changed: no (doc/test only).
+- Verification: `prove -Iperl t/1378 t/1376 t/1305 t/1307 t/1332` PASS;
+  `mdbook build docs/book` clean; `git diff --check` clean.
+- Next: PNT into scheduler-frontier item #1 (loop-contained repeat-body
+  local-do lowering), user-confirmed.

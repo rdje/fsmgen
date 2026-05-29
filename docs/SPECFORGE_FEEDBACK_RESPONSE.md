@@ -434,3 +434,67 @@ The current ISF book/spec audit family is:
 `docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md` records the
 broader audit plus example-correctness addendum that surfaced
 this work.
+
+## 2026-05-29: Actor-Local `(types)`↔`(enums)` Relationship Clarity
+
+This answers the 2026-05-29 clarity request in SPECFORGE's
+`docs/FSMGEN_FEEDBACK.md` on whether an enum name is also a scalar type
+alias, whether co-declaration is a conflict, and whether unreferenced
+declarations are valid. The answers below were established by probing the
+live `bin/fsmgen` at HEAD (not read off the docs) and are now locked by
+[`t/1378-isf-enum-type-relationship.t`](../t/1378-isf-enum-type-relationship.t),
+so the rule is executable.
+
+### Question 1 — does `(enums (NAME ...))` alone establish `(type NAME)`?
+
+**No.** An `(enums (NAME ...))` declaration establishes only the enum
+member-value family `NAME`. It does **not** also establish a scalar type
+alias named `NAME`. Using `(type NAME)` on a width-bearing interface port,
+transaction-local port, or storage variable when only `(enums (NAME ...))`
+is declared fails closed before lowering:
+
+```text
+Error: actor '<actor>' interface port '<port>' references unknown type 'NAME'
+```
+
+### Question 2 — is co-declaring `(type NAME (bits k))` + `(enums (NAME ...))` a conflict?
+
+**Neither a conflict nor mere redundancy — it is the intended and required
+mechanism** for using an enum name as a width-bearing type. Co-declaring the
+same `NAME` in both `(types ...)` and `(enums ...)` is accepted: the two
+occupy distinct declaration roles — `(type NAME (bits k))` is the scalar
+width alias consumed by `(type NAME)`, and `(enums (NAME ...))` is the
+member-value family consumed by `NAME.MEMBER` references — so it is not a
+redeclaration conflict. To make a recovered enum-like symbol usable as a
+port/storage type, emit **both**.
+
+Corollary relevant to deterministic emission: the backing `(bits k)` width
+is the author's assertion and is **not** cross-validated against enum member
+magnitudes (`(type mode (bits 1))` is accepted even with a member value that
+needs more bits). SPECFORGE's planned `k = ceil(log2(member_count))` for a
+dense `0..N-1` enum is therefore an appropriate, accepted choice.
+
+### Question 3 — must actor-local `(types)`/`(enums)`/`(constants)` be referenced?
+
+**No.** An unreferenced actor-local `(types)`, `(enums)`, or `(constants)`
+declaration is contract-valid: it lowers cleanly and is preserved in its
+scheduled `.fsm` review section (`+types` / `+enums` / `+constants`).
+
+### Correction to SPECFORGE's pending "enums-standalone" reading
+
+SPECFORGE's *enums-standalone* reading is correct **only** for a recovered
+symbol that is never used as a width-bearing type — emitting
+`(enums (NAME ...))` alone is fine there. But if a recovered symbol must be
+used as `(type NAME)` on a port or storage variable, the emitter **must also**
+emit the backing `(type NAME (bits k))`; the enum declaration alone will fail
+closed as an unknown type. Co-declaration is safe and is the supported path.
+
+### Where the rule now lives
+
+- [`docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`](ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  — actor-local-declarations section.
+- [`docs/book/src/13j-type-enum-aggregate.md`](book/src/13j-type-enum-aggregate.md)
+  — "Enum names are not type aliases" subsection with a runnable accept-path
+  example (gated by `t/1376`).
+- [`docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`](ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
+  — section 11.6.1 Enum, Type, And Aggregate Boundary.
