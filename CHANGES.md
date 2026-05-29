@@ -30240,3 +30240,6 @@ This is the persistent technical change history for FSMGen.
 
 ### G8 heading density shipped
 - Added 4 `###` sub-headings to the Pipeline section of [docs/book/src/13-intent-scheduling.md](docs/book/src/13-intent-scheduling.md): Schedule Report, Public Interface Contract, Constructor And Facade Validation, Parser Handoff Shape.
+
+### CI corpus fixture fix selected
+- Created [docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md](docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md) to fix the stale `t/corpus/system_incomplete_section.fsm` fixture that's failing CI after the clock-only HDL feature shipped.

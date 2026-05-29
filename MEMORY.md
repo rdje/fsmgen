@@ -37827,3 +37827,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   13-intent-scheduling.md: Schedule Report, Public Interface
   Contract, Constructor And Facade Validation, Parser Handoff
   Shape.
+
+## 2026-05-29: CI fix — corpus fixture for system_incomplete_section
+- GitHub CI has been failing on a stale corpus fixture. The
+  fixture t/corpus/system_incomplete_section.fsm contains
+  (+system (clock clk)) which used to be incomplete but was
+  shipped as accepted by NO-RESET-SCHEDULED-FSM-HDL.1.
+- Selected `CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX` to update
+  the fixture to (+system (sreset rst_n)) — reset-only, no
+  clock, which still triggers the diagnostic.

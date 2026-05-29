@@ -33352,3 +33352,6 @@ It is an exact-delay pulse request:
 
 ## 2026-05-29: G8 shipped
 - 4 subheadings added.
+
+## 2026-05-29: CI fix selected
+- Corpus fixture stale after clock-only HDL shipped.

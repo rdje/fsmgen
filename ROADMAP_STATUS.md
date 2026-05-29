@@ -14592,3 +14592,6 @@ Exit criteria:
 - `R14`: next active tree — `ISF-G8-HEADING-DENSITY`.
 - `R14`: G8 heading density now ships. 4 subheadings added to
   Pipeline section of 13-intent-scheduling.md.
+- CI maintenance: active tree `CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX`
+  fixes stale corpus fixture causing the Perl FSM Regression
+  workflow to fail.

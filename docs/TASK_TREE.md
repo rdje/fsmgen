@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX` | `pending` | CI maintenance | `CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.2` | [docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md](docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md) |
 
 ## Proposed Task Trees
 

@@ -16231,3 +16231,5 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 ## 2026-05-29: Selected R14 G8 heading density
 
 ## 2026-05-29: G8 shipped — all 8 gaps complete
+
+## 2026-05-29: Selected CI corpus fixture fix
