@@ -5469,7 +5469,26 @@ sub _finalize_actor_crossings($self, $actor) {
         $_->{name} => 1
     } @{$actor->{clock_domains}{domains} || []};
 
+    my %declared_transactions = map {
+        $_->{name} => 1
+    } @{$actor->{transactions} || []};
+
     for my $crossing (@{$actor->{crossings} || []}) {
+        if (($crossing->{kind} // 'event') eq 'activation') {
+            my $child = $crossing->{child};
+            my $from = $crossing->{from}{domain};
+            my $to = $crossing->{to}{domain};
+            confess "Error: actor '$actor_name' activation crossing '$child' source domain '$from' is not declared\n"
+                unless $declared_domains{$from};
+            confess "Error: actor '$actor_name' activation crossing '$child' destination domain '$to' is not declared\n"
+                unless $declared_domains{$to};
+            confess "Error: actor '$actor_name' activation crossing '$child' source and destination domains must differ\n"
+                if $from eq $to;
+            confess "Error: actor '$actor_name' activation crossing child '$child' is not a declared transaction\n"
+                unless $declared_transactions{$child};
+            next;
+        }
+
         my $name = $crossing->{name};
         my $from = $crossing->{from};
         my $to = $crossing->{to};
@@ -6677,14 +6696,24 @@ sub _parse_crossings($self, $clause, $actor_name) {
     my @crossings;
     my %seen_event;
     my %seen_signal;
+    my %seen_activation_child;
 
     for my $entry (@{$clause}[1 .. $#$clause]) {
-        confess "Error: actor '$actor_name' crossings entries require '(event name (from domain signal) (to domain signal) (ready signal))'\n"
+        confess "Error: actor '$actor_name' crossings entries require '(event name (from domain signal) (to domain signal) (ready signal))' or '(activation child (from domain) (to domain))'\n"
             unless ref($entry) eq 'ARRAY'
-                && @$entry >= 5
+                && @$entry >= 2
                 && defined($entry->[0])
                 && !ref($entry->[0])
-                && $entry->[0] eq 'event';
+                && ($entry->[0] eq 'event' || $entry->[0] eq 'activation');
+
+        if ($entry->[0] eq 'activation') {
+            push @crossings,
+                $self->_parse_activation_crossing($entry, $actor_name, \%seen_activation_child);
+            next;
+        }
+
+        confess "Error: actor '$actor_name' crossings event entries require '(event name (from domain signal) (to domain signal) (ready signal))'\n"
+            unless @$entry >= 5;
 
         my $name = $entry->[1];
         confess "Error: actor '$actor_name' crossing event names must be scalar HDL identifiers\n"
@@ -6751,6 +6780,59 @@ sub _parse_crossings($self, $clause, $actor_name) {
     }
 
     return \@crossings;
+}
+
+# Parse a `(activation child (from domain) (to domain))` crossing: declares that
+# `child` (a transaction in the `to` domain) may be activated by a blocking
+# cross-domain (do)/(spawn) from a transaction in the `from` domain. Unlike an
+# event crossing, the synchronized signals are the activation start/done handoff
+# ports, which are compiler-internal, so the entry names only the child and the
+# two domains (no explicit signals).
+sub _parse_activation_crossing($self, $entry, $actor_name, $seen_child) {
+    confess "Error: actor '$actor_name' activation crossing requires '(activation child (from domain) (to domain))'\n"
+        unless @$entry >= 4;
+
+    my $child = $entry->[1];
+    confess "Error: actor '$actor_name' activation crossing child must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($child);
+    confess "Error: actor '$actor_name' has duplicate activation crossing for child '$child'\n"
+        if $seen_child->{$child}++;
+
+    my (%seen_subclause, $from, $to);
+    for my $part (@{$entry}[2 .. $#$entry]) {
+        confess "Error: actor '$actor_name' activation crossing '$child' subclauses must be '(from domain)' or '(to domain)'\n"
+            unless ref($part) eq 'ARRAY'
+                && @$part
+                && defined($part->[0])
+                && !ref($part->[0])
+                && length($part->[0]);
+
+        my $head = $part->[0];
+        confess "Error: actor '$actor_name' activation crossing '$child' has duplicate '$head' subclause\n"
+            if $seen_subclause{$head}++;
+
+        if ($head eq 'from' || $head eq 'to') {
+            confess "Error: actor '$actor_name' activation crossing '$child' requires '($head domain)'\n"
+                unless @$part == 2 && _is_hdl_identifier($part->[1]);
+            $from = { domain => $part->[1] } if $head eq 'from';
+            $to   = { domain => $part->[1] } if $head eq 'to';
+            next;
+        }
+
+        confess "Error: actor '$actor_name' activation crossing '$child' has unsupported subclause '$head'\n";
+    }
+
+    confess "Error: actor '$actor_name' activation crossing '$child' requires '(from domain)'\n"
+        unless $from;
+    confess "Error: actor '$actor_name' activation crossing '$child' requires '(to domain)'\n"
+        unless $to;
+
+    return {
+        kind  => 'activation',
+        child => $child,
+        from  => $from,
+        to    => $to,
+    };
 }
 
 sub _finalize_actor_clock_domain_timing($self, $actor, $singleton_actor_clauses) {

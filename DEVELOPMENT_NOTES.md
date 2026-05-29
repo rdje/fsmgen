@@ -33666,3 +33666,19 @@ It is an exact-delay pulse request:
   tree. Recording a fail-closed terminal with a test is the right way to retire
   a backlog inference idea: future readers see WHY it's fail-closed, with a
   guard that fails if someone "fixes" it incorrectly.
+
+## 2026-05-30: ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.2 — declare-then-fail-closed for a correctness-critical feature
+- This slice deliberately separates the SAFE part (parse + structurally validate
+  the new `(crossings (activation ...))` declaration) from the CORRECTNESS-CRITICAL
+  part (`.3`: routing the activation start/done through CDC synchronizers). The
+  `.2` lowering FAILS CLOSED ("not yet supported") rather than silently ignoring
+  the declaration — because silently accepting it would let an author believe
+  cross-domain activation is wired when nothing is synchronized. For a CDC
+  feature, "parses but fails closed at lower" is the only safe intermediate; a
+  validator-only acceptance would be a latent metastability bug.
+- Parser design: the activation crossing names only the child + two domains, not
+  signals, because the activation start/done ports (`<inst>_start`/`<inst>_done`)
+  are compiler-internal — the author cannot name them, so the `activation` kind
+  is the right abstraction (vs. hand-declared raw `event` pairs). The existing
+  multi-domain lowering already guards `next unless kind eq 'event'`, so adding a
+  new kind did not disturb the event-crossing path.

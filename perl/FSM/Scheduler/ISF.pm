@@ -56,6 +56,15 @@ sub lower($self, @args) {
     my ($actor) = _validate_actor_arg('lower', @args);
     fsm_trace_enter("Scheduler lower: $actor->{actor_name}", 2);
 
+    # The `(crossings (activation ...))` surface is parsed and validated, but the
+    # CDC routing of the activation start/done handshake is not yet implemented.
+    # Fail closed rather than silently ignore the declaration (parser-acceptance
+    # != support). Cross-domain activation via this crossing ships in
+    # ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3.
+    if (my ($activation) = grep { ($_->{kind} // '') eq 'activation' } @{$actor->{crossings} || []}) {
+        confess "FSM::Scheduler::ISF->lower: actor '$actor->{actor_name}' declares an activation crossing for child '$activation->{child}', but cross-domain activation lowering is not yet supported (the (crossings (activation ...)) surface is parsed and validated; CDC routing is in progress)\n";
+    }
+
     my $ir     = $self->{ir}->build_module($actor);
     if (_is_multi_domain_ir($ir)) {
         my $files = $self->_emit_multi_domain_scheduled_artifacts($actor, $ir);

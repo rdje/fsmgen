@@ -118,18 +118,25 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   Children: `.1` (select), `.2` (parse+declare-validate, fail-closed), `.3` (lowering+accept), `.4` (docs+example)
 
 - ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select; record investigated ground truth + safe design + slice plan.`
   Acceptance: `Task tree committed before any code change.`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `dbbe6bce`
+
+- ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.2`
+  Status: `done`
+  Goal: `Parse + structurally validate (crossings (activation child (from SRC)(to DEST))); lowering fails closed (not yet supported).`
+  Acceptance: `Construct parses + validates; malformed rejected at parse; well-formed fails closed at lower; event crossings unaffected.`
+  Verification: `prove -Iperl t/1386 t/1247 t/1372; broad clock-domain/crossing regression; mdbook build docs/book; git diff --check`
+  Commit: `ship commit (this slice)`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `.1` | `pending` | Selection/design commit. |
-| 2 | `.2` | `pending` | Parse + declaration-validate the new crossing kind (fail-closed lowering). |
+| 1 | `.1` | `done` | Selection/design commit `dbbe6bce`. |
+| 2 | `.2` | `done` | Parser + structural validation shipped; lowering fail-closed (`t/1386`). |
 | 3 | `.3` | `pending` | Lowering + CDC routing + validator acceptance (ships together; correctness-critical). |
 | 4 | `.4` | `pending` | Docs + runnable book example. |
 
@@ -156,13 +163,15 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-30` | `.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-30` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-30` | `.2` | `prove -Iperl t/1386 t/1247 t/1372` (Files=3, Tests=19, PASS); broad clock-domain/crossing/parser regression (12 files, 147) PASS; `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.1: select cross-domain activation via crossing` | `pending` |
+| `.1` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.1: select cross-domain activation via crossing` | `dbbe6bce` |
+| `.2` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.2: parse + validate activation crossing (lowering fail-closed)` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -170,3 +179,11 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   activation via a declared crossing). Recorded the investigated infrastructure,
   the bidirectional-handshake safety constraint (validator+lowering ship
   together), the `(crossings (activation ...))` design, and the slice plan.
+- `2026-05-30`: `.1` selection/design committed (`dbbe6bce`).
+- `2026-05-30`: `.2` shipped. Parser (`_parse_crossings` dispatch +
+  `_parse_activation_crossing`) accepts `(crossings (activation child (from SRC)
+  (to DEST)))`; `_finalize_actor_crossings` validates domains declared, SRC≠DEST,
+  and child is a declared transaction. Lowering fails closed for any actor
+  declaring an activation crossing ("cross-domain activation lowering is not yet
+  supported") — parser-acceptance ≠ support; CDC routing ships in `.3`. Event
+  crossings unaffected. Locked by `t/1386`; regression PASS.

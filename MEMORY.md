@@ -38225,3 +38225,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   .2 parse+declare-validate (fail-closed lowering, safe), .3 lowering+accept
   (correctness-critical, ships together; HDL/Verilator evidence), .4 docs+example.
   Created `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING`. [[frontier-pnt-autonomy]].
+- `.2` SHIPPED: parser accepts `(crossings (activation child (from SRC)(to DEST)))`
+  (`_parse_activation_crossing` + `_finalize_actor_crossings` validation: domains
+  declared, SRC≠DEST, child is a declared transaction); lowering fails closed for
+  any actor declaring one ("cross-domain activation lowering is not yet
+  supported") — parser-acceptance ≠ support, CDC routing ships in `.3`. Event
+  crossings unaffected. `t/1386` locks it; broad CDC/parser regression PASS.
+  Next: `.3` (lowering + CDC routing + validator acceptance, ships together).

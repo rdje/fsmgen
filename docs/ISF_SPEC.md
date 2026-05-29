@@ -1492,6 +1492,14 @@ Multi-clock boundary:
   shipped CDC primitive or protocol actor must provide specified runtime
   behavior, lowering, diagnostics, and report metadata before such crossings
   are legal.
+- A `(crossings (activation child (from SRC) (to DEST)))` declaration is parsed
+  and structurally validated (SRC/DEST declared and distinct; `child` a declared
+  transaction) as the surface for a future cross-domain blocking `(do)`/`(spawn)`
+  through CDC-synchronized activation start/done. Its lowering is **not yet
+  supported**: an actor declaring an activation crossing fails closed
+  (`cross-domain activation lowering is not yet supported`) until the CDC routing
+  ships (parser-acceptance ≠ support). Cross-domain activation without such a
+  crossing continues to fail closed with the clock-domain-violation diagnostic.
 - Asynchronous reset trees are not DTs. FSMGen does not use ISF DT logic to
   build arbitrary asynchronous reset gating.
 
@@ -5733,6 +5741,7 @@ Focused tests:
 - [t/1383-isf-loop-and-deeper-repeat-body-spawn.t](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t)
 - [t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t](../t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t)
 - [t/1385-isf-multi-unknown-width-fail-closed-terminal.t](../t/1385-isf-multi-unknown-width-fail-closed-terminal.t)
+- [t/1386-isf-activation-crossing-declaration.t](../t/1386-isf-activation-crossing-declaration.t)
 
 ## 12. Explicitly Deferred
 

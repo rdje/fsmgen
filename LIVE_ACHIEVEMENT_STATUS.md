@@ -16446,3 +16446,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   acknowledged-event CDC children). Safety: validator-accept + CDC routing ship
   together (`.3`). Slices: `.1` select/design, `.2` parse+declare-validate
   (fail-closed), `.3` lowering+accept, `.4` docs. `.1` is this selection/design.
+- `.2` shipped: `(crossings (activation child (from SRC)(to DEST)))` parses +
+  validates (domains declared/distinct, child a declared transaction); lowering
+  fails closed ("not yet supported") until `.3` routes the CDC. Event crossings
+  unaffected. `t/1386` locks it; broad CDC/parser regression PASS. Frontier `.3`.

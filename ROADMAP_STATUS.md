@@ -14759,3 +14759,9 @@ Exit criteria:
   (`.3`) — a validator-only relaxation would emit an unsynchronized cross-clock
   handoff. Slices: `.1` select/design, `.2` parse+declare-validate (fail-closed),
   `.3` lowering+accept (correctness-critical), `.4` docs+example.
+- `R14`: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.2` shipped — the
+  `(crossings (activation child (from SRC)(to DEST)))` declaration parses and is
+  structurally validated; lowering fails closed (`cross-domain activation
+  lowering is not yet supported`) until `.3` routes the CDC. Event crossings
+  unaffected; locked by `t/1386`. Frontier now `.3` (lowering + CDC routing +
+  validator acceptance, ships together).
