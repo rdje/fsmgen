@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `BOOK-COOKBOOK-COMPOSITION-RUNNABLE` | `pending` | `R14` | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2` | [docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md](docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `BOOK-COOKBOOK-COMPOSITION-RUNNABLE` | `done` | `R14` | `closed` | [docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md](docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md) |
 | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS` | `done` | `R14` | `closed` | [docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md](docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md) |
 | `CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX` | `done` | CI maintenance | `closed` | [docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md](docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md) |
 | `ISF-G8-HEADING-DENSITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-G8-HEADING-DENSITY.md](docs/tasks/ISF-G8-HEADING-DENSITY.md) |

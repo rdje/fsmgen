@@ -16256,3 +16256,13 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 ## 2026-05-29: Selected R14 cookbook composition recipes runnable
 - Active tree: `BOOK-COOKBOOK-COMPOSITION-RUNNABLE`. Upgrade recipes
   3/4/5 to verified inline-runnable `lisp`. `.1` is this selection.
+
+## 2026-05-29: cookbook composition recipes runnable shipped
+- Roadmap lane: `R14`.
+- Completed `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2`: cookbook recipes
+  3/4/5 upgraded to verified inline-runnable `lisp` (C1/C2/C3).
+  t/1377 standalone count 11 → 14, all clean.
+- Public behavior changed: no — book content only.
+- Validation: `prove -Iperl t/1377 t/1376 t/1305 t/1307 t/1332`
+  (Files=5, Tests=713); `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice: PNT continues.

@@ -14615,3 +14615,8 @@ Exit criteria:
   Upgrades cookbook recipes 3/4/5 from `text` schematics to verified
   inline-runnable `lisp` composition examples (C1/C2/C3 patterns proven
   by `t/101`), gated by `t/1377`.
+- `R14`: cookbook composition recipes runnable now ships. Recipes
+  3/4/5 upgraded to verified inline-runnable `lisp` (C1/C2/C3). The
+  non-ISF book gate `t/1377` now covers 14 standalone `.fsm` fixtures
+  (was 11), all generating cleanly. Book-audit family green
+  (`Files=5, Tests=713`).

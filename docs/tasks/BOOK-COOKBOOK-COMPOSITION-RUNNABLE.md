@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `BOOK-COOKBOOK-COMPOSITION-RUNNABLE`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14` (documentation-synchronization invariant)
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`
@@ -99,8 +99,8 @@ form the demoted schematics had used.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.1` | `pending` | Selection commit before any book change. |
-| 2 | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2` | `pending` | Upgrade recipes + revalidate. |
+| 1 | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.1` | `done` | Selection commit `4f12f820` landed before any book change. |
+| 2 | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2` | `done` | Recipes 3/4/5 upgraded to runnable `lisp`; t/1377 now gates 14 standalone fixtures (was 11). Tree closed. |
 
 ## Decisions
 
@@ -119,14 +119,14 @@ form the demoted schematics had used.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-29` | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-29` | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2` | `prove -Iperl t/1377 t/1376 t/1305 t/1307 t/1332`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-29` | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.1` | `mdbook build docs/book`; `git diff --check` | `PASS` (doc-only selection) |
+| `2026-05-29` | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2` | `prove -Iperl t/1377 t/1376 t/1305 t/1307 t/1332` (`Files=5, Tests=713`); `mdbook build docs/book`; `git diff --check` | `PASS`; t/1377 now reports 14 standalone `.fsm` fixtures generate cleanly (was 11); t/1376 still 32 ISF lowered |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.1` | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.1: select cookbook composition recipes runnable` | `pending commit hash` |
+| `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.1` | `4f12f820 BOOK-COOKBOOK-COMPOSITION-RUNNABLE.1: select cookbook composition recipes runnable` | Selection commit. |
 | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2` | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2: ship cookbook composition recipes runnable` | `pending commit hash` |
 
 ## Changelog
@@ -136,3 +136,10 @@ form the demoted schematics had used.
   example-correctness slice) to verified inline-runnable `lisp`
   examples, closing the gap between the cookbook's "copyable
   patterns" promise and composition's multi-file reality.
+- `2026-05-29`: Shipped `.2`. Recipe 3 → C1 single embedded child
+  (inferred ports); recipe 4 → C2 two embedded children with
+  slash-delimited wiring; recipe 5 → C3 `?rtl` + embedded `?rtlif`
+  with `/=8'hA5/.../` and `/=open/.../` structural-actual defaults.
+  Each gained a walkthrough paragraph. `t/1377` now extracts and
+  passes all three (standalone fixture count 11 → 14, 0 failures).
+  Book-audit family green at `Files=5, Tests=713`. Tree closed.

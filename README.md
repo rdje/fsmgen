@@ -83,7 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
-- `docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md` — active `R14` task tree upgrading cookbook composition recipes 3/4/5 from `text` schematics to verified inline-runnable `lisp` examples (C1/C2/C3 patterns proven by `t/101`), gated by `t/1377`.
+- `docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md` — completed `R14` task tree that upgraded cookbook composition recipes 3/4/5 from `text` schematics to verified inline-runnable `lisp` examples (C1/C2/C3 patterns proven by `t/101`); `t/1377` now gates 14 standalone `.fsm` fixtures.
 - `docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md` — completed `R14` task tree that extended the example-correctness build gate from the ISF surface to the non-ISF `.fsm` (IAL0) book chapters; demoted 19 multi-file/schematic blocks to `text` and added `t/1377-book-fsm-example-generation-audit.t` (11 standalone `.fsm` fixtures gated).
 - `docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md` — completed CI-maintenance task tree that fixed the stale `t/corpus/system_incomplete_section.fsm` fixture.
 - `docs/tasks/ISF-G8-HEADING-DENSITY.md` — completed `R14` task tree that added 4 sub-headings to the Pipeline section of 13-intent-scheduling.md.

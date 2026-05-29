@@ -59,9 +59,25 @@ Use this when:
 
 ## 3. One Generated Child Under A Top
 
-```text
+```lisp
 (?top:single_child_top
   (?fsmc:child child_ctrl_src)
+)
+
+(?fsm:child_ctrl_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (<go
+      (done> <= 1)
+    )
+  )
+  (+size
+    (go 1)
+    (done 1)
+  )
 )
 ```
 
@@ -70,20 +86,60 @@ Use this when:
 - you want a top wrapper quickly
 - the child interface can become the top interface honestly
 
+**Walkthrough.** `(?top:single_child_top ...)` declares the
+composition top. `(?fsmc:child child_ctrl_src)` realizes one
+generated FSM child instance named `child` from the source module
+`child_ctrl_src`. That source is embedded as a sibling `(?fsm:...)`
+root in the same file, so the example is self-contained — the
+composition realizer accepts embedded child roots as companion
+source material. With a single child and no `?ports` block, the
+narrow `C1` lane infers the top interface directly from the child's
+ports (`go`, `done`).
+
 ## 4. Multi-Child Explicit Wiring
 
-```text
+```lisp
 (?top:two_child_top
-  (?ports:public_io
-    clk
-    rst_n
-    result_data>8
-  )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
   (?wiring:wiring
-    (producer.output_data consumer.input_data)
-    (consumer.final_data result_data)
+    /start/producer.go/
+    /start/consumer.go/
+    /producer.payload/consumer.payload/
+    /consumer.result_data/status/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (<go
+      (payload> <= 8'5)
+    )
+  )
+  (+size
+    (go 1)
+    (payload 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (<go
+      (result_data> <= payload)
+    )
+  )
+  (+size
+    (go 1)
+    (payload 8)
+    (result_data 8)
   )
 )
 ```
@@ -93,21 +149,37 @@ Use this when:
 - child names do not all match top names
 - you want explicit composition intent
 
+**Walkthrough.** Two generated children (`producer`, `consumer`)
+are realized from embedded `(?fsm:...)` roots. The `(?wiring:wiring
+...)` block uses the slash-delimited `/source/dest/` form: each
+entry routes a source endpoint to a destination endpoint. Here a
+top-level `start` pulse fans out to both children's `go` inputs,
+the producer's `payload` output feeds the consumer's `payload`
+input, and the consumer's `result_data` is exposed as the inferred
+top port `status`. Slash-delimited wiring (`/a/b/`), not list-form
+`(a b)`, is the composition wiring spelling.
+
 ## 5. Structural Actual Defaults
 
-```text
+```lisp
 (?top:uart_defaults_top
   (?ports:public_io
-    default_data>8
     serial_out>
   )
   (?rtl:uart_tx)
   (?wiring:wiring
-    (=8'hA5 default_data)
-    (=8'hA5 uart_tx.data_in)
-    (=open uart_tx.enable)
-    (uart_tx.serial_out serial_out)
+    /=8'hA5/uart_tx.data_in/
+    /=open/uart_tx.enable/
+    /uart_tx.txd/serial_out/
   )
+)
+
+(?rtlif:uart_tx
+  core_clk:clock
+  rst_async_n:reset
+  data_in<8:data
+  enable<:data
+  txd>:data
 )
 ```
 
@@ -115,6 +187,17 @@ Use this when:
 
 - one child input wants a fixed value
 - one child input should remain intentionally open
+
+**Walkthrough.** `(?rtl:uart_tx)` references an external RTL child;
+its interface metadata is provided by the embedded
+`(?rtlif:uart_tx ...)` root (the `C3` lane requires that interface
+metadata, which can be embedded as companion source). In the
+wiring, `/=8'hA5/uart_tx.data_in/` drives a fixed actual literal
+into the child input, `/=open/uart_tx.enable/` leaves an input
+intentionally unconnected, and `/uart_tx.txd/serial_out/` exposes
+the child output as the top port `serial_out`. The `=literal` and
+`=open` actual defaults are how structural composition supplies or
+omits child inputs without an FSM driver.
 
 ## 6. Package-Backed Shared Values
 

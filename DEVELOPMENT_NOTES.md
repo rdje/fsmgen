@@ -33392,3 +33392,13 @@ It is an exact-delay pulse request:
 - Grounding in an already-asserted-good test pattern (rather than
   authoring fresh composition wiring) is the signoff-quality guard:
   the repo's legacy composition samples do not even `--check` cleanly.
+
+## 2026-05-29: cookbook composition recipes runnable shipped
+- The cookbook composition recipes are now real copy-pasteable
+  patterns, not schematics. The decisive enabler was the
+  slash-delimited `/source/dest/` wiring form (the demoted schematics
+  had used `(source dest)`), plus embedding child `?fsm:` and
+  `?rtlif:` roots in the same file as companion source material.
+- Grounding each recipe in a `t/101`-proven pattern kept this at
+  signoff quality; t/1377 (now 14 fixtures) locks them against
+  regression.

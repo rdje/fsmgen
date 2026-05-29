@@ -30259,3 +30259,8 @@ This is the persistent technical change history for FSMGen.
 
 ### active R14 task tree selected: cookbook composition recipes runnable
 - Created [docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md](docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md) to upgrade cookbook recipes 3/4/5 from honest `text` schematics to self-contained inline-runnable `lisp` composition examples grounded in patterns the composition suite (`t/101`) already asserts generate. Selection commit only; no book change.
+
+### cookbook composition recipes runnable shipped
+- Upgraded [docs/book/src/12-cookbook.md](docs/book/src/12-cookbook.md) recipes 3/4/5 from `text` schematics to self-contained inline-runnable `lisp` examples: recipe 3 (one generated child, C1 inferred-ports lane), recipe 4 (multi-child explicit wiring, C2 with slash-delimited `/src/dst/` wiring), recipe 5 (structural actual defaults, C3 `?rtl` + embedded `?rtlif` with `/=8'hA5/.../` and `/=open/.../`). Each gained a walkthrough paragraph. Patterns are grounded in `t/101-composition-explicit-link-implicit-ports.t`.
+- `t/1377-book-fsm-example-generation-audit.t` now gates 14 standalone `.fsm` fixtures (was 11), all generating cleanly. Recipes 6 (package container) and 7 (typed aggregate) remain honest `text`.
+- Book-audit family green: `prove -Iperl t/1377 t/1376 t/1305 t/1307 t/1332` (Files=5, Tests=713).

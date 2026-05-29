@@ -37904,3 +37904,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   (package) and 7 (aggregate) stay `text`; chapter 05/06 teaching
   snippets stay schematic.
 - `.1` select (this), `.2` ship + revalidate via `t/1377`.
+
+## 2026-05-29: R14 cookbook composition recipes runnable shipped
+- Completed `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2` and closed the tree.
+- Cookbook recipes 3/4/5 upgraded from `text` schematics to verified
+  inline-runnable `lisp`: recipe 3 = C1 single embedded child; recipe
+  4 = C2 two embedded children with slash-delimited `/src/dst/`
+  wiring; recipe 5 = C3 `?rtl` + embedded `?rtlif` with
+  `/=8'hA5/.../` and `/=open/.../` structural-actual defaults. Each
+  gained a walkthrough.
+- `t/1377` standalone fixture count 11 → 14 (all generate cleanly).
+  Book-audit family green: `prove -Iperl t/1377 t/1376 t/1305 t/1307
+  t/1332` (Files=5, Tests=713). mdbook clean; whitespace clean.
+- Active task tree: `none`. Recipes 6 (package) and 7 (aggregate)
+  remain honest `text`; chapter 05/06 teaching snippets remain
+  schematic.
