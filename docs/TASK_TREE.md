@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS` | `pending` | `R14` | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2` | [docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md](docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md) |
 
 ## Proposed Task Trees
 

@@ -83,6 +83,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md` — active `R14` task tree extending the example-correctness build gate from the ISF surface to the non-ISF `.fsm` (IAL0) book chapters; demotes 16 multi-file/schematic blocks to `text` and adds `t/1377-book-fsm-example-generation-audit.t`.
 - `docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md` — completed CI-maintenance task tree that fixed the stale `t/corpus/system_incomplete_section.fsm` fixture.
 - `docs/tasks/ISF-G8-HEADING-DENSITY.md` — completed `R14` task tree that added 4 sub-headings to the Pipeline section of 13-intent-scheduling.md.
 - `docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md` — completed `R14` task tree that appended a dated status snapshot to 14-feature-backlog.md.

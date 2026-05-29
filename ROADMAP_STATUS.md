@@ -14597,3 +14597,9 @@ Exit criteria:
   workflow to fail.
 - CI maintenance: corpus fixture fix shipped. t/249, t/300,
   t/304 pass locally; pending CI verification on push.
+- `R14`: next active task tree selected —
+  `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS`. Extends the example-correctness
+  build gate from the ISF surface to the non-ISF `.fsm` (IAL0) book
+  chapters. Scoping audit found 11 standalone `lisp` `.fsm` blocks that
+  pass `--check` and 16 inherently multi-file/schematic blocks to demote
+  to `text`. `.2` will add `t/1377-book-fsm-example-generation-audit.t`.

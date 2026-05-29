@@ -37841,3 +37841,29 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Updated `t/corpus/system_incomplete_section.fsm` to
   `(+system (sreset rst_n))` (reset-only, no clock).
 - Local validation: t/249, t/300, t/304 all pass.
+
+## 2026-05-29: R14 active task tree selected — non-ISF .fsm book example correctness + build gate
+- Created and registered active task tree
+  [`BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS`](docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md).
+- Last session's `t/1376` gate covers only ISF (`(actor ...)`)
+  book examples. The non-ISF `.fsm` chapters (01-08 + `.fsm`
+  cookbook recipes) have ~103 `lisp` blocks with no gate.
+- Scoping audit (`--check` per complete `(?fsm:`/`(?dt:`/`(?top:`
+  root): 11 standalone blocks pass; 16 complete-looking blocks
+  fail because they are inherently multi-file / schematic
+  (8 need external `?fsmc` child sources, 3 need `?rtl` `.rtlif`
+  metadata, 1 is single-child in the C2 lane, 4 consume
+  sibling `?pkg`/aggregate material or are schematic typed tops).
+- Confirmed the 16 cannot be cheaply made inline-runnable: a
+  `?pkg:` root makes a file a package container that "does not
+  generate HDL directly," and composition tops need sidecar
+  children. So the honest fix is the established `lisp`/`text`
+  convention: demote the 16 to `text`, gate the standalone set.
+- Plan: `.1` select (this), `.2` convert 16 blocks to `text` +
+  add `t/1377-book-fsm-example-generation-audit.t` (black-box
+  `--check-json` per standalone `lisp` `.fsm` block, mirroring
+  `t/300`).
+- Deferred follow-up: upgrade specific composition/cookbook
+  recipes to fully inline-runnable multi-file fixtures.
+- Active task tree: `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS`.
+- Current frontier: `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2`.

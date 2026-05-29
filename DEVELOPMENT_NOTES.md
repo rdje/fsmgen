@@ -33358,3 +33358,15 @@ It is an exact-delay pulse request:
 
 ## 2026-05-29: CI fix shipped
 - Fixture flipped from clock-only to reset-only.
+
+## 2026-05-29: active R14 task tree — non-ISF .fsm book example correctness + build gate
+- Mirrors last session's ISF `t/1376` build gate for the IAL0 `.fsm`
+  chapters. Reuses the `lisp` (standalone-runnable) vs `text`
+  (schematic/multi-file) block-tag convention.
+- The 16 failing blocks are genuinely multi-file: composition tops need
+  sidecar `?fsmc`/`?rtl` sources, and `?pkg:` roots make a file a
+  package container that does not generate HDL directly. So they are
+  demoted to `text` rather than forced inline.
+- `.2` adds `t/1377` using the black-box `IPC::Cmd::run` +
+  `--check-json` idiom from `t/300`, asserting every remaining
+  non-ISF `lisp` `.fsm` block reports `success: true`.

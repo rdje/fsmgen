@@ -16235,3 +16235,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 ## 2026-05-29: Selected CI corpus fixture fix
 
 ## 2026-05-29: CI corpus fixture fix shipped
+
+## 2026-05-29: Selected R14 non-ISF .fsm book example correctness + build gate
+- Active tree: `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS`.
+- Goal: demote 16 multi-file/schematic non-ISF `.fsm` book blocks to
+  `text`; add `t/1377` gate for the 11 standalone blocks.
+- `.1` is this selection commit (no book/test change yet).
