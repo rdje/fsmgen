@@ -32,7 +32,7 @@ this chapter:
   repeat`, `switch → when⁺ → repeat`) now lower; undrained / multi-pending spawn
   and cross-domain generated `do` stay deferred.
 - **Book example correctness build gate**: every `lisp`-tagged book
-  example must parse + lower (`t/1376`). Current state: 36
+  example must parse + lower (`t/1376`). Current state: 38
   complete fixtures lower cleanly.
 - **Cookbook ISF recipes**: `docs/book/src/12-cookbook.md` now
   carries recipes 9-13 covering basic actor, spawn, parameterized

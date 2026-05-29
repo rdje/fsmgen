@@ -16421,3 +16421,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   done)` and multi-pending `(await_any done)` + drain features (the only
   frontier shapes still prose/`text`-only). Doc-only; `t/1376` gates them.
   `.1` selection; `.2` ships.
+
+## 2026-05-30: Completed R14 runnable book examples for frontier spawn + multi-pending await_any
+- Tree `ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES` is `done`. Added
+  `loop_contained_repeat_spawn` and `loop_contained_repeat_multi_await_any`
+  runnable `lisp` examples to `13d`; `t/1376` count 36 → 38. All six shipped
+  repeat-body-activation frontier shapes now have copy-pasteable book examples.
+  Doc-only. Audit set (6 files, 853) PASS; mdBook + diff-check clean.

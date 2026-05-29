@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-30`
 - Last updated: `2026-05-30`
@@ -47,30 +47,30 @@ limitation; `t/1376` checks lowering, which succeeds.)
 ## Task Tree
 
 - ID: `ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES`
-  Status: `active`
+  Status: `done`
   Goal: `Add runnable book examples for the shipped loop/deeper spawn + multi-pending features.`
   Children: `.1`, `.2`
 
 - ID: `ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the slice.`
   Acceptance: `Task tree committed before any doc change.`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `3036f5ac`
 
 - ID: `ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Add the two runnable examples; update the count; validate.`
   Acceptance: `t/1376 lowers both (count 36 → 38); audits green.`
-  Verification: `prove -Iperl t/1376 t/1305 t/1307 t/1304 t/1332 t/1250; mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Verification: `prove -Iperl t/1376 t/1305 t/1307 t/1304 t/1332 t/1250 (Files=6, Tests=853, PASS); mdbook build docs/book; git diff --check`
+  Commit: `ship commit (this slice)`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `....1` | `pending` | Selection commit. |
-| 2 | `....2` | `pending` | Add examples + count + validate. |
+| 1 | `....1` | `done` | Selection commit `3036f5ac`. |
+| 2 | `....2` | `done` | Two runnable examples added (count 36→38); tree closed. |
 
 ## Decisions
 
@@ -90,17 +90,23 @@ limitation; `t/1376` checks lowering, which succeeds.)
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-30` | `....1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-30` | `....2` | `prove -Iperl t/1376 t/1305 t/1307 t/1304 t/1332 t/1250`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-30` | `....1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-30` | `....2` | `prove -Iperl t/1376 t/1305 t/1307 t/1304 t/1332 t/1250` (Files=6, Tests=853, PASS; t/1376 count 36→38); `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `....1` | `...1: select frontier spawn/await_any book runnable examples` | `pending` |
-| `....2` | `...2: ship frontier spawn/await_any book runnable examples` | `pending` |
+| `....1` | `...1: select frontier spawn/await_any book runnable examples` | `3036f5ac` |
+| `....2` | `...2: ship frontier spawn/await_any book runnable examples` | `ship commit (this slice)` |
 
 ## Changelog
 
 - `2026-05-30`: Created. Book example-coverage for the shipped loop/deeper
   spawn + multi-pending await_any frontier features.
+- `2026-05-30`: `.1` selection committed (`3036f5ac`).
+- `2026-05-30`: `.2` shipped. Added `loop_contained_repeat_spawn` and
+  `loop_contained_repeat_multi_await_any` runnable `lisp` examples to 13d;
+  `t/1376` count 36 → 38; audit set (6 files, 853) PASS. All shipped
+  repeat-body-activation frontier shapes now have copy-pasteable book examples.
+  Tree closed.

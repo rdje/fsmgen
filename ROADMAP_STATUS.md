@@ -14738,3 +14738,8 @@ Exit criteria:
   multi-pending `(await_any done)` + drain features (the only frontier shapes
   still documented only with prose/`text`). Doc-only; `t/1376` gates the new
   examples (count 36 → 38).
+- `R14`: `ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES` is **completed**.
+  Added runnable `lisp` examples to `13d` (`loop_contained_repeat_spawn`,
+  `loop_contained_repeat_multi_await_any`); `t/1376` count 36 → 38. All shipped
+  repeat-body-activation frontier shapes now have copy-pasteable book examples.
+  Doc-only; audit set PASS.

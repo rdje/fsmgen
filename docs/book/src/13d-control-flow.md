@@ -277,14 +277,22 @@ The basic `(spawn child as inst)` + same-body `(await_all done)` (or
 single-pending `(await_any done)`) subset lowers inside a loop-contained or
 deeper-nested repeat:
 
-```text
-(transaction parent
-  (on start)
-  (while cond
-    (repeat loops
-      (spawn worker as w0)
-      (await_all done)))      ;; drains w0 before repeat_check / loop re-entry
-  (complete done))
+```lisp
+(actor loop_contained_repeat_spawn
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (await_all done)))     ;; drains w0 before repeat_check / loop re-entry
+    (complete done))
+  (transaction worker
+    (complete done)))
 ```
 
 The lowered schedule mirrors the proven top-level repeat-body spawn: the spawn
@@ -312,6 +320,28 @@ emit `repeat-body generated do bindings require static '(params ...)'
 overrides`. A repeat wrapped by both a loop and a branch (for example
 `(while c1 (when c2 (repeat ...)))`) still routes through
 `Transaction 'parent': loop-contained repeat-body do remains deferred`.
+
+The multi-pending observation + later-drain shape lowers like this:
+
+```lisp
+(actor loop_contained_repeat_multi_await_any
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (await_any done)       ;; observe the first child to finish
+        (await_all done)))     ;; drain both before repeat_check / loop re-entry
+    (complete done))
+  (transaction worker
+    (complete done)))
+```
 
 ### Deeper-nested repeat-body local `do`
 

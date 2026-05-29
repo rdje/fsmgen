@@ -38190,3 +38190,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   cleanly → t/1376 gates them; count 36→38). Created
   `ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES`. Doc-only.
   [[frontier-pnt-autonomy]].
+- `.2` SHIPPED: added runnable `lisp` `(actor ...)` examples to 13d —
+  `loop_contained_repeat_spawn` (spawn + await_all) and
+  `loop_contained_repeat_multi_await_any` (multi-pending await_any + await_all).
+  t/1376 count 36→38; audit set (6 files, 853) PASS. Tree complete. All shipped
+  repeat-body-activation frontier shapes now have copy-pasteable book examples.
