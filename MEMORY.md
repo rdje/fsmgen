@@ -37836,3 +37836,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Selected `CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX` to update
   the fixture to (+system (sreset rst_n)) — reset-only, no
   clock, which still triggers the diagnostic.
+
+## 2026-05-29: CI corpus fixture fix shipped
+- Updated `t/corpus/system_incomplete_section.fsm` to
+  `(+system (sreset rst_n))` (reset-only, no clock).
+- Local validation: t/249, t/300, t/304 all pass.

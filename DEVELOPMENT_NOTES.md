@@ -33355,3 +33355,6 @@ It is an exact-delay pulse request:
 
 ## 2026-05-29: CI fix selected
 - Corpus fixture stale after clock-only HDL shipped.
+
+## 2026-05-29: CI fix shipped
+- Fixture flipped from clock-only to reset-only.

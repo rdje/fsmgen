@@ -30243,3 +30243,7 @@ This is the persistent technical change history for FSMGen.
 
 ### CI corpus fixture fix selected
 - Created [docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md](docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md) to fix the stale `t/corpus/system_incomplete_section.fsm` fixture that's failing CI after the clock-only HDL feature shipped.
+
+### CI corpus fixture fix shipped
+- Updated [t/corpus/system_incomplete_section.fsm](t/corpus/system_incomplete_section.fsm) from `(+system (clock clk))` to `(+system (sreset rst_n))`. Clock-only +system is now an accepted shipped feature; the fixture now uses reset-only +system which still triggers `FSMGEN_LANGUAGE_INCOMPLETE_SYSTEM_SECTION` with the expected boundary text.
+- Verified locally: t/249-regression-corpus-classified-behavior.t, t/300-check-json-regression-corpus.t, t/304-normalized-semantic-json-regression-corpus.t all PASS.

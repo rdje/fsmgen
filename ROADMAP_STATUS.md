@@ -14595,3 +14595,5 @@ Exit criteria:
 - CI maintenance: active tree `CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX`
   fixes stale corpus fixture causing the Perl FSM Regression
   workflow to fail.
+- CI maintenance: corpus fixture fix shipped. t/249, t/300,
+  t/304 pass locally; pending CI verification on push.

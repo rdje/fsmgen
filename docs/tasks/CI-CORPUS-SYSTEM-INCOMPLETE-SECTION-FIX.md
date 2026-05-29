@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `CI maintenance`
 
 ## Goal

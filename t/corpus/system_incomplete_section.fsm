@@ -1,6 +1,6 @@
 (?fsm:system_incomplete_section
   (+system
-    (clock clk)
+    (sreset rst_n)
   )
   (-dt
     (A = 1)
