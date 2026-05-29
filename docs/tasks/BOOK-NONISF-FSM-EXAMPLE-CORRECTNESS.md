@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14` (documentation-synchronization invariant)
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`
@@ -68,6 +68,23 @@ adopted last session for the ISF surface:
 | `12-cookbook.md` | #5 | needs-rtlif | `(?top:uart_defaults_top` |
 | `12-cookbook.md` | #7 | other (typed actual) | `(?top:typed_actual_top` |
 
+### Predicate-surfaced additions (3 more, total 19)
+
+The authoritative build-gate predicate (a `lisp` block *containing*
+a generation root, not merely one whose first root is a generation
+root) surfaced 3 additional same-category blocks the initial
+first-root heuristic skipped. These were demoted to `text` as well:
+
+| Chapter | Block | Category | Head |
+| --- | --- | --- | --- |
+| `03-decision-trees-and-fsms.md` | #1 | schematic `+fsm` shape with `(idle ...)` ellipsis | `(+fsm my_module)` |
+| `03-decision-trees-and-fsms.md` | #2 | schematic `+fsm` shape with `(idle ...)` ellipsis | `(+fsm my_module` |
+| `12-cookbook.md` | recipe 6 | `?pkg:` package container + consuming `?fsm:` (multi-file) | `(?pkg:shared` |
+
+Total blocks demoted: **19** (16 listed above + 3 here). After
+demotion, all 11 remaining gate-eligible `lisp` `.fsm` blocks pass
+`--check-json`.
+
 ## Non-Goals
 
 - Do not roll back or alter the 11 standalone blocks that already
@@ -126,8 +143,8 @@ adopted last session for the ISF surface:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.1` | `pending` | Selection commit must land before the book/test change so the slice is owned through `COMMIT.md`. |
-| 2 | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2` | `pending` | Convert blocks + ship the gate. |
+| 1 | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.1` | `done` | Selection commit `84566349` landed before any book/test change. |
+| 2 | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2` | `done` | Demoted 19 blocks to `text`; added `t/1377`; all 11 standalone blocks pass. Tree closed. |
 
 ## Decisions
 
@@ -160,14 +177,14 @@ adopted last session for the ISF surface:
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-29` | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-29` | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2` | `prove -Iperl t/1377`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-29` | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.1` | `mdbook build docs/book`; `git diff --check` | `PASS` (doc-only selection) |
+| `2026-05-29` | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2` | `prove -Iperl t/1377 t/1376 t/1305 t/1307 t/1332` (`Files=5, Tests=713`); `mdbook build docs/book`; `git diff --check` | `PASS`; t/1377 reports 11 standalone `.fsm` fixtures generate cleanly, 73 non-generation-root lisp blocks skipped; t/1376 still 32 ISF fixtures lowered |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.1` | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.1: select non-ISF .fsm example correctness + build gate` | `pending commit hash` |
+| `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.1` | `84566349 BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.1: select non-ISF .fsm example correctness + build gate` | Selection commit. |
 | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2` | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2: ship non-ISF .fsm example correctness + build gate` | `pending commit hash` |
 
 ## Changelog
@@ -176,3 +193,14 @@ adopted last session for the ISF surface:
   build gate from the ISF surface to the non-ISF `.fsm` (IAL0)
   chapters. Scoping audit identified 16 multi-file/schematic blocks
   to demote to `text` and 11 standalone blocks to gate.
+- `2026-05-29`: Shipped `.2`. Demoted **19** `lisp` blocks to
+  `text` (the 16 listed plus 3 predicate-surfaced: `03` #1/#2
+  schematic `+fsm` shapes and cookbook recipe 6's `?pkg:`+`?fsm:`
+  package illustration). Added
+  `t/1377-book-fsm-example-generation-audit.t`, a black-box gate
+  (`./bin/fsmgen --check-json` via `IPC::Cmd::run`, mirroring
+  `t/300`) that asserts every `lisp` block containing a generation
+  root in chapters `01`-`08` and `12` passes generation. Post-state:
+  11 standalone `.fsm` fixtures generate cleanly, 0 failures. The
+  book-audit family (`t/1377`, `t/1376`, `t/1305`, `t/1307`,
+  `t/1332`) passes at `Files=5, Tests=713`. Tree closed.

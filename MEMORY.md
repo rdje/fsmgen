@@ -37867,3 +37867,23 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   recipes to fully inline-runnable multi-file fixtures.
 - Active task tree: `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS`.
 - Current frontier: `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2`.
+
+## 2026-05-29: R14 non-ISF .fsm book example correctness + build gate shipped
+- Completed `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2` and closed the tree.
+- Demoted 19 `lisp` blocks to `text` across 03/05/06/07/12 (the 16
+  scoped + 3 predicate-surfaced: 03 #1/#2 schematic `+fsm` shapes,
+  cookbook recipe 6 `?pkg:`+`?fsm:` package illustration). All were
+  inherently multi-file/schematic and cannot generate standalone.
+- Added `t/1377-book-fsm-example-generation-audit.t`: black-box gate
+  (`./bin/fsmgen --check-json` per `lisp` block containing a
+  generation root, chapters 01-08 + 12) mirroring `t/300`. Post-state:
+  11 standalone `.fsm` fixtures generate cleanly, 0 failures.
+- Convention now enforced on both layers: `lisp` == standalone
+  fixture that generates/lowers; `text` == schematic/multi-file.
+  ISF gate t/1376 (32 lowered) + non-ISF gate t/1377 (11 generated)
+  together lock every copy-pasteable book example.
+- Validation: `prove -Iperl t/1377 t/1376 t/1305 t/1307 t/1332`
+  (Files=5, Tests=713); `mdbook build docs/book`; `git diff --check`.
+- Active task tree: `none`. Deferred follow-up: upgrade specific
+  composition/cookbook recipes to fully inline-runnable multi-file
+  fixtures.

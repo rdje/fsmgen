@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS` | `pending` | `R14` | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2` | [docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md](docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS` | `done` | `R14` | `closed` | [docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md](docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md) |
 | `CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX` | `done` | CI maintenance | `closed` | [docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md](docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md) |
 | `ISF-G8-HEADING-DENSITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-G8-HEADING-DENSITY.md](docs/tasks/ISF-G8-HEADING-DENSITY.md) |
 | `ISF-G4-BACKLOG-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-G4-BACKLOG-TRUTH-SYNC.md) |

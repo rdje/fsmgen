@@ -22,7 +22,7 @@ silently truncated to a valid prefix.
 
 Default mode also accepts the legacy `+fsm` root family:
 
-```lisp
+```text
 (+fsm my_module)
 (+system (clock clk) (sreset reset))
 (idle ...)
@@ -30,7 +30,7 @@ Default mode also accepts the legacy `+fsm` root family:
 
 and the nested legacy form:
 
-```lisp
+```text
 (+fsm my_module
   (+system (clock clk) (sreset reset))
   (idle ...))

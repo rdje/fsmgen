@@ -213,7 +213,7 @@ links themselves define the boundary clearly.
 
 Example:
 
-```lisp
+```text
 (?top:uart_slice_top
   (?rtl:byte_sink)
   (?wiring:wiring
@@ -308,7 +308,7 @@ to build one deterministic shared carrier.
 
 Example:
 
-```lisp
+```text
 (?top:shared_status_top
   (?ports:public_io
     clk
@@ -473,7 +473,7 @@ Whole aggregate roots such as `=FRAME` are now live on the typed actual path.
 
 Example:
 
-```lisp
+```text
 (?top:typed_actual_top
   (+constants
     (FRAME
@@ -716,7 +716,7 @@ emission. For example, an external RTL or generated-child instance can pass a
 folded aggregate override when the child declaration/default establishes the
 expected parameter shape:
 
-```lisp
+```text
 (?top:top
   (+constants
     (LANES_A (8'hA5 8'h3C))
@@ -743,7 +743,7 @@ Generated `?fsmc` and `?dtc` children now use the same semantic override
 surface, but the declaration contract lives in the realized child source's
 direct `(+params ...)` block rather than in `.rtlif` metadata:
 
-```lisp
+```text
 (?top:parameterized_generated_child_top
   (+constants
     (OVERRIDE_WIDTH 16)

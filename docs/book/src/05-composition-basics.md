@@ -39,7 +39,7 @@ instance name must be unique within the `?top`.
 
 ## The Minimal Shape
 
-```lisp
+```text
 (?top:top_name
   (?ports:public_io
     clk
@@ -314,7 +314,7 @@ parameter default before HDL is emitted.
 
 Once you have multiple children, the normal tool is `?wiring`.
 
-```lisp
+```text
 (?top:two_child_top
   (?ports:public_io
     clk
@@ -441,7 +441,7 @@ interface boundary where those layers exist.
 
 Example:
 
-```lisp
+```text
 (?top:dtc_top
   (?ports:public_io
     sel
@@ -488,7 +488,7 @@ There are now several bounded same-name paths:
 
 Simple example:
 
-```lisp
+```text
 (?top:single_by_name_top
   (?ports:public_io
     clk
@@ -534,7 +534,7 @@ declare the top port explicitly in `?ports`.
 
 External RTL is declared with `?rtl` and described by `.rtlif` metadata.
 
-```lisp
+```text
 (?top:fsm_plus_rtl_top
   (?ports:public_io
     clk

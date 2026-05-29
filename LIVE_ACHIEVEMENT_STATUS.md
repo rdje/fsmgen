@@ -16241,3 +16241,14 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Goal: demote 16 multi-file/schematic non-ISF `.fsm` book blocks to
   `text`; add `t/1377` gate for the 11 standalone blocks.
 - `.1` is this selection commit (no book/test change yet).
+
+## 2026-05-29: non-ISF .fsm book example correctness + build gate shipped
+- Roadmap lane: `R14`.
+- Completed `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2`: demoted 19
+  multi-file/schematic `lisp` blocks to `text`; added `t/1377`
+  gating the 11 standalone non-ISF `.fsm` examples.
+- Public behavior changed: no — book content + new test only.
+- Validation: `prove -Iperl t/1377 t/1376 t/1305 t/1307 t/1332`
+  (Files=5, Tests=713); `mdbook build docs/book`; `git diff --check`.
+- Next bounded slice: PNT continues; deferred follow-up is upgrading
+  composition/cookbook recipes to fully inline-runnable fixtures.

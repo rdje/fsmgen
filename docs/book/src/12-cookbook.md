@@ -59,7 +59,7 @@ Use this when:
 
 ## 3. One Generated Child Under A Top
 
-```lisp
+```text
 (?top:single_child_top
   (?fsmc:child child_ctrl_src)
 )
@@ -72,7 +72,7 @@ Use this when:
 
 ## 4. Multi-Child Explicit Wiring
 
-```lisp
+```text
 (?top:two_child_top
   (?ports:public_io
     clk
@@ -95,7 +95,7 @@ Use this when:
 
 ## 5. Structural Actual Defaults
 
-```lisp
+```text
 (?top:uart_defaults_top
   (?ports:public_io
     default_data>8
@@ -118,7 +118,7 @@ Use this when:
 
 ## 6. Package-Backed Shared Values
 
-```lisp
+```text
 (?pkg:shared
   (+constants
     (RESET_BYTE 8'hA5)
@@ -152,7 +152,7 @@ Use this when:
 
 ## 7. Typed Aggregate Boundary
 
-```lisp
+```text
 (?top:typed_actual_top
   (+constants
     (FRAME

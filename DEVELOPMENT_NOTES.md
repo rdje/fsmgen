@@ -33370,3 +33370,16 @@ It is an exact-delay pulse request:
 - `.2` adds `t/1377` using the black-box `IPC::Cmd::run` +
   `--check-json` idiom from `t/300`, asserting every remaining
   non-ISF `lisp` `.fsm` block reports `success: true`.
+
+## 2026-05-29: non-ISF .fsm book example correctness + build gate shipped
+- Shipped `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2`. The gate predicate
+  is "a `lisp` block that CONTAINS a generation root" (not merely one
+  whose first root is a generation root) — this caught cookbook
+  recipe 6, a `?pkg:`+`?fsm:` bundle whose first root is `?pkg:`.
+- t/1377 shells out to `./bin/fsmgen --check-json` per block rather
+  than calling an in-process API, because the `.fsm` generation path
+  is most faithfully exercised end-to-end through the CLI (matches
+  t/300's accepted black-box pattern). ~8s wall for 11 fixtures.
+- Two-layer coverage now: t/1376 (ISF `(actor` lower) + t/1377
+  (non-ISF `.fsm` generate). A copy-pasted `lisp` book example is
+  guaranteed to work on whichever layer it belongs to.

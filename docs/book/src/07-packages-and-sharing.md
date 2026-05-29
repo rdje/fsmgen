@@ -64,7 +64,7 @@ package/member path that failed to resolve.
 
 ## Direct-Root Example
 
-```lisp
+```text
 (?fsm:uses_shared_values
   (+import shared)
   (+size
@@ -78,7 +78,7 @@ package/member path that failed to resolve.
 
 ## Composition Example
 
-```lisp
+```text
 (?top:uses_shared_pkg
   (+import shared)
   (?ports:public_io

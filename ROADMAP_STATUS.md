@@ -14603,3 +14603,11 @@ Exit criteria:
   chapters. Scoping audit found 11 standalone `lisp` `.fsm` blocks that
   pass `--check` and 16 inherently multi-file/schematic blocks to demote
   to `text`. `.2` will add `t/1377-book-fsm-example-generation-audit.t`.
+- `R14`: non-ISF `.fsm` book example correctness + build gate now ships.
+  19 inherently multi-file/schematic `lisp` blocks demoted to `text`
+  across chapters 03/05/06/07/12; `t/1377-book-fsm-example-generation-audit.t`
+  gates the 11 standalone non-ISF `.fsm` examples via
+  `./bin/fsmgen --check-json`. The ISF gate (t/1376, 32 lowered) plus
+  the non-ISF gate (t/1377, 11 generated) together lock every
+  copy-pasteable book example. Book audit family passes at
+  `Files=5, Tests=713`.
