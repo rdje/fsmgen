@@ -33528,3 +33528,21 @@ It is an exact-delay pulse request:
   3 → dropped the generated-do rejection, kept spawn + when-inside-while).
   Cross-domain generated do keeps its own `cross-domain repeat-body do remains
   deferred` lane (a separate future frontier item).
+
+## 2026-05-29: selected R14 deeper-nested repeat-body local-do lowering (frontier #3)
+- The investigation that de-risked this: I worried the deeper-nested gate
+  relaxation could enable shapes the lowering silently drops (`_expand_when`/
+  `_expand_switch` recurse into nested `when` but NOT nested `switch`). But the
+  validator's `SUPPORTED_TRANSACTION_CLAUSES` already rejects a nested `switch`
+  inside a `when` body or a `switch` branch as an unsupported clause — so a
+  switch can only appear at the outermost branch position. The shapes that can
+  reach the deeper-nested repeat gate are therefore exactly `when⁺→repeat` and
+  `switch→when⁺→repeat`, which the recursion fully supports. Reachable-set and
+  lowering-support are aligned; no silent-drop trap. This made the slice a clean
+  validator relaxation rather than a lowering rewrite.
+- Generated-do deeper-nested stays deferred because the nested `_expand_when`
+  (8095) / `_expand_switch` (8138) recursions call the inner expander WITHOUT
+  the four `_ir_repeat` params (same drop pattern as the loop-body case). Local
+  do does not consume them, so local-do deeper-nested is safe; generated-do
+  there would need those threaded through the nested recursions plus deeper
+  collector discovery — a later slice.

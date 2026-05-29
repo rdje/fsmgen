@@ -16336,3 +16336,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `git diff --check` clean.
 - Next: PNT into the next frontier item (loop-contained spawn, deeper-nested,
   cross-domain).
+
+## 2026-05-29: Selected R14 deeper-nested repeat-body local-do lowering (frontier #3)
+- Active tree: `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING`. Plain local
+  `(do child)` at deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ →
+  repeat`) now lowers — a clean validator relaxation (reachable shapes match
+  the lowering recursion; the validator already blocks nested `switch`).
+  Generated-do/spawn deeper-nested stay deferred. `.1` selection; `.2` ships.

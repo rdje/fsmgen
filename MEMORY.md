@@ -38052,3 +38052,16 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   generated-do rejection). Regression: 103 files / 933 tests PASS + audit set
   (11 files, 870) PASS. Book/spec docs synced (13d gains a runnable generated-do
   example; count 34→35). Tree complete.
+
+## 2026-05-29: R14 active tree selected — deeper-nested repeat-body local-do lowering (frontier #3)
+- Goal: plain local `(do child)` at deeper branch nesting (`when⁺ → repeat`,
+  `switch → when⁺ → repeat`) lowers (currently `deeper-nested repeat-body do
+  remains deferred`).
+- Probed: clean validator relaxation (like frontier #1). The validator's
+  SUPPORTED_TRANSACTION_CLAUSES blocks nested `switch` in when/switch bodies, so
+  the only deeper-nested shapes reaching the repeat gate are `when⁺→repeat` and
+  `switch→when⁺→repeat` — exactly what `_expand_when`(8095)/`_expand_switch`(8138)
+  recurse into. No silent-drop trap, no lowering change for local do (params not
+  consumed). Generated-do deeper-nested stays deferred (nested recursions drop
+  the `_ir_repeat` params). Created `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING`.
+  `.2` ships the gate relaxation + t/1381 + doc sync. See [[frontier-pnt-autonomy]].

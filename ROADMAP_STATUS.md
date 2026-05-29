@@ -14670,3 +14670,9 @@ Exit criteria:
   `t/1380` (+ updated `t/1374`/`t/1379`); docs synced. Cross-domain generated
   do and spawn stay deferred. Next: PNT into the next frontier item
   (loop-contained spawn / deeper-nested).
+- `R14`: active task tree — `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING`
+  (scheduler-frontier #3). Plain local `(do child)` at deeper branch nesting
+  (`when⁺ → repeat`, `switch → when⁺ → repeat`) now lowers — a clean validator
+  relaxation (the validator already blocks nested `switch`, so the reachable
+  shapes match the lowering recursion). Generated-do/spawn deeper-nested stay
+  deferred. `.2` ships the gate relaxation + `t/1381`.
