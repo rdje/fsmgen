@@ -14627,3 +14627,9 @@ Exit criteria:
   (belongs to SPECFORGE per H4), tracked but intentionally without an
   R14 implementation tree. Tracked in
   `docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md`.
+- `R14`: next active task tree — `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY`,
+  answering SPECFORGE's 2026-05-29 clarity request on the actor-local
+  (types)↔(enums) relationship. Probed ground truth: enum name is not an
+  auto type alias; co-declaring (type NAME)+(enums NAME) is the accepted
+  mechanism; unreferenced decls are valid; co-declared width is not
+  cross-validated against members. `.2` documents this + adds t/1378.

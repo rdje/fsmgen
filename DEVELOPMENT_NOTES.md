@@ -33411,3 +33411,10 @@ It is an exact-delay pulse request:
   honest terminal is fail-closed; the Proposed tree activates only on a
   decidable sub-case. Avoided fabricating stub trees for every broader
   extension (the workflow forbids proposal-as-permission inflation).
+
+## 2026-05-29: active R14 task tree — ISF enum↔type relationship clarity (SPECFORGE ask)
+- Established the rule by probing the live `bin/fsmgen` (not from docs),
+  per SPECFORGE's explicit request for a confirmed real rule. The enum
+  name and the scalar type alias are distinct namespaces; co-declaring
+  the same name in both is the supported mechanism, not a conflict. The
+  rule will be locked with t/1378 so the contract is executable.

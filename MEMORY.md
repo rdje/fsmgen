@@ -37937,3 +37937,19 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Tracked in `docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md`. Doc-only.
 - Net: R14 aspect→tree ownership is now literally complete. Next:
   activate a concrete implementable aspect and PNT-implement.
+
+## 2026-05-29: R14 active task tree selected — ISF enum↔type relationship clarity (SPECFORGE ask)
+- SPECFORGE filed a 2026-05-29 clarity request (in
+  specforge/docs/FSMGEN_FEEDBACK.md) about the actor-local
+  (types)↔(enums) same-name relationship. FSMGen replies in its own
+  docs/SPECFORGE_FEEDBACK_RESPONSE.md (the established channel).
+- Probed the live binary for ground truth:
+    * enum name alone is NOT a usable (type NAME) — fails "unknown type"
+    * co-declaring (type NAME (bits k)) + (enums (NAME ...)) is accepted
+      and is the required way to use an enum name as a width-bearing type
+    * unreferenced (types)/(enums)/(constants) are contract-valid
+    * co-declared (bits k) is NOT cross-validated against enum members
+- Created `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY`. `.2` documents this in
+  ISF_PUBLIC_INTERFACE_CONTRACT.md, 13j, ISF_DOWNSTREAM_INTEGRATION_SPEC.md,
+  responds in SPECFORGE_FEEDBACK_RESPONSE.md, and adds t/1378 locking the
+  3 behaviors. Doc/test only; no parser/runtime change.

@@ -30267,3 +30267,6 @@ This is the persistent technical change history for FSMGen.
 
 ### R14 aspect→task-tree coverage audit
 - Published [docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md](docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md) confirming every ISF backlog aspect (21 `###` sub-sections) is task-tree owned. Registered [docs/tasks/ISF-FULL-WIDTH-INFERENCE.md](docs/tasks/ISF-FULL-WIDTH-INFERENCE.md) as a Proposed tree for the remaining extract/assemble multi-unknown width-inference cases, and recorded IAL2 protocol/platform intent as a tracked non-R14 horizon exploration (no R14 implementation tree by design). Documentation/tracking only.
+
+### active R14 task tree selected: ISF enum↔type relationship clarity (SPECFORGE ask)
+- Created [docs/tasks/ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.md](docs/tasks/ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.md) answering SPECFORGE's 2026-05-29 clarity request. Probed the live binary: an enum name is not an automatic `(type NAME)` alias (using it fails "unknown type"); co-declaring `(type NAME (bits k))` + `(enums (NAME ...))` is accepted and is the required mechanism to make an enum a width-bearing type; unreferenced actor-local declarations are valid; the co-declared width is not cross-validated against enum member magnitudes. `.2` will document this across the contract/book/downstream/response docs and add `t/1378`. Selection commit only.

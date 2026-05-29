@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY` | `pending` | `R14` | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.2` | [docs/tasks/ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.md](docs/tasks/ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.md) |
 
 ## Proposed Task Trees
 

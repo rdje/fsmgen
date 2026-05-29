@@ -16273,3 +16273,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `ISF-FULL-WIDTH-INFERENCE` Proposed tree; recorded IAL2 as non-R14
   exploration. Public behavior changed: no (tracking only).
 - Next: activate a concrete implementable R14 aspect and PNT-implement.
+
+## 2026-05-29: Selected R14 ISF enum↔type relationship clarity (SPECFORGE ask)
+- Active tree: `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY`. Probed ground truth
+  for the 3 SPECFORGE questions; `.2` documents + locks with t/1378.
+- `.1` is this selection commit (no doc/test change yet).
