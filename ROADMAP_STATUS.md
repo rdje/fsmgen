@@ -14655,3 +14655,9 @@ Exit criteria:
   `--check-json` success, SV HDL emits). spawn, generated-do, and deeper
   nesting stay deferred. Locked by `t/1379` (+ updated `t/1374`/`t/1375`);
   book/spec docs synced. Next: PNT into the next scheduler-frontier item.
+- `R14`: active task tree — `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING`
+  (scheduler-frontier #2). Same-domain generated `(do child (params ...))` (+
+  bind/domain with params) inside a single `(while ...)`/`(until ...)`-contained
+  repeat now lowers. Threads the four `_ir_repeat` params through the loop-body
+  path so the generated child is instantiated; cross-domain generated do and
+  spawn stay deferred. `.2` ships threading + validator relaxation + `t/1380`.

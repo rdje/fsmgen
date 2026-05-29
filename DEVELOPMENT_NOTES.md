@@ -33489,3 +33489,20 @@ It is an exact-delay pulse request:
   lowers it (count went 33 → 34); the spawn/generated deferral example stays a
   `text` block. Also corrected the stale "32 complete fixtures" count in
   `14-feature-backlog.md` to 34 (it had drifted by one in the prior slice).
+
+## 2026-05-29: selected R14 loop-contained repeat-body generated-do lowering (frontier #2)
+- User clarified PNT autonomy: do not ask which frontier item is next; ship all
+  of them in any order ([[frontier-pnt-autonomy]] memory).
+- The key difference from the local-do slice: a generated do genuinely needs the
+  four trailing `_ir_repeat` params. `_expand_loop_body` drops them, so this slice
+  threads `$spawn_refs`/`$constant_values`/`$generated_children`/
+  `$repeat_do_ordinal_ref` through `_ir_while`/`_ir_until`/`_expand_loop_body`.
+  `$spawn_refs` is the load-bearing one — `_ir_repeat` pushes the generated-do
+  clone onto it (when `$do_ref->{generated_child}`), and that is what makes the
+  composition planner instantiate the child module in the `_top`. Without it the
+  child would be referenced but never built.
+- Instance-naming/reuse is settled by reading `_repeat_do_ref_from_clause`: the
+  ordinal comes from the per-transaction `$repeat_do_ordinal_ref`, assigned once
+  at lower time per lexical do site, so a loop-contained generated do yields one
+  instance re-triggered each iteration — the same reuse model as the local-do and
+  the top-level generated-do. No new scheduling semantics.

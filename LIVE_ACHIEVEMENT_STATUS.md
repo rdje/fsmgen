@@ -16313,3 +16313,12 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   activation/lowering (95 files, 902) sweeps PASS; `mdbook build docs/book`
   clean; `git diff --check` clean.
 - Next: PNT into the next scheduler-frontier item.
+
+## 2026-05-29: Selected R14 loop-contained repeat-body generated-do lowering (frontier #2)
+- Active tree: `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING`. Enables a
+  same-domain generated `(do child (params ...))` (+ bind/domain with params)
+  inside a single `(while ...)`/`(until ...)`-contained repeat. Threads the four
+  `_ir_repeat` params through the loop-body path so the generated child is
+  instantiated; cross-domain and spawn stay deferred.
+- PNT proceeding autonomously through all remaining frontier items (user
+  direction; no ordering question). `.1` selection commit; `.2` ships.

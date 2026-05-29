@@ -38012,3 +38012,21 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   13k/14/13h/13b, ISF_SPEC (+ t/1379 in focused-test index),
   ISF_DOWNSTREAM_INTEGRATION_SPEC, ISF_PUBLIC_INTERFACE_CONTRACT,
   SPECFORGE_FEEDBACK_RESPONSE. Tree complete.
+
+## 2026-05-29: R14 active tree selected — loop-contained repeat-body generated-do lowering (frontier #2)
+- User feedback: do NOT ask which frontier item is next; PNT through ALL of
+  them, any order ([[frontier-pnt-autonomy]]). Proceeding autonomously.
+- Goal: same-domain generated `(do child (params ...))` (+ bind/domain with
+  params) inside a single while/until-contained repeat now lowers (prior slice
+  deferred it with `loop-contained repeat-body generated do remains deferred`).
+- Probed: unlike local-do, a generated do consumes the 4 trailing `_ir_repeat`
+  params (`$spawn_refs`, `$constant_values`, `$generated_children`,
+  `$repeat_do_ordinal_ref`) — `_expand_loop_body` (~L8157) drops them; all 4
+  are in scope at the while/until dispatch (~L4648/4656), so thread them
+  through `_ir_while`/`_ir_until`/`_expand_loop_body`. The lowering in
+  `_ir_repeat` already emits the generated child + pushes it to spawn_refs for
+  composition. Semantics: one instance per lexical do site, re-triggered each
+  iteration (matches top-level). Cross-domain + spawn stay deferred.
+- Created `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING`. `.2` ships
+  threading + validator relaxation + t/1380 golden + doc sync. `.1` selection
+  only.
