@@ -959,14 +959,19 @@ transaction and shadow actor-level static names. Qualified package scalar
 constants such as `shared.WAIT_PARAM` are accepted by that same static wait
 contract when they resolve to non-negative integer literals.
 
-Generated or spawned nested child activation, cross-domain repeat-body `do`,
-deeper branch repeat activation, loop-contained repeat activation, and nested
-`stage` or `contract` clauses remain outside the shipped repeat-body subset.
-Cross-domain, loop-contained, and deeper-nested repeat-body `do`/`spawn`
-each now emit their own targeted `<axis> repeat-body <do|spawn> remains
-deferred` diagnostic so authors can identify which deferred lane is
-blocking their specific case; the original generic "supported only for
-top-level..." message remains as a safety-net fallback.
+A plain local `(do child)` inside a `(repeat ...)` that sits directly in a
+single `(while ...)` or `(until ...)` body is part of the shipped repeat-body
+subset. Generated or spawned nested child activation, cross-domain repeat-body
+`do`, deeper branch repeat activation, loop-contained repeat-body `spawn` and
+generated `do`, repeats reached through an additional branch/loop ancestor, and
+nested `stage` or `contract` clauses remain outside the shipped repeat-body
+subset. Cross-domain, loop-contained, and deeper-nested repeat-body `do`/`spawn`
+each emit their own targeted `<axis> repeat-body <do|spawn> remains
+deferred` diagnostic (the loop-contained generated-`do` lane emits
+`loop-contained repeat-body generated do remains deferred`) so authors can
+identify which deferred lane is blocking their specific case; the original
+generic "supported only for top-level..." message remains as a safety-net
+fallback.
 
 <details>
 <summary>Repeat-body audit markers</summary>

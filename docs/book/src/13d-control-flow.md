@@ -203,35 +203,68 @@ loop.
 Those branch-contained nested spawns reuse the static generated-child handoff
 model and preserve source-order samples before the spawn or sync states.
 
-Both branch-contained bound nested generated `do` subsets still reject deeper
-branch nesting and loop-contained repeats. Loop-contained and
-deeper-nested repeat-body `do`/`spawn` now emit targeted diagnostics
-(`loop-contained repeat-body <do|spawn> remains deferred` and
-`deeper-nested repeat-body <do|spawn> remains deferred`) so authors
-can identify which deferred lane is blocking their case.
+### Loop-contained repeat-body local `do`
 
-The loop-contained rejected shape is a `(repeat ...)` nested inside a
-`(while ...)` or `(until ...)` body whose body contains a `do` or
-`spawn` clause:
+A plain local `(do child)` — a `(do ...)` with no `(params ...)`, `(bind ...)`,
+or `(domain ...)` and a target that is not a generated child — directly inside
+a `(repeat ...)` that sits in a single `(while ...)` or `(until ...)` body
+lowers cleanly:
+
+```lisp
+(actor loop_contained_repeat_do
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (do worker)))
+    (complete done))
+  (transaction worker
+    (complete done)))
+```
+
+The scheduled `.fsm` reuses the proven repeat structure inside the loop body:
+the loop entry tests `cond`, `repeat_init` re-seeds the repeat counter from
+`loops` on each loop iteration, the blocking-do state asserts `worker_start`
+and awaits `worker_done`, and `repeat_check` decrements the counter and either
+re-runs the repeat block or returns to the loop check. So
+`(while cond (repeat N (do worker)))` means "while `cond`, run the worker
+`N` times per loop iteration"; `(until ...)` applies the post-test form of the
+same shape.
+
+This subset is intentionally narrow. The repeat must sit **directly** in a
+single loop body — a repeat reached through an extra `(when ...)`/`(switch ...)`
+ancestor, or through more than one loop, stays deferred (see below).
+
+### Loop-contained repeat-body `spawn` and generated `do` (deferred)
+
+Inside a loop-contained repeat, `spawn` and a *generated* `do` (one carrying
+`(params ...)`/`(bind ...)`/`(domain ...)`, or targeting a generated child)
+still fail closed with targeted diagnostics:
 
 ```text
 (transaction parent
   (on start)
-  (while cond                ;; loop wraps the repeat
+  (while cond                  ;; loop wraps the repeat
     (repeat loops
-      (do worker)))          ;; <-- not yet supported in a loop body
+      (spawn worker as w0)     ;; <-- spawn not yet supported in a loop body
+      (await_all done)))
   (complete done))
 ```
 
-The validator emits
-`Transaction 'parent': loop-contained repeat-body do remains
-deferred`. The symmetric form using `(spawn worker as w0)` plus
-`(await_all done)` inside the repeat body emits
-`Transaction 'parent': loop-contained repeat-body spawn remains
-deferred`. `(until ...)` produces the same diagnostic as `(while
-...)`. The deferred lane is loop-contained repeat-body lowering,
-which would integrate the loop pre-test (or post-test) with the
-nested-repeat re-entry proof.
+The validator emits `Transaction 'parent': loop-contained repeat-body spawn
+remains deferred` for the spawn form, and `Transaction 'parent':
+loop-contained repeat-body generated do remains deferred; only a plain local
+'(do child)' is supported inside a loop-contained repeat` for a generated `do`.
+A repeat wrapped by both a loop and a branch (for example
+`(while c1 (when c2 (repeat ...)))`) still routes through
+`Transaction 'parent': loop-contained repeat-body do remains deferred`. The
+deferred lanes would extend the loop-contained subset to outstanding child
+drains and deeper nesting.
 
 The deeper-nested rejected shape is a `(repeat ...)` reached through
 more than one branch ancestor — either two `(when ...)` clauses

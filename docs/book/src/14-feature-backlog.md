@@ -18,10 +18,14 @@ this chapter:
   gates — `repeat-count parameter`, `wait-count parameter`,
   `latency-bound parameter`, `watchdog-limit parameter` — each with
   its own deferral phrase (`t/1373`); loop-contained repeat-body
-  `<do|spawn>` remains deferred (`t/1374`); deeper-nested
+  `spawn` and generated `do` remain deferred (`t/1374`); deeper-nested
   repeat-body `<do|spawn>` remains deferred (`t/1375`).
+- **Loop-contained repeat-body local `do`**: a plain local `(do child)`
+  inside a `(repeat ...)` directly in a single `(while ...)`/`(until ...)`
+  body now lowers (`t/1379`); spawn and generated `do` in a
+  loop-contained repeat stay deferred.
 - **Book example correctness build gate**: every `lisp`-tagged book
-  example must parse + lower (`t/1376`). Current state: 32
+  example must parse + lower (`t/1376`). Current state: 34
   complete fixtures lower cleanly.
 - **Cookbook ISF recipes**: `docs/book/src/12-cookbook.md` now
   carries recipes 9-13 covering basic actor, spawn, parameterized
@@ -643,18 +647,21 @@ binding handoffs once when `(bind ...)` is paired with static `(params ...)`;
 it may also carry declared same-domain `(domain NAME)` metadata when static
 params are present.
 
-It rejects deeper branch nesting and loop-contained repeat activation.
-Loop-contained repeat-body `do` and `spawn` (a `(repeat ...)` nested
-inside `(while ...)` or `(until ...)` whose body contains a `do` or
-`spawn` clause) now fail closed with a targeted `loop-contained
-repeat-body <do|spawn> remains deferred` diagnostic instead of the
-generic "supported only for top-level repeat clauses..." message.
-Deeper-nested repeat-body `do` and `spawn` (deeper-when nesting or
-when-inside-switch nesting) now fail closed with a targeted
-`deeper-nested repeat-body <do|spawn> remains deferred` diagnostic;
-the original generic message remains as a safety-net fallback for
-shapes not yet classified. Broader loop-contained and deeper-nested
-implementations remain backlog.
+It rejects deeper branch nesting beyond the documented branch-contained
+subsets. A plain local `(do child)` inside a `(repeat ...)` directly in a
+single `(while ...)`/`(until ...)` body now lowers (it reuses the proven
+repeat schedule inside the loop body; see `t/1379`). Inside a loop-contained
+repeat, `spawn` still fails closed with `loop-contained repeat-body spawn
+remains deferred`, and a generated `do` (carrying `(params ...)`/`(bind ...)`/
+`(domain ...)` or targeting a generated child) fails closed with
+`loop-contained repeat-body generated do remains deferred`; a repeat reached
+through an additional branch/loop ancestor still emits `loop-contained
+repeat-body do remains deferred`. Deeper-nested repeat-body `do` and `spawn`
+(deeper-when nesting or when-inside-switch nesting) now fail closed with a
+targeted `deeper-nested repeat-body <do|spawn> remains deferred` diagnostic;
+the original generic message remains as a safety-net fallback for shapes not
+yet classified. Loop-contained `spawn`/generated `do` and broader
+deeper-nested implementations remain backlog.
 
 A top-level repeat body may use `(spawn child as inst [(params ...)] [(bind
 ...)] [(domain NAME)])` clauses when the same repeat body reaches `(await_all
@@ -786,9 +793,10 @@ requirement message. Cross-domain do without the `(domain ...)`
 annotation still surfaces the generic clock-domain violation message.
 Generated/spawn nested activation beyond the documented branch-contained
 generated `do` cases and the branch-contained spawned cases,
-deeper branch repeat activation, loop-contained repeat activation, and broader
-outstanding-child lifetime semantics beyond the mandatory-drain subset remain
-backlog.
+deeper branch repeat activation, loop-contained repeat-body `spawn` and
+generated `do` (the plain local `(do child)` loop-contained case is shipped),
+and broader outstanding-child lifetime semantics beyond the mandatory-drain
+subset remain backlog.
 
 The shipped branch-contained generated nested do subsets still keep
 unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,

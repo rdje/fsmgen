@@ -33462,3 +33462,30 @@ It is an exact-delay pulse request:
   repeat directly inside a single loop (`context_depths` exactly
   `{while=>1}`/`{until=>1}`) and only a plain local do; spawn, generated-do,
   await-sync, and deeper nesting stay fail-closed with targeted diagnostics.
+
+## 2026-05-29: shipped R14 loop-contained repeat-body local-do lowering (scheduler-frontier #1)
+- The single most important verification step was comparing the
+  loop-contained schedule against a known-good top-level repeat. They are
+  byte-identical except for the post-repeat successor (top-level → `_done`,
+  loop-contained → the loop check state). Because the repeat block reuses the
+  proven `repeat_init`/blocking-do/`repeat_check` structure verbatim, the
+  loop-contained case inherits its correctness — no new scheduling logic, so
+  no new failure modes. This is why the change is a validator gate relaxation
+  with zero edits to `_ir_repeat`/`_expand_loop_body`.
+- Test layout choice: the now-accepted while/until local-do case was REMOVED
+  from `t/1374`'s rejection assertions (it would otherwise be a false
+  negative) and the rejection there repointed to the generated-child-do
+  sub-case (still deferred). `t/1375`'s "loop-contained fires first" negative
+  control was repointed to a `when`-inside-`while` shape, which still emits
+  `loop-contained repeat-body do remains deferred` and demonstrates the
+  loop-contained diagnostic wins over the deeper-nested one. The accept-path
+  golden lives in the new `t/1379`.
+- Boundary observed while probing: `while`-inside-`while` is rejected even
+  earlier as an unsupported `(while ...)` clause inside a loop body (loops are
+  not supported direct loop-body children), so deeper loop nesting never
+  reaches the repeat-body gate. `when`-inside-`while` does reach the gate and
+  stays deferred via `_repeat_body_context_is_loop_contained`.
+- The 13d accept example is a runnable `lisp` `(actor ...)` block so `t/1376`
+  lowers it (count went 33 → 34); the spawn/generated deferral example stays a
+  `text` block. Also corrected the stale "32 complete fixtures" count in
+  `14-feature-backlog.md` to 34 (it had drifted by one in the prior slice).

@@ -1246,12 +1246,17 @@ Rules:
   `(domain NAME)` as declared same-domain metadata when static `(params ...)`
   overrides are present.
 
-  Deeper branch nesting and loop-contained repeats remain outside both nested
-  subsets. Loop-contained repeat-body `do` and `spawn` now emit a
-  targeted `loop-contained repeat-body <do|spawn> remains deferred`
-  diagnostic instead of the generic "supported only for top-level..."
-  message. Deeper-nested repeat-body `do` and `spawn` (deeper-when
-  nesting or when-inside-switch nesting) emit a targeted
+  Deeper branch nesting remains outside both nested subsets. A plain local
+  `(do child)` inside a `(repeat ...)` directly in a single `(while ...)`/
+  `(until ...)` body lowers (it reuses the proven repeat schedule inside the
+  loop body). Inside a loop-contained repeat, `spawn` emits the targeted
+  `loop-contained repeat-body spawn remains deferred` diagnostic and a
+  generated `do` (carrying `(params ...)`/`(bind ...)`/`(domain ...)` or
+  targeting a generated child) emits `loop-contained repeat-body generated do
+  remains deferred`; a repeat reached through an additional branch/loop
+  ancestor still emits `loop-contained repeat-body do remains deferred`.
+  Deeper-nested repeat-body `do` and `spawn` (deeper-when nesting or
+  when-inside-switch nesting) emit a targeted
   `deeper-nested repeat-body <do|spawn> remains deferred` diagnostic;
   the generic message remains as a safety-net fallback.
 
@@ -1971,8 +1976,10 @@ Rules:
   run static-parameter same-domain generated `(do child (params ...) [(bind
   ...)] (domain NAME))` in that pending interval.
 
-  No deeper branch repeat or loop-contained repeat is included in those
-  shipped nested subsets.
+  No deeper branch repeat is included in those shipped nested subsets, and
+  loop-contained repeats accept only a plain local `(do child)` (their own
+  shipped subset described above) — loop-contained `spawn` and generated `do`
+  stay deferred.
 
   Top-level repeat bodies may also use `(do child (params ...))` with static
   parameter overrides; that form creates one generated child activation

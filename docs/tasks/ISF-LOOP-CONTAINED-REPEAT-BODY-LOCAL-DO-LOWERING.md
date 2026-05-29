@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`
@@ -104,32 +104,32 @@ The supported shape:
 ## Task Tree
 
 - ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING`
-  Status: `active`
+  Status: `done`
   Goal: `Lower loop-contained repeat-body plain local (do); keep spawn/generated-do deferred.`
   Children:
     `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.1`,
     `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.2`
 
 - ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the slice; record probed ground truth, scope, and the validator-only plan.`
   Acceptance: `Task tree committed before any code/test/doc change.`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `107ca400`
 
 - ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Relax the validator gate for plain local do; add t/1379 golden + update t/1374; sync docs; validate.`
   Acceptance: `Accept-path lowers + round-trips; deferred cases still fail closed; audits green.`
-  Verification: `prove -Iperl t/1379 t/1374 t/1375 t/1307 t/1305 t/1376 t/1332 t/1250; mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Verification: `prove -Iperl t/1379 t/1374 t/1375 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250; mdbook build docs/book; git diff --check`
+  Commit: `ship commit (this slice)`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `pending` | Selection commit before any code/test/doc change. |
-| 2 | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `pending` | Ship the validator relaxation + golden + doc sync. |
+| 1 | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `done` | Selection commit `107ca400`. |
+| 2 | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `done` | Validator relaxation + `t/1379` golden + doc sync shipped; tree closed. |
 
 ## Decisions
 
@@ -159,18 +159,27 @@ The supported shape:
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-29` | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-29` | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `prove -Iperl t/1379 t/1374 t/1375 t/1307 t/1305 t/1376 t/1332 t/1250`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-29` | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-29` | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `prove -Iperl t/1379 t/1374 t/1375 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250` (Files=9, Tests=864, PASS); repeat/loop sweep (14 files) + do/spawn/activation/lowering sweep (95 files, 902 tests) PASS; `--check-json` success + SV HDL emit; `mdbook build docs/book` (clean); `git diff --check` (clean) | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.1: select loop-contained repeat-body local-do lowering` | `pending commit hash` |
-| `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.2: ship loop-contained repeat-body local-do lowering` | `pending commit hash` |
+| `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.1: select loop-contained repeat-body local-do lowering` | `107ca400` |
+| `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.2: ship loop-contained repeat-body local-do lowering` | `ship commit (this slice)` |
 
 ## Changelog
 
 - `2026-05-29`: Created. Scheduler-frontier #1, user-confirmed. Validator-only
   enablement of plain local `(do)` inside a single while/until-contained
   repeat; spawn and generated-do stay deferred.
+- `2026-05-29`: `.1` selection committed (`107ca400`).
+- `2026-05-29`: `.2` shipped. Added `$loop_body_repeat` to
+  `_validate_repeat_body_spawn_subset`; the `do` gate now accepts a plain
+  local do under a single while/until-contained repeat and emits
+  `loop-contained repeat-body generated do remains deferred` for the generated
+  case. Schedule verified byte-identical to the proven top-level repeat;
+  `--check-json` success + SV HDL emit. Added `t/1379`; updated `t/1374`/
+  `t/1375`; synced 13d/13k/14/13h/13b + ISF_SPEC (+ focused-test index) +
+  downstream/contract/SPECFORGE response. All validation green; tree closed.

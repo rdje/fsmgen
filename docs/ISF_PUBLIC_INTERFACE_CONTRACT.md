@@ -1112,10 +1112,18 @@ Cross-domain repeat-body `do` rejection emits a targeted
 `cross-domain repeat-body do remains deferred` diagnostic and is
 checked by
 [t/1372-isf-cross-domain-repeat-body-do-diagnostic.t](../t/1372-isf-cross-domain-repeat-body-do-diagnostic.t).
-Loop-contained repeat-body `do`/`spawn` emits a targeted
-`loop-contained repeat-body <do|spawn> remains deferred`
-diagnostic and is checked by
-[t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t).
+A plain local `(do child)` inside a `(repeat ...)` directly in a single
+`(while ...)`/`(until ...)` body lowers (its accept-path schedule is
+checked by
+[t/1379-isf-loop-contained-repeat-body-local-do.t](../t/1379-isf-loop-contained-repeat-body-local-do.t)).
+Loop-contained repeat-body `spawn` emits a targeted
+`loop-contained repeat-body spawn remains deferred` diagnostic, a
+loop-contained generated `do` emits `loop-contained repeat-body generated
+do remains deferred`, and a repeat reached through an additional branch/loop
+ancestor emits `loop-contained repeat-body do remains deferred`; these are
+checked by
+[t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t)
+and [t/1379-isf-loop-contained-repeat-body-local-do.t](../t/1379-isf-loop-contained-repeat-body-local-do.t).
 Deeper-nested repeat-body `do`/`spawn` (deeper-when or
 when-inside-switch) emits a targeted `deeper-nested repeat-body
 <do|spawn> remains deferred` diagnostic and is checked by
@@ -1456,8 +1464,10 @@ overrides are present; the generated top wires those input/output binding
 handoffs once for the lexical nested do site. When-contained and
 switch-contained generated nested `do` also accept `(domain NAME)` as declared
 same-domain metadata when static `(params ...)` overrides are present. Deeper
-branch nesting and loop-contained repeats remain
-outside both nested subsets. Generated
+branch nesting remains outside both nested subsets. A plain local `(do child)`
+inside a `(repeat ...)` directly in a single `(while ...)`/`(until ...)` body
+is its own shipped subset; loop-contained `spawn` and generated `do` stay
+deferred. Generated
 repeat-body `do` emits one generated child instance for the lexical do site,
 applies the parameter override once in the generated top, wires optional
 binding handoff ports once for that generated instance, records same-domain

@@ -10,10 +10,14 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 
-subtest 'loop-contained repeat-body do emits the targeted diagnostic' => sub {
+# A plain local (do child) directly inside a single (while ...)/(until ...)
+# -contained repeat now LOWERS (see t/1379). The loop-contained do deferral
+# now applies to the generated-do sub-case and to repeats reached through
+# additional branch nesting.
+subtest 'loop-contained repeat-body generated do emits the targeted diagnostic' => sub {
     assert_lower_rejected(
         <<'ISF',
-(actor while_repeat_do_probe
+(actor while_repeat_generated_do_probe
   (clock clk)
   (reset rst_n)
   (interface
@@ -21,6 +25,8 @@ subtest 'loop-contained repeat-body do emits the targeted diagnostic' => sub {
     (output done))
   (transaction parent
     (on start)
+    (spawn worker as w0)
+    (await_all done)
     (while cond
       (repeat loops
         (do worker)))
@@ -28,13 +34,13 @@ subtest 'loop-contained repeat-body do emits the targeted diagnostic' => sub {
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': loop-contained repeat-body do remains deferred/,
-        'while-contained repeat-body do is rejected with the targeted diagnostic',
+        qr/Transaction 'parent': loop-contained repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported inside a loop-contained repeat/,
+        'while-contained repeat-body generated-child do is rejected with the targeted diagnostic',
     );
 
     assert_lower_rejected(
         <<'ISF',
-(actor until_repeat_do_probe
+(actor until_repeat_generated_do_probe
   (clock clk)
   (reset rst_n)
   (interface
@@ -42,6 +48,8 @@ ISF
     (output done))
   (transaction parent
     (on start)
+    (spawn worker as w0)
+    (await_all done)
     (until cond
       (repeat loops
         (do worker)))
@@ -49,8 +57,8 @@ ISF
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': loop-contained repeat-body do remains deferred/,
-        'until-contained repeat-body do is rejected with the targeted diagnostic',
+        qr/Transaction 'parent': loop-contained repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported inside a loop-contained repeat/,
+        'until-contained repeat-body generated-child do is rejected with the targeted diagnostic',
     );
 };
 

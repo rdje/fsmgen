@@ -16298,3 +16298,18 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   stay deferred.
 - `.1` is this selection commit (no code/test/doc change yet). `.2` ships the
   validator change + `t/1379` golden + book/spec doc sync.
+
+## 2026-05-29: Completed R14 loop-contained repeat-body local-do lowering (scheduler-frontier #1)
+- Tree `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING` is `done`. A plain
+  local `(do child)` inside a `(repeat ...)` directly in a single
+  `(while ...)`/`(until ...)` body now lowers (validator-only gate relaxation
+  in `_validate_repeat_body_spawn_subset`). Public behavior changed: yes — a
+  previously fail-closed shape now lowers; spawn/generated-do/deeper nesting
+  stay deferred.
+- Schedule is byte-identical to the proven top-level repeat; `--check-json`
+  success and SV HDL emits with all five states.
+- Verification: `prove -Iperl t/1379 t/1374 t/1375 t/1304 t/1307 t/1305 t/1376
+  t/1332 t/1250` PASS (Files=9, Tests=864); repeat/loop (14) + do/spawn/
+  activation/lowering (95 files, 902) sweeps PASS; `mdbook build docs/book`
+  clean; `git diff --check` clean.
+- Next: PNT into the next scheduler-frontier item.

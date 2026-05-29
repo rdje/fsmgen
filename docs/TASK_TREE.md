@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING` | `active` | `R14` | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | [docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.md](docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.md) |
+| _(none active)_ | | | | |
 
 ## Proposed Task Trees
 
@@ -59,6 +59,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING` | `done` | `R14` | `closed` | [docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.md](docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.md) |
 | `ISF-ENUM-TYPE-RELATIONSHIP-CLARITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.md](docs/tasks/ISF-ENUM-TYPE-RELATIONSHIP-CLARITY.md) |
 | `R14-ASPECT-COVERAGE-AUDIT` | `done` | `R14` | `closed` | [docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md](docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md) |
 | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE` | `done` | `R14` | `closed` | [docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md](docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md) |

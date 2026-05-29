@@ -6342,6 +6342,13 @@ sub _validate_repeat_body_spawn_subset {
         && _context_depths_match_exactly($context_depths, { when => 1 });
     my $switch_branch_repeat = $label eq 'switch branch'
         && _context_depths_match_exactly($context_depths, { switch => 1 });
+    # A repeat directly inside a single (while ...)/(until ...) body, with no
+    # other branch/loop nesting. Only a plain local (do child) is enabled here
+    # (a validator gate relaxation; the lowering already handles it). spawn,
+    # generated do, await-sync, and deeper nesting stay deferred.
+    my $loop_body_repeat = ($label eq 'while body' || $label eq 'until body')
+        && (_context_depths_match_exactly($context_depths, { while => 1 })
+            || _context_depths_match_exactly($context_depths, { until => 1 }));
     my $pending_local_do_label = $when_body_repeat
         ? 'when-body'
         : $switch_branch_repeat
@@ -6432,18 +6439,30 @@ sub _validate_repeat_body_spawn_subset {
         }
 
         if ($keyword eq 'do') {
-            if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat)) {
-                confess "Transaction '$tn': loop-contained repeat-body do remains deferred\n"
-                    if _repeat_body_context_is_loop_contained($context_depths);
-                confess "Transaction '$tn': deeper-nested repeat-body do remains deferred\n"
-                    if _repeat_body_context_is_deeper_nested($label, $context_depths);
-                confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n";
-            }
             my $uses_generated_params = _repeat_body_do_uses_generated_params($body_clause);
             my $uses_bindings = _repeat_body_do_uses_bindings($body_clause);
             my $uses_domain = _repeat_body_do_uses_domain($body_clause);
             my $target = $body_clause->[1];
             my $generated_do = _repeat_body_do_is_generated_activation($body_clause, $target, $generated_children);
+            my $plain_local_do = !$uses_generated_params
+                && !$uses_bindings
+                && !$uses_domain
+                && !$generated_do;
+            if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat)) {
+                if ($loop_body_repeat) {
+                    # A repeat directly inside a single while/until body may run
+                    # a plain local (do child); a generated do (params/bind/
+                    # domain or generated-child target) stays deferred here.
+                    confess "Transaction '$tn': loop-contained repeat-body generated do remains deferred; only a plain local '(do child)' is supported inside a loop-contained repeat\n"
+                        unless $plain_local_do;
+                } else {
+                    confess "Transaction '$tn': loop-contained repeat-body do remains deferred\n"
+                        if _repeat_body_context_is_loop_contained($context_depths);
+                    confess "Transaction '$tn': deeper-nested repeat-body do remains deferred\n"
+                        if _repeat_body_context_is_deeper_nested($label, $context_depths);
+                    confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n";
+                }
+            }
             for my $subclause (@{$body_clause}[2 .. $#$body_clause]) {
                 confess "Transaction '$tn': repeat-body generated do supports only static '(params ...)', '(bind ...)', and '(domain ...)' in the generated blocking-do subset\n"
                     unless ref($subclause) eq 'ARRAY'

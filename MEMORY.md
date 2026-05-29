@@ -37990,3 +37990,25 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   spawn + generated-do + deeper nesting stay deferred. Created
   `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING`. `.2` ships the
   validator change + t/1379 golden + doc sync. `.1` is selection only.
+
+## 2026-05-29: R14 shipped — loop-contained repeat-body local-do lowering (scheduler-frontier #1)
+- `.2` shipped. Validator-only change in `_validate_repeat_body_spawn_subset`
+  (LoweringIR.pm): added `$loop_body_repeat` (label 'while body'/'until body'
+  with context_depths exactly {while=>1}/{until=>1}); the `do` gate now allows
+  a plain local do under `$loop_body_repeat` and emits a new
+  `loop-contained repeat-body generated do remains deferred` message for the
+  generated case. spawn gate untouched (still deferred).
+- Verified the loop-contained schedule is byte-identical to the proven
+  top-level repeat (repeat_init seeds counter, blocking-do awaits child _done,
+  repeat_check decrements → re-run or loop-check); differs only in the
+  post-repeat successor (loop check vs done). `--check-json` success; full SV
+  HDL emits with all five states. No lowering edit needed.
+- Tests: added `t/1379` (accept while+until golden + deferred generated/spawn/
+  when-in-while). Updated `t/1374` (subtest 1 now asserts generated-do
+  deferral) and `t/1375` (negative control repointed to when-in-while).
+  Regression: repeat/loop sweep (14 files) + do/spawn/activation/lowering
+  sweep (95 files, 902 tests) + doc-truth audits all PASS.
+- Docs synced: 13d (runnable accept example + spawn/generated deferral),
+  13k/14/13h/13b, ISF_SPEC (+ t/1379 in focused-test index),
+  ISF_DOWNSTREAM_INTEGRATION_SPEC, ISF_PUBLIC_INTERFACE_CONTRACT,
+  SPECFORGE_FEEDBACK_RESPONSE. Tree complete.

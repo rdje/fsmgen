@@ -14648,3 +14648,10 @@ Exit criteria:
   `_expand_loop_body` already lower a repeat-body local do correctly; spawn,
   generated-do, and deeper nesting stay deferred. `.2` ships the change +
   `t/1379` golden + doc sync.
+- `R14`: `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING` is **completed**
+  (`.2` shipped). A plain local `(do child)` inside a `(repeat ...)` directly
+  in a single `(while ...)`/`(until ...)` body now lowers (validator-only gate
+  relaxation; schedule is byte-identical to the proven top-level repeat,
+  `--check-json` success, SV HDL emits). spawn, generated-do, and deeper
+  nesting stay deferred. Locked by `t/1379` (+ updated `t/1374`/`t/1375`);
+  book/spec docs synced. Next: PNT into the next scheduler-frontier item.

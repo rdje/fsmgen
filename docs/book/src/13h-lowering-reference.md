@@ -1427,15 +1427,20 @@ The when-contained and switch-contained generated cases also accept `(domain
 NAME)` as declared same-domain metadata when static `(params ...)` overrides
 are present.
 
-Both nested subsets reject deeper branch nesting, loop-contained repeats, and
-generated/spawned nested activation beyond the documented branch-contained
-generated `do` cases and the branch-contained generated-spawn cases.
-Loop-contained repeat-body `do` and `spawn` (a `(repeat ...)` nested
-inside `(while ...)` or `(until ...)`) emit a targeted `loop-contained
-repeat-body <do|spawn> remains deferred` diagnostic. Deeper-nested
-repeat-body `do` and `spawn` (deeper-when nesting or when-inside-switch
-nesting) emit a targeted `deeper-nested repeat-body <do|spawn> remains
-deferred` diagnostic. The original generic "supported only for
+Both nested subsets reject deeper branch nesting and generated/spawned nested
+activation beyond the documented branch-contained generated `do` cases and the
+branch-contained generated-spawn cases. A plain local `(do child)` inside a
+`(repeat ...)` that sits directly in a single `(while ...)` or `(until ...)`
+body now lowers: it reuses the proven repeat schedule (`repeat_init` re-seeds
+the counter each loop iteration, the blocking-do awaits the child `_done` port,
+and `repeat_check` re-runs the repeat or returns to the loop check). Inside a
+loop-contained repeat, `spawn` emits the targeted `loop-contained repeat-body
+spawn remains deferred` diagnostic and a generated `do` emits `loop-contained
+repeat-body generated do remains deferred`; a repeat reached through an
+additional branch or loop ancestor still emits `loop-contained repeat-body do
+remains deferred`. Deeper-nested repeat-body `do` and `spawn` (deeper-when
+nesting or when-inside-switch nesting) emit a targeted `deeper-nested
+repeat-body <do|spawn> remains deferred` diagnostic. The original generic "supported only for
 top-level..." message remains as a safety-net fallback for shapes not
 yet classified.
 
