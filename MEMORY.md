@@ -38083,3 +38083,15 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   ISF_SPEC (+ t/1381 index), downstream/contract/SPECFORGE response. Audit set
   (12 files, 970) PASS. Tree complete. Remaining frontier: loop-contained spawn,
   cross-domain generated do, deeper-nested generated do/spawn.
+
+## 2026-05-29: R14 active tree selected — deeper-nested repeat-body generated-do lowering (frontier #4)
+- Goal: same-domain generated `(do child (params ...))` at deeper branch
+  nesting (`when⁺→repeat`, `switch→when⁺→repeat`) lowers + instantiates child.
+- Probed: 3-part change (like the loop generated-do slice but for branches):
+  (1) collector recursion — `_child_action_refs_from_transaction_clauses`
+  when/switch branches only find a DIRECT repeat, so a deeper-nested generated
+  child isn't discovered (params rejected); (2) thread the 4 `_ir_repeat`
+  params through the nested `_expand_when`(8095)/`_expand_switch`(8138)
+  recursions; (3) validator: admit deeper-nested generated do. Cross-domain +
+  spawn stay deferred. Created `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING`.
+  `.2` ships it + t/1382. [[frontier-pnt-autonomy]].

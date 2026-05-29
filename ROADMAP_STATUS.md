@@ -14683,3 +14683,10 @@ Exit criteria:
   `t/1375`/`t/1215`); docs synced. Deeper-nested generated do/spawn stay
   deferred. Next: PNT into the remaining frontier (loop-contained spawn,
   cross-domain generated do, deeper-nested generated do/spawn).
+- `R14`: active task tree — `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING`
+  (scheduler-frontier #4). Same-domain generated `(do child (params ...))` at
+  deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) now
+  lowers + instantiates the child. A 3-part change: collector recursion, thread
+  the four `_ir_repeat` params through the nested branch recursions, and
+  validator relaxation. Cross-domain generated do and spawn stay deferred. `.2`
+  ships it + `t/1382`.

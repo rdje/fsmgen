@@ -16354,3 +16354,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `mdbook build` clean; `git diff --check` clean.
 - Next: PNT into the remaining frontier (loop-contained spawn, cross-domain
   generated do, deeper-nested generated do/spawn).
+
+## 2026-05-29: Selected R14 deeper-nested repeat-body generated-do lowering (frontier #4)
+- Active tree: `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING`. Same-domain
+  generated `(do child (params ...))` at deeper branch nesting lowers +
+  instantiates the child. 3-part change (collector recursion, param threading
+  through nested branch recursions, validator relaxation). Cross-domain + spawn
+  stay deferred. `.1` selection; `.2` ships.

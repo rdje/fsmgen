@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| _(none active)_ | | | | |
+| `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING` | `active` | `R14` | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | [docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.md](docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.md) |
 
 ## Proposed Task Trees
 

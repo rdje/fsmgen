@@ -33559,3 +33559,15 @@ It is an exact-delay pulse request:
   buried far from the obvious diagnostic test. A `grep -rn` of all of t/ for the
   exact lifted message would have found them up front — adopt that as the first
   step whenever a deferral is lifted.
+
+## 2026-05-29: selected R14 deeper-nested repeat-body generated-do lowering (frontier #4)
+- This is the branch-nesting analogue of the loop-contained generated-do slice.
+  Same three moving parts: collector discovery must reach the deeper-nested
+  repeat, the lowering must thread the generated-do params through the nested
+  branch recursions, and the validator must admit it. The collector recursion
+  is the part that differs from the loop case: `_child_action_refs_from_transaction_clauses`
+  must descend through nested `when`/`switch` (not just one level) to find the
+  repeat — mirroring `_push_static_zero_child_action_refs_recursive` which
+  already recurses. Discovery only needs the child NAME (the set keys on
+  `$clause->[1]`), so the collector ordinal is irrelevant; the instance name
+  comes from the lowering's per-transaction `$repeat_do_ordinal_ref`.
