@@ -38153,3 +38153,14 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   message). Added `t/1383`. Audit set (15 files, 980) + broad regression (123
   files, 957) PASS. Tree complete. Remaining frontier: cross-domain generated
   do (loop/deeper), and the undrained/multi-pending spawn-drain variants.
+
+## 2026-05-30: R14 active tree selected — loop/deeper multi-pending await_any lowering (frontier #6, completes nesting frontier)
+- Probed support: multi-pending await_any + later await_all is supported at
+  top-level AND when/switch, but I DEFERRED it for loop/deeper in slice #5.
+  Cross-domain repeat-body do is deferred at top-level too → net-new CDC, NOT a
+  nesting extension (excluded from this frontier). So the nesting frontier has
+  ONE clean item left: lift the two multi-pending await_any deferral confesses
+  for loop/deeper. The end-of-validator drain-requirement still rejects
+  undrained; when/switch sequencing rules skip loop/deeper (matching top-level).
+- Created `ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING`.
+  `.2` removes the 2 confesses + t/1384. [[frontier-pnt-autonomy]].

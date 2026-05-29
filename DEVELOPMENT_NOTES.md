@@ -33626,3 +33626,13 @@ It is an exact-delay pulse request:
 - Cascade discipline confirmed again: lifting the spawn deferral broke 7 test
   files; grepping all of t/ for the lifted message found them, and each was
   repointed to the undrained-spawn drain-requirement (still a real deferral).
+
+## 2026-05-30: selected R14 loop/deeper multi-pending await_any lowering (frontier #6)
+- The "what's actually left" check matters here: the user asked to PNT the
+  frontier to exhaustion. Probing showed the nesting frontier (extend top-level/
+  when/switch repeat-body activation subsets to loop/deeper) has exactly ONE
+  clean item left — multi-pending await_any, which I myself deferred in #5.
+  Everything else still "deferred" for loop/deeper (cross-domain do) is ALSO
+  deferred at top-level, so it is not a nesting extension but net-new CDC
+  lowering — a different roadmap effort, not part of this frontier. Recording
+  this so the loop terminates honestly rather than inventing work.

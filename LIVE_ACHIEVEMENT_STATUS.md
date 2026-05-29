@@ -16395,3 +16395,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `git diff --check` clean.
 - Next: cross-domain generated do (loop/deeper), plus the undrained/multi-pending
   spawn-drain variants if pursued.
+
+## 2026-05-30: Selected R14 loop/deeper multi-pending await_any lowering (frontier #6)
+- Active tree: `ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING`.
+  Lifts the multi-pending `(await_any done)` + later `(await_all done)` deferral
+  for loop/deeper (supported at top-level + when/switch). Completes the nesting
+  frontier; cross-domain repeat-body `do` is net-new CDC, not part of it. `.1`
+  selection; `.2` ships + `t/1384`.

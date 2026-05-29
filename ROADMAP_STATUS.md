@@ -14716,3 +14716,9 @@ Exit criteria:
   Undrained / multi-pending spawn and cross-domain stay deferred. Locked by
   `t/1383` (+ 7 test files repointed to the undrained-spawn deferral). Next:
   cross-domain generated do (loop/deeper).
+- `R14`: active task tree — `ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING`
+  (scheduler-frontier #6, completes the nesting frontier). Lifts the multi-pending
+  `(await_any done)` + later `(await_all done)` deferral for loop-contained /
+  deeper-nested repeats (already supported at top-level + when/switch). Cross-domain
+  repeat-body `do` is NOT part of this frontier (deferred at top-level too → net-new
+  CDC lowering). `.2` removes the two deferral confesses + adds `t/1384`.
