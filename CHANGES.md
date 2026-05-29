@@ -30256,3 +30256,6 @@ This is the persistent technical change history for FSMGen.
 - Added [t/1377-book-fsm-example-generation-audit.t](t/1377-book-fsm-example-generation-audit.t): a black-box gate that extracts every `lisp` block containing a generation root (`?fsm:`/`?dt:`/`?top:`/`?mod:`/`?module:`/`+fsm`) from chapters 01-08 and 12 and asserts each passes `./bin/fsmgen --check-json` (success: true), mirroring the `IPC::Cmd::run` idiom in t/300. Post-state: 11 standalone `.fsm` fixtures generate cleanly.
 - The `lisp` (standalone-runnable) vs `text` (schematic/multi-file) block-tag convention is now enforced on both the ISF surface (t/1376) and the non-ISF `.fsm` surface (t/1377).
 - Book audit family passes: `prove -Iperl t/1377 t/1376 t/1305 t/1307 t/1332` (Files=5, Tests=713).
+
+### active R14 task tree selected: cookbook composition recipes runnable
+- Created [docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md](docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md) to upgrade cookbook recipes 3/4/5 from honest `text` schematics to self-contained inline-runnable `lisp` composition examples grounded in patterns the composition suite (`t/101`) already asserts generate. Selection commit only; no book change.

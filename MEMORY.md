@@ -37887,3 +37887,20 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Active task tree: `none`. Deferred follow-up: upgrade specific
   composition/cookbook recipes to fully inline-runnable multi-file
   fixtures.
+
+## 2026-05-29: R14 active task tree selected — cookbook composition recipes runnable
+- Created `BOOK-COOKBOOK-COMPOSITION-RUNNABLE`. The prior slice
+  honestly demoted cookbook composition recipes 3/4/5 to `text`, but
+  the cookbook promises "copyable patterns." Composition examples CAN
+  be self-contained via embedded child/`?rtlif` roots.
+- Verified standalone-generating patterns lifted from
+  `t/101-composition-explicit-link-implicit-ports.t`: C1 single
+  embedded child (inferred ports), C2 two embedded children with
+  slash-delimited `/src/dst/` wiring, C3 `?rtl` + embedded `?rtlif`
+  with `/=8'hA5/.../`,`/=open/.../` structural-actual defaults. The
+  key correction vs the demoted schematics: wiring uses `/src/dst/`,
+  not `(src dst)`.
+- Scope: upgrade recipes 3/4/5 to inline-runnable `lisp`; recipes 6
+  (package) and 7 (aggregate) stay `text`; chapter 05/06 teaching
+  snippets stay schematic.
+- `.1` select (this), `.2` ship + revalidate via `t/1377`.

@@ -16252,3 +16252,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   (Files=5, Tests=713); `mdbook build docs/book`; `git diff --check`.
 - Next bounded slice: PNT continues; deferred follow-up is upgrading
   composition/cookbook recipes to fully inline-runnable fixtures.
+
+## 2026-05-29: Selected R14 cookbook composition recipes runnable
+- Active tree: `BOOK-COOKBOOK-COMPOSITION-RUNNABLE`. Upgrade recipes
+  3/4/5 to verified inline-runnable `lisp`. `.1` is this selection.

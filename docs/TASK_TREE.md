@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `BOOK-COOKBOOK-COMPOSITION-RUNNABLE` | `pending` | `R14` | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2` | [docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md](docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md) |
 
 ## Proposed Task Trees
 

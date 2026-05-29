@@ -33383,3 +33383,12 @@ It is an exact-delay pulse request:
 - Two-layer coverage now: t/1376 (ISF `(actor` lower) + t/1377
   (non-ISF `.fsm` generate). A copy-pasted `lisp` book example is
   guaranteed to work on whichever layer it belongs to.
+
+## 2026-05-29: active R14 task tree — cookbook composition recipes runnable
+- Composition wiring uses slash-delimited `/source/dest/`, not
+  `(source dest)`. The demoted cookbook schematics had the list form,
+  which was a second reason they failed. The upgrade adopts the
+  verified `t/101` patterns (C1/C2/C3) with embedded children/`?rtlif`.
+- Grounding in an already-asserted-good test pattern (rather than
+  authoring fresh composition wiring) is the signoff-quality guard:
+  the repo's legacy composition samples do not even `--check` cleanly.

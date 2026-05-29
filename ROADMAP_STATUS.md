@@ -14611,3 +14611,7 @@ Exit criteria:
   the non-ISF gate (t/1377, 11 generated) together lock every
   copy-pasteable book example. Book audit family passes at
   `Files=5, Tests=713`.
+- `R14`: next active task tree — `BOOK-COOKBOOK-COMPOSITION-RUNNABLE`.
+  Upgrades cookbook recipes 3/4/5 from `text` schematics to verified
+  inline-runnable `lisp` composition examples (C1/C2/C3 patterns proven
+  by `t/101`), gated by `t/1377`.
