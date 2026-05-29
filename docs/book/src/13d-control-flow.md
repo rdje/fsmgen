@@ -297,28 +297,43 @@ A repeat wrapped by both a loop and a branch (for example
 remaining deferred lanes would extend the loop-contained subset to
 outstanding-child spawn drains and deeper nesting.
 
-The deeper-nested rejected shape is a `(repeat ...)` reached through
-more than one branch ancestor — either two `(when ...)` clauses
-nested directly, or a `(when ...)` inside a `(switch ...)` case:
+### Deeper-nested repeat-body local `do`
 
-```text
-(transaction parent
-  (on start)
-  (when cond1
-    (when cond2              ;; second when wraps the repeat
-      (repeat loops
-        (do worker))))       ;; <-- not yet supported at deeper nesting
-  (complete done))
+A plain local `(do child)` inside a `(repeat ...)` reached through more than one
+branch ancestor — two or more `(when ...)` clauses (`when⁺ → repeat`), or a
+`(when ...)` inside a `(switch ...)` case (`switch → when⁺ → repeat`) — also
+lowers:
+
+```lisp
+(actor deeper_nested_repeat_do
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond1) (input cond2) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (when cond1
+      (when cond2
+        (repeat loops
+          (do worker))))
+    (complete done))
+  (transaction worker
+    (complete done)))
 ```
 
-The validator emits
-`Transaction 'parent': deeper-nested repeat-body do remains
-deferred`. The same diagnostic also fires for a `(switch sel (case 0
-(when cond (repeat ...))))` shape. The deferred lane is deeper-nested
-repeat-body lowering, which would extend the branch-contained
-shipped subset to additional nesting depths. The generic
-"supported only for top-level repeat clauses..." message remains as
-a safety-net fallback for shapes not yet classified.
+Each branch guard reaches the repeat block, which reuses the proven
+`repeat_init` → blocking-do → `repeat_check` schedule. (A nested `(switch ...)`
+inside a `(when ...)` body or another `(switch ...)` branch is itself an
+unsupported clause, so the reachable deeper-nested shapes are exactly these.)
+
+A **generated** `do` at deeper branch nesting stays deferred and emits
+`Transaction 'parent': deeper-nested repeat-body generated do remains deferred;
+only a plain local '(do child)' is supported at deeper branch nesting`; a
+deeper-nested `spawn` emits `Transaction 'parent': deeper-nested repeat-body
+spawn remains deferred`. The generic "supported only for top-level repeat
+clauses..." message remains as a safety-net fallback for shapes not yet
+classified.
 
 The branch-contained shipped subsets accept one multi-pending
 `(await_any done)` observation that the same body's later

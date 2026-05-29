@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`
@@ -73,32 +73,32 @@ Third scheduler-frontier slice (after loop-contained local-do and generated-do).
 ## Task Tree
 
 - ID: `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING`
-  Status: `active`
+  Status: `done`
   Goal: `Lower deeper-nested (branch) repeat-body plain local (do); keep generated-do/spawn deferred.`
   Children:
     `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.1`,
     `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.2`
 
 - ID: `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the slice; record probed ground truth and scope.`
   Acceptance: `Task tree committed before any code/test/doc change.`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `5f0f8276`
 
 - ID: `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.2`
-  Status: `pending`
-  Goal: `Relax the validator deeper-nested do gate for plain local do; add t/1381; update t/1375; sync docs; validate.`
+  Status: `done`
+  Goal: `Relax the validator deeper-nested do gate for plain local do; add t/1381; update t/1375/t/1374/t/1215; sync docs; validate.`
   Acceptance: `Accept-path lowers + round-trips; deferred cases still fail closed; audits green.`
-  Verification: `prove -Iperl t/1381 t/1375 t/1374 t/1379 t/1380 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250; mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Verification: `prove -Iperl t/1381 t/1375 t/1374 t/1379 t/1380 t/1215 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250 (Files=12, Tests=970, PASS); broad regression PASS; --check-json clean; mdbook build docs/book; git diff --check`
+  Commit: `ship commit (this slice)`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `pending` | Selection commit before any code/test/doc change. |
-| 2 | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `pending` | Ship the validator relaxation + golden + doc sync. |
+| 1 | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `done` | Selection commit `5f0f8276`. |
+| 2 | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `done` | Validator relaxation + `t/1381` golden + doc sync shipped; tree closed. |
 
 ## Decisions
 
@@ -121,18 +121,25 @@ Third scheduler-frontier slice (after loop-contained local-do and generated-do).
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-29` | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-29` | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `prove -Iperl t/1381 t/1375 t/1374 t/1379 t/1380 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-29` | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-29` | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `prove -Iperl t/1381 t/1375 t/1374 t/1379 t/1380 t/1215 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250` (Files=12, Tests=970, PASS); broad regression PASS; `--check-json` clean; `mdbook build docs/book` (clean); `git diff --check` (clean) | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.1: select deeper-nested repeat-body local-do lowering` | `pending commit hash` |
-| `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.2: ship deeper-nested repeat-body local-do lowering` | `pending commit hash` |
+| `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.1` | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.1: select deeper-nested repeat-body local-do lowering` | `5f0f8276` |
+| `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.2` | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.2: ship deeper-nested repeat-body local-do lowering` | `ship commit (this slice)` |
 
 ## Changelog
 
 - `2026-05-29`: Created. Third scheduler-frontier slice. Plain local `(do)` at
   deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`); generated
   do and spawn stay deferred.
+- `2026-05-29`: `.1` selection committed (`5f0f8276`).
+- `2026-05-29`: `.2` shipped. Validator-only relaxation (the deeper-nested do
+  gate now admits a plain local do; a generated do emits the new `deeper-nested
+  repeat-body generated do remains deferred` message). Added `t/1381`; updated
+  `t/1375`, `t/1374`, and `t/1215` (which asserted the now-lifted local-do
+  deferral); synced book/spec docs (13d count 35→36). Audit set (12 files, 970)
+  + broad regression PASS; `--check-json` clean. Tree closed.

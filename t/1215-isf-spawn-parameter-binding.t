@@ -10396,12 +10396,17 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'double nested when repeat do', qr/deeper-nested repeat-body do remains deferred/);
-(actor double_nested_when_repeat_do
+    # A plain local deeper-nested do now lowers (see t/1381); a deeper-nested
+    # generated do (worker made a generated child via a top-level spawn) still
+    # routes through the deeper-nested generated-do deferral.
+    assert_lower_rejected(<<'ISF', 'double nested when repeat generated do', qr/deeper-nested repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported at deeper branch nesting/);
+(actor double_nested_when_repeat_generated_do
   (clock clk)
   (interface (input start) (input cond) (input inner_cond) (input loops (width 3)) (output done))
   (transaction parent
     (on start)
+    (spawn worker as w0)
+    (await_all done)
     (when cond
       (when inner_cond
         (repeat loops
@@ -10468,12 +10473,14 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested when repeat do', qr/deeper-nested repeat-body do remains deferred/);
-(actor switch_nested_when_repeat_do
+    assert_lower_rejected(<<'ISF', 'switch nested when repeat generated do', qr/deeper-nested repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported at deeper branch nesting/);
+(actor switch_nested_when_repeat_generated_do
   (clock clk)
   (interface (input start) (input mode) (input cond) (input loops (width 3)) (output done))
   (transaction parent
     (on start)
+    (spawn worker as w0)
+    (await_all done)
     (switch mode
       (0
         (when cond

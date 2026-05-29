@@ -16343,3 +16343,14 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   repeat`) now lowers — a clean validator relaxation (reachable shapes match
   the lowering recursion; the validator already blocks nested `switch`).
   Generated-do/spawn deeper-nested stay deferred. `.1` selection; `.2` ships.
+
+## 2026-05-29: Completed R14 deeper-nested repeat-body local-do lowering (frontier #3)
+- Tree `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING` is `done`. A plain
+  local `(do child)` at deeper branch nesting (`when⁺ → repeat`, `switch →
+  when⁺ → repeat`) now lowers (validator-only gate relaxation). Public behavior
+  changed: yes. Deeper-nested generated do/spawn stay deferred.
+- Verification: slice audit set (12 files, 970) PASS; broad regression PASS
+  (incl. the previously-failing `t/1215` now fixed); `--check-json` clean;
+  `mdbook build` clean; `git diff --check` clean.
+- Next: PNT into the remaining frontier (loop-contained spawn, cross-domain
+  generated do, deeper-nested generated do/spawn).

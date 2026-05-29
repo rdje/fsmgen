@@ -6470,14 +6470,23 @@ sub _validate_repeat_body_spawn_subset {
             # runs both a plain local (do child) and a same-domain generated
             # (do child (params ...)) [+ (bind ...)/(domain NAME)] do. Cross-domain
             # generated do and spawn stay deferred (handled below / in the spawn
-            # branch). A repeat reached through an extra branch/loop ancestor still
-            # routes through the loop-contained/deeper-nested deferral here.
+            # branch). A repeat reached through an extra branch ancestor
+            # (when+ -> repeat, switch -> when+ -> repeat) runs a plain local
+            # (do child); a deeper-nested generated do stays deferred (the nested
+            # branch recursions do not thread the generated-do params).
             if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat || $loop_body_repeat)) {
+                my $plain_local_do = !$uses_generated_params
+                    && !$uses_bindings
+                    && !$uses_domain
+                    && !$generated_do;
                 confess "Transaction '$tn': loop-contained repeat-body do remains deferred\n"
                     if _repeat_body_context_is_loop_contained($context_depths);
-                confess "Transaction '$tn': deeper-nested repeat-body do remains deferred\n"
-                    if _repeat_body_context_is_deeper_nested($label, $context_depths);
-                confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n";
+                if (_repeat_body_context_is_deeper_nested($label, $context_depths)) {
+                    confess "Transaction '$tn': deeper-nested repeat-body generated do remains deferred; only a plain local '(do child)' is supported at deeper branch nesting\n"
+                        unless $plain_local_do;
+                } else {
+                    confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n";
+                }
             }
             for my $subclause (@{$body_clause}[2 .. $#$body_clause]) {
                 confess "Transaction '$tn': repeat-body generated do supports only static '(params ...)', '(bind ...)', and '(domain ...)' in the generated blocking-do subset\n"

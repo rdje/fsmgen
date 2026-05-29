@@ -14676,3 +14676,10 @@ Exit criteria:
   relaxation (the validator already blocks nested `switch`, so the reachable
   shapes match the lowering recursion). Generated-do/spawn deeper-nested stay
   deferred. `.2` ships the gate relaxation + `t/1381`.
+- `R14`: `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING` is **completed** (`.2`
+  shipped). Plain local `(do child)` at deeper branch nesting (`when⁺ →
+  repeat`, `switch → when⁺ → repeat`) now lowers (validator-only gate
+  relaxation; `--check-json` clean). Locked by `t/1381` (+ updated `t/1374`/
+  `t/1375`/`t/1215`); docs synced. Deeper-nested generated do/spawn stay
+  deferred. Next: PNT into the remaining frontier (loop-contained spawn,
+  cross-domain generated do, deeper-nested generated do/spawn).

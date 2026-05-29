@@ -1246,20 +1246,21 @@ Rules:
   `(domain NAME)` as declared same-domain metadata when static `(params ...)`
   overrides are present.
 
-  Deeper branch nesting remains outside both nested subsets. A plain local
-  `(do child)` and a same-domain generated `(do child (params ...))` (with
-  `(bind ...)`/`(domain NAME)` when static params are present) inside a
+  A plain local `(do child)` and a same-domain generated `(do child (params ...))`
+  (with `(bind ...)`/`(domain NAME)` when static params are present) inside a
   `(repeat ...)` directly in a single `(while ...)`/`(until ...)` body lower
   (reusing the proven repeat schedule inside the loop body); a generated `do`
-  instantiates its child in the `_top` composition. Inside a loop-contained
+  instantiates its child in the `_top` composition. A plain local `(do child)`
+  inside a `(repeat ...)` reached through deeper branch nesting (`when⁺ →
+  repeat`, `switch → when⁺ → repeat`) also lowers. Inside a loop-contained
   repeat, `spawn` emits the targeted `loop-contained repeat-body spawn remains
   deferred` diagnostic and a cross-domain generated `do` emits `cross-domain
   repeat-body do remains deferred` (bindings/domain without static `(params ...)`
   emit the bindings/domain-require-params diagnostic); a repeat reached through
-  an additional branch/loop ancestor still emits `loop-contained repeat-body do
-  remains deferred`. Deeper-nested repeat-body `do` and `spawn` (deeper-when
-  nesting or when-inside-switch nesting) emit a targeted
-  `deeper-nested repeat-body <do|spawn> remains deferred` diagnostic;
+  an additional loop ancestor still emits `loop-contained repeat-body do
+  remains deferred`. A deeper-nested generated `do` emits `deeper-nested
+  repeat-body generated do remains deferred` and a deeper-nested `spawn` emits
+  `deeper-nested repeat-body spawn remains deferred`;
   the generic message remains as a safety-net fallback.
 
   Top-level repeat bodies also accept generated blocking `(do child)` when
@@ -1978,10 +1979,12 @@ Rules:
   run static-parameter same-domain generated `(do child (params ...) [(bind
   ...)] (domain NAME))` in that pending interval.
 
-  No deeper branch repeat is included in those shipped nested subsets, and
-  loop-contained repeats accept a plain local `(do child)` and a same-domain
-  generated `(do child (params ...))` (their own shipped subset described
-  above) — loop-contained `spawn` and cross-domain generated `do` stay
+  Beyond those branch-contained spawn/generated-do subsets, a plain local
+  `(do child)` at deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ →
+  repeat`) is its own shipped subset, and loop-contained repeats accept a
+  plain local `(do child)` and a same-domain generated `(do child (params ...))`
+  (their own shipped subset described above) — loop-contained `spawn`,
+  cross-domain generated `do`, and deeper-nested generated `do`/`spawn` stay
   deferred.
 
   Top-level repeat bodies may also use `(do child (params ...))` with static

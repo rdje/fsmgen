@@ -38065,3 +38065,21 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   consumed). Generated-do deeper-nested stays deferred (nested recursions drop
   the `_ir_repeat` params). Created `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING`.
   `.2` ships the gate relaxation + t/1381 + doc sync. See [[frontier-pnt-autonomy]].
+
+## 2026-05-29: R14 shipped — deeper-nested repeat-body local-do lowering (frontier #3)
+- `.2` shipped. Validator-only: the do gate now allows a plain local do when
+  `_repeat_body_context_is_deeper_nested` is true (an `unless $plain_local_do`
+  confess of `deeper-nested repeat-body generated do remains deferred` keeps
+  generated do deferred). `when⁺→repeat` and `switch→when⁺→repeat` local do
+  lower; the validator already blocks nested `switch`, so reachable shapes match
+  the lowering recursion (no silent-drop). `--check-json` clean.
+- Regression caught two test files with the now-lifted "deeper-nested
+  repeat-body do remains deferred" local-do assertion: `t/1375` (subtests 1, 3)
+  and `t/1215` (double-when + switch-when do cases) — both repointed to the
+  generated-do deferral. Lesson: when lifting a deferral, grep ALL of t/ for the
+  message, not just the obvious diagnostic test.
+- Added `t/1381` (accept when-in-when + switch→when + deferred generated/spawn).
+  Synced 13d (runnable deeper-nested example, count 35→36), 13k/14/13h/13b,
+  ISF_SPEC (+ t/1381 index), downstream/contract/SPECFORGE response. Audit set
+  (12 files, 970) PASS. Tree complete. Remaining frontier: loop-contained spawn,
+  cross-domain generated do, deeper-nested generated do/spawn.

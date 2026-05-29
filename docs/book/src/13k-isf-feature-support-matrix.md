@@ -962,17 +962,19 @@ contract when they resolve to non-negative integer literals.
 A plain local `(do child)` and a same-domain generated `(do child (params ...))`
 (with `(bind ...)`/`(domain NAME)` when static params are present) inside a
 `(repeat ...)` that sits directly in a single `(while ...)` or `(until ...)`
-body are part of the shipped repeat-body subset. Spawned nested child
-activation, cross-domain repeat-body `do`, deeper branch repeat activation,
-loop-contained repeat-body `spawn`, repeats reached through an additional
-branch/loop ancestor, and nested `stage` or `contract` clauses remain outside
-the shipped repeat-body subset. Cross-domain, loop-contained, and deeper-nested
-repeat-body `do`/`spawn` each emit their own targeted `<axis> repeat-body
-<do|spawn> remains deferred` diagnostic (a loop-contained cross-domain
-generated `do` emits `cross-domain repeat-body do remains deferred`) so authors
-can identify which deferred lane is blocking their specific case; the original
-generic "supported only for top-level..." message remains as a safety-net
-fallback.
+body, plus a plain local `(do child)` at deeper branch nesting (`when⁺ →
+repeat`, `switch → when⁺ → repeat`), are part of the shipped repeat-body subset.
+Spawned nested child activation, cross-domain repeat-body `do`, deeper-nested
+generated `do`, loop-contained repeat-body `spawn`, repeats reached through an
+additional loop ancestor, and nested `stage` or `contract` clauses remain
+outside the shipped repeat-body subset. Cross-domain, loop-contained, and
+deeper-nested repeat-body `do`/`spawn` each emit their own targeted `<axis>
+repeat-body <do|spawn> remains deferred` diagnostic (a loop-contained
+cross-domain generated `do` emits `cross-domain repeat-body do remains
+deferred`; a deeper-nested generated `do` emits `deeper-nested repeat-body
+generated do remains deferred`) so authors can identify which deferred lane is
+blocking their specific case; the original generic "supported only for
+top-level..." message remains as a safety-net fallback.
 
 <details>
 <summary>Repeat-body audit markers</summary>

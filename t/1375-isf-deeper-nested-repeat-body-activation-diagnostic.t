@@ -10,10 +10,13 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 
-subtest 'deeper-when-nested repeat-body do emits the targeted diagnostic' => sub {
+# A plain local (do child) at deeper branch nesting (when+ -> repeat,
+# switch -> when+ -> repeat) now LOWERS (see t/1381). The deeper-nested do
+# deferral now applies to the generated-do sub-case.
+subtest 'deeper-when-nested repeat-body generated do emits the targeted diagnostic' => sub {
     assert_lower_rejected(
         <<'ISF',
-(actor deeper_when_repeat_do_probe
+(actor deeper_when_repeat_generated_do_probe
   (clock clk)
   (reset rst_n)
   (interface
@@ -21,6 +24,8 @@ subtest 'deeper-when-nested repeat-body do emits the targeted diagnostic' => sub
     (output done))
   (transaction parent
     (on start)
+    (spawn worker as w0)
+    (await_all done)
     (when cond1
       (when cond2
         (repeat loops
@@ -29,8 +34,8 @@ subtest 'deeper-when-nested repeat-body do emits the targeted diagnostic' => sub
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': deeper-nested repeat-body do remains deferred/,
-        'when-inside-when repeat-body do is rejected with the deeper-nested diagnostic',
+        qr/Transaction 'parent': deeper-nested repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported at deeper branch nesting/,
+        'when-inside-when repeat-body generated-child do is rejected with the deeper-nested generated-do diagnostic',
     );
 };
 
@@ -59,10 +64,10 @@ ISF
     );
 };
 
-subtest 'when-inside-switch repeat-body do emits the targeted diagnostic' => sub {
+subtest 'when-inside-switch repeat-body generated do emits the targeted diagnostic' => sub {
     assert_lower_rejected(
         <<'ISF',
-(actor when_in_switch_repeat_do_probe
+(actor when_in_switch_repeat_generated_do_probe
   (clock clk)
   (reset rst_n)
   (interface
@@ -70,6 +75,8 @@ subtest 'when-inside-switch repeat-body do emits the targeted diagnostic' => sub
     (output done))
   (transaction parent
     (on start)
+    (spawn worker as w0)
+    (await_all done)
     (switch mode
       (0
         (when cond
@@ -79,8 +86,8 @@ subtest 'when-inside-switch repeat-body do emits the targeted diagnostic' => sub
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': deeper-nested repeat-body do remains deferred/,
-        'when-inside-switch-case repeat-body do is rejected with the deeper-nested diagnostic',
+        qr/Transaction 'parent': deeper-nested repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported at deeper branch nesting/,
+        'when-inside-switch-case repeat-body generated-child do is rejected with the deeper-nested generated-do diagnostic',
     );
 };
 

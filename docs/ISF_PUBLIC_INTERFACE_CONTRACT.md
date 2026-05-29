@@ -1122,15 +1122,19 @@ and [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-co
 Loop-contained repeat-body `spawn` emits a targeted
 `loop-contained repeat-body spawn remains deferred` diagnostic, a
 loop-contained cross-domain generated `do` emits `cross-domain repeat-body do
-remains deferred`, and a repeat reached through an additional branch/loop
+remains deferred`, and a repeat reached through an additional loop
 ancestor emits `loop-contained repeat-body do remains deferred`; these are
 checked by
 [t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t)
 and [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t).
-Deeper-nested repeat-body `do`/`spawn` (deeper-when or
-when-inside-switch) emits a targeted `deeper-nested repeat-body
-<do|spawn> remains deferred` diagnostic and is checked by
-[t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t](../t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t).
+A plain local `(do child)` at deeper branch nesting (`when⁺ → repeat`,
+`switch → when⁺ → repeat`) also lowers (checked by
+[t/1381-isf-deeper-nested-repeat-body-local-do.t](../t/1381-isf-deeper-nested-repeat-body-local-do.t));
+a deeper-nested generated `do` emits `deeper-nested repeat-body generated do
+remains deferred` and a deeper-nested `spawn` emits `deeper-nested repeat-body
+spawn remains deferred`, checked by
+[t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t](../t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t)
+and [t/1381-isf-deeper-nested-repeat-body-local-do.t](../t/1381-isf-deeper-nested-repeat-body-local-do.t).
 Every `lisp`-tagged example in the ISF book chapters
 (`12-cookbook.md`, `13*.md`, `14-feature-backlog.md`) is required
 to parse and lower cleanly, enforced by

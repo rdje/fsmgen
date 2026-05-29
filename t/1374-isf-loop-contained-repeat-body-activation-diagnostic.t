@@ -110,9 +110,11 @@ ISF
 };
 
 subtest 'non-loop unsupported nested-repeat cases route through the deeper-nested diagnostic, not the loop-contained one' => sub {
+    # A plain local (do child) at deeper branch nesting now lowers (see t/1381);
+    # a deeper-nested generated do still routes through the deeper-nested lane.
     assert_lower_rejected(
         <<'ISF',
-(actor double_nested_when_repeat_do_probe
+(actor double_nested_when_repeat_generated_do_probe
   (clock clk)
   (reset rst_n)
   (interface
@@ -120,6 +122,8 @@ subtest 'non-loop unsupported nested-repeat cases route through the deeper-neste
     (output done))
   (transaction parent
     (on start)
+    (spawn worker as w0)
+    (await_all done)
     (when cond1
       (when cond2
         (repeat loops
@@ -128,8 +132,8 @@ subtest 'non-loop unsupported nested-repeat cases route through the deeper-neste
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': deeper-nested repeat-body do remains deferred/,
-        'deeper when nesting routes through the deeper-nested diagnostic',
+        qr/Transaction 'parent': deeper-nested repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported at deeper branch nesting/,
+        'deeper when nesting generated do routes through the deeper-nested generated-do diagnostic',
     );
 
     assert_lower_rejected(

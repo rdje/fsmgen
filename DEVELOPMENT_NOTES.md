@@ -33546,3 +33546,16 @@ It is an exact-delay pulse request:
   do does not consume them, so local-do deeper-nested is safe; generated-do
   there would need those threaded through the nested recursions plus deeper
   collector discovery — a later slice.
+
+## 2026-05-29: shipped R14 deeper-nested repeat-body local-do lowering (frontier #3)
+- Confirmed it was a clean validator relaxation: the gate now emits
+  `deeper-nested repeat-body generated do remains deferred` for a non-local do
+  and falls through for a plain local do. No lowering change — the nested
+  `_expand_when`/`_expand_switch` recursion already assembles the nested-branch
+  + repeat schedule (verified: two `?cond` guards → `repeat_init` → blocking-do
+  → `repeat_check`).
+- The broad regression earned its keep: it caught `t/1215` (a 12.9k-line
+  spawn-binding suite) asserting the now-lifted local-do deferral in two cases
+  buried far from the obvious diagnostic test. A `grep -rn` of all of t/ for the
+  exact lifted message would have found them up front — adopt that as the first
+  step whenever a deferral is lifted.
