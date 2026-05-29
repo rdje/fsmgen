@@ -1123,16 +1123,19 @@ The basic `(spawn child as inst)` + same-body `(await_all done)` (or
 single-pending `(await_any done)`) drain also lowers inside a loop-contained or
 deeper-nested repeat (lowering + composition parity with the top-level
 repeat-body spawn; the full-HDL composition-wiring limitation is pre-existing
-and applies equally there). An undrained loop-contained spawn emits
-`loop-contained repeat-body spawn requires same-body '(await_all done)' or
-single-pending '(await_any done)'`, a multi-pending `(await_any done)` emits
-`loop-contained repeat-body multi-pending '(await_any done)' remains deferred`,
-a loop-contained cross-domain generated `do` emits `cross-domain repeat-body do
+and applies equally there). A multi-pending `(await_any done)` followed by a
+later same-body `(await_all done)` drain is also supported in these contexts
+(as at top-level / when-body / switch-branch). An undrained loop-contained
+spawn emits `loop-contained repeat-body spawn requires same-body '(await_all
+done)' or single-pending '(await_any done)'` (a multi-pending `(await_any done)`
+without a later `(await_all done)` trips this same drain requirement), a
+loop-contained cross-domain generated `do` emits `cross-domain repeat-body do
 remains deferred`, and a repeat reached through an additional loop ancestor
 emits `loop-contained repeat-body do remains deferred`; these are checked by
 [t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t),
 [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t),
-and [t/1383-isf-loop-and-deeper-repeat-body-spawn.t](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t).
+[t/1383-isf-loop-and-deeper-repeat-body-spawn.t](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t),
+and [t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t](../t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t).
 A plain local `(do child)`, a same-domain generated `(do child (params ...))`,
 and the basic spawn + drain subset at deeper branch nesting (`when⁺ → repeat`,
 `switch → when⁺ → repeat`) also lower; a generated `do` instantiates its child

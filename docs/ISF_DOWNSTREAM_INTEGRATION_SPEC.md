@@ -1256,11 +1256,13 @@ Rules:
   inst)` + same-body `(await_all done)` (or single-pending `(await_any done)`)
   drain also lowers inside a loop-contained or deeper-nested repeat (lowering +
   composition parity with the top-level repeat-body spawn; the same pre-existing
-  full-HDL composition-wiring limitation applies). Inside a loop-contained
-  repeat, an undrained spawn emits `loop-contained repeat-body spawn requires
-  same-body '(await_all done)' or single-pending '(await_any done)'`, a
-  multi-pending `(await_any done)` emits `loop-contained repeat-body
-  multi-pending '(await_any done)' remains deferred`, and a cross-domain
+  full-HDL composition-wiring limitation applies). A multi-pending
+  `(await_any done)` followed by a later same-body `(await_all done)` drain is
+  also supported in these contexts (as at top-level / when-body / switch-branch).
+  Inside a loop-contained repeat, an undrained spawn emits `loop-contained
+  repeat-body spawn requires same-body '(await_all done)' or single-pending
+  '(await_any done)'` (a multi-pending `(await_any done)` without a later
+  `(await_all done)` trips this same drain requirement), and a cross-domain
   generated `do` emits `cross-domain repeat-body do remains deferred`
   (bindings/domain without static `(params ...)` emit the
   bindings/domain-require-params diagnostic); a repeat reached through an

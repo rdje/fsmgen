@@ -418,12 +418,16 @@ Each phrase below is the verbatim text the validator emits.
   `--check-json` fails for repeat-body spawn at any nesting because the
   composition planner references the repeat-count / loop-condition parent inputs
   as child endpoints (`instance '<inst>' has no port named 'loops'/'cond'`; see
-  `docs/COMPOSITION_SCOPE.md`). An undrained spawn fires `... repeat-body spawn
-  requires same-body '(await_all done)' or single-pending '(await_any done)'`, a
-  multi-pending `(await_any done)` fires `... repeat-body multi-pending
-  '(await_any done)' remains deferred`, and a cross-domain spawn target stays
-  deferred. Locked by
-  [`t/1383-isf-loop-and-deeper-repeat-body-spawn.t`](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t).
+  `docs/COMPOSITION_SCOPE.md`). A multi-pending `(await_any done)` observation
+  followed by a later same-body `(await_all done)` drain is also supported in
+  these contexts (as at top-level / when-body / switch-branch). An undrained
+  spawn fires `... repeat-body spawn requires same-body '(await_all done)' or
+  single-pending '(await_any done)'` (a multi-pending `(await_any done)` without
+  a later `(await_all done)` trips this same drain requirement), and a
+  cross-domain spawn target stays deferred. Locked by
+  [`t/1383-isf-loop-and-deeper-repeat-body-spawn.t`](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t)
+  and
+  [`t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t`](../t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t).
 
 ### Book example correctness build gate
 

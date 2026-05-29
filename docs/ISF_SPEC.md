@@ -2624,13 +2624,15 @@ Current lowering:
   single-pending `(await_any done)`) drain inside a loop-contained or
   deeper-nested repeat (lowering + composition parity with the top-level
   repeat-body spawn — the same pre-existing full-HDL composition-wiring
-  limitation applies). Inside a loop-contained or deeper-nested repeat, an
-  undrained spawn stays deferred (`loop-contained`/`deeper-nested repeat-body
-  spawn requires same-body '(await_all done)' or single-pending '(await_any
-  done)'`), a multi-pending `(await_any done)` stays deferred
-  (`... multi-pending '(await_any done)' remains deferred`), and a cross-domain
-  generated `do` stays deferred (`cross-domain repeat-body do remains
-  deferred`).
+  limitation applies). A multi-pending `(await_any done)` followed by a later
+  same-body `(await_all done)` drain is also supported in these contexts (as at
+  top-level / when-body / switch-branch). Inside a loop-contained or
+  deeper-nested repeat, an undrained spawn stays deferred
+  (`loop-contained`/`deeper-nested repeat-body spawn requires same-body
+  '(await_all done)' or single-pending '(await_any done)'`) — a multi-pending
+  `(await_any done)` without a later `(await_all done)` trips that same drain
+  requirement — and a cross-domain generated `do` stays deferred (`cross-domain
+  repeat-body do remains deferred`).
   Repeats directly inside a top-level
   `when` body also accept one or more generated
   `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites
@@ -5729,6 +5731,7 @@ Focused tests:
 - [t/1381-isf-deeper-nested-repeat-body-local-do.t](../t/1381-isf-deeper-nested-repeat-body-local-do.t)
 - [t/1382-isf-deeper-nested-repeat-body-generated-do.t](../t/1382-isf-deeper-nested-repeat-body-generated-do.t)
 - [t/1383-isf-loop-and-deeper-repeat-body-spawn.t](../t/1383-isf-loop-and-deeper-repeat-body-spawn.t)
+- [t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t](../t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t)
 
 ## 12. Explicitly Deferred
 

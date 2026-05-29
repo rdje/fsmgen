@@ -16402,3 +16402,15 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   for loop/deeper (supported at top-level + when/switch). Completes the nesting
   frontier; cross-domain repeat-body `do` is net-new CDC, not part of it. `.1`
   selection; `.2` ships + `t/1384`.
+
+## 2026-05-30: Completed R14 loop/deeper multi-pending await_any lowering (frontier #6; nesting frontier complete)
+- Tree `ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING` is
+  `done`. Multi-pending `(await_any done)` + later `(await_all done)` now lowers
+  in loop-contained / deeper-nested repeats (removed the two deferral confesses;
+  undrained still trips the drain requirement). Public behavior changed: yes.
+- **The repeat-body-activation nesting frontier is now complete** — local-do,
+  generated-do, spawn+drain, single/multi await_any all extended to
+  loop-contained + deeper-nested. Remaining repeat-body deferral (cross-domain
+  `do`) is net-new CDC lowering, not a nesting extension.
+- Verification: audit set (8 files, 859) PASS; broad regression PASS; `mdbook
+  build` clean; `git diff --check` clean.

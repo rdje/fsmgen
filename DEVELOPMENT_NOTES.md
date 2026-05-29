@@ -33636,3 +33636,18 @@ It is an exact-delay pulse request:
   deferred at top-level, so it is not a nesting extension but net-new CDC
   lowering — a different roadmap effort, not part of this frontier. Recording
   this so the loop terminates honestly rather than inventing work.
+
+## 2026-05-30: shipped R14 loop/deeper multi-pending await_any lowering (frontier #6; nesting frontier complete)
+- Smallest slice of the family: removing two confesses. The drain-requirement
+  rule from slice #5 already does the safety work — an undrained multi-pending
+  await_any leaves `@pending_spawns` non-empty at the repeat check and trips it.
+  So lifting the multi-pending deferral needed no new guard.
+- With this, the repeat-body-activation NESTING FRONTIER is complete: the three
+  activation kinds (local-do, generated-do, spawn) and the await-sync shapes
+  (await_all, single-pending await_any, multi-pending await_any + drain) all
+  reach loop-contained and deeper-nested repeats at parity with the
+  top-level/when/switch subsets. The PNT loop over this frontier terminates
+  here. What remains under "repeat-body ... deferred" is cross-domain repeat-body
+  `do` — deferred at top-level too, hence net-new CDC lowering, a different
+  roadmap lane — plus the pre-existing repeat-spawn full-HDL composition-wiring
+  limitation. Neither is a nesting extension.

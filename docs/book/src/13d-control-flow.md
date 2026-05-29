@@ -301,9 +301,12 @@ before the repeat check) stays deferred: `Transaction 'parent': loop-contained
 repeat-body spawn requires same-body '(await_all done)' or single-pending
 '(await_any done)' before the repeat check can loop` (and the `deeper-nested
 ...` form). A **multi-pending** `(await_any done)` (two or more outstanding
-children observed by an `await_any`) stays deferred in these contexts:
-`loop-contained repeat-body multi-pending '(await_any done)' remains deferred`.
-A **cross-domain** generated `do` stays deferred (`cross-domain repeat-body do
+children observed by an `await_any`) is supported as an observation point when
+a later same-body `(await_all done)` drains the outstanding children before the
+repeat check — for example `(spawn a)(spawn b)(await_any done)(await_all done)`
+— matching the top-level / when-body / switch-branch behavior; without the
+later `(await_all done)` the outstanding children trip the drain requirement
+above. A **cross-domain** generated `do` stays deferred (`cross-domain repeat-body do
 remains deferred`); bindings or domain metadata without static `(params ...)`
 emit `repeat-body generated do bindings require static '(params ...)'
 overrides`. A repeat wrapped by both a loop and a branch (for example
@@ -350,10 +353,12 @@ above). A deeper-nested **cross-domain** generated `do` stays deferred and emits
 `cross-domain repeat-body do remains deferred`; an **undrained** deeper-nested
 `spawn` emits `Transaction 'parent': deeper-nested repeat-body spawn requires
 same-body '(await_all done)' or single-pending '(await_any done)' before the
-repeat check can loop`, and a multi-pending `(await_any done)` emits
-`deeper-nested repeat-body multi-pending '(await_any done)' remains deferred`.
-The generic "supported only for top-level repeat clauses..." message remains as
-a safety-net fallback for shapes not yet classified.
+repeat check can loop`. A multi-pending `(await_any done)` followed by a later
+same-body `(await_all done)` drain is supported at deeper nesting (as at
+top-level / when-body / switch-branch); without the drain it trips the
+deeper-nested spawn drain requirement. The generic "supported only for
+top-level repeat clauses..." message remains as a safety-net fallback for
+shapes not yet classified.
 
 The branch-contained shipped subsets accept one multi-pending
 `(await_any done)` observation that the same body's later

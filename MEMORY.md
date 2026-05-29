@@ -38164,3 +38164,19 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   undrained; when/switch sequencing rules skip loop/deeper (matching top-level).
 - Created `ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING`.
   `.2` removes the 2 confesses + t/1384. [[frontier-pnt-autonomy]].
+
+## 2026-05-30: R14 shipped — loop/deeper multi-pending await_any lowering (frontier #6; nesting frontier COMPLETE)
+- `.2` shipped. Removed the two multi-pending await_any deferral confesses at
+  the await_any site; multi-pending await_any + later await_all now lowers in
+  loop/deeper (parity with top-level/when/switch). The end-of-routine
+  drain-requirement still rejects undrained (a multi-pending await_any with no
+  later await_all leaves @pending_spawns non-empty). Added `t/1384`; updated
+  `t/1383` (its multi-pending case now trips the drain-requirement). Audit set
+  (8 files, 859) PASS.
+- NESTING FRONTIER NOW EXHAUSTED: all top-level/when/switch repeat-body
+  activation subsets (local-do, generated-do, spawn+drain, single & multi
+  await_any) are extended to loop-contained AND deeper-nested. The only
+  remaining repeat-body "deferred" item is cross-domain repeat-body do, which is
+  deferred at top-level too → net-new CDC lowering (a separate roadmap feature,
+  NOT a nesting extension). Also pre-existing: the repeat-spawn full-HDL
+  composition-wiring limitation (COMPOSITION_SCOPE.md).

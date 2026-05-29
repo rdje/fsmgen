@@ -6736,10 +6736,13 @@ sub _validate_repeat_body_spawn_subset {
                     && !$allowed_branch_static_domain_generated_do_before_post_await_any
                     && !$allowed_generated_do_spawn_after_do_before_post_await_any;
             if ($keyword eq 'await_any' && @pending_spawns > 1) {
-                confess "Transaction '$tn': loop-contained repeat-body multi-pending '(await_any done)' remains deferred; drain with same-body '(await_all done)'\n"
-                    if $loop_body_repeat;
-                confess "Transaction '$tn': deeper-nested repeat-body multi-pending '(await_any done)' remains deferred; drain with same-body '(await_all done)'\n"
-                    if $deeper_nested_repeat;
+                # A multi-pending (await_any done) is an observation point; the
+                # outstanding children must still be drained by a later same-body
+                # (await_all done) before the repeat check loops. This is allowed
+                # at top-level / when-body / switch-branch and now also in
+                # loop-contained / deeper-nested repeats; the end-of-routine
+                # drain-requirement rejects the undrained case (@pending_spawns
+                # still non-empty at the repeat end).
                 $awaiting_multi_pending_drain = 1;
                 next;
             }

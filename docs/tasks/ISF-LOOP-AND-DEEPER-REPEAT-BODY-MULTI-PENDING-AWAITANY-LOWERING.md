@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-30`
 - Last updated: `2026-05-30`
@@ -65,30 +65,30 @@ repeat`). Sixth scheduler-frontier slice.
 ## Task Tree
 
 - ID: `ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING`
-  Status: `active`
+  Status: `done`
   Goal: `Lower loop/deeper repeat-body multi-pending await_any + later drain.`
   Children: `.1`, `.2`
 
 - ID: `ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select; record probed ground truth.`
   Acceptance: `Task tree committed before any code/test/doc change.`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `a8805eeb`
 
 - ID: `ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Remove the two multi-pending await_any deferral confesses; add t/1384; sync docs; validate.`
   Acceptance: `Accept-path lowers; undrained still fails closed; audits green.`
-  Verification: `prove -Iperl t/1384 t/1383 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250; broad regression; mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Verification: `prove -Iperl t/1384 t/1383 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250 (Files=8, Tests=859, PASS); broad regression (72 files, 767) PASS; mdbook build docs/book; git diff --check`
+  Commit: `ship commit (this slice)`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `....1` | `pending` | Selection commit. |
-| 2 | `....2` | `pending` | Ship the relaxation + golden + doc sync. |
+| 1 | `....1` | `done` | Selection commit `a8805eeb`. |
+| 2 | `....2` | `done` | Two deferral confesses removed + `t/1384` + doc sync shipped; tree closed. |
 
 ## Decisions
 
@@ -109,18 +109,24 @@ repeat`). Sixth scheduler-frontier slice.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-30` | `....1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-30` | `....2` | `prove ...; broad regression; mdbook; git diff --check` | `pending` |
+| `2026-05-30` | `....1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-30` | `....2` | `prove -Iperl t/1384 t/1383 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250` (Files=8, Tests=859, PASS); broad regression (72 files, 767) PASS; `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `....1` | `...1: select loop/deeper multi-pending await_any lowering` | `pending` |
-| `....2` | `...2: ship loop/deeper multi-pending await_any lowering` | `pending` |
+| `....1` | `...1: select loop/deeper multi-pending await_any lowering` | `a8805eeb` |
+| `....2` | `...2: ship loop/deeper multi-pending await_any lowering` | `ship commit (this slice)` |
 
 ## Changelog
 
 - `2026-05-30`: Created. Sixth scheduler-frontier slice; completes the
   repeat-body-activation nesting frontier. Cross-domain `do` excluded (net-new
   CDC, separate effort).
+- `2026-05-30`: `.1` selection committed (`a8805eeb`).
+- `2026-05-30`: `.2` shipped. Removed the two multi-pending await_any deferral
+  confesses; multi-pending await_any + later await_all now lowers in
+  loop/deeper (the drain-requirement still rejects undrained). Added `t/1384`;
+  updated `t/1383`. Audit set (8 files, 859) + broad regression (72 files, 767)
+  PASS. **Nesting frontier complete.** Tree closed.

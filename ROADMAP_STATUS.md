@@ -14722,3 +14722,13 @@ Exit criteria:
   deeper-nested repeats (already supported at top-level + when/switch). Cross-domain
   repeat-body `do` is NOT part of this frontier (deferred at top-level too → net-new
   CDC lowering). `.2` removes the two deferral confesses + adds `t/1384`.
+- `R14`: `ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING` is
+  **completed** (`.2` shipped). Multi-pending `(await_any done)` + later
+  `(await_all done)` now lowers in loop-contained / deeper-nested repeats
+  (parity with top-level/when/switch); undrained still trips the drain
+  requirement. Locked by `t/1384` (+ `t/1383` updated). **This completes the
+  repeat-body-activation nesting frontier** — local-do, generated-do,
+  spawn+drain, and single/multi await_any are all extended to loop-contained
+  and deeper-nested contexts. The remaining repeat-body deferral (cross-domain
+  `do`) is deferred at top-level too → net-new CDC lowering, a separate roadmap
+  effort, not a nesting extension.
