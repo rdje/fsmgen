@@ -10,32 +10,34 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 
-# A plain local (do child) at deeper branch nesting (when+ -> repeat,
-# switch -> when+ -> repeat) now LOWERS (see t/1381). The deeper-nested do
-# deferral now applies to the generated-do sub-case.
-subtest 'deeper-when-nested repeat-body generated do emits the targeted diagnostic' => sub {
+# A plain local (do child) AND a same-domain generated (do child (params ...))
+# at deeper branch nesting (when+ -> repeat, switch -> when+ -> repeat) now LOWER
+# (see t/1381 and t/1382). The remaining deeper-nested do deferral is the
+# cross-domain sub-case.
+subtest 'deeper-when-nested cross-domain repeat-body do emits the targeted diagnostic' => sub {
     assert_lower_rejected(
         <<'ISF',
-(actor deeper_when_repeat_generated_do_probe
-  (clock clk)
-  (reset rst_n)
+(actor deeper_when_repeat_cross_domain_do_probe
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain aux (clock aux_clk) (reset aux_rst_n)))
   (interface
-    (input start) (input cond1) (input cond2) (input loops (width 3))
-    (output done))
+    (input start (domain core)) (input cond1 (domain core)) (input cond2 (domain core))
+    (input loops (width 3) (domain core)) (output done (domain core)))
   (transaction parent
+    (domain core)
     (on start)
-    (spawn worker as w0)
-    (await_all done)
     (when cond1
       (when cond2
         (repeat loops
-          (do worker))))
+          (do worker (domain aux)))))
     (complete done))
   (transaction worker
+    (domain aux)
     (complete done)))
 ISF
-        qr/Transaction 'parent': deeper-nested repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported at deeper branch nesting/,
-        'when-inside-when repeat-body generated-child do is rejected with the deeper-nested generated-do diagnostic',
+        qr/cross-domain repeat-body do remains deferred/,
+        'when-inside-when cross-domain repeat-body do is rejected with the cross-domain diagnostic',
     );
 };
 
@@ -64,30 +66,31 @@ ISF
     );
 };
 
-subtest 'when-inside-switch repeat-body generated do emits the targeted diagnostic' => sub {
+subtest 'when-inside-switch cross-domain repeat-body do emits the targeted diagnostic' => sub {
     assert_lower_rejected(
         <<'ISF',
-(actor when_in_switch_repeat_generated_do_probe
-  (clock clk)
-  (reset rst_n)
+(actor when_in_switch_repeat_cross_domain_do_probe
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain aux (clock aux_clk) (reset aux_rst_n)))
   (interface
-    (input start) (input mode) (input cond) (input loops (width 3))
-    (output done))
+    (input start (domain core)) (input mode (domain core)) (input cond (domain core))
+    (input loops (width 3) (domain core)) (output done (domain core)))
   (transaction parent
+    (domain core)
     (on start)
-    (spawn worker as w0)
-    (await_all done)
     (switch mode
       (0
         (when cond
           (repeat loops
-            (do worker)))))
+            (do worker (domain aux))))))
     (complete done))
   (transaction worker
+    (domain aux)
     (complete done)))
 ISF
-        qr/Transaction 'parent': deeper-nested repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported at deeper branch nesting/,
-        'when-inside-switch-case repeat-body generated-child do is rejected with the deeper-nested generated-do diagnostic',
+        qr/cross-domain repeat-body do remains deferred/,
+        'when-inside-switch-case cross-domain repeat-body do is rejected with the cross-domain diagnostic',
     );
 };
 

@@ -10396,23 +10396,25 @@ ISF
     (complete done)))
 ISF
 
-    # A plain local deeper-nested do now lowers (see t/1381); a deeper-nested
-    # generated do (worker made a generated child via a top-level spawn) still
-    # routes through the deeper-nested generated-do deferral.
-    assert_lower_rejected(<<'ISF', 'double nested when repeat generated do', qr/deeper-nested repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported at deeper branch nesting/);
-(actor double_nested_when_repeat_generated_do
-  (clock clk)
-  (interface (input start) (input cond) (input inner_cond) (input loops (width 3)) (output done))
+    # A plain local AND a same-domain generated deeper-nested do now lower
+    # (see t/1381, t/1382); a deeper-nested cross-domain generated do still
+    # routes through the cross-domain deferral.
+    assert_lower_rejected(<<'ISF', 'double nested when repeat cross-domain do', qr/cross-domain repeat-body do remains deferred/);
+(actor double_nested_when_repeat_cross_domain_do
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain aux (clock aux_clk) (reset aux_rst_n)))
+  (interface (input start (domain core)) (input cond (domain core)) (input inner_cond (domain core)) (input loops (width 3) (domain core)) (output done (domain core)))
   (transaction parent
+    (domain core)
     (on start)
-    (spawn worker as w0)
-    (await_all done)
     (when cond
       (when inner_cond
         (repeat loops
-          (do worker))))
+          (do worker (domain aux)))))
     (complete done))
   (transaction worker
+    (domain aux)
     (complete done)))
 ISF
 
@@ -10473,21 +10475,23 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested when repeat generated do', qr/deeper-nested repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported at deeper branch nesting/);
-(actor switch_nested_when_repeat_generated_do
-  (clock clk)
-  (interface (input start) (input mode) (input cond) (input loops (width 3)) (output done))
+    assert_lower_rejected(<<'ISF', 'switch nested when repeat cross-domain do', qr/cross-domain repeat-body do remains deferred/);
+(actor switch_nested_when_repeat_cross_domain_do
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain aux (clock aux_clk) (reset aux_rst_n)))
+  (interface (input start (domain core)) (input mode (domain core)) (input cond (domain core)) (input loops (width 3) (domain core)) (output done (domain core)))
   (transaction parent
+    (domain core)
     (on start)
-    (spawn worker as w0)
-    (await_all done)
     (switch mode
       (0
         (when cond
           (repeat loops
-            (do worker)))))
+            (do worker (domain aux))))))
     (complete done))
   (transaction worker
+    (domain aux)
     (complete done)))
 ISF
 

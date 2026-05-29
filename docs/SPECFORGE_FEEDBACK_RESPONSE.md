@@ -396,14 +396,16 @@ Each phrase below is the verbatim text the validator emits.
   [`t/1380-isf-loop-contained-repeat-body-generated-do.t`](../t/1380-isf-loop-contained-repeat-body-generated-do.t),
   and
   [`t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t`](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t).
-- **Deeper-nested repeat-body local `do` is now shipped.** A plain local
-  `(do child)` inside a `(repeat ...)` reached through deeper branch nesting
-  (`when⁺ → repeat`, `switch → when⁺ → repeat`) lowers. A deeper-nested
-  generated `do` fires `Transaction '<tn>': deeper-nested repeat-body generated
-  do remains deferred; only a plain local '(do child)' is supported at deeper
-  branch nesting`, and a deeper-nested `spawn` fires `Transaction '<tn>':
+- **Deeper-nested repeat-body local `do` and same-domain generated `do` are
+  now shipped.** A plain local `(do child)` and a same-domain generated
+  `(do child (params ...))` inside a `(repeat ...)` reached through deeper
+  branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) lower; a
+  generated `do` instantiates its child in the `_top` composition. A
+  deeper-nested cross-domain generated `do` fires `cross-domain repeat-body do
+  remains deferred`, and a deeper-nested `spawn` fires `Transaction '<tn>':
   deeper-nested repeat-body spawn remains deferred`. Locked by
-  [`t/1381-isf-deeper-nested-repeat-body-local-do.t`](../t/1381-isf-deeper-nested-repeat-body-local-do.t)
+  [`t/1381-isf-deeper-nested-repeat-body-local-do.t`](../t/1381-isf-deeper-nested-repeat-body-local-do.t),
+  [`t/1382-isf-deeper-nested-repeat-body-generated-do.t`](../t/1382-isf-deeper-nested-repeat-body-generated-do.t),
   and
   [`t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t`](../t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t).
 

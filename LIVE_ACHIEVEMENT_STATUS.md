@@ -16361,3 +16361,14 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   instantiates the child. 3-part change (collector recursion, param threading
   through nested branch recursions, validator relaxation). Cross-domain + spawn
   stay deferred. `.1` selection; `.2` ships.
+
+## 2026-05-29: Completed R14 deeper-nested repeat-body generated-do lowering (frontier #4)
+- Tree `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING` is `done`. A
+  same-domain generated `(do child (params ...))` at deeper branch nesting now
+  lowers + instantiates its child in the `_top` (ordinal agreement verified).
+  Public behavior changed: yes. Collector recursion + param threading +
+  validator relaxation. Cross-domain generated do and spawn stay deferred.
+- Verification: audit set (14 files, 977) PASS; broad regression (119 files,
+  950) PASS; `--check-json` clean + 3 SV modules; `mdbook build` clean;
+  `git diff --check` clean.
+- Next: loop-contained spawn, deeper-nested spawn, cross-domain generated do.

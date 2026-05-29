@@ -110,30 +110,32 @@ ISF
 };
 
 subtest 'non-loop unsupported nested-repeat cases route through the deeper-nested diagnostic, not the loop-contained one' => sub {
-    # A plain local (do child) at deeper branch nesting now lowers (see t/1381);
-    # a deeper-nested generated do still routes through the deeper-nested lane.
+    # A plain local AND a same-domain generated (do child) at deeper branch
+    # nesting now lower (see t/1381, t/1382); a deeper-nested cross-domain
+    # generated do still routes through the cross-domain lane.
     assert_lower_rejected(
         <<'ISF',
-(actor double_nested_when_repeat_generated_do_probe
-  (clock clk)
-  (reset rst_n)
+(actor double_nested_when_repeat_cross_domain_do_probe
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain aux (clock aux_clk) (reset aux_rst_n)))
   (interface
-    (input start) (input cond1) (input cond2) (input loops (width 3))
-    (output done))
+    (input start (domain core)) (input cond1 (domain core)) (input cond2 (domain core))
+    (input loops (width 3) (domain core)) (output done (domain core)))
   (transaction parent
+    (domain core)
     (on start)
-    (spawn worker as w0)
-    (await_all done)
     (when cond1
       (when cond2
         (repeat loops
-          (do worker))))
+          (do worker (domain aux)))))
     (complete done))
   (transaction worker
+    (domain aux)
     (complete done)))
 ISF
-        qr/Transaction 'parent': deeper-nested repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported at deeper branch nesting/,
-        'deeper when nesting generated do routes through the deeper-nested generated-do diagnostic',
+        qr/cross-domain repeat-body do remains deferred/,
+        'deeper when nesting cross-domain do routes through the cross-domain diagnostic',
     );
 
     assert_lower_rejected(

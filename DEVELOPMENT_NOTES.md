@@ -33571,3 +33571,22 @@ It is an exact-delay pulse request:
   already recurses. Discovery only needs the child NAME (the set keys on
   `$clause->[1]`), so the collector ordinal is irrelevant; the instance name
   comes from the lowering's per-transaction `$repeat_do_ordinal_ref`.
+
+## 2026-05-29: shipped R14 deeper-nested repeat-body generated-do lowering (frontier #4)
+- The load-bearing correctness property was ordinal agreement: the collector
+  (`_push_nested_branch_repeat_refs`) and the lowering (`_ir_repeat` via the
+  nested `_expand_when`/`_expand_switch` recursions) both assign repeat-do
+  ordinals in depth-first source order, so the `_top` instance names match the
+  scheduled `.fsm` instance ports. I made the collector recurse into nested
+  `when` only (mirroring the lowering, which never descends into a nested
+  `switch` — that clause is validator-rejected), keeping the orders identical.
+  `t/1382` pins this with an is_deeply on the two instance-name lists for a
+  mixed top-level + deeper-nested case (W=8 → ordinal 0, W=16 → ordinal 1).
+- Removing the `deeper-nested ... generated do remains deferred` message broke
+  four test files that asserted it (t/1375, t/1374, t/1381, t/1215) — confirming
+  the earlier lesson: grep all of t/ for a lifted message. Repointed each to the
+  cross-domain deeper-nested deferral, which remains.
+- The cross-domain rejection for a deeper-nested do is produced by the
+  child-ref validation pass keyed on `repeat_parent_label` (so its prefix reads
+  "when-body nested repeat"), not the clause-tree gate; the actionable suffix
+  (`cross-domain repeat-body do remains deferred`) is what tests/emitters key on.

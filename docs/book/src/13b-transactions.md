@@ -692,10 +692,11 @@ generated `do` still fail closed: the spawn form emits the targeted
 cross-domain generated `do` emits `cross-domain repeat-body do remains
 deferred`. A repeat reached through an extra loop ancestor (for
 example `(while c1 (when c2 (repeat ...)))`) still emits `loop-contained
-repeat-body do remains deferred`. A plain local `(do child)` at deeper branch
-nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) also lowers; a
-deeper-nested generated `do` fails closed with `deeper-nested repeat-body
-generated do remains deferred` and a deeper-nested `spawn` with
+repeat-body do remains deferred`. A plain local `(do child)` and a same-domain
+generated `(do child (params ...))` at deeper branch nesting (`when⁺ → repeat`,
+`switch → when⁺ → repeat`) also lower (a generated `do` instantiates its child
+in the `_top`); a deeper-nested cross-domain generated `do` fails closed with
+`cross-domain repeat-body do remains deferred` and a deeper-nested `spawn` with
 `deeper-nested repeat-body spawn remains deferred`. The original generic "supported only for
 top-level..." message remains as a safety-net fallback for shapes not
 yet classified.

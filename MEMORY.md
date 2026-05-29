@@ -38095,3 +38095,23 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   recursions; (3) validator: admit deeper-nested generated do. Cross-domain +
   spawn stay deferred. Created `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING`.
   `.2` ships it + t/1382. [[frontier-pnt-autonomy]].
+
+## 2026-05-29: R14 shipped — deeper-nested repeat-body generated-do lowering (frontier #4)
+- `.2` shipped. 3-part change: (1) added `_push_nested_branch_repeat_refs` and
+  used it in the collector's when/switch branches so generated children in
+  `when⁺→repeat`/`switch→when⁺→repeat` are discovered (recurses into nested
+  `when` only — nested `switch` is validator-rejected — matching the lowering's
+  ordinal order); (2) threaded the 4 `_ir_repeat` params through the nested
+  `_expand_when`(8137)/`_expand_switch`(8180)/`_expand_loop_body`(8237) when
+  recursions; (3) validator: `$deeper_nested_repeat` admits a generated do and
+  joins the bindings/domain-require-params checks; removed the
+  "deeper-nested ... generated do remains deferred" message.
+- Verified ORDINAL AGREEMENT (the load-bearing risk): a top-level gen-do
+  (ordinal 0, W=8) + a deeper-nested gen-do (ordinal 1, W=16) → the .fsm
+  instance ports EXACTLY match the _top instantiations/wiring (locked in t/1382
+  with is_deeply). `--check-json` clean + 3 SV modules.
+- Cascade: removing the message broke 4 test files asserting it (t/1375, t/1374,
+  t/1381, t/1215) — all repointed to the cross-domain deeper-nested deferral
+  (still deferred). Audit set (14 files, 977) + broad regression (119 files,
+  950) PASS. Tree complete. Remaining frontier: loop-contained spawn,
+  deeper-nested spawn, cross-domain generated do.

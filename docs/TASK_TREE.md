@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING` | `active` | `R14` | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | [docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.md](docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.md) |
+| _(none active)_ | | | | |
 
 ## Proposed Task Trees
 
@@ -59,6 +59,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING` | `done` | `R14` | `closed` | [docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.md](docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.md) |
 | `ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING` | `done` | `R14` | `closed` | [docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.md](docs/tasks/ISF-DEEPER-NESTED-REPEAT-BODY-LOCAL-DO-LOWERING.md) |
 | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING` | `done` | `R14` | `closed` | [docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.md](docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.md) |
 | `ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING` | `done` | `R14` | `closed` | [docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.md](docs/tasks/ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING.md) |

@@ -19,16 +19,18 @@ this chapter:
   `latency-bound parameter`, `watchdog-limit parameter` — each with
   its own deferral phrase (`t/1373`); loop-contained repeat-body
   `spawn` and cross-domain generated `do` remain deferred (`t/1374`);
-  deeper-nested repeat-body generated `do` and `spawn` remain deferred
-  (`t/1375`).
+  deeper-nested repeat-body cross-domain generated `do` and `spawn` remain
+  deferred (`t/1375`).
 - **Loop-contained repeat-body `do`**: a plain local `(do child)` (`t/1379`)
   and a same-domain generated `(do child (params ...))` (`t/1380`, which
   instantiates the child in the `_top`) inside a `(repeat ...)` directly in a
   single `(while ...)`/`(until ...)` body now lower; loop-contained `spawn`
   and cross-domain generated `do` stay deferred.
-- **Deeper-nested repeat-body local `do`**: a plain local `(do child)` at
-  deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) now
-  lowers (`t/1381`); deeper-nested generated `do` and `spawn` stay deferred.
+- **Deeper-nested repeat-body `do`**: a plain local `(do child)` (`t/1381`)
+  and a same-domain generated `(do child (params ...))` (`t/1382`, which
+  instantiates the child in the `_top`) at deeper branch nesting (`when⁺ →
+  repeat`, `switch → when⁺ → repeat`) now lower; deeper-nested cross-domain
+  generated `do` and `spawn` stay deferred.
 - **Book example correctness build gate**: every `lisp`-tagged book
   example must parse + lower (`t/1376`). Current state: 36
   complete fixtures lower cleanly.
@@ -662,13 +664,14 @@ with `loop-contained repeat-body spawn remains deferred`, and a cross-domain
 generated `do` fails closed with `cross-domain repeat-body do remains
 deferred`; a repeat reached through an additional loop ancestor still
 emits `loop-contained repeat-body do remains deferred`. A plain local
-`(do child)` at deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ →
-repeat`) also lowers (`t/1381`); a deeper-nested generated `do` fails closed
-with `deeper-nested repeat-body generated do remains deferred` and a
-deeper-nested `spawn` with `deeper-nested repeat-body spawn remains deferred`;
-the original generic message remains as a safety-net fallback for shapes not
-yet classified. Loop-contained `spawn`, cross-domain generated `do`,
-deeper-nested generated `do`/`spawn`, and broader implementations remain
+`(do child)` (`t/1381`) and a same-domain generated `(do child (params ...))`
+(`t/1382`, which instantiates its child in the `_top`) at deeper branch nesting
+(`when⁺ → repeat`, `switch → when⁺ → repeat`) also lower; a deeper-nested
+cross-domain generated `do` fails closed with `cross-domain repeat-body do
+remains deferred` and a deeper-nested `spawn` with `deeper-nested repeat-body
+spawn remains deferred`; the original generic message remains as a safety-net
+fallback for shapes not yet classified. Loop-contained `spawn`, cross-domain
+generated `do`, deeper-nested `spawn`, and broader implementations remain
 backlog.
 
 A top-level repeat body may use `(spawn child as inst [(params ...)] [(bind
@@ -801,10 +804,9 @@ requirement message. Cross-domain do without the `(domain ...)`
 annotation still surfaces the generic clock-domain violation message.
 Generated/spawn nested activation beyond the documented branch-contained
 generated `do` cases and the branch-contained spawned cases,
-deeper-nested generated `do`/`spawn`, loop-contained repeat-body `spawn` and
-cross-domain generated `do` (the plain local `(do child)` and same-domain
-generated `(do child (params ...))` loop-contained cases, and the plain local
-`(do child)` deeper-nested case, are shipped),
+deeper-nested `spawn`, loop-contained repeat-body `spawn`, and cross-domain
+generated `do` (the plain local `(do child)` and same-domain generated
+`(do child (params ...))` loop-contained AND deeper-nested cases are shipped),
 and broader outstanding-child lifetime semantics beyond the mandatory-drain
 subset remain backlog.
 

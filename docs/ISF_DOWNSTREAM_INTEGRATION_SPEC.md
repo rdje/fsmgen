@@ -1258,9 +1258,12 @@ Rules:
   repeat-body do remains deferred` (bindings/domain without static `(params ...)`
   emit the bindings/domain-require-params diagnostic); a repeat reached through
   an additional loop ancestor still emits `loop-contained repeat-body do
-  remains deferred`. A deeper-nested generated `do` emits `deeper-nested
-  repeat-body generated do remains deferred` and a deeper-nested `spawn` emits
-  `deeper-nested repeat-body spawn remains deferred`;
+  remains deferred`. A plain local `(do child)` and a same-domain generated
+  `(do child (params ...))` at deeper branch nesting (`when⁺ → repeat`,
+  `switch → when⁺ → repeat`) also lower (the generated `do` instantiates its
+  child in the `_top`); a deeper-nested cross-domain generated `do` emits
+  `cross-domain repeat-body do remains deferred` and a deeper-nested `spawn`
+  emits `deeper-nested repeat-body spawn remains deferred`;
   the generic message remains as a safety-net fallback.
 
   Top-level repeat bodies also accept generated blocking `(do child)` when
@@ -1980,12 +1983,12 @@ Rules:
   ...)] (domain NAME))` in that pending interval.
 
   Beyond those branch-contained spawn/generated-do subsets, a plain local
-  `(do child)` at deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ →
-  repeat`) is its own shipped subset, and loop-contained repeats accept a
-  plain local `(do child)` and a same-domain generated `(do child (params ...))`
-  (their own shipped subset described above) — loop-contained `spawn`,
-  cross-domain generated `do`, and deeper-nested generated `do`/`spawn` stay
-  deferred.
+  `(do child)` and a same-domain generated `(do child (params ...))` at deeper
+  branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) are their own
+  shipped subset, and loop-contained repeats accept a plain local `(do child)`
+  and a same-domain generated `(do child (params ...))` (their own shipped
+  subset described above) — loop-contained `spawn`, deeper-nested `spawn`, and
+  cross-domain generated `do` stay deferred.
 
   Top-level repeat bodies may also use `(do child (params ...))` with static
   parameter overrides; that form creates one generated child activation

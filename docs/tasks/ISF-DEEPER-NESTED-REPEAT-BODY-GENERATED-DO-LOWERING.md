@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`
@@ -67,32 +67,32 @@ child in the `_top` composition. Fourth scheduler-frontier slice.
 ## Task Tree
 
 - ID: `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING`
-  Status: `active`
+  Status: `done`
   Goal: `Lower same-domain deeper-nested repeat-body generated (do); keep cross-domain/spawn deferred.`
   Children:
     `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1`,
     `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.2`
 
 - ID: `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the slice; record probed ground truth and the 3-part plan.`
   Acceptance: `Task tree committed before any code/test/doc change.`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `98d75a01`
 
 - ID: `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Collector recursion + thread params through nested branch recursions + validator relaxation; add t/1382; sync docs; validate.`
   Acceptance: `Accept-path lowers + instantiates child + emits HDL; deferred cases still fail closed; audits green.`
-  Verification: `prove -Iperl t/1382 t/1381 t/1380 t/1379 t/1375 t/1374 t/1215 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250; mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Verification: `prove -Iperl t/1382 t/1381 t/1380 t/1379 t/1375 t/1374 t/1372 t/1215 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250 (Files=14, Tests=977, PASS); broad regression (119 files, 950) PASS; ordinal agreement + --check-json + 3 SV modules; mdbook build docs/book; git diff --check`
+  Commit: `ship commit (this slice)`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `pending` | Selection commit before any code/test/doc change. |
-| 2 | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `pending` | Ship collector + threading + validator + golden + doc sync. |
+| 1 | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `done` | Selection commit `98d75a01`. |
+| 2 | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `done` | Collector recursion + threading + validator + `t/1382` golden + doc sync shipped; tree closed. |
 
 ## Decisions
 
@@ -112,18 +112,28 @@ child in the `_top` composition. Fourth scheduler-frontier slice.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-29` | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-29` | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `prove -Iperl t/1382 ... ; mdbook build docs/book; git diff --check` | `pending` |
+| `2026-05-29` | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-29` | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `prove -Iperl t/1382 t/1381 t/1380 t/1379 t/1375 t/1374 t/1372 t/1215 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250` (Files=14, Tests=977, PASS); broad regression (119 files, 950) PASS; ordinal agreement + `--check-json` + 3 SV modules; `mdbook build docs/book` (clean); `git diff --check` (clean) | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1: select deeper-nested repeat-body generated-do lowering` | `pending commit hash` |
-| `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.2: ship deeper-nested repeat-body generated-do lowering` | `pending commit hash` |
+| `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.1: select deeper-nested repeat-body generated-do lowering` | `98d75a01` |
+| `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING.2: ship deeper-nested repeat-body generated-do lowering` | `ship commit (this slice)` |
 
 ## Changelog
 
 - `2026-05-29`: Created. Fourth scheduler-frontier slice. Same-domain generated
   `(do)` at deeper branch nesting; collector recursion + lowering threading +
   validator relaxation; cross-domain and spawn stay deferred.
+- `2026-05-29`: `.1` selection committed (`98d75a01`).
+- `2026-05-29`: `.2` shipped. Added `_push_nested_branch_repeat_refs` (collector
+  recursion into nested `when`); threaded the four `_ir_repeat` params through
+  the nested `_expand_when`/`_expand_switch`/`_expand_loop_body` `when`
+  recursions; relaxed the validator (`$deeper_nested_repeat` admits generated do
+  + joins bindings/domain-require-params); removed the deeper-nested generated-do
+  deferral message. Verified ordinal agreement (`t/1382` `is_deeply` on `.fsm`
+  vs `_top` instances). Repointed the now-lifted deferral in t/1375/t/1374/
+  t/1381/t/1215 to cross-domain. Audit set (14 files, 977) + broad regression
+  (119 files, 950) PASS; `--check-json` + 3 SV modules. Tree closed.

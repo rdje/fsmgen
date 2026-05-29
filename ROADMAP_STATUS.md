@@ -14690,3 +14690,12 @@ Exit criteria:
   the four `_ir_repeat` params through the nested branch recursions, and
   validator relaxation. Cross-domain generated do and spawn stay deferred. `.2`
   ships it + `t/1382`.
+- `R14`: `ISF-DEEPER-NESTED-REPEAT-BODY-GENERATED-DO-LOWERING` is **completed**
+  (`.2` shipped). Same-domain generated `(do child (params ...))` at deeper
+  branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) now lowers and
+  instantiates its child in the `_top` (ordinal agreement between `.fsm` and
+  `_top` verified by `t/1382`; `--check-json` clean, 3 SV modules). 3-part
+  change: collector recursion (`_push_nested_branch_repeat_refs`), param
+  threading through the nested branch recursions, validator relaxation.
+  Cross-domain generated do and spawn stay deferred. Next: loop-contained
+  spawn, deeper-nested spawn, cross-domain generated do.

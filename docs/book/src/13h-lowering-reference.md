@@ -1440,13 +1440,15 @@ Inside a loop-contained repeat, `spawn` emits the targeted `loop-contained
 repeat-body spawn remains deferred` diagnostic and a cross-domain generated
 `do` emits `cross-domain repeat-body do remains deferred`; a repeat reached
 through an additional loop ancestor still emits `loop-contained
-repeat-body do remains deferred`. A plain local `(do child)` at deeper branch
-nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) also lowers (reusing the
-same nested branch + repeat recursion); a deeper-nested generated `do` emits
-`deeper-nested repeat-body generated do remains deferred` and a deeper-nested
-`spawn` emits `deeper-nested repeat-body spawn remains deferred`. The original
-generic "supported only for top-level..." message remains as a safety-net
-fallback for shapes not yet classified.
+repeat-body do remains deferred`. A plain local `(do child)` and a same-domain
+generated `(do child (params ...))` at deeper branch nesting (`when⁺ → repeat`,
+`switch → when⁺ → repeat`) also lower (reusing the same nested branch + repeat
+recursion; a generated `do` instantiates its child in the `_top`); a
+deeper-nested cross-domain generated `do` emits `cross-domain repeat-body do
+remains deferred` and a deeper-nested `spawn` emits `deeper-nested repeat-body
+spawn remains deferred`. The original generic "supported only for
+top-level..." message remains as a safety-net fallback for shapes not yet
+classified.
 
 Representative repeat-body spawn lowering uses the static generated instance
 handoff, then an optional sample state, before the repeat check:

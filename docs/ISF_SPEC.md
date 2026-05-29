@@ -2616,13 +2616,16 @@ Current lowering:
   `(bind ...)`/`(domain NAME)` when static params are present) inside a
   `(repeat ...)` directly in a single `(while ...)`/`(until ...)` body; a
   generated `do` instantiates its child in the `_top` composition. A further
-  shipped subset accepts a plain local `(do child)` inside a `(repeat ...)`
-  reached through deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ →
-  repeat`). Inside a loop-contained repeat, `spawn` stays deferred
-  (`loop-contained repeat-body spawn remains deferred`) and a cross-domain
+  shipped subset accepts a plain local `(do child)` and a same-domain generated
+  `(do child (params ...))` inside a `(repeat ...)` reached through deeper
+  branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`); the generated
+  `do` instantiates its child in the `_top`. Inside a loop-contained repeat,
+  `spawn` stays deferred (`loop-contained repeat-body spawn remains deferred`)
+  and a cross-domain generated `do` stays deferred (`cross-domain repeat-body do
+  remains deferred`); at deeper branch nesting, `spawn` stays deferred
+  (`deeper-nested repeat-body spawn remains deferred`) and a cross-domain
   generated `do` stays deferred (`cross-domain repeat-body do remains
-  deferred`); a deeper-nested generated `do` stays deferred
-  (`deeper-nested repeat-body generated do remains deferred`).
+  deferred`).
   Repeats directly inside a top-level
   `when` body also accept one or more generated
   `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites
@@ -5719,6 +5722,7 @@ Focused tests:
 - [t/1379-isf-loop-contained-repeat-body-local-do.t](../t/1379-isf-loop-contained-repeat-body-local-do.t)
 - [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t)
 - [t/1381-isf-deeper-nested-repeat-body-local-do.t](../t/1381-isf-deeper-nested-repeat-body-local-do.t)
+- [t/1382-isf-deeper-nested-repeat-body-generated-do.t](../t/1382-isf-deeper-nested-repeat-body-generated-do.t)
 
 ## 12. Explicitly Deferred
 

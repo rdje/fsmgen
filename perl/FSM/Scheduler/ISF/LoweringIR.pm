@@ -1659,39 +1659,32 @@ sub _child_action_refs_from_transaction_clauses {
         }
 
         if ($keyword eq 'when') {
-            for my $body_clause (@{$clause}[2 .. $#$clause]) {
-                next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
-                next unless defined($body_clause->[0]) && !ref($body_clause->[0]);
-                next unless $body_clause->[0] eq 'repeat';
-                my $static_zero_repeat = _repeat_clause_is_static_zero_for_refs($body_clause, $actor, $tx_name);
-                next if $options->{skip_static_zero_repeats} && $static_zero_repeat;
-                _push_repeat_body_child_action_refs(
-                    \@refs,
-                    $body_clause,
-                    'when body',
-                    \$repeat_do_ordinal,
-                    { static_zero_repeat => $static_zero_repeat ? 1 : 0 },
-                );
-            }
+            # Recurse through nested `when` clauses so repeats reached through
+            # deeper branch nesting (when+ -> repeat) are discovered, in the same
+            # source order the lowering assigns repeat-do ordinals.
+            _push_nested_branch_repeat_refs(
+                \@refs,
+                [@{$clause}[2 .. $#$clause]],
+                'when body',
+                \$repeat_do_ordinal,
+                $options,
+                $actor,
+                $tx_name,
+            );
         }
 
         if ($keyword eq 'switch') {
             for my $branch (@{$clause}[2 .. $#$clause]) {
                 next unless ref($branch) eq 'ARRAY' && @$branch >= 2;
-                for my $body_clause (@{$branch}[1 .. $#$branch]) {
-                    next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
-                    next unless defined($body_clause->[0]) && !ref($body_clause->[0]);
-                    next unless $body_clause->[0] eq 'repeat';
-                    my $static_zero_repeat = _repeat_clause_is_static_zero_for_refs($body_clause, $actor, $tx_name);
-                    next if $options->{skip_static_zero_repeats} && $static_zero_repeat;
-                    _push_repeat_body_child_action_refs(
-                        \@refs,
-                        $body_clause,
-                        'switch branch',
-                        \$repeat_do_ordinal,
-                        { static_zero_repeat => $static_zero_repeat ? 1 : 0 },
-                    );
-                }
+                _push_nested_branch_repeat_refs(
+                    \@refs,
+                    [@{$branch}[1 .. $#$branch]],
+                    'switch branch',
+                    \$repeat_do_ordinal,
+                    $options,
+                    $actor,
+                    $tx_name,
+                );
             }
         }
 
@@ -1747,6 +1740,46 @@ sub _push_repeat_body_child_action_refs {
         $ref{repeat_do_ordinal} = $$repeat_do_ordinal_ref++
             if $body_clause->[0] eq 'do' && ref($repeat_do_ordinal_ref);
         push @$refs, \%ref;
+    }
+}
+
+# Walk a branch body in source order, collecting repeat-body child-action refs
+# from repeats reached through nested `when` clauses (when+ -> repeat). This
+# mirrors the lowering recursion (`_expand_when`/`_expand_switch` recurse into
+# nested `when` only; a nested `switch` is a validator-rejected clause), so the
+# `$repeat_do_ordinal_ref` assignment order matches `_ir_repeat`'s instance
+# naming. Used for the when/switch branches so deeper-nested generated children
+# are discovered, not just direct repeat children.
+sub _push_nested_branch_repeat_refs {
+    my ($refs, $body_clauses, $label, $repeat_do_ordinal_ref, $options, $actor, $tx_name) = @_;
+    $options ||= {};
+
+    for my $bc (@{$body_clauses || []}) {
+        next unless ref($bc) eq 'ARRAY' && @$bc;
+        next unless defined($bc->[0]) && !ref($bc->[0]);
+        my $kw = $bc->[0];
+        if ($kw eq 'repeat') {
+            my $static_zero_repeat = _repeat_clause_is_static_zero_for_refs($bc, $actor, $tx_name);
+            next if $options->{skip_static_zero_repeats} && $static_zero_repeat;
+            _push_repeat_body_child_action_refs(
+                $refs,
+                $bc,
+                $label,
+                $repeat_do_ordinal_ref,
+                { static_zero_repeat => $static_zero_repeat ? 1 : 0 },
+            );
+        }
+        elsif ($kw eq 'when') {
+            _push_nested_branch_repeat_refs(
+                $refs,
+                [@{$bc}[2 .. $#$bc]],
+                'when body',
+                $repeat_do_ordinal_ref,
+                $options,
+                $actor,
+                $tx_name,
+            );
+        }
     }
 }
 
@@ -6466,27 +6499,23 @@ sub _validate_repeat_body_spawn_subset {
             my $uses_domain = _repeat_body_do_uses_domain($body_clause);
             my $target = $body_clause->[1];
             my $generated_do = _repeat_body_do_is_generated_activation($body_clause, $target, $generated_children);
-            # A repeat directly inside a single while/until body ($loop_body_repeat)
-            # runs both a plain local (do child) and a same-domain generated
-            # (do child (params ...)) [+ (bind ...)/(domain NAME)] do. Cross-domain
-            # generated do and spawn stay deferred (handled below / in the spawn
-            # branch). A repeat reached through an extra branch ancestor
-            # (when+ -> repeat, switch -> when+ -> repeat) runs a plain local
-            # (do child); a deeper-nested generated do stays deferred (the nested
-            # branch recursions do not thread the generated-do params).
+            # A repeat directly inside a single while/until body ($loop_body_repeat),
+            # or reached through deeper branch nesting ($deeper_nested_repeat:
+            # when+ -> repeat, switch -> when+ -> repeat), runs both a plain local
+            # (do child) and a same-domain generated (do child (params ...)) [+
+            # (bind ...)/(domain NAME)] do. Cross-domain generated do and spawn
+            # stay deferred (handled by the cross-domain check below / the spawn
+            # branch). A repeat reached through a loop ancestor (loop-contained)
+            # routes through the loop-contained deferral.
+            my $deeper_nested_repeat =
+                !($top_level_repeat || $when_body_repeat || $switch_branch_repeat || $loop_body_repeat)
+                && !_repeat_body_context_is_loop_contained($context_depths)
+                && _repeat_body_context_is_deeper_nested($label, $context_depths);
             if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat || $loop_body_repeat)) {
-                my $plain_local_do = !$uses_generated_params
-                    && !$uses_bindings
-                    && !$uses_domain
-                    && !$generated_do;
                 confess "Transaction '$tn': loop-contained repeat-body do remains deferred\n"
                     if _repeat_body_context_is_loop_contained($context_depths);
-                if (_repeat_body_context_is_deeper_nested($label, $context_depths)) {
-                    confess "Transaction '$tn': deeper-nested repeat-body generated do remains deferred; only a plain local '(do child)' is supported at deeper branch nesting\n"
-                        unless $plain_local_do;
-                } else {
-                    confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n";
-                }
+                confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n"
+                    unless $deeper_nested_repeat;
             }
             for my $subclause (@{$body_clause}[2 .. $#$body_clause]) {
                 confess "Transaction '$tn': repeat-body generated do supports only static '(params ...)', '(bind ...)', and '(domain ...)' in the generated blocking-do subset\n"
@@ -6518,9 +6547,9 @@ sub _validate_repeat_body_spawn_subset {
                     if $uses_domain && !$uses_generated_params;
             }
             confess "Transaction '$tn': repeat-body generated do bindings require static '(params ...)' overrides in the current generated blocking-do subset\n"
-                if ($top_level_repeat || $loop_body_repeat) && $uses_bindings && !$uses_generated_params;
+                if ($top_level_repeat || $loop_body_repeat || $deeper_nested_repeat) && $uses_bindings && !$uses_generated_params;
             confess "Transaction '$tn': repeat-body generated do domain metadata requires static '(params ...)' overrides in the current generated blocking-do subset\n"
-                if ($top_level_repeat || $loop_body_repeat) && $uses_domain && !$uses_generated_params;
+                if ($top_level_repeat || $loop_body_repeat || $deeper_nested_repeat) && $uses_domain && !$uses_generated_params;
             if (@pending_spawns) {
                 my $plain_local_do = !$uses_generated_params && !$uses_bindings && !$uses_domain && !$generated_do;
                 my $plain_generated_child_do = !$uses_generated_params && !$uses_bindings && !$uses_domain && $generated_do;
@@ -8101,7 +8130,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
         elsif($bk eq'repeat'){my($rs,$rc,$rw,$rdw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$rs;_register_repeat_counters($counters,$storage_roles,$rc,$rw,$rdw)}
         elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths,$actor)}
         elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
-        elsif($bk eq'when'){my($ws)=_expand_when($bc,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses);push @body_states,@$ws}}
+        elsif($bk eq'when'){my($ws)=_expand_when($bc,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$ws}}
     if(@lp){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)}
     if(@body_states){$bstate->{true_target}=$body_states[0]{name};$bstate->{branch_state_names}=[map { $_->{name} } @body_states];push @s,@body_states}
     return (\@s);
@@ -8144,7 +8173,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
             elsif($bk2 eq'repeat'){my($rs,$rc,$rw,$rdw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$rs;_register_repeat_counters($counters,$storage_roles,$rc,$rw,$rdw)}
             elsif($bk2 eq'update'||$bk2 eq'set'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths,$actor)}
             elsif($bk2 eq'store'||$bk2 eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc2,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
-            elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses);push @body_states,@$ws}}
+            elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$ws}}
         if(@lp||!@body_states){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)if@lp;push @body_states,{name=>"${tn}_switch_${val}_" . $$ir++,kind=>'sequential',assignments=>[],transitions=>[]}unless@body_states}
         push @branches,{value=>$val,body_start=>$body_states[0]{name}};
         push @branch_state_names, map { $_->{name} } @body_states;
@@ -8201,7 +8230,7 @@ sub _expand_loop_body {
             push @states, $state;
             push @$bank_accesses, @$accesses if ref($bank_accesses) eq 'ARRAY';
         } elsif ($bk eq 'when') {
-            my ($ws) = _expand_when($bc, $tn, $ir, \@lp, $drives, $wd, $widths, $counters, $storage_roles, $actor, $bank_accesses);
+            my ($ws) = _expand_when($bc, $tn, $ir, \@lp, $drives, $wd, $widths, $counters, $storage_roles, $actor, $bank_accesses, $spawn_refs, $constant_values, $generated_children, $repeat_do_ordinal_ref);
             push @states, @$ws;
         }
     }

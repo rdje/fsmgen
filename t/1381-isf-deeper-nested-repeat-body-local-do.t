@@ -84,32 +84,10 @@ ISF
         'the local do reaches the scheduled .fsm inside the switch->when->repeat');
 };
 
-subtest 'deeper-nested generated do and spawn stay deferred' => sub {
-    # generated-child do (worker made a generated child via a top-level spawn)
-    my $generated_do = <<'ISF';
-(actor when_when_generated_do
-  (clock clk)
-  (reset rst_n)
-  (interface
-    (input start) (input c1) (input c2) (input loops (width 3))
-    (output done))
-  (transaction parent
-    (on start)
-    (spawn worker as w0)
-    (await_all done)
-    (when c1
-      (when c2
-        (repeat loops
-          (do worker))))
-    (complete done))
-  (transaction worker
-    (complete done)))
-ISF
-    my $ok1 = eval { parse_lower($generated_do, 'gen.isf'); 1 };
-    ok(!$ok1, 'deeper-nested generated do is rejected');
-    like($@, qr/Transaction 'parent': deeper-nested repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported at deeper branch nesting/,
-        'deeper-nested generated do emits the targeted generated-do diagnostic');
-
+# NOTE: same-domain generated do at deeper branch nesting is now SUPPORTED
+# (see t/1382). This subtest covers the deferral that remains for the local-do
+# scope: spawn at deeper branch nesting.
+subtest 'deeper-nested spawn stays deferred' => sub {
     # spawn stays deferred (unchanged)
     my $spawn = <<'ISF';
 (actor when_when_spawn
