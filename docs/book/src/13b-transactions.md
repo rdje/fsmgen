@@ -681,19 +681,20 @@ The when-contained and switch-contained generated nested `do` subsets also
 accept declared same-domain `(domain NAME)` metadata when static `(params
 ...)` overrides are present.
 
-A plain local `(do child)` inside a `(repeat ...)` that sits directly in a
-single `(while ...)` or `(until ...)` body now lowers, reusing the proven
-repeat schedule inside the loop body (see the control-flow chapter). Inside a
-loop-contained repeat, `spawn` and a generated `do` (carrying `(params ...)`/
-`(bind ...)`/`(domain ...)` or targeting a generated child) still fail closed:
-the spawn form emits the targeted `loop-contained repeat-body spawn remains
-deferred` diagnostic, and the generated-`do` form emits `loop-contained
-repeat-body generated do remains deferred`. A repeat reached through an extra
-branch or loop ancestor (for example `(while c1 (when c2 (repeat ...)))`) still
-emits `loop-contained repeat-body do remains deferred`. Deeper-nested
-repeat-body `do` and `spawn` (deeper-when nesting or when-inside-switch
-nesting) fail closed with a targeted `deeper-nested repeat-body <do|spawn>
-remains deferred` diagnostic. The original generic "supported only for
+A plain local `(do child)` and a same-domain generated `(do child (params ...))`
+(with `(bind ...)`/`(domain NAME)` when static params are present) inside a
+`(repeat ...)` that sits directly in a single `(while ...)` or `(until ...)`
+body now lower, reusing the proven repeat schedule inside the loop body (see the
+control-flow chapter); a generated `do` instantiates its child in the `_top`
+composition. Inside a loop-contained repeat, `spawn` and a cross-domain
+generated `do` still fail closed: the spawn form emits the targeted
+`loop-contained repeat-body spawn remains deferred` diagnostic, and a
+cross-domain generated `do` emits `cross-domain repeat-body do remains
+deferred`. A repeat reached through an extra branch or loop ancestor (for
+example `(while c1 (when c2 (repeat ...)))`) still emits `loop-contained
+repeat-body do remains deferred`. Deeper-nested repeat-body `do` and `spawn`
+(deeper-when nesting or when-inside-switch nesting) fail closed with a targeted
+`deeper-nested repeat-body <do|spawn> remains deferred` diagnostic. The original generic "supported only for
 top-level..." message remains as a safety-net fallback for shapes not
 yet classified.
 

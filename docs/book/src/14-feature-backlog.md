@@ -18,14 +18,15 @@ this chapter:
   gates — `repeat-count parameter`, `wait-count parameter`,
   `latency-bound parameter`, `watchdog-limit parameter` — each with
   its own deferral phrase (`t/1373`); loop-contained repeat-body
-  `spawn` and generated `do` remain deferred (`t/1374`); deeper-nested
-  repeat-body `<do|spawn>` remains deferred (`t/1375`).
-- **Loop-contained repeat-body local `do`**: a plain local `(do child)`
-  inside a `(repeat ...)` directly in a single `(while ...)`/`(until ...)`
-  body now lowers (`t/1379`); spawn and generated `do` in a
-  loop-contained repeat stay deferred.
+  `spawn` and cross-domain generated `do` remain deferred (`t/1374`);
+  deeper-nested repeat-body `<do|spawn>` remains deferred (`t/1375`).
+- **Loop-contained repeat-body `do`**: a plain local `(do child)` (`t/1379`)
+  and a same-domain generated `(do child (params ...))` (`t/1380`, which
+  instantiates the child in the `_top`) inside a `(repeat ...)` directly in a
+  single `(while ...)`/`(until ...)` body now lower; loop-contained `spawn`
+  and cross-domain generated `do` stay deferred.
 - **Book example correctness build gate**: every `lisp`-tagged book
-  example must parse + lower (`t/1376`). Current state: 34
+  example must parse + lower (`t/1376`). Current state: 35
   complete fixtures lower cleanly.
 - **Cookbook ISF recipes**: `docs/book/src/12-cookbook.md` now
   carries recipes 9-13 covering basic actor, spawn, parameterized
@@ -648,20 +649,21 @@ it may also carry declared same-domain `(domain NAME)` metadata when static
 params are present.
 
 It rejects deeper branch nesting beyond the documented branch-contained
-subsets. A plain local `(do child)` inside a `(repeat ...)` directly in a
-single `(while ...)`/`(until ...)` body now lowers (it reuses the proven
-repeat schedule inside the loop body; see `t/1379`). Inside a loop-contained
-repeat, `spawn` still fails closed with `loop-contained repeat-body spawn
-remains deferred`, and a generated `do` (carrying `(params ...)`/`(bind ...)`/
-`(domain ...)` or targeting a generated child) fails closed with
-`loop-contained repeat-body generated do remains deferred`; a repeat reached
-through an additional branch/loop ancestor still emits `loop-contained
-repeat-body do remains deferred`. Deeper-nested repeat-body `do` and `spawn`
-(deeper-when nesting or when-inside-switch nesting) now fail closed with a
-targeted `deeper-nested repeat-body <do|spawn> remains deferred` diagnostic;
-the original generic message remains as a safety-net fallback for shapes not
-yet classified. Loop-contained `spawn`/generated `do` and broader
-deeper-nested implementations remain backlog.
+subsets. A plain local `(do child)` (`t/1379`) and a same-domain generated
+`(do child (params ...))` (`t/1380`) inside a `(repeat ...)` directly in a
+single `(while ...)`/`(until ...)` body now lower (reusing the proven repeat
+schedule inside the loop body; a generated `do` instantiates its child in the
+`_top` composition). Inside a loop-contained repeat, `spawn` still fails closed
+with `loop-contained repeat-body spawn remains deferred`, and a cross-domain
+generated `do` fails closed with `cross-domain repeat-body do remains
+deferred`; a repeat reached through an additional branch/loop ancestor still
+emits `loop-contained repeat-body do remains deferred`. Deeper-nested
+repeat-body `do` and `spawn` (deeper-when nesting or when-inside-switch
+nesting) now fail closed with a targeted `deeper-nested repeat-body <do|spawn>
+remains deferred` diagnostic; the original generic message remains as a
+safety-net fallback for shapes not yet classified. Loop-contained `spawn`,
+cross-domain generated `do`, and broader deeper-nested implementations remain
+backlog.
 
 A top-level repeat body may use `(spawn child as inst [(params ...)] [(bind
 ...)] [(domain NAME)])` clauses when the same repeat body reaches `(await_all
@@ -794,7 +796,8 @@ annotation still surfaces the generic clock-domain violation message.
 Generated/spawn nested activation beyond the documented branch-contained
 generated `do` cases and the branch-contained spawned cases,
 deeper branch repeat activation, loop-contained repeat-body `spawn` and
-generated `do` (the plain local `(do child)` loop-contained case is shipped),
+cross-domain generated `do` (the plain local `(do child)` and same-domain
+generated `(do child (params ...))` loop-contained cases are shipped),
 and broader outstanding-child lifetime semantics beyond the mandatory-drain
 subset remain backlog.
 

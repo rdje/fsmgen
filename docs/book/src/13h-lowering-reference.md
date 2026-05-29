@@ -1429,20 +1429,22 @@ are present.
 
 Both nested subsets reject deeper branch nesting and generated/spawned nested
 activation beyond the documented branch-contained generated `do` cases and the
-branch-contained generated-spawn cases. A plain local `(do child)` inside a
-`(repeat ...)` that sits directly in a single `(while ...)` or `(until ...)`
-body now lowers: it reuses the proven repeat schedule (`repeat_init` re-seeds
-the counter each loop iteration, the blocking-do awaits the child `_done` port,
-and `repeat_check` re-runs the repeat or returns to the loop check). Inside a
-loop-contained repeat, `spawn` emits the targeted `loop-contained repeat-body
-spawn remains deferred` diagnostic and a generated `do` emits `loop-contained
-repeat-body generated do remains deferred`; a repeat reached through an
-additional branch or loop ancestor still emits `loop-contained repeat-body do
-remains deferred`. Deeper-nested repeat-body `do` and `spawn` (deeper-when
-nesting or when-inside-switch nesting) emit a targeted `deeper-nested
-repeat-body <do|spawn> remains deferred` diagnostic. The original generic "supported only for
-top-level..." message remains as a safety-net fallback for shapes not
-yet classified.
+branch-contained generated-spawn cases. A plain local `(do child)` and a
+same-domain generated `(do child (params ...))` inside a `(repeat ...)` that
+sits directly in a single `(while ...)` or `(until ...)` body now lower: they
+reuse the proven repeat schedule (`repeat_init` re-seeds the counter each loop
+iteration, the blocking-do asserts the child/instance `_start` and awaits its
+`_done` port, and `repeat_check` re-runs the repeat or returns to the loop
+check), and a generated `do` instantiates its child in the `_top` composition.
+Inside a loop-contained repeat, `spawn` emits the targeted `loop-contained
+repeat-body spawn remains deferred` diagnostic and a cross-domain generated
+`do` emits `cross-domain repeat-body do remains deferred`; a repeat reached
+through an additional branch or loop ancestor still emits `loop-contained
+repeat-body do remains deferred`. Deeper-nested repeat-body `do` and `spawn`
+(deeper-when nesting or when-inside-switch nesting) emit a targeted
+`deeper-nested repeat-body <do|spawn> remains deferred` diagnostic. The original
+generic "supported only for top-level..." message remains as a safety-net
+fallback for shapes not yet classified.
 
 Representative repeat-body spawn lowering uses the static generated instance
 handoff, then an optional sample state, before the repeat check:

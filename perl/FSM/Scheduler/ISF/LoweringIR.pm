@@ -1694,6 +1694,26 @@ sub _child_action_refs_from_transaction_clauses {
                 }
             }
         }
+
+        if ($keyword eq 'while' || $keyword eq 'until') {
+            # A repeat directly inside a single (while ...)/(until ...) body may
+            # activate a generated child via a same-domain generated (do ...);
+            # discover those so the child is registered, validated, and built.
+            for my $body_clause (@{$clause}[2 .. $#$clause]) {
+                next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
+                next unless defined($body_clause->[0]) && !ref($body_clause->[0]);
+                next unless $body_clause->[0] eq 'repeat';
+                my $static_zero_repeat = _repeat_clause_is_static_zero_for_refs($body_clause, $actor, $tx_name);
+                next if $options->{skip_static_zero_repeats} && $static_zero_repeat;
+                _push_repeat_body_child_action_refs(
+                    \@refs,
+                    $body_clause,
+                    "$keyword body",
+                    \$repeat_do_ordinal,
+                    { static_zero_repeat => $static_zero_repeat ? 1 : 0 },
+                );
+            }
+        }
     }
 
     return @refs;
@@ -4648,6 +4668,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
                 _ir_while(
                     $cl, $tn, \$si, [splice @ps], $wd, $drives, $widths,
                     \%ct, \%storage_roles, $actor, \@bank_accesses,
+                    \@spc, $constant_values, $generated_children, \$repeat_do_ordinal,
                 )
             };
         }
@@ -4656,6 +4677,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
                 _ir_until(
                     $cl, $tn, \$si, [splice @ps], $wd, $drives, $widths,
                     \%ct, \%storage_roles, $actor, \@bank_accesses,
+                    \@spc, $constant_values, $generated_children, \$repeat_do_ordinal,
                 )
             };
         }
@@ -6444,24 +6466,18 @@ sub _validate_repeat_body_spawn_subset {
             my $uses_domain = _repeat_body_do_uses_domain($body_clause);
             my $target = $body_clause->[1];
             my $generated_do = _repeat_body_do_is_generated_activation($body_clause, $target, $generated_children);
-            my $plain_local_do = !$uses_generated_params
-                && !$uses_bindings
-                && !$uses_domain
-                && !$generated_do;
-            if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat)) {
-                if ($loop_body_repeat) {
-                    # A repeat directly inside a single while/until body may run
-                    # a plain local (do child); a generated do (params/bind/
-                    # domain or generated-child target) stays deferred here.
-                    confess "Transaction '$tn': loop-contained repeat-body generated do remains deferred; only a plain local '(do child)' is supported inside a loop-contained repeat\n"
-                        unless $plain_local_do;
-                } else {
-                    confess "Transaction '$tn': loop-contained repeat-body do remains deferred\n"
-                        if _repeat_body_context_is_loop_contained($context_depths);
-                    confess "Transaction '$tn': deeper-nested repeat-body do remains deferred\n"
-                        if _repeat_body_context_is_deeper_nested($label, $context_depths);
-                    confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n";
-                }
+            # A repeat directly inside a single while/until body ($loop_body_repeat)
+            # runs both a plain local (do child) and a same-domain generated
+            # (do child (params ...)) [+ (bind ...)/(domain NAME)] do. Cross-domain
+            # generated do and spawn stay deferred (handled below / in the spawn
+            # branch). A repeat reached through an extra branch/loop ancestor still
+            # routes through the loop-contained/deeper-nested deferral here.
+            if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat || $loop_body_repeat)) {
+                confess "Transaction '$tn': loop-contained repeat-body do remains deferred\n"
+                    if _repeat_body_context_is_loop_contained($context_depths);
+                confess "Transaction '$tn': deeper-nested repeat-body do remains deferred\n"
+                    if _repeat_body_context_is_deeper_nested($label, $context_depths);
+                confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n";
             }
             for my $subclause (@{$body_clause}[2 .. $#$body_clause]) {
                 confess "Transaction '$tn': repeat-body generated do supports only static '(params ...)', '(bind ...)', and '(domain ...)' in the generated blocking-do subset\n"
@@ -6493,9 +6509,9 @@ sub _validate_repeat_body_spawn_subset {
                     if $uses_domain && !$uses_generated_params;
             }
             confess "Transaction '$tn': repeat-body generated do bindings require static '(params ...)' overrides in the current generated blocking-do subset\n"
-                if $top_level_repeat && $uses_bindings && !$uses_generated_params;
+                if ($top_level_repeat || $loop_body_repeat) && $uses_bindings && !$uses_generated_params;
             confess "Transaction '$tn': repeat-body generated do domain metadata requires static '(params ...)' overrides in the current generated blocking-do subset\n"
-                if $top_level_repeat && $uses_domain && !$uses_generated_params;
+                if ($top_level_repeat || $loop_body_repeat) && $uses_domain && !$uses_generated_params;
             if (@pending_spawns) {
                 my $plain_local_do = !$uses_generated_params && !$uses_bindings && !$uses_domain && !$generated_do;
                 my $plain_generated_child_do = !$uses_generated_params && !$uses_bindings && !$uses_domain && $generated_do;
@@ -7458,7 +7474,7 @@ sub _ir_dynamic_wait {
 }
 
 sub _ir_while {
-    my ($cl, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses) = @_;
+    my ($cl, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses, $spawn_refs, $constant_values, $generated_children, $repeat_do_ordinal_ref) = @_;
     my $condition = $cl->[1];
     my @body_clauses = @{$cl}[2 .. $#$cl];
     my @entry_assignments = _sample_assignments($pending_samples || []);
@@ -7479,6 +7495,7 @@ sub _ir_while {
     my $body_states = _expand_loop_body(
         \@body_clauses, $tn, $ir, [], $wd, $drives, $widths,
         $counters, $storage_roles, $actor, $bank_accesses, 'while body',
+        $spawn_refs, $constant_values, $generated_children, $repeat_do_ordinal_ref,
     );
     my $back = {
         name        => "${tn}_while_check_" . $$ir++,
@@ -7504,7 +7521,7 @@ sub _ir_while {
 }
 
 sub _ir_until {
-    my ($cl, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses) = @_;
+    my ($cl, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses, $spawn_refs, $constant_values, $generated_children, $repeat_do_ordinal_ref) = @_;
     my $condition = $cl->[1];
     my @body_clauses = @{$cl}[2 .. $#$cl];
     my $loop_id = $$ir;
@@ -7512,6 +7529,7 @@ sub _ir_until {
         \@body_clauses, $tn, $ir, $pending_samples || [], $wd, $drives,
         $widths, $counters, $storage_roles, $actor, $bank_accesses,
         'until body',
+        $spawn_refs, $constant_values, $generated_children, $repeat_do_ordinal_ref,
     );
     my $check = {
         name        => "${tn}_until_check_" . $$ir++,
@@ -8131,7 +8149,7 @@ sub _ir_sync_all { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_all_$i",kind=>'sync_
 sub _ir_sync_any { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_any_$i",kind=>'sync_any',assignments=>[],transitions=>[],done_ports=>[@$dps]} }
 
 sub _expand_loop_body {
-    my ($body_clauses, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses, $body_label) = @_;
+    my ($body_clauses, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses, $body_label, $spawn_refs, $constant_values, $generated_children, $repeat_do_ordinal_ref) = @_;
     my @states;
     my @lp = @{$pending_samples || []};
     $body_label //= 'loop body';
@@ -8162,7 +8180,7 @@ sub _expand_loop_body {
         } elsif ($bk eq 'complete') {
             push @states, _ir_complete($bc, $tn, $$ir++);
         } elsif ($bk eq 'repeat') {
-            my ($rs, $rc, $rw, $rdw) = _ir_repeat($bc, $tn, $ir, \@lp, $wd, $drives, $widths, $actor, $bank_accesses);
+            my ($rs, $rc, $rw, $rdw) = _ir_repeat($bc, $tn, $ir, \@lp, $wd, $drives, $widths, $actor, $bank_accesses, $spawn_refs, $constant_values, $generated_children, $repeat_do_ordinal_ref);
             push @states, @$rs;
             _register_repeat_counters($counters, $storage_roles, $rc, $rw, $rdw);
         } elsif ($bk eq 'update' || $bk eq 'set' || $bk eq 'shift_left' || $bk eq 'shift_right' || $bk eq 'assemble' || $bk eq 'extract') {

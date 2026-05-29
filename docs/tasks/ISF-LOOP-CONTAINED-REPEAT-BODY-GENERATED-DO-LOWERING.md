@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-29`
 - Last updated: `2026-05-29`
@@ -91,32 +91,32 @@ all frontier items ship, in any order.
 ## Task Tree
 
 - ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING`
-  Status: `active`
+  Status: `done`
   Goal: `Lower same-domain loop-contained repeat-body generated (do); keep cross-domain/spawn deferred.`
   Children:
     `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.1`,
     `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.2`
 
 - ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the slice; record probed ground truth, threading plan, and scope.`
   Acceptance: `Task tree committed before any code/test/doc change.`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `3aafad9d`
 
 - ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.2`
-  Status: `pending`
-  Goal: `Thread the 4 params through _ir_while/_ir_until/_expand_loop_body; relax the validator for same-domain generated do; add t/1380; sync docs; validate.`
+  Status: `done`
+  Goal: `Thread the 4 params through _ir_while/_ir_until/_expand_loop_body; add loop-body discovery to the generated-child collector; relax the validator for same-domain generated do; add t/1380; sync docs; validate.`
   Acceptance: `Accept-path lowers + instantiates child + emits HDL; deferred cases still fail closed; audits green.`
-  Verification: `prove -Iperl t/1380 t/1379 t/1374 t/1375 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250; mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Verification: `prove -Iperl t/1380 t/1379 t/1374 t/1375 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250 (Files=11, Tests=870, PASS); broad regression (103 files, 933) PASS; --check-json + 3-module SV emit; mdbook build docs/book; git diff --check`
+  Commit: `ship commit (this slice)`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `pending` | Selection commit before any code/test/doc change. |
-| 2 | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `pending` | Ship threading + validator relaxation + golden + doc sync. |
+| 1 | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `done` | Selection commit `3aafad9d`. |
+| 2 | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `done` | Threading + collector discovery + validator relaxation + `t/1380` golden + doc sync shipped; tree closed. |
 
 ## Decisions
 
@@ -141,15 +141,15 @@ all frontier items ship, in any order.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-29` | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `mdbook build docs/book`; `git diff --check` | `pending` |
-| `2026-05-29` | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `prove -Iperl t/1380 t/1379 t/1374 t/1375 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250`; `mdbook build docs/book`; `git diff --check` | `pending` |
+| `2026-05-29` | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-29` | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `prove -Iperl t/1380 t/1379 t/1374 t/1375 t/1372 t/1304 t/1307 t/1305 t/1376 t/1332 t/1250` (Files=11, Tests=870, PASS); broad regression (103 files, 933) PASS; `--check-json` success + 3-module SV emit; `mdbook build docs/book` (clean); `git diff --check` (clean) | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.1: select loop-contained repeat-body generated-do lowering` | `pending commit hash` |
-| `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.2: ship loop-contained repeat-body generated-do lowering` | `pending commit hash` |
+| `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.1` | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.1: select loop-contained repeat-body generated-do lowering` | `3aafad9d` |
+| `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.2` | `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING.2: ship loop-contained repeat-body generated-do lowering` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -157,3 +157,13 @@ all frontier items ship, in any order.
   `(do)` inside a single while/until-contained repeat; thread the four
   `_ir_repeat` params through the loop-body path; cross-domain and spawn stay
   deferred.
+- `2026-05-29`: `.1` selection committed (`3aafad9d`).
+- `2026-05-29`: `.2` shipped. Threaded the four params through
+  `_ir_while`/`_ir_until`/`_expand_loop_body`; added the `while`/`until`→repeat
+  branch to `_child_action_refs_from_transaction_clauses` (the real blocker —
+  generated children activated only from a loop were not being discovered);
+  extended the validator `do` gate + bindings/domain-require-params for
+  `$loop_body_repeat`; removed the obsolete generated-do deferral message.
+  Verified `--check-json` + 3-module SV emit with the child instantiated using
+  the `(W 8)` override. Added `t/1380`; updated `t/1374`/`t/1379`; synced
+  book/spec docs (13d count 34→35). All validation green; tree closed.

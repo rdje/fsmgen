@@ -1112,18 +1112,21 @@ Cross-domain repeat-body `do` rejection emits a targeted
 `cross-domain repeat-body do remains deferred` diagnostic and is
 checked by
 [t/1372-isf-cross-domain-repeat-body-do-diagnostic.t](../t/1372-isf-cross-domain-repeat-body-do-diagnostic.t).
-A plain local `(do child)` inside a `(repeat ...)` directly in a single
-`(while ...)`/`(until ...)` body lowers (its accept-path schedule is
-checked by
-[t/1379-isf-loop-contained-repeat-body-local-do.t](../t/1379-isf-loop-contained-repeat-body-local-do.t)).
+A plain local `(do child)` and a same-domain generated `(do child (params ...))`
+(with `(bind ...)`/`(domain NAME)` when static params are present) inside a
+`(repeat ...)` directly in a single `(while ...)`/`(until ...)` body lower; a
+generated `do` instantiates its child in the `_top` composition. The
+accept-path schedules are checked by
+[t/1379-isf-loop-contained-repeat-body-local-do.t](../t/1379-isf-loop-contained-repeat-body-local-do.t)
+and [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t).
 Loop-contained repeat-body `spawn` emits a targeted
 `loop-contained repeat-body spawn remains deferred` diagnostic, a
-loop-contained generated `do` emits `loop-contained repeat-body generated
-do remains deferred`, and a repeat reached through an additional branch/loop
+loop-contained cross-domain generated `do` emits `cross-domain repeat-body do
+remains deferred`, and a repeat reached through an additional branch/loop
 ancestor emits `loop-contained repeat-body do remains deferred`; these are
 checked by
 [t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t)
-and [t/1379-isf-loop-contained-repeat-body-local-do.t](../t/1379-isf-loop-contained-repeat-body-local-do.t).
+and [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t).
 Deeper-nested repeat-body `do`/`spawn` (deeper-when or
 when-inside-switch) emits a targeted `deeper-nested repeat-body
 <do|spawn> remains deferred` diagnostic and is checked by
@@ -1465,9 +1468,10 @@ handoffs once for the lexical nested do site. When-contained and
 switch-contained generated nested `do` also accept `(domain NAME)` as declared
 same-domain metadata when static `(params ...)` overrides are present. Deeper
 branch nesting remains outside both nested subsets. A plain local `(do child)`
-inside a `(repeat ...)` directly in a single `(while ...)`/`(until ...)` body
-is its own shipped subset; loop-contained `spawn` and generated `do` stay
-deferred. Generated
+and a same-domain generated `(do child (params ...))` inside a `(repeat ...)`
+directly in a single `(while ...)`/`(until ...)` body are their own shipped
+subset (a generated `do` instantiates its child in the `_top`); loop-contained
+`spawn` and cross-domain generated `do` stay deferred. Generated
 repeat-body `do` emits one generated child instance for the lexical do site,
 applies the parameter override once in the generated top, wires optional
 binding handoff ports once for that generated instance, records same-domain

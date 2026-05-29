@@ -38030,3 +38030,25 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Created `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING`. `.2` ships
   threading + validator relaxation + t/1380 golden + doc sync. `.1` selection
   only.
+
+## 2026-05-29: R14 shipped — loop-contained repeat-body generated-do lowering (frontier #2)
+- `.2` shipped. Changes in LoweringIR.pm: (1) threaded `$spawn_refs`/
+  `$constant_values`/`$generated_children`/`$repeat_do_ordinal_ref` through
+  `_ir_while`/`_ir_until`/`_expand_loop_body` to `_ir_repeat`; (2) added a
+  `while`/`until`→repeat branch to `_child_action_refs_from_transaction_clauses`
+  so a generated child activated only from inside a loop is DISCOVERED/registered
+  (without this its `(params)` is rejected and it is misclassified as local —
+  this was the real blocker, not the threading); (3) validator: `$loop_body_repeat`
+  added to the do allow-list and to the bindings/domain-require-params checks;
+  removed the now-obsolete "loop-contained repeat-body generated do remains
+  deferred" message.
+- Verified end-to-end: while/until generated do lowers, the `_top` composition
+  instantiates the child with the resolved override (e.g. `(W 8)`), 3 HDL
+  modules emit, `--check-json` success. Cross-domain generated do, spawn,
+  bindings/domain-without-params stay deferred.
+- Tests: added `t/1380` (accept while+until + child instantiation + deferred
+  cross-domain/bind/spawn). Updated `t/1374` subtest 1 (now extra-nesting +
+  cross-domain deferrals) and `t/1379` subtest 3 (dropped the lifted
+  generated-do rejection). Regression: 103 files / 933 tests PASS + audit set
+  (11 files, 870) PASS. Book/spec docs synced (13d gains a runnable generated-do
+  example; count 34→35). Tree complete.

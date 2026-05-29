@@ -379,17 +379,22 @@ Each phrase below is the verbatim text the validator emits.
   bounds remain deferred`, `... watchdog limits remain deferred`
   phrase. Locked by
   [`t/1373-isf-timing-param-sub-axis-diagnostic.t`](../t/1373-isf-timing-param-sub-axis-diagnostic.t).
-- **Loop-contained repeat-body local `do` is now shipped.** A plain local
-  `(do child)` inside a `(repeat ...)` directly in a single `(while ...)`/
-  `(until ...)` body lowers (it reuses the proven repeat schedule inside the
-  loop body). Inside a loop-contained repeat, `spawn` still fires
-  `Transaction '<tn>': loop-contained repeat-body spawn remains deferred`, a
-  generated `do` fires `Transaction '<tn>': loop-contained repeat-body
-  generated do remains deferred`, and a repeat reached through an additional
-  branch/loop ancestor fires `Transaction '<tn>': loop-contained repeat-body
-  do remains deferred`. Locked by
-  [`t/1379-isf-loop-contained-repeat-body-local-do.t`](../t/1379-isf-loop-contained-repeat-body-local-do.t)
-  (accept path + still-deferred cases) and
+- **Loop-contained repeat-body local `do` and same-domain generated `do` are
+  now shipped.** A plain local `(do child)` and a same-domain generated
+  `(do child (params ...))` (with `(bind ...)`/`(domain NAME)` when static
+  params are present) inside a `(repeat ...)` directly in a single
+  `(while ...)`/`(until ...)` body lower; a generated `do` instantiates its
+  child in the `_top` composition. Inside a loop-contained repeat, `spawn`
+  still fires `Transaction '<tn>': loop-contained repeat-body spawn remains
+  deferred`, a cross-domain generated `do` fires `Transaction '<tn>':
+  repeat-body generated do target '<child>' is in a different clock domain
+  than the calling transaction; cross-domain repeat-body do remains deferred`,
+  and a repeat reached through an additional branch/loop ancestor fires
+  `Transaction '<tn>': loop-contained repeat-body do remains deferred`. Locked
+  by
+  [`t/1379-isf-loop-contained-repeat-body-local-do.t`](../t/1379-isf-loop-contained-repeat-body-local-do.t),
+  [`t/1380-isf-loop-contained-repeat-body-generated-do.t`](../t/1380-isf-loop-contained-repeat-body-generated-do.t),
+  and
   [`t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t`](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t).
 - **`Transaction '<tn>': deeper-nested repeat-body <do|spawn>
   remains deferred`** — fires for deeper-when nesting and

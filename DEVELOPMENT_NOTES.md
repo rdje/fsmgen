@@ -33506,3 +33506,25 @@ It is an exact-delay pulse request:
   at lower time per lexical do site, so a loop-contained generated do yields one
   instance re-triggered each iteration — the same reuse model as the local-do and
   the top-level generated-do. No new scheduling semantics.
+
+## 2026-05-29: shipped R14 loop-contained repeat-body generated-do lowering (frontier #2)
+- The non-obvious blocker was NOT the param threading (anticipated) but the
+  generated-child DISCOVERY pre-pass. `_child_action_refs_from_transaction_clauses`
+  descended into `when`/`switch`→repeat but not `while`/`until`→repeat, so a
+  child activated only from inside a loop was never added to `%generated_children`.
+  Symptom: the worker's own `(params (W 4))` was rejected ("params supported only
+  on generated child transactions...") and the do was misclassified as local.
+  Fix: add a `while`/`until`→repeat branch mirroring the `switch` branch (single
+  direct loop level, matching the validator's `$loop_body_repeat` scope). This
+  is the lesson — enabling a generated activation in a new syntactic position
+  requires updating BOTH the activation collector and the validator/lowerer.
+- Verified the override actually reaches the composition: the `_top` shows
+  `(?fsmc:parent_worker_repeat_do_0 worker (params (W 8)))` and the start/done
+  wiring, and `bin/fsmgen` emits 3 SV modules. So the generated child is really
+  built, not just referenced.
+- Removed the `loop-contained repeat-body generated do remains deferred` message
+  entirely (the gate no longer emits it). Updated the two tests that asserted it
+  (`t/1374` subtest 1 → extra-nesting + cross-domain deferrals; `t/1379` subtest
+  3 → dropped the generated-do rejection, kept spawn + when-inside-while).
+  Cross-domain generated do keeps its own `cross-domain repeat-body do remains
+  deferred` lane (a separate future frontier item).

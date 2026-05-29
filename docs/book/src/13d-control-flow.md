@@ -240,10 +240,40 @@ This subset is intentionally narrow. The repeat must sit **directly** in a
 single loop body — a repeat reached through an extra `(when ...)`/`(switch ...)`
 ancestor, or through more than one loop, stays deferred (see below).
 
-### Loop-contained repeat-body `spawn` and generated `do` (deferred)
+### Loop-contained repeat-body generated `do`
 
-Inside a loop-contained repeat, `spawn` and a *generated* `do` (one carrying
-`(params ...)`/`(bind ...)`/`(domain ...)`, or targeting a generated child)
+A same-domain **generated** `do` — one carrying static `(params ...)` (and
+`(bind ...)`/`(domain NAME)` when static params are present), or targeting a
+generated child — also lowers inside a single `(while ...)`/`(until ...)`
+-contained repeat:
+
+```lisp
+(actor loop_contained_repeat_generated_do
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (do worker (params (W 8)))))
+    (complete done))
+  (transaction worker
+    (params (W 4))
+    (complete done)))
+```
+
+One generated child instance is created per lexical `do` site (named
+`<tn>_<child>_repeat_do_<ord>`) and re-triggered on each loop iteration — the
+blocking-do state asserts the instance `_start` and awaits its `_done`, exactly
+like a top-level repeat-body generated `do`. The `_top` composition
+instantiates the child with the resolved parameter overrides.
+
+### Loop-contained repeat-body `spawn` and cross-domain `do` (deferred)
+
+Inside a loop-contained repeat, `spawn` and a **cross-domain** generated `do`
 still fail closed with targeted diagnostics:
 
 ```text
@@ -257,14 +287,15 @@ still fail closed with targeted diagnostics:
 ```
 
 The validator emits `Transaction 'parent': loop-contained repeat-body spawn
-remains deferred` for the spawn form, and `Transaction 'parent':
-loop-contained repeat-body generated do remains deferred; only a plain local
-'(do child)' is supported inside a loop-contained repeat` for a generated `do`.
+remains deferred` for the spawn form, and `cross-domain repeat-body do remains
+deferred` for a generated `do` whose target is in a different clock domain.
+Bindings or domain metadata without static `(params ...)` emit
+`repeat-body generated do bindings require static '(params ...)' overrides`.
 A repeat wrapped by both a loop and a branch (for example
 `(while c1 (when c2 (repeat ...)))`) still routes through
 `Transaction 'parent': loop-contained repeat-body do remains deferred`. The
-deferred lanes would extend the loop-contained subset to outstanding child
-drains and deeper nesting.
+remaining deferred lanes would extend the loop-contained subset to
+outstanding-child spawn drains and deeper nesting.
 
 The deeper-nested rejected shape is a `(repeat ...)` reached through
 more than one branch ancestor — either two `(when ...)` clauses

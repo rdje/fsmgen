@@ -1247,16 +1247,18 @@ Rules:
   overrides are present.
 
   Deeper branch nesting remains outside both nested subsets. A plain local
-  `(do child)` inside a `(repeat ...)` directly in a single `(while ...)`/
-  `(until ...)` body lowers (it reuses the proven repeat schedule inside the
-  loop body). Inside a loop-contained repeat, `spawn` emits the targeted
-  `loop-contained repeat-body spawn remains deferred` diagnostic and a
-  generated `do` (carrying `(params ...)`/`(bind ...)`/`(domain ...)` or
-  targeting a generated child) emits `loop-contained repeat-body generated do
-  remains deferred`; a repeat reached through an additional branch/loop
-  ancestor still emits `loop-contained repeat-body do remains deferred`.
-  Deeper-nested repeat-body `do` and `spawn` (deeper-when nesting or
-  when-inside-switch nesting) emit a targeted
+  `(do child)` and a same-domain generated `(do child (params ...))` (with
+  `(bind ...)`/`(domain NAME)` when static params are present) inside a
+  `(repeat ...)` directly in a single `(while ...)`/`(until ...)` body lower
+  (reusing the proven repeat schedule inside the loop body); a generated `do`
+  instantiates its child in the `_top` composition. Inside a loop-contained
+  repeat, `spawn` emits the targeted `loop-contained repeat-body spawn remains
+  deferred` diagnostic and a cross-domain generated `do` emits `cross-domain
+  repeat-body do remains deferred` (bindings/domain without static `(params ...)`
+  emit the bindings/domain-require-params diagnostic); a repeat reached through
+  an additional branch/loop ancestor still emits `loop-contained repeat-body do
+  remains deferred`. Deeper-nested repeat-body `do` and `spawn` (deeper-when
+  nesting or when-inside-switch nesting) emit a targeted
   `deeper-nested repeat-body <do|spawn> remains deferred` diagnostic;
   the generic message remains as a safety-net fallback.
 
@@ -1977,9 +1979,10 @@ Rules:
   ...)] (domain NAME))` in that pending interval.
 
   No deeper branch repeat is included in those shipped nested subsets, and
-  loop-contained repeats accept only a plain local `(do child)` (their own
-  shipped subset described above) — loop-contained `spawn` and generated `do`
-  stay deferred.
+  loop-contained repeats accept a plain local `(do child)` and a same-domain
+  generated `(do child (params ...))` (their own shipped subset described
+  above) — loop-contained `spawn` and cross-domain generated `do` stay
+  deferred.
 
   Top-level repeat bodies may also use `(do child (params ...))` with static
   parameter overrides; that form creates one generated child activation

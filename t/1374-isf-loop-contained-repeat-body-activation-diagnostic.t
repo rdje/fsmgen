@@ -10,55 +10,56 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 
-# A plain local (do child) directly inside a single (while ...)/(until ...)
-# -contained repeat now LOWERS (see t/1379). The loop-contained do deferral
-# now applies to the generated-do sub-case and to repeats reached through
-# additional branch nesting.
-subtest 'loop-contained repeat-body generated do emits the targeted diagnostic' => sub {
+# A plain local (do child) AND a same-domain generated (do child (params ...))
+# directly inside a single (while ...)/(until ...)-contained repeat now LOWER
+# (see t/1379 and t/1380). The loop-contained do deferral now applies only to a
+# repeat reached through an additional branch/loop ancestor, and to a
+# cross-domain generated do (its own cross-domain diagnostic).
+subtest 'loop-contained repeat-body do still defers through extra nesting' => sub {
     assert_lower_rejected(
         <<'ISF',
-(actor while_repeat_generated_do_probe
+(actor while_when_repeat_do_probe
   (clock clk)
   (reset rst_n)
   (interface
-    (input start) (input cond) (input loops (width 3))
+    (input start) (input c1) (input c2) (input loops (width 3))
     (output done))
   (transaction parent
     (on start)
-    (spawn worker as w0)
-    (await_all done)
-    (while cond
-      (repeat loops
-        (do worker)))
+    (while c1
+      (when c2
+        (repeat loops
+          (do worker))))
     (complete done))
   (transaction worker
     (complete done)))
 ISF
-        qr/Transaction 'parent': loop-contained repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported inside a loop-contained repeat/,
-        'while-contained repeat-body generated-child do is rejected with the targeted diagnostic',
+        qr/Transaction 'parent': loop-contained repeat-body do remains deferred/,
+        'a repeat reached through when-inside-while still routes through the loop-contained diagnostic',
     );
 
     assert_lower_rejected(
         <<'ISF',
-(actor until_repeat_generated_do_probe
-  (clock clk)
-  (reset rst_n)
+(actor while_repeat_cross_domain_do_probe
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain aux (clock aux_clk) (reset aux_rst_n)))
   (interface
-    (input start) (input cond) (input loops (width 3))
-    (output done))
+    (input start (domain core)) (input cond (domain core))
+    (input loops (width 3) (domain core)) (output done (domain core)))
   (transaction parent
+    (domain core)
     (on start)
-    (spawn worker as w0)
-    (await_all done)
-    (until cond
+    (while cond
       (repeat loops
-        (do worker)))
+        (do worker (domain aux))))
     (complete done))
   (transaction worker
+    (domain aux)
     (complete done)))
 ISF
-        qr/Transaction 'parent': loop-contained repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported inside a loop-contained repeat/,
-        'until-contained repeat-body generated-child do is rejected with the targeted diagnostic',
+        qr/Transaction 'parent': repeat-body generated do target 'worker' is in a different clock domain than the calling transaction; cross-domain repeat-body do remains deferred/,
+        'a cross-domain generated do in a loop-contained repeat still defers with the cross-domain diagnostic',
     );
 };
 

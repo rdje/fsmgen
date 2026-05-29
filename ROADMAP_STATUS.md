@@ -14661,3 +14661,12 @@ Exit criteria:
   repeat now lowers. Threads the four `_ir_repeat` params through the loop-body
   path so the generated child is instantiated; cross-domain generated do and
   spawn stay deferred. `.2` ships threading + validator relaxation + `t/1380`.
+- `R14`: `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING` is **completed**
+  (`.2` shipped). Same-domain generated `(do child (params ...))` inside a single
+  `(while ...)`/`(until ...)`-contained repeat now lowers and instantiates the
+  child in the `_top` composition (`--check-json` success, 3 HDL modules emit).
+  Required threading the four `_ir_repeat` params through the loop-body path
+  AND adding loop-body discovery to the generated-child collector. Locked by
+  `t/1380` (+ updated `t/1374`/`t/1379`); docs synced. Cross-domain generated
+  do and spawn stay deferred. Next: PNT into the next frontier item
+  (loop-contained spawn / deeper-nested).

@@ -16322,3 +16322,17 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   instantiated; cross-domain and spawn stay deferred.
 - PNT proceeding autonomously through all remaining frontier items (user
   direction; no ordering question). `.1` selection commit; `.2` ships.
+
+## 2026-05-29: Completed R14 loop-contained repeat-body generated-do lowering (frontier #2)
+- Tree `ISF-LOOP-CONTAINED-REPEAT-BODY-GENERATED-DO-LOWERING` is `done`. A
+  same-domain generated `(do child (params ...))` inside a single
+  `(while ...)`/`(until ...)`-contained repeat now lowers and instantiates the
+  child in the `_top` composition. Public behavior changed: yes. Needed param
+  threading through the loop-body path + loop-body discovery in the
+  generated-child collector + a validator relaxation. Cross-domain generated
+  do and spawn stay deferred.
+- Verification: audit set (11 files, 870) PASS; broad regression (103 files,
+  933) PASS; `--check-json` success + 3-module SV emit; `mdbook build` clean;
+  `git diff --check` clean.
+- Next: PNT into the next frontier item (loop-contained spawn, deeper-nested,
+  cross-domain).

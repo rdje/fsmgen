@@ -2612,11 +2612,14 @@ Current lowering:
   When-contained and switch-contained generated nested `do` also accept
   `(domain NAME)` as declared same-domain metadata when static `(params ...)`
   overrides are present. Deeper branch nesting remains outside both nested
-  subsets. A separate shipped subset accepts a plain local `(do child)` inside
-  a `(repeat ...)` directly in a single `(while ...)`/`(until ...)` body; inside
-  a loop-contained repeat, `spawn` and a generated `do` stay deferred with
-  targeted `loop-contained repeat-body spawn remains deferred` and
-  `loop-contained repeat-body generated do remains deferred` diagnostics.
+  subsets. A separate shipped subset accepts a plain local `(do child)` and a
+  same-domain generated `(do child (params ...))` (with `(bind ...)`/
+  `(domain NAME)` when static params are present) inside a `(repeat ...)`
+  directly in a single `(while ...)`/`(until ...)` body; a generated `do`
+  instantiates its child in the `_top` composition. Inside a loop-contained
+  repeat, `spawn` stays deferred (`loop-contained repeat-body spawn remains
+  deferred`) and a cross-domain generated `do` stays deferred
+  (`cross-domain repeat-body do remains deferred`).
   Repeats directly inside a top-level
   `when` body also accept one or more generated
   `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites
@@ -5711,6 +5714,7 @@ Focused tests:
 - [t/1376-isf-book-example-lowering-audit.t](../t/1376-isf-book-example-lowering-audit.t)
 - [t/1378-isf-enum-type-relationship.t](../t/1378-isf-enum-type-relationship.t)
 - [t/1379-isf-loop-contained-repeat-body-local-do.t](../t/1379-isf-loop-contained-repeat-body-local-do.t)
+- [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t)
 
 ## 12. Explicitly Deferred
 

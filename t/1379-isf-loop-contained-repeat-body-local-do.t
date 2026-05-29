@@ -92,31 +92,10 @@ ISF
         'until_check exits to done when cond holds, else re-runs the repeat block');
 };
 
-subtest 'loop-contained repeat-body generated do, spawn, and deeper nesting stay deferred' => sub {
-    # Generated-child do (worker made a generated child via a top-level spawn) is deferred
-    my $generated_child_do = <<'ISF';
-(actor while_repeat_generated_do
-  (clock clk)
-  (reset rst_n)
-  (interface
-    (input start) (input cond) (input loops (width 3))
-    (output done))
-  (transaction parent
-    (on start)
-    (spawn worker as w0)
-    (await_all done)
-    (while cond
-      (repeat loops
-        (do worker)))
-    (complete done))
-  (transaction worker
-    (complete done)))
-ISF
-    my $ok1 = eval { parse_lower($generated_child_do, 'gen-child-do.isf'); 1 };
-    ok(!$ok1, 'loop-contained repeat-body generated-child do is rejected');
-    like($@, qr/Transaction 'parent': loop-contained repeat-body generated do remains deferred; only a plain local '\(do child\)' is supported inside a loop-contained repeat/,
-        'generated do in a loop-contained repeat emits the targeted generated-do diagnostic');
-
+# NOTE: same-domain generated do in a loop-contained repeat is now SUPPORTED
+# (see t/1380). This subtest covers the deferrals that remain for the local-do
+# scope: spawn, and a repeat reached through an extra branch ancestor.
+subtest 'loop-contained repeat-body spawn and deeper nesting stay deferred' => sub {
     # Spawn stays deferred (unchanged)
     my $spawn = <<'ISF';
 (actor while_repeat_spawn
