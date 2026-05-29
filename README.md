@@ -83,6 +83,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md` — active `R14` roadmap-maintenance task tree confirming every ISF backlog aspect is task-tree owned; registered `ISF-FULL-WIDTH-INFERENCE` (Proposed) and recorded IAL2 as a non-R14 horizon exploration.
+- `docs/tasks/ISF-FULL-WIDTH-INFERENCE.md` — proposed `R14` task tree owning the remaining extract/assemble multi-unknown width-inference cases (activates only on a decidable sub-case).
 - `docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md` — completed `R14` task tree that upgraded cookbook composition recipes 3/4/5 from `text` schematics to verified inline-runnable `lisp` examples (C1/C2/C3 patterns proven by `t/101`); `t/1377` now gates 14 standalone `.fsm` fixtures.
 - `docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md` — completed `R14` task tree that extended the example-correctness build gate from the ISF surface to the non-ISF `.fsm` (IAL0) book chapters; demoted 19 multi-file/schematic blocks to `text` and added `t/1377-book-fsm-example-generation-audit.t` (11 standalone `.fsm` fixtures gated).
 - `docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md` — completed CI-maintenance task tree that fixed the stale `t/corpus/system_incomplete_section.fsm` fixture.

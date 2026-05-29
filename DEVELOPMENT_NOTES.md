@@ -33402,3 +33402,12 @@ It is an exact-delay pulse request:
 - Grounding each recipe in a `t/101`-proven pattern kept this at
   signoff quality; t/1377 (now 14 fixtures) locks them against
   regression.
+
+## 2026-05-29: R14 aspect→task-tree coverage audit
+- The R14 ISF Objective Coverage table already owned all
+  ongoing/unresolved aspects. The audit closed the only two gaps:
+  Full Width Inference (Proposed tree) and IAL2 (non-R14 exploration,
+  by design). Multi-unknown width inference is underdetermined, so its
+  honest terminal is fail-closed; the Proposed tree activates only on a
+  decidable sub-case. Avoided fabricating stub trees for every broader
+  extension (the workflow forbids proposal-as-permission inflation).

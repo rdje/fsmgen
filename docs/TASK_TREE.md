@@ -52,11 +52,13 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
+| `ISF-FULL-WIDTH-INFERENCE` | `proposed` | `R14` | `ISF-FULL-WIDTH-INFERENCE.1` (probe for a decidable multi-unknown width sub-case; else record fail-closed terminal) | [docs/tasks/ISF-FULL-WIDTH-INFERENCE.md](docs/tasks/ISF-FULL-WIDTH-INFERENCE.md) |
 
 ## Completed Task Trees
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R14-ASPECT-COVERAGE-AUDIT` | `done` | `R14` | `closed` | [docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md](docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md) |
 | `BOOK-COOKBOOK-COMPOSITION-RUNNABLE` | `done` | `R14` | `closed` | [docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md](docs/tasks/BOOK-COOKBOOK-COMPOSITION-RUNNABLE.md) |
 | `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS` | `done` | `R14` | `closed` | [docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md](docs/tasks/BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.md) |
 | `CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX` | `done` | CI maintenance | `closed` | [docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md](docs/tasks/CI-CORPUS-SYSTEM-INCOMPLETE-SECTION-FIX.md) |

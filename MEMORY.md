@@ -37919,3 +37919,21 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Active task tree: `none`. Recipes 6 (package) and 7 (aggregate)
   remain honest `text`; chapter 05/06 teaching snippets remain
   schematic.
+
+## 2026-05-29: R14 aspect→task-tree coverage audit (user precondition for R14 PNT)
+- User directive: PNT-loop R14 until exhaustion; first ensure all R14
+  aspects are task-tree owned/tracked, then implement one by one.
+- Audited all 21 ISF backlog `###` sub-sections vs the R14 ISF
+  Objective Coverage table. Result: all ongoing/unresolved aspects
+  are already owned; 2 genuine gaps closed:
+    * `ISF-FULL-WIDTH-INFERENCE` registered as a Proposed tree
+      (remaining extract/assemble multi-unknown cases; mostly
+      undecidable → fail-closed is the honest terminal, activate only
+      on a decidable sub-case).
+    * IAL2 Protocol/Platform Intent: recorded as a non-R14 horizon
+      exploration (R14 is IAL1; IAL2/protocol capture belongs to
+      SPECFORGE per H4) — tracked in backlog/roadmap/brainstorm, no
+      R14 tree by design.
+- Tracked in `docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md`. Doc-only.
+- Net: R14 aspect→tree ownership is now literally complete. Next:
+  activate a concrete implementable aspect and PNT-implement.

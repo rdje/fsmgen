@@ -14620,3 +14620,10 @@ Exit criteria:
   non-ISF book gate `t/1377` now covers 14 standalone `.fsm` fixtures
   (was 11), all generating cleanly. Book-audit family green
   (`Files=5, Tests=713`).
+- `R14`: aspect→task-tree coverage audit completed. All 21 ISF backlog
+  sub-sections are task-tree owned. Two gaps closed:
+  `ISF-FULL-WIDTH-INFERENCE` registered as a Proposed tree; IAL2
+  protocol/platform intent recorded as a non-R14 horizon exploration
+  (belongs to SPECFORGE per H4), tracked but intentionally without an
+  R14 implementation tree. Tracked in
+  `docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md`.

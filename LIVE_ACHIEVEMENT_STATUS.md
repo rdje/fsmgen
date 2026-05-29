@@ -16266,3 +16266,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Validation: `prove -Iperl t/1377 t/1376 t/1305 t/1307 t/1332`
   (Files=5, Tests=713); `mdbook build docs/book`; `git diff --check`.
 - Next bounded slice: PNT continues.
+
+## 2026-05-29: R14 aspect→task-tree coverage audit
+- Roadmap lane: `R14`.
+- Confirmed all 21 ISF backlog aspects task-tree owned; registered
+  `ISF-FULL-WIDTH-INFERENCE` Proposed tree; recorded IAL2 as non-R14
+  exploration. Public behavior changed: no (tracking only).
+- Next: activate a concrete implementable R14 aspect and PNT-implement.
