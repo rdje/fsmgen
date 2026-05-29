@@ -14751,3 +14751,11 @@ Exit criteria:
   remaining R14 work is status-gated (richer CDC crossing primitives: backlog,
   not activated; IAL2: non-R14), requiring an explicit roadmap activation
   decision.
+- `R14`: active task tree — `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING` (CDC lane,
+  user-activated `2026-05-30`). Enables a blocking cross-domain `(do)`/`(spawn)`
+  through a new `(crossings (activation child (from SRC)(to DEST)))` kind whose
+  lowering routes the activation start/done through two acknowledged-event CDC
+  children. SAFETY: validator-acceptance and CDC routing must ship together
+  (`.3`) — a validator-only relaxation would emit an unsynchronized cross-clock
+  handoff. Slices: `.1` select/design, `.2` parse+declare-validate (fail-closed),
+  `.3` lowering+accept (correctness-critical), `.4` docs+example.

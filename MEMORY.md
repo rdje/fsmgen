@@ -38210,3 +38210,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   status-gated: richer CDC crossing primitives (backlog, not activated — a
   net-new synchronizer feature) and IAL2 (non-R14). Activating the CDC lane is
   a roadmap decision.
+
+## 2026-05-30: R14 active tree — cross-domain activation via a declared crossing (CDC lane activated)
+- User chose this CDC-lane direction. Investigated the crossing infra
+  (`(crossings (event ...))`: Parser.pm ~L6673/5461; ISF.pm partition + CDC-child
+  wiring ~L227/334/368; ISFEventCDCModuleEmitter; fail-closed at
+  `_validate_same_domain_target` LoweringIR.pm ~L2572).
+- SAFETY: a blocking cross-domain do needs a BIDIRECTIONAL start/done handshake;
+  the shipped event crossing is unidirectional (needs TWO). So a validator-only
+  relaxation is FORBIDDEN — it would emit an unsynchronized cross-clock handoff
+  (metastability). Validator-accept + CDC routing MUST ship together.
+- Design: new `(crossings (activation child (from SRC)(to DEST)))` kind; lowering
+  auto-wires start/done through two event CDC children. Slices: .1 select/design,
+  .2 parse+declare-validate (fail-closed lowering, safe), .3 lowering+accept
+  (correctness-critical, ships together; HDL/Verilator evidence), .4 docs+example.
+  Created `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING`. [[frontier-pnt-autonomy]].

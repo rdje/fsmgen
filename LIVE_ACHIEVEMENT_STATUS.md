@@ -16438,3 +16438,11 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   is status-gated (richer CDC crossing primitives: backlog; IAL2: non-R14).
 - Verification: `prove -Iperl t/1385 t/1344 t/1101 t/1250` PASS; `mdbook build`
   clean; `git diff --check` clean.
+
+## 2026-05-30: Selected R14 cross-domain activation via a declared crossing (CDC lane activated)
+- Active tree: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING`. New
+  `(crossings (activation child (from SRC)(to DEST)))` kind enabling a blocking
+  cross-domain `(do)`/`(spawn)` with CDC-synchronized start/done (two
+  acknowledged-event CDC children). Safety: validator-accept + CDC routing ship
+  together (`.3`). Slices: `.1` select/design, `.2` parse+declare-validate
+  (fail-closed), `.3` lowering+accept, `.4` docs. `.1` is this selection/design.
