@@ -14765,3 +14765,17 @@ Exit criteria:
   lowering is not yet supported`) until `.3` routes the CDC. Event crossings
   unaffected; locked by `t/1386`. Frontier now `.3` (lowering + CDC routing +
   validator acceptance, ships together).
+- `R14`: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3` shipped — the cross-domain
+  activation handshake-port lowering machinery (`_wire_external_activations`,
+  consumed via `$actor->{external_activations}`, only ever set by the multi-domain
+  partition). The SIBLING model (chosen over generated-do, which is blocked for
+  full HDL by the multi-domain generated-child composition-scope limitation)
+  promotes the `(do child)` `<child>_start`/`<child>_done` handshake to per-domain
+  MODULE ports: caller side drives `<start>`/awaits `<done>`; callee side gates
+  `child` on `<start>` (synthesizing a start-gated entry when needed) and asserts
+  `<done>` at its terminal. Built + unit-tested behind the still-fail-closed guard
+  (`t/1387`); uncovered cross-domain `(do)` and any activation-crossing `lower()`
+  STILL fail closed (validator-accept + CDC routing remain bundled for `.5`).
+  `.3` re-scoped the slice plan to `.3` (this), `.4` (dual-CDC top emission, behind
+  guard), `.5` (partition recognition + validator acceptance + remove guard, ships
+  together; HDL/Verilator evidence), `.6` (docs + runnable example). Frontier `.4`.

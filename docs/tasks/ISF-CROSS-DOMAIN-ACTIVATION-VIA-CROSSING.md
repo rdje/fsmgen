@@ -83,14 +83,32 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   SRC≠DEST; cross-domain `(do)`/`(spawn)` STILL fails closed at lowering (the
   declaration is parsed but not yet honored — "parser-acceptance ≠ support").
   Safe (fail-closed) and bounded.
-- `.3` lowering + validator acceptance (the correctness-critical slice): partition
-  parent/child across domains; auto-generate + wire the two event CDC children
-  for the activation start/done; teach `_validate_same_domain_target` (via the
-  do/spawn call site) to accept a cross-domain activation covered by an
-  `activation` crossing. Ship validator-accept + CDC routing together. Golden
-  `.fsm` + composition + HDL (Verilator `--verify-hdl` where available) evidence
-  that the handoff routes through the CDC children.
-- `.4` docs (13a crossing section + 13d control-flow + downstream/contract/
+- `.3` cross-domain activation handshake-port lowering machinery (safe, behind
+  the fail-closed guard): `_wire_external_activations` consumes
+  `$actor->{external_activations}` (only ever set by the multi-domain partition)
+  and promotes the SIBLING-model `(do child)` handshake to per-domain MODULE
+  ports — caller (SRC) `<start>`→output/`<done>`→input; callee (DEST)
+  `<start>`→input/`<done>`→output with `child`'s entry gated on `<start>`
+  (synthesizing a start-gated entry for a body-only transaction) and `<done>`
+  asserted at its terminal. `_validate_child_transaction_refs` accepts a caller
+  target that lowers in the other domain's module. Built + unit-tested in
+  isolation; the `lower()` guard + `_validate_same_domain_target` stay
+  FAIL-CLOSED.
+- `.4` dual-CDC top emission helpers (safe, behind the guard): emit the two
+  acknowledged-event CDC children for an `activation` crossing in
+  `_emit_multi_domain_top` + wire start (SRC→DEST) and done (DEST→SRC); unit-test
+  the emitted top in isolation against a synthetic partition. Guard stays.
+- `.5` integration — the correctness-critical slice (validator-accept + CDC
+  routing SHIP TOGETHER): `_build_domain_partition` recognizes the `activation`
+  crossing, injects `external_activations` into the SRC/DEST domain actors, and
+  records the dual-CDC summary; the top emits + wires the two CDC children;
+  `_validate_same_domain_target` accepts a cross-domain `(do)`/`(spawn)` covered
+  by an `activation` crossing; the `lower()` guard is removed. Golden `.fsm` +
+  composition + HDL (`--check-json` / Verilator where available) evidence the
+  handoff routes through the CDC children, or the residual boundary is documented
+  honestly (the multi-domain composition-scope precedent). Uncovered cross-domain
+  activation still fails closed.
+- `.6` docs (13a crossing section + 13d control-flow + downstream/contract/
   SPECFORGE response) + runnable book example.
 
 ## Non-Goals
@@ -115,7 +133,7 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 - ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING`
   Status: `active`
   Goal: `Cross-domain (do)/(spawn) through a declared (crossings (activation ...)) with CDC-synchronized start/done.`
-  Children: `.1` (select), `.2` (parse+declare-validate, fail-closed), `.3` (lowering+accept), `.4` (docs+example)
+  Children: `.1` (select), `.2` (parse+declare-validate, fail-closed), `.3` (handshake-port lowering machinery, behind guard), `.4` (dual-CDC top emission, behind guard), `.5` (integration: validator-accept + CDC routing + remove guard, together), `.6` (docs+example)
 
 - ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.1`
   Status: `done`
@@ -129,6 +147,13 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   Goal: `Parse + structurally validate (crossings (activation child (from SRC)(to DEST))); lowering fails closed (not yet supported).`
   Acceptance: `Construct parses + validates; malformed rejected at parse; well-formed fails closed at lower; event crossings unaffected.`
   Verification: `prove -Iperl t/1386 t/1247 t/1372; broad clock-domain/crossing regression; mdbook build docs/book; git diff --check`
+  Commit: `ffffc2a0`
+
+- ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3`
+  Status: `done`
+  Goal: `Cross-domain activation handshake-port lowering machinery (SIBLING model), behind the fail-closed guard.`
+  Acceptance: `_wire_external_activations promotes the (do child) handshake to per-domain module ports (caller start->output/done->input; callee start->input/done->output, child gated on start with a synthesized start-gated entry when needed, done asserted at terminal); validator accepts a caller target absent from the per-domain module; uncovered cross-domain do and any activation-crossing lower() STILL fail closed.`
+  Verification: `prove -Iperl t/1387 t/1250 t/1386 t/1247 t/1372; broad activation/do/spawn/clock-domain regression (39 files, 246) PASS; perl -c; mdbook build docs/book; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -137,27 +162,60 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design commit `dbbe6bce`. |
 | 2 | `.2` | `done` | Parser + structural validation shipped; lowering fail-closed (`t/1386`). |
-| 3 | `.3` | `pending` | Lowering + CDC routing + validator acceptance (ships together; correctness-critical). |
-| 4 | `.4` | `pending` | Docs + runnable book example. |
+| 3 | `.3` | `done` | Handshake-port lowering machinery (`_wire_external_activations`) built + unit-tested behind the guard (`t/1387`); guard + `_validate_same_domain_target` stay fail-closed. |
+| 4 | `.4` | `pending` | Dual-CDC top emission helpers (two CDC children + wiring), unit-tested behind the guard. |
+| 5 | `.5` | `pending` | Integration: partition recognition + `external_activations` injection + validator acceptance + remove guard (ships together; correctness-critical; HDL/Verilator evidence). |
+| 6 | `.6` | `pending` | Docs + runnable book example. |
 
 ## Decisions
 
 - `2026-05-30`: New `(crossings (activation ...))` kind (not hand-declared raw
   event pairs) because activation start/done signals are compiler-internal.
-- `2026-05-30`: Validator acceptance and CDC routing MUST ship together (`.3`)
-  to avoid emitting an unsynchronized cross-domain handoff. `.2` is safe because
-  lowering stays fail-closed until `.3`.
+- `2026-05-30`: Validator acceptance and CDC routing MUST ship together (now `.5`)
+  to avoid emitting an unsynchronized cross-domain handoff. `.2`–`.4` are safe
+  because lowering stays fail-closed until `.5`.
+- `2026-05-30` (`.3` investigation): chose the **SIBLING** lowering model over the
+  generated-do model. Generated-do gives clean dedicated `<inst>_start`/`<inst>_done`
+  ports but realizes `child` as a `?fsmc` child, which is BLOCKED for full HDL by
+  the pre-existing multi-domain generated-child composition-scope limitation
+  (`docs/COMPOSITION_SCOPE.md` — the same boundary already documented for
+  repeat-body spawn; confirmed empirically: a same-domain multi-domain generated-do
+  fails `--check-json` with `instance 'core' has no port named ...`). The sibling
+  model promotes the `_wire_do_children` `<child>_start`/`<child>_done` handshake to
+  per-domain MODULE ports, so the top wires module-to-module and sidesteps that
+  limitation — the best path to full HDL.
+- `2026-05-30` (`.3` investigation): "recognition" is NOT an independently
+  observable slice — `report()` runs the partition validator
+  (`_validate_same_domain_target`), which fail-closes on the cross-domain `(do)`.
+  So partition recognition, validator acceptance, and CDC routing are one atomic
+  seam (and the safety constraint already bundles validator+routing). The
+  decomposition therefore builds + unit-tests the lowering (`.3`) and top-emission
+  (`.4`) machinery behind the still-fail-closed guard, and flips the guard + the
+  validator + the partition together in `.5`.
+- `2026-05-30` (`.3` decision): the dual CDC children are AUTO-generated from the
+  single `activation` crossing (resolving the prior open question) — the
+  `<child>_start`/`<child>_done` handshake signals are compiler-internal, so the
+  author declares one `(activation ...)` and lowering wires the two synchronizers.
 
 ## Open Questions
 
-- `.3` design detail: one `activation` crossing auto-generating two event CDC
-  children, vs. two CDC children declared/instantiated explicitly. Lean toward
-  auto-generating two within the single `activation` crossing for author
-  ergonomics; finalize in `.3` against the existing CDC-child emit path.
+- `.5` HDL reach: whether the sibling-model module-to-module CDC wiring reaches
+  full `--check-json` / Verilator parity, or whether a residual multi-domain
+  composition-scope boundary remains (to be documented honestly like the
+  repeat-body-spawn precedent). Finalize empirically in `.5`.
+- `.4`/`.5` handshake signal naming: the sibling do-state uses `<child>_start`/
+  `<child>_done`; if `child` also drives an output literally named `<child>_done`
+  there is a collision. Decide a collision-free policy (e.g. an activation-scoped
+  prefix) when wiring the live partition in `.5`. `.3` accepts explicit
+  `start_signal`/`done_signal` on each `external_activations` entry to keep this
+  open.
 
 ## Blockers
 
-- None for `.1`/`.2`. `.3` is the substantial correctness-critical slice.
+- None for `.1`–`.4`. `.5` is the substantial correctness-critical slice
+  (validator-accept + CDC routing ship together); its full-HDL reach may be
+  bounded by the multi-domain composition-scope limitation
+  (`docs/COMPOSITION_SCOPE.md`), to be confirmed and documented honestly.
 
 ## Verification Log
 
@@ -165,13 +223,15 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | --- | --- | --- | --- |
 | `2026-05-30` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-05-30` | `.2` | `prove -Iperl t/1386 t/1247 t/1372` (Files=3, Tests=19, PASS); broad clock-domain/crossing/parser regression (12 files, 147) PASS; `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-30` | `.3` | `prove -Iperl t/1387 t/1250 t/1386 t/1247 t/1372 t/1110 t/1382 t/1383` PASS; broad activation/do/spawn/clock-domain regression (39 files, 246) PASS; `perl -c LoweringIR.pm`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.1: select cross-domain activation via crossing` | `dbbe6bce` |
-| `.2` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.2: parse + validate activation crossing (lowering fail-closed)` | `ship commit (this slice)` |
+| `.2` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.2: parse + validate activation crossing (lowering fail-closed)` | `ffffc2a0` |
+| `.3` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3: cross-domain activation handshake-port lowering machinery (behind guard)` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -187,3 +247,20 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   declaring an activation crossing ("cross-domain activation lowering is not yet
   supported") — parser-acceptance ≠ support; CDC routing ships in `.3`. Event
   crossings unaffected. Locked by `t/1386`; regression PASS.
+- `2026-05-30`: `.3` shipped, and the slice plan re-scoped (`.3`/`.4`/`.5`/`.6`)
+  after a deep lowering investigation. Chose the **SIBLING** lowering model
+  (generated-do is blocked for full HDL by the multi-domain generated-child
+  composition-scope limitation, `docs/COMPOSITION_SCOPE.md`); established that
+  partition recognition + validator acceptance + CDC routing are one atomic seam
+  (`report()` runs the partition validator), so the machinery is built behind the
+  still-fail-closed guard and the seam flips in `.5`. Shipped
+  `_wire_external_activations` (LoweringIR) which, driven by
+  `$actor->{external_activations}` (only the multi-domain partition sets it),
+  promotes the `(do child)` handshake to per-domain module ports: caller (SRC)
+  `<start>`→output/`<done>`→input; callee (DEST) `<start>`→input/`<done>`→output,
+  gating `child`'s entry on `<start>` (synthesizing a start-gated `<child>_idle_ext`
+  for a body-only transaction) and asserting `<done>` at its terminal.
+  `_validate_child_transaction_refs` accepts a caller target absent from the
+  per-domain module. Uncovered cross-domain `(do)` and any activation-crossing
+  `lower()` STILL fail closed. Locked by `t/1387`; broad regression (39 files,
+  246) PASS.

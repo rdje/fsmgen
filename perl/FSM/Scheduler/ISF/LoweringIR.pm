@@ -1170,6 +1170,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     push @dts, $self->_build_rules($actor, \%ctrs, \@bank_accesses, $generated_children, \%storage_roles);
     push @dts, @rule_trigger_dts;
     $self->_wire_do_children(\@states, \%ctrs, $actor, $generated_children);
+    $self->_wire_external_activations(\@states, \@ports, \%ctrs, $actor);
     my $local_drive_filter = keys(%$generated_children) ? \%local_drive_uses : undef;
     $self->_build_drive_dts($actor, \@dts, \%ctrs, $local_drive_filter, \%spawn_drive_sources, \%storage_roles);
 
@@ -2593,6 +2594,16 @@ sub _validate_drive_reuse_domains {
 sub _validate_child_transaction_refs($self, $actor) {
     my %transactions = map { $_->{name} => 1 } @{$actor->{transactions} || []};
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
+    # A per-domain module that owns the SRC side of a cross-domain activation
+    # carries a `caller` external-activation entry for a child that lowers in the
+    # OTHER domain's module. Such a `(do child)` is honored through promoted
+    # handshake ports (see `_wire_external_activations`), so the target need not
+    # be a transaction declared in this per-domain module.
+    my %external_caller_children = map {
+        $_->{child} => 1
+    } grep {
+        ref($_) eq 'HASH' && ($_->{role} // '') eq 'caller'
+    } @{$actor->{external_activations} || []};
     my %generated_children;
     my %generated_instances;
     my @child_refs;
@@ -2611,7 +2622,11 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Transaction '$tx_name': $keyword target must be a scalar transaction name\n"
                 unless defined($target) && !ref($target) && length($target);
             confess "Transaction '$tx_name': $keyword target '$target' is not a declared transaction\n"
-                unless $transactions{$target};
+                unless $transactions{$target} || $external_caller_children{$target};
+            # A cross-domain activation caller target is handled through promoted
+            # handshake ports, not a same-module child; skip the generated-child
+            # bookkeeping below (it would index a transaction that is absent here).
+            next if !$transactions{$target} && $external_caller_children{$target};
 
             if ($keyword eq 'spawn') {
                 confess "Transaction '$tx_name': spawn target '$target' conflicts with parent actor module name '$actor->{actor_name}'\n"
@@ -11380,6 +11395,99 @@ sub _wire_do_children {
         $ctrs->{$d}=1 if ref($ctrs)eq'HASH';
         my($en)=grep{$_->{name}=~/^\Q$c\E_idle_/}@$st;if($en){$en->{guard}={port=>$s};$en->{transitions}=[];my($nx)=grep{$_->{name}=~/^\Q$c\E_/&&$_->{kind}ne'entry'&&$_->{name}!~/_timeout$/}@$st;push @{$en->{transitions}},{target=>$nx->{name},condition=>$en->{guard}}if$nx}
         my($tm)=grep{$_->{name}=~/^\Q$c\E_(?:done|complete)_/&&$_->{kind}eq'terminal'}@$st;unshift @{$tm->{assignments}},{lhs=>$d,rhs=>1,op=>'<1'}if$tm}
+}
+
+# Cross-domain activation handshake lowering (ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING).
+#
+# When a blocking `(do child)` crosses a clock-domain boundary through a declared
+# `(crossings (activation child (from SRC)(to DEST)))`, the calling transaction
+# and `child` lower into separate per-domain modules, so the activation
+# start/done handshake that is module-internal for a same-domain `(do)` must be
+# promoted to inter-module PORTS and routed through CDC synchronizers in the top.
+#
+# This routine consumes `$actor->{external_activations}` (only ever set by the
+# multi-domain partition when building a per-domain actor) and promotes the
+# handshake signals to ports on the per-domain module:
+#   - role 'caller' (SRC side, owning the `(do child)`): `<start>` becomes an
+#     OUTPUT and `<done>` an INPUT. The do-state emitted by `_ir_do` already
+#     asserts `<start>` and guards on `<done>`; here we only promote the signals
+#     from module-internal `+size` registers to interface ports.
+#   - role 'callee' (DEST side, owning `child`): `<start>` becomes an INPUT and
+#     `<done>` an OUTPUT, and `child`'s idle state is gated on `<start>` with its
+#     terminal asserting `<done>` (the same rewrite `_wire_do_children` performs
+#     for a same-domain sibling `(do)`, but for an activation whose `(do)` clause
+#     lives in the other domain's module).
+sub _wire_external_activations {
+    my ($self, $st, $ports, $ctrs, $actor) = @_;
+    my $activations = $actor->{external_activations};
+    return unless ref($activations) eq 'ARRAY' && @$activations;
+
+    for my $activation (@$activations) {
+        my $child = $activation->{child};
+        next unless defined($child) && !ref($child) && length($child);
+        my $role  = $activation->{role} // '';
+        my $start = $activation->{start_signal} // "${child}_start";
+        my $done  = $activation->{done_signal}  // "${child}_done";
+
+        # Promote the handshake signals from module-internal `+size` registers to
+        # interface ports, removing the internal duplicate so the emitted module
+        # exposes each signal exactly once.
+        delete $ctrs->{$start} if ref($ctrs) eq 'HASH';
+        delete $ctrs->{$done}  if ref($ctrs) eq 'HASH';
+
+        if ($role eq 'caller') {
+            _ensure_port($ports, $start, 'output', 1,
+                "external activation '$child' caller start handoff");
+            _ensure_port($ports, $done, 'input', 1,
+                "external activation '$child' caller done handoff");
+        }
+        elsif ($role eq 'callee') {
+            _ensure_port($ports, $start, 'input', 1,
+                "external activation '$child' callee start handoff");
+            _ensure_port($ports, $done, 'output', 1,
+                "external activation '$child' callee done handoff");
+
+            # Gate `child`'s entry on the activation `<start>` pulse and assert
+            # `<done>` on each terminal, mirroring the generated-child start/done
+            # handshake. A cross-domain `child` is activated by the CDC pulse, not
+            # by its own `(on ...)` trigger, so synthesize a start-gated entry when
+            # the transaction has none (e.g. a body-only transaction).
+            my @child_states = grep { $_->{name} =~ /^\Q$child\E_/ } @$st;
+            my ($entry) = grep { $_->{kind} eq 'entry' } @child_states;
+            if (!$entry && @child_states) {
+                my $first = $child_states[0];
+                my ($first_index) = grep { $st->[$_] == $first } 0 .. $#$st;
+                $entry = {
+                    name        => "${child}_idle_ext",
+                    kind        => 'entry',
+                    guard       => { port => $start },
+                    assignments => [],
+                    transitions => [],
+                };
+                splice(@$st, $first_index, 0, $entry);
+                @child_states = grep { $_->{name} =~ /^\Q$child\E_/ } @$st;
+            }
+            if ($entry) {
+                $entry->{guard} = { port => $start };
+                $entry->{transitions} = [];
+                my ($next) = grep {
+                    $_->{kind} ne 'entry' && $_->{name} !~ /_timeout$/
+                } @child_states;
+                push @{$entry->{transitions}}, { target => $next->{name}, condition => $entry->{guard} }
+                    if $next;
+
+                for my $state (@child_states) {
+                    next unless $state->{kind} eq 'terminal';
+                    unshift @{$state->{assignments}}, { lhs => $done, rhs => 1, op => '<1' };
+                    $state->{transitions} = [{ target => $entry->{name} }];
+                }
+            }
+        }
+        else {
+            confess "FSM::Scheduler::ISF::LoweringIR: external activation '$child' has unknown role '$role'\n";
+        }
+    }
+    return 1;
 }
 
 sub _merge_sequential {

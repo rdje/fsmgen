@@ -33682,3 +33682,59 @@ It is an exact-delay pulse request:
   is the right abstraction (vs. hand-declared raw `event` pairs). The existing
   multi-domain lowering already guards `next unless kind eq 'event'`, so adding a
   new kind did not disturb the event-crossing path.
+
+## Cross-domain activation `.3` — sibling lowering model, atomic seam, and the handshake-port machinery (2026-05-30)
+
+`ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3` is the first implementation slice
+after `.2` (parse + structural validation). A deep investigation drove three
+decisions that shaped the rest of the lane:
+
+- **Sibling model over generated-do.** A same-domain `(do child)` has two
+  realizations: (a) a *generated-do* (`(do child (params ...))`) realizes `child`
+  as a separate `?fsmc` module with clean dedicated `<inst>_start`/`<inst>_done`
+  ports; (b) a *sibling* `(do child)` keeps the `<child>_start`/`<child>_done`
+  handshake module-internal (`_wire_do_children` gates the sibling's entry on
+  `<child>_start` and asserts `<child>_done` at its terminal). Generated-do looks
+  cleaner, but realizing `child` as a `?fsmc` child in a multi-domain top is
+  blocked for full HDL by the pre-existing multi-domain generated-child
+  composition-scope limitation (`docs/COMPOSITION_SCOPE.md` — the same boundary
+  already documented for repeat-body spawn; confirmed empirically: a *same-domain*
+  multi-domain generated-do fails `--check-json` with `instance 'core' has no
+  port named ...`). The sibling model promotes the handshake to per-domain MODULE
+  ports, so the top wires module-to-module and sidesteps that limitation — the
+  best path to full HDL for cross-domain activation.
+
+- **Recognition is not an independently observable slice.** `report()` runs the
+  partition validator (`_validate_same_domain_target`), which fail-closes on a
+  cross-domain `(do)`. So you cannot ship "the partition/report recognizes the
+  activation crossing" without first relaxing the validator — and the safety
+  constraint forbids relaxing the validator without the CDC routing (it would emit
+  an unsynchronized cross-clock handoff). Partition recognition + validator
+  acceptance + CDC routing are therefore one atomic seam. The disciplined
+  decomposition builds + unit-tests the lowering machinery (`.3`) and the dual-CDC
+  top emission (`.4`) *behind the still-fail-closed guard*, and flips the guard +
+  the validator + the partition together in `.5`.
+
+- **The `external_activations` marker.** Rather than have the lowering re-derive
+  cross-domain intent from `$actor->{crossings}` (which would have to infer
+  SRC/DEST side from the domain clock), the multi-domain partition will inject an
+  explicit `$actor->{external_activations}` list onto each per-domain actor (in
+  `.5`). `_wire_external_activations` consumes it: role `caller` promotes the
+  SRC-side `(do child)` handshake to `<start>`→output / `<done>`→input ports (the
+  `_ir_do` do-state already asserts/guards them; we only promote them from
+  `+size` registers, deleting the `%ctrs` duplicate so the signal surfaces once);
+  role `callee` promotes the DEST-side handshake to `<start>`→input /
+  `<done>`→output and gates `child`. A cross-domain `child` is activated by the
+  CDC pulse, not by its own `(on ...)`, so when a body-only transaction has no
+  entry state we synthesize a start-gated `<child>_idle_ext` (mirroring the
+  generated-child entry synthesis at `_build_*_child_ir`) and route terminals back
+  to it. The entry shape carries explicit `start_signal`/`done_signal` so the
+  collision-free naming policy can be decided in `.5` without reworking `.3`.
+
+Because `external_activations` is only ever set by the multi-domain partition
+(not by any current path), `_wire_external_activations` early-returns and the
+`_validate_child_transaction_refs` relaxation matches an empty set for every
+existing actor — the slice is inert for everything shipped so far (broad
+regression: 39 files, 246 tests PASS). `t/1387` builds per-domain caller/callee
+modules directly (setting `external_activations` by hand) to verify the machinery
+while the live seam stays fail-closed.

@@ -16450,3 +16450,14 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   validates (domains declared/distinct, child a declared transaction); lowering
   fails closed ("not yet supported") until `.3` routes the CDC. Event crossings
   unaffected. `t/1386` locks it; broad CDC/parser regression PASS. Frontier `.3`.
+- `.3` shipped: cross-domain activation handshake-port lowering machinery
+  (`_wire_external_activations`, consumed via `$actor->{external_activations}` —
+  only the multi-domain partition sets it). SIBLING model (generated-do is blocked
+  for full HDL by the multi-domain composition-scope limitation) promotes the
+  `(do child)` handshake to per-domain module ports: caller drives
+  `<start>`/awaits `<done>`; callee gates `child` on `<start>` (synthesizing a
+  start-gated entry when needed) and asserts `<done>` at its terminal. Built +
+  unit-tested behind the still-fail-closed guard (`t/1387`); uncovered
+  cross-domain `(do)` and any activation-crossing `lower()` STILL fail closed.
+  Re-scoped `.3`/`.4`/`.5`/`.6`; validator-accept + CDC routing ship together in
+  `.5`. Broad regression (39 files, 246) PASS. Frontier `.4`.

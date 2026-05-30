@@ -38232,3 +38232,31 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   supported") — parser-acceptance ≠ support, CDC routing ships in `.3`. Event
   crossings unaffected. `t/1386` locks it; broad CDC/parser regression PASS.
   Next: `.3` (lowering + CDC routing + validator acceptance, ships together).
+- `.3` investigation (deep): two lowering models — (a) generated-do (clean
+  `<inst>_start`/`<inst>_done` ports + `?fsmc` child) is BLOCKED for full HDL by
+  the pre-existing multi-domain generated-child composition-scope limitation
+  (`docs/COMPOSITION_SCOPE.md`; same boundary as repeat-body spawn — confirmed
+  `--check-json` fails on a same-domain multi-domain generated-do); (b) SIBLING
+  model promotes the `_wire_do_children` `<child>_start`/`<child>_done` handshake
+  to per-domain MODULE ports (module-to-module CDC wiring, sidesteps the
+  generated-child limitation → best shot at full HDL). DECISION: sibling model.
+  Also: `report()` runs the partition validator, so "recognition" is NOT
+  observable without the dangerous `_validate_same_domain_target` relaxation;
+  combined with the SAFETY constraint, validator-accept + CDC routing are one
+  atomic seam. Re-scoped `.3`→`.3/.4/.5/.6`, keeping the `lower()` guard +
+  `_validate_same_domain_target` FAIL-CLOSED until the CDC routing lands in `.5`.
+- `.3` SHIPPED: cross-domain activation handshake-port lowering machinery
+  (`_wire_external_activations` in LoweringIR, consumed via
+  `$actor->{external_activations}` — only ever set by the multi-domain partition).
+  role 'caller' (SRC): promotes the `(do child)` `<start>`→output / `<done>`→input
+  ports (do-state already asserts/guards them). role 'callee' (DEST): promotes
+  `<start>`→input / `<done>`→output, gates `child`'s entry on `<start>` (synthesizes
+  a start-gated `<child>_idle_ext` when the body-only transaction has no `(on)`),
+  asserts `<done>` at each terminal looping back to the entry. `_validate_child_
+  transaction_refs` accepts a caller target absent from the per-domain module.
+  Built + unit-tested behind the still-fail-closed guard (`t/1387`); uncovered
+  cross-domain `(do)` and any activation-crossing `lower()` STILL fail closed.
+  Broad activation/do/spawn/clock-domain regression (39 files, 246) PASS.
+  Next: `.4` (dual-CDC top emission helpers, behind guard), then `.5`
+  (partition recognition + `external_activations` injection + validator
+  acceptance + remove guard, ships together; HDL/Verilator evidence).

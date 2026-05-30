@@ -5742,6 +5742,7 @@ Focused tests:
 - [t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t](../t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t)
 - [t/1385-isf-multi-unknown-width-fail-closed-terminal.t](../t/1385-isf-multi-unknown-width-fail-closed-terminal.t)
 - [t/1386-isf-activation-crossing-declaration.t](../t/1386-isf-activation-crossing-declaration.t)
+- [t/1387-isf-cross-domain-activation-handshake-lowering.t](../t/1387-isf-cross-domain-activation-handshake-lowering.t)
 
 ## 12. Explicitly Deferred
 
