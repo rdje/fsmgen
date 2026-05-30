@@ -14779,3 +14779,14 @@ Exit criteria:
   `.3` re-scoped the slice plan to `.3` (this), `.4` (dual-CDC top emission, behind
   guard), `.5` (partition recognition + validator acceptance + remove guard, ships
   together; HDL/Verilator evidence), `.6` (docs + runnable example). Frontier `.4`.
+- `R14`: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.4` shipped — the CDC routing
+  structure, behind the still-fail-closed guard. The cross-domain caller emits a
+  ONE-CYCLE `<start>` request (a held level would re-pulse the acknowledged-event
+  CDC and re-trigger `child`), and `_emit_multi_domain_top` emits + wires the two
+  CDC children `<actor>__cdc_activation_<child>_{start,done}` (start SRC→DEST, done
+  DEST→SRC; `ready` left open — single outstanding by construction, the `<done>`
+  pulse is the ack), reusing a shared `_emit_cdc_event_rtlif` so event-crossing
+  output is unchanged. Unit-tested in isolation (`t/1387`, 5 subtests); event
+  goldens + composition regression (13 files, 449) PASS. Frontier now `.5`
+  (integration: partition recognition + `external_activations` injection +
+  validator acceptance + remove guard, ships together; Verilator evidence).

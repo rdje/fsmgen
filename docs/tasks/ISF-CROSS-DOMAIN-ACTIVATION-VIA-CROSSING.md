@@ -94,10 +94,15 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   target that lowers in the other domain's module. Built + unit-tested in
   isolation; the `lower()` guard + `_validate_same_domain_target` stay
   FAIL-CLOSED.
-- `.4` dual-CDC top emission helpers (safe, behind the guard): emit the two
-  acknowledged-event CDC children for an `activation` crossing in
-  `_emit_multi_domain_top` + wire start (SRC→DEST) and done (DEST→SRC); unit-test
-  the emitted top in isolation against a synthetic partition. Guard stays.
+- `.4` CDC routing structure (safe, behind the guard): (a) the cross-domain
+  CALLER emits a ONE-CYCLE `<start>` request (a sequential request state, like a
+  spawn start, followed by the await-on-`<done>` state) — the acknowledged-event
+  CDC re-pulses while `request` is held, so a held level would re-trigger `child`;
+  (b) `_emit_multi_domain_top` emits the two acknowledged-event CDC children for an
+  `activation` crossing and wires start (SRC→DEST) and done (DEST→SRC), with the
+  CDC `ready` outputs left open (single outstanding by construction; the `<done>`
+  pulse is the acknowledgement). Both unit-tested in isolation; guard stays
+  FAIL-CLOSED.
 - `.5` integration — the correctness-critical slice (validator-accept + CDC
   routing SHIP TOGETHER): `_build_domain_partition` recognizes the `activation`
   crossing, injects `external_activations` into the SRC/DEST domain actors, and
@@ -154,6 +159,13 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   Goal: `Cross-domain activation handshake-port lowering machinery (SIBLING model), behind the fail-closed guard.`
   Acceptance: `_wire_external_activations promotes the (do child) handshake to per-domain module ports (caller start->output/done->input; callee start->input/done->output, child gated on start with a synthesized start-gated entry when needed, done asserted at terminal); validator accepts a caller target absent from the per-domain module; uncovered cross-domain do and any activation-crossing lower() STILL fail closed.`
   Verification: `prove -Iperl t/1387 t/1250 t/1386 t/1247 t/1372; broad activation/do/spawn/clock-domain regression (39 files, 246) PASS; perl -c; mdbook build docs/book; git diff --check`
+  Commit: `77f447c9`
+
+- ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.4`
+  Status: `done`
+  Goal: `CDC routing structure (behind the guard): one-cycle cross-domain caller start request + dual-CDC top emission/wiring.`
+  Acceptance: `The cross-domain caller emits a one-cycle <start> request state then awaits <done>; _emit_multi_domain_top emits two acknowledged-event CDC children for an activation crossing wiring start (SRC->DEST) + done (DEST->SRC) with ready open; event-crossing emission is unchanged (rtlif refactor); guard + _validate_same_domain_target stay fail-closed.`
+  Verification: `prove -Iperl t/1387 (5 subtests) t/1247 t/1255 t/1116 t/1305; broad composition/crossing/domain/child regression (13 files, 449) PASS; perl -c ISF.pm + LoweringIR.pm; mdbook build docs/book; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -163,7 +175,7 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | 1 | `.1` | `done` | Selection/design commit `dbbe6bce`. |
 | 2 | `.2` | `done` | Parser + structural validation shipped; lowering fail-closed (`t/1386`). |
 | 3 | `.3` | `done` | Handshake-port lowering machinery (`_wire_external_activations`) built + unit-tested behind the guard (`t/1387`); guard + `_validate_same_domain_target` stay fail-closed. |
-| 4 | `.4` | `pending` | Dual-CDC top emission helpers (two CDC children + wiring), unit-tested behind the guard. |
+| 4 | `.4` | `done` | One-cycle cross-domain caller request + dual-CDC top emission/wiring, unit-tested behind the guard (`t/1387`); event-crossing emission unchanged. |
 | 5 | `.5` | `pending` | Integration: partition recognition + `external_activations` injection + validator acceptance + remove guard (ships together; correctness-critical; HDL/Verilator evidence). |
 | 6 | `.6` | `pending` | Docs + runnable book example. |
 
@@ -196,6 +208,15 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   single `activation` crossing (resolving the prior open question) — the
   `<child>_start`/`<child>_done` handshake signals are compiler-internal, so the
   author declares one `(activation ...)` and lowering wires the two synchronizers.
+- `2026-05-30` (`.4` decision): the cross-domain caller issues a ONE-CYCLE
+  `<start>` request, not a held level. The acknowledged-event CDC toggles on
+  `request && ready` and re-arms after every round-trip ack, so a held `request`
+  would re-pulse the destination and re-trigger `child`. The done side is already
+  one-cycle (the callee terminal is transient). With single-outstanding requests
+  guaranteed by the blocking-do structure, the CDC `ready` back-pressure is
+  unnecessary and its output is left open (the `<done>` pulse is the
+  application-level acknowledgement). To be confirmed by Verilator simulation in
+  `.5`/`.6`.
 
 ## Open Questions
 
@@ -224,6 +245,7 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | `2026-05-30` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-05-30` | `.2` | `prove -Iperl t/1386 t/1247 t/1372` (Files=3, Tests=19, PASS); broad clock-domain/crossing/parser regression (12 files, 147) PASS; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-05-30` | `.3` | `prove -Iperl t/1387 t/1250 t/1386 t/1247 t/1372 t/1110 t/1382 t/1383` PASS; broad activation/do/spawn/clock-domain regression (39 files, 246) PASS; `perl -c LoweringIR.pm`; `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-30` | `.4` | `prove -Iperl t/1387` (5 subtests) PASS; broad composition/crossing/domain/child regression with event-crossing goldens (13 files, 449) PASS; `perl -c ISF.pm`+`LoweringIR.pm`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -231,7 +253,8 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | --- | --- | --- |
 | `.1` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.1: select cross-domain activation via crossing` | `dbbe6bce` |
 | `.2` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.2: parse + validate activation crossing (lowering fail-closed)` | `ffffc2a0` |
-| `.3` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3: cross-domain activation handshake-port lowering machinery (behind guard)` | `ship commit (this slice)` |
+| `.3` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3: cross-domain activation handshake-port lowering machinery (behind guard)` | `77f447c9` |
+| `.4` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.4: one-cycle caller request + dual-CDC top emission (behind guard)` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -264,3 +287,18 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   per-domain module. Uncovered cross-domain `(do)` and any activation-crossing
   `lower()` STILL fail closed. Locked by `t/1387`; broad regression (39 files,
   246) PASS.
+- `2026-05-30`: `.4` shipped — the CDC routing structure, behind the guard.
+  (a) The cross-domain caller now emits a ONE-CYCLE `<start>` request (a
+  sequential request state, asserted on entry like a spawn start, then the
+  await-on-`<done>` state); a held level would re-pulse the acknowledged-event CDC
+  (which toggles on `request && ready` and re-arms after each round trip) and
+  re-trigger `child`. (b) `_emit_multi_domain_top` emits the two acknowledged-event
+  CDC children (`<actor>__cdc_activation_<child>_{start,done}`) and wires start
+  SRC→DEST (`SRC.<child>_start`→request, pulse→`DEST.<child>_start`) and done
+  DEST→SRC (`DEST.<child>_done`→request, pulse→`SRC.<child>_done`), reusing a
+  shared `_emit_cdc_event_rtlif` (the event rtlif refactored to delegate to it, so
+  event-crossing output is unchanged). The CDC `ready` outputs are left open —
+  one outstanding by construction, with the `<done>` pulse as the acknowledgement.
+  All exercised only via direct unit calls (behind the still-fail-closed guard);
+  `t/1387` (5 subtests) + event-crossing goldens (`t/1247`/`t/1255`/`t/1116`)
+  regression (13 files, 449) PASS.

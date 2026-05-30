@@ -33738,3 +33738,51 @@ existing actor — the slice is inert for everything shipped so far (broad
 regression: 39 files, 246 tests PASS). `t/1387` builds per-domain caller/callee
 modules directly (setting `external_activations` by hand) to verify the machinery
 while the live seam stays fail-closed.
+
+## Cross-domain activation `.4` — one-cycle caller request and the dual-CDC top routing (2026-05-30)
+
+`.4` builds the CDC routing structure behind the still-fail-closed guard, after
+`.3` shipped the per-domain handshake-port lowering.
+
+**Why the caller must pulse `<start>` for one cycle.** The activation start/done
+are routed through the shipped acknowledged-event CDC child
+(`FSM/Composition/ISFEventCDCModuleEmitter.pm`). Its source FF toggles when
+`request && ready`, and `ready` returns high a few cycles after each accepted
+request (once the destination ack syncs back). A same-domain `(do child)` holds
+`<child>_start` high for the entire await (`_ir_do` asserts it in the await
+state). If that held level fed the CDC `request`, the source would re-toggle on
+every `ready` re-arm — once per round-trip latency — re-pulsing the destination
+and re-starting `child` while it is still running (and again right after it
+returns to idle, before the `<done>` pulse reaches the caller to drop the
+request). So the cross-domain caller branch of `_wire_external_activations`
+restructures the do-state: it strips the `<start>` assignment from the await
+state and inserts a `sequential` `<owner>_do_<i>_req` state that asserts `<start>`
+on entry and falls through unconditionally to the await — exactly the shape a
+spawn start uses. `<start>` is therefore high for one cycle, the CDC emits one
+destination pulse, and `request` is low before `ready` re-arms, so no re-trigger.
+The done side needs no such change: the callee terminal is transient (asserts
+`<done>` for the one cycle it is active, then returns to the entry), so
+`<child>_done` is already a one-cycle request into the done CDC.
+
+**Why `ready` is left open.** The acknowledged-event CDC offers single-outstanding
+back-pressure via `ready`. A blocking `(do child)` has exactly one activation
+outstanding by construction (the caller blocks on `<done>` before it can re-issue
+`<start>`), and the `<done>` pulse is itself the application-level acknowledgement.
+So the `ready` outputs of both synchronizers are intentionally unconnected in the
+top — there is no second request to gate. (If a future non-blocking / pipelined
+activation is added, it would consume `ready`; that is out of scope here.)
+
+**Top emission.** `_emit_multi_domain_top` emits two `?rtl` children per
+`(activation ...)` crossing and `_emit_multi_domain_wiring` wires them: start
+SRC→DEST (`SRC.<child>_start`→`request`, `pulse`→`DEST.<child>_start`, SRC
+clock/reset→source, DEST clock/reset→dest) and done DEST→SRC (reversed). The
+event-crossing rtlif emitter was refactored into a shared
+`_emit_cdc_event_rtlif($module, $source_domain, $dest_domain)` consumed by both
+the `(event ...)` crossing and `_emit_activation_crossing_rtlif` (which picks the
+source/dest orientation per direction). The event-crossing goldens
+(`t/1247`/`t/1255`/`t/1116`) confirm the refactor is output-preserving.
+
+All of this is reachable only through `_emit_multi_domain_scheduled_artifacts`,
+which `lower()` still blocks for any activation-crossing actor, so `.4` changes no
+shipped behavior; `t/1387` exercises the emission directly with a synthetic
+actor + partition.

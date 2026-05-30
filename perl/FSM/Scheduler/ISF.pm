@@ -297,6 +297,13 @@ sub _emit_multi_domain_top($actor, $partition) {
         next unless ($crossing->{kind} // '') eq 'event';
         push @lines, _emit_crossing_instance($actor, $crossing);
     }
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ($crossing->{kind} // '') eq 'activation';
+        push @lines, '  (?rtl:' . _activation_start_instance_name($crossing) . ' '
+            . _activation_start_module_name($actor, $crossing) . ')';
+        push @lines, '  (?rtl:' . _activation_done_instance_name($crossing) . ' '
+            . _activation_done_module_name($actor, $crossing) . ')';
+    }
     push @lines, _emit_multi_domain_wiring($actor, $partition);
     push @lines, ')';
 
@@ -304,6 +311,13 @@ sub _emit_multi_domain_top($actor, $partition) {
         next unless ($crossing->{kind} // '') eq 'event';
         push @lines, '';
         push @lines, _emit_crossing_rtlif($actor, $crossing, $partition);
+    }
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ($crossing->{kind} // '') eq 'activation';
+        push @lines, '';
+        push @lines, _emit_activation_crossing_rtlif($actor, $crossing, $partition, 'start');
+        push @lines, '';
+        push @lines, _emit_activation_crossing_rtlif($actor, $crossing, $partition, 'done');
     }
 
     return join("\n", @lines) . "\n";
@@ -367,6 +381,40 @@ sub _emit_multi_domain_wiring($actor, $partition) {
         push @links, _link("$instance.ready", "$crossing->{from}{domain}.$crossing->{ready}{signal}");
         push @links, _link("$instance.pulse", "$crossing->{to}{domain}.$crossing->{to}{signal}");
     }
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ($crossing->{kind} // '') eq 'activation';
+        my $src = $domain_by_name{$crossing->{from}{domain}};
+        my $dst = $domain_by_name{$crossing->{to}{domain}};
+        my $start_signal = _activation_start_signal($crossing);
+        my $done_signal = _activation_done_signal($crossing);
+        my $start = _activation_start_instance_name($crossing);
+        my $done = _activation_done_instance_name($crossing);
+
+        # start synchronizer: SRC drives the one-cycle request -> DEST start pulse.
+        push @links, _link($src->{clock}, "$start.source_clk");
+        push @links, _link($dst->{clock}, "$start.dest_clk");
+        push @links, _link($src->{reset}{name}, "$start.source_reset")
+            if ref($src->{reset}) eq 'HASH';
+        push @links, _link($dst->{reset}{name}, "$start.dest_reset")
+            if ref($dst->{reset}) eq 'HASH';
+        push @links, _link("$src->{name}.$start_signal", "$start.request");
+        push @links, _link("$start.pulse", "$dst->{name}.$start_signal");
+
+        # done synchronizer: DEST drives the one-cycle done -> SRC release pulse.
+        push @links, _link($dst->{clock}, "$done.source_clk");
+        push @links, _link($src->{clock}, "$done.dest_clk");
+        push @links, _link($dst->{reset}{name}, "$done.source_reset")
+            if ref($dst->{reset}) eq 'HASH';
+        push @links, _link($src->{reset}{name}, "$done.dest_reset")
+            if ref($src->{reset}) eq 'HASH';
+        push @links, _link("$dst->{name}.$done_signal", "$done.request");
+        push @links, _link("$done.pulse", "$src->{name}.$done_signal");
+
+        # The acknowledged-event `ready` outputs are intentionally left open: the
+        # caller issues a single one-cycle request per blocking do and the `<done>`
+        # pulse is the application-level acknowledgement, so no back-pressure wire
+        # is needed (single outstanding by construction).
+    }
 
     my @lines = ('  (?wiring:domain_wiring');
     push @lines, map { "    $_" } @links;
@@ -376,11 +424,18 @@ sub _emit_multi_domain_wiring($actor, $partition) {
 
 sub _emit_crossing_rtlif($actor, $crossing, $partition) {
     my %domain_by_name = map { $_->{name} => $_ } @{$partition->{domains} || []};
-    my $source_domain = $domain_by_name{$crossing->{from}{domain}};
-    my $dest_domain = $domain_by_name{$crossing->{to}{domain}};
+    return _emit_cdc_event_rtlif(
+        _crossing_module_name($actor, $crossing),
+        $domain_by_name{$crossing->{from}{domain}},
+        $domain_by_name{$crossing->{to}{domain}},
+    );
+}
 
+# Shared acknowledged-event CDC child interface artifact, used by both the
+# `(event ...)` crossing and the two `(activation ...)` start/done synchronizers.
+sub _emit_cdc_event_rtlif($module_name, $source_domain, $dest_domain) {
     my @lines;
-    push @lines, '(?rtlif:' . _crossing_module_name($actor, $crossing);
+    push @lines, "(?rtlif:$module_name";
     push @lines, '  (params';
     push @lines, '    (FSMGEN_ISF_CDC_EVENT 0d1)';
     push @lines, _emit_crossing_reset_param_lines('SOURCE', $source_domain->{reset});
@@ -397,6 +452,18 @@ sub _emit_crossing_rtlif($actor, $crossing, $partition) {
     push @lines, '  pulse>:data';
     push @lines, ')';
     return join("\n", @lines);
+}
+
+# The two CDC children of one activation crossing: `start` synchronizes SRC->DEST,
+# `done` synchronizes DEST->SRC (source/dest reversed).
+sub _emit_activation_crossing_rtlif($actor, $crossing, $partition, $direction) {
+    my %domain_by_name = map { $_->{name} => $_ } @{$partition->{domains} || []};
+    my $src = $domain_by_name{$crossing->{from}{domain}};
+    my $dst = $domain_by_name{$crossing->{to}{domain}};
+    my ($source_domain, $dest_domain, $module_name) = $direction eq 'start'
+        ? ($src, $dst, _activation_start_module_name($actor, $crossing))
+        : ($dst, $src, _activation_done_module_name($actor, $crossing));
+    return _emit_cdc_event_rtlif($module_name, $source_domain, $dest_domain);
 }
 
 sub _emit_crossing_reset_param_lines($prefix, $reset) {
@@ -447,6 +514,25 @@ sub _crossing_instance_name($crossing) {
 
 sub _crossing_module_name($actor, $crossing) {
     return "$actor->{actor_name}__cdc_event_$crossing->{name}";
+}
+
+# Cross-domain activation (ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING). One
+# `(crossings (activation child (from SRC)(to DEST)))` auto-routes the activation
+# start/done handshake through TWO acknowledged-event CDC children: `start`
+# carries the caller's one-cycle `<child>_start` request SRC->DEST (pulse starts
+# `child`), `done` carries `child`'s one-cycle `<child>_done` DEST->SRC (pulse
+# releases the caller). The handshake signal names match `_wire_external_activations`.
+sub _activation_start_signal($crossing) { return "$crossing->{child}_start"; }
+sub _activation_done_signal($crossing)  { return "$crossing->{child}_done"; }
+
+sub _activation_start_instance_name($crossing) { return "$crossing->{child}_activation_start_cdc"; }
+sub _activation_done_instance_name($crossing)  { return "$crossing->{child}_activation_done_cdc"; }
+
+sub _activation_start_module_name($actor, $crossing) {
+    return "$actor->{actor_name}__cdc_activation_$crossing->{child}_start";
+}
+sub _activation_done_module_name($actor, $crossing) {
+    return "$actor->{actor_name}__cdc_activation_$crossing->{child}_done";
 }
 
 sub _entry_domain($entry, $default_domain) {

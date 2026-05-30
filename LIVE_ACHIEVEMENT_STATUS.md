@@ -16461,3 +16461,13 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   cross-domain `(do)` and any activation-crossing `lower()` STILL fail closed.
   Re-scoped `.3`/`.4`/`.5`/`.6`; validator-accept + CDC routing ship together in
   `.5`. Broad regression (39 files, 246) PASS. Frontier `.4`.
+- `.4` shipped: CDC routing structure (behind the still-fail-closed guard). The
+  cross-domain caller emits a ONE-CYCLE `<start>` request (a held level would
+  re-pulse the acknowledged-event CDC and re-trigger `child`), and
+  `_emit_multi_domain_top` emits + wires the two CDC children
+  `<actor>__cdc_activation_<child>_{start,done}` (start SRC→DEST, done DEST→SRC;
+  `ready` left open — single outstanding, the `<done>` pulse is the ack), reusing
+  a shared `_emit_cdc_event_rtlif` so event-crossing output is unchanged.
+  Unit-tested in isolation (`t/1387`, 5 subtests); event goldens + composition
+  regression (13 files, 449) PASS. Frontier `.5` (integration: validator
+  acceptance + remove guard, together; Verilator evidence).

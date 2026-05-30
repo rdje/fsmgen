@@ -85,6 +85,29 @@ ISF
     # by a leftover module-internal register).
     my @start_decls = ($fsm =~ /\(worker_start \d+\)/g);
     is(scalar(@start_decls), 1, 'caller declares the start handshake exactly once');
+
+    # Cross-domain `<start>` routes through an acknowledged-event CDC that
+    # re-pulses while `request` is held, so the caller must emit a ONE-CYCLE start
+    # request (asserted on entry, then a separate await-on-`<done>` state) rather
+    # than holding the level for the whole do.
+    my @states = @{$ir->{states}};
+    my ($request) = grep { $_->{name} =~ /_do_\d+_req$/ } @states;
+    ok($request, 'caller emits a dedicated one-cycle start request state');
+    ok(
+        (grep { ($_->{lhs} // '') eq 'worker_start' } @{$request->{assignments} || []}),
+        'the request state asserts the start handshake',
+    );
+    ok(
+        scalar(@{$request->{transitions} || []}) == 1
+            && !$request->{transitions}[0]{condition},
+        'the request state falls through unconditionally (start is high for one cycle)',
+    );
+    my ($await) = grep { ($_->{guard}{port} // '') eq 'worker_done' } @states;
+    ok($await, 'caller awaits the done handshake in a separate state');
+    ok(
+        (!grep { ($_->{lhs} // '') eq 'worker_start' } @{$await->{assignments} || []}),
+        'the await state does not re-assert the held start level',
+    );
 };
 
 subtest 'caller do target absent without an external activation still fails closed' => sub {
@@ -129,6 +152,52 @@ ISF
     my $err = $@;
     ok(!$ok, 'an actor declaring an activation crossing is still rejected at lower');
     like($err, qr/cross-domain activation lowering is not yet supported/, 'rejection states CDC routing is pending');
+};
+
+subtest 'multi-domain top emits and wires the two activation CDC children' => sub {
+    my $actor = {
+        actor_name => 'act',
+        crossings  => [
+            { kind => 'activation', child => 'worker', from => { domain => 'core' }, to => { domain => 'bus' } },
+        ],
+        interface => {
+            inputs  => [ { name => 'start', width => 1, domain => 'core' } ],
+            outputs => [ { name => 'done',  width => 1, domain => 'core' } ],
+        },
+    };
+    my $partition = {
+        kind           => 'multi_domain',
+        default_domain => 'core',
+        top_fsm        => 'act_top.fsm',
+        domains        => [
+            { name => 'core', clock => 'clk',     reset => { name => 'rst_n',     kind => 'sync', polarity => 'active_low' }, scheduled_fsm => 'act__domain_core.fsm' },
+            { name => 'bus',  clock => 'bus_clk', reset => { name => 'bus_rst_n', kind => 'sync', polarity => 'active_low' }, scheduled_fsm => 'act__domain_bus.fsm' },
+        ],
+    };
+
+    my $top = FSM::Scheduler::ISF::_emit_multi_domain_top($actor, $partition);
+
+    like($top, qr/\(\?rtl:worker_activation_start_cdc act__cdc_activation_worker_start\)/, 'top instantiates the start CDC child');
+    like($top, qr/\(\?rtl:worker_activation_done_cdc act__cdc_activation_worker_done\)/, 'top instantiates the done CDC child');
+
+    # start synchronizer: SRC (core) request -> DEST (bus) pulse, clk->source, bus_clk->dest.
+    like($top, qr{/core\.worker_start/worker_activation_start_cdc\.request/}, 'start CDC takes the SRC one-cycle request');
+    like($top, qr{/worker_activation_start_cdc\.pulse/bus\.worker_start/}, 'start CDC pulses the DEST start');
+    like($top, qr{/clk/worker_activation_start_cdc\.source_clk/}, 'start CDC source clock is the SRC domain clock');
+    like($top, qr{/bus_clk/worker_activation_start_cdc\.dest_clk/}, 'start CDC dest clock is the DEST domain clock');
+
+    # done synchronizer: DEST (bus) request -> SRC (core) pulse (reversed clocks).
+    like($top, qr{/bus\.worker_done/worker_activation_done_cdc\.request/}, 'done CDC takes the DEST one-cycle done');
+    like($top, qr{/worker_activation_done_cdc\.pulse/core\.worker_done/}, 'done CDC pulses the SRC release');
+    like($top, qr{/bus_clk/worker_activation_done_cdc\.source_clk/}, 'done CDC source clock is the DEST domain clock');
+    like($top, qr{/clk/worker_activation_done_cdc\.dest_clk/}, 'done CDC dest clock is the SRC domain clock');
+
+    # No back-pressure wire is emitted (ready is open; the done pulse is the ack).
+    unlike($top, qr/worker_activation_start_cdc\.ready/, 'start CDC ready is left open (single outstanding by construction)');
+
+    like($top, qr/\(\?rtlif:act__cdc_activation_worker_start[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the start CDC interface artifact');
+    like($top, qr/\(\?rtlif:act__cdc_activation_worker_done[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the done CDC interface artifact');
+    like($top, qr/\(FSMGEN_ISF_CDC_EVENT 0d1\)/, 'activation CDC children reuse the acknowledged-event primitive');
 };
 
 done_testing();

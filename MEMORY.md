@@ -38260,3 +38260,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   Next: `.4` (dual-CDC top emission helpers, behind guard), then `.5`
   (partition recognition + `external_activations` injection + validator
   acceptance + remove guard, ships together; HDL/Verilator evidence).
+- `.4` SHIPPED (CDC routing structure, behind guard): (a) the cross-domain CALLER
+  now emits a ONE-CYCLE `<start>` request (sequential request state asserted on
+  entry, then await-on-`<done>`) in `_wire_external_activations` — a held level
+  would re-pulse the acknowledged-event CDC (toggles on `request && ready`,
+  re-arms each round trip) and re-trigger `child`; the done side is already
+  one-cycle (callee terminal is transient). (b) `_emit_multi_domain_top` (ISF.pm)
+  emits the two CDC children `<actor>__cdc_activation_<child>_{start,done}` and
+  wires start SRC→DEST (`SRC.<child>_start`→request, pulse→`DEST.<child>_start`)
+  and done DEST→SRC, reusing a shared `_emit_cdc_event_rtlif` (event rtlif
+  refactored to delegate — event output unchanged). CDC `ready` left open (single
+  outstanding; `<done>` pulse is the ack). All behind the still-fail-closed guard;
+  exercised only via direct unit calls. `t/1387` now 5 subtests; event-crossing
+  goldens (`t/1247`/`t/1255`/`t/1116`) + composition regression (13 files, 449)
+  PASS. Next: `.5` integration (partition recognition + `external_activations`
+  injection + validator acceptance + remove guard, together; Verilator evidence).

@@ -11440,6 +11440,43 @@ sub _wire_external_activations {
                 "external activation '$child' caller start handoff");
             _ensure_port($ports, $done, 'input', 1,
                 "external activation '$child' caller done handoff");
+
+            # Cross-domain `<start>` routes through an acknowledged-event CDC child,
+            # which re-toggles (re-pulses the destination) for as long as `request`
+            # is held high. A same-domain do holds `<start>` for the whole await,
+            # which would re-trigger `child` across the boundary. Restructure the
+            # do into a one-cycle start REQUEST state (asserted on entry, like a
+            # spawn start) followed by the original await-on-`<done>` state, so the
+            # CDC sees a single request pulse per activation.
+            my ($do_state) = grep {
+                ($_->{kind} // '') eq 'await'
+                    && grep { ($_->{lhs} // '') eq $start } @{$_->{assignments} || []}
+            } @$st;
+            if ($do_state) {
+                $do_state->{assignments} = [
+                    grep { ($_->{lhs} // '') ne $start } @{$do_state->{assignments} || []}
+                ];
+                my $request = {
+                    name        => "$do_state->{name}_req",
+                    kind        => 'sequential',
+                    assignments => [
+                        { lhs => $start, rhs => 1, op => '=', source_kind => 'cross_domain_do_start' },
+                    ],
+                    transitions => [{ target => $do_state->{name} }],
+                };
+                my ($do_index) = grep { $st->[$_] == $do_state } 0 .. $#$st;
+                splice(@$st, $do_index, 0, $request);
+                # Redirect the do-state's predecessors (e.g. the idle entry) to the
+                # one-cycle request state; the request state itself falls through to
+                # the await unconditionally.
+                for my $state (@$st) {
+                    next if $state == $request;
+                    for my $transition (@{$state->{transitions} || []}) {
+                        $transition->{target} = $request->{name}
+                            if ($transition->{target} // '') eq $do_state->{name};
+                    }
+                }
+            }
         }
         elsif ($role eq 'callee') {
             _ensure_port($ports, $start, 'input', 1,
