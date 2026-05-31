@@ -126,13 +126,16 @@ fallthrough target in the generated `.fsm`.
 
 ## Where Child Activations Are Allowed
 
-Child-activation clauses — `(do ...)`, `(spawn ...)`, `(await_all ...)`, and
-`(await_any ...)` — are accepted as **top-level transaction clauses** and **inside
-a `repeat` body**. In addition, a **local `(do child)`** — plain or with
-`(bind ...)` port bindings, no `(params ...)` overrides, target not generated
-elsewhere — is accepted **directly inside a `when` body, a `switch` branch, a
-`while` body, and an `until` body** — a conditional (or loop-conditional) one-shot
-activation:
+All four child-activation clauses — `(do ...)`, `(spawn ...)`, `(await_all ...)`,
+and `(await_any ...)` — are accepted as **top-level transaction clauses**, **inside
+a `repeat` body**, and **directly inside a `when` body, a `switch` branch, a
+`while` body, and an `until` body**. Inside a branch/loop body they describe a
+*conditional* (or loop-conditional) activation: the activation only happens when
+the enclosing branch is taken / on each loop iteration.
+
+A **local `(do child)`** — plain or with `(bind ...)` port bindings, no
+`(params ...)` overrides, target not generated elsewhere — is the simplest form, a
+conditional one-shot activation:
 
 ```lisp
 (actor conditional_activation
@@ -173,15 +176,49 @@ the same generated-child composition behavior):
 (until c    (do w (params (W 8))))        ;; generated until-body do
 ```
 
-Both the local and the generated `(do)` cover the full conditional/loop-conditional
-activation surface: a `(do)` is a blocking activation, and blocking constructs are
-allowed in those bodies — `(await ...)` is accepted inside `when` / `switch` /
-`while` / `until`, and so is `(do)` in both its local and generated forms.
+A **non-blocking `(spawn child as inst)`** plus an `(await_all ...)` / `(await_any
+...)` drain is also accepted in a branch/loop body — a *conditional fan-out + join*.
+The spawns assert each child's start handshake without blocking; the drain then
+blocks on the accumulated child done handshakes (`await_all` = all, `await_any` =
+any). The done-port accumulator is body-local, so the drain belongs in the same
+branch/loop body as the spawns it joins:
 
-Still deferred (fails closed with a targeted diagnostic) — `(spawn ...)`,
-`(await_all ...)`, and `(await_any ...)` directly inside a branch/loop body; those
-fan-out / drain clauses remain restricted to **top-level** and **`repeat`** bodies.
-Wrap them in a `repeat`, e.g. `(while c (repeat 1 (spawn w as w0)))`.
+```lisp
+(actor conditional_fan_out
+  (interface
+    (input start)
+    (input cond)
+    (input go)
+    (input din (width 8))
+    (output done)
+    (output r1 (width 8))
+    (output r2 (width 8))
+    (output w1done)
+    (output w2done))
+  (transaction parent
+    (on start)
+    (when cond
+      (spawn worker1 as w1)   ;; conditional fan-out: start both children…
+      (spawn worker2 as w2)
+      (await_all done))       ;; …then join on both done handshakes
+    (complete done))
+  (transaction worker1
+    (on go)
+    (update r1 din)
+    (complete w1done))
+  (transaction worker2
+    (on go)
+    (update r2 din)
+    (complete w2done)))
+```
+
+The spawned children are instantiated and wired in the composition top exactly like
+a top-level spawn fan-out (and share the same multi-instance composition behavior).
+Child activation is therefore fully orthogonal across the clause contexts: a `(do)`
+(local or generated) and a `(spawn ...)` + drain lower the same way at top level,
+in a `repeat`, and in any branch/loop body — a `(do)` is a blocking activation and
+a `(spawn ...)`/`(await ...)` pair is a non-blocking fan-out/join, and both kinds of
+construct are allowed in those bodies.
 
 Across clock domains the same staging applies: a cross-domain `(do child)` through
 a `(crossings (activation ...))` is supported top-level (see

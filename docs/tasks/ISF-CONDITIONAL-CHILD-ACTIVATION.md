@@ -176,6 +176,13 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
   Goal: `generated `(do child (params ...))` lowers to a generated child instance directly in switch/while/until bodies too (completing generated conditional activation across all four branch/loop bodies).`
   Acceptance: `_generated_child_transaction_refs marks switch-branch/while-body/until-body do-with-params children generated (label set extended); _expand_switch and _expand_loop_body do branches route generated do through the same _conditional_do_ref_from_clause + spawn-ref-push + _ir_do($do_ref) path as _expand_when (.5a); the now-dead _assert_when_body_local_do helper removed; the generated child is built + instantiated (cond_do_<n>) + wired in the top for each of switch/while/until; parity with .5a and the top-level generated do; t/1388 flips the switch-deferral subtest to a switch/while/until lowers-to-instance subtest; t/1245's generated-do-loop rejection repointed to the still-deferred (spawn ...) boundary.`
   Verification: `prove -Iperl t/1388 t/1245 t/1376 t/1305 t/1304 t/1307 PASS; per-context (switch/while/until) lower + cond_do instance + top instantiation/wiring verified; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
+  Commit: `73cc1b90`
+
+- ID: `ISF-CONDITIONAL-CHILD-ACTIVATION.6`
+  Status: `done`
+  Goal: `(spawn child as inst) + (await_all)/(await_any) drains directly in when/switch/while/until bodies (conditional fan-out + join).`
+  Acceptance: `spawn/await_all/await_any added to the when/switch/while/until clause-context allow-lists; _expand_when/_expand_switch/_expand_loop_body each thread a body-local done-port accumulator (@dps) — a (spawn child as inst) builds _spawn_ref_from_clause (pushed to $spawn_refs for top wiring), emits _ir_spawn (asserts <inst>_start), and pushes <inst>_done onto @dps; a following (await_all)/(await_any) emits _ir_sync_all/_ir_sync_any draining @dps and resets it; a conditional multi-spawn fan-out then single drain lowers under the branch guard, the spawned instances are instantiated + wired in the top, and the join blocks on their done handshakes; unsupported deeper shapes fail closed; 13d/13b move spawn/drains onto the supported branch/loop surface; t/1388 (or a new t/) covers when/switch fan-out + while/until; book examples lower; audits pass.`
+  Verification: `prove -Iperl t/1388 (+ new spawn subtest, 9 subtests) t/1245 t/1376 (41) t/1305 t/1304 t/1307 PASS; per-context (when/switch/while/until) lower + spawn instance + drain (await_all/await_any done-port) + top instantiation/wiring verified; parity with top-level spawn fan-out confirmed (same COMPOSITION_SCOPE --check-json boundary); full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -188,7 +195,8 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | 4 | `.4` | `done` | BOUND local `(do child (bind ...))` accepted in all branch/loop bodies (relaxed `_assert_when_body_local_do` to allow `(bind ...)`; `_ir_do`'s non-generated path emits the bindings). Only the GENERATED `(params ...)` form still defers. `t/1388`/`t/1245` updated. |
 | 5 | `.5a` | `done` | when-body GENERATED `(do child (params ...))` lowers to a `cond_do` generated child instance (instantiated + wired in the top, conditionally activated); parity with a top-level generated do (same composition-scope `--check-json` boundary). `t/1388`. |
 | 6 | `.5b` | `done` | switch-branch + while/until GENERATED `(do child (params ...))` lower to `cond_do` instances (same `_conditional_do_ref_from_clause` path as `.5a`, routed through `_expand_switch`/`_expand_loop_body`; label set extended; dead `_assert_when_body_local_do` removed). Generated conditional activation now complete across all four branch/loop bodies. `t/1388`/`t/1245`. |
-| 7 | `.6`–`.7` | `pending` | `(spawn)` + `await_all`/`await_any` drains in branch/loop bodies; docs/examples sweep. |
+| 7 | `.6` | `done` | `(spawn child as inst)` + `(await_all)`/`(await_any)` drains accepted in all four branch/loop bodies (allow-list + spawn/drain branches threading a body-local `@dps` accumulator through `_expand_when`/`_expand_switch`/`_expand_loop_body`). Conditional fan-out + join lowers; spawned instances instantiated + wired in the top (parity with top-level spawn fan-out, same composition-scope `--check-json` boundary). `t/1388`/`t/1245`. **Child activation (do local/bound/generated + spawn + drains) is now complete across all branch/loop bodies.** |
+| 8 | `.7` | `pending` | docs/examples consolidation sweep (the `13d`/`13b` surface is kept truthful per-slice; `.7` is a final pass + any cross-domain follow-ups). |
 
 ## Decisions
 
@@ -225,6 +233,7 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | `2026-05-31` | `.4` | `prove -Iperl t/1388` (5 subtests) `t/1245 t/1376 t/1305` PASS; full `./bin/ci-regression isf --no-book` PASS; bound lower + binding-emit + generated-deferral verified; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-05-31` | `.5a` | `prove -Iperl t/1388 t/1245 t/1376 t/1305 t/1304 t/1307` PASS; lower + cond_do instance + top instantiation/wiring verified; parity with top-level generated do (shared COMPOSITION_SCOPE --check-json boundary); full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-05-31` | `.5b` | `prove -Iperl t/1388 t/1245 t/1376 t/1305 t/1304 t/1307` PASS; per-context (switch/while/until) lower + `cond_do` instance + top instantiation/wiring verified; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-05-31` | `.6` | `prove -Iperl t/1388` (9 subtests) `t/1245 t/1376` (41) `t/1305 t/1304 t/1307` PASS; per-context (when/switch/while/until) spawn fan-out + `await_all`/`await_any` drain lower + spawn instance + top instantiation/wiring verified; parity with top-level spawn fan-out (shared COMPOSITION_SCOPE --check-json boundary); full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -235,7 +244,8 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | `.3` | `ISF-CONDITIONAL-CHILD-ACTIVATION.3: local (do child) in switch/while/until bodies` | `e93f7883` |
 | `.4` | `ISF-CONDITIONAL-CHILD-ACTIVATION.4: bound local (do child) in branch/loop bodies` | `a2567839` |
 | `.5a` | `ISF-CONDITIONAL-CHILD-ACTIVATION.5a: when-body generated (do child (params ...)) -> conditional generated child instance` | `bf7a26e8` |
-| `.5b` | `ISF-CONDITIONAL-CHILD-ACTIVATION.5b: generated (do child (params ...)) in switch/while/until bodies` | `ship commit (this slice)` |
+| `.5b` | `ISF-CONDITIONAL-CHILD-ACTIVATION.5b: generated (do child (params ...)) in switch/while/until bodies` | `73cc1b90` |
+| `.6` | `ISF-CONDITIONAL-CHILD-ACTIVATION.6: (spawn) + await_all/await_any drains in branch/loop bodies (conditional fan-out + join)` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -314,3 +324,29 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
   (deferral-lift cascade). 13d/13b updated (generated do moved onto the supported
   surface for all four bodies; only `(spawn)`/`await_all`/`await_any` directly in
   branch/loop bodies remain deferred to top-level/`repeat`).
+- `2026-05-31`: `.6` shipped — `(spawn child as inst)` plus an `(await_all)`/
+  `(await_any)` drain are now accepted directly inside `when`/`switch`/`while`/
+  `until` bodies (conditional fan-out + join), **completing child activation across
+  all branch/loop bodies** (`(do)` local/bound/generated + `(spawn)` + drains).
+  Added `spawn await_all await_any` to the four branch/loop clause-context
+  allow-lists. `_expand_when`/`_expand_switch`/`_expand_loop_body` each thread a
+  body-local done-port accumulator (`@dps`): a `(spawn child as inst)` builds
+  `_spawn_ref_from_clause` (pushed to `$spawn_refs` so the spawn instance is
+  instantiated + wired in the composition top), emits `_ir_spawn` (asserts
+  `<inst>_start`), and pushes `<inst>_done` onto `@dps`; a following `(await_all)`/
+  `(await_any)` emits `_ir_sync_all`/`_ir_sync_any` draining `@dps` (the join blocks
+  on `& <inst>_done` / `| <inst>_done`) and resets the accumulator. This reuses the
+  exact top-level / repeat-body spawn lowering — the accumulator is body-local, so
+  the drain belongs in the same branch/loop body as its spawns. A conditional
+  multi-spawn fan-out then single `await_all` lowers under the branch guard with all
+  spawn instances instantiated + wired in the top. PARITY with a top-level spawn
+  fan-out: both lower + compose, and both reach the same pre-existing multi-instance
+  composition-scope `--check-json` boundary (`docs/COMPOSITION_SCOPE.md`) — verified
+  the equivalent top-level `(spawn w1)(spawn w2)(await_all)` fails `--check-json`
+  with the identical message — so `t/1388` asserts the lowered schedule + top (not
+  `--check-json`). `t/1388` adds a spawn fan-out/join subtest across all four
+  contexts (now 9 subtests); `t/1245`'s `(spawn ...)`-in-loop rejection is repointed
+  to a still-unsupported non-child-activation clause (`(latency ...)` in a while
+  body) since `(spawn)` now lowers (deferral-lift cascade). 13d/13b updated (spawn +
+  drains moved onto the supported branch/loop surface, with a runnable
+  `conditional_fan_out` example; book-example count 40→41).

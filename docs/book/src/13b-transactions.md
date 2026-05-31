@@ -105,16 +105,16 @@ routes the start/done handshake through CDC synchronizers. See
 [Activation Crossing](13a-actor-interface.md#activation-crossing). A cross-domain
 `(do)` without a covering crossing fails closed.
 
-`(do ...)`, `(spawn ...)`, `(await_all ...)`, and `(await_any ...)` are accepted
-as top-level transaction clauses and inside a `repeat` body; additionally a
-`(do child)` — local (plain or with `(bind ...)` port bindings) **or** generated
-(a `(do child (params ...))` parameter override) — is accepted directly inside a
-`when` body, a `switch` branch, a `while` body, and an `until` body (conditional /
-loop-conditional one-shot activation, local or generated). `(spawn ...)`,
-`(await_all ...)`, and `(await_any ...)` remain restricted to top-level and
-`repeat` bodies. See
+`(do ...)`, `(spawn ...)`, `(await_all ...)`, and `(await_any ...)` are accepted as
+top-level transaction clauses, inside a `repeat` body, **and directly inside a
+`when` body, a `switch` branch, a `while` body, and an `until` body** (conditional /
+loop-conditional activation). A `(do child)` may be local (plain or with
+`(bind ...)` port bindings) or generated (a `(do child (params ...))` parameter
+override); a `(spawn child as inst)` + `(await_all ...)`/`(await_any ...)` drain
+forms a conditional fan-out + join (the done-port accumulator is body-local, so the
+drain belongs in the same body as its spawns). See
 [Where Child Activations Are Allowed](13d-control-flow.md#where-child-activations-are-allowed)
-for the supported contexts, what is deferred, and the `(repeat ...)` workaround.
+for the full surface and the cross-domain staging.
 
 ## How Transactions Become Hardware
 

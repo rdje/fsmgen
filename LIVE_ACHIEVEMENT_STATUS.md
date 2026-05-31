@@ -16537,3 +16537,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   the top-level generated do). Dead `_assert_when_body_local_do` removed. 13d/13b;
   t/1388/t/1245. Only `(spawn)`/`await_all`/`await_any` in branch/loop bodies remain
   deferred. Frontier `.6`.
+- `.6` (ISF-CONDITIONAL-CHILD-ACTIVATION) shipped (2026-05-31): `(spawn child as
+  inst)` + `(await_all)`/`(await_any)` drains now lower in when/switch/while/until
+  bodies (conditional fan-out + join) — COMPLETING child activation across all
+  branch/loop bodies. Body-local `@dps` accumulator per expander; reuses top-level
+  spawn lowering; parity with top-level spawn fan-out. t/1388 (9 subtests)/t/1245;
+  13d/13b. Theme #1 (conditional child activation) functionally complete; frontier
+  `.7` (docs sweep), then themes #2/#3/#4.

@@ -160,23 +160,21 @@ ISF
     (complete done)))
 ISF
 
-    # A plain, bound, OR generated conditional `(do child ...)` in a while body now
-    # lowers (conditional one-shot activation, ISF-CONDITIONAL-CHILD-ACTIVATION; the
-    # generated `(do child (params ...))` case is covered by t/1388). A `(spawn ...)`
-    # in a loop body remains deferred (a later slice).
-    assert_lower_rejected(<<'ISF', 'spawn loop body', qr/\ATransaction 'main': unsupported '\(spawn \.\.\.\)' clause in while body/);
-(actor loop_child_spawn
+    # Child activation now lowers fully in loop bodies (ISF-CONDITIONAL-CHILD-
+    # ACTIVATION): a plain/bound/generated `(do child ...)` and a `(spawn child as
+    # inst)` + `(await_all)`/`(await_any)` drain (conditional fan-out/join) all lower
+    # — covered positively by t/1388. The clause-context allow-list still fails
+    # closed for non-child-activation clauses placed directly in a loop body; e.g. a
+    # `(latency ...)` clause:
+    assert_lower_rejected(<<'ISF', 'unsupported clause loop body', qr/\ATransaction 'main': unsupported '\(latency \.\.\.\)' clause in while body/);
+(actor loop_latency_body
   (clock clk)
   (reset (rst_n async active_low))
-  (interface (input start) (input keep) (input din (width 8)) (output done) (output cdone (width 8)))
-  (transaction child
-    (on start)
-    (update cdone din)
-    (complete cdone))
+  (interface (input start) (input keep) (output done))
   (transaction main
     (on start)
     (while keep
-      (spawn child as c0))
+      (latency (max 4)))
     (complete done)))
 ISF
 

@@ -38504,3 +38504,22 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `(spawn ...)`-in-while-body boundary (deferral-lift cascade). t/1388's
   switch-deferral subtest flipped to switch/while/until lowers-to-instance. 13d/13b
   updated. Frontier `.6`.
+
+## 2026-05-31: ISF-CONDITIONAL-CHILD-ACTIVATION.6 — (spawn)+drains in branch/loop bodies; CHILD ACTIVATION COMPLETE
+- `.6`: `(spawn child as inst)` + `(await_all)`/`(await_any)` drain now lower
+  directly in when/switch/while/until bodies (conditional fan-out + join). Added
+  `spawn await_all await_any` to the four allow-lists; each expander
+  (`_expand_when`/`_expand_switch`/`_expand_loop_body`) threads a BODY-LOCAL `@dps`
+  accumulator — spawn pushes `<inst>_done`, await_all/await_any drains it via
+  `_ir_sync_all`/`_ir_sync_any` (reuses the exact top-level spawn lowering). The
+  drain MUST be in the same body as its spawns (accumulator is body-local). The
+  `(await_all X)`/`(await_any X)` arg is SYNTACTIC ONLY (validator requires one
+  token but `_ir_sync_all`/`_ir_sync_any` ignore it; the real join is the `@dps`
+  done-ports). Parity with top-level spawn fan-out: both fail `--check-json` at the
+  same multi-instance composition-scope boundary (COMPOSITION_SCOPE.md), so t/1388
+  asserts lowered schedule + top, not --check-json.
+- THEME #1 (conditional child activation) IS NOW COMPLETE: do (local/bound/
+  generated) + spawn + await_all/await_any all lower in all four branch/loop bodies.
+  `.7` is just a docs/examples consolidation sweep. Next: themes #2 (nested
+  cross-domain), #3 (intent constructs), #4 (ATL). t/1245's spawn-deferral case
+  repointed to `(latency ...)`-in-while (still unsupported). Frontier `.7`.

@@ -14912,3 +14912,14 @@ Exit criteria:
   the top-level generated do (shared composition-scope `--check-json` boundary).
   `t/1388`/`t/1245`; 13d/13b updated. Only `(spawn)`/`await_all`/`await_any`
   directly in branch/loop bodies remain deferred (frontier `.6`).
+- `R14`: `ISF-CONDITIONAL-CHILD-ACTIVATION.6` shipped (2026-05-31) — `(spawn child
+  as inst)` + `(await_all)`/`(await_any)` drains now lower directly inside
+  `when`/`switch`/`while`/`until` bodies (conditional fan-out + join), COMPLETING
+  child activation across all branch/loop bodies (`(do)` local/bound/generated +
+  `(spawn)` + drains). Each branch/loop expander threads a body-local done-port
+  accumulator and reuses the exact top-level spawn lowering; spawn instances are
+  instantiated + wired in the composition top. Parity with a top-level spawn
+  fan-out (same multi-instance composition-scope `--check-json` boundary). `t/1388`
+  (9 subtests)/`t/1245`; 13d/13b updated (runnable `conditional_fan_out` example;
+  book examples 40→41). Frontier `.7` (docs/examples consolidation sweep). Theme #1
+  of the language-richness frontier is now functionally complete.

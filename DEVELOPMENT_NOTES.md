@@ -34043,3 +34043,27 @@ removed — a good sign the deferral was scaffolding, not load-bearing logic. Le
 once one branch/loop expander gains a capability, the other two almost always want
 the identical edit — budget the slice for "wire the same path through N expanders +
 extend the label set," not for per-context design.
+
+## Conditional child activation `.6` — spawn+drains reuse top-level lowering verbatim (2026-05-31)
+
+`.6` added `(spawn)` + `(await_all)`/`(await_any)` to the branch/loop bodies and
+turned out to be the lightest slice of the whole tree: the branch expanders already
+receive `$spawn_refs` (the same array the top-level builder feeds spawn-instance
+wiring), so a branch-body `(spawn child as inst)` just calls the SAME
+`_spawn_ref_from_clause` + `_ir_spawn` the top-level builder uses, pushes the ref to
+`$spawn_refs`, and the composition top wires it with no new machinery. The only new
+state is a body-local `@dps` (done-port) accumulator threaded through each expander,
+exactly mirroring the top-level/repeat `@dps`/`@spawn_done_ports` — spawn pushes
+`<inst>_done`, `await_all`/`await_any` drains it and resets. Two facts worth
+remembering: (1) the `(await_all X)`/`(await_any X)` argument is SYNTACTIC ONLY — the
+validator (`_validate_sync_clause`) requires exactly one token, but `_ir_sync_all`/
+`_ir_sync_any` ignore it and build the join condition from the `done_ports`
+accumulator; the canonical token is `done` but it has no semantic effect. (2) The
+accumulator is body-local by construction, so a spawn's drain must live in the same
+branch/loop body — a cross-body drain (spawn in a `when`, `await_all` at top level)
+would not see the branch-body spawn's done-port; that's a deliberate scoping choice,
+not a bug. Parity check that mattered: the multi-instance spawn composition top
+fails `--check-json` at the COMPOSITION_SCOPE boundary — but so does the IDENTICAL
+top-level `(spawn w1)(spawn w2)(await_all)`, so the branch-body version is at parity,
+not a regression. Always run the top-level equivalent through `--check-json` before
+concluding a composition-scope failure is yours.

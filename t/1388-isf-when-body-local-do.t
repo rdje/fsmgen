@@ -210,4 +210,60 @@ ISF
     }
 };
 
+subtest 'a (spawn ...) fan-out + (await_all)/(await_any) join lowers in when / switch / while / until bodies' => sub {
+    # ISF-CONDITIONAL-CHILD-ACTIVATION.6: `(spawn child as inst)` plus an
+    # `(await_all)`/`(await_any)` drain are accepted directly inside a branch/loop
+    # body — a conditional (or loop-conditional) fan-out + join. The spawns assert
+    # the children's start handshakes, the drain blocks on their done handshakes,
+    # and the spawned instances are instantiated + wired in the composition top
+    # (parity with a top-level spawn fan-out, which shares the same pre-existing
+    # COMPOSITION_SCOPE --check-json boundary — so this asserts the lowered schedule
+    # + top, not --check-json).
+    my %context = (
+        'when body'     => ['(when cond (spawn worker1 as w1) (spawn worker2 as w2) (await_all done))', 'await_all', qr/w1_done[\s\S]*?w2_done|w2_done[\s\S]*?w1_done/],
+        'switch branch' => ['(switch sel (0 (spawn worker1 as w1) (spawn worker2 as w2) (await_all done)))', 'await_all', qr/w1_done[\s\S]*?w2_done|w2_done[\s\S]*?w1_done/],
+        'while body'    => ['(while cond (spawn worker1 as w1) (await_any done))', 'await_any', qr/w1_done/],
+        'until body'    => ['(until cond (spawn worker1 as w1) (spawn worker2 as w2) (await_all done))', 'await_all', qr/w1_done[\s\S]*?w2_done|w2_done[\s\S]*?w1_done/],
+    );
+    for my $label (sort keys %context) {
+        my ($body, $sync, $drain_re) = @{$context{$label}};
+        my $actor = parse_source(<<"ISF", "spawn-$label");
+(actor spawn_join
+  (interface
+    (input start)
+    (input cond)
+    (input sel (width 2))
+    (input go)
+    (input din (width 8))
+    (output done)
+    (output r1 (width 8))
+    (output r2 (width 8))
+    (output w1done)
+    (output w2done))
+  (transaction parent
+    (on start)
+    $body
+    (complete done))
+  (transaction worker1
+    (on go)
+    (update r1 din)
+    (complete w1done))
+  (transaction worker2
+    (on go)
+    (update r2 din)
+    (complete w2done)))
+ISF
+        my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+        ok($lowered, "$label: spawn fan-out + $sync join lowers") or diag($@);
+        my $fsm = $lowered->{files}{'spawn_join.fsm'};
+        like($fsm, qr/\(w1_start 1\)/, "$label: the first spawn asserts the child start handshake");
+        like($fsm, qr/parent_${sync}_\d+/, "$label: the $sync join state is emitted");
+        like($fsm, qr/parent_${sync}_\d+[\s\S]*?$drain_re/, "$label: the $sync join blocks on the spawned child done handshake(s)");
+        my $top = $lowered->{files}{'spawn_join_top.fsm'};
+        like($top, qr/\(\?fsmc:w1 worker1\)/, "$label: the top instantiates the spawned child instance");
+        like($top, qr/spawn_join\.w1_start w1\.start/, "$label: the top wires the spawned instance start handoff");
+        like($top, qr/w1\.done spawn_join\.w1_done/, "$label: the top wires the spawned instance done handoff");
+    }
+};
+
 done_testing();
