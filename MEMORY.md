@@ -38402,3 +38402,17 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   gates PASS. Tree closed.
 - This limitation is a candidate to LIFT for the "ISF as rich high-level language"
   vision (conditional one-shot `(do)` in branch bodies) — a future feature tree.
+
+## 2026-05-31: Four language-richness themes sanctioned (implement all, any order)
+- User: implement ALL FOUR vision themes (order-agnostic). Recorded in the
+  `isf-language-richness-frontier` auto-memory. Ownership: (1) conditional
+  activation → new `ISF-CONDITIONAL-CHILD-ACTIVATION` tree (frontier `.2`, start
+  with when-body local `(do)`); (2) nested cross-domain CDC →
+  `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3`; (3) intent-capture constructs → scope
+  a design tree when reached; (4) ATL → existing `ISF-ACTOR-NETWORK-ORCHESTRATION`
+  + `ISF-ATL-*` trees. PNT through all autonomously; no asking about order.
+- `ISF-CONDITIONAL-CHILD-ACTIVATION` ground truth: `%SUPPORTED_TRANSACTION_CLAUSES`
+  blocks do/spawn in when/switch/while/until; `_expand_when`/`_expand_switch`/
+  `_expand_loop_body` have no do/spawn branch; the activation-ref collectors don't
+  surface when/switch/loop-body do/spawn. No fundamental obstacle (blocking await
+  is allowed there). `.2` = wire when-body local `(do)` through the full path.

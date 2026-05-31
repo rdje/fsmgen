@@ -14860,3 +14860,15 @@ Exit criteria:
   (replacing the repeat-only `_live_child_action_refs` reliance). `t/1387` now 9
   subtests. Frontier now `.3` (the substantial nested SUPPORT work per context,
   with goldens + HDL).
+- `R14` (language-richness frontier, user-sanctioned 2026-05-31): the user
+  directed that four "ISF/ATL as a rich high-level language" themes ALL be
+  implemented, any order (PNT autonomously). Ownership status:
+  (1) **Lift conditional activation** — `(do)`/`(spawn)` directly in
+  when/switch/while/until bodies → new tree `ISF-CONDITIONAL-CHILD-ACTIVATION`
+  (active, frontier `.2`); (2) **Nested cross-domain CDC** →
+  `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` (active, frontier `.3`); (3) **New
+  intent-capture constructs** (procedures/sub-transactions, richer loops with
+  early-exit, structured pipelines/dataflow) → to be scoped in its own design
+  tree when reached; (4) **Advance ATL** (actor networks) → partly owned by
+  `ISF-ACTOR-NETWORK-ORCHESTRATION` + `ISF-ATL-*` trees. PNT proceeds through
+  these autonomously, each task-tree-owned before code.
