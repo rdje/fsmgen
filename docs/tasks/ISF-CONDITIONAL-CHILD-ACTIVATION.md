@@ -70,8 +70,28 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
   done. Local conditional activation now complete across all branch/loop bodies.
 - `.4` BOUND local `(do child (bind ...))` in all branch/loop bodies (allow
   `(bind ...)`; `_ir_do`'s non-generated path emits the bindings) — done.
-- `.5` generated `(do child (params ...))` in branch/loop bodies (the
-  generated-child instance machinery in branch regions).
+- `.5` generated `(do child (params ...))` in branch/loop bodies — the
+  generated-child instance machinery in branch regions. DESIGN (investigated
+  `2026-05-31`): mirror the repeat-body precedent. In `_ir_repeat` a body `(do)`
+  builds `_repeat_do_ref_from_clause` (which sets `generated_child`/`instance` via
+  `_generated_repeat_do_instance_name` + a `repeat_do_ordinal`), pushes the ref to
+  `$spawn_refs` when generated, and calls `_ir_do($do_ref,'repeat body')`. The
+  branch expanders (`_expand_when`/`_expand_switch`/`_expand_loop_body`) already
+  receive `$spawn_refs`/`$constant_values`/`$generated_children`/
+  `$repeat_do_ordinal_ref`, so a branch generated-do needs: (a) a branch do-ref
+  builder + a branch instance-naming scheme/ordinal (new, analogous to the repeat
+  one); (b) the expander `do` branch to build the ref, push to `$spawn_refs`, and
+  `_ir_do($do_ref,$label)`; and the LABEL-special-cased functions extended for the
+  branch contexts — (c) `_generated_child_transaction_refs` (marks generated only
+  at `transaction body`/`repeat body`); (d) `_build_domain_partition`
+  child-instance grouping + instance naming (~L2160); (e)
+  `_validate_child_transaction_refs` (~L2766) instance naming; (f) the composition
+  top wiring (reads `spawn_instances`, should be generic). Because the
+  instance-naming/ordinals are load-bearing (read at several sites), this is a
+  multi-function, multi-slice sub-frontier (the same-domain repeat-body
+  generated-do equivalent shipped as several trees), to be sub-sliced:
+  `.5a` when-body, `.5b` switch-branch, `.5c` while/until — each with golden +
+  HDL evidence and per-context fail-closed for unsupported deeper shapes.
 - `.6` `(spawn ...)` + `await_all`/`await_any` drains in branch/loop bodies.
 - `.7` docs/examples sweep + feature-matrix/doc-truth sync (the `13d`/`13b`
   surface is kept truthful per-slice; this consolidates any remaining examples).
@@ -133,10 +153,19 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | 2 | `.2` | `done` | when-body local `(do child)` shipped (allow-list + `_expand_when` do branch + collector + `_wire_do_children` gating); 13d/13b updated; `t/1388`. |
 | 3 | `.3` | `done` | local `(do child)` extended to `switch`/`while`/`until` bodies (same pattern; `_expand_switch`/`_expand_loop_body` do branch + allow-list + collector); local conditional activation now complete across all branch/loop bodies; `t/1388`. |
 | 4 | `.4` | `done` | BOUND local `(do child (bind ...))` accepted in all branch/loop bodies (relaxed `_assert_when_body_local_do` to allow `(bind ...)`; `_ir_do`'s non-generated path emits the bindings). Only the GENERATED `(params ...)` form still defers. `t/1388`/`t/1245` updated. |
-| 5 | `.5` | `pending` | generated `(do child (params ...))` in branch/loop bodies (the generated-child instance machinery in branch regions). |
-| 6 | `.6`–`.7` | `pending` | `(spawn)` + `await_all`/`await_any` drains in branch/loop bodies; docs/examples sweep. |
+| 5 | `.5a` | `pending` | when-body GENERATED `(do child (params ...))` — first sub-slice of the generated-child instance machinery in branch regions (design recorded; mirror the repeat-body precedent). |
+| 6 | `.5b`–`.5c` | `pending` | switch-branch / while-until generated do. |
+| 7 | `.6`–`.7` | `pending` | `(spawn)` + `await_all`/`await_any` drains in branch/loop bodies; docs/examples sweep. |
 
 ## Decisions
+
+- `2026-05-31` (`.5` design): generated conditional `(do child (params ...))` is
+  a multi-function, load-bearing slice (new branch do-ref builder + instance
+  naming/ordinal; plus label-special-cased extensions to
+  `_generated_child_transaction_refs`, the partition child-instance grouping,
+  validation, and instance naming). Mirroring the repeat-body generated-do
+  precedent, it is sub-sliced by context (`.5a` when, `.5b` switch, `.5c`
+  while/until) and taken with fresh focus rather than rushed, per the quality bar.
 
 - `2026-05-31`: pursue this as one of the four sanctioned language-richness
   themes (user, any order). Start with when-body local `(do)` because it is the

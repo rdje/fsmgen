@@ -38454,3 +38454,19 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   generated (params) dos. 13d/13b updated. Frontier
   `ISF-CONDITIONAL-CHILD-ACTIVATION.5` (generated conditional do — instance
   machinery in branch regions). t/1388 now 5 subtests.
+
+## 2026-05-31: ISF-CONDITIONAL-CHILD-ACTIVATION.5 design recorded (generated conditional do)
+- Generated `(do child (params ...))` in branch/loop bodies = the generated-child
+  INSTANCE machinery in branch regions. Precedent: `_ir_repeat` body `(do)` builds
+  `_repeat_do_ref_from_clause` (sets generated_child/instance via
+  `_generated_repeat_do_instance_name` + repeat_do_ordinal), pushes to $spawn_refs
+  when generated, `_ir_do($do_ref,'repeat body')`. Branch expanders already receive
+  $spawn_refs/$generated_children/$repeat_do_ordinal_ref.
+- `.5` needs: (a) branch do-ref builder + branch instance naming/ordinal (NEW);
+  (b) expander do branch builds ref + pushes spawn_refs + _ir_do($do_ref);
+  (c) `_generated_child_transaction_refs` (1517) + (d) partition child-instances
+  (~2160) + (e) `_validate_child_transaction_refs` (~2766) + instance naming, all
+  currently label-special-cased to transaction/repeat body — extend for branch
+  labels; (f) top wiring is generic (reads spawn_instances). Load-bearing
+  (ordinals read at multiple sites) → sub-sliced `.5a` when / `.5b` switch / `.5c`
+  while-until, taken with fresh focus. Frontier `.5a`.
