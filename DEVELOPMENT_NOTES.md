@@ -34004,3 +34004,23 @@ unlocked bound conditional activation in all four branch/loop bodies. This split
 machinery in branch regions, deferred to `.5`) — the right boundary, since they
 have very different lowering costs. As before, the bound-deferral tests were a
 deferral-lift cascade (repointed to the generated form).
+
+## Conditional child activation `.5a` — the feared ordinal-matching was sidestepped (2026-05-31)
+
+`.5a` (when-body generated `(do (params ...))`) looked load-bearing because the
+top-level/repeat instance naming uses ordinals computed by independent traversals
+(`_do_clause_ordinal` only counts top-level dos; the repeat path uses a shared
+`repeat_do_ordinal` counter matched between the expander and the collector). The
+key realization: for a generated do, the EXPANDER can own the instance name and
+push that same ref to `$spawn_refs`, which is the single source that drives
+`_register_generated_activation_instance` AND the composition top wiring. So the
+do-state, the registration, and the top wiring all use one ref — consistent by
+construction, with NO cross-traversal ordinal match. The instance ordinal only
+needs to be unique within the owning transaction, so counting the branch-do refs
+already in `$spawn_refs` suffices (`<owner>_<child>_cond_do_<n>`). The validator
+(`_validate_child_transaction_refs`) still skips when-body generated do (it isn't
+in the `$generated_activation` label set), which is acceptable: it only computes
+an instance name for duplicate-detection, and the distinct `cond_do` naming can't
+collide with `_do_`/`_repeat_do_` names. So `.5a` was a contained change, not the
+multi-traversal-ordinal slog the design feared. (The validator override-param
+check for when-body generated do can be added later if desired.)

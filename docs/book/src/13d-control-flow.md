@@ -159,22 +159,29 @@ The enclosing branch/loop guards the do-state; when it is entered, the do-state
 asserts the child's start handshake (driving any `(bind (input ...))` ports) and
 blocks on its done handshake, exactly like a top-level `(do child)`.
 
-Still deferred (fails closed with a targeted diagnostic) — the **generated**
-conditional activation form (a `(do child (params ...))` parameter override):
+A **generated** conditional activation — a `(do child (params ...))` parameter
+override, in a `when` body — is also supported: it elaborates a generated child
+instance (named `<owner>_<child>_cond_do_<n>`), instantiated and wired in the
+generated composition top, exactly like a top-level generated `(do)` (and sharing
+the same generated-child composition behavior).
+
+Still deferred (fails closed with a targeted diagnostic) — generated
+`(do child (params ...))` in a `switch` / `while` / `until` body:
 
 ```text
-(when cond (do w (params (W 8))))      ;; deferred: generated when-body do
 (switch sel (0 (do w (params (W 8))))) ;; deferred: generated switch-branch do
+(while c (do w (params (W 8))))        ;; deferred: generated while-body do
 ```
 
-For a generated conditional activation today, wrap it in a `repeat` (which accepts
-the generated form), e.g. `(when cond (repeat 1 (do w (params (W 8)))))`.
+For a generated conditional activation in those still-unsupported contexts, wrap
+it in a `repeat`, e.g. `(switch sel (0 (repeat 1 (do w (params (W 8))))))`.
 
 This gap is not fundamental: a `(do)` is a blocking activation, and blocking
 constructs are allowed in those bodies — `(await ...)` is accepted inside `when` /
 `switch` / `while` / `until`. The remaining gap is implementation scoping: the
-**local** `(do child)` (plain or bound) is wired into all branch/loop bodies; the
-generated (parameterized) conditional form is being added incrementally.
+**local** `(do child)` (plain or bound) is wired into all four branch/loop bodies,
+and the **generated** form into the `when` body; generated activation in the other
+branch/loop bodies is being added incrementally.
 
 Across clock domains the same staging applies: a cross-domain `(do child)` through
 a `(crossings (activation ...))` is supported top-level (see

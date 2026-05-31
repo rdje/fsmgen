@@ -145,6 +145,13 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
   Verification: `prove -Iperl t/1388 (5 subtests) t/1245 t/1376 t/1305 PASS; full ./bin/ci-regression isf --no-book PASS; bound lower + binding-emit verified; generated deferral verified; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
+- ID: `ISF-CONDITIONAL-CHILD-ACTIVATION.5a`
+  Status: `done`
+  Goal: `when-body generated `(do child (params ...))` lowers to a generated child instance (conditional generated activation).`
+  Acceptance: `_generated_child_transaction_refs marks a when-body do-with-params child generated; _expand_when builds a conditional do-ref (cond_do instance name, ordinal from the spawn-ref count) via _conditional_do_ref_from_clause, pushes it to spawn_refs, and _ir_do($do_ref) asserts the instance start handoff; the generated child module is built, instantiated in the top, and wired; parity with a top-level generated do (same composition-scope --check-json boundary); t/1388 asserts the lowered schedule + top.`
+  Verification: `prove -Iperl t/1388 t/1245 t/1376 t/1305 t/1304 t/1307 PASS; lower + cond_do instance + top instantiation/wiring verified; parity with top-level generated do confirmed (both share the COMPOSITION_SCOPE --check-json boundary); full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
+  Commit: `ship commit (this slice)`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -153,8 +160,8 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | 2 | `.2` | `done` | when-body local `(do child)` shipped (allow-list + `_expand_when` do branch + collector + `_wire_do_children` gating); 13d/13b updated; `t/1388`. |
 | 3 | `.3` | `done` | local `(do child)` extended to `switch`/`while`/`until` bodies (same pattern; `_expand_switch`/`_expand_loop_body` do branch + allow-list + collector); local conditional activation now complete across all branch/loop bodies; `t/1388`. |
 | 4 | `.4` | `done` | BOUND local `(do child (bind ...))` accepted in all branch/loop bodies (relaxed `_assert_when_body_local_do` to allow `(bind ...)`; `_ir_do`'s non-generated path emits the bindings). Only the GENERATED `(params ...)` form still defers. `t/1388`/`t/1245` updated. |
-| 5 | `.5a` | `pending` | when-body GENERATED `(do child (params ...))` — first sub-slice of the generated-child instance machinery in branch regions (design recorded; mirror the repeat-body precedent). |
-| 6 | `.5b`–`.5c` | `pending` | switch-branch / while-until generated do. |
+| 5 | `.5a` | `done` | when-body GENERATED `(do child (params ...))` lowers to a `cond_do` generated child instance (instantiated + wired in the top, conditionally activated); parity with a top-level generated do (same composition-scope `--check-json` boundary). `t/1388`. |
+| 6 | `.5b`–`.5c` | `pending` | switch-branch / while-until generated do (extend the `_expand_switch`/`_expand_loop_body` do branch + the `when body` label set the same way). |
 | 7 | `.6`–`.7` | `pending` | `(spawn)` + `await_all`/`await_any` drains in branch/loop bodies; docs/examples sweep. |
 
 ## Decisions
@@ -190,6 +197,7 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | `2026-05-31` | `.2` | `prove -Iperl t/1388` (3 subtests) `t/1376` (40 examples) `t/1305 t/1304 t/1307` + when/clock-domain/do/spawn sweep (12 files, 551) PASS; full `./bin/ci-regression isf --no-book` PASS; `--verify-hdl` (verilator_lint+yosys_synthesis PASS); `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-05-31` | `.3` | `prove -Iperl t/1388` (4 subtests) `t/1376 t/1305` + clock-domain/repeat sweep PASS; full `./bin/ci-regression isf --no-book` PASS; per-context (switch/while/until) lower + sibling-gate verified; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-05-31` | `.4` | `prove -Iperl t/1388` (5 subtests) `t/1245 t/1376 t/1305` PASS; full `./bin/ci-regression isf --no-book` PASS; bound lower + binding-emit + generated-deferral verified; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-05-31` | `.5a` | `prove -Iperl t/1388 t/1245 t/1376 t/1305 t/1304 t/1307` PASS; lower + cond_do instance + top instantiation/wiring verified; parity with top-level generated do (shared COMPOSITION_SCOPE --check-json boundary); full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -198,7 +206,8 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | `.1` | `ISF-CONDITIONAL-CHILD-ACTIVATION.1: select` | (committed) |
 | `.2` | `ISF-CONDITIONAL-CHILD-ACTIVATION.2: when-body local (do child) (conditional one-shot activation)` | `189191cc` |
 | `.3` | `ISF-CONDITIONAL-CHILD-ACTIVATION.3: local (do child) in switch/while/until bodies` | `e93f7883` |
-| `.4` | `ISF-CONDITIONAL-CHILD-ACTIVATION.4: bound local (do child) in branch/loop bodies` | `ship commit (this slice)` |
+| `.4` | `ISF-CONDITIONAL-CHILD-ACTIVATION.4: bound local (do child) in branch/loop bodies` | `a2567839` |
+| `.5a` | `ISF-CONDITIONAL-CHILD-ACTIVATION.5a: when-body generated (do child (params ...)) -> conditional generated child instance` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -242,3 +251,20 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
   bound-deferral cases in `t/1388` and `t/1245` were repointed to generated
   `(params ...)` dos (still deferred); `13d`/`13b` updated (bound local do moved to
   the supported surface; only the generated form remains deferred).
+- `2026-05-31`: `.5a` shipped — a when-body GENERATED `(do child (params ...))`
+  now lowers to a generated child instance. `_generated_child_transaction_refs`
+  marks a when-body do-with-params child generated (added `when body` to the label
+  set); new `_conditional_do_ref_from_clause` builds the do-ref with a
+  `_generated_conditional_do_instance_name` (`<owner>_<child>_cond_do_<n>`, ordinal
+  = count of branch-do refs already in `$spawn_refs`, so the name is unique per
+  owner and OWNED by the expander); the `_expand_when` do branch builds the ref,
+  pushes it to `$spawn_refs`, and calls `_ir_do($do_ref,'when body')`. Because the
+  expander's spawn-ref drives `_register_generated_activation_instance` and the top
+  wiring, the instance identity is consistent by construction (no cross-traversal
+  ordinal match needed). The generated child module is built, instantiated
+  (`?fsmc:<owner>_<child>_cond_do_0 <child>`), and wired in the top; the do is
+  guarded by the when branch. This is at PARITY with a top-level generated do —
+  both lower + compose, and both hit the same pre-existing generated-child
+  composition-scope `--check-json` boundary (`docs/COMPOSITION_SCOPE.md`), so
+  `t/1388` asserts the lowered schedule + top (not `--check-json`). Generated do in
+  `switch`/`while`/`until` bodies stays deferred (`.5b`/`.5c`). 13d/13b updated.

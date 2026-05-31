@@ -1528,7 +1528,7 @@ sub _generated_child_transaction_refs {
             }
             if (
                 $clause->[0] eq 'do'
-                && ($label eq 'transaction body' || $label eq 'repeat body')
+                && ($label eq 'transaction body' || $label eq 'repeat body' || $label eq 'when body')
                 && @{_do_parameter_overrides($clause, $tx->{name}, $label, $constant_values, $actor)}
             ) {
                 $s{$clause->[1]} = 1;
@@ -5640,6 +5640,42 @@ sub _repeat_do_ref_from_clause {
     return $ref;
 }
 
+# ISF-CONDITIONAL-CHILD-ACTIVATION.5a: build the do-ref for a `(do child)` in a
+# branch/loop body. For a generated child (a `(params ...)` override, or a target
+# generated elsewhere) it carries a `cond_do` instance name + overrides/bindings,
+# so the expander, `_register_generated_activation_instance`, and the top wiring
+# all share one instance identity (the expander pushes this same ref to
+# `$spawn_refs`). `$ordinal` must be unique within the owning transaction.
+sub _conditional_do_ref_from_clause {
+    my ($clause, $tn, $ordinal, $constant_values, $actor, $generated_children, $label) = @_;
+    my $child = $clause->[1];
+    my $overrides = _do_parameter_overrides($clause, $tn, $label, $constant_values, $actor);
+    my $generated_child = (
+        @$overrides
+            || (ref($generated_children) eq 'HASH' && $generated_children->{$child})
+    ) ? 1 : 0;
+    my $ref = {
+        child           => $child,
+        activation_kind => 'do',
+        generated_child => $generated_child,
+    };
+    if ($generated_child) {
+        $ref->{instance} = _generated_conditional_do_instance_name($tn, $child, $ordinal);
+        $ref->{branch_do} = 1;
+        $ref->{parameter_overrides} = $overrides;
+        my $domain = _activation_domain_from_clause($clause, $tn, $label);
+        $ref->{domain} = $domain if defined $domain;
+        my $port_bindings = _activation_bindings_from_clause($clause, $tn, $label);
+        $ref->{port_bindings} = $port_bindings if @$port_bindings;
+    }
+    return $ref;
+}
+
+sub _generated_conditional_do_instance_name {
+    my ($owner, $child, $ordinal) = @_;
+    return "${owner}_${child}_cond_do_$ordinal";
+}
+
 sub _repeat_body_do_is_generated_activation {
     my ($clause, $target, $generated_children) = @_;
     return 1 if _repeat_body_do_uses_generated_params($clause);
@@ -8338,7 +8374,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
             }
         }
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
-        elsif($bk eq'do'){_assert_when_body_local_do($bc,$tn,'when body',$generated_children);_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_do($bc,$tn,$$ir++,undef,'when body')}
+        elsif($bk eq'do'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my $cond_ord=scalar(grep { ref($_)eq'HASH'&&$_->{branch_do} } @{$spawn_refs||[]});my $do_ref=_conditional_do_ref_from_clause($bc,$tn,$cond_ord,$constant_values||{},$actor,$generated_children,'when body');if($do_ref->{generated_child}){push @$spawn_refs,_clone_isf_value($do_ref) if ref($spawn_refs)eq'ARRAY';push @body_states,_ir_do($bc,$tn,$$ir++,$do_ref,'when body')}else{push @body_states,_ir_do($bc,$tn,$$ir++,undef,'when body')}}
         elsif($bk eq'repeat'){my($rs,$rc,$rw,$rdw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$rs;_register_repeat_counters($counters,$storage_roles,$rc,$rw,$rdw)}
         elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths,$actor)}
         elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}

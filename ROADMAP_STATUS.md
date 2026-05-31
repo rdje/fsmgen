@@ -14894,3 +14894,11 @@ Exit criteria:
   `(bind ...)` and defer only the generated `(params ...)` form. 13d/13b updated;
   t/1388 (5 subtests) + t/1245 repointed. Frontier `.5` (generated conditional do
   — the generated-child instance machinery in branch regions).
+- `R14`: `ISF-CONDITIONAL-CHILD-ACTIVATION.5a` shipped (2026-05-31) — a when-body
+  GENERATED `(do child (params ...))` now lowers to a generated child instance
+  (`<owner>_<child>_cond_do_<n>`), instantiated + wired in the composition top and
+  conditionally activated, at parity with a top-level generated do (both share the
+  pre-existing generated-child composition-scope `--check-json` boundary). The
+  expander owns the instance name via the spawn-ref, so the lowering + top wiring
+  are consistent by construction. 13d/13b updated; `t/1388`. Frontier `.5b`
+  (switch-branch / while-until generated do).

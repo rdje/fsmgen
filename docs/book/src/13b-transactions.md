@@ -109,8 +109,9 @@ routes the start/done handshake through CDC synchronizers. See
 as top-level transaction clauses and inside a `repeat` body; additionally a local
 `(do child)` — plain or with `(bind ...)` port bindings — is accepted directly
 inside a `when` body, a `switch` branch, a `while` body, and an `until` body
-(conditional one-shot activation). The generated (parameterized) conditional `(do)`
-form is still deferred. See
+(conditional one-shot activation), and a generated `(do child (params ...))` is
+accepted in a `when` body. Generated conditional activation in `switch`/`while`/
+`until` bodies is still deferred. See
 [Where Child Activations Are Allowed](13d-control-flow.md#where-child-activations-are-allowed)
 for the supported contexts, what is deferred, and the `(repeat ...)` workaround.
 

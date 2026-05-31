@@ -38470,3 +38470,21 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   labels; (f) top wiring is generic (reads spawn_instances). Load-bearing
   (ordinals read at multiple sites) → sub-sliced `.5a` when / `.5b` switch / `.5c`
   while-until, taken with fresh focus. Frontier `.5a`.
+
+## 2026-05-31: ISF-CONDITIONAL-CHILD-ACTIVATION.5a shipped — when-body GENERATED (do (params...))
+- A when-body `(do child (params ...))` now lowers to a generated child instance.
+  New `_conditional_do_ref_from_clause` + `_generated_conditional_do_instance_name`
+  (`<owner>_<child>_cond_do_<n>`, ordinal = count of branch-do refs in $spawn_refs).
+  `_generated_child_transaction_refs` now marks when-body do-with-params generated
+  (added 'when body' to the label set). The `_expand_when` do branch builds the
+  ref, pushes to $spawn_refs, `_ir_do($do_ref,'when body')`. KEY: the expander OWNS
+  the instance name via the spawn-ref it pushes, so registration + top wiring are
+  consistent BY CONSTRUCTION (no cross-traversal ordinal match needed — that was
+  the feared hard part, sidestepped). Child module built + instantiated
+  (`?fsmc:..._cond_do_0 child`) + wired; guarded by the when branch.
+- PARITY with top-level generated do: both lower + compose, both hit the
+  pre-existing generated-child composition-scope --check-json boundary
+  (docs/COMPOSITION_SCOPE.md). So t/1388 asserts the lowered schedule + top, NOT
+  --check-json. Switch/while/until generated do still deferred (.5b/.5c: just wire
+  the do branch in _expand_switch/_expand_loop_body + add the labels the same way).
+  13d/13b updated. Frontier .5b.

@@ -16524,3 +16524,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   child ports). Gate relaxed to allow `(bind ...)`; only the generated
   `(params ...)` form defers. 13d/13b updated; t/1388 (5 subtests) + t/1245
   repointed. Frontier `.5` (generated conditional do).
+- `.5a` (ISF-CONDITIONAL-CHILD-ACTIVATION) shipped (2026-05-31): a when-body
+  GENERATED `(do child (params ...))` now lowers to a generated child instance
+  (`<owner>_<child>_cond_do_<n>`), instantiated + wired in the top, conditionally
+  activated (parity with a top-level generated do; shared composition-scope
+  --check-json boundary). Expander owns the instance name via the spawn-ref ->
+  consistent by construction. 13d/13b updated; t/1388. Frontier `.5b`.

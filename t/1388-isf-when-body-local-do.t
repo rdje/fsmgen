@@ -87,7 +87,7 @@ ISF
     like($fsm, qr/parent_do_\d+[\s\S]*?\(worker_start 1\)/, 'the do-state still asserts the start handshake');
 };
 
-subtest 'a generated (params) (do) inside a when body is deferred' => sub {
+subtest 'a generated (params) (do) inside a when body lowers to a conditional generated child instance' => sub {
     my $gen = parse_source(<<'ISF', 'when-generated-do');
 (actor when_generated_do
   (interface
@@ -95,29 +95,38 @@ subtest 'a generated (params) (do) inside a when body is deferred' => sub {
     (input cond)
     (input din (width 8))
     (output done)
-    (output wc (width 8)))
+    (output result (width 8))
+    (output wdone))
   (transaction parent
     (on start)
     (when cond
       (do worker
         (params (W 8))
-        (bind (input data din))))
+        (bind (input data din) (output data_out result))))
     (complete done))
   (transaction worker
     (params (W 8))
     (on start)
-    (ports (input data (width W)))
-    (update wc data)
-    (complete wc)))
+    (ports (input data (width W)) (output data_out (width W)))
+    (update data_out data)
+    (complete wdone)))
 ISF
-    my $ok = eval { FSM::Scheduler::ISF->new()->lower($gen); 1 };
-    my $err = $@;
-    ok(!$ok, 'a generated (params) (do) in a when body is rejected (deferred)');
-    like(
-        $err,
-        qr/when body generated '\(do worker \.\.\.\)' is not yet supported.*generated child activation.*is deferred/s,
-        'the deferral diagnostic names the generated when-body do',
-    );
+    my $lowered = eval { FSM::Scheduler::ISF->new()->lower($gen) };
+    ok($lowered, 'a generated (params) (do) in a when body lowers') or diag($@);
+
+    # The generated child is built, instantiated in the top under a conditional
+    # do-instance name, and conditionally activated (parity with a top-level
+    # generated do; the generated-child composition wiring shares the pre-existing
+    # COMPOSITION_SCOPE --check-json boundary, so this asserts the lowered schedule
+    # + top, not --check-json).
+    ok(exists $lowered->{files}{'worker.fsm'}, 'the generated child module is emitted');
+    my $parent = $lowered->{files}{'when_generated_do.fsm'};
+    like($parent, qr/parent_when_\d+\s*\(\s*\?cond/s, 'the generated do is guarded by the when branch selector');
+    like($parent, qr/parent_worker_cond_do_0_start>/, 'the do-state asserts the conditional generated-instance start handoff');
+    my $top = $lowered->{files}{'when_generated_do_top.fsm'};
+    like($top, qr/\(\?fsmc:parent_worker_cond_do_0 worker\b/, 'the top instantiates the conditional generated child instance');
+    like($top, qr/parent_worker_cond_do_0\.start/, 'the top wires the conditional instance start handoff');
+    like($top, qr/parent_worker_cond_do_0\.done/, 'the top wires the conditional instance done handoff');
 };
 
 subtest 'a plain local (do) lowers in switch / while / until bodies too' => sub {
