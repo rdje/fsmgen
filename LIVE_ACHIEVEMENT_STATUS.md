@@ -16519,3 +16519,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   the `.2` when-body case). Local conditional activation now lowers + gates the
   sibling in ALL branch/loop bodies; generated/bound forms deferred. 13d/13b
   updated; `t/1388` (4 subtests). Frontier `.4`.
+- `.4` (ISF-CONDITIONAL-CHILD-ACTIVATION) shipped (2026-05-31): a BOUND local
+  `(do child (bind ...))` now lowers in all branch/loop bodies (driving bound
+  child ports). Gate relaxed to allow `(bind ...)`; only the generated
+  `(params ...)` form defers. 13d/13b updated; t/1388 (5 subtests) + t/1245
+  repointed. Frontier `.5` (generated conditional do).

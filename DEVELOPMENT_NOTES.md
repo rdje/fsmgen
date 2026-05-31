@@ -33990,3 +33990,17 @@ lifted message"), the single affected case was repointed to a generated/bound
 while-body do, which still fails closed — preserving the "unsupported loop body"
 coverage at the new boundary. Always grep `t/` for the exact lifted diagnostic
 before assuming a deferral-lift is contained.
+
+## Conditional child activation `.4` — bound local (do) was nearly free (2026-05-31)
+
+`.4` (bound local `(do child (bind ...))` in branch/loop bodies) turned out to be
+a one-line relaxation: `_ir_do`'s non-generated path already reads the clause's
+`(bind ...)` and emits the input/output assignments, and the branch/loop `do`
+branches already call `_ir_do($bc, undef, $label)`. So the only blocker was
+`_assert_when_body_local_do` deferring anything with a `(bind ...)`. Relaxing it to
+defer only on `(params ...)` (the truly-generated form) or a generated target
+unlocked bound conditional activation in all four branch/loop bodies. This split
+"bound" (cheap, `_ir_do` handles it) from "generated" (needs the instance
+machinery in branch regions, deferred to `.5`) — the right boundary, since they
+have very different lowering costs. As before, the bound-deferral tests were a
+deferral-lift cascade (repointed to the generated form).

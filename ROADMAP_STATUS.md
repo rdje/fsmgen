@@ -14887,3 +14887,10 @@ Exit criteria:
   conditional activation now lowers + gates the sibling in all branch/loop bodies;
   generated/bound conditional `(do)` forms remain deferred per context. 13d/13b
   updated; `t/1388` (4 subtests). Frontier `.4` (generated/bound conditional do).
+- `R14`: `ISF-CONDITIONAL-CHILD-ACTIVATION.4` shipped (2026-05-31) — a BOUND local
+  `(do child (bind ...))` now lowers in all branch/loop bodies (when/switch/while/
+  until), driving the bound child ports and gating the sibling. `_ir_do`'s
+  non-generated path already emits the bindings; the gate was relaxed to allow
+  `(bind ...)` and defer only the generated `(params ...)` form. 13d/13b updated;
+  t/1388 (5 subtests) + t/1245 repointed. Frontier `.5` (generated conditional do
+  — the generated-child instance machinery in branch regions).

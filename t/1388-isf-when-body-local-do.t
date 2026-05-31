@@ -58,15 +58,16 @@ ISF
     like($fsm, qr/worker_idle_\d+[\s\S]*?<worker_start/s, 'the sibling child entry is gated on the start handshake');
 };
 
-subtest 'a generated or bound (do) inside a when body is deferred' => sub {
+subtest 'a bound local (do) inside a when body lowers and emits the binding' => sub {
     my $bound = parse_source(<<'ISF', 'when-bound-do');
 (actor when_bound_do
   (interface
     (input start)
     (input cond)
     (input req (width 8))
+    (input go)
     (output done)
-    (output wc))
+    (output wc (width 8)))
   (transaction parent
     (on start)
     (when cond
@@ -74,17 +75,48 @@ subtest 'a generated or bound (do) inside a when body is deferred' => sub {
         (bind (input addr req))))
     (complete done))
   (transaction worker
+    (on go)
     (ports (input addr (width 8)))
     (update wc addr)
     (complete wc)))
 ISF
-    my $ok = eval { FSM::Scheduler::ISF->new()->lower($bound); 1 };
+    my $lowered = eval { FSM::Scheduler::ISF->new()->lower($bound) };
+    ok($lowered, 'a bound local (do) in a when body lowers') or diag($@);
+    my $fsm = $lowered->{files}{'when_bound_do.fsm'};
+    like($fsm, qr/parent_do_\d+[\s\S]*?\(addr req\)/, 'the do-state drives the bound child port (addr <- req)');
+    like($fsm, qr/parent_do_\d+[\s\S]*?\(worker_start 1\)/, 'the do-state still asserts the start handshake');
+};
+
+subtest 'a generated (params) (do) inside a when body is deferred' => sub {
+    my $gen = parse_source(<<'ISF', 'when-generated-do');
+(actor when_generated_do
+  (interface
+    (input start)
+    (input cond)
+    (input din (width 8))
+    (output done)
+    (output wc (width 8)))
+  (transaction parent
+    (on start)
+    (when cond
+      (do worker
+        (params (W 8))
+        (bind (input data din))))
+    (complete done))
+  (transaction worker
+    (params (W 8))
+    (on start)
+    (ports (input data (width W)))
+    (update wc data)
+    (complete wc)))
+ISF
+    my $ok = eval { FSM::Scheduler::ISF->new()->lower($gen); 1 };
     my $err = $@;
-    ok(!$ok, 'a bound (do) in a when body is rejected (deferred)');
+    ok(!$ok, 'a generated (params) (do) in a when body is rejected (deferred)');
     like(
         $err,
-        qr/when body generated\/bound '\(do worker \.\.\.\)' is not yet supported.*conditional activation is deferred/s,
-        'the deferral diagnostic names the generated/bound when-body do',
+        qr/when body generated '\(do worker \.\.\.\)' is not yet supported.*generated child activation.*is deferred/s,
+        'the deferral diagnostic names the generated when-body do',
     );
 };
 
@@ -124,32 +156,34 @@ ISF
     }
 };
 
-subtest 'a generated or bound (do) in a switch branch is also deferred' => sub {
-    my $bound = parse_source(<<'ISF', 'switch-bound-do');
-(actor switch_bound_do
+subtest 'a generated (params) (do) in a switch branch is also deferred' => sub {
+    my $gen = parse_source(<<'ISF', 'switch-generated-do');
+(actor switch_generated_do
   (interface
     (input start)
     (input sel (width 2))
-    (input req (width 8))
+    (input din (width 8))
     (output done)
-    (output wc))
+    (output wc (width 8)))
   (transaction parent
     (on start)
     (switch sel
-      (0 (do worker (bind (input addr req)))))
+      (0 (do worker (params (W 8)) (bind (input data din)))))
     (complete done))
   (transaction worker
-    (ports (input addr (width 8)))
-    (update wc addr)
+    (params (W 8))
+    (on start)
+    (ports (input data (width W)))
+    (update wc data)
     (complete wc)))
 ISF
-    my $ok = eval { FSM::Scheduler::ISF->new()->lower($bound); 1 };
+    my $ok = eval { FSM::Scheduler::ISF->new()->lower($gen); 1 };
     my $err = $@;
-    ok(!$ok, 'a bound (do) in a switch branch is rejected (deferred)');
+    ok(!$ok, 'a generated (params) (do) in a switch branch is rejected (deferred)');
     like(
         $err,
-        qr/switch branch generated\/bound '\(do worker \.\.\.\)' is not yet supported/,
-        'the deferral diagnostic names the switch-branch generated/bound do',
+        qr/switch branch generated '\(do worker \.\.\.\)' is not yet supported/,
+        'the deferral diagnostic names the switch-branch generated do',
     );
 };
 

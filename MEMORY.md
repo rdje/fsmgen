@@ -38442,3 +38442,15 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   + gates the sibling in ALL branch/loop bodies. 13d/13b updated. `t/1388` now 4
   subtests. Frontier `ISF-CONDITIONAL-CHILD-ACTIVATION.4` (generated/bound
   conditional do).
+
+## 2026-05-31: ISF-CONDITIONAL-CHILD-ACTIVATION.4 shipped — bound local (do) in branch/loop bodies
+- Relaxed `_assert_when_body_local_do` to allow `(bind ...)` (defer only on
+  `(params ...)` override or a generated target). The branch/loop `do` branches
+  already route through `_ir_do`'s non-generated path, which emits the binding
+  input/output assignments + start. A bound `(do worker (bind (input addr req)))`
+  now lowers in when/switch/while/until, drives the bound child ports, gates the
+  sibling. Generated `(params ...)` form still defers ("generated '(do ...)' not
+  yet supported"). Deferral cascade: t/1388 + t/1245 bound cases repointed to
+  generated (params) dos. 13d/13b updated. Frontier
+  `ISF-CONDITIONAL-CHILD-ACTIVATION.5` (generated conditional do — instance
+  machinery in branch regions). t/1388 now 5 subtests.
