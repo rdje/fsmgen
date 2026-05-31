@@ -124,6 +124,40 @@ fallthrough target in the generated `.fsm`.
   (complete done))
 ```
 
+## `(exit-when condition)` — Mid-Loop Early Exit
+
+`(exit-when condition)` leaves the enclosing `while`/`until` loop the cycle
+`condition` holds, instead of waiting for the loop's own top/bottom condition test.
+It is accepted **directly inside a `while` body or an `until` body** and lowers to a
+single decision state: when `condition` is true the loop's exit edge is taken
+(the same state the loop's own condition exits to); otherwise control falls through
+to the next body clause and the loop continues normally.
+
+```lisp
+(actor early_exit
+  (interface
+    (input start)
+    (input busy)
+    (input go)
+    (input din (width 8))
+    (output done)
+    (output result (width 8)))
+  (transaction main
+    (on start)
+    (while busy
+      (update result din)
+      (exit-when go)        ;; leave the loop the cycle `go` is high
+      (update result din))
+    (complete done)))
+```
+
+This lowers the `(exit-when go)` clause to `(?go (=1 (-> <loop exit>)) (=0 (-> <next
+clause>)))`. The exit edge reuses the loop's computed exit target, so an early exit
+behaves exactly like a normal loop exit (the watchdog counts the cycles actually
+spent in the loop). `(exit-when ...)` outside a `while`/`until` body — at the
+transaction top level, in a `repeat` body, or in a `when`/`switch` body — fails
+closed with an `unsupported '(exit-when ...)' clause in <context>` diagnostic.
+
 ## Where Child Activations Are Allowed
 
 All four child-activation clauses — `(do ...)`, `(spawn ...)`, `(await_all ...)`,

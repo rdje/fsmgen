@@ -14951,3 +14951,12 @@ Exit criteria:
   was previously missed. Deeper nestings still defer. 13a/13d/13k synced; `t/1387` (11
   subtests). Cross-domain top-level activation is now fully orthogonal to the
   same-domain top-level+repeat+branch/loop surface; only multi-level nesting remains.
+- `R14`: `ISF-LOOP-EARLY-EXIT.2` shipped (2026-06-01) — `(exit-when cond)` mid-loop
+  early exit now lowers directly inside `while`/`until` bodies to a `loop_exit_when`
+  decision (true → the loop's exit target, false → next body clause); `--check-json`
+  + verilator/yosys PASS. This is the first shipped construct of language-richness
+  theme #3 (new intent-capture constructs). Reused the `loop_exit_target` already
+  computed in `_link_states`; `Emitter/FSM.pm` renders it like the loop decisions.
+  Fails closed outside `while`/`until`. 13d (runnable example) + 13k (control-flow
+  row) + `docs/ISF_SPEC.md` (t/1389) synced. Frontier `.3` (exit-when inside a `when`
+  nested in a loop), then `.4` report metadata, `.5` docs.

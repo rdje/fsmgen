@@ -42,12 +42,14 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
         map { $_ => 1 } qw(
             drive await sample complete repeat update set shift_left shift_right
             assemble extract when store load wait do spawn await_all await_any
+            exit-when
         )
     },
     until => {
         map { $_ => 1 } qw(
             drive await sample complete repeat update set shift_left shift_right
             assemble extract when store load wait do spawn await_all await_any
+            exit-when
         )
     },
 );
@@ -8499,6 +8501,22 @@ sub _expand_loop_body {
             }
         } elsif ($bk eq 'complete') {
             push @states, _ir_complete($bc, $tn, $$ir++);
+        } elsif ($bk eq 'exit-when') {
+            # ISF-LOOP-EARLY-EXIT: a `(exit-when cond)` mid-loop early exit. Emit a
+            # decision state whose TRUE edge leaves the loop (resolved to the loop's
+            # `loop_exit_target` in `_link_states`) and whose FALSE edge falls through
+            # to the next body clause. Only valid directly in a `while`/`until` body.
+            confess "Transaction '$tn': $body_label '(exit-when ...)' requires exactly one condition expression\n"
+                unless @$bc == 2 && defined($bc->[1]);
+            _push_sample_state(\@states, $tn, \@lp, $ir);
+            push @states, {
+                name           => "${tn}_exit_when_" . $$ir++,
+                kind           => 'loop_exit_when',
+                condition      => $bc->[1],
+                loop_exit_when => 1,
+                assignments    => [],
+                transitions    => [],
+            };
         } elsif ($bk eq 'do') {
             _push_sample_state(\@states, $tn, \@lp, $ir);
             my $cond_ord = scalar(grep { ref($_) eq 'HASH' && $_->{branch_do} } @{$spawn_refs || []});
@@ -10370,6 +10388,14 @@ sub _link_states {
             $st->[$idx_by_name{$name}]{loop_exit_target} = $exit_target;
             $st->[$idx_by_name{$name}]{loop_body_start} = $s->{loop_body_start};
         }
+        # ISF-LOOP-EARLY-EXIT: stamp this loop's exit target onto any `(exit-when)`
+        # decision state in its body, so the main linker can wire its TRUE edge.
+        for my $name (@{$s->{loop_body_state_names} || []}) {
+            next unless defined $idx_by_name{$name};
+            my $body_state = $st->[$idx_by_name{$name}];
+            $body_state->{loop_exit_target} = $exit_target
+                if ($body_state->{kind} // '') eq 'loop_exit_when';
+        }
         $s->{loop_exit_target} = $exit_target;
     }
 
@@ -10399,6 +10425,7 @@ sub _link_states {
         elsif($s->{kind}eq'repeat_init'){_link_repeat_init_state($s,\%idx_by_name,$st,$next_state,$next,$e)}
         elsif($s->{kind}eq'switch'){_link_switch_state($s,\%idx_by_name,$st,$n,$e)}
         elsif($s->{kind}eq'loop_while'||$s->{kind}eq'loop_until'){_link_loop_state($s,\%idx_by_name,$st)}
+        elsif($s->{kind}eq'loop_exit_when'){push @{$s->{transitions}},{target=>$s->{loop_exit_target},condition=>{loop_branch=>1}}if defined $s->{loop_exit_target};push @{$s->{transitions}},{target=>$next,condition=>{loop_branch=>0}}if defined $next}
         elsif($next_state&&$next_state->{dynamic_wait_entry}){_link_dynamic_wait_predecessor($tn,$s,$next_state)}
         elsif($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}

@@ -115,6 +115,13 @@ Reads like:
   Goal: `Select; record ground truth (no early-exit today; loop_exit_target hook) + design + slice plan.`
   Acceptance: `Task tree committed before any code change.`
   Verification: `mdbook build docs/book; git diff --check`
+  Commit: `6c6db3d6`
+
+- ID: `ISF-LOOP-EARLY-EXIT.2`
+  Status: `done`
+  Goal: `Core (exit-when cond) lowering directly inside while/until bodies.`
+  Acceptance: `exit-when added to the while/until clause-context allow-lists; _expand_loop_body emits a 'loop_exit_when' decision state (condition => cond); _link_states' per-loop pass stamps the loop's loop_exit_target onto the exit-when body states, and the main linker pushes the TRUE edge (loop_branch 1 -> loop_exit_target) + FALSE edge (loop_branch 0 -> next clause); the FSM emitter renders 'loop_exit_when' like the loop decision states. (exit-when go) in a while body lowers to (?go (=1 -> loop exit)(=0 -> next clause)) and continues/exits correctly; (exit-when) outside a while/until body (top-level, repeat, when, switch) fails closed with "unsupported '(exit-when ...)' clause in <ctx>"; a bare (exit-when) without a condition fails closed; --check-json + verilator/yosys PASS; 13d documents it with a runnable example; 13k row + ISF_SPEC focused-test index updated; t/1389 locks it.`
+  Verification: `Spike: (while busy (update ...)(exit-when go)(update ...)) lowers to main_exit_when_N (?go (=1 -> loop exit)(=0 -> next)); until lowers; top-level/repeat/when defer; bare exit-when defers; --check-json SUCCESS; --verify-hdl verilator_lint+yosys_synthesis PASS. prove -Iperl t/1389 (5 subtests) t/1250 t/1376 (42) t/1305 t/1304 t/1307 t/1303 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c (LoweringIR + Emitter/FSM); mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -122,8 +129,8 @@ Reads like:
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
-| 2 | `.2` | `pending` | Core `(exit-when cond)` lowering in `while`/`until` bodies — the bounded high-value construct, with the `loop_exit_target` hook already in place. |
-| 3 | `.3`–`.5` | `pending` | when-in-loop exit-when; schedule-report metadata; docs/examples. |
+| 2 | `.2` | `done` | `(exit-when cond)` lowers in `while`/`until` bodies to a `loop_exit_when` decision (true → loop exit target, false → next clause); fails closed elsewhere; `--check-json` + verilator/yosys PASS. `t/1389`. |
+| 3 | `.3`–`.5` | `pending` | when-in-loop exit-when; schedule-report metadata; docs/examples consolidation. |
 
 ## Decisions
 
@@ -150,12 +157,14 @@ Reads like:
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.2` | Spike: while/until `(exit-when)` lowers (`?cond` decision: true→loop exit, false→next clause); top-level/repeat/when/bare defer; `--check-json` SUCCESS; `--verify-hdl` verilator_lint+yosys_synthesis PASS. `prove -Iperl t/1389` (5 subtests) `t/1250 t/1376` (42) `t/1305 t/1304 t/1307 t/1303` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-LOOP-EARLY-EXIT.1: select loop early-exit (exit-when)` | `ship commit (this slice)` |
+| `.1` | `ISF-LOOP-EARLY-EXIT.1: select loop early-exit (exit-when)` | `6c6db3d6` |
+| `.2` | `ISF-LOOP-EARLY-EXIT.2: (exit-when cond) mid-loop early exit in while/until bodies` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -165,3 +174,23 @@ Reads like:
   ground truth (no early-exit today; loop lowering + `_link_states` exit-target
   computation) and the slice plan (`.2` core lowering, `.3` when-in-loop, `.4`
   report, `.5` docs).
+- `2026-06-01`: `.2` shipped — `(exit-when cond)` mid-loop early exit now lowers
+  directly inside `while`/`until` bodies. Added `exit-when` to the `while`/`until`
+  clause-context allow-lists (`%SUPPORTED_TRANSACTION_CLAUSES`). `_expand_loop_body`
+  emits a `loop_exit_when` decision state (`condition => cond`) with a malformed-clause
+  guard. In `_link_states`, the per-loop pass (which already computes each loop's
+  `loop_exit_target` = the state after the loop) now also stamps that target onto the
+  loop's `loop_exit_when` body states; the main linker then pushes the TRUE edge
+  (`loop_branch` 1 → `loop_exit_target`) and the FALSE edge (`loop_branch` 0 → the
+  next body clause). The FSM emitter (`Emitter/FSM.pm`) renders `loop_exit_when` like
+  the `loop_while`/`loop_until` decision states, so a `(exit-when go)` lowers to
+  `(?go (=1 (-> <loop exit>)) (=0 (-> <next clause>)))`. Verified end-to-end: the
+  exit edge reuses the loop's natural exit target, the false edge continues the body,
+  `--check-json` SUCCEEDS, and `--verify-hdl` passes (verilator_lint + yosys_synthesis).
+  `(exit-when)` outside a `while`/`until` body (top-level, `repeat`, `when`/`switch`)
+  fails closed with `unsupported '(exit-when ...)' clause in <ctx>`, and a bare
+  `(exit-when)` without a condition fails closed. Book: `13d` gains a dedicated
+  `(exit-when)` section with a runnable example; the `13k` "Transaction control flow"
+  row lists it; `docs/ISF_SPEC.md` registers `t/1389`. `t/1389` (5 subtests) locks
+  while/until lowering, the loop-exit/continue edges, HDL-shape (one true + one false
+  edge), and all four fail-closed contexts.

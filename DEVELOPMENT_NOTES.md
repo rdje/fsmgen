@@ -34123,3 +34123,26 @@ handshakes the realizer can infer; both `.3` and `.4` compose cleanly. (2) Decla
 an unused interface input in a multi-domain fixture breaks `--check-json` (the unused
 input is pruned from its domain module but the top still wires it) — keep
 cross-domain fixtures minimal, declaring only signals the body uses.
+
+## Loop early-exit `(exit-when)` — the loop-link pass is the resolution point (2026-06-01)
+
+`(exit-when cond)` needs to jump to "the state after the enclosing loop," which is
+not known when `_expand_loop_body` runs (it depends on what follows the whole loop).
+The clean resolution point is `_link_states`' per-loop pass (~L10372): it already
+computes each loop's `loop_exit_target` (the state after the loop's last state) AND
+already iterates the loop's `loop_body_state_names`. So an `(exit-when)` body state
+is resolved THERE — stamp the loop's exit target onto any `loop_exit_when` body
+state, then let the main linker build the TRUE (→ exit) and FALSE (→ next clause)
+edges. No `loop_id` threading into `_expand_loop_body` was needed (the design
+guessed it would be); the body-state enumeration the loop pass already does is
+enough. The exit-when state reuses the exact `loop_branch`-conditioned two-edge
+shape of the `loop_while`/`loop_until` decision states, so the FSM emitter only
+needed `loop_exit_when` added to that one render branch. Lesson: when a construct
+needs "the boundary of an enclosing region," resolve it in the pass that already
+computes that boundary, rather than threading the boundary down into the expander.
+
+The FALSE edge target is simply the next state in the state list — which is the next
+body clause for a mid-body exit-when and the loop check for a last-body exit-when, so
+"continue the loop" falls out for free in every position. Verified `--verify-hdl`
+passes (the exit-when decision's next-state selectors are one-hot/exclusive with the
+loop decisions).

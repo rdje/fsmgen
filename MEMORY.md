@@ -38594,3 +38594,22 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   an EN-DASH in "`.1`–`.N` done", so the theme #2 frontier silently stayed at `.4`
   through the `.4` commit; corrected to `.5`/`.1`–`.4` here. LESSON: TASK_TREE.md
   frontier cells use en-dashes — prefer Edit over sed, or match the en-dash.
+
+## 2026-06-01: ISF-LOOP-EARLY-EXIT.2 — (exit-when) mid-loop early exit SHIPPED
+- `(exit-when cond)` now lowers directly in while/until bodies to a `loop_exit_when`
+  decision: true → the loop's exit target, false → next body clause. Renders
+  `(?cond (=1 -> loop exit)(=0 -> next))`. --check-json + verilator/yosys PASS.
+- Implementation: allow-list adds `exit-when` to while/until; `_expand_loop_body`
+  emits the `loop_exit_when` state (condition => cond); `_link_states`' per-loop pass
+  (which already computes `loop_exit_target`) stamps it onto the loop's exit-when body
+  states; the main linker pushes TRUE (loop_branch 1 → exit) + FALSE (loop_branch 0 →
+  next); `Emitter/FSM.pm` renders `loop_exit_when` like loop_while/until.
+- KEY HOOK (reusable): `_link_states` per-loop pass at ~L10372 computes each loop's
+  exit target AND already enumerates its body states (`loop_body_state_names`) — so a
+  body clause that needs "the loop exit" can be resolved there without threading
+  loop_id. Fail-closed: exit-when outside while/until → "unsupported '(exit-when ...)'
+  clause in <ctx>"; bare exit-when (no cond) → rejected.
+- New test t/1389 (registered in docs/ISF_SPEC.md focused-test index — REQUIRED by
+  t/1250). 13d has a runnable example; 13k control-flow row lists it. Frontier `.3`
+  (exit-when inside a when nested in a loop), then `.4` report, `.5` docs.
+- Theme #3 (new intent-capture constructs) now has its first shipped construct.

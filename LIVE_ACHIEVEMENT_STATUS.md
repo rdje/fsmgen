@@ -16563,3 +16563,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   loop_body_start) — the when/switch selector fix. 13a/13d/13k; t/1387 (11 subtests).
   Cross-domain top-level activation now orthogonal to the same-domain surface; only
   multi-level nesting remains.
+- `.2` (ISF-LOOP-EARLY-EXIT) shipped (2026-06-01): `(exit-when cond)` mid-loop early
+  exit lowers in while/until bodies (true → loop exit, false → next clause);
+  --check-json + verilator/yosys PASS. First shipped construct of theme #3 (new
+  intent-capture constructs). Reused the `loop_exit_target` hook; renders via
+  Emitter/FSM. Fails closed outside while/until. 13d/13k/ISF_SPEC; t/1389 (5 subtests).
+  Frontier `.3` (when-in-loop), `.4` report, `.5` docs.

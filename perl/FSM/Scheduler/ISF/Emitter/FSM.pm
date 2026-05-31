@@ -334,7 +334,8 @@ sub _emit_transitions($self, $state) {
         return @lines;
     }
 
-    if ($state->{kind} eq 'loop_while' || $state->{kind} eq 'loop_until') {
+    if ($state->{kind} eq 'loop_while' || $state->{kind} eq 'loop_until'
+        || $state->{kind} eq 'loop_exit_when') {
         return map { $self->_emit_simple_transition($_) } @$txs
             if $state->{loop_transitions_materialized};
 
