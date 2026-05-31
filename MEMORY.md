@@ -38579,3 +38579,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Cross-domain top-level activation is now fully orthogonal to the same-domain
   top-level+repeat+branch/loop surface; only multi-level nesting remains (`.5`+).
   13a/13d/13k synced; t/1387 (11 subtests). Frontier `.5`.
+
+## 2026-06-01: Theme #3 OPENED — ISF-LOOP-EARLY-EXIT (exit-when) select slice
+- Theme #3 (new intent-capture constructs) opened with `ISF-LOOP-EARLY-EXIT`:
+  `(exit-when cond)` mid-loop early exit for while/until bodies. ISF has no
+  break/continue/mid-body exit today. THE HOOK: `_link_states` (~L10354) already
+  computes each loop's `loop_exit_target` (state after the loop) and enumerates the
+  loop's body states (`loop_body_state_names`) — so an exit-when body state can be
+  resolved to that target in the same pass. Design: emit a `loop_exit_when` decision
+  state in `_expand_loop_body` (fall-through = cond false → next clause); in
+  `_link_states`' per-loop pass, push the TRUE edge to loop_exit_target. `.1` select
+  committed. Frontier `.2` (core lowering in while/until).
+- ALSO fixed a TASK_TREE.md drift: an earlier `sed` used a hyphen but the file uses
+  an EN-DASH in "`.1`–`.N` done", so the theme #2 frontier silently stayed at `.4`
+  through the `.4` commit; corrected to `.5`/`.1`–`.4` here. LESSON: TASK_TREE.md
+  frontier cells use en-dashes — prefer Edit over sed, or match the en-dash.
