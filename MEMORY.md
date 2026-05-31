@@ -38559,3 +38559,23 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `.4` RE-SCOPED: theme #1's completion (same-domain branch-body do) unblocks a
   branch-body CROSS-DOMAIN do — promoted to `.4` ahead of deeper repeat-nestings.
   Frontier `.4`.
+
+## 2026-06-01: ISF-NESTED-CROSS-DOMAIN-ACTIVATION.4 — branch-body cross-domain (do) SHIPPED
+- `.4`: a cross-domain `(do child)` directly inside any TOP-LEVEL branch/loop body
+  (when/switch/while/until) now lowers through the dual-CDC; `--check-json` SUCCEEDS
+  for all four. Unblocked by theme #1 (same-domain branch-body do).
+- Gates: validator accepts branch-body labels; partition got `top_level_branch_body`
+  flag (immediate container is a when/switch/while/until that's a direct transaction
+  clause). THE REAL FIX: the caller restructure `_wire_external_activations`
+  previously redirected only `transitions[].target` to the do-state — caught plain
+  predecessors + while/until loop edges, but MISSED the `when` selector's
+  `true_target` and the `switch` branch's `body_start` (rendered from dedicated
+  fields, not transitions), leaving the start handshake unreachable. Now also
+  redirects `true_target`/`branches[].body_start`/`loop_body_start`.
+- KEY LESSON: a branch (when) state stores its taken-branch entry in `true_target`
+  (only the skip goes into transitions[]); switch uses `branches[].body_start`;
+  while/until put the body entry in transitions[]. Any state-rewrite touching branch
+  targets must handle these dedicated fields, not just transitions[].target.
+- Cross-domain top-level activation is now fully orthogonal to the same-domain
+  top-level+repeat+branch/loop surface; only multi-level nesting remains (`.5`+).
+  13a/13d/13k synced; t/1387 (11 subtests). Frontier `.5`.

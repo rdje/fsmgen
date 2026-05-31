@@ -352,16 +352,19 @@ ISF
 };
 
 subtest 'a nested cross-domain (do) fails closed with a precise deferred diagnostic' => sub {
-    # A `(do child)` inside a when/switch body — or inside a repeat that is itself
-    # nested in another body (when->repeat) — is a real use of the activation
-    # crossing, but that DEEPER nested cross-domain activation is not yet supported.
-    # (A `(do child)` directly inside a TOP-LEVEL repeat body IS supported —
-    # ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3 — and is covered by the positive subtest
-    # below.) The diagnostic must name the deferred context accurately — not the
-    # genuinely-unused "declared but ... no top-level (do)" message.
+    # A `(do child)` directly inside a TOP-LEVEL branch/loop body (`when`/`switch`/
+    # `while`/`until`) or a TOP-LEVEL `repeat` body IS supported
+    # (ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3/.4 — covered by the positive subtests
+    # below). A DEEPER-nested `(do child)` — inside a container that is itself nested
+    # in another body — is still deferred. The diagnostic must name the (innermost)
+    # deferred context accurately, not the genuinely-unused
+    # "declared but ... no top-level (do)" message.
     my %context_body = (
-        'when body'     => '(when cond (do worker))',
-        'switch branch' => '(switch sel (0 (do worker)))',
+        # when->when: the inner when is NOT a direct transaction clause, so the do
+        # stays deferred; the innermost container the diagnostic names is a when body.
+        'when body'     => '(when cond (when cond (do worker)))',
+        # switch->switch: likewise deferred; innermost container is a switch branch.
+        'switch branch' => '(switch sel (0 (switch sel (0 (do worker)))))',
         # when->repeat: the repeat is NOT top-level, so it stays deferred; the
         # innermost container the diagnostic names is the repeat body.
         'repeat body'   => '(when cond (repeat n (do worker)))',
@@ -459,6 +462,64 @@ ISF
     ok(defined($top), 'the multi-domain top is emitted');
     like($top, qr/cdc_activation_worker_start/, 'the top instantiates the start CDC synchronizer');
     like($top, qr/cdc_activation_worker_done/, 'the top instantiates the done CDC synchronizer');
+};
+
+subtest 'a (do child) directly inside a TOP-LEVEL branch/loop body lowers cross-domain through the dual-CDC' => sub {
+    # ISF-NESTED-CROSS-DOMAIN-ACTIVATION.4: now that the same-domain branch-body
+    # `(do)` feature is shipped (ISF-CONDITIONAL-CHILD-ACTIVATION), a covered
+    # cross-domain `(do worker)` directly inside a TOP-LEVEL `when`/`switch`/`while`/
+    # `until` body lowers through the same dual-CDC handshake. The caller restructure
+    # redirects the branch/loop ENTRY (a `when` `true_target`, a `switch` branch
+    # `body_start`, a loop `loop_body_start`) into the inserted ready-await, so the
+    # await-ready -> one-cycle-start -> await-done chain runs when the branch is taken.
+    my %context = (
+        'when'   => '(when guard (do worker))',
+        'switch' => '(switch guard (1 (do worker)))',
+        'while'  => '(while guard (do worker))',
+        'until'  => '(until guard (do worker))',
+    );
+    for my $label (sort keys %context) {
+        # Declare `guard` at the width each context needs (switch needs a vector
+        # selector). Only signals the body uses are declared, so nothing is pruned.
+        my $guard_decl = $label eq 'switch'
+            ? '(input guard (width 2) (domain core))'
+            : '(input guard (domain core))';
+        my $actor = parse_source(<<"ISF", "branch-xdom-$label");
+(actor branch_xdom
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus  (clock bus_clk) (reset bus_rst_n)))
+  (crossings
+    (activation worker (from core) (to bus)))
+  (interface
+    (input  start (domain core))
+    $guard_decl
+    (output done  (domain core))
+    (input  din    (width 8) (domain bus))
+    (output result (width 8) (domain bus))
+    (output worker_complete (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    $context{$label}
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (sample din as snap)
+    (update result snap)
+    (complete worker_complete)))
+ISF
+        my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+        ok($lowered, "$label-body cross-domain (do) lowers") or diag($@);
+        my $core = $lowered->{files}{'branch_xdom__domain_core.fsm'};
+        # The inserted ready-await is reachable (the branch/loop entry was redirected
+        # into it), drives a one-cycle start, then blocks on done.
+        like($core, qr/-> parent_do_\d+_ready/, "$label: the branch/loop entry is redirected into the start-ready await");
+        like($core, qr/parent_do_\d+_req\b[\s\S]*?\(worker_start>\s*1\)/, "$label: a one-cycle start request is driven");
+        like($core, qr/parent_do_\d+\b\s*\(\s*<worker_done/, "$label: the do-state blocks on the done handshake");
+        my $bus = $lowered->{files}{'branch_xdom__domain_bus.fsm'};
+        like($bus, qr/worker_idle_ext\s*\(\s*<worker_start/s, "$label: the callee is gated on the start pulse");
+    }
 };
 
 done_testing();

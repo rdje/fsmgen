@@ -16555,3 +16555,11 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   gates lifted; caller restructure applied unchanged. Deeper nestings still defer.
   13a/13d/13k; t/1387 (10 subtests). Theme #2 progressing; `.4` = branch-body
   cross-domain do (unblocked by theme #1).
+- `.4` (ISF-NESTED-CROSS-DOMAIN-ACTIVATION) shipped (2026-06-01): cross-domain `(do)`
+  directly inside any top-level branch/loop body (when/switch/while/until) lowers
+  through the dual-CDC; `--check-json` SUCCEEDS. Validator (branch-body labels) +
+  partition (`top_level_branch_body`) gates lifted; caller restructure extended to
+  redirect branch/loop entry refs (true_target / branches[].body_start /
+  loop_body_start) — the when/switch selector fix. 13a/13d/13k; t/1387 (11 subtests).
+  Cross-domain top-level activation now orthogonal to the same-domain surface; only
+  multi-level nesting remains.

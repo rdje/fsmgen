@@ -14941,3 +14941,13 @@ Exit criteria:
   branch-body cross-domain `(do)` (newly unblocked by theme #1's completion), ahead
   of the deeper repeat-nestings. Theme #2 of the language-richness frontier is
   progressing.
+- `R14`: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.4` shipped (2026-06-01) — a cross-domain
+  `(do child)` directly inside any TOP-LEVEL branch/loop body (when/switch/while/
+  until) now lowers through the dual-CDC; `--check-json` SUCCEEDS for all four. Newly
+  unblocked by theme #1's completion (same-domain branch-body do). Lifted the
+  validator (branch-body labels) + partition (`top_level_branch_body` flag); the real
+  fix extended the caller restructure to redirect branch/loop ENTRY references
+  (`true_target`/`branches[].body_start`/`loop_body_start`) — the when/switch selector
+  was previously missed. Deeper nestings still defer. 13a/13d/13k synced; `t/1387` (11
+  subtests). Cross-domain top-level activation is now fully orthogonal to the
+  same-domain top-level+repeat+branch/loop surface; only multi-level nesting remains.

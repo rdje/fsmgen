@@ -1980,18 +1980,22 @@ sub _rule_trigger_generated_refs {
 #                   innermost-found nested `(do child)`, or undef.
 sub _activation_do_use_context {
     my ($clauses, $child) = @_;
-    # top_level         : a `(do child)` directly in the transaction body.
-    # top_level_repeat  : a `(do child)` directly inside a TOP-LEVEL `repeat` body
-    #                     (ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3 — the first supported
-    #                     nested cross-domain context; deeper nestings stay deferred).
-    # nested_label      : the innermost container of a deferred nested `(do child)`.
-    my %out = (top_level => 0, top_level_repeat => 0, nested_label => undef);
+    # top_level              : a `(do child)` directly in the transaction body.
+    # top_level_repeat       : a `(do child)` directly inside a TOP-LEVEL `repeat`
+    #                          body (ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3).
+    # top_level_branch_body  : a `(do child)` directly inside a TOP-LEVEL `when` /
+    #                          `switch` / `while` / `until` body (`.4`; relies on the
+    #                          same-domain branch-body `(do)` feature shipped by
+    #                          ISF-CONDITIONAL-CHILD-ACTIVATION). Deeper nestings of
+    #                          either kind stay deferred.
+    # nested_label           : the innermost container of a deferred nested `(do)`.
+    my %out = (top_level => 0, top_level_repeat => 0, top_level_branch_body => 0, nested_label => undef);
     _scan_activation_do_use($clauses, $child, undef, \%out, 0);
     return %out;
 }
 
 sub _scan_activation_do_use {
-    my ($clauses, $child, $container_label, $out, $in_top_level_repeat) = @_;
+    my ($clauses, $child, $container_label, $out, $top_level_container) = @_;
     return unless ref($clauses) eq 'ARRAY';
     for my $clause (@$clauses) {
         next unless ref($clause) eq 'ARRAY' && @$clause;
@@ -2000,8 +2004,14 @@ sub _scan_activation_do_use {
         if ($kw eq 'do' && defined($clause->[1]) && !ref($clause->[1]) && $clause->[1] eq $child) {
             if (defined $container_label) {
                 $out->{nested_label} //= $container_label;
-                $out->{top_level_repeat} = 1
-                    if $in_top_level_repeat && $container_label eq 'repeat body';
+                # A `(do child)` directly inside a container that is itself a direct
+                # transaction-body clause is a supported nested context: a top-level
+                # `repeat` body (`.3`) or a top-level branch body (`.4`). Anything
+                # deeper loses top-level status and stays deferred.
+                if ($top_level_container) {
+                    if ($container_label eq 'repeat body') { $out->{top_level_repeat} = 1; }
+                    else                                   { $out->{top_level_branch_body} = 1; }
+                }
             }
             else {
                 $out->{top_level} = 1;
@@ -2009,17 +2019,17 @@ sub _scan_activation_do_use {
             next;
         }
         if ($kw eq 'when' || $kw eq 'repeat' || $kw eq 'while' || $kw eq 'until') {
-            # A `repeat` directly in the transaction body (container_label still
-            # undef) is the supported `.3` site; its direct `(do child)` body
-            # clauses are marked top-level-repeat. Any deeper container loses that
-            # status (so nested-repeat / when->repeat / etc. stay deferred).
-            my $child_top_level_repeat = (!defined($container_label) && $kw eq 'repeat') ? 1 : 0;
-            _scan_activation_do_use([@{$clause}[2 .. $#$clause]], $child, "$kw body", $out, $child_top_level_repeat);
+            # The container is a direct transaction-body clause iff we are still at
+            # the top level (container_label undef); its direct `(do child)` body
+            # clauses are then top-level-repeat / top-level-branch.
+            my $child_top_level = (!defined($container_label)) ? 1 : 0;
+            _scan_activation_do_use([@{$clause}[2 .. $#$clause]], $child, "$kw body", $out, $child_top_level);
         }
         elsif ($kw eq 'switch') {
+            my $child_top_level = (!defined($container_label)) ? 1 : 0;
             for my $branch (@{$clause}[2 .. $#$clause]) {
                 next unless ref($branch) eq 'ARRAY';
-                _scan_activation_do_use([@{$branch}[1 .. $#$branch]], $child, 'switch branch', $out, 0);
+                _scan_activation_do_use([@{$branch}[1 .. $#$branch]], $child, 'switch branch', $out, $child_top_level);
             }
         }
     }
@@ -2128,17 +2138,18 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
         for my $tx (@{$actor->{transactions} || []}) {
             next unless _domain_for_entry($tx, $default_domain) eq $src;
             my %use = _activation_do_use_context($tx->{clauses}, $child);
-            # A top-level `(do child)` OR a `(do child)` directly inside a top-level
-            # `repeat` body (ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3) is a supported,
-            # covered cross-domain activation. Deeper nestings stay deferred.
-            $covered = 1 if $use{top_level} || $use{top_level_repeat};
+            # A top-level `(do child)`, a `(do child)` directly inside a top-level
+            # `repeat` body (`.3`), OR a `(do child)` directly inside a top-level
+            # branch body (`.4`: when/switch/while/until) is a supported, covered
+            # cross-domain activation. Deeper nestings stay deferred.
+            $covered = 1 if $use{top_level} || $use{top_level_repeat} || $use{top_level_branch_body};
             $nested_label //= $use{nested_label};
         }
         # Accurate fail-closed diagnostics: distinguish a top-level covered
         # activation (proceeds) from a NESTED use (deferred) from a genuinely
         # unused crossing.
         if (!$covered && defined($nested_label)) {
-            confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is used by a nested '(do $child)' (inside a $nested_label), but cross-domain activation is currently supported only for a top-level '(do $child)' or a '(do $child)' directly inside a top-level '(repeat ...)' body; deeper nested cross-domain activation remains deferred\n";
+            confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is used by a nested '(do $child)' (inside a $nested_label), but cross-domain activation is currently supported only for a top-level '(do $child)', or a '(do $child)' directly inside a top-level '(repeat ...)' body or a top-level branch body ('when'/'switch'/'while'/'until'); deeper nested cross-domain activation remains deferred\n";
         }
         confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is declared but no transaction in domain '$src' performs a top-level '(do $child)'; an activation crossing must own a real cross-domain activation\n"
             unless $covered;
@@ -2633,13 +2644,20 @@ sub _validate_transaction_clause_domain_refs {
         # routed through CDC synchronizers, so the same-domain target checks are
         # intentionally skipped for it (the CDC routing is emitted in the
         # multi-domain top). Every other cross-domain reference still fails closed.
-        # Supported at the transaction top level and directly inside a `repeat` body
-        # (ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3); the partition gate further
-        # restricts the repeat case to a TOP-LEVEL repeat (deeper nestings defer
-        # there). Cross-domain `spawn` and deeper-nested cross-domain `do` remain
-        # fail-closed.
+        # Supported at the transaction top level, directly inside a `repeat` body
+        # (`.3`), and directly inside a branch body (`.4`: when/switch/while/until);
+        # the partition gate further restricts each nested case to a TOP-LEVEL
+        # container (deeper nestings defer there). Cross-domain `spawn` and
+        # deeper-nested cross-domain `do` remain fail-closed.
+        my $covered_activation_label =
+            ($label // '') eq 'transaction body'
+            || ($label // '') eq 'repeat body'
+            || ($label // '') eq 'when body'
+            || ($label // '') eq 'switch branch'
+            || ($label // '') eq 'while body'
+            || ($label // '') eq 'until body';
         my $covered_activation = $keyword eq 'do'
-            && (($label // '') eq 'transaction body' || ($label // '') eq 'repeat body')
+            && $covered_activation_label
             && _activation_crossing_covers($actor, $domain, $transaction_domains->{$target}, $target);
         if (!$covered_activation) {
             _validate_same_domain_target(
@@ -11737,13 +11755,29 @@ sub _wire_external_activations {
                 };
                 my ($do_index) = grep { $st->[$_] == $do_state } 0 .. $#$st;
                 splice(@$st, $do_index, 0, $ready_wait, $request);
-                # Redirect the do-state's predecessors (e.g. the idle entry) to the
-                # ready-await state; ready_wait -> request -> do(await done).
+                # Redirect every reference to the do-state — a predecessor's plain
+                # transition target, OR a branch/loop ENTRY target that is rendered
+                # from a dedicated field rather than `transitions` (a `when`/branch
+                # state's `true_target`, a `switch` branch's `body_start`, a loop's
+                # `loop_body_start`) — to the ready-await, so the inserted
+                # ready -> req -> do(await done) chain runs before the do-state in
+                # every context (top-level, repeat body, and branch/loop body). The
+                # `repeat_check` loop-back targets the repeat init (NOT the do-state),
+                # so it is correctly left untouched and re-runs the handshake each
+                # iteration.
                 for my $state (@$st) {
                     next if $state == $request || $state == $ready_wait;
                     for my $transition (@{$state->{transitions} || []}) {
                         $transition->{target} = $ready_wait->{name}
                             if ($transition->{target} // '') eq $do_state->{name};
+                    }
+                    $state->{true_target} = $ready_wait->{name}
+                        if ($state->{true_target} // '') eq $do_state->{name};
+                    $state->{loop_body_start} = $ready_wait->{name}
+                        if ($state->{loop_body_start} // '') eq $do_state->{name};
+                    for my $branch (@{$state->{branches} || []}) {
+                        $branch->{body_start} = $ready_wait->{name}
+                            if ($branch->{body_start} // '') eq $do_state->{name};
                     }
                 }
             }

@@ -34096,3 +34096,30 @@ Two cross-cutting lessons reinforced:
    the feature is NOT shipped) and t/1387's `repeat body` deferral case. Grep tests
    AND book-feature-matrix non-claim lists for the lifted capability, not just the
    code diagnostic string.
+
+## Nested cross-domain activation `.4` — branch selectors hide their entry target (2026-06-01)
+
+`.3` made the caller restructure look universal ("finds the do-state by its <start>
+assertion; redirect every transition targeting it"). `.4` exposed the gap: that
+redirect only rewrites `transitions[].target`. A `branch` (when) state pushes ONLY
+its skip/false transition into `transitions[]` and keeps the taken-branch entry in a
+dedicated `true_target` field (rendered separately); a `switch` keeps each branch
+entry in `branches[].body_start`. So the when/switch selector's edge into the
+do-state was NOT a `transitions[].target` and survived the redirect untouched — the
+inserted ready/req states were unreachable and the start handshake was silently
+skipped (the FSM still "lowered" and even passed `--check-json`, which validates
+composition wiring, not reachability). while/until escaped this because
+`_link_loop_state` DOES push the body entry into `transitions[]`. Fix: redirect
+`true_target`, `branches[].body_start`, and `loop_body_start` alongside
+`transitions[].target`. Lesson: when rewriting an FSM's edges generically, enumerate
+EVERY field a state kind can use to reference a successor — branch/switch/loop kinds
+carry entry targets in dedicated fields, not just `transitions[]`. And: `--check-json`
+success is necessary but not sufficient — always assert reachability of the inserted
+states (e.g. "something transitions INTO the ready-await") in the test.
+
+Two more reusable facts: (1) cross-domain composition does NOT hit the
+COMPOSITION_SCOPE `--check-json` boundary — the dual-CDC emits real port-level
+handshakes the realizer can infer; both `.3` and `.4` compose cleanly. (2) Declaring
+an unused interface input in a multi-domain fixture breaks `--check-json` (the unused
+input is pruned from its domain module but the top still wires it) — keep
+cross-domain fixtures minimal, declaring only signals the body uses.
