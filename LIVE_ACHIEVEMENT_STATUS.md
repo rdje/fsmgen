@@ -16530,3 +16530,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   activated (parity with a top-level generated do; shared composition-scope
   --check-json boundary). Expander owns the instance name via the spawn-ref ->
   consistent by construction. 13d/13b updated; t/1388. Frontier `.5b`.
+- `.5b` (ISF-CONDITIONAL-CHILD-ACTIVATION) shipped (2026-05-31): generated
+  `(do child (params ...))` now lowers to a `cond_do` generated child instance in
+  switch/while/until bodies too (took `.5b`+`.5c` together), completing generated
+  conditional activation across all four branch/loop bodies (parity with `.5a` and
+  the top-level generated do). Dead `_assert_when_body_local_do` removed. 13d/13b;
+  t/1388/t/1245. Only `(spawn)`/`await_all`/`await_any` in branch/loop bodies remain
+  deferred. Frontier `.6`.

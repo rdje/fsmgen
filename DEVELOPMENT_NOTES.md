@@ -34024,3 +34024,22 @@ an instance name for duplicate-detection, and the distinct `cond_do` naming can'
 collide with `_do_`/`_repeat_do_` names. So `.5a` was a contained change, not the
 multi-traversal-ordinal slog the design feared. (The validator override-param
 check for when-body generated do can be added later if desired.)
+
+## Conditional child activation `.5b` — `.5a`'s pattern generalized cleanly to all bodies (2026-05-31)
+
+`.5a` proved the instance-owned-by-the-expander approach for when-body generated
+`(do)`. `.5b`/`.5c` then collapsed into a single mechanical slice: the `do` branch
+in `_expand_switch` and `_expand_loop_body` was already structurally identical to
+`_expand_when`'s, so routing them through the same `_conditional_do_ref_from_clause`
++ `push @$spawn_refs` + `_ir_do($do_ref,$label)` path (plus adding `switch branch`/
+`while body`/`until body` to `_generated_child_transaction_refs`'s label set) was
+all it took. The cond-do ordinal counts `branch_do` refs already in `$spawn_refs`,
+which is shared across all three expanders, so two generated dos in the same
+transaction (e.g. one in a `when` and one in a `switch`) get distinct
+`cond_do_0`/`cond_do_1` names regardless of which expander emits them. With all
+three `do` branches now building their own do-ref, the old
+`_assert_when_body_local_do` deferral helper had no remaining callers and was
+removed — a good sign the deferral was scaffolding, not load-bearing logic. Lesson:
+once one branch/loop expander gains a capability, the other two almost always want
+the identical edit — budget the slice for "wire the same path through N expanders +
+extend the label set," not for per-context design.

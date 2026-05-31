@@ -14902,3 +14902,13 @@ Exit criteria:
   expander owns the instance name via the spawn-ref, so the lowering + top wiring
   are consistent by construction. 13d/13b updated; `t/1388`. Frontier `.5b`
   (switch-branch / while-until generated do).
+- `R14`: `ISF-CONDITIONAL-CHILD-ACTIVATION.5b` shipped (2026-05-31) — generated
+  `(do child (params ...))` now lowers to a `cond_do` generated child instance
+  directly in `switch` branches, `while` bodies, and `until` bodies too (taken with
+  `.5c` as one pattern), completing GENERATED conditional activation across all four
+  branch/loop bodies. `_expand_switch`/`_expand_loop_body` route through the same
+  `_conditional_do_ref_from_clause` path as `_expand_when` (`.5a`); the label set is
+  extended; the dead `_assert_when_body_local_do` is removed. Parity with `.5a` and
+  the top-level generated do (shared composition-scope `--check-json` boundary).
+  `t/1388`/`t/1245`; 13d/13b updated. Only `(spawn)`/`await_all`/`await_any`
+  directly in branch/loop bodies remain deferred (frontier `.6`).

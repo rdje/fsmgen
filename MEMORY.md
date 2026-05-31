@@ -38488,3 +38488,19 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   --check-json. Switch/while/until generated do still deferred (.5b/.5c: just wire
   the do branch in _expand_switch/_expand_loop_body + add the labels the same way).
   13d/13b updated. Frontier .5b.
+
+## 2026-05-31: ISF-CONDITIONAL-CHILD-ACTIVATION.5b — generated (do (params)) now in ALL branch/loop bodies
+- `.5b` (took `.5b`+`.5c` together — one pattern): generated `(do child (params ...))`
+  now lowers to a `cond_do` generated child instance directly in switch/while/until
+  bodies too, not just `when` (`.5a`). Extended `_generated_child_transaction_refs`
+  label set with 'switch branch'/'while body'/'until body'; routed `_expand_switch`
+  + `_expand_loop_body` do branches through the SAME `_conditional_do_ref_from_clause`
+  + push-to-$spawn_refs + `_ir_do($do_ref)` path as `_expand_when`. Removed the
+  now-dead `_assert_when_body_local_do` helper. Generated conditional activation is
+  now COMPLETE across all four branch/loop bodies (local + bound + generated).
+- Remaining deferred in branch/loop bodies: `(spawn)` / `await_all` / `await_any`
+  (those stay top-level + `repeat` only) — that's the `.6`/`.7` frontier.
+  t/1245's generated-do-loop rejection was repointed to the still-deferred
+  `(spawn ...)`-in-while-body boundary (deferral-lift cascade). t/1388's
+  switch-deferral subtest flipped to switch/while/until lowers-to-instance. 13d/13b
+  updated. Frontier `.6`.

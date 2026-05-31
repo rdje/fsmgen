@@ -160,27 +160,23 @@ ISF
     (complete done)))
 ISF
 
-    # A plain or bound local `(do child)` in a while body now lowers (conditional
-    # one-shot activation, ISF-CONDITIONAL-CHILD-ACTIVATION; covered by t/1388). A
-    # GENERATED conditional `(do child (params ...))` in a loop body is still
-    # deferred.
-    assert_lower_rejected(<<'ISF', 'generated child call loop body', qr/\ATransaction 'main': while body generated '\(do child \.\.\.\)' is not yet supported/);
-(actor loop_child_call
+    # A plain, bound, OR generated conditional `(do child ...)` in a while body now
+    # lowers (conditional one-shot activation, ISF-CONDITIONAL-CHILD-ACTIVATION; the
+    # generated `(do child (params ...))` case is covered by t/1388). A `(spawn ...)`
+    # in a loop body remains deferred (a later slice).
+    assert_lower_rejected(<<'ISF', 'spawn loop body', qr/\ATransaction 'main': unsupported '\(spawn \.\.\.\)' clause in while body/);
+(actor loop_child_spawn
   (clock clk)
   (reset (rst_n async active_low))
   (interface (input start) (input keep) (input din (width 8)) (output done) (output cdone (width 8)))
   (transaction child
-    (params (W 8))
     (on start)
-    (ports (input data (width W)))
-    (update cdone data)
+    (update cdone din)
     (complete cdone))
   (transaction main
     (on start)
     (while keep
-      (do child
-        (params (W 8))
-        (bind (input data din))))
+      (spawn child as c0))
     (complete done)))
 ISF
 

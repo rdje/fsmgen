@@ -165,19 +165,25 @@ ISF
     }
 };
 
-subtest 'a generated (params) (do) in a switch branch is also deferred' => sub {
-    my $gen = parse_source(<<'ISF', 'switch-generated-do');
-(actor switch_generated_do
+subtest 'a generated (params) (do) in switch / while / until bodies lowers to a conditional generated child instance' => sub {
+    my %context = (
+        'switch branch' => '(switch sel (0 (do worker (params (W 8)) (bind (input data din)))))',
+        'while body'    => '(while cond (do worker (params (W 8)) (bind (input data din))))',
+        'until body'    => '(until cond (do worker (params (W 8)) (bind (input data din))))',
+    );
+    for my $label (sort keys %context) {
+        my $gen = parse_source(<<"ISF", "ctx-generated-$label");
+(actor ctx_generated_do
   (interface
     (input start)
+    (input cond)
     (input sel (width 2))
     (input din (width 8))
     (output done)
     (output wc (width 8)))
   (transaction parent
     (on start)
-    (switch sel
-      (0 (do worker (params (W 8)) (bind (input data din)))))
+    $context{$label}
     (complete done))
   (transaction worker
     (params (W 8))
@@ -186,14 +192,22 @@ subtest 'a generated (params) (do) in a switch branch is also deferred' => sub {
     (update wc data)
     (complete wc)))
 ISF
-    my $ok = eval { FSM::Scheduler::ISF->new()->lower($gen); 1 };
-    my $err = $@;
-    ok(!$ok, 'a generated (params) (do) in a switch branch is rejected (deferred)');
-    like(
-        $err,
-        qr/switch branch generated '\(do worker \.\.\.\)' is not yet supported/,
-        'the deferral diagnostic names the switch-branch generated do',
-    );
+        my $lowered = eval { FSM::Scheduler::ISF->new()->lower($gen) };
+        ok($lowered, "a generated (params) (do) in a $label lowers") or diag($@);
+
+        # Parity with the when-body generated do and the top-level generated do:
+        # the child module is built, instantiated under a conditional do-instance
+        # name, and conditionally activated. The generated-child composition wiring
+        # shares the pre-existing COMPOSITION_SCOPE --check-json boundary, so this
+        # asserts the lowered schedule + top, not --check-json.
+        ok(exists $lowered->{files}{'worker.fsm'}, "$label: the generated child module is emitted");
+        my $parent = $lowered->{files}{'ctx_generated_do.fsm'};
+        like($parent, qr/parent_worker_cond_do_0_start>/, "$label: the do-state asserts the conditional generated-instance start handoff");
+        my $top = $lowered->{files}{'ctx_generated_do_top.fsm'};
+        like($top, qr/\(\?fsmc:parent_worker_cond_do_0 worker\b/, "$label: the top instantiates the conditional generated child instance");
+        like($top, qr/parent_worker_cond_do_0\.start/, "$label: the top wires the conditional instance start handoff");
+        like($top, qr/parent_worker_cond_do_0\.done/, "$label: the top wires the conditional instance done handoff");
+    }
 };
 
 done_testing();

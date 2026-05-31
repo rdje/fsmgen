@@ -46,7 +46,7 @@ first.
 | --- | --- | --- | --- | --- |
 | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING` | `done` | `R14` | complete (`.1`–`.7` done; cross-domain blocking `(do)` via a declared activation crossing) | [docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md](docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md) |
 | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` | `active` | `R14` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3` (`.1`/`.2` done) | [docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md](docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md) |
-| `ISF-CONDITIONAL-CHILD-ACTIVATION` | `active` | `R14` | `ISF-CONDITIONAL-CHILD-ACTIVATION.5b` (`.1`-`.5a` done) | [docs/tasks/ISF-CONDITIONAL-CHILD-ACTIVATION.md](docs/tasks/ISF-CONDITIONAL-CHILD-ACTIVATION.md) |
+| `ISF-CONDITIONAL-CHILD-ACTIVATION` | `active` | `R14` | `ISF-CONDITIONAL-CHILD-ACTIVATION.6` (`.1`-`.5b` done) | [docs/tasks/ISF-CONDITIONAL-CHILD-ACTIVATION.md](docs/tasks/ISF-CONDITIONAL-CHILD-ACTIVATION.md) |
 
 ## Proposed Task Trees
 

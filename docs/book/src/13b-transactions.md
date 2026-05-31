@@ -106,12 +106,13 @@ routes the start/done handshake through CDC synchronizers. See
 `(do)` without a covering crossing fails closed.
 
 `(do ...)`, `(spawn ...)`, `(await_all ...)`, and `(await_any ...)` are accepted
-as top-level transaction clauses and inside a `repeat` body; additionally a local
-`(do child)` — plain or with `(bind ...)` port bindings — is accepted directly
-inside a `when` body, a `switch` branch, a `while` body, and an `until` body
-(conditional one-shot activation), and a generated `(do child (params ...))` is
-accepted in a `when` body. Generated conditional activation in `switch`/`while`/
-`until` bodies is still deferred. See
+as top-level transaction clauses and inside a `repeat` body; additionally a
+`(do child)` — local (plain or with `(bind ...)` port bindings) **or** generated
+(a `(do child (params ...))` parameter override) — is accepted directly inside a
+`when` body, a `switch` branch, a `while` body, and an `until` body (conditional /
+loop-conditional one-shot activation, local or generated). `(spawn ...)`,
+`(await_all ...)`, and `(await_any ...)` remain restricted to top-level and
+`repeat` bodies. See
 [Where Child Activations Are Allowed](13d-control-flow.md#where-child-activations-are-allowed)
 for the supported contexts, what is deferred, and the `(repeat ...)` workaround.
 
