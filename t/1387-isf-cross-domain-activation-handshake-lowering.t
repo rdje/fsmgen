@@ -351,4 +351,54 @@ ISF
     );
 };
 
+subtest 'a nested cross-domain (do) fails closed with a precise deferred diagnostic' => sub {
+    # A `(do child)` inside a when/switch/repeat body is a real use of the
+    # activation crossing, but nested cross-domain activation is not yet supported
+    # (only top-level). The diagnostic must say so accurately — not the
+    # genuinely-unused "declared but ... no top-level (do)" message.
+    my %context_body = (
+        'when body'     => '(when cond (do worker))',
+        'switch branch' => '(switch sel (0 (do worker)))',
+        'repeat body'   => '(repeat n (do worker))',
+    );
+    for my $label (sort keys %context_body) {
+        my $actor = parse_source(<<"ISF", "nested-$label");
+(actor nested_xdom
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus  (clock bus_clk) (reset bus_rst_n)))
+  (crossings
+    (activation worker (from core) (to bus)))
+  (interface
+    (input start (domain core))
+    (input cond (domain core))
+    (input sel (width 2) (domain core))
+    (input n (width 3) (domain core))
+    (output done (domain core))
+    (output worker_complete (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    $context_body{$label}
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (complete worker_complete)))
+ISF
+        my $ok = eval { FSM::Scheduler::ISF->new()->lower($actor); 1 };
+        my $err = $@;
+        ok(!$ok, "nested ($label) cross-domain (do) is rejected at lower");
+        like(
+            $err,
+            qr/used by a nested '\(do worker\)' \(inside a \Q$label\E\)[\s\S]*nested cross-domain activation remains deferred/,
+            "nested ($label) diagnostic accurately names the deferred nested context",
+        );
+        unlike(
+            $err,
+            qr/declared but no transaction/,
+            "nested ($label) is not misreported as a declared-but-unused crossing",
+        );
+    }
+};
+
 done_testing();

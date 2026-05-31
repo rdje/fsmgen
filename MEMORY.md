@@ -38356,3 +38356,17 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Owned the audit itself with `ROADMAP-TASKTREE-MDBOOK-ALIGNMENT-AUDIT` (done).
   No code/content repair was required — the doctrine is satisfied with zero
   drift. Active R14 frontier remains `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.2`.
+
+## 2026-05-31: ISF-NESTED-CROSS-DOMAIN-ACTIVATION.2 shipped — precise nested-deferred diagnostic
+- Added `_activation_do_use_context` (recursive clause scan in LoweringIR.pm)
+  classifying a `(do child)` as top-level vs nested (when/switch/repeat/while/
+  until body). `_build_domain_partition` now fails a NESTED cross-domain
+  `(do child)` with an accurate "used by a nested '(do child)' (inside a <ctx>)
+  ... nested cross-domain activation remains deferred" message — distinct from the
+  genuinely-unused "declared but ... no top-level (do)". Top-level still lowers.
+- Replaced reliance on `_live_child_action_refs_from_transaction_clauses` (which
+  only surfaced repeat-body do-refs, so when/switch nested uses were previously
+  misreported as "unused"). `t/1387` now 9 subtests (when/switch/repeat + not-
+  misreported-as-unused). Broad sweep (11 files, 451) PASS; full ci-regression isf
+  pending green at commit. Frontier `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3` (the
+  substantial nested SUPPORT work, per context, with goldens + HDL).

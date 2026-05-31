@@ -16501,3 +16501,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   SPECFORGE_FEEDBACK_RESPONSE. `t/1387` now 8 subtests; report audits + full
   `ci-regression isf` PASS. Cross-domain blocking `(do)` via a declared activation
   crossing is complete end-to-end. Follow-ups: cross-domain `(spawn)`, nested `(do)`.
+- `.2` (ISF-NESTED-CROSS-DOMAIN-ACTIVATION) shipped (2026-05-31): precise
+  nested-deferred diagnostic. A nested cross-domain `(do child)` (when/switch/
+  repeat/while/until body) fails closed with "used by a nested '(do child)'
+  (inside a <ctx>) ... nested cross-domain activation remains deferred", distinct
+  from the genuinely-unused message; top-level still lowers. New
+  `_activation_do_use_context` recursive clause scan; `t/1387` now 9 subtests.
+  Frontier `.3` (nested SUPPORT per context, goldens + HDL).

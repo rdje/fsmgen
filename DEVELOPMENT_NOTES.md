@@ -33918,3 +33918,19 @@ finding is that the doctrine was already implemented and enforced, not aspiratio
 The governance lesson: the audit itself is task-tree owned
 (`ROADMAP-TASKTREE-MDBOOK-ALIGNMENT-AUDIT`), so this point-in-time verification is
 durable across session loss, exactly as the doctrine intends for every activity.
+
+## Nested cross-domain activation `.2` — accurate deferral over a convenient collector (2026-05-31)
+
+`.2` is a diagnostic-precision slice. The subtlety: the partition's "does a
+SRC-domain transaction actually `(do child)`?" check originally reused
+`_live_child_action_refs_from_transaction_clauses`, which (from the same-domain
+repeat-body activation frontier) only surfaces repeat-body do/spawn refs. So a
+`(do child)` inside a `when` body or `switch` branch was invisible to it — and a
+nested cross-domain `(do child)` was therefore misreported as a declared-but-unused
+crossing rather than a deferred nested use. `.2` replaces that with a dedicated
+recursive clause scan (`_activation_do_use_context` / `_scan_activation_do_use`)
+that walks the transaction's own clause tree and classifies the `(do child)` as
+top-level vs nested, naming the nesting container. The lesson: for an accurate
+*diagnostic*, scan the authored clause tree directly rather than borrowing a
+collector built for a different (activation-lowering) purpose, whose coverage is
+intentionally narrower.

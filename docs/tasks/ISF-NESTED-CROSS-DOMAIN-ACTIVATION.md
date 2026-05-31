@@ -93,14 +93,21 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   Goal: `Select; record ground truth (top-level-only gates + misleading nested diagnostic) + design + slice plan.`
   Acceptance: `Task tree committed before any code change.`
   Verification: `mdbook build docs/book; git diff --check`
+  Commit: `2c081347`
+
+- ID: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.2`
+  Status: `done`
+  Goal: `Precise nested-deferred diagnostic — distinguish a nested (do child) use from a genuinely-unused crossing.`
+  Acceptance: `A nested cross-domain (do child) (inside when/switch/repeat/while/until) fails closed with "used by a nested (do child) (inside a <ctx>) ... nested cross-domain activation remains deferred", distinct from the declared-but-unused message; the top-level case still lowers; genuinely-unused still says "declared but ... no top-level (do)"; locked by t/1387.`
+  Verification: `prove -Iperl t/1387 (9 subtests) t/1386 t/1247 t/1372 t/1374 t/1375 t/1250 t/1305 t/1382 t/1383 t/1110 (11 files, 451) PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `.1` | `done` | Selection/design (this commit). |
-| 2 | `.2` | `pending` | Precise nested-deferred diagnostic (safe, bounded; improves the misleading "declared but unused" message). |
+| 1 | `.1` | `done` | Selection/design (`2c081347`). |
+| 2 | `.2` | `done` | Precise nested-deferred diagnostic shipped (`_activation_do_use_context` recursive scan; `t/1387` covers when/switch/repeat + the genuinely-unused case). |
 | 3 | `.3`+ | `pending` | Support nested cross-domain `(do)` per context (when/switch/repeat), with goldens + HDL. |
 
 ## Decisions
@@ -127,12 +134,14 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-31` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-31` | `.2` | `prove -Iperl t/1387` (9 subtests) + clock-domain/crossing/diagnostic/spec-index/feature-matrix sweep (11 files, 451) PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.1: select nested cross-domain activation` | `ship commit (this slice)` |
+| `.1` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.1: select nested cross-domain activation` | `2c081347` |
+| `.2` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.2: precise nested cross-domain (do) deferred diagnostic` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -140,3 +149,15 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING` (top-level cross-domain activation
   shipped). Recorded the two top-level-only gates, the misleading nested
   diagnostic, and the slice plan (`.2` precise diagnostic, `.3`+ nested support).
+- `2026-05-31`: `.2` shipped. Added `_activation_do_use_context` (a recursive
+  clause scan in `LoweringIR.pm`) that classifies a `(do child)` as top-level vs
+  nested (when/switch/repeat/while/until body); `_build_domain_partition` now
+  fails a nested cross-domain `(do child)` with an accurate "used by a nested
+  '(do child)' (inside a <ctx>) ... nested cross-domain activation remains
+  deferred" message, distinct from the genuinely-unused "declared but ... no
+  top-level (do)" message. The top-level case still lowers; `t/1387` gained a
+  subtest covering when/switch/repeat + the not-misreported-as-unused assertion
+  (now 9 subtests). The recursive scan replaced the prior reliance on
+  `_live_child_action_refs_from_transaction_clauses`, which only surfaced
+  repeat-body do-refs (so when/switch nested uses were previously misreported as
+  unused).

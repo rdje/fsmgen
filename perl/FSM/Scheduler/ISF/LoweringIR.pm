@@ -1946,6 +1946,48 @@ sub _rule_trigger_generated_refs {
     return @refs;
 }
 
+# Determine how a `(do <child>)` is used within a transaction's clause tree, for
+# accurate activation-crossing diagnostics. Returns a hash:
+#   top_level    => 1 if a `(do child)` appears as a direct transaction clause;
+#   nested_label => the nesting context ('when body' / 'switch branch' /
+#                   'repeat body' / 'while body' / 'until body') of the
+#                   innermost-found nested `(do child)`, or undef.
+sub _activation_do_use_context {
+    my ($clauses, $child) = @_;
+    my %out = (top_level => 0, nested_label => undef);
+    _scan_activation_do_use($clauses, $child, undef, \%out);
+    return %out;
+}
+
+sub _scan_activation_do_use {
+    my ($clauses, $child, $container_label, $out) = @_;
+    return unless ref($clauses) eq 'ARRAY';
+    for my $clause (@$clauses) {
+        next unless ref($clause) eq 'ARRAY' && @$clause;
+        my $kw = $clause->[0];
+        next unless defined($kw) && !ref($kw);
+        if ($kw eq 'do' && defined($clause->[1]) && !ref($clause->[1]) && $clause->[1] eq $child) {
+            if (defined $container_label) {
+                $out->{nested_label} //= $container_label;
+            }
+            else {
+                $out->{top_level} = 1;
+            }
+            next;
+        }
+        if ($kw eq 'when' || $kw eq 'repeat' || $kw eq 'while' || $kw eq 'until') {
+            _scan_activation_do_use([@{$clause}[2 .. $#$clause]], $child, "$kw body", $out);
+        }
+        elsif ($kw eq 'switch') {
+            for my $branch (@{$clause}[2 .. $#$clause]) {
+                next unless ref($branch) eq 'ARRAY';
+                _scan_activation_do_use([@{$branch}[1 .. $#$branch]], $child, 'switch branch', $out);
+            }
+        }
+    }
+    return;
+}
+
 sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
     return undef unless _actor_has_clock_domains($actor);
     $pruned_transactions ||= {};
@@ -2044,15 +2086,18 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
             if defined($child_domain) && $child_domain ne $dst;
 
         my $covered = 0;
-        TX: for my $tx (@{$actor->{transactions} || []}) {
+        my $nested_label;
+        for my $tx (@{$actor->{transactions} || []}) {
             next unless _domain_for_entry($tx, $default_domain) eq $src;
-            for my $ref (_live_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name}, $actor)) {
-                next unless ($ref->{keyword} // '') eq 'do';
-                next unless ($ref->{label} // '') eq 'transaction body';
-                next unless ($ref->{clause}[1] // '') eq $child;
-                $covered = 1;
-                last TX;
-            }
+            my %use = _activation_do_use_context($tx->{clauses}, $child);
+            $covered = 1 if $use{top_level};
+            $nested_label //= $use{nested_label};
+        }
+        # Accurate fail-closed diagnostics: distinguish a top-level covered
+        # activation (proceeds) from a NESTED use (deferred) from a genuinely
+        # unused crossing.
+        if (!$covered && defined($nested_label)) {
+            confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is used by a nested '(do $child)' (inside a $nested_label), but cross-domain activation is currently supported only for a top-level '(do $child)'; nested cross-domain activation remains deferred\n";
         }
         confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is declared but no transaction in domain '$src' performs a top-level '(do $child)'; an activation crossing must own a real cross-domain activation\n"
             unless $covered;

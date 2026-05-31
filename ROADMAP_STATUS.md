@@ -14851,3 +14851,12 @@ Exit criteria:
   alignment test gates (13 files / 919 tests PASS; full `ci-regression isf` green
   at 2084). No code/content repair required. The active R14 frontier is unchanged
   (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION.2`).
+- `R14`: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.2` shipped (2026-05-31) — a precise
+  nested-deferred diagnostic. A nested cross-domain `(do child)` (inside a
+  when/switch/repeat/while/until body) now fails closed with "used by a nested
+  '(do child)' (inside a <ctx>) ... nested cross-domain activation remains
+  deferred", distinct from the genuinely-unused message; the top-level case still
+  lowers. Implemented via a new `_activation_do_use_context` recursive clause scan
+  (replacing the repeat-only `_live_child_action_refs` reliance). `t/1387` now 9
+  subtests. Frontier now `.3` (the substantial nested SUPPORT work per context,
+  with goldens + HDL).
