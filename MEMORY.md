@@ -38339,3 +38339,20 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   nested-use from genuinely-unused), locked by a `t/138x` test; `.3`+ = actual
   nested support per context (when/switch/repeat) with goldens + HDL, like the
   same-domain repeat-body nesting frontier. Frontier `.2`.
+
+## 2026-05-31: Doctrine compliance + tri-surface alignment audit (governance)
+- User forcefully restated the task-tree doctrine (no code change without
+  task-tree ownership; whole roadmap owned; past changes audited; roadmap ↔
+  codebase ↔ mdBook aligned, no drift). Audited the CURRENT state and found it
+  FULLY implemented: the Mandatory Task-Tree Gate exists in `docs/TASK_TREE.md`
+  + `COMMIT.md`; 401 task-tree files; the R14 objective→owner coverage map +
+  book-facing owner coverage gates; R8–R12 past-change *-AUDIT trees; R0–R7
+  done with architecture trees; R13 shipped surfaces owned + remaining gated.
+- Alignment is CONTINUOUSLY enforced by test gates: `t/1376` (book examples
+  lower, 39), `t/1305`/`t/1304`/`t/1306`/`t/1307`/`t/1332` doc-truth, `t/1256`
+  backlog status, `t/1303` live-book paths, `t/371` doc-path, `t/1112` public
+  contract, `t/1250` spec index, `t/1116`/`t/1255` report. All pass (13 files,
+  919 tests, 2026-05-31); full `ci-regression isf` green at 2084.
+- Owned the audit itself with `ROADMAP-TASKTREE-MDBOOK-ALIGNMENT-AUDIT` (done).
+  No code/content repair was required — the doctrine is satisfied with zero
+  drift. Active R14 frontier remains `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.2`.

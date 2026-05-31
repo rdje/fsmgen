@@ -14841,3 +14841,13 @@ Exit criteria:
   "declared but unused" message. Slice plan: `.2` precise nested-deferred
   diagnostic (safe), `.3`+ nested support per context with goldens + HDL.
   `.1` selection committed; frontier `.2`.
+- `R0` (governance): `ROADMAP-TASKTREE-MDBOOK-ALIGNMENT-AUDIT` completed
+  (2026-05-31) — a thorough audit confirming the task-tree doctrine is fully
+  implemented and currently satisfied: the no-code-without-ownership gate is in
+  force and honored, the whole roadmap (R0–R14) is task-tree owned (objective and
+  book-facing owner-coverage tables + R8–R12 audit trees + R0–R7 architecture
+  trees), past changes were retro-audited, and roadmap ↔ codebase ↔ mdBook
+  alignment is verified with zero drift and continuously enforced by the standing
+  alignment test gates (13 files / 919 tests PASS; full `ci-regression isf` green
+  at 2084). No code/content repair required. The active R14 frontier is unchanged
+  (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION.2`).

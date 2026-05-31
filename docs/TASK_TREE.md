@@ -60,6 +60,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ROADMAP-TASKTREE-MDBOOK-ALIGNMENT-AUDIT` | `done` | `R0` | `closed (doctrine fully implemented; tri-surface alignment verified, zero drift)` | [docs/tasks/ROADMAP-TASKTREE-MDBOOK-ALIGNMENT-AUDIT.md](docs/tasks/ROADMAP-TASKTREE-MDBOOK-ALIGNMENT-AUDIT.md) |
 | `ISF-FULL-WIDTH-INFERENCE` | `done` | `R14` | `closed (fail-closed terminal recorded)` | [docs/tasks/ISF-FULL-WIDTH-INFERENCE.md](docs/tasks/ISF-FULL-WIDTH-INFERENCE.md) |
 | `ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES` | `done` | `R14` | `closed` | [docs/tasks/ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES.md](docs/tasks/ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES.md) |
 | `ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING` | `done` | `R14` | `closed` | [docs/tasks/ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING.md](docs/tasks/ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING.md) |

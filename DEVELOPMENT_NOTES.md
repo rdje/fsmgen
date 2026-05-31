@@ -33890,3 +33890,31 @@ With `.7` the whole feature is complete end-to-end: parse → validate → lower
 (dual-CDC) → HDL → book example → schedule report. The remaining cross-domain
 surface (cross-domain `(spawn)`, nested cross-domain `(do)`) is intentionally out
 of this tree and will be picked up as separate frontier work.
+
+## Doctrine compliance audit — the doctrine was already fully implemented (2026-05-31)
+
+A forceful restatement of the task-tree doctrine prompted a full audit. The
+finding is that the doctrine was already implemented and enforced, not aspirational:
+
+- The "no code change without task-tree ownership" rule is a hard gate in both
+  `docs/TASK_TREE.md` (§ Mandatory Task-Tree Gate, § ISF Task-Tree Rule) and
+  `COMMIT.md` (§ Non-negotiable invariant), and is mechanically reinforced by the
+  per-leaf commit requirement (leaf ID in the commit subject/first line).
+- Whole-roadmap coverage is maintained as living tables in `docs/TASK_TREE.md`
+  ("R14 ISF Objective Coverage", "Book-Facing Feature Backlog Owner Coverage"),
+  not as a one-time claim — every objective family and backlog category names an
+  owning tree or a "future task tree required" gate.
+- Past (pre/early-system) code changes were retro-audited through dedicated audit
+  trees per lane (`R8-*`, `R9-*`, `R10-*`, `R11-*-FRONTIER-AUDIT`,
+  `R12-*-CORPUS-WIDENING`, `R14-ASPECT-COVERAGE-AUDIT`, `FSMGEN-IR-AUDIT`).
+- The crucial alignment property — roadmap/codebase/mdBook never drift — is not
+  enforced by vigilance but by *test gates* in the regression suite: book
+  examples must lower (`t/1376`), the feature matrix and chapter claims are
+  doc-truth-audited (`t/1305`/`t/1304`/`t/1306`/`t/1307`/`t/1332`), the backlog
+  status, live-book paths, public contract, spec index, and report shapes are all
+  audited (`t/1256`/`t/1303`/`t/371`/`t/1112`/`t/1250`/`t/1116`/`t/1255`). Drift is
+  therefore caught mechanically on every regression run.
+
+The governance lesson: the audit itself is task-tree owned
+(`ROADMAP-TASKTREE-MDBOOK-ALIGNMENT-AUDIT`), so this point-in-time verification is
+durable across session loss, exactly as the doctrine intends for every activity.
