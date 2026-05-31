@@ -165,6 +165,12 @@ sub _clock_domain_child_instance_summary($instance) {
 
 sub _clock_domain_crossing_endpoint_summary($endpoint) {
     return {
+        activation => $endpoint->{activation},
+        role       => $endpoint->{role},
+        start      => $endpoint->{start},
+        done       => $endpoint->{done},
+    } if exists $endpoint->{activation};
+    return {
         event  => $endpoint->{event},
         role   => $endpoint->{role},
         signal => $endpoint->{signal},
@@ -183,6 +189,8 @@ sub _crossing_summary($self, $ir) {
 }
 
 sub _crossing_event_summary($crossing, $partition) {
+    return _crossing_activation_summary($crossing, $partition)
+        if ($crossing->{kind} // '') eq 'activation';
     return {
         name               => $crossing->{name},
         kind               => $crossing->{kind},
@@ -193,6 +201,28 @@ sub _crossing_event_summary($crossing, $partition) {
         ready_signal       => $crossing->{ready_signal},
         instance           => $crossing->{instance},
         module             => $crossing->{module},
+        outstanding_policy => $crossing->{outstanding_policy},
+        payload            => $crossing->{payload},
+        top_fsm            => $partition->{top_fsm},
+    };
+}
+
+# Cross-domain activation crossing: a distinct report shape from the event
+# crossing — one declaration owns two CDC children (a start synchronizer
+# SRC->DST and a done synchronizer DST->SRC).
+sub _crossing_activation_summary($crossing, $partition) {
+    return {
+        name               => $crossing->{name},
+        kind               => 'activation',
+        child              => $crossing->{child},
+        source_domain      => $crossing->{source_domain},
+        destination_domain => $crossing->{destination_domain},
+        start_signal       => $crossing->{start_signal},
+        done_signal        => $crossing->{done_signal},
+        start_instance     => $crossing->{start_instance},
+        start_module       => $crossing->{start_module},
+        done_instance      => $crossing->{done_instance},
+        done_module        => $crossing->{done_module},
         outstanding_policy => $crossing->{outstanding_policy},
         payload            => $crossing->{payload},
         top_fsm            => $partition->{top_fsm},

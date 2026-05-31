@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14` (ISF Multi-Clock And CDC Semantics — richer crossing primitives)
 - Created: `2026-05-30`
-- Last updated: `2026-05-30`
+- Last updated: `2026-05-31`
 - Owner: repo-local workflow
 
 ## Goal
@@ -197,9 +197,23 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   Goal: `Book documentation + a runnable cross-domain activation example (the user-facing review surface).`
   Acceptance: `13a gains an Activation Crossing section (surface + dual-CDC routing + await-ready handshake + fail-closed boundaries) with a full runnable (actor ...) example that lowers + generates HDL; 13b cross-references it from the (do) surface; 13k feature matrix gains a row; 14 backlog/count updated; book examples still lower (t/1376 now 39), feature-matrix + doc-truth audits pass.`
   Verification: `mdbook build docs/book; prove -Iperl t/1376 (39 examples) t/1305 t/1304 t/1307 t/1332 PASS; git diff --check`
+  Commit: `eda950e5`
+
+- ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.7`
+  Status: `done`
+  Goal: `Activation crossing schedule-report metadata + downstream/contract/SPECFORGE sync (closes the tree).`
+  Acceptance: `_build_domain_partition records an activation crossing summary + per-domain endpoints; the JSON report emits kind:"activation" (child, source/destination_domain, start/done signal+instance+module, outstanding_policy, payload, top_fsm) and per-domain { activation, role, start, done }; report audits pass; ISF_DOWNSTREAM_INTEGRATION_SPEC / ISF_PUBLIC_INTERFACE_CONTRACT / SPECFORGE_FEEDBACK_RESPONSE document the activation crossing.`
+  Verification: `prove -Iperl t/1387 (8 subtests, incl. report shape) t/1116 t/1255 t/1247 t/1217 t/1305 t/1304 t/1307 t/1332 t/1250 t/1386 PASS (11 files, 880); full ./bin/ci-regression isf --no-book PASS; perl -c; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
+
+The tree is complete — all leaves `.1`–`.7` are `done`. Cross-domain blocking
+`(do child)` through `(crossings (activation child (from SRC)(to DST)))` parses,
+validates, lowers end-to-end through two CDC synchronizers, generates HDL, is
+documented with a runnable book example, and is exposed in the schedule report.
+Follow-ups (separate trees): cross-domain `(spawn)`, nested cross-domain `(do)`
+(inside `repeat`/`when`/`switch`).
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
@@ -209,7 +223,7 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | 4 | `.4` | `done` | One-cycle cross-domain caller request + dual-CDC top emission/wiring, unit-tested behind the guard (`t/1387`); event-crossing emission unchanged. |
 | 5 | `.5` | `done` | Integration shipped: validator accepts a covered cross-domain `(do)`, `external_activations` injected, guard removed, CDC `ready` consumed via await-handshake; end-to-end HDL (5 modules), per-domain Verilator+yosys PASS (`t/1387`, full `ci-regression isf`). |
 | 6 | `.6` | `done` | Book documentation shipped: `13a` Activation Crossing section + runnable example (lowers + HDL), `13b` cross-ref, `13k` matrix row, `14` updates; `t/1376` (39 examples) + matrix/doc-truth audits PASS. |
-| 7 | `.7` | `pending` | Activation crossing schedule-report metadata (distinct shape + audits) + `ISF_DOWNSTREAM_INTEGRATION_SPEC`/`ISF_PUBLIC_INTERFACE_CONTRACT`/`SPECFORGE_FEEDBACK_RESPONSE` sync. |
+| 7 | `.7` | `done` | Activation crossing schedule-report metadata (`kind:"activation"` + per-domain endpoints, `t/1387` 8 subtests) + downstream/contract/SPECFORGE sync; report audits (`t/1116`/`t/1255`) PASS. Tree complete. |
 
 ## Decisions
 
@@ -294,6 +308,7 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | `2026-05-30` | `.4` | `prove -Iperl t/1387` (5 subtests) PASS; broad composition/crossing/domain/child regression with event-crossing goldens (13 files, 449) PASS; `perl -c ISF.pm`+`LoweringIR.pm`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-05-30` | `.5` | `prove -Iperl t/1387` (7 subtests) + clock-domain/crossing/composition/report-audit sweep (16 files, 557) PASS; full `./bin/ci-regression isf --no-book` PASS; per-domain `--verify-hdl` → `verilator_lint`+`yosys_synthesis` PASS; full composition HDL generation emits 5 modules (exit 0); `perl -c`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-05-31` | `.6` | `mdbook build docs/book`; `prove -Iperl t/1376` (39 examples lower cleanly) `t/1305 t/1304 t/1307 t/1332` PASS; the runnable example lowers (3 artifacts) + generates HDL (5 modules); `git diff --check` | `PASS` |
+| `2026-05-31` | `.7` | `prove -Iperl t/1387` (8 subtests incl. report shape) `t/1116 t/1255 t/1247 t/1217 t/1305 t/1304 t/1307 t/1332 t/1250 t/1386` PASS (11 files, 880); full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -304,7 +319,8 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | `.3` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3: cross-domain activation handshake-port lowering machinery (behind guard)` | `77f447c9` |
 | `.4` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.4: one-cycle caller request + dual-CDC top emission (behind guard)` | `93e4e73e` |
 | `.5` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.5: integration — cross-domain activation lowers end-to-end through two CDC synchronizers` | `13cbceeb` |
-| `.6` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.6: book documentation + runnable cross-domain activation example` | `ship commit (this slice)` |
+| `.6` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.6: book documentation + runnable cross-domain activation example` | `eda950e5` |
+| `.7` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.7: activation crossing schedule-report metadata + downstream/contract/SPECFORGE sync (closes tree)` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -383,3 +399,17 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   book gates pass: `t/1376` now lowers 39 complete examples, `t/1305` feature-matrix
   audit + `t/1304`/`t/1307`/`t/1332` doc-truth audits PASS, `mdbook build` clean.
   Report metadata + downstream/contract/SPECFORGE sync moved to `.7`.
+- `2026-05-31`: `.7` shipped — closes the tree. The schedule report now exposes
+  the activation crossing: `_build_domain_partition` records an activation summary
+  (`kind:"activation"` with `child`, `source_domain`/`destination_domain`,
+  `start_signal`/`done_signal`, `start_instance`/`start_module`,
+  `done_instance`/`done_module`, `outstanding_policy`, `payload`) plus per-domain
+  endpoints `{ activation, role, start, done }`; `Emitter::JSON` branches
+  `_crossing_event_summary`/`_clock_domain_crossing_endpoint_summary` on kind (the
+  event shape is unchanged). Synced `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`
+  (activation crossing primitive rules), `ISF_PUBLIC_INTERFACE_CONTRACT.md`
+  (report shape + `t/1387` reference), and a dated `SPECFORGE_FEEDBACK_RESPONSE.md`
+  entry. `t/1387` gains a report-shape subtest (now 8). Report audits
+  (`t/1116`/`t/1255`) + doc-truth audits + full `ci-regression isf` PASS. The whole
+  `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING` tree is complete; cross-domain
+  `(spawn)` and nested cross-domain `(do)` remain as separate follow-up trees.

@@ -38307,3 +38307,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   metadata + `ISF_DOWNSTREAM_INTEGRATION_SPEC`/`ISF_PUBLIC_INTERFACE_CONTRACT`/
   `SPECFORGE_FEEDBACK_RESPONSE` sync. Frontier `.7`. (CDC lane: 6 commits ahead of
   origin; consider push around `.7`/SPECFORGE access.)
+- `.7` SHIPPED (2026-05-31) — CLOSES the `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING`
+  tree (all `.1`–`.7` done). The schedule report exposes the activation crossing:
+  `_build_domain_partition` records an activation summary (`kind:"activation"`:
+  child, source/destination_domain, start/done signal+instance+module,
+  outstanding_policy, payload) + per-domain endpoints `{activation, role, start,
+  done}`; `Emitter::JSON` `_crossing_event_summary` +
+  `_clock_domain_crossing_endpoint_summary` branch on kind (event shape
+  unchanged). Synced ISF_DOWNSTREAM_INTEGRATION_SPEC + ISF_PUBLIC_INTERFACE_CONTRACT
+  + dated SPECFORGE_FEEDBACK_RESPONSE. `t/1387` now 8 subtests (report shape).
+  Report audits (`t/1116`/`t/1255`) + full `ci-regression isf` PASS. Whole CDC
+  feature DONE: parses→validates→lowers→2-CDC HDL→book example→report. Follow-ups
+  (separate trees): cross-domain `(spawn)`, nested cross-domain `(do)`. CDC lane
+  now 7 commits ahead of origin — DUE FOR A PUSH (SPECFORGE wants the response).
+  Next R14 work: pick a new frontier task tree autonomously (per
+  [[frontier-pnt-autonomy]]).

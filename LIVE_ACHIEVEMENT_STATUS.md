@@ -16492,3 +16492,12 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   (count 38→39, top-level cross-domain activation shipped). Book gates: `t/1376`
   lowers 39 examples; `t/1305`/`t/1304`/`t/1307`/`t/1332` + `mdbook build` PASS.
   Frontier `.7` (activation schedule-report metadata + downstream/contract/SPECFORGE).
+- `.7` shipped (2026-05-31) — CLOSES the cross-domain activation tree (`.1`–`.7`).
+  The schedule report exposes the activation crossing (`kind:"activation"` with
+  child/source+destination domain/start+done signal+instance+module/policy/payload,
+  plus per-domain `{activation, role, start, done}` endpoints); `Emitter::JSON`
+  branches on kind (event shape unchanged). Synced
+  ISF_DOWNSTREAM_INTEGRATION_SPEC + ISF_PUBLIC_INTERFACE_CONTRACT + dated
+  SPECFORGE_FEEDBACK_RESPONSE. `t/1387` now 8 subtests; report audits + full
+  `ci-regression isf` PASS. Cross-domain blocking `(do)` via a declared activation
+  crossing is complete end-to-end. Follow-ups: cross-domain `(spawn)`, nested `(do)`.

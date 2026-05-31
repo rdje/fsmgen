@@ -14818,3 +14818,18 @@ Exit criteria:
   feature-matrix + `t/1304`/`t/1307`/`t/1332` doc-truth audits PASS, `mdbook build`
   clean. Frontier now `.7` (activation schedule-report metadata + downstream
   integration spec / public interface contract / SPECFORGE response sync).
+- `R14`: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.7` shipped (2026-05-31) —
+  **closes the tree** (`.1`–`.7` done). The schedule report exposes an activation
+  crossing as a `crossings` entry with `kind: "activation"` (carrying `child`,
+  `source_domain`/`destination_domain`, `start_signal`/`done_signal`,
+  `start_instance`/`start_module`, `done_instance`/`done_module`,
+  `outstanding_policy`, `payload`, `top_fsm`) plus per-domain endpoints
+  `{ activation, role, start, done }`; the `Emitter::JSON` crossing/endpoint
+  summaries branch on kind so the event-crossing shape is unchanged. Synced
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `ISF_PUBLIC_INTERFACE_CONTRACT.md`, and a
+  dated `SPECFORGE_FEEDBACK_RESPONSE.md` entry. `t/1387` gains a report-shape
+  subtest (now 8); report audits (`t/1116`/`t/1255`) + full `ci-regression isf`
+  PASS. **Cross-domain blocking `(do child)` via a declared activation crossing is
+  now complete end-to-end** — parse → validate → lower (dual-CDC) → HDL → book
+  example → schedule report. Remaining cross-domain work (cross-domain `(spawn)`,
+  nested cross-domain `(do)`) is tracked as separate future trees.

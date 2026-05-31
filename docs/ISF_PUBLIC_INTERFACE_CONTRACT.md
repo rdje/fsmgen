@@ -600,6 +600,18 @@ two generated CDC child modules and both source/destination endpoint roles in
 one top. It also covers the file-backed no-reset event-crossing fixture,
 proving absent-reset CDC metadata in the generated top and schedule-report
 surface while preserving the current no-reset HDL fail-closed boundary.
+Cross-domain activation crossings are checked by
+[t/1387-isf-cross-domain-activation-handshake-lowering.t](../t/1387-isf-cross-domain-activation-handshake-lowering.t):
+a top-level blocking `(do child)` covered by `(crossings (activation child
+(from SRC)(to DST)))` lowers to per-domain modules plus a top that routes the
+start/done handshake through two generated CDC children, and the schedule report
+exposes the crossing with `kind: "activation"` (carrying `child`,
+`source_domain`/`destination_domain`, `start_signal`/`done_signal`,
+`start_instance`/`start_module`, `done_instance`/`done_module`,
+`outstanding_policy`, `payload`, `top_fsm`) plus per-domain endpoints
+`{ activation, role, start, done }`. Uncovered, declared-but-unused, or
+mis-placed activation crossings, cross-domain `(spawn)`, and nested cross-domain
+`(do)` fail closed.
 The `parse_source(...)` facade method is checked by
 [t/1118-isf-public-parse-source-facade-audit.t](../t/1118-isf-public-parse-source-facade-audit.t)
 to ensure in-memory source text returns a scheduler-consumable actor with the

@@ -2025,10 +2025,9 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
             signal => $crossing->{to}{signal},
         } if exists $groups{$crossing->{to}{domain}};
     }
-    # NOTE: `(activation ...)` crossings are routed by `_emit_multi_domain_top`
-    # directly from `$actor->{crossings}`; their schedule-report metadata (a
-    # distinct shape from the event endpoint summary) is a separate slice, so they
-    # are intentionally NOT added to the event-shaped crossing summaries here.
+    # `(activation ...)` crossings are routed by `_emit_multi_domain_top` directly
+    # from `$actor->{crossings}`; here they are validated and summarized for the
+    # schedule report (a shape distinct from the event endpoint summary).
     #
     # An activation crossing must own a REAL cross-domain activation: the child
     # must live in the destination domain, and some transaction in the source
@@ -2057,6 +2056,36 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
         }
         confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is declared but no transaction in domain '$src' performs a top-level '(do $child)'; an activation crossing must own a real cross-domain activation\n"
             unless $covered;
+
+        my $start_signal = "${child}_start";
+        my $done_signal  = "${child}_done";
+        push @crossing_summaries, {
+            name               => $child,
+            kind               => 'activation',
+            child              => $child,
+            source_domain      => $src,
+            destination_domain => $dst,
+            start_signal       => $start_signal,
+            done_signal        => $done_signal,
+            start_instance     => "${child}_activation_start_cdc",
+            start_module       => "$actor->{actor_name}__cdc_activation_${child}_start",
+            done_instance      => "${child}_activation_done_cdc",
+            done_module        => "$actor->{actor_name}__cdc_activation_${child}_done",
+            outstanding_policy => 'single_outstanding_acknowledged',
+            payload            => 'none',
+        };
+        push @{$groups{$src}{crossings}}, {
+            activation => $child,
+            role       => 'source',
+            start      => $start_signal,
+            done       => $done_signal,
+        } if exists $groups{$src};
+        push @{$groups{$dst}{crossings}}, {
+            activation => $child,
+            role       => 'destination',
+            start      => $start_signal,
+            done       => $done_signal,
+        } if exists $groups{$dst};
     }
 
     my %generated_children = _generated_child_transaction_refs($actor);

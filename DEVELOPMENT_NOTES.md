@@ -33861,3 +33861,32 @@ matter:
 The book-example count gate in `14-feature-backlog.md` is a manual note (38→39);
 `t/1376` itself asserts "all blocks lower," not an exact count, so the note is
 documentation rather than a hard assertion.
+
+## Cross-domain activation `.7` — schedule-report metadata, and why the report shape is distinct (2026-05-31)
+
+`.7` closes the tree by surfacing the activation crossing in the schedule report
+and syncing the downstream-facing specs.
+
+The activation crossing's report shape is deliberately **distinct** from the
+event crossing's. An event crossing is one unidirectional channel
+(`source_signal` → `destination_signal`, with a `ready_signal` and one
+`instance`/`module`). An activation crossing is one declaration that owns **two**
+CDC children — a start synchronizer (SRC→DST) and a done synchronizer (DST→SRC) —
+so its summary carries `child`, `start_signal`/`done_signal`,
+`start_instance`/`start_module`, and `done_instance`/`done_module` instead of the
+single event triple. Forcing it into the event shape would have meant null event
+fields plus losing the dual-CDC identity, so `Emitter::JSON` branches on `kind`
+(`_crossing_event_summary` → `_crossing_activation_summary`) and the per-domain
+endpoint summary branches on the presence of an `activation` key. Event-crossing
+output is byte-for-byte unchanged (the `t/1116`/`t/1255`/`t/1247` audits prove
+it), so the addition is purely additive for any actor that does not declare an
+activation crossing.
+
+The partition records the summary inside the same loop that already validates the
+crossing (child-in-DST + a covering top-level `(do)`), so an unused/mis-placed
+crossing fails closed before any report entry is produced.
+
+With `.7` the whole feature is complete end-to-end: parse → validate → lower
+(dual-CDC) → HDL → book example → schedule report. The remaining cross-domain
+surface (cross-domain `(spawn)`, nested cross-domain `(do)`) is intentionally out
+of this tree and will be picked up as separate frontier work.

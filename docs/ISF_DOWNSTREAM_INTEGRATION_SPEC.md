@@ -426,6 +426,45 @@ Rules:
   absent source/destination resets, and generated CDC child modules omit the
   absent reset ports.
 
+Activation crossing primitive:
+
+```lisp
+(crossings
+  (activation worker (from core) (to bus)))
+```
+
+Rules:
+
+- An activation crossing owns a top-level blocking `(do child)` where `child` is
+  a transaction declared in the destination domain and the calling transaction is
+  in the source domain. The start/done handshake signals are compiler-internal,
+  so only the crossing is declared (not raw event pairs).
+- One activation crossing auto-generates two acknowledged-event CDC children: a
+  `start` synchronizer (source → destination) and a `done` synchronizer
+  (destination → source). Each reuses the no-payload acknowledged single-bit
+  event primitive.
+- The caller awaits the start synchronizer's `ready`, drives a one-cycle
+  `<child>_start` request, and blocks on the `<child>_done` pulse; the child is
+  gated on the start pulse and, on completion, awaits the done synchronizer's
+  `ready` before driving a one-cycle `<child>_done`. At most one activation is
+  outstanding; the `<child>_done` pulse is the acknowledgement. No same-cycle
+  relationship is promised.
+- The schedule report exposes an activation crossing as a `crossings` entry with
+  `kind: "activation"` carrying `child`, `source_domain`, `destination_domain`,
+  `start_signal`/`done_signal`, `start_instance`/`start_module`,
+  `done_instance`/`done_module`, `outstanding_policy`, `payload`, and `top_fsm`.
+  Each participating domain exposes a per-domain endpoint
+  `{ activation, role (source|destination), start, done }`.
+- Generated HDL for an accepted activation crossing emits the two domain modules,
+  the two generated CDC child modules, and the generated top for
+  SystemVerilog/Verilog-family targets. (Multi-domain composition tops carry the
+  same pre-existing `shared_dp_export_*` lint characteristic as event crossings.)
+- Fail-closed boundaries: a cross-domain `(do)` with no covering activation
+  crossing, a declared-but-unused crossing (one whose `child` no transaction
+  `(do)`es), a crossing whose `child` is not in the declared destination domain,
+  cross-domain `(spawn)`, and nested cross-domain `(do)` (inside
+  `repeat`/`when`/`switch`) all fail closed.
+
 ## 8. Interface, Storage, Constants
 
 Interface:

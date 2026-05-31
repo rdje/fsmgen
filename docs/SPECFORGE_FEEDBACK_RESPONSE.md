@@ -538,3 +538,67 @@ closed as an unknown type. Co-declaration is safe and is the supported path.
   example (gated by `t/1376`).
 - [`docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`](ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
   — section 11.6.1 Enum, Type, And Aggregate Boundary.
+
+## 2026-05-31: Cross-Domain Activation Via A Declared Crossing (shipped end-to-end)
+
+A blocking cross-domain `(do child)` — where the calling transaction and `child`
+run in different clock domains — now lowers end-to-end through a declared
+crossing, complementing the shipped event crossing.
+
+Surface:
+
+```lisp
+(crossings
+  (activation worker (from core) (to bus)))
+```
+
+What SPECFORGE can plan around now:
+
+- `(crossings (activation child (from SRC)(to DST)))` owns a top-level blocking
+  `(do child)` where `child` is a transaction in domain `DST` and the caller is
+  in `SRC`. The start/done handshake signals are compiler-internal; only the
+  crossing is declared.
+- One activation crossing auto-generates **two** acknowledged single-bit event
+  CDC children: a `start` synchronizer (SRC → DST) and a `done` synchronizer
+  (DST → SRC). Each reuses the existing `FSMGEN_ISF_CDC_EVENT` primitive,
+  generated module shape, and reset metadata.
+- Lowering partitions the actor into `<actor>__domain_<SRC>.fsm`,
+  `<actor>__domain_<DST>.fsm`, and `<actor>_top.fsm`; plain HDL generation emits
+  those two domain modules, both CDC child modules
+  (`<actor>__cdc_activation_<child>_{start,done}`), and the top. Per-domain
+  modules pass external Verilator lint + yosys synthesis; the composition top
+  carries the same pre-existing `shared_dp_export_*` lint characteristic as
+  multi-domain event crossings.
+- The schedule report (`report(...)` / `--emit-schedule-json`) exposes the
+  crossing as a `crossings` entry with `kind: "activation"` carrying `child`,
+  `source_domain`, `destination_domain`, `start_signal`, `done_signal`,
+  `start_instance`, `start_module`, `done_instance`, `done_module`,
+  `outstanding_policy` (`single_outstanding_acknowledged`), `payload` (`none`),
+  and `top_fsm`. Each participating domain carries a per-domain endpoint
+  `{ activation, role: source|destination, start, done }`.
+- Runtime semantics: at most one activation outstanding; the caller awaits the
+  start synchronizer's `ready`, pulses a one-cycle request, and blocks on the
+  done pulse; the child is gated on the start pulse and acknowledges by pulsing
+  done after awaiting the done synchronizer's `ready`. No same-cycle relationship
+  is promised; there is no data payload on the activation handshake.
+
+Fail-closed boundaries (unchanged philosophy — a declared crossing must own the
+path): a cross-domain `(do)` with no covering activation crossing, a
+declared-but-unused crossing, a crossing whose `child` is not in the declared
+destination domain, cross-domain `(spawn)`, and nested cross-domain `(do)`
+(inside `repeat`/`when`/`switch`) all fail closed.
+
+Verification: [t/1387-isf-cross-domain-activation-handshake-lowering.t](../t/1387-isf-cross-domain-activation-handshake-lowering.t)
+(end-to-end lowering through both CDC children, await-ready handshake, schedule
+report metadata, and the fail-closed cases); the runnable book example in
+[docs/book/src/13a-actor-interface.md](book/src/13a-actor-interface.md) lowers
+and generates HDL; full `./bin/ci-regression isf` passes.
+
+Updated documents:
+
+- [`docs/book/src/13a-actor-interface.md`](book/src/13a-actor-interface.md) —
+  Activation Crossing section + runnable example.
+- [`docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`](ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
+  — activation crossing primitive rules.
+- [`docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`](ISF_PUBLIC_INTERFACE_CONTRACT.md) —
+  activation crossing report shape + test reference.

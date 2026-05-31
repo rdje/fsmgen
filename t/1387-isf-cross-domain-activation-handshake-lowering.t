@@ -7,6 +7,8 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use JSON::PP qw(decode_json);
+
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::LoweringIR;
@@ -284,6 +286,69 @@ subtest 'multi-domain top emits and wires the two activation CDC children' => su
     like($top, qr/\(\?rtlif:act__cdc_activation_worker_start[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the start CDC interface artifact');
     like($top, qr/\(\?rtlif:act__cdc_activation_worker_done[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the done CDC interface artifact');
     like($top, qr/\(FSMGEN_ISF_CDC_EVENT 0d1\)/, 'activation CDC children reuse the acknowledged-event primitive');
+};
+
+subtest 'the schedule report exposes activation crossing metadata' => sub {
+    my $actor = parse_source(<<'ISF', 'activation-report');
+(actor xdom_report
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus (clock bus_clk) (reset bus_rst_n)))
+  (crossings
+    (activation worker (from core) (to bus)))
+  (interface
+    (input start (domain core))
+    (output done (domain core))
+    (input din (width 8) (domain bus))
+    (output result (width 8) (domain bus))
+    (output worker_complete (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (do worker)
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (sample din as snap)
+    (update result snap)
+    (complete worker_complete)))
+ISF
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+
+    is_deeply(
+        $report->{crossings},
+        [
+            {
+                name               => 'worker',
+                kind               => 'activation',
+                child              => 'worker',
+                source_domain      => 'core',
+                destination_domain => 'bus',
+                start_signal       => 'worker_start',
+                done_signal        => 'worker_done',
+                start_instance     => 'worker_activation_start_cdc',
+                start_module       => 'xdom_report__cdc_activation_worker_start',
+                done_instance      => 'worker_activation_done_cdc',
+                done_module        => 'xdom_report__cdc_activation_worker_done',
+                outstanding_policy => 'single_outstanding_acknowledged',
+                payload            => 'none',
+                top_fsm            => 'xdom_report_top.fsm',
+            },
+        ],
+        'top-level report exposes the activation crossing with its dual-CDC metadata',
+    );
+
+    my %domain = map { $_->{name} => $_ } @{$report->{clock_domains}};
+    is_deeply(
+        $domain{core}{crossings},
+        [{ activation => 'worker', role => 'source', start => 'worker_start', done => 'worker_done' }],
+        'source-domain report exposes the activation source endpoint',
+    );
+    is_deeply(
+        $domain{bus}{crossings},
+        [{ activation => 'worker', role => 'destination', start => 'worker_start', done => 'worker_done' }],
+        'destination-domain report exposes the activation destination endpoint',
+    );
 };
 
 done_testing();
