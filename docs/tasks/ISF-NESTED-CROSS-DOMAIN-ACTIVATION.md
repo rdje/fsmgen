@@ -54,14 +54,44 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   genuinely-unused case. Mirrors the project's targeted-rejection-diagnostic
   pattern. Lock with a `t/138x` diagnostic test; both the unused and the
   nested-deferred messages asserted.
-- `.3`+ (the substantial work) — **support** nested cross-domain `(do)`: lift the
-  top-level-only gate, and make the caller-side restructure in
-  `_wire_external_activations` correctly find and rewrite the nested do-state
-  (which sits inside the `when`/`switch`/`repeat` lowered region, alongside the
-  branch/loop machinery) without disturbing the surrounding control flow. Verify
-  end-to-end lowering + HDL for each nesting context. Likely several slices
-  (when-body, switch-branch, repeat-body), each with goldens + HDL evidence,
-  matching the incremental nesting frontier used for same-domain activation.
+- `.3`+ (the substantial work) — **support** nested cross-domain `(do)`. Scope
+  finding from the `.3` design (investigated `2026-05-31`), see Decisions:
+
+  - `do`/`spawn` are supported clause keywords ONLY in the `transaction`
+    (top-level) and `repeat` contexts (`%SUPPORTED_TRANSACTION_CLAUSES`). A plain
+    `(do)` directly in a `when`/`switch`/`while`/`until` body is unsupported **even
+    same-domain** (rejected at `_validate_supported_transaction_clauses`). So
+    "nested `(do)`" means "inside a `repeat` body" (a top-level repeat, or a repeat
+    nested in a when/switch/while/until). Plain when/switch/while/until-body
+    cross-domain `(do)` is therefore N/A for this tree (it would require a
+    same-domain when/switch-body `(do)` feature first — a separate lane); `.2`
+    already defers it accurately.
+  - So `.3`+ = **cross-domain REPEAT-BODY `(do worker)`** (the local/sibling model
+    the activation crossing covers), routed through the crossing's two CDC children
+    per loop iteration. A blocking repeat-body `(do)` blocks each iteration until
+    `done`, so it is single-outstanding per iteration → the shipped await-`ready` +
+    one-cycle-`<start>` + dual-CDC handshake applies per iteration, and the DEST
+    worker returns to idle between iterations (callee terminal → idle), ready for
+    the next `<start>` pulse.
+  - Caller restructure feasibility: `_wire_external_activations` (caller) finds the
+    await-state asserting `<start>` and inserts `await <start>_ready` → one-cycle
+    `<start>` before it, redirecting predecessors. Inside a `repeat` region the
+    do-state's predecessor is the loop entry and the `repeat_check` loops back to
+    the do-state; the existing "redirect all transitions targeting the do-state
+    (except from the request state) to the ready-await" rule would ALSO redirect
+    the `repeat_check` loop-back to the ready-await — exactly right (each iteration
+    re-runs the full handshake). So the restructure likely applies in the repeat
+    region with little/no change — to be verified empirically in the first
+    implementation sub-slice.
+  - Gate-lifting: the validator relaxation (currently `$label eq 'transaction
+    body'`) and the partition deferral (`_activation_do_use_context` nested →
+    confess) must be lifted for the `repeat` body context specifically, while
+    keeping plain when/switch/while/until-body `(do)` deferred.
+  - Sub-slices (mirroring the same-domain repeat-body frontier), each with a golden
+    `.fsm` + HDL evidence: `.3` top-level repeat-body; `.4` when→repeat;
+    `.5` switch→repeat; `.6` while/until→repeat; `.7` deeper-nested
+    (`when⁺→repeat`, `switch→when⁺→repeat`). Consolidate if the restructure
+    generalizes across contexts.
 
 ## Non-Goals
 
@@ -108,7 +138,8 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (`2c081347`). |
 | 2 | `.2` | `done` | Precise nested-deferred diagnostic shipped (`_activation_do_use_context` recursive scan; `t/1387` covers when/switch/repeat + the genuinely-unused case). |
-| 3 | `.3`+ | `pending` | Support nested cross-domain `(do)` per context (when/switch/repeat), with goldens + HDL. |
+| 3 | `.3` | `pending` | Support **top-level repeat-body** cross-domain `(do worker)` (the first supported nested context): lift the validator + partition gate for the `repeat` context, verify the caller restructure applies in the repeat region, route the per-iteration handshake through the dual-CDC; golden `.fsm` + HDL. |
+| 4 | `.4`–`.7` | `pending` | Remaining repeat contexts: `when→repeat`, `switch→repeat`, `while/until→repeat`, deeper-nested. (Plain when/switch/while/until-body `(do)` is N/A — unsupported even same-domain.) |
 
 ## Decisions
 
@@ -117,6 +148,15 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   nested cross-domain `(do)` is misleading (reports "unused" when it is
   nested-use-deferred), and an accurate diagnostic is independently valuable and
   low-risk.
+- `2026-05-31` (`.3` design): scoped `.3`+ to **cross-domain repeat-body `(do)`
+  only**. `%SUPPORTED_TRANSACTION_CLAUSES` allows `do`/`spawn` only in the
+  `transaction` and `repeat` contexts, so a plain `(do)` in a when/switch/while/
+  until body is unsupported even same-domain (confirmed: rejected at
+  `_validate_supported_transaction_clauses` with "unsupported '(do ...)' clause in
+  when body"). Supporting cross-domain plain when/switch-body `(do)` would require
+  building same-domain support for it first — out of this tree (a separate lane).
+  The viable nested-do context is the `repeat` body, and there the per-iteration
+  single-outstanding blocking handshake fits the shipped dual-CDC handshake.
 
 ## Open Questions
 
@@ -161,3 +201,15 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   `_live_child_action_refs_from_transaction_clauses`, which only surfaced
   repeat-body do-refs (so when/switch nested uses were previously misreported as
   unused).
+- `2026-05-31`: `.3` nested-support DESIGN recorded. Investigated the supported
+  nested-`(do)` surface and found `do`/`spawn` are allowed only in the
+  `transaction` and `repeat` clause contexts (`%SUPPORTED_TRANSACTION_CLAUSES`);
+  plain when/switch/while/until-body `(do)` is unsupported even same-domain. So
+  `.3`+ is scoped to **cross-domain repeat-body `(do)`** (per-iteration handshake
+  through the dual-CDC; the caller restructure is expected to apply in the repeat
+  region with little change). Re-scoped `.3`+ into `.3` top-level repeat-body and
+  `.4`–`.7` for the remaining repeat contexts. NOTE: the do/spawn clause-context
+  limitation has no fundamental semantic rationale (blocking `await` IS allowed in
+  those contexts) — it is an implementation-scoping deferral, tracked separately
+  for mdBook documentation and a possible future "conditional `(do)`" language
+  feature aligned with the rich-high-level-language goal.

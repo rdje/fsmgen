@@ -38370,3 +38370,22 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   misreported-as-unused). Broad sweep (11 files, 451) PASS; full ci-regression isf
   pending green at commit. Frontier `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3` (the
   substantial nested SUPPORT work, per context, with goldens + HDL).
+
+## 2026-05-31: ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3 design recorded (repeat-only scoping)
+- Investigated the supported nested-`(do)` surface: `%SUPPORTED_TRANSACTION_CLAUSES`
+  allows `do`/`spawn` ONLY in `transaction` (top-level) and `repeat` contexts.
+  Plain `(do)` directly in when/switch/while/until is unsupported EVEN SAME-DOMAIN
+  (rejected at `_validate_supported_transaction_clauses`: "unsupported '(do ...)'
+  clause in when body"). So nested cross-domain do reduces to REPEAT-BODY do.
+- `.3`+ re-scoped: `.3` top-level repeat-body cross-domain `(do worker)` (per-
+  iteration handshake through the dual-CDC; caller restructure expected to apply
+  in the repeat region since `repeat_check` loop-back gets redirected to the
+  ready-await), `.4`–`.7` remaining repeat contexts. Plain when/switch-body
+  cross-domain do is N/A (no same-domain support).
+- KEY FINDING (user asked): the do/spawn clause-context limitation has NO
+  fundamental semantic rationale — blocking `await` IS allowed in when/switch/
+  while/until bodies, so blocking-ness isn't the obstacle; `do`/`spawn` lowering
+  just wasn't wired into `_expand_when`/`_expand_switch` body handling (only
+  top-level + repeat). It's an implementation-scoping deferral. User wants it (a)
+  documented in mdBook, and it aligns with the "ISF as rich high-level language"
+  vision to eventually lift it (conditional one-shot `(do)`).
