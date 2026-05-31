@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-CHILD-ACTIVATION-CLAUSE-CONTEXT-DOC`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14` (ISF — book ↔ codebase truth)
 - Created: `2026-05-31`
 - Last updated: `2026-05-31`
@@ -82,10 +82,12 @@ documentation tree.
 
 ## Current Frontier
 
+The tree is complete (`.1`/`.2` done).
+
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `.1` | `done` | Selection/design (this commit). |
-| 2 | `.2` | `pending` | Add the book note + cross-reference; run the book gates. |
+| 1 | `.1` | `done` | Selection/design. |
+| 2 | `.2` | `done` | Book note ("Where Child Activations Are Allowed" in `13d`) + `13b` cross-reference shipped; workaround verified to lower; book gates PASS. |
 
 ## Decisions
 
@@ -107,12 +109,14 @@ documentation tree.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-31` | `.1` | `git diff --check` | `PASS` |
+| `2026-05-31` | `.2` | `mdbook build docs/book`; `prove -Iperl t/1376 t/1305 t/1304 t/1307 t/1332 t/1303` (6 files, 874) PASS; workaround `(when cond (repeat 1 (do worker)))` verified to lower; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-CHILD-ACTIVATION-CLAUSE-CONTEXT-DOC.1: select` | `ship commit (this slice)` |
+| `.1` | `ISF-CHILD-ACTIVATION-CLAUSE-CONTEXT-DOC.1: select` | (committed) |
+| `.2` | `ISF-CHILD-ACTIVATION-CLAUSE-CONTEXT-DOC.2: document (do)/(spawn) clause-context limitation in mdBook` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -121,3 +125,8 @@ documentation tree.
   its rationale. Recorded the ground truth (`%SUPPORTED_TRANSACTION_CLAUSES`),
   the objective rationale (no fundamental reason — implementation-scoping
   deferral; blocking `await` is allowed in those contexts), and the doc plan.
+- `2026-05-31`: `.2` shipped; tree complete. Added a "Where Child Activations Are
+  Allowed" section to `13d-control-flow.md` (the supported/unsupported contexts
+  for `do`/`spawn`/`await_all`/`await_any`, the `(repeat ...)` workaround verified
+  to lower, the implementation-scoping rationale, and the cross-domain corollary)
+  and a cross-reference from the `13b` activation surface. Book gates pass.

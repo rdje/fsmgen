@@ -124,6 +124,39 @@ fallthrough target in the generated `.fsm`.
   (complete done))
 ```
 
+## Where Child Activations Are Allowed
+
+Child-activation clauses — `(do ...)`, `(spawn ...)`, `(await_all ...)`, and
+`(await_any ...)` — are accepted only as **top-level transaction clauses** or
+**inside a `repeat` body**. They are **not** accepted directly inside a `when`,
+`switch`, `while`, or `until` body:
+
+```text
+(when cond (do worker))        ;; rejected: unsupported (do ...) clause in when body
+(switch sel (0 (do worker)))   ;; rejected: unsupported (do ...) clause in switch branch
+```
+
+To activate a child conditionally today, wrap the activation in a `repeat` (which
+those bodies do accept), for example a one-iteration repeat:
+
+```text
+(when cond (repeat 1 (do worker)))   ;; accepted: repeat bodies accept (do ...)
+```
+
+This is an **implementation-scoping limitation, not a fundamental one**: a `(do)`
+is a blocking activation, and blocking constructs are otherwise allowed in those
+bodies — `(await ...)` is accepted inside `when` / `switch` / `while` / `until`.
+The child-activation lowering is currently wired into the top-level and
+`repeat`-body paths (single activation and looped activation); a conditional
+one-shot `(do)` directly in a branch body is not yet lowered. Lifting this
+restriction is future work.
+
+The same boundary applies across clock domains: a cross-domain `(do child)`
+through a `(crossings (activation ...))` is supported only top-level (see
+[Activation Crossing](13a-actor-interface.md#activation-crossing)); a nested
+cross-domain `(do)` fails closed with a "nested cross-domain activation remains
+deferred" diagnostic.
+
 ## Nested Control Flow
 
 The shipped nested-control subset is explicit.

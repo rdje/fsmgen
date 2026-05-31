@@ -38389,3 +38389,16 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   top-level + repeat). It's an implementation-scoping deferral. User wants it (a)
   documented in mdBook, and it aligns with the "ISF as rich high-level language"
   vision to eventually lift it (conditional one-shot `(do)`).
+
+## 2026-05-31: do/spawn clause-context limitation documented in mdBook (ISF-CHILD-ACTIVATION-CLAUSE-CONTEXT-DOC, done)
+- User asked for the rationale + that the limitation be documented. Answer: NO
+  fundamental rationale — blocking `(await)` is allowed in when/switch/while/until
+  bodies, so blocking-ness isn't the obstacle; do/spawn lowering just isn't wired
+  into the conditional branch-body path (only top-level + repeat). It's an
+  implementation-scoping deferral.
+- Documented in `13d-control-flow.md` ("Where Child Activations Are Allowed":
+  supported/unsupported contexts, the `(repeat 1 (do ...))` workaround verified to
+  lower, the rationale, the cross-domain corollary) + a `13b` cross-ref. Book
+  gates PASS. Tree closed.
+- This limitation is a candidate to LIFT for the "ISF as rich high-level language"
+  vision (conditional one-shot `(do)` in branch bodies) — a future feature tree.

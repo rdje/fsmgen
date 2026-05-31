@@ -105,6 +105,12 @@ routes the start/done handshake through CDC synchronizers. See
 [Activation Crossing](13a-actor-interface.md#activation-crossing). A cross-domain
 `(do)` without a covering crossing fails closed.
 
+`(do ...)`, `(spawn ...)`, `(await_all ...)`, and `(await_any ...)` are accepted
+only as top-level transaction clauses or inside a `repeat` body — not directly
+inside a `when` / `switch` / `while` / `until` body. See
+[Where Child Activations Are Allowed](13d-control-flow.md#where-child-activations-are-allowed)
+for the boundary, the `(repeat ...)` workaround, and the rationale.
+
 ## How Transactions Become Hardware
 
 ```
