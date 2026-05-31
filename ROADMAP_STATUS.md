@@ -14872,3 +14872,12 @@ Exit criteria:
   tree when reached; (4) **Advance ATL** (actor networks) → partly owned by
   `ISF-ACTOR-NETWORK-ORCHESTRATION` + `ISF-ATL-*` trees. PNT proceeds through
   these autonomously, each task-tree-owned before code.
+- `R14`: `ISF-CONDITIONAL-CHILD-ACTIVATION.2` shipped (2026-05-31; language-richness
+  theme #1, first implementation slice) — a plain local `(do child)` now lowers
+  directly in a `when` body (conditional one-shot activation, no `(repeat 1 ...)`
+  wrapping). `do` added to the `when` clause-context allow-list; `_expand_when`
+  emits the do-state (generated/bound deferred via `_assert_when_body_local_do`);
+  `_push_nested_branch_repeat_refs` surfaces the branch-body do so the sibling is
+  gated. Generated/bound when-body do + switch/while/until-body do still fail
+  closed. 13d/13b updated (supported surface + runnable example; book examples
+  39->40); `t/1388`; `--verify-hdl` verilator+yosys PASS. Frontier `.3`.

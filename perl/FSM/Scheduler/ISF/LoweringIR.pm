@@ -23,7 +23,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
     when => {
         map { $_ => 1 } qw(
             drive await sample complete repeat update set shift_left shift_right
-            assemble extract when store load wait
+            assemble extract when store load wait do
         )
     },
     switch => {
@@ -1759,6 +1759,19 @@ sub _push_nested_branch_repeat_refs {
         next unless ref($bc) eq 'ARRAY' && @$bc;
         next unless defined($bc->[0]) && !ref($bc->[0]);
         my $kw = $bc->[0];
+        if ($kw eq 'do' || $kw eq 'spawn') {
+            # A direct `(do child)`/`(spawn child)` in a branch body (ISF-
+            # CONDITIONAL-CHILD-ACTIVATION). Surfaced so `_wire_do_children` gates
+            # the local sibling child and `_validate_child_transaction_refs` sees
+            # it. The clause-context allow-list governs which contexts actually
+            # lower (e.g. only `when` accepts `do` so far).
+            push @$refs, {
+                clause  => $bc,
+                keyword => $kw,
+                label   => $label,
+            };
+            next;
+        }
         if ($kw eq 'repeat') {
             my $static_zero_repeat = _repeat_clause_is_static_zero_for_refs($bc, $actor, $tx_name);
             next if $options->{skip_static_zero_repeats} && $static_zero_repeat;
@@ -8276,6 +8289,24 @@ sub _activation_output_assignments {
     } grep { $_->{role} eq 'output' } @$bindings;
 }
 sub _ir_when     { my ($cl,$tn,$i)=@_; {name=>"${tn}_when_$i",kind=>'branch',condition=>$cl->[1],body_clauses=>[@{$cl}[2..$#$cl]],assignments=>[],transitions=>[]} }
+# ISF-CONDITIONAL-CHILD-ACTIVATION.2: a `(do child)` directly in a branch/loop
+# body is supported only for the LOCAL (sibling) form for now — a plain
+# `(do child)` with no `(params ...)` overrides and no `(bind ...)`, whose target
+# is not generated elsewhere. Generated / bound / cross-domain conditional
+# activation is deferred to later slices and fails closed here.
+sub _assert_when_body_local_do {
+    my ($clause, $tn, $label, $generated_children) = @_;
+    my $target = $clause->[1];
+    my $generated_or_bound = grep {
+        ref($_) eq 'ARRAY' && @$_ && defined($_->[0]) && !ref($_->[0])
+            && ($_->[0] eq 'params' || $_->[0] eq 'bind')
+    } @{$clause}[2 .. $#$clause];
+    confess "Transaction '$tn': $label generated/bound '(do " . ($target // '?') . " ...)' is not yet supported; only a plain local '(do child)' is supported directly in a $label (generated or bound conditional activation is deferred)\n"
+        if $generated_or_bound
+            || (ref($generated_children) eq 'HASH' && defined($target) && $generated_children->{$target});
+    return 1;
+}
+
 sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref)=@_; my @s; my $bstate=_ir_when($cl,$tn,$$ir++); push @s,$bstate; my @body_states; my @lp;
     for my $bc(@{$bstate->{body_clauses}}){next unless ref($bc)eq'ARRAY';my$bk=$bc->[0];
         if($bk eq'drive'){push @body_states,_ir_transaction_drive_clause($bc,$tn,$$ir++,$drives,[splice @lp])}
@@ -8295,6 +8326,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
             }
         }
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
+        elsif($bk eq'do'){_assert_when_body_local_do($bc,$tn,'when body',$generated_children);_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_do($bc,$tn,$$ir++,undef,'when body')}
         elsif($bk eq'repeat'){my($rs,$rc,$rw,$rdw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$rs;_register_repeat_counters($counters,$storage_roles,$rc,$rw,$rdw)}
         elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths,$actor)}
         elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}

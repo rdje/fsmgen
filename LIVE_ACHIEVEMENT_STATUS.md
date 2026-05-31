@@ -16508,3 +16508,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   from the genuinely-unused message; top-level still lowers. New
   `_activation_do_use_context` recursive clause scan; `t/1387` now 9 subtests.
   Frontier `.3` (nested SUPPORT per context, goldens + HDL).
+- `.2` (ISF-CONDITIONAL-CHILD-ACTIVATION) shipped (2026-05-31; language-richness
+  theme #1, first slice): a plain local `(do child)` now lowers directly in a
+  `when` body (conditional one-shot activation). Allow-list + `_expand_when` do
+  branch + branch-body do collector + sibling gating; generated/bound + switch/
+  while/until deferred. 13d/13b updated (supported surface + runnable example,
+  39->40 examples); `t/1388`; --verify-hdl verilator+yosys PASS. Frontier `.3`.

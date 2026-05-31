@@ -38416,3 +38416,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `_expand_loop_body` have no do/spawn branch; the activation-ref collectors don't
   surface when/switch/loop-body do/spawn. No fundamental obstacle (blocking await
   is allowed there). `.2` = wire when-body local `(do)` through the full path.
+
+## 2026-05-31: ISF-CONDITIONAL-CHILD-ACTIVATION.2 shipped — when-body local (do) (theme #1 first slice)
+- A plain local `(do child)` now lowers directly in a `when` body (conditional
+  one-shot activation). Edits in LoweringIR.pm: (1) added `do` to the `when`
+  clause-context allow-list; (2) `_expand_when` gained a `do` branch emitting the
+  `_ir_do` state, with `_assert_when_body_local_do` deferring generated/bound
+  forms; (3) `_push_nested_branch_repeat_refs` now surfaces a direct branch-body
+  `(do)`/`(spawn)` so `_wire_do_children` gates the sibling + validation sees it.
+- The when branch guards the do-state; it asserts `<child>_start`/blocks on
+  `<child>_done`; the sibling child is gated on its start (when it has an entry).
+  Same semantics as top-level local `(do)`. Generated/bound when-body do +
+  switch/while/until-body do still fail closed (later slices).
+- Updated 13d/13b (limitation note -> supported-surface + runnable example;
+  book-example count 39->40). `t/1388` (3 subtests); --verify-hdl verilator+yosys
+  PASS. Frontier `ISF-CONDITIONAL-CHILD-ACTIVATION.3` (when-body generated/bound do).

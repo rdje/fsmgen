@@ -127,32 +127,56 @@ fallthrough target in the generated `.fsm`.
 ## Where Child Activations Are Allowed
 
 Child-activation clauses — `(do ...)`, `(spawn ...)`, `(await_all ...)`, and
-`(await_any ...)` — are accepted only as **top-level transaction clauses** or
-**inside a `repeat` body**. They are **not** accepted directly inside a `when`,
-`switch`, `while`, or `until` body:
+`(await_any ...)` — are accepted as **top-level transaction clauses** and **inside
+a `repeat` body**. In addition, a **plain local `(do child)`** (no `(params ...)`
+overrides, no `(bind ...)`, target not generated elsewhere) is accepted **directly
+inside a `when` body** — a conditional one-shot activation:
 
-```text
-(when cond (do worker))        ;; rejected: unsupported (do ...) clause in when body
-(switch sel (0 (do worker)))   ;; rejected: unsupported (do ...) clause in switch branch
+```lisp
+(actor conditional_activation
+  (interface
+    (input start)
+    (input cond)
+    (input go)
+    (input din (width 8))
+    (output done)
+    (output result (width 8))
+    (output worker_done))
+  (transaction parent
+    (on start)
+    (when cond
+      (do worker))          ;; accepted: conditional one-shot activation
+    (complete done))
+  (transaction worker
+    (on go)
+    (update result din)
+    (complete worker_done)))
 ```
 
-To activate a child conditionally today, wrap the activation in a `repeat` (which
-those bodies do accept), for example a one-iteration repeat:
+The `when` branch guards the do-state; when `cond` holds, the do-state asserts the
+child's start handshake and blocks on its done handshake, exactly like a top-level
+`(do child)`.
+
+Still deferred (each fails closed with a targeted diagnostic):
 
 ```text
-(when cond (repeat 1 (do worker)))   ;; accepted: repeat bodies accept (do ...)
+(when cond (do w (params (W 8))))   ;; deferred: generated/bound when-body do
+(when cond (do w (bind (input a r))));; deferred: generated/bound when-body do
+(switch sel (0 (do worker)))        ;; rejected: (do) not yet accepted in a switch branch
+(while c (do worker))               ;; rejected: (do) not yet accepted in a while/until body
 ```
 
-This is an **implementation-scoping limitation, not a fundamental one**: a `(do)`
-is a blocking activation, and blocking constructs are otherwise allowed in those
-bodies — `(await ...)` is accepted inside `when` / `switch` / `while` / `until`.
-The child-activation lowering is currently wired into the top-level and
-`repeat`-body paths (single activation and looped activation); a conditional
-one-shot `(do)` directly in a branch body is not yet lowered. Lifting this
-restriction is future work.
+For the still-unsupported contexts, wrap the activation in a `repeat` (which those
+bodies accept), e.g. `(switch sel (0 (repeat 1 (do worker))))`.
 
-The same boundary applies across clock domains: a cross-domain `(do child)`
-through a `(crossings (activation ...))` is supported only top-level (see
+None of these gaps is fundamental: a `(do)` is a blocking activation, and blocking
+constructs are otherwise allowed in those bodies — `(await ...)` is accepted inside
+`when` / `switch` / `while` / `until`. The remaining gaps are implementation
+scoping: the child-activation lowering is being extended into the conditional
+branch/loop bodies incrementally (local when-body `(do)` first).
+
+Across clock domains the same staging applies: a cross-domain `(do child)` through
+a `(crossings (activation ...))` is supported top-level (see
 [Activation Crossing](13a-actor-interface.md#activation-crossing)); a nested
 cross-domain `(do)` fails closed with a "nested cross-domain activation remains
 deferred" diagnostic.

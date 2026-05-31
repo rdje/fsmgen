@@ -98,15 +98,23 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
   Goal: `Select; record ground truth (allow-list + expander gap + collector gap) + design + slice plan.`
   Acceptance: `Task tree committed before any code change.`
   Verification: `git diff --check`
+  Commit: (committed)
+
+- ID: `ISF-CONDITIONAL-CHILD-ACTIVATION.2`
+  Status: `done`
+  Goal: `Support a plain local (do child) directly in a when body (conditional one-shot activation).`
+  Acceptance: `(do child) accepted in the when allow-list; _expand_when emits the do-state (asserting <child>_start, blocking on <child>_done) and the collector surfaces the when-body do so _wire_do_children gates the sibling; generated/bound when-body do and switch/while/until-body do still fail closed; HDL generates (verilator+yosys); book reflects the new surface (13d/13b updated, runnable example lowers); t/1388 + book gates pass.`
+  Verification: `prove -Iperl t/1388 (3 subtests) t/1376 (40) t/1305 t/1304 t/1307 + when/clock-domain/do/spawn sweep (12 files, 551) PASS; full ./bin/ci-regression isf --no-book PASS; per-actor --verify-hdl (verilator_lint+yosys_synthesis PASS); perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `.1` | `done` | Selection/design (this commit). |
-| 2 | `.2` | `pending` | when-body local `(do child)` — the simplest concrete context; establishes the expander + collector + validation pattern the later contexts reuse. |
-| 3 | `.3`–`.7` | `pending` | generated do, switch, while/until, spawn+drain, docs+examples. |
+| 1 | `.1` | `done` | Selection/design. |
+| 2 | `.2` | `done` | when-body local `(do child)` shipped (allow-list + `_expand_when` do branch + collector + `_wire_do_children` gating); generated/bound + switch/while/until deferred; 13d/13b updated; `t/1388`. |
+| 3 | `.3` | `pending` | when-body generated `(do child (params ...))` / bound `(do)`. |
+| 4 | `.4`–`.7` | `pending` | switch-branch, while/until, spawn+drain, docs/examples sweep. |
 
 ## Decisions
 
@@ -130,12 +138,14 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-31` | `.1` | `git diff --check` | `PASS` |
+| `2026-05-31` | `.2` | `prove -Iperl t/1388` (3 subtests) `t/1376` (40 examples) `t/1305 t/1304 t/1307` + when/clock-domain/do/spawn sweep (12 files, 551) PASS; full `./bin/ci-regression isf --no-book` PASS; `--verify-hdl` (verilator_lint+yosys_synthesis PASS); `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-CONDITIONAL-CHILD-ACTIVATION.1: select` | `ship commit (this slice)` |
+| `.1` | `ISF-CONDITIONAL-CHILD-ACTIVATION.1: select` | (committed) |
+| `.2` | `ISF-CONDITIONAL-CHILD-ACTIVATION.2: when-body local (do child) (conditional one-shot activation)` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -143,3 +153,17 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
   `(do)`/`(spawn)` clause-context limitation documented by
   `ISF-CHILD-ACTIVATION-CLAUSE-CONTEXT-DOC`). Recorded the allow-list/expander/
   collector gaps and the per-context slice plan.
+- `2026-05-31`: `.2` shipped — a plain local `(do child)` now lowers directly in a
+  `when` body. Added `do` to the `when` clause-context allow-list; added a `do`
+  branch to `_expand_when` (emits the `_ir_do` state in the branch region, with
+  `_assert_when_body_local_do` deferring generated/bound forms); extended
+  `_push_nested_branch_repeat_refs` to surface a direct branch-body `(do)`/`(spawn)`
+  so `_wire_do_children` gates the sibling child and `_validate_child_transaction_refs`
+  sees it. The when branch guards the do-state (`?cond (=1 -> do)`), which asserts
+  `<child>_start` and blocks on `<child>_done`; the sibling child is gated on its
+  start handshake (when it has an entry state) — same semantics as a top-level
+  local `(do)`. Generated/bound when-body `(do)` and `(do)` in switch/while/until
+  bodies still fail closed (deferred to later slices). Updated `13d`/`13b` (the
+  limitation note becomes the supported-surface description + a runnable example)
+  and bumped the book-example count (39→40). `t/1388` locks it; full
+  `ci-regression isf` + `--verify-hdl` (verilator+yosys) PASS.

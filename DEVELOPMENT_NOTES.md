@@ -33934,3 +33934,34 @@ top-level vs nested, naming the nesting container. The lesson: for an accurate
 *diagnostic*, scan the authored clause tree directly rather than borrowing a
 collector built for a different (activation-lowering) purpose, whose coverage is
 intentionally narrower.
+
+## Conditional child activation `.2` — when-body local (do) (2026-05-31)
+
+First slice of language-richness theme #1 (make ISF feel like a language: activate
+a child conditionally without wrapping in a `repeat`). The change is small and
+additive because conditional one-shot activation reuses the existing local-`(do)`
+machinery; only the wiring was missing:
+
+- The `when` clause-context allow-list gains `do`.
+- `_expand_when` emits the `_ir_do` await-state in the branch region (the `when`
+  branch already guards entry into the body, so the do-state is naturally
+  conditional). `_assert_when_body_local_do` defers the generated/bound forms so
+  only the local sibling case lowers in this slice.
+- `_push_nested_branch_repeat_refs` (the branch-body activation-ref collector,
+  previously repeat-only) now surfaces a direct branch-body `(do)`/`(spawn)`. This
+  feeds `_wire_do_children` (which gates the sibling child on `<child>_start`) and
+  `_validate_child_transaction_refs`. It is additive for existing actors (which
+  had no branch-body `(do)`, that being rejected), so the broad regression is
+  unaffected; the clause-context allow-list still governs which contexts actually
+  lower (only `when` accepts `do` so far — switch/while/until-body `(do)` stays
+  rejected).
+
+The sibling child is gated only if it has an entry state (an `(on ...)` or
+equivalent) — identical to top-level local `(do)`; an entry-less sibling
+free-runs and the do just waits on its completion. That is pre-existing local-`(do)`
+behavior, not introduced here.
+
+Critically for the mdBook truth doctrine: because `.2` changes the user-facing
+surface, the `13d`/`13b` notes were updated in the same slice (the "limitation"
+note became the "supported surface" description), so the book never drifts from
+the codebase.
