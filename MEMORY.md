@@ -38622,3 +38622,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   pass stamps loop_exit_target automatically. Post-hoc safety: any loop_exit_when
   without a loop_exit_target (a when NOT in a loop) → confess "only valid inside a
   while/until loop body". t/1389 (6 subtests). Frontier .4 (report metadata), .5 docs.
+
+## 2026-06-01: ISF-PROCEDURES tree opened (select) — reusable (proc) with inline OR handshake calls
+- New theme #3 construct per user direction (implement BOTH calling conventions,
+  pickable cleanly). `(proc NAME (params) body)` defines a reusable parameterized
+  block; `(call NAME actuals)` = INLINE substitution (default, macro-expand at call
+  site, uniquify proc-locals, zero runtime cost); `(call NAME actuals as INST)` =
+  HANDSHAKE (synthesize one-shot block + (do)-style start/done + arg ports; reuse
+  child-activation substrate). `as INST` is the clean discriminator (mirrors spawn).
+- ISF/IAL1 construct (desugars to existing primitives) — NOT a higher layer. Recursion
+  / dynamic dispatch fail closed (no hardware call stack). Build INLINE first (.2, the
+  new pre-scheduling expansion); handshake (.4) reuses do/spawn machinery.
+- Param directions: in (value) default, out (write-back lvalue). Expansion pass likely
+  in FSM::Adapter::ISF (keep proc/call out of the scheduler entirely).
+- DOCS are first-class per slice (see [[thorough-mdbook-examples]]); .5 = dedicated
+  example-dense chapter. Frontier .2.
