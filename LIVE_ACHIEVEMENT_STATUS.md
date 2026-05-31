@@ -16544,3 +16544,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   spawn lowering; parity with top-level spawn fan-out. t/1388 (9 subtests)/t/1245;
   13d/13b. Theme #1 (conditional child activation) functionally complete; frontier
   `.7` (docs sweep), then themes #2/#3/#4.
+- `.7` (ISF-CONDITIONAL-CHILD-ACTIVATION) shipped + TREE CLOSED (2026-06-01):
+  consolidation — 13d (context × clause) support matrix; tree Active→Completed.
+  Theme #1 (conditional child activation) COMPLETE: (do) local/bound/generated +
+  (spawn) + drains across top-level, repeat, and all four branch/loop bodies.
+  Docs-only slice (doc-truth/feature-matrix audits + mdbook). Next: themes #2/#3/#4.

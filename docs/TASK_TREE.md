@@ -46,7 +46,6 @@ first.
 | --- | --- | --- | --- | --- |
 | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING` | `done` | `R14` | complete (`.1`–`.7` done; cross-domain blocking `(do)` via a declared activation crossing) | [docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md](docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md) |
 | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` | `active` | `R14` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3` (`.1`/`.2` done) | [docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md](docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md) |
-| `ISF-CONDITIONAL-CHILD-ACTIVATION` | `active` | `R14` | `ISF-CONDITIONAL-CHILD-ACTIVATION.7` (`.1`-`.6` done) | [docs/tasks/ISF-CONDITIONAL-CHILD-ACTIVATION.md](docs/tasks/ISF-CONDITIONAL-CHILD-ACTIVATION.md) |
 
 ## Proposed Task Trees
 
@@ -61,6 +60,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CONDITIONAL-CHILD-ACTIVATION` | `done` | `R14` | `closed (.1–.7 done; conditional child activation complete: (do) local/bound/generated + (spawn) + await_all/await_any drains lower across top-level, repeat, and all four when/switch/while/until bodies)` | [docs/tasks/ISF-CONDITIONAL-CHILD-ACTIVATION.md](docs/tasks/ISF-CONDITIONAL-CHILD-ACTIVATION.md) |
 | `ROADMAP-TASKTREE-MDBOOK-ALIGNMENT-AUDIT` | `done` | `R0` | `closed (doctrine fully implemented; tri-surface alignment verified, zero drift)` | [docs/tasks/ROADMAP-TASKTREE-MDBOOK-ALIGNMENT-AUDIT.md](docs/tasks/ROADMAP-TASKTREE-MDBOOK-ALIGNMENT-AUDIT.md) |
 | `ISF-CHILD-ACTIVATION-CLAUSE-CONTEXT-DOC` | `done` | `R14` | `closed (do/spawn clause-context limitation + rationale documented in 13d/13b)` | [docs/tasks/ISF-CHILD-ACTIVATION-CLAUSE-CONTEXT-DOC.md](docs/tasks/ISF-CHILD-ACTIVATION-CLAUSE-CONTEXT-DOC.md) |
 | `ISF-FULL-WIDTH-INFERENCE` | `done` | `R14` | `closed (fail-closed terminal recorded)` | [docs/tasks/ISF-FULL-WIDTH-INFERENCE.md](docs/tasks/ISF-FULL-WIDTH-INFERENCE.md) |

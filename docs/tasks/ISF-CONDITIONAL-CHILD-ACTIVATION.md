@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `ISF-CONDITIONAL-CHILD-ACTIVATION`
-- Status: `active`
+- Status: `done` (closed `2026-06-01`)
 - Roadmap lane: `R14` (ISF — high-level language richness)
 - Created: `2026-05-31`
-- Last updated: `2026-05-31`
+- Last updated: `2026-06-01`
 - Owner: repo-local workflow
 
 ## Goal
@@ -132,7 +132,7 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 ## Task Tree
 
 - ID: `ISF-CONDITIONAL-CHILD-ACTIVATION`
-  Status: `active`
+  Status: `done`
   Goal: `(do)/(spawn) directly in when/switch/while/until bodies (conditional one-shot activation).`
   Children: `.1` (select), `.2`–`.6` (per-context lowering), `.7` (docs+examples)
 
@@ -183,6 +183,13 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
   Goal: `(spawn child as inst) + (await_all)/(await_any) drains directly in when/switch/while/until bodies (conditional fan-out + join).`
   Acceptance: `spawn/await_all/await_any added to the when/switch/while/until clause-context allow-lists; _expand_when/_expand_switch/_expand_loop_body each thread a body-local done-port accumulator (@dps) — a (spawn child as inst) builds _spawn_ref_from_clause (pushed to $spawn_refs for top wiring), emits _ir_spawn (asserts <inst>_start), and pushes <inst>_done onto @dps; a following (await_all)/(await_any) emits _ir_sync_all/_ir_sync_any draining @dps and resets it; a conditional multi-spawn fan-out then single drain lowers under the branch guard, the spawned instances are instantiated + wired in the top, and the join blocks on their done handshakes; unsupported deeper shapes fail closed; 13d/13b move spawn/drains onto the supported branch/loop surface; t/1388 (or a new t/) covers when/switch fan-out + while/until; book examples lower; audits pass.`
   Verification: `prove -Iperl t/1388 (+ new spawn subtest, 9 subtests) t/1245 t/1376 (41) t/1305 t/1304 t/1307 PASS; per-context (when/switch/while/until) lower + spawn instance + drain (await_all/await_any done-port) + top instantiation/wiring verified; parity with top-level spawn fan-out confirmed (same COMPOSITION_SCOPE --check-json boundary); full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
+  Commit: `c0c3e009`
+
+- ID: `ISF-CONDITIONAL-CHILD-ACTIVATION.7`
+  Status: `done`
+  Goal: `Consolidation/closeout: confirm the 13d/13b child-activation surface reads coherently end-to-end, add a scannable same-domain support matrix, and close the tree.`
+  Acceptance: `13d gains a (context x clause) support matrix table (all same-domain contexts x {local do, generated do, spawn+drains} = supported); the section reads coherently after six incremental slices; feature-matrix + doc-truth + book-example audits stay green; the ISF-CONDITIONAL-CHILD-ACTIVATION tree is closed (parent done; moved Active->Completed in docs/TASK_TREE.md). Cross-domain branch-body (do) remains out of scope here (theme #2: ISF-NESTED-CROSS-DOMAIN-ACTIVATION).`
+  Verification: `prove -Iperl t/1376 t/1305 t/1304 t/1307 t/1303 t/1250 PASS; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -196,7 +203,12 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | 5 | `.5a` | `done` | when-body GENERATED `(do child (params ...))` lowers to a `cond_do` generated child instance (instantiated + wired in the top, conditionally activated); parity with a top-level generated do (same composition-scope `--check-json` boundary). `t/1388`. |
 | 6 | `.5b` | `done` | switch-branch + while/until GENERATED `(do child (params ...))` lower to `cond_do` instances (same `_conditional_do_ref_from_clause` path as `.5a`, routed through `_expand_switch`/`_expand_loop_body`; label set extended; dead `_assert_when_body_local_do` removed). Generated conditional activation now complete across all four branch/loop bodies. `t/1388`/`t/1245`. |
 | 7 | `.6` | `done` | `(spawn child as inst)` + `(await_all)`/`(await_any)` drains accepted in all four branch/loop bodies (allow-list + spawn/drain branches threading a body-local `@dps` accumulator through `_expand_when`/`_expand_switch`/`_expand_loop_body`). Conditional fan-out + join lowers; spawned instances instantiated + wired in the top (parity with top-level spawn fan-out, same composition-scope `--check-json` boundary). `t/1388`/`t/1245`. **Child activation (do local/bound/generated + spawn + drains) is now complete across all branch/loop bodies.** |
-| 8 | `.7` | `pending` | docs/examples consolidation sweep (the `13d`/`13b` surface is kept truthful per-slice; `.7` is a final pass + any cross-domain follow-ups). |
+| 8 | `.7` | `done` | Consolidation/closeout — 13d gains a (context × clause) support matrix (all same-domain contexts × {local do, generated do, spawn+drains} = ✓); section reads coherently; audits green; **tree closed (Active→Completed)**. |
+
+**Tree complete (`2026-06-01`).** Theme #1 (conditional child activation) is done:
+`(do)` (local/bound/generated) and `(spawn)` + `(await_all)`/`(await_any)` drains
+lower across top-level, `repeat`, and all four branch/loop bodies. Cross-domain
+branch-body activation is theme #2 (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 
 ## Decisions
 
@@ -234,6 +246,7 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | `2026-05-31` | `.5a` | `prove -Iperl t/1388 t/1245 t/1376 t/1305 t/1304 t/1307` PASS; lower + cond_do instance + top instantiation/wiring verified; parity with top-level generated do (shared COMPOSITION_SCOPE --check-json boundary); full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-05-31` | `.5b` | `prove -Iperl t/1388 t/1245 t/1376 t/1305 t/1304 t/1307` PASS; per-context (switch/while/until) lower + `cond_do` instance + top instantiation/wiring verified; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-05-31` | `.6` | `prove -Iperl t/1388` (9 subtests) `t/1245 t/1376` (41) `t/1305 t/1304 t/1307` PASS; per-context (when/switch/while/until) spawn fan-out + `await_all`/`await_any` drain lower + spawn instance + top instantiation/wiring verified; parity with top-level spawn fan-out (shared COMPOSITION_SCOPE --check-json boundary); full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.7` | `prove -Iperl t/1376 t/1305 t/1304 t/1307 t/1303 t/1250` PASS (support-matrix table added to 13d does not perturb the doc-truth/feature-matrix/spec-index audits); `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -245,7 +258,8 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | `.4` | `ISF-CONDITIONAL-CHILD-ACTIVATION.4: bound local (do child) in branch/loop bodies` | `a2567839` |
 | `.5a` | `ISF-CONDITIONAL-CHILD-ACTIVATION.5a: when-body generated (do child (params ...)) -> conditional generated child instance` | `bf7a26e8` |
 | `.5b` | `ISF-CONDITIONAL-CHILD-ACTIVATION.5b: generated (do child (params ...)) in switch/while/until bodies` | `73cc1b90` |
-| `.6` | `ISF-CONDITIONAL-CHILD-ACTIVATION.6: (spawn) + await_all/await_any drains in branch/loop bodies (conditional fan-out + join)` | `ship commit (this slice)` |
+| `.6` | `ISF-CONDITIONAL-CHILD-ACTIVATION.6: (spawn) + await_all/await_any drains in branch/loop bodies (conditional fan-out + join)` | `c0c3e009` |
+| `.7` | `ISF-CONDITIONAL-CHILD-ACTIVATION.7: consolidation — same-domain support matrix + close tree` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -350,3 +364,16 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
   body) since `(spawn)` now lowers (deferral-lift cascade). 13d/13b updated (spawn +
   drains moved onto the supported branch/loop surface, with a runnable
   `conditional_fan_out` example; book-example count 40→41).
+- `2026-06-01`: `.7` shipped — consolidation/closeout. After six slices the 13d
+  "Where Child Activations Are Allowed" section reads coherently end-to-end; added a
+  scannable same-domain support matrix (context × {local `(do)`, generated
+  `(do (params ...))`, `(spawn)` + drains}) — every cell ✓, the point being full
+  orthogonality of child activation across top-level, `repeat`, and all four
+  branch/loop bodies. Feature-matrix / doc-truth / book-example / spec-index audits
+  stay green (the table does not perturb them). **Tree closed**: parent
+  `ISF-CONDITIONAL-CHILD-ACTIVATION` set `done` and moved Active→Completed in
+  `docs/TASK_TREE.md`. Note (cross-theme): completing same-domain branch-body `(do)`
+  here invalidates the earlier scope-finding in `ISF-NESTED-CROSS-DOMAIN-ACTIVATION`
+  `.3` ("a plain `(do)` in a when/switch/while/until body is unsupported even
+  same-domain") — a branch-body *cross-domain* `(do)` is now newly conceivable and
+  should be folded into theme #2's design when that lane is picked up.

@@ -38523,3 +38523,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `.7` is just a docs/examples consolidation sweep. Next: themes #2 (nested
   cross-domain), #3 (intent constructs), #4 (ATL). t/1245's spawn-deferral case
   repointed to `(latency ...)`-in-while (still unsupported). Frontier `.7`.
+
+## 2026-06-01: ISF-CONDITIONAL-CHILD-ACTIVATION CLOSED (.7) — theme #1 complete
+- `.7` (closeout): 13d gained a (context × clause) support matrix; tree moved
+  Active→Completed in docs/TASK_TREE.md; parent Status=done. THEME #1 of the
+  language-richness frontier is COMPLETE (see [[isf-language-richness-frontier]]):
+  `(do)` local/bound/generated + `(spawn)` + drains lower across top-level, repeat,
+  and all four branch/loop bodies.
+- CROSS-THEME (record for theme #2): completing same-domain branch-body `(do)`
+  invalidated `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3`'s old scope-finding ("plain
+  `(do)` in when/switch/while/until is unsupported even same-domain"). A branch-body
+  CROSS-DOMAIN `(do)` is now newly conceivable — fold into theme #2's `.3` design.
+- `.7` is docs-only (no .pm/.t logic change) — verified via doc-truth/feature-matrix
+  audits (t/1376/1305/1304/1307/1303/1250) + mdbook, not the full 7-min regression.
+- NEXT: theme #2 (ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3 — repeat-body cross-domain
+  do), theme #3 (intent constructs — design slice), theme #4 (ATL actor networks).

@@ -14923,3 +14923,11 @@ Exit criteria:
   (9 subtests)/`t/1245`; 13d/13b updated (runnable `conditional_fan_out` example;
   book examples 40→41). Frontier `.7` (docs/examples consolidation sweep). Theme #1
   of the language-richness frontier is now functionally complete.
+- `R14`: `ISF-CONDITIONAL-CHILD-ACTIVATION` CLOSED (2026-06-01, `.1`–`.7`). Theme #1
+  of the ISF language-richness frontier is complete: conditional child activation —
+  `(do)` (local/bound/generated) and `(spawn)` + `(await_all)`/`(await_any)` drains
+  — lowers directly in `when`/`switch`/`while`/`until` bodies, fully orthogonal with
+  top-level and `repeat` (13d carries a support matrix). `.7` added the matrix and
+  closed the tree (Active→Completed). Next R14 language-richness work: theme #2
+  (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3`, now also able to cover a branch-body
+  cross-domain `(do)`), theme #3 (intent-capture constructs), theme #4 (ATL).

@@ -220,6 +220,18 @@ in a `repeat`, and in any branch/loop body — a `(do)` is a blocking activation
 a `(spawn ...)`/`(await ...)` pair is a non-blocking fan-out/join, and both kinds of
 construct are allowed in those bodies.
 
+The full same-domain support matrix (✓ = lowers; the spawn column means
+`(spawn ...)` together with its `(await_all ...)` / `(await_any ...)` drain):
+
+| Context | local `(do)` | generated `(do (params ...))` | `(spawn)` + drains |
+| --- | :---: | :---: | :---: |
+| top-level transaction | ✓ | ✓ | ✓ |
+| `repeat` body | ✓ | ✓ | ✓ |
+| `when` body | ✓ | ✓ | ✓ |
+| `switch` branch | ✓ | ✓ | ✓ |
+| `while` body | ✓ | ✓ | ✓ |
+| `until` body | ✓ | ✓ | ✓ |
+
 Across clock domains the same staging applies: a cross-domain `(do child)` through
 a `(crossings (activation ...))` is supported top-level (see
 [Activation Crossing](13a-actor-interface.md#activation-crossing)); a nested
