@@ -38295,3 +38295,15 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   + sweep (16 files, 557) + full `ci-regression isf` PASS. Uncovered/unused still
   fail closed. Frontier `.6` (docs + book example + activation report metadata).
   Cross-domain `spawn` + nested `(do)` remain follow-ups.
+- `.6` SHIPPED (2026-05-31) — the feature is now reviewable in the book. Added an
+  "Activation Crossing" section to `13a-actor-interface.md` (surface, dual-CDC
+  routing, await-ready handshake, generated artifacts, fail-closed boundaries) with
+  a full runnable `(actor cross_domain_activation ...)` example that lowers to 3
+  artifacts + generates 5-module HDL; `13b` cross-reference from the `(do)` surface;
+  a "Cross-domain activation crossing" row in the `13k` feature matrix; `14`
+  backlog/count (38→39, top-level cross-domain activation now shipped vs nested
+  deferred). Book gates: `t/1376` lowers 39 examples, `t/1305`/`t/1304`/`t/1307`/
+  `t/1332` PASS, `mdbook build` clean. Re-scoped: `.7` = activation schedule-report
+  metadata + `ISF_DOWNSTREAM_INTEGRATION_SPEC`/`ISF_PUBLIC_INTERFACE_CONTRACT`/
+  `SPECFORGE_FEEDBACK_RESPONSE` sync. Frontier `.7`. (CDC lane: 6 commits ahead of
+  origin; consider push around `.7`/SPECFORGE access.)

@@ -164,6 +164,81 @@ metadata parameters, for example:
 
 That marker is the boundary between generated CDC and ordinary external RTL.
 
+### Activation Crossing
+
+A blocking cross-domain `(do child)` — where the calling transaction and `child`
+run in different clock domains — is owned by an activation crossing:
+
+```lisp
+(crossings
+  (activation worker (from core) (to bus)))
+```
+
+`worker` names a declared transaction in the destination domain (`bus`); the
+calling transaction is in the source domain (`core`). The activation start/done
+handshake signals are compiler-internal, so the author declares only the
+crossing — not raw event pairs. One activation crossing auto-generates **two**
+acknowledged-event CDC children: a `start` synchronizer (source → destination)
+carries the activation request, and a `done` synchronizer (destination → source)
+carries completion back.
+
+A complete actor:
+
+```lisp
+(actor cross_domain_activation
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus  (clock bus_clk) (reset bus_rst_n)))
+  (crossings
+    (activation worker (from core) (to bus)))
+  (interface
+    (input  start (domain core))
+    (output done  (domain core))
+    (input  din    (width 8) (domain bus))
+    (output result (width 8) (domain bus))
+    (output worker_complete (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (do worker)
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (sample din as snap)
+    (update result snap)
+    (complete worker_complete)))
+```
+
+This lowers to `cross_domain_activation__domain_core.fsm` (the caller),
+`cross_domain_activation__domain_bus.fsm` (`worker`), and
+`cross_domain_activation_top.fsm`, which instantiates both domain modules and the
+two CDC children
+`cross_domain_activation__cdc_activation_worker_start` and
+`...__cdc_activation_worker_done`. Plain HDL generation emits all five modules
+(two domain modules, two CDC children, the top).
+
+The handshake mirrors the event-crossing source idiom on both directions:
+
+- The caller (`core`) awaits `worker_start_ready` (the start CDC ready), drives a
+  one-cycle `worker_start` request, then blocks on the `worker_done` pulse.
+- The start CDC synchronizes the request `core → bus` and emits a one-cycle
+  `worker_start` pulse in the destination, which gates `worker`'s entry.
+- On completion, `worker` awaits `worker_done_ready`, drives a one-cycle
+  `worker_done` request, which the done CDC synchronizes `bus → core` and pulses
+  back to release the caller.
+
+Because the request is one cycle and gated on the CDC `ready`, a held level
+cannot re-trigger `worker`; exactly one activation is outstanding at a time, and
+the `done` pulse is the application-level acknowledgement. Both CDC children
+reuse the acknowledged-event primitive (the same `FSMGEN_ISF_CDC_EVENT` marker,
+generated module shape, and reset metadata shown above for event crossings).
+
+Fail-closed boundaries are deliberate: a cross-domain `(do child)` with **no**
+covering activation crossing is rejected; a **declared-but-unused** crossing (one
+whose `child` no transaction actually `(do)`es) or one whose `child` is not in the
+declared destination domain is rejected; and cross-domain `(spawn)` plus nested
+cross-domain `(do)` (inside `repeat`/`when`/`switch`) remain deferred.
+
 Normal `?rtl` children still need externally supplied RTL; FSMGen does not
 invent module internals from a matching port list. When the marker is present,
 the composition realizer emits a concrete Verilog-family child module beside

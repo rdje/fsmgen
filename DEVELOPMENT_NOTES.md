@@ -33836,3 +33836,28 @@ composition characteristic the shipped event-crossing fixture exhibits
 (`docs/COMPOSITION_SCOPE.md`), not introduced by activation. So full-HDL reach for
 the sibling model is at parity with event crossings (the generated-do model would
 have been strictly worse — see the `.3` note).
+
+## Cross-domain activation `.6` — book visibility (2026-05-31)
+
+`.6` makes the shipped feature reviewable in the book (the project's primary
+review surface). The substance is documentation, but two correctness details
+matter:
+
+- **The runnable example must lower AND generate clean HDL.** `t/1376` lowers
+  every `(actor ...)` book block, so the example has to lower cleanly; beyond that
+  the example was chosen so it also generates complete HDL. The worker completes a
+  *separate* 1-bit signal (`worker_complete`), NOT the data signal it updates
+  (`result`) — completing on an updated data signal trips the pre-existing
+  "Mixed pulse-delayed and non-pulse sequential operators" HDL limitation. This is
+  the same fixture lesson from the `.5` HDL probe; the book example encodes the
+  correct pattern.
+
+- **Scope honesty across chapters.** `13a` documents the shipped top-level
+  activation crossing; `13b` cross-references it; `13k` adds a feature row; `14`
+  moves the top-level case to shipped. The repeat-body / nested cross-domain `(do)`
+  scope statements in `13d`/`14` are deliberately left unchanged — they describe
+  the *nested* cross-domain case, which remains deferred, so they stay accurate.
+
+The book-example count gate in `14-feature-backlog.md` is a manual note (38→39);
+`t/1376` itself asserts "all blocks lower," not an exact count, so the note is
+documentation rather than a hard assertion.

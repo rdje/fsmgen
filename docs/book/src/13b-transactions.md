@@ -99,6 +99,12 @@ trigger instance's done-observer signal. Direct/local rule-trigger output
 bindings remain rejected because a shared local target has no rule-specific
 completion identity.
 
+A blocking `(do child)` whose `child` runs in a **different clock domain** is not
+a direct activation: it must be owned by a declared activation crossing, which
+routes the start/done handshake through CDC synchronizers. See
+[Activation Crossing](13a-actor-interface.md#activation-crossing). A cross-domain
+`(do)` without a covering crossing fails closed.
+
 ## How Transactions Become Hardware
 
 ```

@@ -121,8 +121,17 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   are the pre-existing `shared_dp_export_*` PINMISSING, at parity with the shipped
   event-crossing multi-domain HDL). Uncovered cross-domain `(do)` and
   declared-but-unused crossings still fail closed.
-- `.6` docs (13a crossing section + 13d control-flow + downstream/contract/
-  SPECFORGE response) + runnable book example.
+- `.6` book documentation + runnable example: `13a` Activation Crossing section
+  (surface + dual-CDC routing + await-ready handshake + fail-closed boundaries)
+  with a full runnable `(actor ...)` example that lowers + generates HDL; `13b`
+  cross-reference from the `(do)` surface; `13k` feature-matrix row; `14`
+  backlog/count updates. Gated by `t/1376` (book examples lower) + `t/1305`
+  (feature-matrix audit) + doc-truth audits.
+- `.7` schedule-report metadata for activation crossings + downstream specs: add
+  the activation crossing to the schedule report (a shape distinct from the event
+  endpoint summary) with its report audits, then sync
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `ISF_PUBLIC_INTERFACE_CONTRACT.md`, and
+  the dated `SPECFORGE_FEEDBACK_RESPONSE.md` entry.
 
 ## Non-Goals
 
@@ -146,7 +155,7 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 - ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING`
   Status: `active`
   Goal: `Cross-domain (do)/(spawn) through a declared (crossings (activation ...)) with CDC-synchronized start/done.`
-  Children: `.1` (select), `.2` (parse+declare-validate, fail-closed), `.3` (handshake-port lowering machinery, behind guard), `.4` (dual-CDC top emission, behind guard), `.5` (integration: validator-accept + CDC routing + remove guard, together), `.6` (docs+example)
+  Children: `.1` (select), `.2` (parse+declare-validate, fail-closed), `.3` (handshake-port lowering machinery, behind guard), `.4` (dual-CDC top emission, behind guard), `.5` (integration: validator-accept + CDC routing + remove guard, together), `.6` (book docs + runnable example), `.7` (schedule-report metadata + downstream/contract/SPECFORGE)
 
 - ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.1`
   Status: `done`
@@ -181,6 +190,13 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   Goal: `Integration (validator-accept + CDC routing ship together): cross-domain (do) covered by an activation crossing lowers end-to-end through two CDC synchronizers; guard removed.`
   Acceptance: `Validator accepts a top-level cross-domain (do child) covered by an (activation ...) crossing (else fail closed); declared-but-unused / mis-placed crossings fail closed; per-domain actors get external_activations injected; the handshake consumes the CDC ready outputs (caller awaits <start>_ready, callee awaits <done>_ready); end-to-end lowering emits per-domain modules + a top routing start SRC->DEST and done DEST->SRC; per-domain modules pass Verilator lint + yosys; composition emits complete HDL (only pre-existing shared_dp_export_* PINMISSING remain).`
   Verification: `prove -Iperl t/1387 (7 subtests) t/1386 t/1247 t/1372 t/1374 t/1375 t/1250 t/1116 t/1255 t/1305 + composition/spawn regression (16 files, 557) PASS; full ./bin/ci-regression isf --no-book PASS; per-domain --verify-hdl (verilator_lint + yosys_synthesis PASS); full composition HDL generation (5 modules) exit 0; perl -c; mdbook; git diff --check`
+  Commit: `13cbceeb`
+
+- ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.6`
+  Status: `done`
+  Goal: `Book documentation + a runnable cross-domain activation example (the user-facing review surface).`
+  Acceptance: `13a gains an Activation Crossing section (surface + dual-CDC routing + await-ready handshake + fail-closed boundaries) with a full runnable (actor ...) example that lowers + generates HDL; 13b cross-references it from the (do) surface; 13k feature matrix gains a row; 14 backlog/count updated; book examples still lower (t/1376 now 39), feature-matrix + doc-truth audits pass.`
+  Verification: `mdbook build docs/book; prove -Iperl t/1376 (39 examples) t/1305 t/1304 t/1307 t/1332 PASS; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -192,7 +208,8 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | 3 | `.3` | `done` | Handshake-port lowering machinery (`_wire_external_activations`) built + unit-tested behind the guard (`t/1387`); guard + `_validate_same_domain_target` stay fail-closed. |
 | 4 | `.4` | `done` | One-cycle cross-domain caller request + dual-CDC top emission/wiring, unit-tested behind the guard (`t/1387`); event-crossing emission unchanged. |
 | 5 | `.5` | `done` | Integration shipped: validator accepts a covered cross-domain `(do)`, `external_activations` injected, guard removed, CDC `ready` consumed via await-handshake; end-to-end HDL (5 modules), per-domain Verilator+yosys PASS (`t/1387`, full `ci-regression isf`). |
-| 6 | `.6` | `pending` | Docs (13a/13d + downstream/contract/SPECFORGE) + runnable book example; activation crossing schedule-report metadata. |
+| 6 | `.6` | `done` | Book documentation shipped: `13a` Activation Crossing section + runnable example (lowers + HDL), `13b` cross-ref, `13k` matrix row, `14` updates; `t/1376` (39 examples) + matrix/doc-truth audits PASS. |
+| 7 | `.7` | `pending` | Activation crossing schedule-report metadata (distinct shape + audits) + `ISF_DOWNSTREAM_INTEGRATION_SPEC`/`ISF_PUBLIC_INTERFACE_CONTRACT`/`SPECFORGE_FEEDBACK_RESPONSE` sync. |
 
 ## Decisions
 
@@ -276,6 +293,7 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | `2026-05-30` | `.3` | `prove -Iperl t/1387 t/1250 t/1386 t/1247 t/1372 t/1110 t/1382 t/1383` PASS; broad activation/do/spawn/clock-domain regression (39 files, 246) PASS; `perl -c LoweringIR.pm`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-05-30` | `.4` | `prove -Iperl t/1387` (5 subtests) PASS; broad composition/crossing/domain/child regression with event-crossing goldens (13 files, 449) PASS; `perl -c ISF.pm`+`LoweringIR.pm`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-05-30` | `.5` | `prove -Iperl t/1387` (7 subtests) + clock-domain/crossing/composition/report-audit sweep (16 files, 557) PASS; full `./bin/ci-regression isf --no-book` PASS; per-domain `--verify-hdl` → `verilator_lint`+`yosys_synthesis` PASS; full composition HDL generation emits 5 modules (exit 0); `perl -c`; `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-31` | `.6` | `mdbook build docs/book`; `prove -Iperl t/1376` (39 examples lower cleanly) `t/1305 t/1304 t/1307 t/1332` PASS; the runnable example lowers (3 artifacts) + generates HDL (5 modules); `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -285,7 +303,8 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | `.2` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.2: parse + validate activation crossing (lowering fail-closed)` | `ffffc2a0` |
 | `.3` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3: cross-domain activation handshake-port lowering machinery (behind guard)` | `77f447c9` |
 | `.4` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.4: one-cycle caller request + dual-CDC top emission (behind guard)` | `93e4e73e` |
-| `.5` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.5: integration — cross-domain activation lowers end-to-end through two CDC synchronizers` | `ship commit (this slice)` |
+| `.5` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.5: integration — cross-domain activation lowers end-to-end through two CDC synchronizers` | `13cbceeb` |
+| `.6` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.6: book documentation + runnable cross-domain activation example` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -352,3 +371,15 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   declared-but-unused crossings still fail closed. `t/1387` (7 subtests) + sweep
   (16 files, 557) + full `ci-regression isf` PASS. (Cross-domain `spawn`, nested
   cross-domain `(do)`, and the activation report metadata remain follow-ups.)
+- `2026-05-31`: `.6` shipped — the feature is now reviewable in the book. Added an
+  Activation Crossing section to `13a-actor-interface.md` (surface, dual-CDC
+  routing, await-ready handshake, generated artifacts, fail-closed boundaries) with
+  a full runnable `(actor cross_domain_activation ...)` example that lowers to the
+  three artifacts and generates complete HDL (5 modules); a cross-reference from
+  the `(do)` surface in `13b-transactions.md`; a "Cross-domain activation crossing"
+  row in the `13k` feature-support matrix; and `14-feature-backlog.md` updates
+  (book-example count 38→39, top-level cross-domain activation moved from "needs a
+  CDC contract" to shipped while repeat-body/nested + `spawn` stay deferred). The
+  book gates pass: `t/1376` now lowers 39 complete examples, `t/1305` feature-matrix
+  audit + `t/1304`/`t/1307`/`t/1332` doc-truth audits PASS, `mdbook build` clean.
+  Report metadata + downstream/contract/SPECFORGE sync moved to `.7`.

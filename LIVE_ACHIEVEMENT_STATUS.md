@@ -16484,3 +16484,11 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `shared_dp_export_*` PINMISSING remain, at parity with event crossings). `t/1387`
   (7 subtests) + sweep (16 files, 557) + full `ci-regression isf` PASS. Frontier
   `.6` (docs + book example + activation report metadata).
+- `.6` shipped (2026-05-31): the feature is now reviewable in the book. `13a` gains
+  an "Activation Crossing" section (surface + dual-CDC routing + await-ready
+  handshake + fail-closed boundaries) with a full runnable `(actor
+  cross_domain_activation ...)` example that lowers (3 artifacts) and generates HDL
+  (5 modules); `13b` cross-reference; `13k` feature-matrix row; `14` updates
+  (count 38→39, top-level cross-domain activation shipped). Book gates: `t/1376`
+  lowers 39 examples; `t/1305`/`t/1304`/`t/1307`/`t/1332` + `mdbook build` PASS.
+  Frontier `.7` (activation schedule-report metadata + downstream/contract/SPECFORGE).

@@ -14806,3 +14806,15 @@ Exit criteria:
   `ci-regression isf` PASS. Frontier now `.6` (docs + runnable book example +
   activation crossing schedule-report metadata); cross-domain `spawn` and nested
   cross-domain `(do)` remain follow-ups.
+- `R14`: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.6` shipped (2026-05-31) — the
+  feature is now reviewable in the book. `13a-actor-interface.md` gains an
+  "Activation Crossing" section (surface, dual-CDC routing, await-ready handshake,
+  generated artifacts, fail-closed boundaries) with a full runnable `(actor
+  cross_domain_activation ...)` example that lowers to three artifacts and
+  generates complete HDL (5 modules); `13b` cross-references it from the `(do)`
+  surface; `13k` gains a "Cross-domain activation crossing" feature row; `14`
+  records the shipped top-level case (vs deferred nested/`spawn`) and bumps the
+  book-example count 38→39. Book gates pass: `t/1376` lowers 39 examples, `t/1305`
+  feature-matrix + `t/1304`/`t/1307`/`t/1332` doc-truth audits PASS, `mdbook build`
+  clean. Frontier now `.7` (activation schedule-report metadata + downstream
+  integration spec / public interface contract / SPECFORGE response sync).
