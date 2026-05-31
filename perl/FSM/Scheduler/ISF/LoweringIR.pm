@@ -24,6 +24,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
         map { $_ => 1 } qw(
             drive await sample complete repeat update set shift_left shift_right
             assemble extract when store load wait do spawn await_all await_any
+            exit-when
         )
     },
     switch => {
@@ -8402,6 +8403,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
             }
         }
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
+        elsif($bk eq'exit-when'){confess "Transaction '$tn': when body '(exit-when ...)' requires exactly one condition expression\n" unless @$bc==2 && defined($bc->[1]);_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,{name=>"${tn}_exit_when_".$$ir++,kind=>'loop_exit_when',condition=>$bc->[1],loop_exit_when=>1,assignments=>[],transitions=>[]}}
         elsif($bk eq'do'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my $cond_ord=scalar(grep { ref($_)eq'HASH'&&$_->{branch_do} } @{$spawn_refs||[]});my $do_ref=_conditional_do_ref_from_clause($bc,$tn,$cond_ord,$constant_values||{},$actor,$generated_children,'when body');if($do_ref->{generated_child}){push @$spawn_refs,_clone_isf_value($do_ref) if ref($spawn_refs)eq'ARRAY';push @body_states,_ir_do($bc,$tn,$$ir++,$do_ref,'when body')}else{push @body_states,_ir_do($bc,$tn,$$ir++,undef,'when body')}}
         elsif($bk eq'spawn'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my $sref=_spawn_ref_from_clause($bc,$tn,$constant_values,$actor,'when body');push @$spawn_refs,$sref if ref($spawn_refs)eq'ARRAY';push @dps,"$sref->{instance}_done";push @body_states,_ir_spawn($bc,$tn,$$ir++)}
         elsif($bk eq'await_all'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_sync_all($tn,$$ir++,\@dps);@dps=()}
@@ -10397,6 +10399,19 @@ sub _link_states {
                 if ($body_state->{kind} // '') eq 'loop_exit_when';
         }
         $s->{loop_exit_target} = $exit_target;
+    }
+
+    # ISF-LOOP-EARLY-EXIT: a `(exit-when)` is only valid inside a loop. After the
+    # per-loop pass has stamped `loop_exit_target` onto every exit-when state that
+    # belongs to a loop, any remaining un-stamped `loop_exit_when` is not inside a
+    # loop (e.g. a `(when ...)` that is not nested in a `while`/`until`) — fail
+    # closed. (Direct while/until-body exit-when is gated by the clause allow-list;
+    # this catches the when-nested case, where `when` is allowed both top-level and
+    # in a loop.)
+    for my $s (@$st) {
+        next unless ($s->{kind} // '') eq 'loop_exit_when';
+        confess "Transaction '$tn': '(exit-when ...)' is only valid inside a 'while'/'until' loop body\n"
+            unless defined $s->{loop_exit_target};
     }
 
     for my $i (0 .. $#$st) {

@@ -104,11 +104,46 @@ ISF
     is($false_edges, 1, 'exactly one exit-when false edge');
 };
 
-subtest '(exit-when) fails closed outside a while/until body' => sub {
+subtest '(exit-when cond) inside a when nested in a loop exits the whole loop' => sub {
+    # ISF-LOOP-EARLY-EXIT.3: a `(exit-when)` may live in a `when` body that is itself
+    # inside a `while`/`until` loop; its true edge leaves the ENTIRE loop (the loop's
+    # exit target), not just the `when`.
+    my $actor = parse_source(<<'ISF', 'when-in-loop-exit-when');
+(actor wln
+  (interface
+    (input start)
+    (input busy)
+    (input err)
+    (input go)
+    (input din (width 8))
+    (output done)
+    (output result (width 8)))
+  (transaction main
+    (on start)
+    (while busy
+      (when err
+        (exit-when go))
+      (update result din))
+    (complete done)))
+ISF
+    my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+    ok($lowered, 'a when-nested (exit-when) inside a loop lowers') or diag($@);
+    my $fsm = $lowered->{files}{'wln.fsm'};
+    # The while decision exits to some state; the nested exit-when's true edge must
+    # jump to that SAME loop exit (not to the when's continuation).
+    my ($loop_exit) = $fsm =~ /main_while_entry_\d+\s*\(\s*\?busy[\s\S]*?\(=0 \(-> (main_\w+)\)\)/;
+    ok(defined($loop_exit), 'the while decision has a loop-exit target');
+    like($fsm, qr/main_exit_when_\d+\s*\(\s*\?go[\s\S]*?\(=1 \(-> \Q$loop_exit\E\)\)/s,
+        'the when-nested exit-when true edge jumps to the whole-loop exit');
+};
+
+subtest '(exit-when) fails closed outside a loop body' => sub {
+    # The clause allow-list rejects `(exit-when)` directly at the transaction top
+    # level or in a `repeat` body. (`when` allows the clause syntactically so it can
+    # be used in a loop-nested when; see the loop-aware safety case below.)
     my %context = (
         'transaction body' => '(exit-when go)',
         'repeat body'      => '(repeat 2 (exit-when go))',
-        'when body'        => '(when busy (exit-when go))',
     );
     for my $label (sort keys %context) {
         my $actor = parse_source(<<"ISF", "exit-when-$label");
@@ -128,6 +163,24 @@ ISF
             "the diagnostic names the unsupported $label context",
         );
     }
+
+    # A `(exit-when)` in a `when` that is NOT inside a loop fails closed with the
+    # loop-aware safety diagnostic (the clause is syntactically allowed in a `when`,
+    # but only meaningful inside a loop).
+    my $top_when = parse_source(<<'ISF', 'exit-when-top-when');
+(actor top_when_exit
+  (interface (input start) (input busy) (input go) (output done))
+  (transaction main
+    (on start)
+    (when busy
+      (exit-when go))
+    (complete done)))
+ISF
+    my $ok = eval { FSM::Scheduler::ISF->new()->lower($top_when); 1 };
+    my $err = $@;
+    ok(!$ok, '(exit-when) in a non-loop when is rejected');
+    like($err, qr/'\(exit-when \.\.\.\)' is only valid inside a 'while'\/'until' loop body/,
+        'the loop-aware safety diagnostic names the requirement');
 };
 
 subtest 'a malformed (exit-when) without a condition fails closed' => sub {

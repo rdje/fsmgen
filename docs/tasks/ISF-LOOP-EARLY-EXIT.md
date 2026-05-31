@@ -122,6 +122,13 @@ Reads like:
   Goal: `Core (exit-when cond) lowering directly inside while/until bodies.`
   Acceptance: `exit-when added to the while/until clause-context allow-lists; _expand_loop_body emits a 'loop_exit_when' decision state (condition => cond); _link_states' per-loop pass stamps the loop's loop_exit_target onto the exit-when body states, and the main linker pushes the TRUE edge (loop_branch 1 -> loop_exit_target) + FALSE edge (loop_branch 0 -> next clause); the FSM emitter renders 'loop_exit_when' like the loop decision states. (exit-when go) in a while body lowers to (?go (=1 -> loop exit)(=0 -> next clause)) and continues/exits correctly; (exit-when) outside a while/until body (top-level, repeat, when, switch) fails closed with "unsupported '(exit-when ...)' clause in <ctx>"; a bare (exit-when) without a condition fails closed; --check-json + verilator/yosys PASS; 13d documents it with a runnable example; 13k row + ISF_SPEC focused-test index updated; t/1389 locks it.`
   Verification: `Spike: (while busy (update ...)(exit-when go)(update ...)) lowers to main_exit_when_N (?go (=1 -> loop exit)(=0 -> next)); until lowers; top-level/repeat/when defer; bare exit-when defers; --check-json SUCCESS; --verify-hdl verilator_lint+yosys_synthesis PASS. prove -Iperl t/1389 (5 subtests) t/1250 t/1376 (42) t/1305 t/1304 t/1307 t/1303 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c (LoweringIR + Emitter/FSM); mdbook build; git diff --check`
+  Commit: `8024666b`
+
+- ID: `ISF-LOOP-EARLY-EXIT.3`
+  Status: `done`
+  Goal: `(exit-when cond) inside a when body that is itself nested in a while/until loop exits the whole loop.`
+  Acceptance: `exit-when added to the when clause-context allow-list; _expand_when emits the loop_exit_when decision state; because a when's body states are part of the enclosing loop's loop_body_state_names, _link_states' per-loop pass already stamps loop_exit_target onto the when-nested exit-when. A post-hoc _link_states safety check rejects any loop_exit_when left without a loop_exit_target (a when NOT inside a loop) with "'(exit-when ...)' is only valid inside a 'while'/'until' loop body". (while busy (when err (exit-when go))) lowers: the exit-when true edge jumps to the WHOLE-loop exit (not the when continuation); --check-json SUCCEEDS. A top-level (when ... (exit-when ...)) fails closed via the safety check. t/1389 gains a when-in-loop positive subtest and a non-loop-when safety subtest; the prior when-body allow-list deferral assertion is repointed to the safety message.`
+  Verification: `Spike: (while busy (when err (exit-when go))(update ...)) and (until ...) lower; exit-when true edge -> whole-loop exit (main_done_N); --check-json SUCCESS; top-level when -> exit-when fails closed with the safety message. prove -Iperl t/1389 (6 subtests) t/1376 t/1305 t/1304 t/1307 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -130,7 +137,8 @@ Reads like:
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
 | 2 | `.2` | `done` | `(exit-when cond)` lowers in `while`/`until` bodies to a `loop_exit_when` decision (true → loop exit target, false → next clause); fails closed elsewhere; `--check-json` + verilator/yosys PASS. `t/1389`. |
-| 3 | `.3`–`.5` | `pending` | when-in-loop exit-when; schedule-report metadata; docs/examples consolidation. |
+| 3 | `.3` | `done` | `(exit-when)` inside a `when` nested in a loop exits the WHOLE loop (true edge → loop exit). `when` allow-list + `_expand_when` branch + a post-hoc `_link_states` safety check (an un-stamped `loop_exit_when` = not in a loop → fail closed). `t/1389`. |
+| 4 | `.4`–`.5` | `pending` | schedule-report `exit-when` metadata; docs/examples consolidation. |
 
 ## Decisions
 
@@ -158,13 +166,15 @@ Reads like:
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.2` | Spike: while/until `(exit-when)` lowers (`?cond` decision: true→loop exit, false→next clause); top-level/repeat/when/bare defer; `--check-json` SUCCESS; `--verify-hdl` verilator_lint+yosys_synthesis PASS. `prove -Iperl t/1389` (5 subtests) `t/1250 t/1376` (42) `t/1305 t/1304 t/1307 t/1303` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.3` | Spike: `(while busy (when err (exit-when go))(update ...))` lowers; the when-nested exit-when true edge jumps to the WHOLE-loop exit; `until` lowers; `--check-json` SUCCESS; a top-level `(when ... (exit-when ...))` fails closed with the loop-aware safety message. `prove -Iperl t/1389` (6 subtests) `t/1376 t/1305 t/1304 t/1307` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `ISF-LOOP-EARLY-EXIT.1: select loop early-exit (exit-when)` | `6c6db3d6` |
-| `.2` | `ISF-LOOP-EARLY-EXIT.2: (exit-when cond) mid-loop early exit in while/until bodies` | `ship commit (this slice)` |
+| `.2` | `ISF-LOOP-EARLY-EXIT.2: (exit-when cond) mid-loop early exit in while/until bodies` | `8024666b` |
+| `.3` | `ISF-LOOP-EARLY-EXIT.3: (exit-when) inside a when nested in a loop` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -194,3 +204,21 @@ Reads like:
   row lists it; `docs/ISF_SPEC.md` registers `t/1389`. `t/1389` (5 subtests) locks
   while/until lowering, the loop-exit/continue edges, HDL-shape (one true + one false
   edge), and all four fail-closed contexts.
+- `2026-06-01`: `.3` shipped — `(exit-when cond)` now also works inside a `when` body
+  that is itself nested in a `while`/`until` loop, where its true edge leaves the
+  WHOLE loop (not just the `when`). Added `exit-when` to the `when` clause-context
+  allow-list and an `exit-when` branch to `_expand_when` (emitting the same
+  `loop_exit_when` decision state as `_expand_loop_body`). No new resolution
+  machinery was needed: a `when`'s body states are already part of the enclosing
+  loop's `loop_body_state_names`, so `_link_states`' per-loop pass stamps
+  `loop_exit_target` onto the when-nested exit-when automatically. Because `when` is
+  valid both top-level and in a loop, a post-hoc `_link_states` safety check now
+  rejects any `loop_exit_when` left without a `loop_exit_target` (a `when` not inside
+  a loop) with `'(exit-when ...)' is only valid inside a 'while'/'until' loop body`.
+  Verified: `(while busy (when err (exit-when go)) (update ...))` lowers with the
+  exit-when true edge jumping to the whole-loop exit (`main_done_N`), `--check-json`
+  SUCCEEDS, and a top-level `(when ... (exit-when ...))` fails closed. 13d documents
+  the when-nested case with a runnable example. `t/1389` gains a when-in-loop
+  positive subtest and a non-loop-`when` safety subtest; its prior top-level-when
+  allow-list deferral assertion is repointed to the safety message (deferral-lift
+  cascade).

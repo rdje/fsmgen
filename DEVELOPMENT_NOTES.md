@@ -34146,3 +34146,18 @@ body clause for a mid-body exit-when and the loop check for a last-body exit-whe
 "continue the loop" falls out for free in every position. Verified `--verify-hdl`
 passes (the exit-when decision's next-state selectors are one-hot/exclusive with the
 loop decisions).
+
+## Loop early-exit `.3` — nesting via the loop's body-state set, with a post-hoc safety net (2026-06-01)
+
+Extending `(exit-when)` into a `when` nested in a loop needed almost nothing new:
+`_expand_loop_body`'s `when` branch calls `_expand_when`, whose returned states are
+appended to the loop's body, so the when-nested `loop_exit_when` is already in the
+loop's `loop_body_state_names` and the per-loop pass stamps `loop_exit_target` onto
+it for free. The only real work was guarding misuse: `when` is a valid context both
+top-level and in a loop, so adding `exit-when` to the `when` allow-list would also
+admit a top-level `(when ... (exit-when ...))` with no enclosing loop. Rather than
+thread an "inside a loop" flag down into `_expand_when`, a single post-hoc pass after
+the loop-exit-target computation rejects any `loop_exit_when` still missing a
+`loop_exit_target`. Lesson: when a construct is only meaningful inside an enclosing
+region but its host clause is allowed elsewhere, a post-hoc "did the enclosing region
+claim it?" check is cleaner than threading context through every expander.

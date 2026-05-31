@@ -154,9 +154,23 @@ to the next body clause and the loop continues normally.
 This lowers the `(exit-when go)` clause to `(?go (=1 (-> <loop exit>)) (=0 (-> <next
 clause>)))`. The exit edge reuses the loop's computed exit target, so an early exit
 behaves exactly like a normal loop exit (the watchdog counts the cycles actually
-spent in the loop). `(exit-when ...)` outside a `while`/`until` body — at the
-transaction top level, in a `repeat` body, or in a `when`/`switch` body — fails
-closed with an `unsupported '(exit-when ...)' clause in <context>` diagnostic.
+spent in the loop).
+
+`(exit-when ...)` may also appear inside a `when` body that is itself nested in the
+loop — its true edge still leaves the **whole** loop (not just the `when`):
+
+```lisp
+(while busy
+  (when error
+    (exit-when fatal))   ;; on a fatal error, leave the loop entirely
+  (drive step))
+```
+
+`(exit-when ...)` that is not inside a `while`/`until` loop fails closed: at the
+transaction top level or in a `repeat` body the clause allow-list rejects it
+(`unsupported '(exit-when ...)' clause in <context>`); in a `when` that is not nested
+in a loop it fails closed with `'(exit-when ...)' is only valid inside a 'while'/'until'
+loop body`.
 
 ## Where Child Activations Are Allowed
 

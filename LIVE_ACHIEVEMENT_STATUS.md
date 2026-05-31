@@ -16569,3 +16569,6 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   intent-capture constructs). Reused the `loop_exit_target` hook; renders via
   Emitter/FSM. Fails closed outside while/until. 13d/13k/ISF_SPEC; t/1389 (5 subtests).
   Frontier `.3` (when-in-loop), `.4` report, `.5` docs.
+- `.3` (ISF-LOOP-EARLY-EXIT) shipped (2026-06-01): (exit-when) inside a when nested
+  in a loop exits the whole loop; post-hoc safety rejects (exit-when) in a non-loop
+  when. t/1389 (6 subtests). Frontier .4 (report), .5 (docs).

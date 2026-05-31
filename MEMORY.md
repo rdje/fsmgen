@@ -38613,3 +38613,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   t/1250). 13d has a runnable example; 13k control-flow row lists it. Frontier `.3`
   (exit-when inside a when nested in a loop), then `.4` report, `.5` docs.
 - Theme #3 (new intent-capture constructs) now has its first shipped construct.
+
+## 2026-06-01: ISF-LOOP-EARLY-EXIT.3 — exit-when inside a when nested in a loop
+- `(exit-when cond)` now also works inside a `when` body nested in a while/until loop;
+  its true edge leaves the WHOLE loop. Added exit-when to the `when` allow-list +
+  `_expand_when` branch (same loop_exit_when state). NO new resolution machinery: a
+  when's body states are already in the loop's loop_body_state_names, so the per-loop
+  pass stamps loop_exit_target automatically. Post-hoc safety: any loop_exit_when
+  without a loop_exit_target (a when NOT in a loop) → confess "only valid inside a
+  while/until loop body". t/1389 (6 subtests). Frontier .4 (report metadata), .5 docs.

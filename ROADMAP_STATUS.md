@@ -14960,3 +14960,8 @@ Exit criteria:
   Fails closed outside `while`/`until`. 13d (runnable example) + 13k (control-flow
   row) + `docs/ISF_SPEC.md` (t/1389) synced. Frontier `.3` (exit-when inside a `when`
   nested in a loop), then `.4` report metadata, `.5` docs.
+- `R14`: `ISF-LOOP-EARLY-EXIT.3` shipped (2026-06-01) — `(exit-when)` now also works
+  inside a `when` nested in a `while`/`until` loop (true edge leaves the whole loop).
+  Reused the per-loop pass (a when's body states are already in the loop body set);
+  added a post-hoc safety check rejecting a `(exit-when)` in a non-loop `when`.
+  `t/1389` (6 subtests). Frontier `.4` (schedule-report metadata), `.5` (docs).
