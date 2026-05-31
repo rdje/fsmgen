@@ -233,11 +233,17 @@ the `done` pulse is the application-level acknowledgement. Both CDC children
 reuse the acknowledged-event primitive (the same `FSMGEN_ISF_CDC_EVENT` marker,
 generated module shape, and reset metadata shown above for event crossings).
 
-Fail-closed boundaries are deliberate: a cross-domain `(do child)` with **no**
-covering activation crossing is rejected; a **declared-but-unused** crossing (one
-whose `child` no transaction actually `(do)`es) or one whose `child` is not in the
-declared destination domain is rejected; and cross-domain `(spawn)` plus nested
-cross-domain `(do)` (inside `repeat`/`when`/`switch`) remain deferred.
+A cross-domain `(do child)` is supported at the transaction top level and directly
+inside a **top-level `(repeat ...)` body** (the blocking activation re-runs the full
+await-ready → one-cycle-start → dual-CDC → done handshake each iteration, and the
+destination worker returns to idle between iterations ready for the next start
+pulse). The remaining fail-closed boundaries are deliberate: a cross-domain
+`(do child)` with **no** covering activation crossing is rejected; a
+**declared-but-unused** crossing (one whose `child` no transaction actually
+`(do)`es) or one whose `child` is not in the declared destination domain is
+rejected; and cross-domain `(spawn)` plus *deeper-nested* cross-domain `(do)`
+(inside a `when`/`switch`/`while`/`until` body, or a `repeat` that is itself nested
+in another body) remain deferred.
 
 Normal `?rtl` children still need externally supplied RTL; FSMGen does not
 invent module internals from a matching port list. When the marker is present,

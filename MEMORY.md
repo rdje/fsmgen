@@ -38538,3 +38538,24 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   audits (t/1376/1305/1304/1307/1303/1250) + mdbook, not the full 7-min regression.
 - NEXT: theme #2 (ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3 — repeat-body cross-domain
   do), theme #3 (intent constructs — design slice), theme #4 (ATL actor networks).
+
+## 2026-06-01: ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3 — top-level repeat-body cross-domain (do) SHIPPED (theme #2)
+- A cross-domain `(do child)` (covered by `(crossings (activation ...))`) directly
+  in a TOP-LEVEL `(repeat ...)` body now lowers through the dual-CDC, re-running the
+  full await-ready->one-cycle-start->done handshake each iteration; callee returns
+  to idle between iterations. `--check-json` SUCCEEDS (dual-CDC composition is
+  sound — NO composition-scope boundary, unlike same-domain generated-child/spawn).
+- Gates lifted: validator (`_validate_transaction_clause_domain_refs`) accepts
+  covered cross-domain do at label `repeat body`; `_activation_do_use_context` got a
+  `top_level_repeat` flag (do whose immediate container is a repeat that is a direct
+  transaction clause) → partition treats it as covered. The caller restructure
+  `_wire_external_activations` applied UNCHANGED — it finds the do-state by its
+  `<start>` assertion, redirects `repeat_init->do` to the ready-await, and the
+  `repeat_check->repeat_init` loop-back (never targeted the do-state) re-runs the
+  handshake per iteration. KEY LESSON: the restructure generalizes to any position.
+- Deeper nestings (when/switch/while/until body; repeat nested in a branch) still
+  defer (diagnostic refined to name both supported contexts). 13a/13d/13k synced;
+  t/1387 (+positive subtest, 10), t/1305 non-claims updated.
+- `.4` RE-SCOPED: theme #1's completion (same-domain branch-body do) unblocks a
+  branch-body CROSS-DOMAIN do — promoted to `.4` ahead of deeper repeat-nestings.
+  Frontier `.4`.

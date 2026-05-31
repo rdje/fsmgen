@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14` (ISF Multi-Clock And CDC Semantics — richer crossing primitives)
 - Created: `2026-05-31`
-- Last updated: `2026-05-31`
+- Last updated: `2026-06-01`
 - Owner: repo-local workflow
 
 ## Goal
@@ -130,6 +130,13 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   Goal: `Precise nested-deferred diagnostic — distinguish a nested (do child) use from a genuinely-unused crossing.`
   Acceptance: `A nested cross-domain (do child) (inside when/switch/repeat/while/until) fails closed with "used by a nested (do child) (inside a <ctx>) ... nested cross-domain activation remains deferred", distinct from the declared-but-unused message; the top-level case still lowers; genuinely-unused still says "declared but ... no top-level (do)"; locked by t/1387.`
   Verification: `prove -Iperl t/1387 (9 subtests) t/1386 t/1247 t/1372 t/1374 t/1375 t/1250 t/1305 t/1382 t/1383 t/1110 (11 files, 451) PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; git diff --check`
+  Commit: `be4fa262`
+
+- ID: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3`
+  Status: `done`
+  Goal: `Support a cross-domain (do child) directly inside a TOP-LEVEL repeat body — the first supported nested cross-domain context — routed through the dual-CDC per iteration.`
+  Acceptance: `The two gates are lifted for the top-level repeat case only: (1) the per-clause validator accepts a covered cross-domain (do) at label 'repeat body' (not just 'transaction body'); (2) the partition's _activation_do_use_context distinguishes a (do child) directly inside a TOP-LEVEL repeat (new top_level_repeat flag) from deeper nesting, and the partition treats top_level_repeat as covered. The caller restructure (_wire_external_activations) applies UNCHANGED in the repeat region: the repeat_init->do edge is redirected to the ready-await, the do-state splits into ready->req->await-done, and the repeat_check loop-back re-runs the full handshake each iteration; the callee returns to idle between iterations. Deeper nestings (when/switch/while/until body, or a repeat nested in another body) still fail closed with the (refined) nested-deferred diagnostic. The top-level (non-repeat) case is unchanged. End-to-end --check-json SUCCEEDS (no composition-scope boundary). 13a/13d/13k updated; t/1387 gains a positive subtest + repoints its 'repeat body' deferral case to a when->repeat.`
+  Verification: `Empirical spike: top-level (repeat 2 (do worker)) lowers to 3 domain files; caller restructured to parent_do_N_ready->_req->await-done inside the repeat loop; callee worker_idle_ext gated on start, pulses done, returns to idle; --check-json SUCCEEDS. Deferral preserved for when-body / switch->repeat / when->repeat. prove -Iperl t/1387 (10 subtests) t/1386 t/1247 t/1304 t/1307 t/1305 t/1376 t/1303 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -138,8 +145,9 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (`2c081347`). |
 | 2 | `.2` | `done` | Precise nested-deferred diagnostic shipped (`_activation_do_use_context` recursive scan; `t/1387` covers when/switch/repeat + the genuinely-unused case). |
-| 3 | `.3` | `pending` | Support **top-level repeat-body** cross-domain `(do worker)` (the first supported nested context): lift the validator + partition gate for the `repeat` context, verify the caller restructure applies in the repeat region, route the per-iteration handshake through the dual-CDC; golden `.fsm` + HDL. |
-| 4 | `.4`–`.7` | `pending` | Remaining repeat contexts: `when→repeat`, `switch→repeat`, `while/until→repeat`, deeper-nested. (Plain when/switch/while/until-body `(do)` is N/A — unsupported even same-domain.) |
+| 3 | `.3` | `done` | Top-level repeat-body cross-domain `(do worker)` LOWERS through the dual-CDC per iteration. Lifted the validator (`repeat body` label) + partition (`top_level_repeat` flag → covered); the caller restructure applied UNCHANGED in the repeat region; `--check-json` SUCCEEDS. Deeper nestings still fail closed (refined diagnostic). `t/1387` (+positive subtest). |
+| 4 | `.4` | `pending` | **Plain branch-body cross-domain `(do)`** — NEWLY UNBLOCKED. Theme #1 (`ISF-CONDITIONAL-CHILD-ACTIVATION`, closed) shipped same-domain `(do)` directly in `when`/`switch`/`while`/`until` bodies, so the `.3`-design assumption that branch-body `(do)` is N/A (unsupported even same-domain) no longer holds. A covered cross-domain `(do)` directly in a branch body is now a viable supported context: extend the partition (`top_level_branch_body` analog) + validator (branch-body labels), reuse the same restructure. |
+| 5 | `.5`–`.7` | `pending` | Deeper nestings: `when→repeat`, `switch→repeat`, `while/until→repeat`, branch→branch, and deeper combinations. Consolidate where the restructure generalizes. |
 
 ## Decisions
 
@@ -157,6 +165,25 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   building same-domain support for it first — out of this tree (a separate lane).
   The viable nested-do context is the `repeat` body, and there the per-iteration
   single-outstanding blocking handshake fits the shipped dual-CDC handshake.
+- `2026-06-01` (`.3` shipped — empirical confirmation): the caller restructure
+  (`_wire_external_activations`) applied to the repeat region with ZERO change. The
+  do-state is found by its `<start>` assertion regardless of position; the
+  `repeat_init -> do` edge is redirected to the ready-await; the `repeat_check`
+  loop-back already targets `repeat_init` (NOT the do-state), so it was untouched
+  and naturally re-runs `init -> ready -> req -> await-done` each iteration. The
+  callee terminal->idle chain returns `worker` to idle between iterations, ready for
+  the next `<start>` pulse. Crucially `--check-json` SUCCEEDS — the dual-CDC
+  composition is sound (no composition-scope boundary, unlike the same-domain
+  generated-child / multi-instance-spawn cases). Restricted to a TOP-LEVEL repeat
+  via a new `top_level_repeat` flag in `_activation_do_use_context` (the validator's
+  `repeat body` label allowance is broader, but the partition gate keeps deeper
+  repeats deferred — belt-and-suspenders).
+- `2026-06-01` (`.4` re-scope): theme #1 (`ISF-CONDITIONAL-CHILD-ACTIVATION`) closed
+  and now lowers same-domain `(do)`/`(spawn)` directly in all four branch/loop
+  bodies. This INVALIDATES the `.3`-design premise that a branch-body `(do)` is N/A
+  (unsupported even same-domain). So a covered cross-domain `(do)` directly in a
+  `when`/`switch`/`while`/`until` body is now a viable supported context and becomes
+  `.4` (ahead of the deeper repeat-nestings), reusing the same restructure.
 
 ## Open Questions
 
@@ -175,13 +202,16 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
 | --- | --- | --- | --- |
 | `2026-05-31` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-05-31` | `.2` | `prove -Iperl t/1387` (9 subtests) + clock-domain/crossing/diagnostic/spec-index/feature-matrix sweep (11 files, 451) PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.3` | Empirical spike: `(repeat 2 (do worker))` cross-domain lowers to 3 domain files; caller restructured (`parent_do_N_ready->_req->await-done`) inside the repeat loop; callee gated on `<start>`, pulses `<done>`, returns to idle; `--check-json` **SUCCEEDS**. Deferral preserved (when-body / switch→repeat / when→repeat). `prove -Iperl t/1387` (10 subtests) `t/1386 t/1247 t/1304 t/1307 t/1305 t/1376 t/1303` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.1: select nested cross-domain activation` | `2c081347` |
-| `.2` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.2: precise nested cross-domain (do) deferred diagnostic` | `ship commit (this slice)` |
+| `.2` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.2: precise nested cross-domain (do) deferred diagnostic` | `be4fa262` |
+| `.3` design | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3 design: scope nested cross-domain (do) to repeat-body contexts` | `e8d44e8d` |
+| `.3` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3: top-level repeat-body cross-domain (do) through dual-CDC` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -213,3 +243,35 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   those contexts) — it is an implementation-scoping deferral, tracked separately
   for mdBook documentation and a possible future "conditional `(do)`" language
   feature aligned with the rich-high-level-language goal.
+- `2026-06-01`: `.3` shipped — a cross-domain `(do child)` directly inside a
+  TOP-LEVEL `(repeat ...)` body now lowers through the dual-CDC, the first supported
+  nested cross-domain context. Two gates lifted: (1) the per-clause domain-ref
+  validator (`_validate_transaction_clause_domain_refs`) now treats a crossing-
+  covered cross-domain `(do)` as covered at label `repeat body` as well as
+  `transaction body`; (2) `_activation_do_use_context`/`_scan_activation_do_use`
+  gained a `top_level_repeat` flag (a `(do child)` whose immediate container is a
+  `repeat` that is itself a direct transaction-body clause), and the partition
+  (`_build_domain_partition`) treats `top_level_repeat` as a covered activation.
+  The caller restructure (`_wire_external_activations`) applied to the repeat region
+  with NO change: it finds the do-state by its `<start>` assertion, redirects the
+  `repeat_init -> do` edge to the inserted `<do>_ready` await, splits the do-state
+  into `ready -> req(one-cycle <start>) -> await <done>`, and leaves the
+  `repeat_check -> repeat_init` loop-back untouched (it never targeted the do-state),
+  so the full handshake re-runs every iteration; the callee's terminal->idle chain
+  returns the worker to idle between iterations. Verified end-to-end: the
+  3-domain-file lowering is correct AND `--check-json` SUCCEEDS (the dual-CDC
+  composition is sound — no composition-scope boundary). Deeper nestings (when/
+  switch/while/until body, or a repeat nested in another body) still fail closed,
+  with the diagnostic refined to name both supported contexts ("a top-level
+  '(do)' or a '(do)' directly inside a top-level '(repeat ...)' body; deeper nested
+  ... remains deferred"). 13a/13d/13k updated (the cross-domain staging now lists
+  top-level-repeat as shipped; the feature matrix row + non-claims updated). `t/1387`
+  gains a positive top-level-repeat subtest (now 10) and repoints its `repeat body`
+  deferral case to a `when->repeat` (still deferred); `t/1305` non-claims updated.
+- `2026-06-01`: `.4` re-scoped. Closing theme #1
+  (`ISF-CONDITIONAL-CHILD-ACTIVATION`) shipped same-domain `(do)`/`(spawn)` directly
+  in `when`/`switch`/`while`/`until` bodies, which invalidates the `.3`-design
+  premise that a branch-body `(do)` is N/A even same-domain. A covered cross-domain
+  `(do)` directly in a branch body is therefore now a viable supported context and
+  is promoted to `.4` (ahead of the deeper repeat-nestings), reusing the same
+  restructure + a branch-body analog of the `top_level_repeat` partition flag.

@@ -1980,13 +1980,18 @@ sub _rule_trigger_generated_refs {
 #                   innermost-found nested `(do child)`, or undef.
 sub _activation_do_use_context {
     my ($clauses, $child) = @_;
-    my %out = (top_level => 0, nested_label => undef);
-    _scan_activation_do_use($clauses, $child, undef, \%out);
+    # top_level         : a `(do child)` directly in the transaction body.
+    # top_level_repeat  : a `(do child)` directly inside a TOP-LEVEL `repeat` body
+    #                     (ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3 — the first supported
+    #                     nested cross-domain context; deeper nestings stay deferred).
+    # nested_label      : the innermost container of a deferred nested `(do child)`.
+    my %out = (top_level => 0, top_level_repeat => 0, nested_label => undef);
+    _scan_activation_do_use($clauses, $child, undef, \%out, 0);
     return %out;
 }
 
 sub _scan_activation_do_use {
-    my ($clauses, $child, $container_label, $out) = @_;
+    my ($clauses, $child, $container_label, $out, $in_top_level_repeat) = @_;
     return unless ref($clauses) eq 'ARRAY';
     for my $clause (@$clauses) {
         next unless ref($clause) eq 'ARRAY' && @$clause;
@@ -1995,6 +2000,8 @@ sub _scan_activation_do_use {
         if ($kw eq 'do' && defined($clause->[1]) && !ref($clause->[1]) && $clause->[1] eq $child) {
             if (defined $container_label) {
                 $out->{nested_label} //= $container_label;
+                $out->{top_level_repeat} = 1
+                    if $in_top_level_repeat && $container_label eq 'repeat body';
             }
             else {
                 $out->{top_level} = 1;
@@ -2002,12 +2009,17 @@ sub _scan_activation_do_use {
             next;
         }
         if ($kw eq 'when' || $kw eq 'repeat' || $kw eq 'while' || $kw eq 'until') {
-            _scan_activation_do_use([@{$clause}[2 .. $#$clause]], $child, "$kw body", $out);
+            # A `repeat` directly in the transaction body (container_label still
+            # undef) is the supported `.3` site; its direct `(do child)` body
+            # clauses are marked top-level-repeat. Any deeper container loses that
+            # status (so nested-repeat / when->repeat / etc. stay deferred).
+            my $child_top_level_repeat = (!defined($container_label) && $kw eq 'repeat') ? 1 : 0;
+            _scan_activation_do_use([@{$clause}[2 .. $#$clause]], $child, "$kw body", $out, $child_top_level_repeat);
         }
         elsif ($kw eq 'switch') {
             for my $branch (@{$clause}[2 .. $#$clause]) {
                 next unless ref($branch) eq 'ARRAY';
-                _scan_activation_do_use([@{$branch}[1 .. $#$branch]], $child, 'switch branch', $out);
+                _scan_activation_do_use([@{$branch}[1 .. $#$branch]], $child, 'switch branch', $out, 0);
             }
         }
     }
@@ -2116,14 +2128,17 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
         for my $tx (@{$actor->{transactions} || []}) {
             next unless _domain_for_entry($tx, $default_domain) eq $src;
             my %use = _activation_do_use_context($tx->{clauses}, $child);
-            $covered = 1 if $use{top_level};
+            # A top-level `(do child)` OR a `(do child)` directly inside a top-level
+            # `repeat` body (ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3) is a supported,
+            # covered cross-domain activation. Deeper nestings stay deferred.
+            $covered = 1 if $use{top_level} || $use{top_level_repeat};
             $nested_label //= $use{nested_label};
         }
         # Accurate fail-closed diagnostics: distinguish a top-level covered
         # activation (proceeds) from a NESTED use (deferred) from a genuinely
         # unused crossing.
         if (!$covered && defined($nested_label)) {
-            confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is used by a nested '(do $child)' (inside a $nested_label), but cross-domain activation is currently supported only for a top-level '(do $child)'; nested cross-domain activation remains deferred\n";
+            confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is used by a nested '(do $child)' (inside a $nested_label), but cross-domain activation is currently supported only for a top-level '(do $child)' or a '(do $child)' directly inside a top-level '(repeat ...)' body; deeper nested cross-domain activation remains deferred\n";
         }
         confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is declared but no transaction in domain '$src' performs a top-level '(do $child)'; an activation crossing must own a real cross-domain activation\n"
             unless $covered;
@@ -2614,14 +2629,17 @@ sub _validate_transaction_clause_domain_refs {
     }
     if ($keyword eq 'do' || $keyword eq 'spawn') {
         my $target = $clause->[1];
-        # A top-level cross-domain `(do child)` covered by an `(activation ...)`
-        # crossing is routed through CDC synchronizers, so the same-domain target
-        # checks are intentionally skipped for it (the CDC routing is emitted in
-        # the multi-domain top). Every other cross-domain reference still fails
-        # closed. Restricted to top-level `do` for now; cross-domain `spawn` and
-        # nested cross-domain `do` remain fail-closed.
+        # A cross-domain `(do child)` covered by an `(activation ...)` crossing is
+        # routed through CDC synchronizers, so the same-domain target checks are
+        # intentionally skipped for it (the CDC routing is emitted in the
+        # multi-domain top). Every other cross-domain reference still fails closed.
+        # Supported at the transaction top level and directly inside a `repeat` body
+        # (ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3); the partition gate further
+        # restricts the repeat case to a TOP-LEVEL repeat (deeper nestings defer
+        # there). Cross-domain `spawn` and deeper-nested cross-domain `do` remain
+        # fail-closed.
         my $covered_activation = $keyword eq 'do'
-            && ($label // '') eq 'transaction body'
+            && (($label // '') eq 'transaction body' || ($label // '') eq 'repeat body')
             && _activation_crossing_covers($actor, $domain, $transaction_domains->{$target}, $target);
         if (!$covered_activation) {
             _validate_same_domain_target(

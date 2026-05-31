@@ -232,11 +232,14 @@ The full same-domain support matrix (✓ = lowers; the spawn column means
 | `while` body | ✓ | ✓ | ✓ |
 | `until` body | ✓ | ✓ | ✓ |
 
-Across clock domains the same staging applies: a cross-domain `(do child)` through
-a `(crossings (activation ...))` is supported top-level (see
-[Activation Crossing](13a-actor-interface.md#activation-crossing)); a nested
-cross-domain `(do)` fails closed with a "nested cross-domain activation remains
-deferred" diagnostic.
+Across clock domains the staging is narrower than the same-domain surface above. A
+cross-domain `(do child)` through a `(crossings (activation ...))` is supported at
+the transaction top level and directly inside a **top-level `(repeat ...)` body**
+(the dual-CDC handshake re-runs each iteration; see
+[Activation Crossing](13a-actor-interface.md#activation-crossing)). A *deeper-nested*
+cross-domain `(do)` — directly in a `when`/`switch`/`while`/`until` body, or in a
+`repeat` that is itself nested in another body — still fails closed with a
+"deeper nested cross-domain activation remains deferred" diagnostic.
 
 ## Nested Control Flow
 

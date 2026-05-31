@@ -14931,3 +14931,13 @@ Exit criteria:
   closed the tree (Active→Completed). Next R14 language-richness work: theme #2
   (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3`, now also able to cover a branch-body
   cross-domain `(do)`), theme #3 (intent-capture constructs), theme #4 (ATL).
+- `R14`: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3` shipped (2026-06-01) — a cross-domain
+  `(do child)` directly inside a TOP-LEVEL `(repeat ...)` body now lowers through
+  the dual-CDC (the first supported nested cross-domain context); the handshake
+  re-runs each iteration and `--check-json` SUCCEEDS. Lifted the validator
+  (`repeat body` label) + partition (`top_level_repeat` flag); the caller restructure
+  applied unchanged in the repeat region. Deeper nestings still fail closed (refined
+  diagnostic). 13a/13d/13k synced; `t/1387` (+positive subtest). `.4` re-scoped to
+  branch-body cross-domain `(do)` (newly unblocked by theme #1's completion), ahead
+  of the deeper repeat-nestings. Theme #2 of the language-richness frontier is
+  progressing.

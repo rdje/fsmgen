@@ -379,8 +379,11 @@ for my $example (@required_examples) {
 
 my @required_non_claims = (
     'Multi-bit CDC payloads',
-    'Cross-domain repeat-body `do`, generated or spawned nested activation',
-    'cross-domain activation inside repeat bodies',
+    # Top-level repeat-body cross-domain `(do)` is now shipped
+    # (ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3); the matrix must still defer the deeper
+    # cases. These two non-claims track that remaining deferred boundary.
+    'Generated or spawned nested activation',
+    'DEEPER-nested cross-domain',
     'Dynamic division/modulo nonzero proof is not shipped',
     'Enum members are not writable targets',
     'Aggregate interface ports',

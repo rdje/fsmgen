@@ -16549,3 +16549,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   Theme #1 (conditional child activation) COMPLETE: (do) local/bound/generated +
   (spawn) + drains across top-level, repeat, and all four branch/loop bodies.
   Docs-only slice (doc-truth/feature-matrix audits + mdbook). Next: themes #2/#3/#4.
+- `.3` (ISF-NESTED-CROSS-DOMAIN-ACTIVATION) shipped (2026-06-01): top-level
+  repeat-body cross-domain `(do)` lowers through the dual-CDC per iteration;
+  `--check-json` SUCCEEDS. Validator (`repeat body`) + partition (`top_level_repeat`)
+  gates lifted; caller restructure applied unchanged. Deeper nestings still defer.
+  13a/13d/13k; t/1387 (10 subtests). Theme #2 progressing; `.4` = branch-body
+  cross-domain do (unblocked by theme #1).

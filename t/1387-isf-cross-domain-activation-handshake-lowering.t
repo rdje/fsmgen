@@ -352,14 +352,19 @@ ISF
 };
 
 subtest 'a nested cross-domain (do) fails closed with a precise deferred diagnostic' => sub {
-    # A `(do child)` inside a when/switch/repeat body is a real use of the
-    # activation crossing, but nested cross-domain activation is not yet supported
-    # (only top-level). The diagnostic must say so accurately — not the
+    # A `(do child)` inside a when/switch body — or inside a repeat that is itself
+    # nested in another body (when->repeat) — is a real use of the activation
+    # crossing, but that DEEPER nested cross-domain activation is not yet supported.
+    # (A `(do child)` directly inside a TOP-LEVEL repeat body IS supported —
+    # ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3 — and is covered by the positive subtest
+    # below.) The diagnostic must name the deferred context accurately — not the
     # genuinely-unused "declared but ... no top-level (do)" message.
     my %context_body = (
         'when body'     => '(when cond (do worker))',
         'switch branch' => '(switch sel (0 (do worker)))',
-        'repeat body'   => '(repeat n (do worker))',
+        # when->repeat: the repeat is NOT top-level, so it stays deferred; the
+        # innermost container the diagnostic names is the repeat body.
+        'repeat body'   => '(when cond (repeat n (do worker)))',
     );
     for my $label (sort keys %context_body) {
         my $actor = parse_source(<<"ISF", "nested-$label");
@@ -399,6 +404,61 @@ ISF
             "nested ($label) is not misreported as a declared-but-unused crossing",
         );
     }
+};
+
+subtest 'a (do child) directly inside a TOP-LEVEL repeat body lowers cross-domain through the dual-CDC per iteration' => sub {
+    # ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3: the first supported nested cross-domain
+    # context. A blocking `(do worker)` in a top-level `(repeat ...)` body blocks
+    # each iteration until done, so the shipped await-ready + one-cycle-start +
+    # dual-CDC handshake applies per iteration, and the callee returns to idle
+    # between iterations ready for the next start pulse.
+    my $actor = parse_source(<<'ISF', 'top-level-repeat-xdom');
+(actor cross_domain_repeat_do
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus  (clock bus_clk) (reset bus_rst_n)))
+  (crossings
+    (activation worker (from core) (to bus)))
+  (interface
+    (input  start (domain core))
+    (output done  (domain core))
+    (input  din    (width 8) (domain bus))
+    (output result (width 8) (domain bus))
+    (output worker_complete (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (repeat 2 (do worker))
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (sample din as snap)
+    (update result snap)
+    (complete worker_complete)))
+ISF
+    my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+    ok($lowered, 'top-level repeat-body cross-domain (do) lowers') or diag($@);
+
+    my $core = $lowered->{files}{'cross_domain_repeat_do__domain_core.fsm'};
+    ok(defined($core), 'the caller (core) domain module is emitted');
+    # The do-state inside the repeat region is restructured into the CDC handshake
+    # chain: await <start>_ready -> one-cycle <start> -> await <done>.
+    like($core, qr/parent_do_\d+_ready\b[\s\S]*?<worker_start_ready/, 'caller awaits the start CDC ready before the request');
+    like($core, qr/parent_do_\d+_req\b[\s\S]*?\(worker_start>\s*1\)/, 'caller drives a one-cycle start request');
+    like($core, qr/parent_do_\d+\b[\s\S]*?<worker_done/, 'caller blocks on the done handshake');
+    # The repeat loop-back re-enters the handshake each iteration (loop-back targets
+    # the repeat init, which leads to the ready-await).
+    like($core, qr/parent_repeat_check_\d+[\s\S]*?parent_repeat_init_\d+/, 'the repeat loop re-runs the per-iteration handshake');
+
+    my $bus = $lowered->{files}{'cross_domain_repeat_do__domain_bus.fsm'};
+    ok(defined($bus), 'the callee (bus) domain module is emitted');
+    like($bus, qr/worker_idle_ext\s*\(\s*<worker_start/s, 'callee entry is gated on the start pulse each iteration');
+    like($bus, qr/worker_done_req\b[\s\S]*?\(worker_done>\s*1\)[\s\S]*?worker_idle_ext/, 'callee pulses done then returns to idle, ready for the next iteration');
+
+    my $top = $lowered->{files}{'cross_domain_repeat_do_top.fsm'};
+    ok(defined($top), 'the multi-domain top is emitted');
+    like($top, qr/cdc_activation_worker_start/, 'the top instantiates the start CDC synchronizer');
+    like($top, qr/cdc_activation_worker_done/, 'the top instantiates the done CDC synchronizer');
 };
 
 done_testing();

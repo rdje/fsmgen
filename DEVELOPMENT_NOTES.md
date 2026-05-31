@@ -34067,3 +34067,32 @@ fails `--check-json` at the COMPOSITION_SCOPE boundary — but so does the IDENT
 top-level `(spawn w1)(spawn w2)(await_all)`, so the branch-body version is at parity,
 not a regression. Always run the top-level equivalent through `--check-json` before
 concluding a composition-scope failure is yours.
+
+## Nested cross-domain activation `.3` — the caller restructure is position-independent (2026-06-01)
+
+The fear going into `.3` was that `_wire_external_activations`'s caller restructure
+(split the do await-state into ready->req->await-done and redirect predecessors)
+was written assuming a top-level do and would need rework inside a repeat region.
+It did not. The restructure locates the do-state purely by "the await state that
+asserts `<start>`" — position-independent — and its redirect rule ("redirect every
+transition targeting the do-state, except from the req/ready states, to the
+ready-await") happens to do exactly the right thing in a repeat: the only edge into
+the do-state was `repeat_init -> do`, which becomes `repeat_init -> ready`; the
+`repeat_check` loop-back targets `repeat_init` (NOT the do-state), so it is left
+alone and naturally re-enters `init -> ready -> req -> await-done` each iteration.
+Net change for `.3` was three small edits — two gate liftings (validator label +
+partition `top_level_repeat` flag) and a diagnostic-wording refinement — plus tests
+and docs. The expensive-looking machinery was already general.
+
+Two cross-cutting lessons reinforced:
+1. PARITY-CHECK A COMPOSITION FAILURE, but also check a SUCCESS the same way: here
+   `--check-json` SUCCEEDED for the repeat-body case (the dual-CDC composes), in
+   contrast to same-domain generated-child/multi-instance-spawn which hit the
+   COMPOSITION_SCOPE boundary. The CDC path emits real port-level handshakes, so the
+   composition realizer infers the wiring cleanly. Don't assume every new
+   composition shape hits the boundary — test it.
+2. DEFERRAL-LIFT CASCADE extends to doc-truth audits: lifting the repeat-body
+   deferral broke t/1305's hard-coded "non-claim" substrings (the matrix asserting
+   the feature is NOT shipped) and t/1387's `repeat body` deferral case. Grep tests
+   AND book-feature-matrix non-claim lists for the lifted capability, not just the
+   code diagnostic string.
