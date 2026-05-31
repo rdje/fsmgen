@@ -34161,3 +34161,23 @@ the loop-exit-target computation rejects any `loop_exit_when` still missing a
 `loop_exit_target`. Lesson: when a construct is only meaningful inside an enclosing
 region but its host clause is allowed elsewhere, a post-hoc "did the enclosing region
 claim it?" check is cleaner than threading context through every expander.
+
+## Inline procedures `.2` — expand in the adapter, not the scheduler (2026-06-01)
+
+Inline `(proc)`/`(call)` lowers by pure macro-expansion, so the cleanest home is a
+PARSE-TIME pass in `FSM::Adapter::ISF::Parser` (`_expand_procedure_calls`, run after
+`_build_actor`'s clause loop and before the finalizers/validators). The scheduler
+(`LoweringIR`) never learns about `proc`/`call` at all — by the time the actor hash
+reaches it, every `(call ...)` is already replaced by the substituted body clauses.
+This is why the emitted `.fsm` is byte-identical to writing the clauses out by hand
+(asserted directly in `t/1390` by lowering a proc actor and a hand-written actor and
+comparing the files). Substitution is a deep clone of the proc body that replaces any
+atom matching a parameter name with a deep clone of that parameter's actual (which can
+be a whole expression list, not just a signal). Recursion is caught by carrying the
+proc-name stack through the recursive expansion of the substituted body.
+
+Two gotchas: (1) the expansion runs at PARSE time, so malformed-call errors surface
+from `parse_source`, not `lower` — tests must wrap `parse_source` in eval for the
+fail-closed cases. (2) the lisp parser emits a trailing `undef` for an empty `()` —
+so `(params)` parses as `['params', undef]`; filter undef entries when reading param
+specs (and body clauses) or you get a spurious "parameter spec must be a list".

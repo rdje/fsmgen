@@ -16572,3 +16572,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - `.3` (ISF-LOOP-EARLY-EXIT) shipped (2026-06-01): (exit-when) inside a when nested
   in a loop exits the whole loop; post-hoc safety rejects (exit-when) in a non-loop
   when. t/1389 (6 subtests). Frontier .4 (report), .5 (docs).
+- `.2` (ISF-PROCEDURES) shipped (2026-06-01): inline `(proc)`/`(call)` reusable
+  procedures (in-params) — macro-expand at the call site, byte-identical .fsm to
+  hand-written; parse-time pass, scheduler untouched; fails closed on unknown/arity/
+  recursion/handshake-deferred/out-param-deferred/malformed; --check-json + verilator/
+  yosys PASS. 13b section (4 examples), 13k row, t/1390. Frontier .3 (out-params).

@@ -38637,3 +38637,19 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   in FSM::Adapter::ISF (keep proc/call out of the scheduler entirely).
 - DOCS are first-class per slice (see [[thorough-mdbook-examples]]); .5 = dedicated
   example-dense chapter. Frontier .2.
+
+## 2026-06-01: ISF-PROCEDURES.2 — inline (proc)/(call) SHIPPED (in-params)
+- `(proc NAME (params (P (width N))...) BODY...)` + `(call NAME actuals)` now lower:
+  the inline call MACRO-EXPANDS the proc body at the call site, substituting each
+  in-param with its actual (signal OR whole expression). Emitted .fsm is BYTE-IDENTICAL
+  to hand-written (asserted in t/1390). Recurses into when/switch/while/until/repeat
+  bodies + the substituted body.
+- KEY: expansion is a PARSE-TIME pass in FSM::Adapter::ISF::Parser
+  (`_expand_procedure_calls`, run after _build_actor's clause loop, before finalizers)
+  — proc/call NEVER reach the scheduler (the scheduler is untouched). Definition stored
+  in $actor->{procs}. SYNTAX: params wrapped in (params ...) to disambiguate from body.
+- Fail-closed: unknown proc, arity, recursion (direct/transitive, no call stack),
+  (call ... as INST) handshake form (deferred .4), out-params (deferred .3), malformed
+  proc. GOTCHA: empty (params) parses as ['params', undef] — filter the trailing undef.
+- --check-json + verilator/yosys PASS. 13b "Reusable Procedures" section (4 runnable
+  examples), 13k row, ISF_SPEC t/1390. Frontier .3 (out-params), .4 (handshake), .5 docs.

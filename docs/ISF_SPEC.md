@@ -5745,6 +5745,7 @@ Focused tests:
 - [t/1387-isf-cross-domain-activation-handshake-lowering.t](../t/1387-isf-cross-domain-activation-handshake-lowering.t)
 - [t/1388-isf-when-body-local-do.t](../t/1388-isf-when-body-local-do.t)
 - [t/1389-isf-loop-early-exit.t](../t/1389-isf-loop-early-exit.t)
+- [t/1390-isf-procedures.t](../t/1390-isf-procedures.t)
 
 ## 12. Explicitly Deferred
 

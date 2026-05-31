@@ -155,6 +155,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         interface    => { inputs => [], outputs => [] },
         handshakes   => {},
         transactions => [],
+        procs        => {},
         rules        => [],
         resources    => [],
         storage      => [],
@@ -235,6 +236,11 @@ sub _build_actor($self, $actor_ast, $source_label) {
             confess "Error: duplicate transaction '$transaction->{name}' in actor '$actor_name'\n"
                 if $transaction_names{$transaction->{name}}++;
             push @{$result->{transactions}}, $transaction;
+        } elsif ($keyword eq 'proc') {
+            my $proc = $self->_parse_proc($clause, $actor_name);
+            confess "Error: duplicate proc '$proc->{name}' in actor '$actor_name'\n"
+                if exists $result->{procs}{$proc->{name}};
+            $result->{procs}{$proc->{name}} = $proc;
         } elsif ($keyword eq 'rule') {
             my $rule = $self->_parse_rule($clause);
             confess "Error: duplicate rule '$rule->{name}' in actor '$actor_name'\n"
@@ -289,6 +295,11 @@ sub _build_actor($self, $actor_ast, $source_label) {
         }
     }
 
+    # ISF-PROCEDURES: expand inline `(call NAME actuals)` into the substituted
+    # `(proc NAME ...)` body BEFORE the finalizers/validators run, so the scheduler
+    # only ever sees ordinary clauses (procs/calls never reach the lowerer).
+    $self->_expand_procedure_calls($result);
+
     $self->_finalize_actor_symbol_tables($result, $source_label);
     $self->_finalize_actor_constant_values($result);
     $self->_finalize_actor_param_values($result);
@@ -315,6 +326,143 @@ sub _build_actor($self, $actor_ast, $source_label) {
 
     fsm_trace_exit('Parser _build_actor completed', 3);
     return $result;
+}
+
+# --- ISF-PROCEDURES: reusable procedures, inline (call) expansion ---
+
+# (proc NAME (params PARAMSPEC...) BODY...)
+# PARAMSPEC := (PNAME (width N))            -- an `in` (value) parameter
+#            | (out PNAME (width N))         -- an `out` (write-back) parameter
+sub _parse_proc($self, $clause, $actor_name) {
+    my (undef, $name, @rest) = @$clause;
+    confess "Error: (proc ...) in actor '$actor_name' requires a name\n"
+        unless defined($name) && !ref($name) && length($name);
+    my (@params, @body);
+    my $seen_params = 0;
+    for my $sub (@rest) {
+        next unless defined $sub;   # the lisp parser can emit a trailing undef for `()`
+        if (ref($sub) eq 'ARRAY' && @$sub && defined($sub->[0]) && !ref($sub->[0]) && $sub->[0] eq 'params') {
+            confess "Error: proc '$name' in actor '$actor_name' has more than one (params ...)\n" if $seen_params;
+            $seen_params = 1;
+            for my $pspec (@{$sub}[1 .. $#$sub]) {
+                next unless defined $pspec;   # empty `(params)` parses as ['params', undef]
+                push @params, $self->_parse_proc_param($pspec, $name, $actor_name);
+            }
+        } else {
+            push @body, $sub;
+        }
+    }
+    confess "Error: proc '$name' in actor '$actor_name' requires a (params ...) clause (use (params) for none)\n"
+        unless $seen_params;
+    confess "Error: proc '$name' in actor '$actor_name' has an empty body\n"
+        unless @body;
+    return { name => $name, params => \@params, body => \@body };
+}
+
+sub _parse_proc_param($self, $pspec, $proc_name, $actor_name) {
+    confess "Error: proc '$proc_name' in actor '$actor_name' parameter spec must be a list\n"
+        unless ref($pspec) eq 'ARRAY' && @$pspec;
+    my @t = @$pspec;
+    my $dir = 'in';
+    if (defined($t[0]) && !ref($t[0]) && $t[0] eq 'out') {
+        $dir = 'out';
+        shift @t;
+    }
+    my $pname = $t[0];
+    confess "Error: proc '$proc_name' in actor '$actor_name' parameter needs a name\n"
+        unless defined($pname) && !ref($pname) && length($pname);
+    return { name => $pname, dir => $dir };
+}
+
+sub _expand_procedure_calls($self, $result) {
+    my $procs = $result->{procs} || {};
+    return unless %$procs;
+    for my $tx (@{$result->{transactions} || []}) {
+        $tx->{clauses} = $self->_expand_calls_in_list(
+            $tx->{clauses}, $procs, [], "transaction '$tx->{name}'");
+    }
+}
+
+sub _expand_calls_in_list($self, $clauses, $procs, $stack, $ctx) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]) && $clause->[0] eq 'call') {
+            push @out, @{$self->_expand_one_call($clause, $procs, $stack, $ctx)};
+        } else {
+            push @out, $self->_expand_calls_in_clause($clause, $procs, $stack, $ctx);
+        }
+    }
+    return \@out;
+}
+
+# Recurse into the body of a body-bearing control-flow clause so that a nested
+# `(call ...)` is expanded too. Non-body clauses pass through unchanged.
+sub _expand_calls_in_clause($self, $clause, $procs, $stack, $ctx) {
+    return $clause
+        unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $body = $self->_expand_calls_in_list([@{$clause}[2 .. $#$clause]], $procs, $stack, $ctx);
+        return [ @{$clause}[0 .. 1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $branch (@{$clause}[2 .. $#$clause]) {
+            if (ref($branch) eq 'ARRAY' && @$branch) {
+                my $bbody = $self->_expand_calls_in_list([@{$branch}[1 .. $#$branch]], $procs, $stack, $ctx);
+                push @branches, [ $branch->[0], @$bbody ];
+            } else {
+                push @branches, $branch;
+            }
+        }
+        return [ @{$clause}[0 .. 1], @branches ];
+    }
+    return $clause;
+}
+
+sub _expand_one_call($self, $clause, $procs, $stack, $ctx) {
+    my (undef, $name, @rest) = @$clause;
+    confess "Error: (call ...) in $ctx requires a procedure name\n"
+        unless defined($name) && !ref($name) && length($name);
+    # The handshake form `(call NAME ... as INST)` is deferred to ISF-PROCEDURES.4.
+    if (grep { defined($_) && !ref($_) && $_ eq 'as' } @rest) {
+        confess "Error: $ctx '(call $name ... as INST)' handshake-form procedure call is not yet supported; the inline form '(call $name actuals)' is supported (the handshake form lands in ISF-PROCEDURES.4)\n";
+    }
+    my $proc = $procs->{$name};
+    confess "Error: $ctx calls unknown procedure '$name'\n" unless $proc;
+    confess "Error: $ctx recursive procedure call '(call $name ...)' is not lowerable to hardware (no call stack); chain: " . join(' -> ', @$stack, $name) . "\n"
+        if grep { $_ eq $name } @$stack;
+    my @actuals = @rest;
+    my @params  = @{$proc->{params}};
+    confess "Error: $ctx '(call $name ...)' passes " . scalar(@actuals) . " argument(s) but proc '$name' declares " . scalar(@params) . " parameter(s)\n"
+        unless @actuals == @params;
+    my %subst;
+    for my $i (0 .. $#params) {
+        confess "Error: $ctx '(call $name ...)': out-parameter '$params[$i]{name}' is not yet supported; only value (in) parameters are supported in the inline form so far (out-parameters land in ISF-PROCEDURES.3)\n"
+            if $params[$i]{dir} eq 'out';
+        $subst{$params[$i]{name}} = $actuals[$i];
+    }
+    my $body = $self->_substitute_proc_body($proc->{body}, \%subst);
+    # Recursively expand any nested `(call ...)` inside the substituted body, with
+    # `$name` on the recursion stack to detect (transitive) recursion.
+    return $self->_expand_calls_in_list($body, $procs, [@$stack, $name], "$ctx -> proc '$name'");
+}
+
+# Deep-copy `$node`, replacing any scalar atom that names a parameter with a deep
+# clone of that parameter's actual (an atom or a whole expression list).
+sub _substitute_proc_body($self, $node, $subst) {
+    if (ref($node) eq 'ARRAY') {
+        return [ map { $self->_substitute_proc_body($_, $subst) } @$node ];
+    }
+    if (defined($node) && !ref($node) && exists $subst->{$node}) {
+        return _proc_deep_clone($subst->{$node});
+    }
+    return $node;
+}
+
+sub _proc_deep_clone($node) {
+    return [ map { _proc_deep_clone($_) } @$node ] if ref($node) eq 'ARRAY';
+    return $node;
 }
 
 # --- Individual clause parsers ---

@@ -37,15 +37,15 @@ Reads like:
 (actor acc_demo
   (interface (input start) (input din (width 8)) (output done) (output total (width 8)))
 
-  ;; a reusable procedure: add `in` into `acc`
-  (proc accumulate (in (width 8)) (out acc (width 8))
-    (update acc (+ acc in)))
+  ;; a reusable procedure: add `in` into the actor's `total`
+  (proc accumulate (params (in (width 8)))
+    (update total (+ total in)))
 
   (transaction main
     (on start)
     (sample din as s)
-    (call accumulate s total)          ;; INLINE: expands to (update total (+ total s))
-    (call accumulate s total as a0)    ;; HANDSHAKE: instance a0, start/done + arg ports
+    (call accumulate s)                ;; INLINE (shipped .2): expands to (update total (+ total s))
+    (call accumulate s as a0)          ;; HANDSHAKE (.4): instance a0, start/done + arg ports
     (complete done)))
 ```
 
@@ -69,7 +69,10 @@ Reads like:
 
 ### Definition
 
-`(proc NAME (PARAM-SPEC...) BODY...)` at actor level. A `PARAM-SPEC` is:
+`(proc NAME (params PARAM-SPEC...) BODY...)` at actor level — the parameters are
+wrapped in an explicit `(params ...)` sub-clause (shipped in `.2`; this refines the
+bare-paramspec sketch from the original design, to disambiguate the params from the
+body clauses). A `PARAM-SPEC` is:
 
 - `(NAME (width N))` — an **in** (value) parameter (default direction).
 - `(out NAME (width N))` — an **out** parameter (an lvalue the call writes back).
@@ -171,6 +174,13 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
   Goal: `Select; design both calling conventions + the `as INST` pick; ground truth.`
   Acceptance: `Task tree committed before any code change.`
   Verification: `mdbook build docs/book; git diff --check`
+  Commit: `76d7f01b`
+
+- ID: `ISF-PROCEDURES.2`
+  Status: `done`
+  Goal: `Inline (proc) + (call NAME actuals) for value (in) parameters — the parse-time expansion.`
+  Acceptance: `(proc NAME (params (P (width N))...) BODY...) parsed into $actor->{procs}; a parse-time pass in FSM::Adapter::ISF::Parser (_expand_procedure_calls, run after _build_actor's clause loop and before the finalizers) replaces each inline (call NAME actuals) with the proc body, substituting each in-param name with its actual (a signal OR a whole expression), recursing into when/switch/while/until/repeat bodies and into the substituted body. The emitted .fsm is byte-identical to writing the substituted clauses by hand (verified against a hand-written actor); procs/calls never reach the lowerer. Fails closed: unknown proc, arity mismatch, recursion (direct/transitive; no call stack), the handshake form (call ... as INST) (deferred .4), out-params (deferred .3), and malformed (proc ...) (no name / no (params ...) / empty body). --check-json + verilator/yosys PASS. 13b gains an example-rich procedures section (4 runnable examples); 13k row; ISF_SPEC registers t/1390. NOTE: the shipped definition syntax wraps the parameters in an explicit (params ...) sub-clause — (proc NAME (params PARAMSPEC...) BODY...) — refining the .1-design's bare-paramspec sketch, to disambiguate params from body clauses.`
+  Verification: `prove -Iperl t/1390 (6 subtests) t/1250 t/1376 t/1305 t/1303 t/1304 t/1307 PASS; identical-.fsm + when/while-body + --check-json + --verify-hdl + all fail-closed verified; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -178,8 +188,9 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
-| 2 | `.2` | `pending` | Inline `(proc)` + `(call NAME actuals)` for in-params — the genuinely new pre-scheduling expansion, lowest risk (desugars to existing clauses). |
-| 3 | `.3`–`.5` | `pending` | Inline out-params; handshake `(call … as INST)`; docs/examples. |
+| 2 | `.2` | `done` | Inline `(proc)` + `(call NAME actuals)` for in-params: a parse-time expansion pass in `FSM::Adapter::ISF::Parser` substitutes actuals into the proc body (identical `.fsm` to hand-written); fails closed on unknown/arity/recursion/handshake-deferred/out-param-deferred/malformed. `--check-json` + verilator/yosys PASS. `t/1390`. |
+| 3 | `.3` | `pending` | Inline **out-params** — `(out NAME (width N))` write-back lvalue substitution. |
+| 4 | `.4`–`.5` | `pending` | Handshake `(call … as INST)`; dedicated example-dense docs chapter + matrix/spec sync. |
 
 ## Decisions
 
@@ -210,12 +221,14 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.2` | Spike: `(proc accumulate (params (in (width 8))) (update total (+ total in)))` + `(call accumulate s)`/`(call accumulate (+ s 1))` expands to identical `.fsm`; calls in when/while bodies lower; `--check-json` SUCCESS; `--verify-hdl` verilator_lint+yosys_synthesis PASS; unknown/arity/recursion/handshake/out-param/malformed fail closed. `prove -Iperl t/1390` (6 subtests) `t/1250 t/1376` (45) `t/1305 t/1303 t/1304 t/1307` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-PROCEDURES.1: select reusable procedures (inline + handshake calls)` | `ship commit (this slice)` |
+| `.1` | `ISF-PROCEDURES.1: select reusable procedures (inline + handshake calls)` | `76d7f01b` |
+| `.2` | `ISF-PROCEDURES.2: inline (proc)/(call) reusable procedures (in-params)` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -225,3 +238,27 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
   default) or `(call NAME actuals as INST)` (port-binding handshake). Recorded the
   ISF/IAL1 layering rationale (desugars to existing primitives) and the
   inline-first slice plan.
+- `2026-06-01`: `.2` shipped — inline `(proc)` + `(call NAME actuals)` for value (in)
+  parameters. A `(proc NAME (params (P (width N))...) BODY...)` is parsed (new `proc`
+  branch in `FSM::Adapter::ISF::Parser`'s `_build_actor`) into `$actor->{procs}`. A
+  new parse-time pass `_expand_procedure_calls` (run right after the actor's clause
+  loop and BEFORE the finalizers/validators) rewrites each inline `(call NAME
+  actuals)` into the procedure body with each in-parameter name substituted by its
+  actual — which may be a plain signal OR a whole expression (e.g. `(call accumulate
+  (+ s 1))` → `(update total (+ total (+ s 1)))`). The expansion recurses into
+  `when`/`switch`/`while`/`until`/`repeat` bodies and into the substituted body
+  itself (so nested calls expand), with the proc name pushed on a recursion stack to
+  reject direct/transitive recursion (no hardware call stack). Because expansion runs
+  in the adapter, `proc`/`call` never reach the scheduler — the emitted `.fsm` is
+  byte-identical to writing the substituted clauses by hand (asserted in `t/1390`
+  against a hand-written actor). Fails closed with targeted diagnostics: unknown
+  procedure, argument-count mismatch, recursion, the handshake form `(call ... as
+  INST)` (deferred to `.4`), out-parameters (deferred to `.3`), and malformed
+  `(proc ...)` (missing name / missing `(params ...)` / empty body). The empty
+  `(params)` lisp-parse quirk (a trailing `undef`) is filtered. Verified `--check-json`
+  SUCCEEDS and `--verify-hdl` passes (verilator_lint + yosys_synthesis). Book: `13b`
+  gains an example-rich "Reusable Procedures" section (4 runnable examples: basic
+  accumulate, expression actual, multi-param, call-in-loop); `13k` gains a procedures
+  row; `docs/ISF_SPEC.md` registers `t/1390`. Shipped-syntax note: the parameters are
+  wrapped in `(params ...)` (refines the `.1` bare-paramspec design) to disambiguate
+  params from body clauses.

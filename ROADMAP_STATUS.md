@@ -14965,3 +14965,11 @@ Exit criteria:
   Reused the per-loop pass (a when's body states are already in the loop body set);
   added a post-hoc safety check rejecting a `(exit-when)` in a non-loop `when`.
   `t/1389` (6 subtests). Frontier `.4` (schedule-report metadata), `.5` (docs).
+- `R14`: `ISF-PROCEDURES.2` shipped (2026-06-01) — inline `(proc)`/`(call)` reusable
+  procedures (value/in params). The inline call macro-expands the proc body at the
+  call site (parse-time pass in `FSM::Adapter::ISF::Parser`); the emitted `.fsm` is
+  byte-identical to hand-written, and proc/call never reach the scheduler. Fails
+  closed on unknown/arity/recursion/handshake-deferred/out-param-deferred/malformed.
+  `--check-json` + verilator/yosys PASS. The "callable block with its own arguments"
+  in its lightweight inline form (theme #3). `13b` example-rich section; `13k` row;
+  `t/1390`. Frontier `.3` (out-params), `.4` (handshake call), `.5` (docs chapter).

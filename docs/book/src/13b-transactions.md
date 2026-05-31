@@ -1931,6 +1931,106 @@ deferred lane is per-activation latency counter specialization.
 
 **Implicit signals**: `{tx}_cc`, `{tx}_inc`, `{tx}_lerr` + non-state DT `(-cc_inc)`.
 
+## `(proc NAME (params ...) body...)` / `(call NAME actuals...)` — Reusable Procedures
+
+A **procedure** is a named, parameterized block of clauses you can reuse across
+transactions without repeating yourself. It is defined at actor level alongside
+transactions:
+
+```lisp
+(proc NAME
+  (params (P1 (width N1)) (P2 (width N2)) ...)   ;; the call parameters (formals)
+  BODY...)                                        ;; clauses that may reference P1, P2, ...
+```
+
+and called from a transaction body with `(call NAME actuals...)` — one actual per
+parameter, positional.
+
+A procedure is **not** a transaction: it has no `(on ...)` trigger and is never
+scheduled on its own. It exists only to be `(call)`ed.
+
+### Inline calls (substitution)
+
+`(call NAME actuals...)` is an **inline** call: the procedure body is expanded at the
+call site with each parameter replaced by its actual, and the result is scheduled as
+if you had written the substituted clauses by hand. There is **no** runtime cost, no
+instance, and no start/done handshake — the emitted `.fsm` is byte-identical to the
+hand-written version.
+
+```lisp
+(actor acc_demo
+  (interface (input start) (input din (width 8)) (output done) (output total (width 8)))
+
+  (proc accumulate (params (in (width 8)))
+    (update total (+ total in)))
+
+  (transaction main
+    (on start)
+    (sample din as s)
+    (call accumulate s)          ;; expands to: (update total (+ total s))
+    (call accumulate (+ s 1))    ;; expands to: (update total (+ total (+ s 1)))
+    (complete done)))
+```
+
+An actual can be a plain signal **or a whole expression** — it is substituted
+verbatim into the body (note the second call above passes `(+ s 1)`).
+
+A procedure with several parameters substitutes positionally:
+
+```lisp
+(actor madd_demo
+  (interface (input start) (input a (width 8)) (input b (width 8))
+             (output done) (output total (width 8)))
+
+  (proc madd (params (x (width 8)) (y (width 8)))
+    (update total (+ x y)))
+
+  (transaction main
+    (on start)
+    (sample a as av)
+    (sample b as bv)
+    (call madd av bv)            ;; expands to: (update total (+ av bv))
+    (complete done)))
+```
+
+Because an inline call is just expansion, it works **anywhere a clause is allowed** —
+including inside `when`, `switch`, `while`, and `until` bodies:
+
+```lisp
+(actor loop_proc
+  (interface (input start) (input busy) (input din (width 8))
+             (output done) (output total (width 8)))
+
+  (proc step (params (v (width 8)))
+    (update total (+ total v)))
+
+  (transaction main
+    (on start)
+    (sample din as s)
+    (while busy
+      (call step s))             ;; the body of `step` runs each loop iteration
+    (complete done)))
+```
+
+### Boundaries (fail-closed)
+
+Hardware has no call stack, so a procedure may not call itself (directly or through a
+chain) — recursion fails closed (`recursive procedure call ... is not lowerable to
+hardware`). Other misuse also fails closed with a targeted diagnostic: an unknown
+procedure name, an argument-count mismatch, or a malformed `(proc ...)` (missing name,
+missing `(params ...)`, or an empty body).
+
+### Coming next
+
+Two extensions are staged and currently fail closed with a clear message:
+
+- **Out-parameters** — `(out NAME (width N))` parameters that name a caller signal the
+  procedure writes back into.
+- **The handshake call** — `(call NAME actuals... as INST)` synthesizes the procedure
+  as its own one-shot hardware block (start/done + argument ports) and calls it with
+  the `(do)`-style handshake, instead of inlining it. The `as INST` suffix is the
+  single, clean way to pick the handshake convention over inline substitution.
+
 ## Timing Summary
 
 | Clause | Cycles | Notes |
