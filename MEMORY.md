@@ -38322,3 +38322,20 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   now 7 commits ahead of origin — DUE FOR A PUSH (SPECFORGE wants the response).
   Next R14 work: pick a new frontier task tree autonomously (per
   [[frontier-pnt-autonomy]]).
+
+## 2026-05-31: R14 active tree — nested cross-domain activation (follow-up to the CDC lane)
+- Created `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` (extend cross-domain blocking
+  `(do child)` via the activation crossing from top-level to `when`/`switch`/
+  `repeat` bodies). `.1` SELECT shipped.
+- Ground truth: the activation-crossing infra is correct for top-level `(do)`; two
+  gates scope it there — the validator relaxation
+  (`_validate_transaction_clause_domain_refs` do/spawn branch) requires
+  `($label) eq 'transaction body'`, and `_build_domain_partition`'s "owns a real
+  activation" check only counts a top-level covering `(do)`. So a NESTED
+  cross-domain `(do)` fails closed today with a MISLEADING message ("declared but
+  no transaction performs a top-level '(do worker)'" — reads as unused when it is
+  nested-use-deferred).
+- Slice plan: `.2` (safe, next) = precise nested-deferred diagnostic (distinguish
+  nested-use from genuinely-unused), locked by a `t/138x` test; `.3`+ = actual
+  nested support per context (when/switch/repeat) with goldens + HDL, like the
+  same-domain repeat-body nesting frontier. Frontier `.2`.

@@ -14833,3 +14833,11 @@ Exit criteria:
   now complete end-to-end** — parse → validate → lower (dual-CDC) → HDL → book
   example → schedule report. Remaining cross-domain work (cross-domain `(spawn)`,
   nested cross-domain `(do)`) is tracked as separate future trees.
+- `R14`: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` selected (2026-05-31) as the direct
+  follow-up — extend cross-domain blocking `(do child)` from top-level to
+  `when`/`switch`/`repeat` bodies. Ground truth: two top-level-only gates (the
+  validator relaxation and the partition "owns a real activation" check), so a
+  nested cross-domain `(do)` currently fails closed with a misleading
+  "declared but unused" message. Slice plan: `.2` precise nested-deferred
+  diagnostic (safe), `.3`+ nested support per context with goldens + HDL.
+  `.1` selection committed; frontier `.2`.
