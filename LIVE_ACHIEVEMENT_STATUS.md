@@ -16577,3 +16577,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   hand-written; parse-time pass, scheduler untouched; fails closed on unknown/arity/
   recursion/handshake-deferred/out-param-deferred/malformed; --check-json + verilator/
   yosys PASS. 13b section (4 examples), 13k row, t/1390. Frontier .3 (out-params).
+- `.3` (ISF-PROCEDURES) shipped (2026-06-01): inline out-parameters — (out NAME ...)
+  writes back into a caller-chosen signal (out-actual must be a plain lvalue). Inline
+  calling convention now complete (in+out). --check-json + verilator/yosys PASS. 13b/
+  13k; t/1390 (7 subtests). Frontier .4 (handshake call), .5 (docs chapter).

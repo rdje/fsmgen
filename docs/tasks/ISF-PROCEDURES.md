@@ -181,6 +181,13 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
   Goal: `Inline (proc) + (call NAME actuals) for value (in) parameters — the parse-time expansion.`
   Acceptance: `(proc NAME (params (P (width N))...) BODY...) parsed into $actor->{procs}; a parse-time pass in FSM::Adapter::ISF::Parser (_expand_procedure_calls, run after _build_actor's clause loop and before the finalizers) replaces each inline (call NAME actuals) with the proc body, substituting each in-param name with its actual (a signal OR a whole expression), recursing into when/switch/while/until/repeat bodies and into the substituted body. The emitted .fsm is byte-identical to writing the substituted clauses by hand (verified against a hand-written actor); procs/calls never reach the lowerer. Fails closed: unknown proc, arity mismatch, recursion (direct/transitive; no call stack), the handshake form (call ... as INST) (deferred .4), out-params (deferred .3), and malformed (proc ...) (no name / no (params ...) / empty body). --check-json + verilator/yosys PASS. 13b gains an example-rich procedures section (4 runnable examples); 13k row; ISF_SPEC registers t/1390. NOTE: the shipped definition syntax wraps the parameters in an explicit (params ...) sub-clause — (proc NAME (params PARAMSPEC...) BODY...) — refining the .1-design's bare-paramspec sketch, to disambiguate params from body clauses.`
   Verification: `prove -Iperl t/1390 (6 subtests) t/1250 t/1376 t/1305 t/1303 t/1304 t/1307 PASS; identical-.fsm + when/while-body + --check-json + --verify-hdl + all fail-closed verified; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
+  Commit: `e680f967`
+
+- ID: `ISF-PROCEDURES.3`
+  Status: `done`
+  Goal: `Inline out-parameters — (out NAME (width N)) writes back into a caller-chosen signal.`
+  Acceptance: `The .2 out-parameter deferral is lifted: an (out P (width N)) parameter substitutes its caller actual into the proc body like an in-parameter, but the actual must be a plain signal lvalue (an expression actual fails closed: "out-parameter ... requires a plain signal actual to write back into, not an expression"). The caller picks the write-back destination per call, so one proc can drive different signals. In- and out-params mix freely (positional). --check-json + verilator/yosys PASS. 13b gains an out-parameter example; 13k row updated; t/1390 replaces the out-param-deferral subtest with a positive out-param subtest + the expression-as-out-actual rejection.`
+  Verification: `Spike: (proc compute (params (in (width 8)) (out r (width 8))) (update r (+ in 1))) + (call compute s r1)/(call compute (+ s 1) r2) -> (update r1 (+ s 1))/(update r2 (+ (+ s 1) 1)); expression-as-out-actual rejected; --check-json SUCCESS; --verify-hdl verilator_lint+yosys_synthesis PASS. prove -Iperl t/1390 (7 subtests) t/1376 t/1305 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -189,8 +196,9 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
 | 2 | `.2` | `done` | Inline `(proc)` + `(call NAME actuals)` for in-params: a parse-time expansion pass in `FSM::Adapter::ISF::Parser` substitutes actuals into the proc body (identical `.fsm` to hand-written); fails closed on unknown/arity/recursion/handshake-deferred/out-param-deferred/malformed. `--check-json` + verilator/yosys PASS. `t/1390`. |
-| 3 | `.3` | `pending` | Inline **out-params** — `(out NAME (width N))` write-back lvalue substitution. |
-| 4 | `.4`–`.5` | `pending` | Handshake `(call … as INST)`; dedicated example-dense docs chapter + matrix/spec sync. |
+| 3 | `.3` | `done` | Inline **out-params** — `(out NAME (width N))` writes back into a caller-chosen signal (the out-actual must be a plain lvalue, not an expression). `--check-json` + verilator/yosys PASS. `t/1390`. |
+| 4 | `.4` | `pending` | **Handshake** `(call … as INST)` — synthesize the proc as a one-shot block (start/done + arg ports) + `(do)`-style call; reuse the child-activation substrate. The second calling convention. |
+| 5 | `.5` | `pending` | Dedicated example-dense docs chapter + matrix/spec sync. |
 
 ## Decisions
 
@@ -221,6 +229,7 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.3` | Spike: out-param `(out r (width 8))` writes into the caller signal (`(call compute s r1)` -> `(update r1 (+ s 1))`); expression-as-out-actual rejected; `--check-json` + verilator/yosys PASS. `prove -Iperl t/1390` (7 subtests) `t/1376 t/1305` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.2` | Spike: `(proc accumulate (params (in (width 8))) (update total (+ total in)))` + `(call accumulate s)`/`(call accumulate (+ s 1))` expands to identical `.fsm`; calls in when/while bodies lower; `--check-json` SUCCESS; `--verify-hdl` verilator_lint+yosys_synthesis PASS; unknown/arity/recursion/handshake/out-param/malformed fail closed. `prove -Iperl t/1390` (6 subtests) `t/1250 t/1376` (45) `t/1305 t/1303 t/1304 t/1307` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
@@ -228,7 +237,8 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `ISF-PROCEDURES.1: select reusable procedures (inline + handshake calls)` | `76d7f01b` |
-| `.2` | `ISF-PROCEDURES.2: inline (proc)/(call) reusable procedures (in-params)` | `ship commit (this slice)` |
+| `.2` | `ISF-PROCEDURES.2: inline (proc)/(call) reusable procedures (in-params)` | `e680f967` |
+| `.3` | `ISF-PROCEDURES.3: inline out-parameters (write-back)` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -262,3 +272,16 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
   row; `docs/ISF_SPEC.md` registers `t/1390`. Shipped-syntax note: the parameters are
   wrapped in `(params ...)` (refines the `.1` bare-paramspec design) to disambiguate
   params from body clauses.
+- `2026-06-01`: `.3` shipped — inline **out-parameters**. The `.2` out-parameter
+  deferral is lifted: an `(out NAME (width N))` parameter substitutes its caller
+  actual into the procedure body exactly like an in-parameter, except the actual must
+  be a plain signal lvalue (an expression actual fails closed with "out-parameter ...
+  requires a plain signal actual to write back into, not an expression"). The caller
+  picks the write-back destination per call, so one procedure can drive different
+  signals (`(call compute s r1)` → `(update r1 (+ s 1))`, `(call compute (+ s 1) r2)`
+  → `(update r2 (+ (+ s 1) 1))`). In- and out-parameters mix freely and substitute
+  positionally. `--check-json` SUCCEEDS and `--verify-hdl` passes (verilator_lint +
+  yosys_synthesis). Book: `13b` gains an out-parameter example; the `13k` row is
+  updated to describe both parameter directions. `t/1390` replaces the
+  out-param-deferral subtest with a positive out-parameter subtest plus the
+  expression-as-out-actual rejection.

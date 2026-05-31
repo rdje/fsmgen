@@ -14973,3 +14973,9 @@ Exit criteria:
   `--check-json` + verilator/yosys PASS. The "callable block with its own arguments"
   in its lightweight inline form (theme #3). `13b` example-rich section; `13k` row;
   `t/1390`. Frontier `.3` (out-params), `.4` (handshake call), `.5` (docs chapter).
+- `R14`: `ISF-PROCEDURES.3` shipped (2026-06-01) — inline out-parameters: an
+  `(out NAME ...)` proc parameter writes back into a caller-chosen signal (the
+  out-actual must be a plain lvalue, not an expression). Completes the inline calling
+  convention (in + out params). `--check-json` + verilator/yosys PASS. 13b example,
+  13k row, `t/1390`. Frontier `.4` (the handshake call `(call ... as INST)` — the
+  second convention), `.5` (docs chapter).

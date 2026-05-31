@@ -2012,20 +2012,45 @@ including inside `when`, `switch`, `while`, and `until` bodies:
     (complete done)))
 ```
 
+### Out-parameters (write-back)
+
+An `(out NAME (width N))` parameter names a **caller signal the procedure writes back
+into** — the caller picks the target signal per call, so one procedure can drive
+different destinations. An out-parameter's actual must be a plain signal (an lvalue),
+not an expression:
+
+```lisp
+(actor outp_demo
+  (interface (input start) (input din (width 8)) (output done)
+             (output r1 (width 8)) (output r2 (width 8)))
+
+  (proc inc_into (params (in (width 8)) (out r (width 8)))
+    (update r (+ in 1)))
+
+  (transaction main
+    (on start)
+    (sample din as s)
+    (call inc_into s r1)          ;; expands to: (update r1 (+ s 1))
+    (call inc_into (+ s 1) r2)    ;; expands to: (update r2 (+ (+ s 1) 1))
+    (complete done)))
+```
+
+In-parameters and out-parameters may be mixed freely; they substitute positionally in
+declaration order.
+
 ### Boundaries (fail-closed)
 
 Hardware has no call stack, so a procedure may not call itself (directly or through a
 chain) — recursion fails closed (`recursive procedure call ... is not lowerable to
 hardware`). Other misuse also fails closed with a targeted diagnostic: an unknown
-procedure name, an argument-count mismatch, or a malformed `(proc ...)` (missing name,
-missing `(params ...)`, or an empty body).
+procedure name, an argument-count mismatch, an expression passed where an
+out-parameter expects a signal, or a malformed `(proc ...)` (missing name, missing
+`(params ...)`, or an empty body).
 
 ### Coming next
 
-Two extensions are staged and currently fail closed with a clear message:
+One extension is staged and currently fails closed with a clear message:
 
-- **Out-parameters** — `(out NAME (width N))` parameters that name a caller signal the
-  procedure writes back into.
 - **The handshake call** — `(call NAME actuals... as INST)` synthesizes the procedure
   as its own one-shot hardware block (start/done + argument ports) and calls it with
   the `(do)`-style handshake, instead of inlining it. The `as INST` suffix is the

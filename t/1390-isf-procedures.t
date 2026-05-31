@@ -118,8 +118,30 @@ subtest 'inline-procedure misuse fails closed with targeted diagnostics' => sub 
     like(lower_error($base->($proc, '(call p s as i0)'), 'handshake'),
         qr/'\(call p \.\.\. as INST\)' handshake-form procedure call is not yet supported/, 'handshake form deferred');
 
-    like(lower_error($base->('(proc p (params (out r (width 8))) (update r 1))', '(call p total)'), 'outparam'),
-        qr/out-parameter 'r' is not yet supported/, 'out-parameter deferred');
+    like(lower_error($base->('(proc p (params (out r (width 8))) (update r 1))', '(call p (+ s 1))'), 'outexpr'),
+        qr/out-parameter 'r' requires a plain signal actual to write back into, not an expression/,
+        'an expression actual for an out-parameter is rejected');
+};
+
+subtest 'inline out-parameters write back into the caller-chosen signal' => sub {
+    # ISF-PROCEDURES.3: an (out NAME (width N)) parameter names a caller lvalue the
+    # procedure writes into; the caller picks the target per call.
+    my $lowered = lower_source(<<'ISF', 'outp');
+(actor outp
+  (interface (input start) (input din (width 8)) (output done)
+             (output r1 (width 8)) (output r2 (width 8)))
+  (proc compute (params (in (width 8)) (out r (width 8)))
+    (update r (+ in 1)))
+  (transaction main
+    (on start)
+    (sample din as s)
+    (call compute s r1)          ;; expands to: (update r1 (+ s 1))
+    (call compute (+ s 1) r2)    ;; expands to: (update r2 (+ (+ s 1) 1))
+    (complete done)))
+ISF
+    my $fsm = $lowered->{files}{'outp.fsm'};
+    like($fsm, qr/\(r1>\s*\(\+ s 1\)\)/, 'the out-parameter writes into the first caller signal (r1)');
+    like($fsm, qr/\(r2>\s*\(\+ \(\+ s 1\) 1\)\)/, 'the out-parameter writes into the second caller signal (r2), with the expression in-actual');
 };
 
 subtest 'a malformed (proc) fails closed' => sub {

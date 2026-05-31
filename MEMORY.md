@@ -38653,3 +38653,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   proc. GOTCHA: empty (params) parses as ['params', undef] — filter the trailing undef.
 - --check-json + verilator/yosys PASS. 13b "Reusable Procedures" section (4 runnable
   examples), 13k row, ISF_SPEC t/1390. Frontier .3 (out-params), .4 (handshake), .5 docs.
+
+## 2026-06-01: ISF-PROCEDURES.3 — inline out-parameters SHIPPED
+- `(out NAME (width N))` proc params now lower (inline): substitute the caller's
+  actual like an in-param, but the out-actual MUST be a plain signal lvalue (an
+  expression actual fails closed). Caller picks the write-back signal per call → one
+  proc drives different destinations. In/out mix freely (positional). Tiny change:
+  removed the .2 out-param deferral, added the lvalue check in _expand_one_call.
+  --check-json + verilator/yosys PASS. 13b out-param example, 13k row, t/1390 (7
+  subtests). Frontier .4 = HANDSHAKE call (call ... as INST) — the 2nd convention.

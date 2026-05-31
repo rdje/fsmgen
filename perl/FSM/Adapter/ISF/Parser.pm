@@ -438,9 +438,12 @@ sub _expand_one_call($self, $clause, $procs, $stack, $ctx) {
         unless @actuals == @params;
     my %subst;
     for my $i (0 .. $#params) {
-        confess "Error: $ctx '(call $name ...)': out-parameter '$params[$i]{name}' is not yet supported; only value (in) parameters are supported in the inline form so far (out-parameters land in ISF-PROCEDURES.3)\n"
-            if $params[$i]{dir} eq 'out';
-        $subst{$params[$i]{name}} = $actuals[$i];
+        my ($p, $actual) = ($params[$i], $actuals[$i]);
+        # An out-parameter names a caller LVALUE the procedure writes back into, so
+        # its actual must be a plain signal name, not an expression.
+        confess "Error: $ctx '(call $name ...)': out-parameter '$p->{name}' requires a plain signal actual to write back into, not an expression\n"
+            if $p->{dir} eq 'out' && (!defined($actual) || ref($actual));
+        $subst{$p->{name}} = $actual;
     }
     my $body = $self->_substitute_proc_body($proc->{body}, \%subst);
     # Recursively expand any nested `(call ...)` inside the substituted body, with
