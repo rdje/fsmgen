@@ -16514,3 +16514,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   branch + branch-body do collector + sibling gating; generated/bound + switch/
   while/until deferred. 13d/13b updated (supported surface + runnable example,
   39->40 examples); `t/1388`; --verify-hdl verilator+yosys PASS. Frontier `.3`.
+- `.3` (ISF-CONDITIONAL-CHILD-ACTIVATION) shipped (2026-05-31): local `(do child)`
+  conditional activation extended to switch/while/until bodies (same pattern as
+  the `.2` when-body case). Local conditional activation now lowers + gates the
+  sibling in ALL branch/loop bodies; generated/bound forms deferred. 13d/13b
+  updated; `t/1388` (4 subtests). Frontier `.4`.

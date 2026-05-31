@@ -88,27 +88,69 @@ ISF
     );
 };
 
-subtest 'a (do) directly in a switch branch is still rejected (later slice)' => sub {
-    my $actor = parse_source(<<'ISF', 'switch-do');
-(actor switch_do
+subtest 'a plain local (do) lowers in switch / while / until bodies too' => sub {
+    my %context = (
+        'switch branch' => '(switch sel (0 (do worker)))',
+        'while body'    => '(while cond (do worker))',
+        'until body'    => '(until cond (do worker))',
+    );
+    for my $label (sort keys %context) {
+        my $actor = parse_source(<<"ISF", "ctx-$label");
+(actor ctx_local_do
+  (interface
+    (input start)
+    (input cond)
+    (input sel (width 2))
+    (input go)
+    (input din (width 8))
+    (output done)
+    (output result (width 8))
+    (output wdone))
+  (transaction parent
+    (on start)
+    $context{$label}
+    (complete done))
+  (transaction worker
+    (on go)
+    (update result din)
+    (complete wdone)))
+ISF
+        my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+        ok($lowered, "local (do) in a $label lowers") or diag($@);
+        my ($fsm) = grep { /^ctx_local_do/ } keys %{$lowered->{files} || {}};
+        $fsm = $lowered->{files}{$fsm};
+        like($fsm, qr/\(worker_start 1\)/, "$label do-state asserts the start handshake");
+        like($fsm, qr/worker_idle_\d+[\s\S]*?<worker_start/s, "$label gates the sibling child on its start handshake");
+    }
+};
+
+subtest 'a generated or bound (do) in a switch branch is also deferred' => sub {
+    my $bound = parse_source(<<'ISF', 'switch-bound-do');
+(actor switch_bound_do
   (interface
     (input start)
     (input sel (width 2))
+    (input req (width 8))
     (output done)
     (output wc))
   (transaction parent
     (on start)
     (switch sel
-      (0 (do worker)))
+      (0 (do worker (bind (input addr req)))))
     (complete done))
   (transaction worker
-    (on start)
+    (ports (input addr (width 8)))
+    (update wc addr)
     (complete wc)))
 ISF
-    my $ok = eval { FSM::Scheduler::ISF->new()->lower($actor); 1 };
+    my $ok = eval { FSM::Scheduler::ISF->new()->lower($bound); 1 };
     my $err = $@;
-    ok(!$ok, 'a (do) directly in a switch branch is still rejected');
-    like($err, qr/unsupported '\(do \.\.\.\)' clause in switch branch/, 'switch-branch (do) fails the clause-context allow-list');
+    ok(!$ok, 'a bound (do) in a switch branch is rejected (deferred)');
+    like(
+        $err,
+        qr/switch branch generated\/bound '\(do worker \.\.\.\)' is not yet supported/,
+        'the deferral diagnostic names the switch-branch generated/bound do',
+    );
 };
 
 done_testing();

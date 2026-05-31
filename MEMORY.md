@@ -38431,3 +38431,14 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Updated 13d/13b (limitation note -> supported-surface + runnable example;
   book-example count 39->40). `t/1388` (3 subtests); --verify-hdl verilator+yosys
   PASS. Frontier `ISF-CONDITIONAL-CHILD-ACTIVATION.3` (when-body generated/bound do).
+
+## 2026-05-31: ISF-CONDITIONAL-CHILD-ACTIVATION.3 shipped — local (do) in switch/while/until
+- Extended the `.2` when-body local-do pattern to switch branches + while/until
+  bodies (the expanders `_expand_switch`/`_expand_loop_body` mirror `_expand_when`).
+  Added `do` to those allow-lists; added do branches to both expanders (reusing
+  `_assert_when_body_local_do` for generated/bound deferral); extended the
+  collector's while/until branch to surface direct do/spawn (switch already did
+  via `_push_nested_branch_repeat_refs`). Local conditional activation now lowers
+  + gates the sibling in ALL branch/loop bodies. 13d/13b updated. `t/1388` now 4
+  subtests. Frontier `ISF-CONDITIONAL-CHILD-ACTIVATION.4` (generated/bound
+  conditional do).

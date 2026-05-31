@@ -160,18 +160,23 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'child call loop body', qr/\ATransaction 'main': unsupported '\(do \.\.\.\)' clause in while body/);
+    # A plain local `(do child)` in a while body now lowers (conditional one-shot
+    # activation, ISF-CONDITIONAL-CHILD-ACTIVATION; covered by t/1388). A
+    # GENERATED/BOUND conditional `(do)` in a loop body is still deferred.
+    assert_lower_rejected(<<'ISF', 'bound child call loop body', qr/\ATransaction 'main': while body generated\/bound '\(do child \.\.\.\)' is not yet supported/);
 (actor loop_child_call
   (clock clk)
   (reset (rst_n async active_low))
-  (interface (input start) (input keep) (output done))
+  (interface (input start) (input keep) (input req (width 8)) (output done) (output cdone))
   (transaction child
     (on start)
-    (complete done))
+    (ports (input addr (width 8)))
+    (complete cdone))
   (transaction main
     (on start)
     (while keep
-      (do child))
+      (do child
+        (bind (input addr req))))
     (complete done)))
 ISF
 

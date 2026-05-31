@@ -33965,3 +33965,28 @@ Critically for the mdBook truth doctrine: because `.2` changes the user-facing
 surface, the `13d`/`13b` notes were updated in the same slice (the "limitation"
 note became the "supported surface" description), so the book never drifts from
 the codebase.
+
+## Conditional child activation `.3` — local (do) across all branch/loop bodies (2026-05-31)
+
+`.3` generalizes `.2` to `switch`/`while`/`until`. The three body expanders
+(`_expand_when`, `_expand_switch`, `_expand_loop_body`) share an identical
+body-clause dispatch, so the `do` branch is the same in each, and
+`_assert_when_body_local_do` (label-parameterized) handles the generated/bound
+deferral uniformly. The only asymmetry was in the activation-ref collector: switch
+branches already routed through `_push_nested_branch_repeat_refs` (extended in
+`.2` to surface direct do/spawn), but the while/until branch enumerated repeats
+directly, so it needed the same direct-do/spawn surfacing. With that, local
+conditional activation is uniform across all branch/loop bodies. Generated/bound
+conditional forms remain deferred (next slice). As in `.2`, the book was updated
+in the same slice so it never claims a context is unsupported once it lowers.
+
+## Lesson (conditional activation `.3`): lifting a deferral cascades to its rejection tests
+
+Adding `do` to the `while`/`until`/`switch` clause-context allow-lists lifted the
+"unsupported '(do ...)' clause in while body" rejection. `t/1245-isf-transaction-loop-lowering.t`
+asserted exactly that rejection for `(while keep (do child))`, so it failed when
+the construct started lowering. Per the standing rule ("grep all of t/ for the
+lifted message"), the single affected case was repointed to a generated/bound
+while-body do, which still fails closed — preserving the "unsupported loop body"
+coverage at the new boundary. Always grep `t/` for the exact lifted diagnostic
+before assuming a deferral-lift is contained.

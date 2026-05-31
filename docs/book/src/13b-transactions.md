@@ -107,9 +107,9 @@ routes the start/done handshake through CDC synchronizers. See
 
 `(do ...)`, `(spawn ...)`, `(await_all ...)`, and `(await_any ...)` are accepted
 as top-level transaction clauses and inside a `repeat` body; additionally a plain
-local `(do child)` is accepted directly inside a `when` body (conditional one-shot
-activation). Generated/bound when-body `(do)`, and `(do)` directly in a `switch` /
-`while` / `until` body, are still deferred. See
+local `(do child)` is accepted directly inside a `when` body, a `switch` branch, a
+`while` body, and an `until` body (conditional one-shot activation). The
+generated/bound conditional `(do)` forms are still deferred. See
 [Where Child Activations Are Allowed](13d-control-flow.md#where-child-activations-are-allowed)
 for the supported contexts, what is deferred, and the `(repeat ...)` workaround.
 

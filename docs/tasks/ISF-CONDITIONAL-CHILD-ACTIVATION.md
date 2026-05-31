@@ -63,14 +63,16 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 ## Slice plan
 
 - `.1` select (this doc) — scope, ground truth, design.
-- `.2` when-body local `(do child)` (sibling) — the simplest concrete context.
-- `.3` when-body generated `(do child (params ...))`.
-- `.4` switch-branch `(do child)` (local + generated).
-- `.5` `while`/`until` body `(do child)`.
-- `.6` `(spawn ...)` + `await_all`/`await_any` drains in branch/loop bodies.
-- `.7` docs (13d "Where Child Activations Are Allowed" updated from limitation to
-  shipped surface; 13b) + runnable book examples + feature-matrix/doc-truth sync.
-  (Consolidate slices where the expander handling generalizes across contexts.)
+- `.2` when-body local `(do child)` (sibling) — the simplest concrete context
+  (done).
+- `.3` local `(do child)` in `switch` branches + `while`/`until` bodies (same
+  pattern as `.2`; consolidated because the three expanders share dispatch) —
+  done. Local conditional activation now complete across all branch/loop bodies.
+- `.4` generated/bound conditional `(do child (params ...)/(bind ...))` in
+  branch/loop bodies.
+- `.5` `(spawn ...)` + `await_all`/`await_any` drains in branch/loop bodies.
+- `.6` docs/examples sweep + feature-matrix/doc-truth sync (the `13d`/`13b`
+  surface is kept truthful per-slice; this consolidates any remaining examples).
 
 ## Non-Goals
 
@@ -105,6 +107,13 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
   Goal: `Support a plain local (do child) directly in a when body (conditional one-shot activation).`
   Acceptance: `(do child) accepted in the when allow-list; _expand_when emits the do-state (asserting <child>_start, blocking on <child>_done) and the collector surfaces the when-body do so _wire_do_children gates the sibling; generated/bound when-body do and switch/while/until-body do still fail closed; HDL generates (verilator+yosys); book reflects the new surface (13d/13b updated, runnable example lowers); t/1388 + book gates pass.`
   Verification: `prove -Iperl t/1388 (3 subtests) t/1376 (40) t/1305 t/1304 t/1307 + when/clock-domain/do/spawn sweep (12 files, 551) PASS; full ./bin/ci-regression isf --no-book PASS; per-actor --verify-hdl (verilator_lint+yosys_synthesis PASS); perl -c; mdbook build; git diff --check`
+  Commit: `189191cc`
+
+- ID: `ISF-CONDITIONAL-CHILD-ACTIVATION.3`
+  Status: `done`
+  Goal: `Extend the plain local (do child) conditional activation to switch branches, while bodies, and until bodies (same pattern as .2).`
+  Acceptance: `do added to the switch/while/until clause-context allow-lists; _expand_switch + _expand_loop_body emit the do-state (generated/bound deferred via _assert_when_body_local_do); the collector surfaces direct switch/while/until-body (do)/(spawn) so the sibling is gated; local conditional activation now lowers in all branch/loop bodies; generated/bound forms still fail closed per context; 13d/13b updated; t/1388 covers all contexts.`
+  Verification: `prove -Iperl t/1388 (4 subtests) t/1376 t/1305 + clock-domain/repeat sweep PASS; full ./bin/ci-regression isf --no-book PASS; per-context lower + sibling-gate verified; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -112,9 +121,10 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design. |
-| 2 | `.2` | `done` | when-body local `(do child)` shipped (allow-list + `_expand_when` do branch + collector + `_wire_do_children` gating); generated/bound + switch/while/until deferred; 13d/13b updated; `t/1388`. |
-| 3 | `.3` | `pending` | when-body generated `(do child (params ...))` / bound `(do)`. |
-| 4 | `.4`–`.7` | `pending` | switch-branch, while/until, spawn+drain, docs/examples sweep. |
+| 2 | `.2` | `done` | when-body local `(do child)` shipped (allow-list + `_expand_when` do branch + collector + `_wire_do_children` gating); 13d/13b updated; `t/1388`. |
+| 3 | `.3` | `done` | local `(do child)` extended to `switch`/`while`/`until` bodies (same pattern; `_expand_switch`/`_expand_loop_body` do branch + allow-list + collector); local conditional activation now complete across all branch/loop bodies; `t/1388`. |
+| 4 | `.4` | `pending` | generated/bound conditional `(do child (params ...)/(bind ...))` in branch/loop bodies. |
+| 5 | `.5`–`.7` | `pending` | `(spawn)` + `await_all`/`await_any` drains in branch/loop bodies; docs/examples sweep. |
 
 ## Decisions
 
@@ -139,13 +149,15 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
 | --- | --- | --- | --- |
 | `2026-05-31` | `.1` | `git diff --check` | `PASS` |
 | `2026-05-31` | `.2` | `prove -Iperl t/1388` (3 subtests) `t/1376` (40 examples) `t/1305 t/1304 t/1307` + when/clock-domain/do/spawn sweep (12 files, 551) PASS; full `./bin/ci-regression isf --no-book` PASS; `--verify-hdl` (verilator_lint+yosys_synthesis PASS); `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-05-31` | `.3` | `prove -Iperl t/1388` (4 subtests) `t/1376 t/1305` + clock-domain/repeat sweep PASS; full `./bin/ci-regression isf --no-book` PASS; per-context (switch/while/until) lower + sibling-gate verified; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `ISF-CONDITIONAL-CHILD-ACTIVATION.1: select` | (committed) |
-| `.2` | `ISF-CONDITIONAL-CHILD-ACTIVATION.2: when-body local (do child) (conditional one-shot activation)` | `ship commit (this slice)` |
+| `.2` | `ISF-CONDITIONAL-CHILD-ACTIVATION.2: when-body local (do child) (conditional one-shot activation)` | `189191cc` |
+| `.3` | `ISF-CONDITIONAL-CHILD-ACTIVATION.3: local (do child) in switch/while/until bodies` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -167,3 +179,14 @@ activation in branch bodies (`ISF-NESTED-CROSS-DOMAIN-ACTIVATION`).
   limitation note becomes the supported-surface description + a runnable example)
   and bumped the book-example count (39→40). `t/1388` locks it; full
   `ci-regression isf` + `--verify-hdl` (verilator+yosys) PASS.
+- `2026-05-31`: `.3` shipped — local `(do child)` extended to `switch` branches,
+  `while` bodies, and `until` bodies (same pattern as `.2`). Added `do` to those
+  three clause-context allow-lists; added a `do` branch to `_expand_switch` and
+  `_expand_loop_body` (reusing `_assert_when_body_local_do` for the
+  generated/bound deferral); extended the collector's while/until branch to
+  surface a direct `(do)`/`(spawn)` (switch was already covered). Local
+  conditional activation now lowers in all branch/loop bodies and gates the
+  sibling child; generated/bound forms still fail closed with per-context
+  diagnostics. `13d`/`13b` updated (switch/while/until local do moved to the
+  supported surface; only generated/bound conditional forms remain deferred).
+  `t/1388` extended to cover all four contexts (now 4 subtests). Updated `t/1245-isf-transaction-loop-lowering.t` (deferral-lift cascade): its `(while keep (do child))` "unsupported (do) in while body" rejection is now a supported local conditional activation, so the case was repointed to a generated/bound while-body do (which still defers).

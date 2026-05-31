@@ -29,7 +29,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
     switch => {
         map { $_ => 1 } qw(
             drive await sample repeat update set shift_left shift_right assemble
-            extract when store load wait
+            extract when store load wait do
         )
     },
     repeat => {
@@ -41,13 +41,13 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
     while => {
         map { $_ => 1 } qw(
             drive await sample complete repeat update set shift_left shift_right
-            assemble extract when store load wait
+            assemble extract when store load wait do
         )
     },
     until => {
         map { $_ => 1 } qw(
             drive await sample complete repeat update set shift_left shift_right
-            assemble extract when store load wait
+            assemble extract when store load wait do
         )
     },
 );
@@ -1696,6 +1696,17 @@ sub _child_action_refs_from_transaction_clauses {
             for my $body_clause (@{$clause}[2 .. $#$clause]) {
                 next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
                 next unless defined($body_clause->[0]) && !ref($body_clause->[0]);
+                if ($body_clause->[0] eq 'do' || $body_clause->[0] eq 'spawn') {
+                    # A direct `(do child)`/`(spawn child)` in a while/until body
+                    # (ISF-CONDITIONAL-CHILD-ACTIVATION) — surfaced for sibling
+                    # gating + validation; the clause-context allow-list governs.
+                    push @refs, {
+                        clause  => $body_clause,
+                        keyword => $body_clause->[0],
+                        label   => "$keyword body",
+                    };
+                    next;
+                }
                 next unless $body_clause->[0] eq 'repeat';
                 my $static_zero_repeat = _repeat_clause_is_static_zero_for_refs($body_clause, $actor, $tx_name);
                 next if $options->{skip_static_zero_repeats} && $static_zero_repeat;
@@ -8373,6 +8384,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
             elsif($bk2 eq'repeat'){my($rs,$rc,$rw,$rdw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$rs;_register_repeat_counters($counters,$storage_roles,$rc,$rw,$rdw)}
             elsif($bk2 eq'update'||$bk2 eq'set'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths,$actor)}
             elsif($bk2 eq'store'||$bk2 eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc2,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
+            elsif($bk2 eq'do'){_assert_when_body_local_do($bc2,$tn,'switch branch',$generated_children);_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_do($bc2,$tn,$$ir++,undef,'switch branch')}
             elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$ws}}
         if(@lp||!@body_states){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)if@lp;push @body_states,{name=>"${tn}_switch_${val}_" . $$ir++,kind=>'sequential',assignments=>[],transitions=>[]}unless@body_states}
         push @branches,{value=>$val,body_start=>$body_states[0]{name}};
@@ -8417,6 +8429,10 @@ sub _expand_loop_body {
             }
         } elsif ($bk eq 'complete') {
             push @states, _ir_complete($bc, $tn, $$ir++);
+        } elsif ($bk eq 'do') {
+            _assert_when_body_local_do($bc, $tn, $body_label, $generated_children);
+            _push_sample_state(\@states, $tn, \@lp, $ir);
+            push @states, _ir_do($bc, $tn, $$ir++, undef, $body_label);
         } elsif ($bk eq 'repeat') {
             my ($rs, $rc, $rw, $rdw) = _ir_repeat($bc, $tn, $ir, \@lp, $wd, $drives, $widths, $actor, $bank_accesses, $spawn_refs, $constant_values, $generated_children, $repeat_do_ordinal_ref);
             push @states, @$rs;

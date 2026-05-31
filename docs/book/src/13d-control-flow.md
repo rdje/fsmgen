@@ -130,7 +130,8 @@ Child-activation clauses — `(do ...)`, `(spawn ...)`, `(await_all ...)`, and
 `(await_any ...)` — are accepted as **top-level transaction clauses** and **inside
 a `repeat` body**. In addition, a **plain local `(do child)`** (no `(params ...)`
 overrides, no `(bind ...)`, target not generated elsewhere) is accepted **directly
-inside a `when` body** — a conditional one-shot activation:
+inside a `when` body, a `switch` branch, a `while` body, and an `until` body** —
+a conditional (or loop-conditional) one-shot activation:
 
 ```lisp
 (actor conditional_activation
@@ -153,27 +154,27 @@ inside a `when` body** — a conditional one-shot activation:
     (complete worker_done)))
 ```
 
-The `when` branch guards the do-state; when `cond` holds, the do-state asserts the
-child's start handshake and blocks on its done handshake, exactly like a top-level
-`(do child)`.
+The enclosing branch/loop guards the do-state; when it is entered, the do-state
+asserts the child's start handshake and blocks on its done handshake, exactly like
+a top-level `(do child)`.
 
-Still deferred (each fails closed with a targeted diagnostic):
+Still deferred (each fails closed with a targeted diagnostic) — the **generated**
+and **bound** conditional activation forms:
 
 ```text
-(when cond (do w (params (W 8))))   ;; deferred: generated/bound when-body do
-(when cond (do w (bind (input a r))));; deferred: generated/bound when-body do
-(switch sel (0 (do worker)))        ;; rejected: (do) not yet accepted in a switch branch
-(while c (do worker))               ;; rejected: (do) not yet accepted in a while/until body
+(when cond (do w (params (W 8))))     ;; deferred: generated when-body do
+(when cond (do w (bind (input a r)))) ;; deferred: bound when-body do
+(switch sel (0 (do w (params (W 8))))) ;; deferred: generated switch-branch do
 ```
 
-For the still-unsupported contexts, wrap the activation in a `repeat` (which those
-bodies accept), e.g. `(switch sel (0 (repeat 1 (do worker))))`.
+For a generated/bound conditional activation today, wrap it in a `repeat` (which
+accepts the generated/bound forms), e.g. `(when cond (repeat 1 (do w (params (W 8)))))`.
 
 None of these gaps is fundamental: a `(do)` is a blocking activation, and blocking
-constructs are otherwise allowed in those bodies — `(await ...)` is accepted inside
-`when` / `switch` / `while` / `until`. The remaining gaps are implementation
-scoping: the child-activation lowering is being extended into the conditional
-branch/loop bodies incrementally (local when-body `(do)` first).
+constructs are allowed in those bodies — `(await ...)` is accepted inside `when` /
+`switch` / `while` / `until`. The remaining gaps are implementation scoping: the
+**local** `(do child)` is wired into all branch/loop bodies; the generated/bound
+conditional forms are being added incrementally.
 
 Across clock domains the same staging applies: a cross-domain `(do child)` through
 a `(crossings (activation ...))` is supported top-level (see

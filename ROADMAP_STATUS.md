@@ -14881,3 +14881,9 @@ Exit criteria:
   gated. Generated/bound when-body do + switch/while/until-body do still fail
   closed. 13d/13b updated (supported surface + runnable example; book examples
   39->40); `t/1388`; `--verify-hdl` verilator+yosys PASS. Frontier `.3`.
+- `R14`: `ISF-CONDITIONAL-CHILD-ACTIVATION.3` shipped (2026-05-31) — local
+  `(do child)` conditional activation extended to `switch` branches, `while`
+  bodies, and `until` bodies (same pattern as the `.2` when-body case). Local
+  conditional activation now lowers + gates the sibling in all branch/loop bodies;
+  generated/bound conditional `(do)` forms remain deferred per context. 13d/13b
+  updated; `t/1388` (4 subtests). Frontier `.4` (generated/bound conditional do).
