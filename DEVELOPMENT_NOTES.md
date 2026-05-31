@@ -33786,3 +33786,53 @@ All of this is reachable only through `_emit_multi_domain_scheduled_artifacts`,
 which `lower()` still blocks for any activation-crossing actor, so `.4` changes no
 shipped behavior; `t/1387` exercises the emission directly with a synthetic
 actor + partition.
+
+## Cross-domain activation `.5` — the integration seam, ready consumption, and the await-guard gotcha (2026-05-30)
+
+`.5` flips the seam: with the machinery built behind the guard in `.3`/`.4`, this
+slice makes a top-level blocking cross-domain `(do child)` covered by an
+`(activation ...)` crossing lower end-to-end. Three things were decided/found:
+
+- **Validator + partition gating.** `_validate_transaction_clause_domain_refs`
+  accepts the covered cross-domain `(do)` (`_activation_crossing_covers`), and
+  `_build_domain_partition` additionally requires the crossing to own a *real*
+  activation: the child must be declared in the destination domain, and some
+  source-domain transaction must perform a top-level `(do child)`. A
+  declared-but-unused crossing (the original `t/1386` `$DECLARED` fixture) or a
+  mis-placed child fails closed — otherwise the top would instantiate two CDC
+  children wired to handshake signals nothing drives (dead, and worse,
+  unsynchronized-looking logic). Restricted to top-level `(do)`; cross-domain
+  `spawn` and nested cross-domain `(do)` stay fail-closed.
+
+- **`ready` MUST be consumed (correcting `.4`).** `.4` left the CDC `ready`
+  outputs open on the theory that a blocking do is single-outstanding. That is
+  true functionally, but the composition layer rejects an unconsumed child output
+  ("several same-name child outputs remain unconsumed by explicit links" — both
+  CDC children expose a `ready`, so it cannot even infer a top output). The
+  shipped event crossing already shows the right pattern: it wires
+  `cdc.ready → source_domain.<ready_signal>`, which the source FSM `(await …)`s.
+  So the activation handshake now mirrors it exactly — caller
+  `(await <start>_ready)` then a one-cycle `<start>` pulse; callee
+  `(await <done>_ready)` then a one-cycle `<done>` pulse — and
+  `_emit_multi_domain_wiring` routes each `ready` back to the consuming input.
+  This is both composition-legal and more robust (the request/done is issued only
+  when the CDC is actually ready to accept it).
+
+- **Await-guard gotcha.** A synthetic `await` state must carry its guard on the
+  transition's `condition` (`{port => ready}`), NOT only as a separate top-level
+  `guard` field. The FSM emitter's await branch renders `$transition->{condition}`;
+  a state with `guard` set but a condition-less transition renders as an empty
+  `(name )` block, which then fails the adapter re-parse during composition. The
+  normally-built await states get their transition condition from the sequential
+  linking pass; hand-built ones must set it explicitly.
+
+**HDL evidence.** A covered actor lowers to `<actor>__domain_{src,dst}.fsm` plus
+`<actor>_top.fsm`, and full HDL generation emits five modules (two
+`<actor>__cdc_activation_<child>_{start,done}` synchronizers, two domain modules,
+the top). Each per-domain module passes `--verify-hdl` (Verilator lint + yosys
+synthesis). The composition top emits complete HDL; its only Verilator warnings
+are the pre-existing `shared_dp_export_*` PINMISSING — the same multi-domain
+composition characteristic the shipped event-crossing fixture exhibits
+(`docs/COMPOSITION_SCOPE.md`), not introduced by activation. So full-HDL reach for
+the sibling model is at parity with event crossings (the generated-do model would
+have been strictly worse — see the `.3` note).

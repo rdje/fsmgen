@@ -104,15 +104,23 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   pulse is the acknowledgement). Both unit-tested in isolation; guard stays
   FAIL-CLOSED.
 - `.5` integration — the correctness-critical slice (validator-accept + CDC
-  routing SHIP TOGETHER): `_build_domain_partition` recognizes the `activation`
-  crossing, injects `external_activations` into the SRC/DEST domain actors, and
-  records the dual-CDC summary; the top emits + wires the two CDC children;
-  `_validate_same_domain_target` accepts a cross-domain `(do)`/`(spawn)` covered
-  by an `activation` crossing; the `lower()` guard is removed. Golden `.fsm` +
-  composition + HDL (`--check-json` / Verilator where available) evidence the
-  handoff routes through the CDC children, or the residual boundary is documented
-  honestly (the multi-domain composition-scope precedent). Uncovered cross-domain
-  activation still fails closed.
+  routing SHIP TOGETHER): `_validate_transaction_clause_domain_refs` accepts a
+  top-level cross-domain `(do child)` covered by an `activation` crossing
+  (`_activation_crossing_covers`); `_build_domain_partition` validates the
+  crossing owns a real activation (child in DEST, a SRC transaction performs the
+  `(do)`) and fails closed on a declared-but-unused or mis-placed crossing;
+  `_domain_actor_for_scheduled_artifact` injects `external_activations` (caller
+  into SRC, callee into DEST); the `lower()` guard is removed. The handshake
+  consumes the CDC `ready` outputs via the event-crossing idiom — the caller
+  `(await <start>_ready)` before its one-cycle `<start>` pulse and the callee
+  `(await <done>_ready)` before pulsing `<done>` (correcting `.4`'s ready-open,
+  which the composition rejects as an unconsumed child output). End-to-end the
+  actor lowers to per-domain modules + a top routing start SRC→DEST and done
+  DEST→SRC through the two CDC children; per-domain modules pass Verilator lint +
+  yosys synthesis; the composition emits complete HDL (the only residual warnings
+  are the pre-existing `shared_dp_export_*` PINMISSING, at parity with the shipped
+  event-crossing multi-domain HDL). Uncovered cross-domain `(do)` and
+  declared-but-unused crossings still fail closed.
 - `.6` docs (13a crossing section + 13d control-flow + downstream/contract/
   SPECFORGE response) + runnable book example.
 
@@ -166,6 +174,13 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   Goal: `CDC routing structure (behind the guard): one-cycle cross-domain caller start request + dual-CDC top emission/wiring.`
   Acceptance: `The cross-domain caller emits a one-cycle <start> request state then awaits <done>; _emit_multi_domain_top emits two acknowledged-event CDC children for an activation crossing wiring start (SRC->DEST) + done (DEST->SRC) with ready open; event-crossing emission is unchanged (rtlif refactor); guard + _validate_same_domain_target stay fail-closed.`
   Verification: `prove -Iperl t/1387 (5 subtests) t/1247 t/1255 t/1116 t/1305; broad composition/crossing/domain/child regression (13 files, 449) PASS; perl -c ISF.pm + LoweringIR.pm; mdbook build docs/book; git diff --check`
+  Commit: `93e4e73e`
+
+- ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.5`
+  Status: `done`
+  Goal: `Integration (validator-accept + CDC routing ship together): cross-domain (do) covered by an activation crossing lowers end-to-end through two CDC synchronizers; guard removed.`
+  Acceptance: `Validator accepts a top-level cross-domain (do child) covered by an (activation ...) crossing (else fail closed); declared-but-unused / mis-placed crossings fail closed; per-domain actors get external_activations injected; the handshake consumes the CDC ready outputs (caller awaits <start>_ready, callee awaits <done>_ready); end-to-end lowering emits per-domain modules + a top routing start SRC->DEST and done DEST->SRC; per-domain modules pass Verilator lint + yosys; composition emits complete HDL (only pre-existing shared_dp_export_* PINMISSING remain).`
+  Verification: `prove -Iperl t/1387 (7 subtests) t/1386 t/1247 t/1372 t/1374 t/1375 t/1250 t/1116 t/1255 t/1305 + composition/spawn regression (16 files, 557) PASS; full ./bin/ci-regression isf --no-book PASS; per-domain --verify-hdl (verilator_lint + yosys_synthesis PASS); full composition HDL generation (5 modules) exit 0; perl -c; mdbook; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -176,8 +191,8 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | 2 | `.2` | `done` | Parser + structural validation shipped; lowering fail-closed (`t/1386`). |
 | 3 | `.3` | `done` | Handshake-port lowering machinery (`_wire_external_activations`) built + unit-tested behind the guard (`t/1387`); guard + `_validate_same_domain_target` stay fail-closed. |
 | 4 | `.4` | `done` | One-cycle cross-domain caller request + dual-CDC top emission/wiring, unit-tested behind the guard (`t/1387`); event-crossing emission unchanged. |
-| 5 | `.5` | `pending` | Integration: partition recognition + `external_activations` injection + validator acceptance + remove guard (ships together; correctness-critical; HDL/Verilator evidence). |
-| 6 | `.6` | `pending` | Docs + runnable book example. |
+| 5 | `.5` | `done` | Integration shipped: validator accepts a covered cross-domain `(do)`, `external_activations` injected, guard removed, CDC `ready` consumed via await-handshake; end-to-end HDL (5 modules), per-domain Verilator+yosys PASS (`t/1387`, full `ci-regression isf`). |
+| 6 | `.6` | `pending` | Docs (13a/13d + downstream/contract/SPECFORGE) + runnable book example; activation crossing schedule-report metadata. |
 
 ## Decisions
 
@@ -217,26 +232,40 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   unnecessary and its output is left open (the `<done>` pulse is the
   application-level acknowledgement). To be confirmed by Verilator simulation in
   `.5`/`.6`.
+- `2026-05-30` (`.5` decision, CORRECTS the `.4` ready-open): the CDC `ready`
+  outputs are NOT left open — the composition rejects an unconsumed child output
+  ("several same-name child outputs remain unconsumed"). Instead the handshake
+  consumes `ready` via the shipped event-crossing idiom: the caller
+  `(await <start>_ready)` before its one-cycle `<start>` pulse, and the callee
+  `(await <done>_ready)` before pulsing `<done>`. This both satisfies the
+  composition and is more robust (the request is issued only when the CDC is
+  actually ready). Verified: end-to-end the composition emits complete HDL and
+  the per-domain modules pass Verilator lint + yosys synthesis.
+- `2026-05-30` (`.5` decision): a declared activation crossing must own a REAL
+  cross-domain activation — the child must be in DEST and some SRC transaction
+  must perform a top-level `(do child)`. A declared-but-unused or mis-placed
+  crossing fails closed (it would otherwise emit dead/unsynchronized CDC logic).
 
 ## Open Questions
 
-- `.5` HDL reach: whether the sibling-model module-to-module CDC wiring reaches
-  full `--check-json` / Verilator parity, or whether a residual multi-domain
-  composition-scope boundary remains (to be documented honestly like the
-  repeat-body-spawn precedent). Finalize empirically in `.5`.
-- `.4`/`.5` handshake signal naming: the sibling do-state uses `<child>_start`/
-  `<child>_done`; if `child` also drives an output literally named `<child>_done`
-  there is a collision. Decide a collision-free policy (e.g. an activation-scoped
-  prefix) when wiring the live partition in `.5`. `.3` accepts explicit
-  `start_signal`/`done_signal` on each `external_activations` entry to keep this
-  open.
+- `.6`/follow-up: cross-domain `spawn` (non-blocking) and nested cross-domain
+  `(do)` (repeat/when/switch body) remain fail-closed — the `.5` acceptance is
+  restricted to a top-level blocking `(do)`. Extending to those is future work.
+- `.6`/follow-up: the activation crossing's schedule-report metadata (a distinct
+  shape from the event endpoint summary) is not yet surfaced (`_crossing_summary`
+  stays event-only); add it with the report-contract audits in `.6` or a
+  dedicated slice.
+- Handshake signal naming (`<child>_start`/`<child>_done`): a collision with a
+  `child` output literally named `<child>_done` is still theoretically possible;
+  `external_activations` carries explicit `start_signal`/`done_signal` so a
+  collision-free policy can be introduced without reworking the lowering.
 
 ## Blockers
 
-- None for `.1`–`.4`. `.5` is the substantial correctness-critical slice
-  (validator-accept + CDC routing ship together); its full-HDL reach may be
-  bounded by the multi-domain composition-scope limitation
-  (`docs/COMPOSITION_SCOPE.md`), to be confirmed and documented honestly.
+- None. `.5` (the correctness-critical integration) shipped and reaches complete
+  HDL; the only residual composition warnings are the pre-existing
+  `shared_dp_export_*` PINMISSING (parity with the shipped event-crossing
+  multi-domain HDL, `docs/COMPOSITION_SCOPE.md`), not specific to activation.
 
 ## Verification Log
 
@@ -246,6 +275,7 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | `2026-05-30` | `.2` | `prove -Iperl t/1386 t/1247 t/1372` (Files=3, Tests=19, PASS); broad clock-domain/crossing/parser regression (12 files, 147) PASS; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-05-30` | `.3` | `prove -Iperl t/1387 t/1250 t/1386 t/1247 t/1372 t/1110 t/1382 t/1383` PASS; broad activation/do/spawn/clock-domain regression (39 files, 246) PASS; `perl -c LoweringIR.pm`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-05-30` | `.4` | `prove -Iperl t/1387` (5 subtests) PASS; broad composition/crossing/domain/child regression with event-crossing goldens (13 files, 449) PASS; `perl -c ISF.pm`+`LoweringIR.pm`; `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-05-30` | `.5` | `prove -Iperl t/1387` (7 subtests) + clock-domain/crossing/composition/report-audit sweep (16 files, 557) PASS; full `./bin/ci-regression isf --no-book` PASS; per-domain `--verify-hdl` → `verilator_lint`+`yosys_synthesis` PASS; full composition HDL generation emits 5 modules (exit 0); `perl -c`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -254,7 +284,8 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 | `.1` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.1: select cross-domain activation via crossing` | `dbbe6bce` |
 | `.2` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.2: parse + validate activation crossing (lowering fail-closed)` | `ffffc2a0` |
 | `.3` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3: cross-domain activation handshake-port lowering machinery (behind guard)` | `77f447c9` |
-| `.4` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.4: one-cycle caller request + dual-CDC top emission (behind guard)` | `ship commit (this slice)` |
+| `.4` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.4: one-cycle caller request + dual-CDC top emission (behind guard)` | `93e4e73e` |
+| `.5` | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.5: integration — cross-domain activation lowers end-to-end through two CDC synchronizers` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -302,3 +333,22 @@ authors cannot name them; the `activation` kind is the right abstraction.)
   All exercised only via direct unit calls (behind the still-fail-closed guard);
   `t/1387` (5 subtests) + event-crossing goldens (`t/1247`/`t/1255`/`t/1116`)
   regression (13 files, 449) PASS.
+- `2026-05-30`: `.5` shipped — the correctness-critical integration; cross-domain
+  activation now lowers end-to-end. `_validate_transaction_clause_domain_refs`
+  accepts a top-level cross-domain `(do child)` covered by an `(activation ...)`
+  crossing (`_activation_crossing_covers`); `_build_domain_partition` validates the
+  crossing owns a real activation (child in DEST + a SRC transaction performs the
+  `(do)`) and fails closed otherwise; `_domain_actor_for_scheduled_artifact`
+  injects `external_activations` (caller→SRC, callee→DEST); the `lower()` guard is
+  removed. The handshake CONSUMES the CDC `ready` outputs (correcting `.4`'s
+  ready-open, which the composition rejects): the caller `(await <start>_ready)`
+  before its one-cycle `<start>` pulse and the callee `(await <done>_ready)` before
+  pulsing `<done>` (the event-crossing idiom). End-to-end the actor lowers to
+  per-domain modules + a top routing start SRC→DEST and done DEST→SRC through the
+  two CDC children; per-domain modules pass Verilator lint + yosys synthesis and
+  the composition emits complete HDL (5 modules); the only residual warnings are
+  the pre-existing `shared_dp_export_*` PINMISSING (parity with the shipped
+  event-crossing multi-domain HDL). Uncovered cross-domain `(do)` and
+  declared-but-unused crossings still fail closed. `t/1387` (7 subtests) + sweep
+  (16 files, 557) + full `ci-regression isf` PASS. (Cross-domain `spawn`, nested
+  cross-domain `(do)`, and the activation report metadata remain follow-ups.)

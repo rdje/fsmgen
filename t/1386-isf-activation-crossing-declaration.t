@@ -56,11 +56,15 @@ subtest 'a well-formed activation crossing parses + validates and is recorded on
     is($act->{to}{domain}, 'aux', 'records the destination domain');
 };
 
-subtest 'a well-formed activation crossing fails closed at lowering (not yet supported)' => sub {
+subtest 'a declared-but-unused activation crossing fails closed at lowering' => sub {
+    # The $DECLARED actor declares an activation crossing but `parent` never
+    # performs `(do worker)`, so the crossing owns no real cross-domain activation;
+    # lowering it would emit dead CDC logic. It must fail closed. (The end-to-end
+    # lowering of a USED activation crossing is covered in t/1387.)
     my $ok = eval { parse_lower($DECLARED); 1 };
-    ok(!$ok, 'lowering an actor with an activation crossing is rejected (deferred to .3)');
-    like($@, qr/cross-domain activation lowering is not yet supported/,
-        'the deferral diagnostic is the honest "not yet supported" terminal');
+    ok(!$ok, 'lowering an actor with a declared-but-unused activation crossing is rejected');
+    like($@, qr/activation crossing for child 'worker'.*declared but no transaction in domain 'core' performs a top-level '\(do worker\)'/s,
+        'the diagnostic explains the crossing owns no real cross-domain activation');
 };
 
 subtest 'malformed activation crossing declarations are rejected at parse' => sub {

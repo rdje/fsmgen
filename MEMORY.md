@@ -38275,3 +38275,23 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   goldens (`t/1247`/`t/1255`/`t/1116`) + composition regression (13 files, 449)
   PASS. Next: `.5` integration (partition recognition + `external_activations`
   injection + validator acceptance + remove guard, together; Verilator evidence).
+- `.5` SHIPPED — the correctness-critical integration; cross-domain activation now
+  lowers END-TO-END. `_validate_transaction_clause_domain_refs` accepts a top-level
+  cross-domain `(do child)` covered by an `(activation ...)` crossing
+  (`_activation_crossing_covers`); `_build_domain_partition` fails closed on a
+  declared-but-unused or mis-placed crossing (child must be in DEST + a SRC tx must
+  perform `(do child)`); `_domain_actor_for_scheduled_artifact` injects
+  `external_activations` (caller→SRC, callee→DEST); `lower()` guard removed.
+  IMPORTANT correction of `.4`: the CDC `ready` outputs must be CONSUMED (the
+  composition rejects unconsumed child outputs) — so the caller `(await <start>_ready)`
+  before its one-cycle `<start>` pulse and the callee `(await <done>_ready)` before
+  pulsing `<done>` (the event-crossing idiom). GOTCHA: a synthetic await state needs
+  the guard on its TRANSITION (`condition=>{port=>ready}`), not a separate `guard`
+  field, or the FSM emitter renders the state empty (`(name )`). End-to-end:
+  per-domain modules + top routing start SRC→DEST / done DEST→SRC through two CDC
+  children; per-domain `--verify-hdl` → verilator_lint + yosys_synthesis PASS;
+  composition emits 5 modules; only residual warnings are pre-existing
+  `shared_dp_export_*` PINMISSING (parity w/ event crossing). `t/1387` (7 subtests)
+  + sweep (16 files, 557) + full `ci-regression isf` PASS. Uncovered/unused still
+  fail closed. Frontier `.6` (docs + book example + activation report metadata).
+  Cross-domain `spawn` + nested `(do)` remain follow-ups.

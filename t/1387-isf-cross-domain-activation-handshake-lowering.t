@@ -127,14 +127,97 @@ ISF
     like($err, qr/do target 'worker' is not a declared transaction/, 'rejection names the missing target');
 };
 
-subtest 'an activation crossing actor still fails closed at lower (CDC routing pending)' => sub {
+subtest 'a covered cross-domain (do) lowers end-to-end through two CDC children' => sub {
     my $actor = parse_source(<<'ISF', 'activation-crossing');
-(actor act_pending
+(actor xdom
   (clock-domains
     (domain core (clock clk) (reset rst_n) :default)
     (domain bus (clock bus_clk) (reset bus_rst_n)))
   (crossings
     (activation worker (from core) (to bus)))
+  (interface
+    (input start (domain core))
+    (output done (domain core))
+    (input din (width 8) (domain bus))
+    (output result (width 8) (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (do worker)
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (sample din as snap)
+    (update result snap)
+    (complete result)))
+ISF
+    my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+    ok($lowered, 'a covered cross-domain activation lowers') or diag($@);
+
+    is_deeply(
+        [sort keys %{$lowered->{files}}],
+        [qw(xdom__domain_bus.fsm xdom__domain_core.fsm xdom_top.fsm)],
+        'lowering partitions the caller and child into per-domain modules plus a top',
+    );
+
+    # SRC (caller) module: await start-ready, then one-cycle start request, then
+    # await done.
+    my $core = $lowered->{files}{'xdom__domain_core.fsm'};
+    like($core, qr/<worker_start_ready\b/, 'caller awaits the start-ready handshake (consumes the start CDC ready)');
+    like($core, qr/_do_\d+_req[\s\S]*?\(worker_start>\s*1\)/, 'caller emits the one-cycle start request');
+    like($core, qr/<worker_done\b/, 'caller blocks on the done handshake');
+
+    # DEST (callee) module: child gated on start; on completion await done-ready
+    # then pulse done.
+    my $bus = $lowered->{files}{'xdom__domain_bus.fsm'};
+    like($bus, qr/worker_idle_ext\s*\(\s*<worker_start/s, 'child is gated on the start pulse');
+    like($bus, qr/<worker_done_ready\b/, 'callee awaits the done-ready handshake (consumes the done CDC ready)');
+    like($bus, qr/\(worker_done>\s*1\)/, 'callee pulses the done handshake');
+
+    # Top: the two CDC children carry start SRC->DEST and done DEST->SRC.
+    my $top = $lowered->{files}{'xdom_top.fsm'};
+    like($top, qr/\(\?rtl:worker_activation_start_cdc xdom__cdc_activation_worker_start\)/, 'top instantiates the start CDC child');
+    like($top, qr/\(\?rtl:worker_activation_done_cdc xdom__cdc_activation_worker_done\)/, 'top instantiates the done CDC child');
+    like($top, qr{/core\.worker_start/worker_activation_start_cdc\.request/}, 'caller start drives the start CDC request');
+    like($top, qr{/worker_activation_start_cdc\.pulse/bus\.worker_start/}, 'start CDC pulses the child start');
+    like($top, qr{/bus\.worker_done/worker_activation_done_cdc\.request/}, 'child done drives the done CDC request');
+    like($top, qr{/worker_activation_done_cdc\.pulse/core\.worker_done/}, 'done CDC pulses the caller release');
+};
+
+subtest 'a declared-but-unused activation crossing fails closed at lower' => sub {
+    # `parent` never performs `(do worker)`, so the crossing owns no real
+    # cross-domain activation and would emit dead CDC logic; reject it.
+    my $actor = parse_source(<<'ISF', 'activation-unused');
+(actor act_unused
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus (clock bus_clk) (reset bus_rst_n)))
+  (crossings
+    (activation worker (from core) (to bus)))
+  (interface
+    (input start (domain core))
+    (output done (domain core))
+    (output worker_done (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (complete worker_done)))
+ISF
+    my $ok = eval { FSM::Scheduler::ISF->new()->lower($actor); 1 };
+    my $err = $@;
+    ok(!$ok, 'a declared-but-unused activation crossing is rejected at lower');
+    like($err, qr/declared but no transaction in domain 'core' performs a top-level '\(do worker\)'/, 'the diagnostic explains the crossing is unused');
+};
+
+subtest 'a cross-domain (do) WITHOUT a covering activation crossing still fails closed' => sub {
+    my $actor = parse_source(<<'ISF', 'activation-uncovered');
+(actor act_uncovered
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus (clock bus_clk) (reset bus_rst_n)))
   (interface
     (input start (domain core))
     (output done (domain core))
@@ -150,8 +233,8 @@ subtest 'an activation crossing actor still fails closed at lower (CDC routing p
 ISF
     my $ok = eval { FSM::Scheduler::ISF->new()->lower($actor); 1 };
     my $err = $@;
-    ok(!$ok, 'an actor declaring an activation crossing is still rejected at lower');
-    like($err, qr/cross-domain activation lowering is not yet supported/, 'rejection states CDC routing is pending');
+    ok(!$ok, 'a cross-domain (do) with no activation crossing is rejected at lower');
+    like($err, qr/clock-domain violation.*do target 'worker'.*domain 'bus'.*domain 'core'/s, 'the diagnostic is the fail-closed clock-domain violation');
 };
 
 subtest 'multi-domain top emits and wires the two activation CDC children' => sub {
@@ -192,8 +275,11 @@ subtest 'multi-domain top emits and wires the two activation CDC children' => su
     like($top, qr{/bus_clk/worker_activation_done_cdc\.source_clk/}, 'done CDC source clock is the DEST domain clock');
     like($top, qr{/clk/worker_activation_done_cdc\.dest_clk/}, 'done CDC dest clock is the SRC domain clock');
 
-    # No back-pressure wire is emitted (ready is open; the done pulse is the ack).
-    unlike($top, qr/worker_activation_start_cdc\.ready/, 'start CDC ready is left open (single outstanding by construction)');
+    # The CDC `ready` outputs are consumed: the caller awaits `<start>_ready`
+    # before pulsing and the callee awaits `<done>_ready` before asserting done
+    # (the event-crossing idiom; also satisfies the composition's consume rule).
+    like($top, qr{/worker_activation_start_cdc\.ready/core\.worker_start_ready/}, 'start CDC ready feeds the caller start-ready input');
+    like($top, qr{/worker_activation_done_cdc\.ready/bus\.worker_done_ready/}, 'done CDC ready feeds the callee done-ready input');
 
     like($top, qr/\(\?rtlif:act__cdc_activation_worker_start[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the start CDC interface artifact');
     like($top, qr/\(\?rtlif:act__cdc_activation_worker_done[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the done CDC interface artifact');

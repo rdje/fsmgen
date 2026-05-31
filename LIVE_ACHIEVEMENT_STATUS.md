@@ -16471,3 +16471,16 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   Unit-tested in isolation (`t/1387`, 5 subtests); event goldens + composition
   regression (13 files, 449) PASS. Frontier `.5` (integration: validator
   acceptance + remove guard, together; Verilator evidence).
+- `.5` shipped: the correctness-critical integration — a top-level cross-domain
+  blocking `(do child)` covered by an `(activation ...)` crossing now lowers
+  END-TO-END. Validator accepts the covered `(do)` (else fail closed);
+  declared-but-unused / mis-placed crossings fail closed; `external_activations`
+  injected into the per-domain actors; `lower()` guard removed. The handshake
+  consumes the CDC `ready` outputs via the event-crossing idiom (caller awaits
+  `<start>_ready` then pulses `<start>`; callee awaits `<done>_ready` then pulses
+  `<done>`). End-to-end: per-domain modules + a top routing start SRC→DEST / done
+  DEST→SRC through two CDC children; per-domain modules pass Verilator lint + yosys
+  synthesis; the composition emits complete HDL (5 modules; only pre-existing
+  `shared_dp_export_*` PINMISSING remain, at parity with event crossings). `t/1387`
+  (7 subtests) + sweep (16 files, 557) + full `ci-regression isf` PASS. Frontier
+  `.6` (docs + book example + activation report metadata).

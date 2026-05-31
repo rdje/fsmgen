@@ -2025,6 +2025,39 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
             signal => $crossing->{to}{signal},
         } if exists $groups{$crossing->{to}{domain}};
     }
+    # NOTE: `(activation ...)` crossings are routed by `_emit_multi_domain_top`
+    # directly from `$actor->{crossings}`; their schedule-report metadata (a
+    # distinct shape from the event endpoint summary) is a separate slice, so they
+    # are intentionally NOT added to the event-shaped crossing summaries here.
+    #
+    # An activation crossing must own a REAL cross-domain activation: the child
+    # must live in the destination domain, and some transaction in the source
+    # domain must perform a top-level `(do child)`. A declared-but-unused crossing
+    # (or one whose child is misplaced) would emit dead/unsynchronized CDC logic,
+    # so it fails closed here.
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ($crossing->{kind} // '') eq 'activation';
+        my $child = $crossing->{child};
+        my $src   = $crossing->{from}{domain};
+        my $dst   = $crossing->{to}{domain};
+        my $child_domain = $transaction_domains{$child};
+        confess "ISF activation crossing for child '$child' declares destination domain '$dst', but transaction '$child' is in domain '" . ($child_domain // '?') . "'\n"
+            if defined($child_domain) && $child_domain ne $dst;
+
+        my $covered = 0;
+        TX: for my $tx (@{$actor->{transactions} || []}) {
+            next unless _domain_for_entry($tx, $default_domain) eq $src;
+            for my $ref (_live_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name}, $actor)) {
+                next unless ($ref->{keyword} // '') eq 'do';
+                next unless ($ref->{label} // '') eq 'transaction body';
+                next unless ($ref->{clause}[1] // '') eq $child;
+                $covered = 1;
+                last TX;
+            }
+        }
+        confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is declared but no transaction in domain '$src' performs a top-level '(do $child)'; an activation crossing must own a real cross-domain activation\n"
+            unless $covered;
+    }
 
     my %generated_children = _generated_child_transaction_refs($actor);
     my %do_ordinals;
@@ -2481,19 +2514,30 @@ sub _validate_transaction_clause_domain_refs {
     }
     if ($keyword eq 'do' || $keyword eq 'spawn') {
         my $target = $clause->[1];
-        _validate_same_domain_target(
-            "$context $keyword target '$target'",
-            $domain,
-            $transaction_domains->{$target},
-            'transaction',
-        );
-        if (my $activation_domain = _activation_domain_from_clause($clause, $tx->{name}, $label)) {
+        # A top-level cross-domain `(do child)` covered by an `(activation ...)`
+        # crossing is routed through CDC synchronizers, so the same-domain target
+        # checks are intentionally skipped for it (the CDC routing is emitted in
+        # the multi-domain top). Every other cross-domain reference still fails
+        # closed. Restricted to top-level `do` for now; cross-domain `spawn` and
+        # nested cross-domain `do` remain fail-closed.
+        my $covered_activation = $keyword eq 'do'
+            && ($label // '') eq 'transaction body'
+            && _activation_crossing_covers($actor, $domain, $transaction_domains->{$target}, $target);
+        if (!$covered_activation) {
             _validate_same_domain_target(
-                "$context $keyword instance domain '$activation_domain'",
+                "$context $keyword target '$target'",
                 $domain,
-                $activation_domain,
-                'activation',
+                $transaction_domains->{$target},
+                'transaction',
             );
+            if (my $activation_domain = _activation_domain_from_clause($clause, $tx->{name}, $label)) {
+                _validate_same_domain_target(
+                    "$context $keyword instance domain '$activation_domain'",
+                    $domain,
+                    $activation_domain,
+                    'activation',
+                );
+            }
         }
         for my $binding (_activation_bindings_from_clause($clause, $tx->{name}, $label)->@*) {
             if ($binding->{role} eq 'input') {
@@ -2578,6 +2622,23 @@ sub _validate_same_domain_target {
         if $target_domain ne $owner_domain;
 
     return 1;
+}
+
+# True when the actor declares an `(activation child (from SRC)(to DEST))`
+# crossing that owns a cross-domain `(do child)` from `$caller_domain` into
+# `$target_domain`. Such a `(do)` is routed through the two CDC synchronizers
+# (`_emit_multi_domain_top`) rather than fail-closed at the same-domain check.
+sub _activation_crossing_covers {
+    my ($actor, $caller_domain, $target_domain, $child) = @_;
+    return 0 unless defined($caller_domain) && defined($target_domain) && defined($child);
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ref($crossing) eq 'HASH' && ($crossing->{kind} // '') eq 'activation';
+        return 1
+            if ($crossing->{child} // '') eq $child
+            && ($crossing->{from}{domain} // '') eq $caller_domain
+            && ($crossing->{to}{domain} // '') eq $target_domain;
+    }
+    return 0;
 }
 
 sub _validate_drive_reuse_domains {
@@ -11436,18 +11497,27 @@ sub _wire_external_activations {
         delete $ctrs->{$done}  if ref($ctrs) eq 'HASH';
 
         if ($role eq 'caller') {
+            my $ready = "${start}_ready";
             _ensure_port($ports, $start, 'output', 1,
                 "external activation '$child' caller start handoff");
             _ensure_port($ports, $done, 'input', 1,
                 "external activation '$child' caller done handoff");
+            _ensure_port($ports, $ready, 'input', 1,
+                "external activation '$child' caller start-ready handshake");
+            delete $ctrs->{$ready} if ref($ctrs) eq 'HASH';
 
-            # Cross-domain `<start>` routes through an acknowledged-event CDC child,
-            # which re-toggles (re-pulses the destination) for as long as `request`
-            # is held high. A same-domain do holds `<start>` for the whole await,
-            # which would re-trigger `child` across the boundary. Restructure the
-            # do into a one-cycle start REQUEST state (asserted on entry, like a
-            # spawn start) followed by the original await-on-`<done>` state, so the
-            # CDC sees a single request pulse per activation.
+            # The cross-domain `<start>` routes through an acknowledged-event CDC
+            # child. Mirror the event-crossing source idiom: AWAIT `<start>_ready`
+            # (CDC idle, request accepted on the next pulse) and then assert
+            # `<start>` for exactly ONE cycle. Holding `<start>` would re-toggle the
+            # CDC and re-trigger `child`; awaiting `<start>_ready` consumes the CDC
+            # `ready` output (the composition requires every child output to be
+            # consumed) and guarantees the single request pulse is accepted.
+            #
+            # `_ir_do` emits one await state that asserts `<start>` and guards on
+            # `<done>`. Restructure it into:
+            #   <do>_ready (await <start>_ready) -> <do>_req (one-cycle <start>)
+            #   -> <do> (await <done>).
             my ($do_state) = grep {
                 ($_->{kind} // '') eq 'await'
                     && grep { ($_->{lhs} // '') eq $start } @{$_->{assignments} || []}
@@ -11464,31 +11534,40 @@ sub _wire_external_activations {
                     ],
                     transitions => [{ target => $do_state->{name} }],
                 };
+                my $ready_wait = {
+                    name        => "$do_state->{name}_ready",
+                    kind        => 'await',
+                    assignments => [],
+                    guard       => { port => $ready },
+                    transitions => [{ target => $request->{name}, condition => { port => $ready } }],
+                };
                 my ($do_index) = grep { $st->[$_] == $do_state } 0 .. $#$st;
-                splice(@$st, $do_index, 0, $request);
+                splice(@$st, $do_index, 0, $ready_wait, $request);
                 # Redirect the do-state's predecessors (e.g. the idle entry) to the
-                # one-cycle request state; the request state itself falls through to
-                # the await unconditionally.
+                # ready-await state; ready_wait -> request -> do(await done).
                 for my $state (@$st) {
-                    next if $state == $request;
+                    next if $state == $request || $state == $ready_wait;
                     for my $transition (@{$state->{transitions} || []}) {
-                        $transition->{target} = $request->{name}
+                        $transition->{target} = $ready_wait->{name}
                             if ($transition->{target} // '') eq $do_state->{name};
                     }
                 }
             }
         }
         elsif ($role eq 'callee') {
+            my $ready = "${done}_ready";
             _ensure_port($ports, $start, 'input', 1,
                 "external activation '$child' callee start handoff");
             _ensure_port($ports, $done, 'output', 1,
                 "external activation '$child' callee done handoff");
+            _ensure_port($ports, $ready, 'input', 1,
+                "external activation '$child' callee done-ready handshake");
+            delete $ctrs->{$ready} if ref($ctrs) eq 'HASH';
 
-            # Gate `child`'s entry on the activation `<start>` pulse and assert
-            # `<done>` on each terminal, mirroring the generated-child start/done
-            # handshake. A cross-domain `child` is activated by the CDC pulse, not
-            # by its own `(on ...)` trigger, so synthesize a start-gated entry when
-            # the transaction has none (e.g. a body-only transaction).
+            # Gate `child`'s entry on the activation `<start>` pulse. A cross-domain
+            # `child` is activated by the CDC pulse, not by its own `(on ...)`
+            # trigger, so synthesize a start-gated entry when the transaction has
+            # none (e.g. a body-only transaction).
             my @child_states = grep { $_->{name} =~ /^\Q$child\E_/ } @$st;
             my ($entry) = grep { $_->{kind} eq 'entry' } @child_states;
             if (!$entry && @child_states) {
@@ -11513,10 +11592,28 @@ sub _wire_external_activations {
                 push @{$entry->{transitions}}, { target => $next->{name}, condition => $entry->{guard} }
                     if $next;
 
+                # The activation `<done>` mirrors the start handshake in reverse:
+                # await `<done>_ready` (the done CDC idle) and then pulse `<done>`
+                # for one cycle before returning to idle. Awaiting `<done>_ready`
+                # consumes the done CDC `ready` output and guarantees a single
+                # accepted done pulse. Route every terminal through this chain.
+                my $done_req = {
+                    name        => "${child}_done_req",
+                    kind        => 'sequential',
+                    assignments => [{ lhs => $done, rhs => 1, op => '<1' }],
+                    transitions => [{ target => $entry->{name} }],
+                };
+                my $done_ready_wait = {
+                    name        => "${child}_done_ready",
+                    kind        => 'await',
+                    assignments => [],
+                    guard       => { port => $ready },
+                    transitions => [{ target => $done_req->{name}, condition => { port => $ready } }],
+                };
+                push @$st, $done_ready_wait, $done_req;
                 for my $state (@child_states) {
                     next unless $state->{kind} eq 'terminal';
-                    unshift @{$state->{assignments}}, { lhs => $done, rhs => 1, op => '<1' };
-                    $state->{transitions} = [{ target => $entry->{name} }];
+                    $state->{transitions} = [{ target => $done_ready_wait->{name} }];
                 }
             }
         }

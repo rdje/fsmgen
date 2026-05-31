@@ -14790,3 +14790,19 @@ Exit criteria:
   goldens + composition regression (13 files, 449) PASS. Frontier now `.5`
   (integration: partition recognition + `external_activations` injection +
   validator acceptance + remove guard, ships together; Verilator evidence).
+- `R14`: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.5` shipped — the
+  correctness-critical integration; a cross-domain blocking `(do child)` covered by
+  an `(activation ...)` crossing now lowers END-TO-END. The validator accepts the
+  covered top-level `(do)` (else fail closed); a declared-but-unused or mis-placed
+  crossing fails closed; `external_activations` is injected into the per-domain
+  actors; the `lower()` guard is removed. The handshake consumes the CDC `ready`
+  outputs via the event-crossing idiom (caller awaits `<start>_ready` then pulses
+  `<start>`; callee awaits `<done>_ready` then pulses `<done>`). End-to-end the
+  actor lowers to per-domain modules + a top routing start SRC→DEST and done
+  DEST→SRC through two CDC children; per-domain modules pass Verilator lint + yosys
+  synthesis and the composition emits complete HDL (5 modules; only the pre-existing
+  `shared_dp_export_*` PINMISSING remain, at parity with the shipped event-crossing
+  multi-domain HDL). `t/1387` (7 subtests) + sweep (16 files, 557) + full
+  `ci-regression isf` PASS. Frontier now `.6` (docs + runnable book example +
+  activation crossing schedule-report metadata); cross-domain `spawn` and nested
+  cross-domain `(do)` remain follow-ups.

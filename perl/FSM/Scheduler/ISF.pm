@@ -56,15 +56,6 @@ sub lower($self, @args) {
     my ($actor) = _validate_actor_arg('lower', @args);
     fsm_trace_enter("Scheduler lower: $actor->{actor_name}", 2);
 
-    # The `(crossings (activation ...))` surface is parsed and validated, but the
-    # CDC routing of the activation start/done handshake is not yet implemented.
-    # Fail closed rather than silently ignore the declaration (parser-acceptance
-    # != support). Cross-domain activation via this crossing ships in
-    # ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3.
-    if (my ($activation) = grep { ($_->{kind} // '') eq 'activation' } @{$actor->{crossings} || []}) {
-        confess "FSM::Scheduler::ISF->lower: actor '$actor->{actor_name}' declares an activation crossing for child '$activation->{child}', but cross-domain activation lowering is not yet supported (the (crossings (activation ...)) surface is parsed and validated; CDC routing is in progress)\n";
-    }
-
     my $ir     = $self->{ir}->build_module($actor);
     if (_is_multi_domain_ir($ir)) {
         my $files = $self->_emit_multi_domain_scheduled_artifacts($actor, $ir);
@@ -207,6 +198,7 @@ sub _domain_actor_for_scheduled_artifact($actor, $domain, $default_domain) {
         ],
     };
     _add_crossing_endpoint_ports($actor, \%domain_actor, $domain_name);
+    _inject_activation_external_activations($actor, \%domain_actor, $domain_name);
     $domain_actor{storage} = [
         map { _clone_isf_value($_) }
         grep { _entry_domain($_, $default_domain) eq $domain_name }
@@ -259,6 +251,29 @@ sub _add_crossing_endpoint_ports($actor, $domain_actor, $domain_name) {
             );
         }
     }
+    return 1;
+}
+
+sub _inject_activation_external_activations($actor, $domain_actor, $domain_name) {
+    my @activations;
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ref($crossing) eq 'HASH' && ($crossing->{kind} // '') eq 'activation';
+        my $child = $crossing->{child};
+        next unless defined($child) && !ref($child) && length($child);
+        my $from = $crossing->{from}{domain} // '';
+        my $to   = $crossing->{to}{domain} // '';
+        my $role;
+        if ($from eq $domain_name)  { $role = 'caller'; }
+        elsif ($to eq $domain_name) { $role = 'callee'; }
+        else                        { next; }
+        push @activations, {
+            child        => $child,
+            role         => $role,
+            start_signal => "${child}_start",
+            done_signal  => "${child}_done",
+        };
+    }
+    $domain_actor->{external_activations} = \@activations if @activations;
     return 1;
 }
 
@@ -399,6 +414,10 @@ sub _emit_multi_domain_wiring($actor, $partition) {
             if ref($dst->{reset}) eq 'HASH';
         push @links, _link("$src->{name}.$start_signal", "$start.request");
         push @links, _link("$start.pulse", "$dst->{name}.$start_signal");
+        # The caller awaits `<start>_ready` before issuing the one-cycle request,
+        # so route the start CDC `ready` back to the SRC module (the event-crossing
+        # idiom). This also consumes the CDC `ready` output for the composition.
+        push @links, _link("$start.ready", "$src->{name}.${start_signal}_ready");
 
         # done synchronizer: DEST drives the one-cycle done -> SRC release pulse.
         push @links, _link($dst->{clock}, "$done.source_clk");
@@ -409,11 +428,9 @@ sub _emit_multi_domain_wiring($actor, $partition) {
             if ref($src->{reset}) eq 'HASH';
         push @links, _link("$dst->{name}.$done_signal", "$done.request");
         push @links, _link("$done.pulse", "$src->{name}.$done_signal");
-
-        # The acknowledged-event `ready` outputs are intentionally left open: the
-        # caller issues a single one-cycle request per blocking do and the `<done>`
-        # pulse is the application-level acknowledgement, so no back-pressure wire
-        # is needed (single outstanding by construction).
+        # The callee awaits `<done>_ready` before pulsing `<done>`; route the done
+        # CDC `ready` back to the DEST module (consuming the output).
+        push @links, _link("$done.ready", "$dst->{name}.${done_signal}_ready");
     }
 
     my @lines = ('  (?wiring:domain_wiring');
