@@ -28,8 +28,11 @@ subtest 'SPI-like fixture lowers to the expected scheduled FSM structure' => sub
     unlike($fsm, qr/\(= \(mosi_val tx_byte\)\)/, 'scheduled FSM does not drive one-bit MOSI from the full transmit byte');
     like($fsm, qr/\(<- \(tx_byte \(\| \(<< tx_byte 1\) 0\)\)\)/, 'scheduled FSM shifts the transmit byte left');
     like($fsm, qr/\(<- \(rx_data> \(\| \(<< rx_data 1\) miso\)\)\)/, 'scheduled FSM shifts sampled MISO into rx_data');
-    like($fsm, qr/\(<- \(spi_transfer_cnt \(- spi_transfer_cnt 1\)\)\)/, 'scheduled FSM decrements the repeat counter');
-    like($fsm, qr/\(=0 \(-> spi_transfer_drive_9\)\)/, 'scheduled FSM exits the repeat loop at zero');
+    like($fsm, qr/\(spi_transfer_repeat_init_2\b\s*\(<= \(spi_transfer_cnt 8\)\)\s*\(-> spi_transfer_repeat_check_8\)/s,
+        'scheduled FSM repeat init loads the counter and transitions straight to the check state');
+    like($fsm, qr/\(-- spi_transfer_cnt\)/, 'scheduled FSM decrements the repeat counter');
+    like($fsm, qr/\(\?spi_transfer_cnt\s+\(>0 \(-> spi_transfer_drive_3\)\)\s+\(=0 \(-> spi_transfer_drive_9\)\)/s,
+        'scheduled FSM loops or exits based on the repeat counter (check-first)');
     like($fsm, qr/\(<1 \(done> 1\)\)/, 'scheduled FSM completes with a one-cycle delayed pulse');
 
     is($report->{source}, 'spi_master.isf', 'schedule report names the source fixture');

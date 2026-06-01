@@ -92,7 +92,7 @@ ISF
     my $fsm = $result->{files}{'repeat_boundary.fsm'};
     like($fsm, qr/\(main_repeat_init_1\n\s+\(<= \(main_cnt 3\)\)/, 'repeat init loads scalar count');
     like($fsm, qr/\(= \(tick_start 1\)\)/, 'repeat body drive is emitted');
-    like($fsm, qr/\(main_repeat_check_3\n\s+\(<- \(main_cnt \(- main_cnt 1\)\)\)/, 'repeat check decrements the counter');
+    like($fsm, qr/\(main_repeat_check_3\n\s+\(-- main_cnt\)/, 'repeat check decrements the counter');
 };
 
 subtest 'runtime scalar repeat counts zero-bypass the repeat body' => sub {
@@ -116,8 +116,10 @@ ISF
 
     my $fsm = $result->{files}{'repeat_runtime_zero.fsm'};
     like($fsm, qr/\(main_cnt 12\)/, 'runtime repeat count keeps the sampled source width');
-    like($fsm, qr/\(main_repeat_init_1\n\s+\(<= \(main_cnt beats\)\)\n\s+\(-> main_drive_2 <beats\)\n\s+\(-> main_done_4 <\(== beats 0\)\)/,
-        'runtime zero repeat count bypasses the body and repeat check');
+    like($fsm, qr/\(main_repeat_init_1\n\s+\(<= \(main_cnt beats\)\)\n\s+\(-> main_repeat_check_3\)/,
+        'runtime repeat init loads the counter and enters the check-first loop');
+    like($fsm, qr/\(main_repeat_check_3\n\s+\(-- main_cnt\)\n\s+\(\?main_cnt\n\s+\(>0 \(-> main_drive_2\)\)\n\s+\(=0 \(-> main_done_4\)\)/,
+        'runtime zero repeat count bypasses the body via the check-first decrement');
     like($fsm, qr/\(main_drive_2\n\s+\(= \(tick_start 1\)\)\n\s+\(-> main_repeat_check_3\)/,
         'nonzero runtime repeat count still enters the existing body path');
 };

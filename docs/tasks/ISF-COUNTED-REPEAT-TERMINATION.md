@@ -108,15 +108,15 @@ all count kinds with far less churn.
   Commit: `this slice`
 
 - ID: `ISF-COUNTED-REPEAT-TERMINATION.2`
-  Status: `todo`
-  Goal: `Termination fix (Option B): loop_target -> first body state; init load -> count-1; Emitter/FSM.pm repeat_check -> (>0 -> body)(=0 -> done).`
-  Acceptance: `Counted (repeat N …) runs body exactly N times then completes for static/param/constant/runtime counts and 0/1; spawn/do/await-in-repeat + cross-domain-handshake-in-repeat unaffected; ~18 goldens updated to the corrected .fsm/SV; full isf regression PASS; simulation confirms exactly-N termination.`
-  Verification: `Simulate static N=1/2/4, runtime count, count 0; do-in-repeat re-runs each iteration; prove -Iperl t/1202 t/1360 t/1383 t/1387 (+ affected) PASS; full ./bin/ci-regression isf PASS; perl -c; mdbook build; git diff --check`
-  Commit: `pending`
+  Status: `done`
+  Goal: `Termination fix (check-first): init -> check (load count once, raw copy); repeat_check loop_target -> first body state; decrement via the '--' operator; Emitter/FSM.pm repeat_check continue edge -> (>0 -> body)(=0 -> done).`
+  Acceptance: `Counted (repeat N …) runs body exactly N times then completes for static literal, param/constant, and runtime-signal counts and 0/1 edges; spawn/do/await-in-repeat + cross-domain-handshake-in-repeat re-arm correctly each iteration; goldens updated to the corrected .fsm structure; full suite PASS; simulation confirms exactly-N termination. A runtime (wait …) as the FIRST statement of a repeat body fails closed with a clear diagnostic (deferred to .3); non-first and static waits unaffected.`
+  Verification: `Simulated (verilator --binary): static N=1/4/7 -> result==N; runtime n=5/0/1 -> exactly n (0 -> immediate done); non-first runtime wait-in-repeat -> count==3 terminates; runtime-wait-FIRST -> fail-closed. Implemented as Option A (check-first) not Option B (count-1 load) because a (- n 1) load is a second counter expression-assignment that aliases the one-hot selector enable. Goldens updated across t/1202 1360 1095 1228 1310 1311 1244 1379 1381 1383 1387 1215 1103 1111. Full suite prove -j6 -Iperl t/ -> 1402 files / 10165 tests PASS; perl -c; mdbook build; git diff --check.`
+  Commit: `this slice`
 
 - ID: `ISF-COUNTED-REPEAT-TERMINATION.3`
   Status: `frontier`
-  Goal: `Make the counted-loop decision edge verilator-clean (cnt > 1'b0 WIDTHEXPAND) so counted loops pass --verify-hdl.`
+  Goal: `(a) Support a runtime (wait …) as the FIRST statement of a repeat body (currently fail-closed in .2): the check-first loop must (re)load the wait counter on the loop-back edge and compute the correct zero-bypass target; restore the t/1244 coverage converted to fail-closed assertions in .2. (b) Make the counted-loop decision edge verilator-clean: the (>0) continue edge renders cnt > 1'b0 (WIDTHEXPAND, 3-bit vs 1-bit literal), so counted loops do not yet pass --verify-hdl; width-match the literal or use a |cnt reduction.`
   Acceptance: `TBD when scheduled.`
   Verification: `TBD`
   Commit: `pending`
@@ -125,9 +125,9 @@ all count kinds with far less churn.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `.1` | `done` | Bug proven by simulation; Option B fix shape proven; design recorded. |
-| 2 | `.2` | `todo` | The termination fix — three coordinated changes; update goldens; simulate + isf regression. |
-| 3 | `.3` | `frontier` | Residual `cnt > 1'b0` WIDTHEXPAND so counted loops pass `--verify-hdl`. |
+| 1 | `.1` | `done` | Bug proven by simulation; fix shape proven; design recorded. |
+| 2 | `.2` | `done` | Termination fix landed (check-first); simulation confirms exactly-N for static/runtime/zero; full suite PASS (1402 files). Runtime-wait-first-in-repeat fails closed (deferred to `.3`). |
+| 3 | `.3` | `frontier` | Restore runtime-wait-first-in-repeat (+ its t/1244 coverage); make the `(>0)` decision edge verilator-clean (`cnt > 1'b0` WIDTHEXPAND) so counted loops pass `--verify-hdl`. |
 
 ## Decisions
 
@@ -148,12 +148,14 @@ all count kinds with far less churn.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | verilator `--binary` sims (no-loop terminates @ cy2; plain repeat-4 + for-loop spin; hand-fixed .fsm terminates, accumulating body == N); `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.2` | verilator `--binary`: static N=1/4/7 → result==N; runtime n=5/0/1 → exactly n; non-first runtime wait-in-repeat → count==3 terminates; runtime-wait-FIRST → fail-closed. Full suite `prove -j6 -Iperl t/` → 1402 files / 10165 tests PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-COUNTED-REPEAT-TERMINATION.1: select + prove counted-repeat non-termination` | this slice |
+| `.1` | `ISF-COUNTED-REPEAT-TERMINATION.1: select + prove counted-repeat non-termination` | `bb… (committed)` |
+| `.2` | `ISF-COUNTED-REPEAT-TERMINATION.2: check-first counted-repeat termination` | this slice |
 
 ## Changelog
 
@@ -161,5 +163,19 @@ all count kinds with far less churn.
   never terminate for `N >= 2` — the loop-back reloads the counter at `repeat_init` and
   the continue edge mis-renders as `main_cnt == 1'b1`. The bug hid because no verification
   gate simulates. Fix shape (counter loaded once, loop-back to the body, `(=0 -> done)
-  (>0 (-- cnt) -> body)` decision) proven by simulation. Slice plan: `.2` Option B
-  termination fix (body-first, minimal churn), `.3` decision-edge width-cleanliness.
+  (>0 (-- cnt) -> body)` decision) proven by simulation.
+- `2026-06-01`: `.2` shipped — **check-first** counted-repeat lowering. `repeat_init` now
+  loads the count once (raw copy) and flows to `repeat_check`; the check decrements via
+  `--`, continues to the first body state on `(>0 …)`, and exits on `(=0 …)`. This
+  terminates after exactly N iterations for static literal, param/constant, and
+  runtime-signal counts (and 0/1 edges), proven by `verilator --binary` simulation; the
+  spawn/do/await-in-repeat and cross-domain-handshake-in-repeat machinery re-arm correctly
+  each iteration (the body re-runs from its first state). Chosen over the body-first
+  `count-1`-load variant because a `(- n 1)` load is a second counter expression-assignment
+  that aliases the one-hot write-enable selector and trips a false multi-driver assertion;
+  the raw-copy load keeps the decrement the only counter expression. Goldens updated across
+  `t/1202 1360 1095 1228 1310 1311 1244 1379 1381 1383 1387 1215 1103 1111`. A runtime
+  `(wait …)` as the FIRST statement of a repeat body fails closed with a clear diagnostic
+  (its t/1244 coverage was converted to fail-closed assertions) — deferred to `.3`;
+  non-first and static waits are unaffected. Full suite (`prove -j6 -Iperl t/`) → 1402
+  files / 10165 tests PASS.

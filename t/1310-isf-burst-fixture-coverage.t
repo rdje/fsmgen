@@ -28,9 +28,11 @@ subtest 'Burst-reader fixture lowers to the expected scheduled FSM structure' =>
     like($fsm, qr/\(<= \(beats burst_len\) <start\)/, 'scheduled FSM samples burst_len as beats on start');
     like($fsm, qr/\(<= \(word rdata\)\)/, 'scheduled FSM samples rdata inside the repeat body');
     like($fsm, qr/\(<= \(read_burst_cnt beats\)\)/, 'scheduled FSM loads the repeat counter from sampled beats');
-    like($fsm, qr/\(<- \(read_burst_cnt \(- read_burst_cnt 1\)\)\)/, 'scheduled FSM decrements the repeat counter');
-    like($fsm, qr/\(\?read_burst_cnt\s+\(=1 \(-> read_burst_repeat_init_3\)\)\s+\(=0 \(-> read_burst_drive_7\)\)/s,
-        'scheduled FSM loops or exits based on the repeat counter');
+    like($fsm, qr/\(read_burst_repeat_init_3\b[^(]*\(= \(read_burst_inc 1\)\)\s*\(<= \(read_burst_cnt beats\)\)\s*\(-> read_burst_repeat_check_6\)/s,
+        'scheduled FSM repeat init loads the counter and transitions straight to the check state');
+    like($fsm, qr/\(-- read_burst_cnt\)/, 'scheduled FSM decrements the repeat counter');
+    like($fsm, qr/\(\?read_burst_cnt\s+\(>0 \(-> read_burst_await_4\)\)\s+\(=0 \(-> read_burst_drive_7\)\)/s,
+        'scheduled FSM loops or exits based on the repeat counter (check-first)');
     like($fsm, qr/\(\?read_burst_wd\s+\(=0 \(-> read_burst_timeout\)\)\s+\(>0 \(-- read_burst_wd\)\)\s+\)/s,
         'scheduled FSM watchdog tests timeout and decrements only on the nonzero branch');
     like($fsm, qr/\(<1 \(done> 1\)\)/, 'scheduled FSM completes with a one-cycle delayed pulse');

@@ -56,9 +56,9 @@ ISF
     like($fsm, qr/\(main_cnt 4\)/, 'package repeat count drives resolved counter width');
     like($fsm, qr/\(<= \(main_cnt shared\.REPEAT_NINE\)\)/,
         'repeat init preserves authored package constant token');
-    like(state_block($fsm, 'main_repeat_init_1'), qr/\(-> main_drive_2\)/,
-        'static package repeat count enters the body path');
-    like(state_block($fsm, 'main_repeat_check_3'), qr/\(<- \(main_cnt \(- main_cnt 1\)\)\)/,
+    like(state_block($fsm, 'main_repeat_init_1'), qr/\(-> main_repeat_check_3\)/,
+        'static package repeat count enters the check-first loop');
+    like(state_block($fsm, 'main_repeat_check_3'), qr/\(-- main_cnt\)\n\s+\(\?main_cnt\n\s+\(>0 \(-> main_drive_2\)\)\n\s+\(=0 \(-> main_done_4\)\)/,
         'static package repeat count keeps the normal decrement check');
 
     assert_fsm_reaches_hdl($fsm, 'package_constant_repeat_count');

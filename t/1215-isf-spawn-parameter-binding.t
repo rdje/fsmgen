@@ -73,7 +73,7 @@ ISF
         'repeat body spawn asserts the static child start and advances to await_all');
     like($parent_fsm, qr/\(parent_await_all_3[\s\S]*\(-> parent_repeat_check_4 <w0_done\)/,
         'repeat body await_all waits for the child done before the repeat check');
-    like($parent_fsm, qr/\(parent_repeat_check_4[\s\S]*\(=1 \(-> parent_repeat_init_1\)\)/,
+    like($parent_fsm, qr/\(parent_repeat_check_4[\s\S]*\(>0 \(-> parent_spawn_2\)\)/,
         'repeat check can only loop after the await_all state');
     like($child_fsm, qr/\(\+params\s+\(WIDTH 8\)\s+\(LANES \(8'h00 8'h00\)\)\s+\)/s,
         'repeat-spawn child emits transaction parameter defaults');
@@ -9175,7 +9175,7 @@ ISF
     ok(!exists($lowered->{files}{'repeat_do_local_top.fsm'}), 'repeat-body local do does not emit a generated top');
     like($fsm, qr/\(parent_do_2[\s\S]*\(= \(worker_start 1\)\)[\s\S]*<worker_done[\s\S]*\(-> parent_repeat_check_3\)/,
         'repeat-body local do starts the child and waits for its fresh done before the repeat check');
-    like($fsm, qr/\(parent_repeat_check_3[\s\S]*\(-> parent_repeat_init_1\)/,
+    like($fsm, qr/\(parent_repeat_check_3[\s\S]*\(>0 \(-> parent_do_2\)\)/,
         'repeat check back-edge is reachable only after the local do state');
     like($fsm, qr/\(worker_idle_0[\s\S]*<worker_start[\s\S]*\(-> worker_done_1\)/,
         'local child entry is rewired to the generated start handoff');

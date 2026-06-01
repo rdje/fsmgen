@@ -25,12 +25,16 @@ subtest 'scheduler lowers burst_reader.isf — repeat with counter inference' =>
     like($fsm, qr/read_burst_repeat_init/, 'has repeat init state');
     like($fsm, qr/\(<= \(read_burst_cnt beats\)\)/, 'counter loaded from bound name');
 
-    # Repeat check: decrement and loop
+    # Repeat init: single transition to the check state (no runtime zero-branch).
+    like($fsm, qr/\(read_burst_repeat_init_3\b[^)]*\)?\s*\(= \(read_burst_inc 1\)\)\s*\(<= \(read_burst_cnt beats\)\)\s*\(-> read_burst_repeat_check_6\)/s,
+        'repeat init loads counter and transitions straight to the check state');
+
+    # Repeat check: check-first decrement and loop.
     like($fsm, qr/read_burst_repeat_check/, 'has repeat check state');
-    like($fsm, qr/\(<- \(read_burst_cnt \(- read_burst_cnt 1\)\)\)/, 'counter decremented with <-');
+    like($fsm, qr/\(-- read_burst_cnt\)/, 'counter decremented with --');
     like($fsm, qr/\(\?read_burst_cnt/, 'decision tree on counter');
     like($fsm, qr/\(=0 \(-> read_burst_drive/, 'exit when counter zero');
-    like($fsm, qr/\(=1 \(-> read_burst_repeat_init/, 'loop back when counter nonzero');
+    like($fsm, qr/\(>0 \(-> read_burst_await_4\)\)/, 'loop back to the first body state when counter nonzero');
 
     # Await keeps timeout and decrement as same-cycle selector branches.
     unlike($fsm, qr/read_burst_await_\d+\s*\n\s*\(-- read_burst_wd\)/, 'await has no unconditional watchdog decrement');

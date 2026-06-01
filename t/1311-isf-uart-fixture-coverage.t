@@ -26,9 +26,11 @@ subtest 'UART-like fixture lowers to the expected scheduled FSM structure' => su
     like($fsm, qr/\(= \(tx_val byte_data\[0\]\)\)/, 'scheduled FSM drives TX from the sampled byte LSB');
     like($fsm, qr/\(<- \(byte_data \(\| \(>> byte_data 1\) \(<< 0 7\)\)\)\)/,
         'scheduled FSM shifts byte_data right with zero fill');
-    like($fsm, qr/\(<- \(send_byte_cnt \(- send_byte_cnt 1\)\)\)/, 'scheduled FSM decrements the repeat counter');
-    like($fsm, qr/\(\?send_byte_cnt\s+\(=1 \(-> send_byte_repeat_init_3\)\)\s+\(=0 \(-> send_byte_drive_7\)\)/s,
-        'scheduled FSM loops or exits based on the repeat counter');
+    like($fsm, qr/\(send_byte_repeat_init_3\b\s*\(<= \(send_byte_cnt 8\)\)\s*\(-> send_byte_repeat_check_6\)/s,
+        'scheduled FSM repeat init loads the counter and transitions straight to the check state');
+    like($fsm, qr/\(-- send_byte_cnt\)/, 'scheduled FSM decrements the repeat counter');
+    like($fsm, qr/\(\?send_byte_cnt\s+\(>0 \(-> send_byte_drive_4\)\)\s+\(=0 \(-> send_byte_drive_7\)\)/s,
+        'scheduled FSM loops or exits based on the repeat counter (check-first)');
     like($fsm, qr/\(= \(tx_val 1\)\)/, 'scheduled FSM drives UART stop bit high');
     like($fsm, qr/\(<1 \(done> 1\)\)/, 'scheduled FSM completes with a one-cycle delayed pulse');
     unlike($fsm, qr/\(= \(tx_val byte_data\)\)/, 'scheduled FSM does not drive one-bit TX from the full byte');

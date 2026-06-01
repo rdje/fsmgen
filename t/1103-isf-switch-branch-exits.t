@@ -103,7 +103,7 @@ ISF
     my $repeat_check = state_block($fsm, 'main_repeat_check_3');
     my $alt_tail     = state_block($fsm, 'main_drive_4');
 
-    like($repeat_check, qr/\(=1 \(-> main_repeat_init_1\)\)/, 'repeat branch still loops to its init state');
+    like($repeat_check, qr/\(>0 \(-> main_drive_2\)\)/, 'repeat branch still loops to its first body state');
     like($repeat_check, qr/\(=0 \(-> main_drive_6\)\)/, 'repeat branch exits after all switch branches');
     unlike($repeat_check, qr/\(=0 \(-> main_drive_4\)\)/, 'repeat branch does not exit into the next branch');
     like($alt_tail, qr/\(-> main_drive_6\)/, 'non-repeat branch exits to the post-switch state');

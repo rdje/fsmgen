@@ -4724,6 +4724,14 @@ sub _transaction_param_wait_count_value {
 sub _repeat_count_load_value {
     my ($count, $actor, $tn) = @_;
 
+    # ISF-COUNTED-REPEAT-TERMINATION (check-first): load the counter with the count value
+    # AS-IS (a literal/constant copy, or a runtime signal copy) — never an expression. The
+    # repeat_check (reached first, before the body) performs the count==0 -> exit test and
+    # the per-iteration decrement, so loading the raw count yields exactly `count`
+    # iterations. Keeping the load a copy (not a `(- count 1)` expression) is essential:
+    # the decrement is the counter's only expression-assignment, so the generated one-hot
+    # write-enable selector stays disjoint (two expression-assignments would alias to one
+    # `<counter>_expr_en` wire and trip the multi-driver assertion).
     my $transaction_param_value = _transaction_param_repeat_count_value($count, $actor, $tn);
     return $transaction_param_value if defined $transaction_param_value;
 
@@ -8658,8 +8666,28 @@ sub _ir_repeat {
             @spawn_done_ports = () if @spawn_done_ports <= 1;
         }}
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
-    my $fb=$s[0]{name};
-    push @s, {name=>"${tn}_repeat_check_".$$ir++,kind=>'repeat_check',assignments=>[{lhs=>$ctr,rhs=>"(- $ctr 1)",op=>'<-'}],transitions=>[],loop_target=>$fb,counter=>$ctr};
+    # ISF-COUNTED-REPEAT-TERMINATION: fail closed when the first body state is a dynamic
+    # (runtime) wait. The check-first loop re-enters the body from the repeat_check, but a
+    # runtime wait as the loop-back target needs its counter (re)loaded on that edge and a
+    # correct zero-bypass target — not yet wired. (A non-first runtime wait works: the
+    # preceding body state loads the wait counter via the predecessor edge. A static wait
+    # is fine: it lowers to plain sequential states with no counter.)
+    if (@s >= 2 && $s[1]{dynamic_wait_entry}) {
+        confess "Transaction '$tn': a runtime '(wait ...)' as the FIRST statement of a '(repeat ...)' body is not yet supported under the counted-loop lowering. Put another body statement before the wait, or use a static (literal/constant) wait count. (Tracked in ISF-COUNTED-REPEAT-TERMINATION.3.)\n";
+    }
+    # ISF-COUNTED-REPEAT-TERMINATION: the loop-back targets the FIRST BODY state, not the
+    # repeat_init state. Looping back to repeat_init would reload the counter every
+    # iteration (cnt <= N), so the per-iteration decrement never sticks and the loop never
+    # terminates. The body still re-runs from its first state each iteration (so the
+    # spawn/do/await and cross-domain-handshake machinery still re-arm), but the counter is
+    # loaded exactly once. For an empty body, loop back to the check itself (a pure
+    # N-cycle countdown).
+    my $check_name = "${tn}_repeat_check_".$$ir++;
+    my $fb = (@s >= 2) ? $s[1]{name} : $check_name;
+    # Decrement via the '--' operator — a clean per-iteration decrement whose dedicated
+    # write-enable stays disjoint from the counter's load enable (the init loads the raw
+    # count as a copy), so the generated one-hot selector assertion has no false conflict.
+    push @s, {name=>$check_name,kind=>'repeat_check',assignments=>[{lhs=>$ctr,op=>'--'}],transitions=>[],loop_target=>$fb,counter=>$ctr};
     $s[0]{repeat_state_names} = [map { $_->{name} } @s];
     return (\@s,$ctr,$width,\@dynamic_wait_counters);
 }
@@ -10492,37 +10520,18 @@ sub _link_states {
 
 sub _link_repeat_init_state {
     my ($state, $idx_by_name, $states, $next_state, $next_target, $entry_target) = @_;
-    return unless defined($next_target) && length($next_target);
 
-    my $runtime_source = $state->{repeat_runtime_count_source};
-    if (!defined($runtime_source) || !length($runtime_source)) {
-        if ($next_state && $next_state->{dynamic_wait_entry}) {
-            _link_dynamic_wait_entry_edge($state, $next_state, '1');
-        } else {
-            push @{$state->{transitions}}, { target => $next_target };
-        }
-        return;
-    }
-
-    my $last_idx = _state_region_last_index($idx_by_name, $state->{repeat_state_names}, $idx_by_name->{$state->{name}} // 0);
-    my $exit_idx = $last_idx + 1;
-    my $exit_target = $exit_idx <= $#$states ? $states->[$exit_idx]{name} : $entry_target;
-    my $enter_condition = $runtime_source;
-    my $zero_condition = "(== $runtime_source 0)";
-
-    if ($next_state && $next_state->{dynamic_wait_entry}) {
-        _link_dynamic_wait_entry_edge($state, $next_state, $enter_condition);
-    } else {
-        push @{$state->{transitions}}, {
-            target    => $next_target,
-            condition => { expr => $enter_condition },
-        };
-    }
-
-    push @{$state->{transitions}}, {
-        target    => $exit_target,
-        condition => { expr => $zero_condition },
-    };
+    # ISF-COUNTED-REPEAT-TERMINATION (check-first): the init state loads the counter once
+    # and flows unconditionally to the repeat_check (the last state of the repeat region).
+    # The check performs the count==0 -> exit test and the per-iteration decrement + body
+    # dispatch, so it subsumes the old runtime zero-branch (which used to skip the body at
+    # init when a runtime count was 0). Looping back to the check (not init) means the
+    # counter is loaded exactly once.
+    my $check_name = ($state->{repeat_state_names} && @{$state->{repeat_state_names}})
+        ? $state->{repeat_state_names}[-1]
+        : $next_target;
+    return unless defined($check_name) && length($check_name);
+    push @{$state->{transitions}}, { target => $check_name };
 }
 
 sub _state_region_last_index {
@@ -11876,10 +11885,10 @@ sub _wire_external_activations {
                 # state's `true_target`, a `switch` branch's `body_start`, a loop's
                 # `loop_body_start`) — to the ready-await, so the inserted
                 # ready -> req -> do(await done) chain runs before the do-state in
-                # every context (top-level, repeat body, and branch/loop body). The
-                # `repeat_check` loop-back targets the repeat init (NOT the do-state),
-                # so it is correctly left untouched and re-runs the handshake each
-                # iteration.
+                # every context (top-level, repeat body, and branch/loop body). When a
+                # `repeat_check` loop-back targets the do-state (the first body state),
+                # this redirect catches it too, so the handshake re-arms via the
+                # ready-await on every iteration.
                 for my $state (@$st) {
                     next if $state == $request || $state == $ready_wait;
                     for my $transition (@{$state->{transitions} || []}) {
