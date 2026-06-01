@@ -278,15 +278,24 @@ resets to its start value at the head of each outer iteration, and the loops low
 nested counted `(repeat …)` (each with its own counter — see *Nested Counted Loops*). The
 nesting can go arbitrarily deep.
 
-A `(for ...)` **embedded in a control-flow body** (inside a `when`/`switch`/`while`/`until`/
-`repeat` body) is not yet supported and **fails closed**, as do a zero width, a literal-zero
-count, an implicit-width non-literal count, a non-upward range (`B <= A`), non-literal range
-bounds, and an empty body:
+A `(for ...)` may also be **embedded in a control-flow body** — inside a
+`when`/`switch`/`while`/`until`/`repeat` body. Its index `(local …)` is hoisted to the
+transaction top and an index reset is prepended in the body, so the loop restarts each time
+its enclosing body is (re-)entered:
 
 ```lisp
-;; rejected: a (for ...) embedded in a when/switch/while/until/repeat body is not yet supported
-(when go
-  (for (i 4) (update total (+ total i))))
+(while busy
+  (for (i 4)                       ;; each while iteration runs the inner loop afresh (i = 0..3)
+    (update checksum (^ checksum i))))
+```
+
+A zero width, a literal-zero count, an implicit-width non-literal count, a non-upward range
+(`B <= A`), non-literal range bounds, and an empty body all **fail closed** with a clear
+diagnostic:
+
+```lisp
+;; rejected: count must be >= 1
+(for (i 0) (update total (+ total i)))
 ```
 
 ## Nested Counted Loops

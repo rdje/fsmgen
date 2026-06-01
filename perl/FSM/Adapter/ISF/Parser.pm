@@ -519,34 +519,41 @@ sub _proc_deep_clone($node) {
 # nested/embedded `(for ...)` fails closed (lifted by a later slice via index hoisting).
 sub _expand_for_loops($self, $result) {
     for my $tx (@{$result->{transactions} || []}) {
-        $tx->{clauses} = $self->_expand_fors_in_list(
+        my ($out, $hoisted) = $self->_expand_fors_in_list(
             $tx->{clauses}, "transaction '$tx->{name}'", 1);
+        # At the transaction top every index `(local …)` is already emitted in place; any
+        # residual hoisted locals are prepended defensively so they always sit at the top.
+        $tx->{clauses} = [ @$hoisted, @$out ];
     }
 }
 
+# Returns (\@out, \@hoisted): @out is the rewritten clause list at this level; @hoisted are
+# index `(local …)` declarations that must rise to the transaction top (a valid `(local …)`
+# context). At the top level ($top true) hoisted locals are materialized in place — right
+# before the construct they came from — so @hoisted comes back empty; deeper down they
+# bubble up. This lets a `(for …)` sit at the top level, directly nested in another `(for
+# …)` body, OR embedded in a `when`/`switch`/`while`/`until`/`repeat` body: its index local
+# rises to the top while its repeat (with an index reset, for non-top fors) stays in place.
 sub _expand_fors_in_list($self, $clauses, $ctx, $top) {
-    my @out;
+    my (@out, @hoisted);
     for my $clause (@{$clauses || []}) {
         if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]) && $clause->[0] eq 'for') {
-            confess "Error: (for ...) in $ctx is currently supported only at the transaction top level or directly nested inside another (for ...) body (a (for ...) embedded in a when/switch/while/until/repeat body is not yet supported)\n"
-                unless $top;
-            # Top-level for: its index local and any hoisted nested-index locals are emitted
-            # here at the transaction top (a valid `(local …)` context), followed by the
-            # repeat (and, for nested fors, their index resets, which live in the body).
-            my ($locals, $repl) = $self->_desugar_for($clause, $ctx, 1);
-            push @out, @$locals, @$repl;
+            my ($locals, $repl) = $self->_desugar_for($clause, $ctx, $top);
+            if ($top) { push @out, @$locals, @$repl }
+            else      { push @hoisted, @$locals; push @out, @$repl }
         } else {
-            push @out, $self->_for_rewrite_clause($clause, $ctx);
+            my ($rewritten, $sub_hoisted) = $self->_for_rewrite_clause($clause, $ctx);
+            if ($top) { push @out, @$sub_hoisted, $rewritten }
+            else      { push @hoisted, @$sub_hoisted; push @out, $rewritten }
         }
     }
-    return \@out;
+    return (\@out, \@hoisted);
 }
 
-# Expand the body of a `(for ...)`: a DIRECTLY-nested `(for ...)` is desugared and its index
-# locals are hoisted up (returned in the second list) so they reach the transaction top,
-# while its repeat (with an index-reset prepended) stays in the body. A `(for ...)` embedded
-# in a `when`/`switch`/`while`/`until`/`repeat` body inside this for body still fails closed
-# (via `_for_rewrite_clause`, which recurses with $top = 0).
+# Expand the body of a `(for ...)`: a directly-nested `(for ...)` is desugared and its index
+# locals are hoisted up (returned in the second list); a `(for ...)` embedded in a
+# control-flow clause within this body is handled by `_for_rewrite_clause`, whose hoisted
+# locals also bubble up. Both reach the transaction top.
 sub _expand_for_body($self, $body, $ctx) {
     my (@out, @hoisted);
     for my $clause (@{$body || []}) {
@@ -555,34 +562,38 @@ sub _expand_for_body($self, $body, $ctx) {
             push @hoisted, @$locals;
             push @out, @$repl;
         } else {
-            push @out, $self->_for_rewrite_clause($clause, $ctx);
+            my ($rewritten, $sub_hoisted) = $self->_for_rewrite_clause($clause, $ctx);
+            push @hoisted, @$sub_hoisted;
+            push @out, $rewritten;
         }
     }
     return (\@out, \@hoisted);
 }
 
-# Recurse into body-bearing control flow so a `(for ...)` embedded there is detected and
-# fails closed (passed $top = 0); non-for clauses pass through unchanged.
+# Recurse into body-bearing control flow, expanding any `(for ...)` inside (its index local
+# hoists out). Returns ($clause, \@hoisted): the rewritten clause and the index locals that
+# must rise to the transaction top. Non-control-flow clauses pass through with no hoist.
 sub _for_rewrite_clause($self, $clause, $ctx) {
-    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    return ($clause, []) unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
     my $kw = $clause->[0];
     if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
-        my $body = $self->_expand_fors_in_list([@{$clause}[2 .. $#$clause]], $ctx, 0);
-        return [ $kw, $clause->[1], @$body ];
+        my ($body, $hoisted) = $self->_expand_fors_in_list([@{$clause}[2 .. $#$clause]], $ctx, 0);
+        return ([ $kw, $clause->[1], @$body ], $hoisted);
     }
     if ($kw eq 'switch') {
-        my @branches;
+        my (@branches, @hoisted);
         for my $br (@{$clause}[2 .. $#$clause]) {
             if (ref($br) eq 'ARRAY' && @$br) {
-                my $body = $self->_expand_fors_in_list([@{$br}[1 .. $#$br]], $ctx, 0);
+                my ($body, $bh) = $self->_expand_fors_in_list([@{$br}[1 .. $#$br]], $ctx, 0);
                 push @branches, [ $br->[0], @$body ];
+                push @hoisted, @$bh;
             } else {
                 push @branches, $br;
             }
         }
-        return [ 'switch', $clause->[1], @branches ];
+        return ([ 'switch', $clause->[1], @branches ], \@hoisted);
     }
-    return $clause;
+    return ($clause, []);
 }
 
 # Spec forms:

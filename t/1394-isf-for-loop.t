@@ -250,13 +250,40 @@ ISF
     like($fsm, qr/\(<- \(j \(\+ j 1\)\)\)/, 'the inner index j advances each inner iteration');
 };
 
-subtest 'a (for …) embedded in a when/control-flow body still fails closed' => sub {
-    my $embedded = lower_error(
-        "(actor t (interface (input start) (input go) (output done) (output result (width 8))) "
-        . "(transaction main (on start) (when go (for (i 4) (update result (+ result 1)))) (complete done)))",
-        'embedded');
-    like($embedded, qr/embedded in a when\/switch\/while\/until\/repeat body is not yet supported/,
-        'a (for …) embedded in a when body is rejected');
+subtest 'a (for …) embedded in a control-flow body lowers with its index hoisted (ISF-FOR-LOOP.7)' => sub {
+    # A (for …) inside a when/switch/while/until/repeat body now lowers: its index (local …)
+    # is hoisted to the transaction top, and an index reset (set i START) is prepended in the
+    # body so each enclosing entry restarts the index.
+    my $actor = parse_source(<<'ISF', 'embedded-for');
+(actor ef
+  (interface (input start) (input go) (output done) (output total (width 8)))
+  (transaction main
+    (on start)
+    (when go
+      (for (i 4)
+        (update total (+ total i))))
+    (complete done)))
+ISF
+    my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+    ok($lowered, 'a (for …) embedded in a when body lowers') or diag($@);
+    my $fsm = $lowered->{files}{'ef.fsm'};
+    like($fsm, qr/\(i 3\)/, 'the index i is hoisted to +size at the transaction top');
+    like($fsm, qr/\(<- \(i 0\)\)/, 'the index resets to its start value in the when body');
+    like($fsm, qr/main_repeat_init_\d+/, 'the loop body lowers to a counted repeat inside the when');
+
+    # for inside a while body also lowers (the loop reruns the inner for each iteration)
+    my $while_for = parse_source(<<'ISF', 'while-for');
+(actor wf
+  (clock clk) (reset rst_n)
+  (interface (input start) (input c) (output done) (output total (width 8)))
+  (transaction main
+    (on start)
+    (while c
+      (for (i 3)
+        (update total (+ total i))))
+    (complete done)))
+ISF
+    ok(eval { FSM::Scheduler::ISF->new()->lower($while_for) }, 'a (for …) embedded in a while body lowers') or diag($@);
 };
 
 done_testing();

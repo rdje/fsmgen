@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-FOR-LOOP`
-- Status: `active`
+- Status: `done` (closed `2026-06-01`)
 - Roadmap lane: `R14` (ISF — high-level language richness)
 - Created: `2026-06-01`
 - Last updated: `2026-06-01`
@@ -93,7 +93,7 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 ## Task Tree
 
 - ID: `ISF-FOR-LOOP`
-  Status: `active`
+  Status: `done`
   Goal: `(for (i N) body) indexed counted loop — parser desugar into a declared index local + counted repeat with a tail increment.`
   Children: `.1` (select), `.2` (top-level literal-N desugar), `.3` (frontier: nesting/embedding + explicit-width/param counts)
 
@@ -140,11 +140,11 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
   Commit: `this slice`
 
 - ID: `ISF-FOR-LOOP.7`
-  Status: `frontier`
-  Goal: `Embedded (for …): a (for …) inside a when/switch/while/until/repeat body (the local already hoists; bubble it past the enclosing control flow + reset correctly when the for is inside a looping context).`
-  Acceptance: `TBD when scheduled.`
-  Verification: `TBD`
-  Commit: `pending`
+  Status: `done`
+  Goal: `Embedded (for …): a (for …) inside a when/switch/while/until/repeat body.`
+  Acceptance: `_expand_fors_in_list / _for_rewrite_clause / _expand_for_body thread hoisted index locals (return (out, hoisted)); a (for …) embedded in any control-flow body has its index (local …) hoisted to the transaction top (materialized in place just before the enclosing top-level construct) with an index reset (set i START) prepended in the body, and lowers to a counted (repeat …). Top-level + nested for outputs are UNCHANGED (no golden churn). A (for …) anywhere now lowers; only malformed specs (bad width/count/range/empty body) fail closed. t/1394 updates the embedded subtest to assert it lowers; 13d + 13k drop the embedded fail-close.`
+  Verification: `(when go (for (i 4) (update total (+ total i)))) lowers (i hoisted to +size; (set i 0) reset in the when body; counted repeat); verilator --binary -> total == 6 (i=0..3) when go fires. (while c (for (i 3) …)) lowers. Single/nested/range/step for unchanged. prove -Iperl t/1394 (11 subtests) + doc gates PASS; full suite PASS; perl -c; mdbook build; git diff --check.`
+  Commit: `this slice`
 
 ## Current Frontier
 
@@ -156,7 +156,7 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | 4 | `.4` | `done` | Range form `(for (i from A to B) body)` — index counts A..B-1. Simulated `(from 2 to 5)` → sum 2+3+4 == 9. |
 | 5 | `.5` | `done` | Range step form `(for (i from A to B step S) body)` — strided iteration. Simulated `(from 0 to 10 step 2)` → sum 0+2+4+6+8 == 20. |
 | 6 | `.6` | `done` | Nested `(for (i M) (for (j N) body))` — index hoisting + nested counted repeat. Simulated 3×2 → sum(i+j) == 9. |
-| 7 | `.7` | `frontier` | Embedded `(for …)` in a control-flow body (when/switch/while/until/repeat). |
+| 7 | `.7` | `done` | Embedded `(for …)` in a control-flow body — index hoists to the tx top. Simulated `(when go (for (i 4) …))` → 6. **Tree complete.** |
 
 ## Decisions
 
@@ -181,6 +181,7 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | `2026-06-01` | `.4` | `(for (i from 2 to 5) …)` lowers (i default 2, count 3, width 3, tail increment); `verilator --binary` → total==9 (`i=2,3,4`), terminates; fail-closed: B<=A, B==A, non-literal bounds, missing 'to'. `prove -Iperl t/1394` (8 subtests) + doc gates PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.5` | `(for (i from 0 to 10 step 2) …)` lowers (count 5, default 0, `+2` increment); `verilator --binary` → total==20 (`i=0,2,4,6,8`), terminates; `(from 1 to 10 step 3)` → count 3 (`i=1,4,7`); fail-closed: step 0, non-literal step, non-'step' trailer. `prove -Iperl t/1394` (10 subtests) + doc gates PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.6` | `(for (i 3) (for (j 2) (update grid (+ grid (+ i j))))) ` lowers (i, j hoisted to `+size`; `main_cnt` + `main_cnt_<n>`; `(set j 0)` inner reset; i/j tail increments); `verilator --binary` → grid==9 (`i=0..2, j=0..1`), terminates; single for + range/step unchanged; embedded for-in-when fails closed. `prove -Iperl t/1394` (11 subtests) + doc gates PASS; full suite PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.7` | `(when go (for (i 4) (update total (+ total i))))` lowers (i hoisted to `+size`; `(set i 0)` reset in the when body; counted repeat); `verilator --binary` → total==6 (`i=0..3`) when go fires; `(while c (for (i 3) …))` lowers; single/nested/range/step for unchanged. `prove -Iperl t/1394` (11 subtests) + doc gates PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -191,7 +192,8 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | `.3` | `ISF-FOR-LOOP.3: (for (i (width W) COUNT) body) explicit-width + non-literal counts` | `0b2405aa` |
 | `.4` | `ISF-FOR-LOOP.4: (for (i from A to B) body) range form` | `eb693153` |
 | `.5` | `ISF-FOR-LOOP.5: (for (i from A to B step S) body) range step form` | `217fa0c5` |
-| `.6` | `ISF-FOR-LOOP.6: nested (for (i M) (for (j N) body)) via index hoisting` | this slice |
+| `.6` | `ISF-FOR-LOOP.6: nested (for (i M) (for (j N) body)) via index hoisting` | `2e5ebd3d` |
+| `.7` | `ISF-FOR-LOOP.7: embedded (for …) in a control-flow body via index hoisting` | this slice |
 
 ## Changelog
 
@@ -251,3 +253,14 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
   in a `when`/`switch`/`while`/`until`/`repeat` body still fails closed (the index would have
   to bubble past the enclosing control flow) — deferred to `.7`. `t/1394` gains a nested-for
   subtest (11 total); `13d`/`13k` document nested for.
+- `2026-06-01`: `.7` shipped — **embedded for-loops; for-loop tree complete.** A `(for …)`
+  inside any `when`/`switch`/`while`/`until`/`repeat` body now lowers. `_expand_fors_in_list`,
+  `_for_rewrite_clause`, and `_expand_for_body` thread hoisted index locals (each returns its
+  `(out, hoisted)`); an embedded for's index `(local …)` is materialized at the transaction
+  top (in place, just before its enclosing top-level construct) with an index reset
+  `(set i START)` prepended in the body, so the loop restarts on each enclosing entry, and
+  the loop lowers to a counted `(repeat …)`. Top-level and nested for outputs are unchanged
+  (no golden churn). Verified by simulation: `(when go (for (i 4) (update total (+ total i))))`
+  → `total == 6` (`i=0..3`) when `go` fires; `(while c (for (i 3) …))` lowers. `t/1394`
+  updates the embedded subtest to assert it lowers (11 subtests); `13d`/`13k` drop the
+  embedded fail-close. A `(for …)` now lowers anywhere; only malformed specs fail closed.
