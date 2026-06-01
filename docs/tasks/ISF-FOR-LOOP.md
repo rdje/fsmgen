@@ -126,9 +126,16 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
   Commit: `this slice`
 
 - ID: `ISF-FOR-LOOP.5`
+  Status: `done`
+  Goal: `Range step form (for (i from A to B step S) body): strided iteration i = A, A+S, … < B.`
+  Acceptance: `A trailing 'step S' (literal S >= 1, default 1) makes the range stride by S: ceil((B-A)/S) iterations counting i = A, A+S, A+2S, … (each < B), with (set i (+ i S)) as the tail increment and the width sized to hold the post-final-increment value. A zero/non-literal step and a non-'step' trailer fail closed. t/1394 gains step subtests; 13d + 13k document it.`
+  Verification: `(for (i from 0 to 10 step 2) (update total (+ total i))) lowers (count 5, default 0, +2 increment); simulated (verilator --binary) total == 20 (i=0,2,4,6,8), terminates; (from 1 to 10 step 3) -> count 3 (i=1,4,7). Fail-closed: step 0, non-literal step, non-'step' trailer. prove -Iperl t/1394 (10 subtests) + doc gates PASS; perl -c; mdbook build; git diff --check.`
+  Commit: `this slice`
+
+- ID: `ISF-FOR-LOOP.6`
   Status: `frontier`
   Goal: `Nested / embedded (for …): hoist index locals to the transaction top so a (for …) may sit inside another (for …) or inside a when/switch/while/until/repeat body.`
-  Acceptance: `TBD when scheduled. NOTE: nested for-loops desugar to nested (repeat …), which the clause allow-list currently rejects ("unsupported '(repeat ...)' clause in repeat body") AND all repeats in a transaction share the single counter ${tn}_cnt — so .5 depends on (or co-designs with) nested-counted-repeat support (allow-list + per-instance counters).`
+  Acceptance: `TBD when scheduled. NOTE: nested for-loops desugar to nested (repeat …), which the clause allow-list currently rejects AND all repeats in a transaction share the single counter ${tn}_cnt — so .6 depends on (or co-designs with) nested-counted-repeat support (allow-list + per-instance counters).`
   Verification: `TBD`
   Commit: `pending`
 
@@ -140,7 +147,8 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | 2 | `.2` | `done` | Top-level `(for (i N) body)`, literal `N`, auto-sized index — parser desugar into `(local i …)` + counted `(repeat …)` with a tail increment. Simulated exactly-N with `i = 0..N-1`. |
 | 3 | `.3` | `done` | Explicit-width index + non-literal counts: `(for (i (width W) COUNT) body)` (param/constant/runtime counts). Simulated runtime n=5 → sum 0..4 == 10. |
 | 4 | `.4` | `done` | Range form `(for (i from A to B) body)` — index counts A..B-1. Simulated `(from 2 to 5)` → sum 2+3+4 == 9. |
-| 5 | `.5` | `frontier` | Nesting/embedding (index hoisting) — needs nested-counted-repeat support (allow-list + per-instance counters). |
+| 5 | `.5` | `done` | Range step form `(for (i from A to B step S) body)` — strided iteration. Simulated `(from 0 to 10 step 2)` → sum 0+2+4+6+8 == 20. |
+| 6 | `.6` | `frontier` | Nesting/embedding (index hoisting) — needs nested-counted-repeat support (allow-list + per-instance counters). |
 
 ## Decisions
 
@@ -163,6 +171,7 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | `2026-06-01` | `.2` | `(for (i 4) …)` lowers (index in `+size`, init 0, body reads `i`, tail increment, check-first repeat); `verilator --binary` → terminates, `result == 6` (`i = 0..3`, exactly 4 iterations); `--check-json` SUCCESS; non-literal/zero/empty/nested/embedded fail closed. `prove -Iperl t/1394 t/1250 t/1305 t/1304 t/1307 t/1376` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.3` | `(for (i (width 8) n) …)` lowers (i width 8; repeat loads runtime `n` once → check); `verilator --binary` → n=5 → total==10 (`i=0..4`), n=1 → 0, n=0 → 0 iterations; fail-closed: zero width, literal-zero count, implicit-width non-literal. `prove -Iperl t/1394` (6 subtests) + doc gates PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.4` | `(for (i from 2 to 5) …)` lowers (i default 2, count 3, width 3, tail increment); `verilator --binary` → total==9 (`i=2,3,4`), terminates; fail-closed: B<=A, B==A, non-literal bounds, missing 'to'. `prove -Iperl t/1394` (8 subtests) + doc gates PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.5` | `(for (i from 0 to 10 step 2) …)` lowers (count 5, default 0, `+2` increment); `verilator --binary` → total==20 (`i=0,2,4,6,8`), terminates; `(from 1 to 10 step 3)` → count 3 (`i=1,4,7`); fail-closed: step 0, non-literal step, non-'step' trailer. `prove -Iperl t/1394` (10 subtests) + doc gates PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -171,7 +180,8 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | `.1` | `ISF-FOR-LOOP.1: select (for (i N) body) indexed counted loop` | committed |
 | `.2` | `ISF-FOR-LOOP.2: (for (i N) body) indexed counted loop desugar` | committed |
 | `.3` | `ISF-FOR-LOOP.3: (for (i (width W) COUNT) body) explicit-width + non-literal counts` | `0b2405aa` |
-| `.4` | `ISF-FOR-LOOP.4: (for (i from A to B) body) range form` | this slice |
+| `.4` | `ISF-FOR-LOOP.4: (for (i from A to B) body) range form` | `eb693153` |
+| `.5` | `ISF-FOR-LOOP.5: (for (i from A to B step S) body) range step form` | this slice |
 
 ## Changelog
 
@@ -209,4 +219,13 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
   Verified by simulation: `(for (i from 2 to 5) (update total (+ total i)))` → `total == 9`
   (`i = 2,3,4`), terminates. A descending/empty range (`B <= A`), non-literal bounds, and a
   missing `to` fail closed. `t/1394` gains two range subtests (8 total); `13d`/`13k`
-  document the form. Nesting/embedding moves to `.5`.
+  document the form. Nesting/embedding moves to a later slice.
+- `2026-06-01`: `.5` shipped — the range step form `(for (i from A to B step S) body)`.
+  A trailing `step S` (literal `S >= 1`, default `1`) strides the index: `ceil((B-A)/S)`
+  iterations counting `i = A, A+S, A+2S, …` (each `< B`), desugaring with `(set i (+ i S))`
+  as the tail increment and the width sized to hold the post-final-increment value.
+  Verified by simulation: `(for (i from 0 to 10 step 2) (update total (+ total i)))` →
+  `total == 20` (`i = 0,2,4,6,8`), terminates; `(from 1 to 10 step 3)` → 3 iterations
+  (`i = 1,4,7`). A zero/non-literal step and a non-`step` trailer fail closed. `t/1394`
+  gains two step subtests (10 total); `13d`/`13k` document it. Nesting/embedding moves
+  to `.6`.

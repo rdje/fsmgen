@@ -188,6 +188,41 @@ subtest 'the range form fails closed on B <= A, an empty range, non-literal boun
     like($desc, qr/requires B > A/, 'a descending range names the B > A requirement');
 };
 
+subtest 'range step form (for (i from A to B step S) …) strides by S' => sub {
+    # ISF-FOR-LOOP.5: (for (i from A to B step S) body) counts i = A, A+S, A+2S, … (< B)
+    # — ceil((B-A)/S) iterations with a +S tail increment. Common for strided access.
+    my $actor = parse_source(<<'ISF', 'for-step');
+(actor fs
+  (interface (input start) (output done) (output total (width 8)))
+  (transaction main
+    (on start)
+    (for (i from 0 to 10 step 2)
+      (update total (+ total i)))
+    (complete done)))
+ISF
+    my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+    ok($lowered, 'a (for (i from 0 to 10 step 2) …) strided loop lowers') or diag($@);
+    my $fsm = $lowered->{files}{'fs.fsm'};
+    like($fsm, qr/\(main_repeat_init_\d+\n\s+\(<= \(main_cnt 5\)\)/s, 'ceil((10-0)/2) == 5 iterations');
+    like($fsm, qr/\(<- \(i 0\)\)/, 'the index starts at A (0)');
+    like($fsm, qr/\(<- \(i \(\+ i 2\)\)\)/, 'the index advances by the step S (2)');
+};
+
+subtest 'the range step form fails closed on a zero/non-literal step or trailing junk' => sub {
+    my %bad = (
+        'a zero step'          => '(i from 0 to 10 step 0)',
+        'a non-literal step'   => '(i from 0 to 10 step s)',
+        'a non-step trailer'   => '(i from 0 to 10 by 2)',
+    );
+    for my $label (sort keys %bad) {
+        my $err = lower_error(
+            "(actor t (interface (input start) (input s (width 4)) (output done) (output r (width 8))) "
+            . "(transaction main (on start) (for $bad{$label} (update r (+ r 1))) (complete done)))",
+            "bad-$label");
+        like($err, qr/\(for/, "$label is rejected with a (for …) diagnostic");
+    }
+};
+
 subtest 'nested or embedded (for …) fails closed (top-level only in .2)' => sub {
     my $nested = lower_error(
         "(actor t (interface (input start) (output done) (output result (width 8))) "

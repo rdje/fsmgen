@@ -570,9 +570,12 @@ sub _for_rewrite_clause($self, $clause, $ctx) {
 #                             accepts (actor/transaction parameter, package/actor constant,
 #                             or known-width runtime scalar). The caller owns W being wide
 #                             enough to hold COUNT-1.
-#   (VAR from A to B)      -- range form: the index counts A..B-1 (B-A iterations), starting
-#                             at A. A and B are literal non-negative integers with B > A; the
-#                             width auto-sizes to hold B.
+#   (VAR from A to B [step S])
+#                          -- range form: the index counts A, A+S, A+2S, … (each value < B),
+#                             starting at A; S defaults to 1. A, B (and S, if given) are
+#                             literal non-negative integers with B > A and S >= 1. There are
+#                             ceil((B-A)/S) iterations; the width auto-sizes to hold the
+#                             post-final-increment value A + ceil((B-A)/S)*S.
 sub _desugar_for($self, $clause, $ctx) {
     my (undef, $spec, @body) = @$clause;
     confess "Error: (for ...) in $ctx requires a '(VAR COUNT)', '(VAR (width W) COUNT)', or '(VAR from A to B)' spec\n"
@@ -582,7 +585,7 @@ sub _desugar_for($self, $clause, $ctx) {
         unless defined($var) && !ref($var) && length($var);
 
     my $second = $spec->[1];
-    my ($width, $count, $default) = (undef, undef, 0);
+    my ($width, $count, $default, $increment) = (undef, undef, 0, 1);
     if (ref($second) eq 'ARRAY' && @$second >= 2 && defined($second->[0]) && !ref($second->[0]) && $second->[0] eq 'width') {
         # explicit-width form: (VAR (width W) COUNT)
         $width = $second->[1];
@@ -597,8 +600,8 @@ sub _desugar_for($self, $clause, $ctx) {
         confess "Error: (for ($var (width $width) $count) ...) in $ctx count must be >= 1\n"
             if !ref($count) && $count =~ /\A[0-9]+\z/ && $count + 0 < 1;
     } elsif (defined($second) && !ref($second) && $second eq 'from') {
-        # range form: (VAR from A to B) -> index counts A..B-1
-        confess "Error: (for ($var from A to B) ...) in $ctx requires '(for ($var from A to B) ...)' (A, 'to', B after 'from')\n"
+        # range form: (VAR from A to B [step S]) -> index counts A, A+S, … (< B)
+        confess "Error: (for ($var from A to B) ...) in $ctx requires '(for ($var from A to B [step S]) ...)' (A, 'to', B after 'from')\n"
             unless @$spec >= 5 && defined($spec->[3]) && !ref($spec->[3]) && $spec->[3] eq 'to';
         my ($a, $b) = ($spec->[2], $spec->[4]);
         confess "Error: (for ($var from A to B) ...) in $ctx requires literal non-negative integer bounds A and B\n"
@@ -606,10 +609,23 @@ sub _desugar_for($self, $clause, $ctx) {
                 && defined($b) && !ref($b) && $b =~ /\A[0-9]+\z/;
         confess "Error: (for ($var from $a to $b) ...) in $ctx requires B > A (an upward, non-empty range)\n"
             unless $b + 0 > $a + 0;
-        $count   = ($b + 0) - ($a + 0);             # B-A iterations
-        $default = $a + 0;                          # the index starts at A
-        # W = bits to hold B, so the index reaches B after the final increment without wrapping.
-        $width   = length(sprintf '%b', $b + 0);
+        my $step = 1;
+        if (@$spec >= 6) {
+            confess "Error: (for ($var from $a to $b ...) ...) in $ctx trailing range tokens require 'step S'\n"
+                unless @$spec >= 7 && defined($spec->[5]) && !ref($spec->[5]) && $spec->[5] eq 'step';
+            $step = $spec->[6];
+            confess "Error: (for ($var from $a to $b step ...) ...) in $ctx requires a positive integer literal step\n"
+                unless defined($step) && !ref($step) && $step =~ /\A[0-9]+\z/ && $step + 0 >= 1;
+            $step += 0;
+        }
+        $default = $a + 0;                                       # the index starts at A
+        # ceil((B-A)/step) strided iterations: A, A+step, … (last value < B).
+        $count   = int((($b + 0) - ($a + 0) + $step - 1) / $step);
+        # W = bits to hold A + count*step (the value after the final increment), so the
+        # strided index never wraps.
+        $width   = length(sprintf '%b', $default + $count * $step);
+        # A unit step is an ordinary +1 increment; a wider step increments by S.
+        $increment = $step;
     } else {
         # implicit-width form: (VAR COUNT), COUNT must be a literal so the width auto-sizes.
         $count = $second;
@@ -627,7 +643,7 @@ sub _desugar_for($self, $clause, $ctx) {
     # For-expand the body too, so a nested/embedded `(for ...)` inside it fails closed.
     my $inner = $self->_expand_fors_in_list(\@body, "$ctx -> (for $var ...)", 0);
     my $local  = [ 'local', $var, [ 'width', $width ], [ 'default', $default ] ];
-    my $repeat = [ 'repeat', $count, @$inner, [ 'set', $var, [ '+', $var, 1 ] ] ];
+    my $repeat = [ 'repeat', $count, @$inner, [ 'set', $var, [ '+', $var, $increment ] ] ];
     return [ $local, $repeat ];
 }
 

@@ -252,6 +252,18 @@ with the upper bound `B` exclusive. `A` and `B` are literal non-negative integer
 `B > A` (an upward, non-empty range); the index width auto-sizes to hold `B`. It desugars
 to `(local i (width W) (default A))` plus `(repeat (B-A) body... (set i (+ i 1)))`.
 
+A trailing `step S` strides the index by `S` (default `1`) — useful for strided access:
+
+```lisp
+(for (i from 0 to 10 step 2)    ;; i = 0, 2, 4, 6, 8 (each value < 10)
+  (update total (+ total i)))
+```
+
+`(for (i from A to B step S) ...)` runs `ceil((B-A)/S)` iterations counting
+`i = A, A+S, A+2S, …` (each value `< B`), with `S` a positive integer literal; it desugars
+with `(set i (+ i S))` as the tail increment and sizes the width to hold the
+post-final-increment value.
+
 The `(for ...)` must be a **top-level transaction clause** in this release — the index
 declaration uses `(local ...)`, which is a transaction-context-only clause. A nested or
 embedded `(for ...)` (one inside another `(for ...)`, or inside a
