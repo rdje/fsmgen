@@ -5752,6 +5752,7 @@ Focused tests:
 - [t/1395-isf-nested-counted-repeat.t](../t/1395-isf-nested-counted-repeat.t)
 - [t/1396-isf-cond.t](../t/1396-isf-cond.t)
 - [t/1397-isf-register-reset-value-surface.t](../t/1397-isf-register-reset-value-surface.t)
+- [t/1398-isf-storage-reset-value.t](../t/1398-isf-storage-reset-value.t)
 
 ## 12. Explicitly Deferred
 

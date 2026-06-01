@@ -1415,6 +1415,9 @@ sub _finalize_actor_storage_depths($self, $actor) {
                 {
                     name  => $entry->{name},
                     width => $entry->{width},
+                    # ISF-REGISTER-RESET-VALUES.4: preserve the var's hardware reset value
+                    # across the signal rebuild.
+                    (defined $entry->{reset_value} ? (reset_value => $entry->{reset_value}) : ()),
                 },
             ];
             next;
@@ -7586,6 +7589,14 @@ sub _parse_storage($self, $clause, $actor_name) {
                 );
                 next;
             }
+            # ISF-REGISTER-RESET-VALUES.4: `(reset V)` sets a storage var's hardware reset
+            # value (the value the register powers up at) — for register-map / CSR fields.
+            if ($option_name eq 'reset') {
+                confess "Error: actor '$actor_name' storage '$name' reset requires '(reset V)' with a non-negative integer literal\n"
+                    unless @$option == 2 && defined($option->[1]) && !ref($option->[1]) && $option->[1] =~ /\A[0-9]+\z/;
+                $parsed_options{reset_value} = $option->[1] + 0;
+                next;
+            }
 
             confess "Error: actor '$actor_name' storage '$name' has unsupported option '$option_name'\n";
         }
@@ -7597,11 +7608,20 @@ sub _parse_storage($self, $clause, $actor_name) {
         confess "Error: actor '$actor_name' storage '$name' requires '(width N)' or '(type NAME)'\n"
             unless defined($width) || defined($type);
 
+        my $reset = $parsed_options{reset_value};
+        if (defined $reset) {
+            confess "Error: actor '$actor_name' storage bank '$name' does not accept '(reset V)' (per-element bank reset values are not supported)\n"
+                if $kind eq 'bank';
+            # Width-fit check when the width is a literal (a param/constant width is checked
+            # downstream once resolved).
+            confess "Error: actor '$actor_name' storage var '$name' reset value $reset does not fit in $width bit(s)\n"
+                if !ref($width) && $width =~ /\A[1-9][0-9]*\z/ && $reset >= (2 ** ($width + 0));
+        }
         my @signals;
         if ($kind eq 'var') {
             confess "Error: actor '$actor_name' storage $kind '$name' does not accept '(depth N)'\n"
                 if defined($parsed_options{depth_value});
-            @signals = ({ name => $name, width => $width });
+            @signals = ({ name => $name, width => $width, (defined $reset ? (reset_value => $reset) : ()) });
         } else {
             my $depth = $parsed_options{depth_value};
             confess "Error: actor '$actor_name' storage bank '$name' requires '(depth N)'\n"
@@ -7616,6 +7636,7 @@ sub _parse_storage($self, $clause, $actor_name) {
             width   => $width,
             signals => \@signals,
             ($kind eq 'bank' ? (depth => $parsed_options{depth_value}) : ()),
+            (defined $reset ? (reset_value => $reset) : ()),
         };
         $entries[-1]{type} = $type if defined $type;
         $entries[-1]{domain} = $parsed_options{domain_value}

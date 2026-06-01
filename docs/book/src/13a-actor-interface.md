@@ -413,6 +413,27 @@ Pointer-selected access is available through explicit action forms such as
 `(store data wr_ptr data_in)` and `(load data rd_ptr as data_out)`, which
 lower through guarded scalarized entries.
 
+### Storage reset values — register maps / CSRs
+
+A scalar storage `var` may carry a **hardware reset value** with an optional `(reset V)`,
+so a control/status register powers up at a specified default instead of all-0s — the
+common need for a **register map** (CSR block):
+
+```lisp
+(storage
+  (var ctrl   (width 8) (reset 1))     ;; control register powers up enabled
+  (var mode   (width 8) (reset 16))    ;; mode field's reset default
+  (var status (width 8)))              ;; status powers up at 0 (no (reset …))
+```
+
+`(reset V)` (a non-negative integer literal that fits the width) emits the `+size` carrier
+`(NAME width (reset V))`, and the generated HDL reset block assigns the register that value
+(`ctrl <= 1` instead of `ctrl <= 0`). When no `(reset V)` is given the register resets to
+all-0s, exactly as before (fully backward-compatible). `(reset V)` is a hardware power-up
+value — distinct from the transaction-local init-on-entry `(default V)`/`(init V)` on a
+`(local …)`. A per-element bank `(reset V)`, and an over-width or non-integer reset value,
+fail closed.
+
 `(storage ...)` is a singleton actor clause. Storage names and scalarized
 element names must not collide with interface ports, actor clock/reset signals,
 or generated scheduler signals such as `can_accept`. Missing scalar storage

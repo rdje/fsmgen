@@ -129,6 +129,9 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles, $bank_accesses, $reset_values) =
         $self->_build_transaction($tx, $actor, 0);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
+    # ISF-REGISTER-RESET-VALUES: storage var reset values (actor-level) + this transaction's
+    # local reset values (the 10th _build_transaction return).
+    my %module_reset_values = (_declared_storage_reset_values($actor), %{$reset_values || {}});
     my %module_signal_widths = _declared_storage_signal_widths($actor);
     my %module_storage_roles = _declared_storage_roles($actor);
     my %module_signal_type_refs = (
@@ -165,7 +168,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         signal_widths => \%module_signal_widths,
         signal_type_refs => \%module_signal_type_refs,
         storage_roles => \%module_storage_roles,
-        reset_values => $reset_values,
+        reset_values => \%module_reset_values,
         children   => {},
         temporal_contracts => $contracts,
         bank_accesses => $bank_accesses,
@@ -1095,7 +1098,9 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     my $transaction_port_bindings = _transaction_port_binding_metadata($actor);
     my %signal_widths = _declared_storage_signal_widths($actor);
     my %storage_roles = _declared_storage_roles($actor);
-    my %reset_values;   # ISF-REGISTER-RESET-VALUES: signal -> hardware reset value (opt-in)
+    # ISF-REGISTER-RESET-VALUES: signal -> hardware reset value (opt-in). Seed with the
+    # actor-level storage var reset values; per-transaction local reset values merge in below.
+    my %reset_values = _declared_storage_reset_values($actor);
     my %signal_type_refs = (
         _actor_interface_signal_type_refs($actor),
         _declared_storage_signal_type_refs($actor),
@@ -3949,6 +3954,23 @@ sub _declared_storage_signal_widths {
     }
 
     return %widths;
+}
+
+# ISF-REGISTER-RESET-VALUES.4: actor-owned storage var hardware reset values (signal ->
+# reset value) — for register-map / CSR fields declared `(storage (var NAME (width N)
+# (reset V)))`. Unspecified storage resets to all-0s, unchanged.
+sub _declared_storage_reset_values {
+    my ($actor) = @_;
+    my %resets;
+
+    for my $entry (@{$actor->{storage} || []}) {
+        for my $signal (@{$entry->{signals} || []}) {
+            $resets{$signal->{name}} = $signal->{reset_value}
+                if defined $signal->{reset_value};
+        }
+    }
+
+    return %resets;
 }
 
 sub _actor_interface_signal_type_refs {
