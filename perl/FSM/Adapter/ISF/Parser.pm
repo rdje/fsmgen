@@ -341,6 +341,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
     # read-modify-write `(set …)`. Same staging / width needs as the bit ops.
     $self->_expand_set_fields($result);
 
+    # ISF-ROTATE: rewrite `(rotate-left/right REG [by N])` to a masked shift-OR `(set …)`.
+    # Same staging / width needs as the bit ops.
+    $self->_expand_rotate($result);
+
     # ISF-MINMAX: rewrite `(max/min DST A B)` onto `(select …)`. Runs BEFORE the select pass
     # so the emitted `(select …)` is expanded below.
     $self->_expand_minmax($result);
@@ -823,6 +827,86 @@ sub _desugar_set_field($self, $clause, $ctx, $widths) {
     my $clear_lit = "${width}'d${clear_mask}";
     my $value_lit = "${width}'d${shifted}";
     return [ 'set', $name, [ '|', [ '&', $name, $clear_lit ], $value_lit ] ];
+}
+
+# --- ISF-ROTATE: `(rotate-left/right REG [by N])` bit rotation ---
+#
+# Parser desugar into a single masked shift-OR `(set …)` (shift amounts are plain literals, so
+# the form stays verilator-clean):
+#   (rotate-left  REG by N) -> (set REG (| (<< REG N) (>> REG (W-N))))
+#   (rotate-right REG by N) -> (set REG (| (>> REG N) (<< REG (W-N))))
+# N defaults to 1, a literal 0 < N < W; W is the register's declared literal width.
+my %ROTATE_KEYWORDS = map { $_ => 1 } qw(rotate-left rotate-right);
+
+sub _expand_rotate($self, $result) {
+    for my $tx (@{$result->{transactions} || []}) {
+        my $widths = $self->_bit_op_width_map($result, $tx);
+        $tx->{clauses} = $self->_expand_rotate_in_list(
+            $tx->{clauses}, "transaction '$tx->{name}'", $widths);
+    }
+}
+
+sub _expand_rotate_in_list($self, $clauses, $ctx, $widths) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0])
+            && $ROTATE_KEYWORDS{$clause->[0]}) {
+            push @out, $self->_desugar_rotate($clause, $ctx, $widths);
+        } else {
+            push @out, $self->_rotate_rewrite_clause($clause, $ctx, $widths);
+        }
+    }
+    return \@out;
+}
+
+sub _rotate_rewrite_clause($self, $clause, $ctx, $widths) {
+    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $body = $self->_expand_rotate_in_list([@{$clause}[2 .. $#$clause]], $ctx, $widths);
+        return [ $kw, $clause->[1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_rotate_in_list([@{$br}[1 .. $#$br]], $ctx, $widths);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $clause->[1], @branches ];
+    }
+    return $clause;
+}
+
+sub _desugar_rotate($self, $clause, $ctx, $widths) {
+    my ($op, $name, @rest) = @$clause;
+    confess "Error: ($op ...) in $ctx requires a register name\n"
+        unless defined($name) && !ref($name) && length($name);
+    @rest = grep { defined } @rest;
+    my $amount = 1;
+    if (@rest) {
+        confess "Error: ($op $name ...) in $ctx trailing tokens require 'by N'\n"
+            unless @rest == 2 && defined($rest[0]) && !ref($rest[0]) && $rest[0] eq 'by';
+        $amount = $rest[1];
+        confess "Error: ($op $name by ...) in $ctx requires a literal rotate amount\n"
+            unless defined($amount) && !ref($amount) && $amount =~ /^\d+$/;
+        $amount += 0;
+    }
+
+    my $width = exists $widths->{$name} ? $widths->{$name} : undef;
+    confess "Error: ($op $name) in $ctx requires a statically known register width "
+          . "(declare '$name' with a literal (width N)); its counter-rotate amount cannot be formed otherwise\n"
+        unless defined $width;
+    confess "Error: ($op $name by $amount) in $ctx requires 0 < N < $width for the ${width}-bit register '$name'\n"
+        unless $amount > 0 && $amount < $width;
+
+    my $counter = $width - $amount;
+    # rotate-left: (| (<< REG N) (>> REG W-N)); rotate-right swaps the shift directions.
+    my ($fwd, $back) = ($op eq 'rotate-left') ? ('<<', '>>') : ('>>', '<<');
+    return [ 'set', $name, [ '|', [ $fwd, $name, $amount ], [ $back, $name, $counter ] ] ];
 }
 
 # --- ISF-MINMAX: `(max DST A B)` / `(min DST A B)` larger / smaller of two values ---

@@ -482,6 +482,51 @@ resolves to a positive integer, and `CONST` names a declared actor constant
 that resolves to a positive integer. Unrelated or cross-transaction
 transaction parameters remain fail-closed for data-operation width evidence.
 
+## `(rotate-left REG [by N])` / `(rotate-right REG [by N])` — Bit Rotation
+
+```lisp
+(rotate-left  lfsr)        ;; rotate lfsr left  by 1 (MSB wraps to LSB)
+(rotate-right tag by 3)    ;; rotate tag  right by 3
+```
+
+The wrap-around sibling of `shift_left` / `shift_right` — the bits that fall off
+one end reappear at the other. The bread-and-butter of LFSRs, CRC, barrel
+shifters, and circular tags. `N` is the literal rotate amount (default `1`, with
+`0 < N < width`).
+
+A pure ISF parser desugar into a single masked shift-OR `(set …)`:
+
+| Form | Desugars to |
+| --- | --- |
+| `(rotate-left REG by N)` | `(set REG (\| (<< REG N) (>> REG (W-N))))` |
+| `(rotate-right REG by N)` | `(set REG (\| (>> REG N) (<< REG (W-N))))` |
+
+The shift *amounts* (`N`, `W-N`) are plain literals — they do not widen the
+result the way a value-operand literal would — so the form is verilator-lint +
+yosys clean. The counter-shift amount `W-N` needs the register's **width**, which
+must be a statically known literal (resolved from a `(local …)`, an interface
+port, or a `(storage (var …))`).
+
+```lisp
+(actor spinner
+  (interface (input start) (output done) (output pattern (width 8)))
+  (transaction main
+    (on start)
+    (local p (width 8) (reset 129))   ;; 0x81 = 1000_0001
+    (rotate-left p)                    ;; -> 0000_0011 = 0x03 (the MSB wrapped to bit 0)
+    (update pattern p)
+    (complete done)))
+```
+
+After `start`, `pattern == 3`.
+
+A malformed form fails closed before `.fsm` emission: a missing register name; a
+malformed `by` (not `by` followed by a literal); an amount with `N <= 0` or
+`N >=` the width; or a non-literal / symbolic width.
+
+**Lowering**: `(<- (REG (| (<< REG N) (>> REG (W-N)))))` (and the mirror for
+rotate-right) — the sequential Q-named assignment `(set …)` produces.
+
 ## `(assemble field1 field2 ... as var [(widths N...)])` — Concatenation
 
 ```lisp
