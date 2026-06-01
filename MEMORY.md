@@ -38729,3 +38729,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   _substitute_proc_body. Fail-closed: redefine, interface-port-name collision.
   --check-json + verilator/yosys PASS. t/1391 (7 subtests). Frontier .5 (docs).
 - The "variables" trio: (local) register + (default/init V) value + (let) intermediate.
+
+## 2026-06-01: ISF-LOCAL-VARIABLES CLOSED (.5) — dedicated 13m chapter; variables surface complete
+- `.5`: new docs/book/src/13m-local-variables.md chapter (local register, default/init,
+  let, (local)-vs-(let) table, init-vs-hardware-reset note, worked running_max example
+  = local+default+let+proc+while+when). Wired into SUMMARY + live-doc contract (after
+  13l → t/1303 + t/297 consistent); 13b → pointer. TREE CLOSED (Active→Completed).
+- ISF "variables and functions" now BOTH complete: ISF-LOCAL-VARIABLES (variables:
+  (local)+(default/init)+(let)) + ISF-PROCEDURES (functions: (proc)/(call) inline or
+  handshake, in/out params). Both ISF/IAL1, both --check-json + verilator/yosys verified.

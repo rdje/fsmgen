@@ -27,5 +27,6 @@
   - [Types, Enums, and Aggregates](13j-type-enum-aggregate.md)
   - [Feature Support Matrix](13k-isf-feature-support-matrix.md)
   - [Reusable Procedures](13l-procedures.md)
+  - [Local Variables](13m-local-variables.md)
 - [Feature Backlog](14-feature-backlog.md)
 - [Reference Map](90-reference-map.md)

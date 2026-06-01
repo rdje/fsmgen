@@ -16601,3 +16601,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - `.4` (ISF-LOCAL-VARIABLES) shipped (2026-06-01): `(let NAME EXPR)` named intermediates
   — pure substitution, no register; parse-time pass; redefine/port-collision fail
   closed; --check-json + verilator/yosys PASS. t/1391 (7 subtests). Frontier .5 (docs).
+- `.5` (ISF-LOCAL-VARIABLES) shipped + TREE CLOSED (2026-06-01): dedicated 13m-local-
+  variables chapter (local/default/init/let + worked running_max example); wired into
+  SUMMARY + live-doc contract; 13b → pointer. ISF variables surface complete. With
+  ISF-PROCEDURES (functions) closed too, the variables+functions pair is delivered.

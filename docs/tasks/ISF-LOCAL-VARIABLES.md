@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LOCAL-VARIABLES`
-- Status: `active`
+- Status: `done` (closed `2026-06-01`)
 - Roadmap lane: `R14` (ISF — high-level language richness)
 - Created: `2026-06-01`
 - Last updated: `2026-06-01`
@@ -92,7 +92,7 @@ Reads like:
 ## Task Tree
 
 - ID: `ISF-LOCAL-VARIABLES`
-  Status: `active`
+  Status: `done`
   Goal: `(local NAME (width N) [(init V)]) declared internal variables + (let NAME EXPR) named intermediates.`
   Children: `.1` (select), `.2` (local decl), `.3` (init), `.4` (let), `.5` (docs)
 
@@ -115,13 +115,20 @@ Reads like:
   Goal: `(local NAME (width N) (default V)) initial values.`
   Acceptance: `_parse_local_decl parses an optional (default V) / (init V) (a non-negative integer literal that fits in the width; out-of-range or non-integer fails closed); the local handler in _build_transaction materializes the init as a set-to-V state on transaction entry (a transaction-local is re-initialized each run, like a software local). --check-json + verilator/yosys PASS. 13b gains an init example; 13k row updated; t/1391 gains init + init-fail-closed subtests.`
   Verification: `Spike: (local acc (width 8) (default 0)) emits (acc 0) set on entry; init-too-wide / non-int fail closed; --check-json SUCCESS; --verify-hdl PASS. prove -Iperl t/1391 (5 subtests) t/1376 t/1305 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
-  Commit: `ship commit (.3)`
+  Commit: `28fbd7ed`
 
 - ID: `ISF-LOCAL-VARIABLES.4`
   Status: `done`
   Goal: `(let NAME EXPR) named intermediate values (pure substitution).`
   Acceptance: `A parse-time pass (_expand_let_bindings in FSM::Adapter::ISF::Parser, run BEFORE procedure expansion so let-bound names reach (call) actuals already substituted) substitutes NAME -> EXPR in the rest of the enclosing body; nested bodies (when/switch/while/until/repeat) inherit the scope and may shadow it; the (let) clause emits nothing (no register, no cycle). Reuses the proc substitution helper (_substitute_proc_body). Fails closed on redefining an already-bound name or a name colliding with an interface port. --check-json + verilator/yosys PASS. 13b gains a (let) section; 13k row; t/1391 gains a (let) positive subtest + redefine/port-collision fail-closed subtests.`
   Verification: `Spike: (let sum (+ av bv)) substitutes into (update result (+ sum 1)) -> (+ (+ av bv) 1) with NO sum register; redefine + port-collision fail closed; --check-json SUCCESS; --verify-hdl PASS. prove -Iperl t/1391 (7 subtests) t/1376 t/1305 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
+  Commit: `28fbd7ed`
+
+- ID: `ISF-LOCAL-VARIABLES.5`
+  Status: `done`
+  Goal: `Thorough, example-rich mdBook docs — a dedicated Local Variables chapter.`
+  Acceptance: `New docs/book/src/13m-local-variables.md documents (local) registers, (default V)/(init V) initial values, (let) intermediates, a (local)-vs-(let) comparison table, the init-on-entry-vs-hardware-reset distinction, the fail-closed boundaries, and a worked running_max example combining local+default+let+proc+while+when. Wired into SUMMARY.md + the live-document-path contract (after 13l) so t/1303 + the capability manifest stay consistent; 13b reduced to a pointer; every example lowers (t/1376).`
+  Verification: `running_max (local+default+let+proc+while+when) lowers; prove -Iperl t/1303 t/1376 t/1305 t/1250 t/297 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c (contract); mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -132,7 +139,7 @@ Reads like:
 | 2 | `.2` | `done` | `(local NAME (width N))` declaration — registers the explicit width in the transaction signal map (emitted in `+size`); body reads/writes it; collision/missing/zero-width fail closed. `--check-json` + verilator/yosys PASS. `t/1391`. |
 | 3 | `.3` | `done` | `(default V)` initial values (synonym `(init V)`) — a transaction-local is re-initialized each run (init-on-entry set); out-of-range/non-integer init fails closed. `--check-json`+verilator/yosys PASS. `t/1391`. |
 | 4 | `.4` | `done` | `(let NAME EXPR)` named intermediates — pure substitution (NAME→EXPR in the rest of the scoped body; no register), redefine/port-collision fail closed. `--check-json`+verilator/yosys PASS. `t/1391`. |
-| 5 | `.5` | `pending` | thorough docs chapter/section. |
+| 5 | `.5` | `done` | Dedicated **Local Variables** chapter (`13m-local-variables.md`) — local register, `(default/init V)`, `(let)`, an inline-vs-let comparison, and a worked local+proc+let+loop example; wired into SUMMARY + the live-doc-path contract; 13b reduced to a pointer. **Tree complete.** |
 
 ## Decisions
 
@@ -166,7 +173,9 @@ Reads like:
 | --- | --- | --- |
 | `.1` | `ISF-LOCAL-VARIABLES.1: select declared local variables` | `5a552ef5` |
 | `.2` | `ISF-LOCAL-VARIABLES.2: (local NAME (width N)) declared internal register` | `5a4388fb` |
-| `.3` | `ISF-LOCAL-VARIABLES.3: (local ... (init V)) initial values` | `ship commit (this slice)` |
+| `.3` | `ISF-LOCAL-VARIABLES.3: (local ... (default V)/(init V)) initial values` | `28fbd7ed` |
+| `.4` | `ISF-LOCAL-VARIABLES.4: (let NAME EXPR) named intermediates` | `28fbd7ed` |
+| `.5` | `ISF-LOCAL-VARIABLES.5: dedicated Local Variables mdBook chapter (13m)` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -215,3 +224,17 @@ Reads like:
   SUCCEEDS and `--verify-hdl` passes (verilator_lint + yosys_synthesis). Book: `13b`
   gains a `(let ...)` section; `13k` row updated; `t/1391` gains a `(let)` positive
   subtest plus redefine and port-collision fail-closed subtests (7 subtests).
+- `2026-06-01`: `.5` shipped — a dedicated **Local Variables** mdBook chapter
+  (`docs/book/src/13m-local-variables.md`) consolidating the variables surface
+  end-to-end: `(local)` declared registers, `(default V)`/`(init V)` initial values
+  (with the init-on-entry vs hardware-reset distinction), `(let)` named intermediates,
+  a `(local)`-vs-`(let)` comparison, the fail-closed boundaries, and a worked
+  `running_max` example combining a local + default + let + a reusable procedure + a
+  while loop + a when. Wired into `SUMMARY.md` and the live-document-path contract
+  (`FSM::Support::ISFPublicInterfaceContract`, after `13l`) so `t/1303` and the
+  capability manifest (`t/297`) stay consistent; the `13b` local-variables section is
+  reduced to a pointer. Every example lowers (`t/1376`). **Tree complete** —
+  `ISF-LOCAL-VARIABLES` is closed: `(local NAME (width N) [(default V)/(init V)])`
+  declared internal registers and `(let NAME EXPR)` named intermediates, delivering the
+  *variables* half of the high-level-language pair alongside `ISF-PROCEDURES` (the
+  *functions* half).

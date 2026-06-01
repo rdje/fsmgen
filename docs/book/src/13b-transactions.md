@@ -1931,68 +1931,12 @@ deferred lane is per-activation latency counter specialization.
 
 **Implicit signals**: `{tx}_cc`, `{tx}_inc`, `{tx}_lerr` + non-state DT `(-cc_inc)`.
 
-## `(local NAME (width N))` — Declared Internal Variables
+## Local Variables
 
-`(local NAME (width N))` declares an internal register `NAME` of an explicit width,
-private to the transaction and not exposed on the interface. The body reads and writes
-it like any signal. This **pins the width** of intermediate state: a plain
-`(set tmp expr)` to an undeclared name already works, but its width is *inferred*; a
-`(local ...)` declaration emits `NAME` in the module's `+size` block at the width you
-choose — useful for accumulators and temporaries that need to be wider than the values
-flowing through them.
-
-```lisp
-(actor accumulator
-  (interface (input start) (input din (width 8)) (output done) (output result (width 8)))
-  (transaction main
-    (on start)
-    (local acc (width 8))     ;; an explicit 8-bit internal register
-    (sample din as s)
-    (set acc (+ acc s))        ;; read + write the local like any signal
-    (update result acc)
-    (complete done)))
-```
-
-An optional `(default V)` gives the local an initial value (the keyword `(init V)` is
-an accepted synonym). A transaction-local is re-initialized **each time the transaction
-runs** (like a software local variable), so the default materializes a set-to-`V` on
-entry; `V` is a non-negative integer literal that fits in the declared width:
-
-```lisp
-(transaction main
-  (on start)
-  (local acc (width 8) (default 0))   ;; starts at 0 every run
-  (sample din as s)
-  (set acc (+ acc s))
-  (update result acc)
-  (complete done))
-```
-
-A `(local ...)` fails closed if its name collides with an interface port, if the
-`(width N)` is missing or not a positive integer, or if a `(default V)` / `(init V)` is
-not a non-negative integer that fits in the width. (Note: this `(default …)` is an
-*init-on-entry* value, distinct from a register's *hardware reset* value.)
-
-### `(let NAME EXPR)` — named intermediates
-
-Where `(local …)` is a register you read and write, `(let NAME EXPR)` simply **names an
-expression**: `NAME` is substituted by `EXPR` in the rest of the body. It is a pure
-desugar — no register, no extra cycle — useful for naming a sub-expression used in
-several places:
-
-```lisp
-(transaction main
-  (on start)
-  (sample a as av)
-  (sample b as bv)
-  (let sum (+ av bv))          ;; name the sub-expression
-  (update result (+ sum 1))    ;; lowers as: (update result (+ (+ av bv) 1))
-  (complete done))
-```
-
-A `(let)` is scoped to the rest of its enclosing body (a `(let)` inside a `when`/loop
-body may shadow an outer one). It fails closed on redefining an already-bound name or
-on a name that collides with an interface port.
+A transaction can keep named local state with `(local NAME (width N) [(default V)])`
+(a declared internal register, optionally initialized each run) and name intermediate
+values with `(let NAME EXPR)` (pure substitution). These are documented in full, with
+examples, in their own chapter: [Local Variables](13m-local-variables.md).
 
 ## Reusable Procedures
 

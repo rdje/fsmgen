@@ -15013,3 +15013,10 @@ Exit criteria:
   interface-port collision fail closed. `--check-json` + verilator/yosys PASS. `t/1391`
   (7 subtests). Frontier `.5` (docs). The variables surface is now `(local)` +
   `(default/init V)` + `(let)`.
+- `R14`: `ISF-LOCAL-VARIABLES` CLOSED (2026-06-01, `.1`–`.5`). Declared local registers
+  `(local NAME (width N) [(default V)/(init V)])` + named intermediates `(let NAME
+  EXPR)`; dedicated `13m-local-variables.md` chapter wired into SUMMARY + the live-doc
+  contract. The *variables* half of the high-level pair, alongside `ISF-PROCEDURES`
+  (*functions*) — both complete, ISF/IAL1, HDL-verified. Theme #3 now has three closed
+  construct families: loop early-exit, reusable procedures, local variables. (Arbitrary
+  hardware register reset values remain tracked by `ISF-REGISTER-RESET-VALUES`.)
