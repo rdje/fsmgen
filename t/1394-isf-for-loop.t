@@ -145,6 +145,49 @@ subtest 'the explicit-width form fails closed on a bad width / literal-zero coun
     like($nolit, qr/explicit-width form/, 'a non-literal count without a width points at the explicit-width form');
 };
 
+subtest 'range form (for (i from A to B) …) counts A..B-1 starting at A' => sub {
+    # ISF-FOR-LOOP.4: (for (i from A to B) body) is the range loop — the index counts
+    # A, A+1, … B-1 (B-A iterations), starting at A. Desugars to a declared index defaulting
+    # to A plus a counted (repeat (B-A) …) with a tail increment.
+    my $actor = parse_source(<<'ISF', 'for-range');
+(actor fr
+  (interface (input start) (output done) (output total (width 8)))
+  (transaction main
+    (on start)
+    (for (i from 2 to 5)
+      (update total (+ total i)))
+    (complete done)))
+ISF
+    my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+    ok($lowered, 'a (for (i from 2 to 5) …) range loop lowers') or diag($@);
+    my $fsm = $lowered->{files}{'fr.fsm'};
+    like($fsm, qr/\(main_set_\d+\n\s+\(<- \(i 2\)\)/s, 'the index starts at the lower bound A (2)');
+    like($fsm, qr/\(main_repeat_init_\d+\n\s+\(<= \(main_cnt 3\)\)/s, 'the loop runs B-A == 3 iterations');
+    like($fsm, qr/\(i 3\)/, 'the index width holds B (5 -> 3 bits)');
+    like($fsm, qr/\(<- \(i \(\+ i 1\)\)\)/, 'the index advances each iteration');
+};
+
+subtest 'the range form fails closed on B <= A, an empty range, non-literal bounds, or a missing "to"' => sub {
+    my %bad = (
+        'a descending range (B < A)' => '(i from 5 to 2)',
+        'an empty range (B == A)'    => '(i from 3 to 3)',
+        'non-literal bounds'         => '(i from a to 5)',
+        'a missing "to"'             => '(i from 2 5)',
+    );
+    for my $label (sort keys %bad) {
+        my $err = lower_error(
+            "(actor t (interface (input start) (output done) (output r (width 8))) "
+            . "(transaction main (on start) (for $bad{$label} (update r (+ r 1))) (complete done)))",
+            "bad-$label");
+        like($err, qr/\(for/, "$label is rejected with a (for …) diagnostic");
+    }
+    my $desc = lower_error(
+        "(actor t (interface (input start) (output done) (output r (width 8))) "
+        . "(transaction main (on start) (for (i from 5 to 2) (update r (+ r 1))) (complete done)))",
+        'descending');
+    like($desc, qr/requires B > A/, 'a descending range names the B > A requirement');
+};
+
 subtest 'nested or embedded (for …) fails closed (top-level only in .2)' => sub {
     my $nested = lower_error(
         "(actor t (interface (input start) (output done) (output result (width 8))) "

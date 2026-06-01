@@ -563,23 +563,26 @@ sub _for_rewrite_clause($self, $clause, $ctx) {
 }
 
 # Spec forms:
-#   (VAR COUNT)            -- COUNT is a literal non-negative integer; the index width is
-#                             auto-sized to hold COUNT.
+#   (VAR COUNT)            -- COUNT is a literal non-negative integer; the index counts
+#                             0..COUNT-1 and its width auto-sizes to hold COUNT.
 #   (VAR (width W) COUNT)  -- explicit index width W (a positive integer literal); COUNT
 #                             may be a literal OR a non-literal the counted `(repeat ...)`
 #                             accepts (actor/transaction parameter, package/actor constant,
 #                             or known-width runtime scalar). The caller owns W being wide
-#                             enough to hold COUNT-1 (the index counts 0..COUNT-1).
+#                             enough to hold COUNT-1.
+#   (VAR from A to B)      -- range form: the index counts A..B-1 (B-A iterations), starting
+#                             at A. A and B are literal non-negative integers with B > A; the
+#                             width auto-sizes to hold B.
 sub _desugar_for($self, $clause, $ctx) {
     my (undef, $spec, @body) = @$clause;
-    confess "Error: (for ...) in $ctx requires a '(VAR COUNT)' or '(VAR (width W) COUNT)' spec\n"
+    confess "Error: (for ...) in $ctx requires a '(VAR COUNT)', '(VAR (width W) COUNT)', or '(VAR from A to B)' spec\n"
         unless ref($spec) eq 'ARRAY' && @$spec >= 2;
     my $var = $spec->[0];
     confess "Error: (for ...) in $ctx requires an index variable name\n"
         unless defined($var) && !ref($var) && length($var);
 
     my $second = $spec->[1];
-    my ($width, $count);
+    my ($width, $count, $default) = (undef, undef, 0);
     if (ref($second) eq 'ARRAY' && @$second >= 2 && defined($second->[0]) && !ref($second->[0]) && $second->[0] eq 'width') {
         # explicit-width form: (VAR (width W) COUNT)
         $width = $second->[1];
@@ -593,10 +596,24 @@ sub _desugar_for($self, $clause, $ctx) {
         # a runtime/parameter zero is a legitimate "run zero times".
         confess "Error: (for ($var (width $width) $count) ...) in $ctx count must be >= 1\n"
             if !ref($count) && $count =~ /\A[0-9]+\z/ && $count + 0 < 1;
+    } elsif (defined($second) && !ref($second) && $second eq 'from') {
+        # range form: (VAR from A to B) -> index counts A..B-1
+        confess "Error: (for ($var from A to B) ...) in $ctx requires '(for ($var from A to B) ...)' (A, 'to', B after 'from')\n"
+            unless @$spec >= 5 && defined($spec->[3]) && !ref($spec->[3]) && $spec->[3] eq 'to';
+        my ($a, $b) = ($spec->[2], $spec->[4]);
+        confess "Error: (for ($var from A to B) ...) in $ctx requires literal non-negative integer bounds A and B\n"
+            unless defined($a) && !ref($a) && $a =~ /\A[0-9]+\z/
+                && defined($b) && !ref($b) && $b =~ /\A[0-9]+\z/;
+        confess "Error: (for ($var from $a to $b) ...) in $ctx requires B > A (an upward, non-empty range)\n"
+            unless $b + 0 > $a + 0;
+        $count   = ($b + 0) - ($a + 0);             # B-A iterations
+        $default = $a + 0;                          # the index starts at A
+        # W = bits to hold B, so the index reaches B after the final increment without wrapping.
+        $width   = length(sprintf '%b', $b + 0);
     } else {
         # implicit-width form: (VAR COUNT), COUNT must be a literal so the width auto-sizes.
         $count = $second;
-        confess "Error: (for ($var ...) ...) in $ctx requires a literal non-negative integer count (use the explicit-width form '(for ($var (width W) COUNT) ...)' for a parameter, constant, or runtime count)\n"
+        confess "Error: (for ($var ...) ...) in $ctx requires a literal non-negative integer count (use '(for ($var (width W) COUNT) ...)' for a parameter/constant/runtime count, or '(for ($var from A to B) ...)' for a range)\n"
             unless defined($count) && !ref($count) && $count =~ /\A[0-9]+\z/;
         confess "Error: (for ($var $count) ...) in $ctx count must be >= 1\n"
             unless $count + 0 >= 1;
@@ -609,7 +626,7 @@ sub _desugar_for($self, $clause, $ctx) {
 
     # For-expand the body too, so a nested/embedded `(for ...)` inside it fails closed.
     my $inner = $self->_expand_fors_in_list(\@body, "$ctx -> (for $var ...)", 0);
-    my $local  = [ 'local', $var, [ 'width', $width ], [ 'default', 0 ] ];
+    my $local  = [ 'local', $var, [ 'width', $width ], [ 'default', $default ] ];
     my $repeat = [ 'repeat', $count, @$inner, [ 'set', $var, [ '+', $var, 1 ] ] ];
     return [ $local, $repeat ];
 }

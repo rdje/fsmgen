@@ -240,12 +240,24 @@ accepts (literal, actor/transaction parameter, package/actor constant, or known-
 runtime scalar). The plain `(for (i N) ...)` form requires a **literal** `N >= 1` (its
 width auto-sizes); use the explicit-width form for a non-literal count.
 
+To iterate over a **range** that does not start at zero, use the `from … to …` form:
+
+```lisp
+(for (i from 2 to 5)            ;; i = 2, 3, 4 (the upper bound is exclusive)
+  (update total (+ total i)))
+```
+
+`(for (i from A to B) ...)` counts `i = A, A+1, … B-1` — `B-A` iterations starting at `A`,
+with the upper bound `B` exclusive. `A` and `B` are literal non-negative integers with
+`B > A` (an upward, non-empty range); the index width auto-sizes to hold `B`. It desugars
+to `(local i (width W) (default A))` plus `(repeat (B-A) body... (set i (+ i 1)))`.
+
 The `(for ...)` must be a **top-level transaction clause** in this release — the index
 declaration uses `(local ...)`, which is a transaction-context-only clause. A nested or
 embedded `(for ...)` (one inside another `(for ...)`, or inside a
 `when`/`switch`/`while`/`until`/`repeat` body), a zero width, a literal-zero count, an
-implicit-width non-literal count, and an empty body all **fail closed** with a clear
-diagnostic:
+implicit-width non-literal count, a non-upward range (`B <= A`), non-literal range bounds,
+and an empty body all **fail closed** with a clear diagnostic:
 
 ```lisp
 ;; rejected: (for ...) is currently supported only as a top-level transaction clause
