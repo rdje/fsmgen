@@ -49,7 +49,7 @@ first.
 | `ISF-LOOP-EARLY-EXIT` | `active` | `R14` | `ISF-LOOP-EARLY-EXIT.4` (`.1`–`.3` done) | [docs/tasks/ISF-LOOP-EARLY-EXIT.md](docs/tasks/ISF-LOOP-EARLY-EXIT.md) |
 | `ISF-REGISTER-RESET-VALUES` | `active` | `R14` | `ISF-REGISTER-RESET-VALUES.3` (`.1`–`.2` done) | [docs/tasks/ISF-REGISTER-RESET-VALUES.md](docs/tasks/ISF-REGISTER-RESET-VALUES.md) |
 | `ISF-FOR-LOOP` | `active` | `R14` | `ISF-FOR-LOOP.6` (`.1`–`.5` done; indexed counted loop `(for (i N)…)`, explicit-width/variable-count, range `(for (i from A to B)…)`, and strided `(… step S)`; simulated; `.6` = nesting/embedding) | [docs/tasks/ISF-FOR-LOOP.md](docs/tasks/ISF-FOR-LOOP.md) |
-| `ISF-NESTED-COUNTED-REPEAT` | `active` | `R14` | `ISF-NESTED-COUNTED-REPEAT.2` (`.1` done; nested `(repeat …)` in a repeat body with per-instance counters — substrate for nested loops; target validated by simulation) | [docs/tasks/ISF-NESTED-COUNTED-REPEAT.md](docs/tasks/ISF-NESTED-COUNTED-REPEAT.md) |
+| `ISF-NESTED-COUNTED-REPEAT` | `done` | `R14` | `closed (.1–.2; nested counted (repeat M (repeat N body)) with per-instance counters — body runs M*N times; simulated + --verify-hdl clean; substrate for nested for-loops)` | [docs/tasks/ISF-NESTED-COUNTED-REPEAT.md](docs/tasks/ISF-NESTED-COUNTED-REPEAT.md) |
 | `ISF-COUNTED-REPEAT-TERMINATION` | `active` | `R14` | `ISF-COUNTED-REPEAT-TERMINATION.4` (`.1`–`.3` done; check-first lowering terminates exactly-N for static/runtime/zero; `(!=0)` decision edge → counted loops pass `--verify-hdl`; `.4` = runtime-wait-first-in-repeat) | [docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md](docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md) |
 
 ## Proposed Task Trees

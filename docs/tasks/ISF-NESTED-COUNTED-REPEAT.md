@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-NESTED-COUNTED-REPEAT`
-- Status: `active`
+- Status: `done` (closed `2026-06-01`)
 - Roadmap lane: `R14` (ISF — high-level language richness)
 - Created: `2026-06-01`
 - Last updated: `2026-06-01`
@@ -75,7 +75,7 @@ The outer body *is* the inner loop (`iinit … icheck … body`); the outer chec
 ## Task Tree
 
 - ID: `ISF-NESTED-COUNTED-REPEAT`
-  Status: `active`
+  Status: `done`
   Goal: `Nested counted (repeat …) with per-instance counters — the substrate for nested loops.`
   Children: `.1` (select + target validation), `.2` (lowerer nested-repeat support)
 
@@ -87,18 +87,18 @@ The outer body *is* the inner loop (`iinit … icheck … body`); the outer chec
   Commit: `this slice`
 
 - ID: `ISF-NESTED-COUNTED-REPEAT.2`
-  Status: `todo`
+  Status: `done`
   Goal: `Lowerer nested (repeat …): allow-list + per-instance counter + recursive lowering + registration.`
-  Acceptance: `(repeat M (repeat N body)) lowers (outer ${tn}_cnt + inner ${tn}_cnt_<n>, both in +size); simulation runs body M*N times + terminates; --verify-hdl PASS; single/sequential repeats unchanged; isf band PASS.`
-  Verification: `Spike + t/; full isf regression; perl -c; mdbook build; git diff --check`
-  Commit: `pending`
+  Acceptance: `repeat added to the repeat clause allow-list; _ir_repeat takes an optional $counter_name (default ${tn}_cnt) and, in its body loop, lowers a nested (repeat …) recursively with a unique ${tn}_cnt_<ir> counter, collecting nested (and deeper/dynamic-wait) counters into its 4th return value so they register in +size. (repeat M (repeat N body)) lowers with distinct counters, runs body M*N times, terminates; --verify-hdl PASS; single/sequential repeats unchanged; isf band + full suite PASS.`
+  Verification: `(repeat 3 (repeat 2 body)) lowers (main_cnt + main_cnt_2 in +size; outer check -> inner init, inner check -> outer check); verilator --binary -> count == 6 terminates; triple 2x2x2 -> 3 counters, count == 8; --verify-hdl verilator+yosys PASS; sequential-after-nested lowers. prove -Iperl t/1395 (3 subtests) + doc gates PASS; full suite PASS; perl -c; mdbook build; git diff --check.`
+  Commit: `this slice`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Select; target validated by simulation (3×2 → 6 body runs). |
-| 2 | `.2` | `todo` | Lowerer nested-repeat: allow-list + per-instance counters + recursive lowering. |
+| 2 | `.2` | `done` | Lowerer nested-repeat: allow-list + per-instance counters + recursive lowering. Simulated 3×2 → 6 and 2×2×2 → 8; `--verify-hdl` PASS. **Tree complete.** |
 
 ## Decisions
 
@@ -117,12 +117,14 @@ The outer body *is* the inner loop (`iinit … icheck … body`); the outer chec
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | verilator `--binary`: hand-crafted nested 3×2 repeat → `count == 6`, terminates; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.2` | `(repeat 3 (repeat 2 body))` lowers (`main_cnt` + `main_cnt_2` in `+size`; outer check → inner init, inner check → outer check); `verilator --binary` → `count == 6`; triple `2×2×2` → 3 counters, `count == 8`; `--verify-hdl` verilator+yosys PASS. `prove -Iperl t/1395` (3 subtests) + doc gates PASS; full suite PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-NESTED-COUNTED-REPEAT.1: select + validate nested-repeat target` | this slice |
+| `.1` | `ISF-NESTED-COUNTED-REPEAT.1: select + validate nested-repeat target` | `d4187a15` |
+| `.2` | `ISF-NESTED-COUNTED-REPEAT.2: lowerer nested (repeat …) with per-instance counters` | this slice |
 
 ## Changelog
 
@@ -131,3 +133,14 @@ The outer body *is* the inner loop (`iinit … icheck … body`); the outer chec
   validated by simulation (3×2 → 6 body runs, terminates). `.2` lands the lowerer support
   (allow-list + per-instance counter + recursive lowering + registration); nested indexed
   `(for …)` (parser index hoisting) follows as `ISF-FOR-LOOP.6`.
+- `2026-06-01`: `.2` shipped — **tree complete**. `repeat` added to the `repeat` clause
+  allow-list; `_ir_repeat` takes an optional `$counter_name` (default `${tn}_cnt`) and, in
+  its body loop, lowers a nested `(repeat …)` recursively with a unique `${tn}_cnt_<ir>`
+  counter, collecting nested (and deeper/dynamic-wait) counters into its 4th return value so
+  they register in `+size`. `(repeat 3 (repeat 2 body))` lowers with `main_cnt` + `main_cnt_2`
+  (outer check → inner init, inner check → outer check); simulation runs the body `3*2 == 6`
+  times and terminates; triple `2×2×2` → three distinct counters and `count == 8`;
+  `--verify-hdl` (verilator + yosys) PASSES. Single/sequential repeats are unchanged (they
+  keep the bare `${tn}_cnt`). `t/1395`; `13d` gains a "Nested Counted Loops" section and the
+  `13k` repeat-body surface lists nested repeat. Nested indexed `(for …)` follows as
+  `ISF-FOR-LOOP.6` (parser index hoisting on top of this substrate).

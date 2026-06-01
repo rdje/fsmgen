@@ -5749,6 +5749,7 @@ Focused tests:
 - [t/1391-isf-local-variables.t](../t/1391-isf-local-variables.t)
 - [t/1393-isf-loop-continue.t](../t/1393-isf-loop-continue.t)
 - [t/1394-isf-for-loop.t](../t/1394-isf-for-loop.t)
+- [t/1395-isf-nested-counted-repeat.t](../t/1395-isf-nested-counted-repeat.t)
 
 ## 12. Explicitly Deferred
 

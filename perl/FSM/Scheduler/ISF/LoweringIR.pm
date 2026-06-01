@@ -36,7 +36,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
     repeat => {
         map { $_ => 1 } qw(
             drive await sample update set shift_left shift_right assemble extract
-            store load wait do spawn await_all await_any
+            store load wait do spawn await_all await_any repeat
         )
     },
     while => {
@@ -8604,7 +8604,13 @@ sub _expand_loop_body {
 }
 
 sub _ir_repeat {
-    my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters; my @spawn_done_ports;
+    my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref,$counter_name)=@_;
+    # ISF-NESTED-COUNTED-REPEAT: each repeat instance owns its counter. The outermost (and
+    # sequential/while/until/switch-contained) repeats keep the bare `${tn}_cnt`; a nested
+    # repeat is lowered with a unique `${tn}_cnt_<ir>` so an inner and outer counter never
+    # collide.
+    my $ctr = (defined($counter_name) && length($counter_name)) ? $counter_name : "${tn}_cnt";
+    my @s; my @lp; my @dynamic_wait_counters; my @nested_repeat_counters; my @spawn_done_ports;
     _validate_repeat_count_source($cl->[1], $widths, $actor, $tn);
     if (_is_static_zero_repeat_count($cl->[1], $actor, $tn)) {
         return ([], undef, undef, []);
@@ -8664,6 +8670,18 @@ sub _ir_repeat {
             _push_sample_state(\@s,$tn,\@lp,$ir);
             push @s,_ir_sync_any($tn,$$ir++,\@spawn_done_ports);
             @spawn_done_ports = () if @spawn_done_ports <= 1;
+        }
+        elsif($bk eq'repeat'){
+            # ISF-NESTED-COUNTED-REPEAT: a nested counted repeat. Flush pending samples,
+            # then lower it recursively with a UNIQUE counter (the bare ${tn}_cnt is in use
+            # by this outer repeat). Collect the nested counter (and any deeper nested or
+            # dynamic-wait counters it returns) so they get registered in +size.
+            _push_sample_state(\@s,$tn,\@lp,$ir);
+            my $nested_ctr="${tn}_cnt_".$$ir;
+            my ($rs,$rc,$rw,$rxc)=_ir_repeat($bc,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref,$nested_ctr);
+            push @s,@$rs;
+            push @nested_repeat_counters,{name=>$rc,width=>$rw} if defined($rc) && length($rc);
+            push @nested_repeat_counters,@$rxc if ref($rxc) eq 'ARRAY';
         }}
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
     # ISF-COUNTED-REPEAT-TERMINATION: fail closed when the first body state is a dynamic
@@ -8689,7 +8707,10 @@ sub _ir_repeat {
     # count as a copy), so the generated one-hot selector assertion has no false conflict.
     push @s, {name=>$check_name,kind=>'repeat_check',assignments=>[{lhs=>$ctr,op=>'--'}],transitions=>[],loop_target=>$fb,counter=>$ctr};
     $s[0]{repeat_state_names} = [map { $_->{name} } @s];
-    return (\@s,$ctr,$width,\@dynamic_wait_counters);
+    # The 4th value carries every "extra" counter the caller must register in +size: this
+    # repeat's dynamic-wait counters plus any nested repeat counters (and their own nested
+    # counters, bubbled up).
+    return (\@s,$ctr,$width,[@dynamic_wait_counters,@nested_repeat_counters]);
 }
 
 sub _apply_rule_user_resource_arbitration {

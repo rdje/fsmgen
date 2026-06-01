@@ -277,6 +277,24 @@ and an empty body all **fail closed** with a clear diagnostic:
   (for (i 4) (update total (+ total i))))
 ```
 
+## Nested Counted Loops
+
+A counted `(repeat …)` may sit **inside** another `(repeat …)` body, so the body runs
+`outer × inner` times:
+
+```lisp
+(repeat 3
+  (repeat 2
+    (update count (+ count 1))))   ;; runs 3 * 2 = 6 times
+```
+
+Each repeat instance gets its own counter — the outermost keeps `<tx>_cnt`, a nested
+repeat uses a unique `<tx>_cnt_<n>` — so the inner and outer countdowns never collide, and
+the nesting can go arbitrarily deep. Lowering is check-first throughout: the outer check's
+continue edge enters the inner loop, and the inner check's exit edge returns to the outer
+check. (A nested indexed `(for …)` is a later addition; nested *counted* `(repeat …)` ships
+now.)
+
 ## Where Child Activations Are Allowed
 
 All four child-activation clauses — `(do ...)`, `(spawn ...)`, `(await_all ...)`,
