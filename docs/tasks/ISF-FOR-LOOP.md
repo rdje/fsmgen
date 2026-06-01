@@ -105,11 +105,11 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
   Commit: `this slice`
 
 - ID: `ISF-FOR-LOOP.2`
-  Status: `todo`
+  Status: `done`
   Goal: `Top-level (for (i N) body) with literal N — parser desugar.`
-  Acceptance: `_expand_for_loops runs before let/proc expansion; a top-level (for (i N) body) desugars to (local i (width W) (default 0)) + (repeat N body… (set i (+ i 1))) with W = bits to hold N; i counts 0..N-1 to the body; nested/embedded (for …) and a non-literal/empty/<1 count fail closed with clear diagnostics; --check-json + verilator/yosys PASS. 13d gains a (for …) section + runnable example; 13k row; ISF_SPEC registers the new t/.`
-  Verification: `Spike: (for (i 4) …) -> (local i (width 3)(default 0)) + (repeat 4 … (set i (+ i 1))); i in +size; --check-json SUCCESS; --verify-hdl PASS; nested for + bad spec fail closed. prove -Iperl t/<new> t/1391 t/1376 t/1305 t/1250 t/1304 t/1307 PASS; full isf regression PASS; perl -c; mdbook build; git diff --check`
-  Commit: `pending`
+  Acceptance: `_expand_for_loops runs before let/proc expansion; a top-level (for (i N) body) desugars to (local i (width W) (default 0)) + (repeat N body… (set i (+ i 1))) with W = bits to hold N; i counts 0..N-1 to the body; nested/embedded (for …) and a non-literal/empty/<1 count fail closed with clear diagnostics; --check-json SUCCESS. 13d gains a (for …) section + example; 13k row; ISF_SPEC registers t/1394.`
+  Verification: `(for (i 4) (update result (+ result i))) lowers: i in +size at width 3, init (i 0), body reads i, tail (set i (+ i 1)), check-first repeat. Simulated (verilator --binary): terminates, result == 0+1+2+3 == 6 (i = 0..3 across exactly 4 iterations). --check-json SUCCESS. Fail-closed: non-literal/zero count, empty body, nested for, for-in-when. prove -Iperl t/1394 (4 subtests) + t/1250 t/1305 t/1304 t/1307 t/1376 PASS; perl -c; mdbook build; git diff --check.`
+  Commit: `this slice`
 
 - ID: `ISF-FOR-LOOP.3`
   Status: `frontier`
@@ -123,7 +123,7 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
-| 2 | `.2` | `todo` | Top-level `(for (i N) body)`, literal `N`, auto-sized index — parser desugar into `(local i …)` + counted `(repeat …)` with a tail increment. |
+| 2 | `.2` | `done` | Top-level `(for (i N) body)`, literal `N`, auto-sized index — parser desugar into `(local i …)` + counted `(repeat …)` with a tail increment. Simulated exactly-N with `i = 0..N-1`. |
 | 3 | `.3` | `frontier` | Nesting/embedding (index hoisting) + explicit-width / param counts. |
 
 ## Decisions
@@ -144,12 +144,14 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.2` | `(for (i 4) …)` lowers (index in `+size`, init 0, body reads `i`, tail increment, check-first repeat); `verilator --binary` → terminates, `result == 6` (`i = 0..3`, exactly 4 iterations); `--check-json` SUCCESS; non-literal/zero/empty/nested/embedded fail closed. `prove -Iperl t/1394 t/1250 t/1305 t/1304 t/1307 t/1376` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-FOR-LOOP.1: select (for (i N) body) indexed counted loop` | this slice |
+| `.1` | `ISF-FOR-LOOP.1: select (for (i N) body) indexed counted loop` | committed |
+| `.2` | `ISF-FOR-LOOP.2: (for (i N) body) indexed counted loop desugar` | this slice |
 
 ## Changelog
 
@@ -160,3 +162,12 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
   `(local …)` must sit at the transaction top because `local` is transaction-context
   only); `.3` is the frontier for nesting/embedding (index hoisting) and
   explicit-width / param counts.
+- `2026-06-01`: `.2` shipped — the parser desugar landed (`_expand_for_loops` runs before
+  `let`/procedure expansion). `(for (i N) body...)` → `(local i (width W) (default 0))` +
+  `(repeat N body... (set i (+ i 1)))`, `W` = bits to hold `N`, `i` 0-based. Verified by
+  simulation (`verilator --binary`): `(for (i 4) (update result (+ result i)))` terminates
+  with `result == 6` (`i = 0,1,2,3` across exactly four iterations) — correct because it
+  rides the fixed counted-`(repeat …)` lowering (`ISF-COUNTED-REPEAT-TERMINATION.2`).
+  Nested/embedded `(for …)`, a non-literal or zero count, and an empty body fail closed
+  with clear diagnostics. `t/1394` (4 subtests); `13d` gains a `(for …)` section; the
+  `13k` control-flow row lists it; `docs/ISF_SPEC.md` registers `t/1394`.

@@ -195,6 +195,49 @@ and fails closed elsewhere (with a diagnostic naming `continue-when`). Together
 `(exit-when)` and `(continue-when)` are the *break* / *continue* pair of a high-level
 loop.
 
+## `(for (i N) body...)` — Indexed Counted Loop
+
+`(for (i N) body...)` runs `body` exactly `N` times while exposing a **loop index** `i`
+that counts `0, 1, … N-1` to the body — the ergonomic indexed loop a high-level language
+has. A bare `(repeat N body)` runs `body` N times but gives the body no index; `(for ...)`
+adds one, so the body can do indexed work (per-iteration values, addressing).
+
+```lisp
+(transaction sum_first_four
+  (on start)
+  (for (i 4)
+    (update total (+ total i)))   ;; i = 0,1,2,3 across the four iterations -> total += 0+1+2+3
+  (complete done))
+```
+
+`(for ...)` is pure ISF (IAL1) sugar: the parser desugars it — before procedure and
+`let` expansion — into a declared index local plus a counted `(repeat ...)` with a tail
+increment, both of which already lower:
+
+```lisp
+(local i (width W) (default 0))      ;; W = bits to hold N; i starts at 0
+(repeat N
+  body...
+  (set i (+ i 1)))                    ;; i advances 0 -> 1 -> … at the end of each iteration
+```
+
+Because the index advances at the *tail* of each iteration, the body reads `i` as
+`0` on the first pass, `1` on the second, … `N-1` on the last — a 0-based index. The
+counted `(repeat ...)` it lowers to runs the body exactly `N` times and then completes
+(see [the counted-repeat schedule](13b-transactions.md)).
+
+`N` must be a **literal** non-negative integer (`>= 1`), and the `(for ...)` must be a
+**top-level transaction clause** in this release — the index declaration uses `(local
+...)`, which is a transaction-context-only clause. A nested or embedded `(for ...)` (one
+inside another `(for ...)`, or inside a `when`/`switch`/`while`/`until`/`repeat` body), a
+non-literal or zero count, and an empty body all **fail closed** with a clear diagnostic:
+
+```lisp
+;; rejected: (for ...) is currently supported only as a top-level transaction clause
+(when go
+  (for (i 4) (update total (+ total i))))
+```
+
 ## Where Child Activations Are Allowed
 
 All four child-activation clauses — `(do ...)`, `(spawn ...)`, `(await_all ...)`,

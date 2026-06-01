@@ -295,6 +295,12 @@ sub _build_actor($self, $actor_ast, $source_label) {
         }
     }
 
+    # ISF-FOR-LOOP: desugar `(for (i N) body)` indexed counted loops into a declared
+    # index `(local i ...)` + `(repeat N body... (set i (+ i 1)))` BEFORE let/procedure
+    # expansion, so any `(let ...)`/`(call ...)` inside the `for` body (now living inside
+    # the desugared `(repeat ...)`) is expanded afterwards by those passes.
+    $self->_expand_for_loops($result);
+
     # ISF-LOCAL-VARIABLES: expand `(let NAME EXPR)` named intermediates (substitute
     # NAME -> EXPR in the rest of the body) BEFORE procedure expansion, so a let-bound
     # name reaches `(call ...)` actuals already substituted.
@@ -501,6 +507,85 @@ sub _proc_deep_clone($node) {
 # desugar — NAME is substituted by EXPR in the rest of the enclosing body (and nested
 # bodies, which may shadow it with their own `(let)`); the `(let)` clause itself emits
 # nothing. No register, no runtime cost.
+# --- ISF-FOR-LOOP: `(for (i N) body)` indexed counted loop (parser desugar) ---
+
+# `(for (i N) body...)` runs `body` N times while exposing an index `i` counting
+# 0..N-1. It desugars to a declared index register plus a counted repeat that advances
+# the index at the tail of each iteration:
+#   (local i (width W) (default 0))            ;; W = bits to hold N
+#   (repeat N body... (set i (+ i 1)))
+# `(local ...)` is a transaction-context-only clause, so the desugared index must sit at
+# the transaction top level: `.2` supports a TOP-LEVEL `(for ...)` with a literal N; a
+# nested/embedded `(for ...)` fails closed (lifted by a later slice via index hoisting).
+sub _expand_for_loops($self, $result) {
+    for my $tx (@{$result->{transactions} || []}) {
+        $tx->{clauses} = $self->_expand_fors_in_list(
+            $tx->{clauses}, "transaction '$tx->{name}'", 1);
+    }
+}
+
+sub _expand_fors_in_list($self, $clauses, $ctx, $top) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]) && $clause->[0] eq 'for') {
+            confess "Error: (for ...) in $ctx is currently supported only as a top-level transaction clause (nested or embedded for-loops are not yet supported)\n"
+                unless $top;
+            push @out, @{ $self->_desugar_for($clause, $ctx) };
+        } else {
+            push @out, $self->_for_rewrite_clause($clause, $ctx);
+        }
+    }
+    return \@out;
+}
+
+# Recurse into body-bearing control flow so a `(for ...)` embedded there is detected and
+# fails closed (passed $top = 0); non-for clauses pass through unchanged.
+sub _for_rewrite_clause($self, $clause, $ctx) {
+    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $body = $self->_expand_fors_in_list([@{$clause}[2 .. $#$clause]], $ctx, 0);
+        return [ $kw, $clause->[1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_fors_in_list([@{$br}[1 .. $#$br]], $ctx, 0);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $clause->[1], @branches ];
+    }
+    return $clause;
+}
+
+sub _desugar_for($self, $clause, $ctx) {
+    my (undef, $spec, @body) = @$clause;
+    confess "Error: (for ...) in $ctx requires a '(VAR COUNT)' spec\n"
+        unless ref($spec) eq 'ARRAY' && @$spec >= 2;
+    my $var = $spec->[0];
+    confess "Error: (for ...) in $ctx requires an index variable name in '(VAR COUNT)'\n"
+        unless defined($var) && !ref($var) && length($var);
+    my $count = $spec->[1];
+    confess "Error: (for ($var ...) ...) in $ctx requires a literal non-negative integer count\n"
+        unless defined($count) && !ref($count) && $count =~ /\A[0-9]+\z/;
+    confess "Error: (for ($var $count) ...) in $ctx count must be >= 1\n"
+        unless $count + 0 >= 1;
+    confess "Error: (for ($var $count) ...) in $ctx has an empty body\n"
+        unless @body;
+    # W = bits to represent N, so the index can reach N after the final increment
+    # without wrapping (i is read as 0..N-1 inside the body).
+    my $width = length(sprintf '%b', $count + 0);
+    # For-expand the body too, so a nested/embedded `(for ...)` inside it fails closed.
+    my $inner = $self->_expand_fors_in_list(\@body, "$ctx -> (for $var ...)", 0);
+    my $local  = [ 'local', $var, [ 'width', $width ], [ 'default', 0 ] ];
+    my $repeat = [ 'repeat', $count, @$inner, [ 'set', $var, [ '+', $var, 1 ] ] ];
+    return [ $local, $repeat ];
+}
+
 sub _expand_let_bindings($self, $result) {
     my %reserved = map { ($_->{name} // '') => 1 }
         @{$result->{interface}{inputs} || []}, @{$result->{interface}{outputs} || []};
