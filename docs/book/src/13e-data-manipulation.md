@@ -220,6 +220,61 @@ non-literal / symbolic width.
 **Lowering**: `(?(!= (& NAME W'dMASK) W'd0) …)` /
 `(?(== (& NAME W'dMASK) W'd0) …)` — the decision state a `(when …)` produces.
 
+## `(set-field NAME (bits HI LO) VALUE)` — Multi-Bit Field Write
+
+```lisp
+(set-field ctrl (bits 5 3) 5)    ;; ctrl[5:3] <- 3'b101, other bits preserved
+(set-field div  (bits 7 0) 24)   ;; div[7:0]  <- 24
+```
+
+The multi-bit generalisation of [`set-bit`](#set-bit-name-n--clear-bit-name-n--toggle-bit-name-n--single-bit-manipulation)
+— write a named register field (a mode, a divider ratio, a priority level) to a
+value, leaving the surrounding bits untouched. `HI` and `LO` are the literal
+inclusive bit bounds (`HI >= LO`), and `VALUE` is a literal that must fit in the
+`HI - LO + 1`-bit field.
+
+This is a pure ISF parser desugar into a width-clean masked read-modify-write
+`(set …)` built from sized literals:
+
+```lisp
+(set-field x (bits HI LO) V) -> (set x (| (& x W'dCLEARMASK) W'dSHIFTED))
+  CLEARMASK = (2^width - 1) ^ (((2^(HI-LO+1)) - 1) << LO)   ;; field bits zeroed
+  SHIFTED   = V << LO                                        ;; V placed in the field
+```
+
+The sized literals (`W'd…`) keep the nested `(| (& …) …)` verilator-lint + yosys
+clean — an unsized mask would create a 32-bit intermediate that fails the
+width-clean lint — so the register's **width** must be a statically known literal
+(resolved from a `(local …)`, an interface port, or a `(storage (var …))`).
+
+A complete runnable example (a control register whose `[5:3]` mode field is set
+while the rest of the register is preserved):
+
+```lisp
+(actor mode_set
+  (interface (input start) (output done) (output ctrl (width 8)))
+  (transaction main
+    (on start)
+    (local r (width 8) (reset 255))   ;; 0xFF
+    (set-field r (bits 5 3) 5)        ;; r[5:3] <- 101  =>  0xEF
+    (update ctrl r)
+    (complete done)))
+```
+
+After `start`, `ctrl == 239` (`0xEF`): bits `[5:3]` hold `101` and every other bit
+keeps its `0xFF` value.
+
+A malformed form fails closed before `.fsm` emission: a missing name; a malformed
+`(bits HI LO)` selector; non-literal `HI` / `LO` / `VALUE`; `HI < LO`; `HI >=` the
+register width; a `VALUE` that overflows the field; or a non-literal / symbolic
+width. As with every expression `(set …)`, two `(set-field …)` writes to the
+**same** register in different states of one transaction alias (the
+one-expression-write-enable-per-register constraint) — use one per register, or
+combine the fields into a single value.
+
+**Lowering**: `(<- (NAME (| (& NAME W'dCLEARMASK) W'dSHIFTED)))` — the sequential
+Q-named assignment `(set …)` produces.
+
 ## `(shift_left reg bit [(width N)])` — Shift Register (Left)
 
 ```lisp

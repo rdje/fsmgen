@@ -333,6 +333,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
     # interface / storage / transaction-local widths, which are all populated above.
     $self->_expand_bit_ops($result);
 
+    # ISF-SET-FIELD: rewrite `(set-field NAME (bits HI LO) V)` to a width-clean masked
+    # read-modify-write `(set …)`. Same staging / width needs as the bit ops.
+    $self->_expand_set_fields($result);
+
     $self->_finalize_actor_symbol_tables($result, $source_label);
     $self->_finalize_actor_constant_values($result);
     $self->_finalize_actor_param_values($result);
@@ -713,6 +717,100 @@ sub _desugar_bit_op($self, $clause, $ctx, $widths) {
         unless defined $width;
     my $invmask = ((1 << $width) - 1) ^ $mask;
     return [ 'set', $name, [ '&', $name, $invmask ] ];
+}
+
+# --- ISF-SET-FIELD: `(set-field NAME (bits HI LO) V)` multi-bit field write ---
+#
+# Parser desugar into a width-clean masked read-modify-write `(set …)` using sized literals
+# (sized literals keep the nested `(| (& …) …)` lint-clean; unsized literals 32-bit-expand):
+#   (set-field x (bits HI LO) V) -> (set x (| (& x W'dCLEARMASK) W'dSHIFTED))
+#     CLEARMASK = (2^W - 1) ^ (((2^(HI-LO+1)) - 1) << LO)   ; field bits zeroed
+#     SHIFTED   = V << LO                                    ; V placed in the field
+# HI, LO, V are literals (HI >= LO, HI < W, V fits the field); W is the declared literal width.
+sub _expand_set_fields($self, $result) {
+    for my $tx (@{$result->{transactions} || []}) {
+        my $widths = $self->_bit_op_width_map($result, $tx);
+        $tx->{clauses} = $self->_expand_set_fields_in_list(
+            $tx->{clauses}, "transaction '$tx->{name}'", $widths);
+    }
+}
+
+sub _expand_set_fields_in_list($self, $clauses, $ctx, $widths) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0])
+            && $clause->[0] eq 'set-field') {
+            push @out, $self->_desugar_set_field($clause, $ctx, $widths);
+        } else {
+            push @out, $self->_set_field_rewrite_clause($clause, $ctx, $widths);
+        }
+    }
+    return \@out;
+}
+
+sub _set_field_rewrite_clause($self, $clause, $ctx, $widths) {
+    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $body = $self->_expand_set_fields_in_list([@{$clause}[2 .. $#$clause]], $ctx, $widths);
+        return [ $kw, $clause->[1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_set_fields_in_list([@{$br}[1 .. $#$br]], $ctx, $widths);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $clause->[1], @branches ];
+    }
+    return $clause;
+}
+
+sub _desugar_set_field($self, $clause, $ctx, $widths) {
+    my ($op, $name, $bits, @rest) = @$clause;
+    confess "Error: (set-field ...) in $ctx requires a register name\n"
+        unless defined($name) && !ref($name) && length($name);
+    confess "Error: (set-field $name ...) in $ctx requires a (bits HI LO) field selector\n"
+        unless ref($bits) eq 'ARRAY' && @$bits == 3 && defined($bits->[0]) && !ref($bits->[0]) && $bits->[0] eq 'bits';
+    my ($hi, $lo) = ($bits->[1], $bits->[2]);
+    confess "Error: (set-field $name (bits ...)) in $ctx requires literal HI and LO bit indices\n"
+        unless defined($hi) && !ref($hi) && $hi =~ /^\d+$/ && defined($lo) && !ref($lo) && $lo =~ /^\d+$/;
+    $hi += 0; $lo += 0;
+    confess "Error: (set-field $name (bits $hi $lo) ...) in $ctx requires HI >= LO\n"
+        if $hi < $lo;
+
+    @rest = grep { defined } @rest;
+    confess "Error: (set-field $name (bits $hi $lo) ...) in $ctx requires exactly one literal field value\n"
+        unless @rest == 1;
+    my $val = $rest[0];
+    confess "Error: (set-field $name (bits $hi $lo) ...) in $ctx requires a non-negative integer field value\n"
+        unless defined($val) && !ref($val) && $val =~ /^\d+$/;
+    $val += 0;
+
+    my $width = exists $widths->{$name} ? $widths->{$name} : undef;
+    confess "Error: (set-field $name (bits $hi $lo) $val) in $ctx requires a statically known register "
+          . "width (declare '$name' with a literal (width N)); its sized field mask cannot be formed otherwise\n"
+        unless defined $width;
+    confess "Error: (set-field $name (bits $hi $lo) $val) in $ctx — bit $hi is out of range for the "
+          . "${width}-bit register '$name'\n"
+        if $hi >= $width;
+
+    my $field_bits = $hi - $lo + 1;
+    my $field_span = 1 << $field_bits;
+    confess "Error: (set-field $name (bits $hi $lo) $val) in $ctx — value $val does not fit in the "
+          . "${field_bits}-bit field [$hi:$lo]\n"
+        if $val >= $field_span;
+
+    my $field_mask = ($field_span - 1) << $lo;
+    my $clear_mask = ((1 << $width) - 1) ^ $field_mask;
+    my $shifted = $val << $lo;
+    my $clear_lit = "${width}'d${clear_mask}";
+    my $value_lit = "${width}'d${shifted}";
+    return [ 'set', $name, [ '|', [ '&', $name, $clear_lit ], $value_lit ] ];
 }
 
 # --- ISF-BIT-TEST: `(when-bit/unless-bit NAME N body…)` branch on a single register bit ---
