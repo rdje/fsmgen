@@ -38738,3 +38738,17 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - ISF "variables and functions" now BOTH complete: ISF-LOCAL-VARIABLES (variables:
   (local)+(default/init)+(let)) + ISF-PROCEDURES (functions: (proc)/(call) inline or
   handshake, in/out params). Both ISF/IAL1, both --check-json + verilator/yosys verified.
+
+## 2026-06-01: ISF-REGISTER-RESET-VALUES.2 — .fsm (reset V) carrier SHIPPED
+- `(signal width (reset V))` in a `.fsm` +size now sets the register's HARDWARE reset
+  value. Impl: FSMGenFull::Parser::parse_size_section splits an optional `(reset V)`
+  marker out of the width field (unambiguous vs width exprs whose head is an operator)
+  and registers `attributes => { reset_value => V }`; the HDL backend's existing
+  get_reset_value_from_ast → attributes->{reset_value} emits `<sig> <= V`. Default
+  unspecified → all-0s (byte-identical). Non-integer fails closed. (q 8 (reset 5)) ->
+  q <= 5 (verilator/yosys PASS). t/1392.
+- CRITICAL: this is a CORE .fsm parser change (FSMGenFull), affecting ALL .fsm files —
+  the FULL ci-regression suite is the gate, NOT `ci-regression isf`. The isf subset
+  would miss core .fsm regressions.
+- The carrier is internal until .3 (ISF surface: a (reset V) on an ISF declaration,
+  e.g. (local NAME (width N) (reset V))). Then register maps (.4). Frontier .3.

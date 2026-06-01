@@ -15020,3 +15020,9 @@ Exit criteria:
   (*functions*) — both complete, ISF/IAL1, HDL-verified. Theme #3 now has three closed
   construct families: loop early-exit, reusable procedures, local variables. (Arbitrary
   hardware register reset values remain tracked by `ISF-REGISTER-RESET-VALUES`.)
+- `R14`: `ISF-REGISTER-RESET-VALUES.2` shipped (2026-06-01) — the `.fsm` carrier:
+  `(signal width (reset V))` in `+size` sets a register's hardware reset value (split
+  out in `FSMGenFull::Parser`, registered as a `reset_value` attribute the HDL backend
+  already consumes → `<sig> <= V`). Default unspecified stays all-0s (byte-identical);
+  non-integer fails closed; verilator/yosys PASS; `t/1392`. CORE `.fsm` parser change —
+  gated by the FULL regression suite. ISF surface is `.3`, register maps `.4`.

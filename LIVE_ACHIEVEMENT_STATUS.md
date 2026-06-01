@@ -16605,3 +16605,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   variables chapter (local/default/init/let + worked running_max example); wired into
   SUMMARY + live-doc contract; 13b → pointer. ISF variables surface complete. With
   ISF-PROCEDURES (functions) closed too, the variables+functions pair is delivered.
+- `.2` (ISF-REGISTER-RESET-VALUES) shipped (2026-06-01): `.fsm` `(signal width (reset V))`
+  carrier sets a register's hardware reset value (HDL emits `<sig> <= V`); default all-0s
+  unchanged; non-integer fails closed; verilator/yosys PASS. Core `.fsm` parser change
+  (FULL regression gate). t/1392. Frontier .3 (ISF surface).

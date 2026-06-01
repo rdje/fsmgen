@@ -113,6 +113,13 @@ Precise findings:
   Goal: `Select; scope arbitrary register reset values (default 0) + the two-layer (.fsm/HDL + ISF surface) design + slice plan.`
   Acceptance: `Task tree committed before any code change.`
   Verification: `mdbook build docs/book; git diff --check`
+  Commit: `2701a7d0`
+
+- ID: `ISF-REGISTER-RESET-VALUES.2`
+  Status: `done`
+  Goal: `.fsm carrier — a (reset V) marker on a +size register sets its hardware reset value; HDL backend (already done) emits it.`
+  Acceptance: `FSMGenFull::Parser::parse_size_section accepts an optional (reset V) marker inside a +size entry's width field — (signal width (reset V)) — splits it out (unambiguous vs width expressions, whose head is an arithmetic/bitwise operator) and registers the signal with attributes => { reset_value => V }; the already-implemented HDL consumption (get_reset_value_from_ast -> attributes->{reset_value}) then emits <sig> <= V in the always_ff reset branch. Default unspecified stays all-0s, byte-identical. A non-integer reset value fails closed. Verified at the .fsm level (hand-written .fsm): (q 8 (reset 5)) -> q <= 5; (q 8) -> q <= 8'h00; verilator/yosys PASS. t/1392. The ISF surface (a (reset V) on an ISF declaration) is .3 — until then this carrier is internal, so no user-facing mdBook yet.`
+  Verification: `Hand-written .fsm spike: (q 8 (reset 5)) emits q <= 5 (verilator_lint+yosys_synthesis PASS); (q 8) emits q <= 8'h00 (unchanged); non-integer reset fails closed. prove -Iperl t/1392 (3 subtests) PASS; perl -c; full ./bin/ci-regression full --no-book PASS (core parser change). NOTE: the FULL suite is the gate (core .fsm parser change), not the isf subset.`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -120,8 +127,9 @@ Precise findings:
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
-| 2 | `.2` | `pending` | `.fsm` IR + HDL backend per-register reset value (default 0) — the load-bearing core change; everything else layers on it. |
-| 3 | `.3`–`.5` | `pending` | ISF surface syntax; register-map reset values; docs. |
+| 2 | `.2` | `done` | `.fsm` **carrier** — `(signal width (reset V))` in `+size` sets the register's hardware reset value (carried as a signal attribute the HDL backend already consumes); default unspecified stays all-0s (byte-identical); non-integer fails closed. verilator/yosys PASS. `t/1392`. |
+| 3 | `.3` | `pending` | ISF surface syntax — emit the `(reset V)` carrier from an ISF declaration (e.g. `(local NAME (width N) (reset V))` and/or interface/storage). |
+| 4 | `.4`–`.5` | `pending` | register-map reset values; thorough mdBook docs. |
 
 ## Decisions
 
@@ -150,12 +158,14 @@ Precise findings:
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.2` | Hand-written `.fsm`: `(q 8 (reset 5))` -> `q <= 5` (verilator_lint+yosys_synthesis PASS); `(q 8)` -> `q <= 8'h00` (unchanged); non-integer reset fails closed. `prove -Iperl t/1392` (3 subtests) PASS; `perl -c`; full `./bin/ci-regression full --no-book` PASS | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-REGISTER-RESET-VALUES.1: select arbitrary register reset values` | `ship commit (this slice)` |
+| `.1` | `ISF-REGISTER-RESET-VALUES.1: select arbitrary register reset values` | `2701a7d0` |
+| `.2` | `ISF-REGISTER-RESET-VALUES.2: .fsm (reset V) carrier for per-register reset values` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -177,3 +187,17 @@ Precise findings:
   carrier syntax + AST-parser population + ISF emission) rather than a quick desugar;
   the HDL emission comes for free once the signal carries the value. Default unspecified
   stays all-0s (the existing fallback). Updated `.2` scope accordingly.
+- `2026-06-01`: `.2` shipped — the `.fsm` carrier. `FSMGenFull::Parser::parse_size_section`
+  now accepts an optional `(reset V)` marker inside a `+size` entry's width field —
+  `(signal width (reset V))` — splits it out (unambiguous against width expressions,
+  whose head is always an arithmetic/bitwise operator, never `reset`), and registers
+  the signal with `attributes => { reset_value => V }`. The already-implemented HDL
+  consumption path (`get_reset_value_from_ast` → `attributes->{reset_value}`) then emits
+  `<sig> <= V` in the `always_ff` reset branch. Verified at the `.fsm` level:
+  `(q 8 (reset 5))` → `q <= 5` (verilator_lint + yosys_synthesis PASS); a plain `(q 8)`
+  → `q <= 8'h00` byte-identical (fully backward-compatible); a non-integer reset value
+  fails closed. `t/1392` locks it. Because this changes the **core** `.fsm` parser
+  (affecting all `.fsm` files, not just ISF), the FULL `ci-regression` suite is the gate
+  (not the `isf` subset). The ISF surface (a `(reset V)` on an ISF declaration, e.g.
+  `(local NAME (width N) (reset V))`) is `.3`; until then the carrier is internal, so no
+  user-facing mdBook yet.

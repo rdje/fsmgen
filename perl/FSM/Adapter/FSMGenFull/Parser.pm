@@ -678,8 +678,38 @@ sub parse_size_section($self, $size_ast) {
             unless ref($size_def) eq 'ARRAY' && @$size_def == 2;
 
         my ($sig, $width) = @$size_def;
+
+        # ISF-REGISTER-RESET-VALUES: an optional `(reset V)` marker inside the width
+        # field pins the register's hardware reset value — `(signal width (reset V))`.
+        # It is carried as a signal attribute the HDL backend already consumes; absent
+        # it, the register resets to all-0s as before (fully backward-compatible). The
+        # marker is split out here so the remaining tokens form the plain width
+        # expression; `(reset V)` is unambiguous against width expressions (whose head
+        # is an arithmetic/bitwise operator, never `reset`).
+        my $reset_value;
+        if (ref($width) eq 'ARRAY') {
+            my @rest;
+            for my $tok (@$width) {
+                my $head = (ref($tok) eq 'ARRAY' && @$tok >= 2)
+                    ? ($self->unwrap_scalar_token($tok->[0]) // '') : '';
+                if ($head eq 'reset') {
+                    $reset_value = $self->unwrap_scalar_token($tok->[1]);
+                } else {
+                    push @rest, $tok;
+                }
+            }
+            $width = \@rest;
+        }
+
         my $resolved_sig = $self->unwrap_scalar_token($sig);
         my $resolved_width = $self->unwrap_scalar_token($width);
+        if (defined $reset_value) {
+            Carp::confess
+                "Malformed '+size' reset value for signal '". ($resolved_sig // '?') ."'. ".
+                "A '(reset V)' reset value must be a non-negative integer literal. ".
+                supported_boundary_hint()
+                unless !ref($reset_value) && $reset_value =~ /\A[0-9]+\z/;
+        }
 
         Carp::confess
             "Malformed '+size' entry for signal '$resolved_sig'. ".
@@ -702,6 +732,7 @@ sub parse_size_section($self, $size_ast) {
             declared_type_name => $width_contract->{declared_type_name},
             declared_type_spec => $width_contract->{declared_type_spec},
             width_declared => 1,
+            (defined $reset_value ? (attributes => { reset_value => $reset_value }) : ()),
         );
 
         # Keep rm/mr auxiliary outputs width-aligned with their parent signal
