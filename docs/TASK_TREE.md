@@ -48,7 +48,7 @@ first.
 | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` | `active` | `R14` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5` (`.1`–`.4` done) | [docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md](docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md) |
 | `ISF-LOOP-EARLY-EXIT` | `active` | `R14` | `ISF-LOOP-EARLY-EXIT.4` (`.1`–`.3` done) | [docs/tasks/ISF-LOOP-EARLY-EXIT.md](docs/tasks/ISF-LOOP-EARLY-EXIT.md) |
 | `ISF-REGISTER-RESET-VALUES` | `active` | `R14` | `ISF-REGISTER-RESET-VALUES.3` (`.1`–`.2` done) | [docs/tasks/ISF-REGISTER-RESET-VALUES.md](docs/tasks/ISF-REGISTER-RESET-VALUES.md) |
-| `ISF-FOR-LOOP` | `active` | `R14` | `ISF-FOR-LOOP.3` (`.1`–`.2` done; top-level `(for (i N) body)` indexed counted loop — parser desugar into a declared index local + counted repeat; simulated exactly-N with `i=0..N-1`; `.3` = nesting/embedding + explicit-width/param counts) | [docs/tasks/ISF-FOR-LOOP.md](docs/tasks/ISF-FOR-LOOP.md) |
+| `ISF-FOR-LOOP` | `active` | `R14` | `ISF-FOR-LOOP.4` (`.1`–`.3` done; top-level `(for (i N) body)` + explicit-width `(for (i (width W) COUNT) body)` indexed counted loop with literal/param/constant/runtime counts; simulated exactly-N with `i=0..N-1`; `.4` = nesting/embedding) | [docs/tasks/ISF-FOR-LOOP.md](docs/tasks/ISF-FOR-LOOP.md) |
 | `ISF-COUNTED-REPEAT-TERMINATION` | `active` | `R14` | `ISF-COUNTED-REPEAT-TERMINATION.3` (`.1`–`.2` done; check-first lowering — counted `(repeat N …)` now terminates exactly-N for static/runtime/zero counts; `.3` = runtime-wait-first-in-repeat + `--verify-hdl` width-cleanliness) | [docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md](docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md) |
 
 ## Proposed Task Trees

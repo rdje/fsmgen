@@ -226,11 +226,26 @@ Because the index advances at the *tail* of each iteration, the body reads `i` a
 counted `(repeat ...)` it lowers to runs the body exactly `N` times and then completes
 (see [the counted-repeat schedule](13b-transactions.md)).
 
-`N` must be a **literal** non-negative integer (`>= 1`), and the `(for ...)` must be a
-**top-level transaction clause** in this release — the index declaration uses `(local
-...)`, which is a transaction-context-only clause. A nested or embedded `(for ...)` (one
-inside another `(for ...)`, or inside a `when`/`switch`/`while`/`until`/`repeat` body), a
-non-literal or zero count, and an empty body all **fail closed** with a clear diagnostic:
+To loop a **variable** number of times, give the index an explicit width so the count may
+be a parameter, constant, or runtime signal:
+
+```lisp
+(for (i (width 8) n)            ;; n is a parameter/constant/runtime scalar
+  (update total (+ total i)))   ;; runs n times; i = 0 … n-1 (n == 0 runs zero times)
+```
+
+`(for (i (width W) COUNT) ...)` declares the index at width `W` (a positive integer
+literal — you size it to hold `COUNT-1`) and accepts any count the counted `(repeat ...)`
+accepts (literal, actor/transaction parameter, package/actor constant, or known-width
+runtime scalar). The plain `(for (i N) ...)` form requires a **literal** `N >= 1` (its
+width auto-sizes); use the explicit-width form for a non-literal count.
+
+The `(for ...)` must be a **top-level transaction clause** in this release — the index
+declaration uses `(local ...)`, which is a transaction-context-only clause. A nested or
+embedded `(for ...)` (one inside another `(for ...)`, or inside a
+`when`/`switch`/`while`/`until`/`repeat` body), a zero width, a literal-zero count, an
+implicit-width non-literal count, and an empty body all **fail closed** with a clear
+diagnostic:
 
 ```lisp
 ;; rejected: (for ...) is currently supported only as a top-level transaction clause

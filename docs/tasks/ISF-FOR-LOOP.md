@@ -112,9 +112,16 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
   Commit: `this slice`
 
 - ID: `ISF-FOR-LOOP.3`
+  Status: `done`
+  Goal: `Explicit-width index + non-literal counts: (for (i (width W) COUNT) body) where COUNT may be a literal, parameter, constant, or runtime scalar.`
+  Acceptance: `(for (i (width W) N) body) declares the index at width W and passes COUNT to the counted (repeat …) (which accepts literal/param/constant/runtime counts); i counts 0..COUNT-1; COUNT==0 (runtime) runs zero times. A zero width, a literal-zero count, an implicit-width non-literal count, and an empty body fail closed with clear diagnostics. The implicit (for (i N) …) literal form is unchanged. t/1394 gains explicit-width subtests; 13d + 13k document the form.`
+  Verification: `(for (i (width 8) n) (update total (+ total i))) lowers (i width 8; repeat loads n once -> check); simulated (verilator --binary) n=5 -> total==10 (i=0..4), n=1 -> 0, n=0 -> 0 iterations. Fail-closed: (width 0), literal (width 8) 0, implicit (i n). prove -Iperl t/1394 (6 subtests) + doc gates PASS; perl -c; mdbook build; git diff --check.`
+  Commit: `this slice`
+
+- ID: `ISF-FOR-LOOP.4`
   Status: `frontier`
-  Goal: `Lift restrictions: hoist indices so (for …) nests/embeds in control flow; explicit-width and param/constant counts.`
-  Acceptance: `TBD when scheduled.`
+  Goal: `Nested / embedded (for …): hoist index locals to the transaction top so a (for …) may sit inside another (for …) or inside a when/switch/while/until/repeat body.`
+  Acceptance: `TBD when scheduled. NOTE: nested for-loops desugar to nested (repeat …), which the clause allow-list currently rejects ("unsupported '(repeat ...)' clause in repeat body") — so .4 likely depends on (or co-designs with) nested-counted-repeat support.`
   Verification: `TBD`
   Commit: `pending`
 
@@ -124,7 +131,8 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
 | 2 | `.2` | `done` | Top-level `(for (i N) body)`, literal `N`, auto-sized index — parser desugar into `(local i …)` + counted `(repeat …)` with a tail increment. Simulated exactly-N with `i = 0..N-1`. |
-| 3 | `.3` | `frontier` | Nesting/embedding (index hoisting) + explicit-width / param counts. |
+| 3 | `.3` | `done` | Explicit-width index + non-literal counts: `(for (i (width W) COUNT) body)` (param/constant/runtime counts). Simulated runtime n=5 → sum 0..4 == 10. |
+| 4 | `.4` | `frontier` | Nesting/embedding (index hoisting) — likely needs nested-counted-repeat support. |
 
 ## Decisions
 
@@ -145,13 +153,15 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.2` | `(for (i 4) …)` lowers (index in `+size`, init 0, body reads `i`, tail increment, check-first repeat); `verilator --binary` → terminates, `result == 6` (`i = 0..3`, exactly 4 iterations); `--check-json` SUCCESS; non-literal/zero/empty/nested/embedded fail closed. `prove -Iperl t/1394 t/1250 t/1305 t/1304 t/1307 t/1376` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.3` | `(for (i (width 8) n) …)` lowers (i width 8; repeat loads runtime `n` once → check); `verilator --binary` → n=5 → total==10 (`i=0..4`), n=1 → 0, n=0 → 0 iterations; fail-closed: zero width, literal-zero count, implicit-width non-literal. `prove -Iperl t/1394` (6 subtests) + doc gates PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `ISF-FOR-LOOP.1: select (for (i N) body) indexed counted loop` | committed |
-| `.2` | `ISF-FOR-LOOP.2: (for (i N) body) indexed counted loop desugar` | this slice |
+| `.2` | `ISF-FOR-LOOP.2: (for (i N) body) indexed counted loop desugar` | committed |
+| `.3` | `ISF-FOR-LOOP.3: (for (i (width W) COUNT) body) explicit-width + non-literal counts` | this slice |
 
 ## Changelog
 
@@ -171,3 +181,14 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
   Nested/embedded `(for …)`, a non-literal or zero count, and an empty body fail closed
   with clear diagnostics. `t/1394` (4 subtests); `13d` gains a `(for …)` section; the
   `13k` control-flow row lists it; `docs/ISF_SPEC.md` registers `t/1394`.
+- `2026-06-01`: `.3` shipped — explicit-width index + non-literal counts.
+  `(for (i (width W) COUNT) body)` declares the index at width `W` (positive literal) and
+  passes `COUNT` to the counted `(repeat …)`, so `COUNT` may be a literal, actor/transaction
+  parameter, package/actor constant, or known-width runtime scalar — the indexed
+  variable-count loop. Verified by simulation: `(for (i (width 8) n) (update total
+  (+ total i)))` runs `n` times with `i = 0..n-1` (n=5 → total 10, n=0 → zero iterations).
+  A zero width, a literal-zero count, an implicit-width non-literal count, and an empty
+  body fail closed. The implicit `(for (i N) …)` literal form is unchanged. `t/1394` gains
+  two explicit-width subtests (6 total); `13d`/`13k` document the form. Nesting/embedding
+  (index hoisting) moves to `.4` (likely needs nested-counted-repeat support, since nested
+  for-loops desugar to nested `(repeat …)` which the allow-list currently rejects).

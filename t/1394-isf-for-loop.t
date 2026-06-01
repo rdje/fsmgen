@@ -103,6 +103,48 @@ subtest '(for …) fails closed on a malformed spec' => sub {
     like($nonlit, qr/requires a literal non-negative integer count/, 'a non-literal count names the literal-count requirement');
 };
 
+subtest 'explicit-width form (for (i (width W) N) …) accepts a runtime/parameter count' => sub {
+    # ISF-FOR-LOOP.3: (for (i (width W) N) body) gives the index an explicit width W so the
+    # count N may be a non-literal (here a runtime input) — bare (repeat N) gives no index;
+    # this is the indexed variable-count loop. It rides the counted (repeat …) lowering.
+    my $actor = parse_source(<<'ISF', 'for-runtime');
+(actor frt
+  (interface (input start) (input n (width 8)) (output done) (output total (width 8)))
+  (transaction main
+    (on start)
+    (for (i (width 8) n)
+      (update total (+ total i)))
+    (complete done)))
+ISF
+    my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+    ok($lowered, 'a (for (i (width 8) n) …) with a runtime count lowers') or diag($@);
+    my $fsm = $lowered->{files}{'frt.fsm'};
+    like($fsm, qr/\(i 8\)/, 'the index i takes the explicit width 8');
+    like($fsm, qr/\(main_repeat_init_\d+\n\s+\(<= \(main_cnt n\)\)\n\s+\(-> main_repeat_check_\d+\)/s,
+        'the counted repeat loads the runtime count n once and flows to the check');
+    like($fsm, qr/\(<- \(i \(\+ i 1\)\)\)/, 'the index advances each iteration');
+};
+
+subtest 'the explicit-width form fails closed on a bad width / literal-zero count / missing count' => sub {
+    my %bad = (
+        'a zero width'        => '(i (width 0) n)',
+        'a literal-zero count'=> '(i (width 8) 0)',
+        'a non-literal count without a width' => '(i n)',
+    );
+    for my $label (sort keys %bad) {
+        my $err = lower_error(
+            "(actor t (interface (input start) (input n (width 8)) (output done) (output r (width 8))) "
+            . "(transaction main (on start) (for $bad{$label} (update r (+ r 1))) (complete done)))",
+            "bad-$label");
+        like($err, qr/\(for/, "$label is rejected with a (for …) diagnostic");
+    }
+    my $nolit = lower_error(
+        "(actor t (interface (input start) (input n (width 8)) (output done) (output r (width 8))) "
+        . "(transaction main (on start) (for (i n) (update r (+ r 1))) (complete done)))",
+        'no-width-nonlit');
+    like($nolit, qr/explicit-width form/, 'a non-literal count without a width points at the explicit-width form');
+};
+
 subtest 'nested or embedded (for …) fails closed (top-level only in .2)' => sub {
     my $nested = lower_error(
         "(actor t (interface (input start) (output done) (output result (width 8))) "
