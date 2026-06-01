@@ -26,5 +26,6 @@
   - [Downstream Integration](13i-downstream-integration.md)
   - [Types, Enums, and Aggregates](13j-type-enum-aggregate.md)
   - [Feature Support Matrix](13k-isf-feature-support-matrix.md)
+  - [Reusable Procedures](13l-procedures.md)
 - [Feature Backlog](14-feature-backlog.md)
 - [Reference Map](90-reference-map.md)

@@ -16586,3 +16586,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   calling conventions now ship (inline + handshake), pickable per call-site. Reuses
   the bound-do substrate; --check-json + verilator/yosys PASS. 13b section + table;
   t/1390 (9 subtests). Frontier .5 (docs chapter).
+- `.5` (ISF-PROCEDURES) shipped + TREE CLOSED (2026-06-01): dedicated 13l-procedures
+  chapter (many examples incl. proc+while+exit-when), wired into SUMMARY + live-doc
+  contract; 13b → pointer. ISF-PROCEDURES complete: (proc) callable inline OR
+  handshake, in+out params. Both conventions + thorough docs delivered.

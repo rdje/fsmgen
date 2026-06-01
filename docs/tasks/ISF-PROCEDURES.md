@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-PROCEDURES`
-- Status: `active`
+- Status: `done` (closed `2026-06-01`)
 - Roadmap lane: `R14` (ISF — high-level language richness)
 - Created: `2026-06-01`
 - Last updated: `2026-06-01`
@@ -165,7 +165,7 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 ## Task Tree
 
 - ID: `ISF-PROCEDURES`
-  Status: `active`
+  Status: `done`
   Goal: `Reusable (proc) callable inline (substitution) or via a port-binding handshake, picked at the call site.`
   Children: `.1` (select), `.2` (inline in-params), `.3` (inline out-params), `.4` (handshake call), `.5` (docs)
 
@@ -195,6 +195,13 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
   Goal: `Handshake call (call NAME actuals as INST) — synthesize the proc as a one-shot child transaction and drive it with the bound (do) handshake.`
   Acceptance: `(call NAME actuals as INST) lowers to a bound (do NAME (bind (input <in-param> <actual>)... (output <out-param> <actual>)...)) against a child transaction synthesized from the proc (params -> typed ports: in->input, out->output; body -> transaction body terminated by (complete NAME_done)). _expand_handshake_call builds the bound do + records the synthesis need; _expand_procedure_calls drains a worklist of synthesis targets (a synthesized body may reach further handshake calls); _synthesize_proc_transaction builds + parses the child transaction (and expands inline calls in its body, recursion-guarded). The as INST suffix is the discriminator (the proc body keeps its param NAMES as port names; no substitution). The call site asserts <NAME>_start, binds the in-args, reads the out-args on done, and blocks on <NAME>_done; --check-json + verilator/yosys PASS. Fails closed: missing instance name after as, and a proc/transaction name collision. KNOWN LIMITATION: the synthesized child is a reused sibling, so INST is currently a label (distinct instances per call is a future refinement). 13b gains a handshake section + an inline-vs-handshake comparison table + example; 13k row updated; t/1390 replaces the handshake-deferral assertion with a positive handshake subtest + two handshake fail-closed cases.`
   Verification: `Spike: (call inc_into s result as a0) synthesizes the inc_into child + bound do; main asserts inc_into_start, binds (in s)/(result> r), blocks on <inc_into_done; child runs r=in+1; --check-json SUCCESS; --verify-hdl verilator_lint+yosys_synthesis PASS; missing-INST + name-collision fail closed. prove -Iperl t/1390 (9 subtests) t/1376 t/1305 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
+  Commit: `136f3636`
+
+- ID: `ISF-PROCEDURES.5`
+  Status: `done`
+  Goal: `Thorough, example-rich mdBook documentation — a dedicated Reusable Procedures chapter.`
+  Acceptance: `A new docs/book/src/13l-procedures.md chapter documents procedures end-to-end with many runnable examples (definition, inline calls, expression actuals, multi-param, call-in-loop, in/out params, the handshake call, an inline-vs-handshake comparison table + when-to-use, a realistic procedure+while+exit-when example, and the full fail-closed boundary list). Wired into SUMMARY.md and the live-document-path contract (FSM::Support::ISFPublicInterfaceContract, after 13k) so t/1303 + the capability manifest stay consistent; the 13b section is reduced to a pointer to avoid duplication; every example lowers (t/1376). Per the user directive for extremely thorough, example-rich docs.`
+  Verification: `crc_step_demo (proc + while + exit-when) lowers; prove -Iperl t/1303 t/1376 t/1305 t/1250 t/297 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c (contract); mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -205,7 +212,7 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 | 2 | `.2` | `done` | Inline `(proc)` + `(call NAME actuals)` for in-params: a parse-time expansion pass in `FSM::Adapter::ISF::Parser` substitutes actuals into the proc body (identical `.fsm` to hand-written); fails closed on unknown/arity/recursion/handshake-deferred/out-param-deferred/malformed. `--check-json` + verilator/yosys PASS. `t/1390`. |
 | 3 | `.3` | `done` | Inline **out-params** — `(out NAME (width N))` writes back into a caller-chosen signal (the out-actual must be a plain lvalue, not an expression). `--check-json` + verilator/yosys PASS. `t/1390`. |
 | 4 | `.4` | `done` | **Handshake** `(call … as INST)` — synthesizes the proc as a one-shot child transaction (in→input ports, out→output ports) + a bound `(do)` call; reuses the child-activation substrate. **Both calling conventions now ship.** `--check-json` + verilator/yosys PASS. `t/1390`. |
-| 5 | `.5` | `pending` | Dedicated example-dense docs chapter + matrix/spec sync. |
+| 5 | `.5` | `done` | Dedicated example-dense **Reusable Procedures** chapter (`13l-procedures.md`) wired into SUMMARY + the live-doc-path contract; `13b` reduced to a pointer; matrix/spec already synced. **Tree complete.** |
 
 ## Decisions
 
@@ -236,6 +243,7 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.5` | New `13l-procedures.md` chapter (many runnable examples incl. proc+while+exit-when) wired into SUMMARY + the live-doc-path contract; `13b` reduced to a pointer. `prove -Iperl t/1303 t/1376 t/1305 t/1250 t/297` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.4` | Spike: `(call inc_into s result as a0)` synthesizes the `inc_into` child + bound `(do)`; main asserts `inc_into_start`, binds `(in s)`/`(result> r)`, blocks on `<inc_into_done`; child runs `r=in+1`; `--check-json` SUCCESS; `--verify-hdl` verilator_lint+yosys_synthesis PASS; missing-INST + name-collision fail closed. `prove -Iperl t/1390` (9 subtests) `t/1376 t/1305` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.3` | Spike: out-param `(out r (width 8))` writes into the caller signal (`(call compute s r1)` -> `(update r1 (+ s 1))`); expression-as-out-actual rejected; `--check-json` + verilator/yosys PASS. `prove -Iperl t/1390` (7 subtests) `t/1376 t/1305` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.2` | Spike: `(proc accumulate (params (in (width 8))) (update total (+ total in)))` + `(call accumulate s)`/`(call accumulate (+ s 1))` expands to identical `.fsm`; calls in when/while bodies lower; `--check-json` SUCCESS; `--verify-hdl` verilator_lint+yosys_synthesis PASS; unknown/arity/recursion/handshake/out-param/malformed fail closed. `prove -Iperl t/1390` (6 subtests) `t/1250 t/1376` (45) `t/1305 t/1303 t/1304 t/1307` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
@@ -247,7 +255,8 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 | `.1` | `ISF-PROCEDURES.1: select reusable procedures (inline + handshake calls)` | `76d7f01b` |
 | `.2` | `ISF-PROCEDURES.2: inline (proc)/(call) reusable procedures (in-params)` | `e680f967` |
 | `.3` | `ISF-PROCEDURES.3: inline out-parameters (write-back)` | `e06ad8db` |
-| `.4` | `ISF-PROCEDURES.4: handshake (call ... as INST) via synthesized child transaction` | `ship commit (this slice)` |
+| `.4` | `ISF-PROCEDURES.4: handshake (call ... as INST) via synthesized child transaction` | `136f3636` |
+| `.5` | `ISF-PROCEDURES.5: dedicated Reusable Procedures mdBook chapter (13l)` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -321,3 +330,18 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
   cleanly at the call site — is now fully delivered: one `(proc)` definition, called
   inline with `(call NAME actuals)` or via the handshake with `(call NAME actuals as
   INST)`.**
+- `2026-06-01`: `.5` shipped — a dedicated **Reusable Procedures** mdBook chapter
+  (`docs/book/src/13l-procedures.md`) consolidating the construct end-to-end with many
+  runnable examples: definition syntax; inline calls (basic, expression actual,
+  multi-parameter, call-in-loop); in/out parameters; the handshake call; an
+  inline-vs-handshake comparison table with when-to-use guidance; a realistic
+  `proc + while + exit-when` example (combining the theme-#3 constructs); and the full
+  fail-closed boundary list. The chapter is wired into `SUMMARY.md` and the
+  live-document-path contract (`FSM::Support::ISFPublicInterfaceContract`, inserted
+  after `13k`) so `t/1303` and the capability manifest (`t/297`) stay consistent; the
+  `13b` procedures section is reduced to a short pointer to avoid duplication. Every
+  example lowers (`t/1376`). **Tree complete** — `ISF-PROCEDURES` is closed: a
+  reusable `(proc)` definition callable inline (`(call NAME actuals)`) or via the
+  port-binding handshake (`(call NAME actuals as INST)`), with value-in and
+  write-back-out parameters, fully delivering the user's "implement both calling
+  conventions, pickable cleanly" direction and the thorough-documentation directive.

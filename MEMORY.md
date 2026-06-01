@@ -38678,3 +38678,14 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   = future). t/1390 (9 subtests). 13b handshake section + inline-vs-handshake table.
 - USER DIRECTION FULLY DELIVERED: one (proc), pick inline (call N a) OR handshake
   (call N a as INST) per call site. Frontier .5 (dedicated example-dense docs chapter).
+
+## 2026-06-01: ISF-PROCEDURES CLOSED (.5) — dedicated 13l chapter; tree complete
+- `.5`: new docs/book/src/13l-procedures.md chapter (many runnable examples incl. a
+  realistic proc+while+exit-when), wired into SUMMARY + the live-doc-path contract
+  (FSM::Support::ISFPublicInterfaceContract, after 13k → t/1303 + t/297 capability
+  manifest stay consistent); 13b reduced to a pointer. NOTE: adding a 13x book page =
+  create page + SUMMARY entry + this hardcoded contract list (in SUMMARY order).
+- TREE CLOSED (Active→Completed). ISF-PROCEDURES delivers the full "callable block
+  with its own arguments": (proc NAME (params ...) body) called inline (call N a) OR
+  handshake (call N a as INST), with in + out params. Both directions of the user's
+  ask done (both conventions + thorough docs).

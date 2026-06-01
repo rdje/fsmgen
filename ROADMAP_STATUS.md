@@ -14987,3 +14987,10 @@ Exit criteria:
   bound-do substrate; `--check-json` + verilator/yosys PASS. 13b handshake section +
   comparison table; 13k row; `t/1390` (9 subtests). Frontier `.5` (dedicated
   example-dense procedures chapter).
+- `R14`: `ISF-PROCEDURES` CLOSED (2026-06-01, `.1`–`.5`). Reusable procedures with both
+  calling conventions (inline `(call N a)` / handshake `(call N a as INST)`) and
+  value-in + write-back-out parameters; dedicated `13l-procedures.md` chapter (many
+  runnable examples) wired into SUMMARY + the live-doc-path contract. Fully delivers
+  the user's "implement both, pickable" + "thorough mdBook docs" directives. Theme #3
+  (new intent-capture constructs) now has two shipped construct families: loop
+  early-exit and reusable procedures.
