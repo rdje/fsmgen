@@ -83,13 +83,10 @@ A malformed form fails closed before `.fsm` emission: `(incr)` with no register
 name, or trailing tokens that are not a `by N` pair (e.g. `(incr x foo 2)`), is
 rejected with a diagnostic.
 
-> **One expression write per register per transaction.** Because `(incr …)` /
-> `(decr …)` lower to an expression `(set …)`, a register written by **two or
-> more** expression `(set …)`s in different states of one transaction — for
-> example two literal `(incr x)` back to back — hits a pre-existing codegen
-> constraint (one expression write-enable per register). The common patterns are
-> unaffected: a single `(incr x)`, an `(incr x)` inside a loop body (one state
-> executed N times), or combining repeated bumps into one `(incr x by N)`.
+> **Sequential writes accumulate.** Because `(incr …)` / `(decr …)` lower to an
+> expression `(set …)`, two in a row (`(incr x)` then `(incr x)`) run as two
+> sequential states — each with its own write-enable — so `x` ends up bumped
+> twice. (You can also combine them into one `(incr x by N)`.)
 
 **Lowering**: `(<- (NAME (+ NAME N)))` / `(<- (NAME (- NAME N)))` — the same
 sequential Q-named assignment `(set …)` produces.
@@ -156,12 +153,10 @@ missing / non-integer / multiple bit index, a bit index `>=` the register width,
 or — for `clear-bit` — a register whose width is not a statically known literal
 (e.g. a parameterized `(width W)`), since the inverse mask cannot then be formed.
 
-> **One expression write per register per transaction.** Like every expression
-> `(set …)`, two bit ops on the **same** register in different states of one
-> transaction (e.g. `(set-bit ctrl 0)` then `(set-bit ctrl 1)`) hit the
-> one-expression-write-enable-per-register codegen constraint. Use one bit op per
-> register per transaction (a bit op inside a loop body is one state and is fine),
-> or write the combined mask directly with `(set ctrl (| ctrl 3))`.
+> **Sequential bit ops compose.** Two bit ops on the same register
+> (`(set-bit ctrl 0)` then `(set-bit ctrl 1)`) run as two sequential states, each
+> with its own write-enable, so both bits end up set. (You can also write the
+> combined mask directly with `(set ctrl (| ctrl 3))`.)
 
 **Lowering**: `(<- (NAME (| NAME M)))` / `(<- (NAME (^ NAME M)))` /
 `(<- (NAME (& NAME INV)))` — the sequential Q-named assignment `(set …)` produces.
@@ -267,10 +262,9 @@ keeps its `0xFF` value.
 A malformed form fails closed before `.fsm` emission: a missing name; a malformed
 `(bits HI LO)` selector; non-literal `HI` / `LO` / `VALUE`; `HI < LO`; `HI >=` the
 register width; a `VALUE` that overflows the field; or a non-literal / symbolic
-width. As with every expression `(set …)`, two `(set-field …)` writes to the
-**same** register in different states of one transaction alias (the
-one-expression-write-enable-per-register constraint) — use one per register, or
-combine the fields into a single value.
+width. Two `(set-field …)` writes to the same register run as two sequential
+read-modify-write states (each with its own write-enable), so writing two
+disjoint fields back to back leaves both set.
 
 **Lowering**: `(<- (NAME (| (& NAME W'dCLEARMASK) W'dSHIFTED)))` — the sequential
 Q-named assignment `(set …)` produces.

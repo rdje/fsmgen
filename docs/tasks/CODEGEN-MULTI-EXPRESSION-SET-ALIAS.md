@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `CODEGEN-MULTI-EXPRESSION-SET-ALIAS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: core HDL codegen (EnableGraph synthesis) — not R14/ISF
 - Created: `2026-06-02`
 - Last updated: `2026-06-02`
@@ -61,30 +61,45 @@ continuous assign is not a structural multi-driver — so neither external tool
 catches it. Only functional simulation (or reading the generated wiring) reveals
 the dropped write.
 
-## Root cause (to confirm)
+## Root cause (confirmed)
 
-The expression write-enable wire is named per **register** (`lc(type) . "_expr"`
-+ `_en` in `FSM/Synthesis/EnableGraph/` — see `SignalSupport.pm` ~L124,
-`CaptureSupport.pm` ~L879, and `HDL/ASTFactorization.pm` ~L622) rather than per
-**write site / state**. Two expression-set states for the same register collide
-on that one wire; the last `assign` wins, and the onehot0 selector is built from
-the same (register-keyed) name list.
+`FSM/Synthesis/EnableGraph/SignalSupport.pm::generate_rhs_based_enable_name($lhs,
+$rhs)` (~L757) builds the LHS-level write-enable name as
+`"${clean_lhs}_${rhs_suffix}_en"`. For a complex-expression RHS it takes the
+`else` branch (~L781-786): it names the expression via the `expr_namer`, then
+**strips the disambiguating suffix** — `$expr_name =~ s/_expr\d*$//;` and
+`s/^expr_//;` — collapsing distinct expression RHS to the same generic suffix, so
+`(+ acc a)` and `(+ acc b)` both yield the LHS-level enable name `acc_expr_en`.
 
-## Proposed direction (design, not yet committed)
+The per-rhs-group LHS-level enables are built in
+`AssignmentSupport.pm::generate_rhs_based_enable_names` (~L685-708) — one
+`lhs_level_enable.{name, ast}` per distinct `$rhs` group. With colliding names,
+the two groups emit `assign acc_expr_en = …;` twice (a duplicate continuous
+assign — last wins) and `build_multiplexer_config` (~L727-737) pushes both groups
+into the mux / onehot0 under the **same** `enable_signal` name. The per-**state**
+DT enables (e.g. `main_set_2_acc_acc_b_en`) are already distinct — only the
+LHS-level name collapses.
 
-Give each expression write site its own enable (e.g. `<reg>_expr_en_<state>` or
-reuse the per-state `<state>_<reg>_..._en` already generated), drive the
-register's next-value mux by selecting among the **distinct** per-site enables,
-and build the `$onehot0` selector from those distinct enables so it once again
-detects a true same-cycle multi-write. Must stay backward-compatible with the
-single-expression-set case (no churn for the overwhelmingly common shape) and
-keep verilator-lint + yosys clean. Expect golden-output updates across the suite.
+## Fix (landed)
+
+Make the LHS-level enable name **unique per distinct RHS group** for one register.
+In `generate_rhs_based_enable_names`' per-lhs loop (`AssignmentSupport.pm` ~L681)
+a `%used_enable_names` set tracks the names assigned for that register; when
+`generate_rhs_based_enable_name` returns a name already used (distinct RHS
+collapsing to the same suffix), the later group's name gets a numeric
+discriminator (`<base>_2_en`, `<base>_3_en`, …) and the first occurrence keeps
+the bare name. Every consumer (the `assign <name> = …` emission in
+`EnableSupport.pm::generate_lhs_enables_from_analysis`, the mux `enable_signal`,
+the `$onehot0` selector, the factorization scans) reads the stored
+`lhs_level_enable.{name}`, so the rename propagates everywhere from one site.
+`generate_rhs_based_enable_name` has exactly one caller, so no path regenerates a
+stale name. Single-write registers never collide → identical names → zero golden
+churn for the common case.
 
 ## Non-Goals
 
 - Changing ISF surface semantics. ISF constructs that lower to expression
-  `(set …)` are correct; this is purely a backend write-enable naming/selection
-  fix. The ISF docs (13e) describe the limitation in the meantime.
+  `(set …)` are correct; this was purely a backend write-enable naming fix.
 
 ## Acceptance Criteria
 
@@ -97,16 +112,21 @@ keep verilator-lint + yosys clean. Expect golden-output updates across the suite
 
 ## Slice plan
 
-- `.1` select + this doc (no code).
-- `.2` characterization test capturing the current broken wiring as the bug
-  witness (xfail / documented-current-behavior), so the fix has a target.
-- `.3` per-write-site enable generation in EnableGraph + golden updates; the
-  repro applies both writes; multi-driver detection restored.
+- `.1` select + this doc (no code). `done`.
+- `.2`/`.3` per-register enable-name disambiguation + regression test
+  (`t/1405`) + correction of the now-stale 13e/13k limitation notes. `done`
+  (landed together — the fix was a focused per-lhs uniquifier, not a sweeping
+  per-site rewrite, so one slice covered it).
+
+## Verification
+
+| Date | Leaf | Checks | Result |
+| --- | --- | --- | --- |
+| `2026-06-02` | `.2`/`.3` | `t/1405` (2 subtests: two expression sets to one register get distinct non-aliased enables `acc_expr_en` / `acc_expr_2_en` with distinct mux arms; a single set is unchanged — bare `acc_expr_en`, no `_2_en`); witness `(set acc (+ acc a))(set acc (+ acc b))` `--verify-hdl` clean and `verilator --binary` sim → `acc == a+b == 27` (was `b == 20`, the `+a` write dropped); full `prove t/` green (no golden churn); 13e/13k limitation notes corrected to "sequential writes compose"; memory note retired | `PASS` |
 
 ## Blockers
 
-- None — but it is a core-backend change with broad golden impact; sequence it
-  deliberately rather than mid-ISF-theme. Logged now so it is tracked.
+- None. Resolved.
 
 ## Changelog
 
@@ -114,3 +134,11 @@ keep verilator-lint + yosys clean. Expect golden-output updates across the suite
   `(incr x)` in a row exposed it); confirmed pre-existing via raw double
   `(set …)`. Documented the limitation in 13e and the 13k matrix in the
   meantime; the counted-repeat lowering already avoids it by construction.
+- `2026-06-02`: **fixed + closed**. Root-caused to the name collapse in
+  `generate_rhs_based_enable_name` and fixed by a per-register enable-name
+  uniquifier in `generate_rhs_based_enable_names`. `t/1405` guards the distinct
+  wiring; the witness simulates to `acc == a+b`; full suite green with no golden
+  churn. The 13e/13k notes that documented this as a limitation were corrected to
+  describe sequential composing writes, and the interim memory note was retired.
+  Counted-repeat no longer needs to avoid a 2nd counter expression for this
+  reason (its check-first design stays for the termination fix, independently).

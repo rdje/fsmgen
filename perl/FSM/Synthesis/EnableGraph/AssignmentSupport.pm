@@ -678,6 +678,15 @@ sub generate_complete_enable_structure ($self, $lhs) {
         }
     }
 
+    # CODEGEN-MULTI-EXPRESSION-SET-ALIAS: distinct RHS can collapse to the same generated
+    # LHS-level enable name (generate_rhs_based_enable_name strips the expr-namer's
+    # disambiguating suffix). Two expression `(set)`s to one register in different states
+    # would then share one `<lhs>_..._en` wire — the later `assign` overwrites it and the
+    # earlier write is silently dropped, while the onehot0 selector degenerates to the same
+    # name twice. Track names assigned for this LHS and disambiguate any collision so every
+    # distinct RHS group drives its own enable. Single-write registers never collide, so
+    # their names (and generated HDL) are unchanged.
+    my %used_enable_names;
     for my $rhs (sort keys %{$lhs_analysis->{rhs_groups}}) {
         my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
 
@@ -694,6 +703,13 @@ sub generate_complete_enable_structure ($self, $lhs) {
         }
 
         my $lhs_enable_name = $signal_support->generate_rhs_based_enable_name($lhs, $rhs);
+        if ($used_enable_names{$lhs_enable_name}) {
+            (my $base = $lhs_enable_name) =~ s/_en$//;
+            my $n = 2;
+            $n++ while $used_enable_names{"${base}_${n}_en"};
+            $lhs_enable_name = "${base}_${n}_en";
+        }
+        $used_enable_names{$lhs_enable_name} = 1;
 
         $rhs_group->{lhs_level_enable} = {
             name => $lhs_enable_name,
