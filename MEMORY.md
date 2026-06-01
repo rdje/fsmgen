@@ -38689,3 +38689,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   with its own arguments": (proc NAME (params ...) body) called inline (call N a) OR
   handshake (call N a as INST), with in + out params. Both directions of the user's
   ask done (both conventions + thorough docs).
+
+## 2026-06-01: ISF-LOCAL-VARIABLES tree opened (select) — the "variables" companion to procedures
+- New theme #3 construct: `(local NAME (width N) [(init V)])` explicit-width internal
+  register + `(let NAME EXPR)` named intermediate. GROUND TRUTH: implicit internal
+  scalars ALREADY work ((set tmp expr) with undeclared tmp lowers; width inferred, NOT
+  in +size). So (local) pins the width (avoids inference ambiguity) + adds reset/init
+  + clear decl. No internal-signal decl keyword exists today. ISF/IAL1 (desugars to a
+  declared signal). Frontier .2 (local decl), .3 init, .4 let, .5 docs.
