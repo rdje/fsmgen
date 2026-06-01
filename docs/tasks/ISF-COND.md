@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-COND`
-- Status: `active`
+- Status: `done` (closed `2026-06-01`)
 - Roadmap lane: `R14` (ISF — high-level language richness)
 - Created: `2026-06-01`
 - Last updated: `2026-06-01`
@@ -72,7 +72,7 @@ expression guards, and `&`/`!` are shipped operators.
 ## Task Tree
 
 - ID: `ISF-COND`
-  Status: `active`
+  Status: `done`
   Goal: `(cond …) if/else-if/else priority chain — parser desugar to a negated-guard when-chain.`
   Children: `.1` (select + target validation), `.2` (desugar + tests + docs)
 
@@ -84,18 +84,18 @@ expression guards, and `&`/`!` are shipped operators.
   Commit: `this slice`
 
 - ID: `ISF-COND.2`
-  Status: `todo`
+  Status: `done`
   Goal: `(cond …) parser desugar to the negated-guard when-chain + tests + docs.`
-  Acceptance: `(cond (c1 b1)…(else bn)) lowers to the priority when-chain; first true branch runs, else when none; nested cond expands; else-not-last / missing condition / empty body fail closed; simulation confirms priority. 13d section + 13k row; ISF_SPEC registers t/.`
-  Verification: `Spike + t/; full isf regression; perl -c; mdbook build; git diff --check`
-  Commit: `pending`
+  Acceptance: `_expand_cond_loops runs before for/let/proc expansion; (cond (c1 b1)…(else bn)) desugars to (when c1 b1)(when (& (! c1) c2) b2)…(when (& (! c1)(! c2)…) elseBody) via _desugar_cond + _cond_and_guard (left-nested &); the first true branch runs and the else runs when none do (simulation-confirmed priority). Expression conditions and a no-else chain lower; a nested (cond …) in a branch expands; else-not-last, an empty branch body (trailing-undef filtered), and a non-list branch fail closed with clear diagnostics. 13d gains a (cond …) section; 13k row lists it; ISF_SPEC registers t/1396.`
+  Verification: `(cond (c1 …)(c2 …)(else …)) lowers to ?c1 / ?(& (! c1) c2) / ?(& (! c1)(! c2)); verilator --binary: c1=1->r1, c1=1&c2=1->r1, c1=0&c2=1->r2, c1=0&c2=0->r3 (priority correct). Expr conds, no-else, nested cond lower; else-not-last/empty-body/non-list fail closed. prove -Iperl t/1396 (4 subtests) + doc gates PASS; full suite PASS; perl -c; mdbook build; git diff --check.`
+  Commit: `this slice`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Select; target (negated-guard when-chain) validated by simulation (priority correct). |
-| 2 | `.2` | `todo` | `(cond …)` desugar + tests + docs. |
+| 2 | `.2` | `done` | `(cond …)` desugar + tests + docs. Simulation-confirmed priority. **Tree complete.** |
 
 ## Decisions
 
@@ -112,15 +112,29 @@ expression guards, and `&`/`!` are shipped operators.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | verilator `--binary`: negated-guard `when`-chain → first-true-branch priority (c1>c2; else when none); `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.2` | `(cond (c1 …)(c2 …)(else …))` lowers to `?c1` / `?(& (! c1) c2)` / `?(& (! c1)(! c2))`; `verilator --binary` → c1=1→r1, c1=1&c2=1→r1, c1=0&c2=1→r2, c1=0&c2=0→r3 (priority); expr-conds / no-else / nested cond lower; else-not-last / empty-body / non-list fail closed. `prove -Iperl t/1396` (4 subtests) + doc gates PASS; full suite PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-COND.1: select (cond …) if/else-if/else priority chain` | this slice |
+| `.1` | `ISF-COND.1: select (cond …) if/else-if/else priority chain` | `1c7f8b9c` |
+| `.2` | `ISF-COND.2: (cond …) desugar to a negated-guard when-chain` | this slice |
 
 ## Changelog
 
 - `2026-06-01`: Created — `(cond …)` if/else-if/else priority chain, a pure ISF parser
   desugar to a `when`-chain with accumulated negated guards. Target (priority correctness)
   validated by simulation. `.2` lands the desugar + tests + docs.
+- `2026-06-01`: `.2` shipped — **tree complete**. `_expand_cond_loops` runs in
+  `_build_actor` before the for/let/proc passes; `_desugar_cond` turns each branch into a
+  `(when GUARD body…)`, accumulating `(! ci)` guards (left-nested `&` via `_cond_and_guard`)
+  so the first true branch wins and the `else` runs only when none did. Verified by
+  simulation (verilator `--binary`): `(cond (c1 …)(c2 …)(else …))` gives `c1`-priority
+  (`c1=1&c2=1 → r1`), `c2` when `c1` is false, and the `else` when both are false. Expression
+  conditions, a no-`else` chain, and a nested `(cond …)` all lower; `else`-not-last, an empty
+  branch body (the trailing-undef quirk is filtered), and a non-list branch fail closed with
+  clear diagnostics. `t/1396`; `13d` gains a `(cond …)` section; the `13k` control-flow row
+  lists it; `docs/ISF_SPEC.md` registers `t/1396`. The conditions are evaluated across the
+  multi-cycle `when`-chain, so they must be stable while it runs (sample volatile inputs
+  first), matching `when`/`switch`.

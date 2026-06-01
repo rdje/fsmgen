@@ -295,6 +295,12 @@ sub _build_actor($self, $actor_ast, $source_label) {
         }
     }
 
+    # ISF-COND: desugar `(cond (c body...)... (else body...))` if/else-if/else priority
+    # chains into a `when`-chain with accumulated negated guards BEFORE the for/let/proc
+    # passes, so the generated `when` bodies (and any `for`/`let`/`call` inside them) are
+    # expanded by those later passes.
+    $self->_expand_cond_loops($result);
+
     # ISF-FOR-LOOP: desugar `(for (i N) body)` indexed counted loops into a declared
     # index `(local i ...)` + `(repeat N body... (set i (+ i 1)))` BEFORE let/procedure
     # expansion, so any `(let ...)`/`(call ...)` inside the `for` body (now living inside
@@ -507,6 +513,95 @@ sub _proc_deep_clone($node) {
 # desugar — NAME is substituted by EXPR in the rest of the enclosing body (and nested
 # bodies, which may shadow it with their own `(let)`); the `(let)` clause itself emits
 # nothing. No register, no runtime cost.
+# --- ISF-COND: `(cond (c body...)... (else body...))` if/else-if/else (parser desugar) ---
+
+# `(cond …)` is the if/else-if/else priority chain. It desugars to a `when`-chain with
+# accumulated negated guards, so branch i runs only when `ci` holds and no earlier
+# condition did; an optional final `(else …)` runs when none held:
+#   (when c1 body1…) (when (& (! c1) c2) body2…) (when (& (! c1) (! c2)) elseBody…)
+# Each emitted clause is an ordinary `(when …)`, valid wherever the `(cond …)` appeared, so
+# no hoisting is needed; nested `(cond …)` in any body is expanded by recursion.
+sub _expand_cond_loops($self, $result) {
+    for my $tx (@{$result->{transactions} || []}) {
+        $tx->{clauses} = $self->_expand_conds_in_list(
+            $tx->{clauses}, "transaction '$tx->{name}'");
+    }
+}
+
+sub _expand_conds_in_list($self, $clauses, $ctx) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]) && $clause->[0] eq 'cond') {
+            push @out, @{ $self->_desugar_cond($clause, $ctx) };
+        } else {
+            push @out, $self->_cond_rewrite_clause($clause, $ctx);
+        }
+    }
+    return \@out;
+}
+
+# Recurse into body-bearing control flow so a `(cond …)` nested inside one is expanded.
+sub _cond_rewrite_clause($self, $clause, $ctx) {
+    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    # `when`/`while`/`until`/`repeat`/`for` carry a head (condition/count/spec) at [1] then a
+    # body at [2..]; recurse into the body.
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat' || $kw eq 'for') {
+        my $body = $self->_expand_conds_in_list([@{$clause}[2 .. $#$clause]], $ctx);
+        return [ $kw, $clause->[1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_conds_in_list([@{$br}[1 .. $#$br]], $ctx);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $clause->[1], @branches ];
+    }
+    return $clause;
+}
+
+# Left-nested `&` of the conditions: [a,b,c] -> (& (& a b) c). Single -> the condition itself.
+sub _cond_and_guard {
+    my ($conds) = @_;
+    my @c = @$conds;
+    my $g = shift @c;
+    $g = [ '&', $g, $_ ] for @c;
+    return $g;
+}
+
+sub _desugar_cond($self, $clause, $ctx) {
+    my (undef, @branches) = @$clause;
+    confess "Error: (cond ...) in $ctx requires at least one branch\n" unless @branches;
+    my (@out, @negated);
+    my $seen_else = 0;
+    for my $br (@branches) {
+        confess "Error: (cond ...) in $ctx branch must be a '(CONDITION body...)' or '(else body...)' list\n"
+            unless ref($br) eq 'ARRAY' && @$br >= 1 && defined($br->[0]);
+        confess "Error: (cond ...) in $ctx 'else' must be the last branch\n" if $seen_else;
+        my $head = $br->[0];
+        # The lisp parser can emit a trailing undef for `(a)`-shaped branches, so filter it.
+        my @body = grep { defined } @{$br}[1 .. $#$br];
+        confess "Error: (cond ...) in $ctx branch has an empty body\n" unless @body;
+        # Expand any nested `(cond ...)` in the branch body.
+        my $inner = $self->_expand_conds_in_list(\@body, "$ctx -> (cond ...)");
+        if (!ref($head) && $head eq 'else') {
+            $seen_else = 1;
+            my $guard = @negated ? _cond_and_guard(\@negated) : 1;
+            push @out, [ 'when', $guard, @$inner ];
+        } else {
+            my $guard = @negated ? _cond_and_guard([ @negated, $head ]) : $head;
+            push @out, [ 'when', $guard, @$inner ];
+            push @negated, [ '!', $head ];
+        }
+    }
+    return \@out;
+}
+
 # --- ISF-FOR-LOOP: `(for (i N) body)` indexed counted loop (parser desugar) ---
 
 # `(for (i N) body...)` runs `body` N times while exposing an index `i` counting

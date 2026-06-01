@@ -101,6 +101,39 @@ default branch excludes their union. If the explicit values are exhaustive for
 the signal width, the default branch is unreachable but remains a valid
 fallthrough target in the generated `.fsm`.
 
+## `(cond (condition body...)... (else body...))` — If / Else-If / Else
+
+`(cond ...)` is the **priority** conditional chain. It tests each branch's condition in
+order; the **first** branch whose condition holds runs (and only it), and the optional
+final `(else ...)` runs when none held. Where `(switch ...)` dispatches on one signal's
+*value*, `(cond ...)` chooses among independent boolean conditions (signals or expressions)
+— the if / else-if / else of a high-level language, without hand-nesting `when`.
+
+```lisp
+(cond
+  ((== mode 0) (drive read))
+  ((== mode 1) (drive write))
+  ((== mode 2) (drive erase))
+  (else        (drive nop)))
+```
+
+`(cond ...)` is pure ISF sugar: the parser desugars it into a `when`-chain with
+**accumulated negated guards**, so a later branch fires only when every earlier condition
+was false:
+
+```lisp
+(when (== mode 0) (drive read))
+(when (& (! (== mode 0)) (== mode 1)) (drive write))
+(when (& (! (== mode 0)) (! (== mode 1)) (== mode 2)) (drive erase))
+(when (& (! (== mode 0)) (! (== mode 1)) (! (== mode 2))) (drive nop))   ;; else
+```
+
+The branch conditions are evaluated across the chain (each `when` is a decision), so they
+should be **stable** while the chain runs — sample a volatile input first (as you would for
+`when`/`switch`). The `(else ...)` branch must be **last** (if present); a branch must have a
+condition (or be `else`) and a non-empty body, or the form **fails closed**. A `(cond ...)`
+nests anywhere a `when` may appear, including inside another `(cond ...)` branch.
+
 ## Mixing Control Flow
 
 ```lisp

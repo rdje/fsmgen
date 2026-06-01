@@ -49,7 +49,7 @@ first.
 | `ISF-LOOP-EARLY-EXIT` | `active` | `R14` | `ISF-LOOP-EARLY-EXIT.4` (`.1`–`.3` done) | [docs/tasks/ISF-LOOP-EARLY-EXIT.md](docs/tasks/ISF-LOOP-EARLY-EXIT.md) |
 | `ISF-REGISTER-RESET-VALUES` | `active` | `R14` | `ISF-REGISTER-RESET-VALUES.3` (`.1`–`.2` done) | [docs/tasks/ISF-REGISTER-RESET-VALUES.md](docs/tasks/ISF-REGISTER-RESET-VALUES.md) |
 | `ISF-FOR-LOOP` | `done` | `R14` | `closed (.1–.7; indexed counted loop — count, explicit-width/variable-count, range, strided step, nested, and embedded-in-control-flow via index hoisting; all simulated)` | [docs/tasks/ISF-FOR-LOOP.md](docs/tasks/ISF-FOR-LOOP.md) |
-| `ISF-COND` | `active` | `R14` | `ISF-COND.2` (`.1` done; `(cond …)` if/else-if/else priority chain — parser desugar to a negated-guard `when`-chain; target validated by simulation) | [docs/tasks/ISF-COND.md](docs/tasks/ISF-COND.md) |
+| `ISF-COND` | `done` | `R14` | `closed (.1–.2; (cond …) if/else-if/else priority chain — parser desugar to a negated-guard when-chain; first true branch wins; simulation-confirmed)` | [docs/tasks/ISF-COND.md](docs/tasks/ISF-COND.md) |
 | `ISF-NESTED-COUNTED-REPEAT` | `done` | `R14` | `closed (.1–.2; nested counted (repeat M (repeat N body)) with per-instance counters — body runs M*N times; simulated + --verify-hdl clean; substrate for nested for-loops)` | [docs/tasks/ISF-NESTED-COUNTED-REPEAT.md](docs/tasks/ISF-NESTED-COUNTED-REPEAT.md) |
 | `ISF-COUNTED-REPEAT-TERMINATION` | `active` | `R14` | `ISF-COUNTED-REPEAT-TERMINATION.4` (`.1`–`.3` done; check-first lowering terminates exactly-N for static/runtime/zero; `(!=0)` decision edge → counted loops pass `--verify-hdl`; `.4` = runtime-wait-first-in-repeat) | [docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md](docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md) |
 
