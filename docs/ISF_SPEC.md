@@ -5759,6 +5759,7 @@ Focused tests:
 - [t/1403-isf-set-field.t](../t/1403-isf-set-field.t)
 - [t/1404-isf-when-field.t](../t/1404-isf-when-field.t)
 - [t/1406-isf-select.t](../t/1406-isf-select.t)
+- [t/1407-isf-minmax.t](../t/1407-isf-minmax.t)
 
 ## 12. Explicitly Deferred
 

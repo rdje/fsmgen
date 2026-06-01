@@ -75,6 +75,50 @@ operands).
 **Lowering**: `(?COND (-> …(set DST A)…)) … (?(! COND) (-> …(set DST B)…))` — the
 two decision states the `(when …)` pair produces.
 
+## `(max DST A B)` / `(min DST A B)` — Larger / Smaller Of Two
+
+```lisp
+(max peak peak sample)   ;; peak = max(peak, sample)   (running maximum)
+(min floor a b)          ;; floor = min(a, b)
+```
+
+Pick the larger or smaller of two values into a register — running maxima,
+ceilings/floors, priority picks. `A` and `B` are any value expressions; `DST` is
+a register.
+
+A pure ISF parser desugar onto
+[`(select …)`](#select-dst-cond-a-b--conditional-assignment):
+
+| Form | Desugars to |
+| --- | --- |
+| `(max DST A B)` | `(select DST (>= A B) A B)` |
+| `(min DST A B)` | `(select DST (<= A B) A B)` |
+
+which in turn lowers to two conditional `(set …)`s.
+
+**A clamp composes** from the two — and because sequential writes to one register
+each get their own write-enable, no temporary is needed:
+
+```lisp
+(actor saturate
+  (interface (input start) (input in (width 8)) (output done) (output v (width 8)))
+  (transaction main
+    (on start)
+    (update v in)
+    (max v v 20)     ;; floor at 20
+    (min v v 80)     ;; ceil at 80   =>  v is clamped into [20, 80]
+    (complete done)))
+```
+
+`in = 150` yields `v == 80`, `in = 5` yields `v == 20`, and `in = 50` passes
+through as `50`.
+
+A malformed form fails closed before `.fsm` emission: a missing register name, or
+anything other than exactly `(max DST A B)` / `(min DST A B)`.
+
+**Lowering**: as for `(select …)` — two decision states, one assigning the picked
+value.
+
 ## `(incr NAME [by N])` / `(decr NAME [by N])` — Compound Increment / Decrement
 
 ```lisp

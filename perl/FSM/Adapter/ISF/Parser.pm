@@ -341,6 +341,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
     # read-modify-write `(set …)`. Same staging / width needs as the bit ops.
     $self->_expand_set_fields($result);
 
+    # ISF-MINMAX: rewrite `(max/min DST A B)` onto `(select …)`. Runs BEFORE the select pass
+    # so the emitted `(select …)` is expanded below.
+    $self->_expand_minmax($result);
+
     # ISF-SELECT: rewrite `(select DST COND A B)` to two mutually-exclusive conditional
     # `(set …)`s. Runs after the data passes (the emitted `(set …)` are final).
     $self->_expand_selects($result);
@@ -819,6 +823,67 @@ sub _desugar_set_field($self, $clause, $ctx, $widths) {
     my $clear_lit = "${width}'d${clear_mask}";
     my $value_lit = "${width}'d${shifted}";
     return [ 'set', $name, [ '|', [ '&', $name, $clear_lit ], $value_lit ] ];
+}
+
+# --- ISF-MINMAX: `(max DST A B)` / `(min DST A B)` larger / smaller of two values ---
+#
+# Parser desugar onto the `(select …)` conditional assignment (expanded by _expand_selects,
+# which runs after this pass):
+#   (max DST A B) -> (select DST (>= A B) A B)
+#   (min DST A B) -> (select DST (<= A B) A B)
+my %MINMAX_KEYWORDS = map { $_ => 1 } qw(max min);
+
+sub _expand_minmax($self, $result) {
+    for my $tx (@{$result->{transactions} || []}) {
+        $tx->{clauses} = $self->_expand_minmax_in_list(
+            $tx->{clauses}, "transaction '$tx->{name}'");
+    }
+}
+
+sub _expand_minmax_in_list($self, $clauses, $ctx) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0])
+            && $MINMAX_KEYWORDS{$clause->[0]}) {
+            push @out, $self->_desugar_minmax($clause, $ctx);
+        } else {
+            push @out, $self->_minmax_rewrite_clause($clause, $ctx);
+        }
+    }
+    return \@out;
+}
+
+sub _minmax_rewrite_clause($self, $clause, $ctx) {
+    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $body = $self->_expand_minmax_in_list([@{$clause}[2 .. $#$clause]], $ctx);
+        return [ $kw, $clause->[1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_minmax_in_list([@{$br}[1 .. $#$br]], $ctx);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $clause->[1], @branches ];
+    }
+    return $clause;
+}
+
+sub _desugar_minmax($self, $clause, $ctx) {
+    my ($op, $dst, $a, $b) = @$clause;
+    confess "Error: ($op ...) in $ctx requires a register name\n"
+        unless defined($dst) && !ref($dst) && length($dst);
+    confess "Error: ($op $dst A B) in $ctx requires exactly two values\n"
+        unless @$clause == 4 && defined($a) && defined($b);
+    # max picks A when A >= B; min picks A when A <= B.
+    my $cmp = ($op eq 'max') ? '>=' : '<=';
+    return [ 'select', $dst, [ $cmp, $a, $b ], $a, $b ];
 }
 
 # --- ISF-SELECT: `(select DST COND A B)` conditional assignment ---
