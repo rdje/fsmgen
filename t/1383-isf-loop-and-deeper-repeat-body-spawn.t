@@ -59,7 +59,7 @@ ISF
         'spawn asserts w0_start then proceeds to await_all');
     like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<w0_done/s,
         'await_all drains w0_done before repeat_check (the drain happens before the loop can re-enter)');
-    like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(>0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
+    like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
         'repeat_check decrements, re-runs the repeat (spawn) or returns to the while check');
 
     # the generated child is instantiated in the _top composition

@@ -122,7 +122,7 @@ ISF
     my $fsm = lower_source($source, 'repeat_sample_data.fsm');
 
     like(state_block($fsm, 'main_repeat_init_1'),  qr/\(-> main_repeat_check_4\)/, 'repeat init enters check first');
-    like(state_block($fsm, 'main_repeat_check_4'), qr/\(>0 \(-> main_sample_2\)\)/, 'repeat check enters sample before update');
+    like(state_block($fsm, 'main_repeat_check_4'), qr/\(!=0 \(-> main_sample_2\)\)/, 'repeat check enters sample before update');
     like(state_block($fsm, 'main_sample_2'),       qr/\(-> main_update_3\)/, 'repeat sample state precedes update');
     like(state_block($fsm, 'main_update_3'),       qr/\(-> main_repeat_check_4\)/, 'repeat update enters repeat check');
 };

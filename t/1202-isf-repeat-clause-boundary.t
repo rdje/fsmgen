@@ -118,7 +118,7 @@ ISF
     like($fsm, qr/\(main_cnt 12\)/, 'runtime repeat count keeps the sampled source width');
     like($fsm, qr/\(main_repeat_init_1\n\s+\(<= \(main_cnt beats\)\)\n\s+\(-> main_repeat_check_3\)/,
         'runtime repeat init loads the counter and enters the check-first loop');
-    like($fsm, qr/\(main_repeat_check_3\n\s+\(-- main_cnt\)\n\s+\(\?main_cnt\n\s+\(>0 \(-> main_drive_2\)\)\n\s+\(=0 \(-> main_done_4\)\)/,
+    like($fsm, qr/\(main_repeat_check_3\n\s+\(-- main_cnt\)\n\s+\(\?main_cnt\n\s+\(!=0 \(-> main_drive_2\)\)\n\s+\(=0 \(-> main_done_4\)\)/,
         'runtime zero repeat count bypasses the body via the check-first decrement');
     like($fsm, qr/\(main_drive_2\n\s+\(= \(tick_start 1\)\)\n\s+\(-> main_repeat_check_3\)/,
         'nonzero runtime repeat count still enters the existing body path');

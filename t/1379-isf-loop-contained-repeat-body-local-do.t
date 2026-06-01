@@ -55,7 +55,7 @@ ISF
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(worker_start 1\)\).*?\(<worker_done.*?->\s*parent_repeat_check_\d+/s,
         'local do asserts worker_start, awaits worker_done, then repeat_check');
     # repeat_check decrements and either re-runs the repeat or returns to the loop check
-    like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(>0\s*\(->\s*parent_do_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
+    like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_do_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
         'repeat_check decrements parent_cnt; nonzero re-runs repeat (do), zero returns to while_check');
     # the loop re-test exists and re-enters the repeat block
     like($fsm, qr/\(parent_while_check_\d+\b.*?\?cond/s,

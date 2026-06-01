@@ -115,8 +115,15 @@ all count kinds with far less churn.
   Commit: `this slice`
 
 - ID: `ISF-COUNTED-REPEAT-TERMINATION.3`
+  Status: `done`
+  Goal: `Make the counted-loop decision edge verilator-clean so counted loops (and for-loops) pass --verify-hdl.`
+  Acceptance: `The repeat_check continue edge is emitted as (!=0 (-> body)) instead of (>0 (-> body)); the SV emitter renders counter != 0 as the reduction (|counter) (clean) — vs (>0 …) which rendered counter > 1'b0 (WIDTHEXPAND that failed --verify-hdl). The done edge (=0) keeps rendering (~|counter). Semantics unchanged (nonzero continue). --verify-hdl (verilator lint + yosys) PASSES on counted loops and for-loops; goldens updated (>0 -> !=0, watchdog >0 untouched); 13h lowering reference updated to the (!=0)/(=0) check-first form. Full suite PASS.`
+  Verification: `(repeat 4 …) and (for (i 4) …) -> --verify-hdl verilator_lint PASS + yosys_synthesis PASS; SV renders (|cnt) continue / (~|cnt) done; r4 still terminates exactly-N. Goldens: >0 (->) -> !=0 (->) across 15 t/ files (watchdog >0 (-- …) preserved). prove -j6 isf band PASS; full suite PASS; perl -c; mdbook build; git diff --check.`
+  Commit: `this slice`
+
+- ID: `ISF-COUNTED-REPEAT-TERMINATION.4`
   Status: `frontier`
-  Goal: `(a) Support a runtime (wait …) as the FIRST statement of a repeat body (currently fail-closed in .2): the check-first loop must (re)load the wait counter on the loop-back edge and compute the correct zero-bypass target; restore the t/1244 coverage converted to fail-closed assertions in .2. (b) Make the counted-loop decision edge verilator-clean: the (>0) continue edge renders cnt > 1'b0 (WIDTHEXPAND, 3-bit vs 1-bit literal), so counted loops do not yet pass --verify-hdl; width-match the literal or use a |cnt reduction.`
+  Goal: `Support a runtime (wait …) as the FIRST statement of a repeat body (fail-closed in .2): the check-first loop must (re)load the wait counter on the loop-back edge and compute the correct zero-bypass target; restore the t/1244 coverage that .2 converted to fail-closed assertions.`
   Acceptance: `TBD when scheduled.`
   Verification: `TBD`
   Commit: `pending`
@@ -126,8 +133,9 @@ all count kinds with far less churn.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Bug proven by simulation; fix shape proven; design recorded. |
-| 2 | `.2` | `done` | Termination fix landed (check-first); simulation confirms exactly-N for static/runtime/zero; full suite PASS (1402 files). Runtime-wait-first-in-repeat fails closed (deferred to `.3`). |
-| 3 | `.3` | `frontier` | Restore runtime-wait-first-in-repeat (+ its t/1244 coverage); make the `(>0)` decision edge verilator-clean (`cnt > 1'b0` WIDTHEXPAND) so counted loops pass `--verify-hdl`. |
+| 2 | `.2` | `done` | Termination fix landed (check-first); simulation confirms exactly-N for static/runtime/zero; full suite PASS (1402 files). Runtime-wait-first-in-repeat fails closed (deferred to `.4`). |
+| 3 | `.3` | `done` | Decision edge emitted as `(!=0 …)` → renders the clean reduction `(\|cnt)`; counted loops + for-loops now pass `--verify-hdl` (verilator + yosys). |
+| 4 | `.4` | `frontier` | Restore runtime-wait-first-in-repeat (+ its t/1244 coverage). |
 
 ## Decisions
 
@@ -149,13 +157,15 @@ all count kinds with far less churn.
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | verilator `--binary` sims (no-loop terminates @ cy2; plain repeat-4 + for-loop spin; hand-fixed .fsm terminates, accumulating body == N); `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.2` | verilator `--binary`: static N=1/4/7 → result==N; runtime n=5/0/1 → exactly n; non-first runtime wait-in-repeat → count==3 terminates; runtime-wait-FIRST → fail-closed. Full suite `prove -j6 -Iperl t/` → 1402 files / 10165 tests PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.3` | `--verify-hdl` on `(repeat 4 …)` and `(for (i 4) …)` → verilator_lint PASS + yosys_synthesis PASS; SV renders `(\|cnt)` continue / `(~\|cnt)` done; r4 still exactly-N. Goldens `>0 (->` → `!=0 (->` across 15 t/ files (watchdog `>0 (-- …)` preserved); 13h updated. isf band 258 files PASS; full suite PASS; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `ISF-COUNTED-REPEAT-TERMINATION.1: select + prove counted-repeat non-termination` | `bb… (committed)` |
-| `.2` | `ISF-COUNTED-REPEAT-TERMINATION.2: check-first counted-repeat termination` | this slice |
+| `.2` | `ISF-COUNTED-REPEAT-TERMINATION.2: check-first counted-repeat termination` | `3bbd6d00` |
+| `.3` | `ISF-COUNTED-REPEAT-TERMINATION.3: verilator-clean counted-loop decision edge` | this slice |
 
 ## Changelog
 
@@ -176,6 +186,17 @@ all count kinds with far less churn.
   the raw-copy load keeps the decrement the only counter expression. Goldens updated across
   `t/1202 1360 1095 1228 1310 1311 1244 1379 1381 1383 1387 1215 1103 1111`. A runtime
   `(wait …)` as the FIRST statement of a repeat body fails closed with a clear diagnostic
-  (its t/1244 coverage was converted to fail-closed assertions) — deferred to `.3`;
+  (its t/1244 coverage was converted to fail-closed assertions) — deferred to `.4`;
   non-first and static waits are unaffected. Full suite (`prove -j6 -Iperl t/`) → 1402
   files / 10165 tests PASS.
+- `2026-06-01`: `.3` shipped — counted loops are now verilator-clean. The `repeat_check`
+  continue edge is emitted as `(!=0 (-> body))` instead of `(>0 (-> body))`: the SV emitter
+  renders `counter != 0` as the reduction `(|counter)` (a clean, width-correct nonzero
+  test), whereas `(>0 …)` rendered `counter > 1'b0` — a WIDTHEXPAND lint that failed
+  `--verify-hdl`. The done edge `(=0 …)` keeps rendering `(~|counter)`. Semantics are
+  unchanged (nonzero → continue). `--verify-hdl` (verilator lint + yosys synthesis) now
+  PASSES on counted `(repeat …)` loops and `(for …)` loops; `r4` still terminates exactly
+  N. Goldens updated (`>0 (->` → `!=0 (->` across 15 `t/` files; the watchdog `>0 (-- …)`
+  decrement is untouched); the `13h` lowering reference now documents the `(!=0)/(=0)`
+  check-first form (and the runtime-wait-first-in-repeat fail-close). isf band (258 files)
+  and the full suite PASS.

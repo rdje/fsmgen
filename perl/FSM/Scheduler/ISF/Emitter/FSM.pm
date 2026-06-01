@@ -235,12 +235,13 @@ sub _emit_transitions($self, $state) {
         for my $t (@counter_transitions) {
             my $c = $t->{condition};
             if ($c->{op} eq '!=') {
-                # ISF-COUNTED-REPEAT-TERMINATION: the continue edge is "counter nonzero",
-                # so emit (>0 …). Emitting (=1 …) means "== 1" in the .fsm language, which
-                # the SV emitter renders as `counter == 1'b1` — true only at the value 1,
-                # not for a multi-bit counter still counting down — so the loop never
-                # continues correctly. `(>0)` renders a proper nonzero test.
-                push @lines, "      (>0 (-> $t->{target}))";
+                # ISF-COUNTED-REPEAT-TERMINATION: the continue edge is "counter nonzero".
+                # Emit it as `(!=0 …)` (a `!= 0` test): the SV emitter renders `counter
+                # != 0` as the reduction `(|counter)` — a clean, width-correct nonzero test.
+                # (Emitting `(=1 …)` would mean "== 1" — wrong for a multi-bit counter still
+                # counting down; emitting `(>0 …)` is correct but renders `counter > 1'b0`,
+                # a WIDTHEXPAND lint that fails `--verify-hdl`.)
+                push @lines, "      (!=0 (-> $t->{target}))";
             } else {
                 push @lines, "      (=0 (-> $t->{target}))";
             }

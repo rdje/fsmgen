@@ -451,7 +451,7 @@ ISF
     like($core, qr/parent_do_\d+\b[\s\S]*?<worker_done/, 'caller blocks on the done handshake');
     # The repeat loop-back re-enters the handshake each iteration (the check-first
     # loop-back targets the ready-await, which re-arms the per-iteration handshake).
-    like($core, qr/parent_repeat_check_\d+[\s\S]*?\(>0 \(-> parent_do_\d+_ready\)\)/, 'the repeat loop re-runs the per-iteration handshake');
+    like($core, qr/parent_repeat_check_\d+[\s\S]*?\(!=0 \(-> parent_do_\d+_ready\)\)/, 'the repeat loop re-runs the per-iteration handshake');
 
     my $bus = $lowered->{files}{'cross_domain_repeat_do__domain_bus.fsm'};
     ok(defined($bus), 'the callee (bus) domain module is emitted');

@@ -874,25 +874,58 @@ to a sample-preserving clone of the following body state when that state can
 carry samples without changing timing. The false path remains an explicit skip
 around the sampled body.
 
-Runtime waits in `repeat` bodies are also supported. With no pending sample,
-the generated dynamic wait counter is registered with the repeat body's other
-counters, and the repeat-check loop-back/exit edges remain unchanged after the
-body:
+Runtime waits in `repeat` bodies are supported only in a **non-first** body
+position. A runtime `(wait ...)` as the **FIRST statement of a `(repeat ...)`
+body fails closed** under the counted-loop lowering with the diagnostic:
+
+```text
+a runtime '(wait ...)' as the FIRST statement of a '(repeat ...)' body is not
+yet supported under the counted-loop lowering
+```
+
+(tracked in ISF-COUNTED-REPEAT-TERMINATION.3/.4). Put another body statement
+before the wait, or use a static (literal/constant) wait count.
+
+For a runtime wait in a non-first position, the **preceding** body state loads
+the generated wait counter via its outgoing edge and splits into the positive
+and zero paths. The repeat check keeps the check-first `(-- main_cnt)` form,
+looping back to the first body state while the repeat counter is nonzero:
 
 ```lisp
 (main_repeat_init_1
   (<= (main_cnt 2))
-  (<- (main_wait_2_cnt cycles) <cycles)
-  (-> main_wait_2 <cycles)
-  (-> main_drive_3 <(== cycles 0)))
+  (-> main_repeat_check_4))
+
+(main_update_2                       ;; first body statement (precedes the wait)
+  (<- (r> (+ r 1)))
+  (<- (main_wait_3_cnt cycles) <cycles)
+  (-> main_wait_3 <cycles)
+  (-> main_repeat_check_4 <(== cycles 0)))
+
+(main_wait_3
+  (-- main_wait_3_cnt)
+  (?main_wait_3_cnt
+    (=1 (-> main_repeat_check_4)))
+  (?main_wait_3_cnt
+    (>1 (-> main_wait_3))))
+
+(main_repeat_check_4
+  (-- main_cnt)
+  (?main_cnt
+    (!=0 (-> main_update_2))
+    (=0 (-> main_done_5))))
 ```
 
-If pending samples appear before the repeat-body runtime wait, the positive
-iteration path enters a sample-carrying first wait state and a no-resample
-wait loop handles counts greater than one. The zero iteration path bypasses to
-a sample-preserving clone of the following body state when that successor can
-carry samples. The clone advances to the same repeat-check state as the
-original body successor, so repeat loop-back and exit behavior remain
+The wait state's `(?main_wait_3_cnt ...)` decision is the runtime-wait counter,
+not the repeat counter, so it keeps the `=1`/`>1` form. Only the repeat-counter
+check uses the `(-- main_cnt)` + `(!=0)/(=0)` form.
+
+If pending samples appear before the (non-first) repeat-body runtime wait, the
+positive iteration path enters a sample-carrying first wait state and a
+no-resample wait loop handles counts greater than one. The zero iteration path
+bypasses to a sample-preserving clone of the following body state when that
+successor can carry samples. The clone advances to the same repeat-check state
+as the original body successor, so repeat loop-back and exit behavior remain
 unchanged.
 
 Runtime waits in `switch` branches are supported. With no pending sample, if
@@ -966,15 +999,18 @@ using the runtime count split on later iterations.
 When the runtime wait is the final state-producing clause in a loop body, the
 zero-count successor is the loop decision/check state itself. That state can
 carry the pending sample when its counter assignment and condition do not read
-or overwrite the pending alias:
+or overwrite the pending alias. For a `repeat` body, the zero-count clone of
+the repeat-check materializes the pending sample and then keeps the check-first
+repeat-check body, looping back to the first body state while the repeat
+counter is nonzero:
 
 ```lisp
-(main_wait_2_zero_sample
+(main_wait_3_zero_sample
   (<= (hold din))
-  (<- (main_cnt (- main_cnt 1)))
+  (-- main_cnt)
   (?main_cnt
-    (=1 (-> main_repeat_init_1))
-    (=0 (-> main_done_4))))
+    (!=0 (-> main_update_2))
+    (=0 (-> main_done_5))))
 ```
 
 For `while` and `until`, the clone preserves the same branch behavior as the
@@ -1029,8 +1065,8 @@ states.
 **Generated .fsm**:
 ```lisp
 (i2c_transfer_repeat_init_2
-  (<= (i2c_transfer_cnt 8))       ;; load counter (D-input)
-  (-> i2c_transfer_drive_3))
+  (<= (i2c_transfer_cnt 8))       ;; load counter ONCE (D-input)
+  (-> i2c_transfer_repeat_check_5)) ;; init flows to the CHECK, not the body
 
 (i2c_transfer_drive_3              ;; body: first drive call
   (= (scl_start 1))
@@ -1042,12 +1078,18 @@ states.
   (= (scl_val 0))
   (-> i2c_transfer_repeat_check_5))
 
-(i2c_transfer_repeat_check_5       ;; check + loop
-  (<- (i2c_transfer_cnt (- i2c_transfer_cnt 1)))   ;; decrement (Q-named)
+(i2c_transfer_repeat_check_5       ;; check + loop (check-first)
+  (-- i2c_transfer_cnt)            ;; decrement via the '--' operator
   (?i2c_transfer_cnt
-    (=1 (-> i2c_transfer_repeat_init_2))           ;; loop back
-    (=0 (-> next_state))))                          ;; exit
+    (!=0 (-> i2c_transfer_drive_3))  ;; continue: counter nonzero -> first body state
+    (=0 (-> next_state))))           ;; exit
 ```
+
+The lowering is **check-first**: the counter is loaded exactly once in
+`repeat_init`, which then flows unconditionally to `repeat_check`. The check
+decrements the counter and, while it is still nonzero, loops back to the FIRST
+body state (not back to `repeat_init`). The continue edge renders as the
+reduction `|i2c_transfer_cnt` and the exit edge as `~|i2c_transfer_cnt`.
 
 **Timing**: `N × (body_cycles) + 2` (init + check). For `N=8` with 2 drives: `8×2+2=18` cycles.
 **Implicit signals**: `{tx}_cnt` (inferred width). Decimal literal counts use
@@ -1466,9 +1508,9 @@ handoff, then an optional sample state, before the repeat check:
   (-> parent_repeat_check_5 <w0_done))
 
 (parent_repeat_check_5
-  (<- (parent_cnt (- parent_cnt 1)))
+  (-- parent_cnt)
   (?parent_cnt
-    (=1 (-> parent_repeat_init_1))
+    (!=0 (-> parent_spawn_2))
     (=0 (-> parent_done_6))))
 ```
 

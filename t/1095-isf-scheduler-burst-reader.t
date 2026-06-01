@@ -34,7 +34,7 @@ subtest 'scheduler lowers burst_reader.isf — repeat with counter inference' =>
     like($fsm, qr/\(-- read_burst_cnt\)/, 'counter decremented with --');
     like($fsm, qr/\(\?read_burst_cnt/, 'decision tree on counter');
     like($fsm, qr/\(=0 \(-> read_burst_drive/, 'exit when counter zero');
-    like($fsm, qr/\(>0 \(-> read_burst_await_4\)\)/, 'loop back to the first body state when counter nonzero');
+    like($fsm, qr/\(!=0 \(-> read_burst_await_4\)\)/, 'loop back to the first body state when counter nonzero');
 
     # Await keeps timeout and decrement as same-cycle selector branches.
     unlike($fsm, qr/read_burst_await_\d+\s*\n\s*\(-- read_burst_wd\)/, 'await has no unconditional watchdog decrement');

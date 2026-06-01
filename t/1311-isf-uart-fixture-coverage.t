@@ -29,7 +29,7 @@ subtest 'UART-like fixture lowers to the expected scheduled FSM structure' => su
     like($fsm, qr/\(send_byte_repeat_init_3\b\s*\(<= \(send_byte_cnt 8\)\)\s*\(-> send_byte_repeat_check_6\)/s,
         'scheduled FSM repeat init loads the counter and transitions straight to the check state');
     like($fsm, qr/\(-- send_byte_cnt\)/, 'scheduled FSM decrements the repeat counter');
-    like($fsm, qr/\(\?send_byte_cnt\s+\(>0 \(-> send_byte_drive_4\)\)\s+\(=0 \(-> send_byte_drive_7\)\)/s,
+    like($fsm, qr/\(\?send_byte_cnt\s+\(!=0 \(-> send_byte_drive_4\)\)\s+\(=0 \(-> send_byte_drive_7\)\)/s,
         'scheduled FSM loops or exits based on the repeat counter (check-first)');
     like($fsm, qr/\(= \(tx_val 1\)\)/, 'scheduled FSM drives UART stop bit high');
     like($fsm, qr/\(<1 \(done> 1\)\)/, 'scheduled FSM completes with a one-cycle delayed pulse');

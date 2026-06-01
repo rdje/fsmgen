@@ -31,7 +31,7 @@ subtest 'SPI-like fixture lowers to the expected scheduled FSM structure' => sub
     like($fsm, qr/\(spi_transfer_repeat_init_2\b\s*\(<= \(spi_transfer_cnt 8\)\)\s*\(-> spi_transfer_repeat_check_8\)/s,
         'scheduled FSM repeat init loads the counter and transitions straight to the check state');
     like($fsm, qr/\(-- spi_transfer_cnt\)/, 'scheduled FSM decrements the repeat counter');
-    like($fsm, qr/\(\?spi_transfer_cnt\s+\(>0 \(-> spi_transfer_drive_3\)\)\s+\(=0 \(-> spi_transfer_drive_9\)\)/s,
+    like($fsm, qr/\(\?spi_transfer_cnt\s+\(!=0 \(-> spi_transfer_drive_3\)\)\s+\(=0 \(-> spi_transfer_drive_9\)\)/s,
         'scheduled FSM loops or exits based on the repeat counter (check-first)');
     like($fsm, qr/\(<1 \(done> 1\)\)/, 'scheduled FSM completes with a one-cycle delayed pulse');
 

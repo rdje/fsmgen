@@ -59,7 +59,7 @@ ISF
     # the index advances by 1 at the tail of each iteration
     like($fsm, qr/\(<- \(i \(\+ i 1\)\)\)/, 'the index i advances by 1 each iteration');
     # the loop body runs under a counted repeat (check-first: init -> check, (>0)/(=0))
-    like($fsm, qr/main_repeat_check_\d+\n\s+\(-- main_cnt\)\n\s+\(\?main_cnt\n\s+\(>0/s,
+    like($fsm, qr/main_repeat_check_\d+\n\s+\(-- main_cnt\)\n\s+\(\?main_cnt\n\s+\(!=0/s,
         'the loop lowers to a counted repeat with the check-first decrement');
 };
 

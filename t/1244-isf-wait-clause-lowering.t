@@ -1936,7 +1936,7 @@ ISF
     my $repeat_check = state_block($fsm, 'main_repeat_check_3');
     like($repeat_check, qr/\(<- \(main_wait_4_cnt cycles\) <\(& \(== main_cnt 0\) cycles\)\)/,
         'repeat exit edge samples the runtime count on the positive path');
-    like($repeat_check, qr/\?main_cnt[\s\S]*\(>0 \(-> main_drive_2\)\)/,
+    like($repeat_check, qr/\?main_cnt[\s\S]*\(!=0 \(-> main_drive_2\)\)/,
         'repeat loop-back edge is preserved');
     like($repeat_check, qr/\(-> main_done_5 <\(& \(== main_cnt 0\) \(== cycles 0\)\)\)/,
         'repeat exit edge bypasses the dynamic wait on zero');
