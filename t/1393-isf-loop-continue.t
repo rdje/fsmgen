@@ -72,6 +72,28 @@ ISF
         'continue-when in an until body jumps to the until check');
 };
 
+subtest '(continue-when) inside a when nested in a loop jumps to the loop check' => sub {
+    # ISF-LOOP-CONTINUE.3: a `(continue-when)` may live in a `when` body that is itself
+    # inside a `while`/`until` loop; its true edge still jumps to the loop's tail check.
+    my $actor = parse_source(<<'ISF', 'when-in-loop-continue');
+(actor cwl
+  (interface (input start) (input busy) (input err) (input skip) (input din (width 8)) (output done) (output result (width 8)))
+  (transaction main
+    (on start)
+    (while busy
+      (when err
+        (continue-when skip))
+      (update result din))
+    (complete done)))
+ISF
+    my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+    ok($lowered, 'a when-nested (continue-when) inside a loop lowers') or diag($@);
+    my $fsm = $lowered->{files}{'cwl.fsm'};
+    my ($tail) = $fsm =~ /(main_while_check_\d+)/;
+    like($fsm, qr/main_continue_when_\d+\s*\(\s*\?skip[\s\S]*?\(=1 \(-> \Q$tail\E\)\)/s,
+        'the when-nested continue-when true edge jumps to the loop tail check');
+};
+
 subtest '(continue-when) fails closed outside a while/until body' => sub {
     my %context = (
         'transaction body' => '(continue-when skip)',
@@ -85,6 +107,15 @@ subtest '(continue-when) fails closed outside a while/until body' => sub {
         like($err, qr/unsupported '\(continue-when \.\.\.\)' clause in \Q$label\E/,
             "(continue-when) in a $label is rejected");
     }
+
+    # A `(continue-when)` in a `when` that is NOT inside a loop fails closed with the
+    # loop-aware safety diagnostic, naming continue-when (not exit-when).
+    my $err = lower_error(
+        "(actor t (interface (input start) (input err) (input skip) (output done)) "
+        . "(transaction main (on start) (when err (continue-when skip)) (complete done)))",
+        'non-loop-when');
+    like($err, qr/'\(continue-when \.\.\.\)' is only valid inside a 'while'\/'until' loop body/,
+        'a (continue-when) in a non-loop when fails closed naming continue-when');
 };
 
 done_testing();

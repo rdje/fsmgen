@@ -38764,3 +38764,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - ISF loops now have the full BREAK/CONTINUE pair: (exit-when) + (continue-when).
   Frontier .3 (when-in-loop + docs). REUSE LESSON: a loop-branch decision (exit vs
   continue) is one machinery parameterized by which loop target gets stamped.
+
+## 2026-06-01: ISF-LOOP-CONTINUE CLOSED (.3) — break/continue pair complete
+- `.3`: continue-when in a when-nested-in-loop already worked (the when body states are
+  in the loop's loop_body_state_names → per-loop pass stamps the tail-check target
+  automatically, like exit-when's when-nested slice); locked by t/1393. Shared
+  not-in-a-loop safety message now NAMES the actual clause (continue-when vs exit-when)
+  via the loop_continue_when marker. TREE CLOSED (Active→Completed).
+- ISF loops now have the FULL break/continue pair: (exit-when) + (continue-when), both
+  in while/until bodies AND when-nested-in-loop. Theme #3 closed trees: loop-early-exit,
+  procedures, local-variables, loop-continue.

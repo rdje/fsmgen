@@ -48,7 +48,6 @@ first.
 | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` | `active` | `R14` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5` (`.1`–`.4` done) | [docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md](docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md) |
 | `ISF-LOOP-EARLY-EXIT` | `active` | `R14` | `ISF-LOOP-EARLY-EXIT.4` (`.1`–`.3` done) | [docs/tasks/ISF-LOOP-EARLY-EXIT.md](docs/tasks/ISF-LOOP-EARLY-EXIT.md) |
 | `ISF-REGISTER-RESET-VALUES` | `active` | `R14` | `ISF-REGISTER-RESET-VALUES.3` (`.1`–`.2` done) | [docs/tasks/ISF-REGISTER-RESET-VALUES.md](docs/tasks/ISF-REGISTER-RESET-VALUES.md) |
-| `ISF-LOOP-CONTINUE` | `active` | `R14` | `ISF-LOOP-CONTINUE.3` (`.1`–`.2` done) | [docs/tasks/ISF-LOOP-CONTINUE.md](docs/tasks/ISF-LOOP-CONTINUE.md) |
 
 ## Proposed Task Trees
 
@@ -63,6 +62,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-LOOP-CONTINUE` | `done` | `R14` | `closed (.1–.3; (continue-when cond) skip-to-next-iteration in while/until + when-in-loop; companion to (exit-when))` | [docs/tasks/ISF-LOOP-CONTINUE.md](docs/tasks/ISF-LOOP-CONTINUE.md) |
 | `ISF-LOCAL-VARIABLES` | `done` | `R14` | `closed (.1–.5; (local NAME (width N) [(default V)/(init V)]) declared internal registers + (let NAME EXPR) named intermediates; dedicated 13m chapter)` | [docs/tasks/ISF-LOCAL-VARIABLES.md](docs/tasks/ISF-LOCAL-VARIABLES.md) |
 | `ISF-PROCEDURES` | `done` | `R14` | `closed (.1–.5; reusable (proc) callable inline (call N a) or handshake (call N a as INST), value-in + write-back-out params; dedicated 13l chapter)` | [docs/tasks/ISF-PROCEDURES.md](docs/tasks/ISF-PROCEDURES.md) |
 | `ISF-CONDITIONAL-CHILD-ACTIVATION` | `done` | `R14` | `closed (.1–.7 done; conditional child activation complete: (do) local/bound/generated + (spawn) + await_all/await_any drains lower across top-level, repeat, and all four when/switch/while/until bodies)` | [docs/tasks/ISF-CONDITIONAL-CHILD-ACTIVATION.md](docs/tasks/ISF-CONDITIONAL-CHILD-ACTIVATION.md) |

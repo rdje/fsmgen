@@ -15032,3 +15032,8 @@ Exit criteria:
   TRUE target. `--check-json` + verilator/yosys PASS; fails closed outside a loop.
   `t/1393`; 13d/13k. ISF loops now have the full break/continue pair. Theme #3 keeps
   growing (loop early-exit, procedures, local variables, loop continue).
+- `R14`: `ISF-LOOP-CONTINUE` CLOSED (2026-06-01, `.1`–`.3`). `(continue-when cond)`
+  skip-to-next-iteration in `while`/`until` bodies + when-nested-in-loop; the not-in-a-
+  loop safety message names the actual clause. With `(exit-when)`, ISF loops have the
+  full break/continue pair. Theme #3 now has four closed construct families
+  (loop early-exit, procedures, local variables, loop continue).

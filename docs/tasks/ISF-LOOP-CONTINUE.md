@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LOOP-CONTINUE`
-- Status: `active`
+- Status: `done` (closed `2026-06-01`)
 - Roadmap lane: `R14` (ISF — high-level language richness)
 - Created: `2026-06-01`
 - Last updated: `2026-06-01`
@@ -73,7 +73,7 @@ or exits); otherwise control falls through to the next body clause. Together,
 ## Task Tree
 
 - ID: `ISF-LOOP-CONTINUE`
-  Status: `active`
+  Status: `done`
   Goal: `(continue-when cond) skip-to-next-iteration in while/until bodies (companion to exit-when).`
   Children: `.1` (select), `.2` (core lowering), `.3` (when-in-loop + docs)
 
@@ -89,6 +89,13 @@ or exits); otherwise control falls through to the next body clause. Together,
   Goal: `(continue-when cond) in while/until bodies — skip to the loop tail check.`
   Acceptance: `continue-when added to the while/until/when clause allow-lists; _expand_loop_body/_expand_when emit a decision state of the shared kind loop_exit_when marked loop_continue_when; _link_states' per-loop pass stamps the loop tail check (loop_decision_state_names[-1]) as the TRUE target for continue-when states (vs the exit target for exit-when), reusing the same main-linker + emitter + not-in-a-loop safety path. (continue-when skip) in a while body -> (?skip (=1 -> <while_check>)(=0 -> <next clause>)); until likewise targets the until check; exit-when behavior unchanged. --check-json + verilator/yosys PASS; outside a while/until body fails closed. 13d gains a (continue-when) section; 13k row; ISF_SPEC registers t/1393.`
   Verification: `Spike: (while busy ...(continue-when skip)...) -> continue_when (?skip (=1 -> while_check)(=0 -> next)); until -> until_check; exit-when regress OK; top-level/repeat fail closed; --check-json SUCCESS; --verify-hdl PASS. prove -Iperl t/1393 (3 subtests) t/1389 t/1376 t/1305 t/1250 t/1304 t/1307 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
+  Commit: `9274ceb8`
+
+- ID: `ISF-LOOP-CONTINUE.3`
+  Status: `done`
+  Goal: `(continue-when) inside a when nested in a loop + safety-message polish + docs.`
+  Acceptance: `A (continue-when) in a when body nested in a while/until loop lowers (the when's body states are part of the loop's loop_body_state_names, so the per-loop pass stamps the tail-check target automatically — no new machinery, like the exit-when when-nested slice). The shared not-in-a-loop safety check now names the actual clause (continue-when vs exit-when) via the loop_continue_when marker. 13d notes the when-nested case. t/1393 gains a when-in-loop subtest + a non-loop-when safety subtest; exit-when (t/1389) unchanged.`
+  Verification: `(while busy (when err (continue-when skip)) ...) lowers, continue-when -> whole-loop tail check; non-loop when continue-when fails closed naming continue-when; exit-when safety still names exit-when. prove -Iperl t/1393 (5 subtests) t/1389 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -97,7 +104,7 @@ or exits); otherwise control falls through to the next body clause. Together,
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
 | 2 | `.2` | `done` | `(continue-when cond)` in `while`/`until` bodies — decision state (shared `loop_exit_when` kind, `loop_continue_when` marker) whose TRUE edge jumps to the loop tail check; FALSE → next clause. `--check-json`+verilator/yosys PASS. `t/1393`. |
-| 3 | `.3` | `pending` | when-in-loop + docs. |
+| 3 | `.3` | `done` | `(continue-when)` inside a `when` nested in a loop works (jumps to the whole-loop check); the shared not-in-a-loop safety message now names the actual clause (`continue-when`); 13d updated. **Tree complete.** |
 
 ## Decisions
 
@@ -123,7 +130,8 @@ or exits); otherwise control falls through to the next body clause. Together,
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `ISF-LOOP-CONTINUE.1: select (continue-when) skip-to-next-iteration` | `629722d1` |
-| `.2` | `ISF-LOOP-CONTINUE.2: (continue-when cond) in while/until bodies` | `ship commit (this slice)` |
+| `.2` | `ISF-LOOP-CONTINUE.2: (continue-when cond) in while/until bodies` | `9274ceb8` |
+| `.3` | `ISF-LOOP-CONTINUE.3: (continue-when) when-in-loop + clause-named safety + docs` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -145,3 +153,12 @@ or exits); otherwise control falls through to the next body clause. Together,
   `(continue-when)` section; `13k` control-flow row lists it; `docs/ISF_SPEC.md`
   registers `t/1393`. With `(exit-when)` + `(continue-when)`, ISF loops have the full
   break/continue pair.
+- `2026-06-01`: `.3` shipped — closeout. A `(continue-when)` in a `when` body nested in
+  a `while`/`until` loop already lowered (the `when` body states are part of the loop's
+  `loop_body_state_names`, so the per-loop pass stamps the tail-check target with no new
+  machinery — exactly like the exit-when when-nested slice); `.3` locks it with a test.
+  The shared not-in-a-loop safety check now names the actual clause (`continue-when` vs
+  `exit-when`) via the `loop_continue_when` marker. `13d` notes the when-nested case.
+  `t/1393` gains a when-in-loop subtest + a non-loop-`when` safety subtest (5 subtests);
+  `exit-when` (`t/1389`) is unchanged. **Tree complete** — `(exit-when)` +
+  `(continue-when)` give ISF loops the full break/continue pair.

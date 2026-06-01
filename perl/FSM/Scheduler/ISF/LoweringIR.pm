@@ -10435,17 +10435,18 @@ sub _link_states {
         $s->{loop_exit_target} = $exit_target;
     }
 
-    # ISF-LOOP-EARLY-EXIT: a `(exit-when)` is only valid inside a loop. After the
-    # per-loop pass has stamped `loop_exit_target` onto every exit-when state that
-    # belongs to a loop, any remaining un-stamped `loop_exit_when` is not inside a
-    # loop (e.g. a `(when ...)` that is not nested in a `while`/`until`) — fail
-    # closed. (Direct while/until-body exit-when is gated by the clause allow-list;
-    # this catches the when-nested case, where `when` is allowed both top-level and
-    # in a loop.)
+    # ISF-LOOP-EARLY-EXIT / ISF-LOOP-CONTINUE: an `(exit-when)` / `(continue-when)` is
+    # only valid inside a loop. After the per-loop pass has stamped the TRUE target
+    # onto every such state that belongs to a loop, any remaining un-stamped
+    # `loop_exit_when` is not inside a loop (e.g. a `(when ...)` not nested in a
+    # `while`/`until`) — fail closed, naming the actual clause. (A direct while/until
+    # body use is gated by the clause allow-list; this catches the when-nested case,
+    # where `when` is allowed both top-level and in a loop.)
     for my $s (@$st) {
         next unless ($s->{kind} // '') eq 'loop_exit_when';
-        confess "Transaction '$tn': '(exit-when ...)' is only valid inside a 'while'/'until' loop body\n"
-            unless defined $s->{loop_exit_target};
+        next if defined $s->{loop_exit_target};
+        my $clause = $s->{loop_continue_when} ? 'continue-when' : 'exit-when';
+        confess "Transaction '$tn': '($clause ...)' is only valid inside a 'while'/'until' loop body\n";
     }
 
     for my $i (0 .. $#$st) {

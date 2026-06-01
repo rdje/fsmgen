@@ -16613,3 +16613,6 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   iteration in while/until (jumps to the loop tail check); companion to (exit-when),
   reusing its decision machinery. --check-json + verilator/yosys PASS; fails closed
   outside a loop. t/1393; 13d/13k. ISF loops now have the full break/continue pair.
+- `.3` (ISF-LOOP-CONTINUE) shipped + TREE CLOSED (2026-06-01): continue-when works in a
+  when-nested-in-loop (verified); safety message names the actual clause. ISF loops now
+  have the full break/continue pair ((exit-when)+(continue-when)).

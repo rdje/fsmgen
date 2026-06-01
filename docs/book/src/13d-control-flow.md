@@ -190,8 +190,10 @@ to the next body clause.
 This lowers `(continue-when (== s 0))` to `(?(== s 0) (=1 (-> <loop check>)) (=0 (->
 <next clause>)))`, where `<loop check>` is the loop's tail decision (the `while`/`until`
 back-edge check). Like `(exit-when)`, it is accepted directly in a `while`/`until` body
-(and in a `when` nested in one), and fails closed elsewhere. Together `(exit-when)` and
-`(continue-when)` are the *break* / *continue* pair of a high-level loop.
+**and inside a `when` nested in one** (where it still targets the whole loop's check),
+and fails closed elsewhere (with a diagnostic naming `continue-when`). Together
+`(exit-when)` and `(continue-when)` are the *break* / *continue* pair of a high-level
+loop.
 
 ## Where Child Activations Are Allowed
 
