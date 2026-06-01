@@ -94,6 +94,78 @@ rejected with a diagnostic.
 **Lowering**: `(<- (NAME (+ NAME N)))` / `(<- (NAME (- NAME N)))` — the same
 sequential Q-named assignment `(set …)` produces.
 
+## `(set-bit NAME N)` / `(clear-bit NAME N)` / `(toggle-bit NAME N)` — Single-Bit Manipulation
+
+```lisp
+(set-bit    ctrl 0)   ;; ctrl[0] <- 1   (e.g. an enable bit)
+(clear-bit  irq  3)   ;; irq[3]  <- 0   (e.g. acknowledge / clear a flag)
+(toggle-bit mode 7)   ;; mode[7] <- ~mode[7]
+```
+
+The bread-and-butter of control / status / configuration registers — set an
+enable bit, clear an interrupt flag, flip a mode bit — expressed by intent rather
+than by hand-written masks. `N` is a literal bit index counting from `0`, and
+must be in range for the register (`0 <= N < width`).
+
+This is a pure ISF parser desugar into a single-level masked
+[`(set …)`](#update-var-expr--variable-modification), using only the supported
+`.fsm` bitwise operators:
+
+| Form | Desugars to | Mask |
+| --- | --- | --- |
+| `(set-bit x N)` | `(set x (\| x M))` | `M = 2^N` |
+| `(toggle-bit x N)` | `(set x (^ x M))` | `M = 2^N` |
+| `(clear-bit x N)` | `(set x (& x INV))` | `INV = (2^width - 1) ^ 2^N` |
+
+The masks are emitted as plain literals (the backend widths them to the register)
+and the expression is single-level — a deliberate choice, because a nested or
+shift-based mask (`(<< 1 N)`, or `(^ x (& x M))`) produces an unsized 32-bit
+intermediate that fails the width-clean lint, and bitwise-NOT (`~`) is not a
+supported `.fsm` operator. `set-bit` / `toggle-bit` masks are width-independent;
+`clear-bit`'s inverse mask needs the register's **width**, which is resolved from
+its declaration — a transaction `(local …)`, an interface port, or a
+`(storage (var …))`.
+
+A complete runnable register-control example (each output reset to a known value,
+one bit op each):
+
+```lisp
+(actor csr_ctl
+  (interface (input start) (output done)
+             (output en (width 8)) (output irq (width 8)) (output mode (width 8)))
+  (transaction main
+    (on start)
+    (local e (width 8) (reset 0))
+    (local i (width 8) (reset 255))
+    (local m (width 8) (reset 0))
+    (set-bit e 0)        ;; e:    0   -> 1     (0x01)
+    (clear-bit i 3)      ;; i:    255 -> 247   (0xF7)
+    (toggle-bit m 4)     ;; m:    0   -> 16    (0x10)
+    (update en e)
+    (update irq i)
+    (update mode m)
+    (complete done)))
+```
+
+After `start`, `en == 1`, `irq == 247`, and `mode == 16`. (The reset-value locals
+rely on a register holding its value between writes — see
+[Local Variables](./13m-local-variables.md).)
+
+A malformed form fails closed before `.fsm` emission: a missing register name, a
+missing / non-integer / multiple bit index, a bit index `>=` the register width,
+or — for `clear-bit` — a register whose width is not a statically known literal
+(e.g. a parameterized `(width W)`), since the inverse mask cannot then be formed.
+
+> **One expression write per register per transaction.** Like every expression
+> `(set …)`, two bit ops on the **same** register in different states of one
+> transaction (e.g. `(set-bit ctrl 0)` then `(set-bit ctrl 1)`) hit the
+> one-expression-write-enable-per-register codegen constraint. Use one bit op per
+> register per transaction (a bit op inside a loop body is one state and is fine),
+> or write the combined mask directly with `(set ctrl (| ctrl 3))`.
+
+**Lowering**: `(<- (NAME (| NAME M)))` / `(<- (NAME (^ NAME M)))` /
+`(<- (NAME (& NAME INV)))` — the sequential Q-named assignment `(set …)` produces.
+
 ## `(shift_left reg bit [(width N)])` — Shift Register (Left)
 
 ```lisp

@@ -322,6 +322,11 @@ sub _build_actor($self, $actor_ast, $source_label) {
     # already-lowered control-flow bodies.
     $self->_expand_compound_assign($result);
 
+    # ISF-BIT-OPS: rewrite `(set-bit/clear-bit/toggle-bit NAME N)` to a single-level masked
+    # `(set …)` — same staging rationale (the emitted `(set …)` is final). Needs the actor
+    # interface / storage / transaction-local widths, which are all populated above.
+    $self->_expand_bit_ops($result);
+
     $self->_finalize_actor_symbol_tables($result, $source_label);
     $self->_finalize_actor_constant_values($result);
     $self->_finalize_actor_param_values($result);
@@ -582,6 +587,126 @@ sub _desugar_compound($self, $clause, $ctx) {
     }
     my $arith = ($op eq 'incr') ? '+' : '-';
     return [ 'set', $name, [ $arith, $name, $amount ] ];
+}
+
+# --- ISF-BIT-OPS: `(set-bit/clear-bit/toggle-bit NAME N)` single-bit register manipulation ---
+#
+# Parser desugar into a single-level masked `(set …)` using only supported `.fsm` operators
+# (`|`, `&`, `^`) — nested forms and `(<< 1 N)` create an unsized 32-bit intermediate
+# (WIDTHEXPAND) and `~` is unsupported, so the masks are pre-computed literals:
+#   (set-bit    x N) -> (set x (| x  2^N))
+#   (toggle-bit x N) -> (set x (^ x  2^N))
+#   (clear-bit  x N) -> (set x (& x ((2^W-1) ^ 2^N)))   ; needs the literal width W
+# N is a literal bit index with 0 <= N < W. `set-bit`/`toggle-bit` masks are
+# width-independent; `clear-bit`'s inverse mask requires a statically known width.
+my %BIT_OP_KEYWORDS = map { $_ => 1 } qw(set-bit clear-bit toggle-bit);
+
+sub _expand_bit_ops($self, $result) {
+    for my $tx (@{$result->{transactions} || []}) {
+        my $widths = $self->_bit_op_width_map($result, $tx);
+        $tx->{clauses} = $self->_expand_bit_ops_in_list(
+            $tx->{clauses}, "transaction '$tx->{name}'", $widths);
+    }
+}
+
+# Build a register-name -> declared literal width map for one transaction. A name present with
+# an undef value is declared but carries a non-literal (symbolic) width; an absent name is
+# undeclared. Sources, in precedence order: transaction locals, actor interface ports, storage
+# vars. Only a bare non-negative integer counts as a literal width.
+sub _bit_op_width_map($self, $result, $tx) {
+    my %w;
+    my $lit = sub ($x) { (defined($x) && !ref($x) && $x =~ /^\d+$/) ? ($x + 0) : undef };
+
+    for my $clause (@{$tx->{clauses} || []}) {
+        next unless ref($clause) eq 'ARRAY' && @$clause
+            && defined($clause->[0]) && !ref($clause->[0]) && $clause->[0] eq 'local';
+        my $name = $clause->[1];
+        next unless defined($name) && !ref($name) && !exists $w{$name};
+        my $width;
+        for my $sub (@{$clause}[2 .. $#$clause]) {
+            $width = $sub->[1]
+                if ref($sub) eq 'ARRAY' && @$sub >= 2 && defined($sub->[0]) && $sub->[0] eq 'width';
+        }
+        $w{$name} = $lit->($width);
+    }
+    for my $dir (qw(inputs outputs)) {
+        for my $port (@{$result->{interface}{$dir} || []}) {
+            next unless ref($port) eq 'HASH' && defined($port->{name}) && !exists $w{$port->{name}};
+            $w{$port->{name}} = $lit->($port->{width});
+        }
+    }
+    for my $store (@{$result->{storage} || []}) {
+        next unless ref($store) eq 'HASH' && ($store->{kind} // '') eq 'var'
+            && defined($store->{name}) && !exists $w{$store->{name}};
+        $w{$store->{name}} = $lit->($store->{width});
+    }
+    return \%w;
+}
+
+sub _expand_bit_ops_in_list($self, $clauses, $ctx, $widths) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0])
+            && $BIT_OP_KEYWORDS{$clause->[0]}) {
+            push @out, $self->_desugar_bit_op($clause, $ctx, $widths);
+        } else {
+            push @out, $self->_bit_op_rewrite_clause($clause, $ctx, $widths);
+        }
+    }
+    return \@out;
+}
+
+# Recurse into body-bearing control flow so a `(set-bit …)` nested there is rewritten.
+sub _bit_op_rewrite_clause($self, $clause, $ctx, $widths) {
+    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $body = $self->_expand_bit_ops_in_list([@{$clause}[2 .. $#$clause]], $ctx, $widths);
+        return [ $kw, $clause->[1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_bit_ops_in_list([@{$br}[1 .. $#$br]], $ctx, $widths);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $clause->[1], @branches ];
+    }
+    return $clause;
+}
+
+sub _desugar_bit_op($self, $clause, $ctx, $widths) {
+    my ($op, $name, @rest) = @$clause;
+    @rest = grep { defined } @rest;
+    confess "Error: ($op ...) in $ctx requires a register name\n"
+        unless defined($name) && !ref($name) && length($name);
+    confess "Error: ($op $name ...) in $ctx requires exactly one literal bit index\n"
+        unless @rest == 1;
+    my $bit = $rest[0];
+    confess "Error: ($op $name ...) in $ctx requires a non-negative integer bit index\n"
+        unless defined($bit) && !ref($bit) && $bit =~ /^\d+$/;
+    $bit += 0;
+
+    # When the register width is statically known, the bit index must fit.
+    my $width = exists $widths->{$name} ? $widths->{$name} : undef;
+    confess "Error: ($op $name $bit) in $ctx — bit index $bit is out of range for the "
+          . "${width}-bit register '$name'\n"
+        if defined($width) && $bit >= $width;
+
+    my $mask = 1 << $bit;
+    return [ 'set', $name, [ '|', $name, $mask ] ] if $op eq 'set-bit';
+    return [ 'set', $name, [ '^', $name, $mask ] ] if $op eq 'toggle-bit';
+
+    # clear-bit needs the inverse mask, which requires a statically known literal width.
+    confess "Error: (clear-bit $name $bit) in $ctx requires a statically known register width "
+          . "(declare '$name' with a literal (width N)); its inverse bit-mask cannot be formed otherwise\n"
+        unless defined $width;
+    my $invmask = ((1 << $width) - 1) ^ $mask;
+    return [ 'set', $name, [ '&', $name, $invmask ] ];
 }
 
 # --- ISF-COND: `(cond (c body...)... (else body...))` if/else-if/else (parser desugar) ---
