@@ -15026,3 +15026,9 @@ Exit criteria:
   already consumes → `<sig> <= V`). Default unspecified stays all-0s (byte-identical);
   non-integer fails closed; verilator/yosys PASS; `t/1392`. CORE `.fsm` parser change —
   gated by the FULL regression suite. ISF surface is `.3`, register maps `.4`.
+- `R14`: `ISF-LOOP-CONTINUE.2` shipped (2026-06-01) — `(continue-when cond)` skip-to-
+  next-iteration in `while`/`until` bodies (jumps to the loop tail check), the companion
+  to `(exit-when)`; reuses the exit-when decision machinery with the tail check as the
+  TRUE target. `--check-json` + verilator/yosys PASS; fails closed outside a loop.
+  `t/1393`; 13d/13k. ISF loops now have the full break/continue pair. Theme #3 keeps
+  growing (loop early-exit, procedures, local variables, loop continue).

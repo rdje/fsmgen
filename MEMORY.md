@@ -38752,3 +38752,15 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   would miss core .fsm regressions.
 - The carrier is internal until .3 (ISF surface: a (reset V) on an ISF declaration,
   e.g. (local NAME (width N) (reset V))). Then register maps (.4). Frontier .3.
+
+## 2026-06-01: ISF-LOOP-CONTINUE.2 — (continue-when cond) SHIPPED (break/continue pair complete)
+- `(continue-when cond)` in while/until bodies: skip the rest of the iteration, jump to
+  the loop TAIL check (re-evaluate the condition). Companion to (exit-when). Impl reuses
+  the exit-when machinery: SAME kind `loop_exit_when` + a `loop_continue_when` marker;
+  _link_states per-loop pass stamps the tail check (loop_decision_state_names[-1]) as the
+  TRUE target for continue-when (vs exit target for exit-when); same main-linker/emitter/
+  safety path. (continue-when skip) -> (?skip (=1 -> while_check)(=0 -> next)).
+  --check-json + verilator/yosys PASS. Fails closed outside while/until. t/1393. 13d/13k.
+- ISF loops now have the full BREAK/CONTINUE pair: (exit-when) + (continue-when).
+  Frontier .3 (when-in-loop + docs). REUSE LESSON: a loop-branch decision (exit vs
+  continue) is one machinery parameterized by which loop target gets stamped.

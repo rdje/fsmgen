@@ -172,6 +172,27 @@ transaction top level or in a `repeat` body the clause allow-list rejects it
 in a loop it fails closed with `'(exit-when ...)' is only valid inside a 'while'/'until'
 loop body`.
 
+## `(continue-when condition)` — Skip To Next Iteration
+
+`(continue-when condition)` is the loop *continue* primitive — the companion to
+`(exit-when)`. The cycle `condition` holds it **skips the rest of the current
+iteration** and jumps to the loop's tail condition check, which re-evaluates the loop
+condition and either runs another iteration or exits; otherwise control falls through
+to the next body clause.
+
+```lisp
+(while busy
+  (sample din as s)
+  (continue-when (== s 0))   ;; skip zero bytes; re-check `busy` and loop again
+  (drive process))
+```
+
+This lowers `(continue-when (== s 0))` to `(?(== s 0) (=1 (-> <loop check>)) (=0 (->
+<next clause>)))`, where `<loop check>` is the loop's tail decision (the `while`/`until`
+back-edge check). Like `(exit-when)`, it is accepted directly in a `while`/`until` body
+(and in a `when` nested in one), and fails closed elsewhere. Together `(exit-when)` and
+`(continue-when)` are the *break* / *continue* pair of a high-level loop.
+
 ## Where Child Activations Are Allowed
 
 All four child-activation clauses — `(do ...)`, `(spawn ...)`, `(await_all ...)`,

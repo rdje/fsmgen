@@ -34240,3 +34240,16 @@ body. The `(let)` clause emits nothing. CAUTION reinforced: do NOT edit a source
 while a full ci-regression is running — a regression launched before this pass caught
 `Parser.pm` mid-edit and failed `t/1378` spuriously; re-running clean was green. Spike
 the desugar, finish the edit, THEN run the regression.
+
+## Loop continue `.2` — one decision machinery, parameterized by the loop target (2026-06-01)
+
+`(continue-when)` reused `(exit-when)`'s entire lowering with a single parameter: which
+loop target the TRUE edge takes. Both emit the SAME state kind (`loop_exit_when`) so the
+FSM emitter and main linker are untouched; the only fork is in `_link_states`' per-loop
+pass, which stamps `loop_exit_target` = (a `loop_continue_when`-marked state ? the loop
+tail check `loop_decision_state_names[-1]` : the loop exit target). The tail check is the
+`while_check`/`until_check` decision that re-evaluates the loop condition — so "continue"
+is just "jump to the check." Lesson: when two constructs differ only in a target, model
+them as one decision kind parameterized by the stamped target, not two parallel kinds —
+the emitter/linker/safety code stays single-sourced and exit-when's behavior is provably
+unchanged.

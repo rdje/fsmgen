@@ -5747,6 +5747,7 @@ Focused tests:
 - [t/1389-isf-loop-early-exit.t](../t/1389-isf-loop-early-exit.t)
 - [t/1390-isf-procedures.t](../t/1390-isf-procedures.t)
 - [t/1391-isf-local-variables.t](../t/1391-isf-local-variables.t)
+- [t/1393-isf-loop-continue.t](../t/1393-isf-loop-continue.t)
 
 ## 12. Explicitly Deferred
 

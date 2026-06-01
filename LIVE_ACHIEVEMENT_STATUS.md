@@ -16609,3 +16609,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   carrier sets a register's hardware reset value (HDL emits `<sig> <= V`); default all-0s
   unchanged; non-integer fails closed; verilator/yosys PASS. Core `.fsm` parser change
   (FULL regression gate). t/1392. Frontier .3 (ISF surface).
+- `.2` (ISF-LOOP-CONTINUE) shipped (2026-06-01): `(continue-when cond)` skip-to-next-
+  iteration in while/until (jumps to the loop tail check); companion to (exit-when),
+  reusing its decision machinery. --check-json + verilator/yosys PASS; fails closed
+  outside a loop. t/1393; 13d/13k. ISF loops now have the full break/continue pair.

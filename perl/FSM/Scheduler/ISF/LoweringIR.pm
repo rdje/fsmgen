@@ -24,7 +24,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
         map { $_ => 1 } qw(
             drive await sample complete repeat update set shift_left shift_right
             assemble extract when store load wait do spawn await_all await_any
-            exit-when
+            exit-when continue-when
         )
     },
     switch => {
@@ -43,14 +43,14 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
         map { $_ => 1 } qw(
             drive await sample complete repeat update set shift_left shift_right
             assemble extract when store load wait do spawn await_all await_any
-            exit-when
+            exit-when continue-when
         )
     },
     until => {
         map { $_ => 1 } qw(
             drive await sample complete repeat update set shift_left shift_right
             assemble extract when store load wait do spawn await_all await_any
-            exit-when
+            exit-when continue-when
         )
     },
 );
@@ -8412,6 +8412,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
         }
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
         elsif($bk eq'exit-when'){confess "Transaction '$tn': when body '(exit-when ...)' requires exactly one condition expression\n" unless @$bc==2 && defined($bc->[1]);_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,{name=>"${tn}_exit_when_".$$ir++,kind=>'loop_exit_when',condition=>$bc->[1],loop_exit_when=>1,assignments=>[],transitions=>[]}}
+        elsif($bk eq'continue-when'){confess "Transaction '$tn': when body '(continue-when ...)' requires exactly one condition expression\n" unless @$bc==2 && defined($bc->[1]);_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,{name=>"${tn}_continue_when_".$$ir++,kind=>'loop_exit_when',condition=>$bc->[1],loop_exit_when=>1,loop_continue_when=>1,assignments=>[],transitions=>[]}}
         elsif($bk eq'do'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my $cond_ord=scalar(grep { ref($_)eq'HASH'&&$_->{branch_do} } @{$spawn_refs||[]});my $do_ref=_conditional_do_ref_from_clause($bc,$tn,$cond_ord,$constant_values||{},$actor,$generated_children,'when body');if($do_ref->{generated_child}){push @$spawn_refs,_clone_isf_value($do_ref) if ref($spawn_refs)eq'ARRAY';push @body_states,_ir_do($bc,$tn,$$ir++,$do_ref,'when body')}else{push @body_states,_ir_do($bc,$tn,$$ir++,undef,'when body')}}
         elsif($bk eq'spawn'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my $sref=_spawn_ref_from_clause($bc,$tn,$constant_values,$actor,'when body');push @$spawn_refs,$sref if ref($spawn_refs)eq'ARRAY';push @dps,"$sref->{instance}_done";push @body_states,_ir_spawn($bc,$tn,$$ir++)}
         elsif($bk eq'await_all'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_sync_all($tn,$$ir++,\@dps);@dps=()}
@@ -8526,6 +8527,24 @@ sub _expand_loop_body {
                 loop_exit_when => 1,
                 assignments    => [],
                 transitions    => [],
+            };
+        } elsif ($bk eq 'continue-when') {
+            # ISF-LOOP-CONTINUE: a `(continue-when cond)` skip-to-next-iteration. Same
+            # decision-state machinery as `(exit-when)` (kind `loop_exit_when`), but
+            # marked `loop_continue_when` so `_link_states` stamps the loop's TAIL
+            # CHECK (re-evaluate the condition) as the TRUE target instead of the loop
+            # exit; the FALSE edge falls through to the next body clause.
+            confess "Transaction '$tn': $body_label '(continue-when ...)' requires exactly one condition expression\n"
+                unless @$bc == 2 && defined($bc->[1]);
+            _push_sample_state(\@states, $tn, \@lp, $ir);
+            push @states, {
+                name               => "${tn}_continue_when_" . $$ir++,
+                kind               => 'loop_exit_when',
+                condition          => $bc->[1],
+                loop_exit_when     => 1,
+                loop_continue_when => 1,
+                assignments        => [],
+                transitions        => [],
             };
         } elsif ($bk eq 'do') {
             _push_sample_state(\@states, $tn, \@lp, $ir);
@@ -10398,13 +10417,20 @@ sub _link_states {
             $st->[$idx_by_name{$name}]{loop_exit_target} = $exit_target;
             $st->[$idx_by_name{$name}]{loop_body_start} = $s->{loop_body_start};
         }
-        # ISF-LOOP-EARLY-EXIT: stamp this loop's exit target onto any `(exit-when)`
-        # decision state in its body, so the main linker can wire its TRUE edge.
+        # ISF-LOOP-EARLY-EXIT / ISF-LOOP-CONTINUE: stamp the TRUE target onto this
+        # loop's `(exit-when)` / `(continue-when)` decision states (both kind
+        # `loop_exit_when`). An `(exit-when)` jumps to the loop exit; a
+        # `(continue-when)` (marked `loop_continue_when`) jumps to the loop's TAIL
+        # check — the last decision state, which re-evaluates the condition and either
+        # loops again or exits.
+        my $continue_target = (@{$s->{loop_decision_state_names} || []})
+            ? $s->{loop_decision_state_names}[-1] : $exit_target;
         for my $name (@{$s->{loop_body_state_names} || []}) {
             next unless defined $idx_by_name{$name};
             my $body_state = $st->[$idx_by_name{$name}];
-            $body_state->{loop_exit_target} = $exit_target
-                if ($body_state->{kind} // '') eq 'loop_exit_when';
+            next unless ($body_state->{kind} // '') eq 'loop_exit_when';
+            $body_state->{loop_exit_target} =
+                $body_state->{loop_continue_when} ? $continue_target : $exit_target;
         }
         $s->{loop_exit_target} = $exit_target;
     }

@@ -82,6 +82,13 @@ or exits); otherwise control falls through to the next body clause. Together,
   Goal: `Select; reuse the exit-when machinery with the loop tail-check as the continue target.`
   Acceptance: `Task tree committed before any code change.`
   Verification: `mdbook build docs/book; git diff --check`
+  Commit: `629722d1`
+
+- ID: `ISF-LOOP-CONTINUE.2`
+  Status: `done`
+  Goal: `(continue-when cond) in while/until bodies — skip to the loop tail check.`
+  Acceptance: `continue-when added to the while/until/when clause allow-lists; _expand_loop_body/_expand_when emit a decision state of the shared kind loop_exit_when marked loop_continue_when; _link_states' per-loop pass stamps the loop tail check (loop_decision_state_names[-1]) as the TRUE target for continue-when states (vs the exit target for exit-when), reusing the same main-linker + emitter + not-in-a-loop safety path. (continue-when skip) in a while body -> (?skip (=1 -> <while_check>)(=0 -> <next clause>)); until likewise targets the until check; exit-when behavior unchanged. --check-json + verilator/yosys PASS; outside a while/until body fails closed. 13d gains a (continue-when) section; 13k row; ISF_SPEC registers t/1393.`
+  Verification: `Spike: (while busy ...(continue-when skip)...) -> continue_when (?skip (=1 -> while_check)(=0 -> next)); until -> until_check; exit-when regress OK; top-level/repeat fail closed; --check-json SUCCESS; --verify-hdl PASS. prove -Iperl t/1393 (3 subtests) t/1389 t/1376 t/1305 t/1250 t/1304 t/1307 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -89,7 +96,7 @@ or exits); otherwise control falls through to the next body clause. Together,
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
-| 2 | `.2` | `pending` | Core `(continue-when cond)` in `while`/`until` bodies — mirrors `exit-when`, low risk. |
+| 2 | `.2` | `done` | `(continue-when cond)` in `while`/`until` bodies — decision state (shared `loop_exit_when` kind, `loop_continue_when` marker) whose TRUE edge jumps to the loop tail check; FALSE → next clause. `--check-json`+verilator/yosys PASS. `t/1393`. |
 | 3 | `.3` | `pending` | when-in-loop + docs. |
 
 ## Decisions
@@ -109,12 +116,14 @@ or exits); otherwise control falls through to the next body clause. Together,
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.2` | Spike: while/until `(continue-when)` jumps to the loop tail check; exit-when unchanged; top-level/repeat fail closed; `--check-json` + verilator/yosys PASS. `prove -Iperl t/1393` (3 subtests) `t/1389 t/1376 t/1305 t/1250 t/1304 t/1307` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-LOOP-CONTINUE.1: select (continue-when) skip-to-next-iteration` | `ship commit (this slice)` |
+| `.1` | `ISF-LOOP-CONTINUE.1: select (continue-when) skip-to-next-iteration` | `629722d1` |
+| `.2` | `ISF-LOOP-CONTINUE.2: (continue-when cond) in while/until bodies` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -122,3 +131,17 @@ or exits); otherwise control falls through to the next body clause. Together,
   cond)` skip-to-next-iteration, reusing the `loop_exit_when` decision machinery with
   the loop tail check as the continue target. Slice plan: `.2` core lowering, `.3`
   when-in-loop + docs.
+- `2026-06-01`: `.2` shipped — `(continue-when cond)` in `while`/`until` bodies. Added
+  `continue-when` to the `while`/`until`/`when` clause-context allow-lists;
+  `_expand_loop_body`/`_expand_when` emit a decision state of the shared kind
+  `loop_exit_when` marked `loop_continue_when`. `_link_states`' per-loop pass stamps the
+  loop's TAIL check (`loop_decision_state_names[-1]`) as the TRUE target for
+  continue-when states (vs the exit target for exit-when), reusing the same main-linker,
+  FSM-emitter, and not-in-a-loop safety path. So `(continue-when skip)` lowers to
+  `(?skip (=1 -> <loop tail check>) (=0 -> <next clause>))` — jumping to the tail check
+  re-evaluates the loop condition (continue), while exit-when's behavior is unchanged.
+  Verified `--check-json` SUCCEEDS and `--verify-hdl` passes (verilator + yosys); a
+  `(continue-when)` outside a `while`/`until` body fails closed. Book: `13d` gains a
+  `(continue-when)` section; `13k` control-flow row lists it; `docs/ISF_SPEC.md`
+  registers `t/1393`. With `(exit-when)` + `(continue-when)`, ISF loops have the full
+  break/continue pair.
