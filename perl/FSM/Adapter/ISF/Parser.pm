@@ -371,15 +371,37 @@ sub _parse_proc_param($self, $pspec, $proc_name, $actor_name) {
     my $pname = $t[0];
     confess "Error: proc '$proc_name' in actor '$actor_name' parameter needs a name\n"
         unless defined($pname) && !ref($pname) && length($pname);
-    return { name => $pname, dir => $dir };
+    # Optional (width N) attribute — needed when the proc is synthesized into a child
+    # transaction for the handshake call form (the parameter becomes a typed port).
+    my $width;
+    for my $attr (@t[1 .. $#t]) {
+        next unless ref($attr) eq 'ARRAY' && @$attr >= 2
+            && defined($attr->[0]) && !ref($attr->[0]) && $attr->[0] eq 'width';
+        $width = $attr->[1];
+    }
+    return { name => $pname, dir => $dir, width => $width };
 }
 
 sub _expand_procedure_calls($self, $result) {
     my $procs = $result->{procs} || {};
     return unless %$procs;
+    my %synth;   # proc-name -> 1 : procs reached via a handshake `(call ... as INST)`
+    local $self->{_proc_synth} = \%synth;
     for my $tx (@{$result->{transactions} || []}) {
         $tx->{clauses} = $self->_expand_calls_in_list(
             $tx->{clauses}, $procs, [], "transaction '$tx->{name}'");
+    }
+    # Synthesize a child transaction for each proc invoked via the handshake call.
+    # A synthesized body may itself reach further handshake calls, so drain a
+    # worklist until no new synthesis target appears.
+    my %synthesized;
+    while (1) {
+        my @pending = grep { !$synthesized{$_} } sort keys %synth;
+        last unless @pending;
+        for my $pname (@pending) {
+            $synthesized{$pname} = 1;
+            $self->_synthesize_proc_transaction($result, $procs, $procs->{$pname});
+        }
     }
 }
 
@@ -424,12 +446,14 @@ sub _expand_one_call($self, $clause, $procs, $stack, $ctx) {
     my (undef, $name, @rest) = @$clause;
     confess "Error: (call ...) in $ctx requires a procedure name\n"
         unless defined($name) && !ref($name) && length($name);
-    # The handshake form `(call NAME ... as INST)` is deferred to ISF-PROCEDURES.4.
-    if (grep { defined($_) && !ref($_) && $_ eq 'as' } @rest) {
-        confess "Error: $ctx '(call $name ... as INST)' handshake-form procedure call is not yet supported; the inline form '(call $name actuals)' is supported (the handshake form lands in ISF-PROCEDURES.4)\n";
-    }
     my $proc = $procs->{$name};
     confess "Error: $ctx calls unknown procedure '$name'\n" unless $proc;
+    # The HANDSHAKE form `(call NAME actual... as INST)`: instead of inlining, call a
+    # synthesized one-shot child transaction through the bound `(do ...)` handshake.
+    my ($as_at) = grep { defined($rest[$_]) && !ref($rest[$_]) && $rest[$_] eq 'as' } 0 .. $#rest;
+    if (defined $as_at) {
+        return $self->_expand_handshake_call($name, $proc, [@rest[0 .. $as_at - 1]], $rest[$as_at + 1], $ctx);
+    }
     confess "Error: $ctx recursive procedure call '(call $name ...)' is not lowerable to hardware (no call stack); chain: " . join(' -> ', @$stack, $name) . "\n"
         if grep { $_ eq $name } @$stack;
     my @actuals = @rest;
@@ -466,6 +490,51 @@ sub _substitute_proc_body($self, $node, $subst) {
 sub _proc_deep_clone($node) {
     return [ map { _proc_deep_clone($_) } @$node ] if ref($node) eq 'ARRAY';
     return $node;
+}
+
+# Handshake call `(call NAME actual... as INST)`: lower to a bound `(do NAME (bind
+# ...))` against a synthesized one-shot child transaction (built by
+# `_synthesize_proc_transaction`). The proc parameters become the child's ports —
+# in -> input, out -> output — and the actuals are bound positionally.
+sub _expand_handshake_call($self, $name, $proc, $actuals, $inst, $ctx) {
+    confess "Error: $ctx '(call $name ... as INST)' requires an instance name after 'as'\n"
+        unless defined($inst) && !ref($inst) && length($inst);
+    my @params = @{$proc->{params}};
+    confess "Error: $ctx '(call $name ... as $inst)' passes " . scalar(@$actuals) . " argument(s) but proc '$name' declares " . scalar(@params) . " parameter(s)\n"
+        unless @$actuals == @params;
+    my @bind;
+    for my $i (0 .. $#params) {
+        my ($p, $actual) = ($params[$i], $actuals->[$i]);
+        confess "Error: $ctx '(call $name ... as $inst)': out-parameter '$p->{name}' requires a plain signal actual to write back into, not an expression\n"
+            if $p->{dir} eq 'out' && (!defined($actual) || ref($actual));
+        my $role = $p->{dir} eq 'out' ? 'output' : 'input';
+        push @bind, [ $role, $p->{name}, _proc_deep_clone($actual) ];
+    }
+    $self->{_proc_synth}{$name} = 1;   # request a synthesized child transaction
+    return [ [ 'do', $name, [ 'bind', @bind ] ] ];
+}
+
+# Synthesize a one-shot child transaction from a proc invoked via the handshake
+# call: its parameters become typed ports (in -> input, out -> output) and its body
+# becomes the transaction body, terminated by `(complete NAME_done)`. The bound
+# `(do NAME ...)` emitted at each call site drives the handshake.
+sub _synthesize_proc_transaction($self, $result, $procs, $proc) {
+    my $name = $proc->{name};
+    confess "Error: actor '$result->{actor_name}': proc '$name' is invoked via the handshake form '(call $name ... as INST)' but a transaction named '$name' already exists; rename one of them\n"
+        if grep { ($_->{name} // '') eq $name } @{$result->{transactions} || []};
+    my @ports;
+    for my $p (@{$proc->{params}}) {
+        my $dir = $p->{dir} eq 'out' ? 'output' : 'input';
+        push @ports, defined($p->{width})
+            ? [ $dir, $p->{name}, [ 'width', $p->{width} ] ]
+            : [ $dir, $p->{name} ];
+    }
+    # Expand any inline `(call ...)` inside the synthesized body (recursion-guarded;
+    # a nested handshake call requests its own synthesis through `_proc_synth`).
+    my $body = $self->_expand_calls_in_list($proc->{body}, $procs, [$name], "proc '$name' (handshake)");
+    my $done = "${name}_done";
+    my $tx_clause = [ 'transaction', $name, [ 'ports', @ports ], @$body, [ 'complete', $done ] ];
+    push @{$result->{transactions}}, $self->_parse_transaction($tx_clause);
 }
 
 # --- Individual clause parsers ---

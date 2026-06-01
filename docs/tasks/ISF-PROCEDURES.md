@@ -188,6 +188,13 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
   Goal: `Inline out-parameters — (out NAME (width N)) writes back into a caller-chosen signal.`
   Acceptance: `The .2 out-parameter deferral is lifted: an (out P (width N)) parameter substitutes its caller actual into the proc body like an in-parameter, but the actual must be a plain signal lvalue (an expression actual fails closed: "out-parameter ... requires a plain signal actual to write back into, not an expression"). The caller picks the write-back destination per call, so one proc can drive different signals. In- and out-params mix freely (positional). --check-json + verilator/yosys PASS. 13b gains an out-parameter example; 13k row updated; t/1390 replaces the out-param-deferral subtest with a positive out-param subtest + the expression-as-out-actual rejection.`
   Verification: `Spike: (proc compute (params (in (width 8)) (out r (width 8))) (update r (+ in 1))) + (call compute s r1)/(call compute (+ s 1) r2) -> (update r1 (+ s 1))/(update r2 (+ (+ s 1) 1)); expression-as-out-actual rejected; --check-json SUCCESS; --verify-hdl verilator_lint+yosys_synthesis PASS. prove -Iperl t/1390 (7 subtests) t/1376 t/1305 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
+  Commit: `e06ad8db`
+
+- ID: `ISF-PROCEDURES.4`
+  Status: `done`
+  Goal: `Handshake call (call NAME actuals as INST) — synthesize the proc as a one-shot child transaction and drive it with the bound (do) handshake.`
+  Acceptance: `(call NAME actuals as INST) lowers to a bound (do NAME (bind (input <in-param> <actual>)... (output <out-param> <actual>)...)) against a child transaction synthesized from the proc (params -> typed ports: in->input, out->output; body -> transaction body terminated by (complete NAME_done)). _expand_handshake_call builds the bound do + records the synthesis need; _expand_procedure_calls drains a worklist of synthesis targets (a synthesized body may reach further handshake calls); _synthesize_proc_transaction builds + parses the child transaction (and expands inline calls in its body, recursion-guarded). The as INST suffix is the discriminator (the proc body keeps its param NAMES as port names; no substitution). The call site asserts <NAME>_start, binds the in-args, reads the out-args on done, and blocks on <NAME>_done; --check-json + verilator/yosys PASS. Fails closed: missing instance name after as, and a proc/transaction name collision. KNOWN LIMITATION: the synthesized child is a reused sibling, so INST is currently a label (distinct instances per call is a future refinement). 13b gains a handshake section + an inline-vs-handshake comparison table + example; 13k row updated; t/1390 replaces the handshake-deferral assertion with a positive handshake subtest + two handshake fail-closed cases.`
+  Verification: `Spike: (call inc_into s result as a0) synthesizes the inc_into child + bound do; main asserts inc_into_start, binds (in s)/(result> r), blocks on <inc_into_done; child runs r=in+1; --check-json SUCCESS; --verify-hdl verilator_lint+yosys_synthesis PASS; missing-INST + name-collision fail closed. prove -Iperl t/1390 (9 subtests) t/1376 t/1305 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -197,7 +204,7 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 | 1 | `.1` | `done` | Selection/design (this doc). |
 | 2 | `.2` | `done` | Inline `(proc)` + `(call NAME actuals)` for in-params: a parse-time expansion pass in `FSM::Adapter::ISF::Parser` substitutes actuals into the proc body (identical `.fsm` to hand-written); fails closed on unknown/arity/recursion/handshake-deferred/out-param-deferred/malformed. `--check-json` + verilator/yosys PASS. `t/1390`. |
 | 3 | `.3` | `done` | Inline **out-params** — `(out NAME (width N))` writes back into a caller-chosen signal (the out-actual must be a plain lvalue, not an expression). `--check-json` + verilator/yosys PASS. `t/1390`. |
-| 4 | `.4` | `pending` | **Handshake** `(call … as INST)` — synthesize the proc as a one-shot block (start/done + arg ports) + `(do)`-style call; reuse the child-activation substrate. The second calling convention. |
+| 4 | `.4` | `done` | **Handshake** `(call … as INST)` — synthesizes the proc as a one-shot child transaction (in→input ports, out→output ports) + a bound `(do)` call; reuses the child-activation substrate. **Both calling conventions now ship.** `--check-json` + verilator/yosys PASS. `t/1390`. |
 | 5 | `.5` | `pending` | Dedicated example-dense docs chapter + matrix/spec sync. |
 
 ## Decisions
@@ -229,6 +236,7 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.4` | Spike: `(call inc_into s result as a0)` synthesizes the `inc_into` child + bound `(do)`; main asserts `inc_into_start`, binds `(in s)`/`(result> r)`, blocks on `<inc_into_done`; child runs `r=in+1`; `--check-json` SUCCESS; `--verify-hdl` verilator_lint+yosys_synthesis PASS; missing-INST + name-collision fail closed. `prove -Iperl t/1390` (9 subtests) `t/1376 t/1305` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.3` | Spike: out-param `(out r (width 8))` writes into the caller signal (`(call compute s r1)` -> `(update r1 (+ s 1))`); expression-as-out-actual rejected; `--check-json` + verilator/yosys PASS. `prove -Iperl t/1390` (7 subtests) `t/1376 t/1305` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.2` | Spike: `(proc accumulate (params (in (width 8))) (update total (+ total in)))` + `(call accumulate s)`/`(call accumulate (+ s 1))` expands to identical `.fsm`; calls in when/while bodies lower; `--check-json` SUCCESS; `--verify-hdl` verilator_lint+yosys_synthesis PASS; unknown/arity/recursion/handshake/out-param/malformed fail closed. `prove -Iperl t/1390` (6 subtests) `t/1250 t/1376` (45) `t/1305 t/1303 t/1304 t/1307` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
@@ -238,7 +246,8 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
 | --- | --- | --- |
 | `.1` | `ISF-PROCEDURES.1: select reusable procedures (inline + handshake calls)` | `76d7f01b` |
 | `.2` | `ISF-PROCEDURES.2: inline (proc)/(call) reusable procedures (in-params)` | `e680f967` |
-| `.3` | `ISF-PROCEDURES.3: inline out-parameters (write-back)` | `ship commit (this slice)` |
+| `.3` | `ISF-PROCEDURES.3: inline out-parameters (write-back)` | `e06ad8db` |
+| `.4` | `ISF-PROCEDURES.4: handshake (call ... as INST) via synthesized child transaction` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -285,3 +294,30 @@ A pre-scheduling **expansion pass** (in the adapter or an early lowering step):
   updated to describe both parameter directions. `t/1390` replaces the
   out-param-deferral subtest with a positive out-parameter subtest plus the
   expression-as-out-actual rejection.
+- `2026-06-01`: `.4` shipped — the **handshake call** `(call NAME actuals... as INST)`,
+  completing both calling conventions. Instead of inlining, the handshake form
+  synthesizes the procedure as a one-shot child transaction (parameters become typed
+  ports — in→input, out→output — and the body becomes the transaction body, terminated
+  by `(complete NAME_done)`) and drives it at the call site with a bound
+  `(do NAME (bind (input <in-param> <actual>)... (output <out-param> <actual>)...))`.
+  `_expand_handshake_call` (`FSM::Adapter::ISF::Parser`) builds the bound `(do)` and
+  records the synthesis need; `_expand_procedure_calls` drains a worklist of synthesis
+  targets (a synthesized body may itself reach further handshake calls);
+  `_synthesize_proc_transaction` builds and parses the child transaction (expanding
+  inline calls in its body, recursion-guarded) and appends it to the actor. The proc
+  body keeps its parameter NAMES (they are the port names — no substitution in the
+  handshake form). Verified end-to-end: `(call inc_into s result as a0)` asserts
+  `inc_into_start`, binds `(in s)` and reads `(result> r)` on done, blocks on
+  `<inc_into_done`, and the synthesized child runs `r = in + 1`; `--check-json`
+  SUCCEEDS and `--verify-hdl` passes (verilator_lint + yosys_synthesis). Fails closed:
+  a handshake `(call ... as)` missing its instance name, and a handshake procedure
+  whose name collides with an existing transaction. KNOWN LIMITATION: the synthesized
+  child is a reused sibling, so `INST` is currently a label (giving each handshake call
+  a distinct instance is a future refinement). Book: `13b` gains a handshake-call
+  section with an inline-vs-handshake comparison table and a runnable example; the
+  `13k` row describes both conventions. `t/1390` replaces the handshake-deferral
+  assertion with a positive handshake subtest and two handshake fail-closed cases (9
+  subtests). **The user's direction — implement both calling conventions, pickable
+  cleanly at the call site — is now fully delivered: one `(proc)` definition, called
+  inline with `(call NAME actuals)` or via the handshake with `(call NAME actuals as
+  INST)`.**

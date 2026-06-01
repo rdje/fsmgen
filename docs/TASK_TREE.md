@@ -47,7 +47,7 @@ first.
 | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING` | `done` | `R14` | complete (`.1`–`.7` done; cross-domain blocking `(do)` via a declared activation crossing) | [docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md](docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md) |
 | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` | `active` | `R14` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5` (`.1`–`.4` done) | [docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md](docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md) |
 | `ISF-LOOP-EARLY-EXIT` | `active` | `R14` | `ISF-LOOP-EARLY-EXIT.4` (`.1`–`.3` done) | [docs/tasks/ISF-LOOP-EARLY-EXIT.md](docs/tasks/ISF-LOOP-EARLY-EXIT.md) |
-| `ISF-PROCEDURES` | `active` | `R14` | `ISF-PROCEDURES.4` (`.1`–`.3` done) | [docs/tasks/ISF-PROCEDURES.md](docs/tasks/ISF-PROCEDURES.md) |
+| `ISF-PROCEDURES` | `active` | `R14` | `ISF-PROCEDURES.5` (`.1`–`.4` done) | [docs/tasks/ISF-PROCEDURES.md](docs/tasks/ISF-PROCEDURES.md) |
 
 ## Proposed Task Trees
 

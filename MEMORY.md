@@ -38662,3 +38662,19 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   removed the .2 out-param deferral, added the lvalue check in _expand_one_call.
   --check-json + verilator/yosys PASS. 13b out-param example, 13k row, t/1390 (7
   subtests). Frontier .4 = HANDSHAKE call (call ... as INST) — the 2nd convention.
+
+## 2026-06-01: ISF-PROCEDURES.4 — HANDSHAKE call SHIPPED; BOTH conventions delivered
+- `(call NAME actuals as INST)` now lowers via the handshake: synthesize the proc as a
+  one-shot CHILD TRANSACTION (params -> typed ports in→input/out→output; body +
+  (complete NAME_done)) and emit a bound (do NAME (bind ...)) at the call site. Reuses
+  the existing (do child (bind ...)) substrate — lowers to ONE module (sibling),
+  --check-json + verilator/yosys PASS. `as INST` is the discriminator (no `as` = inline).
+- Impl in FSM::Adapter::ISF::Parser: _expand_handshake_call builds the bound do +
+  records synth need ($self->{_proc_synth}); _expand_procedure_calls drains a worklist;
+  _synthesize_proc_transaction builds+parses the child tx (expands inline calls in its
+  body). Proc body keeps param NAMES (= port names; no substitution in handshake form).
+- Fail-closed: missing INST after `as`; proc/transaction name collision. KNOWN LIMIT:
+  synthesized child is a reused sibling, so INST is a label (distinct-instance-per-call
+  = future). t/1390 (9 subtests). 13b handshake section + inline-vs-handshake table.
+- USER DIRECTION FULLY DELIVERED: one (proc), pick inline (call N a) OR handshake
+  (call N a as INST) per call site. Frontier .5 (dedicated example-dense docs chapter).

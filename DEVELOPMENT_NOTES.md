@@ -34181,3 +34181,30 @@ from `parse_source`, not `lower` — tests must wrap `parse_source` in eval for 
 fail-closed cases. (2) the lisp parser emits a trailing `undef` for an empty `()` —
 so `(params)` parses as `['params', undef]`; filter undef entries when reading param
 specs (and body clauses) or you get a spurious "parameter spec must be a list".
+
+## Procedures `.4` — the handshake call is "synthesize a transaction + bound (do)" (2026-06-01)
+
+The handshake convention `(call NAME actuals as INST)` did NOT need any new lowering:
+it desugars, at parse time, to a child transaction synthesized from the proc plus a
+bound `(do NAME (bind ...))` at the call site — both of which the scheduler already
+handles. The proc parameters become the child's ports (in→input, out→output), the
+proc body becomes the transaction body (its parameter names ARE the port names, so —
+unlike the inline form — NO substitution happens), and `(complete NAME_done)`
+terminates it. A spike of the hand-written equivalent (transaction + bound do)
+confirmed it lowers to ONE module (the sibling child is inlined) and `--check-json`
+SUCCEEDS before any code was written — always spike the desugar target first.
+
+Two design notes worth keeping: (1) synthesis runs from a WORKLIST in
+`_expand_procedure_calls`, because a synthesized proc body can itself contain a
+handshake call, which requests another synthesis; drain until no new target appears.
+(2) `INST` is currently a label — the synthesized child is a reused sibling, so two
+handshake calls to the same proc share one hardware block (sequential reuse). Giving
+each call a distinct instance would mean routing through the generated-child instance
+machinery (the `(spawn child as inst)` path) instead of the sibling bound-do; that is
+a clean future refinement, not needed for the convention to work.
+
+Net: ISF now has the full high-level "callable block with its own arguments" at BOTH
+ends — lightweight inline (macro-expand, no instance) and heavyweight handshake
+(synthesized block, start/done + ports) — picked by the presence of `as INST`, with
+one `(proc)` definition usable either way. This is the IAL1 realization of a function
+(see the isf-abstraction-layering memory).

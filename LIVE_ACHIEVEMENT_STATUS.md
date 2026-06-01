@@ -16581,3 +16581,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   writes back into a caller-chosen signal (out-actual must be a plain lvalue). Inline
   calling convention now complete (in+out). --check-json + verilator/yosys PASS. 13b/
   13k; t/1390 (7 subtests). Frontier .4 (handshake call), .5 (docs chapter).
+- `.4` (ISF-PROCEDURES) shipped (2026-06-01): handshake call `(call NAME actuals as
+  INST)` — synthesize the proc as a one-shot child transaction + bound (do). BOTH
+  calling conventions now ship (inline + handshake), pickable per call-site. Reuses
+  the bound-do substrate; --check-json + verilator/yosys PASS. 13b section + table;
+  t/1390 (9 subtests). Frontier .5 (docs chapter).

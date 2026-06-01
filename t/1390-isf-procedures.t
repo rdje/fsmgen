@@ -115,9 +115,6 @@ subtest 'inline-procedure misuse fails closed with targeted diagnostics' => sub 
     like(lower_error($base->('(proc p (params (a (width 8))) (call p a))', '(call p s)'), 'recursion'),
         qr/recursive procedure call '\(call p \.\.\.\)' is not lowerable to hardware/, 'recursion');
 
-    like(lower_error($base->($proc, '(call p s as i0)'), 'handshake'),
-        qr/'\(call p \.\.\. as INST\)' handshake-form procedure call is not yet supported/, 'handshake form deferred');
-
     like(lower_error($base->('(proc p (params (out r (width 8))) (update r 1))', '(call p (+ s 1))'), 'outexpr'),
         qr/out-parameter 'r' requires a plain signal actual to write back into, not an expression/,
         'an expression actual for an out-parameter is rejected');
@@ -142,6 +139,55 @@ ISF
     my $fsm = $lowered->{files}{'outp.fsm'};
     like($fsm, qr/\(r1>\s*\(\+ s 1\)\)/, 'the out-parameter writes into the first caller signal (r1)');
     like($fsm, qr/\(r2>\s*\(\+ \(\+ s 1\) 1\)\)/, 'the out-parameter writes into the second caller signal (r2), with the expression in-actual');
+};
+
+subtest 'a handshake (call ... as INST) calls a synthesized child via the (do) handshake' => sub {
+    # ISF-PROCEDURES.4: `(call NAME actuals as INST)` synthesizes the procedure as a
+    # one-shot child transaction (in-params -> input ports, out-params -> output
+    # ports) and drives it with the bound `(do)` handshake — instead of inlining it.
+    my $lowered = eval {
+        lower_source(<<'ISF', 'hs');
+(actor hs_demo
+  (interface (input start) (input din (width 8)) (output done) (output result (width 8)))
+  (proc inc_into (params (in (width 8)) (out r (width 8)))
+    (update r (+ in 1)))
+  (transaction main
+    (on start)
+    (sample din as s)
+    (call inc_into s result as a0)
+    (complete done)))
+ISF
+    };
+    ok($lowered, 'a handshake (call ... as INST) lowers') or diag($@);
+    my $fsm = $lowered->{files}{'hs_demo.fsm'};
+    # The call site drives the in-arg, asserts start, reads the out-arg on done, and
+    # blocks on the done handshake.
+    like($fsm, qr/\(in s\)/, 'the in-argument is bound (in <- s)');
+    like($fsm, qr/\(inc_into_start 1\)/, 'the call asserts the synthesized child start handshake');
+    like($fsm, qr/\(result>\s*r\)/, 'the out-argument is read back (result <- r)');
+    like($fsm, qr/<inc_into_done/, 'the call blocks on the synthesized child done handshake');
+    # The synthesized child transaction's body runs r = in + 1.
+    like($fsm, qr/inc_into_\w+[\s\S]*?\(r\s*\(\+ in 1\)\)/, 'the synthesized child computes r = in + 1');
+};
+
+subtest 'handshake-call misuse fails closed' => sub {
+    my $base = sub {
+        my ($pdef, $callline) = @_;
+        return "(actor t (interface (input start) (input din (width 8)) (output done) (output total (width 8))) "
+            . "$pdef (transaction main (on start) (sample din as s) $callline (complete done)))";
+    };
+    # Missing instance name after `as`.
+    like(lower_error($base->('(proc p (params (a (width 8))) (update total a))', '(call p s as)'), 'noinst'),
+        qr/'\(call p \.\.\. as INST\)' requires an instance name after 'as'/, 'handshake without an instance name');
+
+    # A proc handshake-called but a transaction already owns that name.
+    like(lower_error(
+        '(actor t (interface (input start) (input din (width 8)) (output done) (output total (width 8))) '
+        . '(proc dup (params (a (width 8))) (update total a)) '
+        . '(transaction dup (on start) (complete done)) '
+        . '(transaction main (on start) (sample din as s) (call dup s as d0) (complete done)))', 'namecollision'),
+        qr/proc 'dup' is invoked via the handshake form .* but a transaction named 'dup' already exists/,
+        'handshake proc/transaction name collision');
 };
 
 subtest 'a malformed (proc) fails closed' => sub {

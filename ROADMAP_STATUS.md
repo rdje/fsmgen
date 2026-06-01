@@ -14979,3 +14979,11 @@ Exit criteria:
   convention (in + out params). `--check-json` + verilator/yosys PASS. 13b example,
   13k row, `t/1390`. Frontier `.4` (the handshake call `(call ... as INST)` — the
   second convention), `.5` (docs chapter).
+- `R14`: `ISF-PROCEDURES.4` shipped (2026-06-01) — the handshake call `(call NAME
+  actuals... as INST)`: synthesizes the proc as a one-shot child transaction (params →
+  typed ports) and drives it with a bound `(do)` handshake. **Both calling conventions
+  now ship** (inline `(call N a)` / handshake `(call N a as INST)`), fully delivering
+  the user's "implement both, pickable per call-site" direction. Reuses the existing
+  bound-do substrate; `--check-json` + verilator/yosys PASS. 13b handshake section +
+  comparison table; 13k row; `t/1390` (9 subtests). Frontier `.5` (dedicated
+  example-dense procedures chapter).

@@ -2038,23 +2038,51 @@ not an expression:
 In-parameters and out-parameters may be mixed freely; they substitute positionally in
 declaration order.
 
+### Handshake calls (`as INST`) — the other convention
+
+The same procedure can be called the **other** way: `(call NAME actuals... as INST)`
+synthesizes the procedure as its own **one-shot hardware block** (a child transaction
+with start/done plus one port per parameter) and drives it with the `(do)`-style
+handshake — the call site binds the in-arguments, pulses the child's start, blocks on
+its done, and reads the out-arguments back. The trailing `as INST` is the single,
+clean way to pick the handshake convention over inline substitution; without it, the
+call inlines.
+
+```lisp
+(actor hs_demo
+  (interface (input start) (input din (width 8)) (output done) (output result (width 8)))
+
+  (proc inc_into (params (in (width 8)) (out r (width 8)))
+    (update r (+ in 1)))
+
+  (transaction main
+    (on start)
+    (sample din as s)
+    (call inc_into s result as a0)   ;; handshake: pass s -> in, run, read r -> result
+    (complete done)))
+```
+
+The two conventions are a clean choice at each call site for the **same** definition:
+
+| | `(call NAME actuals)` | `(call NAME actuals as INST)` |
+|---|---|---|
+| Form | inline substitution | port-binding handshake |
+| Cost | none (macro-expanded) | a one-shot child block + start/done |
+| Hardware | no instance | a synthesized child transaction |
+| Use when | small reusable snippets | a heavier block you want shared/instanced |
+
+Parameter directions work the same in both: an in-parameter passes a value, an
+out-parameter names a signal the call writes back into (`result` above).
+
 ### Boundaries (fail-closed)
 
 Hardware has no call stack, so a procedure may not call itself (directly or through a
 chain) — recursion fails closed (`recursive procedure call ... is not lowerable to
 hardware`). Other misuse also fails closed with a targeted diagnostic: an unknown
 procedure name, an argument-count mismatch, an expression passed where an
-out-parameter expects a signal, or a malformed `(proc ...)` (missing name, missing
-`(params ...)`, or an empty body).
-
-### Coming next
-
-One extension is staged and currently fails closed with a clear message:
-
-- **The handshake call** — `(call NAME actuals... as INST)` synthesizes the procedure
-  as its own one-shot hardware block (start/done + argument ports) and calls it with
-  the `(do)`-style handshake, instead of inlining it. The `as INST` suffix is the
-  single, clean way to pick the handshake convention over inline substitution.
+out-parameter expects a signal, a handshake `(call ... as)` missing its instance name,
+a handshake procedure whose name collides with an existing transaction, or a malformed
+`(proc ...)` (missing name, missing `(params ...)`, or an empty body).
 
 ## Timing Summary
 
