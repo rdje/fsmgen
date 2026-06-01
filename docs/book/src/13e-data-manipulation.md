@@ -30,6 +30,70 @@ nonzero.
 
 **Lowering**: `(<- (var expr))` — sequential Q-named assignment.
 
+## `(incr NAME [by N])` / `(decr NAME [by N])` — Compound Increment / Decrement
+
+```lisp
+(incr count)          ;; count += 1
+(incr total by din)   ;; total += din
+(decr remaining)      ;; remaining -= 1
+(decr level by 2)     ;; level -= 2
+```
+
+`(incr …)` and `(decr …)` are the compound-assignment sugar a high-level
+language has (`x += N`, `x++`). They capture the common counter / accumulator
+intent more directly than spelling out `(set NAME (+ NAME N))`. The amount is an
+optional `by N` (the `by` keyword followed by the amount); `N` defaults to `1`
+and may be a literal, a signal, or an expression.
+
+This is a pure ISF parser desugar into the existing
+[`(update …)` / `(set …)`](#update-var-expr--variable-modification) data op — no
+new lowering machinery:
+
+| Form | Desugars to |
+| --- | --- |
+| `(incr x)` | `(set x (+ x 1))` |
+| `(incr x by N)` | `(set x (+ x N))` |
+| `(decr x)` | `(set x (- x 1))` |
+| `(decr x by N)` | `(set x (- x N))` |
+
+They are valid anywhere a `(set …)` is — at the transaction top level and inside
+control-flow bodies (`when`, `switch`, `while`, `until`, `repeat`, and so the
+`for` / `cond` forms that lower to them). The canonical use is a loop
+accumulator:
+
+```lisp
+(actor scoreboard
+  (interface
+    (input start)
+    (output done)
+    (output rounds (width 8))
+    (output bonus (width 8)))
+  (transaction run
+    (on start)
+    (incr bonus by 10)        ;; bonus += 10 once  -> 10
+    (for (i 3)
+      (incr rounds))          ;; rounds += 1 per iteration -> 3
+    (complete done)))
+```
+
+After `start`, `bonus` reaches `10` (one `+= 10`) and `rounds` reaches `3` (one
+`+= 1` executed each of the three loop iterations), then `done` asserts.
+
+A malformed form fails closed before `.fsm` emission: `(incr)` with no register
+name, or trailing tokens that are not a `by N` pair (e.g. `(incr x foo 2)`), is
+rejected with a diagnostic.
+
+> **One expression write per register per transaction.** Because `(incr …)` /
+> `(decr …)` lower to an expression `(set …)`, a register written by **two or
+> more** expression `(set …)`s in different states of one transaction — for
+> example two literal `(incr x)` back to back — hits a pre-existing codegen
+> constraint (one expression write-enable per register). The common patterns are
+> unaffected: a single `(incr x)`, an `(incr x)` inside a loop body (one state
+> executed N times), or combining repeated bumps into one `(incr x by N)`.
+
+**Lowering**: `(<- (NAME (+ NAME N)))` / `(<- (NAME (- NAME N)))` — the same
+sequential Q-named assignment `(set …)` produces.
+
 ## `(shift_left reg bit [(width N)])` — Shift Register (Left)
 
 ```lisp

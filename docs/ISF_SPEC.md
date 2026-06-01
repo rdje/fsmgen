@@ -5753,6 +5753,7 @@ Focused tests:
 - [t/1396-isf-cond.t](../t/1396-isf-cond.t)
 - [t/1397-isf-register-reset-value-surface.t](../t/1397-isf-register-reset-value-surface.t)
 - [t/1398-isf-storage-reset-value.t](../t/1398-isf-storage-reset-value.t)
+- [t/1399-isf-compound-assign.t](../t/1399-isf-compound-assign.t)
 
 ## 12. Explicitly Deferred
 

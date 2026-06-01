@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-COMPOUND-ASSIGN`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14` (ISF — high-level language richness)
 - Created: `2026-06-01`
 - Last updated: `2026-06-01`
@@ -69,7 +69,7 @@ defaults to `1` and may be a literal, signal, or expression. No new lowerer mach
 ## Task Tree
 
 - ID: `ISF-COMPOUND-ASSIGN`
-  Status: `active`
+  Status: `done`
   Goal: `(incr/decr NAME [by N]) compound-assignment sugar — parser desugar to (set NAME (± NAME N)).`
   Children: `.1` (select), `.2` (desugar + tests + docs)
 
@@ -81,18 +81,20 @@ defaults to `1` and may be a literal, signal, or expression. No new lowerer mach
   Commit: `this slice`
 
 - ID: `ISF-COMPOUND-ASSIGN.2`
-  Status: `todo`
+  Status: `done`
   Goal: `_expand_compound_assign desugar + tests + docs.`
   Acceptance: `(incr/decr NAME [by N]) desugars to the matching (set …); N defaults to 1 and may be a literal/signal/expression; works at the top level and in control-flow bodies; a missing name / malformed by fails closed; 13e section + 13k row; ISF_SPEC registers t/.`
-  Verification: `Spike + t/; full isf regression; perl -c; mdbook build; git diff --check`
-  Commit: `pending`
+  Verification: `t/1399 (3 subtests); --verify-hdl + verilator --binary on the doc accumulator (rounds=3, bonus=10); full isf regression; perl -c; mdbook build; git diff --check`
+  Commit: `this slice`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
-| 2 | `.2` | `todo` | The desugar + tests + docs. |
+| 2 | `.2` | `done` | The desugar + tests + docs. |
+
+Tree complete — `(incr/decr NAME [by N])` ships.
 
 ## Decisions
 
@@ -110,14 +112,23 @@ defaults to `1` and may be a literal, signal, or expression. No new lowerer mach
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.2` | `t/1399` (3 subtests); `--verify-hdl` (verilator lint + yosys) on the doc accumulator; `verilator --binary` sim → `rounds=3, bonus=10`; full `prove t/` regression; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-COMPOUND-ASSIGN.1: select (incr/decr NAME [by N])` | this slice |
+| `.1` | `ISF-COMPOUND-ASSIGN.1: select (incr/decr NAME [by N])` | prior slice |
+| `.2` | `ISF-COMPOUND-ASSIGN.2: (incr/decr NAME [by N]) desugar + tests + docs` | this slice |
 
 ## Changelog
 
 - `2026-06-01`: Created — `(incr/decr NAME [by N])` compound-assignment sugar, a pure ISF
   parser desugar to `(set NAME (± NAME N))`. `.2` lands the desugar + tests + docs.
+- `2026-06-01`: `.2` shipped — `_expand_compound_assign` (runs after the cond/for/let/proc
+  passes, recursing into `when`/`switch`/`while`/`until`/`repeat` bodies) rewrites each
+  `(incr/decr NAME [by N])` to `(set NAME (± NAME N))`; `N` defaults to 1; a missing name or
+  malformed `by` fails closed. t/1399 (3 subtests); 13e data-manipulation section + 13k row;
+  ISF_SPEC registers t/1399. Tree closed. Noted the pre-existing two-expression-writes-per-
+  register codegen constraint in the docs (the common single / in-a-loop / `by N` patterns are
+  unaffected); logging it as its own core frontier item.

@@ -317,6 +317,11 @@ sub _build_actor($self, $actor_ast, $source_label) {
     # only ever sees ordinary clauses (procs/calls never reach the lowerer).
     $self->_expand_procedure_calls($result);
 
+    # ISF-COMPOUND-ASSIGN: rewrite `(incr/decr NAME [by N])` to `(set NAME (± NAME N))`
+    # AFTER the cond/for/let/proc passes, so the emitted `(set …)` is final and lands in the
+    # already-lowered control-flow bodies.
+    $self->_expand_compound_assign($result);
+
     $self->_finalize_actor_symbol_tables($result, $source_label);
     $self->_finalize_actor_constant_values($result);
     $self->_finalize_actor_param_values($result);
@@ -513,6 +518,72 @@ sub _proc_deep_clone($node) {
 # desugar — NAME is substituted by EXPR in the rest of the enclosing body (and nested
 # bodies, which may shadow it with their own `(let)`); the `(let)` clause itself emits
 # nothing. No register, no runtime cost.
+# --- ISF-COMPOUND-ASSIGN: `(incr/decr NAME [by N])` compound assignment (parser desugar) ---
+
+# `(incr NAME [by N])` -> `(set NAME (+ NAME N))` and `(decr NAME [by N])` ->
+# `(set NAME (- NAME N))`, with N defaulting to 1. Runs after the cond/for/let/proc passes,
+# so the emitted `(set …)` is final; it recurses into the lowered control-flow bodies.
+sub _expand_compound_assign($self, $result) {
+    for my $tx (@{$result->{transactions} || []}) {
+        $tx->{clauses} = $self->_expand_compound_in_list(
+            $tx->{clauses}, "transaction '$tx->{name}'");
+    }
+}
+
+sub _expand_compound_in_list($self, $clauses, $ctx) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0])
+            && ($clause->[0] eq 'incr' || $clause->[0] eq 'decr')) {
+            push @out, $self->_desugar_compound($clause, $ctx);
+        } else {
+            push @out, $self->_compound_rewrite_clause($clause, $ctx);
+        }
+    }
+    return \@out;
+}
+
+# Recurse into body-bearing control flow so an `(incr/decr …)` nested there is rewritten.
+sub _compound_rewrite_clause($self, $clause, $ctx) {
+    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $body = $self->_expand_compound_in_list([@{$clause}[2 .. $#$clause]], $ctx);
+        return [ $kw, $clause->[1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_compound_in_list([@{$br}[1 .. $#$br]], $ctx);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $clause->[1], @branches ];
+    }
+    return $clause;
+}
+
+sub _desugar_compound($self, $clause, $ctx) {
+    my ($op, $name, @rest) = @$clause;
+    confess "Error: ($op ...) in $ctx requires a register name\n"
+        unless defined($name) && !ref($name) && length($name);
+    # Optional `by N` (N defaults to 1) — a literal, signal, or expression.
+    my $amount = 1;
+    @rest = grep { defined } @rest;
+    if (@rest) {
+        confess "Error: ($op $name ...) in $ctx trailing tokens require 'by N'\n"
+            unless @rest == 2 && defined($rest[0]) && !ref($rest[0]) && $rest[0] eq 'by';
+        $amount = $rest[1];
+        confess "Error: ($op $name by ...) in $ctx requires an amount after 'by'\n"
+            unless defined $amount;
+    }
+    my $arith = ($op eq 'incr') ? '+' : '-';
+    return [ 'set', $name, [ $arith, $name, $amount ] ];
+}
+
 # --- ISF-COND: `(cond (c body...)... (else body...))` if/else-if/else (parser desugar) ---
 
 # `(cond …)` is the if/else-if/else priority chain. It desugars to a `when`-chain with
