@@ -275,6 +275,57 @@ combine the fields into a single value.
 **Lowering**: `(<- (NAME (| (& NAME W'dCLEARMASK) W'dSHIFTED)))` — the sequential
 Q-named assignment `(set …)` produces.
 
+## `(when-field NAME (bits HI LO) VALUE body…)` / `(unless-field …)` — Branch On A Field
+
+```lisp
+(when-field   mode (bits 2 0) 3  (enter-turbo))    ;; run body when mode[2:0] == 3
+(unless-field mode (bits 2 0) 3  (enter-normal))   ;; run body when mode[2:0] != 3
+```
+
+The read/compare companion to
+[`set-field`](#set-field-name-bits-hi-lo-value--multi-bit-field-write), and the
+multi-bit generalisation of
+[`when-bit`](#when-bit-name-n-body--unless-bit-name-n-body--branch-on-a-bit):
+dispatch on a register's mode / level / selector field. `(when-field …)` runs its
+body when the field equals `VALUE`; `(unless-field …)` runs it when it does not.
+
+A pure ISF parser desugar into a `(when …)` with a width-qualified masked field
+comparison (only the field's bits participate — the surrounding bits are masked
+off):
+
+| Form | Desugars to |
+| --- | --- |
+| `(when-field x (bits HI LO) V body…)` | `(when (== (& x W'dFIELDMASK) W'dSHIFTED) body…)` |
+| `(unless-field x (bits HI LO) V body…)` | `(when (!= (& x W'dFIELDMASK) W'dSHIFTED) body…)` |
+
+where `FIELDMASK = ((2^(HI-LO+1)) - 1) << LO` and `SHIFTED = V << LO`. As with the
+other field / bit constructs, the sized literals require the register's width to
+be a statically known literal (resolved from a `(local …)`, an interface port, or
+a `(storage (var …))`).
+
+```lisp
+(actor mode_dispatch
+  (interface (input start) (input mode (width 8)) (output done)
+             (output turbo (width 8)) (output normal (width 8)))
+  (transaction main
+    (on start)
+    (when-field   mode (bits 2 0) 3  (set-bit turbo 0))    ;; mode[2:0] == 3 -> turbo
+    (unless-field mode (bits 2 0) 3  (set-bit normal 0))   ;; otherwise      -> normal
+    (complete done)))
+```
+
+The comparison looks only at `mode[2:0]`, so `mode = 0xF3` (upper nibble set,
+`mode[2:0] == 3`) still takes the `turbo` path.
+
+A malformed form fails closed before `.fsm` emission: a missing name; a malformed
+`(bits HI LO)` selector; non-literal `HI` / `LO` / `VALUE`; `HI < LO`; `HI >=` the
+register width; a `VALUE` overflowing the field; an empty body; or a non-literal /
+symbolic width.
+
+**Lowering**: `(?(== (& NAME W'dFIELDMASK) W'dSHIFTED) …)` /
+`(?(!= (& NAME W'dFIELDMASK) W'dSHIFTED) …)` — the decision state a `(when …)`
+produces.
+
 ## `(shift_left reg bit [(width N)])` — Shift Register (Left)
 
 ```lisp

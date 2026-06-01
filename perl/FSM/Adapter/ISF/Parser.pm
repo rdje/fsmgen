@@ -323,6 +323,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
     # / `(set-bit …)` sitting inside a desugared `(when-bit …)` body.
     $self->_expand_bit_tests($result);
 
+    # ISF-WHEN-FIELD: rewrite `(when-field/unless-field NAME (bits HI LO) V body…)` to a
+    # masked `(when …)` field comparison — same staging rationale as the bit test.
+    $self->_expand_when_fields($result);
+
     # ISF-COMPOUND-ASSIGN: rewrite `(incr/decr NAME [by N])` to `(set NAME (± NAME N))`
     # AFTER the cond/for/let/proc passes, so the emitted `(set …)` is final and lands in the
     # already-lowered control-flow bodies.
@@ -897,6 +901,103 @@ sub _desugar_bit_test($self, $clause, $ctx, $widths) {
     my $cmp = ($op eq 'when-bit') ? '!=' : '==';
     my $guard = [ $cmp, [ '&', $name, $mask_lit ], $zero_lit ];
     return [ 'when', $guard, @$body ];
+}
+
+# --- ISF-WHEN-FIELD: `(when-field/unless-field NAME (bits HI LO) V body…)` branch on a field ---
+#
+# Parser desugar into a `(when …)` with a width-qualified masked field comparison:
+#   (when-field   x (bits HI LO) V body…) -> (when (== (& x W'dFIELDMASK) W'dSHIFTED) body…)
+#   (unless-field x (bits HI LO) V body…) -> (when (!= (& x W'dFIELDMASK) W'dSHIFTED) body…)
+#     FIELDMASK = ((2^(HI-LO+1)) - 1) << LO ; SHIFTED = V << LO
+# Same sized-literal / width-resolution / staging story as ISF-BIT-TEST (runs before the
+# compound/bit-op/set-field passes so their `(when …)` recursion reaches the body).
+my %WHEN_FIELD_KEYWORDS = map { $_ => 1 } qw(when-field unless-field);
+
+sub _expand_when_fields($self, $result) {
+    for my $tx (@{$result->{transactions} || []}) {
+        my $widths = $self->_bit_op_width_map($result, $tx);
+        $tx->{clauses} = $self->_expand_when_fields_in_list(
+            $tx->{clauses}, "transaction '$tx->{name}'", $widths);
+    }
+}
+
+sub _expand_when_fields_in_list($self, $clauses, $ctx, $widths) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0])
+            && $WHEN_FIELD_KEYWORDS{$clause->[0]}) {
+            push @out, $self->_desugar_when_field($clause, $ctx, $widths);
+        } else {
+            push @out, $self->_when_field_rewrite_clause($clause, $ctx, $widths);
+        }
+    }
+    return \@out;
+}
+
+sub _when_field_rewrite_clause($self, $clause, $ctx, $widths) {
+    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $body = $self->_expand_when_fields_in_list([@{$clause}[2 .. $#$clause]], $ctx, $widths);
+        return [ $kw, $clause->[1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_when_fields_in_list([@{$br}[1 .. $#$br]], $ctx, $widths);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $clause->[1], @branches ];
+    }
+    return $clause;
+}
+
+sub _desugar_when_field($self, $clause, $ctx, $widths) {
+    my ($op, $name, $bits, $val, @body) = @$clause;
+    confess "Error: ($op ...) in $ctx requires a register name\n"
+        unless defined($name) && !ref($name) && length($name);
+    confess "Error: ($op $name ...) in $ctx requires a (bits HI LO) field selector\n"
+        unless ref($bits) eq 'ARRAY' && @$bits == 3 && defined($bits->[0]) && !ref($bits->[0]) && $bits->[0] eq 'bits';
+    my ($hi, $lo) = ($bits->[1], $bits->[2]);
+    confess "Error: ($op $name (bits ...)) in $ctx requires literal HI and LO bit indices\n"
+        unless defined($hi) && !ref($hi) && $hi =~ /^\d+$/ && defined($lo) && !ref($lo) && $lo =~ /^\d+$/;
+    $hi += 0; $lo += 0;
+    confess "Error: ($op $name (bits $hi $lo) ...) in $ctx requires HI >= LO\n"
+        if $hi < $lo;
+    confess "Error: ($op $name (bits $hi $lo) ...) in $ctx requires a non-negative integer field value\n"
+        unless defined($val) && !ref($val) && $val =~ /^\d+$/;
+    $val += 0;
+    @body = grep { defined } @body;
+    confess "Error: ($op $name (bits $hi $lo) $val ...) in $ctx requires a non-empty body\n"
+        unless @body;
+
+    my $width = exists $widths->{$name} ? $widths->{$name} : undef;
+    confess "Error: ($op $name (bits $hi $lo) $val) in $ctx requires a statically known register "
+          . "width (declare '$name' with a literal (width N)); its sized field mask cannot be formed otherwise\n"
+        unless defined $width;
+    confess "Error: ($op $name (bits $hi $lo) $val) in $ctx — bit $hi is out of range for the "
+          . "${width}-bit register '$name'\n"
+        if $hi >= $width;
+
+    my $field_bits = $hi - $lo + 1;
+    my $field_span = 1 << $field_bits;
+    confess "Error: ($op $name (bits $hi $lo) $val) in $ctx — value $val does not fit in the "
+          . "${field_bits}-bit field [$hi:$lo]\n"
+        if $val >= $field_span;
+
+    my $field_mask = ($field_span - 1) << $lo;
+    my $shifted = $val << $lo;
+    my $mask_lit = "${width}'d${field_mask}";
+    my $value_lit = "${width}'d${shifted}";
+    # Expand any nested field test in this body before wrapping it.
+    my $expanded = $self->_expand_when_fields_in_list(\@body, $ctx, $widths);
+    my $cmp = ($op eq 'when-field') ? '==' : '!=';
+    my $guard = [ $cmp, [ '&', $name, $mask_lit ], $value_lit ];
+    return [ 'when', $guard, @$expanded ];
 }
 
 # --- ISF-COND: `(cond (c body...)... (else body...))` if/else-if/else (parser desugar) ---
