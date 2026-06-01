@@ -345,6 +345,9 @@ sub _build_actor($self, $actor_ast, $source_label) {
     # Same staging / width needs as the bit ops.
     $self->_expand_rotate($result);
 
+    # ISF-SWAP: rewrite `(swap A B)` to the temp-free XOR swap (three `(set …)`s).
+    $self->_expand_swap($result);
+
     # ISF-MINMAX: rewrite `(max/min DST A B)` onto `(select …)`. Runs BEFORE the select pass
     # so the emitted `(select …)` is expanded below.
     $self->_expand_minmax($result);
@@ -827,6 +830,71 @@ sub _desugar_set_field($self, $clause, $ctx, $widths) {
     my $clear_lit = "${width}'d${clear_mask}";
     my $value_lit = "${width}'d${shifted}";
     return [ 'set', $name, [ '|', [ '&', $name, $clear_lit ], $value_lit ] ];
+}
+
+# --- ISF-SWAP: `(swap A B)` exchange two registers ---
+#
+# Parser desugar into the temp-free XOR swap — three sequential `(set …)`s (A's two writes get
+# distinct enables since CODEGEN-MULTI-EXPRESSION-SET-ALIAS landed):
+#   (swap A B) -> (set A (^ A B)) (set B (^ A B)) (set A (^ A B))
+# After the three states A holds the original B and B the original A. A and B must be distinct
+# (XOR-swapping a register with itself zeroes it).
+sub _expand_swap($self, $result) {
+    for my $tx (@{$result->{transactions} || []}) {
+        $tx->{clauses} = $self->_expand_swap_in_list(
+            $tx->{clauses}, "transaction '$tx->{name}'");
+    }
+}
+
+sub _expand_swap_in_list($self, $clauses, $ctx) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0])
+            && $clause->[0] eq 'swap') {
+            push @out, @{ $self->_desugar_swap($clause, $ctx) };
+        } else {
+            push @out, $self->_swap_rewrite_clause($clause, $ctx);
+        }
+    }
+    return \@out;
+}
+
+sub _swap_rewrite_clause($self, $clause, $ctx) {
+    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $body = $self->_expand_swap_in_list([@{$clause}[2 .. $#$clause]], $ctx);
+        return [ $kw, $clause->[1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_swap_in_list([@{$br}[1 .. $#$br]], $ctx);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $clause->[1], @branches ];
+    }
+    return $clause;
+}
+
+sub _desugar_swap($self, $clause, $ctx) {
+    my ($op, $a, $b) = @$clause;
+    confess "Error: (swap A B) in $ctx requires two register names\n"
+        unless @$clause == 3
+            && defined($a) && !ref($a) && length($a)
+            && defined($b) && !ref($b) && length($b);
+    confess "Error: (swap $a $b) in $ctx requires two distinct registers "
+          . "(XOR-swapping a register with itself would zero it)\n"
+        if $a eq $b;
+    return [
+        [ 'set', $a, [ '^', $a, $b ] ],
+        [ 'set', $b, [ '^', $a, $b ] ],
+        [ 'set', $a, [ '^', $a, $b ] ],
+    ];
 }
 
 # --- ISF-ROTATE: `(rotate-left/right REG [by N])` bit rotation ---

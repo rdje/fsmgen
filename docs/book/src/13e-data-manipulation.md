@@ -119,6 +119,53 @@ anything other than exactly `(max DST A B)` / `(min DST A B)`.
 **Lowering**: as for `(select …)` — two decision states, one assigning the picked
 value.
 
+## `(swap A B)` — Exchange Two Registers
+
+```lisp
+(swap front back)   ;; front, back = back, front
+```
+
+Exchange the contents of two registers — ping-pong buffers, sort steps, register
+renaming. `A` and `B` are two distinct registers.
+
+A pure ISF parser desugar into the temp-free **XOR swap** — three sequential
+`(set …)`s, no scratch register:
+
+```lisp
+(swap A B) -> (set A (^ A B))   ;; A = A ^ B
+              (set B (^ A B))   ;; B = (A^B) ^ B = original A
+              (set A (^ A B))   ;; A = (A^B) ^ (original A) = original B
+```
+
+After the three states, `A` holds the original `B` and `B` the original `A`. (The
+first and third steps both write `A`; since sequential writes to one register each
+get their own write-enable, no temporary is needed.)
+
+```lisp
+(actor swapper
+  (interface (input start) (input p (width 8)) (input q (width 8)) (output done)
+             (output a (width 8)) (output b (width 8)))
+  (transaction main
+    (on start)
+    (local x (width 8))
+    (local y (width 8))
+    (update x p)
+    (update y q)
+    (swap x y)       ;; x, y = y, x
+    (update a x)
+    (update b y)
+    (complete done)))
+```
+
+With `p = 77`, `q = 200`, the result is `a == 200` and `b == 77`.
+
+A malformed form fails closed before `.fsm` emission: anything other than exactly
+`(swap A B)` with two register names, or `A` and `B` naming the same register
+(XOR-swapping a register with itself would zero it).
+
+**Lowering**: three `(<- (A (^ A B)))` / `(<- (B (^ A B)))` sequential Q-named
+assignments.
+
 ## `(incr NAME [by N])` / `(decr NAME [by N])` — Compound Increment / Decrement
 
 ```lisp
