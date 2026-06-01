@@ -34226,3 +34226,17 @@ treats the WIDTHEXPAND warning as an error, so a mixed-width add (e.g. a 12-bit 
 12-bit + 8-bit add warns identically), not specific to local variables. Keep book
 examples and HDL-verified fixtures same-width; the WIDTHEXPAND boundary is an
 orthogonal pre-existing concern.
+
+## Local variables `.4` — (let) reuses the proc substitution machinery (2026-06-01)
+
+`(let NAME EXPR)` is a pure desugar, so it lives in the same parse-time layer as
+procedure inline expansion (`FSM::Adapter::ISF::Parser`) and reuses
+`_substitute_proc_body`/`_proc_deep_clone`. Two design points: (1) it runs BEFORE
+`_expand_procedure_calls` so a let-bound name used as a `(call)` actual is substituted
+first; (2) it is scope-accumulating per body — `_expand_lets_in_list` inherits the
+outer scope and recurses into `when`/`switch`/`while`/`until`/`repeat` bodies (which may
+shadow an outer `(let)`), substituting the head condition/selector but recursing the
+body. The `(let)` clause emits nothing. CAUTION reinforced: do NOT edit a source file
+while a full ci-regression is running — a regression launched before this pass caught
+`Parser.pm` mid-edit and failed `t/1378` spuriously; re-running clean was green. Spike
+the desugar, finish the edit, THEN run the regression.

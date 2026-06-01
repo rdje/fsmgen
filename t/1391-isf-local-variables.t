@@ -66,6 +66,43 @@ ISF
     like($size, qr/\(wide 12\)/, 'the local keeps its declared 12-bit width');
 };
 
+subtest '(local NAME (width N) (default V)) initializes the local on transaction entry' => sub {
+    # ISF-LOCAL-VARIABLES.3: a transaction-local is re-initialized each time the
+    # transaction runs. `(default V)` and `(init V)` are accepted synonyms; both
+    # materialize a set-to-V on entry.
+    for my $kw (qw(default init)) {
+        my $lowered = eval {
+            lower_source(<<"ISF", "lvi-$kw");
+(actor lvi
+  (interface (input start) (input din (width 8)) (output done) (output result (width 8)))
+  (transaction main
+    (on start)
+    (local acc (width 8) ($kw 5))
+    (sample din as s)
+    (set acc (+ acc s))
+    (update result acc)
+    (complete done)))
+ISF
+        };
+        ok($lowered, "a (local ... ($kw V)) lowers") or diag($@);
+        my $fsm = $lowered->{files}{'lvi.fsm'};
+        like($fsm, qr/\(acc 8\)/, "$kw: the local is still declared at its width");
+        like($fsm, qr/\(acc 5\)/, "$kw: the initial value materializes a set of the local to 5");
+    }
+};
+
+subtest 'an out-of-range or non-integer (default V) fails closed' => sub {
+    my $base = sub {
+        my ($decl) = @_;
+        return "(actor lv (interface (input start) (output done) (output result (width 8))) "
+            . "(transaction main (on start) $decl (update result x) (complete done)))";
+    };
+    like(lower_error($base->('(local x (width 4) (default 99))'), 'wide'),
+        qr/default value does not fit in 4 bit\(s\)/, 'default wider than the declared width');
+    like(lower_error($base->('(local x (width 8) (init foo))'), 'nonint'),
+        qr/'\(local x \.\.\. \(default V\)\)' requires a non-negative integer literal/, 'non-integer default (via init synonym)');
+};
+
 subtest '(local) declarations fail closed on misuse' => sub {
     my $base = sub {
         my ($decl) = @_;
@@ -81,6 +118,40 @@ subtest '(local) declarations fail closed on misuse' => sub {
 
     like(lower_error($base->('(local x (width 0))'), 'zerowidth'),
         qr/'\(local x \.\.\.\)' requires a '\(width N\)' with a positive integer/, 'zero width');
+};
+
+subtest '(let NAME EXPR) names an intermediate value (pure substitution, no register)' => sub {
+    # ISF-LOCAL-VARIABLES.4: `(let NAME EXPR)` substitutes NAME -> EXPR in the rest of
+    # the body. It is a pure desugar — no register, no runtime cost.
+    my $lowered = eval {
+        lower_source(<<'ISF', 'letdemo');
+(actor letdemo
+  (interface (input start) (input a (width 8)) (input b (width 8)) (output done) (output result (width 8)))
+  (transaction main
+    (on start)
+    (sample a as av)
+    (sample b as bv)
+    (let sum (+ av bv))
+    (update result (+ sum 1))
+    (complete done)))
+ISF
+    };
+    ok($lowered, 'a (let ...) lowers') or diag($@);
+    my $fsm = $lowered->{files}{'letdemo.fsm'};
+    like($fsm, qr/\(result>\s*\(\+ \(\+ av bv\) 1\)\)/, 'the let name is substituted by its expression');
+    unlike($fsm, qr/\(sum /, 'no register is created for the let binding');
+};
+
+subtest '(let ...) misuse fails closed' => sub {
+    my $base = sub {
+        my ($body) = @_;
+        return "(actor t (interface (input start) (input a (width 8)) (output done) (output result (width 8))) "
+            . "(transaction main (on start) $body (update result a) (complete done)))";
+    };
+    like(lower_error($base->('(let x 1) (let x 2)'), 'redef'),
+        qr/\(let x \.\.\.\) in transaction 'main' redefines an already-bound name 'x'/, 'redefining a let name');
+    like(lower_error($base->('(let a 1)'), 'portcollide'),
+        qr/\(let a \.\.\.\) in transaction 'main' collides with an interface port 'a'/, 'let name colliding with an interface port');
 };
 
 done_testing();

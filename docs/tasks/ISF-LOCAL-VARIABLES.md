@@ -108,6 +108,20 @@ Reads like:
   Goal: `(local NAME (width N)) declares an internal register at an explicit width.`
   Acceptance: `local added to the transaction clause-context allow-list; _build_transaction handles (local NAME (width N)) by registering $ct{NAME}=N (the same width map that feeds +size), so NAME is emitted in +size at the declared width and read/written in the body like any signal (vs. an implicit internal scalar whose width is inferred and omitted from +size). _parse_local_decl validates the width and fails closed on a missing/non-positive width or a collision with an interface port (or an already-declared transaction signal). --check-json + verilator/yosys PASS (same-width arithmetic; the WIDTHEXPAND lint on mixed-width adds is general ISF behavior, not local-specific). 13b gains a declared-internal-variables section + runnable example; 13k row; ISF_SPEC registers t/1391.`
   Verification: `Spike: (local acc (width 8)) -> acc in +size at width 8, set/read works; (local wide (width 12)) keeps 12-bit; collision/missing/zero-width fail closed; --check-json SUCCESS; --verify-hdl verilator_lint+yosys_synthesis PASS. prove -Iperl t/1391 (3 subtests) t/1376 t/1250 t/1305 t/1303 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
+  Commit: `5a4388fb`
+
+- ID: `ISF-LOCAL-VARIABLES.3`
+  Status: `done`
+  Goal: `(local NAME (width N) (default V)) initial values.`
+  Acceptance: `_parse_local_decl parses an optional (default V) / (init V) (a non-negative integer literal that fits in the width; out-of-range or non-integer fails closed); the local handler in _build_transaction materializes the init as a set-to-V state on transaction entry (a transaction-local is re-initialized each run, like a software local). --check-json + verilator/yosys PASS. 13b gains an init example; 13k row updated; t/1391 gains init + init-fail-closed subtests.`
+  Verification: `Spike: (local acc (width 8) (default 0)) emits (acc 0) set on entry; init-too-wide / non-int fail closed; --check-json SUCCESS; --verify-hdl PASS. prove -Iperl t/1391 (5 subtests) t/1376 t/1305 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
+  Commit: `ship commit (.3)`
+
+- ID: `ISF-LOCAL-VARIABLES.4`
+  Status: `done`
+  Goal: `(let NAME EXPR) named intermediate values (pure substitution).`
+  Acceptance: `A parse-time pass (_expand_let_bindings in FSM::Adapter::ISF::Parser, run BEFORE procedure expansion so let-bound names reach (call) actuals already substituted) substitutes NAME -> EXPR in the rest of the enclosing body; nested bodies (when/switch/while/until/repeat) inherit the scope and may shadow it; the (let) clause emits nothing (no register, no cycle). Reuses the proc substitution helper (_substitute_proc_body). Fails closed on redefining an already-bound name or a name colliding with an interface port. --check-json + verilator/yosys PASS. 13b gains a (let) section; 13k row; t/1391 gains a (let) positive subtest + redefine/port-collision fail-closed subtests.`
+  Verification: `Spike: (let sum (+ av bv)) substitutes into (update result (+ sum 1)) -> (+ (+ av bv) 1) with NO sum register; redefine + port-collision fail closed; --check-json SUCCESS; --verify-hdl PASS. prove -Iperl t/1391 (7 subtests) t/1376 t/1305 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -116,8 +130,9 @@ Reads like:
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
 | 2 | `.2` | `done` | `(local NAME (width N))` declaration — registers the explicit width in the transaction signal map (emitted in `+size`); body reads/writes it; collision/missing/zero-width fail closed. `--check-json` + verilator/yosys PASS. `t/1391`. |
-| 3 | `.3` | `pending` | `(init V)` reset values for `(local)`. |
-| 4 | `.4`–`.5` | `pending` | `(let NAME EXPR)` named intermediates; thorough docs chapter/section. |
+| 3 | `.3` | `done` | `(default V)` initial values (synonym `(init V)`) — a transaction-local is re-initialized each run (init-on-entry set); out-of-range/non-integer init fails closed. `--check-json`+verilator/yosys PASS. `t/1391`. |
+| 4 | `.4` | `done` | `(let NAME EXPR)` named intermediates — pure substitution (NAME→EXPR in the rest of the scoped body; no register), redefine/port-collision fail closed. `--check-json`+verilator/yosys PASS. `t/1391`. |
+| 5 | `.5` | `pending` | thorough docs chapter/section. |
 
 ## Decisions
 
@@ -142,6 +157,7 @@ Reads like:
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.3` | Spike: `(local acc (width 8) (default 0))` emits `(acc 0)` set on entry; init-too-wide / non-int fail closed; `--check-json` + verilator/yosys PASS. `prove -Iperl t/1391` (5 subtests) `t/1376 t/1305` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.2` | Spike: `(local acc (width 8))` emits `(acc 8)` in `+size`, read/write works; 12-bit local keeps width; collision/missing/zero-width fail closed; `--check-json` + verilator/yosys PASS. `prove -Iperl t/1391` (3 subtests) `t/1376 t/1250 t/1305 t/1303` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
@@ -149,7 +165,8 @@ Reads like:
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `ISF-LOCAL-VARIABLES.1: select declared local variables` | `5a552ef5` |
-| `.2` | `ISF-LOCAL-VARIABLES.2: (local NAME (width N)) declared internal register` | `ship commit (this slice)` |
+| `.2` | `ISF-LOCAL-VARIABLES.2: (local NAME (width N)) declared internal register` | `5a4388fb` |
+| `.3` | `ISF-LOCAL-VARIABLES.3: (local ... (init V)) initial values` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -172,3 +189,29 @@ Reads like:
   (the WIDTHEXPAND lint on mixed-width adds is general ISF behavior, not
   local-specific). Book: `13b` gains a declared-internal-variables section with a
   runnable accumulator example; `13k` row; `docs/ISF_SPEC.md` registers `t/1391`.
+- `2026-06-01`: `.3` shipped — `(local NAME (width N) (default V))` initial values.
+  `_parse_local_decl` parses an optional `(default V)` / `(init V)` (a non-negative integer literal
+  that must fit in the width; an out-of-range or non-integer init fails closed), and
+  the `local` handler in `_build_transaction` materializes it as a set-to-`V` state on
+  transaction entry — a transaction-local is re-initialized each time the transaction
+  runs (like a software local variable). NOTE: this is an ISF-level init-on-entry, not
+  a hardware reset value; arbitrary *hardware reset* values (registers resetting to a
+  non-zero value on areset, e.g. for register maps) are a separate, deeper
+  `.fsm`→HDL-flow feature tracked by `ISF-REGISTER-RESET-VALUES`. Verified
+  `(local acc (width 8) (default 0))` emits the entry set; `--check-json` SUCCEEDS and
+  `--verify-hdl` passes (verilator_lint + yosys_synthesis). Book: `13b` gains an init
+  example; `13k` row updated; `t/1391` gains init + init-fail-closed subtests (5
+  subtests).
+- `2026-06-01`: `.4` shipped — `(let NAME EXPR)` named intermediates. A parse-time pass
+  `_expand_let_bindings` (`FSM::Adapter::ISF::Parser`, run BEFORE procedure expansion so
+  a let-bound name reaches `(call ...)` actuals already substituted) substitutes
+  `NAME` → `EXPR` in the rest of the enclosing body; nested bodies
+  (`when`/`switch`/`while`/`until`/`repeat`) inherit the let scope and may shadow it,
+  and the `(let)` clause itself emits nothing — a pure desugar with no register and no
+  extra cycle (it reuses the procedure substitution helper `_substitute_proc_body`).
+  Fails closed on redefining an already-bound name or a name that collides with an
+  interface port. Verified `(let sum (+ av bv))` substitutes into
+  `(update result (+ sum 1))` → `(+ (+ av bv) 1)` with no `sum` register; `--check-json`
+  SUCCEEDS and `--verify-hdl` passes (verilator_lint + yosys_synthesis). Book: `13b`
+  gains a `(let ...)` section; `13k` row updated; `t/1391` gains a `(let)` positive
+  subtest plus redefine and port-collision fail-closed subtests (7 subtests).

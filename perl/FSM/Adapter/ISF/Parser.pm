@@ -295,6 +295,11 @@ sub _build_actor($self, $actor_ast, $source_label) {
         }
     }
 
+    # ISF-LOCAL-VARIABLES: expand `(let NAME EXPR)` named intermediates (substitute
+    # NAME -> EXPR in the rest of the body) BEFORE procedure expansion, so a let-bound
+    # name reaches `(call ...)` actuals already substituted.
+    $self->_expand_let_bindings($result);
+
     # ISF-PROCEDURES: expand inline `(call NAME actuals)` into the substituted
     # `(proc NAME ...)` body BEFORE the finalizers/validators run, so the scheduler
     # only ever sees ordinary clauses (procs/calls never reach the lowerer).
@@ -490,6 +495,67 @@ sub _substitute_proc_body($self, $node, $subst) {
 sub _proc_deep_clone($node) {
     return [ map { _proc_deep_clone($_) } @$node ] if ref($node) eq 'ARRAY';
     return $node;
+}
+
+# ISF-LOCAL-VARIABLES: `(let NAME EXPR)` names an intermediate value. It is a pure
+# desugar — NAME is substituted by EXPR in the rest of the enclosing body (and nested
+# bodies, which may shadow it with their own `(let)`); the `(let)` clause itself emits
+# nothing. No register, no runtime cost.
+sub _expand_let_bindings($self, $result) {
+    my %reserved = map { ($_->{name} // '') => 1 }
+        @{$result->{interface}{inputs} || []}, @{$result->{interface}{outputs} || []};
+    for my $tx (@{$result->{transactions} || []}) {
+        $tx->{clauses} = $self->_expand_lets_in_list(
+            $tx->{clauses}, {}, \%reserved, "transaction '$tx->{name}'");
+    }
+}
+
+sub _expand_lets_in_list($self, $clauses, $outer, $reserved, $ctx) {
+    my %scope = %$outer;   # let bindings from enclosing scopes are visible here
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]) && $clause->[0] eq 'let') {
+            my (undef, $name, @rest) = @$clause;
+            confess "Error: (let ...) in $ctx requires a name and an expression\n"
+                unless defined($name) && !ref($name) && length($name) && @rest >= 1 && defined($rest[0]);
+            confess "Error: (let $name ...) in $ctx redefines an already-bound name '$name'\n"
+                if exists $scope{$name};
+            confess "Error: (let $name ...) in $ctx collides with an interface port '$name'\n"
+                if $reserved->{$name};
+            # bind NAME to EXPR with any prior lets already substituted into it
+            $scope{$name} = $self->_substitute_proc_body($rest[0], \%scope);
+        } else {
+            push @out, $self->_let_rewrite_clause($clause, \%scope, $reserved, $ctx);
+        }
+    }
+    return \@out;
+}
+
+# Substitute the let scope into a clause; for body-bearing control flow, substitute the
+# head condition/selector but recurse into the body (which has its own let scope).
+sub _let_rewrite_clause($self, $clause, $scope, $reserved, $ctx) {
+    return $self->_substitute_proc_body($clause, $scope)
+        unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $head = $self->_substitute_proc_body($clause->[1], $scope);
+        my $body = $self->_expand_lets_in_list([@{$clause}[2 .. $#$clause]], $scope, $reserved, $ctx);
+        return [ $kw, $head, @$body ];
+    }
+    if ($kw eq 'switch') {
+        my $sel = $self->_substitute_proc_body($clause->[1], $scope);
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_lets_in_list([@{$br}[1 .. $#$br]], $scope, $reserved, $ctx);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $sel, @branches ];
+    }
+    return $self->_substitute_proc_body($clause, $scope);
 }
 
 # Handshake call `(call NAME actual... as INST)`: lower to a bound `(do NAME (bind

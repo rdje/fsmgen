@@ -1953,9 +1953,46 @@ flowing through them.
     (complete done)))
 ```
 
-A `(local ...)` fails closed if its name collides with an interface port, or if the
-`(width N)` is missing or not a positive integer. (Reset/init values via `(init V)`
-and named intermediates via `(let ...)` are staged follow-ups.)
+An optional `(default V)` gives the local an initial value (the keyword `(init V)` is
+an accepted synonym). A transaction-local is re-initialized **each time the transaction
+runs** (like a software local variable), so the default materializes a set-to-`V` on
+entry; `V` is a non-negative integer literal that fits in the declared width:
+
+```lisp
+(transaction main
+  (on start)
+  (local acc (width 8) (default 0))   ;; starts at 0 every run
+  (sample din as s)
+  (set acc (+ acc s))
+  (update result acc)
+  (complete done))
+```
+
+A `(local ...)` fails closed if its name collides with an interface port, if the
+`(width N)` is missing or not a positive integer, or if a `(default V)` / `(init V)` is
+not a non-negative integer that fits in the width. (Note: this `(default …)` is an
+*init-on-entry* value, distinct from a register's *hardware reset* value.)
+
+### `(let NAME EXPR)` — named intermediates
+
+Where `(local …)` is a register you read and write, `(let NAME EXPR)` simply **names an
+expression**: `NAME` is substituted by `EXPR` in the rest of the body. It is a pure
+desugar — no register, no extra cycle — useful for naming a sub-expression used in
+several places:
+
+```lisp
+(transaction main
+  (on start)
+  (sample a as av)
+  (sample b as bv)
+  (let sum (+ av bv))          ;; name the sub-expression
+  (update result (+ sum 1))    ;; lowers as: (update result (+ (+ av bv) 1))
+  (complete done))
+```
+
+A `(let)` is scoped to the rest of its enclosing body (a `(let)` inside a `when`/loop
+body may shadow an outer one). It fails closed on redefining an already-bound name or
+on a name that collides with an interface port.
 
 ## Reusable Procedures
 

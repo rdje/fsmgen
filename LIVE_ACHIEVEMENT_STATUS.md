@@ -16595,3 +16595,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   pins the width vs. inferred implicit internals. The variables companion to
   procedures. Collision/missing/zero-width fail closed. --check-json + verilator/yosys
   PASS. 13b section; t/1391 (3 subtests). Frontier .3 (init), .4 (let), .5 (docs).
+- `.3` (ISF-LOCAL-VARIABLES) shipped (2026-06-01): `(local ... (init V))` init-on-entry
+  values (transaction-local re-inits each run); out-of-range/non-int fail closed;
+  --check-json + verilator/yosys PASS. t/1391 (5 subtests). Frontier .4 (let), .5 (docs).
+- `.4` (ISF-LOCAL-VARIABLES) shipped (2026-06-01): `(let NAME EXPR)` named intermediates
+  — pure substitution, no register; parse-time pass; redefine/port-collision fail
+  closed; --check-json + verilator/yosys PASS. t/1391 (7 subtests). Frontier .5 (docs).

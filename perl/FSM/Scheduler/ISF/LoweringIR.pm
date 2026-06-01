@@ -4964,7 +4964,14 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         elsif ($k eq 'repeat')   { my ($rs,$rc,$rw,$rdw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths,$actor,\@bank_accesses,\@spc,$constant_values,$generated_children,\$repeat_do_ordinal); push @st,@$rs; _register_repeat_counters(\%ct,\%storage_roles,$rc,$rw,$rdw); }
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn, $actor); }
         elsif ($k eq 'params')   { next; }
-        elsif ($k eq 'local')    { my ($ln, $lw) = _parse_local_decl($cl, $tn, $actor, \%ct); $ct{$ln} = $lw; }
+        elsif ($k eq 'local')    {
+            my ($ln, $lw, $linit) = _parse_local_decl($cl, $tn, $actor, \%ct);
+            $ct{$ln} = $lw;
+            if (defined $linit) {
+                _push_sample_state(\@st, $tn, \@ps, \$si);
+                push @st, _ir_update([ 'set', $ln, $linit ], $tn, $si++, 'set');
+            }
+        }
         elsif ($k eq 'do')       {
             my $do_ref = _do_ref_from_clause($cl, $tn, $do_ordinal++, $generated_children, $constant_values, $actor);
             push @doc, $do_ref;
@@ -11462,21 +11469,32 @@ sub _parse_local_decl {
     my $name = $cl->[1];
     confess "Transaction '$tn': '(local ...)' requires a name\n"
         unless defined($name) && !ref($name) && length($name);
-    my $width;
+    my ($width, $default);
     for my $sub (@{$cl}[2 .. $#$cl]) {
         next unless ref($sub) eq 'ARRAY' && @$sub >= 2
-            && defined($sub->[0]) && !ref($sub->[0]) && $sub->[0] eq 'width';
-        $width = $sub->[1];
+            && defined($sub->[0]) && !ref($sub->[0]);
+        $width   = $sub->[1] if $sub->[0] eq 'width';
+        # `(default V)` and `(init V)` are accepted synonyms for the initial value.
+        $default = $sub->[1] if $sub->[0] eq 'default' || $sub->[0] eq 'init';
     }
     confess "Transaction '$tn': '(local $name ...)' requires a '(width N)' with a positive integer\n"
         unless defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/;
+    # Optional `(default V)` / `(init V)` — a non-negative integer literal that fits in
+    # the width, materialized as a set on transaction entry (a transaction-local is
+    # re-initialized to its default each time the transaction runs).
+    if (defined $default) {
+        confess "Transaction '$tn': '(local $name ... (default V))' requires a non-negative integer literal\n"
+            unless !ref($default) && $default =~ /\A[0-9]+\z/;
+        confess "Transaction '$tn': '(local $name (width $width) (default $default))' default value does not fit in $width bit(s)\n"
+            if $default + 0 >= (2 ** ($width + 0));
+    }
     for my $dir (qw(inputs outputs)) {
         confess "Transaction '$tn': '(local $name ...)' collides with interface port '$name'\n"
             if grep { ($_->{name} // '') eq $name } @{$actor->{interface}{$dir} || []};
     }
     confess "Transaction '$tn': '(local $name ...)' collides with an already-declared signal '$name'\n"
         if ref($ct) eq 'HASH' && exists $ct->{$name};
-    return ($name, $width + 0);
+    return ($name, $width + 0, (defined $default ? $default + 0 : undef));
 }
 
 sub _parse_latency {

@@ -38709,3 +38709,23 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   behavior (a non-local 12+8 add warns identically), NOT a local-var bug; use same-width
   operands in examples. 13b section + accumulator example; 13k row; t/1391 (3 subtests).
   Frontier .3 (init values), .4 (let), .5 docs.
+
+## 2026-06-01: ISF-LOCAL-VARIABLES.3 — (default V) initial values (synonym (init V)) SHIPPED
+- `(local NAME (width N) (default V))`: optional init, materialized as a set-to-V on
+  transaction ENTRY (a transaction-local re-inits each run, like a software local).
+  NOT a hardware reset value. _parse_local_decl validates V (non-neg int fitting width;
+  out-of-range/non-int fail closed); _build_transaction emits the entry set. --check-json
+  + verilator/yosys PASS. t/1391 (5 subtests). Frontier .4 (let), .5 (docs).
+- USER asked (2026-06-01) to log a separate tree for ARBITRARY HARDWARE RESET VALUES
+  (reset any register to non-0, esp. register maps) — that's the .fsm→HDL-flow feature,
+  NOT this ISF init-on-entry. Default reset = all-0s when unspecified (user constraint).
+  Tree: [[ISF-REGISTER-RESET-VALUES]] (to be created).
+
+## 2026-06-01: ISF-LOCAL-VARIABLES.4 — (let NAME EXPR) named intermediates SHIPPED
+- `(let NAME EXPR)` = pure substitution: NAME→EXPR in the rest of the enclosing body;
+  no register, no cycle. Parse-time pass `_expand_let_bindings` in
+  FSM::Adapter::ISF::Parser, run BEFORE procedure expansion (so let-bound names reach
+  (call) actuals substituted). Nested bodies inherit + may shadow the scope. Reuses
+  _substitute_proc_body. Fail-closed: redefine, interface-port-name collision.
+  --check-json + verilator/yosys PASS. t/1391 (7 subtests). Frontier .5 (docs).
+- The "variables" trio: (local) register + (default/init V) value + (let) intermediate.

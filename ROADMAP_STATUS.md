@@ -15001,3 +15001,15 @@ Exit criteria:
   registered in the `%ct`/`+size` map; collision/missing/zero-width fail closed.
   `--check-json` + verilator/yosys PASS. 13b section + accumulator example; 13k row;
   `t/1391`. Frontier `.3` (`(init V)`), `.4` (`(let ...)`), `.5` (docs).
+- `R14`: `ISF-LOCAL-VARIABLES.3` shipped (2026-06-01) — `(local NAME (width N) (default V))`
+  initial values (init-on-transaction-entry; a transaction-local re-inits each run).
+  Out-of-range/non-integer init fails closed. `--check-json` + verilator/yosys PASS.
+  `t/1391` (5 subtests). (Arbitrary *hardware* reset values — a deeper `.fsm`→HDL
+  feature for register maps — are tracked separately by `ISF-REGISTER-RESET-VALUES`.)
+  Frontier `.4` (`(let ...)`), `.5` (docs).
+- `R14`: `ISF-LOCAL-VARIABLES.4` shipped (2026-06-01) — `(let NAME EXPR)` named
+  intermediates (pure substitution NAME→EXPR in the rest of the scoped body; no
+  register/cycle; parse-time pass run before procedure expansion). Redefine /
+  interface-port collision fail closed. `--check-json` + verilator/yosys PASS. `t/1391`
+  (7 subtests). Frontier `.5` (docs). The variables surface is now `(local)` +
+  `(default/init V)` + `(let)`.
