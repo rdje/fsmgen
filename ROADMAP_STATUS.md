@@ -14994,3 +14994,10 @@ Exit criteria:
   the user's "implement both, pickable" + "thorough mdBook docs" directives. Theme #3
   (new intent-capture constructs) now has two shipped construct families: loop
   early-exit and reusable procedures.
+- `R14`: `ISF-LOCAL-VARIABLES.2` shipped (2026-06-01) — `(local NAME (width N))`
+  declares an internal register at an explicit width (emitted in `+size`, read/written
+  in the body), pinning the width vs. inferred implicit internals. The *variables*
+  companion to procedures. `local` added to the transaction allow-list; the width is
+  registered in the `%ct`/`+size` map; collision/missing/zero-width fail closed.
+  `--check-json` + verilator/yosys PASS. 13b section + accumulator example; 13k row;
+  `t/1391`. Frontier `.3` (`(init V)`), `.4` (`(let ...)`), `.5` (docs).

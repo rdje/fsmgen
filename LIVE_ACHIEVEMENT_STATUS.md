@@ -16590,3 +16590,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   chapter (many examples incl. proc+while+exit-when), wired into SUMMARY + live-doc
   contract; 13b → pointer. ISF-PROCEDURES complete: (proc) callable inline OR
   handshake, in+out params. Both conventions + thorough docs delivered.
+- `.2` (ISF-LOCAL-VARIABLES) shipped (2026-06-01): `(local NAME (width N))` declared
+  internal register at an explicit width (emitted in +size, read/written in the body);
+  pins the width vs. inferred implicit internals. The variables companion to
+  procedures. Collision/missing/zero-width fail closed. --check-json + verilator/yosys
+  PASS. 13b section; t/1391 (3 subtests). Frontier .3 (init), .4 (let), .5 (docs).

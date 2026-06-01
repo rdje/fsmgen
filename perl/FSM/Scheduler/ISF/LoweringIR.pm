@@ -17,7 +17,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
             await_any params stage contract store load wait while until set
-            atl_trigger atl_trigger_batch
+            atl_trigger atl_trigger_batch local
         )
     },
     when => {
@@ -4964,6 +4964,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         elsif ($k eq 'repeat')   { my ($rs,$rc,$rw,$rdw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths,$actor,\@bank_accesses,\@spc,$constant_values,$generated_children,\$repeat_do_ordinal); push @st,@$rs; _register_repeat_counters(\%ct,\%storage_roles,$rc,$rw,$rdw); }
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn, $actor); }
         elsif ($k eq 'params')   { next; }
+        elsif ($k eq 'local')    { my ($ln, $lw) = _parse_local_decl($cl, $tn, $actor, \%ct); $ct{$ln} = $lw; }
         elsif ($k eq 'do')       {
             my $do_ref = _do_ref_from_clause($cl, $tn, $do_ordinal++, $generated_children, $constant_values, $actor);
             push @doc, $do_ref;
@@ -11449,6 +11450,33 @@ sub _build_drive_dts {
 
         push @$dts, { name => $name, kind => 'drive', assignments => \@assignments };
     }
+}
+
+# ISF-LOCAL-VARIABLES: `(local NAME (width N))` declares an internal register at an
+# explicit width, emitted in `+size` (vs. an implicit internal scalar whose width is
+# inferred). Returns (name, width); registers the width in the transaction's signal
+# map. Fails closed on a missing/invalid width or a collision with an interface port
+# or an already-declared transaction signal.
+sub _parse_local_decl {
+    my ($cl, $tn, $actor, $ct) = @_;
+    my $name = $cl->[1];
+    confess "Transaction '$tn': '(local ...)' requires a name\n"
+        unless defined($name) && !ref($name) && length($name);
+    my $width;
+    for my $sub (@{$cl}[2 .. $#$cl]) {
+        next unless ref($sub) eq 'ARRAY' && @$sub >= 2
+            && defined($sub->[0]) && !ref($sub->[0]) && $sub->[0] eq 'width';
+        $width = $sub->[1];
+    }
+    confess "Transaction '$tn': '(local $name ...)' requires a '(width N)' with a positive integer\n"
+        unless defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/;
+    for my $dir (qw(inputs outputs)) {
+        confess "Transaction '$tn': '(local $name ...)' collides with interface port '$name'\n"
+            if grep { ($_->{name} // '') eq $name } @{$actor->{interface}{$dir} || []};
+    }
+    confess "Transaction '$tn': '(local $name ...)' collides with an already-declared signal '$name'\n"
+        if ref($ct) eq 'HASH' && exists $ct->{$name};
+    return ($name, $width + 0);
 }
 
 sub _parse_latency {

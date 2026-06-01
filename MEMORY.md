@@ -38697,3 +38697,15 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   in +size). So (local) pins the width (avoids inference ambiguity) + adds reset/init
   + clear decl. No internal-signal decl keyword exists today. ISF/IAL1 (desugars to a
   declared signal). Frontier .2 (local decl), .3 init, .4 let, .5 docs.
+
+## 2026-06-01: ISF-LOCAL-VARIABLES.2 — (local NAME (width N)) SHIPPED
+- `(local NAME (width N))` declares an internal register at an explicit width: emitted
+  in +size at width N, read/written in the body. Pins the width vs. implicit internals
+  (which infer + omit from +size). Impl: `local` added to the `transaction` allow-list;
+  `_build_transaction` does `$ct{NAME}=N` (the %ct map feeds +size); `_parse_local_decl`
+  validates width + fails closed on collision-with-port / missing / non-positive width.
+- --check-json + verilator/yosys PASS (same-width). NOTE: mixed-width adds (e.g. 12-bit
+  local + 8-bit value) trip verilator's WIDTHEXPAND lint — but that's GENERAL ISF
+  behavior (a non-local 12+8 add warns identically), NOT a local-var bug; use same-width
+  operands in examples. 13b section + accumulator example; 13k row; t/1391 (3 subtests).
+  Frontier .3 (init values), .4 (let), .5 docs.

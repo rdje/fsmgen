@@ -34208,3 +34208,21 @@ ends — lightweight inline (macro-expand, no instance) and heavyweight handshak
 (synthesized block, start/done + ports) — picked by the presence of `as INST`, with
 one `(proc)` definition usable either way. This is the IAL1 realization of a function
 (see the isf-abstraction-layering memory).
+
+## Local variables `.2` — register the width in the %ct map that feeds +size (2026-06-01)
+
+`(local NAME (width N))` lowers by the smallest possible hook: `_build_transaction`
+already builds `%ct` (signal -> width), and the FSM emitter's `_emit_size` emits each
+`%ct` entry as a `+size` line. Transaction `(ports ...)` already seed `%ct` that way
+(`$ct{port} = width`). So a `(local)` just adds `$ct{NAME} = N` and emits no state —
+the existing read/write machinery (implicit internals already lower) then uses it,
+now at the declared width. No new width-inference plumbing was needed. Worth
+remembering: `%ct` in `_build_transaction` IS the per-transaction `+size`/width map;
+register a signal's width there to pin it.
+
+One investigation result worth keeping: `--verify-hdl` (verilator `--lint-only`)
+treats the WIDTHEXPAND warning as an error, so a mixed-width add (e.g. a 12-bit local
++ an 8-bit value) fails the lint — but this is GENERAL ISF behavior (a non-local
+12-bit + 8-bit add warns identically), not specific to local variables. Keep book
+examples and HDL-verified fixtures same-width; the WIDTHEXPAND boundary is an
+orthogonal pre-existing concern.

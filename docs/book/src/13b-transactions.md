@@ -1931,6 +1931,32 @@ deferred lane is per-activation latency counter specialization.
 
 **Implicit signals**: `{tx}_cc`, `{tx}_inc`, `{tx}_lerr` + non-state DT `(-cc_inc)`.
 
+## `(local NAME (width N))` — Declared Internal Variables
+
+`(local NAME (width N))` declares an internal register `NAME` of an explicit width,
+private to the transaction and not exposed on the interface. The body reads and writes
+it like any signal. This **pins the width** of intermediate state: a plain
+`(set tmp expr)` to an undeclared name already works, but its width is *inferred*; a
+`(local ...)` declaration emits `NAME` in the module's `+size` block at the width you
+choose — useful for accumulators and temporaries that need to be wider than the values
+flowing through them.
+
+```lisp
+(actor accumulator
+  (interface (input start) (input din (width 8)) (output done) (output result (width 8)))
+  (transaction main
+    (on start)
+    (local acc (width 8))     ;; an explicit 8-bit internal register
+    (sample din as s)
+    (set acc (+ acc s))        ;; read + write the local like any signal
+    (update result acc)
+    (complete done)))
+```
+
+A `(local ...)` fails closed if its name collides with an interface port, or if the
+`(width N)` is missing or not a positive integer. (Reset/init values via `(init V)`
+and named intermediates via `(let ...)` are staged follow-ups.)
+
 ## Reusable Procedures
 
 A `(proc NAME (params ...) body...)` defines a reusable, parameterized block of

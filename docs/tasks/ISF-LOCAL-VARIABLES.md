@@ -101,6 +101,13 @@ Reads like:
   Goal: `Select; record ground truth (implicit internals exist; no explicit decl) + design + slice plan.`
   Acceptance: `Task tree committed before any code change.`
   Verification: `mdbook build docs/book; git diff --check`
+  Commit: `5a552ef5`
+
+- ID: `ISF-LOCAL-VARIABLES.2`
+  Status: `done`
+  Goal: `(local NAME (width N)) declares an internal register at an explicit width.`
+  Acceptance: `local added to the transaction clause-context allow-list; _build_transaction handles (local NAME (width N)) by registering $ct{NAME}=N (the same width map that feeds +size), so NAME is emitted in +size at the declared width and read/written in the body like any signal (vs. an implicit internal scalar whose width is inferred and omitted from +size). _parse_local_decl validates the width and fails closed on a missing/non-positive width or a collision with an interface port (or an already-declared transaction signal). --check-json + verilator/yosys PASS (same-width arithmetic; the WIDTHEXPAND lint on mixed-width adds is general ISF behavior, not local-specific). 13b gains a declared-internal-variables section + runnable example; 13k row; ISF_SPEC registers t/1391.`
+  Verification: `Spike: (local acc (width 8)) -> acc in +size at width 8, set/read works; (local wide (width 12)) keeps 12-bit; collision/missing/zero-width fail closed; --check-json SUCCESS; --verify-hdl verilator_lint+yosys_synthesis PASS. prove -Iperl t/1391 (3 subtests) t/1376 t/1250 t/1305 t/1303 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
 ## Current Frontier
@@ -108,8 +115,9 @@ Reads like:
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
-| 2 | `.2` | `pending` | `(local NAME (width N))` declaration — pin an internal register's width (the concrete gap over implicit inference). |
-| 3 | `.3`–`.5` | `pending` | `(init V)`; `(let ...)`; docs. |
+| 2 | `.2` | `done` | `(local NAME (width N))` declaration — registers the explicit width in the transaction signal map (emitted in `+size`); body reads/writes it; collision/missing/zero-width fail closed. `--check-json` + verilator/yosys PASS. `t/1391`. |
+| 3 | `.3` | `pending` | `(init V)` reset values for `(local)`. |
+| 4 | `.4`–`.5` | `pending` | `(let NAME EXPR)` named intermediates; thorough docs chapter/section. |
 
 ## Decisions
 
@@ -134,12 +142,14 @@ Reads like:
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.2` | Spike: `(local acc (width 8))` emits `(acc 8)` in `+size`, read/write works; 12-bit local keeps width; collision/missing/zero-width fail closed; `--check-json` + verilator/yosys PASS. `prove -Iperl t/1391` (3 subtests) `t/1376 t/1250 t/1305 t/1303` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-LOCAL-VARIABLES.1: select declared local variables` | `ship commit (this slice)` |
+| `.1` | `ISF-LOCAL-VARIABLES.1: select declared local variables` | `5a552ef5` |
+| `.2` | `ISF-LOCAL-VARIABLES.2: (local NAME (width N)) declared internal register` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -148,3 +158,17 @@ Reads like:
   gap is an explicit `(local NAME (width N) [(init V)])` declaration that pins the
   width + adds a reset value, plus `(let NAME EXPR)` named intermediates. Slice plan:
   `.2` local declaration, `.3` init, `.4` let, `.5` docs.
+- `2026-06-01`: `.2` shipped — `(local NAME (width N))` declares an internal register
+  at an explicit width. Added `local` to the `transaction` clause-context allow-list;
+  `_build_transaction` handles the clause by registering `$ct{NAME}=N` in the same
+  width map that feeds the module `+size` block (`_parse_local_decl` validates the
+  `(width N)` and fails closed on a missing/non-positive width or a collision with an
+  interface port / already-declared signal). The local is then emitted in `+size` at
+  the declared width and read/written in the body like any signal — pinning the width
+  instead of relying on the inference that an implicit `(set tmp expr)` gets (and which
+  is omitted from `+size`). Verified `(local acc (width 8))` → `(acc 8)` in `+size`
+  with read/write; a 12-bit local keeps its width; `--check-json` SUCCEEDS and
+  `--verify-hdl` passes (verilator_lint + yosys_synthesis) for same-width arithmetic
+  (the WIDTHEXPAND lint on mixed-width adds is general ISF behavior, not
+  local-specific). Book: `13b` gains a declared-internal-variables section with a
+  runnable accumulator example; `13k` row; `docs/ISF_SPEC.md` registers `t/1391`.
