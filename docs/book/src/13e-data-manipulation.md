@@ -30,6 +30,51 @@ nonzero.
 
 **Lowering**: `(<- (var expr))` — sequential Q-named assignment.
 
+## `(select DST COND A B)` — Conditional Assignment
+
+```lisp
+(select out (> level hi) MAX level)   ;; out = (level > hi) ? MAX : level
+(select dst pick a b)                 ;; dst = pick ? a : b
+```
+
+The conditional assignment a high-level language writes as `dst = cond ? a : b` —
+choose one of two values for a register by a condition. `COND` is any condition
+expression (a scalar signal or a comparison / logical expression); `A` and `B`
+are any value expressions; `DST` is a register.
+
+A pure ISF parser desugar into two mutually-exclusive conditional
+[`(set …)`](#update-var-expr--variable-modification)s:
+
+```lisp
+(select DST COND A B) -> (when COND     (set DST A))
+                         (when (! COND)  (set DST B))
+```
+
+Exactly one branch fires, so `DST` takes `A` on the true path and `B` on the
+false path. (`.fsm` has no ternary operator, so this lowers to two sequential
+decision states rather than a single combinational mux — the two conditional
+writes to `DST` each get their own write-enable.)
+
+A runnable upper-clamp (saturate a value at 100):
+
+```lisp
+(actor clamp
+  (interface (input start) (input x (width 8)) (output done) (output o (width 8)))
+  (transaction main
+    (on start)
+    (select o (> x 100) 100 x)   ;; o = (x > 100) ? 100 : x
+    (complete done)))
+```
+
+`x = 150` yields `o == 100` (clamped); `x = 42` yields `o == 42` (passed through).
+
+A malformed form fails closed before `.fsm` emission: a missing register name, or
+anything other than exactly `(select DST COND A B)` (too few or too many
+operands).
+
+**Lowering**: `(?COND (-> …(set DST A)…)) … (?(! COND) (-> …(set DST B)…))` — the
+two decision states the `(when …)` pair produces.
+
 ## `(incr NAME [by N])` / `(decr NAME [by N])` — Compound Increment / Decrement
 
 ```lisp

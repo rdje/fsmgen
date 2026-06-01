@@ -341,6 +341,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
     # read-modify-write `(set …)`. Same staging / width needs as the bit ops.
     $self->_expand_set_fields($result);
 
+    # ISF-SELECT: rewrite `(select DST COND A B)` to two mutually-exclusive conditional
+    # `(set …)`s. Runs after the data passes (the emitted `(set …)` are final).
+    $self->_expand_selects($result);
+
     $self->_finalize_actor_symbol_tables($result, $source_label);
     $self->_finalize_actor_constant_values($result);
     $self->_finalize_actor_param_values($result);
@@ -815,6 +819,68 @@ sub _desugar_set_field($self, $clause, $ctx, $widths) {
     my $clear_lit = "${width}'d${clear_mask}";
     my $value_lit = "${width}'d${shifted}";
     return [ 'set', $name, [ '|', [ '&', $name, $clear_lit ], $value_lit ] ];
+}
+
+# --- ISF-SELECT: `(select DST COND A B)` conditional assignment ---
+#
+# Parser desugar into two mutually-exclusive conditional `(set …)`s (the two writes to DST no
+# longer alias since CODEGEN-MULTI-EXPRESSION-SET-ALIAS landed):
+#   (select DST COND A B) -> (when COND (set DST A)) (when (! COND) (set DST B))
+# COND is any condition expression, A/B any value expressions, DST a register. Exactly one
+# branch fires, so DST takes A on the true path and B on the false path.
+sub _expand_selects($self, $result) {
+    for my $tx (@{$result->{transactions} || []}) {
+        $tx->{clauses} = $self->_expand_selects_in_list(
+            $tx->{clauses}, "transaction '$tx->{name}'");
+    }
+}
+
+sub _expand_selects_in_list($self, $clauses, $ctx) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0])
+            && $clause->[0] eq 'select') {
+            push @out, @{ $self->_desugar_select($clause, $ctx) };
+        } else {
+            push @out, $self->_select_rewrite_clause($clause, $ctx);
+        }
+    }
+    return \@out;
+}
+
+sub _select_rewrite_clause($self, $clause, $ctx) {
+    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $body = $self->_expand_selects_in_list([@{$clause}[2 .. $#$clause]], $ctx);
+        return [ $kw, $clause->[1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_selects_in_list([@{$br}[1 .. $#$br]], $ctx);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $clause->[1], @branches ];
+    }
+    return $clause;
+}
+
+sub _desugar_select($self, $clause, $ctx) {
+    my ($op, $dst, $cond, $a, $b) = @$clause;
+    confess "Error: (select ...) in $ctx requires a register name\n"
+        unless defined($dst) && !ref($dst) && length($dst);
+    confess "Error: (select $dst COND A B) in $ctx requires a condition and two values "
+          . "(exactly: (select DST COND A B))\n"
+        unless @$clause == 5 && defined($cond) && defined($a) && defined($b);
+    return [
+        [ 'when', $cond,           [ 'set', $dst, $a ] ],
+        [ 'when', [ '!', $cond ],  [ 'set', $dst, $b ] ],
+    ];
 }
 
 # --- ISF-BIT-TEST: `(when-bit/unless-bit NAME N body…)` branch on a single register bit ---
