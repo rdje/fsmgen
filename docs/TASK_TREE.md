@@ -47,7 +47,8 @@ first.
 | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING` | `done` | `R14` | complete (`.1`–`.7` done; cross-domain blocking `(do)` via a declared activation crossing) | [docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md](docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md) |
 | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` | `active` | `R14` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5` (`.1`–`.4` done) | [docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md](docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md) |
 | `ISF-LOOP-EARLY-EXIT` | `active` | `R14` | `ISF-LOOP-EARLY-EXIT.4` (`.1`–`.3` done) | [docs/tasks/ISF-LOOP-EARLY-EXIT.md](docs/tasks/ISF-LOOP-EARLY-EXIT.md) |
-| `ISF-REGISTER-RESET-VALUES` | `active` | `R14` | `ISF-REGISTER-RESET-VALUES.2` (`.1` done) | [docs/tasks/ISF-REGISTER-RESET-VALUES.md](docs/tasks/ISF-REGISTER-RESET-VALUES.md) |
+| `ISF-REGISTER-RESET-VALUES` | `active` | `R14` | `ISF-REGISTER-RESET-VALUES.3` (`.1`–`.2` done) | [docs/tasks/ISF-REGISTER-RESET-VALUES.md](docs/tasks/ISF-REGISTER-RESET-VALUES.md) |
+| `ISF-LOOP-CONTINUE` | `active` | `R14` | `ISF-LOOP-CONTINUE.2` (`.1` done) | [docs/tasks/ISF-LOOP-CONTINUE.md](docs/tasks/ISF-LOOP-CONTINUE.md) |
 
 ## Proposed Task Trees
 
