@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-REGISTER-RESET-VALUES`
-- Status: `active`
+- Status: `done` (closed `2026-06-01`)
 - Roadmap lane: `R14` (ISF — high-level language richness / HDL flow)
 - Created: `2026-06-01`
 - Last updated: `2026-06-01`
@@ -104,7 +104,7 @@ Precise findings:
 ## Task Tree
 
 - ID: `ISF-REGISTER-RESET-VALUES`
-  Status: `active`
+  Status: `done`
   Goal: `Arbitrary (non-zero) per-register reset values through the .fsm -> HDL flow; default unspecified = all-0s; useful for register maps.`
   Children: `.1` (select), `.2` (.fsm/HDL backend), `.3` (ISF surface), `.4` (register maps), `.5` (docs)
 
@@ -136,6 +136,13 @@ Precise findings:
   Verification: `(storage (var mode (width 8) (reset 1)) (var flags (width 8) (reset 255)) (var scratch (width 8))) -> +size (mode 8 (reset 1)) / (flags 8 (reset 255)) / (scratch 8); HDL mode <= 1, flags <= 255, scratch <= 0 (verilator_lint+yosys_synthesis PASS); bank (reset V) / over-width / non-integer fail closed. prove -Iperl t/1398 (3 subtests) + doc gates PASS; full suite PASS; perl -c; mdbook build; git diff --check.`
   Commit: `this slice`
 
+- ID: `ISF-REGISTER-RESET-VALUES.5`
+  Status: `done`
+  Goal: `A complete runnable register-map example in the mdBook (gated by t/1376) + final doc-truth sync.`
+  Acceptance: `13a gains a complete (actor csr_block …) register-map example (two CSRs that power up at their (reset V) defaults, written/read by a transaction) that lowers cleanly under t/1376 (the book-example lowering gate now lowers 43 complete fixtures) and passes verilator/yosys; the 13a/13m/13k prose + t/1397/1398 + ISF_SPEC are in sync. Tree closed.`
+  Verification: `(actor csr_block …) lowers; --verify-hdl verilator_lint+yosys_synthesis PASS; HDL ctrl <= 1 / mode <= 16. t/1376 (43 fixtures) + t/1305/1304/1307/1303/297 PASS; mdbook build; git diff --check.`
+  Commit: `this slice`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -144,7 +151,7 @@ Precise findings:
 | 2 | `.2` | `done` | `.fsm` **carrier** — `(signal width (reset V))` in `+size` sets the register's hardware reset value (carried as a signal attribute the HDL backend already consumes); default unspecified stays all-0s (byte-identical); non-integer fails closed. verilator/yosys PASS. `t/1392`. |
 | 3 | `.3` | `done` | ISF surface — `(local NAME (width N) (reset V))` emits the `+size (reset V)` carrier (threaded module-IR `reset_values` → `_emit_size`); HDL powers up at V; unspecified → all-0s; over-width/non-integer fail closed. `t/1397`; `13m` docs. |
 | 4 | `.4` | `done` | Register maps — `(storage (var NAME (width N) (reset V)))` CSR field reset values (ISF has no dedicated register-map construct, so storage vars are the representation); carried across the storage finalizer + merged into the module-IR `reset_values`. `t/1398`; `13a`/`13k` docs. |
-| 5 | `.5` | `pending` | A complete runnable register-map example in the mdBook (gated) + final doc-truth sync. |
+| 5 | `.5` | `done` | A complete runnable `(actor csr_block …)` register-map example in `13a` (gated by `t/1376`, 43 fixtures) + doc-truth sync. **Tree complete.** |
 
 ## Decisions
 
@@ -176,6 +183,7 @@ Precise findings:
 | `2026-06-01` | `.2` | Hand-written `.fsm`: `(q 8 (reset 5))` -> `q <= 5` (verilator_lint+yosys_synthesis PASS); `(q 8)` -> `q <= 8'h00` (unchanged); non-integer reset fails closed. `prove -Iperl t/1392` (3 subtests) PASS; `perl -c`; full `./bin/ci-regression full --no-book` PASS | `PASS` |
 | `2026-06-01` | `.3` | ISF `(local acc (width 8) (reset 5))` -> `+size (acc 8 (reset 5))` -> HDL `acc <= 5` (verilator_lint+yosys_synthesis PASS); no `(reset V)` -> `acc <= 8'b0` (unchanged); `(reset 5)`+`(default 3)` orthogonal; over-width/non-integer fail closed. `prove -Iperl t/1397` (5 subtests) + doc gates PASS; full suite PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.4` | `(storage (var mode (width 8) (reset 1)) (var flags (width 8) (reset 255)) (var scratch (width 8)))` -> `+size` carriers -> HDL `mode <= 1`, `flags <= 255`, `scratch <= 0` (verilator_lint+yosys_synthesis PASS); bank `(reset V)` / over-width / non-integer fail closed. `prove -Iperl t/1398` (3 subtests) + doc gates PASS; full suite PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.5` | `(actor csr_block …)` register-map example lowers; `--verify-hdl` verilator_lint+yosys_synthesis PASS; HDL `ctrl <= 1` / `mode <= 16`. `t/1376` (43 complete fixtures lowered) + `t/1305/1304/1307/1303/297` PASS; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -184,7 +192,8 @@ Precise findings:
 | `.1` | `ISF-REGISTER-RESET-VALUES.1: select arbitrary register reset values` | `2701a7d0` |
 | `.2` | `ISF-REGISTER-RESET-VALUES.2: .fsm (reset V) carrier for per-register reset values` | committed |
 | `.3` | `ISF-REGISTER-RESET-VALUES.3: ISF (local … (reset V)) surface for register reset values` | committed |
-| `.4` | `ISF-REGISTER-RESET-VALUES.4: storage var (reset V) for register-map / CSR fields` | this slice |
+| `.4` | `ISF-REGISTER-RESET-VALUES.4: storage var (reset V) for register-map / CSR fields` | committed |
+| `.5` | `ISF-REGISTER-RESET-VALUES.5: runnable register-map book example + doc-truth sync` | this slice |
 
 ## Changelog
 
@@ -246,3 +255,11 @@ Precise findings:
   fail closed. `t/1398`; `13a` gains a "Storage reset values — register maps / CSRs" section
   and `13k` updates the storage row. `.5` (a complete runnable register-map example in the
   book + final doc-truth sync) remains.
+- `2026-06-01`: `.5` shipped — **tree complete**. `13a` gains a complete runnable
+  `(actor csr_block …)` register-map example (two CSRs powering up at their `(reset V)`
+  defaults, written/read by a transaction); it lowers cleanly under the book-example gate
+  (`t/1376` now lowers 43 complete fixtures) and passes verilator/yosys (`ctrl <= 1`,
+  `mode <= 16`). The `13a`/`13m`/`13k` prose, the `t/1397`/`t/1398` tests, and `ISF_SPEC`
+  are in sync. **ISF-REGISTER-RESET-VALUES is complete** — any register (a `(local …)` or a
+  storage `var` / CSR field) can power up at an author-chosen value; unspecified stays
+  all-0s; the whole path is verilator-clean.

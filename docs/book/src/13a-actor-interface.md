@@ -434,6 +434,34 @@ value — distinct from the transaction-local init-on-entry `(default V)`/`(init
 `(local …)`. A per-element bank `(reset V)`, and an over-width or non-integer reset value,
 fail closed.
 
+A complete register-map actor — two CSRs that power up at their specified defaults and are
+written/read by a transaction (this lowers cleanly and passes Verilator/Yosys):
+
+```lisp
+(actor csr_block
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input wdata (width 8))
+    (output done)
+    (output ctrl_out (width 8))
+    (output mode_out (width 8)))
+  (storage
+    (var ctrl (width 8) (reset 1))      ;; control register powers up at 1
+    (var mode (width 8) (reset 16)))    ;; mode register powers up at 16
+  (transaction main
+    (on start)
+    (set ctrl wdata)
+    (set mode wdata)
+    (update ctrl_out ctrl)
+    (update mode_out mode)
+    (complete done)))
+```
+
+Out of reset the generated HDL holds `ctrl` at `1` and `mode` at `16`; both are then
+writable from `wdata` and read out on `ctrl_out`/`mode_out`.
+
 `(storage ...)` is a singleton actor clause. Storage names and scalarized
 element names must not collide with interface ports, actor clock/reset signals,
 or generated scheduler signals such as `can_accept`. Missing scalar storage
