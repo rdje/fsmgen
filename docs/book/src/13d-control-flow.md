@@ -264,15 +264,27 @@ A trailing `step S` strides the index by `S` (default `1`) — useful for stride
 with `(set i (+ i S))` as the tail increment and sizes the width to hold the
 post-final-increment value.
 
-The `(for ...)` must be a **top-level transaction clause** in this release — the index
-declaration uses `(local ...)`, which is a transaction-context-only clause. A nested or
-embedded `(for ...)` (one inside another `(for ...)`, or inside a
-`when`/`switch`/`while`/`until`/`repeat` body), a zero width, a literal-zero count, an
-implicit-width non-literal count, a non-upward range (`B <= A`), non-literal range bounds,
-and an empty body all **fail closed** with a clear diagnostic:
+A `(for ...)` may be a **top-level transaction clause** or **directly nested inside
+another `(for ...)` body** — nested loops with independent indices:
 
 ```lisp
-;; rejected: (for ...) is currently supported only as a top-level transaction clause
+(for (i 3)
+  (for (j 2)
+    (update grid (+ grid (+ i j)))))   ;; body runs 3 * 2 = 6 times; i = 0..2, j = 0..1
+```
+
+Both index `(local …)` declarations are hoisted to the transaction top, the inner index
+resets to its start value at the head of each outer iteration, and the loops lower to a
+nested counted `(repeat …)` (each with its own counter — see *Nested Counted Loops*). The
+nesting can go arbitrarily deep.
+
+A `(for ...)` **embedded in a control-flow body** (inside a `when`/`switch`/`while`/`until`/
+`repeat` body) is not yet supported and **fails closed**, as do a zero width, a literal-zero
+count, an implicit-width non-literal count, a non-upward range (`B <= A`), non-literal range
+bounds, and an empty body:
+
+```lisp
+;; rejected: a (for ...) embedded in a when/switch/while/until/repeat body is not yet supported
 (when go
   (for (i 4) (update total (+ total i))))
 ```
@@ -292,8 +304,8 @@ Each repeat instance gets its own counter — the outermost keeps `<tx>_cnt`, a 
 repeat uses a unique `<tx>_cnt_<n>` — so the inner and outer countdowns never collide, and
 the nesting can go arbitrarily deep. Lowering is check-first throughout: the outer check's
 continue edge enters the inner loop, and the inner check's exit edge returns to the outer
-check. (A nested indexed `(for …)` is a later addition; nested *counted* `(repeat …)` ships
-now.)
+check. (A nested indexed `(for …)` desugars onto exactly this nested-`(repeat …)` substrate
+— see the *Indexed Counted Loop* section.)
 
 ## Where Child Activations Are Allowed
 

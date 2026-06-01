@@ -133,9 +133,16 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
   Commit: `this slice`
 
 - ID: `ISF-FOR-LOOP.6`
+  Status: `done`
+  Goal: `Nested (for …): a (for …) directly inside another (for …) body — nested indexed loops.`
+  Acceptance: `(for (i M) (for (j N) body)) desugars with BOTH index (local …) declarations hoisted to the transaction top, an inner-index reset (set j START) at the head of each outer iteration, and a nested counted (repeat …) (riding ISF-NESTED-COUNTED-REPEAT, so the inner/outer counters are distinct); the body runs M*N times with independent indices. _desugar_for returns (hoisted_locals, replacement) and expands its body via _expand_for_body (which hoists directly-nested fors' locals). Single for-loops (count/width/range/step) are unchanged. A (for …) embedded in a when/switch/while/until/repeat body still fails closed (deferred to .7). t/1394 gains a nested-for subtest; 13d + 13k document nested for.`
+  Verification: `(for (i 3) (for (j 2) (update grid (+ grid (+ i j))))) lowers (i, j hoisted to +size; main_cnt + main_cnt_<n>; (set j 0) reset; i,j tail increments); verilator --binary -> grid == 9 (i=0..2, j=0..1), terminates. Single for-loops + range/step unchanged; embedded for-in-when fails closed. prove -Iperl t/1394 (11 subtests) + doc gates PASS; full suite PASS; perl -c; mdbook build; git diff --check.`
+  Commit: `this slice`
+
+- ID: `ISF-FOR-LOOP.7`
   Status: `frontier`
-  Goal: `Nested / embedded (for …): hoist index locals to the transaction top so a (for …) may sit inside another (for …) or inside a when/switch/while/until/repeat body.`
-  Acceptance: `TBD when scheduled. NOTE: nested for-loops desugar to nested (repeat …), which the clause allow-list currently rejects AND all repeats in a transaction share the single counter ${tn}_cnt — so .6 depends on (or co-designs with) nested-counted-repeat support (allow-list + per-instance counters).`
+  Goal: `Embedded (for …): a (for …) inside a when/switch/while/until/repeat body (the local already hoists; bubble it past the enclosing control flow + reset correctly when the for is inside a looping context).`
+  Acceptance: `TBD when scheduled.`
   Verification: `TBD`
   Commit: `pending`
 
@@ -148,7 +155,8 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | 3 | `.3` | `done` | Explicit-width index + non-literal counts: `(for (i (width W) COUNT) body)` (param/constant/runtime counts). Simulated runtime n=5 → sum 0..4 == 10. |
 | 4 | `.4` | `done` | Range form `(for (i from A to B) body)` — index counts A..B-1. Simulated `(from 2 to 5)` → sum 2+3+4 == 9. |
 | 5 | `.5` | `done` | Range step form `(for (i from A to B step S) body)` — strided iteration. Simulated `(from 0 to 10 step 2)` → sum 0+2+4+6+8 == 20. |
-| 6 | `.6` | `frontier` | Nesting/embedding (index hoisting) — needs nested-counted-repeat support (allow-list + per-instance counters). |
+| 6 | `.6` | `done` | Nested `(for (i M) (for (j N) body))` — index hoisting + nested counted repeat. Simulated 3×2 → sum(i+j) == 9. |
+| 7 | `.7` | `frontier` | Embedded `(for …)` in a control-flow body (when/switch/while/until/repeat). |
 
 ## Decisions
 
@@ -172,6 +180,7 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | `2026-06-01` | `.3` | `(for (i (width 8) n) …)` lowers (i width 8; repeat loads runtime `n` once → check); `verilator --binary` → n=5 → total==10 (`i=0..4`), n=1 → 0, n=0 → 0 iterations; fail-closed: zero width, literal-zero count, implicit-width non-literal. `prove -Iperl t/1394` (6 subtests) + doc gates PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.4` | `(for (i from 2 to 5) …)` lowers (i default 2, count 3, width 3, tail increment); `verilator --binary` → total==9 (`i=2,3,4`), terminates; fail-closed: B<=A, B==A, non-literal bounds, missing 'to'. `prove -Iperl t/1394` (8 subtests) + doc gates PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.5` | `(for (i from 0 to 10 step 2) …)` lowers (count 5, default 0, `+2` increment); `verilator --binary` → total==20 (`i=0,2,4,6,8`), terminates; `(from 1 to 10 step 3)` → count 3 (`i=1,4,7`); fail-closed: step 0, non-literal step, non-'step' trailer. `prove -Iperl t/1394` (10 subtests) + doc gates PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-01` | `.6` | `(for (i 3) (for (j 2) (update grid (+ grid (+ i j))))) ` lowers (i, j hoisted to `+size`; `main_cnt` + `main_cnt_<n>`; `(set j 0)` inner reset; i/j tail increments); `verilator --binary` → grid==9 (`i=0..2, j=0..1`), terminates; single for + range/step unchanged; embedded for-in-when fails closed. `prove -Iperl t/1394` (11 subtests) + doc gates PASS; full suite PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -181,7 +190,8 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
 | `.2` | `ISF-FOR-LOOP.2: (for (i N) body) indexed counted loop desugar` | committed |
 | `.3` | `ISF-FOR-LOOP.3: (for (i (width W) COUNT) body) explicit-width + non-literal counts` | `0b2405aa` |
 | `.4` | `ISF-FOR-LOOP.4: (for (i from A to B) body) range form` | `eb693153` |
-| `.5` | `ISF-FOR-LOOP.5: (for (i from A to B step S) body) range step form` | this slice |
+| `.5` | `ISF-FOR-LOOP.5: (for (i from A to B step S) body) range step form` | `217fa0c5` |
+| `.6` | `ISF-FOR-LOOP.6: nested (for (i M) (for (j N) body)) via index hoisting` | this slice |
 
 ## Changelog
 
@@ -229,3 +239,15 @@ expansion (`_expand_let_bindings` / `_expand_procedure_calls`).
   (`i = 1,4,7`). A zero/non-literal step and a non-`step` trailer fail closed. `t/1394`
   gains two step subtests (10 total); `13d`/`13k` document it. Nesting/embedding moves
   to `.6`.
+- `2026-06-01`: `.6` shipped — **nested for-loops**. A `(for …)` directly inside another
+  `(for …)` body now lowers: `_desugar_for` returns `(hoisted_locals, replacement)` and
+  expands its body via `_expand_for_body`, which desugars a directly-nested `(for …)` and
+  hoists its index `(local …)` up. So `(for (i M) (for (j N) body))` emits both index locals
+  at the transaction top, an inner-index reset `(set j START)` at the head of each outer
+  iteration, and a nested counted `(repeat …)` — riding `ISF-NESTED-COUNTED-REPEAT` so the
+  inner/outer counters are distinct (`main_cnt` + `main_cnt_<n>`). Verified by simulation:
+  `(for (i 3) (for (j 2) (update grid (+ grid (+ i j)))))` → `grid == 9` (`i=0..2, j=0..1`),
+  terminates. Single for-loops (count/width/range/step) are unchanged. A `(for …)` embedded
+  in a `when`/`switch`/`while`/`until`/`repeat` body still fails closed (the index would have
+  to bubble past the enclosing control flow) — deferred to `.7`. `t/1394` gains a nested-for
+  subtest (11 total); `13d`/`13k` document nested for.

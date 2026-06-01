@@ -528,14 +528,37 @@ sub _expand_fors_in_list($self, $clauses, $ctx, $top) {
     my @out;
     for my $clause (@{$clauses || []}) {
         if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]) && $clause->[0] eq 'for') {
-            confess "Error: (for ...) in $ctx is currently supported only as a top-level transaction clause (nested or embedded for-loops are not yet supported)\n"
+            confess "Error: (for ...) in $ctx is currently supported only at the transaction top level or directly nested inside another (for ...) body (a (for ...) embedded in a when/switch/while/until/repeat body is not yet supported)\n"
                 unless $top;
-            push @out, @{ $self->_desugar_for($clause, $ctx) };
+            # Top-level for: its index local and any hoisted nested-index locals are emitted
+            # here at the transaction top (a valid `(local …)` context), followed by the
+            # repeat (and, for nested fors, their index resets, which live in the body).
+            my ($locals, $repl) = $self->_desugar_for($clause, $ctx, 1);
+            push @out, @$locals, @$repl;
         } else {
             push @out, $self->_for_rewrite_clause($clause, $ctx);
         }
     }
     return \@out;
+}
+
+# Expand the body of a `(for ...)`: a DIRECTLY-nested `(for ...)` is desugared and its index
+# locals are hoisted up (returned in the second list) so they reach the transaction top,
+# while its repeat (with an index-reset prepended) stays in the body. A `(for ...)` embedded
+# in a `when`/`switch`/`while`/`until`/`repeat` body inside this for body still fails closed
+# (via `_for_rewrite_clause`, which recurses with $top = 0).
+sub _expand_for_body($self, $body, $ctx) {
+    my (@out, @hoisted);
+    for my $clause (@{$body || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]) && $clause->[0] eq 'for') {
+            my ($locals, $repl) = $self->_desugar_for($clause, $ctx, 0);
+            push @hoisted, @$locals;
+            push @out, @$repl;
+        } else {
+            push @out, $self->_for_rewrite_clause($clause, $ctx);
+        }
+    }
+    return (\@out, \@hoisted);
 }
 
 # Recurse into body-bearing control flow so a `(for ...)` embedded there is detected and
@@ -576,7 +599,7 @@ sub _for_rewrite_clause($self, $clause, $ctx) {
 #                             literal non-negative integers with B > A and S >= 1. There are
 #                             ceil((B-A)/S) iterations; the width auto-sizes to hold the
 #                             post-final-increment value A + ceil((B-A)/S)*S.
-sub _desugar_for($self, $clause, $ctx) {
+sub _desugar_for($self, $clause, $ctx, $top) {
     my (undef, $spec, @body) = @$clause;
     confess "Error: (for ...) in $ctx requires a '(VAR COUNT)', '(VAR (width W) COUNT)', or '(VAR from A to B)' spec\n"
         unless ref($spec) eq 'ARRAY' && @$spec >= 2;
@@ -640,11 +663,22 @@ sub _desugar_for($self, $clause, $ctx) {
     confess "Error: (for ($var ...) ...) in $ctx has an empty body\n"
         unless @body;
 
-    # For-expand the body too, so a nested/embedded `(for ...)` inside it fails closed.
-    my $inner = $self->_expand_fors_in_list(\@body, "$ctx -> (for $var ...)", 0);
+    # Expand the body: a directly-nested `(for ...)` is desugared with its index local
+    # hoisted up to us (and on to the transaction top), and its repeat (with a reset) spliced
+    # into our body.
+    my ($body_out, $nested_locals) = $self->_expand_for_body(\@body, "$ctx -> (for $var ...)");
+
     my $local  = [ 'local', $var, [ 'width', $width ], [ 'default', $default ] ];
-    my $repeat = [ 'repeat', $count, @$inner, [ 'set', $var, [ '+', $var, $increment ] ] ];
-    return [ $local, $repeat ];
+    my $repeat = [ 'repeat', $count, @$body_out, [ 'set', $var, [ '+', $var, $increment ] ] ];
+
+    # Index locals hoist to the transaction top (this index plus any from nested fors).
+    my @hoisted = ($local, @$nested_locals);
+    # A nested for (not a top-level transaction clause) resets its index to the start value
+    # at the head of each enclosing iteration — the outer loop re-runs this body, and the
+    # index was left at its end value by the previous pass. A top-level for relies on the
+    # `(local … (default START))` init, which runs once.
+    my @repl = $top ? ($repeat) : ([ 'set', $var, $default ], $repeat);
+    return (\@hoisted, \@repl);
 }
 
 sub _expand_let_bindings($self, $result) {

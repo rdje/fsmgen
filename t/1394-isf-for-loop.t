@@ -223,18 +223,40 @@ subtest 'the range step form fails closed on a zero/non-literal step or trailing
     }
 };
 
-subtest 'nested or embedded (for …) fails closed (top-level only in .2)' => sub {
-    my $nested = lower_error(
-        "(actor t (interface (input start) (output done) (output result (width 8))) "
-        . "(transaction main (on start) (for (i 4) (for (j 2) (update result (+ result 1)))) (complete done)))",
-        'nested');
-    like($nested, qr/supported only as a top-level transaction clause/, 'a nested (for …) is rejected');
+subtest 'a nested (for …) inside a for body lowers with hoisted indices (ISF-FOR-LOOP.6)' => sub {
+    # (for (i M) (for (j N) body)) desugars to BOTH index locals hoisted to the transaction
+    # top, an outer counted repeat whose body resets j and runs an inner counted repeat, and
+    # i/j tail increments — the body runs M*N times. It rides nested counted repeat
+    # (ISF-NESTED-COUNTED-REPEAT) so the inner/outer counters are distinct.
+    my $actor = parse_source(<<'ISF', 'nested-for');
+(actor nfo
+  (interface (input start) (output done) (output grid (width 8)))
+  (transaction main
+    (on start)
+    (for (i 3)
+      (for (j 2)
+        (update grid (+ grid (+ i j)))))
+    (complete done)))
+ISF
+    my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+    ok($lowered, 'a nested (for (i 3) (for (j 2) …)) lowers') or diag($@);
+    my $fsm = $lowered->{files}{'nfo.fsm'};
+    like($fsm, qr/\(i 2\)/, 'the outer index i is declared (hoisted to +size)');
+    like($fsm, qr/\(j 2\)/, 'the inner index j is declared (hoisted to +size)');
+    like($fsm, qr/\(main_cnt \d+\)/, 'the outer repeat counter is declared');
+    like($fsm, qr/\(main_cnt_\d+ \d+\)/, 'a distinct inner repeat counter is declared');
+    like($fsm, qr/\(<- \(j 0\)\)/, 'the inner index j resets to its start each outer iteration');
+    like($fsm, qr/\(<- \(i \(\+ i 1\)\)\)/, 'the outer index i advances each outer iteration');
+    like($fsm, qr/\(<- \(j \(\+ j 1\)\)\)/, 'the inner index j advances each inner iteration');
+};
 
+subtest 'a (for …) embedded in a when/control-flow body still fails closed' => sub {
     my $embedded = lower_error(
         "(actor t (interface (input start) (input go) (output done) (output result (width 8))) "
         . "(transaction main (on start) (when go (for (i 4) (update result (+ result 1)))) (complete done)))",
         'embedded');
-    like($embedded, qr/supported only as a top-level transaction clause/, 'a (for …) embedded in a when body is rejected');
+    like($embedded, qr/embedded in a when\/switch\/while\/until\/repeat body is not yet supported/,
+        'a (for …) embedded in a when body is rejected');
 };
 
 done_testing();
