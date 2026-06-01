@@ -45,14 +45,27 @@ synonym**. A transaction-local is re-initialized **each time the transaction run
   (complete done))
 ```
 
-> **`(default …)` is init-on-entry, not a hardware reset value.** It runs each time the
-> transaction starts. The value a register holds out of *hardware reset* (e.g. for
-> register maps) is a separate, deeper feature — when no reset value is specified a
-> register resets to all-0s.
+### `(reset V)` — a hardware reset value
+
+`(default …)`/`(init …)` is **init-on-entry** — it runs each time the transaction starts.
+The value a register holds out of *hardware reset* (its power-up state) is a **separate**
+property, set with `(reset V)`:
+
+```lisp
+(local mode (width 8) (reset 1))   ;; powers up at 1 on hardware reset (areset/sreset)
+```
+
+`(reset V)` emits the register's hardware reset value into the generated HDL reset block
+(`mode <= 1` instead of the default `mode <= 0`). It is especially useful for **register
+maps / control-status registers** that must power up at a specified default. `V` is a
+non-negative integer literal that fits in the width. `(reset V)` and `(default V)` are
+orthogonal — a local may carry both (`reset` = power-up value, `default` = re-init each
+run). **When no `(reset V)` is given, the register resets to all-0s**, exactly as before
+(fully backward-compatible).
 
 A `(local …)` fails closed if its name collides with an interface port, if the
-`(width N)` is missing or not a positive integer, or if a `(default V)` / `(init V)` is
-not a non-negative integer that fits in the width.
+`(width N)` is missing or not a positive integer, or if a `(default V)` / `(init V)` /
+`(reset V)` is not a non-negative integer that fits in the width.
 
 ## `(let NAME EXPR)` — named intermediate values
 

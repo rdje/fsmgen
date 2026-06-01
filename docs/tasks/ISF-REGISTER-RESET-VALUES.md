@@ -122,13 +122,20 @@ Precise findings:
   Verification: `Hand-written .fsm spike: (q 8 (reset 5)) emits q <= 5 (verilator_lint+yosys_synthesis PASS); (q 8) emits q <= 8'h00 (unchanged); non-integer reset fails closed. prove -Iperl t/1392 (3 subtests) PASS; perl -c; full ./bin/ci-regression full --no-book PASS (core parser change). NOTE: the FULL suite is the gate (core .fsm parser change), not the isf subset.`
   Commit: `ship commit (this slice)`
 
+- ID: `ISF-REGISTER-RESET-VALUES.3`
+  Status: `done`
+  Goal: `ISF surface — (local NAME (width N) (reset V)) sets a register's hardware reset value, emitting the .fsm (reset V) carrier.`
+  Acceptance: `_parse_local_decl parses an optional (reset V) (non-negative integer fitting the width; orthogonal to (default V)/(init V)); the per-register reset value is threaded from _build_transaction (a %reset_values map, 10th return value) through both module builders (_build_child_ir/_build_parent_ir) into the module IR (reset_values), and Emitter/FSM.pm::_emit_size emits (NAME width (reset V)) in +size. The .2 carrier + HDL backend then power the register up at V. Unspecified resets to all-0s, byte-identical. An over-width or non-integer reset value fails closed. t/1397; 13m documents (reset V).`
+  Verification: `(local acc (width 8) (reset 5)) -> +size (acc 8 (reset 5)) -> HDL acc <= 5 (verilator_lint+yosys_synthesis PASS); without (reset V) -> acc <= 8'b0 (unchanged); (reset 5)+(default 3) orthogonal (reset carrier + init-on-entry set); over-width/non-integer fail closed. prove -Iperl t/1397 (5 subtests) + doc gates PASS; full suite PASS; perl -c; mdbook build; git diff --check.`
+  Commit: `this slice`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc). |
 | 2 | `.2` | `done` | `.fsm` **carrier** — `(signal width (reset V))` in `+size` sets the register's hardware reset value (carried as a signal attribute the HDL backend already consumes); default unspecified stays all-0s (byte-identical); non-integer fails closed. verilator/yosys PASS. `t/1392`. |
-| 3 | `.3` | `pending` | ISF surface syntax — emit the `(reset V)` carrier from an ISF declaration (e.g. `(local NAME (width N) (reset V))` and/or interface/storage). |
+| 3 | `.3` | `done` | ISF surface — `(local NAME (width N) (reset V))` emits the `+size (reset V)` carrier (threaded module-IR `reset_values` → `_emit_size`); HDL powers up at V; unspecified → all-0s; over-width/non-integer fail closed. `t/1397`; `13m` docs. |
 | 4 | `.4`–`.5` | `pending` | register-map reset values; thorough mdBook docs. |
 
 ## Decisions
@@ -159,13 +166,15 @@ Precise findings:
 | --- | --- | --- | --- |
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.2` | Hand-written `.fsm`: `(q 8 (reset 5))` -> `q <= 5` (verilator_lint+yosys_synthesis PASS); `(q 8)` -> `q <= 8'h00` (unchanged); non-integer reset fails closed. `prove -Iperl t/1392` (3 subtests) PASS; `perl -c`; full `./bin/ci-regression full --no-book` PASS | `PASS` |
+| `2026-06-01` | `.3` | ISF `(local acc (width 8) (reset 5))` -> `+size (acc 8 (reset 5))` -> HDL `acc <= 5` (verilator_lint+yosys_synthesis PASS); no `(reset V)` -> `acc <= 8'b0` (unchanged); `(reset 5)`+`(default 3)` orthogonal; over-width/non-integer fail closed. `prove -Iperl t/1397` (5 subtests) + doc gates PASS; full suite PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `ISF-REGISTER-RESET-VALUES.1: select arbitrary register reset values` | `2701a7d0` |
-| `.2` | `ISF-REGISTER-RESET-VALUES.2: .fsm (reset V) carrier for per-register reset values` | `ship commit (this slice)` |
+| `.2` | `ISF-REGISTER-RESET-VALUES.2: .fsm (reset V) carrier for per-register reset values` | committed |
+| `.3` | `ISF-REGISTER-RESET-VALUES.3: ISF (local … (reset V)) surface for register reset values` | this slice |
 
 ## Changelog
 
@@ -201,3 +210,16 @@ Precise findings:
   (not the `isf` subset). The ISF surface (a `(reset V)` on an ISF declaration, e.g.
   `(local NAME (width N) (reset V))`) is `.3`; until then the carrier is internal, so no
   user-facing mdBook yet.
+- `2026-06-01`: `.3` shipped — the **ISF surface**. `(local NAME (width N) (reset V))`
+  sets a register's hardware reset value. `_parse_local_decl` parses an optional
+  `(reset V)` (non-negative integer fitting the width; orthogonal to the init-on-entry
+  `(default V)`/`(init V)`); the per-register reset value is threaded from
+  `_build_transaction` (a `%reset_values` map, added as the 10th return value) through both
+  module builders (`_build_child_ir`, `_build_parent_ir`) into the module IR
+  (`reset_values`), and `Emitter/FSM.pm::_emit_size` emits `(NAME width (reset V))` in
+  `+size`. The `.2` carrier + the already-built HDL backend then power the register up at V.
+  Verified end-to-end: `(local acc (width 8) (reset 5))` → `+size (acc 8 (reset 5))` → HDL
+  `acc <= 5` (verilator + yosys PASS); without `(reset V)` → `acc <= 8'b0` byte-identical;
+  `(reset 5)` + `(default 3)` are orthogonal (power-up value + init-on-entry set); an
+  over-width or non-integer reset value fails closed. `t/1397`; `13m` documents `(reset V)`.
+  `.4` (register-map / CSR field reset values) and `.5` (thorough docs) remain.

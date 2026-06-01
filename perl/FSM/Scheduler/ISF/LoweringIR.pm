@@ -126,7 +126,7 @@ sub build_module($self, $actor) {
 # --- Child IR (separate module) ---
 
 sub _build_child_ir($self, $tx, $actor, $cname) {
-    my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles, $bank_accesses) =
+    my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles, $bank_accesses, $reset_values) =
         $self->_build_transaction($tx, $actor, 0);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
     my %module_signal_widths = _declared_storage_signal_widths($actor);
@@ -165,6 +165,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         signal_widths => \%module_signal_widths,
         signal_type_refs => \%module_signal_type_refs,
         storage_roles => \%module_storage_roles,
+        reset_values => $reset_values,
         children   => {},
         temporal_contracts => $contracts,
         bank_accesses => $bank_accesses,
@@ -1094,6 +1095,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     my $transaction_port_bindings = _transaction_port_binding_metadata($actor);
     my %signal_widths = _declared_storage_signal_widths($actor);
     my %storage_roles = _declared_storage_roles($actor);
+    my %reset_values;   # ISF-REGISTER-RESET-VALUES: signal -> hardware reset value (opt-in)
     my %signal_type_refs = (
         _actor_interface_signal_type_refs($actor),
         _declared_storage_signal_type_refs($actor),
@@ -1115,8 +1117,9 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     for my $tx (@{$actor->{transactions}}) {
         next if $generated_children->{$tx->{name}};
         next if $pruned_transactions->{$tx->{name}};
-        my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses) =
+        my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses, $resets) =
             $self->_build_transaction($tx, $actor, $ti++, $generated_children);
+        $reset_values{$_} = $resets->{$_} for keys %{$resets || {}};
         _merge_signal_widths(\%signal_widths, $widths, $tx->{name});
         _merge_signal_type_refs(\%signal_type_refs, { _transaction_port_signal_type_refs($tx) });
         _merge_storage_roles(\%storage_roles, $roles, $tx->{name});
@@ -1199,6 +1202,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         signal_widths => \%signal_widths,
         signal_type_refs => \%signal_type_refs,
         storage_roles => \%storage_roles,
+        reset_values => \%reset_values,
         children   => {},
         spawn_instances => \@spawn_instances,
         temporal_contracts => \@temporal_contracts,
@@ -4872,6 +4876,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
     my $widths = _build_signal_width_map($actor, $tx);
     my @st;
     my %ct;
+    my %reset_values;   # ISF-REGISTER-RESET-VALUES: signal -> hardware reset value (opt-in)
     my @dt;
     my @ps;
     my @doc;
@@ -4973,8 +4978,9 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn, $actor); }
         elsif ($k eq 'params')   { next; }
         elsif ($k eq 'local')    {
-            my ($ln, $lw, $linit) = _parse_local_decl($cl, $tn, $actor, \%ct);
+            my ($ln, $lw, $linit, $lreset) = _parse_local_decl($cl, $tn, $actor, \%ct);
             $ct{$ln} = $lw;
+            $reset_values{$ln} = $lreset if defined $lreset;
             if (defined $linit) {
                 _push_sample_state(\@st, $tn, \@ps, \$si);
                 push @st, _ir_update([ 'set', $ln, $linit ], $tn, $si++, 'set');
@@ -5014,7 +5020,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
     _link_states(\@st, $tn);
     $ct{can_accept} = 1;
     for my $s (@st) { next unless $s->{kind} eq 'entry'; unshift @{$s->{assignments}}, { lhs => 'can_accept', rhs => 1, op => '=' }; }
-    return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts, { %{$widths || {}} }, \%storage_roles, \@bank_accesses);
+    return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts, { %{$widths || {}} }, \%storage_roles, \@bank_accesses, \%reset_values);
 }
 
 sub _merge_signal_widths {
@@ -11526,13 +11532,16 @@ sub _parse_local_decl {
     my $name = $cl->[1];
     confess "Transaction '$tn': '(local ...)' requires a name\n"
         unless defined($name) && !ref($name) && length($name);
-    my ($width, $default);
+    my ($width, $default, $reset);
     for my $sub (@{$cl}[2 .. $#$cl]) {
         next unless ref($sub) eq 'ARRAY' && @$sub >= 2
             && defined($sub->[0]) && !ref($sub->[0]);
         $width   = $sub->[1] if $sub->[0] eq 'width';
         # `(default V)` and `(init V)` are accepted synonyms for the initial value.
         $default = $sub->[1] if $sub->[0] eq 'default' || $sub->[0] eq 'init';
+        # `(reset V)` — the HARDWARE reset value (the value the register holds out of
+        # reset), distinct from the init-on-entry `(default V)`/`(init V)`.
+        $reset   = $sub->[1] if $sub->[0] eq 'reset';
     }
     confess "Transaction '$tn': '(local $name ...)' requires a '(width N)' with a positive integer\n"
         unless defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/;
@@ -11545,13 +11554,22 @@ sub _parse_local_decl {
         confess "Transaction '$tn': '(local $name (width $width) (default $default))' default value does not fit in $width bit(s)\n"
             if $default + 0 >= (2 ** ($width + 0));
     }
+    # Optional `(reset V)` — a non-negative integer literal that fits in the width; emitted
+    # in `+size` as `(name width (reset V))` so the register powers up at V on hardware
+    # reset. Unspecified -> resets to all-0s, unchanged.
+    if (defined $reset) {
+        confess "Transaction '$tn': '(local $name ... (reset V))' requires a non-negative integer literal\n"
+            unless !ref($reset) && $reset =~ /\A[0-9]+\z/;
+        confess "Transaction '$tn': '(local $name (width $width) (reset $reset))' reset value does not fit in $width bit(s)\n"
+            if $reset + 0 >= (2 ** ($width + 0));
+    }
     for my $dir (qw(inputs outputs)) {
         confess "Transaction '$tn': '(local $name ...)' collides with interface port '$name'\n"
             if grep { ($_->{name} // '') eq $name } @{$actor->{interface}{$dir} || []};
     }
     confess "Transaction '$tn': '(local $name ...)' collides with an already-declared signal '$name'\n"
         if ref($ct) eq 'HASH' && exists $ct->{$name};
-    return ($name, $width + 0, (defined $default ? $default + 0 : undef));
+    return ($name, $width + 0, (defined $default ? $default + 0 : undef), (defined $reset ? $reset + 0 : undef));
 }
 
 sub _parse_latency {

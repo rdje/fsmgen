@@ -149,10 +149,13 @@ sub _emit_size($self, $ir) {
     push @l, '  (+size';
     my %declared;
     my $type_refs = $ir->{signal_type_refs} || {};
+    # ISF-REGISTER-RESET-VALUES: an opt-in per-register hardware reset value, emitted in
+    # `+size` as `(name width (reset V))` (the carrier the core `.fsm` parser consumes).
+    my $resets = $ir->{reset_values} || {};
     for my $p (@{$ir->{ports}}) {
         $declared{$p->{name}} = 1;
         my $width_token = $p->{type} // $type_refs->{$p->{name}} // $p->{width};
-        push @l, "    ($p->{name} $width_token)";
+        push @l, "    ($p->{name} $width_token" . _reset_suffix($resets, $p->{name}) . ")";
     }
     for my $storage (@{$ir->{declared_storage} || []}) {
         for my $signal (@{$storage->{signals} || []}) {
@@ -160,17 +163,22 @@ sub _emit_size($self, $ir) {
             next if $declared{$name};
             $declared{$name} = 1;
             my $width_token = $signal->{type} // $type_refs->{$name} // $signal->{width};
-            push @l, "    ($name $width_token)";
+            push @l, "    ($name $width_token" . _reset_suffix($resets, $name) . ")";
         }
     }
     my $ctrs = $ir->{counters} || {};
     for my $name (sort keys %$ctrs) {
         next if $declared{$name};
         my $width_token = $type_refs->{$name} // $ctrs->{$name};
-        push @l, "    ($name $width_token)";
+        push @l, "    ($name $width_token" . _reset_suffix($resets, $name) . ")";
     }
     push @l, '  )';
     return join("\n", @l);
+}
+
+# `(reset V)` marker for a register with an opt-in hardware reset value; empty otherwise.
+sub _reset_suffix($resets, $name) {
+    return (defined $resets->{$name}) ? " (reset $resets->{$name})" : '';
 }
 
 sub _emit_states($self, $ir, $outputs) {
