@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `CODEGEN-RESET-VALUE-HOLD`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: core HDL codegen (EnableGraph synthesis); blocks `ISF-REGISTER-RESET-VALUES`
 - Created: `2026-06-02`
 - Last updated: `2026-06-02`
@@ -86,9 +86,29 @@ unchanged, preserving R8's behavior for non-registers.
 
 ## Slice plan
 
-- `.1` select + this doc (no code).
+- `.1` select + this doc (no code). `done`.
 - `.2` gate the reset-value comb default on `is_register`; focused simulation
-  test (hold across a wait); full regression.
+  test (hold across a wait); full regression. `done`.
+
+## Implementation
+
+- `SignalSupport.pm::get_default_value_from_ast($self, $lhs_ast, $is_register = 0)`
+  — the `reset_value` branches (AST `reset_value()`, signal `get_attribute`,
+  signal `attributes`) are now gated `unless ($is_register)`. A register falls
+  through to the feedback default (`get_default_value`, which returns the signal
+  name). The explicit AST `default_value()` branch is unchanged.
+- `AssignmentSupport.pm::build_multiplexer_config` passes the already-computed
+  `$is_register` into `get_default_value_from_ast`. The comb (`=`) call site in
+  `initial_group_source_expr` is unchanged (defaults `$is_register` to 0), so
+  combinational LHS keep prior behavior.
+- The reset value continues to reach the reset branch via
+  `get_reset_value_from_ast` (`AssignmentSupport.pm` ~L974-982) — unchanged.
+
+## Verification
+
+| Date | Leaf | Checks | Result |
+| --- | --- | --- | --- |
+| `2026-06-02` | `.2` | `t/1400` (3 subtests: held local, no-reset local, held CSR storage var); witness `verilator --binary` sim now reads `o == 5` (was 200); generated SV shows `x_next = x` + `x <= 200` reset branch; verilator-lint + yosys clean; full `prove t/` | `PASS` |
 
 ## Blockers
 

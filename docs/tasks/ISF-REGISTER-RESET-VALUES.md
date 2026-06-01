@@ -263,3 +263,10 @@ Precise findings:
   are in sync. **ISF-REGISTER-RESET-VALUES is complete** — any register (a `(local …)` or a
   storage `var` / CSR field) can power up at an author-chosen value; unspecified stays
   all-0s; the whole path is verilator-clean.
+- `2026-06-02`: follow-up correctness fix tracked in `CODEGEN-RESET-VALUE-HOLD`. Simulation
+  (not just lint/synth) revealed that a reset-value register reverted to its reset value
+  every cycle it was not written — the pre-existing backend used the reset literal as the
+  combinational next-state default instead of the flop feedback. Fixed by gating the
+  reset-value comb-default branches on `is_register` (the reset value still drives the reset
+  branch). A held write now reads back correctly (`o == 5`, was 200). This makes the feature
+  actually usable for registers that retain state; both trees are unpushed.

@@ -739,7 +739,7 @@ sub build_multiplexer_config ($self, $lhs) {
 
     my $is_register = $self->is_register($lhs_ast, $lhs_name);
     my $mux_type = $is_register ? 'flop' : 'comb';
-    my $default_value = $signal_support->get_default_value_from_ast($lhs_ast);
+    my $default_value = $signal_support->get_default_value_from_ast($lhs_ast, $is_register);
 
     $lhs_analysis->{multiplexer} = {
         type => $mux_type,

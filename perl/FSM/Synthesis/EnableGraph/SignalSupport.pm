@@ -387,7 +387,7 @@ and the normalized assignment-analysis fallback second.
 
 =cut
 
-sub get_default_value_from_ast($self, $lhs_ast) {
+sub get_default_value_from_ast($self, $lhs_ast, $is_register = 0) {
     my $ctx = $self->{flattened_dt};
 
     fsm_debug("DEBUG: lhs_ast object type: " . ref($lhs_ast), 3);
@@ -415,28 +415,37 @@ sub get_default_value_from_ast($self, $lhs_ast) {
         }
     }
 
-    if ($lhs_ast->can('reset_value')) {
-        my $reset_val = $lhs_ast->reset_value();
-        if (defined $reset_val) {
-            fsm_debug("  Using AST reset_value as default: '$reset_val'", 3);
-            return $reset_val;
-        }
-    }
-
-    if ($lhs_ast->can('signal')) {
-        my $signal = $lhs_ast->signal;
-        if ($signal && $signal->can('get_attribute')) {
-            my $reset_val = $signal->get_attribute('reset_value');
+    # A flopped register holds its value between writes: its combinational
+    # next-state default must be the feedback from the flop output, and the reset
+    # value belongs ONLY in the sequential reset branch (emitted separately via
+    # get_reset_value_from_ast). Using reset_value as the comb default here made a
+    # reset-value register revert to that value every cycle it was not written, so
+    # skip the reset_value branches for registers and fall through to the feedback
+    # default. Non-register (combinational) LHS keep the prior behavior.
+    unless ($is_register) {
+        if ($lhs_ast->can('reset_value')) {
+            my $reset_val = $lhs_ast->reset_value();
             if (defined $reset_val) {
-                fsm_debug("  Using LHS signal reset_value as default: '$reset_val'", 3);
+                fsm_debug("  Using AST reset_value as default: '$reset_val'", 3);
                 return $reset_val;
             }
         }
-        if ($signal && $signal->can('attributes') && $signal->attributes) {
-            my $reset_val = $signal->attributes->{reset_value};
-            if (defined $reset_val) {
-                fsm_debug("  Using LHS signal attribute reset_value as default: '$reset_val'", 3);
-                return $reset_val;
+
+        if ($lhs_ast->can('signal')) {
+            my $signal = $lhs_ast->signal;
+            if ($signal && $signal->can('get_attribute')) {
+                my $reset_val = $signal->get_attribute('reset_value');
+                if (defined $reset_val) {
+                    fsm_debug("  Using LHS signal reset_value as default: '$reset_val'", 3);
+                    return $reset_val;
+                }
+            }
+            if ($signal && $signal->can('attributes') && $signal->attributes) {
+                my $reset_val = $signal->attributes->{reset_value};
+                if (defined $reset_val) {
+                    fsm_debug("  Using LHS signal attribute reset_value as default: '$reset_val'", 3);
+                    return $reset_val;
+                }
             }
         }
     }
