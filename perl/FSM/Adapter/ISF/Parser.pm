@@ -317,6 +317,12 @@ sub _build_actor($self, $actor_ast, $source_label) {
     # only ever sees ordinary clauses (procs/calls never reach the lowerer).
     $self->_expand_procedure_calls($result);
 
+    # ISF-BIT-TEST: rewrite `(when-bit/unless-bit NAME N body…)` to a masked `(when …)`.
+    # Runs AFTER cond/for/let/proc (body holds lowered control-flow) but BEFORE the
+    # compound/bit-op passes below, so their `(when …)` recursion still reaches a `(incr …)`
+    # / `(set-bit …)` sitting inside a desugared `(when-bit …)` body.
+    $self->_expand_bit_tests($result);
+
     # ISF-COMPOUND-ASSIGN: rewrite `(incr/decr NAME [by N])` to `(set NAME (± NAME N))`
     # AFTER the cond/for/let/proc passes, so the emitted `(set …)` is final and lands in the
     # already-lowered control-flow bodies.
@@ -707,6 +713,92 @@ sub _desugar_bit_op($self, $clause, $ctx, $widths) {
         unless defined $width;
     my $invmask = ((1 << $width) - 1) ^ $mask;
     return [ 'set', $name, [ '&', $name, $invmask ] ];
+}
+
+# --- ISF-BIT-TEST: `(when-bit/unless-bit NAME N body…)` branch on a single register bit ---
+#
+# Parser desugar into a `(when …)` with a width-qualified masked comparison (a sized literal
+# avoids the unsized-32-bit WIDTHEXPAND and the explicit `!=`/`==` avoids the multi-bit
+# truthiness miss the spike found):
+#   (when-bit   x N body…) -> (when (!= (& x W'dMASK) W'd0) body…)   ; MASK = 2^N
+#   (unless-bit x N body…) -> (when (== (& x W'dMASK) W'd0) body…)
+# N is a literal index 0 <= N < W; the sized literals need W, so a symbolic width fails closed.
+my %BIT_TEST_KEYWORDS = map { $_ => 1 } qw(when-bit unless-bit);
+
+sub _expand_bit_tests($self, $result) {
+    for my $tx (@{$result->{transactions} || []}) {
+        my $widths = $self->_bit_op_width_map($result, $tx);
+        $tx->{clauses} = $self->_expand_bit_tests_in_list(
+            $tx->{clauses}, "transaction '$tx->{name}'", $widths);
+    }
+}
+
+sub _expand_bit_tests_in_list($self, $clauses, $ctx, $widths) {
+    my @out;
+    for my $clause (@{$clauses || []}) {
+        if (ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0])
+            && $BIT_TEST_KEYWORDS{$clause->[0]}) {
+            push @out, $self->_desugar_bit_test($clause, $ctx, $widths);
+        } else {
+            push @out, $self->_bit_test_rewrite_clause($clause, $ctx, $widths);
+        }
+    }
+    return \@out;
+}
+
+# Recurse into body-bearing control flow (including a nested when-bit/unless-bit) so a bit
+# test sitting inside another body is rewritten.
+sub _bit_test_rewrite_clause($self, $clause, $ctx, $widths) {
+    return $clause unless ref($clause) eq 'ARRAY' && @$clause && defined($clause->[0]) && !ref($clause->[0]);
+    my $kw = $clause->[0];
+    if ($kw eq 'when' || $kw eq 'while' || $kw eq 'until' || $kw eq 'repeat') {
+        my $body = $self->_expand_bit_tests_in_list([@{$clause}[2 .. $#$clause]], $ctx, $widths);
+        return [ $kw, $clause->[1], @$body ];
+    }
+    if ($kw eq 'switch') {
+        my @branches;
+        for my $br (@{$clause}[2 .. $#$clause]) {
+            if (ref($br) eq 'ARRAY' && @$br) {
+                my $body = $self->_expand_bit_tests_in_list([@{$br}[1 .. $#$br]], $ctx, $widths);
+                push @branches, [ $br->[0], @$body ];
+            } else {
+                push @branches, $br;
+            }
+        }
+        return [ 'switch', $clause->[1], @branches ];
+    }
+    return $clause;
+}
+
+sub _desugar_bit_test($self, $clause, $ctx, $widths) {
+    my ($op, $name, $bit, @body) = @$clause;
+    confess "Error: ($op ...) in $ctx requires a register name\n"
+        unless defined($name) && !ref($name) && length($name);
+    confess "Error: ($op $name ...) in $ctx requires a non-negative integer bit index\n"
+        unless defined($bit) && !ref($bit) && $bit =~ /^\d+$/;
+    $bit += 0;
+    @body = grep { defined } @body;
+    confess "Error: ($op $name $bit ...) in $ctx requires a non-empty body\n"
+        unless @body;
+    # Expand any nested bit test sitting directly in this body before wrapping it.
+    my $body = $self->_expand_bit_tests_in_list(\@body, $ctx, $widths);
+
+    # The sized mask / zero literals need a statically known literal width.
+    my $width = exists $widths->{$name} ? $widths->{$name} : undef;
+    confess "Error: ($op $name $bit) in $ctx requires a statically known register width "
+          . "(declare '$name' with a literal (width N)); its sized bit-mask cannot be formed otherwise\n"
+        unless defined $width;
+    confess "Error: ($op $name $bit) in $ctx — bit index $bit is out of range for the "
+          . "${width}-bit register '$name'\n"
+        if $bit >= $width;
+
+    my $mask = 1 << $bit;
+    my $mask_lit = "${width}'d${mask}";
+    my $zero_lit = "${width}'d0";
+    # set -> (!= (& x MASK) 0); clear -> (== (& x MASK) 0)
+    my $cmp = ($op eq 'when-bit') ? '!=' : '==';
+    my $guard = [ $cmp, [ '&', $name, $mask_lit ], $zero_lit ];
+    return [ 'when', $guard, @$body ];
 }
 
 # --- ISF-COND: `(cond (c body...)... (else body...))` if/else-if/else (parser desugar) ---

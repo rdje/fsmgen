@@ -166,6 +166,60 @@ or — for `clear-bit` — a register whose width is not a statically known lite
 **Lowering**: `(<- (NAME (| NAME M)))` / `(<- (NAME (^ NAME M)))` /
 `(<- (NAME (& NAME INV)))` — the sequential Q-named assignment `(set …)` produces.
 
+## `(when-bit NAME N body…)` / `(unless-bit NAME N body…)` — Branch On A Bit
+
+```lisp
+(when-bit   ctrl 0  (start-engine))   ;; run body when ctrl[0] == 1
+(unless-bit irq  3  (idle))           ;; run body when irq[3]  == 0
+```
+
+The read side of single-bit register intent — poll a status bit, branch on a
+config / flag bit. `(when-bit …)` runs its body when bit `N` is **set**;
+`(unless-bit …)` runs it when bit `N` is **clear**. `N` is a literal bit index,
+`0 <= N < width`.
+
+These are a pure ISF parser desugar into a `(when …)`
+([Control Flow](./13d-control-flow.md)) with a **width-qualified** masked
+comparison:
+
+| Form | Desugars to |
+| --- | --- |
+| `(when-bit x N body…)` | `(when (!= (& x W'dMASK) W'd0) body…)` |
+| `(unless-bit x N body…)` | `(when (== (& x W'dMASK) W'd0) body…)` |
+
+where `MASK = 2^N` and `W` is the register's declared width. The sized literals
+(`W'd…`) and the explicit `!=` / `==` are deliberate: an unsized literal mask
+(`(& x 8)`) creates a 32-bit intermediate that fails the width-clean lint and a
+multi-bit-truthiness mis-evaluation, while the sized masked comparison is
+verilator-lint + yosys clean and correct. Because the mask is sized, `W` must be
+a statically known literal (resolved from a `(local …)`, an interface port, or a
+`(storage (var …))`) — a symbolic `(width W)` fails closed.
+
+The body is a normal clause list, so it nests and composes with every other
+construct (including a nested `(when-bit …)` and the bit ops above):
+
+```lisp
+(actor flag_poll
+  (interface (input start) (input cfg (width 8)) (output done)
+             (output engine (width 8)) (output sleep (width 8)))
+  (transaction main
+    (on start)
+    (when-bit cfg 0          ;; bit 0 set => enabled
+      (set-bit engine 0))
+    (unless-bit cfg 0        ;; bit 0 clear => idle
+      (set-bit sleep 0))
+    (complete done)))
+```
+
+When `cfg[0]` is 1 the engine bit is set; when it is 0 the sleep bit is set.
+
+A malformed form fails closed before `.fsm` emission: a missing name; a missing /
+non-integer bit index; an index `>=` the register width; an empty body; or a
+non-literal / symbolic width.
+
+**Lowering**: `(?(!= (& NAME W'dMASK) W'd0) …)` /
+`(?(== (& NAME W'dMASK) W'd0) …)` — the decision state a `(when …)` produces.
+
 ## `(shift_left reg bit [(width N)])` — Shift Register (Left)
 
 ```lisp

@@ -5755,6 +5755,7 @@ Focused tests:
 - [t/1398-isf-storage-reset-value.t](../t/1398-isf-storage-reset-value.t)
 - [t/1399-isf-compound-assign.t](../t/1399-isf-compound-assign.t)
 - [t/1401-isf-bit-ops.t](../t/1401-isf-bit-ops.t)
+- [t/1402-isf-bit-test.t](../t/1402-isf-bit-test.t)
 
 ## 12. Explicitly Deferred
 
