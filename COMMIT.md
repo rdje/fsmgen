@@ -33,23 +33,26 @@ Ignoring it is not a style issue; it is a project-safety failure.
   - Must stay a thin wrapper that points back to `COMMIT.md`.
   - Must never define, extend, or contradict commit policy independently.
 - `MEMORY.md`
-  - Live continuity state for crash recovery/handoff.
-  - Must be updated first when recording completed work.
+  - **Layer-A bounded resume pointer** (see `MEMORY_ARCHITECTURE.md`): current state +
+    the single next action only.
+  - **OVERWRITE** its "Current state" block when recording completed work — never append.
+    Keep it ≤ ~60 lines; this is mechanically capped by
+    `scripts/check_memory_architecture.sh` (pre-commit hook + CI). Rationale and the
+    reconciliation of this workflow with the memory standard: `docs/decisions/0007`.
 - `ROADMAP_STATUS.md`
-  - Canonical live roadmap/workstream board.
-  - Must be updated before commit whenever a task changes status, deliverables, remaining work, or the current active lane.
-  - Every workstream in this board must keep explicit `Description`, `Deliverables`, `Status`, `Done`, `Left`, and `Exit criteria`.
+  - **FROZEN legacy blob** (do not append). Superseded by the task-trees (layer B,
+    `docs/tasks/` + `docs/TASK_TREE.md`) for live status and by git (layer D) for
+    history — see `docs/decisions/0007`. Existing content stays in git history.
 - `docs/TASK_TREE.md` and `docs/tasks/*.md`
   - Repo-local task-tree workflow and per-top-level task files.
   - Must be updated before commit whenever a task-tree-managed activity changes a node status, current frontier, blocker, decision, validation evidence, or completion evidence.
   - Must stay below this file for commit policy: task-tree docs may require task IDs and evidence, but must not redefine the commit workflow independently.
 - `CHANGES.md`
-  - Persistent technical change history.
-  - Must be updated after `MEMORY.md`, any needed `ROADMAP_STATUS.md` refresh, and any needed task-tree update.
-  - When live status changes, this is the required historical log of that status transition.
+  - **FROZEN legacy blob** (do not append). Change history is git (layer D);
+    `git log` / `git log --grep=UNIT-ID` reconstructs it. See `docs/decisions/0007`.
 - `DEVELOPMENT_NOTES.md`
-  - Design rationale and engineering context.
-  - Must be updated after `CHANGES.md`.
+  - **FROZEN legacy blob** (do not append). Durable design rationale now goes to a
+    decision record under `docs/decisions/` (layer C). See `docs/decisions/0007`.
 - `git_message_brief.txt`
   - Short-lived commit message input file for `git commit -F`.
   - Must be overwritten for each commit and truncated to zero bytes after commit.
@@ -62,12 +65,17 @@ Ignoring it is not a style issue; it is a project-safety failure.
    verify the task-tree owner and current leaf. If none exists, create the
    smallest honest task tree or leaf from `docs/tasks/TEMPLATE.md` first.
 2. Complete the task implementation.
-3. Update docs in this exact order:
-   1. `MEMORY.md`
-   2. `ROADMAP_STATUS.md` if the task changed roadmap status, deliverables, remaining work, or the current active lane
-   3. `docs/TASK_TREE.md` and the owning `docs/tasks/*.md` file if the activity belongs to an active task tree
-   4. `CHANGES.md` and explicitly log any live-status change there
-   5. `DEVELOPMENT_NOTES.md`
+3. Route every durable thing to its memory layer (per `MEMORY_ARCHITECTURE.md`),
+   in this order:
+   1. `docs/TASK_TREE.md` and the owning `docs/tasks/*.md` file — the task-tree (layer B):
+      node status, current frontier, blocker, decision, validation/completion evidence.
+   2. A new `docs/decisions/NNNN-*.md` record (layer C) **iff** the slice produced a
+      durable cross-cutting fact/decision/learning (and update `docs/decisions/INDEX.md`).
+   3. `MEMORY.md` (layer A) — **overwrite** its "Current state" block to point at the new
+      latest commit / active leaf / next action; keep it ≤ ~60 lines.
+   - The legacy blobs (`ROADMAP_STATUS.md`, `CHANGES.md`, `DEVELOPMENT_NOTES.md`,
+     `LIVE_ACHIEVEMENT_STATUS.md`) are FROZEN — do NOT append to them; git (layer D) is
+     the audit trail. See `docs/decisions/0007`.
 4. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
    - For doc-only changes: basic repo state checks are sufficient.
@@ -84,11 +92,15 @@ Ignoring it is not a style issue; it is a project-safety failure.
    - `truncate -s 0 git_message_brief.txt`
 9. Verify final state:
    - `git --no-pager status --short`
-10. The user-facing close-out must always include the current live status snapshot from `ROADMAP_STATUS.md`.
-   - If live status changed, explicitly state how the completed task affected that snapshot.
-   - If live status did not change, explicitly state that the snapshot is unchanged for this task.
-   - For every `Rj`, show at least `Status` + brief `Description`.
-   - When useful, also show brief sub-bullets for the active lane, the changed lane, or any phase whose next step matters for understanding current progress.
+10. The user-facing close-out should include the current live status from the
+   task-trees (`docs/TASK_TREE.md` Active table + the owning `docs/tasks/*.md`
+   frontier), since `ROADMAP_STATUS.md` is now a frozen legacy blob
+   (`docs/decisions/0007`).
+   - State how the completed task changed the active task-tree's status/frontier, or
+     that it is unchanged.
+   - Show at least the active work-unit's `Status` + brief description and its next
+     frontier leaf; add brief sub-bullets where the next step matters for understanding
+     progress.
 
 ## Required stop conditions
 - If `git status --short` shows older unfinished work from another slice, do not start a fresh implementation task until that state is understood and resolved.

@@ -101,3 +101,10 @@ git hooks · CI gate.
   to-catch-codegen-bugs, 0005 push-only-on-request, 0006 thorough-mdBook, 0007
   memory-architecture-supersedes-blob-narration (the COMMIT.md reconciliation,
   executed in `.3`/`.4`).
+- `2026-06-02`: `.3` done — demoted `MEMORY.md` from 38,776 lines → 24-line bounded
+  resume pointer (§6 template; old content recoverable via `git log -- MEMORY.md`).
+  Reconciled `COMMIT.md` per ADR 0007: `MEMORY.md` = overwrite-only layer-A pointer
+  (capped); `ROADMAP_STATUS.md`/`CHANGES.md`/`DEVELOPMENT_NOTES.md`/
+  `LIVE_ACHIEVEMENT_STATUS.md` marked FROZEN; the required-order doc step now routes
+  to layers B → C → A (git is the audit trail); close-out snapshot reads the
+  task-trees, not the frozen `ROADMAP_STATUS.md`.
