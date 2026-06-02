@@ -61,6 +61,18 @@ sub _analyze_signal_usage_from_ast($self, $fsm_module) {
             $self->_analyze_decision_tree($dt);
         }
     }
+
+    # ISF-ASSERT: an `(assert COND)` invariant references signals too. Count those references so a
+    # signal read ONLY by an assert (e.g. an input used only in a precondition) is classified
+    # INPUT and kept as a port, rather than pruned as unused. Reuses the same condition walk as
+    # decision-tree guards.
+    my $asserts = (ref($fsm_module->{attributes}) eq 'HASH')
+        ? ($fsm_module->{attributes}{immediate_assertions} || [])
+        : [];
+    for my $assert (@$asserts) {
+        next unless ref($assert) eq 'HASH' && $assert->{condition};
+        $self->_analyze_condition_references($assert->{condition});
+    }
 }
 
 sub _analyze_decision_tree($self, $dt) {

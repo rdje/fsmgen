@@ -830,6 +830,59 @@ disappearing from scheduled `.fsm` output.
        (drive error_phase))))
 ```
 
+## `(assert COND [message])` — Verification Invariant
+
+```lisp
+(assert (< level depth))
+(assert (>= grant request) "grant must cover the request")
+```
+
+Capture a design-intent **invariant** — a condition that must hold every cycle —
+and project it to a verification-only SystemVerilog assertion. `(assert …)` is a
+transaction-level clause; `COND` is any boolean expression over the actor's
+signals, and the optional trailing string is the failure message.
+
+It lowers (through the only path there is — ISF → `.fsm` → SV — as a thin
+`+assert` carrier) to a combinational assertion guarded for verification only:
+
+```systemverilog
+`ifndef SYNTHESIS
+always_comb begin
+  assert (level < depth) else $error("...");
+end
+`endif
+```
+
+So it is **free in synthesis** (`yosys` skips it) and Verilog (non-SV) output
+stays assertion-free. A signal referenced *only* by an assert (e.g. an input used
+just as a precondition) is kept alive as a port — it is not pruned.
+
+A runnable example — a saturating value with an in-range invariant:
+
+```lisp
+(actor bounded
+  (interface (input start) (input step (width 8)) (output done) (output count (width 8)))
+  (transaction main
+    (on start)
+    (update count step)
+    (assert (< count 200) "count must stay below 200")
+    (complete done)))
+```
+
+Under simulation the assertion stays silent while `count < 200` and fires (with
+the message) the moment it is violated.
+
+`(assert …)` is the **immediate / combinational** sibling of the temporal
+`(contract NAME (eventually SIGNAL within CYCLES))` (which checks a property over
+a bounded number of cycles). Use `(assert …)` for "this must always hold," and a
+`(contract …)` for "this must eventually happen within N cycles."
+
+A malformed form fails closed before `.fsm` emission: `(assert)` with no
+condition, or more than a condition + one message string.
+
+**Lowering**: a `+assert` carrier in the `.fsm` → `module_info` → a guarded
+`assert (COND) else $error("message")` in the generated SV.
+
 ## I2C Example with Switch
 
 ```lisp

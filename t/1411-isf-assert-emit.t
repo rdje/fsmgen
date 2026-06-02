@@ -99,6 +99,26 @@ ISF
         'a name-based default $error message is used when no message is given');
 };
 
+subtest 'an input read ONLY by an assert is kept alive (classified INPUT, not pruned)' => sub {
+    # level/depth are read only by the assert — without the keep-alive they would be pruned and
+    # the emitted `assert (level < depth)` would reference undeclared signals (verilator error).
+    my $module = parsed_module(<<'ISF', 'ka');
+(actor ka
+  (interface (input start) (input level (width 8)) (input depth (width 8)) (output done))
+  (transaction main
+    (on start)
+    (assert (< level depth) "level must stay below depth")
+    (complete done)))
+ISF
+    my $signals = $module->signals;
+    for my $name (qw(level depth)) {
+        ok($signals->{$name}, "$name survives (not pruned)");
+        my $role = $signals->{$name} && $signals->{$name}->can('get_attribute')
+            ? $signals->{$name}->get_attribute('signal_role') : undef;
+        is($role, 'INPUT', "$name is classified INPUT (kept as a port) via its assert reference");
+    }
+};
+
 subtest 'a non-assert module surfaces no immediate assertions and emits nothing' => sub {
     my $module = parsed_module(<<'ISF', 'plain');
 (actor plain

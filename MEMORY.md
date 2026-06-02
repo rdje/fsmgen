@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-ASSERT.3` (this commit) — `(assert COND [message])` emits a verification-only SVA (`ifndef SYNTHESIS` / `assert (COND) else $error(...)`); verified silent-on-pass / fires-on-violation for live signals; `git log -1` for the hash.
-- active_work_unit: `ISF-ASSERT` → frontier leaf: `.4` (next; `.1`–`.3` done) — `(assert COND [message])` verification intent.
-- next_action: implement `ISF-ASSERT.4` — (a) keep otherwise-unused assert-referenced signals alive: thread the assertion conditions' signal refs into the FlattenedDT SV port/usage retention so an `(assert (< level depth))` over inputs read only by the assert is not pruned (live-signal asserts already work); (b) ISF docs (13e/13g section + 13k row).
+- latest_commit: `ISF-ASSERT.4` (this commit) — `(assert COND [message])` verification construct COMPLETE: fires-on-violation SVA over live or assert-only-referenced signals; keep-alive + 13d/13k docs; `git log -1` for the hash.
+- active_work_unit: none active — `ISF-ASSERT` done (`.1`–`.4`). Pick the next frontier item per `docs/decisions/0002` / `0003` (autonomous PNT).
+- next_action: choose the next theme-3/frontier construct or a new direction; the clean theme-3 data/arithmetic surface + `(assert …)` verification intent are shipped. Candidate threads: more verification (`assume`/`cover`, state-guarded asserts), or theme-2 (nested CDC) / theme-4 (ATL).
 - recently_done: `MEMORY-ARCHITECTURE-ADOPTION` (`.1`–`.5`, done); `ISF-ASSERT.1`/`.2`; the theme-3 ISF data/bit/field/arithmetic construct surface (see `docs/decisions/0002`).
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.

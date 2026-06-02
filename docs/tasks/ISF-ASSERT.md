@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ASSERT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14` (ISF — high-level language richness, theme #3 intent capture)
 - Created: `2026-06-02`
 - Last updated: `2026-06-02`
@@ -191,3 +191,21 @@ parses it); no pre-computed signal.
   pass (`o=50<200`) and FIRES on violation (`o=250≥200`). `t/1411` (4 subtests).
   **Known gap (→ `.4`):** an assert over an otherwise-unused input references a
   signal the FlattenedDT backend prunes; live-signal asserts are the working path.
+- `2026-06-02`: `.4` done — keep-alive + docs; **tree complete**.
+  - Keep-alive (closes the `.3` gap): `SignalAnalyzer::_analyze_signal_usage_from_ast`
+    now also walks `$fsm_module->{attributes}{immediate_assertions}` conditions via
+    the existing `_analyze_condition_references`, so a signal referenced only by an
+    assert gets `referenced_in_conditions > 0` → classified `INPUT` by
+    `_classify_signal_role` → kept in the port list (not pruned). `(assert (< level
+    depth))` over inputs read only by the assert now declares `level`/`depth` as
+    ports; `--verify-hdl` verilator-lint + yosys clean; `verilator --binary` is
+    silent on pass and fires on violation. Minimal (~6 lines), low risk
+    (`signal_usage` is consumed only by role classification). `t/1411` gains a
+    keep-alive subtest (the inputs survive with role `INPUT`).
+  - Docs: 13d gains a "Verification Invariant" `(assert COND [message])` section
+    (runnable `bounded` example, verilator/yosys clean) positioning it as the
+    immediate/combinational sibling of the temporal `(contract …)`; the 13k matrix
+    gains an "Immediate assertions" row. `ISF_SPEC` registers `t/1410`/`t/1411`.
+  - **ISF-ASSERT complete** — `(assert COND [message])` is a working verification
+    construct projecting to a fires-on-violation SVA, over live or
+    assert-only-referenced signals, on the ISF → `.fsm` → SV path.
