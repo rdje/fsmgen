@@ -999,7 +999,9 @@ monitor logic); the `!fail` reference does not turn them into ports.
 
 The window is measured from the cycle *after* the arm pulse (same as
 `(contract …)`), so `S` asserted on the arm cycle itself does not count; it must hold
-within the following `N` cycles. `N` must be a literal `>= 1`, `S` must be an actor
+within the following `N` cycles. `N` may be a positive literal **or** a
+transaction/actor scalar parameter, an actor constant, or a qualified package scalar
+constant (the same window sources `(contract …)` accepts); `S` must be an actor
 interface signal, and only `(monitor (within S N))` is supported — other inner forms
 fail closed. This is the same monitor engine `(contract …)` lowers to (arm state +
 `arm`/`pending`/`age`/`fail` DT), now reachable from the property language; once the

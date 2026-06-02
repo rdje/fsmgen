@@ -3072,6 +3072,7 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children, 
         next if $generated_children->{$tx_name};
         next if $pruned_transactions->{$tx_name};
         next if _transaction_params_used_by_contract_window($tx, $params);
+        next if _transaction_params_used_by_monitor_window($tx, $params);
         next if _transaction_params_used_by_data_op_width($tx, $params);
         next if _transaction_params_used_by_transaction_port_width($tx, $params);
         next if _transaction_params_used_by_repeat_count($tx, $params);
@@ -3079,7 +3080,7 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children, 
         next if _transaction_params_used_by_latency_bound($tx, $params);
         next if _transaction_params_used_by_watchdog_limit($tx, $params);
 
-        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, same-transaction wait counts, same-transaction latency bounds, or same-transaction top-level await-local watchdog limits\n";
+        confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract or monitor windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, same-transaction wait counts, same-transaction latency bounds, or same-transaction top-level await-local watchdog limits\n";
     }
     return 1;
 }
@@ -3088,6 +3089,55 @@ sub _transaction_params_used_by_contract_window {
     my ($tx, $params) = @_;
     my $used = _transaction_contract_window_param_names($tx, $params);
     return keys %$used ? 1 : 0;
+}
+
+# ISF-TRIGGER-ANCHOR.4: a check's `(monitor (within S N))` window may reference a transaction/actor
+# parameter exactly like a `(contract …)` window, so the parameter-usage gate must recognise it too.
+sub _transaction_params_used_by_monitor_window {
+    my ($tx, $params) = @_;
+    my $used = _transaction_monitor_window_param_names($tx, $params);
+    return keys %$used ? 1 : 0;
+}
+
+sub _transaction_monitor_window_param_names {
+    my ($tx, $params) = @_;
+    return {} unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
+
+    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
+    return {} unless keys %declared;
+
+    my %used;
+    for my $clause (@{$tx->{clauses} || []}) {
+        my $value = _monitor_within_value_if_present($clause);
+        _collect_isf_value_declared_name_refs($value, \%declared, \%used)
+            if defined $value;
+    }
+
+    return \%used;
+}
+
+# The `within` token of a check's `(monitor (within S N))` clause, or undef if the clause is not one.
+# Clause shape (plain nested arrays): ['assert'|'cover'|'assume', ['monitor', ['within', S, N]], "msg"?].
+sub _monitor_within_value_if_present {
+    my ($clause) = @_;
+    return undef unless ref($clause) eq 'ARRAY'
+        && defined($clause->[0])
+        && !ref($clause->[0])
+        && ($clause->[0] eq 'assert' || $clause->[0] eq 'cover' || $clause->[0] eq 'assume')
+        && ref($clause->[1]) eq 'ARRAY'
+        && defined($clause->[1][0])
+        && !ref($clause->[1][0])
+        && $clause->[1][0] eq 'monitor'
+        && ref($clause->[1][1]) eq 'ARRAY';
+
+    my $within = $clause->[1][1];
+    return undef unless @$within == 3
+        && defined($within->[0])
+        && !ref($within->[0])
+        && $within->[0] eq 'within'
+        && defined($within->[2]);
+
+    return $within->[2];
 }
 
 sub _transaction_params_used_by_data_op_width {
@@ -8410,11 +8460,11 @@ sub _ir_monitor_check {
     confess "Error: ($kind (monitor …)) in transaction '$tn' supports only '(monitor (within SIGNAL N))'\n"
         unless ref($inner) eq 'ARRAY' && @$inner == 3 && defined($inner->[0])
             && !ref($inner->[0]) && $inner->[0] eq 'within';
-    my ($observed, $bound) = ($inner->[1], $inner->[2]);
+    my ($observed, $bound_token) = ($inner->[1], $inner->[2]);
     confess "Error: ($kind (monitor (within SIGNAL N))) in transaction '$tn' requires a scalar signal\n"
         unless defined($observed) && !ref($observed) && length($observed);
-    confess "Error: ($kind (monitor (within SIGNAL N))) in transaction '$tn' N must be a literal integer >= 1\n"
-        unless defined($bound) && !ref($bound) && $bound =~ /\A[1-9][0-9]*\z/;
+    confess "Error: ($kind (monitor (within SIGNAL N))) in transaction '$tn' requires a window count N\n"
+        unless defined($bound_token) && !ref($bound_token);
 
     my %interface_signals = map { $_->{name} => 1 }
         (@{$actor->{interface}{inputs} || []}, @{$actor->{interface}{outputs} || []});
@@ -8422,6 +8472,20 @@ sub _ir_monitor_check {
         unless $interface_signals{$observed};
 
     my $prefix = "${tn}_${kind}_$i";
+    # N may be a literal, a same-transaction/actor scalar parameter, an actor constant, or a
+    # qualified package scalar constant — the same window sources as (contract …) (ISF-TRIGGER-ANCHOR.4),
+    # so the monitor output-mode loses no capability vs the construct it replaces. The common literal
+    # case gets a clear monitor-specific message; identifier windows defer to the shared resolver.
+    my $within_cycles;
+    if ($bound_token =~ /\A[0-9]+\z/) {
+        confess "Error: ($kind (monitor (within SIGNAL N))) in transaction '$tn' N must be a positive integer\n"
+            unless $bound_token =~ /\A[1-9][0-9]*\z/;
+        $within_cycles = $bound_token + 0;
+    }
+    else {
+        $within_cycles = _temporal_contract_within_cycles($bound_token, $actor, $tn, $prefix, 'transaction body');
+    }
+
     my $signals = _monitor_signals_for_prefix($prefix);
     for my $role (qw(arm pending age fail)) {
         confess "Error: ($kind (monitor …)) in transaction '$tn': generated signal '$signals->{$role}' collides with an existing signal\n"
@@ -8430,7 +8494,7 @@ sub _ir_monitor_check {
     }
 
     my ($state, $dt) = _build_eventually_monitor(
-        $signals, $observed, $bound + 0, $counters, $storage_roles);
+        $signals, $observed, $within_cycles, $counters, $storage_roles);
 
     my %assert = (
         name      => "${prefix}_holds",

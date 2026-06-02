@@ -186,11 +186,29 @@ subtest 'the monitor registers are internal (the !fail reference does not promot
     }
 };
 
+subtest 'monitor window resolves a transaction/actor parameter (parity with contract windows)' => sub {
+    my $src = <<'ISF';
+(actor mw
+  (clock clk) (reset rst_n)
+  (params (ACTOR_WIN 8))
+  (interface (input start) (input ack) (output done))
+  (transaction main
+    (params (ACK_WINDOW 4))
+    (on start)
+    (assert (monitor (within ack ACK_WINDOW)) "tx param window")
+    (assert (monitor (within ack ACTOR_WIN)) "actor param window")
+    (complete done)))
+ISF
+    my $fsm = lower_fsm_text($src, 'mw');
+    like($fsm, qr/\(== main_assert_1_age 3\)/, 'transaction param ACK_WINDOW=4 -> monitor expiry at age 3');
+    like($fsm, qr/\(== main_assert_2_age 7\)/, 'actor param ACTOR_WIN=8 -> monitor expiry at age 7');
+};
+
 subtest 'a malformed monitor output-mode fails closed' => sub {
     like(lower_error(
         "(actor a (clock clk) (reset rst_n) (interface (input start) (input ack) (output done)) "
         . "(transaction main (on start) (assert (monitor (within ack 0))) (complete done)))", 'a'),
-        qr/N must be a literal integer >= 1/,
+        qr/N must be a positive integer/,
         '(monitor (within ack 0)) with a zero bound is rejected');
     like(lower_error(
         "(actor b (clock clk) (reset rst_n) (interface (input start) (input ack) (output done)) "

@@ -57,11 +57,13 @@ See `docs/decisions/0009`. Two orthogonal additions:
   written in a transaction body anchors to its position via the arm/age/fail monitor
   (generalized `_build_eventually_monitor`); verilator-simulable; `verilator --binary
   --assert` proves arm→within-N→fail. (The explicit `(monitor …)` wrapper is the
-  output-mode modifier per `0009`; it subsumes the planned standalone `.4` inline form —
-  a bare `(within …)` stays the formal-only module-global property from `.2`, no
-  ambiguous reinterpretation.)
-- `.4` *(folded into `.3`)* — the inline/positioned trigger ships as the `(monitor …)`
-  body form above.
+  output-mode modifier per `0009`; it subsumes the standalone inline form — a bare
+  `(within …)` stays the formal-only module-global property from `.2`, no ambiguous
+  reinterpretation.)
+- `.4` **Window-source parity** — `(monitor (within S N))` resolves `N` from a literal,
+  transaction/actor parameter, actor constant, or qualified package scalar constant via
+  the shared resolver — the same window sources as `(contract …)`. Closes the only
+  capability gap blocking a lossless contract removal.
 - `.5` **Ref (named)** — `(on … :as NAME)` binding + `(at NAME)` trigger leaf.
 - `.6` **Remove `(contract …)`** — retarget parse/validate/`_ir_temporal_contract`
   to the property path; delete the clause surface; migrate tests
@@ -135,3 +137,21 @@ See `docs/decisions/0009`. Two orthogonal additions:
     regression-clean.
   - Remaining: `.5` Ref named `(at NAME)`, `.6` remove `(contract …)` (now redundant with the
     inline monitored form).
+- `2026-06-02`: `.4` done — **window-source parity** for `(monitor (within S N))`. `N` now
+  resolves from a literal, a same-transaction/actor scalar parameter, an actor constant, or a
+  qualified package scalar constant (the shared `_temporal_contract_within_cycles` resolver) —
+  the same window sources `(contract …)` accepts. This closes the last capability gap blocking a
+  lossless contract removal.
+  - The literal `N` keeps a clear monitor-specific message ("N must be a positive integer");
+    identifier windows defer to the shared resolver. Extended the transaction-`params` usage gate
+    (`_validate_transaction_parameter_clauses`) with `_transaction_params_used_by_monitor_window`
+    + `_monitor_within_value_if_present`, so a param consumed only by a monitor window is accepted
+    (its diagnostic now reads "temporal contract / monitor windows").
+  - Verified: `t/1413` + a transaction/actor-param window subtest (age compares to N-1: ACK_WINDOW=4
+    → 3, ACTOR_WIN=8 → 7); `--verify-hdl` verilator-lint + yosys clean on a param-window monitor;
+    all contract-window tests (`t/1362/1364/1365/1366`) green (`t/1365` param-gate diagnostic
+    updated for the new wording).
+  - **`.6` cleanup note:** the shared resolver still says "contract" / "temporal contract" / mentions
+    `eventually` in its rarer identifier-window error paths; that wording is neutralized in `.6` when
+    the resolver is renamed as part of de-contract-ifying the lowerer (cohesive there, not deferred).
+  - Remaining: `.5` Ref named `(at NAME)`, `.6` remove `(contract …)`.
