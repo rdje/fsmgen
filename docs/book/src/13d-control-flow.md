@@ -1009,6 +1009,30 @@ other inner forms fail closed. This is the same monitor engine the former
 reachable from the property language; the inline/event/named triggers all drive it,
 and the former `(contract …)` clause has been removed (`0009`).
 
+### Named anchors — `(point NAME)` and `(at NAME)`
+
+To anchor a check to a transaction position *by name*, label the position with a
+`(point NAME)` marker and reference it with `(at NAME)`:
+
+```lisp
+(transaction main
+  (on start)
+  (point armed)               ;; names this position
+  (drive go)
+  (complete done))
+
+(assert (=> (at armed) (within ack 3)))   ;; "while at `armed`, ack within 3"
+```
+
+`(point NAME)` is a no-op pass-through state that simply labels its position; `(at
+NAME)` lowers to `(state_active <that state>)` — i.e. "control is at the named
+point" — usable anywhere a boolean is (typically as an implication antecedent). The
+name → state bindings are **module-wide**, so a check in one transaction can anchor to
+a `(point …)` declared in another. An `(at NAME)` whose name was never declared fails
+closed (the diagnostic suggests `(point NAME)` or `(on SIGNAL as NAME)`); a duplicate
+point name fails closed. Place a `(point …)` right after `(on …)` to anchor to "just
+activated" without needing a dedicated activation label.
+
 A malformed form fails closed before `.fsm` emission: e.g. `(assert)` /
 `(cover)` / `(assume)` with no condition, or more than a condition + one message
 string.

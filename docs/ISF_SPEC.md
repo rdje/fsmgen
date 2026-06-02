@@ -5759,6 +5759,7 @@ Focused tests:
 - [t/1411-isf-assert-emit.t](../t/1411-isf-assert-emit.t)
 - [t/1412-isf-property-implication.t](../t/1412-isf-property-implication.t)
 - [t/1413-isf-trigger-anchor.t](../t/1413-isf-trigger-anchor.t)
+- [t/1416-isf-trigger-anchor-ref.t](../t/1416-isf-trigger-anchor-ref.t)
 
 ## 12. Explicitly Deferred
 

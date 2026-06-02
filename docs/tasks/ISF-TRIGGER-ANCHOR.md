@@ -64,7 +64,11 @@ See `docs/decisions/0009`. Two orthogonal additions:
   transaction/actor parameter, actor constant, or qualified package scalar constant via
   the shared resolver — the same window sources as `(contract …)`. Closes the only
   capability gap blocking a lossless contract removal.
-- `.5` **Ref (named)** — `(on … :as NAME)` binding + `(at NAME)` trigger leaf.
+- `.5` **Ref (named)** — `(point NAME)` body-position marker + `(on … as NAME)` activation
+  label (bare `as`, like `(sample … as …)`/`(spawn … as …)` — NOT `:as`, user 2026-06-02);
+  `(at NAME)` trigger leaf → `(state_active <bound state>)`. Module-wide name→state bindings
+  collected during lowering; `(at NAME)` in a check condition resolved (post-lowering) to the
+  bound state's `state_active`; fail-closed on an unbound NAME.
 - `.6` **Remove `(contract …)`** — retarget parse/validate/`_ir_temporal_contract`
   to the property path; delete the clause surface; migrate tests
   (`t/1175/1224/1225/1254/1255/1362/1364/1365/1366`, …) + docs (13d/13h/13k/13-intent);
@@ -182,3 +186,17 @@ See `docs/decisions/0009`. Two orthogonal additions:
     form. Swapped the broken `isf/stream_stage_contract.isf` fixture's contract clause to the monitor.
   - Remaining: `.5` Ref named `(at NAME)`; `.6c` neutralize residual "contract" wording (resolver rename
     + ISF_SPEC/downstream lowering/report-schema prose, which describe the now-empty field).
+- `2026-06-02`: `.5a` done — **Ref via `(point NAME)` + `(at NAME)`**. `(point NAME)` is a no-op
+  pass-through labeled state (`${tn}_point_$i`, modeled on `(phase …)`); it records a module-wide
+  `name → state` binding. `(at NAME)` in a check condition is resolved (post-lowering, once all
+  transactions/bindings exist) to `(state_active <bound state>)` → SV `current_state == <STATE>`.
+  - Threaded a `%point_bindings` map through `_build_transaction` (new param); `_ir_point` records
+    bindings; `_resolve_at_references` rewrites `(at NAME)` in the `+assert` conditions (both the
+    parent and child IR paths). Whitelisted `point` in the transaction clause set. Module-wide:
+    an `(at NAME)` may reference a `(point …)` in another transaction. Unknown name + duplicate
+    name fail closed.
+  - Verified: `--verify-hdl` verilator-lint + yosys clean (`(=> (at armed) (within ack 3))` →
+    `(current_state == MAIN_POINT_1) |-> ##[1:3] (ack)`, formal-only); `t/1416` (5 subtests:
+    render+resolve, cross-transaction, unknown-name fail-closed, duplicate fail-closed, malformed);
+    13d "Named anchors" subsection; `ISF_SPEC` registers `t/1416`.
+  - Remaining: `.5b` activation label `(on SIGNAL as NAME)` (bare `as`); `.6c` wording cleanup.

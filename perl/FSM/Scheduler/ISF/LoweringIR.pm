@@ -14,7 +14,7 @@ sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
 my %SUPPORTED_TRANSACTION_CLAUSES = (
     transaction => {
         map { $_ => 1 } qw(
-            on drive await sample update phase shift_left shift_right assemble
+            on drive await sample update phase point shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
             await_any params stage store load wait while until set
             atl_trigger atl_trigger_batch local assert cover assume
@@ -126,8 +126,10 @@ sub build_module($self, $actor) {
 # --- Child IR (separate module) ---
 
 sub _build_child_ir($self, $tx, $actor, $cname) {
+    my %point_bindings;   # ISF-TRIGGER-ANCHOR.5
     my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles, $bank_accesses, $reset_values, $asserts) =
-        $self->_build_transaction($tx, $actor, 0);
+        $self->_build_transaction($tx, $actor, 0, undef, \%point_bindings);
+    _resolve_at_references($asserts, \%point_bindings);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
     # ISF-REGISTER-RESET-VALUES: storage var reset values (actor-level) + this transaction's
     # local reset values (the 10th _build_transaction return).
@@ -1096,6 +1098,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     my @spawn_instances;
     my @temporal_contracts;
     my @immediate_assertions;
+    my %point_bindings;   # ISF-TRIGGER-ANCHOR.5: name -> state for (point …)/(on … as …); for (at …)
     my @bank_accesses;
     my $transaction_port_bindings = _transaction_port_binding_metadata($actor);
     my %signal_widths = _declared_storage_signal_widths($actor);
@@ -1125,7 +1128,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         next if $generated_children->{$tx->{name}};
         next if $pruned_transactions->{$tx->{name}};
         my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses, $resets, $asserts) =
-            $self->_build_transaction($tx, $actor, $ti++, $generated_children);
+            $self->_build_transaction($tx, $actor, $ti++, $generated_children, \%point_bindings);
         $reset_values{$_} = $resets->{$_} for keys %{$resets || {}};
         _merge_signal_widths(\%signal_widths, $widths, $tx->{name});
         _merge_signal_type_refs(\%signal_type_refs, { _transaction_port_signal_type_refs($tx) });
@@ -1187,6 +1190,11 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     $self->_wire_external_activations(\@states, \@ports, \%ctrs, $actor);
     my $local_drive_filter = keys(%$generated_children) ? \%local_drive_uses : undef;
     $self->_build_drive_dts($actor, \@dts, \%ctrs, $local_drive_filter, \%spawn_drive_sources, \%storage_roles);
+
+    # ISF-TRIGGER-ANCHOR.5: all transactions lowered — resolve (at NAME) leaves in checks to the
+    # named point/activation's `state_active` (module-wide; an (at …) may reference a point in
+    # another transaction). Unknown names fail closed.
+    _resolve_at_references(\@immediate_assertions, \%point_bindings);
 
     my $ir = {
         actor_name => $actor->{actor_name},
@@ -4861,11 +4869,15 @@ sub _repeat_count_width_for_integer {
 }
 
 # --- Transaction → IR states ---
-sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
+sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef, $point_bindings = undef) {
     my $tn  = $tx->{name};
     my $wd  = _watchdog_limit_cycles($actor->{watchdog}, $actor, $tn, 'actor watchdog');
     my $drives = $actor->{drives} || {};
     $generated_children ||= {};
+    # ISF-TRIGGER-ANCHOR.5: module-wide name -> state map for (point NAME) / (on … as NAME),
+    # consumed by (at NAME) resolution after all transactions lower. Local fallback for callers
+    # that do not thread one (no (at …) resolution needed there).
+    $point_bindings = {} unless ref($point_bindings) eq 'HASH';
     my $constant_values = _actor_constant_value_map($actor);
     _validate_supported_transaction_clauses($tx->{clauses}, $tn, 'transaction', undef, $generated_children, $actor);
     my $widths = _build_signal_width_map($actor, $tx);
@@ -4940,6 +4952,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         }
         elsif ($k eq 'update' || $k eq 'set') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_update($cl,$tn,$si++,$k); }
         elsif ($k eq 'phase')       { push @st, _ir_phase($cl,$tn,$si++); }
+        elsif ($k eq 'point')       { push @st, _ir_point($cl,$tn,$si++,$point_bindings); }
         elsif ($k eq 'stage')       { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_stage($cl,$tn,$si++,$actor); }
         elsif ($k eq 'assert' || $k eq 'cover' || $k eq 'assume') {
             if (_is_monitor_check($cl)) {
@@ -8106,6 +8119,42 @@ sub _literal_integer_value {
 }
 sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<=',source_kind=>'sample_capture'}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_phase { my ($cl,$tn,$i)=@_; my $name=$cl->[1]; {name=>"${tn}_phase_$i",kind=>'sequential',assignments=>[],transitions=>[],phase_name=>$name} }
+
+# ISF-TRIGGER-ANCHOR.5: (point NAME) is a no-op labeled position in a transaction body — a
+# pass-through state whose name a (at NAME) check resolves to (via `state_active`). Records the
+# name -> state binding into the module-wide $point_bindings map.
+sub _ir_point {
+    my ($cl, $tn, $i, $point_bindings) = @_;
+    my $name = $cl->[1];
+    confess "Transaction '$tn': (point NAME) requires a scalar name\n"
+        unless defined($name) && !ref($name) && length($name);
+    confess "Transaction '$tn': (point '$name') name must be an HDL identifier\n"
+        unless $name =~ /\A[A-Za-z_]\w*\z/;
+    my $state_name = "${tn}_point_$i";
+    if (ref($point_bindings) eq 'HASH') {
+        confess "Transaction '$tn': duplicate point/activation name '$name'\n"
+            if exists $point_bindings->{$name};
+        $point_bindings->{$name} = $state_name;
+    }
+    return { name => $state_name, kind => 'sequential', assignments => [], transitions => [], point_name => $name };
+}
+
+# ISF-TRIGGER-ANCHOR.5: resolve (at NAME) leaves in check conditions to (state_active <state>) once
+# the module-wide name -> state map is complete; an unknown NAME fails closed.
+sub _resolve_at_references {
+    my ($asserts, $bindings) = @_;
+    return unless ref($asserts) eq 'ARRAY';
+    $bindings = {} unless ref($bindings) eq 'HASH';
+    for my $a (@$asserts) {
+        next unless ref($a) eq 'HASH' && defined $a->{condition} && !ref($a->{condition});
+        $a->{condition} =~ s{\(at\s+([A-Za-z_]\w*)\)}{
+            exists $bindings->{$1}
+                ? "(state_active $bindings->{$1})"
+                : confess "Check '" . ($a->{name} // '?') . "': (at $1) references unknown point/activation name '$1'; declare it with (point $1) or (on SIGNAL as $1)\n";
+        }ge;
+    }
+    return;
+}
 sub _ir_stage {
     my ($cl, $tn, $i, $actor) = @_;
     my $stage = _parse_stage_handshake_clause($cl, $tn, 'transaction body');
