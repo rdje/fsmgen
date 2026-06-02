@@ -92,3 +92,12 @@ git hooks · CI gate.
   `docs/TASK_TREE.md`, and CI (`regression.yml`) already present. Reference kit
   copied/adapted from specforge (`scripts/check_memory_architecture.sh`,
   `.githooks/`, bootstrap-pointer shape).
+- `2026-06-02`: `.1` done — `MEMORY_ARCHITECTURE.md` at root + README "Memory &
+  continuity" doc-map section; tree registered in `docs/TASK_TREE.md`. Commit
+  `de7a6e17`.
+- `2026-06-02`: `.2` done — `docs/decisions/` (layer C) + `INDEX.md` + 7 ADRs
+  migrating durable facts out of harness-home memory: 0001 abstraction layering,
+  0002 language-richness frontier, 0003 autonomous-PNT/no-pausing, 0004 simulate-
+  to-catch-codegen-bugs, 0005 push-only-on-request, 0006 thorough-mdBook, 0007
+  memory-architecture-supersedes-blob-narration (the COMMIT.md reconciliation,
+  executed in `.3`/`.4`).
