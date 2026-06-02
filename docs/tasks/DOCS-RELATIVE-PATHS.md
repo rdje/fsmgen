@@ -25,8 +25,8 @@ relative to the git repo root (user directive, decision `0011`).
     for internal corpus-path *comparison* (never displayed) — not a leak.
   - Decision `0011` records the policy.
   - Guard `t/1414-docs-relative-paths-audit.t` scans `docs/**/*.md` (excluding the
-    gitignored generated `docs/book/book/`) and fails on any `/Users/<user>/…` or
-    `/home/<user>/…` home-directory prefix — keeps the invariant from regressing.
+    gitignored generated `docs/book/book/`) and fails on any absolute home-directory
+    prefix (a macOS or Linux user-home path) — keeps the invariant from regressing.
 
 ## Acceptance Criteria
 
