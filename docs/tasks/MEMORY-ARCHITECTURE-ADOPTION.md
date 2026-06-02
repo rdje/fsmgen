@@ -12,7 +12,7 @@
 ## Goal
 
 Adopt the portable **Durable Agent Memory Architecture** standard
-(`/Users/richarddje/Documents/github/specforge/MEMORY_ARCHITECTURE.md`) in this
+(`../specforge/MEMORY_ARCHITECTURE.md`, the sibling repo) in this
 repo, end-to-end, per its §11 adoption checklist and §9.1 enforcement kit — so
 fsmgen's agent memory survives session loss, crash, machine loss, and harness/model
 switches, and is **mechanically enforced** (hard to be non-compliant).

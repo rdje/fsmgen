@@ -24,3 +24,4 @@ Conventions:
 | [0008](0008-verification-property-language-unification.md) | Unify verification on one property language | architecture | assert/assume/cover → clocked SV properties; `(contract …)` removed; one temporal-intent grammar. |
 | [0009](0009-trigger-anchor-vocabulary.md) | Trigger-anchor vocabulary for bounded-eventually | architecture | Three trigger spellings (event/inline/ref) + a synthesizable-monitor output-mode; `contract` dissolves into the engine. |
 | [0010](0010-severity-never-gated-by-trace-level.md) | Severity (≥ warning) is never gated by a trace level | convention | Warnings/errors/fatals always display (ungated `fsm_warn`/`fsm_error`/`fsm_fatal` → STDERR); trace levels gate informational output only. |
+| [0011](0011-doc-file-paths-relative-to-repo-root.md) | Doc file paths are relative to the repo root | convention | No absolute machine-local path in docs; guard `t/1414` enforces it. |

@@ -1,0 +1,57 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Test::More;
+use File::Spec;
+use File::Find;
+use FindBin;
+
+# Decision 0011: every file-path reference in the live docs must be relative to the git
+# repo root — never an absolute machine-local path. Absolute home-directory prefixes
+# (e.g. a /Users/<user>/... or /home/<user>/... path) capture the author's local file
+# structure and break for any other checkout. This guard scans docs/**/*.md and fails on
+# any such prefix, keeping the invariant from regressing.
+
+my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
+my $docs_root = File::Spec->catdir($repo_root, 'docs');
+
+# Machine-local home-directory prefixes that leak local structure. System paths
+# (/usr, /bin, /tmp, /etc) are not local-structure leaks and are not flagged.
+my $abs_local_re = qr{(?:/Users/[^/\s'"`)]+/|/home/[^/\s'"`)]+/)};
+
+my @md_files;
+find(
+    {
+        wanted => sub {
+            return unless -f $_ && /\.md\z/;
+            # Skip the generated mdBook HTML output tree (docs/book/book/) — it is a
+            # gitignored, regenerable build artifact, not authored source.
+            return if $File::Find::name =~ m{/book/book/};
+            push @md_files, $File::Find::name;
+        },
+        no_chdir => 1,
+    },
+    $docs_root,
+);
+
+ok(scalar(@md_files) > 0, 'found docs markdown files to audit');
+
+my @violations;
+for my $file (@md_files) {
+    open my $fh, '<', $file or die "cannot read $file: $!";
+    my $lineno = 0;
+    while (my $line = <$fh>) {
+        $lineno++;
+        if ($line =~ $abs_local_re) {
+            my $rel = File::Spec->abs2rel($file, $repo_root);
+            chomp(my $text = $line);
+            push @violations, "$rel:$lineno: $text";
+        }
+    }
+    close $fh;
+}
+
+is(scalar(@violations), 0, 'no absolute machine-local file paths in docs (decision 0011)')
+    or diag("Absolute local paths must be made repo-root-relative:\n  " . join("\n  ", @violations));
+
+done_testing();
