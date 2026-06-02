@@ -44,6 +44,8 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ASSERT-CONCURRENT` | `active` | `R14` | `ISF-ASSERT-CONCURRENT.2` (`.1` done) — re-point assert/assume/cover to clocked concurrent SV properties (`assert property (@clk disable iff reset …)`); step 1 of decision 0008 | [docs/tasks/ISF-ASSERT-CONCURRENT.md](docs/tasks/ISF-ASSERT-CONCURRENT.md) |
+| `ISF-PROPERTY-IMPLICATION` | `active` | `R14` | `ISF-PROPERTY-IMPLICATION.2` (`.1` done) — temporal property grammar `(=> A B)`/`(within S N)` → SVA `\|->`/`##`; step 2 of decision 0008 (enables removing `(contract …)`) | [docs/tasks/ISF-PROPERTY-IMPLICATION.md](docs/tasks/ISF-PROPERTY-IMPLICATION.md) |
 | `ISF-COVER-ASSUME` | `done` | `R14` | complete (`.1`–`.2`; `(cover COND [label])` / `(assume COND [message])` — the verification-intent siblings of `(assert …)`, one kind-tagged immediate-check family; `cover (COND);` / `assume (COND) else $error(…)`) | [docs/tasks/ISF-COVER-ASSUME.md](docs/tasks/ISF-COVER-ASSUME.md) |
 | `MEMORY-ARCHITECTURE-ADOPTION` | `done` | infra/continuity | complete (`.1`–`.5`; durable-agent-memory standard adopted — layers A/C + tool-neutral bootstrap + E1–E4 enforcement; `MEMORY.md` demoted 38,776 → 24 lines; gates proven to bite) | [docs/tasks/MEMORY-ARCHITECTURE-ADOPTION.md](docs/tasks/MEMORY-ARCHITECTURE-ADOPTION.md) |
 | `ISF-ASSERT` | `done` | `R14` | complete (`.1`–`.4`; `(assert COND [message])` verification invariant → fires-on-violation SVA via a `+assert` `.fsm` carrier; keeps assert-referenced inputs alive; 13d/13k docs) | [docs/tasks/ISF-ASSERT.md](docs/tasks/ISF-ASSERT.md) |

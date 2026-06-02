@@ -21,3 +21,4 @@ Conventions:
 | [0005](0005-push-only-on-explicit-request.md) | Push only on explicit request | feedback | Pushing is fully user-initiated; no commit-count cadence; don't fret about it. |
 | [0006](0006-thorough-mdbook-runnable-examples.md) | Thorough mdBook with runnable examples | convention | Every feature documented with lots of runnable, lowering-clean examples. |
 | [0007](0007-memory-architecture-supersedes-blob-narration.md) | Memory architecture supersedes blob narration | architecture | `MEMORY.md` is the bounded pointer; git + task-trees + ADRs are the record; legacy prose blobs frozen. |
+| [0008](0008-verification-property-language-unification.md) | Unify verification on one property language | architecture | assert/assume/cover → clocked SV properties; `(contract …)` folds in as sugar; one temporal-intent grammar. |
