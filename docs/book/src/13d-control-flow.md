@@ -843,19 +843,21 @@ transaction-level clause; `COND` is any boolean expression over the actor's
 signals, and the optional trailing string is the failure message.
 
 It lowers (through the only path there is — ISF → `.fsm` → SV — as a thin
-`+assert` carrier) to a combinational assertion guarded for verification only:
+`+assert` carrier) to a **clocked concurrent** SV property, guarded for
+verification only and gated off during reset:
 
 ```systemverilog
 `ifndef SYNTHESIS
-always_comb begin
-  assert (level < depth) else $error("...");
-end
+  assert property (@(posedge clk) disable iff (!rst_n) (level < depth))
+    else $error("...");
 `endif
 ```
 
-So it is **free in synthesis** (`yosys` skips it) and Verilog (non-SV) output
-stays assertion-free. A signal referenced *only* by an assert (e.g. an input used
-just as a precondition) is kept alive as a port — it is not pruned.
+The clocked property samples at the clock edge (no false fires on combinational
+transients) and `disable iff` suppresses it during reset — the correct semantic
+for a synchronous FSM. It is **free in synthesis** (`yosys` skips it) and Verilog
+(non-SV) output stays assertion-free. A signal referenced *only* by a check (e.g.
+an input used just as a precondition) is kept alive as a port — it is not pruned.
 
 A runnable example — a saturating value with an in-range invariant:
 
@@ -887,11 +889,11 @@ carrier and likewise guarded for verification only:
 (assume (< req_len 256) "bounded")  ;; an assumption / input constraint
 ```
 
-| Form | Generated SV |
+| Form | Generated SV (clocked, `@(posedge clk) disable iff (reset)`) |
 | --- | --- |
-| `(assert COND [message])` | `assert (COND) else $error("message");` |
-| `(assume COND [message])` | `assume (COND) else $error("message");` |
-| `(cover COND [label])` | `cover (COND);` |
+| `(assert COND [message])` | `assert property (… (COND)) else $error("message");` |
+| `(assume COND [message])` | `assume property (… (COND)) else $error("message");` |
+| `(cover COND [label])` | `cover property (… (COND));` |
 
 - **`(cover …)`** records *coverage* — whether `COND` was ever true. It has no
   failure semantics (no `$error`).
@@ -908,8 +910,9 @@ A malformed form fails closed before `.fsm` emission: e.g. `(assert)` /
 string.
 
 **Lowering**: a `+assert` carrier in the `.fsm` (each entry kind-tagged
-`assert`/`cover`/`assume`) → `module_info` → the matching guarded check in the
-generated SV.
+`assert`/`cover`/`assume`) → `module_info` → the matching clocked concurrent
+`<kind> property (@(posedge clk) disable iff (reset) (COND))` in the generated SV
+(falling back to an immediate combinational check only if the module has no clock).
 
 ## I2C Example with Switch
 

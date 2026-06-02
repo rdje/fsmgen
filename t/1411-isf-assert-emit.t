@@ -74,9 +74,10 @@ ISF
         module_info => $info, target_language => 'systemverilog');
     my $block = join("\n", @lines);
     like($block, qr/`ifndef SYNTHESIS/, 'guarded for verification only');
-    like($block, qr/always_comb begin/, 'combinational invariant block');
-    my $expect_assert = 'assert (o < 200) else $error("o below 200");';  # single-quoted: $error is literal
-    like($block, qr/\Q$expect_assert\E/, 'the assert with the condition + message');
+    # clocked concurrent property (ISF-ASSERT-CONCURRENT): sampled at @(posedge clk), reset-gated
+    my $expect_assert =
+        'assert property (@(posedge clk) disable iff (!rst_n) (o < 200)) else $error("o below 200");';
+    like($block, qr/\Q$expect_assert\E/, 'a clocked concurrent assert property with the condition + message');
     like($block, qr/`endif/, 'closed guard');
 
     # Verilog (non-SV) target emits nothing.
@@ -94,7 +95,8 @@ ISF
     my $info = module_info_for($module);
     my @lines = FSM::Backend::GeneratedModuleEmitter->immediate_assertion_runtime_lines(
         module_info => $info, target_language => 'systemverilog');
-    my $expect_default = 'assert (o < 50) else $error("assert failed: main_assert_0");';
+    my $expect_default =
+        'assert property (@(posedge clk) disable iff (!rst_n) (o < 50)) else $error("assert failed: main_assert_0");';
     like(join("\n", @lines), qr/\Q$expect_default\E/,
         'a name-based default $error message is used when no message is given');
 };
@@ -114,9 +116,11 @@ ISF
     my @lines = FSM::Backend::GeneratedModuleEmitter->immediate_assertion_runtime_lines(
         module_info => $info, target_language => 'systemverilog');
     my $block = join("\n", @lines);
-    like($block, qr/\Qcover (o == 100);\E/, 'cover -> a plain cover() (no else/error)');
-    my $expect_assume = 'assume (req < 128) else $error("req bounded");';
-    like($block, qr/\Q$expect_assume\E/, 'assume -> assume() else $error with the message');
+    my $expect_cover = 'cover property (@(posedge clk) disable iff (!rst_n) (o == 100));';
+    like($block, qr/\Q$expect_cover\E/, 'cover -> a plain cover property (no else/error)');
+    my $expect_assume =
+        'assume property (@(posedge clk) disable iff (!rst_n) (req < 128)) else $error("req bounded");';
+    like($block, qr/\Q$expect_assume\E/, 'assume -> assume property () else $error with the message');
     # kinds surfaced
     my %by_name = map { $_->{name} => $_ } @{$info->{immediate_assertions}};
     is($by_name{main_cover_0}{kind}, 'cover', 'cover kind surfaced');

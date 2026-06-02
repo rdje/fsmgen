@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ASSERT-CONCURRENT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14` (ISF — verification intent)
 - Created: `2026-06-02`
 - Last updated: `2026-06-02`
@@ -71,3 +71,15 @@ ISF language — pure emitter change.
 - `2026-06-02`: Created on the user's go-ahead for steps (1)+(2) of `0008`. Confirmed
   `module_info->{system_contract}` already carries clock/reset/active-level, so this
   is a focused emitter change.
+- `2026-06-02`: `.2` done — **tree complete**. `immediate_assertion_runtime_lines`
+  now emits clocked concurrent properties: `<kind> property (@(posedge <clock>)
+  disable iff (<reset-active>) (COND))` (assert/assume keep `else $error("msg")`,
+  cover bare), built from `module_info->{system_contract}` (`reset-active =
+  reset_active_level ? reset : "!reset"`, mirroring the FSM's own
+  `reset_condition_expr`); drops the `always_comb` wrapper (concurrent assertions
+  are module items); omits `disable iff` with no reset; falls back to the immediate
+  combinational form only when no clock. Verified: `--verify-hdl` verilator-lint +
+  yosys clean; `verilator --binary --assert` — **silent during reset** (`disable
+  iff` — the gap the immediate form had), silent on pass, fires at the clock edge on
+  violation. `t/1411` updated to the property form; 13d/13k updated. No new ISF
+  language. Next: `ISF-PROPERTY-IMPLICATION` (temporal operators).

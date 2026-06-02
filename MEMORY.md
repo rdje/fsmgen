@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-COVER-ASSUME.2` (this commit) — `(cover …)`/`(assume …)` ship as the verification-intent siblings of `(assert …)` (one kind-tagged immediate-check family); `git log -1` for the hash.
-- active_work_unit: none active. Pick the next frontier item per `docs/decisions/0002` / `0003` (autonomous PNT).
-- next_action: choose the next theme-3/frontier construct or a new direction. Verification intent now ships assert/cover/assume (immediate); the temporal `(contract …)` predates. Candidate threads: state-guarded point-in-time asserts, or theme-2 (nested CDC) / theme-4 (ATL, untouched).
+- latest_commit: `ISF-ASSERT-CONCURRENT.2` (this commit) — assert/assume/cover now lower to clocked concurrent SV properties (`@(posedge clk) disable iff (reset)`); reset-gated; step 1 of decision `0008`; `git log -1` for the hash.
+- active_work_unit: `ISF-PROPERTY-IMPLICATION` → frontier leaf: `.2` (next; `.1` done) — temporal property grammar.
+- next_action: implement `ISF-PROPERTY-IMPLICATION.2` — add `(=> A B)` overlapping implication to the check property grammar → SVA `(A) |-> (B)` (boolean leaves via ExpressionBuilder, the `=>` combinator rendered by a dedicated property renderer; carried distinct from the plain boolean condition). Then `.3` next-cycle `|=>` + `(within S N)` → `##[1:N]`. Decision `0008`: this enables REMOVING `(contract …)` entirely (user request) — a later slice once `within`/trigger-anchor land.
 - recently_done: `MEMORY-ARCHITECTURE-ADOPTION` (`.1`–`.5`, done); `ISF-ASSERT.1`/`.2`; the theme-3 ISF data/bit/field/arithmetic construct surface (see `docs/decisions/0002`).
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.

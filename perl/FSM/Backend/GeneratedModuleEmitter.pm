@@ -163,30 +163,50 @@ sub immediate_assertion_runtime_lines ($class, %args) {
     return () unless $target_language =~ /^(?:systemverilog|sv)$/;
     return () unless ref($module_info) eq 'HASH';
 
+    my @checks = grep {
+        ref($_) eq 'HASH' && defined($_->{condition_sv}) && length($_->{condition_sv})
+    } @{$module_info->{immediate_assertions} || []};
+    return () unless @checks;
+
+    # ISF-ASSERT-CONCURRENT: lower to CLOCKED concurrent SV properties — the correct semantic
+    # for a synchronous FSM (sample at the clock edge; disable during reset). Falls back to the
+    # immediate combinational form only when the module has no clock.
+    my $sc = $module_info->{system_contract};
+    my $clock = (ref($sc) eq 'HASH') ? $sc->{clock} : undef;
+    my $concurrent = (defined($clock) && !ref($clock) && length($clock)) ? 1 : 0;
+
+    my ($wrap_open, $wrap_close) = ('(', ')');
+    if ($concurrent) {
+        my $reset = (ref($sc) eq 'HASH') ? $sc->{reset} : undef;
+        my $disable = '';
+        if (defined($reset) && !ref($reset) && length($reset)) {
+            # Mirror the FSM's own reset-active expression (ModulePlanningSupport::reset_condition_expr).
+            my $reset_active = $sc->{reset_active_level} ? $reset : "!$reset";
+            $disable = " disable iff ($reset_active)";
+        }
+        $wrap_open  = "property (\@(posedge $clock)$disable (";
+        $wrap_close = "))";
+    }
+
     my @assertion_lines;
-    for my $assertion (@{$module_info->{immediate_assertions} || []}) {
-        next unless ref($assertion) eq 'HASH';
+    for my $assertion (@checks) {
         my $condition = $assertion->{condition_sv};
-        next unless defined($condition) && length($condition);
         my $kind = $assertion->{kind} // 'assert';
+        my $prop = "$wrap_open$condition$wrap_close";
         if ($kind eq 'cover') {
-            push @assertion_lines, qq{    cover ($condition);};
+            push @assertion_lines, "    cover $prop;";
         } else {
             my $message = _sv_message_fragment(
                 $assertion->{message} // ("$kind failed: " . ($assertion->{name} // $kind)));
-            push @assertion_lines, qq{    $kind ($condition) else \$error("$message");};
+            push @assertion_lines, qq{    $kind $prop else \$error("$message");};
         }
     }
 
     return () unless @assertion_lines;
 
-    return (
-        "  `ifndef SYNTHESIS",
-        "  always_comb begin",
-        @assertion_lines,
-        "  end",
-        "  `endif",
-    );
+    # Concurrent assertions are module items (not inside an always block); immediate ones are.
+    return ("  `ifndef SYNTHESIS", @assertion_lines, "  `endif") if $concurrent;
+    return ("  `ifndef SYNTHESIS", "  always_comb begin", @assertion_lines, "  end", "  `endif");
 }
 
 sub selector_conflict_assertion_runtime_lines ($class, %args) {
