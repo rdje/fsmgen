@@ -1062,6 +1062,147 @@ string.
 `<kind> property (@(posedge clk) disable iff (reset) (COND))` in the generated SV
 (falling back to an immediate combinational check only if the module has no clock).
 
+### Complete, runnable verification examples
+
+The snippets above show clause-level syntax; the actors below are complete and
+self-contained — copy one, lower it with `./bin/fsmgen --verify-hdl <file>.fsm`, and
+read the generated SV. They progress from a trivial invariant to named anchors.
+
+**1 — a plain invariant.** "This must always hold," as a clocked concurrent check:
+
+```lisp
+(actor level_guard
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input level (width 8))
+    (input depth (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (assert (< level depth) "level must stay below depth")
+    (complete done)))
+```
+
+**2 — the verification family together.** `assert` / `assume` / `cover`, including an
+overlapping implication `(=> req ack)`:
+
+```lisp
+(actor handshake_checks
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input req)
+    (input ack)
+    (input len (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (assert (=> req ack) "every req is acked the same cycle")
+    (assume (< len 256) "len is bounded by the protocol")
+    (cover  (& req ack))
+    (complete done)))
+```
+
+**3 — a bounded-eventually monitor (simulable).** From the cycle this clause is
+reached, `ack` must arrive within 3 cycles, checked by a synthesizable monitor:
+
+```lisp
+(actor ack_within
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (assert (monitor (within ack 3)) "ack within 3 cycles of arming")
+    (complete done)))
+```
+
+**4 — an event-anchored check.** Anchor to the rising edge of `start`:
+
+```lisp
+(actor on_edge
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (assert (after start ack) "ack must be high on the start edge")
+    (complete done)))
+```
+
+**5 — named anchors (Ref).** Label the activation with `as accepting`, a body
+position with `(point armed)`, and reference both from checks with `(at …)`:
+
+```lisp
+(actor named_anchors
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (input busy)
+    (output done))
+  (transaction main
+    (on start as accepting)
+    (point armed)
+    (assert (=> (at armed) (within ack 3)) "within 3 cycles of `armed`, ack")
+    (assert (=> (at accepting) (! busy)) "while accepting, never busy")
+    (complete done)))
+```
+
+**6 — a parameterized window.** The monitor window `N` can be a transaction
+parameter (or actor constant / package constant), not just a literal:
+
+```lisp
+(actor param_window
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (params (ACK_WINDOW 5))
+    (on start)
+    (assert (monitor (within ack ACK_WINDOW)) "ack within ACK_WINDOW cycles")
+    (complete done)))
+```
+
+**7 — cross-transaction anchoring.** Name → position bindings are module-wide, so a
+check in one transaction can anchor to a `(point …)` declared in another:
+
+```lisp
+(actor cross_anchor
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input s1)
+    (input s2)
+    (input ack)
+    (output d1)
+    (output d2))
+  (transaction setup
+    (on s1)
+    (point armed)
+    (complete d1))
+  (transaction check
+    (on s2)
+    (assert (=> (at armed) (within ack 2)) "within 2 cycles of `armed` (declared in `setup`), ack")
+    (complete d2)))
+```
+
+(Each of these is lowered as part of the book's example-lowering audit, so the
+chapter and the implementation stay in sync.)
+
 ## I2C Example with Switch
 
 ```lisp

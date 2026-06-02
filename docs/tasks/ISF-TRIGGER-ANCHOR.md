@@ -224,3 +224,9 @@ See `docs/decisions/0009`. Two orthogonal additions:
     not `state_active`); 13d "Named anchors" reworded. All three anchor forms (event/inline/ref) are
     now uniformly signal-based — ISF verification never touches `current_state`.
   - Remaining: `.6c` wording cleanup.
+- `2026-06-02`: docs thoroughness pass (user: "thoroughly documented … with lot of examples;
+  codebase and mdBook shall be in sync") — added a "Complete, runnable verification examples"
+  subsection to 13d with **7 complete `(actor …)` examples** (trivial invariant → assert/assume/cover
+  → monitor → event → named anchors → parameterized window → cross-transaction anchoring), each a
+  full actor so the book example-lowering audit (`t/1376`) lowers + verifies them (now 60 fixtures).
+  All doc audits green (`t/1376/1305/1304/1303/1170`).
