@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-PROPERTY-IMPLICATION.3` (this commit) — `(next X)`/`(within X N)` → `##1`/`##[1:N]` (formal-only under `ifdef FORMAL`); completes the implication grammar (steps 1+2 of decision `0008` done); `git log -1` for the hash.
-- active_work_unit: none active. Decision `0008` chain status: step 1 (concurrent) done, step 2 (implication grammar) done; **remaining = remove `(contract …)`** (user request), which needs a transaction-point trigger anchor first.
-- next_action: design + build the transaction-point **trigger anchor** (so `(assert (=> <here-active> (within S N)))` can anchor to a transaction point, like `contract` does), THEN remove `(contract …)` entirely (its clause, monitor lowering, tests, docs) — decision `0008`. Or pick another frontier item per `0002`/`0003`.
+- latest_commit: `ISF-TRIGGER-ANCHOR.1` (this commit) — design/ownership: decision `0009` (trigger-anchor vocabulary) + task tree `docs/tasks/ISF-TRIGGER-ANCHOR.md`; resolves the open anchor fork of `0008`. `git log -1` for the hash.
+- active_work_unit: `ISF-TRIGGER-ANCHOR` (`.1` done). User chose "all three" trigger forms (event/inline/ref) + a synthesizable-monitor output-mode; one engine `TRIGGER |-> (bounded-eventually) CONSEQUENT`; `(contract …)` dissolves into it and is removed last (no capability gap).
+- next_action: `ISF-TRIGGER-ANCHOR.2` — **Event trigger** `(after SIG (within S N))` → `$rose(SIG) |-> ##[1:N] (S)` (formal-only warm-up). Then `.3` monitor output-mode, `.4` Inline positioned, `.5` Ref named, `.6` remove `(contract …)`. Build order is dependency-driven (decision `0009`).
 - recently_done: `MEMORY-ARCHITECTURE-ADOPTION` (`.1`–`.5`, done); `ISF-ASSERT.1`/`.2`; the theme-3 ISF data/bit/field/arithmetic construct surface (see `docs/decisions/0002`).
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
