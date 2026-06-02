@@ -71,8 +71,21 @@ sub _analyze_signal_usage_from_ast($self, $fsm_module) {
         : [];
     for my $assert (@$asserts) {
         next unless ref($assert) eq 'HASH' && $assert->{condition};
-        $self->_analyze_condition_references($assert->{condition});
+        $self->_analyze_check_condition_references($assert->{condition});
     }
+}
+
+# A check condition is a boolean CoreAST expression or a temporal property combinator tree
+# (ISF-PROPERTY-IMPLICATION) over boolean leaves; walk into the property tree so signals
+# referenced only inside e.g. an implication antecedent/consequent are still kept alive.
+sub _analyze_check_condition_references($self, $cond) {
+    return unless $cond;
+    if (ref($cond) eq 'HASH' && $cond->{__property__}) {
+        $self->_analyze_check_condition_references($cond->{antecedent}) if $cond->{antecedent};
+        $self->_analyze_check_condition_references($cond->{consequent}) if $cond->{consequent};
+        return;
+    }
+    $self->_analyze_condition_references($cond);
 }
 
 sub _analyze_decision_tree($self, $dt) {

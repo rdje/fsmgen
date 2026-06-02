@@ -905,6 +905,39 @@ All three are the immediate/combinational verification family; choose the kind
 by intent — `assert` (must always hold), `assume` (presumed to hold), `cover`
 (want to observe holding).
 
+### Temporal properties — implication `(=> A B)`
+
+A check condition is not limited to a boolean: it may be a **temporal property**.
+The workhorse is implication — "when `A`, then `B`":
+
+```lisp
+(assert (=> req ack))               ;; req |-> ack   (overlapping: same cycle)
+(assert (=> (> level hi) overflow)) ;; (level > hi) |-> overflow
+```
+
+`(=> A B)` lowers to the SVA overlapping-implication operator inside the clocked
+property:
+
+```systemverilog
+`ifndef SYNTHESIS
+  assert property (@(posedge clk) disable iff (!rst_n) ((req) |-> (ack)))
+    else $error("…");
+`endif
+```
+
+Semantics (verified): when `A` is false the property is **vacuously true** (no
+check); when `A` is true, `B` must hold the same cycle, else it fires. `A` and `B`
+are ordinary boolean expressions (each rendered through the normal expression
+path); only the `=>` combinator is special. Signals referenced only inside the
+implication are kept alive as ports. A malformed `(=> A B)` (not exactly an
+antecedent and a consequent) fails closed.
+
+> This is the first piece of an ISF property sublanguage that captures what SV
+> *properties* capture. Next-cycle implication (`|=>`) and bounded `(within S N)`
+> (`##[1:N]`) are planned increments; once they land, the temporal
+> `(contract (eventually S within N))` is expressible as `(assert (=> <trigger>
+> (within S N)))` and is folded in (see `docs/decisions/0008`).
+
 A malformed form fails closed before `.fsm` emission: e.g. `(assert)` /
 `(cover)` / `(assume)` with no condition, or more than a condition + one message
 string.

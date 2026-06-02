@@ -71,9 +71,25 @@ sub build_from_fsm_module ($class, %args) {
     };
 }
 
+# ISF-PROPERTY-IMPLICATION: render a check condition to SV. A plain boolean is a CoreAST
+# expression (-> to_systemverilog); a temporal property is a tagged combinator tree over boolean
+# leaves (-> SVA property operators). Returns undef if any leaf cannot render.
+sub _render_check_condition_sv ($cond) {
+    if (ref($cond) eq 'HASH' && $cond->{__property__}) {
+        if (($cond->{op} // '') eq 'implies_overlap') {
+            my $a = _render_check_condition_sv($cond->{antecedent});
+            my $b = _render_check_condition_sv($cond->{consequent});
+            return undef unless defined($a) && length($a) && defined($b) && length($b);
+            return "($a) |-> ($b)";
+        }
+        return undef;
+    }
+    return eval { $cond->to_systemverilog() };
+}
+
 # ISF-ASSERT: surface the parsed `+assert` invariants (on the module) into module_info as
-# plain emitter-ready records — the CoreAST condition is rendered to SV text here so the
-# emitter does not have to carry the blessed expression object.
+# plain emitter-ready records — the condition is rendered to SV text here so the emitter does
+# not have to carry the blessed expression object (or the property tree).
 sub _immediate_assertions_from_module ($fsm_module) {
     my $raw = (ref($fsm_module) && ref($fsm_module->{attributes}) eq 'HASH')
         ? $fsm_module->{attributes}{immediate_assertions} : undef;
@@ -81,7 +97,7 @@ sub _immediate_assertions_from_module ($fsm_module) {
     my @out;
     for my $a (@$raw) {
         next unless ref($a) eq 'HASH' && defined $a->{name};
-        my $cond_sv = eval { $a->{condition}->to_systemverilog() };
+        my $cond_sv = _render_check_condition_sv($a->{condition});
         next unless defined($cond_sv) && length($cond_sv);
         push @out, {
             name         => $a->{name},

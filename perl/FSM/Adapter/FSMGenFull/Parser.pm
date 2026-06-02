@@ -687,7 +687,7 @@ sub parse_asserts_section($self, $assert_ast) {
             unless defined($kind) && $kind =~ /^(?:assert|cover|assume)$/;
         Carp::confess "'+assert' entry '$name' requires a condition expression"
             unless defined $cond_tok;
-        my $condition = $self->{expression_builder}->parse_expression($cond_tok);
+        my $condition = $self->parse_check_property($cond_tok);
         my $message = defined($msg_tok) ? $self->unwrap_scalar_token($msg_tok) : undef;
         push @{ $module->{attributes}{immediate_assertions} }, {
             name      => $name,
@@ -697,6 +697,26 @@ sub parse_asserts_section($self, $assert_ast) {
         };
     }
     return $module->{attributes}{immediate_assertions};
+}
+
+# ISF-PROPERTY-IMPLICATION: a check condition is either a boolean expression (parsed by the
+# expression builder) or a temporal PROPERTY combinator that does not fit the boolean grammar.
+# Lispish head+grouped-rest: (=> ANT CONS) -> ['=>', [ANT, CONS]]. The boolean leaves are parsed
+# by the expression builder; the combinator is kept as a tagged struct the backend renders to SVA.
+sub parse_check_property($self, $cond_tok) {
+    if (ref($cond_tok) eq 'ARRAY' && @$cond_tok == 2
+        && defined($cond_tok->[0]) && !ref($cond_tok->[0]) && $cond_tok->[0] eq '=>') {
+        my $args = $cond_tok->[1];
+        Carp::confess "'(=> ANT CONS)' implication requires exactly an antecedent and a consequent"
+            unless ref($args) eq 'ARRAY' && @$args == 2 && defined($args->[0]) && defined($args->[1]);
+        return {
+            __property__ => 1,
+            op          => 'implies_overlap',
+            antecedent  => $self->parse_check_property($args->[0]),
+            consequent  => $self->parse_check_property($args->[1]),
+        };
+    }
+    return $self->{expression_builder}->parse_expression($cond_tok);
 }
 
 sub parse_size_section($self, $size_ast) {

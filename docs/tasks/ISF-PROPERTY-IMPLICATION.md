@@ -74,3 +74,21 @@ the *combinators* render to SVA property syntax by a dedicated property renderer
 ## Changelog
 
 - `2026-06-02`: Created on the user's go-ahead for step (2) of `0008`.
+- `2026-06-02`: `.2` done — overlapping implication `(=> A B)` → SVA `(A) |-> (B)`.
+  - `FSMGenFull::parse_check_property` detects the `=>` combinator (Lispish
+    `['=>', [ANT, CONS]]`) and builds a tagged property tree `{ __property__,
+    op: implies_overlap, antecedent, consequent }` with the boolean leaves parsed by
+    `ExpressionBuilder` (recursively — leaves may themselves be properties); a
+    malformed `(=> …)` (not exactly two operands) fails closed.
+  - `GeneratedModuleInfoBuilder::_render_check_condition_sv` renders the tree to
+    `(A_sv) |-> (B_sv)`; the existing concurrent emitter wraps it in the clocked
+    property. `SignalAnalyzer` keep-alive walks the property tree
+    (`_analyze_check_condition_references`) so signals used only inside the
+    implication survive as ports.
+  - Verified: `--verify-hdl` verilator-lint + yosys clean; `verilator --binary
+    --assert` — vacuous when `A` false, holds when both true, FIRES on `A∧¬B`
+    ("req implies ack"). `t/1412` (4 subtests: render, richer leaves, keep-alive,
+    fail-closed); 13d "Temporal properties" subsection + 13k row. `ISF_SPEC`
+    registers `t/1412`. No ISF-lowerer or emitter-wrapper change needed.
+  - `.3` (next-cycle `|=>` + `(within S N)` → `##[1:N]`) remains; with those + a
+    transaction-point trigger anchor, `(contract …)` can be removed (`0008`).
