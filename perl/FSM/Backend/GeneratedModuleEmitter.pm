@@ -152,9 +152,10 @@ sub standalone_dt_assertion_runtime_lines ($class, %args) {
     );
 }
 
-# ISF-ASSERT: project `(assert COND [message])` invariants (surfaced into module_info) to
-# verification-only SV — a combinational `assert (COND)` per invariant, under `ifndef
-# SYNTHESIS`. Verilog (non-SV) output stays assertion-free, like the other assertion kinds.
+# ISF-ASSERT / ISF-COVER-ASSUME: project `(assert|cover|assume COND [message])` immediate checks
+# (surfaced into module_info) to verification-only SV, under `ifndef SYNTHESIS`:
+#   assert/assume -> `<kind> (COND) else $error("message");`   cover -> `cover (COND);`
+# Verilog (non-SV) output stays assertion-free, like the other assertion kinds.
 sub immediate_assertion_runtime_lines ($class, %args) {
     my $target_language = $args{target_language} // 'systemverilog';
     my $module_info = $args{module_info};
@@ -167,9 +168,14 @@ sub immediate_assertion_runtime_lines ($class, %args) {
         next unless ref($assertion) eq 'HASH';
         my $condition = $assertion->{condition_sv};
         next unless defined($condition) && length($condition);
-        my $message = _sv_message_fragment(
-            $assertion->{message} // ('assertion failed: ' . ($assertion->{name} // 'assert')));
-        push @assertion_lines, qq{    assert ($condition) else \$error("$message");};
+        my $kind = $assertion->{kind} // 'assert';
+        if ($kind eq 'cover') {
+            push @assertion_lines, qq{    cover ($condition);};
+        } else {
+            my $message = _sv_message_fragment(
+                $assertion->{message} // ("$kind failed: " . ($assertion->{name} // $kind)));
+            push @assertion_lines, qq{    $kind ($condition) else \$error("$message");};
+        }
     }
 
     return () unless @assertion_lines;

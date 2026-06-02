@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-COVER-ASSUME`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14` (ISF — high-level language richness, theme #3 intent capture)
 - Created: `2026-06-02`
 - Last updated: `2026-06-02`
@@ -73,3 +73,22 @@ each immediate-check record (rather than parallel `+cover`/`+assume` machinery):
 - `2026-06-02`: Created at the user's request ("-> cover, assume"). Generalises the
   `ISF-ASSERT` immediate-check infrastructure with a `kind` field rather than
   duplicating it.
+- `2026-06-02`: `.2` done — **tree complete**. The immediate-check family now carries
+  a `kind` ∈ `{assert, cover, assume}` end-to-end:
+  - ISF lowerer: `cover`/`assume` added to the clause allow-list; `_ir_assert` →
+    `_ir_check` (clause head is the kind; per-kind ordinal names `<tx>_<kind>_<n>`).
+  - `.fsm` carrier: `+assert` entries are kind-tagged `(NAME KIND COND ["msg"])`
+    (kind always emitted → unambiguous); FSMGenFull validates `KIND` ∈ the three.
+  - `module_info` carries `kind`; `GeneratedModuleEmitter` branches —
+    `assert`/`assume` → `<kind> (COND) else $error("msg")` (name-based default
+    message `"<kind> failed: <name>"`), `cover` → `cover (COND);` — all under
+    `` `ifndef SYNTHESIS ``. The `SignalAnalyzer` keep-alive is unchanged (walks
+    every check's condition regardless of kind).
+  - Verified: `--verify-hdl` verilator-lint + yosys clean for all three; `verilator
+    --binary` — `assume` is silent on pass and fires on violation ("req must be
+    bounded"), `cover` runs (coverage), `assert` unchanged. `t/1410` (5 subtests:
+    + cover/assume carrier round-trip), `t/1411` (6 subtests: + cover/assume
+    emission, default-message update). 13d gains a `(cover …)`/`(assume …)`
+    subsection; the 13k row generalised to "Immediate verification checks".
+  - **ISF-COVER-ASSUME complete** — the verification-intent trio assert/cover/assume
+    ships as one immediate-check family.

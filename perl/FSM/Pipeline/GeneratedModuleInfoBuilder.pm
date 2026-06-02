@@ -85,6 +85,7 @@ sub _immediate_assertions_from_module ($fsm_module) {
         next unless defined($cond_sv) && length($cond_sv);
         push @out, {
             name         => $a->{name},
+            kind         => ($a->{kind} // 'assert'),
             condition_sv => $cond_sv,
             (defined $a->{message} ? (message => $a->{message}) : ()),
         };

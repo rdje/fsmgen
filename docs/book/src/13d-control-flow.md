@@ -877,11 +877,39 @@ the message) the moment it is violated.
 a bounded number of cycles). Use `(assert …)` for "this must always hold," and a
 `(contract …)` for "this must eventually happen within N cycles."
 
-A malformed form fails closed before `.fsm` emission: `(assert)` with no
-condition, or more than a condition + one message string.
+### `(cover …)` and `(assume …)`
 
-**Lowering**: a `+assert` carrier in the `.fsm` → `module_info` → a guarded
-`assert (COND) else $error("message")` in the generated SV.
+`(assert …)` has two verification-intent siblings, lowered through the same
+carrier and likewise guarded for verification only:
+
+```lisp
+(cover  (== state BUSY))            ;; was this condition ever reached?
+(assume (< req_len 256) "bounded")  ;; an assumption / input constraint
+```
+
+| Form | Generated SV |
+| --- | --- |
+| `(assert COND [message])` | `assert (COND) else $error("message");` |
+| `(assume COND [message])` | `assume (COND) else $error("message");` |
+| `(cover COND [label])` | `cover (COND);` |
+
+- **`(cover …)`** records *coverage* — whether `COND` was ever true. It has no
+  failure semantics (no `$error`).
+- **`(assume …)`** states an *assumption* (e.g. an input constraint): in
+  simulation it reports like an assert on violation; for formal tools it
+  constrains the state space.
+
+All three are the immediate/combinational verification family; choose the kind
+by intent — `assert` (must always hold), `assume` (presumed to hold), `cover`
+(want to observe holding).
+
+A malformed form fails closed before `.fsm` emission: e.g. `(assert)` /
+`(cover)` / `(assume)` with no condition, or more than a condition + one message
+string.
+
+**Lowering**: a `+assert` carrier in the `.fsm` (each entry kind-tagged
+`assert`/`cover`/`assume`) → `module_info` → the matching guarded check in the
+generated SV.
 
 ## I2C Example with Switch
 

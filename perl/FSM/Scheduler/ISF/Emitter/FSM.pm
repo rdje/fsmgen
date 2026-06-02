@@ -185,15 +185,17 @@ sub _reset_suffix($resets, $name) {
     return (defined $resets->{$name}) ? " (reset $resets->{$name})" : '';
 }
 
-# ISF-ASSERT: emit the `+assert` carrier so `(assert COND [message])` survives ISF -> `.fsm`.
-# Each entry is `(name COND ["message"])`; COND is already rendered `.fsm` text. Empty string
-# when there are no assertions (caller skips the section).
+# ISF-ASSERT / ISF-COVER-ASSUME: emit the `+assert` carrier so `(assert|cover|assume COND
+# [message])` survives ISF -> `.fsm`. Each entry is `(name kind COND ["message"])`; KIND is
+# emitted always (so the parser is unambiguous), COND is already rendered `.fsm` text. Empty
+# string when there are no checks (caller skips the section).
 sub _emit_asserts($self, $ir) {
     my $asserts = $ir->{immediate_assertions} || [];
     return '' unless @$asserts;
     my @l = ('  (+assert');
     for my $a (@$asserts) {
-        my $line = "    ($a->{name} $a->{condition}";
+        my $kind = $a->{kind} // 'assert';
+        my $line = "    ($a->{name} $kind $a->{condition}";
         if (defined $a->{message} && length $a->{message}) {
             my $msg = $a->{message};
             $msg =~ s/\\/\\\\/g;

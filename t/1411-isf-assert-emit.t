@@ -94,9 +94,33 @@ ISF
     my $info = module_info_for($module);
     my @lines = FSM::Backend::GeneratedModuleEmitter->immediate_assertion_runtime_lines(
         module_info => $info, target_language => 'systemverilog');
-    my $expect_default = 'assert (o < 50) else $error("assertion failed: main_assert_0");';
+    my $expect_default = 'assert (o < 50) else $error("assert failed: main_assert_0");';
     like(join("\n", @lines), qr/\Q$expect_default\E/,
         'a name-based default $error message is used when no message is given');
+};
+
+subtest 'cover emits `cover (COND);` and assume emits `assume (COND) else $error(...)`' => sub {
+    my $module = parsed_module(<<'ISF', 'cae');
+(actor cae
+  (interface (input start) (input a (width 8)) (input req (width 8)) (output done) (output o (width 8)))
+  (transaction main
+    (on start)
+    (update o a)
+    (cover  (== o 100))
+    (assume (< req 128) "req bounded")
+    (complete done)))
+ISF
+    my $info = module_info_for($module);
+    my @lines = FSM::Backend::GeneratedModuleEmitter->immediate_assertion_runtime_lines(
+        module_info => $info, target_language => 'systemverilog');
+    my $block = join("\n", @lines);
+    like($block, qr/\Qcover (o == 100);\E/, 'cover -> a plain cover() (no else/error)');
+    my $expect_assume = 'assume (req < 128) else $error("req bounded");';
+    like($block, qr/\Q$expect_assume\E/, 'assume -> assume() else $error with the message');
+    # kinds surfaced
+    my %by_name = map { $_->{name} => $_ } @{$info->{immediate_assertions}};
+    is($by_name{main_cover_0}{kind}, 'cover', 'cover kind surfaced');
+    is($by_name{main_assume_0}{kind}, 'assume', 'assume kind surfaced');
 };
 
 subtest 'an input read ONLY by an assert is kept alive (classified INPUT, not pruned)' => sub {

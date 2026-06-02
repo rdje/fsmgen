@@ -53,14 +53,35 @@ subtest 'ISF (assert COND) emits a +assert carrier and round-trips through FSMGe
     (complete done)))
 ISF
     like($fsm, qr/\(\+assert/, 'the lowered .fsm carries a +assert section');
-    like($fsm, qr/\Q(main_assert_0 (< level depth))\E/, 'the assertion entry carries the name + condition s-expr');
+    like($fsm, qr/\Q(main_assert_0 assert (< level depth))\E/, 'the entry carries name + kind + condition s-expr');
 
     my $asserts = $module->{attributes}{immediate_assertions};
     is(ref($asserts), 'ARRAY', 'the parsed module carries immediate_assertions');
     is(scalar(@$asserts), 1, 'one assertion');
     is($asserts->[0]{name}, 'main_assert_0', 'auto-generated name <tx>_assert_<n>');
+    is($asserts->[0]{kind}, 'assert', 'kind is assert');
     ok($asserts->[0]{condition}->can('to_systemverilog'), 'condition parsed to a CoreAST expression');
     is($asserts->[0]{condition}->to_systemverilog(), 'level < depth', 'condition renders to SV');
+};
+
+subtest '(cover …) and (assume …) ride the same carrier with their kind' => sub {
+    my ($fsm, $module) = roundtrip_module(<<'ISF', 'cv');
+(actor cv
+  (interface (input start) (input x (width 8)) (output done))
+  (transaction main
+    (on start)
+    (cover (== x 7))
+    (assume (< x 200) "x bounded")
+    (complete done)))
+ISF
+    like($fsm, qr/\Q(main_cover_0 cover (== x 7))\E/, '(cover …) -> kind cover');
+    like($fsm, qr/\Q(main_assume_0 assume (< x 200) "x bounded")\E/, '(assume …) -> kind assume + message');
+    my $a = $module->{attributes}{immediate_assertions};
+    is(scalar(@$a), 2, 'both carried');
+    is($a->[0]{kind}, 'cover', 'first is cover');
+    is($a->[0]{name}, 'main_cover_0', 'per-kind ordinal naming for cover');
+    is($a->[1]{kind}, 'assume', 'second is assume');
+    is($a->[1]{message}, 'x bounded', 'assume message round-trips');
 };
 
 subtest 'an optional message round-trips' => sub {

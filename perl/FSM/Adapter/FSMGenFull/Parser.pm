@@ -671,23 +671,27 @@ sub parse_types_section($self, $types_ast) {
 # verification-only SV assertions. COND is parsed by the shared expression builder.
 sub parse_asserts_section($self, $assert_ast) {
     # Lispish head+grouped-rest: (+assert ENTRY...) -> ['+assert', [ENTRY...]] and each entry
-    # (NAME COND ["msg"]) -> ['NAME', [COND, "msg"?]].
+    # (NAME KIND COND ["msg"]) -> ['NAME', [KIND, COND, "msg"?]]. KIND in {assert,cover,assume}.
     my (undef, $entries) = @$assert_ast;
     my $module = $self->{fsm_module};
     $module->{attributes}{immediate_assertions} //= [];
     for my $entry (@{ $entries || [] }) {
-        Carp::confess "Unsupported '+assert' entry: each must be '(NAME COND [\"message\"])'"
+        Carp::confess "Unsupported '+assert' entry: each must be '(NAME KIND COND [\"message\"])'"
             unless ref($entry) eq 'ARRAY' && @$entry == 2 && ref($entry->[1]) eq 'ARRAY';
         my $name = $self->unwrap_scalar_token($entry->[0]);
         Carp::confess "'+assert' entry requires a scalar name"
             unless defined($name) && length($name);
-        my ($cond_tok, $msg_tok) = @{ $entry->[1] };
+        my ($kind_tok, $cond_tok, $msg_tok) = @{ $entry->[1] };
+        my $kind = $self->unwrap_scalar_token($kind_tok);
+        Carp::confess "'+assert' entry '$name' requires a kind in {assert,cover,assume}"
+            unless defined($kind) && $kind =~ /^(?:assert|cover|assume)$/;
         Carp::confess "'+assert' entry '$name' requires a condition expression"
             unless defined $cond_tok;
         my $condition = $self->{expression_builder}->parse_expression($cond_tok);
         my $message = defined($msg_tok) ? $self->unwrap_scalar_token($msg_tok) : undef;
         push @{ $module->{attributes}{immediate_assertions} }, {
             name      => $name,
+            kind      => $kind,
             condition => $condition,
             (defined $message ? (message => $message) : ()),
         };

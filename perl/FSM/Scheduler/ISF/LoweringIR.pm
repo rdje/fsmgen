@@ -17,7 +17,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
             await_any params stage contract store load wait while until set
-            atl_trigger atl_trigger_batch local assert
+            atl_trigger atl_trigger_batch local assert cover assume
         )
     },
     when => {
@@ -4910,7 +4910,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
     my @dps;
     my @contracts;
     my @asserts;
-    my $assert_ordinal = 0;
+    my %check_ordinal;
     my @bank_accesses;
     my %contract_names;
     my %storage_roles;
@@ -4982,7 +4982,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
             push @dt, $cdt;
             push @contracts, $cm;
         }
-        elsif ($k eq 'assert')      { push @asserts, _ir_assert($cl, $tn, $assert_ordinal++); }
+        elsif ($k eq 'assert' || $k eq 'cover' || $k eq 'assume') { push @asserts, _ir_check($cl, $tn, $check_ordinal{$k}++); }
         elsif ($k eq 'shift_left')  { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_left($cl,$tn,$si++,$widths,$actor); }
         elsif ($k eq 'shift_right') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_right($cl,$tn,$si++,$widths,$actor); }
         elsif ($k eq 'assemble')    { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_assemble($cl,$tn,$si++,$actor); }
@@ -7912,19 +7912,20 @@ sub _ir_until {
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<1',source_kind=>'complete_pulse'}],transitions=>[]} }
 sub _ir_update   { my ($cl,$tn,$i,$source_kind)=@_; $source_kind //= 'update'; my$rhs=_format_isf_expr($cl->[2]); {name=>"${tn}_${source_kind}_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-',source_kind=>$source_kind}],transitions=>[]} }
 
-# ISF-ASSERT: `(assert COND [message])` — a transaction-level combinational invariant. Collected
-# (not a state) into the module IR's immediate_assertions and emitted as a `+assert` carrier in
-# the `.fsm`. COND is rendered to `.fsm` text (re-parsed by FSMGenFull's expression builder).
-sub _ir_assert {
+# ISF-ASSERT / ISF-COVER-ASSUME: `(assert|cover|assume COND [message])` — a transaction-level
+# immediate (combinational) verification check. Collected (not a state) into the module IR's
+# immediate_assertions and emitted as a `+assert` carrier in the `.fsm`; the clause head is the
+# kind. COND is rendered to `.fsm` text (re-parsed by FSMGenFull's expression builder).
+sub _ir_check {
     my ($cl, $tn, $i) = @_;
-    my (undef, $cond, $message) = @$cl;
-    confess "Error: (assert ...) in transaction '$tn' requires a condition expression\n"
+    my ($kind, $cond, $message) = @$cl;
+    confess "Error: ($kind ...) in transaction '$tn' requires a condition expression\n"
         unless defined $cond;
-    confess "Error: (assert ...) in transaction '$tn' takes a condition and an optional message string only\n"
+    confess "Error: ($kind ...) in transaction '$tn' takes a condition and an optional message string only\n"
         if @$cl > 3;
-    my %a = ( name => "${tn}_assert_$i", condition => _format_isf_expr($cond) );
+    my %a = ( name => "${tn}_${kind}_$i", kind => $kind, condition => _format_isf_expr($cond) );
     if (defined $message) {
-        confess "Error: (assert COND ...) in transaction '$tn' message must be a scalar string\n"
+        confess "Error: ($kind COND ...) in transaction '$tn' message must be a scalar string\n"
             if ref($message);
         $a{message} = $message;
     }
