@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-COVER-ASSUME` | `active` | `R14` | `ISF-COVER-ASSUME.2` (`.1` done — select) — `(cover COND [label])` / `(assume COND [message])` verification-intent siblings of `(assert …)`; generalise the immediate-check family with a `kind` | [docs/tasks/ISF-COVER-ASSUME.md](docs/tasks/ISF-COVER-ASSUME.md) |
 | `MEMORY-ARCHITECTURE-ADOPTION` | `done` | infra/continuity | complete (`.1`–`.5`; durable-agent-memory standard adopted — layers A/C + tool-neutral bootstrap + E1–E4 enforcement; `MEMORY.md` demoted 38,776 → 24 lines; gates proven to bite) | [docs/tasks/MEMORY-ARCHITECTURE-ADOPTION.md](docs/tasks/MEMORY-ARCHITECTURE-ADOPTION.md) |
 | `ISF-ASSERT` | `done` | `R14` | complete (`.1`–`.4`; `(assert COND [message])` verification invariant → fires-on-violation SVA via a `+assert` `.fsm` carrier; keeps assert-referenced inputs alive; 13d/13k docs) | [docs/tasks/ISF-ASSERT.md](docs/tasks/ISF-ASSERT.md) |
 | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING` | `done` | `R14` | complete (`.1`–`.7` done; cross-domain blocking `(do)` via a declared activation crossing) | [docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md](docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md) |
