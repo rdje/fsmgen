@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `TRACE-SEVERITY-NEVER-GATED`
-- Status: `in-progress`
+- Status: `done`
 - Roadmap lane: infra / observability
 - Created: `2026-06-02`
 - Last updated: `2026-06-02`
@@ -81,3 +81,9 @@ Reroute every severity-bearing `fsm_debug(..., N)` / `fsm_trace_*` call onto the
     none break a test.
   - Remaining: `.3` sweep other masking patterns (`warn`/`print STDERR` gated by level —
     initial sweep found none); `.4` optional guard test.
+- `2026-06-02`: `.3` done — swept active source for `warn`/`carp`/`print STDERR` gated by a
+  debug/verbosity check, and for any residual severity-tagged `fsm_debug`: none found. The
+  codebase is clean of masked severity.
+- `2026-06-02`: `.4` done — guard `t/1415-trace-severity-not-gated-audit.t` fails if any
+  active perl source routes a `WARNING:`/`ERROR:`/`FATAL:`-tagged message through the gated
+  `fsm_debug`/`fsm_trace_*` API (must use the ungated channel). **Tree complete.**
