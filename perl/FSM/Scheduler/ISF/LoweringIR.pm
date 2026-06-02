@@ -4982,7 +4982,21 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
             push @dt, $cdt;
             push @contracts, $cm;
         }
-        elsif ($k eq 'assert' || $k eq 'cover' || $k eq 'assume') { push @asserts, _ir_check($cl, $tn, $check_ordinal{$k}++); }
+        elsif ($k eq 'assert' || $k eq 'cover' || $k eq 'assume') {
+            if (_is_monitor_check($cl)) {
+                # (assert (monitor (within S N))) — synthesizable-monitor output-mode: an arm state
+                # at this position + a monitor DT, asserting the monitor never fails (ISF-TRIGGER-ANCHOR).
+                _push_sample_state(\@st, $tn, \@ps, \$si);
+                my ($ms, $mdt, $massert) =
+                    _ir_monitor_check($cl, $tn, $si++, $actor, $widths, \%ct, \%storage_roles);
+                push @st, $ms;
+                push @dt, $mdt;
+                push @asserts, $massert;
+            }
+            else {
+                push @asserts, _ir_check($cl, $tn, $check_ordinal{$k}++);
+            }
+        }
         elsif ($k eq 'shift_left')  { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_left($cl,$tn,$si++,$widths,$actor); }
         elsif ($k eq 'shift_right') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_right($cl,$tn,$si++,$widths,$actor); }
         elsif ($k eq 'assemble')    { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_assemble($cl,$tn,$si++,$actor); }
@@ -8248,9 +8262,56 @@ sub _ir_contract {
     my $signals = _contract_monitor_signals($tn, $i);
     _validate_contract_monitor_signal_names($tn, $contract, $signals, $actor, $widths, $counters);
 
+    my ($state, $dt) = _build_eventually_monitor(
+        $signals, $contract->{signal}, $contract->{within_cycles},
+        $counters, $storage_roles, $contract->{name});
+    my $summary = {
+        transaction     => $tn,
+        name            => $contract->{name},
+        kind            => 'bounded_eventually',
+        trigger         => $signals->{state},
+        signal          => $contract->{signal},
+        within_cycles   => $contract->{within_cycles},
+        arm_signal      => $signals->{arm},
+        pending_signal  => $signals->{pending},
+        counter_signal  => $signals->{age},
+        fail_signal     => $signals->{fail},
+        monitor_dt      => $signals->{monitor},
+        overlap_policy  => 'fail',
+    };
+
+    return ($state, $dt, $summary);
+}
+
+sub _contract_monitor_signals {
+    my ($tn, $i) = @_;
+    return _monitor_signals_for_prefix("${tn}_contract_$i");
+}
+
+# The arm/age/fail monitor signal set for a bounded-eventually monitor, keyed off a name prefix.
+# Shared by `(contract …)` and the `(monitor …)` output-mode of a check (ISF-TRIGGER-ANCHOR).
+sub _monitor_signals_for_prefix {
+    my ($prefix) = @_;
+    return {
+        state   => $prefix,
+        monitor => "${prefix}_monitor",
+        arm     => "${prefix}_arm",
+        pending => "${prefix}_pending",
+        age     => "${prefix}_age",
+        fail    => "${prefix}_fail",
+    };
+}
+
+# Build the synthesizable bounded-eventually monitor (arm state + arm/pending/age/fail registers):
+# from the cycle `arm` pulses (control reaches the positioned arm state), `$observed` must hold
+# within `$within_cycles` cycles, else `fail` latches. Returns ($arm_state, $monitor_dt). Shared by
+# `(contract …)` and the `(monitor …)` check output-mode (decision 0009) — identical hardware, so
+# `(contract …)` is one caller of this engine and dissolves into it.
+sub _build_eventually_monitor {
+    my ($signals, $observed, $within_cycles, $counters, $storage_roles, $state_label) = @_;
+
     my ($arm, $pending, $age, $fail) = @{$signals}{qw(arm pending age fail)};
-    my $observed = $contract->{signal};
-    my $last_cycle = $contract->{within_cycles} - 1;
+    my $last_cycle = $within_cycles - 1;
     my $age_width = _unsigned_width_for_max($last_cycle);
     $counters->{$arm} = 1;
     $counters->{$pending} = 1;
@@ -8297,7 +8358,7 @@ sub _ir_contract {
         },
     );
 
-    if ($contract->{within_cycles} > 1) {
+    if ($within_cycles > 1) {
         my $advance_guard = "(& $pending (! $observed) (! (== $age $last_cycle)))";
         splice @monitor_assignments, 3, 0, {
             lhs         => $age,
@@ -8311,7 +8372,7 @@ sub _ir_contract {
     my $state = {
         name          => $signals->{state},
         kind          => 'contract',
-        contract_name => $contract->{name},
+        (defined $state_label ? (contract_name => $state_label) : ()),
         assignments   => [
             { lhs => $arm, rhs => 1, op => '=', source_kind => 'contract_arm_request' },
         ],
@@ -8322,35 +8383,67 @@ sub _ir_contract {
         kind        => 'temporal_contract_monitor',
         assignments => \@monitor_assignments,
     };
-    my $summary = {
-        transaction     => $tn,
-        name            => $contract->{name},
-        kind            => 'bounded_eventually',
-        trigger         => $signals->{state},
-        signal          => $contract->{signal},
-        within_cycles   => $contract->{within_cycles},
-        arm_signal      => $signals->{arm},
-        pending_signal  => $signals->{pending},
-        counter_signal  => $signals->{age},
-        fail_signal     => $signals->{fail},
-        monitor_dt      => $signals->{monitor},
-        overlap_policy  => 'fail',
-    };
-
-    return ($state, $dt, $summary);
+    return ($state, $dt);
 }
 
-sub _contract_monitor_signals {
-    my ($tn, $i) = @_;
-    my $prefix = "${tn}_contract_$i";
-    return {
-        state   => $prefix,
-        monitor => "${prefix}_monitor",
-        arm     => "${prefix}_arm",
-        pending => "${prefix}_pending",
-        age     => "${prefix}_age",
-        fail    => "${prefix}_fail",
-    };
+# ISF-TRIGGER-ANCHOR (decision 0009): the synthesizable-monitor output-mode of a check. A check
+# whose condition is `(monitor (within SIGNAL N))` placed in a transaction body anchors the
+# bounded-eventually to its own position (the inline trigger): an arm state pulses where the clause
+# sits, the monitor watches SIGNAL within N cycles, and the check asserts `(! fail)` — a same-cycle
+# boolean, so the temporal logic lives in synthesizable hardware and the assertion is
+# verilator-simulable. Returns ($arm_state, $monitor_dt, $assert_record).
+sub _is_monitor_check {
+    my ($cl) = @_;
+    my $cond = $cl->[1];
+    return ref($cond) eq 'ARRAY' && @$cond == 2 && defined($cond->[0])
+        && !ref($cond->[0]) && $cond->[0] eq 'monitor';
+}
+
+sub _ir_monitor_check {
+    my ($cl, $tn, $i, $actor, $widths, $counters, $storage_roles) = @_;
+    my ($kind, $cond, $message) = @$cl;
+    confess "Error: ($kind ...) in transaction '$tn' takes a condition and an optional message string only\n"
+        if @$cl > 3;
+
+    # (monitor (within SIGNAL N)) -> ['monitor', ['within', SIGNAL, N]] (plain nested arrays)
+    my $inner = (ref($cond) eq 'ARRAY') ? $cond->[1] : undef;
+    confess "Error: ($kind (monitor …)) in transaction '$tn' supports only '(monitor (within SIGNAL N))'\n"
+        unless ref($inner) eq 'ARRAY' && @$inner == 3 && defined($inner->[0])
+            && !ref($inner->[0]) && $inner->[0] eq 'within';
+    my ($observed, $bound) = ($inner->[1], $inner->[2]);
+    confess "Error: ($kind (monitor (within SIGNAL N))) in transaction '$tn' requires a scalar signal\n"
+        unless defined($observed) && !ref($observed) && length($observed);
+    confess "Error: ($kind (monitor (within SIGNAL N))) in transaction '$tn' N must be a literal integer >= 1\n"
+        unless defined($bound) && !ref($bound) && $bound =~ /\A[1-9][0-9]*\z/;
+
+    my %interface_signals = map { $_->{name} => 1 }
+        (@{$actor->{interface}{inputs} || []}, @{$actor->{interface}{outputs} || []});
+    confess "Error: ($kind (monitor (within '$observed' …))) in transaction '$tn': '$observed' is not an actor interface signal\n"
+        unless $interface_signals{$observed};
+
+    my $prefix = "${tn}_${kind}_$i";
+    my $signals = _monitor_signals_for_prefix($prefix);
+    for my $role (qw(arm pending age fail)) {
+        confess "Error: ($kind (monitor …)) in transaction '$tn': generated signal '$signals->{$role}' collides with an existing signal\n"
+            if $counters->{$signals->{$role}} || ($widths && $widths->{$signals->{$role}})
+            || $interface_signals{$signals->{$role}};
+    }
+
+    my ($state, $dt) = _build_eventually_monitor(
+        $signals, $observed, $bound + 0, $counters, $storage_roles);
+
+    my %assert = (
+        name      => "${prefix}_holds",
+        kind      => $kind,
+        condition => "(! $signals->{fail})",
+    );
+    if (defined $message) {
+        confess "Error: ($kind (monitor …) ...) in transaction '$tn' message must be a scalar string\n"
+            if ref($message);
+        $assert{message} = $message;
+    }
+
+    return ($state, $dt, \%assert);
 }
 
 sub _validate_contract_monitor_signal_names {

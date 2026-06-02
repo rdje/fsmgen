@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-TRIGGER-ANCHOR.2` (this commit) — **Event trigger** `(after SIG CONS)` → `$rose(SIG) |-> (CONS)` end-to-end (parse/render/keep-alive/partition); `t/1413`; `--verify-hdl` + `verilator --binary --assert` proven. `git log -1` for the hash.
-- active_work_unit: `ISF-TRIGGER-ANCHOR` (`.1`,`.2` done). One engine `TRIGGER |-> (bounded-eventually) CONSEQUENT`; three trigger forms (event done; inline/ref pending) + monitor output-mode; `(contract …)` dissolves into it and is removed last (no capability gap).
-- next_action: `ISF-TRIGGER-ANCHOR.3` — **synthesizable-monitor output-mode** for `(within …)` consequents (reuse/generalize `_contract_monitor_signals` arm/age/fail so bounded-eventually is verilator-simulable, not only formal). Then `.4` Inline positioned, `.5` Ref named, `.6` remove `(contract …)`. Build order dependency-driven (decision `0009`).
+- latest_commit: `ISF-TRIGGER-ANCHOR.3` (this commit) — **synthesizable-monitor output-mode + Inline trigger** `(assert (monitor (within S N)))` → arm-state + `arm`/`pending`/`age`/`fail` monitor DT (extracted `_build_eventually_monitor`, shared with `contract`) asserting `(! fail)`, verilator-simulable; `t/1413` (9 subtests); `--verify-hdl` + `verilator --binary --assert` proven; `git log -1` for the hash.
+- active_work_unit: `ISF-TRIGGER-ANCHOR` (`.1`,`.2`,`.3` done; `.4` Inline folded into `.3`). Event + Inline/monitor triggers ship; `contract` now lowers byte-identically through the shared monitor engine. Remaining: Ref `(at NAME)`, then remove `(contract …)` (now redundant).
+- next_action: `ISF-TRIGGER-ANCHOR.5` — **Ref (named)** trigger: `(on … :as NAME)` binding + `(at NAME)` trigger leaf. Then `.6` remove `(contract …)` entirely (clause + `_ir_contract` + `_parse_bounded_eventual_contract_clause` + tests/docs), retargeting onto the shared `_build_eventually_monitor`. Hard-to-reverse — user-authorized (`0008`).
 - recently_done: `MEMORY-ARCHITECTURE-ADOPTION` (`.1`–`.5`, done); `ISF-ASSERT.1`/`.2`; the theme-3 ISF data/bit/field/arithmetic construct surface (see `docs/decisions/0002`).
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.

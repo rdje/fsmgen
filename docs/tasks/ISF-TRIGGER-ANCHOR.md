@@ -53,11 +53,15 @@ See `docs/decisions/0009`. Two orthogonal additions:
 - `.1` select + design — `0009` + this tree. **(this slice)**
 - `.2` **Event trigger** `(after SIG (within S N))` → `$rose(SIG) |-> ##[1:N] (S)`
   (formal-only; smallest end-to-end warm-up of the trigger vocabulary) + tests + docs.
-- `.3` **Monitor output-mode** — a property modifier that lowers a bounded-eventually
-  `(within …)` to the arm/age/fail monitor (generalize `_contract_monitor_signals`);
-  verilator-simulable; `verilator --binary --assert` proves arm→within-N→fail.
-- `.4` **Inline (positioned)** — `(assert (within S N))` inside a transaction body
-  anchors to its position (state-active trigger) via the monitor → contract parity.
+- `.3` **Monitor output-mode + Inline (positioned)** — `(assert (monitor (within S N)))`
+  written in a transaction body anchors to its position via the arm/age/fail monitor
+  (generalized `_build_eventually_monitor`); verilator-simulable; `verilator --binary
+  --assert` proves arm→within-N→fail. (The explicit `(monitor …)` wrapper is the
+  output-mode modifier per `0009`; it subsumes the planned standalone `.4` inline form —
+  a bare `(within …)` stays the formal-only module-global property from `.2`, no
+  ambiguous reinterpretation.)
+- `.4` *(folded into `.3`)* — the inline/positioned trigger ships as the `(monitor …)`
+  body form above.
 - `.5` **Ref (named)** — `(on … :as NAME)` binding + `(at NAME)` trigger leaf.
 - `.6` **Remove `(contract …)`** — retarget parse/validate/`_ir_temporal_contract`
   to the property path; delete the clause surface; migrate tests
@@ -107,3 +111,27 @@ See `docs/decisions/0009`. Two orthogonal additions:
     anchors — `(after SIG …)`" subsection; `ISF_SPEC` registers `t/1413`.
   - Remaining: `.3` monitor output-mode (simulable bounded-eventually), `.4` Inline
     positioned, `.5` Ref named, `.6` remove `(contract …)`.
+- `2026-06-02`: `.3` done — **synthesizable-monitor output-mode** `(assert (monitor
+  (within S N)))` (this also delivers the **Inline/positioned** trigger). Lowers to the
+  same arm-state + `arm`/`pending`/`age`/`fail` monitor DT that `(contract …)` uses,
+  asserting `(! fail)` — a same-cycle boolean, so the temporal logic is in synthesizable
+  hardware and the assertion is verilator-simulable.
+  - Refactored `_ir_contract`'s monitor builder out into `_build_eventually_monitor`
+    (signals via `_monitor_signals_for_prefix`); `(contract …)` now lowers byte-identically
+    through it (verified by diffing the `.fsm`). New `_ir_monitor_check` + `_is_monitor_check`
+    detect `(assert|cover|assume (monitor (within S N)))` in the clause dispatch, inject the
+    arm state (positioned where the clause sits) + monitor DT + counters, and push a derived
+    `(NAME kind (! fail) "msg")` into the `+assert` carrier. Entirely ISF-lowerer-side — no
+    FSMGenFull/emitter change (the `(! fail)` boolean re-parses with existing machinery; the
+    monitor DT rides the existing `temporal_contract_monitor` emission path). The fail bit
+    stays an internal register — the assert reference does not promote it to a port.
+  - Verified: `--verify-hdl` verilator-lint + yosys clean; `verilator --binary --assert`
+    proves it — `fail` latches and `$error` fires when `ack` is absent within 3 cycles of
+    arming, and stays silent when `ack` arrives inside the window (window measured from the
+    cycle after the arm pulse, same as `contract`). `t/1413` extended (now 9 subtests:
+    + arm-state/monitor-DT/`!fail`-assert lowering, simulable-not-formal-only, internal-not-port,
+    three fail-closed forms). 13d "Synthesizable-monitor output mode" subsection. All contract
+    tests (`t/1175/1224/1225/1254/1255/1362/1364/1365/1366/1367`) green — refactor is
+    regression-clean.
+  - Remaining: `.5` Ref named `(at NAME)`, `.6` remove `(contract …)` (now redundant with the
+    inline monitored form).

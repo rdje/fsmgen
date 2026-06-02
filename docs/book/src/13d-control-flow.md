@@ -975,6 +975,36 @@ together with a synthesizable-monitor output mode they replace the standalone
 `(contract (eventually S within N))`, which is then removed (see
 `docs/decisions/0009` and `docs/decisions/0008`).
 
+### Synthesizable-monitor output mode — `(monitor (within S N))`
+
+A `(within …)` consequent on its own is *formal-only* (a `##` sequence verilator
+cannot simulate). The **monitor** output mode lowers a bounded-eventually to real
+synthesizable hardware instead, so it is verilator-simulable. Written *inside* a
+transaction body, it anchors to its own position (the **inline** trigger):
+
+```lisp
+(transaction main
+  (on start)
+  (assert (monitor (within ack 3)) "ack within 3 of arming")
+  (complete done))
+```
+
+This injects an **arm state** where the clause sits (it pulses for the cycle control
+reaches that point), plus a small monitor (an `arm`/`pending`/`age`/`fail` register
+set): from the arm pulse, `ack` must hold within `N` cycles, else `fail` latches.
+The check then becomes `assert property (… (!(…_fail)))` — a *same-cycle boolean* on
+the fail bit, so the temporal bookkeeping lives in hardware and the assertion itself
+is verilator-simulable. The monitor registers are internal (driven by the generated
+monitor logic); the `!fail` reference does not turn them into ports.
+
+The window is measured from the cycle *after* the arm pulse (same as
+`(contract …)`), so `S` asserted on the arm cycle itself does not count; it must hold
+within the following `N` cycles. `N` must be a literal `>= 1`, `S` must be an actor
+interface signal, and only `(monitor (within S N))` is supported — other inner forms
+fail closed. This is the same monitor engine `(contract …)` lowers to (arm state +
+`arm`/`pending`/`age`/`fail` DT), now reachable from the property language; once the
+inline/event/named triggers all drive it, `(contract …)` is removed (`0009`).
+
 A malformed form fails closed before `.fsm` emission: e.g. `(assert)` /
 `(cover)` / `(assume)` with no condition, or more than a condition + one message
 string.

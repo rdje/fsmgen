@@ -46,6 +46,18 @@ sub module_info_for {
         fsm_module => $module, intent_hir => $intent);
 }
 
+sub lower_fsm_text {
+    my ($source, $name) = @_;
+    return FSM::Scheduler::ISF->new()->lower(
+        FSM::Adapter::ISF->new()->parse_source($source, "$name.isf"))->{files}{"$name.fsm"};
+}
+
+sub lower_error {
+    my ($source, $name) = @_;
+    my $ok = eval { lower_fsm_text($source, $name); 1 };
+    return $ok ? '' : $@;
+}
+
 subtest 'event trigger (after SIG (within S N)) renders to $rose(SIG) |-> ##[1:N] (S) (formal-only)' => sub {
     my $module = parsed_module(<<'ISF', 'ev_within');
 (actor ev_within
@@ -128,6 +140,68 @@ subtest 'a malformed event trigger fails closed' => sub {
         . "(transaction main (on start) (assert (after start)) (complete done)))", 'one'),
         qr/requires a trigger signal and a consequent/,
         '(after start) with no consequent is rejected');
+};
+
+# ---- Slice .3: synthesizable-monitor output-mode (monitor (within S N)) ----
+#
+# `(assert (monitor (within S N)))` placed in a transaction body anchors a bounded-eventually to
+# its own position: an arm state pulses where the clause sits, a synthesizable monitor (arm/age/fail)
+# watches S within N cycles, and the check asserts `(! fail)` — a same-cycle boolean, so the temporal
+# logic is in hardware and the assertion is verilator-simulable. Reuses contract's monitor engine.
+
+my $MON_SRC = <<'ISF';
+(actor mon
+  (clock clk) (reset rst_n)
+  (interface (input start) (input ack) (output done))
+  (transaction main
+    (on start)
+    (assert (monitor (within ack 3)) "ack within 3 of arming")
+    (complete done)))
+ISF
+
+subtest 'monitor output-mode lowers to an arm state + monitor DT + a (! fail) assert' => sub {
+    my $fsm = lower_fsm_text($MON_SRC, 'mon');
+    like($fsm, qr/\(main_assert_1_arm 1\)/, 'an arm state pulses where the monitored check sits');
+    like($fsm, qr/\(-main_assert_1_monitor/, 'a synthesizable monitor DT (arm/pending/age/fail) is generated');
+    like($fsm, qr/\Q(main_assert_1_holds assert (! main_assert_1_fail) "ack within 3 of arming")\E/,
+        'the check asserts the monitor never fails');
+};
+
+subtest 'the (! fail) assertion is same-cycle boolean (verilator-simulable, not formal-only)' => sub {
+    my $module = parsed_module($MON_SRC, 'mon');
+    my $info = module_info_for($module);
+    my ($a) = grep { $_->{name} eq 'main_assert_1_holds' } @{$info->{immediate_assertions}};
+    ok($a, 'the monitor !fail check surfaces in module_info');
+    is($a->{condition_sv}, '!(main_assert_1_fail)', 'asserts the negated fail bit');
+    ok(!$a->{formal_only}, 'a same-cycle boolean -> simulable, not under ifdef FORMAL');
+};
+
+subtest 'the monitor registers are internal (the !fail reference does not promote fail to a port)' => sub {
+    my $module = parsed_module($MON_SRC, 'mon');
+    my $signals = $module->signals;
+    for my $internal (qw(main_assert_1_fail main_assert_1_arm main_assert_1_age main_assert_1_pending)) {
+        my $role = $signals->{$internal} && $signals->{$internal}->can('get_attribute')
+            ? $signals->{$internal}->get_attribute('signal_role') : undef;
+        isnt($role, 'INPUT', "$internal stays an internal monitor register (not an INPUT port)");
+    }
+};
+
+subtest 'a malformed monitor output-mode fails closed' => sub {
+    like(lower_error(
+        "(actor a (clock clk) (reset rst_n) (interface (input start) (input ack) (output done)) "
+        . "(transaction main (on start) (assert (monitor (within ack 0))) (complete done)))", 'a'),
+        qr/N must be a literal integer >= 1/,
+        '(monitor (within ack 0)) with a zero bound is rejected');
+    like(lower_error(
+        "(actor b (clock clk) (reset rst_n) (interface (input start) (input ack) (output done)) "
+        . "(transaction main (on start) (assert (monitor (within nope 3))) (complete done)))", 'b'),
+        qr/is not an actor interface signal/,
+        '(monitor (within nope 3)) over a non-interface signal is rejected');
+    like(lower_error(
+        "(actor c (clock clk) (reset rst_n) (interface (input start) (input ack) (output done)) "
+        . "(transaction main (on start) (assert (monitor (eventually ack))) (complete done)))", 'c'),
+        qr/supports only '\(monitor \(within SIGNAL N\)\)'/,
+        '(monitor (eventually …)) — unsupported inner property is rejected');
 };
 
 done_testing();
