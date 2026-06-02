@@ -11,14 +11,15 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `e3d2eb83` — "MEMORY-ARCHITECTURE-ADOPTION.2: docs/decisions/ (layer C) + migrate durable facts to ADRs"
-- active_work_unit: `MEMORY-ARCHITECTURE-ADOPTION` → frontier leaf: `.3` (in progress; demote MEMORY.md + reconcile COMMIT.md), then `.4` (enforcement kit) + `.5` (verify/close)
-- next_action: finish `.3` (this commit), then `.4` — install `scripts/check_memory_architecture.sh`, `.githooks/` (+ `git config core.hooksPath .githooks`), tool-neutral bootstrap pointers, and wire the check into CI (`regression.yml`).
-- also_active: `ISF-ASSERT` paused at `.2` (design done in `.1`); resume after this tree — `(assert COND)` via a thin `+assert` `.fsm` carrier.
+- latest_commit: `MEMORY-ARCHITECTURE-ADOPTION.5` close (this commit) — memory architecture adopted + enforced; `git log -1` for the hash.
+- active_work_unit: `ISF-ASSERT` → frontier leaf: `.2` (next; `.1` design done) — `(assert COND [message])` verification intent via a thin `+assert` `.fsm` carrier (ISF → `.fsm` → SV; module_info → emitter, mirroring the `$onehot0` path).
+- next_action: implement `ISF-ASSERT.2` — emit a `+assert` carrier from the ISF lowerer, parse it in FSMGenFull onto `$fsm_module`, surface into `module_info`, and emit a guarded SVA in `GeneratedModuleEmitter::augment_with_runtime_assertions` (under `ifndef SYNTHESIS`); verify with a `verilator --binary` pass/fail testbench.
+- recently_done: `MEMORY-ARCHITECTURE-ADOPTION` (`.1`–`.5`, done); the theme-3 ISF data/bit/field/arithmetic construct surface (see `docs/decisions/0002`).
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 
 ## Notes
 - Push only on explicit user request (no commit-count cadence) — `docs/decisions/0005`.
+- PNT autonomously; do not pause mid-flow — `docs/decisions/0003`.
 - Legacy prose blobs (`CHANGES.md`, `DEVELOPMENT_NOTES.md`, `ROADMAP_STATUS.md`,
-  `LIVE_ACHIEVEMENT_STATUS.md`) are FROZEN — not appended to; git is the audit trail (`docs/decisions/0007`).
+  `LIVE_ACHIEVEMENT_STATUS.md`) are FROZEN — git is the audit trail (`docs/decisions/0007`).

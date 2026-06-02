@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `MEMORY-ARCHITECTURE-ADOPTION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: infrastructure / continuity (cross-cutting)
 - Created: `2026-06-02`
 - Last updated: `2026-06-02`
@@ -108,6 +108,13 @@ git hooks · CI gate.
   `LIVE_ACHIEVEMENT_STATUS.md` marked FROZEN; the required-order doc step now routes
   to layers B → C → A (git is the audit trail); close-out snapshot reads the
   task-trees, not the frozen `ROADMAP_STATUS.md`.
+- `2026-06-02`: `.5` done — **verified the gates bite and closed**. `commit-msg` rejects a
+  non-compliant subject (exit 1) and accepts a work-unit-id incl. the `.2/.3` multi-leaf
+  form (exit 0); the self-check rejects an over-cap `MEMORY.md` (exit 1, clear message)
+  and passes when restored; the `pre-commit` hook runs the check; the `.4` install commit
+  passed through its own newly-active hooks. Full `prove -j6 t/` regression green
+  (adoption is docs/infra-only — no `perl/`/`t/` changes). **Tree complete** — fsmgen now
+  carries the durable-agent-memory standard with E1–E4 enforcement.
 - `2026-06-02`: `.4` done — enforcement kit (§9). `scripts/check_memory_architecture.sh`
   (E2, copied from the specforge reference — knobs already match fsmgen);
   `.githooks/pre-commit` (runs the check) + `.githooks/commit-msg` (E3; regex adapted to

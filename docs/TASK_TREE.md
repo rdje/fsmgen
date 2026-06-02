@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `MEMORY-ARCHITECTURE-ADOPTION` | `active` | infra/continuity | `.1`–`.5` adopt the durable-agent-memory standard (`MEMORY_ARCHITECTURE.md`): layers A/C, tool-neutral bootstrap, E1–E4 enforcement; demote the 2.7 MB `MEMORY.md` to the bounded resume pointer | [docs/tasks/MEMORY-ARCHITECTURE-ADOPTION.md](docs/tasks/MEMORY-ARCHITECTURE-ADOPTION.md) |
+| `MEMORY-ARCHITECTURE-ADOPTION` | `done` | infra/continuity | complete (`.1`–`.5`; durable-agent-memory standard adopted — layers A/C + tool-neutral bootstrap + E1–E4 enforcement; `MEMORY.md` demoted 38,776 → 24 lines; gates proven to bite) | [docs/tasks/MEMORY-ARCHITECTURE-ADOPTION.md](docs/tasks/MEMORY-ARCHITECTURE-ADOPTION.md) |
 | `ISF-ASSERT` | `active` | `R14` | `ISF-ASSERT.2` (`.1` done — select + design; paused for MEMORY-ARCHITECTURE-ADOPTION) — `(assert COND [message])` verification intent via a thin `+assert` `.fsm` carrier | [docs/tasks/ISF-ASSERT.md](docs/tasks/ISF-ASSERT.md) |
 | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING` | `done` | `R14` | complete (`.1`–`.7` done; cross-domain blocking `(do)` via a declared activation crossing) | [docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md](docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md) |
 | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` | `active` | `R14` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5` (`.1`–`.4` done) | [docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md](docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md) |
