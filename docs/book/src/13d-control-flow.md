@@ -1030,8 +1030,24 @@ point" — usable anywhere a boolean is (typically as an implication antecedent)
 name → state bindings are **module-wide**, so a check in one transaction can anchor to
 a `(point …)` declared in another. An `(at NAME)` whose name was never declared fails
 closed (the diagnostic suggests `(point NAME)` or `(on SIGNAL as NAME)`); a duplicate
-point name fails closed. Place a `(point …)` right after `(on …)` to anchor to "just
-activated" without needing a dedicated activation label.
+point name fails closed.
+
+The transaction's **activation** can be labeled inline with a bare `as NAME` on the
+`(on …)` clause — the same `as` keyword as `(sample data as captured)` / `(spawn
+worker as w0)`, no colon:
+
+```lisp
+(transaction main
+  (on start as fired)          ;; `fired` names the accept/entry state
+  (complete done))
+
+(assert (=> (at fired) (! busy)))   ;; "while accepting, not busy"
+```
+
+`(on SIGNAL as NAME)` binds `NAME` to the transaction's entry/accept state and
+coexists with `(sample … as …)` sub-clauses; `(point …)` and `(on … as …)` share one
+name space (a collision fails closed). Equivalently, a `(point …)` placed right after
+`(on …)` anchors to "just activated" without the inline label.
 
 A malformed form fails closed before `.fsm` emission: e.g. `(assert)` /
 `(cover)` / `(assume)` with no condition, or more than a condition + one message

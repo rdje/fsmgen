@@ -95,6 +95,52 @@ subtest 'a duplicate point/activation name fails closed' => sub {
         'two (point p) declarations collide');
 };
 
+subtest '(on SIGNAL as NAME) labels the activation; (at NAME) anchors to the entry state' => sub {
+    my $src = <<'ISF';
+(actor onas
+  (clock clk) (reset rst_n)
+  (interface (input start) (input ack) (output done))
+  (transaction main
+    (on start as fired)
+    (assert (=> (at fired) (! ack)) "while accepting, ack is low")
+    (complete done)))
+ISF
+    my $fsm = lower_fsm_text($src, 'onas');
+    like($fsm, qr/\Q(main_assert_0 assert (=> (state_active main_idle_0) (! ack))\E/,
+        '(on start as fired) binds `fired` to the entry state main_idle_0');
+};
+
+subtest '(on SIGNAL as NAME) coexists with sample sub-clauses' => sub {
+    my $src = <<'ISF';
+(actor mix
+  (clock clk) (reset rst_n)
+  (interface (input start) (input d (width 8)) (input ack) (output done))
+  (transaction main
+    (on start as fired (sample d as cap))
+    (assert (=> (at fired) (within ack 3)))
+    (complete done)))
+ISF
+    my $fsm = lower_fsm_text($src, 'mix');
+    like($fsm, qr/\(state_active main_idle_0\)/, 'the activation label resolves');
+    like($fsm, qr/\(cap d\)/, 'the (sample d as cap) sub-clause still lowers');
+};
+
+subtest '(point …) and (on … as …) share one name space (collision fails closed)' => sub {
+    like(lower_error(
+        "(actor col (clock clk) (reset rst_n) (interface (input start) (input ack) (output done)) "
+        . "(transaction main (on start as p) (point p) (complete done)))", 'col'),
+        qr/duplicate point\/activation name 'p'/,
+        '(on start as p) and (point p) collide');
+};
+
+subtest 'a malformed (on … as) activation label fails closed' => sub {
+    like(lower_error(
+        "(actor bad (clock clk) (reset rst_n) (interface (input start) (output done)) "
+        . "(transaction main (on start as) (complete done)))", 'bad'),
+        qr/activation label requires a scalar name/,
+        '(on start as) with no name is rejected');
+};
+
 subtest 'a malformed (point …) fails closed' => sub {
     like(lower_error(
         "(actor w (clock clk) (reset rst_n) (interface (input start) (output done)) "

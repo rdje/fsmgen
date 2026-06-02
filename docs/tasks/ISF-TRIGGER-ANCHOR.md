@@ -200,3 +200,13 @@ See `docs/decisions/0009`. Two orthogonal additions:
     render+resolve, cross-transaction, unknown-name fail-closed, duplicate fail-closed, malformed);
     13d "Named anchors" subsection; `ISF_SPEC` registers `t/1416`.
   - Remaining: `.5b` activation label `(on SIGNAL as NAME)` (bare `as`); `.6c` wording cleanup.
+- `2026-06-02`: `.5b` done — **activation label `(on SIGNAL as NAME)`** (bare `as`, user-approved
+  over `:as`). `_validate_on_clause` accepts a single top-level `as NAME` label (alongside
+  `(sample … as …)` sub-clauses); `_ir_on` (via `_on_activation_label`) binds NAME to the entry
+  state `${tn}_idle_$i` in the shared module-wide `%point_bindings` map, so `(at NAME)` anchors a
+  check to the accept/entry state. `(point …)` and `(on … as …)` share one name space (collision
+  fails closed); a missing label name fails closed; coexists with `(sample …)` sub-clauses.
+  - Verified: `--verify-hdl` clean (`(=> (at fired) (! ack))` → `(current_state == MAIN_IDLE_0) |->
+    (!(ack))`); `t/1416` extended (now 9 subtests). 13d "Named anchors" gains the `(on … as NAME)`
+    form. **ISF-TRIGGER-ANCHOR.5 (Ref) complete** — `(point NAME)` + `(on … as NAME)` + `(at NAME)`.
+  - Remaining: `.6c` neutralize residual internal "contract" wording (rename the shared resolver).

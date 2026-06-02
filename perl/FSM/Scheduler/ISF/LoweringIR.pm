@@ -4907,7 +4907,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef, $p
     for my $cl (@{$tx->{clauses}}) {
         next unless ref($cl) eq 'ARRAY';
         my $k = $cl->[0];
-        if    ($k eq 'on')       { push @st, _ir_on($cl, $tn, $si++); }
+        if    ($k eq 'on')       { push @st, _ir_on($cl, $tn, $si++, $point_bindings); }
         elsif ($k eq 'drive')    {
             push @st, _ir_transaction_drive_clause($cl, $tn, $si++, $drives, [splice @ps]);
         }
@@ -5155,8 +5155,24 @@ sub _validate_on_clause {
             && !ref($clause->[1])
             && length($clause->[1]);
 
-    for my $i (2 .. $#$clause) {
+    # ISF-TRIGGER-ANCHOR.5b: an optional bare `as NAME` activation label (like (sample … as …) /
+    # (spawn … as …)) names the entry/accept state for `(at NAME)`. It is a scalar `as` followed by
+    # a scalar identifier at the top level of `(on …)` (sample sub-clauses are arrays).
+    my $saw_as_label = 0;
+    my $i = 2;
+    while ($i <= $#$clause) {
         my $body_clause = $clause->[$i];
+        if (defined($body_clause) && !ref($body_clause) && $body_clause eq 'as') {
+            my $name = $clause->[$i + 1];
+            confess "Transaction '$tn': '(on SIGNAL as NAME)' activation label requires a scalar name in $label\n"
+                unless defined($name) && !ref($name) && length($name);
+            confess "Transaction '$tn': '(on …)' activation label name '$name' must be an HDL identifier in $label\n"
+                unless $name =~ /\A[A-Za-z_]\w*\z/;
+            confess "Transaction '$tn': '(on …)' accepts a single 'as NAME' activation label in $label\n"
+                if $saw_as_label++;
+            $i += 2;
+            next;
+        }
         if (ref($body_clause) eq 'ARRAY'
             && @$body_clause
             && defined($body_clause->[0])
@@ -5165,13 +5181,14 @@ sub _validate_on_clause {
             confess "Transaction '$tn': on body does not accept '(params ...)'; "
                 . "direct '(on ...)' activation is an entry guard, not a generated activation-site parameter override\n";
         }
-        confess "Transaction '$tn': on body supports only '(sample port as name)' clauses\n"
+        confess "Transaction '$tn': on body supports only '(sample port as name)' clauses or a single 'as NAME' activation label\n"
             unless ref($body_clause) eq 'ARRAY'
                 && @$body_clause
                 && defined($body_clause->[0])
                 && !ref($body_clause->[0])
                 && $body_clause->[0] eq 'sample';
         _validate_sample_clause($body_clause, $tn, 'on body');
+        $i++;
     }
 
     return 1;
@@ -7524,14 +7541,34 @@ sub _inline_on_samples {
     return _sample_assignments(\@samples);
 }
 
+# The bare `as NAME` activation label of an `(on SIGNAL as NAME)` clause, or undef (ISF-TRIGGER-ANCHOR.5b).
+sub _on_activation_label {
+    my ($cl) = @_;
+    for my $j (2 .. $#$cl) {
+        return $cl->[$j + 1]
+            if defined($cl->[$j]) && !ref($cl->[$j]) && $cl->[$j] eq 'as';
+    }
+    return undef;
+}
+
 sub _ir_on {
-    my ($cl, $tn, $i) = @_;
+    my ($cl, $tn, $i, $point_bindings) = @_;
     my $event = $cl->[1];
     my $guard = !ref($event) ? { port => $event } : { expr => $event };
     my @assignments = map { +{ %$_, guard => $guard } } _inline_on_samples($cl);
+    my $state_name = "${tn}_idle_$i";
+
+    # ISF-TRIGGER-ANCHOR.5b: a bare `as NAME` activation label binds NAME to the entry/accept state,
+    # so `(at NAME)` anchors a check there (shares the module-wide name -> state map with (point …)).
+    my $label = _on_activation_label($cl);
+    if (defined($label) && ref($point_bindings) eq 'HASH') {
+        confess "Transaction '$tn': duplicate point/activation name '$label'\n"
+            if exists $point_bindings->{$label};
+        $point_bindings->{$label} = $state_name;
+    }
 
     return {
-        name        => "${tn}_idle_$i",
+        name        => $state_name,
         kind        => 'entry',
         guard       => $guard,
         assignments => \@assignments,
