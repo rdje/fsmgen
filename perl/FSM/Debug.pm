@@ -13,6 +13,9 @@ use Scalar::Util qw(refaddr);
 use Exporter qw(import);
 our @EXPORT = qw(
     fsm_debug
+    fsm_warn
+    fsm_error
+    fsm_fatal
     fsm_trace_enter
     fsm_trace_exit
     fsm_trace_decision
@@ -380,6 +383,31 @@ sub fsm_debug($message, $level = 1) {
         _emit_trace_line("$prefix$msg_line\n");
     }
 }
+
+# Ungated severity channel (decision 0010): warning/error/fatal messages must NEVER be gated by the
+# trace/verbosity level — a masked error is a silent failure. These always emit to STDERR (regardless
+# of $DEBUG_LEVEL/$DEBUG_ENABLED) and also mirror to the trace output file when one is set, so the
+# severity is visible immediately and the trace log stays complete. They are observability emitters
+# only: they do NOT change control flow (no die) — existing confess/die keep handling termination.
+sub _emit_severity($severity, $message) {
+    my (undef, $file_short, $func_short, $line) = _short_context(2);
+    my $context = sprintf("[%s][%s:%s():%d]", $severity, $file_short, $func_short, $line);
+    my @lines = split /\n/, (defined($message) ? "$message" : '');
+    @lines = ('') unless @lines;
+    for my $msg_line (@lines) {
+        my $out = "$context $msg_line\n";
+        print STDERR $out;
+        if ($TRACE_OUTPUT_FH && _trace_handle_is_live($TRACE_OUTPUT_FH)) {
+            print {$TRACE_OUTPUT_FH} $out;
+            $TRACE_OUTPUT_FH->flush() if $TRACE_OUTPUT_FH->can('flush');
+        }
+    }
+    return;
+}
+
+sub fsm_warn($message)  { _emit_severity('WARNING', $message) }
+sub fsm_error($message) { _emit_severity('ERROR',   $message) }
+sub fsm_fatal($message) { _emit_severity('FATAL',   $message) }
 
 sub fsm_trace_enter($label = '', $level = 2) {
     return unless $DEBUG_ENABLED && $level <= $DEBUG_LEVEL;
