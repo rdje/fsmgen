@@ -951,9 +951,29 @@ intent as the temporal `(contract (eventually S within N))`.
 > checks stay under `` `ifndef SYNTHESIS `` and are verilator-simulable. This is why
 > the simulation proofs in this book cover boolean/overlapping properties only.
 
-Once a transaction-point trigger anchor lands, `(contract (eventually S within N))`
-becomes `(assert (=> <trigger> (within S N)))` and the standalone `(contract …)`
-construct is removed (see `docs/decisions/0008`).
+### Trigger anchors — `(after SIG …)` (event form)
+
+A bounded-eventually check measures its window *from* an anchor point. The first
+anchor spelling is the **event** form — anchor to the rising edge of a signal:
+
+```lisp
+(assert (after start ack))             ;; $rose(start) |-> (ack)          (ack on the start edge)
+(assert (after start (within ack 3)))  ;; $rose(start) |-> (##[1:3] (ack)) (ack within 3 of the edge)
+```
+
+`(after SIG CONS)` lowers to `$rose(SIG) |-> (CONS)`. The trigger signal is
+edge-detected (so the window opens only on the `0 → 1` transition of `SIG`, not
+while it is held high), and any signal used only inside the trigger is kept alive
+as a port. The checkability split applies to the *consequent*: `(after SIG bool)`
+is a same-cycle implication and verilator-simulable; `(after SIG (within …))` has a
+delayed consequent and is formal-only (under `` `ifdef FORMAL ``). A malformed
+`(after SIG)` (no consequent) fails closed.
+
+This is the first of three trigger spellings (event, inline-positioned, and named
+`(at …)`) that let bounded-liveness intent be expressed in the property language;
+together with a synthesizable-monitor output mode they replace the standalone
+`(contract (eventually S within N))`, which is then removed (see
+`docs/decisions/0009` and `docs/decisions/0008`).
 
 A malformed form fails closed before `.fsm` emission: e.g. `(assert)` /
 `(cover)` / `(assume)` with no condition, or more than a condition + one message

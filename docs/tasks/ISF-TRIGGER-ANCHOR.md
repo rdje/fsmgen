@@ -88,3 +88,22 @@ See `docs/decisions/0009`. Two orthogonal additions:
 - `2026-06-02`: `.1` — created on the user's "support all three / Inline, event and
   ref" go-ahead; decision `0009` records the design; build order is dependency-driven
   (Event → monitor output-mode → Inline → Ref → remove contract).
+- `2026-06-02`: `.2` done — **Event trigger** `(after SIG CONS)` → `$rose(SIG) |-> (CONS)`.
+  - `FSMGenFull::parse_check_property` detects the `after` head and builds a tagged
+    `{ __property__, op: after_event, trigger, consequent }` (both parsed recursively,
+    so the consequent may be `(within …)`/`(next …)`); a malformed `(after SIG)` (not
+    exactly trigger + consequent) fails closed.
+  - `GeneratedModuleInfoBuilder::_render_check_condition_sv` renders it to
+    `$rose(<trigger>) |-> (<consequent>)`; `_property_is_formal_only` recurses into
+    `trigger`, so `(after SIG bool)` is simulable and `(after SIG (within …))` is
+    formal-only (delayed consequent) — the existing two-guard partition then routes
+    them to `` `ifndef SYNTHESIS `` vs `` `ifdef FORMAL ``. `SignalAnalyzer` keep-alive
+    walks the `trigger` so the edge signal survives as a port. No ISF-lowerer change
+    (`_format_isf_expr` re-serializes the s-expression transparently).
+  - Verified: `--verify-hdl` verilator-lint + yosys clean; `verilator --binary
+    --assert` on `$rose(start) |-> (ack)` — silent when `ack` high on the start edge,
+    FIRES `$error` when `ack` low on the edge. `t/1413` (5 subtests: within/bool render,
+    formal-only flag, two-guard partition, keep-alive, fail-closed); 13d "Trigger
+    anchors — `(after SIG …)`" subsection; `ISF_SPEC` registers `t/1413`.
+  - Remaining: `.3` monitor output-mode (simulable bounded-eventually), `.4` Inline
+    positioned, `.5` Ref named, `.6` remove `(contract …)`.

@@ -83,6 +83,13 @@ sub _render_check_condition_sv ($cond) {
             return undef unless defined($a) && length($a) && defined($b) && length($b);
             return "($a) |-> ($b)";
         }
+        if ($op eq 'after_event') {
+            # event trigger: anchor the consequent to the rising edge of the trigger signal.
+            my $t = _render_check_condition_sv($cond->{trigger});
+            my $b = _render_check_condition_sv($cond->{consequent});
+            return undef unless defined($t) && length($t) && defined($b) && length($b);
+            return "\$rose($t) |-> ($b)";
+        }
         if ($op eq 'next') {
             my $x = _render_check_condition_sv($cond->{operand});
             return undef unless defined($x) && length($x);
@@ -106,9 +113,12 @@ sub _property_is_formal_only ($cond) {
     return 0 unless ref($cond) eq 'HASH' && $cond->{__property__};
     my $op = $cond->{op} // '';
     return 1 if $op eq 'next' || $op eq 'within';
+    # `after_event` ($rose trigger) is simulable on its own; it is formal-only only when its
+    # consequent is delayed — caught by the recursive consequent check below.
     return 1 if _property_is_formal_only($cond->{antecedent});
     return 1 if _property_is_formal_only($cond->{consequent});
     return 1 if _property_is_formal_only($cond->{operand});
+    return 1 if _property_is_formal_only($cond->{trigger});
     return 0;
 }
 

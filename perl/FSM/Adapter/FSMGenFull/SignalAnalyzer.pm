@@ -84,6 +84,7 @@ sub _analyze_check_condition_references($self, $cond) {
         $self->_analyze_check_condition_references($cond->{antecedent}) if $cond->{antecedent};
         $self->_analyze_check_condition_references($cond->{consequent}) if $cond->{consequent};
         $self->_analyze_check_condition_references($cond->{operand})    if $cond->{operand};
+        $self->_analyze_check_condition_references($cond->{trigger})    if $cond->{trigger};
         return;
     }
     $self->_analyze_condition_references($cond);

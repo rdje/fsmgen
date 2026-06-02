@@ -720,6 +720,18 @@ sub parse_check_property($self, $cond_tok) {
                 consequent  => $self->parse_check_property($args->[1]),
             };
         }
+        if ($head eq 'after') {
+            # (after SIG CONS) event trigger -> $rose(SIG) |-> (CONS); anchors a bounded-eventually
+            # consequent to a signal's rising edge (ISF-TRIGGER-ANCHOR, decision 0009 — "event" form).
+            Carp::confess "'(after SIG CONS)' requires a trigger signal and a consequent"
+                unless ref($args) eq 'ARRAY' && @$args == 2 && defined($args->[0]) && defined($args->[1]);
+            return {
+                __property__ => 1,
+                op          => 'after_event',
+                trigger     => $self->parse_check_property($args->[0]),
+                consequent  => $self->parse_check_property($args->[1]),
+            };
+        }
         if ($head eq 'next') {
             # (next X) -> ##1 (X)  (one-cycle delay; an `(=> A (next B))` is the SVA |=> idiom)
             Carp::confess "'(next X)' requires exactly one operand"
