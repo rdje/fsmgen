@@ -152,6 +152,37 @@ sub standalone_dt_assertion_runtime_lines ($class, %args) {
     );
 }
 
+# ISF-ASSERT: project `(assert COND [message])` invariants (surfaced into module_info) to
+# verification-only SV — a combinational `assert (COND)` per invariant, under `ifndef
+# SYNTHESIS`. Verilog (non-SV) output stays assertion-free, like the other assertion kinds.
+sub immediate_assertion_runtime_lines ($class, %args) {
+    my $target_language = $args{target_language} // 'systemverilog';
+    my $module_info = $args{module_info};
+
+    return () unless $target_language =~ /^(?:systemverilog|sv)$/;
+    return () unless ref($module_info) eq 'HASH';
+
+    my @assertion_lines;
+    for my $assertion (@{$module_info->{immediate_assertions} || []}) {
+        next unless ref($assertion) eq 'HASH';
+        my $condition = $assertion->{condition_sv};
+        next unless defined($condition) && length($condition);
+        my $message = _sv_message_fragment(
+            $assertion->{message} // ('assertion failed: ' . ($assertion->{name} // 'assert')));
+        push @assertion_lines, qq{    assert ($condition) else \$error("$message");};
+    }
+
+    return () unless @assertion_lines;
+
+    return (
+        "  `ifndef SYNTHESIS",
+        "  always_comb begin",
+        @assertion_lines,
+        "  end",
+        "  `endif",
+    );
+}
+
 sub selector_conflict_assertion_runtime_lines ($class, %args) {
     my $target_language = $args{target_language} // 'systemverilog';
     my $module_info = $args{module_info};
@@ -307,6 +338,26 @@ sub augment_with_selector_conflict_assertions ($class, %args) {
     return $hdl_code . "\n$assertion_block\n";
 }
 
+sub augment_with_immediate_assertions ($class, %args) {
+    my $hdl_code = $args{hdl_code};
+    my $target_language = $args{target_language} // 'systemverilog';
+
+    return $hdl_code unless defined($hdl_code) && length($hdl_code);
+
+    my @assertion_lines = $class->immediate_assertion_runtime_lines(
+        module_info => $args{module_info},
+        target_language => $target_language,
+    );
+    return $hdl_code unless @assertion_lines;
+
+    my $assertion_block = join("\n", '', @assertion_lines);
+    if ($hdl_code =~ s/\nendmodule\s*\z/\n$assertion_block\nendmodule/s) {
+        return $hdl_code;
+    }
+
+    return $hdl_code . "\n$assertion_block\n";
+}
+
 sub augment_with_runtime_assertions ($class, %args) {
     my $hdl_code = $args{hdl_code};
 
@@ -318,7 +369,11 @@ sub augment_with_runtime_assertions ($class, %args) {
         %args,
         hdl_code => $hdl_code,
     );
-    return $class->augment_with_standalone_dt_assertions(
+    $hdl_code = $class->augment_with_standalone_dt_assertions(
+        %args,
+        hdl_code => $hdl_code,
+    );
+    return $class->augment_with_immediate_assertions(
         %args,
         hdl_code => $hdl_code,
     );

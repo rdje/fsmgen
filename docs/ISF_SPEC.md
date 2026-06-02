@@ -5763,6 +5763,7 @@ Focused tests:
 - [t/1408-isf-rotate.t](../t/1408-isf-rotate.t)
 - [t/1409-isf-swap.t](../t/1409-isf-swap.t)
 - [t/1410-isf-assert-carrier.t](../t/1410-isf-assert-carrier.t)
+- [t/1411-isf-assert-emit.t](../t/1411-isf-assert-emit.t)
 
 ## 12. Explicitly Deferred
 

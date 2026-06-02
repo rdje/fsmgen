@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-ASSERT.2` (this commit) — the `(assert COND)` `+assert` `.fsm` carrier round-trips ISF → `.fsm` → FSMGenFull; `git log -1` for the hash.
-- active_work_unit: `ISF-ASSERT` → frontier leaf: `.3` (next; `.1`–`.2` done) — `(assert COND [message])` verification intent.
-- next_action: implement `ISF-ASSERT.3` — surface `$fsm_module->{attributes}{immediate_assertions}` into `module_info` (`GeneratedModuleInfoBuilder::build_from_fsm_module`), add `immediate_assertion_runtime_lines` to `GeneratedModuleEmitter` (emit `ifndef SYNTHESIS` / `always_comb` / `assert (COND) else $error("msg")` from the condition's `to_systemverilog`) wired into `augment_with_runtime_assertions`; verify with `--verify-hdl` + a `verilator --binary` pass/fail testbench.
+- latest_commit: `ISF-ASSERT.3` (this commit) — `(assert COND [message])` emits a verification-only SVA (`ifndef SYNTHESIS` / `assert (COND) else $error(...)`); verified silent-on-pass / fires-on-violation for live signals; `git log -1` for the hash.
+- active_work_unit: `ISF-ASSERT` → frontier leaf: `.4` (next; `.1`–`.3` done) — `(assert COND [message])` verification intent.
+- next_action: implement `ISF-ASSERT.4` — (a) keep otherwise-unused assert-referenced signals alive: thread the assertion conditions' signal refs into the FlattenedDT SV port/usage retention so an `(assert (< level depth))` over inputs read only by the assert is not pruned (live-signal asserts already work); (b) ISF docs (13e/13g section + 13k row).
 - recently_done: `MEMORY-ARCHITECTURE-ADOPTION` (`.1`–`.5`, done); `ISF-ASSERT.1`/`.2`; the theme-3 ISF data/bit/field/arithmetic construct surface (see `docs/decisions/0002`).
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.

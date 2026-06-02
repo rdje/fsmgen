@@ -77,9 +77,18 @@ minimal.)
 - `.3` HDL emission: `module_info` surfaces the assertion;
   `augment_with_immediate_assertions` emits the guarded SVA; verilator-lint +
   yosys clean; a `verilator --binary` testbench drives a passing and a failing
-  case (the assertion fires only on violation).
-- `.4` ISF surface polish: optional message, expression conditions, fail-closed
-  validation; 13e/13g doc section + 13k row; `ISF_SPEC` registers the t/.
+  case (the assertion fires only on violation). `done` (for live-signal
+  conditions — see the `.4` keep-alive gap).
+- `.4` keep assert-referenced signals alive + ISF surface polish + docs:
+  - **keep-alive (the known `.3` gap):** an `(assert COND)` whose COND references a
+    signal that is *otherwise unused* in the datapath (e.g. an input read only by
+    the assert) currently emits an assertion over a signal the FlattenedDT SV
+    backend prunes from the port list (it does not yet count assert refs as uses) →
+    an undeclared-signal reference. Thread the assertion conditions' signal
+    references into the port/usage retention so such signals survive. Asserts over
+    live signals (outputs, registers, used inputs) already work.
+  - doc section (13e/13g) + 13k row; `ISF_SPEC` registers the t/ (already done for
+    `t/1410`/`t/1411`).
 
 ## First-cut semantic (decided 2026-06-02)
 
@@ -169,3 +178,16 @@ parses it); no pre-computed signal.
     multiple asserts; fail-closed (no condition / extra operands). Non-assert actors
     unaffected (verify-hdl clean; representative regression green). No SV emission
     yet — that is `.3`.
+- `2026-06-02`: `.3` done — the guarded SVA is emitted (for live-signal conditions).
+  `GeneratedModuleInfoBuilder::build_from_fsm_module` surfaces
+  `$fsm_module->{attributes}{immediate_assertions}` into `module_info` as plain
+  `{ name, condition_sv, message }` records (CoreAST condition rendered to SV via
+  `to_systemverilog`). `GeneratedModuleEmitter::immediate_assertion_runtime_lines`
+  emits, under `ifndef SYNTHESIS` / `always_comb`, `assert (COND) else
+  $error("message")` per invariant (name-based default message when none given;
+  Verilog target assertion-free), wired into `augment_with_runtime_assertions`.
+  Verified end-to-end on a live-signal assert (`(assert (< o 200) "…")`, `o` driven):
+  `--verify-hdl` verilator-lint + yosys clean; `verilator --binary` is SILENT on
+  pass (`o=50<200`) and FIRES on violation (`o=250≥200`). `t/1411` (4 subtests).
+  **Known gap (→ `.4`):** an assert over an otherwise-unused input references a
+  signal the FlattenedDT backend prunes; live-signal asserts are the working path.

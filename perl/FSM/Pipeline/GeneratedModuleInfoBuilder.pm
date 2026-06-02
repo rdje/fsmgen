@@ -66,8 +66,30 @@ sub build_from_fsm_module ($class, %args) {
         parameter_count => $intent_hir_hash->{parameter_count},
         parameter_names => _clone_structured_value($intent_hir_hash->{parameter_names}),
         symbol_contract => _clone_structured_value($intent_hir_hash->{symbol_contract}),
+        immediate_assertions => _immediate_assertions_from_module($fsm_module),
         intent_hir => _clone_structured_value($intent_hir_hash),
     };
+}
+
+# ISF-ASSERT: surface the parsed `+assert` invariants (on the module) into module_info as
+# plain emitter-ready records — the CoreAST condition is rendered to SV text here so the
+# emitter does not have to carry the blessed expression object.
+sub _immediate_assertions_from_module ($fsm_module) {
+    my $raw = (ref($fsm_module) && ref($fsm_module->{attributes}) eq 'HASH')
+        ? $fsm_module->{attributes}{immediate_assertions} : undef;
+    return [] unless ref($raw) eq 'ARRAY';
+    my @out;
+    for my $a (@$raw) {
+        next unless ref($a) eq 'HASH' && defined $a->{name};
+        my $cond_sv = eval { $a->{condition}->to_systemverilog() };
+        next unless defined($cond_sv) && length($cond_sv);
+        push @out, {
+            name         => $a->{name},
+            condition_sv => $cond_sv,
+            (defined $a->{message} ? (message => $a->{message}) : ()),
+        };
+    }
+    return \@out;
 }
 
 sub enrich_with_generated_analysis ($class, %args) {
