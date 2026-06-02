@@ -210,3 +210,17 @@ See `docs/decisions/0009`. Two orthogonal additions:
     (!(ack))`); `t/1416` extended (now 9 subtests). 13d "Named anchors" gains the `(on … as NAME)`
     form. **ISF-TRIGGER-ANCHOR.5 (Ref) complete** — `(point NAME)` + `(on … as NAME)` + `(at NAME)`.
   - Remaining: `.6c` neutralize residual internal "contract" wording (rename the shared resolver).
+- `2026-06-02`: `.5c` done — **Ref boundary fix (signal, not `state_active`)**. User flagged that
+  `(at NAME)` → `(state_active <state>)` made the lowered assertion reference the FSM's `current_state`,
+  crossing the ISF↔FSM line (the event + monitor forms are already signal-based). Re-anchored: a
+  referenced `(point …)`/`(on … as …)` state now drives a 1-bit `*_active` signal (combinational,
+  high while there — like the monitor's `arm`), generated **lazily** in `_resolve_at_references` only
+  for points an `(at NAME)` actually references (no dead signals); `(at NAME)` resolves to that bare
+  signal leaf. The ISF-originated assertion references only the signal; the state→signal derivation
+  stays FSM-side.
+  - Verified: `--verify-hdl` clean — `(=> (at armed) (within ack 3))` →
+    `(main_point_1_active) |-> ##[1:3] (ack)` with `current_state` **absent** from the assertion
+    (`main_point_1_active` is driven by `main_point_1_en` on the FSM side). `t/1416` updated (signal,
+    not `state_active`); 13d "Named anchors" reworded. All three anchor forms (event/inline/ref) are
+    now uniformly signal-based — ISF verification never touches `current_state`.
+  - Remaining: `.6c` wording cleanup.

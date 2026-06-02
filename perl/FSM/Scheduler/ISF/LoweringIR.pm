@@ -129,7 +129,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     my %point_bindings;   # ISF-TRIGGER-ANCHOR.5
     my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles, $bank_accesses, $reset_values, $asserts) =
         $self->_build_transaction($tx, $actor, 0, undef, \%point_bindings);
-    _resolve_at_references($asserts, \%point_bindings);
+    _resolve_at_references($asserts, \%point_bindings, $states, $ctrs);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
     # ISF-REGISTER-RESET-VALUES: storage var reset values (actor-level) + this transaction's
     # local reset values (the 10th _build_transaction return).
@@ -1194,7 +1194,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     # ISF-TRIGGER-ANCHOR.5: all transactions lowered — resolve (at NAME) leaves in checks to the
     # named point/activation's `state_active` (module-wide; an (at …) may reference a point in
     # another transaction). Unknown names fail closed.
-    _resolve_at_references(\@immediate_assertions, \%point_bindings);
+    _resolve_at_references(\@immediate_assertions, \%point_bindings, \@states, \%ctrs);
 
     my $ir = {
         actor_name => $actor->{actor_name},
@@ -8179,15 +8179,32 @@ sub _ir_point {
 # ISF-TRIGGER-ANCHOR.5: resolve (at NAME) leaves in check conditions to (state_active <state>) once
 # the module-wide name -> state map is complete; an unknown NAME fails closed.
 sub _resolve_at_references {
-    my ($asserts, $bindings) = @_;
+    my ($asserts, $bindings, $states, $counters) = @_;
     return unless ref($asserts) eq 'ARRAY';
     $bindings = {} unless ref($bindings) eq 'HASH';
+    my %state_by_name =
+        map { $_->{name} => $_ } grep { ref($_) eq 'HASH' && defined $_->{name} } @{$states || []};
+
     for my $a (@$asserts) {
         next unless ref($a) eq 'HASH' && defined $a->{condition} && !ref($a->{condition});
         $a->{condition} =~ s{\(at\s+([A-Za-z_]\w*)\)}{
-            exists $bindings->{$1}
-                ? "(state_active $bindings->{$1})"
-                : confess "Check '" . ($a->{name} // '?') . "': (at $1) references unknown point/activation name '$1'; declare it with (point $1) or (on SIGNAL as $1)\n";
+            my $name = $1;
+            confess "Check '" . ($a->{name} // '?') . "': (at $name) references unknown point/activation name '$name'; declare it with (point $name) or (on SIGNAL as $name)\n"
+                unless exists $bindings->{$name};
+            my $state_name = $bindings->{$name};
+            my $signal = "${state_name}_active";
+            # Keep the ISF/FSM boundary on the FSM side: the named position surfaces as a 1-bit
+            # SIGNAL the named state drives high while active (combinational, like the monitor's arm),
+            # generated lazily only for referenced points. The ISF-originated assertion references
+            # this signal — never `current_state`. The signal's state-derivation is the FSM's job.
+            if (my $st = $state_by_name{$state_name}) {
+                unless (grep { ($_->{lhs} // '') eq $signal } @{$st->{assignments} || []}) {
+                    push @{$st->{assignments}},
+                        { lhs => $signal, rhs => 1, op => '=', source_kind => 'point_active' };
+                    $counters->{$signal} = 1 if ref($counters) eq 'HASH';
+                }
+            }
+            $signal;   # a bare signal leaf — `(sig)` would parse as a 1-arg operator call
         }ge;
     }
     return;

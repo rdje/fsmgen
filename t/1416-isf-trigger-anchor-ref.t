@@ -15,7 +15,8 @@ use FSM::IR::IntentHIRBuilder;
 use FSM::Pipeline::GeneratedModuleInfoBuilder;
 
 # ISF-TRIGGER-ANCHOR.5 (Ref): name a transaction position with `(point NAME)` and reference it
-# from a check with `(at NAME)`, which resolves to `(state_active <that state>)`. Bindings are
+# from a check with `(at NAME)`, which resolves to a 1-bit `*_active` SIGNAL the named state drives
+# (like the monitor's arm) — so the ISF-originated assertion never references `current_state`. Bindings are
 # module-wide (an `(at NAME)` may reference a point in another transaction); an unknown name fails
 # closed. (Activation labeling `(on SIGNAL as NAME)` — bare `as`, not `:as` — is the sibling form.)
 
@@ -44,7 +45,7 @@ sub module_info_for {
         fsm_module => $mod, intent_hir => $intent);
 }
 
-subtest '(point NAME) names a body position; (at NAME) resolves to that state_active' => sub {
+subtest '(point NAME) names a body position; (at NAME) resolves to its active signal' => sub {
     my $src = <<'ISF';
 (actor pt
   (clock clk) (reset rst_n)
@@ -57,13 +58,15 @@ subtest '(point NAME) names a body position; (at NAME) resolves to that state_ac
 ISF
     my $fsm = lower_fsm_text($src, 'pt');
     like($fsm, qr/\(main_point_1\b/, '(point armed) lowers to a pass-through state main_point_1');
-    like($fsm, qr/\Q(main_assert_0 assert (=> (state_active main_point_1) (within ack 3))\E/,
-        '(at armed) resolves to (state_active main_point_1) in the +assert carrier');
+    like($fsm, qr/\(main_point_1_active 1\)/,
+        'the point state drives a 1-bit active signal (no current_state in the assertion)');
+    like($fsm, qr/\Q(main_assert_0 assert (=> main_point_1_active (within ack 3))\E/,
+        '(at armed) resolves to the bare signal main_point_1_active in the +assert carrier');
 
     my $info = module_info_for($src, 'pt');
     is($info->{immediate_assertions}[0]{condition_sv},
-        '(current_state == MAIN_POINT_1) |-> (##[1:3] (ack))',
-        'renders to a clocked implication anchored on the point state');
+        '(main_point_1_active) |-> (##[1:3] (ack))',
+        'renders to a clocked implication anchored on the point active signal — not current_state');
 };
 
 subtest '(at NAME) resolves across transactions (module-wide bindings)' => sub {
@@ -75,8 +78,8 @@ subtest '(at NAME) resolves across transactions (module-wide bindings)' => sub {
   (transaction b (on s2) (assert (=> (at armed) (within ack 2))) (complete d2)))
 ISF
     my $fsm = lower_fsm_text($src, 'x');
-    like($fsm, qr/\Q(b_assert_0 assert (=> (state_active a_point_1) (within ack 2))\E/,
-        'a check in transaction b anchors to a point declared in transaction a');
+    like($fsm, qr/\Q(b_assert_0 assert (=> a_point_1_active (within ack 2))\E/,
+        'a check in transaction b anchors to a point declared in transaction a (via its active signal)');
 };
 
 subtest 'an unknown (at NAME) fails closed' => sub {
@@ -106,8 +109,8 @@ subtest '(on SIGNAL as NAME) labels the activation; (at NAME) anchors to the ent
     (complete done)))
 ISF
     my $fsm = lower_fsm_text($src, 'onas');
-    like($fsm, qr/\Q(main_assert_0 assert (=> (state_active main_idle_0) (! ack))\E/,
-        '(on start as fired) binds `fired` to the entry state main_idle_0');
+    like($fsm, qr/\Q(main_assert_0 assert (=> main_idle_0_active (! ack))\E/,
+        '(on start as fired) binds `fired` to the entry state (via its active signal)');
 };
 
 subtest '(on SIGNAL as NAME) coexists with sample sub-clauses' => sub {
@@ -121,7 +124,7 @@ subtest '(on SIGNAL as NAME) coexists with sample sub-clauses' => sub {
     (complete done)))
 ISF
     my $fsm = lower_fsm_text($src, 'mix');
-    like($fsm, qr/\(state_active main_idle_0\)/, 'the activation label resolves');
+    like($fsm, qr/\bmain_idle_0_active\b/, 'the activation label resolves to the entry active signal');
     like($fsm, qr/\(cap d\)/, 'the (sample d as cap) sub-clause still lowers');
 };
 

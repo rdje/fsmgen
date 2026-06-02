@@ -1024,13 +1024,17 @@ To anchor a check to a transaction position *by name*, label the position with a
 (assert (=> (at armed) (within ack 3)))   ;; "while at `armed`, ack within 3"
 ```
 
-`(point NAME)` is a no-op pass-through state that simply labels its position; `(at
-NAME)` lowers to `(state_active <that state>)` — i.e. "control is at the named
-point" — usable anywhere a boolean is (typically as an implication antecedent). The
-name → state bindings are **module-wide**, so a check in one transaction can anchor to
-a `(point …)` declared in another. An `(at NAME)` whose name was never declared fails
-closed (the diagnostic suggests `(point NAME)` or `(on SIGNAL as NAME)`); a duplicate
-point name fails closed.
+`(point NAME)` is a no-op pass-through state that labels its position and drives a
+1-bit **active signal** (high while control is at it — exactly like the monitor's
+`arm`); `(at NAME)` resolves to that signal — "control is at the named point" —
+usable anywhere a boolean is (typically as an implication antecedent). Crucially, the
+ISF-originated assertion references only that *signal* — the state-to-signal derivation
+stays on the FSM side, so verification never reaches into the FSM's `current_state`
+(the ISF↔FSM boundary is respected, the same way the event and monitor forms are
+signal-based). The name → position bindings are **module-wide**, so a check in one
+transaction can anchor to a `(point …)` declared in another. An `(at NAME)` whose name
+was never declared fails closed (the diagnostic suggests `(point NAME)` or `(on SIGNAL
+as NAME)`); a duplicate point name fails closed.
 
 The transaction's **activation** can be labeled inline with a bare `as NAME` on the
 `(on …)` clause — the same `as` keyword as `(sample data as captured)` / `(spawn
