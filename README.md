@@ -2,6 +2,23 @@
 This file is the **single entry point** for the project.
 Use it first for objective, navigation, and where to find code/docs quickly.
 
+## Memory & continuity (read this to resume in any harness)
+- **`MEMORY_ARCHITECTURE.md`** (repo root) is the durable-agent-memory standard for
+  this repo — MANDATORY reading, and mechanically enforced. It defines four layers
+  by lifecycle and how a fresh agent (any model, any harness) resumes deterministically:
+  - **A — resume pointer**: `MEMORY.md` (bounded, overwrite-only — current state + the single next action).
+  - **B — work memory**: task-trees under `docs/tasks/` (index: `docs/TASK_TREE.md`).
+  - **C — decision records**: durable cross-cutting facts under `docs/decisions/` (index: `docs/decisions/INDEX.md`).
+  - **D — audit trail**: `git log` (commit subjects carry the work-unit id).
+- Resume order: this `README.md` → `MEMORY_ARCHITECTURE.md` → `MEMORY.md` → the active
+  task-tree's frontier row → only the relevant `docs/decisions/` records.
+- **Route every durable thing to a layer and commit before the turn ends** — nothing
+  important may live only in the conversation. Before committing run
+  `scripts/check_memory_architecture.sh` (git hooks and CI run it too; a non-compliant
+  change cannot merge). The tool-neutral bootstrap files (`AGENTS.md`, `CLAUDE.md`,
+  `.cursorrules`, `.github/copilot-instructions.md`, `GEMINI.md`, `.windsurfrules`) are
+  one-line pointers back here.
+
 ## Session safety invariant
 - The commit workflow in `COMMIT.md` is mandatory and non-negotiable.
 - Before any code, test, source, generated-artifact, or config change, the work
