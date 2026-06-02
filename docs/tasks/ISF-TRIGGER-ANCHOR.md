@@ -224,6 +224,17 @@ See `docs/decisions/0009`. Two orthogonal additions:
     not `state_active`); 13d "Named anchors" reworded. All three anchor forms (event/inline/ref) are
     now uniformly signal-based — ISF verification never touches `current_state`.
   - Remaining: `.6c` wording cleanup.
+- `2026-06-02`: `.6c` done — neutralized the residual *user-facing* "contract" wording. Renamed the
+  shared within-resolver `_temporal_contract_within_cycles` → `_resolve_monitor_window_cycles`
+  (+ `_contract_package_constant_window_cycles` → `_resolve_monitor_window_package_constant`), param
+  `$contract_name` → `$window_owner`, and reworded all its diagnostics ("contract '…' within …" →
+  "monitor window '…' …", dropping "eventually"/"temporal contract"). Reframed the stale
+  `(contract name (eventually …))` block in the downstream-integration spec to `(assert (monitor
+  (within S N)))` + a note that the clause is removed and `temporal_contracts[]` is retained-but-empty.
+  Deliberately **kept** the deeply-wired internal kind/role names (`temporal_contract_monitor` DT
+  kind/storage role, `kind=>'contract'` arm state, `source_kind=>'contract_*'`) — they are golden-checked
+  and accurately name the shared mechanism; renaming them would be pure churn. **ISF-TRIGGER-ANCHOR
+  fully complete.**
 - `2026-06-02`: docs thoroughness pass (user: "thoroughly documented … with lot of examples;
   codebase and mdBook shall be in sync") — added a "Complete, runnable verification examples"
   subsection to 13d with **7 complete `(actor …)` examples** (trivial invariant → assert/assume/cover

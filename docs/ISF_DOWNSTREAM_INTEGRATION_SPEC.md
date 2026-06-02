@@ -2157,28 +2157,29 @@ prefer the `ready`/`valid` form shown above. The `valid_signal` endpoint is a
 normal transaction combinational drive, so it remains subject to the existing
 same-target conflict checks if another rule or transaction writes that signal.
 
-Temporal contract:
+Bounded-eventually monitor (replaces the removed top-level `(contract …)` clause):
 
 ```lisp
-(contract name
-  (eventually signal within N))
+(assert (monitor (within signal N)) "name")
 ```
 
-Current shipped temporal contract kind is `bounded_eventually`. Reports expose
-contract monitor metadata. Assertion projection is currently
+The shipped kind is `bounded_eventually`. Assertion projection is
 `systemverilog_sticky_fail`: SystemVerilog HDL generation emits a
 verification-only assertion from the generated sticky fail bit under
-`` `ifndef SYNTHESIS``. Verilog output remains assertion-free. FSMGen also
-accepts the older nested alias `(eventually signal (within N))`; downstream
-emitters should prefer the flat `within N` form shown above. `N` may be a
+`` `ifndef SYNTHESIS``. Verilog output remains assertion-free. `N` may be a
 positive integer literal, a declared actor constant, an actor-local scalar
 parameter default, a qualified imported package scalar constant, or a
 same-transaction scalar parameter default on a generated child or
-direct/non-generated transaction that resolves to a positive integer. Reports
-keep parent-local `temporal_contracts[].within_cycles` as the resolved integer
-and do not expose a separate source-token field; package-authored windows
-remain visible through package/import metadata and embedded package
-`+constants` entries. Generated child contract monitors are reviewable in the
+direct/non-generated transaction that resolves to a positive integer;
+package-authored windows remain visible through package/import metadata and
+embedded package `+constants` entries.
+
+The former top-level `(contract name (eventually signal within N))` clause was
+removed in favor of this form. The `temporal_contracts[]` schedule-report array is
+**retained for schema-version-1 stability but is now always empty** — the
+bounded-eventually intent surfaces through the immediate-check `+assert` /
+`immediate_assertions` path (a same-cycle `!fail` assertion), not
+`temporal_contracts[]`. Generated child contract monitors are reviewable in the
 generated child scheduled `.fsm`; the parent schedule report remains
 parent-scoped for child-local temporal contracts. Direct transaction
 parameters remain local lowering inputs and are not promoted to actor-level

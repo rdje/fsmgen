@@ -5322,17 +5322,20 @@ sub _parse_stage_handshake_clause {
     return \%parsed;
 }
 
-sub _temporal_contract_within_cycles {
-    my ($token, $actor, $tn, $contract_name, $label) = @_;
+# Resolve a `(monitor (within S N))` window to a positive integer cycle count. `N` may be a positive
+# literal, a same-transaction/actor scalar parameter, an actor constant, or a qualified package scalar
+# constant (shared by the monitor output-mode; formerly the `(contract …)` within-cycles resolver).
+sub _resolve_monitor_window_cycles {
+    my ($token, $actor, $tn, $window_owner, $label) = @_;
     my $accepted_sources = 'positive integer literals, same-transaction scalar parameters, actor constants, actor scalar parameters, or qualified package scalar constants';
 
     return 0 + $token
         if defined($token) && !ref($token) && $token =~ /\A[1-9][0-9]*\z/;
 
-    confess "Transaction '$tn': contract '$contract_name' within cycles must be positive in $label\n"
+    confess "Transaction '$tn': monitor window '$window_owner' must be a positive cycle count in $label\n"
         if defined($token) && !ref($token) && $token =~ /\A0+\z/;
 
-    my $package_window = _contract_package_constant_window_cycles($token, $actor, $tn, $contract_name, $label);
+    my $package_window = _resolve_monitor_window_package_constant($token, $actor, $tn, $window_owner, $label);
     return $package_window if defined $package_window;
 
     if (defined($token) && !ref($token) && _is_hdl_identifier($token)) {
@@ -5341,7 +5344,7 @@ sub _temporal_contract_within_cycles {
         my $transaction_param = _transaction_param_by_name($actor, $tn, $token);
         if ($transaction_param) {
             my $param_value = _non_negative_integer_from_literal(_param_resolved_value($transaction_param));
-            confess "Transaction '$tn': contract '$contract_name' within transaction parameter '$token' must resolve to a positive cycle count in $label\n"
+            confess "Transaction '$tn': monitor window '$window_owner' transaction parameter '$token' must resolve to a positive cycle count in $label\n"
                 unless defined($param_value) && $param_value > 0;
             return $param_value;
         }
@@ -5349,7 +5352,7 @@ sub _temporal_contract_within_cycles {
         my $constant = _actor_constant_by_name($actor, $token);
         if ($constant) {
             my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
-            confess "Transaction '$tn': contract '$contract_name' within constant '$token' must resolve to a positive cycle count in $label\n"
+            confess "Transaction '$tn': monitor window '$window_owner' constant '$token' must resolve to a positive cycle count in $label\n"
                 unless defined($constant_value) && $constant_value > 0;
             return $constant_value;
         }
@@ -5357,27 +5360,27 @@ sub _temporal_contract_within_cycles {
         my $param = _actor_param_by_name($actor, $token);
         if ($param) {
             my $param_value = _non_negative_integer_from_literal(_param_resolved_value($param));
-            confess "Transaction '$tn': contract '$contract_name' within parameter '$token' must resolve to a positive cycle count in $label\n"
+            confess "Transaction '$tn': monitor window '$window_owner' parameter '$token' must resolve to a positive cycle count in $label\n"
                 unless defined($param_value) && $param_value > 0;
             return $param_value;
         }
 
-        confess "Transaction '$tn': contract '$contract_name' within token '$token' is a runtime interface signal; temporal contract windows accept $accepted_sources only in $label\n"
+        confess "Transaction '$tn': monitor window '$window_owner' token '$token' is a runtime interface signal; monitor windows accept $accepted_sources only in $label\n"
             if _actor_interface_signal_by_name($actor, $token);
 
-        confess "Transaction '$tn': contract '$contract_name' within token '$token' is not a same-transaction scalar parameter, declared actor constant, actor scalar parameter, or qualified package scalar constant in $label\n";
+        confess "Transaction '$tn': monitor window '$window_owner' token '$token' is not a same-transaction scalar parameter, declared actor constant, actor scalar parameter, or qualified package scalar constant in $label\n";
     }
 
-    confess "Transaction '$tn': contract '$contract_name' supports only '(eventually signal within cycles)' or '(eventually signal (within cycles))'\n";
+    confess "Transaction '$tn': monitor window '$window_owner' must be a positive cycle count or a parameter/constant that resolves to one in $label\n";
 }
 
-sub _contract_package_constant_window_cycles {
-    my ($token, $actor, $tn, $contract_name, $label) = @_;
+sub _resolve_monitor_window_package_constant {
+    my ($token, $actor, $tn, $window_owner, $label) = @_;
     return undef unless defined($token) && !ref($token);
 
     my $package_constant = _actor_package_constant_reference($actor, $token);
     if (!$package_constant) {
-        confess "Transaction '$tn': contract '$contract_name' within references unknown package constant '$token' in $label\n"
+        confess "Transaction '$tn': monitor window '$window_owner' references unknown package constant '$token' in $label\n"
             if _is_package_constant_reference_shape($token);
         return undef;
     }
@@ -5385,20 +5388,20 @@ sub _contract_package_constant_window_cycles {
     my ($package_name, $constant_name, $suffix) = @$package_constant;
     my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
     if (defined $constant_payload) {
-        confess "Transaction '$tn': contract '$contract_name' within token '$token' is ambiguous: it matches local enum member '$token' and imported package constant '$token' in $label\n"
+        confess "Transaction '$tn': monitor window '$window_owner' token '$token' is ambiguous: it matches local enum member '$token' and imported package constant '$token' in $label\n"
             if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
-        confess "Transaction '$tn': contract '$contract_name' within package constant '$package_name.$constant_name' aggregate/member path '$token' remains deferred; temporal contract windows accept only qualified package scalar constants in this slice\n"
+        confess "Transaction '$tn': monitor window '$window_owner' package constant '$package_name.$constant_name' aggregate/member path '$token' remains deferred; monitor windows accept only qualified package scalar constants in this slice\n"
             if $suffix ne '';
         my $constant_value = _package_constant_scalar_value($constant_payload);
         my $integer_value = defined($constant_value) && !ref($constant_value)
             ? _non_negative_integer_from_literal($constant_value)
             : undef;
-        confess "Transaction '$tn': contract '$contract_name' within package constant '$package_name.$constant_name' must resolve to a positive integer scalar cycle count in $label\n"
+        confess "Transaction '$tn': monitor window '$window_owner' package constant '$package_name.$constant_name' must resolve to a positive integer scalar cycle count in $label\n"
             unless defined($integer_value) && $integer_value > 0;
         return $integer_value;
     }
 
-    confess "Transaction '$tn': contract '$contract_name' within references unknown package constant '$token' in $label\n"
+    confess "Transaction '$tn': monitor window '$window_owner' references unknown package constant '$token' in $label\n"
         if !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
 
     return undef;
@@ -8378,7 +8381,7 @@ sub _ir_monitor_check {
         $within_cycles = $bound_token + 0;
     }
     else {
-        $within_cycles = _temporal_contract_within_cycles($bound_token, $actor, $tn, $prefix, 'transaction body');
+        $within_cycles = _resolve_monitor_window_cycles($bound_token, $actor, $tn, $prefix, 'transaction body');
     }
 
     my $signals = _monitor_signals_for_prefix($prefix);
