@@ -666,19 +666,19 @@ keeps the original `valid` assignment and ready-gated transition:
 If the stage ready input or valid output is `hold`, the form remains
 fail-closed for the same sample-and-consume timing reason.
 
-A top-level bounded-eventual contract arm state can also carry the pending
+A top-level bounded-eventual monitor arm state can also carry the pending
 sample. The clone keeps the original one-cycle arm request and advances like
-the original contract arm state:
+the original monitor arm state:
 
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
-  (= (main_contract_2_arm 1))
+  (= (main_assert_2_arm 1))
   (-> main_drive_3))
 ```
 
 The monitor DT still owns pending, age, and fail storage and observes the same
-arm signal. Contract arm states that would read or overwrite `hold` remain
+arm signal. Monitor arm states that would read or overwrite `hold` remain
 fail-closed for the same sample-and-consume timing reason.
 
 Top-level `await_all` and `await_any` sync states can also carry the pending
@@ -2217,37 +2217,32 @@ generated-state and runtime semantics are explicit.
 **Future**: Grow toward richer pipeline registers only after the shipped
 ready/valid barrier report contract is complete.
 
-### Contracts
+### Bounded-Eventually Monitors
 
 ```lisp
 (contract (always request -> eventually[1..8] grant))
 ```
 
-Historical/free-form temporal assertions like that remain deferred. The first
-shipped contract model is a transaction-local bounded eventual check:
+Historical/free-form temporal assertions like that remain deferred. The shipped
+bounded-eventually model is a transaction-local check written as the
+`(monitor (within S N))` property inside an `(assert …)` clause (this replaced
+the former top-level `(contract …)` clause, which has been removed):
 
 ```lisp
-(contract response_seen
-  (eventually done within 8))
+(assert (monitor (within done 8)) "response_seen")
 ```
 
-When the transaction reaches the contract clause, lowering emits one arm state
+When the transaction reaches the clause, lowering emits one arm state
 that asserts an internal combinational arm request for that cycle. The checked
 window starts on the next cycle and lasts for the specified positive integer
 number of cycles. That window can be authored as a positive literal, a
 declared positive actor constant, an actor-local scalar parameter default, a
 qualified imported package scalar constant, or a same-transaction scalar
-parameter default on a generated child or direct/non-generated transaction
-that resolves to a positive integer. Direct transaction parameters are local
-lowering inputs for this contract-window value domain and are not emitted as
-actor-level `.fsm` `+params`. Activation-site overrides on `spawn`, generated
-blocking `do`, or rule `trigger` that target a generated child parameter used
-by the child contract window are accepted only when the override resolves to
-the same positive integer cycle count as the child transaction parameter
-default. Mismatched overrides fail closed with a targeted diagnostic; override
-specialization of generated child contract windows remains deferred. If
+parameter default that resolves to a positive integer. Direct transaction
+parameters are local lowering inputs for this monitor-window value domain and
+are not emitted as actor-level `.fsm` `+params`. If
 `done` is seen before the window expires, the
-obligation clears. If the window expires first, or if the same contract is
+obligation clears. If the window expires first, or if the same monitor is
 armed again while an obligation is still pending, a generated sticky fail bit
 is set until actor reset.
 
@@ -2256,41 +2251,43 @@ state plus an always-on monitor DT with pending, age, and fail storage. The
 monitor DT is the source of truth; schedule reports classify it as
 `temporal_contract_monitor` and report pending/fail as registers and age as a
 counter. Those storage entries carry the `temporal_contract_monitor` storage
-role, while bounded `temporal_contracts` entries expose the public trigger
-state, observed signal, cycle bound, generated pending/counter/fail signal
-names, reset policy, overlap policy, and assertion projection status.
+role. The legacy `temporal_contracts` report array is now always empty (the
+`(contract …)` clause it described was removed; the field is retained for
+schema-version-1 stability), so the bounded-eventually intent now surfaces
+through the immediate-check `+assert` path rather than `temporal_contracts[]`.
 
-Generated SystemVerilog now projects the fail bit into a verification-only
-assertion under `` `ifndef SYNTHESIS``; the current assertion projection status
-is `systemverilog_sticky_fail`. Verilog output remains assertion-free. When a
-runtime wait with pending samples has a zero-count path into the contract arm
-state, the generated contract clone materializes the sample and emits the same
+Generated SystemVerilog projects the fail bit into a verification-only
+assertion under `` `ifndef SYNTHESIS`` as a same-cycle clocked concurrent
+property on the negated fail bit, so it is verilator-simulable. Verilog output
+remains assertion-free. When a
+runtime wait with pending samples has a zero-count path into the monitor arm
+state, the generated clone materializes the sample and emits the same
 arm request; the monitor DT remains unchanged and remains the only owner of
 pending, age, and fail storage.
 
-Unsupported bodies and nested contracts fail closed. Transaction parameter
-windows, runtime-signal or expression windows, global `always` implication
-forms, min/max windows, dynamic bounds, same-cycle windows, expression
-operands, and multiple outstanding obligations remain deferred.
+Unsupported bodies and nested monitors fail closed. Runtime-signal or
+expression windows, global `always` implication forms, min/max windows, dynamic
+bounds, same-cycle windows, expression operands, and multiple outstanding
+obligations remain deferred.
 
 For a three-cycle window, the scheduled artifact has this shape:
 
 ```lisp
-(main_contract_1
-  (= (main_contract_1_arm 1))
+(main_assert_1
+  (= (main_assert_1_arm 1))
   (-> main_done_2))
 
-(-main_contract_1_monitor
-  (<- (main_contract_1_pending 1)
-      <(& main_contract_1_arm (! main_contract_1_pending)))
-  (<- (main_contract_1_pending 0)
-      <(| (& main_contract_1_pending done)
-          (& main_contract_1_pending (! done) (== main_contract_1_age 2))))
-  (<- (main_contract_1_age 0)
-      <(& main_contract_1_arm (! main_contract_1_pending)))
-  (<- (main_contract_1_age (+ main_contract_1_age 1))
-      <(& main_contract_1_pending (! done) (! (== main_contract_1_age 2))))
-  (<- (main_contract_1_fail 1)
-      <(| (& main_contract_1_arm main_contract_1_pending)
-          (& main_contract_1_pending (! done) (== main_contract_1_age 2)))))
+(-main_assert_1_monitor
+  (<- (main_assert_1_pending 1)
+      <(& main_assert_1_arm (! main_assert_1_pending)))
+  (<- (main_assert_1_pending 0)
+      <(| (& main_assert_1_pending done)
+          (& main_assert_1_pending (! done) (== main_assert_1_age 2))))
+  (<- (main_assert_1_age 0)
+      <(& main_assert_1_arm (! main_assert_1_pending)))
+  (<- (main_assert_1_age (+ main_assert_1_age 1))
+      <(& main_assert_1_pending (! done) (! (== main_assert_1_age 2))))
+  (<- (main_assert_1_fail 1)
+      <(| (& main_assert_1_arm main_assert_1_pending)
+          (& main_assert_1_pending (! done) (== main_assert_1_age 2)))))
 ```

@@ -2202,9 +2202,11 @@ Current transaction clauses:
 Unsupported transaction clause heads now fail closed during lowering instead
 of being silently ignored. The same applies inside currently lowered body
 contexts: `when` bodies, `switch` branches, and `repeat` bodies each have a
-bounded supported subset matching the shipped lowerer. Deferred-but-recognized
-`(contract ...)` and transaction `(stage ...)` clauses keep their more specific
-diagnostics.
+bounded supported subset matching the shipped lowerer. The deferred-but-recognized
+transaction `(stage ...)` clause keeps its more specific diagnostic. The removed
+`(contract ...)` clause is no longer recognized — it falls to the generic
+unsupported-clause diagnostic (its bounded-eventually intent is now
+`(assert (monitor (within signal cycles)))`).
 
 ### 7.1 Activation
 
@@ -4044,13 +4046,13 @@ shipped transaction stages through `transaction_stages` entries containing the
 authored transaction and stage names, `kind = ready_valid_barrier`, generated
 state name, ready input, and valid output.
 
-Transaction-level `(contract name (eventually signal within cycles))` is the
-preferred spelling for the first shipped temporal-contract subset. FSMGen also
-accepts the older nested alias
-`(contract name (eventually signal (within cycles)))`; both forms lower to the
-same bounded-eventually monitor. The contract is supported only as a top-level
-transaction clause, with a unique contract name per transaction, `signal` bound
-to a scalar actor interface input or output, and `cycles` as either a positive
+The bounded-eventually monitor `(assert (monitor (within signal cycles)) ["name"])`,
+placed in a transaction body, asserts that `signal` must hold within `cycles`
+cycles of the cycle control reaches that clause. (It replaces the former
+top-level `(contract name (eventually signal within cycles))` clause, which was
+removed in favor of this unified verification surface.) It is supported with
+`signal` bound to a scalar actor interface input or output, and `cycles` as
+either a positive
 integer literal, a declared actor constant that resolves to a positive
 integer, an actor-local scalar parameter default that resolves to a positive
 integer, a qualified imported package scalar constant that resolves to a
@@ -5534,7 +5536,6 @@ Focused tests:
 - [t/1172-isf-rule-trigger-fanin-schedule-report.t](../t/1172-isf-rule-trigger-fanin-schedule-report.t)
 - [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
 - [t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
-- [t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
 - [t/1176-isf-resource-priority-boundary.t](../t/1176-isf-resource-priority-boundary.t)
 - [t/1177-isf-do-child-done-pulse.t](../t/1177-isf-do-child-done-pulse.t)
 - [t/1178-isf-handshake-compatibility-boundary.t](../t/1178-isf-handshake-compatibility-boundary.t)
@@ -5582,8 +5583,6 @@ Focused tests:
 - [t/1221-isf-rule-expression-assignment.t](../t/1221-isf-rule-expression-assignment.t)
 - [t/1222-isf-rule-expression-conflict-report.t](../t/1222-isf-rule-expression-conflict-report.t)
 - [t/1223-isf-stage-lowering.t](../t/1223-isf-stage-lowering.t)
-- [t/1224-isf-contract-lowering.t](../t/1224-isf-contract-lowering.t)
-- [t/1225-isf-stage-contract-schedule-report.t](../t/1225-isf-stage-contract-schedule-report.t)
 - [t/1226-isf-data-width-storage-report.t](../t/1226-isf-data-width-storage-report.t)
 - [t/1227-isf-schedule-report-freeze-boundary.t](../t/1227-isf-schedule-report-freeze-boundary.t)
 - [t/1228-isf-spi-fixture-coverage.t](../t/1228-isf-spi-fixture-coverage.t)
@@ -5611,7 +5610,6 @@ Focused tests:
 - [t/1250-isf-spec-focused-test-index-audit.t](../t/1250-isf-spec-focused-test-index-audit.t)
 - [t/1252-isf-actor-phase-stage-report.t](../t/1252-isf-actor-phase-stage-report.t)
 - [t/1253-isf-actor-param-report.t](../t/1253-isf-actor-param-report.t)
-- [t/1254-isf-temporal-contract-storage-report.t](../t/1254-isf-temporal-contract-storage-report.t)
 - [t/1255-isf-schedule-report-golden-matrix.t](../t/1255-isf-schedule-report-golden-matrix.t)
 - [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t)
 - [t/1258-isf-enum-member-constants.t](../t/1258-isf-enum-member-constants.t)
@@ -5673,7 +5671,6 @@ Focused tests:
 - [t/1314-isf-when-fixture-coverage.t](../t/1314-isf-when-fixture-coverage.t)
 - [t/1315-isf-generated-composition-fixture-coverage.t](../t/1315-isf-generated-composition-fixture-coverage.t)
 - [t/1316-isf-rule-resource-fixture-coverage.t](../t/1316-isf-rule-resource-fixture-coverage.t)
-- [t/1317-isf-stage-contract-fixture-coverage.t](../t/1317-isf-stage-contract-fixture-coverage.t)
 - [t/1318-isf-shift-left-explicit-width.t](../t/1318-isf-shift-left-explicit-width.t)
 - [t/1319-isf-fifo-datapath-fixture-coverage.t](../t/1319-isf-fifo-datapath-fixture-coverage.t)
 - [t/1320-isf-fifo-controller-fixture-coverage.t](../t/1320-isf-fifo-controller-fixture-coverage.t)
@@ -5718,11 +5715,7 @@ Focused tests:
 - [t/1359-isf-wait-package-constant-counts.t](../t/1359-isf-wait-package-constant-counts.t)
 - [t/1360-isf-repeat-package-constant-counts.t](../t/1360-isf-repeat-package-constant-counts.t)
 - [t/1361-isf-latency-package-constant-bounds.t](../t/1361-isf-latency-package-constant-bounds.t)
-- [t/1362-isf-contract-package-constant-windows.t](../t/1362-isf-contract-package-constant-windows.t)
 - [t/1363-isf-watchdog-package-constant-limits.t](../t/1363-isf-watchdog-package-constant-limits.t)
-- [t/1364-isf-contract-transaction-param-windows.t](../t/1364-isf-contract-transaction-param-windows.t)
-- [t/1365-isf-contract-direct-transaction-param-windows.t](../t/1365-isf-contract-direct-transaction-param-windows.t)
-- [t/1366-isf-contract-activation-override-windows.t](../t/1366-isf-contract-activation-override-windows.t)
 - [t/1367-isf-data-op-transaction-param-widths.t](../t/1367-isf-data-op-transaction-param-widths.t)
 - [t/1368-isf-transaction-port-transaction-param-widths.t](../t/1368-isf-transaction-port-transaction-param-widths.t)
 - [t/1369-isf-timing-param-activation-override-gates.t](../t/1369-isf-timing-param-activation-override-gates.t)
@@ -5915,8 +5908,8 @@ Focused tests:
 - Transaction `(stage ...)` forms beyond the shipped top-level ready/valid
   barrier: nested stages, stage-local latency/compute bodies, multiple
   endpoints, registered-valid variants, and skid buffers remain deferred.
-- Temporal `(contract ...)` forms beyond the shipped top-level bounded
-  eventual subset with positive decimal literal, positive actor-constant,
+- Temporal monitor forms beyond the shipped top-level bounded-eventually
+  `(assert (monitor (within signal N)))` subset with positive decimal literal, positive actor-constant,
   positive actor-scalar-parameter, qualified package scalar-constant,
   generated-child or direct same-transaction scalar-parameter windows, and
   same-value generated child activation-site overrides for those

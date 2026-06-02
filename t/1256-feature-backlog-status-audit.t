@@ -20,8 +20,8 @@ my %expected_status = (
         'partially shipped; broader inference surfaces remain backlog.',
     'Backend-Owned Struct/Record Default Lowering' =>
         'partially shipped; broader default-lowering policy remains backlog.',
-    'Temporal Contract Lowering' =>
-        'partially shipped; broader contract forms remain backlog.',
+    'Bounded-Eventually Monitor Lowering' =>
+        'shipped (the bounded-eventually subset); broader temporal forms remain backlog.',
     'Fully Frozen Schedule JSON Schema' =>
         'shipped for schedule JSON `schema_version: 1`.',
     'ISF Reusable Libraries' =>

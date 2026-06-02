@@ -441,9 +441,12 @@ sub assert_branch_present {
         is_deeply($report->{compile_issues}, [], "$label has the successful empty compile_issues shape");
         return;
     }
-    if ($branch eq 'schedule_report_temporal_contract_reset_policy_shape') {
-        my $contract_entry = first_entry($report->{temporal_contracts});
-        ok(ref($contract_entry->{reset_policy}) eq 'HASH', "$label has temporal reset policy");
+    if ($branch =~ /^schedule_report_temporal_contract_/) {
+        # The bounded-eventually `(contract …)` clause was removed; the
+        # temporal_contracts report field still exists but is now always an
+        # empty array, so every temporal-contract branch is satisfied by the
+        # empty shape rather than by authored entries.
+        is_deeply($report->{temporal_contracts}, [], "$label has the empty temporal_contracts shape");
         return;
     }
     if ($branch eq 'schedule_report_dt_assignments_shape') {
@@ -500,7 +503,6 @@ sub assert_key_branch {
         schedule_report_library_use_keys => ['library_uses'],
         schedule_report_priority_resolution_keys => ['priority_resolutions'],
         schedule_report_resource_arbitration_keys => ['resource_arbitration'],
-        schedule_report_temporal_contract_keys => ['temporal_contracts'],
         schedule_report_transaction_keys => ['transactions'],
         schedule_report_transaction_loop_keys => ['transaction_loops'],
         schedule_report_transaction_port_binding_keys => ['transaction_port_bindings'],
@@ -688,15 +690,6 @@ sub assert_value_branch {
     }
     elsif ($branch eq 'schedule_report_transaction_stage_kind_values') {
         @values = map { $_->{kind} } @{$report->{transaction_stages}};
-    }
-    elsif ($branch eq 'schedule_report_temporal_contract_kind_values') {
-        @values = map { $_->{kind} } @{$report->{temporal_contracts}};
-    }
-    elsif ($branch eq 'schedule_report_temporal_contract_overlap_policy_values') {
-        @values = map { $_->{overlap_policy} } @{$report->{temporal_contracts}};
-    }
-    elsif ($branch eq 'schedule_report_temporal_contract_assertion_projection_values') {
-        @values = map { $_->{assertion_projection} } @{$report->{temporal_contracts}};
     }
     elsif ($branch eq 'schedule_report_dt_kind_values') {
         @values = map { $_->{kind} } @{$report->{dt_blocks}};
@@ -1081,7 +1074,6 @@ sub stage_contract_source {
   (transaction main
     (on start)
     (stage accept (input ready) (output valid))
-    (contract ack_seen (eventually ack (within 3)))
     (complete done)))
 ISF
 }

@@ -110,13 +110,13 @@ ISF
 };
 
 subtest 'deferred transaction clauses keep their specific diagnostics' => sub {
-    assert_lower_rejected(<<'ISF', 'unsupported contract remains specific', qr/\ATransaction 'main': contract 'eventually_done' supports only '\(eventually signal within cycles\)' or '\(eventually signal \(within cycles\)\)'/);
+    assert_lower_rejected(<<'ISF', 'removed contract keyword', qr/\ATransaction 'main': unsupported '\(contract \.\.\.\)' clause in transaction body/);
 (actor deferred_contract
   (clock clk)
   (interface (input start) (output done))
   (transaction main
     (on start)
-    (contract eventually_done (always done))
+    (contract eventually_done (eventually done (within 2)))
     (complete done)))
 ISF
 

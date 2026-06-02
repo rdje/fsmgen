@@ -73,7 +73,7 @@ subtest 'schedule reports use exactly advertised DT kind values' => sub {
     (output done))
   (transaction main
     (on start)
-    (contract ack_seen (eventually ack (within 2)))
+    (assert (monitor (within ack 2)) "ack_seen")
     (complete done)))
 ISF
     for my $dt (@{$contract_report->{dt_blocks} || []}) {

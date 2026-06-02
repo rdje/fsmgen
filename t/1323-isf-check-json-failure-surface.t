@@ -8,8 +8,8 @@ use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
 
 subtest 'ISF lowering failures emit check JSON instead of empty stdout' => sub {
-    my $decoded = run_failed_check_json_source(<<'ISF', 'bad_contract.isf');
-(actor bad_contract
+    my $decoded = run_failed_check_json_source(<<'ISF', 'bad_clause.isf');
+(actor bad_clause
   (clock clk)
   (interface
     (input start)
@@ -17,7 +17,7 @@ subtest 'ISF lowering failures emit check JSON instead of empty stdout' => sub {
     (output done))
   (transaction main
     (on start)
-    (contract ack_seen (always ack))
+    (future_op ack)
     (complete done)))
 ISF
 
@@ -25,7 +25,7 @@ ISF
     is(scalar(@{$decoded->{diagnostics} || []}), 1, 'lowering failure emits one diagnostic');
     like(
         $decoded->{diagnostics}[0]{message},
-        qr/\ATransaction 'main': contract 'ack_seen' supports only '\(eventually signal within cycles\)' or '\(eventually signal \(within cycles\)\)'/,
+        qr/\ATransaction 'main': unsupported '\(future_op \.\.\.\)' clause in transaction body/,
         'lowering diagnostic is preserved in the JSON payload',
     );
     is($decoded->{command}{mode}, 'check', 'failure payload keeps check command mode');

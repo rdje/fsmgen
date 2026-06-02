@@ -2887,30 +2887,30 @@ for no explicit timing clause.
 This is a public summary for downstream tooling, not the raw binding or
 assignment-provenance internals.
 
-### Temporal Contract Lowering
+### Bounded-Eventually Monitor Lowering
 
-Status: partially shipped; broader contract forms remain backlog.
+Status: shipped (the bounded-eventually subset); broader temporal forms remain backlog.
 
-Goal: lower transaction `(contract ...)` temporal assertions into generated
-checks or equivalent scheduled artifacts.
+Goal: express bounded-liveness intent ("this signal must hold within N cycles of
+a point") as a synthesizable monitor plus a verification assertion.
 
-Shipped subset: a top-level transaction contract of the preferred form
-`(contract name (eventually signal within cycles))`. The older nested
-`(eventually signal (within cycles))` spelling remains accepted as an alias.
-The `cycles` value may be a positive integer literal, a declared actor
-constant, an actor-local scalar parameter default, a qualified imported
-package scalar constant, or a same-transaction scalar parameter default on a
-generated child or direct/non-generated transaction that resolves to a positive
-integer. Direct transaction parameters are local lowering inputs for this
-contract-window value domain and are not emitted as actor-level `.fsm`
-`+params`.
+Shipped subset: the bounded-eventually monitor `(assert (monitor (within signal
+N)) ["name"])` placed in a transaction body — from the cycle control reaches the
+clause, `signal` must hold within `N` cycles. `N` may be a positive integer
+literal, a declared actor constant, an actor-local scalar parameter default, a
+qualified imported package scalar constant, or a same-transaction scalar
+parameter default on a generated child or direct/non-generated transaction that
+resolves to a positive integer. Direct transaction parameters are local lowering
+inputs for this window value domain and are not emitted as actor-level `.fsm`
+`+params`. (This replaces the former top-level `(contract name (eventually
+signal within cycles))` clause, removed in favor of the unified verification
+surface.)
 
 Activation-site overrides on `spawn`, generated blocking `do`, or rule
-`trigger` that target a generated child parameter used by the child contract
-window are accepted only when they resolve to the same positive integer cycle
-count as the child transaction parameter default. Mismatched overrides fail
-closed with a targeted diagnostic. Full override-specialized contract-window
-lowering remains backlog.
+`trigger` that target a generated child parameter used by a static timing value
+are accepted only when they resolve to the same value as the child transaction
+parameter default. Mismatched overrides fail closed with a targeted diagnostic.
+Full override-specialized window/timing lowering remains backlog.
 Generated child activation overrides that target transaction parameters used
 by static timing lowering for repeat counts, wait counts, latency bounds, or
 top-level await-local watchdog limits now use the same default-preserving
@@ -2934,24 +2934,19 @@ shipped.
 Reaching the clause emits one arm state; the generated scheduled `.fsm`
 monitor tracks pending/age/fail storage, clears on actor reset, and sets a
 sticky fail bit if the signal is not seen within the window or if the same
-contract is armed again while pending.
+monitor is armed again while pending.
 
-SystemVerilog generation now projects the sticky fail bit into a
-verification-only assertion under `` `ifndef SYNTHESIS``; Verilog output stays
-assertion-free. Remaining backlog: override-specialized contract-window
-lowering after mismatched activation-site parameter overrides,
-runtime-signal or expression windows, unknown or unqualified package constants, aggregate
-package constants, package
-member/item paths, package constants inside contract-window expressions,
-global `always` implication forms, min/max windows, dynamic bounds,
-same-cycle checks, nested contracts, expression operands, and multiple
-outstanding obligations.
+SystemVerilog generation projects the sticky fail bit into a same-cycle clocked
+concurrent assertion (`!fail`) under `` `ifndef SYNTHESIS`` — verilator-simulable;
+Verilog output stays assertion-free. Remaining backlog: runtime-signal or
+expression windows, package constants inside window expressions, global `always`
+implication forms, min/max windows, dynamic bounds, same-cycle-only checks,
+nested monitors, expression operands, and multiple outstanding obligations.
 
-The file-backed `isf/stream_stage_contract.isf` fixture covers the shipped
-top-level ready/valid stage plus bounded eventual contract path through
-strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
-generation, temporal monitor storage roles, and SystemVerilog sticky-fail
-assertion projection.
+The file-backed `isf/stream_stage_contract.isf` fixture covers the ready/valid
+stage plus bounded-eventually monitor path through scheduled `.fsm` structure,
+plain and strict HDL generation, temporal-monitor storage roles, and the
+SystemVerilog sticky-fail assertion projection.
 
 ### Legacy Handshake Semantics
 

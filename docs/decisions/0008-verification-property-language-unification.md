@@ -2,8 +2,12 @@
 
 - Date: 2026-06-02
 - Type: architecture
-- Status: accepted (direction); execution staged (`ISF-ASSERT-CONCURRENT`,
-  `ISF-PROPERTY-IMPLICATION`, then a later `contract` fold-in)
+- Status: accepted; **executed** — `ISF-ASSERT-CONCURRENT` (clocked concurrent
+  checks), `ISF-PROPERTY-IMPLICATION` (temporal grammar), and `ISF-TRIGGER-ANCHOR`
+  (trigger vocabulary + synthesizable-monitor output-mode) shipped; **`(contract …)`
+  removed** in `ISF-TRIGGER-ANCHOR.6` (replaced losslessly by `(assert (monitor
+  (within S N)))`). Remaining tail: `ISF-TRIGGER-ANCHOR.5` (Ref trigger) and `.6c`
+  (residual "contract" wording neutralization).
 
 ## Context
 

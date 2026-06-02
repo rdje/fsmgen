@@ -1482,7 +1482,7 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_stage');
 };
 
-subtest 'top-level runtime scalar waits can zero-bypass pending samples into contract arm states' => sub {
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into monitor arm states' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-contract');
 (actor wait_dynamic_sample_contract
   (clock clk)
@@ -1500,7 +1500,7 @@ subtest 'top-level runtime scalar waits can zero-bypass pending samples into con
     (on start)
     (sample din as hold)
     (wait cycles)
-    (contract ack_seen (eventually ack (within 3)))
+    (assert (monitor (within ack 3)) "ack_seen")
     (drive captured hold)
     (complete done)))
 ISF
@@ -1508,32 +1508,32 @@ ISF
     my $fsm = $lowered->{files}{'wait_dynamic_sample_contract.fsm'};
     my $idle = state_block($fsm, 'main_idle_0');
     like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
-        'zero path bypasses directly to a sample-preserving contract clone');
+        'zero path bypasses directly to a sample-preserving monitor clone');
 
     my $wait = state_block($fsm, 'main_wait_1');
     like($wait, qr/\(<= \(hold din\)\)/,
         'positive path materializes the pending sample in the first wait state');
-    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_contract_2\)\)/,
-        'positive path exits to the original contract arm state');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_assert_2\)\)/,
+        'positive path exits to the original monitor arm state');
 
-    my $contract = state_block($fsm, 'main_contract_2');
+    my $contract = state_block($fsm, 'main_assert_2');
     unlike($contract, qr/\(<= \(hold din\)\)/,
-        'original contract arm does not double-sample after a positive wait');
-    like($contract, qr/\(= \(main_contract_2_arm 1\)\)/,
-        'original contract arm emits the arm request');
+        'original monitor arm does not double-sample after a positive wait');
+    like($contract, qr/\(= \(main_assert_2_arm 1\)\)/,
+        'original monitor arm emits the arm request');
     like($contract, qr/\(-> main_drive_3\)/,
-        'original contract arm advances to the following state');
+        'original monitor arm advances to the following state');
 
     my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
     like($zero_clone, qr/\(<= \(hold din\)\)/,
-        'zero-count contract clone materializes the pending sample');
-    like($zero_clone, qr/\(= \(main_contract_2_arm 1\)\)/,
-        'zero-count contract clone emits the same arm request');
+        'zero-count monitor clone materializes the pending sample');
+    like($zero_clone, qr/\(= \(main_assert_2_arm 1\)\)/,
+        'zero-count monitor clone emits the same arm request');
     like($zero_clone, qr/\(-> main_drive_3\)/,
-        'zero-count contract clone advances like the original contract state');
+        'zero-count monitor clone advances like the original monitor state');
 
-    like($fsm, qr/\(-main_contract_2_monitor[\s\S]*\(<- \(main_contract_2_pending 1\) <\(& main_contract_2_arm \(! main_contract_2_pending\)\)\)/,
-        'contract monitor still owns pending storage and observes the arm request');
+    like($fsm, qr/\(-main_assert_2_monitor[\s\S]*\(<- \(main_assert_2_pending 1\) <\(& main_assert_2_arm \(! main_assert_2_pending\)\)\)/,
+        'monitor still owns pending storage and observes the arm request');
 
     is_deeply(
         $report->{transaction_waits},
@@ -1544,12 +1544,12 @@ ISF
                 count_kind     => 'runtime_scalar',
                 count_source   => 'cycles',
                 entry_state    => 'main_wait_1',
-                exit_state     => 'main_contract_2',
+                exit_state     => 'main_assert_2',
                 counter_signal => 'main_wait_1_cnt',
                 counter_width  => 4,
             },
         ],
-        'contract zero-bypass report still points at the original positive successor',
+        'monitor zero-bypass report still points at the original positive successor',
     );
 
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_contract');

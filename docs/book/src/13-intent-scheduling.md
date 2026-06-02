@@ -499,14 +499,18 @@ artifacts, `actor_network`, `generated_composition`, `library_uses[]`, and
 Shipped transaction stages now project into `transaction_stages` with authored names, generated
 state, and ready/valid endpoints.
 
-Shipped bounded eventual contracts project
-into `temporal_contracts` with trigger state, observed signal, cycle bound,
-generated storage signal names, reset policy, overlap policy, and assertion
-projection status.
+The former top-level `(contract …)` clause has been removed, so the
+`temporal_contracts` report array is now always an empty array `[]` (the field
+is retained for schema-version-1 stability and no longer carries trigger state,
+observed signal, cycle bound, or generated storage signal names). Bounded
+eventual intent is now expressed as the `(assert (monitor (within S N)))`
+monitor, which surfaces through the immediate-check `+assert` path rather than
+`temporal_contracts[]`.
 
-The current projection value is
-`systemverilog_sticky_fail`: SystemVerilog HDL checks the generated sticky
-fail bit under `` `ifndef SYNTHESIS``, while Verilog output stays
+The monitor still emits its arm/pending/age/fail storage under the
+`temporal_contract_monitor` storage role, and SystemVerilog HDL checks the
+generated sticky fail bit as a same-cycle clocked concurrent property under
+`` `ifndef SYNTHESIS`` (verilator-simulable), while Verilog output stays
 assertion-free.
 
 Monitor equations and backend assertion text remain private
@@ -592,9 +596,11 @@ states use `scheduler_error_status` for the global `last_error` status latch.
 Transaction-local port storage uses `transaction_port` when a declared port is
 materialized in the scheduled `.fsm` review artifact.
 
-Temporal-contract pending/fail registers and age counters share the
-`temporal_contract_monitor` role; `temporal_contracts[]` names the specific
-pending, counter, and fail signals for each contract.
+Bounded-eventually-monitor pending/fail registers and age counters share the
+`temporal_contract_monitor` role; the `temporal_contracts[]` report array is now
+always empty (retained for schema-version-1 stability), so the monitor signals
+are reviewable through the scheduled `.fsm` and the `+assert` carrier rather
+than through that array.
 
 Optional positive integer `width` values belong to declared actor-owned storage, inferred
 counters, and register storage with known ISF width evidence.
@@ -608,9 +614,10 @@ Transaction summaries expose emitted scheduled-state names in `states`, and
 name while each `states` array keeps scheduled `.fsm` state emission order.
 
 Transaction stage summaries advertise `ready_valid_barrier` as their current
-kind, and temporal contract summaries advertise `bounded_eventually`, `fail`
-overlap policy, and `systemverilog_sticky_fail` assertion projection as their
-current value families.
+kind. The `temporal_contracts[]` array is now always empty (its former
+`(contract …)` clause was removed), so it advertises no per-entry value
+families; bounded-eventually intent surfaces through the `+assert` carrier
+instead.
 
 Reset summaries advertise `async`/`sync`
 kind values and `active_high`/`active_low` polarity values. Configured and
@@ -1109,30 +1116,25 @@ The ISF-specific current limitations are:
   descending slices only; multiple unknown field widths, non-positive inferred
   remainders, or source/field width disagreement fail closed before scheduled
   `.fsm` emission.
-- The first `(contract ...)` temporal assertion subset is implemented for
-  top-level `(contract name (eventually signal within cycles))`. The older
-  nested `(eventually signal (within cycles))` spelling remains accepted as an
-  alias. The `cycles` token may be a positive integer literal or a declared
+- The bounded-eventually monitor subset is expressed as
+  `(assert (monitor (within signal cycles)) ["name"])` in a transaction body
+  (this replaced the former top-level `(contract …)` clause, which has been
+  removed). The `cycles` token may be a positive integer literal or a declared
   actor constant, actor-local scalar parameter default, qualified imported
-  package scalar constant, or same-transaction scalar parameter default on a
-  generated child or direct/non-generated transaction that resolves to a
-  positive integer. Direct transaction parameters are local lowering inputs for
-  this contract-window value domain and are not emitted as actor-level `.fsm`
-  `+params`. Activation-site overrides on `spawn`, generated blocking `do`,
-  or rule `trigger` that target a generated child parameter used by the child
-  contract window are accepted only when the override resolves to the same
-  positive integer cycle count as the child transaction parameter default.
-  Mismatched overrides fail closed with a targeted diagnostic; override
-  specialization of generated child contract windows remains deferred.
-  Runtime expressions, arbitrary expressions, unknown or
-  unqualified package constants, aggregate package constants, package
+  package scalar constant, or same-transaction scalar parameter default that
+  resolves to a positive integer. Direct transaction parameters are local
+  lowering inputs for this monitor-window value domain and are not emitted as
+  actor-level `.fsm` `+params`. Runtime expressions, arbitrary expressions,
+  unknown or unqualified package constants, aggregate package constants, package
   member/item paths, ambiguous local-enum/package-constant spellings,
   zero-valued constants, and zero-valued or non-scalar actor/transaction
   parameters remain invalid.
-  Both forms lower to an arm state plus an always-on monitor DT with pending,
-  age, and sticky-fail storage, and reports expose the resolved bound in
-  `temporal_contracts[].within_cycles`.
-  Nested contracts and richer temporal forms still fail closed instead of being
+  The monitor lowers to an arm state plus an always-on monitor DT with pending,
+  age, and sticky-fail storage (storage role `temporal_contract_monitor`), and
+  asserts the negated fail bit through the immediate-check `+assert` path; the
+  `temporal_contracts[]` report array is now always empty (retained for
+  schema-version-1 stability).
+  Nested monitors and richer temporal forms still fail closed instead of being
   dropped from the scheduled `.fsm`.
 - Transaction `(latency (min N) (max M))` accepts positive decimal literals,
   declared actor constants, actor-local scalar parameter defaults, and

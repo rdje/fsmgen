@@ -117,7 +117,6 @@ subtest 'direct transaction parameters are accepted as data-operation widths' =>
       (PAYLOAD_W 8)
       (CRC_W 4)
       (DERIVED_W SHREG_W))
-    (contract bit_seen (eventually bit_in (within SHREG_W)))
     (shift_left shreg bit_in (width FLAT_W))
     (shift_right shreg bit_in (width DERIVED_W))
     (extract packet as header payload crc (widths HEADER_W PAYLOAD_W CRC_W))

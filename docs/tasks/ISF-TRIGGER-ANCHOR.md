@@ -151,7 +151,34 @@ See `docs/decisions/0009`. Two orthogonal additions:
     → 3, ACTOR_WIN=8 → 7); `--verify-hdl` verilator-lint + yosys clean on a param-window monitor;
     all contract-window tests (`t/1362/1364/1365/1366`) green (`t/1365` param-gate diagnostic
     updated for the new wording).
-  - **`.6` cleanup note:** the shared resolver still says "contract" / "temporal contract" / mentions
-    `eventually` in its rarer identifier-window error paths; that wording is neutralized in `.6` when
-    the resolver is renamed as part of de-contract-ifying the lowerer (cohesive there, not deferred).
+  - **`.6c` cleanup note:** the shared resolver still says "contract" / "temporal contract" / mentions
+    `eventually` in its rarer identifier-window error paths; that wording is neutralized in `.6c` when
+    the resolver is renamed as part of de-contract-ifying the lowerer.
   - Remaining: `.5` Ref named `(at NAME)`, `.6` remove `(contract …)`.
+- `2026-06-02`: `.6` done — **`(contract …)` removed.** The clause is no longer recognized (it falls
+  to the generic unsupported-clause diagnostic); the inline monitored form `(assert (monitor (within
+  S N)))` is the lossless replacement (same arm/age/fail engine, now also asserting `(! fail)`).
+  - **Lowerer/parser (LoweringIR + ISF Parser):** removed the `contract` whitelist entry, the clause
+    validation + lowering dispatch, `_ir_contract`, `_parse_bounded_eventual_contract_clause`,
+    `_bounded_eventual_contract_parts`, `_validate_contract_monitor_signal_names`,
+    `_contract_monitor_signals`, the contract-window param-gate helpers
+    (`_transaction_params_used_by_contract_window`/`_transaction_contract_window_param_names`/
+    `_contract_within_value_if_present`), the rule activation-override contract-window checks
+    (`_activation_override_preserves_contract_window_param`), and the parser's contract enum-rejection
+    block + `_reject_contract_window_enum_member_value`. KEPT (shared with `(monitor …)`):
+    `_build_eventually_monitor`, `_monitor_signals_for_prefix`, `_temporal_contract_within_cycles`,
+    `_contract_package_constant_window_cycles`, the `kind=>'contract'` arm-state kind, and the
+    `temporal_contracts` report plumbing (now always `[]`, retained for schema-version-1 stability).
+  - **Report fix (latent `.3` bug):** `JSON::_transaction_summary` grouped states by a regex that knew
+    `contract` but not `assert`/`cover`/`assume`, so a monitor arm state (`*_assert_N`) fell under an
+    `undef` transaction key (uninitialized-value warning). Taught the regex the check-kind prefixes.
+  - **Tests:** deleted 9 contract-only tests (`t/1175/1224/1225/1254/1317/1362/1364/1365/1366`);
+    updated 6 mixed tests (`t/1158/1180/1244/1255/1323/1367`) to drop/repurpose the contract case
+    (swapping to `(monitor …)` where the bounded-eventually hardware was genuinely needed); cleaned the
+    9 deleted entries from `ISF_SPEC.md`, the `tested_by` provenance in `ISFPublicInterfaceContract.pm`,
+    the t/1144 expected list, and the t/1183 CI-tier fixture (→ a live rule/resource fixture).
+  - **Docs:** reframed the book (13d/13h/13k/13-intent/14-backlog) + book-matrix audit (`t/1305`) and the
+    `ISF_SPEC.md` / downstream-spec clause-authoring sections to the `(assert (monitor (within S N)))`
+    form. Swapped the broken `isf/stream_stage_contract.isf` fixture's contract clause to the monitor.
+  - Remaining: `.5` Ref named `(at NAME)`; `.6c` neutralize residual "contract" wording (resolver rename
+    + ISF_SPEC/downstream lowering/report-schema prose, which describe the now-empty field).

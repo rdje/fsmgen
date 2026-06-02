@@ -954,8 +954,8 @@ Transaction clauses currently supported:
          (max N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT))
                                   ;; bounds resolve to positive integers
 (stage ...)
-(contract name (eventually signal within N|PARAM|CONST|PACKAGE.CONSTANT))
-                                  ;; window resolves to a positive integer
+(assert (monitor (within signal N|PARAM|CONST|PACKAGE.CONSTANT)) "name")
+                                  ;; bounded-eventually monitor; window resolves to a positive integer
 ```
 
 ### 11.1 Entry Activation

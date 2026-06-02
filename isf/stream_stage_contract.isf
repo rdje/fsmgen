@@ -1,4 +1,4 @@
-;; Ready/valid stream-stage fixture with a bounded eventual acknowledgement contract.
+;; Ready/valid stream-stage fixture with a bounded-eventually acknowledgement monitor.
 (actor stream_stage_contract
   (clock clk)
   (reset (rst_n async active_low))
@@ -16,5 +16,5 @@
       (sample data_in as captured))
     (set data_out captured)
     (stage accept (input ready) (output valid))
-    (contract ack_seen (eventually ack (within 3)))
+    (assert (monitor (within ack 3)) "ack_seen")
     (complete done)))

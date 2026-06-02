@@ -874,10 +874,10 @@ A runnable example — a saturating value with an in-range invariant:
 Under simulation the assertion stays silent while `count < 200` and fires (with
 the message) the moment it is violated.
 
-`(assert …)` is the **immediate / combinational** sibling of the temporal
-`(contract NAME (eventually SIGNAL within CYCLES))` (which checks a property over
-a bounded number of cycles). Use `(assert …)` for "this must always hold," and a
-`(contract …)` for "this must eventually happen within N cycles."
+Use `(assert …)` for "this must always hold." For "this must eventually happen
+within N cycles," use the bounded-eventually monitor `(assert (monitor (within
+SIGNAL N)) …)` documented below (which checks a property over a bounded number
+of cycles).
 
 ### `(cover …)` and `(assume …)`
 
@@ -941,7 +941,8 @@ antecedent and a consequent) fails closed.
 
 `(next X)` lowers to `##1 (X)` and `(within X N)` to `##[1:N] (X)` (`N` a literal
 `>= 1`). These together with an implication express bounded liveness — the same
-intent as the temporal `(contract (eventually S within N))`.
+intent as the synthesizable-monitor form documented below (which replaced the
+former `(contract (eventually S within N))` clause).
 
 > **Checkability split.** verilator cannot simulate an implication with a *delayed*
 > (sequence) consequent — only the same-cycle overlapping `|->`. So checks that use
@@ -971,9 +972,9 @@ delayed consequent and is formal-only (under `` `ifdef FORMAL ``). A malformed
 
 This is the first of three trigger spellings (event, inline-positioned, and named
 `(at …)`) that let bounded-liveness intent be expressed in the property language;
-together with a synthesizable-monitor output mode they replace the standalone
-`(contract (eventually S within N))`, which is then removed (see
-`docs/decisions/0009` and `docs/decisions/0008`).
+together with a synthesizable-monitor output mode they replace the former
+standalone `(contract (eventually S within N))` clause, which has been removed
+(see `docs/decisions/0009` and `docs/decisions/0008`).
 
 ### Synthesizable-monitor output mode — `(monitor (within S N))`
 
@@ -997,15 +998,16 @@ the fail bit, so the temporal bookkeeping lives in hardware and the assertion it
 is verilator-simulable. The monitor registers are internal (driven by the generated
 monitor logic); the `!fail` reference does not turn them into ports.
 
-The window is measured from the cycle *after* the arm pulse (same as
-`(contract …)`), so `S` asserted on the arm cycle itself does not count; it must hold
-within the following `N` cycles. `N` may be a positive literal **or** a
+The window is measured from the cycle *after* the arm pulse (same as the former
+`(contract …)` clause), so `S` asserted on the arm cycle itself does not count; it
+must hold within the following `N` cycles. `N` may be a positive literal **or** a
 transaction/actor scalar parameter, an actor constant, or a qualified package scalar
-constant (the same window sources `(contract …)` accepts); `S` must be an actor
-interface signal, and only `(monitor (within S N))` is supported — other inner forms
-fail closed. This is the same monitor engine `(contract …)` lowers to (arm state +
-`arm`/`pending`/`age`/`fail` DT), now reachable from the property language; once the
-inline/event/named triggers all drive it, `(contract …)` is removed (`0009`).
+constant (the same window sources the former `(contract …)` clause accepted); `S`
+must be an actor interface signal, and only `(monitor (within S N))` is supported —
+other inner forms fail closed. This is the same monitor engine the former
+`(contract …)` clause lowered to (arm state + `arm`/`pending`/`age`/`fail` DT), now
+reachable from the property language; the inline/event/named triggers all drive it,
+and the former `(contract …)` clause has been removed (`0009`).
 
 A malformed form fails closed before `.fsm` emission: e.g. `(assert)` /
 `(cover)` / `(assume)` with no condition, or more than a condition + one message

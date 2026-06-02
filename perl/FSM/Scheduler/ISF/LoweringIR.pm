@@ -16,7 +16,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
         map { $_ => 1 } qw(
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
-            await_any params stage contract store load wait while until set
+            await_any params stage store load wait while until set
             atl_trigger atl_trigger_batch local assert cover assume
         )
     },
@@ -2567,12 +2567,6 @@ sub _validate_transaction_clause_domain_refs {
         }
         return 1;
     }
-    if ($keyword eq 'contract') {
-        my $eventual = $clause->[2];
-        _validate_domain_signal_access($eventual->[1], 'read', $domain, $signal_domains, $local_signals, $constants, "$context contract '$clause->[1]'")
-            if ref($eventual) eq 'ARRAY' && @$eventual >= 2;
-        return 1;
-    }
     if ($keyword eq 'on' || $keyword eq 'await') {
         _validate_domain_signal_access($clause->[1], 'read', $domain, $signal_domains, $local_signals, $constants, "$context $keyword clause");
         if ($keyword eq 'on') {
@@ -2949,8 +2943,6 @@ sub _validate_child_transaction_refs($self, $actor) {
         my %declared_params = map {
             $_->{name} => $_
         } @$declared_param_list;
-        my $contract_window_params =
-            _transaction_contract_window_param_names($transaction_by_name{$target}, $declared_param_list);
         my $repeat_count_params =
             _transaction_repeat_count_param_names($transaction_by_name{$target}, $declared_param_list);
         my $wait_count_params =
@@ -2969,9 +2961,6 @@ sub _validate_child_transaction_refs($self, $actor) {
                 unless exists $declared_params{$name};
             confess "Transaction '$tx_name': $keyword instance '$instance' parameter '$name' shape does not match child '$target' declaration\n"
                 unless _param_values_shape_compatible($declared_params{$name}{value}, $override->{value});
-            confess "Transaction '$tx_name': $keyword instance '$instance' overrides contract-window parameter '$name' on child '$target'; activation-site parameter override-specialized contract windows remain deferred\n"
-                if $contract_window_params->{$name}
-                    && !_activation_override_preserves_contract_window_param($declared_params{$name}, $override);
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides repeat-count parameter '$name' on child '$target'; activation-site parameter override-specialized repeat counts remain deferred\n"
                 if $repeat_count_params->{$name}
                     && !_activation_override_preserves_repeat_count_param($declared_params{$name}, $override);
@@ -3015,8 +3004,6 @@ sub _validate_child_transaction_refs($self, $actor) {
         my %declared_params = map {
             $_->{name} => $_
         } @$declared_param_list;
-        my $contract_window_params =
-            _transaction_contract_window_param_names($transaction_by_name{$target}, $declared_param_list);
         my $repeat_count_params =
             _transaction_repeat_count_param_names($transaction_by_name{$target}, $declared_param_list);
         my $wait_count_params =
@@ -3035,9 +3022,6 @@ sub _validate_child_transaction_refs($self, $actor) {
                 unless exists $declared_params{$name};
             confess "Rule '$rule_name': trigger instance '$instance' parameter '$name' shape does not match child '$target' declaration\n"
                 unless _param_values_shape_compatible($declared_params{$name}{value}, $override->{value});
-            confess "Rule '$rule_name': trigger instance '$instance' overrides contract-window parameter '$name' on child '$target'; activation-site parameter override-specialized contract windows remain deferred\n"
-                if $contract_window_params->{$name}
-                    && !_activation_override_preserves_contract_window_param($declared_params{$name}, $override);
             confess "Rule '$rule_name': trigger instance '$instance' overrides repeat-count parameter '$name' on child '$target'; activation-site parameter override-specialized repeat counts remain deferred\n"
                 if $repeat_count_params->{$name}
                     && !_activation_override_preserves_repeat_count_param($declared_params{$name}, $override);
@@ -3071,7 +3055,6 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children, 
         my $tx_name = $tx->{name};
         next if $generated_children->{$tx_name};
         next if $pruned_transactions->{$tx_name};
-        next if _transaction_params_used_by_contract_window($tx, $params);
         next if _transaction_params_used_by_monitor_window($tx, $params);
         next if _transaction_params_used_by_data_op_width($tx, $params);
         next if _transaction_params_used_by_transaction_port_width($tx, $params);
@@ -3083,12 +3066,6 @@ sub _validate_transaction_parameter_clauses($self, $actor, $generated_children, 
         confess "Transaction '$tx_name': params are supported only on generated child transactions, same-transaction temporal contract or monitor windows, same-transaction data-operation width evidence, same-transaction transaction-port width evidence, same-transaction repeat counts, same-transaction wait counts, same-transaction latency bounds, or same-transaction top-level await-local watchdog limits\n";
     }
     return 1;
-}
-
-sub _transaction_params_used_by_contract_window {
-    my ($tx, $params) = @_;
-    my $used = _transaction_contract_window_param_names($tx, $params);
-    return keys %$used ? 1 : 0;
 }
 
 # ISF-TRIGGER-ANCHOR.4: a check's `(monitor (within S N))` window may reference a transaction/actor
@@ -3341,23 +3318,6 @@ sub _collect_data_op_width_declared_name_refs {
     }
 }
 
-sub _transaction_contract_window_param_names {
-    my ($tx, $params) = @_;
-    return {} unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
-
-    my %declared = map { ($_->{name} // '') => 1 } grep { ref($_) eq 'HASH' } @$params;
-    return {} unless keys %declared;
-
-    my %used;
-    for my $clause (@{$tx->{clauses} || []}) {
-        my $value = _contract_within_value_if_present($clause);
-        _collect_isf_value_declared_name_refs($value, \%declared, \%used)
-            if defined $value;
-    }
-
-    return \%used;
-}
-
 sub _transaction_data_op_width_param_names {
     my ($tx, $params) = @_;
     return {} unless ref($tx) eq 'HASH' && ref($params) eq 'ARRAY' && @$params;
@@ -3385,11 +3345,6 @@ sub _transaction_port_width_param_names {
         $filtered{$name} = 1 if $declared{$name};
     }
     return \%filtered;
-}
-
-sub _activation_override_preserves_contract_window_param {
-    my ($declared_param, $override) = @_;
-    return _activation_override_preserves_static_integer_param($declared_param, $override);
 }
 
 sub _activation_override_preserves_repeat_count_param {
@@ -3431,42 +3386,6 @@ sub _activation_override_preserves_static_integer_param {
     return 0 unless defined($declared_value) && defined($override_value);
 
     return $declared_value == $override_value ? 1 : 0;
-}
-
-sub _contract_within_value_if_present {
-    my ($clause) = @_;
-    return undef unless ref($clause) eq 'ARRAY'
-        && @$clause == 3
-        && defined($clause->[0])
-        && !ref($clause->[0])
-        && $clause->[0] eq 'contract'
-        && defined($clause->[2])
-        && ref($clause->[2]) eq 'ARRAY';
-
-    my $eventual = $clause->[2];
-    return undef unless @$eventual >= 3
-        && defined($eventual->[0])
-        && !ref($eventual->[0])
-        && $eventual->[0] eq 'eventually';
-
-    return $eventual->[3]
-        if @$eventual == 4
-            && defined($eventual->[2])
-            && !ref($eventual->[2])
-            && $eventual->[2] eq 'within'
-            && defined($eventual->[3]);
-
-    return $eventual->[2][1]
-        if @$eventual == 3
-            && defined($eventual->[2])
-            && ref($eventual->[2]) eq 'ARRAY'
-            && @{$eventual->[2]} == 2
-            && defined($eventual->[2][0])
-            && !ref($eventual->[2][0])
-            && $eventual->[2][0] eq 'within'
-            && defined($eventual->[2][1]);
-
-    return undef;
 }
 
 sub _collect_isf_value_declared_name_refs {
@@ -4962,7 +4881,6 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
     my @asserts;
     my %check_ordinal;
     my @bank_accesses;
-    my %contract_names;
     my %storage_roles;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
     my $do_ordinal = 0;
@@ -5023,15 +4941,6 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         elsif ($k eq 'update' || $k eq 'set') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_update($cl,$tn,$si++,$k); }
         elsif ($k eq 'phase')       { push @st, _ir_phase($cl,$tn,$si++); }
         elsif ($k eq 'stage')       { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_stage($cl,$tn,$si++,$actor); }
-        elsif ($k eq 'contract')    {
-            _push_sample_state(\@st, $tn, \@ps, \$si);
-            my ($cs, $cdt, $cm) = _ir_contract(
-                $cl, $tn, $si++, $actor, $widths, \%ct, \%storage_roles, \%contract_names,
-            );
-            push @st, $cs;
-            push @dt, $cdt;
-            push @contracts, $cm;
-        }
         elsif ($k eq 'assert' || $k eq 'cover' || $k eq 'assume') {
             if (_is_monitor_check($cl)) {
                 # (assert (monitor (within S N))) — synthesizable-monitor output-mode: an arm state
@@ -5171,9 +5080,6 @@ sub _validate_supported_transaction_clauses {
         confess "Transaction '$tn': transaction clause heads must be scalar in $label\n"
             unless defined($keyword) && !ref($keyword) && length($keyword);
 
-        if (defined($keyword) && !ref($keyword) && $keyword eq 'contract' && $context ne 'transaction') {
-            confess "Transaction '$tn': temporal '(contract ...)' clauses are supported only as top-level transaction clauses\n";
-        }
         if (defined($keyword) && !ref($keyword) && $keyword eq 'stage' && $context ne 'transaction') {
             confess "Transaction '$tn': pipeline '(stage ...)' clauses are supported only as top-level transaction clauses\n";
         }
@@ -5216,8 +5122,6 @@ sub _validate_supported_transaction_clauses {
             _validate_child_action_clause($clause, $tn, $label);
         } elsif ($keyword eq 'stage') {
             _validate_stage_clause($clause, $tn, $label);
-        } elsif ($keyword eq 'contract') {
-            _validate_contract_clause($clause, $tn, $label);
         } elsif ($keyword eq 'switch') {
             _validate_switch_clause($clause, $tn, $label);
             for my $branch (@{$clause}[2 .. $#$clause]) {
@@ -5341,13 +5245,6 @@ sub _validate_stage_clause {
     return 1;
 }
 
-sub _validate_contract_clause {
-    my ($clause, $tn, $label) = @_;
-
-    _bounded_eventual_contract_parts($clause, $tn, $label);
-    return 1;
-}
-
 sub _parse_stage_handshake_clause {
     my ($clause, $tn, $label) = @_;
 
@@ -5393,70 +5290,6 @@ sub _parse_stage_handshake_clause {
         unless defined($parsed{valid});
 
     return \%parsed;
-}
-
-sub _parse_bounded_eventual_contract_clause {
-    my ($clause, $tn, $label, $actor) = @_;
-
-    my ($name, $signal, $within_token) = _bounded_eventual_contract_parts($clause, $tn, $label);
-    my $within_cycles = _temporal_contract_within_cycles($within_token, $actor, $tn, $name, $label);
-
-    return {
-        name          => $name,
-        signal        => $signal,
-        within_cycles => $within_cycles,
-    };
-}
-
-sub _bounded_eventual_contract_parts {
-    my ($clause, $tn, $label) = @_;
-
-    confess "Transaction '$tn': contract requires '(contract name (eventually signal within cycles))' or '(contract name (eventually signal (within cycles)))' in $label\n"
-        unless ref($clause) eq 'ARRAY'
-            && @$clause == 3
-            && defined($clause->[1])
-            && !ref($clause->[1])
-            && length($clause->[1]);
-
-    my $name = $clause->[1];
-    my $eventual = $clause->[2];
-    confess "Transaction '$tn': contract '$name' supports only '(eventually signal within cycles)' or '(eventually signal (within cycles))'\n"
-        unless ref($eventual) eq 'ARRAY'
-            && defined($eventual->[0])
-            && !ref($eventual->[0])
-            && $eventual->[0] eq 'eventually'
-            && defined($eventual->[1])
-            && !ref($eventual->[1])
-            && length($eventual->[1]);
-
-    my $within_token;
-    if (
-        @$eventual == 4
-        && defined($eventual->[2])
-        && !ref($eventual->[2])
-        && $eventual->[2] eq 'within'
-        && defined($eventual->[3])
-        && !ref($eventual->[3])
-    ) {
-        $within_token = $eventual->[3];
-    }
-    elsif (
-        @$eventual == 3
-        && ref($eventual->[2]) eq 'ARRAY'
-        && @{$eventual->[2]} == 2
-        && defined($eventual->[2][0])
-        && !ref($eventual->[2][0])
-        && $eventual->[2][0] eq 'within'
-        && defined($eventual->[2][1])
-        && !ref($eventual->[2][1])
-    ) {
-        $within_token = $eventual->[2][1];
-    }
-    else {
-        confess "Transaction '$tn': contract '$name' supports only '(eventually signal within cycles)' or '(eventually signal (within cycles))'\n";
-    }
-
-    return ($name, $eventual->[1], $within_token);
 }
 
 sub _temporal_contract_within_cycles {
@@ -8297,47 +8130,6 @@ sub _ir_stage {
     };
 }
 
-sub _ir_contract {
-    my ($cl, $tn, $i, $actor, $widths, $counters, $storage_roles, $seen_contracts) = @_;
-    my $contract = _parse_bounded_eventual_contract_clause($cl, $tn, 'transaction body', $actor);
-    my %interface_signals = map {
-        $_->{name} => 1
-    } (@{$actor->{interface}{inputs} || []}, @{$actor->{interface}{outputs} || []});
-
-    confess "Transaction '$tn': duplicate contract '$contract->{name}'\n"
-        if $seen_contracts->{$contract->{name}}++;
-    confess "Transaction '$tn': contract '$contract->{name}' signal '$contract->{signal}' is not an actor interface signal\n"
-        unless $interface_signals{$contract->{signal}};
-
-    my $signals = _contract_monitor_signals($tn, $i);
-    _validate_contract_monitor_signal_names($tn, $contract, $signals, $actor, $widths, $counters);
-
-    my ($state, $dt) = _build_eventually_monitor(
-        $signals, $contract->{signal}, $contract->{within_cycles},
-        $counters, $storage_roles, $contract->{name});
-    my $summary = {
-        transaction     => $tn,
-        name            => $contract->{name},
-        kind            => 'bounded_eventually',
-        trigger         => $signals->{state},
-        signal          => $contract->{signal},
-        within_cycles   => $contract->{within_cycles},
-        arm_signal      => $signals->{arm},
-        pending_signal  => $signals->{pending},
-        counter_signal  => $signals->{age},
-        fail_signal     => $signals->{fail},
-        monitor_dt      => $signals->{monitor},
-        overlap_policy  => 'fail',
-    };
-
-    return ($state, $dt, $summary);
-}
-
-sub _contract_monitor_signals {
-    my ($tn, $i) = @_;
-    return _monitor_signals_for_prefix("${tn}_contract_$i");
-}
-
 # The arm/age/fail monitor signal set for a bounded-eventually monitor, keyed off a name prefix.
 # Shared by `(contract …)` and the `(monitor …)` output-mode of a check (ISF-TRIGGER-ANCHOR).
 sub _monitor_signals_for_prefix {
@@ -8508,23 +8300,6 @@ sub _ir_monitor_check {
     }
 
     return ($state, $dt, \%assert);
-}
-
-sub _validate_contract_monitor_signal_names {
-    my ($tn, $contract, $signals, $actor, $widths, $counters) = @_;
-    my %reserved;
-    $reserved{$_->{name}} = 1 for @{$actor->{interface}{inputs} || []};
-    $reserved{$_->{name}} = 1 for @{$actor->{interface}{outputs} || []};
-    $reserved{$_} = 1 for keys %{$widths || {}};
-    $reserved{$_} = 1 for keys %{$counters || {}};
-
-    for my $role (qw(arm pending age fail)) {
-        my $signal = $signals->{$role};
-        confess "Transaction '$tn': contract '$contract->{name}' generated signal '$signal' collides with an existing signal\n"
-            if $reserved{$signal};
-    }
-
-    return 1;
 }
 
 sub _unsigned_width_for_max {
