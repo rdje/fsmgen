@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Commit-subject convention gate (layer E3 of MEMORY_ARCHITECTURE.md).
+# The subject must start with a WORK-UNIT-ID (e.g. UNIT-ID.step — summary) so git
+# history is greppable by task-tree unit, OR a conventional-commit type for
+# docs/chore/etc. work. Adapt the patterns to your scheme.
+set -euo pipefail
+
+subject="$(head -1 "$1")"
+# fsmgen work-unit ids: UPPER-CASE-HYPHENATED, optional dotted leaf incl. the multi-leaf
+# `.2/.3` form (e.g. ISF-SWAP:, ISF-COMPOUND-ASSIGN.2:, CODEGEN-MULTI-EXPRESSION-SET-ALIAS.2/.3:).
+unit_id='^[A-Z][A-Z0-9-]+(\.[0-9A-Za-z/.]+)?[ :—-]'
+conventional='^(docs|chore|fix|feat|refactor|test|build|ci|perf|style|revert)(\(.+\))?(!)?:'
+
+if [[ "${subject}" =~ ${unit_id} ]] || [[ "${subject}" =~ ${conventional} ]]; then
+  exit 0
+fi
+
+cat >&2 <<MSG
+[commit-msg] rejected: subject must start with a WORK-UNIT-ID or a conventional type.
+  got:      ${subject}
+  expected: 'UNIT-ID.step — summary'  (e.g. MEMORY-ARCHITECTURE-DOC.4 — install enforcement)
+        or: 'docs: …' / 'chore: …' / 'fix: …' …
+See MEMORY_ARCHITECTURE.md §8 (git is the backbone — unit id in the subject).
+MSG
+exit 1

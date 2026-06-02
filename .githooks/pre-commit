@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Memory-architecture local gate (layer E3 of MEMORY_ARCHITECTURE.md).
+# Activate once per clone: git config core.hooksPath .githooks
+set -euo pipefail
+exec "$(git rev-parse --show-toplevel)/scripts/check_memory_architecture.sh"

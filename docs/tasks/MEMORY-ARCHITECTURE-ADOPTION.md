@@ -108,3 +108,13 @@ git hooks · CI gate.
   `LIVE_ACHIEVEMENT_STATUS.md` marked FROZEN; the required-order doc step now routes
   to layers B → C → A (git is the audit trail); close-out snapshot reads the
   task-trees, not the frozen `ROADMAP_STATUS.md`.
+- `2026-06-02`: `.4` done — enforcement kit (§9). `scripts/check_memory_architecture.sh`
+  (E2, copied from the specforge reference — knobs already match fsmgen);
+  `.githooks/pre-commit` (runs the check) + `.githooks/commit-msg` (E3; regex adapted to
+  fsmgen's `UNIT-ID[.leaf]:` scheme incl. the `.2/.3` multi-leaf form), activated via
+  `git config core.hooksPath .githooks`; tool-neutral bootstrap pointers `AGENTS.md`
+  (canonical) + `CLAUDE.md`/`GEMINI.md`/`.cursorrules`/`.windsurfrules`/
+  `.github/copilot-instructions.md` (E1, each routes to the standard); CI gate (E4) wired
+  as the first step of `regression.yml` (runs the check + asserts every branch commit
+  subject carries a work-unit id). The check passes; this `.4` commit passes through its
+  own newly-active hooks.

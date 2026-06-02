@@ -16,6 +16,26 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Memory-architecture gate (E4)
+      run: |
+        bash scripts/check_memory_architecture.sh
+        # Every commit subject on the branch must carry a work-unit id (or a conventional type).
+        if git rev-parse --verify -q origin/main >/dev/null; then
+          base=origin/main
+        else
+          base="$(git rev-list --max-parents=0 HEAD | tail -1)"
+        fi
+        bad=0
+        while IFS= read -r subj; do
+          [ -z "$subj" ] && continue
+          if printf '%s' "$subj" | grep -Eq '^[A-Z][A-Z0-9-]+(\.[0-9A-Za-z/.]+)?[ :—-]'; then continue; fi
+          if printf '%s' "$subj" | grep -Eq '^(docs|chore|fix|feat|refactor|test|build|ci|perf|style|revert)(\(.+\))?(!)?:'; then continue; fi
+          echo "memory-arch: commit subject lacks a work-unit id: $subj" >&2; bad=1
+        done < <(git log --format='%s' "$base"..HEAD)
+        [ "$bad" -eq 0 ]
 
     - name: Set up Perl
       uses: shogo82148/actions-setup-perl@v1
