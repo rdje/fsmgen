@@ -76,15 +76,40 @@ sub build_from_fsm_module ($class, %args) {
 # leaves (-> SVA property operators). Returns undef if any leaf cannot render.
 sub _render_check_condition_sv ($cond) {
     if (ref($cond) eq 'HASH' && $cond->{__property__}) {
-        if (($cond->{op} // '') eq 'implies_overlap') {
+        my $op = $cond->{op} // '';
+        if ($op eq 'implies_overlap') {
             my $a = _render_check_condition_sv($cond->{antecedent});
             my $b = _render_check_condition_sv($cond->{consequent});
             return undef unless defined($a) && length($a) && defined($b) && length($b);
             return "($a) |-> ($b)";
         }
+        if ($op eq 'next') {
+            my $x = _render_check_condition_sv($cond->{operand});
+            return undef unless defined($x) && length($x);
+            return "##1 ($x)";
+        }
+        if ($op eq 'within') {
+            my $x = _render_check_condition_sv($cond->{operand});
+            return undef unless defined($x) && length($x);
+            return "##[1:$cond->{bound}] ($x)";
+        }
         return undef;
     }
     return eval { $cond->to_systemverilog() };
+}
+
+# A property that uses a delayed consequent (`next` -> ##1, `within` -> ##[1:N]) is formal-only:
+# verilator cannot simulate an implication with a sequence (delay) consequent, so such checks are
+# guarded with `ifdef FORMAL` (not `ifndef SYNTHESIS`) so verilator/yosys skip them while formal
+# tools check them. Boolean and overlapping-implication checks remain verilator-simulable.
+sub _property_is_formal_only ($cond) {
+    return 0 unless ref($cond) eq 'HASH' && $cond->{__property__};
+    my $op = $cond->{op} // '';
+    return 1 if $op eq 'next' || $op eq 'within';
+    return 1 if _property_is_formal_only($cond->{antecedent});
+    return 1 if _property_is_formal_only($cond->{consequent});
+    return 1 if _property_is_formal_only($cond->{operand});
+    return 0;
 }
 
 # ISF-ASSERT: surface the parsed `+assert` invariants (on the module) into module_info as
@@ -103,6 +128,7 @@ sub _immediate_assertions_from_module ($fsm_module) {
             name         => $a->{name},
             kind         => ($a->{kind} // 'assert'),
             condition_sv => $cond_sv,
+            formal_only  => _property_is_formal_only($a->{condition}),
             (defined $a->{message} ? (message => $a->{message}) : ()),
         };
     }

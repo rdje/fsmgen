@@ -83,6 +83,7 @@ sub _analyze_check_condition_references($self, $cond) {
     if (ref($cond) eq 'HASH' && $cond->{__property__}) {
         $self->_analyze_check_condition_references($cond->{antecedent}) if $cond->{antecedent};
         $self->_analyze_check_condition_references($cond->{consequent}) if $cond->{consequent};
+        $self->_analyze_check_condition_references($cond->{operand})    if $cond->{operand};
         return;
     }
     $self->_analyze_condition_references($cond);

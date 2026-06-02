@@ -95,12 +95,62 @@ ISF
     }
 };
 
+subtest 'next-cycle (next B) and bounded (within B N) render to ## delays (formal-only)' => sub {
+    my $module = parsed_module(<<'ISF', 'nw');
+(actor nw
+  (interface (input start) (input req) (input ack) (output done))
+  (transaction main
+    (on start)
+    (assert (=> req (next ack)) "next")
+    (assert (=> req (within ack 3)) "within")
+    (complete done)))
+ISF
+    my $info = module_info_for($module);
+    my %by = map { $_->{name} => $_ } @{$info->{immediate_assertions}};
+    is($by{main_assert_0}{condition_sv}, '(req) |-> (##1 (ack))', '(next ack) -> ##1 (ack)');
+    is($by{main_assert_1}{condition_sv}, '(req) |-> (##[1:3] (ack))', '(within ack 3) -> ##[1:3] (ack)');
+    ok($by{main_assert_0}{formal_only}, 'a delayed consequent is formal-only (verilator cannot simulate ## implication)');
+    ok($by{main_assert_1}{formal_only}, 'within is formal-only');
+
+    my @lines = FSM::Backend::GeneratedModuleEmitter->immediate_assertion_runtime_lines(
+        module_info => $info, target_language => 'systemverilog');
+    my $block = join("\n", @lines);
+    # the delay properties go under `ifdef FORMAL (verilator/yosys skip them), not `ifndef SYNTHESIS
+    like($block, qr/`ifdef FORMAL/, 'a formal-only block is emitted');
+    like($block, qr/`ifdef FORMAL.*##1 \(ack\)/s, 'the ##1 property is inside the FORMAL block');
+};
+
+subtest 'simulable and formal-only checks are partitioned into separate guards' => sub {
+    my $module = parsed_module(<<'ISF', 'split');
+(actor split
+  (interface (input start) (input req) (input ack) (output done))
+  (transaction main
+    (on start)
+    (assert (=> req ack) "overlap")
+    (assert (=> req (next ack)) "delayed")
+    (complete done)))
+ISF
+    my $info = module_info_for($module);
+    my @lines = FSM::Backend::GeneratedModuleEmitter->immediate_assertion_runtime_lines(
+        module_info => $info, target_language => 'systemverilog');
+    my $block = join("\n", @lines);
+    # overlapping implication is verilator-simulable -> `ifndef SYNTHESIS (before the FORMAL block)
+    like($block, qr/`ifndef SYNTHESIS.*\(req\) \|-> \(ack\).*`endif.*`ifdef FORMAL.*##1/s,
+        'overlapping under ifndef SYNTHESIS; the ##1 delayed one under ifdef FORMAL');
+};
+
 subtest 'a malformed implication fails closed' => sub {
     like(parse_error(
         "(actor one (interface (input start) (input req) (output done)) "
         . "(transaction main (on start) (assert (=> req)) (complete done)))", 'one'),
         qr/requires exactly an antecedent and a consequent/,
         '(=> req) with only one operand is rejected');
+
+    like(parse_error(
+        "(actor two (interface (input start) (input req) (input ack) (output done)) "
+        . "(transaction main (on start) (assert (=> req (within ack 0))) (complete done)))", 'two'),
+        qr/bound must be a literal integer >= 1/,
+        '(within ack 0) with a zero bound is rejected');
 };
 
 done_testing();

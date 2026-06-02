@@ -705,16 +705,41 @@ sub parse_asserts_section($self, $assert_ast) {
 # by the expression builder; the combinator is kept as a tagged struct the backend renders to SVA.
 sub parse_check_property($self, $cond_tok) {
     if (ref($cond_tok) eq 'ARRAY' && @$cond_tok == 2
-        && defined($cond_tok->[0]) && !ref($cond_tok->[0]) && $cond_tok->[0] eq '=>') {
+        && defined($cond_tok->[0]) && !ref($cond_tok->[0])) {
+        my $head = $cond_tok->[0];
         my $args = $cond_tok->[1];
-        Carp::confess "'(=> ANT CONS)' implication requires exactly an antecedent and a consequent"
-            unless ref($args) eq 'ARRAY' && @$args == 2 && defined($args->[0]) && defined($args->[1]);
-        return {
-            __property__ => 1,
-            op          => 'implies_overlap',
-            antecedent  => $self->parse_check_property($args->[0]),
-            consequent  => $self->parse_check_property($args->[1]),
-        };
+
+        if ($head eq '=>') {
+            # (=> ANT CONS) overlapping implication -> (ANT) |-> (CONS)
+            Carp::confess "'(=> ANT CONS)' implication requires exactly an antecedent and a consequent"
+                unless ref($args) eq 'ARRAY' && @$args == 2 && defined($args->[0]) && defined($args->[1]);
+            return {
+                __property__ => 1,
+                op          => 'implies_overlap',
+                antecedent  => $self->parse_check_property($args->[0]),
+                consequent  => $self->parse_check_property($args->[1]),
+            };
+        }
+        if ($head eq 'next') {
+            # (next X) -> ##1 (X)  (one-cycle delay; an `(=> A (next B))` is the SVA |=> idiom)
+            Carp::confess "'(next X)' requires exactly one operand"
+                unless ref($args) eq 'ARRAY' && @$args == 1 && defined($args->[0]);
+            return { __property__ => 1, op => 'next', operand => $self->parse_check_property($args->[0]) };
+        }
+        if ($head eq 'within') {
+            # (within X N) -> ##[1:N] (X)  (X holds at some cycle 1..N)
+            Carp::confess "'(within X N)' requires an operand and a literal bound"
+                unless ref($args) eq 'ARRAY' && @$args == 2 && defined($args->[0]) && defined($args->[1]);
+            my $bound = $self->unwrap_scalar_token($args->[1]);
+            Carp::confess "'(within X N)' bound must be a literal integer >= 1"
+                unless defined($bound) && !ref($bound) && $bound =~ /^\d+$/ && $bound + 0 >= 1;
+            return {
+                __property__ => 1,
+                op      => 'within',
+                operand => $self->parse_check_property($args->[0]),
+                bound   => $bound + 0,
+            };
+        }
     }
     return $self->{expression_builder}->parse_expression($cond_tok);
 }

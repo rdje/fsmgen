@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-PROPERTY-IMPLICATION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14` (ISF — verification intent)
 - Created: `2026-06-02`
 - Last updated: `2026-06-02`
@@ -92,3 +92,22 @@ the *combinators* render to SVA property syntax by a dedicated property renderer
     registers `t/1412`. No ISF-lowerer or emitter-wrapper change needed.
   - `.3` (next-cycle `|=>` + `(within S N)` → `##[1:N]`) remains; with those + a
     transaction-point trigger anchor, `(contract …)` can be removed (`0008`).
+- `2026-06-02`: `.3` done — **tree complete**. `(next X)` → `##1 (X)` and
+  `(within X N)` → `##[1:N] (X)` (literal `N >= 1`) added to `parse_check_property`
+  + `_render_check_condition_sv`; the keep-alive walks the `operand`.
+  - **Checkability split (decision `0008`):** verilator cannot simulate an
+    implication with a *delayed* (sequence) consequent — only same-cycle `|->`. So a
+    check whose property contains `next`/`within` is **formal-only**: the
+    `GeneratedModuleInfoBuilder` flags `formal_only`, and the emitter partitions
+    checks into a verilator-simulable block under `` `ifndef SYNTHESIS `` (boolean /
+    overlapping implication) and a formal-only block under `` `ifdef FORMAL ``
+    (`##`-bearing). verilator/yosys skip the FORMAL block, so `--verify-hdl` stays
+    green; formal tools (FORMAL defined) check it.
+  - Verified end-to-end on a mixed actor (boolean + `|->` + `##1` + `##[1:3]`):
+    the simulable two go under `ifndef SYNTHESIS`, the two delayed under `ifdef
+    FORMAL`; `--verify-hdl` verilator-lint + yosys **PASS**. `t/1412` extended (now
+    6 subtests: + next/within render + formal-only flag, the two-guard partition,
+    and the `(within … 0)` fail-closed).
+  - **ISF-PROPERTY-IMPLICATION complete** — overlapping implication (simulable) +
+    next/within (formal-only) ship. Remaining for the contract removal: the
+    transaction-point trigger anchor (its own tree), then remove `(contract …)`.

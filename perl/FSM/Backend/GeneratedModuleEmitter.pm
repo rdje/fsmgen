@@ -188,25 +188,42 @@ sub immediate_assertion_runtime_lines ($class, %args) {
         $wrap_close = "))";
     }
 
-    my @assertion_lines;
+    # ISF-PROPERTY-IMPLICATION: a check with a delayed consequent (`next`/`within` -> `##`) is
+    # formal-only — verilator cannot simulate an implication with a sequence consequent. Such
+    # checks are emitted under `ifdef FORMAL` (formal tools only); verilator-simulable checks
+    # (boolean / overlapping implication) stay under `ifndef SYNTHESIS`. A delay property needs a
+    # clock, so formal-only checks are skipped entirely in the (clockless) immediate fallback.
+    my (@sim_lines, @formal_lines);
     for my $assertion (@checks) {
+        my $formal = ($assertion->{formal_only} && $concurrent) ? 1 : 0;
+        next if $assertion->{formal_only} && !$concurrent;
         my $condition = $assertion->{condition_sv};
         my $kind = $assertion->{kind} // 'assert';
         my $prop = "$wrap_open$condition$wrap_close";
+        my $line;
         if ($kind eq 'cover') {
-            push @assertion_lines, "    cover $prop;";
+            $line = "    cover $prop;";
         } else {
             my $message = _sv_message_fragment(
                 $assertion->{message} // ("$kind failed: " . ($assertion->{name} // $kind)));
-            push @assertion_lines, qq{    $kind $prop else \$error("$message");};
+            $line = qq{    $kind $prop else \$error("$message");};
         }
+        if ($formal) { push @formal_lines, $line } else { push @sim_lines, $line }
     }
 
-    return () unless @assertion_lines;
-
-    # Concurrent assertions are module items (not inside an always block); immediate ones are.
-    return ("  `ifndef SYNTHESIS", @assertion_lines, "  `endif") if $concurrent;
-    return ("  `ifndef SYNTHESIS", "  always_comb begin", @assertion_lines, "  end", "  `endif");
+    my @out;
+    if (@sim_lines) {
+        # Concurrent assertions are module items (not inside an always block); immediate ones are.
+        if ($concurrent) {
+            push @out, "  `ifndef SYNTHESIS", @sim_lines, "  `endif";
+        } else {
+            push @out, "  `ifndef SYNTHESIS", "  always_comb begin", @sim_lines, "  end", "  `endif";
+        }
+    }
+    if (@formal_lines) {
+        push @out, "  `ifdef FORMAL", @formal_lines, "  `endif";
+    }
+    return @out;
 }
 
 sub selector_conflict_assertion_runtime_lines ($class, %args) {

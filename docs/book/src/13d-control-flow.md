@@ -932,11 +932,28 @@ path); only the `=>` combinator is special. Signals referenced only inside the
 implication are kept alive as ports. A malformed `(=> A B)` (not exactly an
 antecedent and a consequent) fails closed.
 
-> This is the first piece of an ISF property sublanguage that captures what SV
-> *properties* capture. Next-cycle implication (`|=>`) and bounded `(within S N)`
-> (`##[1:N]`) are planned increments; once they land, the temporal
-> `(contract (eventually S within N))` is expressible as `(assert (=> <trigger>
-> (within S N)))` and is folded in (see `docs/decisions/0008`).
+**Delayed consequents.** The consequent of an implication may be delayed in time:
+
+```lisp
+(assert (=> req (next ack)))       ;; req |-> ##1 (ack)       (ack one cycle later)
+(assert (=> req (within ack 3)))   ;; req |-> ##[1:3] (ack)   (ack within 1..N cycles)
+```
+
+`(next X)` lowers to `##1 (X)` and `(within X N)` to `##[1:N] (X)` (`N` a literal
+`>= 1`). These together with an implication express bounded liveness — the same
+intent as the temporal `(contract (eventually S within N))`.
+
+> **Checkability split.** verilator cannot simulate an implication with a *delayed*
+> (sequence) consequent — only the same-cycle overlapping `|->`. So checks that use
+> `next` / `within` are **formal-only**: they are emitted under `` `ifdef FORMAL ``
+> (formal tools such as SymbiYosys/Jasper check them; verilator and `yosys` skip
+> them, so `--verify-hdl` still passes), whereas boolean and overlapping-implication
+> checks stay under `` `ifndef SYNTHESIS `` and are verilator-simulable. This is why
+> the simulation proofs in this book cover boolean/overlapping properties only.
+
+Once a transaction-point trigger anchor lands, `(contract (eventually S within N))`
+becomes `(assert (=> <trigger> (within S N)))` and the standalone `(contract …)`
+construct is removed (see `docs/decisions/0008`).
 
 A malformed form fails closed before `.fsm` emission: e.g. `(assert)` /
 `(cover)` / `(assume)` with no condition, or more than a condition + one message
