@@ -100,7 +100,7 @@ sub run_global_ast_factorization ($self) {
         }
     } else {
         fsm_debug("GLOBAL_AST_FACT: [NOT_EXISTS] binary_logical_op_counts NOT found - running count now", 3);
-        fsm_debug("*** WARNING: No logical operation counts available - this shouldn't happen! ***", 3);
+        fsm_warn("No logical operation counts available - this shouldn't happen!");
         $ctx->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
     }
 
@@ -162,7 +162,8 @@ sub run_global_ast_factorization ($self) {
             fsm_debug("=== END INTERMEDIATE SIGNAL: $signal_name ===", 3);
         }
     } else {
-        fsm_debug("*** WARNING: NO INTERMEDIATE SIGNALS GENERATED! ***", 3);
+        # informational note: a module that needs no factoring legitimately produces none.
+        fsm_debug("no intermediate signals generated (no factoring needed)", 3);
     }
 
     # STEP 3: CRITICAL - Substitute intermediate signals back into original expressions
@@ -203,7 +204,8 @@ sub run_global_ast_factorization ($self) {
         }
 
         if ($shown == 0) {
-            fsm_debug("*** WARNING: No substituted expressions found despite substitution_count = $substitution_count ***", 3);
+            # informational note (debug trace of substitution accounting), not a problem.
+            fsm_debug("no substituted expressions for substitution_count = $substitution_count", 3);
         }
     }
 

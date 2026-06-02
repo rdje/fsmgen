@@ -217,7 +217,9 @@ sub _parse_intermediate_expression_to_ast ($self, $expression, $signal_name, $so
 
     my $error = $@;
     chomp $error if defined $error;
-    fsm_debug("[IntermediateSignalSupport.pm][_parse_intermediate_expression_to_ast()] Failed to parse compatibility expression for '$signal_name' from $source_name: " . ($error || 'unknown parse failure'), 3);
+    # informational note: a compatibility-expression parse miss here falls back to the caller's
+    # recovery path (returns undef); it is a routine step, not an operation failure.
+    fsm_debug("[IntermediateSignalSupport.pm][_parse_intermediate_expression_to_ast()] compatibility expression parse miss for '$signal_name' from $source_name (fallback applies): " . ($error || 'unknown parse failure'), 3);
     return undef;
 }
 
@@ -496,7 +498,7 @@ sub track_ast_intermediate_signals ($self, $ast) {
                 $signal_name = $1;
                 fsm_debug("TRACK_INTERMEDIATE: Extracted signal name from string: $signal_name", 3);
             } else {
-                fsm_debug("TRACK_INTERMEDIATE: WARNING - Could not extract signal name from " . ref($ast)
+                fsm_warn("TRACK_INTERMEDIATE: Could not extract signal name from " . ref($ast)
                     . " (available methods: " . join(", ", grep { $ast->can($_) } qw(name signal_name signal to_systemverilog)) . ")");
                 return;
             }

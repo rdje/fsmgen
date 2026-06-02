@@ -649,7 +649,7 @@ used by the backend capture path.
 
 sub convert_condition_to_ast ($self, $condition_node) {
     unless ($condition_node) {
-        fsm_debug("    CONVERT_CONDITION_AST: WARNING - undefined condition node", 3);
+        fsm_warn("CONVERT_CONDITION_AST: undefined condition node");
         return FSM::AST::Utils::literal("1'b1");
     }
 

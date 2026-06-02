@@ -57,7 +57,7 @@ sub parse_fsm($self, $raw_ast) {
     }
     if (($source_info->{kind} // 'unknown') eq 'unknown' && defined($source_info->{header}) && $source_info->{header} =~ /^\?[A-Za-z_][\w-]*:/) {
         my $header = $source_info->{header};
-        fsm_trace_decision(0, "Detected unsupported tagged top-level source '$header'", 1);
+        fsm_error("Detected unsupported tagged top-level source '$header'");
         Carp::confess
             "Unsupported top-level source '$header'. ".
             "The active toolchain supports '?fsm:name', '?dt:name', '?mod:name', '?module:name', and '+fsm' as single-module sources, and '?top:name' through the composition pipeline. ".

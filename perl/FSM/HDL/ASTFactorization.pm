@@ -701,7 +701,7 @@ sub extract_signal_name_from_ast_node {
         fsm_debug("AST-FACTOR-DEBUG:         AST structure: " . $dumper->Dump, 3);
     }
     
-    fsm_debug("AST-FACTOR-DEBUG:       WARNING: Could not extract signal name from AST node", 3);
+    fsm_warn("AST-FACTOR-DEBUG: Could not extract signal name from AST node");
     return undef;
 }
 
@@ -804,7 +804,7 @@ sub substitute_expressions_with_intermediate_signals {
     }
     
     if ($pass_number > $max_passes) {
-        fsm_debug("AST-FACTOR-DEBUG: WARNING: Maximum passes ($max_passes) reached without convergence", 3);
+        fsm_warn("AST-FACTOR-DEBUG: Maximum passes ($max_passes) reached without convergence");
     }
     
     # Debug: Show all intermediate signals and their expressions AFTER substitution

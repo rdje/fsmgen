@@ -368,7 +368,7 @@ sub collect_consolidated_intermediate_signals ($self, $fsm_module) {
     if ($fsm_module && $fsm_module->signals) {
         $self->trace_fsm_signal_inventory($fsm_module);
     } else {
-        fsm_debug("SIGNAL_TRACE: WARNING - No FSM module or signals available at pipeline entry!", 3);
+        fsm_warn("SIGNAL_TRACE: No FSM module or signals available at pipeline entry!");
     }
 
     my %all_intermediate_signals;

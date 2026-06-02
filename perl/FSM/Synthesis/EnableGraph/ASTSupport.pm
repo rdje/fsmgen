@@ -221,7 +221,7 @@ sub _ast_to_systemverilog_internal ($self, $ast, $parent_precedence) {
                 fsm_debug("AST_TO_CLEAN_SV: Using to_systemverilog() method for '$node_type': $sv_result", 3);
                 return $sv_result;
             } else {
-                fsm_debug("AST_TO_CLEAN_SV: to_systemverilog() failed for '$node_type', using fallback", 3);
+                fsm_warn("AST_TO_CLEAN_SV: to_systemverilog() failed for '$node_type', using fallback");
             }
         } else {
             fsm_debug("AST_TO_CLEAN_SV: No to_systemverilog() method for '$node_type'", 3);

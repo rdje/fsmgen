@@ -478,7 +478,9 @@ sub recover_runtime_ast_from_dependency_expression ($self, $signal_name, $signal
 
     my $error = $@;
     chomp $error if defined $error;
-    fsm_debug("[IntermediateSignalRecoverySupport.pm][recover_runtime_ast_from_dependency_expression()] Failed compatibility parse for '$debug_signal_name' via $candidate_source: " . ($error || 'unknown parse failure'), 3);
+    # informational note: one candidate source of a multi-candidate recovery search did not parse;
+    # the search continues and the overall recovery typically succeeds via another candidate.
+    fsm_debug("[IntermediateSignalRecoverySupport.pm][recover_runtime_ast_from_dependency_expression()] compatibility parse miss for '$debug_signal_name' via $candidate_source (recovery continues): " . ($error || 'unknown parse failure'), 3);
     return undef;
 }
 

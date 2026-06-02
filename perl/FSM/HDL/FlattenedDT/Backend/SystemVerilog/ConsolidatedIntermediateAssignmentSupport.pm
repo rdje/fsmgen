@@ -73,7 +73,7 @@ sub render_consolidated_intermediate_assignments ($self, $prepared_block) {
 
         my $expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
         unless (defined($expression) && $expression ne '') {
-            fsm_debug("CONSOL_INTER_SIG: WARNING - No renderable expression for $signal_name, skipping assign emission", 3);
+            fsm_warn("CONSOL_INTER_SIG: No renderable expression for $signal_name, skipping assign emission");
             next;
         }
 

@@ -76,8 +76,9 @@ sub parse_condition($self, $condition) {
             bare_signal_operator => '!='
         );
     } else {
-        # Unexpected format like 'signal_name'
-        fsm_debug("          WARNING: Unexpected condition string string='$condition'. Treating as positive condition.", 3);
+        # informational note: a bare condition string (e.g. 'signal_name') is the routine
+        # "if signal" form — treated as a positive signal reference.
+        fsm_debug("bare condition string '$condition' treated as a positive signal reference", 3);
         return $self->parse_signal_reference($condition);
     }
 }
@@ -1031,7 +1032,7 @@ sub handle_width_mismatch($self, $lhs_width, $rhs_width, $signal_name, $value_ex
             my $signal = $$source_expr_ref->signal;
             $truncated_rhs = FSM::CoreAST::SignalRef->new($signal, slice => [$high_bit, 0]);
         } else {
-            fsm_debug("WARNING: Cannot truncate complex expression - leaving as-is", 3);
+            fsm_warn("Cannot truncate complex expression - leaving as-is");
             $truncated_rhs = $$source_expr_ref;
         }
         $$source_expr_ref = $truncated_rhs;

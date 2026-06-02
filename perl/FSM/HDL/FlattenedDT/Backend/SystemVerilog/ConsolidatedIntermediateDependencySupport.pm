@@ -127,7 +127,7 @@ sub topologically_sort_signals ($self, $filtered_signals, $signal_dependencies) 
 
     my @remaining_signals = sort grep { !$visited{$_} } keys %{ $filtered_signals || {} };
     if (@remaining_signals) {
-        fsm_debug("[ConsolidatedIntermediateDependencySupport.pm][topologically_sort_signals()] WARNING: cycle fallback for: " . join(", ", @remaining_signals), 3);
+        fsm_warn("[ConsolidatedIntermediateDependencySupport.pm][topologically_sort_signals()] cycle fallback for: " . join(", ", @remaining_signals));
         push @sorted_signals, @remaining_signals;
     }
 

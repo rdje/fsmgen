@@ -252,7 +252,7 @@ sub update_original_asts_with_substituted_versions ($self, $factorizer) {
             }
         }
     } else {
-        fsm_debug("*** WARNING: No assignment_analysis structure to update! ***", 3);
+        fsm_warn("No assignment_analysis structure to update!");
     }
 
     fsm_debug("UPDATE_ORIGINAL_ASTS: Updating lhs_assignments structure", 3);
@@ -292,7 +292,8 @@ sub update_original_asts_with_substituted_versions ($self, $factorizer) {
     fsm_debug("  - Assignment condition updates: $assignment_ast_updates", 3);
 
     if ($updated_count == 0) {
-        fsm_debug("*** WARNING: NO AST UPDATES WERE PERFORMED! This suggests the substitution/update mechanism isn't working! ***", 3);
+        # informational note: a module with nothing to substitute legitimately performs no updates.
+        fsm_debug("no AST updates performed (nothing to update for this module)", 3);
     }
 
     return $updated_count;
@@ -552,7 +553,7 @@ sub is_signal_referenced_in_substitutions ($self, $signal_name) {
             }
         }
     } else {
-        fsm_debug("  WARNING: No AST factorizer results available for reference checking", 3);
+        fsm_warn("No AST factorizer results available for reference checking");
     }
 
     if ($ctx->{assignment_analysis}) {

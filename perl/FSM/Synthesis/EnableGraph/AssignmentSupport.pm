@@ -1097,7 +1097,7 @@ Classify one analyzed LHS family into its normalized assignment contract.
 sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
     my $assignments = $lhs_analysis->{assignments};
     unless ($assignments && @$assignments) {
-        fsm_debug("WARNING: No assignments found for LHS '$lhs', defaulting to 'mux_out'", 3);
+        fsm_warn("No assignments found for LHS '$lhs', defaulting to 'mux_out'");
         return 'mux_out';
     }
 
@@ -1348,7 +1348,7 @@ sub get_signal_info ($self, $lhs) {
                     $signal_info->{width} = $width;
                     fsm_debug("SIGNAL_INFO: Found width for '$lhs' -> $width", 3);
                 } else {
-                    fsm_debug("SIGNAL_INFO: Width method returned invalid value for '$lhs'", 3);
+                    fsm_warn("SIGNAL_INFO: Width method returned invalid value for '$lhs'");
                 }
             } else {
                 fsm_debug("SIGNAL_INFO: No width method for '$lhs'", 3);
@@ -1420,7 +1420,7 @@ sub is_register ($self, $lhs_signal_ast, $lhs_name_for_debug) {
     fsm_debug("IS_REGISTER: Analyzing signal '$lhs_name_for_debug' using AST node", 3);
 
     unless ($lhs_signal_ast) {
-        fsm_debug("  WARNING: No signal AST node - using fallback assignment analysis", 3);
+        fsm_warn("No signal AST node - using fallback assignment analysis");
         return $self->fallback_register_analysis_from_assignments($lhs_name_for_debug);
     }
 

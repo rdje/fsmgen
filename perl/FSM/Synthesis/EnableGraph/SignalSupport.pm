@@ -316,7 +316,7 @@ sub get_reset_value_from_ast($self, $lhs_ast) {
     my $lhs_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($lhs_ast);
 
     unless (defined $lhs_name) {
-        fsm_debug("WARNING: Could not extract signal name from AST, using fallback", 3);
+        fsm_warn("Could not extract signal name from AST, using fallback");
         $lhs_name = 'unknown_signal';
     }
     fsm_debug("GET_RESET_VALUE_FROM_AST: Getting reset value for '$lhs_name'", 3);
@@ -402,7 +402,7 @@ sub get_default_value_from_ast($self, $lhs_ast, $is_register = 0) {
 
     my $lhs_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($lhs_ast);
     unless (defined $lhs_name) {
-        fsm_debug("WARNING: Could not extract signal name from AST, using fallback", 3);
+        fsm_warn("Could not extract signal name from AST, using fallback");
         $lhs_name = 'unknown_signal';
     }
     fsm_debug("GET_DEFAULT_VALUE_FROM_AST: Getting default value for '$lhs_name'", 3);
@@ -609,7 +609,7 @@ sub _signal_name_indicates_ast_operators($self, $signal_name) {
         }
         fsm_debug("      NOT FOUND: Signal '$signal_name' not found in global_expressions registry", 3);
     } else {
-        fsm_debug("      WARNING: global_expressions registry is empty or not initialized", 3);
+        fsm_warn("global_expressions registry is empty or not initialized");
     }
 
     fsm_debug("    CHECKING REGISTRY #2: fsm_module->signals (FSMGenFull signal registry)", 3);
@@ -710,7 +710,7 @@ sub _signal_name_indicates_ast_operators($self, $signal_name) {
             fsm_debug("      NOT FOUND: Signal '$signal_name' not found in FSMGenFull signals registry", 3);
         }
     } else {
-        fsm_debug("      WARNING: FSM module signals registry is empty or not initialized", 3);
+        fsm_warn("FSM module signals registry is empty or not initialized");
         if (!$ctx->{fsm_module}) {
             fsm_debug("        Reason: fsm_module is not set", 3);
         } elsif (!$ctx->{fsm_module}->can('signals')) {

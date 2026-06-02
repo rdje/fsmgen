@@ -59,3 +59,25 @@ Reroute every severity-bearing `fsm_debug(..., N)` / `fsm_trace_*` call onto the
 - `2026-06-02`: created; initial sweep — 36 severity-bearing gated trace calls across
   18 files (excluding `*.orig`/`*.txt` cruft); `FSM::Debug` has no ungated severity
   emitter yet.
+- `2026-06-02`: `.1` done — ungated `fsm_warn`/`fsm_error`/`fsm_fatal` (commit
+  `765b03cd`); decision `0010`.
+- `2026-06-02`: `.2` done — triaged + rerouted the 34 severity-bearing gated calls.
+  - A first literal "surface every severity word" pass revealed that **2 messages fire
+    ~3755×/run on normal paths** (a multi-candidate recovery "compatibility parse miss"
+    ×2547; "no intermediate signals generated" when none are needed ×1208), flooding
+    STDERR and breaking 130 tests — and burying the real warnings. User refined `0010`:
+    notes are gatable even when worded with severity words; only genuine problems ungate.
+  - **Triage:** 6 high/moderate-frequency routine notes (`GlobalFactorizationSupport`
+    165/206, `IntermediateSignalRecoverySupport` 481, `ExpressionBuilder` 80,
+    `FactorizationSupport` 294, `IntermediateSignalSupport` 220) kept **gated**
+    (`fsm_debug`, reworded to drop the alarm wording: "parse miss / no factoring needed /
+    bare condition treated as positive"). The remaining ~28 genuine warnings/errors stay
+    **ungated** (`fsm_warn`/`fsm_error`). Heuristic: fires repeatedly during normal passing
+    runs ⇒ note; fires only on a genuine edge/error path ⇒ warning.
+  - Verified: full suite **PASS** (1414 files, 10227 tests); across the whole suite only 5
+    genuine warnings/errors fire (1× each — `LoopStateSupport` pass-cap,
+    `ConsolidatedIntermediateDependencySupport` cycle-fallback, `Parser` unsupported-source
+    `[ERROR]`, `ExpressionBuilder` can't-truncate, `FactorizationPolicySupport` pre-scan) and
+    none break a test.
+  - Remaining: `.3` sweep other masking patterns (`warn`/`print STDERR` gated by level —
+    initial sweep found none); `.4` optional guard test.

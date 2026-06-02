@@ -57,7 +57,7 @@ sub parse_fsm($self, $raw_ast) {
     my $fsm_module = $self->{parser}->parse_fsm($raw_ast);
     
     if (!$fsm_module) {
-        fsm_trace_decision(0, 'Parser returned undefined FSM module', 1);
+        fsm_error('Parser returned undefined FSM module');
         Carp::confess "Failed to parse FSM module from AST";
     }
     

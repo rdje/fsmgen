@@ -99,7 +99,7 @@ sub get_substituted_ast_for_signal ($self, $signal_name, $signal_info) {
             fsm_debug("  Signal '$signal_name' not found in factorizer intermediate signals", 3);
         }
     } else {
-        fsm_debug("  WARNING: No AST factorizer results available", 3);
+        fsm_warn("No AST factorizer results available");
     }
 
     # If no substituted version found, return nil to indicate original should be used

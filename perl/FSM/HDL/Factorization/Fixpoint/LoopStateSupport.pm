@@ -136,7 +136,7 @@ sub finalize_loop_result ($self, $loop_state, %args) {
 
     if (($loop_state->{termination_reason} || 'running') eq 'running') {
         $loop_state->{termination_reason} = "max_pass_limit_reached_$max_pass_number";
-        fsm_debug("[LoopStateSupport.pm][finalize_loop_result()] WARNING: reached pass cap $max_pass_number", 3);
+        fsm_warn("[LoopStateSupport.pm][finalize_loop_result()] reached pass cap $max_pass_number");
     }
 
     fsm_debug(

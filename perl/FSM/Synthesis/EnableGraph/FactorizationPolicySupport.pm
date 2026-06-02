@@ -77,7 +77,7 @@ sub count_binary_logical_operation_occurrences ($self) {
 
     if (exists $ctx->{referenced_intermediate_signals} && %{$ctx->{referenced_intermediate_signals}}) {
         my $prescan_count = scalar(keys %{$ctx->{referenced_intermediate_signals}});
-        fsm_debug("*** COUNT_LOGICAL_OPS: WARNING - Pre-scan has already identified $prescan_count intermediate signals! ***", 3);
+        fsm_warn("COUNT_LOGICAL_OPS: Pre-scan has already identified $prescan_count intermediate signals!");
         fsm_debug("*** This means the logical operation counting is happening TOO LATE! ***", 3);
         fsm_debug("Pre-scan signals: " . join(", ", sort keys %{$ctx->{referenced_intermediate_signals}}));
     } else {
@@ -300,7 +300,7 @@ sub feed_asts_to_factorizer ($self, $factorizer) {
             }
         }
     } else {
-        fsm_debug("*** WARNING: No assignment_analysis available for AST feeding! ***", 3);
+        fsm_warn("No assignment_analysis available for AST feeding!");
     }
 
     my $total_assignments = 0;

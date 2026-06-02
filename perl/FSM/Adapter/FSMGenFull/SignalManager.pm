@@ -38,7 +38,7 @@ sub register_signal($self, $signal_name, %attributes) {
 
     # DEBUG: Track where invalid signal names are created
     if ($signal_name =~ /^[!<>]/) {
-        fsm_debug("*** SIGNAL REGISTRY DEBUG: Invalid signal name '$signal_name' being registered!", 3);
+        fsm_warn("SIGNAL REGISTRY DEBUG: Invalid signal name '$signal_name' being registered!");
         fsm_debug("*** Call stack trace:", 3);
         my $i = 1;
         while (my ($package, $filename, $line, $subroutine) = caller($i)) {
@@ -138,7 +138,7 @@ sub register_signal($self, $signal_name, %attributes) {
 }
 
 sub get_or_create_signal($self, $signal_name, %attributes) {
-    fsm_debug("        WARNING: Using deprecated get_or_create_signal - should use register_signal during parsing", 2);
+    fsm_warn("Using deprecated get_or_create_signal - should use register_signal during parsing");
     return $self->register_signal($signal_name, %attributes);
 }
 

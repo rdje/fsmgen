@@ -54,7 +54,7 @@ sub parse_fsm_file ($class, %args) {
     $class->_restore_preserved_slash_token_braces($raw_ast);
 
     unless ($raw_ast) {
-        fsm_trace_decision(0, "Lispish parser returned undefined AST for '$fsm_file'", 1);
+        fsm_error("Lispish parser returned undefined AST for '$fsm_file'");
         confess "Error: Failed to parse FSM file with Lispish\n";
     }
 
@@ -471,7 +471,7 @@ sub create_fsm_module ($class, %args) {
     }
 
     unless ($fsm_module) {
-        fsm_trace_decision(0, 'Adapter parse_fsm() returned undefined module', 1);
+        fsm_error('Adapter parse_fsm() returned undefined module');
         confess "Error: Failed to create FSM module\n";
     }
 
