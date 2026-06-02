@@ -17,7 +17,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
             await_any params stage contract store load wait while until set
-            atl_trigger atl_trigger_batch local
+            atl_trigger atl_trigger_batch local assert
         )
     },
     when => {
@@ -126,7 +126,7 @@ sub build_module($self, $actor) {
 # --- Child IR (separate module) ---
 
 sub _build_child_ir($self, $tx, $actor, $cname) {
-    my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles, $bank_accesses, $reset_values) =
+    my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles, $bank_accesses, $reset_values, $asserts) =
         $self->_build_transaction($tx, $actor, 0);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
     # ISF-REGISTER-RESET-VALUES: storage var reset values (actor-level) + this transaction's
@@ -171,6 +171,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         reset_values => \%module_reset_values,
         children   => {},
         temporal_contracts => $contracts,
+        immediate_assertions => ($asserts || []),
         bank_accesses => $bank_accesses,
     };
 
@@ -1094,6 +1095,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     my @dts;
     my @spawn_instances;
     my @temporal_contracts;
+    my @immediate_assertions;
     my @bank_accesses;
     my $transaction_port_bindings = _transaction_port_binding_metadata($actor);
     my %signal_widths = _declared_storage_signal_widths($actor);
@@ -1122,7 +1124,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     for my $tx (@{$actor->{transactions}}) {
         next if $generated_children->{$tx->{name}};
         next if $pruned_transactions->{$tx->{name}};
-        my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses, $resets) =
+        my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses, $resets, $asserts) =
             $self->_build_transaction($tx, $actor, $ti++, $generated_children);
         $reset_values{$_} = $resets->{$_} for keys %{$resets || {}};
         _merge_signal_widths(\%signal_widths, $widths, $tx->{name});
@@ -1136,6 +1138,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         }
         push @dts, @$ds;
         push @temporal_contracts, @$contracts;
+        push @immediate_assertions, @{$asserts || []};
         for my $d (@$do)  {
             next if ref($d) eq 'HASH' && $d->{generated_child};
             my $c = ref($d) eq 'HASH' ? $d->{child} : $d;
@@ -1211,6 +1214,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         children   => {},
         spawn_instances => \@spawn_instances,
         temporal_contracts => \@temporal_contracts,
+        immediate_assertions => \@immediate_assertions,
         bank_accesses => \@bank_accesses,
         transaction_port_bindings => $transaction_port_bindings,
     };
@@ -4905,6 +4909,8 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
     my @spc;
     my @dps;
     my @contracts;
+    my @asserts;
+    my $assert_ordinal = 0;
     my @bank_accesses;
     my %contract_names;
     my %storage_roles;
@@ -4976,6 +4982,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
             push @dt, $cdt;
             push @contracts, $cm;
         }
+        elsif ($k eq 'assert')      { push @asserts, _ir_assert($cl, $tn, $assert_ordinal++); }
         elsif ($k eq 'shift_left')  { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_left($cl,$tn,$si++,$widths,$actor); }
         elsif ($k eq 'shift_right') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_right($cl,$tn,$si++,$widths,$actor); }
         elsif ($k eq 'assemble')    { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_assemble($cl,$tn,$si++,$actor); }
@@ -5042,7 +5049,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
     _link_states(\@st, $tn);
     $ct{can_accept} = 1;
     for my $s (@st) { next unless $s->{kind} eq 'entry'; unshift @{$s->{assignments}}, { lhs => 'can_accept', rhs => 1, op => '=' }; }
-    return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts, { %{$widths || {}} }, \%storage_roles, \@bank_accesses, \%reset_values);
+    return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts, { %{$widths || {}} }, \%storage_roles, \@bank_accesses, \%reset_values, \@asserts);
 }
 
 sub _merge_signal_widths {
@@ -7904,6 +7911,25 @@ sub _ir_until {
 
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<1',source_kind=>'complete_pulse'}],transitions=>[]} }
 sub _ir_update   { my ($cl,$tn,$i,$source_kind)=@_; $source_kind //= 'update'; my$rhs=_format_isf_expr($cl->[2]); {name=>"${tn}_${source_kind}_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-',source_kind=>$source_kind}],transitions=>[]} }
+
+# ISF-ASSERT: `(assert COND [message])` — a transaction-level combinational invariant. Collected
+# (not a state) into the module IR's immediate_assertions and emitted as a `+assert` carrier in
+# the `.fsm`. COND is rendered to `.fsm` text (re-parsed by FSMGenFull's expression builder).
+sub _ir_assert {
+    my ($cl, $tn, $i) = @_;
+    my (undef, $cond, $message) = @$cl;
+    confess "Error: (assert ...) in transaction '$tn' requires a condition expression\n"
+        unless defined $cond;
+    confess "Error: (assert ...) in transaction '$tn' takes a condition and an optional message string only\n"
+        if @$cl > 3;
+    my %a = ( name => "${tn}_assert_$i", condition => _format_isf_expr($cond) );
+    if (defined $message) {
+        confess "Error: (assert COND ...) in transaction '$tn' message must be a scalar string\n"
+            if ref($message);
+        $a{message} = $message;
+    }
+    return \%a;
+}
 sub _ir_bank_access {
     my ($cl, $tn, $i, $actor, $widths, $owner_kind) = @_;
     my $spec = _parse_bank_access_for_lowering($cl, $actor, $widths, $tn, 'transaction');

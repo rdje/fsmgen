@@ -71,7 +71,7 @@ minimal.)
 
 ## Slice plan
 
-- `.1` select + design (this doc) + precise read-only mechanics map.
+- `.1` select + design (this doc) + precise read-only mechanics map. `done`.
 - `.2` the `.fsm` `+assert` carrier: ISF emits it, FSMGenFull parses it onto the
   module, it round-trips (a focused round-trip test); no SV yet.
 - `.3` HDL emission: `module_info` surfaces the assertion;
@@ -80,6 +80,47 @@ minimal.)
   case (the assertion fires only on violation).
 - `.4` ISF surface polish: optional message, expression conditions, fail-closed
   validation; 13e/13g doc section + 13k row; `ISF_SPEC` registers the t/.
+
+## First-cut semantic (decided 2026-06-02)
+
+`(assert COND [message])` is a **transaction-level combinational invariant** —
+"COND must hold every cycle" — emitted as `assert (COND) else $error(message)` in
+an `always_comb` under `` `ifndef SYNTHESIS `` (Verilog output stays
+assertion-free). This is the simplest *correct* semantic, genuinely useful for
+safety/structural invariants, and end-to-end verifiable. State-guarded /
+point-in-time asserts and temporal (`|->`) properties are explicit non-goals here
+(temporal is what `(contract …)` already does); a later slice may add
+`(assert COND at STATE)`-style guarding using the `<STATE>_en` signals.
+
+## Implementation map (code-grounded; from the `.1` investigation)
+
+Token shape: `(+assert (NAME COND_SEXPR "message") …)` — one section per module,
+mirroring `+size`. Carry COND as an s-expr (FSMGenFull `ExpressionBuilder`
+parses it); no pre-computed signal.
+
+- **ISF lowerer** (`Scheduler/ISF/LoweringIR.pm`): add `assert` to
+  `%SUPPORTED_TRANSACTION_CLAUSES{transaction}`; a clause case in
+  `_build_transaction` (~L4970, mirroring `contract`) collects into a per-tx
+  `@asserts` via a new `_ir_assert` (name `<tx>_assert_<n>`, cond, message; no
+  state — it is combinational); thread `\@asserts` as the **11th** element of the
+  `_build_transaction` return tuple (~L5045) and destructure it at **both** call
+  sites — `_build_child_ir` (~L129) and `_build_parent_ir` (~L1127) — collecting
+  into `@immediate_assertions`; add `immediate_assertions => …` to the parent IR
+  (~L1213) and child IR (~L173) module hashes.
+- **ISF emitter** (`Scheduler/ISF/Emitter/FSM.pm`): `_emit_asserts($ir)` after
+  `_emit_size` (~L50) emits the `(+assert …)` section from
+  `$ir->{immediate_assertions}`.
+- **FSMGenFull parse** (`Adapter/FSMGenFull/Parser.pm`): add `+assert` to
+  `supported_directives_description` (~L524) + a first-pass collector + a
+  `parse_asserts_section` (mirroring `parse_size_section` ~L660) that parses each
+  `(NAME COND msg)` (COND via `$self->{expression_builder}->parse_expression`),
+  storing on `$fsm_module->{attributes}{immediate_assertions}`.
+- **module_info** (`Pipeline/GeneratedModuleInfoBuilder.pm` `build_from_fsm_module`
+  ~L48-62): surface `immediate_assertions => $fsm_module->{attributes}{immediate_assertions}`.
+- **emit SVA** (`Backend/GeneratedModuleEmitter.pm`): new
+  `immediate_assertion_runtime_lines` (template: `selector_conflict_assertion_runtime_lines`
+  ~L122) emitting `` `ifndef SYNTHESIS `` / `always_comb` / `assert (COND) else
+  $error("msg")` / `endif`, wired into `augment_with_runtime_assertions` (~L310).
 
 ## Non-Goals
 
@@ -109,3 +150,22 @@ minimal.)
   constraint (no side channel); chose a thin `+assert` `.fsm` carrier over reusing
   the temporal-contract machinery (which does not emit an `assert` statement in the
   single-actor flow).
+- `2026-06-02`: `.1` done — design + a precise read-only mechanics map of all four
+  layers; first-cut semantic decided (transaction-level combinational invariant).
+- `2026-06-02`: `.2` done — the `.fsm` `+assert` carrier round-trips.
+  - ISF lowerer (`LoweringIR.pm`): `assert` added to the transaction clause
+    allow-list; `_ir_assert` collects `(assert COND [msg])` into a per-tx `@asserts`
+    (name `<tx>_assert_<n>`, COND rendered via `_format_isf_expr`, optional message),
+    threaded as the 11th `_build_transaction` return element into the parent + child
+    module IR `immediate_assertions`.
+  - ISF emitter (`Emitter/FSM.pm`): `_emit_asserts` writes `(+assert (NAME COND
+    ["msg"]) …)` after `+size` (skipped when empty).
+  - FSMGenFull (`Parser.pm`): `+assert` added to the supported directives + first-pass
+    collector + skip-list; `parse_asserts_section` parses each entry (Lispish
+    head+grouped-rest form), parsing COND via the shared `ExpressionBuilder` and
+    stashing on `$fsm_module->{attributes}{immediate_assertions}`.
+  - `t/1410` (4 subtests): carrier emitted + round-trips; COND parses to a CoreAST
+    expression rendering to SV (`level < depth`); optional message round-trips;
+    multiple asserts; fail-closed (no condition / extra operands). Non-assert actors
+    unaffected (verify-hdl clean; representative regression green). No SV emission
+    yet — that is `.3`.

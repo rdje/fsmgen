@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `MEMORY-ARCHITECTURE-ADOPTION.5` close (this commit) — memory architecture adopted + enforced; `git log -1` for the hash.
-- active_work_unit: `ISF-ASSERT` → frontier leaf: `.2` (next; `.1` design done) — `(assert COND [message])` verification intent via a thin `+assert` `.fsm` carrier (ISF → `.fsm` → SV; module_info → emitter, mirroring the `$onehot0` path).
-- next_action: implement `ISF-ASSERT.2` — emit a `+assert` carrier from the ISF lowerer, parse it in FSMGenFull onto `$fsm_module`, surface into `module_info`, and emit a guarded SVA in `GeneratedModuleEmitter::augment_with_runtime_assertions` (under `ifndef SYNTHESIS`); verify with a `verilator --binary` pass/fail testbench.
-- recently_done: `MEMORY-ARCHITECTURE-ADOPTION` (`.1`–`.5`, done); the theme-3 ISF data/bit/field/arithmetic construct surface (see `docs/decisions/0002`).
+- latest_commit: `ISF-ASSERT.2` (this commit) — the `(assert COND)` `+assert` `.fsm` carrier round-trips ISF → `.fsm` → FSMGenFull; `git log -1` for the hash.
+- active_work_unit: `ISF-ASSERT` → frontier leaf: `.3` (next; `.1`–`.2` done) — `(assert COND [message])` verification intent.
+- next_action: implement `ISF-ASSERT.3` — surface `$fsm_module->{attributes}{immediate_assertions}` into `module_info` (`GeneratedModuleInfoBuilder::build_from_fsm_module`), add `immediate_assertion_runtime_lines` to `GeneratedModuleEmitter` (emit `ifndef SYNTHESIS` / `always_comb` / `assert (COND) else $error("msg")` from the condition's `to_systemverilog`) wired into `augment_with_runtime_assertions`; verify with `--verify-hdl` + a `verilator --binary` pass/fail testbench.
+- recently_done: `MEMORY-ARCHITECTURE-ADOPTION` (`.1`–`.5`, done); `ISF-ASSERT.1`/`.2`; the theme-3 ISF data/bit/field/arithmetic construct surface (see `docs/decisions/0002`).
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 

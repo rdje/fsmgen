@@ -49,6 +49,10 @@ sub emit($self, $ir) {
     }
     push @lines, $self->_emit_size($ir);
     push @lines, '';
+    if (my $assert_block = $self->_emit_asserts($ir)) {
+        push @lines, $assert_block;
+        push @lines, '';
+    }
     push @lines, $self->_emit_states($ir, $self->{outputs});
     push @lines, $self->_emit_dt_blocks($ir, $self->{outputs});
     push @lines, ')';
@@ -179,6 +183,28 @@ sub _emit_size($self, $ir) {
 # `(reset V)` marker for a register with an opt-in hardware reset value; empty otherwise.
 sub _reset_suffix($resets, $name) {
     return (defined $resets->{$name}) ? " (reset $resets->{$name})" : '';
+}
+
+# ISF-ASSERT: emit the `+assert` carrier so `(assert COND [message])` survives ISF -> `.fsm`.
+# Each entry is `(name COND ["message"])`; COND is already rendered `.fsm` text. Empty string
+# when there are no assertions (caller skips the section).
+sub _emit_asserts($self, $ir) {
+    my $asserts = $ir->{immediate_assertions} || [];
+    return '' unless @$asserts;
+    my @l = ('  (+assert');
+    for my $a (@$asserts) {
+        my $line = "    ($a->{name} $a->{condition}";
+        if (defined $a->{message} && length $a->{message}) {
+            my $msg = $a->{message};
+            $msg =~ s/\\/\\\\/g;
+            $msg =~ s/"/\\"/g;
+            $line .= " \"$msg\"";
+        }
+        $line .= ')';
+        push @l, $line;
+    }
+    push @l, '  )';
+    return join("\n", @l);
 }
 
 sub _emit_states($self, $ir, $outputs) {

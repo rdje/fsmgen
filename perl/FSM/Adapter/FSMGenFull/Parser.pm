@@ -148,6 +148,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
     my @pending_enum_entries;
     my @pending_type_entries;
     my @pending_interface_sections;
+    my @pending_assert_sections;
 
     for my $element (@$fsm_contents) {
         Carp::confess
@@ -182,6 +183,9 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         } elsif ($element_name eq '+import') {
             fsm_debug("Parsing import section", 3);
             $self->parse_import_section($module_name, $element);
+        } elsif ($element_name eq '+assert') {
+            fsm_debug("Collecting +assert block", 3);
+            push @pending_assert_sections, $element;
         }
     }
 
@@ -223,6 +227,10 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         $self->parse_interface_section($interface_ast);
     }
 
+    for my $assert_ast (@pending_assert_sections) {
+        $self->parse_asserts_section($assert_ast);
+    }
+
     for my $element (@$fsm_contents) {
         next unless ref($element) eq 'ARRAY';
         my $element_name = $element->[0];
@@ -241,6 +249,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
                 || $element_name eq '+import'
                 || $element_name eq '+define'
                 || $element_name eq '+params'
+                || $element_name eq '+assert'
             )
         ) {
             next;
@@ -521,9 +530,9 @@ sub root_contract_label($self, $root_kind = 'fsm') {
 }
 
 sub supported_directives_description($self, $root_kind = 'fsm') {
-    return "The active contract currently supports only the conventional '+system' form, '+size', '+interface', '+constants', '+enums', '+types', '+import', '+define', and '+params' inside '?dt:name'"
+    return "The active contract currently supports only the conventional '+system' form, '+size', '+interface', '+constants', '+enums', '+types', '+import', '+define', '+params', and '+assert' inside '?dt:name'"
         if $root_kind eq 'dt';
-    return "The active contract currently supports only '+system', '+size', '+interface', '+constants', '+enums', '+types', '+import', '+define', and '+params' inside '?fsm:name'";
+    return "The active contract currently supports only '+system', '+size', '+interface', '+constants', '+enums', '+types', '+import', '+define', '+params', and '+assert' inside '?fsm:name'";
 }
 
 sub supported_top_level_forms_description($self, $root_kind = 'fsm', $is_flat_ast = 0) {
@@ -655,6 +664,35 @@ sub parse_types_section($self, $types_ast) {
     }
 
     return \@type_entries;
+}
+
+# ISF-ASSERT: parse a `(+assert (NAME COND ["message"]) ...)` directive, storing the parsed
+# immediate (combinational) assertions on the module so the backend can project them to
+# verification-only SV assertions. COND is parsed by the shared expression builder.
+sub parse_asserts_section($self, $assert_ast) {
+    # Lispish head+grouped-rest: (+assert ENTRY...) -> ['+assert', [ENTRY...]] and each entry
+    # (NAME COND ["msg"]) -> ['NAME', [COND, "msg"?]].
+    my (undef, $entries) = @$assert_ast;
+    my $module = $self->{fsm_module};
+    $module->{attributes}{immediate_assertions} //= [];
+    for my $entry (@{ $entries || [] }) {
+        Carp::confess "Unsupported '+assert' entry: each must be '(NAME COND [\"message\"])'"
+            unless ref($entry) eq 'ARRAY' && @$entry == 2 && ref($entry->[1]) eq 'ARRAY';
+        my $name = $self->unwrap_scalar_token($entry->[0]);
+        Carp::confess "'+assert' entry requires a scalar name"
+            unless defined($name) && length($name);
+        my ($cond_tok, $msg_tok) = @{ $entry->[1] };
+        Carp::confess "'+assert' entry '$name' requires a condition expression"
+            unless defined $cond_tok;
+        my $condition = $self->{expression_builder}->parse_expression($cond_tok);
+        my $message = defined($msg_tok) ? $self->unwrap_scalar_token($msg_tok) : undef;
+        push @{ $module->{attributes}{immediate_assertions} }, {
+            name      => $name,
+            condition => $condition,
+            (defined $message ? (message => $message) : ()),
+        };
+    }
+    return $module->{attributes}{immediate_assertions};
 }
 
 sub parse_size_section($self, $size_ast) {
