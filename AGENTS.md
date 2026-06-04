@@ -16,6 +16,12 @@ The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`**.
    frontier row is your precise next step.
 5. Pull only the relevant **decision records** under `docs/decisions/`
    (index: `docs/decisions/INDEX.md`).
+6. Before re-deriving any durable fact from code or runtime, consult
+   **`KNOWLEDGE_MAP.md`** — a derived *question → fact* index (generated from the
+   front-mattered fact cards under `docs/knowledge/`; see `knowledge-map/`). Find
+   your question, follow the one pointer to the canonical home, and trust the dated
+   fact or run its `reverify` command. Only if the fact is genuinely not there is
+   new investigation warranted — then write a fact card so it never recurs.
 
 ## Non-negotiable working rules
 

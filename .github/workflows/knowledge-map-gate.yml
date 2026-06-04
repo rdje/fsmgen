@@ -1,0 +1,26 @@
+# Knowledge Map (KM) CI gate — the un-bypassable backstop (MEMORY_ARCHITECTURE §9 E4).
+#
+# `--no-verify` skips the local pre-commit hook but NOT this: an invalid fact card
+# or a Knowledge Map that is out of sync with its fact files fails the build and
+# cannot merge. The check is the same script the local hook runs.
+name: knowledge-map-gate
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  knowledge-map:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate facts + assert the Knowledge Map is in sync
+        run: bash knowledge-map/scripts/check_knowledge_map.sh

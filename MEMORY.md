@@ -11,14 +11,17 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-TRIGGER-ANCHOR.6c` (this commit) — neutralized user-facing "contract" wording: renamed the shared within-resolver → `_resolve_monitor_window_cycles` + reworded its diagnostics to "monitor window …"; reframed the downstream-spec stale `(contract …)` block to `(assert (monitor …))`. Kept the deeply-wired internal kind/role names (`temporal_contract_monitor`, `kind=>'contract'`) — golden-checked, accurate. **ISF-TRIGGER-ANCHOR fully complete.** `git log -1` for the hash.
-- active_work_unit: none active. **ISF-TRIGGER-ANCHOR done** (`.1`–`.6` + `.5a/.5b/.5c` + `.6c`): event/inline/ref triggers + synthesizable monitor + window parity + Ref (signal-anchored, ISF↔FSM boundary respected) + `(contract …)` removed; thorough synced mdBook docs (7 runnable examples). This session also shipped decisions `0008`–`0011`, `TRACE-SEVERITY-NEVER-GATED`, `DOCS-RELATIVE-PATHS`, artifact cleanup. Next: pick a frontier item per `0002`/`0003`.
-- queued: `ISF-TRIGGER-ANCHOR.5b` **activation label** `(on SIGNAL as NAME)` (bare `as`, NOT `:as` — user) binding NAME → entry state, sibling of `.5a`'s `(point NAME)`. `.5a` (point + `(at NAME)` → `(state_active <state>)`, module-wide, fail-closed) is DONE this commit (`t/1416`). Then `.6c` neutralize residual "contract" wording. `(contract …)` already removed (`.6`).
-- recently_done: `MEMORY-ARCHITECTURE-ADOPTION` (`.1`–`.5`, done); `ISF-ASSERT.1`/`.2`; the theme-3 ISF data/bit/field/arithmetic construct surface (see `docs/decisions/0002`).
+- latest_commit: `KNOWLEDGE-MAP-ADOPT.2` (this commit) — adopted the **Knowledge Map** retrieval layer: copied the `knowledge-map/` bundle, restructured `.githooks/pre-commit` into two gates (memory-arch → KM), added the `knowledge-map-gate` CI backstop, wired the `KNOWLEDGE_MAP.md` read-path pointer (AGENTS.md/MEMORY.md/MEMORY_ARCHITECTURE.md), generated the map, and seeded 5 fact cards under `docs/knowledge/`. `git log -1` for the hash.
+- active_work_unit: none active. `KNOWLEDGE-MAP-ADOPT` `.1`–`.2` done (tree left `active` only for optional later folding of high-traffic decision records into the map). `ISF-LOOP-EARLY-EXIT` `.1`–`.4` done (`.5` = optional docs consolidation). Next: pick a frontier item per `0002`/`0003`, or seed/fold more KM cards lazily.
+- recently_done: `ISF-LOOP-EARLY-EXIT.4` (`loop_early_exits[]` schedule-report metadata for exit-when/continue-when); `ISF-TRIGGER-ANCHOR` (complete, `.1`–`.6c`); decisions `0008`–`0011`; `TRACE-SEVERITY-NEVER-GATED`; `DOCS-RELATIVE-PATHS`.
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 
 ## Notes
+- Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
+  index; cards under `docs/knowledge/`, bundle `knowledge-map/`). Write a fact card
+  whenever you establish a durable fact or catch archaeology — lazily, never a sweep
+  (`docs/tasks/KNOWLEDGE-MAP-ADOPT.md`).
 - Push only on explicit user request (no commit-count cadence) — `docs/decisions/0005`.
 - PNT autonomously; do not pause mid-flow — `docs/decisions/0003`.
 - Legacy prose blobs (`CHANGES.md`, `DEVELOPMENT_NOTES.md`, `ROADMAP_STATUS.md`,

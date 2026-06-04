@@ -117,8 +117,19 @@ A fresh agent (same or different model/harness) resumes deterministically and wi
 3. Open the **active task-tree unit (B)** → its frontier row *is* the precise next step.
 4. Pull only the **decision records (C)** relevant to that step.
 5. Consult **`git log` (D)** only if deeper history is needed.
+6. Before re-deriving any durable fact from code or runtime, consult the **Knowledge
+   Map** (`KNOWLEDGE_MAP.md`) — a derived *question → fact* index over small
+   front-mattered fact cards (`docs/knowledge/`). It is an **additive** retrieval
+   layer on top of A–D (it converts/replaces nothing); a card is a signpost that
+   points at the canonical home (book/code/decision record) and carries `date` +
+   `reverify` so a fact is trusted, not excavated. The full standard, scripts, and
+   enforcement ship self-contained in **`knowledge-map/`** (see
+   `knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md`); adoption is tracked in
+   `docs/tasks/KNOWLEDGE-MAP-ADOPT.md`.
 
-A resume reads A + one unit of B + a few C records — never a monolith.
+A resume reads A + one unit of B + a few C records — never a monolith. The Knowledge
+Map turns "which layer holds fact X?" into one lookup, so archaeology is structurally
+unnecessary for any fact logged once.
 
 ---
 
