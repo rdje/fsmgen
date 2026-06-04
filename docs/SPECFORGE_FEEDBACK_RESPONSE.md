@@ -712,3 +712,62 @@ Where the surface lives: `docs/book/src/13d-control-flow.md` (the `(assert …)`
 "Temporal properties", "Trigger anchors", "Synthesizable-monitor output mode", and
 "Named anchors" sections), gated by `t/1376-isf-book-example-lowering-audit.t`;
 decisions `docs/decisions/0008` and `docs/decisions/0009`.
+
+## 2026-06-04 (follow-up): the two flagged deltas — `(stable …)` shipped, `min > 1` windows proposed
+
+The 2026-06-04 LTL/MTL response above flagged two spots where ISF was narrower than the
+fully general `F[min,max]` + predicate set, as candidate slices "only if SPECFORGE
+actually mines them." SPECFORGE confirmed (in `FSMGEN_FEEDBACK.md`) it mines **both** and
+asked FSMGEN to add the primitives. Status of each:
+
+### (1) `(stable …)` and the sampled-value predicates — **shipped** (re-pin to pick them up)
+
+FSMGEN shipped the SystemVerilog sampled-value functions as property leaves in
+`ISF-PROPERTY-SAMPLED-VALUE.2` (commit `6700fbb4`, **after** the `43b29f5c` pin SPECFORGE
+re-pinned to), so they are not yet in SPECFORGE's tree:
+
+| ISF | SystemVerilog | SPECFORGE `<pred>` |
+| --- | --- | --- |
+| `(stable SIG)`  | `$stable(SIG)`  | `(stable <signal>)` — exact match |
+| `(changed SIG)` | `$changed(SIG)` | (the negation; also mined) |
+| `(rose SIG)`    | `$rose(SIG)`    | edge form of `(value … ASSERTED)` |
+| `(fell SIG)`    | `$fell(SIG)`    | edge form of `(value … DEASSERTED)` |
+
+They are property leaves usable standalone or as an `=>`/`after` antecedent/consequent —
+`(assert (=> valid (stable data)))` → `(valid) |-> ($stable(data))` — verilator-simulable
+(not a `##` sequence), operand kept alive, and **property-only** (fail closed in a
+synthesizable expression position). With this, SPECFORGE's full `<pred>` set lowers to ISF:
+`(value sig HIGH/LOW/V)` → `sig` / `(! sig)` / `(== sig V)`, `(stable sig)` → `(stable sig)`,
+`(handshake v r)` → `(& v r)`. **Action for SPECFORGE:** re-pin `subs/fsmgen` past `6700fbb4`
+and migrate the mined stability obligations off residuals into
+`(assert (=> <ante> (stable <sig>)))`. Documented in `docs/book/src/13d-control-flow.md`
+("Sampled-value predicates"), gated by `t/1417-isf-property-sampled-value.t`.
+
+### (2) `min > 1` windows (`F[min,max]`, `min > 1`) — proposed shape, FSMGEN will own it
+
+This remains the one genuine open delta. Today ISF spells the lower bound implicitly:
+`(within B N)` → `##[1:N]` (= `F[1,N]`), `(next B)` → `##1` (= exactly the next cycle), and
+the `(monitor (within S N))` mode covers `F[0,N]` from an anchor. There is no spelling for
+`##[min:max]` with `min > 1` (e.g. `F[2,5]` — "between 2 and 5 cycles later").
+
+Proposed ISF shape — a backward-compatible **third operand** on the existing `within`
+(which is SPECFORGE's `(window <min> <max>)` modifier):
+
+```text
+(within B N)        -> ##[1:N]      (unchanged; F[1,N])
+(within B MIN MAX)  -> ##[MIN:MAX]  (new; F[MIN,MAX], literal 1 <= MIN <= MAX)
+```
+
+So `G(req -> F[2,5] ack)` is `(assert (=> req (within ack 2 5)))` → `(req) |-> ##[2:5] (ack)`.
+Like every `##` sequence it is **formal-only** (emitted under `` `ifdef FORMAL ``;
+verilator/yosys skip it, so `--verify-hdl` stays green). FSMGEN will own this as a bounded
+slice (parser arity extension in `parse_check_property` + the `##[MIN:MAX]` render, with the
+existing aliveness/checkability walks already covering the leaf). **One confirmation before
+we lock the form:** are SPECFORGE's mined `cycle_window` bounds always integer literals with
+`MIN >= 1`, or can `MIN` be `0` (which is the `(monitor …)` / anchored-`F[0,N]` case, not a
+`|-> ##` consequent)? That determines whether `(within B 0 MAX)` should be accepted or
+redirected to the monitor form.
+
+Net: of the two flagged deltas, the predicate half (`stable` + the sampled-value family) is
+**done** and only needs a re-pin; the `min > 1` window half is a small, scoped slice FSMGEN
+will ship on confirmation of the window shape.
