@@ -959,14 +959,35 @@ antecedent and a consequent) fails closed.
 **Delayed consequents.** The consequent of an implication may be delayed in time:
 
 ```lisp
-(assert (=> req (next ack)))       ;; req |-> ##1 (ack)       (ack one cycle later)
-(assert (=> req (within ack 3)))   ;; req |-> ##[1:3] (ack)   (ack within 1..N cycles)
+(assert (=> req (next ack)))         ;; req |-> ##1 (ack)        (ack one cycle later)
+(assert (=> req (within ack 3)))     ;; req |-> ##[1:3] (ack)    (ack within 1..3 cycles)
+(assert (=> req (within ack 2 5)))   ;; req |-> ##[2:5] (ack)    (ack between 2 and 5 cycles later)
 ```
 
 `(next X)` lowers to `##1 (X)` and `(within X N)` to `##[1:N] (X)` (`N` a literal
-`>= 1`). These together with an implication express bounded liveness — the same
-intent as the synthesizable-monitor form documented below (which replaced the
-former `(contract (eventually S within N))` clause).
+`>= 1`). For a window with a **lower bound greater than 1**, give `within` two bounds:
+`(within X MIN MAX)` lowers to `##[MIN:MAX] (X)` (literal `1 <= MIN <= MAX`) — the
+consequent holds *somewhere between `MIN` and `MAX` cycles later* (the bounded-eventually
+`F[MIN,MAX]`). A `MIN` of `0` fails closed: a `[0,0]` same-cycle obligation is just the
+overlapping `(=> A B)`, and a `[0,N]` "from here, eventually within N" is the
+synthesizable-monitor form below. These together with an implication express bounded
+liveness — the same intent as the synthesizable-monitor form documented below (which
+replaced the former `(contract (eventually S within N))` clause).
+
+A complete, runnable example — a request that must be acknowledged 2 to 5 cycles later:
+
+```lisp
+(actor delayed_ack
+  (interface
+    (input start)
+    (input req)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (assert (=> req (within ack 2 5)) "ack arrives 2..5 cycles after req")
+    (complete done)))
+```
 
 > **Checkability split.** verilator cannot simulate an implication with a *delayed*
 > (sequence) consequent — only the same-cycle overlapping `|->`. So checks that use

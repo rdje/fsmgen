@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-PROPERTY-WINDOW-RANGE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14` (ISF — high-level language richness)
 - Created: `2026-06-04`
 - Last updated: `2026-06-04`
@@ -76,7 +76,7 @@ This closes the **second** of the two deltas FSMGEN flagged to SPECFORGE in the
 ## Task Tree
 
 - ID: `ISF-PROPERTY-WINDOW-RANGE`
-  Status: `active`
+  Status: `done`
   Goal: `(within B MIN MAX) -> ##[MIN:MAX] bounded window with an explicit lower bound (1 <= MIN <= MAX).`
   Children: `.1` (select), `.2` (implement)
 
@@ -88,18 +88,17 @@ This closes the **second** of the two deltas FSMGEN flagged to SPECFORGE in the
   Commit: `ship commit (this slice)`
 
 - ID: `ISF-PROPERTY-WINDOW-RANGE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `(within B MIN MAX) renders to ##[MIN:MAX] inside assert/assume/cover; 1 <= MIN <= MAX literal, else fail closed.`
   Acceptance: `parse_check_property accepts arity-3 within (lower=MIN, bound=MAX); _render_check_condition_sv emits ##[MIN:MAX]; (within B N) unchanged (##[1:N]); formal-only; (=> req (within ack 2 5)) -> (req) |-> ##[2:5] (ack); MIN=0, MIN>MAX, non-literal bounds, wrong arity fail closed; 13d documents it with a runnable example; 13k row + ISF_SPEC focused-test index updated; a t/ test locks it; full suite green; SPECFORGE response-doc updated (min>1 shipped).`
   Verification: `prove -j4 -Iperl t/<new> t/1412 t/1376 t/1305 t/1250; --check-json on a min>1 actor; perl -c; mdbook build; full prove -j4 -Iperl t/; git diff --check`
   Commit: `ship commit (this slice)`
-
-## Current Frontier
+  Done: `parse_check_property within block now accepts arity 2 (lower=1,bound=N) or 3 (lower=MIN,bound=MAX, literal 1<=MIN<=MAX); _render_check_condition_sv emits ##[<lower>:<bound>] (lower defaults to 1). Spike: (within ack 2 5) -> ##[2:5], (within ack 3) -> ##[1:3] (back-compat), both under ifdef FORMAL; MIN=0/MIN>MAX/non-literal/4-arg fail closed. t/1418 (3 subtests). 13d "Delayed consequents" + runnable delayed_ack example; 13k row 59 (Form+Behavior); ISF_SPEC index; KM card isf-bounded-window-min. No ISF-layer change; aliveness/formal-only already cover the operand. SPECFORGE response-doc updated (min>1 shipped; both deltas done).`
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc); task tree committed before code. |
-| 2 | `.2` | `pending` | Arity-3 `within` parser + `##[MIN:MAX]` render + fail-closed validation + synced docs + tests. |
+| 2 | `.2` | `done` | `(within B MIN MAX)` → `##[MIN:MAX]` (literal `1 <= MIN <= MAX`); `(within B N)` unchanged; formal-only; `MIN=0`/`MIN>MAX`/non-literal/4-arg fail closed. `t/1418`; 13d/13k/ISF_SPEC synced; SPECFORGE min>1 shipped. |
 
 ## Decisions
 
@@ -115,12 +114,14 @@ This closes the **second** of the two deltas FSMGEN flagged to SPECFORGE in the
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-04` | `.1` | `scripts/check_memory_architecture.sh`; `git diff --check` | `PASS` |
+| `2026-06-04` | `.2` | `prove -Iperl t/1418 t/1412 t/1376 (63 fixtures) t/1305 t/1250` PASS; `--check-json` spike (`##[2:5]`, back-compat `##[1:3]`, MIN=0/MIN>MAX fail closed); `perl -c`; `mdbook build`; full `prove -j4 -Iperl t/`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-PROPERTY-WINDOW-RANGE.1: select — (within B MIN MAX) bounded-window lower bound (task tree)` | `ship commit (this slice)` |
+| `.1` | `ISF-PROPERTY-WINDOW-RANGE.1: select — (within B MIN MAX) bounded-window lower bound (task tree)` | `2236cab4` |
+| `.2` | `ISF-PROPERTY-WINDOW-RANGE.2: (within B MIN MAX) -> ##[MIN:MAX] bounded window with a lower bound` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -132,3 +133,18 @@ This closes the **second** of the two deltas FSMGEN flagged to SPECFORGE in the
   consequent, so the form is locked to that range. Recorded ground truth (the property
   `within` lives in `FSMGenFull::Parser`, distinct from the `(monitor …)` window; ISF
   passes the carrier through verbatim) and the slice plan.
+- `2026-06-04`: `.2` shipped — `(within B MIN MAX)` → `##[MIN:MAX]` (literal
+  `1 <= MIN <= MAX`). Extended the `within` block in
+  `FSMGenFull::Parser::parse_check_property` to accept arity 2 (`lower=1`, `bound=N`,
+  unchanged) or 3 (`lower=MIN`, `bound=MAX`), and switched
+  `GeneratedModuleInfoBuilder::_render_check_condition_sv` to emit
+  `##[<lower>:<bound>]` (lower defaults to 1). `(within ack 2 5)` → `##[2:5] (ack)`;
+  `(=> req (within ack 2 5))` → `(req) |-> ##[2:5] (ack)`; `(within ack 3)` still
+  `##[1:3]`. Formal-only (a `##` sequence; `_property_is_formal_only` already returns 1
+  for op `within`) and the operand aliveness walk already covered it — no extra code.
+  `MIN = 0`, `MIN > MAX`, non-literal bounds, and a four-element `(within X A B C)` all
+  fail closed. No ISF-layer change (pass-through `_format_isf_expr`). `t/1418`
+  (3 subtests). Docs synced: `13d` "Delayed consequents" + a runnable `delayed_ack`
+  example; `13k` row 59 (Form + Behavior); `ISF_SPEC` focused-test index; KM card
+  `isf-bounded-window-min`. `docs/SPECFORGE_FEEDBACK_RESPONSE.md` updated — both flagged
+  deltas now shipped. This closes the second of the two SPECFORGE-flagged temporal deltas.

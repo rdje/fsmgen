@@ -3,13 +3,14 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **8** facts · **40** question keys.
+> **9** facts · **44** question keys.
 
 ## Questions → fact
 
 - "Unsupported expression operator <point>_active" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 - "can I add a new key to the ISF schedule report?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
 - "can ISF assertions reference current_state or state_active?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
+- "does ISF (within …) support a lower bound / a range / F[min,max]?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
 - "does ISF support $stable / $rose / $fell / $changed?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "does ISF validate the assert condition or pass it through?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-04 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "does adding a schedule-report key need a schema_version bump?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
@@ -18,9 +19,12 @@
 - "how do I assert on a rising or falling edge in ISF?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "how do I check a signal is stable or unchanged in an ISF assertion?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "how do I express 'data stable while valid' in ISF?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
+- "how do I express a min>1 bounded window / lower bound in an ISF assertion?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
 - "how do I run the full test suite?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
+- "how do I say 'ack between 2 and 5 cycles after req' in ISF?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
 - "how do I write a stability or edge property in an assert/assume/cover?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "how do exit-when and continue-when differ in their target?" -> [loop-early-exit-target-hook](docs/knowledge/loop-early-exit-target-hook.md) · 2026-06-03 · reverify: `grep -n "loop_exit_target" perl/FSM/Scheduler/ISF/LoweringIR.pm`
+- "how does (within B MIN MAX) lower / what does ##[MIN:MAX] come from?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
 - "how does ISF get compiled to SystemVerilog?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - "how does report() / the JSON schedule report get built?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - "how is the loop exit target for a mid-loop early exit computed?" -> [loop-early-exit-target-hook](docs/knowledge/loop-early-exit-target-hook.md) · 2026-06-03 · reverify: `grep -n "loop_exit_target" perl/FSM/Scheduler/ISF/LoweringIR.pm`
@@ -58,6 +62,15 @@ _How to run the full Perl test suite (and why -j6 can get OOM-killed)_
 - **evidence:** `t/ (~1400+ .t files); .github/workflows/regression.yml; bin/ci-regression`
 - **reverify:** `prove -j4 -Iperl t/`
 - **source:** [`docs/knowledge/full-test-suite-invocation.md`](docs/knowledge/full-test-suite-invocation.md)
+
+### isf-bounded-window-min
+_ISF bounded-window property supports a lower bound — (within B MIN MAX) -> ##[MIN:MAX]_
+
+- **answers:** how do I express a min>1 bounded window / lower bound in an ISF assertion? | how do I say 'ack between 2 and 5 cycles after req' in ISF? | does ISF (within …) support a lower bound / a range / F[min,max]? | how does (within B MIN MAX) lower / what does ##[MIN:MAX] come from?
+- **date:** 2026-06-04 · **status:** current
+- **evidence:** `docs/book/src/13d-control-flow.md (Delayed consequents); t/1418-isf-property-window-range.t; docs/tasks/ISF-PROPERTY-WINDOW-RANGE.md`
+- **reverify:** `prove -Iperl t/1418-isf-property-window-range.t`
+- **source:** [`docs/knowledge/isf-bounded-window-min.md`](docs/knowledge/isf-bounded-window-min.md)
 
 ### isf-fsm-verification-boundary
 _ISF-originated verification references signals, never the FSM state variable_

@@ -768,6 +768,18 @@ we lock the form:** are SPECFORGE's mined `cycle_window` bounds always integer l
 `|-> ##` consequent)? That determines whether `(within B 0 MAX)` should be accepted or
 redirected to the monitor form.
 
-Net: of the two flagged deltas, the predicate half (`stable` + the sampled-value family) is
-**done** and only needs a re-pin; the `min > 1` window half is a small, scoped slice FSMGEN
-will ship on confirmation of the window shape.
+**Update — `min > 1` shipped (`ISF-PROPERTY-WINDOW-RANGE.2`).** SPECFORGE confirmed
+(`FSMGEN_FEEDBACK.md`, "Answer (2026-06-04)") that mined `cycle_window` bounds are integer
+literals and guaranteed `1 <= MIN <= MAX` for the `|-> ##` consequent (a `MIN = 0` is
+resolved SPECFORGE-side — `[0,0]` → residual, `[0,N]` → the `(monitor …)` form). FSMGEN
+locked the form to that range and shipped it: `(within B MIN MAX)` → `##[MIN:MAX]` (the
+existing `(within B N)` = `##[1:N]` is unchanged); `MIN = 0`, `MIN > MAX`, non-literal
+bounds, and the wrong arity all fail closed. It is formal-only (`` `ifdef FORMAL ``).
+Documented in `docs/book/src/13d-control-flow.md` (the "Delayed consequents" part, with a
+runnable `delayed_ack` example) and `13k`; locked by `t/1418-isf-property-window-range.t`.
+
+Net: **both** flagged deltas are now shipped in FSMGEN. **Action for SPECFORGE:** re-pin
+`subs/fsmgen` past the `min > 1` commit and migrate the mined stability + `min > 1`
+obligations off residuals into `(assert (=> <ante> (stable <sig>)))` and
+`(assert (=> <ante> (within <cons> MIN MAX)))`. The `IntentIR → .isf → FSMGEN` loop now
+carries the full mined temporal-rule surface.

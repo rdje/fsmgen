@@ -739,17 +739,33 @@ sub parse_check_property($self, $cond_tok) {
             return { __property__ => 1, op => 'next', operand => $self->parse_check_property($args->[0]) };
         }
         if ($head eq 'within') {
-            # (within X N) -> ##[1:N] (X)  (X holds at some cycle 1..N)
-            Carp::confess "'(within X N)' requires an operand and a literal bound"
-                unless ref($args) eq 'ARRAY' && @$args == 2 && defined($args->[0]) && defined($args->[1]);
-            my $bound = $self->unwrap_scalar_token($args->[1]);
-            Carp::confess "'(within X N)' bound must be a literal integer >= 1"
-                unless defined($bound) && !ref($bound) && $bound =~ /^\d+$/ && $bound + 0 >= 1;
+            # (within X N)       -> ##[1:N] (X)      (X holds at some cycle 1..N)
+            # (within X MIN MAX) -> ##[MIN:MAX] (X)  (ISF-PROPERTY-WINDOW-RANGE: explicit lower
+            #   bound — the min>1 MTL window; literal 1 <= MIN <= MAX, SPECFORGE-confirmed range)
+            Carp::confess "'(within X N)' / '(within X MIN MAX)' requires an operand and one or two literal bounds"
+                unless ref($args) eq 'ARRAY' && (@$args == 2 || @$args == 3) && !(grep { !defined } @$args);
+            my ($lower, $upper);
+            if (@$args == 2) {
+                $upper = $self->unwrap_scalar_token($args->[1]);
+                Carp::confess "'(within X N)' bound must be a literal integer >= 1"
+                    unless defined($upper) && !ref($upper) && $upper =~ /^\d+$/ && $upper + 0 >= 1;
+                ($lower, $upper) = (1, $upper + 0);
+            }
+            else {
+                ($lower, $upper) = map { $self->unwrap_scalar_token($_) } @{$args}[1, 2];
+                Carp::confess "'(within X MIN MAX)' bounds must be literal integers"
+                    unless defined($lower) && !ref($lower) && $lower =~ /^\d+$/
+                        && defined($upper) && !ref($upper) && $upper =~ /^\d+$/;
+                ($lower, $upper) = ($lower + 0, $upper + 0);
+                Carp::confess "'(within X MIN MAX)' bounds must satisfy 1 <= MIN <= MAX"
+                    unless $lower >= 1 && $lower <= $upper;
+            }
             return {
                 __property__ => 1,
                 op      => 'within',
                 operand => $self->parse_check_property($args->[0]),
-                bound   => $bound + 0,
+                lower   => $lower,
+                bound   => $upper,
             };
         }
         # ISF-PROPERTY-SAMPLED-VALUE: SystemVerilog sampled-value functions as property leaves.

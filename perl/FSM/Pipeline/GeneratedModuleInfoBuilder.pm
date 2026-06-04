@@ -98,7 +98,9 @@ sub _render_check_condition_sv ($cond) {
         if ($op eq 'within') {
             my $x = _render_check_condition_sv($cond->{operand});
             return undef unless defined($x) && length($x);
-            return "##[1:$cond->{bound}] ($x)";
+            # ISF-PROPERTY-WINDOW-RANGE: explicit lower bound (defaults to 1 for `(within X N)`).
+            my $lower = $cond->{lower} // 1;
+            return "##[$lower:$cond->{bound}] ($x)";
         }
         if ($op eq 'sampled_value') {
             # ISF-PROPERTY-SAMPLED-VALUE: $stable/$changed/$rose/$fell(SIG). Boolean sampled-value
