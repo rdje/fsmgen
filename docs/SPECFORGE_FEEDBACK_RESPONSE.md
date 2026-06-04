@@ -602,3 +602,113 @@ Updated documents:
   — activation crossing primitive rules.
 - [`docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`](ISF_PUBLIC_INTERFACE_CONTRACT.md) —
   activation crossing report shape + test reference.
+
+## 2026-06-04: First-Class LTL/MTL Temporal Properties — Already Generalized In The Verification Family
+
+This answers the 2026-06-04 suggestion in SPECFORGE's `docs/FSMGEN_FEEDBACK.md`
+("first-class LTL/MTL temporal properties in ISF"), which asks whether FSMGEN
+would generalize the `(contract <n> (eventually <signal> (within <N>)))` special
+case into the full `G(antecedent -> [X | F[min,max]] consequent)` template so
+SPECFORGE can lower mined `temporal_rules` directly into ISF.
+
+**Short answer: yes — and it already shipped, as a generalization rather than a new
+named construct.** The suggestion reviews the `88a7af9c` pin, where the only temporal
+form was the standalone `(contract … (eventually s (within N)))` clause. Since then
+FSMGEN has **removed that clause** and replaced it with a *compositional temporal-
+property language* inside the unified verification family `(assert/assume/cover …)`,
+plus trigger anchors and a synthesizable-monitor output mode (decisions
+`docs/decisions/0008` headline + `docs/decisions/0009`; documented and test-gated in
+`docs/book/src/13d-control-flow.md`). That surface expresses the requested
+`G(ante -> X|F[min,max] cons)` template directly, and is strictly **more general**
+than SPECFORGE's per-rule template because the antecedent and consequent are
+arbitrary boolean expressions (so any predicate conjunction), not a fixed predicate
+list. The spec→checkable-property loop therefore already closes inside
+`IntentIR → .isf → FSMGEN`; the FSMGEN-native option SPECFORGE was weighing against
+its own `TEMPORAL-RULE-SVA-RENDER` PSL/SVA export **exists today**, which likely makes
+that export unnecessary.
+
+### The `G` tick domain is the actor clock
+
+A verification clause lowers to a **clocked concurrent** SV property sampled at the
+actor's declared clock with reset-gating:
+`<kind> property (@(posedge clk) disable iff (!rst_n) (<prop>))`. So the universal
+`G` ranges over the actor's clock edges automatically — there is no per-rule
+`(clock …)`/`(edge …)` to emit. The tick domain is whatever the actor's `(clock)` /
+`(reset)` declare; the sampling edge is the rising edge (`posedge`). Multi-clock
+intent is partitioned by clock domain and bridged with declared `(crossings …)`
+(see the 2026-05-31 activation-crossing addendum), not by per-property clocks.
+
+### 1:1 mapping — SPECFORGE template → ISF spelling
+
+`A`, `B` below are ordinary ISF boolean expressions; a **predicate conjunction** is
+just `(& p1 p2 …)`. "Sim" = verilator-simulable (emitted under `` `ifndef SYNTHESIS ``);
+"Formal" = formal-only delayed-sequence consequent (emitted under `` `ifdef FORMAL ``);
+"HW-sim" = lowered to synthesizable monitor hardware and therefore verilator-simulable.
+
+| LTL/MTL | ISF spelling | Generated SVA (inside the clocked property) | Checkability |
+| --- | --- | --- | --- |
+| `G(A)` plain invariant | `(assert A)` | `(A)` | Sim |
+| `G(A -> B)` overlap implication | `(assert (=> A B))` | `(A) \|-> (B)` | Sim |
+| `G(A -> X B)` next | `(assert (=> A (next B)))` | `(A) \|-> ##1 (B)` | Formal |
+| `G(A -> F[1,N] B)` bounded eventually | `(assert (=> A (within B N)))` | `(A) \|-> ##[1:N] (B)` | Formal |
+| `G($rose(S) -> …)` event-anchored | `(assert (after S …))` | `$rose(S) \|-> (…)` | Sim if `…` same-cycle, else Formal |
+| `F[0,N] S` from an anchor (the old `eventually`) | `(assert (monitor (within S N)))` | arm/age/fail monitor; property becomes `(!(<…>_fail))` | HW-sim |
+
+The former `(contract … (eventually s (within N)))` (empty antecedent, `F[0,N] s`) is
+the bottom row: `(assert (monitor (within s N)))`, anchored inline (its body position),
+by event (`(after …)`), or by a named anchor (`(point …)` / `(at …)`). The monitor
+accepts the same window sources the old clause did (positive literal, transaction/actor
+scalar parameter, actor constant, qualified package scalar constant).
+
+### Predicate sugar maps to ordinary boolean expressions
+
+SPECFORGE's proposed `<pred>` kinds need no new ISF keywords — they are ordinary
+boolean expressions today:
+
+- `(value <sig> HIGH)` → `<sig>`; `(value <sig> LOW)` → `(! <sig>)`;
+  `(value <sig> <VAL>)` → `(== <sig> <VAL>)` (including an enum member `NAME.MEMBER`).
+- `(handshake <valid> <ready>)` → `(& <valid> <ready>)`.
+- An antecedent/consequent **conjunction** → `(& p1 p2 …)`.
+
+So `G((sel & !err) -> F[1,4] ack)` is `(assert (=> (& sel (! err)) (within ack 4)))`.
+
+### Two honest deltas (candidate slices, only if SPECFORGE actually mines them)
+
+These are the only places the current surface is *narrower* than the fully general
+`F[min,max]` + the proposed `<pred>` set. Neither is shipped; each would be its own
+task-tree-owned slice (parsed, validated, normalized, documented, support-accounted,
+lowered honestly), per this document's standing "no unchecked annotations" rule:
+
+1. **Arbitrary lower bound `min > 1`.** ISF spells `##1` (`next`) and `##[1:N]`
+   (`within`) — i.e. `F[1,N]` — plus the `F[0,N]`-from-anchor monitor. A general
+   `##[min:max]` with `min > 1` (e.g. `F[2,5]`) has no spelling yet. If SPECFORGE's
+   mined `cycle_window` ever carries a non-trivial `min`, that is a concrete, bounded
+   operator to add (a `(within B (min M) (max N))` form, say); if `min ∈ {0,1}` covers
+   the mined corpus, nothing is needed.
+2. **`(stable <sig>)`.** A `$stable`-style "unchanged across the tick" predicate is not
+   yet an ISF property primitive. Today a stability obligation either stays a SPECFORGE
+   residual or is expressed indirectly (e.g. equality against a sampled prior value).
+   If SPECFORGE needs stability obligations *as ISF properties*, that motivates adding a
+   `stable` leaf to the property expression language — again, its own verified slice.
+
+### What SPECFORGE can plan around now
+
+- Lower mined `TemporalRuleRecord`s into `(assert (=> <ante> <cons>))` /
+  `(assert (after <S> <cons>))` / `(assert (monitor (within <S> <N>)))` using the
+  mapping above; drop the standalone `(contract …)` / `(eventually …)` spelling (removed).
+- Re-pin past `88a7af9c` to pick up the verification-family generalization (the
+  `(contract …)` clause is gone at the current tip; the property language + triggers +
+  monitor are its replacement).
+- Treat the delayed-consequent forms (`next` / `within` inside `=>` / `after`) as
+  **formal-only**, and prefer `(assert (monitor (within S N)))` when a verilator-simulable
+  bounded-eventually is wanted.
+- This is a **feature suggestion, not a bug report**: no SPECFORGE `.isf` is broken, and
+  SPECFORGE does not emit temporal rules into ISF today. If the two deltas above turn out
+  to be load-bearing for SPECFORGE's mined corpus, file them (a short note here or a
+  reproduction per `docs/DOWNSTREAM_ISSUE_REPORTING.md`) and FSMGEN will scope each as an
+  owned slice.
+
+Where the surface lives: `docs/book/src/13d-control-flow.md` (the `(assert …)`,
+"Temporal properties", "Trigger anchors", "Synthesizable-monitor output mode", and
+"Named anchors" sections), gated by `t/1376-isf-book-example-lowering-audit.t`;
+decisions `docs/decisions/0008` and `docs/decisions/0009`.
