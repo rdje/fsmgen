@@ -752,6 +752,21 @@ sub parse_check_property($self, $cond_tok) {
                 bound   => $bound + 0,
             };
         }
+        # ISF-PROPERTY-SAMPLED-VALUE: SystemVerilog sampled-value functions as property leaves.
+        # (stable SIG)/(changed SIG)/(rose SIG)/(fell SIG) -> $stable/$changed/$rose/$fell(SIG):
+        # boolean edge/stability predicates over a signal, well-defined only in the clocked
+        # assertion context. Usable standalone or as an =>/after antecedent/consequent.
+        my %sampled_value_fn = (stable => '$stable', changed => '$changed', rose => '$rose', fell => '$fell');
+        if (my $fn = $sampled_value_fn{$head}) {
+            Carp::confess "'($head SIG)' sampled-value predicate requires exactly one signal operand"
+                unless ref($args) eq 'ARRAY' && @$args == 1 && defined($args->[0]);
+            return {
+                __property__ => 1,
+                op           => 'sampled_value',
+                fn           => $fn,
+                operand      => $self->parse_check_property($args->[0]),
+            };
+        }
     }
     return $self->{expression_builder}->parse_expression($cond_tok);
 }

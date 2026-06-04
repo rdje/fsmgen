@@ -100,6 +100,13 @@ sub _render_check_condition_sv ($cond) {
             return undef unless defined($x) && length($x);
             return "##[1:$cond->{bound}] ($x)";
         }
+        if ($op eq 'sampled_value') {
+            # ISF-PROPERTY-SAMPLED-VALUE: $stable/$changed/$rose/$fell(SIG). Boolean sampled-value
+            # function over a leaf — not a `##` sequence, so it stays verilator-simulable.
+            my $x = _render_check_condition_sv($cond->{operand});
+            return undef unless defined($x) && length($x);
+            return "$cond->{fn}($x)";
+        }
         return undef;
     }
     return eval { $cond->to_systemverilog() };

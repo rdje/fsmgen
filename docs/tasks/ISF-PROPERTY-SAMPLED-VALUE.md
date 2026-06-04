@@ -101,18 +101,17 @@ addendum) — SPECFORGE mines exactly these stability/edge predicates.
   Commit: `ship commit (this slice)`
 
 - ID: `ISF-PROPERTY-SAMPLED-VALUE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `(stable/changed/rose/fell SIG) property leaves render to $stable/$changed/$rose/$fell(SIG) inside assert/assume/cover.`
   Acceptance: `parse_check_property accepts the four heads as one-operand sampled_value leaves; _render_check_condition_sv emits $fn(operand); they are verilator-simulable (not formal-only) and --verify-hdl passes; operand signals are kept alive as ports; (assert (stable data)), (assert (=> (rose req) ack)), (assert (=> valid (stable data))) lower + generate HDL; malformed arity fails closed; the heads stay property-only (fail closed in synthesizable expression position). 13d documents them with runnable examples; 13k row + ISF_SPEC focused-test index updated; a new t/ test locks it; full suite green.`
   Verification: `prove -j4 -Iperl t/<new> t/1376 t/1305 t/1250; --check-json + --verify-hdl on a sampled-value actor; perl -c; mdbook build; full prove -j4 -Iperl t/; git diff --check`
   Commit: `ship commit (this slice)`
-
-## Current Frontier
+  Done: `parse_check_property gains a one-op sampled_value leaf for stable/changed/rose/fell -> $fn(SIG); _render_check_condition_sv renders $fn(operand); aliveness (_analyze_check_condition_references) + checkability (_property_is_formal_only) already recurse into operand, so simulable + signal-alive came free. Spike: all four + (=> valid (stable data)) + (=> (rose req) ack) generate SV and PASS verilator lint + yosys. New t/1417 (5 subtests: rendering+simulable, implication compose, operand kept alive, arity fail-closed, property-only fail-closed in a when guard). 13d "Sampled-value predicates" subsection + runnable example; 13k row 59 (Form + Behavior); ISF_SPEC focused-test index t/1417. No ISF-layer change (pass-through _format_isf_expr).`
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc); task tree committed before code. |
-| 2 | `.2` | `pending` | Four boolean sampled-value predicates as property leaves + render + aliveness + checkability + synced docs + tests. |
+| 2 | `.2` | `done` | `(stable/changed/rose/fell SIG)` → `$stable/$changed/$rose/$fell(SIG)` property leaves; verilator-simulable; operand kept alive; property-only fail-closed; verilator+yosys PASS. `t/1417`; 13d/13k/ISF_SPEC synced. |
 | 3 | `.3` | `deferred` | Value-returning `(past SIG [N])`; needs expression-level composition. Optional — `(stable)` covers the common "unchanged" case. |
 
 ## Decisions
@@ -132,12 +131,14 @@ addendum) — SPECFORGE mines exactly these stability/edge predicates.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-04` | `.1` | `scripts/check_memory_architecture.sh`; `git diff --check` | `PASS` |
+| `2026-06-04` | `.2` | `prove -Iperl t/1417 t/1376 (61 fixtures) t/1305 t/1250` PASS; `--check-json` + `--verify-hdl` (verilator lint + yosys) PASS on a sampled-value actor; `perl -c`; `mdbook build`; full `prove -j4 -Iperl t/`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-PROPERTY-SAMPLED-VALUE.1: select — SV sampled-value functions in properties (task tree)` | `ship commit (this slice)` |
+| `.1` | `ISF-PROPERTY-SAMPLED-VALUE.1: select — SV sampled-value functions in properties (task tree)` | `2b90c42b` |
+| `.2` | `ISF-PROPERTY-SAMPLED-VALUE.2: (stable/changed/rose/fell SIG) sampled-value predicates in assert/assume/cover` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -149,3 +150,20 @@ addendum) — SPECFORGE mines exactly these stability/edge predicates.
   `GeneratedModuleInfoBuilder`; ISF passes `COND` through verbatim via the pass-through
   `_format_isf_expr`; `$rose` already emitted simulably by `(after …)`) and the slice
   plan.
+- `2026-06-04`: `.2` shipped — `(stable SIG)` / `(changed SIG)` / `(rose SIG)` /
+  `(fell SIG)` now render to `$stable(SIG)` / `$changed(SIG)` / `$rose(SIG)` /
+  `$fell(SIG)` inside `(assert/assume/cover …)`. Added a single `op => 'sampled_value'`
+  leaf (with an `fn` field) to `FSMGenFull::Parser::parse_check_property` and a render
+  branch to `GeneratedModuleInfoBuilder::_render_check_condition_sv`. Because the
+  aliveness walk (`SignalAnalyzer::_analyze_check_condition_references`) and the
+  checkability test (`_property_is_formal_only`) already recurse into the `operand`
+  field, kept-alive-as-a-port and verilator-simulable came for free — no extra code.
+  They compose as `=>`/`after` operands (`(=> valid (stable data))` → `(valid) |->
+  ($stable(data))`; `(=> (rose req) ack)` ≡ `(after req ack)`), stay under
+  `` `ifndef SYNTHESIS `` (not a `##` sequence), keep their operand signal alive, and
+  are **property-only** — a sampled-value head in a `when` guard / data RHS fails closed.
+  Verified end-to-end: a five-check actor generates SV and passes verilator lint +
+  yosys synthesis. `t/1417` (5 subtests). Docs synced: `13d` gains a "Sampled-value
+  predicates" subsection with a runnable example; `13k` row 59 (Form + Behavior);
+  `ISF_SPEC` focused-test index. No ISF-layer change (the pass-through `_format_isf_expr`
+  carries the new forms verbatim). Value-returning `(past …)` stays deferred (`.3`).

@@ -976,6 +976,73 @@ former `(contract (eventually S within N))` clause).
 > checks stay under `` `ifndef SYNTHESIS `` and are verilator-simulable. This is why
 > the simulation proofs in this book cover boolean/overlapping properties only.
 
+### Sampled-value predicates — `(stable …)` / `(changed …)` / `(rose …)` / `(fell …)`
+
+A property leaf may be a **SystemVerilog sampled-value function** — an edge or
+stability fact about a signal, sampled at the clock:
+
+| ISF | SystemVerilog | Holds when |
+| --- | --- | --- |
+| `(stable SIG)`  | `$stable(SIG)`  | `SIG` is unchanged from the previous cycle |
+| `(changed SIG)` | `$changed(SIG)` | `SIG` differs from the previous cycle |
+| `(rose SIG)`    | `$rose(SIG)`    | `SIG` went `0 → 1` this cycle |
+| `(fell SIG)`    | `$fell(SIG)`    | `SIG` went `1 → 0` this cycle |
+
+Each takes exactly one signal. They are ordinary boolean leaves, so they stand alone
+or sit on either side of an implication:
+
+```lisp
+(assert (stable cfg) "cfg is constant")          ;; $stable(cfg)
+(assert (=> valid (stable data)))                ;; (valid) |-> ($stable(data))   — data steady while valid
+(assert (=> (rose req) ack))                     ;; ($rose(req)) |-> (ack)         — ack on the req edge
+(assert (=> (fell grant) (changed state)))       ;; ($fell(grant)) |-> ($changed(state))
+```
+
+Note `(=> (rose req) ack)` is exactly what the event anchor `(after req ack)` (below)
+spells more compactly — `after` is sugar for a `$rose` antecedent. And `(stable SIG)`
+is the everyday "unchanged" obligation (`$stable(s)` is `s == $past(s)`).
+
+A sampled-value leaf is **not** a `##` delay sequence, so — unlike `next` / `within` —
+it stays verilator-**simulable** (emitted under `` `ifndef SYNTHESIS ``); a property is
+formal-only only when a `next` / `within` sits elsewhere in it. Signals referenced only
+inside one are kept alive as ports. The functions are **property-only**: used in a
+synthesizable expression (a `when` guard, a data right-hand side) the head is unknown
+and fails closed — they are meaningful only in a clocked assertion.
+
+A complete, runnable example — a config register that must hold steady while `valid`:
+
+```lisp
+(actor stability_probe
+  (interface
+    (input start)
+    (input valid)
+    (input cfg (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (assert (stable cfg) "cfg must not change")
+    (assert (=> valid (stable cfg)) "cfg holds steady whenever valid is asserted")
+    (complete done)))
+```
+
+And a complete example using the **edge** predicates — a handshake where `ack` must
+follow the `req` rising edge and `done` must pulse when `busy` releases:
+
+```lisp
+(actor edge_handshake
+  (interface
+    (input start)
+    (input req)
+    (input busy)
+    (output ack)
+    (output done))
+  (transaction main
+    (on start)
+    (assert (=> (rose req) ack) "ack on the req rising edge")
+    (assert (=> (fell busy) done) "done when busy releases")
+    (complete done)))
+```
+
 ### Trigger anchors — `(after SIG …)` (event form)
 
 A bounded-eventually check measures its window *from* an anchor point. The first

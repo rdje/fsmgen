@@ -3,16 +3,23 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **5** facts · **26** question keys.
+> **8** facts · **40** question keys.
 
 ## Questions → fact
 
 - "Unsupported expression operator <point>_active" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 - "can I add a new key to the ISF schedule report?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
 - "can ISF assertions reference current_state or state_active?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
+- "does ISF support $stable / $rose / $fell / $changed?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
+- "does ISF validate the assert condition or pass it through?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-04 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "does adding a schedule-report key need a schema_version bump?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
+- "how do I add a property combinator or operator to ISF checks?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-04 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "how do I anchor a position in ISF verification without touching the state variable?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
+- "how do I assert on a rising or falling edge in ISF?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
+- "how do I check a signal is stable or unchanged in an ISF assertion?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
+- "how do I express 'data stable while valid' in ISF?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "how do I run the full test suite?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
+- "how do I write a stability or edge property in an assert/assume/cover?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "how do exit-when and continue-when differ in their target?" -> [loop-early-exit-target-hook](docs/knowledge/loop-early-exit-target-hook.md) · 2026-06-03 · reverify: `grep -n "loop_exit_target" perl/FSM/Scheduler/ISF/LoweringIR.pm`
 - "how does ISF get compiled to SystemVerilog?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - "how does report() / the JSON schedule report get built?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
@@ -26,10 +33,17 @@
 - "what is the ISF to FSM to HDL pipeline?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - "what is the ISF/FSM separation rule for verification?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 - "what is the command to run all the Perl tests?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
+- "where do I document a new ISF property construct / did the book get synced?" -> [isf-verification-book-map](docs/knowledge/isf-verification-book-map.md) · 2026-06-04 · reverify: `grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-control-flow.md docs/book/src/13k-isf-feature-support-matrix.md`
+- "where does (=> A B) / next / within / after / sampled-value get parsed and rendered to SVA?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-04 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "where does (exit-when) / (continue-when) jump to?" -> [loop-early-exit-target-hook](docs/knowledge/loop-early-exit-target-hook.md) · 2026-06-03 · reverify: `grep -n "loop_exit_target" perl/FSM/Scheduler/ISF/LoweringIR.pm`
 - "where does ISF lowering happen?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - "where is the .fsm text produced from an ISF actor?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
+- "where is the ISF assert/assume/cover property grammar?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-04 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
+- "where is the ISF verification / assert / assume / cover surface documented?" -> [isf-verification-book-map](docs/knowledge/isf-verification-book-map.md) · 2026-06-04 · reverify: `grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-control-flow.md docs/book/src/13k-isf-feature-support-matrix.md`
 - "where is the clean hook for ISF loop early-exit?" -> [loop-early-exit-target-hook](docs/knowledge/loop-early-exit-target-hook.md) · 2026-06-03 · reverify: `grep -n "loop_exit_target" perl/FSM/Scheduler/ISF/LoweringIR.pm`
+- "where is the verilator-simulable vs formal-only (ifndef SYNTHESIS / ifdef FORMAL) split decided?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-04 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
+- "which book chapter covers ISF temporal properties, trigger anchors, monitors?" -> [isf-verification-book-map](docs/knowledge/isf-verification-book-map.md) · 2026-06-04 · reverify: `grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-control-flow.md docs/book/src/13k-isf-feature-support-matrix.md`
+- "which mdBook chapters do I update when I add an ISF verification feature?" -> [isf-verification-book-map](docs/knowledge/isf-verification-book-map.md) · 2026-06-04 · reverify: `grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-control-flow.md docs/book/src/13k-isf-feature-support-matrix.md`
 - "which module parses ISF / lowers ISF / emits the schedule report?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - "why did prove exit with code 137?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
 - "why doesn't (at NAME) lower to current_state == STATE?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
@@ -63,6 +77,24 @@ _How an ISF actor becomes SystemVerilog — the lowering pipeline stages and whe
 - **reverify:** `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - **source:** [`docs/knowledge/isf-lowering-pipeline.md`](docs/knowledge/isf-lowering-pipeline.md)
 
+### isf-property-grammar-location
+_Where the ISF verification property grammar lives (parse + render to SVA)_
+
+- **answers:** where is the ISF assert/assume/cover property grammar? | how do I add a property combinator or operator to ISF checks? | where does (=> A B) / next / within / after / sampled-value get parsed and rendered to SVA? | does ISF validate the assert condition or pass it through? | where is the verilator-simulable vs formal-only (ifndef SYNTHESIS / ifdef FORMAL) split decided?
+- **date:** 2026-06-04 · **status:** current
+- **evidence:** `perl/FSM/Adapter/FSMGenFull/Parser.pm (parse_check_property); perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm (_render_check_condition_sv, _property_is_formal_only); perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm (_analyze_check_condition_references)`
+- **reverify:** `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
+- **source:** [`docs/knowledge/isf-property-grammar-location.md`](docs/knowledge/isf-property-grammar-location.md)
+
+### isf-sampled-value-predicates
+_ISF verification properties support the SV sampled-value functions (stable/changed/rose/fell)_
+
+- **answers:** how do I check a signal is stable or unchanged in an ISF assertion? | does ISF support $stable / $rose / $fell / $changed? | how do I assert on a rising or falling edge in ISF? | how do I express 'data stable while valid' in ISF? | how do I write a stability or edge property in an assert/assume/cover?
+- **date:** 2026-06-04 · **status:** current
+- **evidence:** `docs/book/src/13d-control-flow.md (Sampled-value predicates subsection); t/1417-isf-property-sampled-value.t; docs/tasks/ISF-PROPERTY-SAMPLED-VALUE.md`
+- **reverify:** `prove -Iperl t/1417-isf-property-sampled-value.t`
+- **source:** [`docs/knowledge/isf-sampled-value-predicates.md`](docs/knowledge/isf-sampled-value-predicates.md)
+
 ### isf-schedule-report-additive-keys
 _The ISF schedule report allows additive new top-level keys without a schema_version bump_
 
@@ -71,6 +103,15 @@ _The ISF schedule report allows additive new top-level keys without a schema_ver
 - **evidence:** `perl/FSM/Support/ISFPublicInterfaceContract.pm (schedule_report_top_level_keys + the *_full_schema_stable / evolves_with_isf_implementation flags); docs/ISF_SPEC.md schedule-report section`
 - **reverify:** `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
 - **source:** [`docs/knowledge/isf-schedule-report-additive-keys.md`](docs/knowledge/isf-schedule-report-additive-keys.md)
+
+### isf-verification-book-map
+_Where the ISF verification/property surface is documented in the book_
+
+- **answers:** where is the ISF verification / assert / assume / cover surface documented? | which book chapter covers ISF temporal properties, trigger anchors, monitors? | where do I document a new ISF property construct / did the book get synced? | which mdBook chapters do I update when I add an ISF verification feature?
+- **date:** 2026-06-04 · **status:** current
+- **evidence:** `docs/book/src/13d-control-flow.md; docs/book/src/13k-isf-feature-support-matrix.md; t/1376-isf-book-example-lowering-audit.t; t/1305-isf-book-feature-matrix-audit.t`
+- **reverify:** `grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-control-flow.md docs/book/src/13k-isf-feature-support-matrix.md`
+- **source:** [`docs/knowledge/isf-verification-book-map.md`](docs/knowledge/isf-verification-book-map.md)
 
 ### loop-early-exit-target-hook
 _Mid-loop exit/continue targets come from loop_exit_target computed in _link_states_
