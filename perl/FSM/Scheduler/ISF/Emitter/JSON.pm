@@ -42,6 +42,7 @@ sub report_hash($self, $ir) {
         transactions   => $self->_transaction_summary($ir),
         transaction_waits => $self->_transaction_wait_summary($ir),
         transaction_loops => $self->_transaction_loop_summary($ir),
+        loop_early_exits => $self->_loop_early_exit_summary($ir),
         transaction_stages => $self->_transaction_stage_summary($ir),
         temporal_contracts => $self->_temporal_contract_summary($ir),
         bank_accesses  => $self->_bank_access_summary($ir),
@@ -75,6 +76,7 @@ sub multi_domain_report_hash($self, $ir, $domain_report_by_name) {
     $report->{transactions} = [];
     $report->{transaction_waits} = [];
     $report->{transaction_loops} = [];
+    $report->{loop_early_exits} = [];
     $report->{transaction_stages} = [];
     $report->{temporal_contracts} = [];
     $report->{bank_accesses} = [];
@@ -508,6 +510,26 @@ sub _transaction_loop_summary($self, $ir) {
     }
 
     return \@loops;
+}
+
+# ISF-LOOP-EARLY-EXIT.4: schedule-report metadata for `(exit-when COND)` / `(continue-when COND)`
+# sites. Each is a `loop_exit_when` decision state; `kind` distinguishes them, `condition` is the
+# formatted guard, and `target` is the resolved true-edge (the loop exit for exit-when, the loop's
+# tail check for continue-when).
+sub _loop_early_exit_summary($self, $ir) {
+    my @sites;
+    for my $state (@{$ir->{states} || []}) {
+        next unless $state->{loop_exit_when};
+        my ($transaction) = ($state->{name} =~ /\A(.+)_(?:exit|continue)_when_[0-9]+\z/);
+        push @sites, {
+            transaction => $transaction,
+            kind        => ($state->{loop_continue_when} ? 'continue_when' : 'exit_when'),
+            state       => $state->{name},
+            condition   => $state->{exit_when_condition},
+            target      => $state->{loop_exit_target},
+        };
+    }
+    return \@sites;
 }
 
 sub _clone_report_value($value) {

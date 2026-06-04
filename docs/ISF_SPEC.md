@@ -4570,6 +4570,7 @@ same slice that ships them.
   "transactions": [],
   "transaction_waits": [],
   "transaction_loops": [],
+  "loop_early_exits": [],
   "transaction_stages": [],
   "temporal_contracts": [],
   "bank_accesses": [],
@@ -4758,6 +4759,12 @@ normalized `condition`, loop entry state, generated decision states, body
 start, generated body states, exit state, and authored body-clause count. The
 capability-manifest ISF public contract advertises the keys through
 `schedule_report_transaction_loop_keys`.
+The `loop_early_exits` array reports each `(exit-when COND)` and
+`(continue-when COND)` mid-loop site inside a shipped `while`/`until` body.
+Each entry contains the authored `transaction`, the `kind` (`exit_when` or
+`continue_when`), the generated decision `state`, the normalized `condition`,
+and the true-edge `target` (the loop exit for `exit_when`, the loop tail check
+for `continue_when`).
 The `actor_phases` and `actor_stages` arrays report parser-validated
 actor-level metadata without assigning runtime semantics to it. Each entry has
 the authored metadata `name` and a JSON-safe copy of the list-form `body`. The

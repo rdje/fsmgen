@@ -1617,7 +1617,9 @@ Rules:
 - Unsupported nested clauses fail closed.
 - Runtime waits inside supported inline contexts are shipped for the covered
   predecessor and pending-sample cases.
-- Reports expose loop metadata through `transaction_loops[]`.
+- Reports expose loop metadata through `transaction_loops[]`, and each
+  `(exit-when …)` / `(continue-when …)` early-exit site through
+  `loop_early_exits[]`.
 
 ### 11.5 Data Manipulation
 
@@ -3203,6 +3205,7 @@ inferred_storage
 transactions
 transaction_waits
 transaction_loops
+loop_early_exits
 transaction_stages
 temporal_contracts
 bank_accesses
@@ -3306,6 +3309,8 @@ transaction_waits[]: transaction, cycles, count_kind, count_source,
   entry_state, exit_state, counter_signal, counter_width
 transaction_loops[]: transaction, kind, condition, entry_state,
   decision_states, body_start, body_states, exit_state, body_clause_count
+loop_early_exits[]: transaction, kind (exit_when|continue_when), state,
+  condition, target
 transaction_stages[]: transaction, name, kind, state, ready, valid
 temporal_contracts[]: transaction, name, kind, trigger, signal,
   within_cycles, pending_signal, counter_signal, fail_signal,

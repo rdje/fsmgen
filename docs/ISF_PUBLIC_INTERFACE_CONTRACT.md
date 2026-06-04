@@ -2978,6 +2978,7 @@ inferred_storage
 transactions
 transaction_waits
 transaction_loops
+loop_early_exits
 transaction_stages
 temporal_contracts
 bank_accesses
@@ -3018,6 +3019,7 @@ transactions entries: name, states, count
 transaction_waits entries: transaction, cycles, count_kind, count_source, entry_state, exit_state, counter_signal, counter_width
 transaction_waits count_kind values: static, runtime_scalar, runtime_expression
 transaction_loops entries: transaction, kind, condition, entry_state, decision_states, body_start, body_states, exit_state, body_clause_count
+loop_early_exits entries: transaction, kind, state, condition, target
 transaction_stages entries: transaction, name, kind, state, ready, valid
 temporal_contracts entries: transaction, name, kind, trigger, signal, within_cycles, pending_signal, counter_signal, fail_signal, overlap_policy, reset_policy, assertion_projection
 dt_blocks entries: name, kind, assignments
@@ -3407,9 +3409,10 @@ Stable, versioned evolution:
   `compatible_fanin_groups[]`, `priority_resolutions[]`,
   `resource_arbitration[]`, `actor_constants[]`, `actor_phases[]`,
   `actor_stages[]`, `actor_params[]`, `transaction_waits[]`,
-  `transaction_stages[]`, `transaction_loops[]`, `temporal_contracts[]`,
-  `transaction_port_bindings[]`, `actor_network`, `library_uses[]`, and
-  `generated_composition` are bounded summaries, not raw IR exports.
+  `transaction_stages[]`, `transaction_loops[]`, `loop_early_exits[]`,
+  `temporal_contracts[]`, `transaction_port_bindings[]`, `actor_network`,
+  `library_uses[]`, and `generated_composition` are bounded summaries, not raw
+  IR exports.
 - Raw assignment provenance, private assignment indexes, and activation proof
   internals remain private. Public substitutes are the bounded summary arrays
   advertised above plus aggregate fields such as `dt_blocks[].assignments`,

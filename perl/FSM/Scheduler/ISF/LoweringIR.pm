@@ -8512,8 +8512,8 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
             }
         }
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
-        elsif($bk eq'exit-when'){confess "Transaction '$tn': when body '(exit-when ...)' requires exactly one condition expression\n" unless @$bc==2 && defined($bc->[1]);_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,{name=>"${tn}_exit_when_".$$ir++,kind=>'loop_exit_when',condition=>$bc->[1],loop_exit_when=>1,assignments=>[],transitions=>[]}}
-        elsif($bk eq'continue-when'){confess "Transaction '$tn': when body '(continue-when ...)' requires exactly one condition expression\n" unless @$bc==2 && defined($bc->[1]);_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,{name=>"${tn}_continue_when_".$$ir++,kind=>'loop_exit_when',condition=>$bc->[1],loop_exit_when=>1,loop_continue_when=>1,assignments=>[],transitions=>[]}}
+        elsif($bk eq'exit-when'){confess "Transaction '$tn': when body '(exit-when ...)' requires exactly one condition expression\n" unless @$bc==2 && defined($bc->[1]);_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,{name=>"${tn}_exit_when_".$$ir++,kind=>'loop_exit_when',condition=>$bc->[1],exit_when_condition=>_format_isf_expr($bc->[1]),loop_exit_when=>1,assignments=>[],transitions=>[]}}
+        elsif($bk eq'continue-when'){confess "Transaction '$tn': when body '(continue-when ...)' requires exactly one condition expression\n" unless @$bc==2 && defined($bc->[1]);_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,{name=>"${tn}_continue_when_".$$ir++,kind=>'loop_exit_when',condition=>$bc->[1],exit_when_condition=>_format_isf_expr($bc->[1]),loop_exit_when=>1,loop_continue_when=>1,assignments=>[],transitions=>[]}}
         elsif($bk eq'do'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my $cond_ord=scalar(grep { ref($_)eq'HASH'&&$_->{branch_do} } @{$spawn_refs||[]});my $do_ref=_conditional_do_ref_from_clause($bc,$tn,$cond_ord,$constant_values||{},$actor,$generated_children,'when body');if($do_ref->{generated_child}){push @$spawn_refs,_clone_isf_value($do_ref) if ref($spawn_refs)eq'ARRAY';push @body_states,_ir_do($bc,$tn,$$ir++,$do_ref,'when body')}else{push @body_states,_ir_do($bc,$tn,$$ir++,undef,'when body')}}
         elsif($bk eq'spawn'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my $sref=_spawn_ref_from_clause($bc,$tn,$constant_values,$actor,'when body');push @$spawn_refs,$sref if ref($spawn_refs)eq'ARRAY';push @dps,"$sref->{instance}_done";push @body_states,_ir_spawn($bc,$tn,$$ir++)}
         elsif($bk eq'await_all'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_sync_all($tn,$$ir++,\@dps);@dps=()}
@@ -8625,6 +8625,7 @@ sub _expand_loop_body {
                 name           => "${tn}_exit_when_" . $$ir++,
                 kind           => 'loop_exit_when',
                 condition      => $bc->[1],
+                exit_when_condition => _format_isf_expr($bc->[1]),  # ISF-LOOP-EARLY-EXIT.4: report metadata
                 loop_exit_when => 1,
                 assignments    => [],
                 transitions    => [],
@@ -8642,6 +8643,7 @@ sub _expand_loop_body {
                 name               => "${tn}_continue_when_" . $$ir++,
                 kind               => 'loop_exit_when',
                 condition          => $bc->[1],
+                exit_when_condition => _format_isf_expr($bc->[1]),  # ISF-LOOP-EARLY-EXIT.4: report metadata
                 loop_exit_when     => 1,
                 loop_continue_when => 1,
                 assignments        => [],

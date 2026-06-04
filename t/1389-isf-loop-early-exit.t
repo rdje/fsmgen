@@ -200,4 +200,56 @@ ISF
         'the diagnostic names the missing condition');
 };
 
+# ISF-LOOP-EARLY-EXIT.4: each (exit-when)/(continue-when) site is advertised in the schedule
+# report's `loop_early_exits` array (transaction, kind, state, formatted condition, true-edge target).
+subtest 'exit-when / continue-when sites appear in the schedule report (loop_early_exits)' => sub {
+    require JSON::PP;
+    my $actor = parse_source(<<'ISF', 'loop-exit-report');
+(actor loop_exit_report
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input busy)
+    (input go)
+    (output done))
+  (transaction main
+    (on start)
+    (while busy
+      (sample go as g)
+      (exit-when go)
+      (continue-when busy))
+    (complete done)))
+ISF
+    my $report = JSON::PP->new->decode(FSM::Scheduler::ISF->new()->report($actor));
+    my $sites = $report->{loop_early_exits};
+    is(ref($sites), 'ARRAY', 'loop_early_exits is an array in the report');
+    is(scalar(@$sites), 2, 'both the exit-when and continue-when sites are reported');
+
+    my ($exit)     = grep { $_->{kind} eq 'exit_when' } @$sites;
+    my ($continue) = grep { $_->{kind} eq 'continue_when' } @$sites;
+    ok($exit && $continue, 'one exit_when and one continue_when site');
+
+    is($exit->{transaction}, 'main', 'exit_when site names its transaction');
+    is($exit->{condition}, 'go', 'exit_when reports its formatted condition');
+    like($exit->{state}, qr/_exit_when_\d+\z/, 'exit_when reports its decision-state name');
+    ok(defined($exit->{target}) && length($exit->{target}), 'exit_when reports a true-edge target');
+
+    is($continue->{condition}, 'busy', 'continue_when reports its condition');
+    like($continue->{state}, qr/_continue_when_\d+\z/, 'continue_when reports its state');
+    isnt($exit->{target}, $continue->{target},
+        'exit_when targets the loop exit; continue_when targets the loop tail check (distinct)');
+};
+
+# A report with no early-exit sites carries an empty array (the bounded key is always present).
+subtest 'a transaction with no early exits reports an empty loop_early_exits array' => sub {
+    require JSON::PP;
+    my $actor = parse_source(
+        '(actor no_exit (clock clk) (reset rst_n) (interface (input start) (input busy) (output done)) '
+        . '(transaction main (on start) (while busy (sample busy as b)) (complete done)))', 'no-exit');
+    my $report = JSON::PP->new->decode(FSM::Scheduler::ISF->new()->report($actor));
+    is(ref($report->{loop_early_exits}), 'ARRAY', 'loop_early_exits present');
+    is(scalar(@{$report->{loop_early_exits}}), 0, 'and empty when there are no exit/continue-when sites');
+};
+
 done_testing();

@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14` (ISF — high-level language richness)
 - Created: `2026-06-01`
-- Last updated: `2026-06-01`
+- Last updated: `2026-06-03`
 - Owner: repo-local workflow
 
 ## Goal
@@ -131,6 +131,13 @@ Reads like:
   Verification: `Spike: (while busy (when err (exit-when go))(update ...)) and (until ...) lower; exit-when true edge -> whole-loop exit (main_done_N); --check-json SUCCESS; top-level when -> exit-when fails closed with the safety message. prove -Iperl t/1389 (6 subtests) t/1376 t/1305 t/1304 t/1307 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
+- ID: `ISF-LOOP-EARLY-EXIT.4`
+  Status: `done`
+  Goal: `Advertise every (exit-when)/(continue-when) site in the schedule report under a bounded loop_early_exits[] array; sync the report-schema docs.`
+  Acceptance: `_expand_loop_body / _expand_when stamp exit_when_condition => _format_isf_expr(cond) onto each loop_exit_when state; Emitter/JSON.pm's _loop_early_exit_summary walks ir->{states} for loop_exit_when sites and emits {transaction, kind (exit_when|continue_when), state, condition, target=>loop_exit_target}; report build + multi_domain reset both register loop_early_exits; ISFPublicInterfaceContract advertises loop_early_exits as a top-level key (additive — schema_version stays 1 under evolves_with_isf_implementation). A report carries two entries for (while busy (exit-when go)(continue-when busy)) and an empty array when there are none. Docs synced: ISF_DOWNSTREAM_INTEGRATION_SPEC, ISF_PUBLIC_INTERFACE_CONTRACT, ISF_SPEC (key list + sub-keys + prose + JSON example), 13d book gains a loop_early_exits[] schedule-report subsection. t/1389 gains two report subtests.`
+  Verification: `prove -Iperl t/1389 (8 subtests) t/1116 t/1227 t/1255 PASS; perl -c (LoweringIR + Emitter/JSON + ISFPublicInterfaceContract); full prove -j6 -Iperl t/ PASS; git diff --check`
+  Commit: `ship commit (this slice)`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -138,7 +145,8 @@ Reads like:
 | 1 | `.1` | `done` | Selection/design (this doc). |
 | 2 | `.2` | `done` | `(exit-when cond)` lowers in `while`/`until` bodies to a `loop_exit_when` decision (true → loop exit target, false → next clause); fails closed elsewhere; `--check-json` + verilator/yosys PASS. `t/1389`. |
 | 3 | `.3` | `done` | `(exit-when)` inside a `when` nested in a loop exits the WHOLE loop (true edge → loop exit). `when` allow-list + `_expand_when` branch + a post-hoc `_link_states` safety check (an un-stamped `loop_exit_when` = not in a loop → fail closed). `t/1389`. |
-| 4 | `.4`–`.5` | `pending` | schedule-report `exit-when` metadata; docs/examples consolidation. |
+| 4 | `.4` | `done` | Each `(exit-when)`/`(continue-when)` site is advertised in the schedule report under a bounded `loop_early_exits[]` array (`transaction`, `kind`, `state`, `condition`, `target`); additive top-level key (schema stays v1 under `evolves_with_isf_implementation`). Report-schema docs synced (downstream spec, public contract, ISF_SPEC, 13d book). `t/1389` (+2 report subtests). |
+| 5 | `.5` | `pending` | Optional docs/examples consolidation (the per-construct docs are already thorough and in sync). |
 
 ## Decisions
 
@@ -167,6 +175,7 @@ Reads like:
 | `2026-06-01` | `.1` | `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.2` | Spike: while/until `(exit-when)` lowers (`?cond` decision: true→loop exit, false→next clause); top-level/repeat/when/bare defer; `--check-json` SUCCESS; `--verify-hdl` verilator_lint+yosys_synthesis PASS. `prove -Iperl t/1389` (5 subtests) `t/1250 t/1376` (42) `t/1305 t/1304 t/1307 t/1303` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.3` | Spike: `(while busy (when err (exit-when go))(update ...))` lowers; the when-nested exit-when true edge jumps to the WHOLE-loop exit; `until` lowers; `--check-json` SUCCESS; a top-level `(when ... (exit-when ...))` fails closed with the loop-aware safety message. `prove -Iperl t/1389` (6 subtests) `t/1376 t/1305 t/1304 t/1307` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-03` | `.4` | Report dump of `(while busy (exit-when go)(continue-when busy))` carries two `loop_early_exits[]` entries (`exit_when`/`continue_when`, distinct targets); a no-exit transaction reports an empty array. `prove -Iperl t/1389` (8 subtests) `t/1116 t/1227 t/1255` PASS; `perl -c` (LoweringIR + Emitter/JSON + ISFPublicInterfaceContract); full `prove -j6 -Iperl t/` PASS; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -175,6 +184,7 @@ Reads like:
 | `.1` | `ISF-LOOP-EARLY-EXIT.1: select loop early-exit (exit-when)` | `6c6db3d6` |
 | `.2` | `ISF-LOOP-EARLY-EXIT.2: (exit-when cond) mid-loop early exit in while/until bodies` | `8024666b` |
 | `.3` | `ISF-LOOP-EARLY-EXIT.3: (exit-when) inside a when nested in a loop` | `ship commit (this slice)` |
+| `.4` | `ISF-LOOP-EARLY-EXIT.4: loop_early_exits[] schedule-report metadata for exit-when/continue-when` | `ship commit (this slice)` |
 
 ## Changelog
 
@@ -222,3 +232,21 @@ Reads like:
   positive subtest and a non-loop-`when` safety subtest; its prior top-level-when
   allow-list deferral assertion is repointed to the safety message (deferral-lift
   cascade).
+- `2026-06-03`: `.4` shipped — every `(exit-when)` and `(continue-when)` site is now
+  advertised in the schedule report under a bounded `loop_early_exits[]` array. Each
+  entry names the authored `transaction`, the `kind` (`exit_when` or `continue_when`),
+  the generated decision `state`, the normalized `condition`, and the true-edge
+  `target` (the loop *exit* for an `exit_when`, the loop *tail check* for a
+  `continue_when`). Lowering stamps `exit_when_condition => _format_isf_expr(cond)`
+  onto each `loop_exit_when` state (in both `_expand_loop_body` and the `when`-body
+  path); `Emitter/JSON.pm`'s new `_loop_early_exit_summary` walks the IR states for
+  `loop_exit_when` sites and the report build + `multi_domain` reset both register the
+  key. `loop_early_exits` is an **additive** top-level key —
+  `ISFPublicInterfaceContract` advertises it and `schema_version` stays `1` under the
+  report's `evolves_with_isf_implementation` flag (the same mechanism that added
+  `transaction_loops`/`transaction_stages`). Report-schema docs synced across
+  `ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `ISF_PUBLIC_INTERFACE_CONTRACT.md`, and
+  `ISF_SPEC.md` (top-level key list + per-entry sub-keys + prose + the empty-report
+  JSON example), and `13d-control-flow.md` gains a `loop_early_exits[]` schedule-report
+  subsection with a worked two-entry example. `t/1389` gains two report subtests
+  (two-site report shape; empty array when there are no early exits) — 8 subtests total.

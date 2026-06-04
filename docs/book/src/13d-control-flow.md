@@ -228,6 +228,30 @@ and fails closed elsewhere (with a diagnostic naming `continue-when`). Together
 `(exit-when)` and `(continue-when)` are the *break* / *continue* pair of a high-level
 loop.
 
+### Schedule-report metadata (`loop_early_exits[]`)
+
+Every `(exit-when)` and `(continue-when)` site is advertised in the schedule
+report under the bounded `loop_early_exits[]` array, alongside the
+`transaction_loops[]` loop summary. Each entry names the authored
+`transaction`, the `kind` (`exit_when` or `continue_when`), the generated
+decision `state`, the normalized `condition`, and the true-edge `target` — the
+loop *exit* for an `exit_when`, the loop *tail check* for a `continue_when`.
+For the `(while busy (exit-when go) (continue-when busy))` body above, the
+report carries two entries:
+
+```json
+"loop_early_exits": [
+  { "transaction": "main", "kind": "exit_when",
+    "state": "main_exit_when_3", "condition": "go", "target": "main_done_6" },
+  { "transaction": "main", "kind": "continue_when",
+    "state": "main_continue_when_4", "condition": "busy",
+    "target": "main_while_check_5" }
+]
+```
+
+A transaction with no early-exit sites carries an empty `loop_early_exits[]`
+array (the bounded key is always present).
+
 ## `(for (i N) body...)` — Indexed Counted Loop
 
 `(for (i N) body...)` runs `body` exactly `N` times while exposing a **loop index** `i`

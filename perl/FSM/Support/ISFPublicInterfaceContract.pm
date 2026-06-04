@@ -995,6 +995,7 @@ sub isf_public_interface_schedule_report_top_level_keys {
             transactions
             transaction_waits
             transaction_loops
+            loop_early_exits
             transaction_stages
             temporal_contracts
             bank_accesses
