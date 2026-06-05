@@ -3869,3 +3869,10 @@ Current shipped boundary: the normalized semantic payload contract publishes
 `semantic.symbol_contract`, and the report contract republishes that list as
 `success_semantic_optional_child_presence_keys`. The manifest is still not a
 full normalized semantic export.
+
+Current hardening target: successful semantic JSON already emits
+`semantic.forward_ir.lowered_rtl_ir.selector_conflict_target_count` and
+`selector_conflict_targets` for direct roots, but the lowered-RTL contract does
+not yet advertise that exact selector-conflict metadata family. The active
+task-tree leaf is
+`BACKEND-API-VALIDATION-FRONTIER.9.1`.

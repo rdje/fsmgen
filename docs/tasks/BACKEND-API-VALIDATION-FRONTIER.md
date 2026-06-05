@@ -57,7 +57,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.7.1`,
     `BACKEND-API-VALIDATION-FRONTIER.8`,
     `BACKEND-API-VALIDATION-FRONTIER.8.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.9`
+    `BACKEND-API-VALIDATION-FRONTIER.9`,
+    `BACKEND-API-VALIDATION-FRONTIER.9.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -236,9 +237,16 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.9`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next normalized semantic export hardening edge after optional child discovery.`
-  Acceptance: `One exact normalized semantic export field family or terminal deferral is selected from code, contract, test, and mdBook evidence before any implementation.`
+  Acceptance: `Selected the lowered-RTL selector-conflict metadata as the next exact normalized semantic export field family. Runtime evidence shows successful semantic JSON for fsm/apb_requester.fsm already emits semantic.forward_ir.lowered_rtl_ir.selector_conflict_target_count and selector_conflict_targets, while FSM::Support::NormalizedSemanticLoweredRTLIRContract does not advertise those keys. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.9.1.`
+  Verification: `Selection audit/read of perl/FSM/Support/NormalizedSemanticReport.pm, perl/FSM/Support/NormalizedSemanticReportContract.pm, perl/FSM/Support/NormalizedSemanticPayloadContract.pm, perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm, t/354-normalized-semantic-child-runtime-contract-audit.t, t/311-normalized-semantic-report-contract.t, t/330-normalized-semantic-payload-contract.t, t/297-capability-manifest.t, README.md, docs/book/src/11-extensions-and-embedding.md, and docs/book/src/14-feature-backlog.md; probe command perl -Iperl -MJSON::PP=decode_json -MIPC::Cmd=run ... ./bin/fsmgen --strict --emit-semantic-json fsm/apb_requester.fsm confirmed the emitted lowered_rtl_ir selector-conflict keys; scripts/check_memory_architecture.sh; bash knowledge-map/scripts/check_knowledge_map.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.9.1`
+  Status: `active`
+  Goal: `Publish lowered-RTL selector-conflict metadata in the normalized semantic export contract.`
+  Acceptance: `FSM::Support::NormalizedSemanticLoweredRTLIRContract advertises selector_conflict_target_count and selector_conflict_targets for semantic.forward_ir.lowered_rtl_ir, and the payload/report contracts plus capability manifest inherit that exact key family. Runtime contract tests assert the emitted direct semantic JSON lowered-RTL branch keeps those keys under the advertised contract. README/live docs/mdBook explain the selector-conflict metadata, focused contract/runtime/manifest/defensive-copy tests pass, and no raw Perl objects are exported.`
   Verification: `pending`
   Commit: `pending`
 
@@ -267,7 +275,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 19 | `BACKEND-API-VALIDATION-FRONTIER.7.1` | `done` | Advertised the JSON-safe generation-result snapshot as a direct embedding child contract while keeping raw `HDLGenerator` objects non-public and preserving the nested `serializable_plan_reports` reference. |
 | 20 | `BACKEND-API-VALIDATION-FRONTIER.8` | `done` | Selected explicit optional semantic-payload child discovery as the next exact normalized semantic export field family. |
 | 21 | `BACKEND-API-VALIDATION-FRONTIER.8.1` | `done` | Published explicit optional semantic child key-family metadata for `semantic.composition` and `semantic.symbol_contract`. |
-| 22 | `BACKEND-API-VALIDATION-FRONTIER.9` | `active` | Select the next normalized semantic export hardening edge after optional child discovery. |
+| 22 | `BACKEND-API-VALIDATION-FRONTIER.9` | `done` | Selected lowered-RTL selector-conflict metadata as the next exact normalized semantic export field family. |
+| 23 | `BACKEND-API-VALIDATION-FRONTIER.9.1` | `active` | Publish `semantic.forward_ir.lowered_rtl_ir.selector_conflict_target_count` and `selector_conflict_targets` in the normalized semantic export contract. |
 
 ## Decisions
 
@@ -310,6 +319,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.7.1` | `perl -Iperl -c perl/FSM/Support/EmbeddingContract.pm`; `perl -Iperl -c perl/FSM/Support/EmbeddingSection.pm`; `perl -Iperl -c perl/FSM/Support/CapabilityManifestContract.pm`; focused embedding/manifest/snapshot suite (`t/321`, `t/297`, `t/358`, `t/366`, `t/437`, `t/845`-`t/854`, `t/1061`, `t/1062`, `t/632`, `t/650`, `t/641`, `t/629`, `t/655`); manifest-shell/provenance/family-map audit suite (`t/316`, `t/370`, `t/381`, `t/382`, `t/383`, `t/1131`); `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; advertised `embedding.serializable_generation_result_snapshot` as a direct manifest child while preserving nested plan/report compatibility |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.8` | Selection audit/read of `perl/FSM/Support/NormalizedSemanticReportContract.pm`, `perl/FSM/Support/NormalizedSemanticPayloadContract.pm`, `perl/FSM/Support/NormalizedSemanticReport.pm`, `t/311-normalized-semantic-report-contract.t`, `t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t`, `t/302-normalized-semantic-json.t`, `t/664-public-report-embedded-snapshot-key-alignment-audit.t`, `README.md`, `docs/book/src/11-extensions-and-embedding.md`, and `docs/book/src/14-feature-backlog.md`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected explicit optional semantic child discovery for `.8.1` |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.8.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; `prove -Iperl t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t t/297-capability-manifest.t t/302-normalized-semantic-json.t t/664-public-report-embedded-snapshot-key-alignment-audit.t t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t t/1015-normalized-semantic-payload-contract-full-surface-json-roundtrip-audit.t t/1016-normalized-semantic-payload-contract-full-surface-defensive-copy-audit.t t/383-contract-family-map-integrity-audit.t t/357-public-report-shell-runtime-contract-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; optional semantic child discovery is now explicit and manifest-visible |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.9` | Selection audit/read of `perl/FSM/Support/NormalizedSemanticReport.pm`, `perl/FSM/Support/NormalizedSemanticReportContract.pm`, `perl/FSM/Support/NormalizedSemanticPayloadContract.pm`, `perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm`, `t/354-normalized-semantic-child-runtime-contract-audit.t`, `t/311-normalized-semantic-report-contract.t`, `t/330-normalized-semantic-payload-contract.t`, `t/297-capability-manifest.t`, `README.md`, `docs/book/src/11-extensions-and-embedding.md`, and `docs/book/src/14-feature-backlog.md`; selection probe of `./bin/fsmgen --strict --emit-semantic-json fsm/apb_requester.fsm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected lowered-RTL selector-conflict metadata for `.9.1` |
 
 ## Commit Log
 
@@ -336,6 +346,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.7.1` | `BACKEND-API-VALIDATION-FRONTIER.7.1: advertise generation snapshot child` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.8` | `BACKEND-API-VALIDATION-FRONTIER.8: select optional semantic children` | selected `.8.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.8.1` | `BACKEND-API-VALIDATION-FRONTIER.8.1: publish optional semantic children` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.9` | `BACKEND-API-VALIDATION-FRONTIER.9: select lowered RTL selector keys` | selected `.9.1` |
 
 ## Changelog
 
@@ -440,3 +451,8 @@ items named in the 2026-06-05 remaining-work inventory.
   `success_semantic_optional_child_presence_keys`, preserving existing runtime
   optionality for direct, composition, and symbol-rich reports. Activated `.9`
   to select the next normalized semantic export edge.
+- `2026-06-05`: Completed `.9`; selected lowered-RTL selector-conflict metadata
+  as the next exact normalized semantic export field family because successful
+  semantic JSON already emits `selector_conflict_target_count` and
+  `selector_conflict_targets` under `semantic.forward_ir.lowered_rtl_ir`, but
+  the lowered-RTL contract does not yet advertise them. Activated `.9.1`.
