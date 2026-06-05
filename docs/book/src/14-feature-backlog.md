@@ -3871,5 +3871,8 @@ Current shipped boundary: the normalized semantic payload contract publishes
 `semantic.forward_ir.lowered_rtl_ir` contract also advertises the emitted
 `selector_conflict_target_count` and `selector_conflict_targets` metadata,
 including bounded entry keys for `selector_conflict_targets[]`, nested
-`rhs_enable_families[]`, and selector assertion metadata. The manifest is still
-not a full normalized semantic export.
+`rhs_enable_families[]`, and selector assertion metadata. The next selected
+boundary is to publish bounded entry keys for
+`semantic.forward_ir.lowered_rtl_ir.output_drive_families[]` and its nested
+`rhs_enable_families[]` entries. The manifest is still not a full normalized
+semantic export.
