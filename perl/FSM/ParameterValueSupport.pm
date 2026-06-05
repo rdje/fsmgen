@@ -432,9 +432,15 @@ sub _canonical_expression_payload ($class, $value_ast, $context, $docs_hint, $re
 
 sub _canonical_aggregate_expression_payload ($class, $normalized_operator, $display_operator, $operand_payloads, $context, $docs_hint) {
     confess
-        "$context is blocked because aggregate parameter/generic expressions currently support only matching-shape leafwise operators '+', '-', '*', '/', '%', '&', '|', '^' and aliases 'add', 'sub', 'mul', 'div', 'mod', 'and', 'or', 'xor', plus unary '~' and 'not', but saw operator '$display_operator'.".
+        "$context is blocked because aggregate parameter/generic expressions currently support only matching-shape leafwise operators '+', '-', '*', '/', '%', '&', '|', '^' and aliases 'add', 'sub', 'mul', 'div', 'mod', 'and', 'or', 'xor', binary aggregate comparison operators '==' and '!=', plus unary '~' and 'not', but saw operator '$display_operator'.".
         $docs_hint."\n"
         unless $class->_is_aggregate_expression_operator($normalized_operator);
+
+    confess
+        "$context is blocked because aggregate parameter/generic comparison operator '$display_operator' requires exactly 2 operands.".
+        $docs_hint."\n"
+        if $class->_is_aggregate_comparison_expression_operator($normalized_operator)
+            && @$operand_payloads != 2;
 
     my $first_payload = $operand_payloads->[0];
     my $first_kind = ref($first_payload) eq 'HASH' ? ($first_payload->{kind} || '') : '';
@@ -479,6 +485,14 @@ sub _canonical_aggregate_expression_payload ($class, $normalized_operator, $disp
             $docs_hint."\n"
             unless $matches_first;
     }
+
+    return $class->_canonical_aggregate_comparison_expression_payload(
+        $normalized_operator,
+        $display_operator,
+        $operand_payloads,
+        $context,
+        $docs_hint,
+    ) if $class->_is_aggregate_comparison_expression_operator($normalized_operator);
 
     return $class->_apply_aggregate_expression_operator(
         $normalized_operator,
@@ -537,7 +551,7 @@ sub _normalize_scalar_expression_operator ($class, $operator) {
     );
 
     my $normalized = $operator_aliases{$operator} // $operator;
-    my %supported = map { $_ => 1 } qw(+ - * / % & | ^ ~);
+    my %supported = map { $_ => 1 } qw(+ - * / % & | ^ ~ == !=);
     return $supported{$normalized} ? $normalized : undef;
 }
 
@@ -556,7 +570,45 @@ sub _is_aggregate_expression_operator ($class, $operator) {
         || $operator eq '|'
         || $operator eq '^'
         || $operator eq '~'
+        || $operator eq '=='
+        || $operator eq '!='
     );
+}
+
+sub _is_aggregate_comparison_expression_operator ($class, $operator) {
+    return defined($operator) && !ref($operator) && (
+        $operator eq '=='
+        || $operator eq '!='
+    );
+}
+
+sub _canonical_aggregate_comparison_expression_payload ($class, $operator, $display_operator, $payloads, $context, $docs_hint) {
+    my @bitstrings;
+    my $expected_width;
+    for my $operand_index (0 .. $#$payloads) {
+        my ($bits, $width, $reason) =
+            FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($payloads->[$operand_index]);
+        confess
+            "$context is blocked because aggregate parameter/generic comparison operator '$display_operator' operand ".($operand_index + 1)." did not lower to bits; reason '$reason'.".
+            $docs_hint."\n"
+            unless defined($bits) && defined($width) && $width > 0;
+        if (defined $expected_width) {
+            confess
+                "$context is blocked because aggregate parameter/generic comparison operator '$display_operator' operand widths must match; expected width $expected_width but operand ".($operand_index + 1)." has width $width.".
+                $docs_hint."\n"
+                unless $width == $expected_width;
+        } else {
+            $expected_width = $width;
+        }
+        push @bitstrings, $bits;
+    }
+
+    my $equal = $bitstrings[0] eq $bitstrings[1] ? 1 : 0;
+    my $result = $operator eq '==' ? $equal : !$equal;
+    return {
+        kind => 'scalar',
+        payload => "1'b".($result ? '1' : '0'),
+    };
 }
 
 sub _apply_aggregate_expression_operator ($class, $operator, $payloads, $context, $docs_hint) {

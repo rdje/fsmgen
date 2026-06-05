@@ -71,8 +71,8 @@ remains or a real prerequisite blocker is reached.
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3`
   Status: `pending`
-  Goal: `Broaden the shared-datapath route/storage/protocol contract where one exact contract can be proven.`
-  Acceptance: `One specific route, storage, protocol, contributor, or lifting rule is selected, implemented or explicitly deferred, documented, and regression-covered.`
+  Goal: `Select the next shared-datapath route/storage/protocol contract or blocker from evidence.`
+  Acceptance: `Existing R11 shared-datapath evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
   Verification: `pending`
   Commit: `pending`
 
@@ -126,11 +126,11 @@ remains or a real prerequisite blocker is reached.
   Commit: `pending`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement binary semantic parameter/generic aggregate equality and inequality.`
   Acceptance: `Direct +params, .rtlif defaults, external RTL overrides, and generated-child overrides accept binary (== A B) and (!= A B) only when both operands resolve to aggregate values with matching shape. The operators fold before HDL lowering to exact-width scalar literals 1'b1 or 1'b0. Bad arity, mixed scalar/aggregate operands, mismatched shapes, runtime direct .fsm aggregate expressions, ISF runtime aggregate expressions, VHDL aggregate lowering, scalar/aggregate mixing, and mismatched-shape operators remain fail-closed or deferred.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: focused language/composition/corpus checks, mdBook, feature-backlog status, doc path, knowledge-map, memory-architecture, and diff checks`
+  Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11: implement aggregate comparison operators`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`
   Status: `pending`
@@ -150,7 +150,7 @@ remains or a real prerequisite blocker is reached.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11` | `pending` | The evidence selection picked binary semantic parameter/generic aggregate equality/inequality as the first bounded code-bearing slice. |
+| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3` | `pending` | Aggregate comparison is shipped; the next Composition/type item needs evidence-led shared-datapath route/storage/protocol selection before any code. |
 
 ## Selection Result
 
@@ -180,6 +180,24 @@ Other candidates remain deferred for now:
 - Shared-datapath, reusable-module, top-boundary, generated-child top, and
   parameter-binding broadenings still need a more specific route/storage,
   reusable-module, convention, or activation contract before code.
+
+## Implementation Result
+
+`COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11` shipped binary semantic
+parameter/generic aggregate comparison:
+
+- `(== A B)` and `(!= A B)` are accepted by the existing
+  `FSM::ParameterValueSupport` fold-before-HDL normalizer when both operands
+  resolve to matching list/record aggregate shapes.
+- The result folds to scalar exact-width `1'b1` or `1'b0`.
+- The supported surfaces are direct `+params`, `.rtlif` parameter/generic
+  defaults, external RTL parameter/generic overrides, and generated-child
+  parameter overrides.
+- Bad arity, scalar/aggregate mixing, mismatched shapes, runtime aggregate
+  expressions, ISF runtime aggregate expressions, and VHDL aggregate lowering
+  remain fail-closed or deferred.
+- The user-facing contract is documented in `docs/book/` and indexed by
+  `docs/knowledge/aggregate-parameter-comparison.md`.
 
 ## Evidence To Reuse
 
@@ -211,8 +229,8 @@ Other candidates remain deferred for now:
 
 ## Open Questions
 
-- None for the selected next leaf. `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`
-  owns the first code-bearing slice.
+- None before the next evidence-selection leaf. Any shared-datapath code must
+  first get an exact executable owner under this tree.
 
 ## Blockers
 
@@ -225,6 +243,7 @@ Other candidates remain deferred for now:
 | --- | --- | --- |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.1` | `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` | `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
+| `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11` | `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t t/292-composition-generated-child-parameter-overrides.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -232,9 +251,13 @@ Other candidates remain deferred for now:
 | --- | --- | --- |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.1` | `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1: track remaining backlog owners` | `activated by the remaining-work ownership slice` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2: select aggregate equality leaf` | `selected .11 as the first executable Composition/type implementation leaf` |
+| `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11: implement aggregate comparison operators` | `shipped binary matching-shape aggregate equality/inequality for semantic parameter/generic values; next frontier .3` |
 
 ## Changelog
 
 - `2026-06-05`: Created active Composition/type backlog exhaustion tree.
 - `2026-06-05`: Selected binary semantic parameter/generic aggregate equality
   and inequality as the first executable Composition/type implementation leaf.
+- `2026-06-05`: Shipped binary semantic parameter/generic aggregate equality
+  and inequality and advanced the frontier to shared-datapath evidence
+  selection.

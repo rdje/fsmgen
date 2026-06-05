@@ -324,6 +324,8 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
       (LANES_MASKED (and LOCAL_LANES param_pkg.DEFAULT_LANE_MASK))
       (LANES_SUM (+ LOCAL_LANES LOCAL_LANE_INC))
       (LANES_INVERTED (~ LOCAL_LANES))
+      (LANES_EQUAL (== LOCAL_LANES LOCAL_LANES))
+      (LANES_DIFFER (!= LOCAL_LANES param_pkg.DEFAULT_LANE_MASK))
     )
   )
   (?wiring:wiring
@@ -342,6 +344,8 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
     (LANES_MASKED (and param_pkg.DEFAULT_LANES param_pkg.DEFAULT_LANE_MASK))
     (LANES_SUM (+ param_pkg.DEFAULT_LANES param_pkg.DEFAULT_LANE_INC))
     (LANES_INVERTED (not param_pkg.DEFAULT_LANE_MASK))
+    (LANES_EQUAL (== param_pkg.DEFAULT_LANES param_pkg.DEFAULT_LANES))
+    (LANES_DIFFER (!= param_pkg.DEFAULT_LANES param_pkg.DEFAULT_LANE_MASK))
   )
   core_clk:clock
   rst_async_n:reset
@@ -377,7 +381,7 @@ FSM
     my $parameter_overrides = $result->{composition_plan}->instances->[0]->parameter_overrides;
     is_deeply(
         [map { $_->{name} } @$parameter_overrides],
-        [qw(WIDTH RESET_VALUE LANES FRAME EXPR_WIDTH LANES_MASKED LANES_SUM LANES_INVERTED)],
+        [qw(WIDTH RESET_VALUE LANES FRAME EXPR_WIDTH LANES_MASKED LANES_SUM LANES_INVERTED LANES_EQUAL LANES_DIFFER)],
         'composition plan preserves validated parameter override order',
     );
     my %overrides = map { $_->{name} => $_ } @$parameter_overrides;
@@ -407,6 +411,12 @@ FSM
     is($overrides{LANES_SUM}{value_kind}, 'list', 'composition plan keeps aggregate arithmetic override expressions as aggregate values');
     is($overrides{LANES_INVERTED}{value_text}, "16'b0101101011000011", 'composition plan folds aggregate unary complement parameter override expressions');
     is($overrides{LANES_INVERTED}{value_kind}, 'list', 'composition plan keeps aggregate unary complement override expressions as aggregate values');
+    is($overrides{LANES_EQUAL}{value_text}, "1'b1", 'composition plan folds aggregate equality override expressions to scalar truth values');
+    is($overrides{LANES_EQUAL}{value_kind}, 'scalar', 'composition plan keeps aggregate equality override expressions as scalar values');
+    is($overrides{LANES_EQUAL}{value_width}, 1, 'composition plan infers scalar width for aggregate equality override expressions');
+    is($overrides{LANES_DIFFER}{value_text}, "1'b1", 'composition plan folds aggregate inequality override expressions to scalar truth values');
+    is($overrides{LANES_DIFFER}{value_kind}, 'scalar', 'composition plan keeps aggregate inequality override expressions as scalar values');
+    is($overrides{LANES_DIFFER}{value_width}, 1, 'composition plan infers scalar width for aggregate inequality override expressions');
     my %declarations = map { $_->{name} => $_ } @{$result->{composition_plan}->instances->[0]->module_info->{parameter_declarations}};
     is($declarations{WIDTH}{raw_default_value}, 'param_pkg.DEFAULT_WIDTH', 'rtlif defaults preserve package-symbol raw scalar token');
     is($declarations{WIDTH}{default_value_text}, '8', 'rtlif defaults resolve package-backed scalar values');
@@ -414,6 +424,12 @@ FSM
     is($declarations{LANES_MASKED}{default_value_text}, "16'b0000000000000000", 'rtlif defaults resolve package-backed aggregate bitwise expressions');
     is($declarations{LANES_SUM}{default_value_text}, "16'b0000000100000010", 'rtlif defaults resolve package-backed aggregate arithmetic expressions');
     is($declarations{LANES_INVERTED}{default_value_text}, "16'b0000111111110000", 'rtlif defaults resolve package-backed aggregate unary complement expressions');
+    is($declarations{LANES_EQUAL}{default_value_text}, "1'b1", 'rtlif defaults resolve aggregate equality expressions to scalar truth values');
+    is($declarations{LANES_EQUAL}{default_value_kind}, 'scalar', 'rtlif defaults keep aggregate equality expressions as scalar values');
+    is($declarations{LANES_EQUAL}{default_value_width}, 1, 'rtlif defaults infer scalar width for aggregate equality expressions');
+    is($declarations{LANES_DIFFER}{default_value_text}, "1'b1", 'rtlif defaults resolve aggregate inequality expressions to scalar truth values');
+    is($declarations{LANES_DIFFER}{default_value_kind}, 'scalar', 'rtlif defaults keep aggregate inequality expressions as scalar values');
+    is($declarations{LANES_DIFFER}{default_value_width}, 1, 'rtlif defaults infer scalar width for aggregate inequality expressions');
     is($declarations{LANES}{raw_default_value}, 'param_pkg.DEFAULT_LANES', 'rtlif defaults preserve package-symbol raw aggregate token');
     is($declarations{LANES}{default_value_text}, "16'b0000000000000000", 'rtlif defaults resolve package-backed list aggregate shape');
     is_deeply(
@@ -433,12 +449,12 @@ FSM
     );
     is(
         $result->{intent_hir}{composition_children}[0]{parameter_override_count},
-        8,
+        10,
         'intent HIR child export reports the parameter override count',
     );
 
     my $hdl = $result->{hdl_code};
-    like($hdl, qr/\buart_tx\s+#\(\s*\.WIDTH\(16\),\s*\.RESET_VALUE\(8'hA5\),\s*\.LANES\(16'b1010010100111100\),\s*\.FRAME\(3'b101\),\s*\.EXPR_WIDTH\(\(16 \+ 1\)\),\s*\.LANES_MASKED\(16'b1010000000001100\),\s*\.LANES_SUM\(16'b1010011000111110\),\s*\.LANES_INVERTED\(16'b0101101011000011\)\s*\)\s+u_uart\s*\(/s, 'generated HDL emits SV parameter overrides on the external RTL instance');
+    like($hdl, qr/\buart_tx\s+#\(\s*\.WIDTH\(16\),\s*\.RESET_VALUE\(8'hA5\),\s*\.LANES\(16'b1010010100111100\),\s*\.FRAME\(3'b101\),\s*\.EXPR_WIDTH\(\(16 \+ 1\)\),\s*\.LANES_MASKED\(16'b1010000000001100\),\s*\.LANES_SUM\(16'b1010011000111110\),\s*\.LANES_INVERTED\(16'b0101101011000011\),\s*\.LANES_EQUAL\(1'b1\),\s*\.LANES_DIFFER\(1'b1\)\s*\)\s+u_uart\s*\(/s, 'generated HDL emits SV parameter overrides on the external RTL instance');
     unlike($hdl, qr/\bmodule\s+uart_tx\b/s, 'generated HDL does not regenerate the parameterized external rtl child');
 
     my ($success) = run(

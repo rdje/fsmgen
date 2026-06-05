@@ -41,6 +41,8 @@ subtest 'generated child parameter overrides lower through structural IR into SV
       (LANES_MASKED (and TOP_LANES TOP_LANE_MASK))
       (LANES_SUM (+ TOP_LANES TOP_LANE_INC))
       (LANES_INVERTED (~ TOP_LANES))
+      (LANES_EQUAL (== TOP_LANES TOP_LANES))
+      (LANES_DIFFER (!= TOP_LANES TOP_LANE_MASK))
     )
   )
   (?dtc:sink sink_src)
@@ -59,6 +61,8 @@ subtest 'generated child parameter overrides lower through structural IR into SV
     (LANES_MASKED (8'h00 8'h00))
     (LANES_SUM (8'h00 8'h00))
     (LANES_INVERTED (8'h00 8'h00))
+    (LANES_EQUAL 0)
+    (LANES_DIFFER 0)
   )
   (+system
     (clock clk)
@@ -98,7 +102,7 @@ FSM
     is($result->{composition_plan}->lane, 'C2', 'parameterized generated-child composition uses the generated-child C2 lane');
     is_deeply(
         [map { $_->{name} } @$parameter_overrides],
-        [qw(WIDTH LANES EXPR_WIDTH LANES_MASKED LANES_SUM LANES_INVERTED)],
+        [qw(WIDTH LANES EXPR_WIDTH LANES_MASKED LANES_SUM LANES_INVERTED LANES_EQUAL LANES_DIFFER)],
         'composition plan preserves generated-child parameter override order',
     );
     my %overrides = map { $_->{name} => $_ } @$parameter_overrides;
@@ -116,6 +120,12 @@ FSM
     is($overrides{LANES_SUM}{value_kind}, 'list', 'generated-child aggregate arithmetic expression override stays aggregate');
     is($overrides{LANES_INVERTED}{value_text}, "16'b0101101011000011", 'generated-child aggregate unary complement expression override resolves top aggregate constants');
     is($overrides{LANES_INVERTED}{value_kind}, 'list', 'generated-child aggregate unary complement expression override stays aggregate');
+    is($overrides{LANES_EQUAL}{value_text}, "1'b1", 'generated-child aggregate equality expression override resolves top aggregate constants');
+    is($overrides{LANES_EQUAL}{value_kind}, 'scalar', 'generated-child aggregate equality expression override folds to scalar');
+    is($overrides{LANES_EQUAL}{value_width}, 1, 'generated-child aggregate equality expression override infers scalar width');
+    is($overrides{LANES_DIFFER}{value_text}, "1'b1", 'generated-child aggregate inequality expression override resolves top aggregate constants');
+    is($overrides{LANES_DIFFER}{value_kind}, 'scalar', 'generated-child aggregate inequality expression override folds to scalar');
+    is($overrides{LANES_DIFFER}{value_width}, 1, 'generated-child aggregate inequality expression override infers scalar width');
 
     is_deeply(
         $result->{structural_rtl_ir}{instances}[0]{parameter_overrides},
@@ -129,13 +139,13 @@ FSM
     );
     is(
         $result->{intent_hir}{composition_children}[0]{parameter_override_count},
-        6,
+        8,
         'intent HIR child export reports generated-child parameter override count',
     );
 
     my $hdl = $result->{hdl_code};
-    like($hdl, qr/module\s+child_src\s*#\(\s*parameter\s+EXPR_WIDTH\s*=\s*4,\s*parameter\s+LANES\s*=\s*16'b0000000000000000,\s*parameter\s+LANES_INVERTED\s*=\s*16'b0000000000000000,\s*parameter\s+LANES_MASKED\s*=\s*16'b0000000000000000,\s*parameter\s+LANES_SUM\s*=\s*16'b0000000000000000,\s*parameter\s+WIDTH\s*=\s*8\s*\)/s, 'generated child module emits direct parameter declarations');
-    like($hdl, qr/\bchild_src\s+#\(\s*\.WIDTH\(16\),\s*\.LANES\(16'b1010010100111100\),\s*\.EXPR_WIDTH\(\(16 \+ 1\)\),\s*\.LANES_MASKED\(16'b1010000000001100\),\s*\.LANES_SUM\(16'b1010011000111110\),\s*\.LANES_INVERTED\(16'b0101101011000011\)\s*\)\s+u_child\s*\(/s, 'generated top emits SV parameter overrides on the generated-child instance');
+    like($hdl, qr/module\s+child_src\s*#\(\s*parameter\s+EXPR_WIDTH\s*=\s*4,\s*parameter\s+LANES\s*=\s*16'b0000000000000000,\s*parameter\s+LANES_DIFFER\s*=\s*0,\s*parameter\s+LANES_EQUAL\s*=\s*0,\s*parameter\s+LANES_INVERTED\s*=\s*16'b0000000000000000,\s*parameter\s+LANES_MASKED\s*=\s*16'b0000000000000000,\s*parameter\s+LANES_SUM\s*=\s*16'b0000000000000000,\s*parameter\s+WIDTH\s*=\s*8\s*\)/s, 'generated child module emits direct parameter declarations');
+    like($hdl, qr/\bchild_src\s+#\(\s*\.WIDTH\(16\),\s*\.LANES\(16'b1010010100111100\),\s*\.EXPR_WIDTH\(\(16 \+ 1\)\),\s*\.LANES_MASKED\(16'b1010000000001100\),\s*\.LANES_SUM\(16'b1010011000111110\),\s*\.LANES_INVERTED\(16'b0101101011000011\),\s*\.LANES_EQUAL\(1'b1\),\s*\.LANES_DIFFER\(1'b1\)\s*\)\s+u_child\s*\(/s, 'generated top emits SV parameter overrides on the generated-child instance');
     like($hdl, qr/\bin_data\s*==\s*WIDTH\b/s, 'generated child internals keep scalar parameter reference in guard equality');
     like($hdl, qr/\bout_data\s*=\s*LANES\b/s, 'generated child internals keep aggregate parameter reference on RHS');
 

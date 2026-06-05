@@ -220,6 +220,8 @@ subtest '.rtlif parameter declarations preserve canonical defaults' => sub {
     (RESET_VALUE 8'hA5)
     (LANES (8'hA5 8'h3C))
     (LANES_MASKED (and (8'hA5 8'h3C) (8'hF0 8'h0F)))
+    (LANES_EQUAL (== (8'hA5 8'h3C) (8'hA5 8'h3C)))
+    (LANES_DIFFER (!= (8'hA5 8'h3C) (8'hF0 8'h0F)))
     (FRAME ((mode 2'b10) (flag 1)))
   )
   core_clk:clock
@@ -238,7 +240,7 @@ RTLIF
 
     is_deeply(
         [map { $_->{name} } @{$loaded->{parameter_declarations}}],
-        [qw(WIDTH RESET_VALUE LANES LANES_MASKED FRAME)],
+        [qw(WIDTH RESET_VALUE LANES LANES_MASKED LANES_EQUAL LANES_DIFFER FRAME)],
         'loader preserves declared RTL parameter/generic default order',
     );
     my %params = map { $_->{name} => $_ } @{$loaded->{parameter_declarations}};
@@ -264,6 +266,12 @@ RTLIF
     is($params{LANES_MASKED}{default_value_text}, "16'b1010000000001100", 'loader folds aggregate bitwise parameter defaults for backend lowering');
     is($params{LANES_MASKED}{default_value_kind}, 'list', 'loader keeps folded aggregate bitwise parameter defaults as aggregate values');
     is($params{LANES_MASKED}{default_value_width}, 16, 'loader infers packed width for folded aggregate bitwise parameter defaults');
+    is($params{LANES_EQUAL}{default_value_text}, "1'b1", 'loader folds aggregate equality parameter defaults for backend lowering');
+    is($params{LANES_EQUAL}{default_value_kind}, 'scalar', 'loader keeps folded aggregate equality parameter defaults as scalar values');
+    is($params{LANES_EQUAL}{default_value_width}, 1, 'loader infers width for folded aggregate equality parameter defaults');
+    is($params{LANES_DIFFER}{default_value_text}, "1'b1", 'loader folds aggregate inequality parameter defaults for backend lowering');
+    is($params{LANES_DIFFER}{default_value_kind}, 'scalar', 'loader keeps folded aggregate inequality parameter defaults as scalar values');
+    is($params{LANES_DIFFER}{default_value_width}, 1, 'loader infers width for folded aggregate inequality parameter defaults');
     is($params{FRAME}{default_value_text}, "3'b101", 'loader packs record aggregate parameter defaults for backend lowering');
     is($params{FRAME}{default_value_kind}, 'map', 'loader marks record-like aggregate parameter defaults');
     is_deeply(

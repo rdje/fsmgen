@@ -699,6 +699,10 @@ operators `+`, `-`, `*`, `/`, `%`, `&`, `|`, and `^`, plus `add`, `sub`,
 `mul`, `div`, `mod`, `and`, `or`, and `xor` aliases, between matching
 list/record aggregate shapes.
 
+Binary aggregate comparison is supported with `==` and `!=` between matching
+list/record aggregate shapes. It folds to scalar exact-width `1'b1` or
+`1'b0` before backend lowering.
+
 The normalizer folds those expressions leaf-by-leaf into one aggregate value
 before the composition plan reaches HDL lowering.
 
@@ -727,15 +731,19 @@ expected parameter shape:
     (params
       (LANES_SUM (+ LANES_A LANES_B))
       (LANES_MASK (and LANES_A LANES_B))
-      (LANES_INV (~ LANES_A)))))
+      (LANES_INV (~ LANES_A))
+      (LANES_MATCH (== LANES_A LANES_B)))))
 ```
 
 The plan records each override as one packed aggregate value, while retaining
-its semantic list/record kind and type-shape metadata for validation.
+its semantic list/record kind and type-shape metadata for validation. A
+comparison override records a scalar value because its result is one boolean
+parameter/generic literal.
 
-Richer aggregate operators remain future work until the specific operator is
-defined for the operand aggregate types/shapes and the result can be
-validated before generation.
+Richer aggregate operators beyond the matching-shape numeric, bitwise, unary
+complement, and binary comparison forms remain future work until the specific
+operator is defined for the operand aggregate types/shapes and the result can
+be validated before generation.
 
 That widening is tracked in [Feature Backlog](14-feature-backlog.md).
 

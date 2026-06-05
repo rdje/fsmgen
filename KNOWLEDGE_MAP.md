@@ -3,13 +3,16 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **9** facts · **44** question keys.
+> **10** facts · **48** question keys.
 
 ## Questions → fact
 
 - "Unsupported expression operator <point>_active" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 - "can I add a new key to the ISF schedule report?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
+- "can I compare aggregate +params with == or !=?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "can ISF assertions reference current_state or state_active?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
+- "do aggregate parameters support equality or inequality?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
+- "does .rtlif support aggregate generic comparison defaults?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "does ISF (within …) support a lower bound / a range / F[min,max]?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
 - "does ISF support $stable / $rose / $fell / $changed?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "does ISF validate the assert condition or pass it through?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-04 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
@@ -23,6 +26,7 @@
 - "how do I run the full test suite?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
 - "how do I say 'ack between 2 and 5 cycles after req' in ISF?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
 - "how do I write a stability or edge property in an assert/assume/cover?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-04 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
+- "how do aggregate comparison parameters lower to HDL?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "how do exit-when and continue-when differ in their target?" -> [loop-early-exit-target-hook](docs/knowledge/loop-early-exit-target-hook.md) · 2026-06-03 · reverify: `grep -n "loop_exit_target" perl/FSM/Scheduler/ISF/LoweringIR.pm`
 - "how does (within B MIN MAX) lower / what does ##[MIN:MAX] come from?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
 - "how does ISF get compiled to SystemVerilog?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
@@ -53,6 +57,15 @@
 - "why doesn't (at NAME) lower to current_state == STATE?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 
 ## Facts (by id)
+
+### aggregate-parameter-comparison
+_Semantic parameter and generic aggregate comparison support_
+
+- **answers:** do aggregate parameters support equality or inequality? | can I compare aggregate +params with == or !=? | does .rtlif support aggregate generic comparison defaults? | how do aggregate comparison parameters lower to HDL?
+- **date:** 2026-06-05 · **status:** current
+- **evidence:** `docs/book/src/04-symbols-types-and-imports.md; docs/book/src/06-composition-advanced.md; perl/FSM/ParameterValueSupport.pm; t/30-language-contract-symbol-definitions.t; t/88-rtlif-typed-port-contract.t; t/91-composition-multi-rtl-children.t; t/292-composition-generated-child-parameter-overrides.t`
+- **reverify:** `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
+- **source:** [`docs/knowledge/aggregate-parameter-comparison.md`](docs/knowledge/aggregate-parameter-comparison.md)
 
 ### full-test-suite-invocation
 _How to run the full Perl test suite (and why -j6 can get OOM-killed)_

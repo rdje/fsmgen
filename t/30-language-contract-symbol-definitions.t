@@ -58,6 +58,10 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (P_AGG_EXPR_NOT_LITERAL (~ (8'h0F 8'hF0)))
     (P_AGG_EXPR_NOT_RECORD (not FRAME))
     (P_AGG_EXPR_PARAM_XOR (xor P_AGG_EXPR_AND BYTE_MASK))
+    (P_AGG_EXPR_EQ_LIST (== BYTE_PAIR BYTE_PAIR))
+    (P_AGG_EXPR_EQ_RECORD_FALSE (== FRAME FRAME_MASK))
+    (P_AGG_EXPR_NE_LIST (!= BYTE_PAIR BYTE_MASK))
+    (P_AGG_EXPR_NE_RECORD_FALSE (!= FRAME FRAME))
   )
   (+enums
     (mode
@@ -114,7 +118,7 @@ FSM
 my $symbol_summary = $adapter->{signal_manager}->get_symbol_summary;
 is($symbol_summary->{constants}, 9, '+constants summary count is correct');
 is($symbol_summary->{defines}, 1, '+define summary count is correct');
-is($symbol_summary->{params}, 27, '+params summary count is correct');
+is($symbol_summary->{params}, 31, '+params summary count is correct');
 is($symbol_summary->{enums}, 1, '+enums summary count is correct');
 
 my $elements = state_elements($fsm_module, '-dt');
@@ -184,13 +188,19 @@ is($params->{P_AGG_EXPR_NOT_RECORD}{value_text}, "3'b010", 'semantic module reco
 is($params->{P_AGG_EXPR_NOT_RECORD}{value_kind}, 'map', 'aggregate unary complement record expressions stay aggregate parameter values');
 is_deeply($params->{P_AGG_EXPR_NOT_RECORD}{value_type_spec}{member_order}, [qw(mode flag)], 'aggregate unary complement record expressions preserve member order');
 is($params->{P_AGG_EXPR_PARAM_XOR}{value_text}, "16'b0101000000000011", 'semantic module records aggregate bitwise expressions using aggregate parameter operands');
+is($params->{P_AGG_EXPR_EQ_LIST}{value_text}, "1'b1", 'semantic module records folded aggregate list equality expressions');
+is($params->{P_AGG_EXPR_EQ_LIST}{value_kind}, 'scalar', 'aggregate equality expressions fold to scalar parameter values');
+is($params->{P_AGG_EXPR_EQ_LIST}{value_width}, 1, 'aggregate equality expressions preserve exact scalar result width');
+is($params->{P_AGG_EXPR_EQ_RECORD_FALSE}{value_text}, "1'b0", 'semantic module records folded aggregate record false equality expressions');
+is($params->{P_AGG_EXPR_NE_LIST}{value_text}, "1'b1", 'semantic module records folded aggregate list inequality expressions');
+is($params->{P_AGG_EXPR_NE_RECORD_FALSE}{value_text}, "1'b0", 'semantic module records folded aggregate record false inequality expressions');
 
 my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
     fsm_module => $fsm_module,
 );
 is_deeply(
     $intent_hir->parameter_names,
-    [qw(P0 P_AGG_EXPR_ADD P_AGG_EXPR_AND P_AGG_EXPR_DIV P_AGG_EXPR_MOD P_AGG_EXPR_MUL P_AGG_EXPR_NOT_LIST P_AGG_EXPR_NOT_LITERAL P_AGG_EXPR_NOT_RECORD P_AGG_EXPR_OR P_AGG_EXPR_PARAM_XOR P_AGG_EXPR_SUB P_AGG_FROM_PARAM P_BIN P_EXPR P_EXPR_AGG_LEAF P_EXPR_CHAIN P_EXPR_NESTED_AGG_LEAF P_EXPR_PARAM_AGG_LEAF P_FORWARD_BASE P_FROM_AGG P_FROM_CONST P_FROM_ENUM P_FROM_PARAM P_FROM_PARAM_FORWARD P_HEX P_LIST)],
+    [qw(P0 P_AGG_EXPR_ADD P_AGG_EXPR_AND P_AGG_EXPR_DIV P_AGG_EXPR_EQ_LIST P_AGG_EXPR_EQ_RECORD_FALSE P_AGG_EXPR_MOD P_AGG_EXPR_MUL P_AGG_EXPR_NE_LIST P_AGG_EXPR_NE_RECORD_FALSE P_AGG_EXPR_NOT_LIST P_AGG_EXPR_NOT_LITERAL P_AGG_EXPR_NOT_RECORD P_AGG_EXPR_OR P_AGG_EXPR_PARAM_XOR P_AGG_EXPR_SUB P_AGG_FROM_PARAM P_BIN P_EXPR P_EXPR_AGG_LEAF P_EXPR_CHAIN P_EXPR_NESTED_AGG_LEAF P_EXPR_PARAM_AGG_LEAF P_FORWARD_BASE P_FROM_AGG P_FROM_CONST P_FROM_ENUM P_FROM_PARAM P_FROM_PARAM_FORWARD P_HEX P_LIST)],
     'Intent HIR exposes direct-root parameter names from semantic module metadata'
 );
 
@@ -248,6 +258,10 @@ like($hdl, qr/parameter\s+P_AGG_EXPR_NOT_LIST\s*=\s*16'b0101101011000011\b/s, 'd
 like($hdl, qr/parameter\s+P_AGG_EXPR_NOT_LITERAL\s*=\s*16'b1111000000001111\b/s, 'direct SystemVerilog module declares folded aggregate unary complement literal expression default');
 like($hdl, qr/parameter\s+P_AGG_EXPR_NOT_RECORD\s*=\s*3'b010\b/s, 'direct SystemVerilog module declares folded aggregate unary complement record expression default');
 like($hdl, qr/parameter\s+P_AGG_EXPR_PARAM_XOR\s*=\s*16'b0101000000000011\b/s, 'direct SystemVerilog module declares folded aggregate bitwise parameter-operand expression default');
+like($hdl, qr/parameter\s+P_AGG_EXPR_EQ_LIST\s*=\s*1'b1\b/s, 'direct SystemVerilog module declares folded aggregate list equality default');
+like($hdl, qr/parameter\s+P_AGG_EXPR_EQ_RECORD_FALSE\s*=\s*1'b0\b/s, 'direct SystemVerilog module declares folded aggregate record false equality default');
+like($hdl, qr/parameter\s+P_AGG_EXPR_NE_LIST\s*=\s*1'b1\b/s, 'direct SystemVerilog module declares folded aggregate list inequality default');
+like($hdl, qr/parameter\s+P_AGG_EXPR_NE_RECORD_FALSE\s*=\s*1'b0\b/s, 'direct SystemVerilog module declares folded aggregate record false inequality default');
 like($hdl, qr/\bC\s*=\s*P0\b/s, 'generated HDL keeps scalar parameter reference on RHS');
 like($hdl, qr/\bW\s*=\s*P_LIST\b/s, 'generated HDL keeps aggregate parameter reference on RHS');
 like($hdl, qr/\bK\s*=\s*P_FROM_PARAM_FORWARD\b/s, 'generated HDL keeps forward-derived parameter reference on RHS');

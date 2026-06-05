@@ -276,6 +276,78 @@ FSM
         'aggregate +params expressions reject mismatched aggregate shapes before generation'
     );
 
+    my $comparison_mixed_operand_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_comparison_mixed_operand_contract
+  (+constants
+    (LANES (8'hA5 8'h3C))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (== LANES 1))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $comparison_mixed_operand_error,
+        qr/Direct source parameter 'P_BAD'.*operator '==' requires all operands to be aggregate values with matching shape, but operand 2 resolved to 'scalar'/s,
+        'aggregate equality rejects mixed scalar/aggregate operands before generation'
+    );
+
+    my $comparison_shape_mismatch_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_comparison_shape_contract
+  (+constants
+    (LANES (8'hA5 8'h3C))
+    (FRAME ((mode 2'b10) (flag 1)))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (!= LANES FRAME))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $comparison_shape_mismatch_error,
+        qr/Direct source parameter 'P_BAD'.*operator '!=' requires matching aggregate shapes; operand 1 is 'list<bits\[8\], bits\[8\]>' but operand 2 is 'record\{mode:bits\[2\], flag:bit\}'/s,
+        'aggregate inequality rejects mismatched aggregate shapes before generation'
+    );
+
+    my $comparison_arity_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_comparison_arity_contract
+  (+constants
+    (LANES (8'hA5 8'h3C))
+    (MASK (8'hF0 8'h0F))
+    (EXTRA (8'h00 8'hFF))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (== LANES MASK EXTRA))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $comparison_arity_error,
+        qr/Direct source parameter 'P_BAD'.*comparison operator '==' requires exactly 2 operands/s,
+        'aggregate equality rejects non-binary arity before generation'
+    );
+
     my $overflow_error = parse_failure(<<'FSM');
 (?fsm:bad_param_expression_overflow_contract
   (+constants

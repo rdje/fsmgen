@@ -167,7 +167,7 @@ interface ports, transaction ports, and banks remain backlog.
 
 ### Richer Aggregate Operators
 
-Status: backlog.
+Status: partially shipped; broader operators remain backlog.
 
 Goal: widen aggregate operators beyond the shipped matching-shape leafwise
 numeric and bitwise families.
@@ -175,7 +175,9 @@ numeric and bitwise families.
 Current boundary: semantic parameter/generic aggregate values support matching
 list/record aggregate shapes with leafwise `+`, `-`, `*`, `/`, `%`, `&`, `|`,
 `^` plus word aliases before HDL lowering. They also support unary bitwise
-aggregate complement through `(~ VALUE)` and `(not VALUE)`.
+aggregate complement through `(~ VALUE)` and `(not VALUE)`, and binary
+aggregate comparison through `(== A B)` and `(!= A B)` for matching aggregate
+shapes. Comparison folds to a scalar exact-width `1'b1` or `1'b0`.
 
 Additional aggregate operators remain deferred until each operator has a
 defined type/shape/result contract and validation path. Runtime direct `.fsm`

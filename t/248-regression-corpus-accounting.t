@@ -423,8 +423,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    40,
-    'catalog now keeps forty named supported-smoke entries including direct and composition language-feature fixtures',
+    41,
+    'catalog now keeps forty-one named supported-smoke entries including direct and composition language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -438,8 +438,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    40,
-    'catalog now records forty positive strict-mode supported-smoke acceptance entries',
+    41,
+    'catalog now records forty-one positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester

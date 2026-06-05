@@ -109,10 +109,11 @@ Parameter/generic values are semantic values and may be scalar or aggregate.
 Aggregate values can be declared, reused, overridden, shape-checked, and
 packed where the existing paths support them.
 
-The first aggregate-expression slice now supports leafwise numeric and
+The first aggregate-expression slices now support leafwise numeric and
 bitwise operators `+`, `-`, `*`, `/`, `%`, `&`, `|`, and `^`, plus `add`,
 `sub`, `mul`, `div`, `mod`, `and`, `or`, and `xor` aliases, between matching
-list/record aggregate shapes.
+list/record aggregate shapes. They also support binary aggregate comparison
+with `==` and `!=` between matching list/record shapes.
 
 Those expressions are folded leaf-by-leaf into one aggregate value before
 backend lowering.
@@ -120,6 +121,8 @@ backend lowering.
 Unary bitwise complement is also supported on one aggregate operand through
 `(~ VALUE)` or `(not VALUE)`. It keeps the same list/record shape and scalar
 leaf widths, and flips each scalar leaf bit before backend lowering.
+Aggregate comparison folds to a scalar exact-width `1'b1` or `1'b0` before
+backend lowering.
 
 Arithmetic leaves are unsigned and fixed-width: each leaf width must match,
 division or modulo by zero is rejected, and overflow/underflow outside that
@@ -146,7 +149,9 @@ Examples:
   (LANES_MASK (& LANES_A LANES_B))
   (FRAME_OR (or FRAME_A FRAME_B))
   (LANES_INV (~ LANES_A))
-  (FRAME_INV (not FRAME_A)))
+  (FRAME_INV (not FRAME_A))
+  (LANES_MATCH (== LANES_A LANES_A))
+  (FRAME_DIFF (!= FRAME_A FRAME_B)))
 ```
 
 `LANES_SUM` is folded by adding each matching list item. `LANES_MASK` is
@@ -154,11 +159,13 @@ folded by applying bitwise `&` to each matching list item. `FRAME_OR` is
 folded by applying bitwise `|` to each matching record member while preserving
 the authored record member order. `LANES_INV` and `FRAME_INV` apply unary
 bitwise complement to each scalar leaf while preserving the original aggregate
-shape.
+shape. `LANES_MATCH` and `FRAME_DIFF` compare the packed matching aggregate
+payloads and fold to scalar `1'b1`/`1'b0` values.
 
-Richer aggregate operators remain future work until their type/shape/result
-contracts are explicit enough to validate before generation; that widening is
-tracked in [Feature Backlog](14-feature-backlog.md).
+Richer aggregate operators beyond those matching-shape numeric, bitwise,
+unary complement, and binary comparison forms remain future work until their
+type/shape/result contracts are explicit enough to validate before generation;
+that widening is tracked in [Feature Backlog](14-feature-backlog.md).
 
 Direct-root `+params` values may also reuse resolved semantic symbols:
 same-root constants, whole aggregate constant roots, enum members such as
