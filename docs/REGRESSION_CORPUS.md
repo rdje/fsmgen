@@ -265,7 +265,9 @@ matched-only, optional-artifact, and nested support-accounting key lists.
 now owns the success-only nested `semantic` object shape emitted by public
 normalized semantic JSON, including the published nested
 `explicit_system_contract`, `system_contract`, `forward_ir`, and optional
-`symbol_contract` plus `composition` key lists.
+`symbol_contract` plus `composition` key lists. It also publishes
+`optional_child_presence_keys` so embedders can discover optional
+`semantic.symbol_contract` and `semantic.composition` children directly.
 [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)
 now owns the nested `semantic.signal_analysis` object shape emitted by
 successful public normalized semantic JSON, including the published

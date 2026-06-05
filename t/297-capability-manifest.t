@@ -159,11 +159,13 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_forward_ir_nested_presence_key_map
     normalized_semantic_payload_nested_presence_key_map
+    normalized_semantic_payload_optional_child_presence_keys
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_nested_presence_key_map
     normalized_semantic_presence_key_family_map
     normalized_semantic_report_contract_source
+    normalized_semantic_success_semantic_optional_child_presence_keys
 );
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
     normalized_semantic_signal_analysis_contract_source
@@ -779,6 +781,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the grouped normalized-semantic semantic-child key-family map',
     );
     is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{semantic_presence_key_family_map}{optional_child_presence_keys},
+        normalized_semantic_payload_optional_child_presence_keys(),
+        'manifest records optional normalized-semantic child keys in the semantic family map',
+    );
+    is_deeply(
         $manifest->{semantic_exports}{normalized_semantic_json}{nested_presence_key_map},
         normalized_semantic_nested_presence_key_map(),
         'manifest records the grouped normalized-semantic nested key-family map',
@@ -865,6 +872,16 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_semantic_presence_keys} || []}) >= 5,
         'manifest advertises bounded normalized semantic success payload key presence',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{success_semantic_optional_child_presence_keys},
+        normalized_semantic_success_semantic_optional_child_presence_keys(),
+        'manifest advertises optional normalized semantic success payload child keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{success_semantic_optional_child_presence_keys},
+        normalized_semantic_success_semantic_optional_child_presence_keys(),
+        'manifest records optional semantic child keys in the report family map',
     );
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{support_accounting_presence_keys} || []}) >= 1,

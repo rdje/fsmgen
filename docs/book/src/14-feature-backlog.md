@@ -3864,7 +3864,8 @@ Current boundary: the capability manifest and normalized semantic JSON expose
 bounded, audited public surfaces. The manifest is not yet a full normalized
 semantic export.
 
-Current hardening target: publish an explicit optional semantic-payload child
-key family for `semantic.composition` and `semantic.symbol_contract` so tools
-can discover optional normalized semantic children directly instead of inferring
-them only from nested owner maps and prose.
+Current shipped boundary: the normalized semantic payload contract publishes
+`optional_child_presence_keys` for `semantic.composition` and
+`semantic.symbol_contract`, and the report contract republishes that list as
+`success_semantic_optional_child_presence_keys`. The manifest is still not a
+full normalized semantic export.

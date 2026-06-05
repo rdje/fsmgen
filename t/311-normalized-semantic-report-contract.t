@@ -86,6 +86,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_system_contract_keys
     normalized_semantic_symbol_contract_keys
     normalized_semantic_success_only_top_level_keys
+    normalized_semantic_success_semantic_optional_child_presence_keys
     normalized_semantic_success_semantic_keys
     normalized_semantic_support_accounting_keys
 );
@@ -103,6 +104,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_keys
     normalized_semantic_payload_presence_keys
+    normalized_semantic_payload_optional_child_presence_keys
     normalized_semantic_payload_signal_analysis_keys
     normalized_semantic_payload_system_contract_keys
     normalized_semantic_payload_symbol_contract_keys
@@ -381,6 +383,26 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{success_semantic_presence_keys},
         normalized_semantic_payload_presence_keys(),
         'contract publishes the bounded semantic payload key list',
+    );
+    is_deeply(
+        $contract->{success_semantic_optional_child_presence_keys},
+        normalized_semantic_success_semantic_optional_child_presence_keys(),
+        'contract publishes the optional semantic child key list',
+    );
+    is_deeply(
+        normalized_semantic_success_semantic_optional_child_presence_keys(),
+        normalized_semantic_payload_optional_child_presence_keys(),
+        'report optional semantic child keys map to the payload owner',
+    );
+    is_deeply(
+        $contract->{semantic_presence_key_family_map}{optional_child_presence_keys},
+        normalized_semantic_payload_optional_child_presence_keys(),
+        'semantic presence family map republishes optional payload children',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{success_semantic_optional_child_presence_keys},
+        normalized_semantic_success_semantic_optional_child_presence_keys(),
+        'report presence family map publishes optional semantic children',
     );
     is_deeply(
         $contract->{success_module_presence_keys},
@@ -747,6 +769,12 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
     }
 
     ok(!exists $decoded->{semantic}{composition}, 'direct success omits optional composition payload');
+    ok(!exists $decoded->{semantic}{symbol_contract}, 'direct success omits optional symbol-contract payload');
+    is_deeply(
+        normalized_semantic_success_semantic_optional_child_presence_keys(),
+        [qw(composition symbol_contract)],
+        'optional semantic child key list stays bounded and ordered',
+    );
     ok(!$decoded->{generated_output}{emitted}, 'direct success still records no HDL emission');
 };
 
@@ -827,6 +855,10 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         normalized_semantic_composition_keys(),
         'composition success semantic payload keeps bounded composition keys',
     );
+    ok(
+        grep { $_ eq 'composition' } @{normalized_semantic_success_semantic_optional_child_presence_keys()},
+        'composition success optional child family names composition',
+    );
     assert_keys_present(
         $decoded->{semantic}{forward_ir}{intent_hir},
         normalized_semantic_forward_ir_intent_hir_keys(),
@@ -868,6 +900,10 @@ subtest 'successful symbol-rich semantic JSON conforms to the bounded symbol-con
     );
 
     ok($decoded->{semantic}{symbol_contract}, 'symbol-rich success report exposes the optional symbol-contract payload');
+    ok(
+        grep { $_ eq 'symbol_contract' } @{normalized_semantic_success_semantic_optional_child_presence_keys()},
+        'symbol-rich success optional child family names symbol_contract',
+    );
     assert_keys_present(
         $decoded->{semantic}{symbol_contract},
         normalized_semantic_symbol_contract_keys(),

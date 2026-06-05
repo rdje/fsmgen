@@ -1946,14 +1946,15 @@ Successful public normalized semantic JSON reports now also have one bounded
 nested-object contract for the success payload itself:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
 owns the `module`, `system_contract`, `explicit_system_contract`,
-`signal_analysis`, and `forward_ir` keys, and the same owner also publishes
+`signal_analysis`, and `forward_ir` keys. The same owner also publishes
+`optional_child_presence_keys` for `composition` and `symbol_contract`, plus
 the nested `explicit_system_contract`, `signal_analysis`, `system_contract`,
-`forward_ir`, and optional `symbol_contract` plus `composition` key lists.
+`forward_ir`, `symbol_contract`, and `composition` key lists.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
-embedders can discover the shell-owned semantic payload and child extension
-key families from one place instead of collecting those field-family lists
-separately.
+embedders can discover the shell-owned semantic payload, optional child, and
+child extension key families from one place instead of collecting those
+field-family lists separately.
 
 That same payload contract now also publishes a grouped
 `nested_presence_key_map`, and the public normalized semantic report contract
@@ -1967,6 +1968,10 @@ owner's grouped shell-family view as `semantic_presence_key_family_map`, so
 embedders can discover the shell-owned semantic payload and child-extension
 families from one place instead of reconstructing them from separate
 `success_*` fields.
+It also republishes the optional child list directly as
+`success_semantic_optional_child_presence_keys`, preserving the existing
+required success payload key family while making optional `composition` and
+`symbol_contract` discovery explicit.
 
 The bounded `semantic.forward_ir` shell now also publishes its own grouped
 `nested_presence_key_map`, and both the nested payload contract and the
@@ -2661,6 +2666,7 @@ Successful reports expose:
 - `normalized_semantic_schema_version: 1`
 - `command.mode: semantic_export`
 - a report-level `support_accounting` object
+- a top-level `generation_result_snapshot`
 - a `semantic.module` summary
 - `semantic.system_contract`
 - sanitized `semantic.signal_analysis`
@@ -2669,6 +2675,7 @@ Successful reports expose:
 - `semantic.forward_ir.lowered_rtl_ir`
 - `semantic.forward_ir.structural_rtl_ir`
 - `semantic.composition.provenance_report` for composition sources
+- `semantic.composition.plan_snapshot` for composition sources
 
 The important word is "sanitized".
 

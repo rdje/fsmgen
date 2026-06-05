@@ -21,6 +21,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_nested_presence_key_map
     normalized_semantic_payload_forward_ir_structural_rtl_ir_keys
     normalized_semantic_payload_nested_presence_key_map
+    normalized_semantic_payload_optional_child_presence_keys
     normalized_semantic_payload_presence_key_family_map
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_signal_analysis_entry_keys
@@ -72,6 +73,10 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
         {
             label => 'presence_key_family_map',
             build => \&normalized_semantic_payload_presence_key_family_map,
+        },
+        {
+            label => 'optional_child_presence_keys',
+            build => \&normalized_semantic_payload_optional_child_presence_keys,
         },
         {
             label => 'forward_ir_nested_contract_source_map',
@@ -150,6 +155,7 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
 
     my $family_map = normalized_semantic_payload_presence_key_family_map();
     is_deeply($family_map->{public_presence_keys}, normalized_semantic_payload_presence_keys(), 'public presence family entry matches helper');
+    is_deeply($family_map->{optional_child_presence_keys}, normalized_semantic_payload_optional_child_presence_keys(), 'optional child family entry matches helper');
     is_deeply($family_map->{signal_analysis_entry_presence_keys}, normalized_semantic_payload_signal_analysis_entry_keys(), 'signal-analysis entry family entry matches helper');
     is_deeply(
         $family_map->{forward_ir_intent_hir_optional_composition_keys},

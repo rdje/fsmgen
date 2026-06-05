@@ -331,7 +331,9 @@ project policies:
   stable diagnostics, and report-level support accounting where the accepted
   source matches the corpus, with accepted-side corpus coverage for current
   supported-smoke and strict-supported entries plus rejected-side coverage for
-  current expected-failure entries;
+  current expected-failure entries; its contract now also advertises explicit
+  optional semantic success children for `semantic.composition` and
+  `semantic.symbol_contract`;
 - `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` now has a bounded
   top-level result-presence contract advertised through the capability
   manifest, while the raw result hash is explicitly not a JSON-safe interchange

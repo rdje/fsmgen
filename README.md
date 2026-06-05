@@ -724,6 +724,11 @@ Successful public normalized semantic JSON reports now also have one bounded
 nested `semantic` object owner for module/system metadata, signal analysis,
 and the forward-IR projection:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](perl/FSM/Support/NormalizedSemanticPayloadContract.pm).
+That payload owner now advertises `optional_child_presence_keys` for
+`composition` and `symbol_contract`, and the normalized semantic report
+contract republishes the same family as
+`success_semantic_optional_child_presence_keys` so embedders can discover those
+optional success children without inferring them from prose.
 The nested `semantic.system_contract` summary inside that payload now also has
 its own bounded owner for the explicit clock/reset contract keys emitted today:
 [perl/FSM/Support/NormalizedSemanticSystemContract.pm](perl/FSM/Support/NormalizedSemanticSystemContract.pm).

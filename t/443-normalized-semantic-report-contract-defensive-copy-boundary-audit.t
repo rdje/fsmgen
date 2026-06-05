@@ -12,6 +12,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_forward_ir_nested_presence_key_map
     normalized_semantic_payload_nested_presence_key_map
+    normalized_semantic_payload_optional_child_presence_keys
     normalized_semantic_payload_presence_key_family_map
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
@@ -39,6 +40,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_signal_analysis_entry_keys
     normalized_semantic_signal_analysis_keys
     normalized_semantic_success_only_top_level_keys
+    normalized_semantic_success_semantic_optional_child_presence_keys
     normalized_semantic_success_semantic_keys
     normalized_semantic_support_accounting_keys
     normalized_semantic_symbol_contract_keys
@@ -140,6 +142,10 @@ subtest 'normalized semantic report helper builders return fresh nested structur
             build => \&normalized_semantic_success_semantic_keys,
         },
         {
+            label => 'success_semantic_optional_child_presence_keys',
+            build => \&normalized_semantic_success_semantic_optional_child_presence_keys,
+        },
+        {
             label => 'module_keys',
             build => \&normalized_semantic_module_keys,
         },
@@ -217,6 +223,16 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
     my $family_map = normalized_semantic_presence_key_family_map();
     is_deeply($family_map->{success_only_top_level_keys}, normalized_semantic_success_only_top_level_keys(), 'success-only family entry matches helper');
     is_deeply($family_map->{success_semantic_presence_keys}, normalized_semantic_success_semantic_keys(), 'success semantic family entry matches helper');
+    is_deeply(
+        $family_map->{success_semantic_optional_child_presence_keys},
+        normalized_semantic_success_semantic_optional_child_presence_keys(),
+        'success semantic optional child family entry matches helper',
+    );
+    is_deeply(
+        normalized_semantic_success_semantic_optional_child_presence_keys(),
+        normalized_semantic_payload_optional_child_presence_keys(),
+        'success semantic optional child helper matches payload helper',
+    );
     is_deeply($family_map->{support_accounting_presence_keys}, normalized_semantic_support_accounting_keys(), 'support accounting family entry matches helper');
     is_deeply($family_map->{failure_diagnostic_presence_keys}, normalized_semantic_failure_diagnostic_keys(), 'failure diagnostic family entry matches helper');
     is_deeply(

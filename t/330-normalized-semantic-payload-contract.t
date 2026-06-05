@@ -53,6 +53,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_presence_key_family_map
     normalized_semantic_payload_nested_presence_key_map
+    normalized_semantic_payload_optional_child_presence_keys
     normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_forward_ir_nested_presence_key_map
@@ -103,6 +104,16 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         'contract publishes the bounded semantic-object key list',
     );
     is_deeply(
+        $contract->{optional_child_presence_keys},
+        normalized_semantic_payload_optional_child_presence_keys(),
+        'contract publishes the optional semantic child key list',
+    );
+    is_deeply(
+        normalized_semantic_payload_optional_child_presence_keys(),
+        [qw(composition symbol_contract)],
+        'optional semantic child key list stays bounded and ordered',
+    );
+    is_deeply(
         $contract->{nested_contract_source_map},
         {
             module => normalized_semantic_module_contract_source(),
@@ -124,6 +135,11 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         $contract->{presence_key_family_map},
         normalized_semantic_payload_presence_key_family_map(),
         'contract publishes the grouped semantic-payload shell key-family map',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{optional_child_presence_keys},
+        normalized_semantic_payload_optional_child_presence_keys(),
+        'grouped semantic-payload family map publishes the optional child key list',
     );
     is_deeply(
         $contract->{module_presence_keys},

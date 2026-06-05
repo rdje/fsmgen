@@ -49,6 +49,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_forward_ir_nested_presence_key_map
     normalized_semantic_payload_nested_presence_key_map
+    normalized_semantic_payload_optional_child_presence_keys
     normalized_semantic_payload_presence_key_family_map
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
@@ -128,6 +129,7 @@ our @EXPORT_OK = qw(
     normalized_semantic_system_contract_keys
     normalized_semantic_symbol_contract_keys
     normalized_semantic_success_only_top_level_keys
+    normalized_semantic_success_semantic_optional_child_presence_keys
     normalized_semantic_success_semantic_keys
     normalized_semantic_support_accounting_keys
 );
@@ -211,6 +213,7 @@ sub build_normalized_semantic_report_contract {
         matched_success_support_accounting_presence_keys => normalized_semantic_matched_success_support_accounting_keys(),
         matched_failure_support_accounting_presence_keys => normalized_semantic_matched_failure_support_accounting_keys(),
         success_semantic_presence_keys => normalized_semantic_payload_presence_keys(),
+        success_semantic_optional_child_presence_keys => normalized_semantic_success_semantic_optional_child_presence_keys(),
         success_module_presence_keys => normalized_semantic_module_keys(),
         success_module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
         success_explicit_system_contract_presence_keys => normalized_semantic_explicit_system_contract_keys(),
@@ -243,6 +246,7 @@ sub build_normalized_semantic_report_contract {
             'The nested generated_output object is shared with check JSON and stays bounded through FSM::Support::ReportGeneratedOutputContract.',
             'The success-only generation_result_snapshot object stays bounded through FSM::Support::SerializableGenerationResultSnapshot.',
             'The nested semantic success payload stays bounded through FSM::Support::NormalizedSemanticPayloadContract.',
+            'Optional semantic payload children stay discoverable through success_semantic_optional_child_presence_keys without making them mandatory on every success report.',
             'The nested semantic composition object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
             'The nested semantic explicit_system_contract object, when present, stays bounded through FSM::Support::NormalizedSemanticExplicitSystemContract.',
             'The nested semantic forward_ir object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
@@ -322,6 +326,7 @@ sub normalized_semantic_presence_key_family_map {
         matched_success_support_accounting_presence_keys => normalized_semantic_matched_success_support_accounting_keys(),
         matched_failure_support_accounting_presence_keys => normalized_semantic_matched_failure_support_accounting_keys(),
         success_semantic_presence_keys => normalized_semantic_success_semantic_keys(),
+        success_semantic_optional_child_presence_keys => normalized_semantic_success_semantic_optional_child_presence_keys(),
         success_module_presence_keys => normalized_semantic_module_keys(),
         success_module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
         success_explicit_system_contract_presence_keys => normalized_semantic_explicit_system_contract_keys(),
@@ -379,6 +384,10 @@ sub normalized_semantic_matched_failure_support_accounting_keys {
 
 sub normalized_semantic_success_semantic_keys {
     return normalized_semantic_payload_presence_keys();
+}
+
+sub normalized_semantic_success_semantic_optional_child_presence_keys {
+    return normalized_semantic_payload_optional_child_presence_keys();
 }
 
 sub normalized_semantic_module_keys {
