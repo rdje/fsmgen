@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.4.4.1` (this commit) — added warning-clean `fsm/apb_tb.fsm` composition external validation by binding unused generated-child shared-datapath export pins to deterministic sink wires. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.4.5` pending frontier — select one remaining blocked historical validation target; known candidates are `generic_fifo`, `lte_digital_rf`, and `trial_2`.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.4.4.1`; `BACKEND-API-VALIDATION-FRONTIER.4.4`; `BACKEND-API-VALIDATION-FRONTIER.4.3`; `BACKEND-API-VALIDATION-FRONTIER.4.2`; `BACKEND-API-VALIDATION-FRONTIER.4.1`; `BACKEND-API-VALIDATION-FRONTIER.3`; `BACKEND-API-VALIDATION-FRONTIER.2.1`; `BACKEND-API-VALIDATION-FRONTIER.1`; `ISF-REMAINING-BROAD-FRONTIER.12`; `ISF-REMAINING-BROAD-FRONTIER.11.1`; `ISF-REMAINING-BROAD-FRONTIER.11`; `ISF-REMAINING-BROAD-FRONTIER.10`; `ISF-REMAINING-BROAD-FRONTIER.9.1`; `ISF-REMAINING-BROAD-FRONTIER.9`; `ISF-REMAINING-BROAD-FRONTIER.8`.
-- in_flight_uncommitted: `.4.4.1` implementation/docs/task-tree updates pending commit workflow; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.4.5` (this commit) — selected `fsm/trial_2.fsm` as the next exact blocked historical validation target. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.4.5.1` active frontier — resolve or explicitly defer the `trial_2` legacy `?ports` mapping boundary with tests/docs.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.4.5`; `BACKEND-API-VALIDATION-FRONTIER.4.4.1`; `BACKEND-API-VALIDATION-FRONTIER.4.4`; `BACKEND-API-VALIDATION-FRONTIER.4.3`; `BACKEND-API-VALIDATION-FRONTIER.4.2`; `BACKEND-API-VALIDATION-FRONTIER.4.1`; `BACKEND-API-VALIDATION-FRONTIER.3`; `BACKEND-API-VALIDATION-FRONTIER.2.1`; `BACKEND-API-VALIDATION-FRONTIER.1`; `ISF-REMAINING-BROAD-FRONTIER.12`; `ISF-REMAINING-BROAD-FRONTIER.11.1`; `ISF-REMAINING-BROAD-FRONTIER.11`; `ISF-REMAINING-BROAD-FRONTIER.10`; `ISF-REMAINING-BROAD-FRONTIER.9.1`; `ISF-REMAINING-BROAD-FRONTIER.9`.
+- in_flight_uncommitted: `.4.5` selection docs pending commit workflow; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes
