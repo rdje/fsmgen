@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7` (this commit) — shipped cross-domain `(do child)` inside supported nested `when` chains reached from top-level `when`/`switch` bodies. `git log -1` for the hash.
-- active_work_unit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8` pending. Select/refine repeat-contained branch (`repeat->branch`) cross-domain `(do)` before any code; keep mdBook synced if behavior changes.
-- recently_done: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5`; `KNOWLEDGE-MAP-ADOPT.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`.
+- latest_commit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8` (this commit) — closed repeat-contained branch cross-domain `(do)` behind the missing same-domain repeat-body branch prerequisite. `git log -1` for the hash.
+- active_work_unit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.9` pending. Audit remaining deeper combinations and close the tree or create exact new owner leaves; keep mdBook synced if behavior changes.
+- recently_done: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5`; `KNOWLEDGE-MAP-ADOPT.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`.
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 
