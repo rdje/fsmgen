@@ -52,6 +52,7 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.5`,
     `BACKEND-API-VALIDATION-FRONTIER.5.1`,
     `BACKEND-API-VALIDATION-FRONTIER.6`,
+    `BACKEND-API-VALIDATION-FRONTIER.6.1`,
     `BACKEND-API-VALIDATION-FRONTIER.7`,
     `BACKEND-API-VALIDATION-FRONTIER.8`
 
@@ -187,9 +188,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.6`
-  Status: `active`
+  Status: `done`
   Goal: `Broaden structured non-flattened generation.`
-  Acceptance: `One exact non-flattened generation surface is selected, implemented or deferred, documented, and covered.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.6.1`
+  Acceptance: `Selected the flattened-default generation-mode boundary as the exact structured/non-flattened generation edge. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.6.1: expose the current debug-first flattened generation mode in the HDLGenerator facade contract and capability manifest while keeping generation_mode non-public/rejected until a real non-flattened backend path is implemented and regression-backed.`
+  Verification: `Selection audit/read: docs/book/src/01-first-fsm.md, docs/book/src/09-generated-hdl-debugging-and-inspection.md, docs/book/src/14-feature-backlog.md, perl/FSM/Backend/GeneratedModuleEmitter.pm, perl/FSM/Pipeline/HDLGenerator.pm, perl/FSM/Support/HDLGeneratorFacadeContract.pm, t/375-hdl-generator-facade-contract.t, t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t, t/297-capability-manifest.t, and t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t. Evidence: generated-module emission still drives FSM::HDL::FlattenedDT, the public facade constructor options do not include generation_mode, unsupported constructor options are rejected before setup, and the book already says flattened generation is the intentional shipped default.`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.6.1`
+  Status: `active`
+  Goal: `Publish the flattened-default generation-mode boundary without adding a non-flattened backend path.`
+  Acceptance: `The HDLGenerator facade contract and capability manifest expose the current generation mode as flattened/debug-first, advertise the accepted generation-mode family as flattened only, and state that structured/non-flattened generation is deferred. generation_mode remains absent from public constructor options and is still rejected by FSM::Pipeline::HDLGenerator->new(...) as an unsupported constructor option. README/live docs/mdBook explain the boundary, focused tests lock the contract/manifest/constructor behavior, and no emitted HDL shape changes.`
   Verification: `pending`
   Commit: `pending`
 
@@ -226,7 +235,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 13 | `BACKEND-API-VALIDATION-FRONTIER.4.7` | `done` | Explicitly deferred `fsm/lte_digital_rf.fsm` as a regression-backed expected failure at the legacy multi-module `?rtl` composition boundary. |
 | 14 | `BACKEND-API-VALIDATION-FRONTIER.5` | `done` | Selected optional ABC executable discovery as the exact ABC hardening edge while preserving the ABC-free validation gate. |
 | 15 | `BACKEND-API-VALIDATION-FRONTIER.5.1` | `done` | Reported optional ABC mapping tool availability in contracts/support surfaces without enabling or requiring ABC. |
-| 16 | `BACKEND-API-VALIDATION-FRONTIER.6` | `active` | Select the next exact structured/non-flattened generation surface. |
+| 16 | `BACKEND-API-VALIDATION-FRONTIER.6` | `done` | Selected the flattened-default generation-mode contract boundary as the exact structured/non-flattened generation edge. |
+| 17 | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `active` | Publish the flattened-default generation-mode boundary without adding a non-flattened backend path. |
 
 ## Decisions
 
@@ -263,6 +273,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.7` | `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_lte_digital_rf_verify.sv fsm/lte_digital_rf.fsm` expected-failure probe; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; `lte_digital_rf` deferred as an expected-failure corpus boundary; `.4` exhausted |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.5` | Selection audit/read of the external validation support, contract, manifest, smoke test, README, regression-corpus docs, SPECFORGE response, and mdBook ABC backlog/debugging sections; local tool probes for `yosys`, `yosys-abc`, `berkeley-abc`, and `abc`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected optional ABC executable discovery for `.5.1` |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.5.1` | `perl -Iperl -c perl/FSM/Support/HDLExternalValidation.pm`; `perl -Iperl -c perl/FSM/Support/HDLExternalValidationContract.pm`; `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t`; `prove -Iperl t/308-systemverilog-external-validation.t`; `prove -Iperl t/460-hdl-external-validation-contract-defensive-copy-boundary-audit.t t/1057-hdl-external-validation-contract-full-surface-json-roundtrip-audit.t t/1058-hdl-external-validation-contract-full-surface-defensive-copy-audit.t t/323-backend-validation-contract.t`; `prove -Iperl t/365-backend-validation-section-runtime-contract-audit.t t/358-capability-manifest-runtime-contract-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; optional ABC discovery is now reported without enabling or requiring ABC |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.6` | Selection audit/read of `docs/book/src/01-first-fsm.md`, `docs/book/src/09-generated-hdl-debugging-and-inspection.md`, `docs/book/src/14-feature-backlog.md`, `perl/FSM/Backend/GeneratedModuleEmitter.pm`, `perl/FSM/Pipeline/HDLGenerator.pm`, `perl/FSM/Support/HDLGeneratorFacadeContract.pm`, `t/375-hdl-generator-facade-contract.t`, `t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t`, `t/297-capability-manifest.t`, and `t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected flattened-default generation-mode contract boundary for `.6.1` |
 
 ## Commit Log
 
@@ -283,6 +294,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.4.7` | `BACKEND-API-VALIDATION-FRONTIER.4.7: defer lte_digital_rf rtl child count` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.5` | `BACKEND-API-VALIDATION-FRONTIER.5: select ABC discovery edge` | selected `.5.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.5.1` | `BACKEND-API-VALIDATION-FRONTIER.5.1: report optional ABC discovery` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.6` | `BACKEND-API-VALIDATION-FRONTIER.6: select flattened mode boundary` | selected `.6.1` |
 
 ## Changelog
 
@@ -353,3 +365,9 @@ items named in the 2026-06-05 remaining-work inventory.
   limited to Verilator and Yosys and keeping the validation command sequence
   ABC-free. The active frontier moves to `.6` for structured/non-flattened
   generation selection.
+- `2026-06-05`: Completed `.6`; selected the flattened-default generation-mode
+  contract boundary as the first structured/non-flattened generation edge
+  because the current backend still drives `FSM::HDL::FlattenedDT`, the facade
+  exposes no `generation_mode` constructor option, and the book already states
+  that flattened generation is the intentional shipped default. Activated
+  `.6.1` to publish that boundary without adding a non-flattened backend path.
