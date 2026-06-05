@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `KNOWLEDGE-MAP-ADOPT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra` (durable-memory / retrieval)
 - Created: `2026-06-04`
 - Last updated: `2026-06-04`
@@ -66,9 +66,9 @@ index, derived deterministically from small front-mattered fact cards.
 ## Task Tree
 
 - ID: `KNOWLEDGE-MAP-ADOPT`
-  Status: `active`
+  Status: `done`
   Goal: `Adopt the Knowledge Map retrieval layer (additive to MEMORY_ARCHITECTURE + task-trees).`
-  Children: `.1` (select), `.2` (adopt + wire + seed)
+  Children: `.1` (select), `.2` (adopt + wire + seed), `.3` (close optional-active residue)
 
 - ID: `KNOWLEDGE-MAP-ADOPT.1`
   Status: `done`
@@ -85,12 +85,18 @@ index, derived deterministically from small front-mattered fact cards.
   Commit: `ship commit (this slice)`
   Done: `bundle copied (10 files); docs/knowledge/ + 5 seed cards (isf-schedule-report-additive-keys, isf-lowering-pipeline, loop-early-exit-target-hook, isf-fsm-verification-boundary, full-test-suite-invocation); KNOWLEDGE_MAP.md generated (5 facts, 26 question keys); .githooks/pre-commit = two gates; knowledge-map-gate CI added; read-path pointer in AGENTS.md/MEMORY.md/MEMORY_ARCHITECTURE.md. check_knowledge_map.sh PASS; check_memory_architecture.sh PASS.`
 
+- ID: `KNOWLEDGE-MAP-ADOPT.3`
+  Status: `done`
+  Goal: `Close the optional-active residue after the Knowledge Map adoption is complete.`
+  Acceptance: `The task tree and index no longer present Knowledge Map adoption as active work; optional future folding of high-traffic decision records is left to a new task-tree-owned leaf if it is selected later. No behavior, gate, or mdBook source change is made.`
+  Verification: `passed: memory architecture, knowledge-map, mdBook build, doc path audit, and diff checks`
+  Commit: `KNOWLEDGE-MAP-ADOPT.3: close adoption tree`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `.1` | `done` | Selection/design (this doc); task tree committed before code. |
-| 2 | `.2` | `done` | Bundle copied + enforcement wired (two-gate hook + CI) + bootstrap pointer + map generated (5 facts) + 5 seed cards. Tree stays `active` only for optional later folding of high-traffic decision records. |
+| 1 | `closed` | `done` | Knowledge Map adoption is complete; optional future decision-record folding requires a new task-tree-owned leaf if selected. |
 
 ## Decisions
 
@@ -102,6 +108,9 @@ index, derived deterministically from small front-mattered fact cards.
 - `2026-06-04`: restructure the existing single-`exec` pre-commit into a two-gate
   hook (memory-arch then KM) rather than a second hook file — one local gate, in
   order.
+- `2026-06-05`: close the adoption tree rather than leaving it active only for
+  optional future decision-record folding. Optional future folding remains
+  backlog until a new exact leaf is selected.
 
 ## Verification Log
 
@@ -109,6 +118,7 @@ index, derived deterministically from small front-mattered fact cards.
 | --- | --- | --- | --- |
 | `2026-06-04` | `.1` | `scripts/check_memory_architecture.sh`; `git diff --check` | `PASS` |
 | `2026-06-04` | `.2` | `bash knowledge-map/scripts/check_knowledge_map.sh` (5 facts, ids unique, map in sync); `scripts/check_memory_architecture.sh`; two-gate pre-commit dry-run; `git diff --check` | `PASS` |
+| `2026-06-05` | `.3` | `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -116,6 +126,7 @@ index, derived deterministically from small front-mattered fact cards.
 | --- | --- | --- |
 | `.1` | `KNOWLEDGE-MAP-ADOPT.1: select — adopt the Knowledge Map retrieval layer (task tree)` | `5ce4725e` |
 | `.2` | `KNOWLEDGE-MAP-ADOPT.2: adopt the KM bundle + wire enforcement + seed first facts` | `ship commit (this slice)` |
+| `.3` | `KNOWLEDGE-MAP-ADOPT.3: close adoption tree` | `status-normalization slice` |
 
 ## Changelog
 
@@ -139,3 +150,6 @@ index, derived deterministically from small front-mattered fact cards.
   `full-test-suite-invocation` — each a signpost (pointer + `reverify`), no narrative
   duplicated. Lazy growth from here; no migration sweep. `check_knowledge_map.sh` PASS;
   `check_memory_architecture.sh` PASS.
+- `2026-06-05`: `.3` closed the task tree. The adoption work is complete and no
+  pending frontier leaf remains; optional high-traffic decision-record folding
+  stays available only by selecting a new exact task-tree-owned leaf later.
