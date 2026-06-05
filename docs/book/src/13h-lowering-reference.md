@@ -1478,17 +1478,19 @@ reuse the proven repeat schedule (`repeat_init` re-seeds the counter each loop
 iteration, the blocking-do asserts the child/instance `_start` and awaits its
 `_done` port, and `repeat_check` re-runs the repeat or returns to the loop
 check), and a generated `do` instantiates its child in the `_top` composition.
-Inside a loop-contained repeat, `spawn` emits the targeted `loop-contained
-repeat-body spawn remains deferred` diagnostic and a cross-domain generated
-`do` emits `cross-domain repeat-body do remains deferred`; a repeat reached
-through an additional loop ancestor still emits `loop-contained
-repeat-body do remains deferred`. A plain local `(do child)` and a same-domain
-generated `(do child (params ...))` at deeper branch nesting (`when⁺ → repeat`,
-`switch → when⁺ → repeat`) also lower (reusing the same nested branch + repeat
-recursion; a generated `do` instantiates its child in the `_top`); a
+Inside a loop-contained repeat, the basic `spawn` + same-body `await_all` (or
+single-pending `await_any`) subset now lowers, and multi-pending `await_any` is
+accepted when a later same-body `await_all` drains the same outstanding children.
+An undrained loop-contained spawn still emits the targeted drain-requirement
+diagnostic, cross-domain generated `do` emits `cross-domain repeat-body do
+remains deferred`, and a repeat reached through an additional loop ancestor still
+emits `loop-contained repeat-body do remains deferred`. A plain local `(do
+child)`, a same-domain generated `(do child (params ...))`, the basic spawn +
+drain subset, and multi-pending `await_any` with a later drain also lower at
+deeper branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`); a
 deeper-nested cross-domain generated `do` emits `cross-domain repeat-body do
-remains deferred` and a deeper-nested `spawn` emits `deeper-nested repeat-body
-spawn remains deferred`. The original generic "supported only for
+remains deferred` and an undrained deeper-nested `spawn` emits the deeper-nested
+drain-requirement diagnostic. The original generic "supported only for
 top-level..." message remains as a safety-net fallback for shapes not yet
 classified.
 

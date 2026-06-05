@@ -105,16 +105,16 @@ remains or a real prerequisite blocker is reached.
   Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7: defer activation binding widening`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next repeat-body child-activation variant or blocker from evidence.`
   Acceptance: `Existing repeat-body child-activation evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: focused repeat-body/cross-domain activation evidence, mdBook truth-sync, memory architecture, mdBook, feature-backlog status, doc path, knowledge-map, and diff checks`
+  Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8: defer repeat activation widening`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`
   Status: `pending`
-  Goal: `Select and implement or defer the next portable type-core contract.`
-  Acceptance: `One exact enum-as-type, fixed-array, array-of-record, signedness/state-model, inference, or backend-neutral type contract is selected, implemented or explicitly deferred, documented, and regression-covered.`
+  Goal: `Select the next portable type-core contract or blocker from evidence.`
+  Acceptance: `Existing portable type-core evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
   Verification: `pending`
   Commit: `pending`
 
@@ -150,7 +150,7 @@ remains or a real prerequisite blocker is reached.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8` | `pending` | Activation parameter/value-binding widening is explicitly deferred behind one exact activation/binding contract; the next Composition/type item needs repeat-body child-activation evidence selection before any code. |
+| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` | `pending` | Repeat-body child-activation widening is explicitly deferred behind one exact activation, CDC, outstanding-child, or composition-wiring contract; the next Composition/type item needs portable type-core evidence selection before any code. |
 
 ## Selection Result
 
@@ -316,6 +316,38 @@ overrides, arbitrary expression static-override values outside the shipped
 domain, non-scalar actor parameters as override values, output binding
 expression targets, and behavior-changing snapshot-vs-live timing conversion.
 
+## Repeat-Body Child-Activation Selection Result
+
+`COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8` reviewed the closed
+`ISF-REPEAT-BODY-CHILD-ACTIVATION` tree, the loop/deeper repeat-body
+frontier trees, the active `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` frontier, the
+current mdBook boundary, and focused repeat-body/cross-domain regressions.
+
+No new implementation leaf is selected from this broad Composition/type tree.
+Existing shipped surfaces already cover same-domain child activation at the
+transaction top level, repeat body, and direct top-level branch/loop bodies;
+top-level repeat-body local/generated `do`, generated-child `do`, static
+parameter/bind/same-domain metadata generated `do`, spawn with same-body
+drains, source-order samples, and multi-pending `await_any` with later
+same-body `await_all`; branch-contained nested repeat generated-spawn and
+generated-do variants documented in the mdBook; loop-contained/deeper-nested
+local/generated `do`, basic spawn + drain, and multi-pending `await_any` +
+later drain; and cross-domain blocking `do` through an activation crossing at
+the transaction top level or directly inside top-level bodies.
+
+The remaining repeat-body backlog stays deferred until an exact activation,
+CDC, outstanding-child, full-HDL composition-wiring, portable-type,
+VHDL/backend, or architecture prerequisite is explicit. Deeper-nested
+cross-domain blocking `do` is already owned by
+`ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5` and later. Cross-domain `spawn`,
+deeper-nested cross-domain activation outside that active owner,
+mismatched-domain generated-do metadata, undrained spawn forms, broader
+outstanding-child semantics, nested `stage`/`contract`, and the repeat-spawn
+full-HDL `--check-json` composition-wiring boundary remain deferred until a
+more exact owner selects them. This leaf also synced stale mdBook wording so
+the book distinguishes shipped activation-crossing `do` from deferred
+deeper-nested/cross-domain-spawn/generated-domain cases.
+
 ## Evidence To Reuse
 
 - `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`
@@ -367,12 +399,18 @@ expression targets, and behavior-changing snapshot-vs-live timing conversion.
   generated-do, rule-trigger, input-binding, generated-output-binding, and
   direct-on fail-closed surfaces; broader work remains blocked until one exact
   activation/binding contract is selected.
+- `2026-06-05`: Do not select a new repeat-body child-activation
+  implementation leaf from `.8`. Closed repeat-body trees, the active nested
+  cross-domain owner, the current book boundary, and focused regressions
+  already cover the bounded shipped same-domain and top-level activation-crossing
+  surfaces; broader work remains blocked until one exact activation, CDC,
+  outstanding-child, or composition-wiring contract is selected.
 
 ## Open Questions
 
-- None before the next evidence-selection leaf. Any repeat-body
-  child-activation code must first get an exact executable owner under this
-  tree or an existing narrower ISF tree.
+- None before the next evidence-selection leaf. Any portable type-core code
+  must first get an exact executable owner under this tree or an existing
+  narrower type/backend tree.
 
 ## Blockers
 
@@ -391,6 +429,7 @@ expression targets, and behavior-changing snapshot-vs-live timing conversion.
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5` | `prove -Iperl t/24-composition-connect-by-name.t t/86-composition-single-child-connect-by-name.t t/87-composition-mixed-connect-by-name.t t/92-composition-multi-rtl-connect-by-name.t t/94-composition-multi-generated-plus-rtl-connect-by-name.t t/95-composition-connect-by-name-input-fanout.t t/96-composition-implicit-single-child-ports.t t/97-composition-implicit-multi-child-inputs.t t/98-composition-implicit-multi-child-outputs.t t/99-composition-implicit-internal-carriers.t t/100-composition-internal-carrier-top-reexport.t t/101-composition-explicit-link-implicit-ports.t t/102-composition-explicit-port-convention.t t/103-composition-provenance-metadata.t t/104-composition-provenance-reporting.t t/105-composition-override-reporting.t t/106-composition-blocked-reporting.t t/160-composition-top-forward-ir-surface.t t/162-composition-top-structural-rtl-ir-surface.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6` | `prove -Iperl t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t t/1215-isf-spawn-parameter-binding.t t/1248-isf-rule-trigger-parameter-binding.t t/1255-isf-schedule-report-golden-matrix.t t/292-composition-generated-child-parameter-overrides.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7` | `prove -Iperl t/1215-isf-spawn-parameter-binding.t t/1248-isf-rule-trigger-parameter-binding.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1195-isf-sample-clause-boundary.t t/1181-isf-rule-action-boundary.t t/1351-isf-activation-param-package-constants.t t/1369-isf-timing-param-activation-override-gates.t t/1370-isf-data-op-activation-override-width-gate.t t/1371-isf-transaction-port-activation-override-width-gate.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
+| `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8` | `prove -Iperl t/1215-isf-spawn-parameter-binding.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t t/1376-isf-book-example-lowering-audit.t t/1379-isf-loop-contained-repeat-body-local-do.t t/1380-isf-loop-contained-repeat-body-generated-do.t t/1381-isf-deeper-nested-repeat-body-local-do.t t/1382-isf-deeper-nested-repeat-body-generated-do.t t/1383-isf-loop-and-deeper-repeat-body-spawn.t t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t t/1387-isf-cross-domain-activation-handshake-lowering.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -404,6 +443,7 @@ expression targets, and behavior-changing snapshot-vs-live timing conversion.
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5: defer top-boundary widening` | `closed top-boundary convention selection as prerequisite-bound deferral; next frontier .6` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6: defer generated-child top widening` | `closed generated-child top selection as prerequisite-bound deferral; next frontier .7` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7: defer activation binding widening` | `closed activation parameter/value-binding selection as prerequisite-bound deferral; next frontier .8` |
+| `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8: defer repeat activation widening` | `closed repeat-body child-activation selection as prerequisite-bound deferral; synced stale book wording; next frontier .9` |
 
 ## Changelog
 
@@ -428,3 +468,7 @@ expression targets, and behavior-changing snapshot-vs-live timing conversion.
 - `2026-06-05`: Closed activation parameter/value-binding selection as an
   explicit prerequisite deferral and advanced the frontier to repeat-body
   child-activation evidence selection.
+- `2026-06-05`: Closed repeat-body child-activation selection as an explicit
+  prerequisite deferral, synced stale book wording for cross-domain activation
+  and loop/deeper repeat-spawn status, and advanced the frontier to portable
+  type-core evidence selection.

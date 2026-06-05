@@ -960,14 +960,15 @@ A plain local `(do child)` and a same-domain generated `(do child (params ...))`
 `(repeat ...)` that sits directly in a single `(while ...)` or `(until ...)`
 body, plus the same plain-local and same-domain-generated `do` at deeper branch
 nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`), are part of the shipped
-repeat-body subset. Spawned nested child activation, cross-domain repeat-body
-`do`, loop-contained repeat-body `spawn`, deeper-nested `spawn`, repeats reached
-through an additional loop ancestor, and nested `stage` or `contract` clauses
-remain outside the shipped repeat-body subset. Cross-domain, loop-contained, and
-deeper-nested repeat-body `do`/`spawn` each emit their own targeted `<axis>
-repeat-body <do|spawn> remains deferred` diagnostic (a loop-contained or
-deeper-nested cross-domain generated `do` emits `cross-domain repeat-body do
-remains deferred`) so authors can identify which deferred lane is
+repeat-body subset. The basic loop-contained/deeper-nested `spawn` + same-body
+drain subset and multi-pending `await_any` with a later same-body `await_all`
+drain are also shipped at lowering + composition-planning level. Deeper-nested
+cross-domain repeat-body `do`, cross-domain `spawn`, undrained spawn forms,
+repeats reached through an additional loop ancestor, and nested `stage` or
+`contract` clauses remain outside the shipped repeat-body subset. Cross-domain
+generated `do`, loop-contained/deeper-nested undrained `spawn`, and
+extra-loop-ancestor repeat-body `do` each emit targeted diagnostics so authors
+can identify which deferred lane is
 blocking their specific case; the original generic "supported only for
 top-level..." message remains as a safety-net fallback.
 

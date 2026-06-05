@@ -534,7 +534,11 @@ Repeat-body generated `do` accepts already generated child targets or static
 optional same-domain `(domain NAME)` metadata; those handoffs and domain
 summaries are wired/recorded once for the lexical generated do instance.
 
-Cross-domain repeat-body `do` remains deferred.
+For cross-domain blocking `do`, the activation-crossing path described above is
+shipped for a top-level repeat body. Deeper-nested cross-domain repeat-body `do`
+still remains deferred, and generated `do` with mismatched `(domain ...)`
+metadata is still a fail-closed same-domain-metadata error rather than implicit
+CDC.
 
 The when-contained nested subset accepts only a repeat directly inside a
 top-level `when` body and accepts either local plain `(do child)`, plain

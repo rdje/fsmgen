@@ -13,12 +13,13 @@ is the consolidated review list.
 Recent surfaces added since the last consolidated walkthrough of
 this chapter:
 
-- **Targeted rejection diagnostics**: cross-domain repeat-body `do`
-  remains deferred (`t/1372`); four sub-axis activation-override
+- **Targeted rejection diagnostics**: mismatched-domain generated repeat-body
+  `do` and deeper-nested cross-domain activation remain deferred with targeted
+  messages (`t/1372`, `t/1387`); four sub-axis activation-override
   gates — `repeat-count parameter`, `wait-count parameter`,
   `latency-bound parameter`, `watchdog-limit parameter` — each with
-  its own deferral phrase (`t/1373`); undrained / multi-pending / cross-domain
-  loop-contained and deeper-nested repeat-body spawn-drain variants remain
+  its own deferral phrase (`t/1373`); undrained and cross-domain
+  loop-contained/deeper-nested repeat-body spawn-drain variants remain
   deferred (`t/1374`/`t/1375`).
 - **Loop-contained repeat-body `do`/`spawn`**: a plain local `(do child)`
   (`t/1379`), a same-domain generated `(do child (params ...))` (`t/1380`, child
@@ -714,12 +715,14 @@ handoff model for its lexical generated do instance and may also carry
 same-domain `(domain NAME)` metadata.
 
 Repeat-body generated-do domain annotations are accepted only when they name the
-same declared domain as the owning transaction and child. A **top-level** blocking
-`(do child)` may now cross domains through an explicit `(crossings (activation
-child (from SRC)(to DST)))` contract (see
-[Activation Crossing](13a-actor-interface.md#activation-crossing)); cross-domain
-activation inside a repeat/when/switch body, and cross-domain `(spawn)`, remain
-deferred.
+same declared domain as the owning transaction and child. A blocking `(do child)`
+may now cross domains through an explicit `(crossings (activation child (from
+SRC)(to DST)))` contract at the transaction top level or directly inside a
+top-level body, including a top-level repeat body and the four top-level
+branch/loop bodies (see
+[Activation Crossing](13a-actor-interface.md#activation-crossing)).
+Deeper-nested cross-domain activation, mismatched-domain generated-do metadata,
+and cross-domain `(spawn)` remain deferred.
 
 Plain repeat-body generated-child `(do child)` is now shipped for targets
 already generated elsewhere: it creates one deterministic generated do
@@ -807,13 +810,13 @@ generated-do, bound generated-do, and same-domain generated-do
 do-then-spawn after a prior multi-pending `await_any` have shipped only for
 the documented branch-contained forms that may include a second post-spawn
 `await_any` before the mandatory same-body `await_all` drain. Cross-domain
-repeat-body `do` lowering itself remains backlog, but the diagnostic is
-now targeted: a `(do TARGET (domain X))` annotation where the target
-transaction is in a different clock domain than the calling transaction
-fails closed with a "cross-domain repeat-body do remains deferred"
-message instead of the misleading same-domain-feature `(params)`
-requirement message. Cross-domain do without the `(domain ...)`
-annotation still surfaces the generic clock-domain violation message.
+blocking `do` lowering through an explicit activation crossing is shipped for
+the transaction top level and direct top-level bodies; deeper-nested
+cross-domain activation remains backlog. Mismatched-domain generated-do
+metadata stays fail-closed with a targeted "cross-domain repeat-body do
+remains deferred" diagnostic instead of the misleading same-domain-feature
+`(params)` requirement message. Cross-domain do without a covering activation
+crossing still surfaces the generic clock-domain violation message.
 Generated/spawn nested activation beyond the documented branch-contained
 generated `do` cases and the branch-contained spawned cases, and cross-domain
 generated `do` (the plain local `(do child)`, same-domain generated
