@@ -47,6 +47,7 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::OperandContractValidationSupp
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter;
 use FSM::HDL::FlattenedDT::Backend::Verilog;
+use FSM::HDL::FlattenedDT::Backend::VHDL;
 
 =head1 NAME
 
@@ -144,6 +145,7 @@ sub new ($class, %args) {
     $self->{backend_sv_generation_tail_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport->new(flattened_dt => $self);
     $self->{backend_sv_post_flattening_assembly_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport->new(flattened_dt => $self);
     $self->{backend_verilog} = FSM::HDL::FlattenedDT::Backend::Verilog->new(flattened_dt => $self);
+    $self->{backend_vhdl} = FSM::HDL::FlattenedDT::Backend::VHDL->new(flattened_dt => $self);
     
     return $self;
 }
@@ -162,7 +164,11 @@ sub convert_systemverilog_to_verilog ($self, $sv_hdl) {
 }
 
 sub generate_vhdl ($self, $fsm_module) {
-    die "[FlattenedDT.pm][generate_vhdl()] VHDL backend is not implemented yet. Use --language systemverilog or --language verilog.\n";
+    return $self->{backend_vhdl}->generate_vhdl($fsm_module);
+}
+
+sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
+    return $self->{backend_vhdl}->convert_systemverilog_to_vhdl($sv_hdl);
 }
 
 sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {

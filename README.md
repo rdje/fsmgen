@@ -54,7 +54,7 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 
 ## Project objective
 FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL, and now accepts `.isf` intent-scheduling sources that lower into explicit scheduled `.fsm` before HDL generation.
-Current primary target is SystemVerilog, with Verilog conversion support and explicit VHDL not-implemented signaling.
+Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the first accepted single-FSM subset.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order
@@ -101,9 +101,9 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
-- `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work to the proposed backend/API frontier.
+- `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work to the now-active backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
-- `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md` — proposed backend/API frontier owner tree for VHDL, external validation, ABC, structured generation, embedding API, and normalized export backlog.
+- `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md` — active backend/API frontier owner tree for VHDL, external validation, ABC, structured generation, embedding API, and normalized export backlog.
 - `docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md` — proposed architecture-debt frontier owner tree for direct-backend convergence and large ISF parser/lowerer extraction work.
 - `docs/tasks/ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES.md` — completed `R14` task tree that added runnable `lisp` book examples (in `13d`) for the shipped loop-contained spawn + `(await_all done)` and multi-pending `(await_any done)` + drain features (`t/1376` count 36 → 38); all repeat-body-activation frontier shapes now have copy-pasteable book examples.
 - `docs/tasks/ISF-LOOP-AND-DEEPER-REPEAT-BODY-MULTI-PENDING-AWAITANY-LOWERING.md` — completed `R14` task tree (scheduler-frontier #6) that lifted the multi-pending `(await_any done)` + later `(await_all done)` deferral for loop-contained / deeper-nested repeats, locked by `t/1384`; **completes the repeat-body-activation nesting frontier** (cross-domain `do` is excluded — net-new CDC lowering).
@@ -509,7 +509,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/REGRESSION_CORPUS.md` — human-readable companion to the machine-checked support and regression catalog.
 - `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
 - `docs/FEATURE_BACKLOG.md` — repo-level pointer to the canonical mdBook backlog for deferred/not-fully-shipped user-visible features.
-- `docs/VHDL_SCOPE.md` — scoped VHDL backend plan preserved for future horizon H5 reference.
+- `docs/VHDL_SCOPE.md` — scoped VHDL backend plan and shipped direct-root scaffold boundary.
 - `CHANGES.md` — persistent technical change history.
 - `DEVELOPMENT_NOTES.md` — architecture notes and engineering rationale.
 - `MEMORY.md` — live continuity context and recovery notes.

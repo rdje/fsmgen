@@ -52,19 +52,19 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement or explicitly scope the full VHDL backend frontier.`
   Children: `BACKEND-API-VALIDATION-FRONTIER.2.1`
   Acceptance: `One exact VHDL backend surface is selected, implemented or blocked, documented, and regression-covered.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `BACKEND-API-VALIDATION-FRONTIER.2.1 shipped the first exact direct-root VHDL scaffold surface with focused pipeline/CLI regression coverage, docs/mdBook sync, and composition/aggregate/GHDL/full-parity deferrals preserved.`
+  Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.2.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement the first direct-root VHDL backend scaffold through an SV-first converter module.`
-  Acceptance: `perl/FSM/HDL/FlattenedDT.pm routes direct single-FSM VHDL generation through a dedicated VHDL backend/converter instead of the blanket not-implemented die for accepted direct roots. The first accepted fixture covers a small direct FSM/DT surface with clock/reset, scalar/vector ports, state progression, and basic assignments, emitting deterministic VHDL text through the existing pipeline/CLI target path. Composition/top VHDL, GHDL validation, packages, multi-clock domains, aggregate VHDL, and full feature parity remain fail-closed or deferred with existing diagnostics. Focused tests, docs/mdBook, capability/API surfaces, and required gates pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `perl/FSM/HDL/FlattenedDT.pm routes direct single-FSM VHDL generation through FSM::HDL::FlattenedDT::Backend::VHDL instead of the blanket not-implemented die for accepted direct roots. The accepted fixtures cover clock/reset, scalar/vector ports, state progression, basic enable assignments, sync reset, async active-low reset, and flat/nested concat RHS lowering, emitting deterministic VHDL text through the existing pipeline and CLI target path. Composition/top VHDL remains fail-closed with the existing composition diagnostic, aggregate-output direct roots fail closed at the scaffold boundary, and GHDL validation, packages, multi-clock domains, aggregate VHDL, and full feature parity remain deferred. Focused tests, docs/mdBook, capability/API surfaces, and required gates pass.`
+  Verification: `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm; perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; scripts/check_memory_architecture.sh; bash knowledge-map/scripts/check_knowledge_map.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check. command -v ghdl returned unavailable, so GHDL remains deferred.`
+  Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.3`
   Status: `pending`
@@ -113,7 +113,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `BACKEND-API-VALIDATION-FRONTIER.1` | `done` | Backend/API tree activated after broad ISF/R14 exhaustion; selected first exact VHDL direct-root scaffold leaf. |
-| 2 | `BACKEND-API-VALIDATION-FRONTIER.2.1` | `pending` | First executable backend/API leaf: direct single-FSM VHDL scaffold through an SV-first converter, preserving composition/GHDL/full-parity deferrals. |
+| 2 | `BACKEND-API-VALIDATION-FRONTIER.2.1` | `done` | Shipped direct single-FSM VHDL scaffold through an SV-first converter while preserving composition, aggregate, GHDL, and full-parity deferrals. |
+| 3 | `BACKEND-API-VALIDATION-FRONTIER.3` | `pending` | Next VHDL-dependent frontier: decide whether GHDL validation can run now or must be blocked by unavailable tool/backend hardening. |
 
 ## Decisions
 
@@ -128,20 +129,22 @@ items named in the 2026-06-05 remaining-work inventory.
 
 ## Blockers
 
-- VHDL-dependent leaves remain blocked until an executable VHDL backend subset
-  is selected.
+- GHDL validation may be blocked by local tool availability; `command -v ghdl`
+  returned unavailable during `.2.1`.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.1` | Selection audit/read: `docs/TASK_TREE.md`, `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md`, `README.md`, `perl/FSM/HDL/FlattenedDT.pm`, `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `t/114-composition-target-support-diagnostics.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.2.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`; `command -v ghdl` | `PASS`; `ghdl` unavailable and remains deferred |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `BACKEND-API-VALIDATION-FRONTIER.1` | `BACKEND-API-VALIDATION-FRONTIER.1: select VHDL direct scaffold` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.1` | `BACKEND-API-VALIDATION-FRONTIER.1: select VHDL direct scaffold` | selected `.2.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.2.1` | `BACKEND-API-VALIDATION-FRONTIER.2.1: ship VHDL direct scaffold` | this slice |
 
 ## Changelog
 
@@ -149,3 +152,5 @@ items named in the 2026-06-05 remaining-work inventory.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.
+- `2026-06-05`: Shipped `.2.1`, the first direct single-FSM VHDL scaffold,
+  and moved the next frontier to `.3` for GHDL validation selection/blocking.

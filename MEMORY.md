@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.1` (this commit) — activated the backend/API tree and selected the first direct-root VHDL backend scaffold leaf. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.2.1` pending frontier — implement the scoped direct single-FSM VHDL backend scaffold through an SV-first converter, preserving composition/GHDL/full-parity deferrals.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.1`; `ISF-REMAINING-BROAD-FRONTIER.12`; `ISF-REMAINING-BROAD-FRONTIER.11.1`; `ISF-REMAINING-BROAD-FRONTIER.11`; `ISF-REMAINING-BROAD-FRONTIER.10`; `ISF-REMAINING-BROAD-FRONTIER.9.1`; `ISF-REMAINING-BROAD-FRONTIER.9`; `ISF-REMAINING-BROAD-FRONTIER.8`; `ISF-REMAINING-BROAD-FRONTIER.6`; `ISF-REMAINING-BROAD-FRONTIER.5`; `ISF-REMAINING-BROAD-FRONTIER.4`; `ISF-REMAINING-BROAD-FRONTIER.3`; `ISF-REMAINING-BROAD-FRONTIER.2.1`; `ISF-REMAINING-BROAD-FRONTIER.2`; `ISF-REMAINING-BROAD-FRONTIER.7.1`; `ISF-REMAINING-BROAD-FRONTIER.1`; `ISF-COUNTED-REPEAT-TERMINATION.4`.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.2.1` (this commit) — shipped the first direct single-FSM VHDL scaffold through an SV-first converter. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.3` pending frontier — next PNT slice should decide whether GHDL validation can run now or must be blocked/owned by tool availability and backend-hardening prerequisites.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.2.1`; `BACKEND-API-VALIDATION-FRONTIER.1`; `ISF-REMAINING-BROAD-FRONTIER.12`; `ISF-REMAINING-BROAD-FRONTIER.11.1`; `ISF-REMAINING-BROAD-FRONTIER.11`; `ISF-REMAINING-BROAD-FRONTIER.10`; `ISF-REMAINING-BROAD-FRONTIER.9.1`; `ISF-REMAINING-BROAD-FRONTIER.9`; `ISF-REMAINING-BROAD-FRONTIER.8`; `ISF-REMAINING-BROAD-FRONTIER.6`; `ISF-REMAINING-BROAD-FRONTIER.5`; `ISF-REMAINING-BROAD-FRONTIER.4`; `ISF-REMAINING-BROAD-FRONTIER.3`; `ISF-REMAINING-BROAD-FRONTIER.2.1`; `ISF-REMAINING-BROAD-FRONTIER.2`; `ISF-REMAINING-BROAD-FRONTIER.7.1`; `ISF-REMAINING-BROAD-FRONTIER.1`.
 - in_flight_uncommitted: none (working tree clean except unrelated untracked `fx/`, intentionally left alone).
 - blockers: none.
 

@@ -4,9 +4,11 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 
 ## Status
 - The CLI currently accepts `--language vhdl` and routes to `FSM::Pipeline::HDLGenerator`.
-- `FSM::HDL::FlattenedDT::generate_vhdl()` exists but intentionally dies with:
-  "VHDL backend is not implemented yet."
-- This document defines the first honest implementation lane.
+- `FSM::HDL::FlattenedDT::generate_vhdl()` now routes direct single-FSM roots
+  through `FSM::HDL::FlattenedDT::Backend::VHDL`, an SV-first scaffold
+  converter.
+- Composition VHDL, aggregate VHDL, GHDL validation, packages, multi-clock
+  domains, and full feature parity remain deferred.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -22,16 +24,18 @@ The first VHDL lane is intentionally narrow:
 
 2. **Structural conversion from SystemVerilog**
    - Generate SystemVerilog through the existing direct backend
-   - Convert to VHDL through a new `FSM::Backend::VHDL` module
+   - Convert to VHDL through `FSM::HDL::FlattenedDT::Backend::VHDL`
    - Follow the same `convert_systemverilog_to_*` pattern as Verilog
 
 3. **Supported constructs in the first lane:**
    - Module declaration with port list
    - `std_logic` / `std_logic_vector` port and signal types
-   - Synchronous processes with clock and async reset
-   - Combinational `when`/`else` assignments (mapped from SV `always_comb`)
-   - State encoding as VHDL enumerated type or constant declarations
+   - Synchronous processes with clock and synchronous or async reset
+   - Combinational `process(all)` blocks mapped from SV `always_comb`
+   - State encoding as VHDL constant declarations
    - Basic signal assignments
+   - Basic Boolean enable expressions and concatenation RHS forms covered by
+     the direct scaffold fixtures
 
 4. **Intentionally deferred:**
    - Composition-top VHDL
@@ -45,28 +49,32 @@ The first VHDL lane is intentionally narrow:
 ## Implementation plan
 
 ### Phase 1: Conversion scaffolding (R14.1)
-- Create `perl/FSM/Backend/VHDL.pm` with the conversion entrypoint
-- Wire into `FSM::HDL::FlattenedDT::generate_vhdl()`
-- First deliverable: generate structurally valid VHDL that synthesizes
-- Reuse the existing SystemVerilog generation path as input
+- Created `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm` with the conversion
+  entrypoint
+- Wired into `FSM::HDL::FlattenedDT::generate_vhdl()`
+- First deliverable: generate deterministic direct-root VHDL text for the
+  accepted scaffold fixtures
+- Reuses the existing SystemVerilog generation path as input
 
 ### Phase 2: Semantic conversion (R14.2)
-- SystemVerilog `always_ff` → VHDL synchronous process
-- SystemVerilog `always_comb` → VHDL combinational process
-- Signal/port type mapping: `logic` → `std_logic`, `logic [N:0]` → `std_logic_vector(N downto 0)`
-- Module declaration conversion
-- Reset polarity handling
+- Shipped for the current scaffold subset:
+  SystemVerilog `always_ff` → VHDL synchronous/async-reset process,
+  SystemVerilog `always_comb` → VHDL `process(all)`, port/signal type
+  mapping, module/entity conversion, and reset polarity handling.
+- Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
-- Add VHDL output to the regression corpus
-- Ensure `--check --json` and `--emit-semantic-json` work for VHDL target
-- Add focused VHDL generation tests
+- Focused direct VHDL generation tests cover pipeline and CLI routing,
+  sync/async reset processes, concat lowering, and aggregate-output fail-closed
+  diagnostics.
+- Add broader VHDL output to the regression corpus
+- Ensure `--check --json` and `--emit-semantic-json` stay target-neutral
 - Consider external VHDL validation via GHDL
 
 ## Non-goals for R14
 - VHDL composition-top generation (deferred until composition VHDL lane)
 - Full VHDL structural feature parity with SystemVerilog
-- VHDL-2008 or VHDL-2019 specific features in the first lane
+- VHDL-2019 specific features in the first lane
 - Mixed-language (SV+VHDL) co-simulation
 
 ## Relationship to existing Verilog path

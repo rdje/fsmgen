@@ -101,7 +101,7 @@ subtest 'facade target_language option routes direct generated-module backend be
     );
 };
 
-subtest 'facade target_language option preserves the direct VHDL not-implemented boundary' => sub {
+subtest 'facade target_language option routes direct VHDL scaffold behavior' => sub {
     my $direct_path = repo_file('t/corpus/direct_sreset_active_high.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
         debug_level => 0,
@@ -109,24 +109,27 @@ subtest 'facade target_language option preserves the direct VHDL not-implemented
         quiet => 1,
     );
 
-    my $error = capture_exception(sub {
-        $vhdl_pipeline->generate_hdl_from_file($direct_path);
-    });
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
 
     like(
-        $error,
-        qr/Source file:\s+'\Q$direct_path\E'/s,
-        'direct VHDL facade failure keeps source-file context',
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+direct_sreset_active_high\s+is\b/s,
+        'explicit VHDL facade generation emits the expected direct entity',
     );
     like(
-        $error,
-        qr/VHDL backend is not implemented yet/s,
-        'direct VHDL facade failure preserves the backend not-implemented boundary',
+        $vhdl_result->{hdl_code},
+        qr/\barchitecture\s+rtl\s+of\s+direct_sreset_active_high\s+is\b/s,
+        'explicit VHDL facade generation emits the direct architecture',
     );
     like(
-        $error,
-        qr/Use --language systemverilog or --language verilog/s,
-        'direct VHDL facade failure keeps the actionable target-language hint',
+        $vhdl_result->{hdl_code},
+        qr/\bprocess\(clk\)\s+begin\s+if\s+rising_edge\(clk\)\s+then/s,
+        'explicit VHDL facade generation emits the synchronous state process',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL facade generation does not leak SystemVerilog module or always_* forms',
     );
 };
 
@@ -146,15 +149,4 @@ sub contains_value {
     }
 
     return 0;
-}
-
-sub capture_exception {
-    my ($code) = @_;
-    my $ok = eval {
-        $code->();
-        1;
-    };
-
-    return '' if $ok;
-    return $@ || 'unknown error';
 }

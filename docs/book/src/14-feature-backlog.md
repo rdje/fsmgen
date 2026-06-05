@@ -196,9 +196,10 @@ Status: backlog, behind active VHDL backend work.
 Goal: lower aggregate types and values into portable VHDL record/array forms
 for the subset that can be validated as synthesizable.
 
-Current boundary: VHDL is recognized as a target family, but the full backend
-is not implemented. Aggregate lowering beyond scalar/width-safe surfaces is
-therefore not shipped.
+Current boundary: direct single-FSM VHDL generation has a scaffold subset for
+scalar/vector ports, basic enables, reset processes, and concat assignments.
+Aggregate VHDL lowering is still not shipped; aggregate-output direct roots
+remain fail-closed outside the scaffold.
 
 ### Public Type And Export Surfaces
 
@@ -332,7 +333,7 @@ Current boundary: the Verilog-family backend lowers validated parameters and
 aggregate overrides to SystemVerilog `#(...)` instance parameters. VHDL
 generic-map lowering is not shipped. The R11 parameter/generic frontier audit
 keeps this deferred because the composition VHDL target and full VHDL backend
-still fail closed.
+remain outside the shipped direct-root scaffold.
 
 ### Broader Generated-Child Top Instantiation
 
@@ -3758,21 +3759,32 @@ children.
 
 ### Full VHDL Backend
 
-Status: backlog.
+Status: partially shipped; full backend remains backlog.
 
 Goal: implement VHDL as a full HDL backend.
 
-Current boundary: the CLI recognizes VHDL target spelling, but explicit VHDL
-generation is not implemented.
+Current boundary: the CLI and `FSM::Pipeline::HDLGenerator` route
+`target_language => 'vhdl'` direct single-FSM roots through
+`FSM::HDL::FlattenedDT::Backend::VHDL`. The scaffold emits deterministic VHDL
+entity/architecture text for scalar/vector ports, state constants,
+continuous enable assignments, `process(all)` combinational muxes, sync-reset
+clocked processes, async-reset clocked processes, and basic concat RHS forms.
+It is covered by direct pipeline and CLI tests.
+
+Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
+VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
+and full feature parity with the SystemVerilog backend.
 
 ### GHDL Validation
 
-Status: backlog, behind active VHDL backend work.
+Status: backlog, behind a VHDL validation leaf.
 
-Goal: add GHDL validation once there is an active VHDL backend.
+Goal: add GHDL validation once the VHDL backend subset is hardened enough for
+tool validation.
 
 Current boundary: validation focuses on SystemVerilog using Verilator and
-Yosys.
+Yosys. The direct VHDL scaffold is regression-tested through deterministic
+text and CLI routing, but not externally validated by GHDL yet.
 
 ### Warning-Clean External Validation For Every Historical Sample
 

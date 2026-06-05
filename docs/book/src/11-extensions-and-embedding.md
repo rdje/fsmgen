@@ -861,8 +861,10 @@ and the same strict facade object still accepts the canonical pair-form fixture.
 [t/386-hdl-generator-facade-target-language-boundary-audit.t](t/386-hdl-generator-facade-target-language-boundary-audit.t)
 also proves the advertised `target_language` constructor option routes real
 direct backend behavior: the default path emits SystemVerilog forms, explicit
-`verilog` emits Verilog forms, and explicit `vhdl` remains a source-contextual
-not-implemented boundary rather than a completed backend promise.
+`verilog` emits Verilog forms, and explicit `vhdl` emits the direct single-FSM
+VHDL scaffold for the supported subset without leaking SystemVerilog module or
+`always_*` forms. That is still a scoped scaffold, not a full VHDL backend
+promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
 also proves the advertised `debug_level` constructor option is runtime-backed
@@ -2545,8 +2547,9 @@ downstream tools can discover the bounded path-list families for
 `human_contract` and `downstream_alignment` from one place before consuming
 those documentation path lists.
 
-That lane is currently SystemVerilog-only; VHDL/GHDL validation waits for an
-active VHDL backend.
+That validation lane is currently SystemVerilog-only. Direct VHDL generation
+has a scaffold subset, but VHDL/GHDL validation remains deferred until a
+separate validation leaf owns it.
 
 The bounded contract for that lane now has its own owner too:
 [perl/FSM/Support/HDLExternalValidationContract.pm](perl/FSM/Support/HDLExternalValidationContract.pm).
