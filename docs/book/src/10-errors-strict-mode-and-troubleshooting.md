@@ -158,6 +158,11 @@ Expected-failure entries also carry stable `FSMGEN_*` diagnostic codes from
 long-lived docs: wording can improve, but the code is the machine identity for
 the failure family.
 
+The composition-contract expected-failure catalog includes `fsm/trial_2.fsm` as
+a historical legacy `?ports` mapping sample. Its first stable boundary is the
+`FSMGEN_COMPOSITION_PORT_DECLARATION_MODE` diagnostic for the
+`/data_o/{tasu_timestamp, tasu_pl_data}/` mapping directive inside `?ports`.
+
 The maintained language-contract expected-failure corpus now includes named
 entries for unsupported top-level source wrappers, unsupported top-level
 directives, unsupported top-level FSM body forms, legacy generic/template

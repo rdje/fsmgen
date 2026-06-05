@@ -84,6 +84,10 @@ Legacy mapping directives such as `/foo/bar/` do not belong inside `?ports`.
 Use `?wiring` for explicit connectivity; `?ports` is only for top-port
 declarations.
 
+Historical inputs such as `fsm/trial_2.fsm` also used legacy mapping forms like
+`/data_o/{tasu_timestamp, tasu_pl_data}/` inside named `?ports` blocks. Those
+remain an expected-failure boundary, not an active composition feature.
+
 For readability, `?ports` also accepts verbose declarations. These are aliases
 of the compact tokens, not a separate port kind:
 

@@ -150,6 +150,13 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   roots, unsupported nested `.rtlif` structures, and duplicate embedded
   `.rtlif` roots.
 
+The historical sample `fsm/trial_2.fsm` is cataloged as
+`contract.trial_2_ports_mapping_directive` in the composition-contract
+expected-failure bucket. Its current first stable boundary is the legacy
+`/data_o/{tasu_timestamp, tasu_pl_data}/` mapping directive inside `?ports`;
+that keeps it out of the external-validation smoke until a future owner takes
+on the broader legacy composition dialect.
+
 ## Supported-success markers
 
 Every `supported_smoke` entry is executable at the catalog level: it must

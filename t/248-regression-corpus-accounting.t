@@ -258,6 +258,7 @@ for my $required_id (qw(
     contract.composition_child_item_list_dotted_rtl
     contract.composition_unsupported_child_kind
     contract.composition_ports_mapping_directive
+    contract.trial_2_ports_mapping_directive
     contract.composition_duplicate_top_port
     contract.composition_duplicate_child_instance
     contract.composition_ports_shape_multiple_blocks
@@ -433,8 +434,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    161,
-    'catalog now records one hundred sixty-one explicit expected-failure entries',
+    162,
+    'catalog now records one hundred sixty-two explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

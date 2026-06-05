@@ -2031,6 +2031,16 @@ my @REGRESSION_CORPUS = (
         expected_error_pattern => qr/Composition top 'composition_ports_mapping_directive_top' contains '\?ports' mapping directive '\/foo\/bar\/', .*composition port declaration mode is blocked because the active composition parser only supports explicit top-port declarations inside '\?ports'/s,
     },
     {
+        id => 'contract.trial_2_ports_mapping_directive',
+        relpath => 'fsm/trial_2.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_COMPOSITION_PORT_DECLARATION_MODE',
+        expected_error_pattern => qr/Composition top 'lte_dif_tasu' contains '\?ports' mapping directive '\/data_o\/\{tasu_timestamp, tasu_pl_data\}\/', .*composition port declaration mode is blocked because the active composition parser only supports explicit top-port declarations inside '\?ports'/s,
+    },
+    {
         id => 'contract.composition_duplicate_top_port',
         relpath => 't/corpus/composition_duplicate_top_port_top.fsm',
         family => 'composition_contract_fixture',
