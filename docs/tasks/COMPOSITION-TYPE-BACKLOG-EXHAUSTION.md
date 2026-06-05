@@ -98,16 +98,16 @@ remains or a real prerequisite blocker is reached.
   Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6: defer generated-child top widening`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next spawn/blocking-do parameter or value binding contract or blocker from evidence.`
   Acceptance: `Existing activation-parameter/value-binding evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: focused activation parameter/value-binding evidence, memory architecture, mdBook, feature-backlog status, doc path, knowledge-map, and diff checks`
+  Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7: defer activation binding widening`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`
   Status: `pending`
-  Goal: `Close remaining repeat-body child-activation variants that intersect Composition/type behavior.`
-  Acceptance: `One exact undrained, multi-pending, cross-domain, nested, or binding-related repeat-body child-activation variant is selected, implemented or explicitly deferred, documented, and regression-covered.`
+  Goal: `Select the next repeat-body child-activation variant or blocker from evidence.`
+  Acceptance: `Existing repeat-body child-activation evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
   Verification: `pending`
   Commit: `pending`
 
@@ -150,7 +150,7 @@ remains or a real prerequisite blocker is reached.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7` | `pending` | Generated-child top widening is explicitly deferred behind one exact activation/top/composition contract; the next Composition/type item needs spawn/blocking-do parameter and value-binding evidence selection before any code. |
+| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8` | `pending` | Activation parameter/value-binding widening is explicitly deferred behind one exact activation/binding contract; the next Composition/type item needs repeat-body child-activation evidence selection before any code. |
 
 ## Selection Result
 
@@ -290,6 +290,32 @@ semantics, recursive or dynamic child generation, wider generated-child data
 routes outside already selected ATL route slices, and new protocol-like
 generated-top behavior.
 
+## Activation Parameter And Value-Binding Selection Result
+
+`COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7` reviewed
+`ISF-ACTIVATION-PARAM-OVERRIDES`,
+`ISF-ACTIVATION-BIND-EXPRESSIONS`,
+`ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS`, the current mdBook boundary,
+and focused activation parameter/value-binding regressions.
+
+No new implementation leaf is selected from this tree. Existing shipped
+contracts already cover static activation-site parameter overrides for spawn,
+generated blocking `do`, and rule `trigger`; actor constants, actor-local
+scalar parameter defaults, enum members, qualified package scalar constants,
+and compatible aggregate/list literal leaves as static override sources;
+expression-valued input bindings for shipped activation sites; generated-child
+rule-trigger scalar output bindings; binding timing metadata; and fail-closed
+direct `(on ...)` parameter specialization.
+
+The remaining activation parameter/value-binding backlog stays deferred until
+an exact activation/binding, completion-identity, snapshot/live timing,
+portable-type, VHDL/backend, or architecture prerequisite is explicit.
+Deferred items include direct/local rule-trigger output bindings, direct
+`(on ...)` activation-site parameter overrides, runtime-valued parameter
+overrides, arbitrary expression static-override values outside the shipped
+domain, non-scalar actor parameters as override values, output binding
+expression targets, and behavior-changing snapshot-vs-live timing conversion.
+
 ## Evidence To Reuse
 
 - `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`
@@ -335,11 +361,18 @@ generated-top behavior.
   the bounded shipped spawn, generated blocking `do`, and generated
   rule-trigger top surfaces; broader work remains blocked until one exact
   generated-child top contract is selected.
+- `2026-06-05`: Do not select a new activation parameter/value-binding
+  implementation leaf from `.7`. Closed ISF trees, the current book boundary,
+  and focused regressions already cover the bounded shipped spawn,
+  generated-do, rule-trigger, input-binding, generated-output-binding, and
+  direct-on fail-closed surfaces; broader work remains blocked until one exact
+  activation/binding contract is selected.
 
 ## Open Questions
 
-- None before the next evidence-selection leaf. Any activation parameter or
-  value-binding code must first get an exact executable owner under this tree.
+- None before the next evidence-selection leaf. Any repeat-body
+  child-activation code must first get an exact executable owner under this
+  tree or an existing narrower ISF tree.
 
 ## Blockers
 
@@ -357,6 +390,7 @@ generated-top behavior.
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4` | `prove -Iperl t/48-language-contract-standalone-dt-classification.t t/82-standalone-dt-root-support.t t/83-reusable-source-path-resolution.t t/85-composition-standalone-dt-children.t t/86-composition-single-child-connect-by-name.t t/130-composition-generated-child-source-shape-diagnostics.t t/133-standalone-dt-root-aliases.t t/134-standalone-dt-explicit-system-support.t t/135-composition-generated-child-default-source-names.t t/136-standalone-dt-enable-family-metadata.t t/137-standalone-dt-multi-drive-family-metadata.t t/138-composition-standalone-dt-export-metadata.t t/154-standalone-dt-assertion-runtime-hdl.t t/157-composition-standalone-dt-forward-ir-exports.t t/171-forward-lowered-rtl-ir-standalone-dt-target-helpers.t t/292-composition-generated-child-parameter-overrides.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5` | `prove -Iperl t/24-composition-connect-by-name.t t/86-composition-single-child-connect-by-name.t t/87-composition-mixed-connect-by-name.t t/92-composition-multi-rtl-connect-by-name.t t/94-composition-multi-generated-plus-rtl-connect-by-name.t t/95-composition-connect-by-name-input-fanout.t t/96-composition-implicit-single-child-ports.t t/97-composition-implicit-multi-child-inputs.t t/98-composition-implicit-multi-child-outputs.t t/99-composition-implicit-internal-carriers.t t/100-composition-internal-carrier-top-reexport.t t/101-composition-explicit-link-implicit-ports.t t/102-composition-explicit-port-convention.t t/103-composition-provenance-metadata.t t/104-composition-provenance-reporting.t t/105-composition-override-reporting.t t/106-composition-blocked-reporting.t t/160-composition-top-forward-ir-surface.t t/162-composition-top-structural-rtl-ir-surface.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6` | `prove -Iperl t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t t/1215-isf-spawn-parameter-binding.t t/1248-isf-rule-trigger-parameter-binding.t t/1255-isf-schedule-report-golden-matrix.t t/292-composition-generated-child-parameter-overrides.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
+| `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7` | `prove -Iperl t/1215-isf-spawn-parameter-binding.t t/1248-isf-rule-trigger-parameter-binding.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1195-isf-sample-clause-boundary.t t/1181-isf-rule-action-boundary.t t/1351-isf-activation-param-package-constants.t t/1369-isf-timing-param-activation-override-gates.t t/1370-isf-data-op-activation-override-width-gate.t t/1371-isf-transaction-port-activation-override-width-gate.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -369,6 +403,7 @@ generated-top behavior.
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4: defer reusable-module widening` | `closed reusable standalone-DT selection as prerequisite-bound deferral; next frontier .5` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5: defer top-boundary widening` | `closed top-boundary convention selection as prerequisite-bound deferral; next frontier .6` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6: defer generated-child top widening` | `closed generated-child top selection as prerequisite-bound deferral; next frontier .7` |
+| `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7: defer activation binding widening` | `closed activation parameter/value-binding selection as prerequisite-bound deferral; next frontier .8` |
 
 ## Changelog
 
@@ -390,3 +425,6 @@ generated-top behavior.
 - `2026-06-05`: Closed generated-child top selection as an explicit
   prerequisite deferral and advanced the frontier to spawn/blocking-do
   parameter and value-binding evidence selection.
+- `2026-06-05`: Closed activation parameter/value-binding selection as an
+  explicit prerequisite deferral and advanced the frontier to repeat-body
+  child-activation evidence selection.
