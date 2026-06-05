@@ -70,11 +70,11 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Explore and, if selected, specify IAL2 protocol/platform intent.`
   Acceptance: `IAL2 is either kept as horizon exploration or one executable design slice is selected.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Read README.md remaining-work note, docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md Gap 2, docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md .6, docs/ISF_SPEC.md intent abstraction layers, docs/ISF_ATL_DESIGN_PROPOSAL.md ATL/IAL1 boundary, docs/book/src/13-intent-scheduling.md, and docs/book/src/14-feature-backlog.md IAL2 exploration. Existing sources already agree that IAL2 remains non-R14 horizon exploration unless a future source model introduces real protocol/platform semantics above explicit ISF actor/network syntax; no executable implementation slice is selected.`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check`
+  Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.4`
   Status: `pending`
@@ -152,7 +152,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | 2 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `done` | Loop-control false fallthrough edges now split following runtime waits while preserving true exit/continue targets. |
 | 3 | `ISF-REMAINING-BROAD-FRONTIER.2` | `done` | ATL expansion category selected and the exact rule-level qualified trigger leaf closed. |
 | 4 | `ISF-REMAINING-BROAD-FRONTIER.2.1` | `done` | Rule-level qualified `(trigger INSTANCE.TRANSACTION)` now pulses parent handoff output and reports rule-action metadata. |
-| 5 | `ISF-REMAINING-BROAD-FRONTIER.3` | `pending` | Next broad item: decide whether IAL2 remains horizon exploration or has one exact executable design slice. |
+| 5 | `ISF-REMAINING-BROAD-FRONTIER.3` | `done` | IAL2 remains non-R14 horizon exploration; no executable ISF slice selected. |
+| 6 | `ISF-REMAINING-BROAD-FRONTIER.4` | `pending` | Next broad item: select one exact enum/type/aggregate parity surface or defer with evidence. |
 
 ## Decisions
 
@@ -175,6 +176,10 @@ inventory that are not already the active frontier of a narrower ISF tree.
   `context: "rule_action"` metadata; generated ATL tops, payloads/bindings,
   repeated rule-action triggers, nested contexts, and local rule-trigger fan-in stay
   outside the slice.
+- `2026-06-05`: Closed `.3` without code: IAL2 remains horizon exploration and
+  non-R14 until a source model introduces protocol/platform semantics above
+  explicit `.isf` actor/network syntax. Current docs and prior audits already
+  agree on that boundary, so no executable design slice is selected.
 
 ## Open Questions
 
