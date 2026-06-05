@@ -396,13 +396,15 @@ yet. Schedule JSON records accepted triggers in
 `instance`, `target_transaction`, `signal`, and `sink` keys. The selected
 `sink` value is `external_handoff`.
 
-The selected subset explicitly excludes rule-level qualified triggers, nested
-qualified triggers, repeated triggers to the same actor instance, generated
-handoff signal conflicts, fan-in, fan-out, trigger payloads or bindings,
-ready/backpressure, cross-clock actor triggers, generated ATL child artifacts,
-generated ATL tops, and broader concurrent
-group triggers. Those forms stay fail-closed until later leaves select their
-exact artifact and scheduling contracts.
+The selected subset also accepts one top-level rule action
+`(trigger actor.transaction)` as a parent-handoff pulse with
+`context: "rule_action"` metadata. It still explicitly excludes nested
+qualified triggers, repeated triggers to the same actor instance, repeated
+rule-action qualified triggers, generated handoff signal conflicts, fan-in,
+fan-out, trigger payloads or bindings, ready/backpressure, cross-clock actor
+triggers, generated ATL child artifacts, generated ATL tops, and broader
+concurrent group triggers. Those forms stay fail-closed until later leaves
+select their exact artifact and scheduling contracts.
 
 ## Shipped Static Metadata Surfaces
 
@@ -1198,10 +1200,12 @@ top, and wire the selected scalar pin-ingress route described below.
 The parser still recognizes unsupported reserved qualified forms and rejects
 them with ATL-specific diagnostics instead of letting them fall through as
 enum-member, unknown-transaction, or unsupported local-clause errors when the
-qualifier names a declared static actor instance. Rule-level qualified
-`(trigger actor.transaction)`, nested waits/triggers, multiple waits/triggers,
-generated handoff signal conflicts, and cross-clock ATL handoffs remain
-fail-closed. Existing unqualified local behavior is preserved:
+qualifier names a declared static actor instance. One top-level rule action
+`(trigger actor.transaction)` is accepted as a parent-handoff pulse; nested
+waits/triggers, multiple waits/triggers outside the selected batch/wait
+surfaces, repeated rule-action qualified triggers, generated handoff signal
+conflicts, and cross-clock ATL handoffs remain fail-closed. Existing
+unqualified local behavior is preserved:
 `(await signal)` remains a local transaction wait, and rule-level
 `(trigger transaction)` remains the local transaction trigger surface.
 Enum-looking dotted names whose qualifier is not a declared static actor

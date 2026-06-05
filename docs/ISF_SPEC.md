@@ -4424,13 +4424,13 @@ handoff, and report-only group metadata subsets implemented so far:
   child-output/top-output endpoints, and keeps adjacent post-event drive
   calls. Width adaptation and unresolved external vector pin routing remain
   deferred.
-- Future blocking orchestration uses `(do actor.transaction)`, future
-  nonblocking orchestration uses `(spawn actor.transaction as NAME)`, and
-  future rule-level orchestration uses `(trigger actor.transaction)`.
-- The shipped top-level transaction-body subsets are
-  `(await actor.event)` and `(trigger actor.transaction)`. Events and trigger
-  handoffs are scheduler-visible one-cycle control pulses; event and trigger
-  payloads remain deferred.
+- Future blocking orchestration uses `(do actor.transaction)`, and future
+  nonblocking orchestration uses `(spawn actor.transaction as NAME)`.
+- The shipped parent-handoff subsets are top-level transaction-body
+  `(await actor.event)` and `(trigger actor.transaction)`, plus one top-level
+  rule action `(trigger actor.transaction)` in the selected rule-action
+  trigger subset. Events and trigger handoffs are scheduler-visible one-cycle
+  control pulses; event and trigger payloads remain deferred.
 - Concurrent groups may still use
   `(group NAME (members ACTOR...) (mode concurrent))`, but groups are static
   review metadata only. Task-scoped ATL associations are created by scheduled
@@ -4509,21 +4509,25 @@ The current actor-transaction trigger subset is also narrower than full child
 orchestration. It accepts a top-level transaction-body
 `(trigger actor.transaction)` against a static actor instance either as a
 single handoff or as part of the exact temporary trigger-batch subset above,
-where `transaction` is a scalar HDL identifier. FSMGen maps each accepted
-trigger to a deterministic
-one-cycle parent output handoff named `actor_transaction_start`; for example,
-`(trigger reader.capture)` maps to `reader_capture_start`. The scheduled
-parent `.fsm` exposes and pulses that output at the trigger point, either in
-the single-trigger state or in the accepted trigger-batch state. The trigger
-sink is external even when the target actor type resolves and a child `.fsm`
-artifact is emitted; generated ATL top wiring, trigger payloads, and
-ready/backpressure semantics remain unshipped.
-Rule-level qualified triggers, nested triggers, repeated triggers to the same
-actor instance, generated handoff signal conflicts, trigger fan-in/fan-out,
-cross-clock actor triggers, and broader concurrent group behavior remain
-deferred unless a later leaf explicitly widens this surface. Schedule JSON
-reports accepted triggers through
-`actor_network.transaction_triggers[]`.
+where `transaction` is a scalar HDL identifier. It also accepts one
+top-level rule action `(trigger actor.transaction)` against a static actor
+instance. FSMGen maps each accepted trigger to a deterministic one-cycle
+parent output handoff named `actor_transaction_start`; for example,
+`(trigger reader.capture)` maps to `reader_capture_start`, and a rule action
+`(trigger worker.process)` maps to `worker_process_start`. The scheduled
+parent `.fsm` exposes and pulses that output at the trigger point: in the
+transaction trigger state, in the accepted trigger-batch state, or in the
+guarded rule DT for the rule-action subset. Rule-action trigger metadata uses
+`context => rule_action`; no owning transaction applies. The trigger sink is
+external even when the target actor type resolves and a child `.fsm` artifact
+is emitted; generated ATL top wiring, trigger payloads, and ready/backpressure
+semantics remain unshipped.
+Nested triggers, repeated triggers to the same actor instance, repeated
+rule-action qualified triggers, generated handoff signal conflicts, trigger
+fan-in/fan-out, cross-clock actor triggers, rule-action trigger payloads or
+bindings, and broader concurrent group behavior remain deferred unless a
+later leaf explicitly widens this surface. Schedule JSON reports accepted
+triggers through `actor_network.transaction_triggers[]`.
 
 The current generated-artifact contract is explicit: the parent scheduled
 `.fsm` may include the selected one-bit actor-event handoff input, selected

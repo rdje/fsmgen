@@ -1487,8 +1487,9 @@ actor.transaction as NAME)` for nonblocking activation, `(trigger
 actor.transaction)` for rule-level or transaction-body activation, and
 `(await actor.event)` for one-cycle actor event synchronization.
 
-Only the bounded transaction-body trigger and event-wait parent-handoff
-subsets are shipped today.
+The bounded transaction-body trigger/event-wait parent-handoff subsets are
+shipped today. One top-level rule action `(trigger actor.transaction)` is also
+shipped as a parent-handoff pulse.
 
 Event payloads are not part of ATL v0.
 
@@ -1960,9 +1961,10 @@ exposes and waits on that input, and schedule JSON records the wait under
 
 The producer of that pulse remains external until later ATL leaves resolve
 actor types, generate child artifacts, emit ATL tops, and support qualified
-actor transaction triggers. Multiple waits, nested waits, fan-in, fan-out,
-event payloads, cross-clock events, and concurrent group events stay
-fail-closed/deferred. Existing unqualified local forms stay unchanged:
+actor transaction trigger wiring beyond the parent-handoff subset. Multiple
+waits, nested waits, fan-in, fan-out, event payloads, cross-clock events, and
+concurrent group events stay fail-closed/deferred. Existing unqualified local
+forms stay unchanged:
 `(await signal)` remains a transaction wait, and rule-level
 `(trigger transaction)` remains a local transaction trigger. Dotted
 enum-looking names that do not name a static actor instance keep their prior
@@ -1972,16 +1974,30 @@ The shipped qualified actor-transaction trigger subset mirrors that handoff
 boundary. One top-level transaction-body `(trigger actor.transaction)` against
 a direct static actor instance lowers to a generated one-cycle parent output
 named `actor_transaction_start`; for example, `reader.capture`
-maps to `reader_capture_start`. The scheduled parent `.fsm` exposes and
-pulses that output at the trigger point, and schedule JSON records the
+maps to `reader_capture_start`. One top-level rule action may use the same
+qualified trigger spelling; for example, `(trigger worker.process)` in a rule
+lowers through `worker_process_start`. The scheduled parent `.fsm` exposes
+and pulses that output at the trigger point, and schedule JSON records the
 trigger under `actor_network.transaction_triggers[]`.
+
+```lisp
+(actor atl_rule_transaction_trigger
+  (clock clk)
+  (interface (input fire) (output done))
+  (instance worker of packet_worker)
+  (transaction run
+    (on fire)
+    (complete done))
+  (rule kick fire
+    (trigger worker.process)))
+```
 
 The trigger sink remains external until later ATL leaves resolve actor types,
 generate child artifacts, emit ATL tops, and add ready/backpressure or payload
-semantics. Rule-level qualified triggers, nested triggers, repeated triggers
-to the same actor instance, generated handoff signal conflicts, fan-in,
-fan-out, cross-clock triggers, and broader concurrent group behavior stay
-fail-closed/deferred.
+semantics. Nested triggers, repeated triggers to the same actor instance,
+repeated rule-action qualified triggers, generated handoff signal conflicts,
+fan-in, fan-out, rule-action trigger payloads or bindings, cross-clock
+triggers, and broader concurrent group behavior stay fail-closed/deferred.
 
 Direct actor-body proposal (backlog illustration; uses syntax that
 is still on the deferred list, so the validator rejects this fixture

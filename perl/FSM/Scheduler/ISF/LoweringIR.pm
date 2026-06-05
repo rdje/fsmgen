@@ -246,7 +246,8 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
     return () unless @resolutions;
 
     my $network = $actor->{actor_network} || {};
-    my @triggers = @{$network->{transaction_triggers} || []};
+    my @triggers = grep { ($_->{context} // '') eq 'transaction_body' }
+        @{$network->{transaction_triggers} || []};
     my @event_waits = @{$network->{event_waits} || []};
     my @data_movements = @{$network->{data_movements} || []};
     return () unless @triggers || @event_waits;
@@ -2497,6 +2498,7 @@ sub _validate_rule_domain_refs($self, $actor, $signal_domains, $transaction_doma
             my $keyword = $action->[0];
             next unless defined($keyword) && !ref($keyword);
 
+            next if $keyword eq 'atl_trigger';
             if ($keyword eq 'trigger') {
                 my $target = $action->[1];
                 _validate_same_domain_target(
@@ -11599,6 +11601,13 @@ sub _build_rules {
                     push @{$fanin_by_transaction{$target}}, $source
                         unless $seen_fanin_source{"$target\0$source"}++;
                 }
+            } elsif ($a0 eq 'atl_trigger') {
+                push @a, {
+                    lhs         => $ac->[1],
+                    rhs         => 1,
+                    op          => '<1',
+                    source_kind => 'atl_actor_transaction_trigger',
+                };
             } elsif ($a0 eq 'priority') {
                 # Parsed metadata; arbitration enforcement is a later slice.
             } elsif ($a0 eq 'store' || $a0 eq 'load') {

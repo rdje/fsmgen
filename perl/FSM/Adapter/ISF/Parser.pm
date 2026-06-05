@@ -2875,10 +2875,21 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
         for my $action (@{$rule->{actions} || []}) {
             next unless ref($action) eq 'ARRAY' && @$action >= 2;
             my $head = $action->[0];
-            next unless defined($head) && !ref($head) && $head eq 'trigger';
+            next unless defined($head) && !ref($head);
+            if ($head eq 'atl_trigger' || $head eq 'atl_trigger_batch') {
+                confess "Error: rule '$rule_name' '($head ...)' is reserved for FSMGen internal ATL lowering and is not source syntax\n";
+            }
+            next unless $head eq 'trigger';
             my $target = $action->[1];
             next unless _is_qualified_atl_endpoint_token($target, \%actor_instances);
-            confess "Error: rule '$rule_name' ATL actor transaction trigger '(trigger $target)' is reserved but not supported yet; unqualified '(trigger transaction)' remains the local transaction trigger surface\n";
+            _accept_rule_action_atl_transaction_trigger(
+                $action,
+                "rule '$rule_name'",
+                \%actor_instances,
+                \%declared_signals,
+                \@transaction_triggers,
+                $rule_name,
+            );
         }
     }
 
@@ -3333,6 +3344,11 @@ sub _finalize_selected_atl_trigger_batches {
     my ($actor, $instances, $transaction_triggers, $event_waits, $data_movements) = @_;
     my @triggers = @{$transaction_triggers || []};
     return 1 unless @triggers;
+    my @rule_action_triggers = _atl_rule_action_transaction_triggers($transaction_triggers);
+    confess "Error: actor '$actor->{actor_name}' ATL rule action transaction triggers support exactly one qualified trigger in the current subset; repeated rule-action ATL triggers remain deferred\n"
+        if @rule_action_triggers > 1;
+    @triggers = _atl_transaction_body_triggers($transaction_triggers);
+    return 1 unless @triggers;
 
     my @groups = @{(($actor->{actor_network} || {})->{groups}) || []};
     if (@triggers == 1) {
@@ -3484,23 +3500,24 @@ sub _finalize_selected_atl_trigger_batches {
 sub _validate_selected_atl_event_wait_count {
     my ($actor, $instances, $event_waits, $transaction_triggers, $data_movements) = @_;
     my @waits = @{$event_waits || []};
+    my @transaction_body_triggers = _atl_transaction_body_triggers($transaction_triggers);
     return 1 unless @waits > 1;
     return 1 if _selected_atl_two_child_generated_top_candidate(
         $instances,
         $event_waits,
-        $transaction_triggers,
+        \@transaction_body_triggers,
         $data_movements,
     );
     return 1 if _selected_atl_generated_top_actor_route_shape(
         $instances,
         $data_movements,
         $event_waits,
-        $transaction_triggers,
+        \@transaction_body_triggers,
     );
     return 1 if _selected_atl_temporary_trigger_batch_multi_event_wait_shape(
         $actor,
         $event_waits,
-        $transaction_triggers,
+        \@transaction_body_triggers,
         $data_movements,
     );
 
@@ -3513,7 +3530,7 @@ sub _validate_selected_atl_event_wait_count {
 sub _selected_atl_temporary_trigger_batch_multi_event_wait_shape {
     my ($actor, $event_waits, $transaction_triggers, $data_movements) = @_;
     my @waits = @{$event_waits || []};
-    my @triggers = @{$transaction_triggers || []};
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
     return 0 unless @waits > 1
         && @triggers > 1
         && !@{$data_movements || []};
@@ -3562,7 +3579,7 @@ sub _selected_atl_two_child_generated_top_candidate {
     my ($instances, $event_waits, $transaction_triggers, $data_movements) = @_;
     my @instances = @{$instances || []};
     my @waits = @{$event_waits || []};
-    my @triggers = @{$transaction_triggers || []};
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
 
     return 0 unless @instances == 2
         && @waits == 2
@@ -3913,7 +3930,7 @@ sub _selected_atl_generated_top_actor_route_shape {
     );
 
     my @waits = @{$event_waits || []};
-    my @triggers = @{$transaction_triggers || []};
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
     my @movements = @{$data_movements || []};
     my $movement = $movements[0];
     my ($source_trigger, $source_wait, $sink_trigger, $sink_wait) =
@@ -3943,7 +3960,7 @@ sub _selected_atl_generated_top_actor_route_shape {
 sub _selected_atl_generated_top_actor_route_basic_shape {
     my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
     my @waits = @{$event_waits || []};
-    my @triggers = @{$transaction_triggers || []};
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
 
     my ($source_instance, $sink_instance) =
         _selected_atl_actor_route_movement_pair($instances, $data_movements);
@@ -3989,7 +4006,7 @@ sub _selected_atl_actor_route_movement_pair {
 sub _selected_atl_generated_top_actor_route_repeated_trigger_shape {
     my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
     my @waits = @{$event_waits || []};
-    my @triggers = @{$transaction_triggers || []};
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
 
     my ($source_instance, $sink_instance) =
         _selected_atl_actor_route_movement_pair($instances, $data_movements);
@@ -4017,7 +4034,7 @@ sub _selected_atl_generated_top_actor_route_repeated_trigger_shape {
 sub _selected_atl_generated_top_actor_route_repeated_wait_shape {
     my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
     my @waits = @{$event_waits || []};
-    my @triggers = @{$transaction_triggers || []};
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
 
     my ($source_instance, $sink_instance) =
         _selected_atl_actor_route_movement_pair($instances, $data_movements);
@@ -4079,12 +4096,13 @@ sub _selected_atl_generated_top_actor_route_sequence {
 
     my $source_instance = $movement->{source_instance};
     my $sink_instance = $movement->{sink_instance};
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
     my @source_triggers = grep { ($_->{instance} // '') eq ($source_instance // '') }
-        @{$transaction_triggers || []};
+        @triggers;
     my @source_waits = grep { ($_->{instance} // '') eq ($source_instance // '') }
         @{$event_waits || []};
     my @sink_triggers = grep { ($_->{instance} // '') eq ($sink_instance // '') }
-        @{$transaction_triggers || []};
+        @triggers;
     my @sink_waits = grep { ($_->{instance} // '') eq ($sink_instance // '') }
         @{$event_waits || []};
 
@@ -4197,6 +4215,18 @@ sub _strip_private_atl_metadata {
     }
 }
 
+sub _atl_transaction_body_triggers {
+    my ($transaction_triggers) = @_;
+    return grep { ($_->{context} // '') eq 'transaction_body' }
+        @{$transaction_triggers || []};
+}
+
+sub _atl_rule_action_transaction_triggers {
+    my ($transaction_triggers) = @_;
+    return grep { ($_->{context} // '') eq 'rule_action' }
+        @{$transaction_triggers || []};
+}
+
 sub _selected_atl_generated_top_pin_ingress_candidate {
     my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
     return 0 unless _selected_atl_generated_top_pin_ingress_shape(
@@ -4209,7 +4239,7 @@ sub _selected_atl_generated_top_pin_ingress_candidate {
     my @instances = @{$instances || []};
     my @movements = @{$data_movements || []};
     my @waits = @{$event_waits || []};
-    my @triggers = @{$transaction_triggers || []};
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
 
     my $instance = $instances[0]{name};
     my $wait = $waits[0];
@@ -4245,7 +4275,7 @@ sub _selected_atl_generated_top_pin_ingress_shape {
     my @instances = @{$instances || []};
     my @movements = @{$data_movements || []};
     my @waits = @{$event_waits || []};
-    my @triggers = @{$transaction_triggers || []};
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
 
     return 0 unless @instances == 1
         && @movements >= 1
@@ -4292,7 +4322,8 @@ sub _selected_atl_generated_top_pin_egress_candidate {
 
     my @movements = @{$data_movements || []};
     my $wait = $event_waits->[0];
-    my $trigger = $transaction_triggers->[0];
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
+    my $trigger = $triggers[0];
 
     my (%source_endpoints, %sink_pins);
     my @drive_indices;
@@ -4324,7 +4355,7 @@ sub _selected_atl_generated_top_pin_egress_shape {
     my @instances = @{$instances || []};
     my @movements = @{$data_movements || []};
     my @waits = @{$event_waits || []};
-    my @triggers = @{$transaction_triggers || []};
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
 
     return 0 unless @instances == 1
         && @movements >= 1
@@ -4446,6 +4477,36 @@ sub _accept_top_level_atl_transaction_trigger {
         signal            => $signal,
         sink              => 'external_handoff',
         _clause_index     => $clause_index,
+    };
+
+    return 1;
+}
+
+sub _accept_rule_action_atl_transaction_trigger {
+    my ($action, $context, $actor_instances, $declared_signals, $transaction_triggers, $rule_name) = @_;
+    my $target = $action->[1];
+    my ($instance, $transaction) = _parse_qualified_atl_endpoint_token($target, $actor_instances);
+    confess "Error: $context ATL actor transaction trigger '(trigger $target)' is not a declared static actor endpoint\n"
+        unless defined($instance) && defined($transaction);
+    confess "Error: $context ATL actor transaction trigger '(trigger $target)' does not accept payloads, binds, or nested clauses in the current subset\n"
+        unless @$action == 2;
+    confess "Error: $context ATL actor transaction trigger '(trigger $target)' transaction name must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($transaction);
+
+    my $signal = _actor_atl_transaction_trigger_handoff_signal($instance, $transaction);
+    confess "Error: $context ATL actor transaction trigger '(trigger $target)' generated handoff signal '$signal' conflicts with a declared actor signal\n"
+        if $declared_signals->{$signal};
+
+    $action->[0] = 'atl_trigger';
+    $action->[1] = $signal;
+    push @$transaction_triggers, {
+        owner_transaction  => undef,
+        context            => 'rule_action',
+        instance           => $instance,
+        target_transaction => $transaction,
+        signal             => $signal,
+        sink               => 'external_handoff',
+        _owner_rule        => $rule_name,
     };
 
     return 1;

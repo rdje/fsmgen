@@ -55,19 +55,19 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.2`
-  Status: `active`
+  Status: `done`
   Goal: `Broaden ATL actor-network orchestration beyond the shipped bounded v0 contract.`
   Children: `ISF-REMAINING-BROAD-FRONTIER.2.1`
   Acceptance: `One exact ATL expansion is selected, implemented or deferred, synchronized, and covered.`
-  Verification: `Selection audit/read: ATL backlog and design-proposal shipped/deferred sections, ATL public contract, feature matrix, existing transaction-body trigger tests, and rule-trigger lowering/validation paths.`
+  Verification: `Selected and implemented rule-level qualified actor-transaction trigger parent handoffs in .2.1 while preserving generated-top, payload, repeated-trigger, and local rule-trigger boundaries.`
   Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.2.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Support rule-level qualified actor-transaction triggers: a rule action (trigger INSTANCE.TRANSACTION) should pulse the same ATL parent handoff output used by transaction-body triggers and report actor_network.transaction_triggers[] metadata with context rule_action, without widening generated ATL tops, payloads, bindings, nested trigger contexts, repeated-trigger semantics, or rule-trigger fan-in for local transactions.`
   Acceptance: `A rule whose guard fires and whose action is (trigger worker.process) for a declared static actor instance lowers to a guarded rule DT that pulses worker_process_start for one cycle, exposes that output port, and records bounded actor_network.transaction_triggers[] metadata. Existing transaction-body trigger behavior, local rule (trigger transaction) behavior, and fail-closed boundaries for unknown instances, malformed targets, bindings/payloads, generated-top wiring, nested contexts, and repeated/fan-in semantics stay intact. Focused tests, docs/spec/public surfaces, mdBook, and ATL gates pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1182-isf-rule-trigger-target-boundary.t`; `prove -Iperl t/1376-isf-book-example-lowering-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check`
+  Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.3`
   Status: `pending`
@@ -150,8 +150,9 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | --- | --- | --- | --- |
 | 1 | `ISF-REMAINING-BROAD-FRONTIER.1` | `done` | Broad R14 frontier selected after the previous active ISF tree closed. |
 | 2 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `done` | Loop-control false fallthrough edges now split following runtime waits while preserving true exit/continue targets. |
-| 3 | `ISF-REMAINING-BROAD-FRONTIER.2` | `active` | Selected the next ATL expansion category and split exact implementation leaf `.2.1`. |
-| 4 | `ISF-REMAINING-BROAD-FRONTIER.2.1` | `pending` | Exact ATL leaf: rule-level qualified `(trigger INSTANCE.TRANSACTION)` parent-handoff output and report metadata. |
+| 3 | `ISF-REMAINING-BROAD-FRONTIER.2` | `done` | ATL expansion category selected and the exact rule-level qualified trigger leaf closed. |
+| 4 | `ISF-REMAINING-BROAD-FRONTIER.2.1` | `done` | Rule-level qualified `(trigger INSTANCE.TRANSACTION)` now pulses parent handoff output and reports rule-action metadata. |
+| 5 | `ISF-REMAINING-BROAD-FRONTIER.3` | `pending` | Next broad item: decide whether IAL2 remains horizon exploration or has one exact executable design slice. |
 
 ## Decisions
 
@@ -169,6 +170,11 @@ inventory that are not already the active frontier of a narrower ISF tree.
   rule-level qualified triggers as future behavior; the implementation crosses parser
   normalization, rule-DT lowering, report metadata, and generated-top exclusion, so it
   needs its own exact leaf before code changes.
+- `2026-06-05`: Closed `.2.1`: one top-level rule action
+  `(trigger actor.transaction)` now normalizes to an ATL parent handoff pulse with
+  `context: "rule_action"` metadata; generated ATL tops, payloads/bindings,
+  repeated rule-action triggers, nested contexts, and local rule-trigger fan-in stay
+  outside the slice.
 
 ## Open Questions
 

@@ -2584,7 +2584,8 @@ the public contract.
 Future blocking and nonblocking orchestration spellings are reserved as
 `(do actor.transaction)` and `(spawn actor.transaction as NAME)`, with event
 payloads deferred. Transaction-body `(trigger actor.transaction)` has a
-bounded parent-handoff subset; rule-level qualified triggers remain future.
+bounded parent-handoff subset, and one top-level rule action
+`(trigger actor.transaction)` may use the same parent-handoff output surface.
 Concurrent groups may still be declared with
 `(group NAME (members ACTOR...) (mode concurrent))`, but groups are static
 review metadata only. They are not required for task-scoped ATL trigger
@@ -2638,19 +2639,23 @@ wait fixture and negative repeated-wait boundaries; repeated waits fail before
 scheduled `.fsm` emission with the multi-event wait diagnostic.
 The current qualified actor-trigger subset is one top-level transaction-body
 `(trigger actor.transaction)` for a static actor instance, plus the exact
-same-cycle temporary trigger batch described above. Each trigger lowers to a
-generated one-cycle parent output handoff
+same-cycle temporary trigger batch described above. It also includes one
+top-level rule action `(trigger actor.transaction)` for a static actor
+instance. Each trigger lowers to a generated one-cycle parent output handoff
 named `actor_transaction_start`. For example, `reader.capture` lowers through
-`reader_capture_start`, and the scheduled parent `.fsm` pulses that output at
-the trigger point. The trigger sink is external until actor type resolution,
-ATL child generation, generated ATL tops, trigger payloads, and
-ready/backpressure semantics ship. Rule-level qualified triggers, nested
-triggers, repeated triggers to the same instance, generated handoff signal
-conflicts, fan-in/fan-out, cross-clock actor triggers, and broader concurrent
-group behavior remain deferred. Schedule reports expose this through
-`actor_network.transaction_triggers[]` entries with `owner_transaction`,
-`context`, `instance`, `target_transaction`, `signal`, and `sink` keys, where
-`sink` is currently `external_handoff`.
+`reader_capture_start`, and rule action `worker.process` lowers through
+`worker_process_start`; the scheduled parent `.fsm` pulses that output at the
+transaction trigger point or in the guarded rule DT. The trigger sink is
+external until broader actor type resolution, ATL child generation, generated
+ATL tops, trigger payloads, and ready/backpressure semantics ship. Nested
+qualified triggers, repeated triggers to the same instance, repeated
+rule-action qualified triggers, generated handoff signal conflicts,
+fan-in/fan-out, cross-clock actor triggers, rule-action trigger payloads or
+bindings, and broader concurrent group behavior remain deferred. Schedule
+reports expose this through `actor_network.transaction_triggers[]` entries
+with `owner_transaction`, `context`, `instance`, `target_transaction`,
+`signal`, and `sink` keys, where `sink` is currently `external_handoff`; rule
+actions use `context: "rule_action"` and have no owning transaction.
 Actor roots may also carry parser-validated clock-domain declarations through
 a singleton `(clock-domains ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `clock_domains`

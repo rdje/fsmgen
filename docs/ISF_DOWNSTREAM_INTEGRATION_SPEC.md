@@ -2527,9 +2527,12 @@ capability manifest and this handoff:
   reports kind `scalar_actor_to_pin_handoff` with
   `sink => top_level_pin`.
 - Blocking actor-transaction orchestration is reserved as
-  `(do actor.transaction)`, nonblocking orchestration as
-  `(spawn actor.transaction as NAME)`, and rule-level orchestration as
-  `(trigger actor.transaction)`.
+  `(do actor.transaction)`, and nonblocking orchestration as
+  `(spawn actor.transaction as NAME)`.
+- Rule-level actor-transaction orchestration has a bounded parent-handoff
+  subset: one top-level rule action `(trigger actor.transaction)` may target a
+  declared static actor instance and lower to a generated one-cycle parent
+  output handoff.
 - Actor event waits use `(await actor.event)`. The shipped subset is one
   top-level transaction-body wait against a direct static actor instance,
   either alone for one actor or after one selected temporary trigger batch;
@@ -2637,22 +2640,23 @@ multi-event wait diagnostic.
 Current actor-transaction trigger handoff subset: downstream producers may
 emit a top-level transaction-body `(trigger actor.transaction)` against a
 static actor instance either as a single handoff or as part of the exact
-temporary trigger-batch subset documented above. The target transaction name
-must be a scalar HDL identifier. FSMGen maps each accepted trigger to a
-generated
-one-cycle parent output named `actor_transaction_start`; for example,
-`reader.capture` maps to `reader_capture_start`. The scheduled parent `.fsm`
-exposes and pulses that output at the trigger point, either in the
-single-trigger state or the accepted grouped trigger state. The sink of that
-trigger is external in this subset.
+temporary trigger-batch subset documented above. Downstream producers may also
+emit one top-level rule action `(trigger actor.transaction)` against a static
+actor instance. The target transaction name must be a scalar HDL identifier.
+FSMGen maps each accepted trigger to a one-cycle parent output named `actor_transaction_start`;
+for example, `reader.capture` maps to `reader_capture_start`, and a rule
+action `worker.process` maps to `worker_process_start`. The scheduled parent
+`.fsm` exposes and pulses that output at the trigger point, either in the
+single-trigger state, in the accepted grouped trigger state, or in the guarded
+rule DT. The sink of that trigger is external in this subset.
 
 Schedule JSON reports accepted triggers under
 `actor_network.transaction_triggers[]`. Each entry exposes
 `owner_transaction`, `context`, `instance`, `target_transaction`, `signal`,
 and `sink`; the current sink is `external_handoff`.
 
-Downstream producers must not emit rule-level qualified triggers, nested
-qualified triggers, repeated triggers to the same actor instance,
+Downstream producers must not emit nested qualified triggers, repeated
+triggers to the same actor instance, repeated rule-action qualified triggers,
 fan-in/fan-out trigger structures, generated handoff signal conflicts, trigger
 payloads or bindings, ready/backpressure assumptions, cross-clock actor
 triggers, concurrent group endpoints, or source that relies on generated ATL

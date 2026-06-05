@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-REMAINING-BROAD-FRONTIER.2` (this commit) — selected the exact ATL rule-level qualified trigger leaf. `git log -1` for the hash.
-- active_work_unit: `ISF-REMAINING-BROAD-FRONTIER.2.1` pending frontier — implement rule-level qualified `(trigger INSTANCE.TRANSACTION)` parent handoffs before any other ATL behavior change.
-- recently_done: `ISF-REMAINING-BROAD-FRONTIER.2`; `ISF-REMAINING-BROAD-FRONTIER.7.1`; `ISF-REMAINING-BROAD-FRONTIER.1`; `ISF-COUNTED-REPEAT-TERMINATION.4`; `ISF-PROPERTY-SAMPLED-VALUE.3`; `ISF-LOOP-EARLY-EXIT.5`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.10`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.9`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5`; `KNOWLEDGE-MAP-ADOPT.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`.
-- in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
+- latest_commit: `ISF-REMAINING-BROAD-FRONTIER.2.1` (this commit) — shipped bounded rule-level qualified ATL trigger parent handoffs. `git log -1` for the hash.
+- active_work_unit: `ISF-REMAINING-BROAD-FRONTIER.3` pending frontier — decide whether IAL2 remains horizon exploration or has one exact executable design slice before any IAL2 behavior change.
+- recently_done: `ISF-REMAINING-BROAD-FRONTIER.2.1`; `ISF-REMAINING-BROAD-FRONTIER.2`; `ISF-REMAINING-BROAD-FRONTIER.7.1`; `ISF-REMAINING-BROAD-FRONTIER.1`; `ISF-COUNTED-REPEAT-TERMINATION.4`; `ISF-PROPERTY-SAMPLED-VALUE.3`; `ISF-LOOP-EARLY-EXIT.5`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.10`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.9`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5`; `KNOWLEDGE-MAP-ADOPT.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`.
+- in_flight_uncommitted: none (working tree clean except unrelated untracked `fx/`, intentionally left alone).
 - blockers: none.
 
 ## Notes

@@ -957,6 +957,79 @@ ISF
     );
 };
 
+subtest 'selected rule-level qualified transaction trigger lowers to parent handoff output' => sub {
+    my $actor = parse_source(<<'ISF', 'atl-rule-transaction-trigger.isf');
+(actor atl_rule_transaction_trigger
+  (clock clk)
+  (interface (input fire) (output done))
+  (instance worker of packet_worker)
+  (transaction run
+    (on fire)
+    (complete done))
+  (rule kick fire
+    (trigger worker.process)))
+ISF
+
+    is_deeply(
+        $actor->{actor_network}{transaction_triggers},
+        [
+            {
+                owner_transaction  => undef,
+                context            => 'rule_action',
+                instance           => 'worker',
+                target_transaction => 'process',
+                signal             => 'worker_process_start',
+                sink               => 'external_handoff',
+            },
+        ],
+        'parser records rule-action actor-transaction trigger handoff metadata',
+    );
+
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $lowered = $scheduler->lower($actor);
+    my $fsm = $lowered->{files}{'atl_rule_transaction_trigger.fsm'};
+    ok($fsm, 'rule-action actor-transaction trigger still emits the parent scheduled .fsm only');
+    is_deeply(
+        [sort keys %{$lowered->{files}}],
+        ['atl_rule_transaction_trigger.fsm'],
+        'rule-action actor-transaction trigger does not emit ATL child artifacts or a generated top',
+    );
+    like($fsm, qr/\(worker_process_start 1\)/, 'scheduled .fsm exposes generated rule trigger handoff output');
+    like($fsm, qr/\(<1 \(worker_process_start> 1\)\)/, 'rule DT pulses the generated trigger handoff output');
+    unlike($fsm, qr/process_trigger_fanin/, 'rule-action actor trigger does not create local transaction trigger fan-in');
+    unlike($fsm, qr/kick_process/, 'rule-action actor trigger does not create a local rule trigger source');
+
+    my $report = decode_json($scheduler->report($actor));
+    assert_actor_network_report(
+        $report,
+        {
+            kind      => 'static_declaration',
+            instances => [
+                {
+                    name        => 'worker',
+                    actor_type  => 'packet_worker',
+                    declaration => 'actor',
+                },
+            ],
+            groups => [],
+            group_schedules => [],
+            data_movements => [],
+            event_waits => [],
+            transaction_triggers => [
+                {
+                    owner_transaction  => undef,
+                    context            => 'rule_action',
+                    instance           => 'worker',
+                    target_transaction => 'process',
+                    signal             => 'worker_process_start',
+                    sink               => 'external_handoff',
+                },
+            ],
+        },
+        'rule-action actor-transaction trigger report',
+    );
+};
+
 subtest 'selected scalar actor-to-actor data movement lowers to parent handoff ports' => sub {
     my $source = <<'ISF';
 (actor atl_scalar_data_movement
@@ -1588,17 +1661,35 @@ ISF
 
     parse_fails_like(
         <<'ISF',
-(actor qualified_rule_trigger
+(actor qualified_rule_trigger_payload
   (clock clk)
   (interface (input start) (output done))
   (instance reader of packet_reader)
   (transaction local
     (complete done))
   (rule kick start
-    (trigger reader.capture)))
+    (trigger reader.capture (params (WIDTH 2)))))
 ISF
-        qr/ATL actor transaction trigger '\(trigger reader\.capture\)' is reserved but not supported yet/,
-        'rule-level qualified actor trigger fails closed before unknown-transaction diagnostics',
+        qr/ATL actor transaction trigger '\(trigger reader\.capture\)' does not accept payloads, binds, or nested clauses in the current subset/,
+        'rule-level qualified actor trigger payloads fail closed',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor repeated_qualified_rule_triggers
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (transaction local
+    (complete done))
+  (rule kick_reader start
+    (trigger reader.capture))
+  (rule kick_writer start
+    (trigger writer.emit)))
+ISF
+        qr/ATL rule action transaction triggers support exactly one qualified trigger in the current subset/,
+        'repeated rule-level qualified actor triggers fail closed',
     );
 
     my $actor = parse_source(<<'ISF', 'local-await-trigger.isf');
