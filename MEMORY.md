@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.4.1` (this commit) — added warning-clean `fsm/trial_0.fsm` to the external SystemVerilog validation smoke. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.4.2` pending frontier — select the next exact historical validation target; `apb_tb` and `trial_2` probe failures need exact future owner leaves if selected.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.4.1`; `BACKEND-API-VALIDATION-FRONTIER.3`; `BACKEND-API-VALIDATION-FRONTIER.2.1`; `BACKEND-API-VALIDATION-FRONTIER.1`; `ISF-REMAINING-BROAD-FRONTIER.12`; `ISF-REMAINING-BROAD-FRONTIER.11.1`; `ISF-REMAINING-BROAD-FRONTIER.11`; `ISF-REMAINING-BROAD-FRONTIER.10`; `ISF-REMAINING-BROAD-FRONTIER.9.1`; `ISF-REMAINING-BROAD-FRONTIER.9`; `ISF-REMAINING-BROAD-FRONTIER.8`; `ISF-REMAINING-BROAD-FRONTIER.6`; `ISF-REMAINING-BROAD-FRONTIER.5`; `ISF-REMAINING-BROAD-FRONTIER.4`; `ISF-REMAINING-BROAD-FRONTIER.3`; `ISF-REMAINING-BROAD-FRONTIER.2.1`.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.4.2` (this commit) — added warning-clean `fsm/mipicsi2_configreg.fsm` and `fsm/mipicsi2_fifo_4x8.fsm` to the external SystemVerilog validation smoke. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.4.3` pending frontier — select the next exact historical validation target; `generic_fifo`, `lte_digital_rf`, `apb_tb`, and `trial_2` probe failures need exact future owner leaves if selected.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.4.2`; `BACKEND-API-VALIDATION-FRONTIER.4.1`; `BACKEND-API-VALIDATION-FRONTIER.3`; `BACKEND-API-VALIDATION-FRONTIER.2.1`; `BACKEND-API-VALIDATION-FRONTIER.1`; `ISF-REMAINING-BROAD-FRONTIER.12`; `ISF-REMAINING-BROAD-FRONTIER.11.1`; `ISF-REMAINING-BROAD-FRONTIER.11`; `ISF-REMAINING-BROAD-FRONTIER.10`; `ISF-REMAINING-BROAD-FRONTIER.9.1`; `ISF-REMAINING-BROAD-FRONTIER.9`; `ISF-REMAINING-BROAD-FRONTIER.8`; `ISF-REMAINING-BROAD-FRONTIER.6`; `ISF-REMAINING-BROAD-FRONTIER.5`; `ISF-REMAINING-BROAD-FRONTIER.4`.
 - in_flight_uncommitted: none (working tree clean except unrelated untracked `fx/`, intentionally left alone).
 - blockers: none.
 

@@ -357,6 +357,7 @@ The optional external SystemVerilog validation lane is covered by
 [t/308-systemverilog-external-validation.t](t/308-systemverilog-external-validation.t).
 When `verilator` and `yosys` are installed, that smoke generates
 `fsm/lte_dif_pmaster.fsm`, `fsm/mipicsi2_byteserial.fsm`,
+`fsm/mipicsi2_configreg.fsm`, `fsm/mipicsi2_fifo_4x8.fsm`,
 `fsm/mipicsi2_pkt_nx4B_fifo.fsm`, `fsm/mipicsi2_tester_ctrl.fsm`, and
 `fsm/mipicsi2_txtimer.fsm`, the warning-clean historical direct samples
 `fsm/trial_0.fsm` and `fsm/trial_1.fsm`, plus every supported direct protocol

@@ -50,6 +50,8 @@ subtest 'generated MIPI examples with inferred widths pass external validation' 
 
     for my $sample (qw(
         fsm/mipicsi2_byteserial.fsm
+        fsm/mipicsi2_configreg.fsm
+        fsm/mipicsi2_fifo_4x8.fsm
         fsm/mipicsi2_pkt_nx4B_fifo.fsm
         fsm/mipicsi2_tester_ctrl.fsm
         fsm/mipicsi2_txtimer.fsm
