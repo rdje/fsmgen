@@ -10,6 +10,8 @@ our @EXPORT_OK = qw(
     build_normalized_semantic_lowered_rtl_ir_contract
     normalized_semantic_lowered_rtl_ir_contract_source
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys
+    normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
     normalized_semantic_lowered_rtl_ir_presence_key_family_map
     normalized_semantic_lowered_rtl_ir_presence_keys
     normalized_semantic_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys
@@ -40,6 +42,10 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
         },
         public_presence_keys => normalized_semantic_lowered_rtl_ir_presence_keys(),
         optional_composition_keys => normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
+        output_drive_family_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys(),
+        output_drive_rhs_enable_family_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
         selector_conflict_target_entry_keys =>
             normalized_semantic_lowered_rtl_ir_selector_conflict_target_entry_keys(),
         selector_conflict_rhs_enable_family_entry_keys =>
@@ -54,9 +60,10 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
         guidance => [
             q{Treat this contract as the bounded nested `semantic.forward_ir.lowered_rtl_ir` object used by successful public normalized semantic JSON reports.},
             'The bounded public promise covers the current lowered-RTL summary shared by direct roots, including selector-conflict metadata, plus the current composition-only extension keys.',
+            'The output-drive family and rhs-enable-family key families describe the current nested entry schemas emitted in output_drive_families[].',
             'The selector-conflict target, rhs-enable-family, and assertion key families describe the current nested entry schemas emitted in selector_conflict_targets[].',
             'Use the grouped presence_key_family_map to discover the bounded core and composition-only lowered_rtl_ir key families without collecting those key-family lists separately.',
-            'The deeper `output_drive_families`, `standalone_dt_multi_drive_targets`, and composition candidate payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
+            'The deeper `standalone_dt_multi_drive_targets` and composition candidate payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
         ],
     };
 }
@@ -91,6 +98,35 @@ sub normalized_semantic_lowered_rtl_ir_optional_composition_keys {
             instance_names
             internal_net_count
             internal_net_names
+        ),
+    ];
+}
+
+sub normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys {
+    return [
+        qw(
+            default_value
+            driver_blocks
+            driver_count
+            driver_enable_signals
+            family_enable_signals
+            multiplexer_type
+            reset_value
+            rhs_enable_families
+            rhs_values
+            signal_name
+            width
+        ),
+    ];
+}
+
+sub normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys {
+    return [
+        qw(
+            driver_blocks
+            driver_enable_signals
+            family_enable_signal
+            rhs_value
         ),
     ];
 }
@@ -146,6 +182,10 @@ sub normalized_semantic_lowered_rtl_ir_presence_key_family_map {
     return {
         public_presence_keys => normalized_semantic_lowered_rtl_ir_presence_keys(),
         optional_composition_keys => normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
+        output_drive_family_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys(),
+        output_drive_rhs_enable_family_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
         selector_conflict_target_entry_keys =>
             normalized_semantic_lowered_rtl_ir_selector_conflict_target_entry_keys(),
         selector_conflict_rhs_enable_family_entry_keys =>

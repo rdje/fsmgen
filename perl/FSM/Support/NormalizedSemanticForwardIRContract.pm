@@ -13,6 +13,8 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     normalized_semantic_lowered_rtl_ir_contract_source
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys
+    normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
     normalized_semantic_lowered_rtl_ir_presence_keys
     normalized_semantic_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys
     normalized_semantic_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
@@ -33,6 +35,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_contract_source
     normalized_semantic_forward_ir_nested_presence_key_map
     normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
@@ -77,6 +81,10 @@ sub build_normalized_semantic_forward_ir_contract {
         lowered_rtl_ir_contract_source => normalized_semantic_forward_ir_lowered_rtl_ir_contract_source(),
         lowered_rtl_ir_presence_keys => normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys(),
         lowered_rtl_ir_optional_composition_keys => normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
+        lowered_rtl_ir_output_drive_family_entry_keys =>
+            normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys(),
+        lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys =>
+            normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
         lowered_rtl_ir_selector_conflict_target_entry_keys =>
             normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys(),
         lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys =>
@@ -92,7 +100,7 @@ sub build_normalized_semantic_forward_ir_contract {
             q{Treat this contract as the bounded nested `semantic.forward_ir` object used by successful public normalized semantic JSON reports.},
             'The nested object exposes only the current sanitized forward semantic projections, not raw compiler/private pipeline state.',
             'The nested `intent_hir` branch now also has one bounded owner for its current object shell and composition-only extension keys.',
-            'The nested `lowered_rtl_ir` branch now also has one bounded owner for its current direct-root shell, composition-only extension keys, and selector-conflict entry key families.',
+            'The nested `lowered_rtl_ir` branch now also has one bounded owner for its current direct-root shell, composition-only extension keys, output-drive entry key families, and selector-conflict entry key families.',
             'The nested `structural_rtl_ir` branch now also has one bounded owner for its current direct-root and composition-top object shell.',
             'Use the grouped `nested_presence_key_map` to discover the bounded key families for intent_hir, lowered_rtl_ir, and structural_rtl_ir without collecting those child key lists separately.',
             'Use the grouped `presence_key_family_map` to discover the shell-owned forward_ir and child composition-only extension key families without collecting those field-family lists separately.',
@@ -140,6 +148,10 @@ sub normalized_semantic_forward_ir_presence_key_family_map {
         public_presence_keys => normalized_semantic_forward_ir_presence_keys(),
         intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
         lowered_rtl_ir_optional_composition_keys => normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
+        lowered_rtl_ir_output_drive_family_entry_keys =>
+            normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys(),
+        lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys =>
+            normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
         lowered_rtl_ir_selector_conflict_target_entry_keys =>
             normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys(),
         lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys =>
@@ -165,6 +177,14 @@ sub normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys {
 
 sub normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys {
     return normalized_semantic_lowered_rtl_ir_optional_composition_keys();
+}
+
+sub normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys {
+    return normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys {
+    return normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys();
 }
 
 sub normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys {

@@ -173,6 +173,9 @@ stdout, writes no HDL files even when `-o` is present, and returns non-zero on
 rejected sources. Successful reports expose a sanitized `semantic` payload with
 module/root metadata, system/reset contract metadata, signal analysis, and the
 three forward layers `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`.
+The lowered-RTL layer now advertises bounded output-drive family entry schemas
+and selector-conflict entry schemas instead of leaving those payloads only
+sample-implied.
 They also include the same report-level support-accounting bridge used by
 successful `--check-json`. Rejected semantic exports reuse the stable
 diagnostic-code classifier from check JSON and do not expose partial semantics.

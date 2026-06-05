@@ -12,6 +12,8 @@ use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     build_normalized_semantic_lowered_rtl_ir_contract
     normalized_semantic_lowered_rtl_ir_contract_source
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys
+    normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
     normalized_semantic_lowered_rtl_ir_presence_key_family_map
     normalized_semantic_lowered_rtl_ir_presence_keys
     normalized_semantic_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys
@@ -66,6 +68,47 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
         $contract->{optional_composition_keys},
         normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
         'contract publishes the bounded lowered-rtl-ir composition-only key list',
+    );
+    is_deeply(
+        $contract->{output_drive_family_entry_keys},
+        normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys(),
+        'contract publishes the bounded output-drive family entry key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys(),
+        [
+            qw(
+                default_value
+                driver_blocks
+                driver_count
+                driver_enable_signals
+                family_enable_signals
+                multiplexer_type
+                reset_value
+                rhs_enable_families
+                rhs_values
+                signal_name
+                width
+            ),
+        ],
+        'output-drive family entry key list stays bounded and ordered',
+    );
+    is_deeply(
+        $contract->{output_drive_rhs_enable_family_entry_keys},
+        normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
+        'contract publishes the bounded output-drive rhs-enable-family entry key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
+        [
+            qw(
+                driver_blocks
+                driver_enable_signals
+                family_enable_signal
+                rhs_value
+            ),
+        ],
+        'output-drive rhs-enable-family entry key list stays bounded and ordered',
     );
     is_deeply(
         $contract->{selector_conflict_target_entry_keys},
@@ -147,6 +190,16 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
         $contract->{presence_key_family_map}{selector_conflict_target_entry_keys},
         normalized_semantic_lowered_rtl_ir_selector_conflict_target_entry_keys(),
         'grouped lowered-rtl-ir family map includes selector-conflict target entries',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{output_drive_family_entry_keys},
+        normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys(),
+        'grouped lowered-rtl-ir family map includes output-drive family entries',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{output_drive_rhs_enable_family_entry_keys},
+        normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
+        'grouped lowered-rtl-ir family map includes output-drive rhs-enable-family entries',
     );
 };
 

@@ -71,6 +71,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
@@ -106,6 +108,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_payload_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys
+    normalized_semantic_payload_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_keys
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_optional_child_presence_keys
@@ -519,6 +523,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'contract publishes the bounded forward-ir lowered-rtl-ir composition-only key list',
     );
     is_deeply(
+        $contract->{success_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys(),
+        'contract publishes the bounded forward-ir lowered-rtl-ir output-drive family entry key list',
+    );
+    is_deeply(
+        $contract->{success_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
+        'contract publishes the bounded forward-ir lowered-rtl-ir output-drive rhs-family key list',
+    );
+    is_deeply(
         $contract->{success_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys},
         normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys(),
         'contract publishes the bounded forward-ir lowered-rtl-ir selector-conflict target entry key list',
@@ -579,6 +593,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'report presence family map publishes selector-conflict target entry keys',
     );
     is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys(),
+        'report presence family map publishes output-drive family entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
+        'report presence family map publishes output-drive rhs-enable-family entry keys',
+    );
+    is_deeply(
         $contract->{presence_key_family_map}{success_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys},
         normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys(),
         'report presence family map publishes selector-conflict rhs-enable-family entry keys',
@@ -607,6 +631,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys(),
         normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
         'semantic payload forward-ir lowered-rtl-ir composition keys map to the nested lowered-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys(),
+        normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys(),
+        'semantic payload forward-ir lowered-rtl-ir output-drive family entry keys map to the nested lowered-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
+        normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
+        'semantic payload forward-ir lowered-rtl-ir output-drive rhs-family keys map to the nested lowered-rtl-ir owner',
     );
     is_deeply(
         normalized_semantic_payload_forward_ir_structural_rtl_ir_keys(),
@@ -851,6 +885,30 @@ subtest 'selector-instrumented semantic JSON keeps bounded selector-conflict ent
         $rhs_family->{same_value_assertion},
         normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
         'selector-instrumented same-value assertion keeps bounded keys',
+    );
+};
+
+subtest 'direct semantic JSON keeps bounded output-drive entry keys' => sub {
+    my $direct_path = File::Spec->catfile($repo_root, 'fsm', 'apb_requester.fsm');
+    my $direct_out_path = File::Spec->catfile($tempdir, 'semantic_contract_apb_requester_output_drive.sv');
+
+    my $decoded = run_semantic_json(
+        ['./bin/fsmgen', '--strict', '--emit-semantic-json', '-o', $direct_out_path, $direct_path],
+        'strict semantic JSON succeeds for output-drive direct sample',
+    );
+    my $family = $decoded->{semantic}{forward_ir}{lowered_rtl_ir}{output_drive_families}[0];
+    ok($family, 'direct success includes at least one output-drive family entry');
+    assert_keys_present(
+        $family,
+        normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys(),
+        'direct output-drive family entry keeps bounded keys',
+    );
+    my $rhs_family = $family->{rhs_enable_families}[0];
+    ok($rhs_family, 'direct output-drive family includes at least one rhs-enable-family entry');
+    assert_keys_present(
+        $rhs_family,
+        normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
+        'direct output-drive rhs-enable-family entry keeps bounded keys',
     );
 };
 

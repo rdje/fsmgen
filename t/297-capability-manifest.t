@@ -163,6 +163,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
@@ -920,6 +922,16 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_presence_keys},
         normalized_semantic_forward_ir_lowered_rtl_ir_keys(),
         'manifest records exact normalized semantic lowered-rtl-ir keys including selector-conflict metadata',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys(),
+        'manifest records exact normalized semantic output-drive family entry keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
+        'manifest records exact normalized semantic output-drive rhs-enable-family entry keys',
     );
     is_deeply(
         $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys},

@@ -2052,8 +2052,11 @@ The nested `semantic.forward_ir.lowered_rtl_ir` summary inside that branch now
 also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm)
 owns the current lowered-RTL shell keys, including the emitted
-`selector_conflict_target_count` and `selector_conflict_targets` metadata, the
-bounded `selector_conflict_targets[]` entry keys, nested
+`output_drive_family_count` and `output_drive_families` metadata, bounded
+`output_drive_families[]` entry keys, nested output-drive
+`rhs_enable_families[]` entry keys, the emitted
+`selector_conflict_target_count` and `selector_conflict_targets` metadata,
+bounded `selector_conflict_targets[]` entry keys, nested selector
 `rhs_enable_families[]` entry keys, and selector assertion metadata keys, plus
 the composition-only extension keys emitted today for top roots.
 
