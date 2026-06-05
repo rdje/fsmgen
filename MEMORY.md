@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.7.1` (this commit) — advertised `embedding.serializable_generation_result_snapshot` as a direct JSON-safe generation-result snapshot child while preserving the nested plan/report compatibility reference. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.8` active frontier — select the next exact normalized semantic export field family before any implementation.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.7.1`; `BACKEND-API-VALIDATION-FRONTIER.7`; `BACKEND-API-VALIDATION-FRONTIER.6.1`; `BACKEND-API-VALIDATION-FRONTIER.6`; `BACKEND-API-VALIDATION-FRONTIER.5.1`; `BACKEND-API-VALIDATION-FRONTIER.5`; `BACKEND-API-VALIDATION-FRONTIER.4.7`; `BACKEND-API-VALIDATION-FRONTIER.4.6.1`; `BACKEND-API-VALIDATION-FRONTIER.4.6`; `BACKEND-API-VALIDATION-FRONTIER.4.5.1`; `BACKEND-API-VALIDATION-FRONTIER.4.5`; `BACKEND-API-VALIDATION-FRONTIER.4.4.1`; `BACKEND-API-VALIDATION-FRONTIER.4.4`; `BACKEND-API-VALIDATION-FRONTIER.4.3`; `BACKEND-API-VALIDATION-FRONTIER.4.2`.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.8` (this commit) — selected explicit optional semantic-payload child discovery for the next normalized semantic export slice. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.8.1` active frontier — publish the optional semantic child key family for `semantic.composition` and `semantic.symbol_contract`.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.8`; `BACKEND-API-VALIDATION-FRONTIER.7.1`; `BACKEND-API-VALIDATION-FRONTIER.7`; `BACKEND-API-VALIDATION-FRONTIER.6.1`; `BACKEND-API-VALIDATION-FRONTIER.6`; `BACKEND-API-VALIDATION-FRONTIER.5.1`; `BACKEND-API-VALIDATION-FRONTIER.5`; `BACKEND-API-VALIDATION-FRONTIER.4.7`; `BACKEND-API-VALIDATION-FRONTIER.4.6.1`; `BACKEND-API-VALIDATION-FRONTIER.4.6`; `BACKEND-API-VALIDATION-FRONTIER.4.5.1`; `BACKEND-API-VALIDATION-FRONTIER.4.5`; `BACKEND-API-VALIDATION-FRONTIER.4.4.1`; `BACKEND-API-VALIDATION-FRONTIER.4.4`; `BACKEND-API-VALIDATION-FRONTIER.4.3`.
 - in_flight_uncommitted: none expected after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

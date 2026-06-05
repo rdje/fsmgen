@@ -3863,3 +3863,8 @@ Goal: provide a full normalized semantic export format for downstream tools.
 Current boundary: the capability manifest and normalized semantic JSON expose
 bounded, audited public surfaces. The manifest is not yet a full normalized
 semantic export.
+
+Current hardening target: publish an explicit optional semantic-payload child
+key family for `semantic.composition` and `semantic.symbol_contract` so tools
+can discover optional normalized semantic children directly instead of inferring
+them only from nested owner maps and prose.

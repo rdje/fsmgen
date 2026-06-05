@@ -55,7 +55,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.6.1`,
     `BACKEND-API-VALIDATION-FRONTIER.7`,
     `BACKEND-API-VALIDATION-FRONTIER.7.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.8`
+    `BACKEND-API-VALIDATION-FRONTIER.8`,
+    `BACKEND-API-VALIDATION-FRONTIER.8.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -219,9 +220,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.8`
-  Status: `active`
+  Status: `done`
   Goal: `Broaden normalized semantic export.`
-  Acceptance: `One exact normalized export field family is specified, implemented or deferred, documented, and regression-covered.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.8.1`
+  Acceptance: `Selected explicit optional semantic-payload child discovery as the next exact normalized semantic export field family. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.8.1: publish an explicit optional semantic child key family for semantic.composition and semantic.symbol_contract so embedders do not have to infer optional semantic children only from nested_presence_key_map or prose.`
+  Verification: `Selection audit/read: perl/FSM/Support/NormalizedSemanticReportContract.pm, perl/FSM/Support/NormalizedSemanticPayloadContract.pm, perl/FSM/Support/NormalizedSemanticReport.pm, t/311-normalized-semantic-report-contract.t, t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t, t/302-normalized-semantic-json.t, t/664-public-report-embedded-snapshot-key-alignment-audit.t, README.md, docs/book/src/11-extensions-and-embedding.md, and docs/book/src/14-feature-backlog.md. Evidence: successful semantic payloads already emit optional semantic.composition for composition roots and semantic.symbol_contract for symbol-rich sources; the contracts expose both child owners and nested presence maps, but no grouped optional semantic child key family is advertised directly under the report/payload contracts.`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.8.1`
+  Status: `active`
+  Goal: `Publish explicit optional semantic-payload child discovery for normalized semantic JSON.`
+  Acceptance: `NormalizedSemanticPayloadContract exposes a dedicated optional semantic child key family for composition and symbol_contract, and NormalizedSemanticReportContract republishes that family for successful semantic reports. Existing semantic payload required-key behavior remains unchanged: direct roots may omit composition, symbol-poor roots may omit symbol_contract, and no raw Perl objects are exported. README/live docs/mdBook explain the optional child family, and focused tests cover contract JSON round-trip, defensive-copy behavior, manifest propagation, and runtime success reports for direct, composition, and symbol-rich fixtures.`
   Verification: `pending`
   Commit: `pending`
 
@@ -248,7 +257,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 17 | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `done` | Published the flattened-default generation-mode boundary without adding a non-flattened backend path. |
 | 18 | `BACKEND-API-VALIDATION-FRONTIER.7` | `done` | Selected the JSON-safe generation-result snapshot as the next exact programmatic embedding API surface. |
 | 19 | `BACKEND-API-VALIDATION-FRONTIER.7.1` | `done` | Advertised the JSON-safe generation-result snapshot as a direct embedding child contract while keeping raw `HDLGenerator` objects non-public and preserving the nested `serializable_plan_reports` reference. |
-| 20 | `BACKEND-API-VALIDATION-FRONTIER.8` | `active` | Broaden normalized semantic export by selecting the next exact export field family. |
+| 20 | `BACKEND-API-VALIDATION-FRONTIER.8` | `done` | Selected explicit optional semantic-payload child discovery as the next exact normalized semantic export field family. |
+| 21 | `BACKEND-API-VALIDATION-FRONTIER.8.1` | `active` | Publish explicit optional semantic child key-family metadata for `semantic.composition` and `semantic.symbol_contract`. |
 
 ## Decisions
 
@@ -289,6 +299,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `perl -Iperl -c perl/FSM/Support/HDLGeneratorFacadeContract.pm`; `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t t/297-capability-manifest.t`; facade manifest JSON/defensive-copy audit suite (`t/815`, `t/817`, `t/818`, `t/819`, `t/820`, `t/821`, `t/822`, `t/823`, `t/824`, `t/825`, `t/826`, `t/1089`, `t/1090`, `t/358`); `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; flattened generation mode is now contract/manifest-visible and `generation_mode` remains rejected |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.7` | Selection audit/read of `perl/FSM/Support/SerializableGenerationResultSnapshot.pm`, `perl/FSM/Support/SerializablePlanReportContract.pm`, `perl/FSM/Support/EmbeddingContract.pm`, `perl/FSM/Support/EmbeddingSection.pm`, `t/632-serializable-generation-result-snapshot.t`, `t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t`, `t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t`, `t/297-capability-manifest.t`, `README.md`, `docs/book/src/11-extensions-and-embedding.md`, and `docs/book/src/14-feature-backlog.md`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct embedding child advertisement for `generation_result_snapshot` |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.7.1` | `perl -Iperl -c perl/FSM/Support/EmbeddingContract.pm`; `perl -Iperl -c perl/FSM/Support/EmbeddingSection.pm`; `perl -Iperl -c perl/FSM/Support/CapabilityManifestContract.pm`; focused embedding/manifest/snapshot suite (`t/321`, `t/297`, `t/358`, `t/366`, `t/437`, `t/845`-`t/854`, `t/1061`, `t/1062`, `t/632`, `t/650`, `t/641`, `t/629`, `t/655`); manifest-shell/provenance/family-map audit suite (`t/316`, `t/370`, `t/381`, `t/382`, `t/383`, `t/1131`); `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; advertised `embedding.serializable_generation_result_snapshot` as a direct manifest child while preserving nested plan/report compatibility |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.8` | Selection audit/read of `perl/FSM/Support/NormalizedSemanticReportContract.pm`, `perl/FSM/Support/NormalizedSemanticPayloadContract.pm`, `perl/FSM/Support/NormalizedSemanticReport.pm`, `t/311-normalized-semantic-report-contract.t`, `t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t`, `t/302-normalized-semantic-json.t`, `t/664-public-report-embedded-snapshot-key-alignment-audit.t`, `README.md`, `docs/book/src/11-extensions-and-embedding.md`, and `docs/book/src/14-feature-backlog.md`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected explicit optional semantic child discovery for `.8.1` |
 
 ## Commit Log
 
@@ -313,6 +324,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `BACKEND-API-VALIDATION-FRONTIER.6.1: publish flattened mode contract` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.7` | `BACKEND-API-VALIDATION-FRONTIER.7: select generation snapshot API` | selected `.7.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.7.1` | `BACKEND-API-VALIDATION-FRONTIER.7.1: advertise generation snapshot child` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.8` | `BACKEND-API-VALIDATION-FRONTIER.8: select optional semantic children` | selected `.8.1` |
 
 ## Changelog
 
@@ -406,3 +418,8 @@ items named in the 2026-06-05 remaining-work inventory.
   `embedding.serializable_plan_reports.generation_result_snapshot_contract`
   reference for compatibility, and moves the active frontier to `.8` for
   normalized semantic export selection.
+- `2026-06-05`: Completed `.8`; selected explicit optional semantic-payload
+  child discovery as the next normalized semantic export slice because
+  `semantic.composition` and `semantic.symbol_contract` are already optional
+  emitted children with bounded contracts, but the report/payload contracts do
+  not yet publish one direct optional child key family. Activated `.8.1`.
