@@ -358,9 +358,9 @@ The optional external SystemVerilog validation lane is covered by
 When `verilator` and `yosys` are installed, that smoke generates
 `fsm/lte_dif_pmaster.fsm`, `fsm/mipicsi2_byteserial.fsm`,
 `fsm/mipicsi2_pkt_nx4B_fifo.fsm`, `fsm/mipicsi2_tester_ctrl.fsm`, and
-`fsm/mipicsi2_txtimer.fsm`, the cleaned historical direct sample
-`fsm/trial_1.fsm`, plus every supported direct protocol actor from
-the corpus (`fsm/apb_requester.fsm`, `fsm/apb_completer.fsm`, and
+`fsm/mipicsi2_txtimer.fsm`, the warning-clean historical direct samples
+`fsm/trial_0.fsm` and `fsm/trial_1.fsm`, plus every supported direct protocol
+actor from the corpus (`fsm/apb_requester.fsm`, `fsm/apb_completer.fsm`, and
 `fsm/amba_requester.fsm` today), validates the emitted `.sv` files with
 Verilator `--lint-only --sv`, validates ABC-free Yosys structural synthesis
 with `read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat`, and
