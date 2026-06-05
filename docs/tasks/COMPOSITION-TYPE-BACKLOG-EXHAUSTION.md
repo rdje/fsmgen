@@ -91,16 +91,16 @@ remains or a real prerequisite blocker is reached.
   Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5: defer top-boundary widening`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next generated-child top instantiation surface or blocker from evidence.`
   Acceptance: `Existing generated-child top-instantiation evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: focused generated-child top evidence, memory architecture, mdBook, feature-backlog status, doc path, knowledge-map, and diff checks`
+  Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6: defer generated-child top widening`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`
   Status: `pending`
-  Goal: `Broaden spawn/blocking-do parameter and value binding surfaces.`
-  Acceptance: `One exact static value, parameter, binding, package, aggregate, or specialization rule is selected, implemented or explicitly deferred, documented, and regression-covered.`
+  Goal: `Select the next spawn/blocking-do parameter or value binding contract or blocker from evidence.`
+  Acceptance: `Existing activation-parameter/value-binding evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
   Verification: `pending`
   Commit: `pending`
 
@@ -150,7 +150,7 @@ remains or a real prerequisite blocker is reached.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6` | `pending` | Top-boundary convention widening is explicitly deferred behind one exact composition contract; the next Composition/type item needs generated-child top-instantiation evidence selection before any code. |
+| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7` | `pending` | Generated-child top widening is explicitly deferred behind one exact activation/top/composition contract; the next Composition/type item needs spawn/blocking-do parameter and value-binding evidence selection before any code. |
 
 ## Selection Result
 
@@ -267,6 +267,29 @@ automatic priority/merge/arbitration for same-name conflicts, wider public
 re-export policy, non-top-boundary convention semantics, and richer local
 override syntax not already covered by `?ports` and `?wiring`.
 
+## Generated-Child Top Selection Result
+
+`COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6` reviewed the current generated-child
+composition book boundary and focused generated-child top regressions.
+
+No new generated-child top implementation leaf is selected from this tree. The
+existing shipped contract already covers bounded generated composition tops for
+spawn, generated blocking `do`, and generated rule-trigger activation
+surfaces, including scheduled parent/child artifacts, generated top `.fsm`
+emission, composition-pipeline HDL lowering, start/done handoffs, named-drive
+handoffs, explicit port-binding handoffs, per-instance parameter overrides,
+generated-child override lowering, and public schedule-report
+`generated_composition` discovery metadata.
+
+The remaining generated-child top backlog stays deferred until an exact
+activation/top/composition, route/storage/protocol, reusable-module,
+portable-type, VHDL/backend, or architecture prerequisite is explicit.
+Deferred items include broader generated-child top forms beyond the shipped
+spawn/generated-do/rule-trigger patterns, generalized child lifecycle
+semantics, recursive or dynamic child generation, wider generated-child data
+routes outside already selected ATL route slices, and new protocol-like
+generated-top behavior.
+
 ## Evidence To Reuse
 
 - `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`
@@ -307,11 +330,16 @@ override syntax not already covered by `?ports` and `?wiring`.
   leaf from `.5`. The R11 audit, book boundary, and focused regressions
   already cover the bounded shipped surface; broader work remains blocked
   until one exact composition contract is selected.
+- `2026-06-05`: Do not select a new generated-child top implementation leaf
+  from `.6`. The current book boundary and focused regressions already cover
+  the bounded shipped spawn, generated blocking `do`, and generated
+  rule-trigger top surfaces; broader work remains blocked until one exact
+  generated-child top contract is selected.
 
 ## Open Questions
 
-- None before the next evidence-selection leaf. Any generated-child top
-  instantiation code must first get an exact executable owner under this tree.
+- None before the next evidence-selection leaf. Any activation parameter or
+  value-binding code must first get an exact executable owner under this tree.
 
 ## Blockers
 
@@ -328,6 +356,7 @@ override syntax not already covered by `?ports` and `?wiring`.
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3` | `prove -Iperl t/139-composition-shared-datapath-candidate-metadata.t t/140-composition-shared-datapath-drive-intent-metadata.t t/141-composition-shared-datapath-aggregate-enable-metadata.t t/142-composition-shared-datapath-assertion-metadata.t t/143-composition-shared-datapath-visibility-metadata.t t/144-composition-shared-datapath-combinational-peer-read-policy.t t/145-composition-shared-datapath-runtime-hdl.t t/146-composition-shared-datapath-lifted-register-runtime.t t/147-composition-shared-datapath-internal-lifted-register-runtime.t t/148-composition-shared-datapath-mixed-reexport-runtime.t t/149-composition-shared-datapath-combinational-runtime.t t/150-composition-shared-datapath-combinational-internal-runtime.t t/151-composition-shared-datapath-assertion-runtime-hdl.t t/152-composition-shared-datapath-public-fanout-register-runtime.t t/153-composition-shared-datapath-combinational-public-fanout-runtime.t t/159-composition-shared-datapath-forward-ir-exports.t t/178-composition-shared-datapath-support.t t/183-composition-shared-datapath-candidate-builder.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4` | `prove -Iperl t/48-language-contract-standalone-dt-classification.t t/82-standalone-dt-root-support.t t/83-reusable-source-path-resolution.t t/85-composition-standalone-dt-children.t t/86-composition-single-child-connect-by-name.t t/130-composition-generated-child-source-shape-diagnostics.t t/133-standalone-dt-root-aliases.t t/134-standalone-dt-explicit-system-support.t t/135-composition-generated-child-default-source-names.t t/136-standalone-dt-enable-family-metadata.t t/137-standalone-dt-multi-drive-family-metadata.t t/138-composition-standalone-dt-export-metadata.t t/154-standalone-dt-assertion-runtime-hdl.t t/157-composition-standalone-dt-forward-ir-exports.t t/171-forward-lowered-rtl-ir-standalone-dt-target-helpers.t t/292-composition-generated-child-parameter-overrides.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5` | `prove -Iperl t/24-composition-connect-by-name.t t/86-composition-single-child-connect-by-name.t t/87-composition-mixed-connect-by-name.t t/92-composition-multi-rtl-connect-by-name.t t/94-composition-multi-generated-plus-rtl-connect-by-name.t t/95-composition-connect-by-name-input-fanout.t t/96-composition-implicit-single-child-ports.t t/97-composition-implicit-multi-child-inputs.t t/98-composition-implicit-multi-child-outputs.t t/99-composition-implicit-internal-carriers.t t/100-composition-internal-carrier-top-reexport.t t/101-composition-explicit-link-implicit-ports.t t/102-composition-explicit-port-convention.t t/103-composition-provenance-metadata.t t/104-composition-provenance-reporting.t t/105-composition-override-reporting.t t/106-composition-blocked-reporting.t t/160-composition-top-forward-ir-surface.t t/162-composition-top-structural-rtl-ir-surface.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
+| `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6` | `prove -Iperl t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t t/1215-isf-spawn-parameter-binding.t t/1248-isf-rule-trigger-parameter-binding.t t/1255-isf-schedule-report-golden-matrix.t t/292-composition-generated-child-parameter-overrides.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -339,6 +368,7 @@ override syntax not already covered by `?ports` and `?wiring`.
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3: defer shared-datapath widening` | `closed shared-datapath selection as prerequisite-bound deferral; next frontier .4` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4: defer reusable-module widening` | `closed reusable standalone-DT selection as prerequisite-bound deferral; next frontier .5` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5: defer top-boundary widening` | `closed top-boundary convention selection as prerequisite-bound deferral; next frontier .6` |
+| `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6: defer generated-child top widening` | `closed generated-child top selection as prerequisite-bound deferral; next frontier .7` |
 
 ## Changelog
 
@@ -357,3 +387,6 @@ override syntax not already covered by `?ports` and `?wiring`.
 - `2026-06-05`: Closed top-boundary convention selection as an explicit
   prerequisite deferral and advanced the frontier to generated-child
   top-instantiation evidence selection.
+- `2026-06-05`: Closed generated-child top selection as an explicit
+  prerequisite deferral and advanced the frontier to spawn/blocking-do
+  parameter and value-binding evidence selection.

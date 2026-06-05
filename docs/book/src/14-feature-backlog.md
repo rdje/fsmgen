@@ -344,10 +344,10 @@ Current boundary: generated-child parameterization exists for bounded
 composition paths, and ISF generated-child fixtures now emit a generated
 `<actor>_top.fsm` that wires the scheduled parent, scheduled children,
 start/done handoffs, named-drive handoffs, explicit port-binding handoffs, and
-per-instance parameter overrides for spawn and generated blocking `do`
-activations through the existing composition pipeline. Broader generated-child
-top surfaces beyond the covered spawn and parameterized `do` patterns remain
-backlog.
+per-instance parameter overrides for spawn, generated blocking `do`, and
+generated rule-trigger activations through the existing composition pipeline.
+Broader generated-child top surfaces beyond the covered spawn, generated `do`,
+and rule-trigger patterns remain backlog.
 
 ### Spawn and Blocking Do Parameter Binding
 

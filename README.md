@@ -101,7 +101,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
-- `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — active Composition/type backlog tree selected for PNT exhaustion; current frontier selects the next generated-child top-instantiation surface after deferring top-boundary convention widening behind one exact composition contract.
+- `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — active Composition/type backlog tree selected for PNT exhaustion; current frontier selects the next spawn/blocking-do parameter and value-binding contract after deferring generated-child top widening behind one exact activation/top/composition contract.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
 - `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md` — proposed backend/API frontier owner tree for VHDL, external validation, ABC, structured generation, embedding API, and normalized export backlog.
 - `docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md` — proposed architecture-debt frontier owner tree for direct-backend convergence and large ISF parser/lowerer extraction work.
