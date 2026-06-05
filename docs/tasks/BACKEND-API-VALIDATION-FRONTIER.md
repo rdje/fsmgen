@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `BACKEND-API-VALIDATION-FRONTIER`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `Backends And Validation` / `Embedding And Public APIs`
 - Created: `2026-06-05`
 - Last updated: `2026-06-05`
@@ -16,7 +16,7 @@ items named in the 2026-06-05 remaining-work inventory.
 
 ## Non-Goals
 
-- Do not implement backend or API behavior while this tree is proposed.
+- Do not implement backend or API behavior without an active exact child leaf.
 - Do not claim VHDL, GHDL, ABC, structured generation, or embedding API
   behavior as shipped without matching code, tests, and mdBook coverage.
 - Do not leak unstable internal objects as public API surfaces.
@@ -32,10 +32,11 @@ items named in the 2026-06-05 remaining-work inventory.
 ## Task Tree
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER`
-  Status: `proposed`
+  Status: `active`
   Goal: `Track backend, validation, embedding, and public API backlog directions.`
   Children: `BACKEND-API-VALIDATION-FRONTIER.1`,
     `BACKEND-API-VALIDATION-FRONTIER.2`,
+    `BACKEND-API-VALIDATION-FRONTIER.2.1`,
     `BACKEND-API-VALIDATION-FRONTIER.3`,
     `BACKEND-API-VALIDATION-FRONTIER.4`,
     `BACKEND-API-VALIDATION-FRONTIER.5`,
@@ -44,16 +45,24 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.8`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next executable backend/API leaf from evidence.`
-  Acceptance: `One backend/API item is activated or explicitly blocked behind a prerequisite.`
+  Acceptance: `Activated the backend/API frontier after the broad ISF/R14 frontier exhausted and selected BACKEND-API-VALIDATION-FRONTIER.2.1, the first scoped direct-root VHDL backend scaffold leaf.`
+  Verification: `Selection audit/read: docs/TASK_TREE.md, docs/book/src/14-feature-backlog.md Backends And Validation section, docs/VHDL_SCOPE.md, docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md VHDL prerequisite result, README.md backend/API pointers, perl/FSM/HDL/FlattenedDT.pm generate_vhdl not-implemented boundary, perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm conversion pattern, t/386-hdl-generator-facade-target-language-boundary-audit.t, and t/114-composition-target-support-diagnostics.t. Evidence shows VHDL is the first listed backend/API backlog item, unblocks GHDL/composition VHDL work, and has a narrow direct-root SV-first conversion plan while composition VHDL remains fail-closed.`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.2`
+  Status: `active`
+  Goal: `Implement or explicitly scope the full VHDL backend frontier.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.2.1`
+  Acceptance: `One exact VHDL backend surface is selected, implemented or blocked, documented, and regression-covered.`
   Verification: `pending`
   Commit: `pending`
 
-- ID: `BACKEND-API-VALIDATION-FRONTIER.2`
+- ID: `BACKEND-API-VALIDATION-FRONTIER.2.1`
   Status: `pending`
-  Goal: `Implement or explicitly scope the full VHDL backend frontier.`
-  Acceptance: `One exact VHDL backend surface is selected, implemented or blocked, documented, and regression-covered.`
+  Goal: `Implement the first direct-root VHDL backend scaffold through an SV-first converter module.`
+  Acceptance: `perl/FSM/HDL/FlattenedDT.pm routes direct single-FSM VHDL generation through a dedicated VHDL backend/converter instead of the blanket not-implemented die for accepted direct roots. The first accepted fixture covers a small direct FSM/DT surface with clock/reset, scalar/vector ports, state progression, and basic assignments, emitting deterministic VHDL text through the existing pipeline/CLI target path. Composition/top VHDL, GHDL validation, packages, multi-clock domains, aggregate VHDL, and full feature parity remain fail-closed or deferred with existing diagnostics. Focused tests, docs/mdBook, capability/API surfaces, and required gates pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -103,16 +112,19 @@ items named in the 2026-06-05 remaining-work inventory.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `BACKEND-API-VALIDATION-FRONTIER.1` | `pending` | Proposed owner only; not PNT-eligible until backend/API work is selected. |
+| 1 | `BACKEND-API-VALIDATION-FRONTIER.1` | `done` | Backend/API tree activated after broad ISF/R14 exhaustion; selected first exact VHDL direct-root scaffold leaf. |
+| 2 | `BACKEND-API-VALIDATION-FRONTIER.2.1` | `pending` | First executable backend/API leaf: direct single-FSM VHDL scaffold through an SV-first converter, preserving composition/GHDL/full-parity deferrals. |
 
 ## Decisions
 
-- `2026-06-05`: Keep this tree proposed while the user-selected active focus is
-  Composition/type.
+- `2026-06-05`: Activated after `ISF-REMAINING-BROAD-FRONTIER` exhausted. Select
+  VHDL as the first backend/API lane because it is first in the book backlog,
+  unblocks GHDL and VHDL composition work, and `docs/VHDL_SCOPE.md` already
+  defines a narrow direct-root SV-first conversion scaffold.
 
 ## Open Questions
 
-- None while proposed.
+- None.
 
 ## Blockers
 
@@ -123,14 +135,17 @@ items named in the 2026-06-05 remaining-work inventory.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- |
-| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.1` | `pending` | `pending` |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.1` | Selection audit/read: `docs/TASK_TREE.md`, `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md`, `README.md`, `perl/FSM/HDL/FlattenedDT.pm`, `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `t/114-composition-target-support-diagnostics.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `BACKEND-API-VALIDATION-FRONTIER.1` | `pending` | `pending` |
+| `BACKEND-API-VALIDATION-FRONTIER.1` | `BACKEND-API-VALIDATION-FRONTIER.1: select VHDL direct scaffold` | this slice |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed backend/API frontier owner tree.
+- `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
+  VHDL backend scaffold through an SV-first converter, before backend code
+  changes.
