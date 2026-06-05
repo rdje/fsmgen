@@ -777,17 +777,18 @@ wait-state chains, and treat resolved zero as a transparent no-op. The
 runtime wait boundary accepts the known-width runtime scalar and runtime
 expression count subsets including
 consecutive top-level runtime waits and waits after shipped `await`, `stage`,
-`repeat` exit, `await_all`, `await_any`, bank load/store, and loop-decision
-predecessors,
+`repeat` exit, repeat-check loop-back into a leading repeat-body wait,
+`await_all`, `await_any`, bank load/store, and loop-decision predecessors,
 reaches HDL generation, exposes `actor_constants[]` and
 `actor_params[]` plus `transaction_waits[]` provenance, and rejects malformed,
 unknown, unsupported parameter, unsupported package, unknown-width expression,
 or unsupported dynamic counts.
 Inline `when`, `repeat`, `switch`, `while`, and
-`until` body dynamic waits are covered for the no-pending-sample subset. Branch
-and loop decision states preserve their alternate exits while splitting the
-selected dynamic-wait edge into positive-count load/entry and zero-count
-bypass paths. Pending samples before top-level runtime waits are covered: the
+`until` body dynamic waits are covered for the no-pending-sample subset,
+including a runtime wait as the first repeat-body state. Branch and loop
+decision states preserve their alternate exits while splitting the selected
+dynamic-wait edge into positive-count load/entry and zero-count bypass paths.
+Pending samples before top-level runtime waits are covered: the
 positive path materializes samples in the first wait state, counts greater
 than one continue through a no-resample wait-loop state, and the zero path uses
 a sample-preserving clone of the following state when that state can carry the

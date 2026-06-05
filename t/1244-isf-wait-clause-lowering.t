@@ -2212,12 +2212,12 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_when_sample');
 };
 
-subtest 'runtime wait as first repeat-body statement fails closed' => sub {
-    # A runtime (dynamic) (wait ...) as the FIRST statement of a (repeat ...)
-    # body is not yet supported under the counted-loop lowering; it must fail
-    # closed with a targeted diagnostic rather than emit (possibly wrong) FSM
-    # text. Tracked in ISF-COUNTED-REPEAT-TERMINATION.3.
-    my $source = <<'ISF';
+subtest 'runtime wait as first repeat-body statement reloads from repeat_check' => sub {
+    # ISF-COUNTED-REPEAT-TERMINATION.4: the check-first repeat re-enters a leading
+    # runtime wait through the same dynamic-wait edge splitter used by other
+    # predecessor states. The repeat_check reloads the wait counter on the positive
+    # wait-count path and bypasses the wait when the runtime count is zero.
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-repeat');
 (actor wait_dynamic_repeat
   (clock clk)
   (reset (rst_n async active_low))
@@ -2236,25 +2236,42 @@ subtest 'runtime wait as first repeat-body statement fails closed' => sub {
     (complete done)))
 ISF
 
-    my $ok = eval {
-        lower_source($source, 'wait-dynamic-repeat');
-        1;
-    };
-    ok(!$ok, 'runtime wait as first repeat-body statement is rejected during lowering');
-    like(
-        $@,
-        qr/a runtime '\(wait \.\.\.\)' as the FIRST statement of a '\(repeat \.\.\.\)' body is not yet supported/,
-        'lowering fails closed with the counted-loop runtime-wait diagnostic',
+    my $fsm = $lowered->{files}{'wait_dynamic_repeat.fsm'};
+    my $repeat_check = state_block($fsm, 'main_repeat_check_4');
+    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) cycles\)\)/,
+        'repeat_check loop-back samples the runtime wait count on the positive path');
+    like($repeat_check, qr/\(-> main_wait_2 <\(& \(!= main_cnt 0\) cycles\)\)/,
+        'repeat_check positive path enters the leading dynamic wait');
+    like($repeat_check, qr/\(-> main_drive_3 <\(& \(!= main_cnt 0\) \(== cycles 0\)\)\)/,
+        'repeat_check positive zero-wait path bypasses to the following body state');
+    like($repeat_check, qr/\?main_cnt[\s\S]*\(=0 \(-> main_done_5\)\)/,
+        'repeat_check still exits the repeat when the repeat counter reaches zero');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_drive_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'leading repeat-body dynamic wait report exposes runtime count metadata',
     );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_repeat');
 };
 
-subtest 'runtime wait as first repeat-body statement fails closed (with carried sample)' => sub {
-    # A leading (sample ... as ...) folds into the runtime (wait ...) entry state
-    # rather than emitting its own state, so the dynamic wait is still the FIRST
-    # emitted state of the (repeat ...) body. That case is not yet supported under
-    # the counted-loop lowering and must fail closed with the targeted diagnostic.
-    # Tracked in ISF-COUNTED-REPEAT-TERMINATION.3.
-    my $source = <<'ISF';
+subtest 'runtime wait as first repeat-body statement preserves carried samples' => sub {
+    # A leading (sample ... as ...) folds into the runtime (wait ...) entry state.
+    # The repeat_check zero-wait path must therefore target a sample-preserving
+    # clone of the following body state rather than dropping the carried sample.
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-repeat-sample');
 (actor wait_dynamic_repeat_sample
   (clock clk)
   (reset (rst_n async active_low))
@@ -2275,16 +2292,41 @@ subtest 'runtime wait as first repeat-body statement fails closed (with carried 
     (complete done)))
 ISF
 
-    my $ok = eval {
-        lower_source($source, 'wait-dynamic-repeat-sample');
-        1;
-    };
-    ok(!$ok, 'runtime wait as first emitted repeat-body state is rejected during lowering');
-    like(
-        $@,
-        qr/a runtime '\(wait \.\.\.\)' as the FIRST statement of a '\(repeat \.\.\.\)' body is not yet supported/,
-        'lowering fails closed with the counted-loop runtime-wait diagnostic',
+    my $fsm = $lowered->{files}{'wait_dynamic_repeat_sample.fsm'};
+    my $repeat_check = state_block($fsm, 'main_repeat_check_4');
+    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) cycles\)\)/,
+        'repeat_check reloads the carried-sample dynamic wait on the positive path');
+    like($repeat_check, qr/\(-> main_wait_2 <\(& \(!= main_cnt 0\) cycles\)\)/,
+        'positive path enters the sample-carrying wait state');
+    like($repeat_check, qr/\(-> main_wait_2_zero_sample <\(& \(!= main_cnt 0\) \(== cycles 0\)\)\)/,
+        'zero-wait path enters the sample-preserving body clone');
+
+    my $zero_clone = state_block($fsm, 'main_wait_2_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'zero-wait clone materializes the carried sample');
+    like($zero_clone, qr/\(= \(outp_val hold\)\)/,
+        'zero-wait clone preserves the following drive that consumes the sample');
+    like($zero_clone, qr/\(-> main_repeat_check_4\)/,
+        'zero-wait clone returns to the repeat check');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_drive_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'sample-carrying leading repeat-body dynamic wait report keeps the original successor',
     );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_repeat_sample');
 };
 
 subtest 'runtime scalar waits lower inside switch branches' => sub {
@@ -2650,12 +2692,10 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_switch_sample_set');
 };
 
-subtest 'runtime wait as first repeat-body statement fails closed (carried sample, setter body)' => sub {
-    # As above, the leading (sample ... as ...) folds into the runtime (wait ...)
-    # entry state, leaving the dynamic wait as the FIRST emitted state of the
-    # (repeat ...) body. Not yet supported under the counted-loop lowering, so it
-    # must fail closed. Tracked in ISF-COUNTED-REPEAT-TERMINATION.3.
-    my $source = <<'ISF';
+subtest 'runtime wait as first repeat-body statement preserves carried samples before a setter' => sub {
+    # The carried-sample zero-bypass path may also clone an independent setter
+    # successor, preserving both the sample and the setter before control resumes.
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-repeat-sample-set');
 (actor wait_dynamic_repeat_sample_set
   (clock clk)
   (reset (rst_n async active_low))
@@ -2677,16 +2717,39 @@ subtest 'runtime wait as first repeat-body statement fails closed (carried sampl
     (complete done)))
 ISF
 
-    my $ok = eval {
-        lower_source($source, 'wait-dynamic-repeat-sample-set');
-        1;
-    };
-    ok(!$ok, 'runtime wait as first emitted repeat-body state is rejected during lowering');
-    like(
-        $@,
-        qr/a runtime '\(wait \.\.\.\)' as the FIRST statement of a '\(repeat \.\.\.\)' body is not yet supported/,
-        'lowering fails closed with the counted-loop runtime-wait diagnostic',
+    my $fsm = $lowered->{files}{'wait_dynamic_repeat_sample_set.fsm'};
+    my $repeat_check = state_block($fsm, 'main_repeat_check_5');
+    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) cycles\)\)/,
+        'repeat_check reloads the leading dynamic wait before the setter body');
+    like($repeat_check, qr/\(-> main_wait_2_zero_sample <\(& \(!= main_cnt 0\) \(== cycles 0\)\)\)/,
+        'zero-wait path enters the sample-preserving setter clone');
+
+    my $zero_clone = state_block($fsm, 'main_wait_2_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'setter zero-wait clone materializes the carried sample');
+    like($zero_clone, qr/\(<- \(out> 1\)\)/,
+        'setter zero-wait clone preserves the independent setter');
+    like($zero_clone, qr/\(-> main_drive_4\)/,
+        'setter zero-wait clone continues to the following drive');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_set_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'sample-carrying leading repeat-body dynamic wait report points at the original setter',
     );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_repeat_sample_set');
 };
 
 subtest 'runtime scalar waits lower inside while and until bodies' => sub {
@@ -2993,12 +3056,10 @@ ISF
 subtest 'loop decision runtime scalar waits preserve pending samples' => sub {
     my ($lowered, $report, $fsm, $wait);
 
-    # The repeat variant has a runtime (wait ...) as the FIRST emitted state of
-    # the (repeat ...) body (the leading sample folds into the wait entry state),
-    # which is not yet supported under the counted-loop lowering and must fail
-    # closed. Tracked in ISF-COUNTED-REPEAT-TERMINATION.3. The while/until decision
-    # variants below are unaffected and still lower as before.
-    assert_lower_rejected(<<'ISF', 'wait-dynamic-sample-repeat-check',
+    # ISF-COUNTED-REPEAT-TERMINATION.4: the repeat variant now lowers too. The
+    # leading sample folds into the wait entry state, and the zero-count path clones
+    # the repeat_check so the sample is materialized before the next iteration check.
+    ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-repeat-check');
 (actor wait_dynamic_sample_repeat_check
   (clock clk)
   (reset (rst_n async active_low))
@@ -3014,7 +3075,42 @@ subtest 'loop decision runtime scalar waits preserve pending samples' => sub {
       (wait cycles))
     (complete done)))
 ISF
-        qr/a runtime '\(wait \.\.\.\)' as the FIRST statement of a '\(repeat \.\.\.\)' body is not yet supported/);
+
+    $fsm = $lowered->{files}{'wait_dynamic_sample_repeat_check.fsm'};
+    my $repeat_check = state_block($fsm, 'main_repeat_check_3');
+    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) cycles\)\)/,
+        'repeat_check reloads the leading dynamic wait on the positive path');
+    like($repeat_check, qr/\(-> main_wait_2 <\(& \(!= main_cnt 0\) cycles\)\)/,
+        'repeat_check positive path enters the sample-carrying wait');
+    like($repeat_check, qr/\(-> main_wait_2_zero_sample <\(& \(!= main_cnt 0\) \(== cycles 0\)\)\)/,
+        'repeat_check zero-wait path enters the sample-preserving check clone');
+
+    my $repeat_zero_clone = state_block($fsm, 'main_wait_2_zero_sample');
+    like($repeat_zero_clone, qr/\(<= \(hold din\)\)/,
+        'repeat zero-wait clone materializes the carried sample');
+    like($repeat_zero_clone, qr/\(-- main_cnt\)/,
+        'repeat zero-wait clone preserves the next iteration check');
+    like($repeat_zero_clone, qr/\(-> main_wait_2_zero_sample <\(& \(!= main_cnt 0\) \(== cycles 0\)\)\)/,
+        'repeat zero-wait clone can continue through consecutive zero waits');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_repeat_check_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'repeat-check successor dynamic wait report points at the original repeat check',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_repeat_check');
 
     ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-while-check');
 (actor wait_dynamic_sample_while_check

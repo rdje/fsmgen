@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `ISF-COUNTED-REPEAT-TERMINATION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14` (ISF lowering correctness)
 - Created: `2026-06-01`
-- Last updated: `2026-06-01`
+- Last updated: `2026-06-05`
 - Owner: repo-local workflow
 
 ## Goal
@@ -43,11 +43,12 @@ HDL:
    core SV emitter produces `main_cnt == 1'b1` (true only at value 1), not a nonzero test.
    (The `=0` / done edge correctly renders `~|cnt`.)
 
-## Design (Option B — body-first, minimal churn; correct for static/runtime/zero counts)
+## Historical Design (.1 Superseded; .2 Shipped Check-First)
 
-Keep the current `init -> body … -> check` state order (so the spawn/do/await-in-repeat
-and cross-domain-handshake machinery, which depend on body adjacency and re-run the body
-from its first state each iteration, are undisturbed). Three coordinated changes:
+Initial `.1` selected Option B: keep the current `init -> body … -> check` state order so
+the spawn/do/await-in-repeat and cross-domain-handshake machinery, which depend on body
+adjacency and re-run the body from its first state each iteration, are undisturbed. Three
+coordinated changes:
 
 1. `_ir_repeat`: `loop_target` = the **first body state** (`$s[1]`) instead of
    `repeat_init` (`$s[0]`) — the loop-back skips the counter reload. (Empty body: loop
@@ -67,20 +68,31 @@ Why not check-first (init→check→body): it also works and is arguably cleaner
 for the heavily-developed spawn/do/await-in-repeat-body features. Option B is correct for
 all count kinds with far less churn.
 
+Supersession: `.2` shipped the check-first shape instead. The body-first `count - 1`
+runtime load introduced a second counter expression-assignment that aliased the one-hot
+selector enable, while the check-first shape loads the raw count once, keeps the decrement
+as the only counter expression update, and still re-enters the body from its first state.
+All current code, public docs, and verification evidence describe that check-first shape.
+
 ## Slice plan
 
 - `.1` select (this doc) with the simulation evidence + proven fix shape.
-- `.2` the termination fix (Option B): the three changes above; update the ~18 affected
-  `.fsm`/SV goldens; verify with **simulation** (static N, runtime count, count 0/1,
-  nested, do-in-repeat) + full `isf` regression. The decision becomes `(>0 -> body)
-  (=0 -> done)`; counter loads `N-1`; loop-back targets the body.
+- `.2` the termination fix (shipped check-first): `repeat_init` loads the raw count once,
+  flows to `repeat_check`, and the repeat check decrements, exits on zero, or re-enters
+  the first body state on nonzero. Update affected `.fsm`/SV goldens; verify with
+  **simulation** (static N, runtime count, count 0/1, nested, do-in-repeat) + full `isf`
+  regression.
 - `.3` (frontier) width-cleanliness: the `(>0)` edge renders `cnt > 1'b0`
   (WIDTHEXPAND — 3-bit vs 1-bit literal). Make the nonzero decision edge verilator-clean
   (width-matched literal or `|cnt` reduction) so counted loops pass `--verify-hdl`.
+- `.4` leading runtime wait restoration: support a runtime `(wait ...)` as the first
+  repeat-body state by letting `repeat_check` reload/enter/bypass that dynamic wait on
+  the nonzero loop-back edge.
 
-## Non-Goals
+## Original Non-Goals
 
-- Reworking the loop structure beyond what termination requires (no check-first rewrite).
+- Reworking the loop structure beyond what termination requires (recorded before `.2`
+  selected the check-first fix shape).
 - The general multi-bit decision-literal width issue beyond the repeat counter edge
   (handled in `.3` for the repeat path; a broader sweep is separate if wanted).
 
@@ -91,14 +103,15 @@ all count kinds with far less churn.
   (and 0/1 edge counts), proven by simulation; spawn/do/await-in-repeat and
   cross-domain-handshake-in-repeat still behave correctly; full `isf` regression green;
   goldens updated to the corrected structure. `.3` additionally makes counted loops pass
-  `--verify-hdl`. Each leaf committed via `COMMIT.md`.
+  `--verify-hdl`. `.4` restores runtime `(wait ...)` as the first repeat-body statement,
+  including carried-sample zero-bypass coverage. Each leaf committed via `COMMIT.md`.
 
 ## Task Tree
 
 - ID: `ISF-COUNTED-REPEAT-TERMINATION`
-  Status: `active`
-  Goal: `Counted (repeat N …) loops must terminate after exactly N iterations (currently spin forever for N>=2).`
-  Children: `.1` (select + evidence), `.2` (termination fix, Option B), `.3` (frontier: decision-edge width-cleanliness)
+  Status: `done`
+  Goal: `Counted (repeat N …) loops terminate after exactly N iterations, emit a verilator-clean nonzero decision edge, and support leading runtime waits in repeat bodies.`
+  Children: `.1` (select + evidence), `.2` (termination fix, check-first), `.3` (decision-edge width-cleanliness), `.4` (leading runtime wait restoration)
 
 - ID: `ISF-COUNTED-REPEAT-TERMINATION.1`
   Status: `done`
@@ -110,7 +123,7 @@ all count kinds with far less churn.
 - ID: `ISF-COUNTED-REPEAT-TERMINATION.2`
   Status: `done`
   Goal: `Termination fix (check-first): init -> check (load count once, raw copy); repeat_check loop_target -> first body state; decrement via the '--' operator; Emitter/FSM.pm repeat_check continue edge -> (>0 -> body)(=0 -> done).`
-  Acceptance: `Counted (repeat N …) runs body exactly N times then completes for static literal, param/constant, and runtime-signal counts and 0/1 edges; spawn/do/await-in-repeat + cross-domain-handshake-in-repeat re-arm correctly each iteration; goldens updated to the corrected .fsm structure; full suite PASS; simulation confirms exactly-N termination. A runtime (wait …) as the FIRST statement of a repeat body fails closed with a clear diagnostic (deferred to .3); non-first and static waits unaffected.`
+  Acceptance: `Counted (repeat N …) runs body exactly N times then completes for static literal, param/constant, and runtime-signal counts and 0/1 edges; spawn/do/await-in-repeat + cross-domain-handshake-in-repeat re-arm correctly each iteration; goldens updated to the corrected .fsm structure; full suite PASS; simulation confirms exactly-N termination. A runtime (wait …) as the FIRST statement of a repeat body failed closed in this slice and was deferred to .4; non-first and static waits were unaffected.`
   Verification: `Simulated (verilator --binary): static N=1/4/7 -> result==N; runtime n=5/0/1 -> exactly n (0 -> immediate done); non-first runtime wait-in-repeat -> count==3 terminates; runtime-wait-FIRST -> fail-closed. Implemented as Option A (check-first) not Option B (count-1 load) because a (- n 1) load is a second counter expression-assignment that aliases the one-hot selector enable. Goldens updated across t/1202 1360 1095 1228 1310 1311 1244 1379 1381 1383 1387 1215 1103 1111. Full suite prove -j6 -Iperl t/ -> 1402 files / 10165 tests PASS; perl -c; mdbook build; git diff --check.`
   Commit: `this slice`
 
@@ -122,20 +135,21 @@ all count kinds with far less churn.
   Commit: `this slice`
 
 - ID: `ISF-COUNTED-REPEAT-TERMINATION.4`
-  Status: `frontier`
+  Status: `done`
   Goal: `Support a runtime (wait …) as the FIRST statement of a repeat body (fail-closed in .2): the check-first loop must (re)load the wait counter on the loop-back edge and compute the correct zero-bypass target; restore the t/1244 coverage that .2 converted to fail-closed assertions.`
-  Acceptance: `TBD when scheduled.`
-  Verification: `TBD`
-  Commit: `pending`
+  Acceptance: `repeat_check loop-back to a leading runtime wait now uses the dynamic-wait splitter under (!= repeat_counter 0): it reloads the generated wait counter and enters the wait for positive runtime counts, zero-bypasses to the following body state for zero runtime counts, and still exits the repeat on repeat-counter zero. Carried samples before the leading wait use sample-preserving zero clones for following body states or repeat-check successors. t/1244 fail-closed assertions were restored to positive lowering/HDL-generation coverage; the mdBook, live spec, downstream integration handoff, public interface contract, and feature matrix now document the shipped behavior.`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; prove -Iperl t/1244-isf-wait-clause-lowering.t; prove -Iperl t/1376-isf-book-example-lowering-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; ./bin/ci-regression isf --no-book -> 294 files / 2124 tests PASS.`
+  Commit: `this slice`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Bug proven by simulation; fix shape proven; design recorded. |
-| 2 | `.2` | `done` | Termination fix landed (check-first); simulation confirms exactly-N for static/runtime/zero; full suite PASS (1402 files). Runtime-wait-first-in-repeat fails closed (deferred to `.4`). |
+| 2 | `.2` | `done` | Termination fix landed (check-first); simulation confirms exactly-N for static/runtime/zero; full suite PASS (1402 files). Runtime-wait-first-in-repeat was temporarily deferred, then restored by `.4`. |
 | 3 | `.3` | `done` | Decision edge emitted as `(!=0 …)` → renders the clean reduction `(\|cnt)`; counted loops + for-loops now pass `--verify-hdl` (verilator + yosys). |
-| 4 | `.4` | `frontier` | Restore runtime-wait-first-in-repeat (+ its t/1244 coverage). |
+| 4 | `.4` | `done` | Runtime-wait-first-in-repeat restored; t/1244 positive lowering/HDL coverage plus docs synced. |
+| 5 | `closed` | `done` | No remaining frontier in this tree. |
 
 ## Decisions
 
@@ -146,6 +160,11 @@ all count kinds with far less churn.
   kinds (the existing init zero-branch already handles runtime `count == 0`). The
   `ISF-FOR-LOOP.2` desugar is parked (stashed) until this lands, since it desugars onto
   `(repeat …)`.
+- `2026-06-05`: `.4` shipped after the final implementation had already moved to
+  check-first counted repeats. A leading runtime wait is now a valid repeat-body first
+  state: `repeat_check` preserves its repeat-counter zero exit and splits the nonzero
+  loop-back into positive wait-count load/entry and zero wait-count bypass. This lifts the
+  temporary `.2` fail-closed boundary without changing counted-loop termination semantics.
 
 ## Blockers
 
@@ -158,14 +177,16 @@ all count kinds with far less churn.
 | `2026-06-01` | `.1` | verilator `--binary` sims (no-loop terminates @ cy2; plain repeat-4 + for-loop spin; hand-fixed .fsm terminates, accumulating body == N); `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.2` | verilator `--binary`: static N=1/4/7 → result==N; runtime n=5/0/1 → exactly n; non-first runtime wait-in-repeat → count==3 terminates; runtime-wait-FIRST → fail-closed. Full suite `prove -j6 -Iperl t/` → 1402 files / 10165 tests PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.3` | `--verify-hdl` on `(repeat 4 …)` and `(for (i 4) …)` → verilator_lint PASS + yosys_synthesis PASS; SV renders `(\|cnt)` continue / `(~\|cnt)` done; r4 still exactly-N. Goldens `>0 (->` → `!=0 (->` across 15 t/ files (watchdog `>0 (-- …)` preserved); 13h updated. isf band 258 files PASS; full suite PASS; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-05` | `.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t` → 1 file / 38 tests PASS; `prove -Iperl t/1376-isf-book-example-lowering-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t` → 3 files / 430 tests PASS; `./bin/ci-regression isf --no-book` → 294 files / 2124 tests PASS | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `ISF-COUNTED-REPEAT-TERMINATION.1: select + prove counted-repeat non-termination` | `bb… (committed)` |
+| `.1` | `ISF-COUNTED-REPEAT-TERMINATION.1: select + prove counted-repeat non-termination` | `25fa8fb6` |
 | `.2` | `ISF-COUNTED-REPEAT-TERMINATION.2: check-first counted-repeat termination` | `3bbd6d00` |
-| `.3` | `ISF-COUNTED-REPEAT-TERMINATION.3: verilator-clean counted-loop decision edge` | this slice |
+| `.3` | `ISF-COUNTED-REPEAT-TERMINATION.3: verilator-clean counted-loop decision edge` | `3f70be09` |
+| `.4` | `ISF-COUNTED-REPEAT-TERMINATION.4: restore leading repeat-body runtime waits` | this slice |
 
 ## Changelog
 
@@ -188,7 +209,7 @@ all count kinds with far less churn.
   `(wait …)` as the FIRST statement of a repeat body fails closed with a clear diagnostic
   (its t/1244 coverage was converted to fail-closed assertions) — deferred to `.4`;
   non-first and static waits are unaffected. Full suite (`prove -j6 -Iperl t/`) → 1402
-  files / 10165 tests PASS.
+  files / 10165 tests PASS. `.4` later lifted this temporary boundary.
 - `2026-06-01`: `.3` shipped — counted loops are now verilator-clean. The `repeat_check`
   continue edge is emitted as `(!=0 (-> body))` instead of `(>0 (-> body))`: the SV emitter
   renders `counter != 0` as the reduction `(|counter)` (a clean, width-correct nonzero
@@ -198,5 +219,14 @@ all count kinds with far less churn.
   PASSES on counted `(repeat …)` loops and `(for …)` loops; `r4` still terminates exactly
   N. Goldens updated (`>0 (->` → `!=0 (->` across 15 `t/` files; the watchdog `>0 (-- …)`
   decrement is untouched); the `13h` lowering reference now documents the `(!=0)/(=0)`
-  check-first form (and the runtime-wait-first-in-repeat fail-close). isf band (258 files)
-  and the full suite PASS.
+  check-first form. isf band (258 files) and the full suite PASS.
+- `2026-06-05`: `.4` shipped — a runtime `(wait …)` can now be the first statement of a
+  `(repeat …)` body. The `repeat_check` state reloads the leading dynamic-wait counter on
+  `(& (!= main_cnt 0) cycles)`, enters the wait on that positive path, zero-bypasses to
+  the following body state on `(& (!= main_cnt 0) (== cycles 0))`, and preserves the
+  repeat-counter `=0` exit. Carried samples before the leading wait materialize through
+  generated zero-sample clones for following body states or repeat-check successors.
+  `t/1244` now carries positive coverage for plain, carried-sample, setter-successor, and
+  repeat-check-successor leading waits; the mdBook, live spec, downstream integration
+  handoff, public interface contract, and feature matrix are in sync. Broad ISF regression
+  (`./bin/ci-regression isf --no-book`) PASS: 294 files / 2124 tests.

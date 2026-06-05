@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-PROPERTY-SAMPLED-VALUE.3` (this commit) — closed value-returning `(past ...)` as deferred/prerequisite-bound and made the docs non-claim explicit. `git log -1` for the hash.
-- active_work_unit: `ISF-COUNTED-REPEAT-TERMINATION.4` frontier. Runtime `(wait ...)` as the first statement of a repeat body is fail-closed; restore support and t/1244 coverage under this owner.
-- recently_done: `ISF-PROPERTY-SAMPLED-VALUE.3`; `ISF-LOOP-EARLY-EXIT.5`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.10`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.9`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5`; `KNOWLEDGE-MAP-ADOPT.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6`.
+- latest_commit: `ISF-COUNTED-REPEAT-TERMINATION.4` (this commit) — restored leading runtime `(wait ...)` in repeat bodies and closed the counted-repeat termination tree. `git log -1` for the hash.
+- active_work_unit: none active; next PNT action is to activate/select the next proposed frontier tree before any code/test/source/config change (start with `ISF-REMAINING-BROAD-FRONTIER.1` if the R14 lane remains selected).
+- recently_done: `ISF-COUNTED-REPEAT-TERMINATION.4`; `ISF-PROPERTY-SAMPLED-VALUE.3`; `ISF-LOOP-EARLY-EXIT.5`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.10`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.9`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5`; `KNOWLEDGE-MAP-ADOPT.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`.
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 

@@ -8862,15 +8862,6 @@ sub _ir_repeat {
             push @nested_repeat_counters,@$rxc if ref($rxc) eq 'ARRAY';
         }}
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
-    # ISF-COUNTED-REPEAT-TERMINATION: fail closed when the first body state is a dynamic
-    # (runtime) wait. The check-first loop re-enters the body from the repeat_check, but a
-    # runtime wait as the loop-back target needs its counter (re)loaded on that edge and a
-    # correct zero-bypass target — not yet wired. (A non-first runtime wait works: the
-    # preceding body state loads the wait counter via the predecessor edge. A static wait
-    # is fine: it lowers to plain sequential states with no counter.)
-    if (@s >= 2 && $s[1]{dynamic_wait_entry}) {
-        confess "Transaction '$tn': a runtime '(wait ...)' as the FIRST statement of a '(repeat ...)' body is not yet supported under the counted-loop lowering. Put another body statement before the wait, or use a static (literal/constant) wait count. (Tracked in ISF-COUNTED-REPEAT-TERMINATION.3.)\n";
-    }
     # ISF-COUNTED-REPEAT-TERMINATION: the loop-back targets the FIRST BODY state, not the
     # repeat_init state. Looping back to repeat_init would reload the counter every
     # iteration (cnt <= N), so the per-iteration decrement never sticks and the loop never
@@ -10707,7 +10698,7 @@ sub _link_states {
         elsif($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
         elsif($s->{kind}eq'stage'&&$next){push @{$s->{transitions}},{target=>$next,condition=>{port=>$s->{ready}}}}
-        elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$next,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$next}
+        elsif($s->{kind}eq'repeat_check'){_link_repeat_check_state($s,\%idx_by_name,$st,$next)}
         elsif(($s->{kind}eq'sequential'||$s->{kind}eq'contract'||$s->{kind}eq'wait'||$s->{kind}eq'bank_store'||$s->{kind}eq'bank_load')&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'branch'){my$skip=$s->{branch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip}}
         elsif($s->{kind}eq'sync_all'&&$next){push @{$s->{transitions}},{target=>$next}}
@@ -10731,6 +10722,27 @@ sub _link_repeat_init_state {
         : $next_target;
     return unless defined($check_name) && length($check_name);
     push @{$state->{transitions}}, { target => $check_name };
+}
+
+sub _link_repeat_check_state {
+    my ($state, $idx_by_name, $states, $next_target) = @_;
+    my $loop_target = $state->{loop_target};
+    my $counter = $state->{counter};
+    my $loop_state = _state_by_name($idx_by_name, $states, $loop_target);
+
+    if ($loop_state && $loop_state->{dynamic_wait_entry}) {
+        _link_dynamic_wait_entry_edge($state, $loop_state, "(!= $counter 0)");
+    } else {
+        push @{$state->{transitions}}, {
+            target    => $loop_target,
+            condition => { signal => $counter, op => '!=', value => 0 },
+        } if defined($loop_target) && length($loop_target);
+    }
+
+    push @{$state->{transitions}}, {
+        target    => $next_target,
+        condition => { signal => $counter, op => '=', value => 0 },
+    } if defined($next_target) && length($next_target);
 }
 
 sub _state_region_last_index {

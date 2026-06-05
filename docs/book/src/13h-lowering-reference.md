@@ -874,22 +874,43 @@ to a sample-preserving clone of the following body state when that state can
 carry samples without changing timing. The false path remains an explicit skip
 around the sampled body.
 
-Runtime waits in `repeat` bodies are supported only in a **non-first** body
-position. A runtime `(wait ...)` as the **FIRST statement of a `(repeat ...)`
-body fails closed** under the counted-loop lowering with the diagnostic:
+Runtime waits in `repeat` bodies are supported in first or later body
+position. When the body starts with a runtime wait, the repeat check owns the
+dynamic-wait split on its nonzero loop-back edge: repeat-counter zero still
+exits the loop; repeat-counter nonzero plus a positive wait count reloads the
+generated wait counter and enters the wait; repeat-counter nonzero plus a zero
+wait count bypasses the wait to the following body state:
 
-```text
-a runtime '(wait ...)' as the FIRST statement of a '(repeat ...)' body is not
-yet supported under the counted-loop lowering
+```lisp
+(main_repeat_init_1
+  (<= (main_cnt 2))
+  (-> main_repeat_check_4))
+
+(main_wait_2
+  (-- main_wait_2_cnt)
+  (?main_wait_2_cnt
+    (=1 (-> main_drive_3)))
+  (?main_wait_2_cnt
+    (>1 (-> main_wait_2))))
+
+(main_drive_3
+  (= (tick_start 1))
+  (-> main_repeat_check_4))
+
+(main_repeat_check_4
+  (-- main_cnt)
+  (<- (main_wait_2_cnt cycles) <(& (!= main_cnt 0) cycles))
+  (?main_cnt
+    (=0 (-> main_done_5)))
+  (-> main_wait_2 <(& (!= main_cnt 0) cycles))
+  (-> main_drive_3 <(& (!= main_cnt 0) (== cycles 0))))
 ```
 
-(tracked in ISF-COUNTED-REPEAT-TERMINATION.3/.4). Put another body statement
-before the wait, or use a static (literal/constant) wait count.
-
-For a runtime wait in a non-first position, the **preceding** body state loads
+For a runtime wait in a later body position, the **preceding** body state loads
 the generated wait counter via its outgoing edge and splits into the positive
-and zero paths. The repeat check keeps the check-first `(-- main_cnt)` form,
-looping back to the first body state while the repeat counter is nonzero:
+and zero paths. The repeat check keeps the same check-first `(-- main_cnt)`
+form, looping back to the first body state while the repeat counter is
+nonzero:
 
 ```lisp
 (main_repeat_init_1
@@ -920,13 +941,13 @@ The wait state's `(?main_wait_3_cnt ...)` decision is the runtime-wait counter,
 not the repeat counter, so it keeps the `=1`/`>1` form. Only the repeat-counter
 check uses the `(-- main_cnt)` + `(!=0)/(=0)` form.
 
-If pending samples appear before the (non-first) repeat-body runtime wait, the
-positive iteration path enters a sample-carrying first wait state and a
-no-resample wait loop handles counts greater than one. The zero iteration path
-bypasses to a sample-preserving clone of the following body state when that
-successor can carry samples. The clone advances to the same repeat-check state
-as the original body successor, so repeat loop-back and exit behavior remain
-unchanged.
+If pending samples appear before a repeat-body runtime wait, the positive
+iteration path enters a sample-carrying first wait state and a no-resample
+wait loop handles counts greater than one. The zero iteration path bypasses to
+a sample-preserving clone of the following body state when that successor can
+carry samples. When the wait's successor is the repeat check itself, the clone
+preserves the repeat counter decrement and loop decision, so repeat loop-back
+and exit behavior remain unchanged.
 
 Runtime waits in `switch` branches are supported. With no pending sample, if
 one case starts with a runtime wait, the switch state materializes only the

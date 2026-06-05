@@ -65,7 +65,7 @@ first.
 | `ISF-COMPOUND-ASSIGN` | `done` | `R14` | complete (`.1`–`.2`; `(incr/decr NAME [by N])` compound-assignment sugar — parser desugar to `(set NAME (± NAME N))`, N default 1; malformed forms fail closed; 13e documented) | [docs/tasks/ISF-COMPOUND-ASSIGN.md](docs/tasks/ISF-COMPOUND-ASSIGN.md) |
 | `ISF-COND` | `done` | `R14` | `closed (.1–.2; (cond …) if/else-if/else priority chain — parser desugar to a negated-guard when-chain; first true branch wins; simulation-confirmed)` | [docs/tasks/ISF-COND.md](docs/tasks/ISF-COND.md) |
 | `ISF-NESTED-COUNTED-REPEAT` | `done` | `R14` | `closed (.1–.2; nested counted (repeat M (repeat N body)) with per-instance counters — body runs M*N times; simulated + --verify-hdl clean; substrate for nested for-loops)` | [docs/tasks/ISF-NESTED-COUNTED-REPEAT.md](docs/tasks/ISF-NESTED-COUNTED-REPEAT.md) |
-| `ISF-COUNTED-REPEAT-TERMINATION` | `active` | `R14` | `ISF-COUNTED-REPEAT-TERMINATION.4` (`.1`–`.3` done; check-first lowering terminates exactly-N for static/runtime/zero; `(!=0)` decision edge → counted loops pass `--verify-hdl`; `.4` = runtime-wait-first-in-repeat) | [docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md](docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md) |
+| `ISF-COUNTED-REPEAT-TERMINATION` | `done` | `R14` | complete (`.1`–`.4`; check-first lowering terminates exactly-N for static/runtime/zero; `(!=0)` decision edge passes `--verify-hdl`; leading runtime waits in repeat bodies now reload/enter/zero-bypass from `repeat_check`) | [docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md](docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md) |
 
 ## Proposed Task Trees
 

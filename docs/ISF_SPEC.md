@@ -3016,24 +3016,28 @@ loop branch.
 Runtime waits inside `when` bodies are supported when no pending sample must
 cross the dynamic wait. The branch true edge is split into positive-count
 counter load and zero-count bypass paths, and the false edge still skips the
-whole `when` body. Runtime waits inside `repeat` bodies are also supported
-when no pending sample must cross the dynamic wait; generated dynamic wait
-counters are registered alongside the repeat counter, and the repeat-check
-loop-back/exit edges remain intact. Runtime waits inside `switch` branches are
-supported for the no-pending-sample subset. If the selected switch case starts
-with a runtime wait, the switch state owns that case's positive-count counter
-load/entry and zero-count bypass; other explicit cases remain selectable, and
-implicit fallthrough lowers as the complement of all explicit case-value
-predicates. Runtime waits inside `while` bodies are supported for the
-no-pending-sample subset. If the body starts with a runtime wait, both the
-entry decision true path and the loop-back true path split into positive-count
-counter load/entry and zero-count bypass paths, while the false path exits the
-loop. Runtime waits inside `until` bodies are also supported for the
-no-pending-sample subset. The initial predecessor enters or bypasses the first
-body wait, the `until` true path exits, and the false loop-back path reloads
-or bypasses the runtime wait for the next iteration. Runtime waits after
-pending samples remain rejected when the selected successor cannot carry the
-sample without changing timing. Runtime waits after predecessor states whose
+whole `when` body. Runtime waits inside `repeat` bodies are supported in first
+or later body position when no pending sample must cross the dynamic wait.
+Generated dynamic wait counters are registered alongside the repeat counter.
+When the repeat body starts with a runtime wait, the repeat check owns the
+nonzero loop-back split: repeat-counter zero exits the loop, repeat-counter
+nonzero plus positive wait count reloads the generated wait counter and enters
+the wait, and repeat-counter nonzero plus zero wait count bypasses to the
+following body state or sample-compatible clone. Runtime waits inside `switch`
+branches are supported for the no-pending-sample subset. If the selected
+switch case starts with a runtime wait, the switch state owns that case's
+positive-count counter load/entry and zero-count bypass; other explicit cases
+remain selectable, and implicit fallthrough lowers as the complement of all
+explicit case-value predicates. Runtime waits inside `while` bodies are
+supported for the no-pending-sample subset. If the body starts with a runtime
+wait, both the entry decision true path and the loop-back true path split into
+positive-count counter load/entry and zero-count bypass paths, while the false
+path exits the loop. Runtime waits inside `until` bodies are also supported
+for the no-pending-sample subset. The initial predecessor enters or bypasses
+the first body wait, the `until` true path exits, and the false loop-back path
+reloads or bypasses the runtime wait for the next iteration. Runtime waits
+after pending samples remain rejected when the selected successor cannot carry
+the sample without changing timing. Runtime waits after predecessor states whose
 edge split is not implemented yet, malformed counts, and unknown-width runtime
 count expressions remain rejected.
 
