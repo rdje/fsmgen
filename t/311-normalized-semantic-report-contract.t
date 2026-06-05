@@ -71,6 +71,10 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_keys
     normalized_semantic_matched_failure_diagnostic_keys
     normalized_semantic_matched_failure_diagnostic_support_accounting_keys
@@ -514,6 +518,26 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
         'contract publishes the bounded forward-ir lowered-rtl-ir composition-only key list',
     );
+    is_deeply(
+        $contract->{success_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys(),
+        'contract publishes the bounded forward-ir lowered-rtl-ir selector-conflict target entry key list',
+    );
+    is_deeply(
+        $contract->{success_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys(),
+        'contract publishes the bounded forward-ir lowered-rtl-ir selector-conflict rhs-enable-family entry key list',
+    );
+    is_deeply(
+        $contract->{success_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys(),
+        'contract publishes the bounded forward-ir lowered-rtl-ir selector-conflict multi-value assertion key list',
+    );
+    is_deeply(
+        $contract->{success_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
+        'contract publishes the bounded forward-ir lowered-rtl-ir selector-conflict same-value assertion key list',
+    );
     is(
         $contract->{forward_ir_structural_rtl_ir_contract_source},
         normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
@@ -548,6 +572,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
         normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
         'normalized semantic report forward-ir lowered-rtl-ir composition keys map to the nested lowered-rtl-ir owner',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys(),
+        'report presence family map publishes selector-conflict target entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys(),
+        'report presence family map publishes selector-conflict rhs-enable-family entry keys',
     );
     is_deeply(
         normalized_semantic_forward_ir_structural_rtl_ir_keys(),
@@ -784,6 +818,40 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
         'optional semantic child key list stays bounded and ordered',
     );
     ok(!$decoded->{generated_output}{emitted}, 'direct success still records no HDL emission');
+};
+
+subtest 'selector-instrumented semantic JSON keeps bounded selector-conflict entry keys' => sub {
+    my $selector_path = File::Spec->catfile($repo_root, 'fsm', 'apb_requester.fsm');
+    my $selector_out_path = File::Spec->catfile($tempdir, 'semantic_contract_apb_requester.sv');
+
+    my $decoded = run_semantic_json(
+        ['./bin/fsmgen', '--strict', '--emit-semantic-json', '-o', $selector_out_path, $selector_path],
+        'strict semantic JSON succeeds for selector-instrumented direct sample',
+    );
+    my $selector_target = $decoded->{semantic}{forward_ir}{lowered_rtl_ir}{selector_conflict_targets}[0];
+    ok($selector_target, 'selector-instrumented success includes at least one selector-conflict target entry');
+    assert_keys_present(
+        $selector_target,
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys(),
+        'selector-instrumented target entry keeps bounded keys',
+    );
+    my $rhs_family = $selector_target->{rhs_enable_families}[0];
+    ok($rhs_family, 'selector-instrumented target includes at least one rhs-enable-family entry');
+    assert_keys_present(
+        $rhs_family,
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys(),
+        'selector-instrumented rhs-enable-family entry keeps bounded keys',
+    );
+    assert_keys_present(
+        $selector_target->{multi_value_assertion},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys(),
+        'selector-instrumented multi-value assertion keeps bounded keys',
+    );
+    assert_keys_present(
+        $rhs_family->{same_value_assertion},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
+        'selector-instrumented same-value assertion keeps bounded keys',
+    );
 };
 
 subtest 'successful composition semantic JSON conforms to the bounded contract' => sub {

@@ -27,6 +27,10 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_keys
     normalized_semantic_matched_failure_diagnostic_keys
     normalized_semantic_matched_failure_diagnostic_support_accounting_keys
@@ -174,6 +178,22 @@ subtest 'normalized semantic report helper builders return fresh nested structur
             build => \&normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys,
         },
         {
+            label => 'forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys',
+            build => \&normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys,
+        },
+        {
+            label => 'forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys',
+            build => \&normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys,
+        },
+        {
+            label => 'forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys',
+            build => \&normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys,
+        },
+        {
+            label => 'forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys',
+            build => \&normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys,
+        },
+        {
             label => 'forward_ir_structural_rtl_ir_keys',
             build => \&normalized_semantic_forward_ir_structural_rtl_ir_keys,
         },
@@ -249,6 +269,26 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
         $family_map->{success_forward_ir_lowered_rtl_ir_optional_composition_keys},
         normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
         'lowered-RTL optional composition family entry matches helper',
+    );
+    is_deeply(
+        $family_map->{success_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys(),
+        'lowered-RTL selector-conflict target entry family matches helper',
+    );
+    is_deeply(
+        $family_map->{success_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys(),
+        'lowered-RTL selector-conflict rhs-enable-family entry family matches helper',
+    );
+    is_deeply(
+        $family_map->{success_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys(),
+        'lowered-RTL selector-conflict multi-value assertion family matches helper',
+    );
+    is_deeply(
+        $family_map->{success_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
+        'lowered-RTL selector-conflict same-value assertion family matches helper',
     );
 };
 

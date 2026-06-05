@@ -334,7 +334,8 @@ project policies:
   current expected-failure entries; its contract now also advertises explicit
   optional semantic success children for `semantic.composition` and
   `semantic.symbol_contract`, plus lowered-RTL selector-conflict target
-  count/list metadata;
+  count/list metadata and bounded `selector_conflict_targets[]` /
+  `rhs_enable_families[]` entry and selector assertion metadata keys;
 - `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` now has a bounded
   top-level result-presence contract advertised through the capability
   manifest, while the raw result hash is explicitly not a JSON-safe interchange

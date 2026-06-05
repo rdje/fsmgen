@@ -745,7 +745,8 @@ own bounded owner for the current sanitized forward semantic projections:
 [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](perl/FSM/Support/NormalizedSemanticForwardIRContract.pm).
 The nested `semantic.forward_ir.lowered_rtl_ir` summary inside that branch now
 also has its own bounded owner for the current lowered-RTL shell, including
-selector-conflict target count/list metadata, plus the current composition-only
+selector-conflict target count/list metadata and the bounded
+`selector_conflict_targets[]` entry schema, plus the current composition-only
 extension keys:
 [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm).
 The nested `semantic.forward_ir.structural_rtl_ir` summary inside that branch

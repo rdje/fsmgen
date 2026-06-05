@@ -12,6 +12,10 @@ our @EXPORT_OK = qw(
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_lowered_rtl_ir_presence_key_family_map
     normalized_semantic_lowered_rtl_ir_presence_keys
+    normalized_semantic_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys
+    normalized_semantic_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
+    normalized_semantic_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
+    normalized_semantic_lowered_rtl_ir_selector_conflict_target_entry_keys
 );
 
 sub build_normalized_semantic_lowered_rtl_ir_contract {
@@ -36,14 +40,23 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
         },
         public_presence_keys => normalized_semantic_lowered_rtl_ir_presence_keys(),
         optional_composition_keys => normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
+        selector_conflict_target_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_selector_conflict_target_entry_keys(),
+        selector_conflict_rhs_enable_family_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys(),
+        selector_conflict_multi_value_assertion_keys =>
+            normalized_semantic_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys(),
+        selector_conflict_same_value_assertion_keys =>
+            normalized_semantic_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
         presence_key_family_map => normalized_semantic_lowered_rtl_ir_presence_key_family_map(),
         optional_for_non_composition_sources => JSON::PP::true,
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested `semantic.forward_ir.lowered_rtl_ir` object used by successful public normalized semantic JSON reports.},
             'The bounded public promise covers the current lowered-RTL summary shared by direct roots, including selector-conflict metadata, plus the current composition-only extension keys.',
+            'The selector-conflict target, rhs-enable-family, and assertion key families describe the current nested entry schemas emitted in selector_conflict_targets[].',
             'Use the grouped presence_key_family_map to discover the bounded core and composition-only lowered_rtl_ir key families without collecting those key-family lists separately.',
-            'The deeper `output_drive_families`, `selector_conflict_targets`, `standalone_dt_multi_drive_targets`, and composition candidate payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
+            'The deeper `output_drive_families`, `standalone_dt_multi_drive_targets`, and composition candidate payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
         ],
     };
 }
@@ -82,10 +95,65 @@ sub normalized_semantic_lowered_rtl_ir_optional_composition_keys {
     ];
 }
 
+sub normalized_semantic_lowered_rtl_ir_selector_conflict_target_entry_keys {
+    return [
+        qw(
+            family_enable_signals
+            multi_value_assertion
+            multiplexer_type
+            rhs_enable_families
+            rhs_values
+            signal_name
+        ),
+    ];
+}
+
+sub normalized_semantic_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys {
+    return [
+        qw(
+            driver_enable_signals
+            family_enable_signal
+            rhs_value
+            same_value_assertion
+        ),
+    ];
+}
+
+sub normalized_semantic_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys {
+    return [
+        qw(
+            input_count
+            input_enable_signals
+            kind
+            target_signal
+        ),
+    ];
+}
+
+sub normalized_semantic_lowered_rtl_ir_selector_conflict_same_value_assertion_keys {
+    return [
+        qw(
+            input_count
+            input_enable_signals
+            kind
+            rhs_value
+            target_signal
+        ),
+    ];
+}
+
 sub normalized_semantic_lowered_rtl_ir_presence_key_family_map {
     return {
         public_presence_keys => normalized_semantic_lowered_rtl_ir_presence_keys(),
         optional_composition_keys => normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
+        selector_conflict_target_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_selector_conflict_target_entry_keys(),
+        selector_conflict_rhs_enable_family_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys(),
+        selector_conflict_multi_value_assertion_keys =>
+            normalized_semantic_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys(),
+        selector_conflict_same_value_assertion_keys =>
+            normalized_semantic_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
     };
 }
 
