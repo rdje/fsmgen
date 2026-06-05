@@ -3870,4 +3870,6 @@ Current shipped boundary: the normalized semantic payload contract publishes
 `success_semantic_optional_child_presence_keys`. The
 `semantic.forward_ir.lowered_rtl_ir` contract also advertises the emitted
 `selector_conflict_target_count` and `selector_conflict_targets` metadata. The
-manifest is still not a full normalized semantic export.
+next selected hardening leaf is the bounded entry schema for
+`selector_conflict_targets[]`, nested `rhs_enable_families[]`, and selector
+assertion metadata. The manifest is still not a full normalized semantic export.

@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.9.1` (this commit) — published lowered-RTL selector-conflict metadata in the normalized semantic export contract. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.10` active frontier — select the next normalized semantic export hardening edge before implementation.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.9.1`; `BACKEND-API-VALIDATION-FRONTIER.9`; `BACKEND-API-VALIDATION-FRONTIER.8.1`; `BACKEND-API-VALIDATION-FRONTIER.8`; `BACKEND-API-VALIDATION-FRONTIER.7.1`; `BACKEND-API-VALIDATION-FRONTIER.7`; `BACKEND-API-VALIDATION-FRONTIER.6.1`; `BACKEND-API-VALIDATION-FRONTIER.6`; `BACKEND-API-VALIDATION-FRONTIER.5.1`; `BACKEND-API-VALIDATION-FRONTIER.5`; `BACKEND-API-VALIDATION-FRONTIER.4.7`; `BACKEND-API-VALIDATION-FRONTIER.4.6.1`; `BACKEND-API-VALIDATION-FRONTIER.4.6`; `BACKEND-API-VALIDATION-FRONTIER.4.5.1`; `BACKEND-API-VALIDATION-FRONTIER.4.5`.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.10` (this commit) — selected selector-conflict target entry schemas as the next normalized semantic export edge. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.10.1` active frontier — publish bounded key families for `selector_conflict_targets[]`, nested `rhs_enable_families[]`, and selector assertion metadata.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.10`; `BACKEND-API-VALIDATION-FRONTIER.9.1`; `BACKEND-API-VALIDATION-FRONTIER.9`; `BACKEND-API-VALIDATION-FRONTIER.8.1`; `BACKEND-API-VALIDATION-FRONTIER.8`; `BACKEND-API-VALIDATION-FRONTIER.7.1`; `BACKEND-API-VALIDATION-FRONTIER.7`; `BACKEND-API-VALIDATION-FRONTIER.6.1`; `BACKEND-API-VALIDATION-FRONTIER.6`; `BACKEND-API-VALIDATION-FRONTIER.5.1`; `BACKEND-API-VALIDATION-FRONTIER.5`; `BACKEND-API-VALIDATION-FRONTIER.4.7`; `BACKEND-API-VALIDATION-FRONTIER.4.6.1`; `BACKEND-API-VALIDATION-FRONTIER.4.6`; `BACKEND-API-VALIDATION-FRONTIER.4.5.1`.
 - in_flight_uncommitted: none expected after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
