@@ -81,14 +81,9 @@ regression gate is a focused SystemVerilog smoke, not yet a claim that every
 historical sample in `fsm/` is externally warning-clean. Both deferred items
 are tracked in [Feature Backlog](14-feature-backlog.md).
 
-The focused smoke currently includes `fsm/lte_dif_pmaster.fsm`, the MIPI
-byte-serial/timer examples that rely on inferred widths from slices,
-selectors, and guards, the MIPI config-register and FIFO examples, the MIPI
-packet FIFO example that locks sliced CoreAST enable-graph guard rendering,
-the MIPI tester-control example that locks late whole-signal width propagation
-from selector evidence, the warning-clean historical direct samples
-`fsm/trial_0.fsm` and
-`fsm/trial_1.fsm`, and every
+The focused smoke currently includes `fsm/lte_dif_pmaster.fsm`, every current
+MIPI sample under `fsm/`, the warning-clean historical direct samples
+`fsm/trial_0.fsm` and `fsm/trial_1.fsm`, and every
 supported direct protocol actor in the regression corpus:
 `fsm/apb_requester.fsm`, `fsm/apb_completer.fsm`, and
 `fsm/amba_requester.fsm` today.

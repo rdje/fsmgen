@@ -42,6 +42,7 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.4.1`,
     `BACKEND-API-VALIDATION-FRONTIER.4.2`,
     `BACKEND-API-VALIDATION-FRONTIER.4.3`,
+    `BACKEND-API-VALIDATION-FRONTIER.4.4`,
     `BACKEND-API-VALIDATION-FRONTIER.5`,
     `BACKEND-API-VALIDATION-FRONTIER.6`,
     `BACKEND-API-VALIDATION-FRONTIER.7`,
@@ -81,9 +82,10 @@ items named in the 2026-06-05 remaining-work inventory.
   Goal: `Drive warning-clean external validation across historical samples.`
   Children: `BACKEND-API-VALIDATION-FRONTIER.4.1`,
     `BACKEND-API-VALIDATION-FRONTIER.4.2`,
-    `BACKEND-API-VALIDATION-FRONTIER.4.3`
+    `BACKEND-API-VALIDATION-FRONTIER.4.3`,
+    `BACKEND-API-VALIDATION-FRONTIER.4.4`
   Acceptance: `One exact historical sample family or tool gate is selected, cleaned or deferred, documented, and covered.`
-  Verification: `BACKEND-API-VALIDATION-FRONTIER.4.1 added fsm/trial_0.fsm and BACKEND-API-VALIDATION-FRONTIER.4.2 added fsm/mipicsi2_configreg.fsm plus fsm/mipicsi2_fifo_4x8.fsm to the external SystemVerilog validation smoke; further warning-clean work remains active under .4.3.`
+  Verification: `BACKEND-API-VALIDATION-FRONTIER.4.1 added fsm/trial_0.fsm, BACKEND-API-VALIDATION-FRONTIER.4.2 added fsm/mipicsi2_configreg.fsm plus fsm/mipicsi2_fifo_4x8.fsm, and BACKEND-API-VALIDATION-FRONTIER.4.3 added all remaining current MIPI samples under fsm/ to the external SystemVerilog validation smoke; blocked historical samples remain active under .4.4.`
   Commit: `pending`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.4.1`
@@ -101,9 +103,16 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.4.3`
+  Status: `done`
+  Goal: `Add the remaining warning-clean MIPI direct samples to the external SystemVerilog validation smoke.`
+  Acceptance: `t/308-systemverilog-external-validation.t validates fsm/mipicsi2_laned_clog.fsm, fsm/mipicsi2_laned_sctrl.fsm, fsm/mipicsi2_rxccore_hs.fsm, fsm/mipicsi2_rxdcore_hs.fsm, fsm/mipicsi2_txccore_hs.fsm, fsm/mipicsi2_txccore_ulp.fsm, fsm/mipicsi2_txdcore_hs.fsm, fsm/mipicsi2_txdcore_lp.fsm, and fsm/mipicsi2_xgamaster.fsm through the existing Verilator lint plus ABC-free Yosys synthesis lane when tools are installed. docs/REGRESSION_CORPUS.md and the mdBook generated-HDL debugging chapter state that all MIPI samples currently in fsm/ are covered by the focused smoke.`
+  Verification: `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_laned_clog_verify.sv fsm/mipicsi2_laned_clog.fsm; ./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_laned_sctrl_verify.sv fsm/mipicsi2_laned_sctrl.fsm; ./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_rxccore_hs_verify.sv fsm/mipicsi2_rxccore_hs.fsm; ./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_rxdcore_hs_verify.sv fsm/mipicsi2_rxdcore_hs.fsm; ./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_txccore_hs_verify.sv fsm/mipicsi2_txccore_hs.fsm; ./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_txccore_ulp_verify.sv fsm/mipicsi2_txccore_ulp.fsm; ./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_txdcore_hs_verify.sv fsm/mipicsi2_txdcore_hs.fsm; ./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_txdcore_lp_verify.sv fsm/mipicsi2_txdcore_lp.fsm; ./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_xgamaster_verify.sv fsm/mipicsi2_xgamaster.fsm; prove -Iperl t/308-systemverilog-external-validation.t; scripts/check_memory_architecture.sh; bash knowledge-map/scripts/check_knowledge_map.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check. Temporary /tmp probe outputs were removed.`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.4.4`
   Status: `pending`
-  Goal: `Select the next exact warning-clean historical validation target after the MIPI config/fifo samples.`
-  Acceptance: `Probe remaining candidate samples or tool gates, document the next exact owner leaf, and do not change validation code until the selected target has leaf-level ownership.`
+  Goal: `Select the next exact blocked historical validation sample after full MIPI smoke coverage.`
+  Acceptance: `Choose one remaining blocked sample family or tool gate, document the exact owner leaf, and do not change validation code until the selected target has leaf-level ownership. Current known blocked candidates are generic_fifo (?define source kind), lte_digital_rf (legacy multi-RTL composition syntax), apb_tb (composition PINMISSING warnings), and trial_2 (legacy composition ?ports mapping).`
   Verification: `pending`
   Commit: `pending`
 
@@ -144,7 +153,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 3 | `BACKEND-API-VALIDATION-FRONTIER.3` | `done` | GHDL validation cannot run in the current environment because `ghdl` is unavailable; external-validation contracts/docs now say the lane remains SystemVerilog-only until a future GHDL validation leaf is runnable. |
 | 4 | `BACKEND-API-VALIDATION-FRONTIER.4.1` | `done` | Added the already warning-clean historical `fsm/trial_0.fsm` sample to the external SystemVerilog validation smoke; deferred `apb_tb` and `trial_2` to exact future owners based on probe failures. |
 | 5 | `BACKEND-API-VALIDATION-FRONTIER.4.2` | `done` | Added warning-clean `fsm/mipicsi2_configreg.fsm` and `fsm/mipicsi2_fifo_4x8.fsm` to the external SystemVerilog validation smoke; deferred `generic_fifo` and `lte_digital_rf` based on probe failures. |
-| 6 | `BACKEND-API-VALIDATION-FRONTIER.4.3` | `pending` | Select the next exact warning-clean historical validation target after the MIPI config/fifo samples. |
+| 6 | `BACKEND-API-VALIDATION-FRONTIER.4.3` | `done` | Added the remaining warning-clean current MIPI samples under `fsm/` to the external SystemVerilog validation smoke. |
+| 7 | `BACKEND-API-VALIDATION-FRONTIER.4.4` | `pending` | Select the next exact blocked historical validation sample now that all warning-clean MIPI samples are covered. |
 
 ## Decisions
 
@@ -171,6 +181,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.3` | `perl -Iperl -c perl/FSM/Support/HDLExternalValidationContract.pm`; `prove -Iperl t/313-hdl-external-validation-contract.t t/1057-hdl-external-validation-contract-full-surface-json-roundtrip-audit.t t/1058-hdl-external-validation-contract-full-surface-defensive-copy-audit.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`; `command -v ghdl` | `PASS`; `ghdl` unavailable and GHDL validation remains deferred |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.1` | `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_trial_0_verify.sv fsm/trial_0.fsm`; `prove -Iperl t/308-systemverilog-external-validation.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`; selection probes for `fsm/apb_tb.fsm` and `fsm/trial_2.fsm`; removed `/tmp/fsmgen_*_verify.sv` probe artifacts | `PASS`; `apb_tb` and `trial_2` deferred to exact future owners |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.2` | `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_configreg_verify.sv fsm/mipicsi2_configreg.fsm`; `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_fifo_4x8_verify.sv fsm/mipicsi2_fifo_4x8.fsm`; `prove -Iperl t/308-systemverilog-external-validation.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`; selection probes for `fsm/generic_fifo.fsm` and `fsm/lte_digital_rf.fsm`; removed `/tmp/fsmgen_*_verify.sv` probe artifacts | `PASS`; `generic_fifo` and `lte_digital_rf` deferred to exact future owners |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.3` | Probe `--verify-hdl` commands for remaining MIPI samples: `mipicsi2_laned_clog`, `mipicsi2_laned_sctrl`, `mipicsi2_rxccore_hs`, `mipicsi2_rxdcore_hs`, `mipicsi2_txccore_hs`, `mipicsi2_txccore_ulp`, `mipicsi2_txdcore_hs`, `mipicsi2_txdcore_lp`, `mipicsi2_xgamaster`; `prove -Iperl t/308-systemverilog-external-validation.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`; removed `/tmp/fsmgen_*_verify.sv` probe artifacts | `PASS` |
 
 ## Commit Log
 
@@ -180,7 +191,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.2.1` | `BACKEND-API-VALIDATION-FRONTIER.2.1: ship VHDL direct scaffold` | shipped direct VHDL scaffold |
 | `BACKEND-API-VALIDATION-FRONTIER.3` | `BACKEND-API-VALIDATION-FRONTIER.3: keep GHDL validation deferred` | kept GHDL deferred |
 | `BACKEND-API-VALIDATION-FRONTIER.4.1` | `BACKEND-API-VALIDATION-FRONTIER.4.1: add trial_0 validation smoke` | added trial_0 smoke |
-| `BACKEND-API-VALIDATION-FRONTIER.4.2` | `BACKEND-API-VALIDATION-FRONTIER.4.2: add MIPI config fifo validation smoke` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.4.2` | `BACKEND-API-VALIDATION-FRONTIER.4.2: add MIPI config fifo validation smoke` | added config/fifo MIPI smoke |
+| `BACKEND-API-VALIDATION-FRONTIER.4.3` | `BACKEND-API-VALIDATION-FRONTIER.4.3: add remaining MIPI validation smoke` | this slice |
 
 ## Changelog
 
@@ -205,3 +217,8 @@ items named in the 2026-06-05 remaining-work inventory.
 - `2026-06-05`: Completed `.4.2`; the external validation smoke now includes
   `fsm/mipicsi2_configreg.fsm` and `fsm/mipicsi2_fifo_4x8.fsm`, and the
   warning-clean frontier continues at `.4.3`.
+- `2026-06-05`: Activated `.4.3` after probes showed all remaining MIPI
+  direct samples under `fsm/` pass external SystemVerilog validation.
+- `2026-06-05`: Completed `.4.3`; every current MIPI sample under `fsm/` is
+  now in the external validation smoke, and blocked historical targets remain
+  for `.4.4` selection.

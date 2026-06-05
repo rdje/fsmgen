@@ -52,9 +52,18 @@ subtest 'generated MIPI examples with inferred widths pass external validation' 
         fsm/mipicsi2_byteserial.fsm
         fsm/mipicsi2_configreg.fsm
         fsm/mipicsi2_fifo_4x8.fsm
+        fsm/mipicsi2_laned_clog.fsm
+        fsm/mipicsi2_laned_sctrl.fsm
         fsm/mipicsi2_pkt_nx4B_fifo.fsm
+        fsm/mipicsi2_rxccore_hs.fsm
+        fsm/mipicsi2_rxdcore_hs.fsm
         fsm/mipicsi2_tester_ctrl.fsm
+        fsm/mipicsi2_txccore_hs.fsm
+        fsm/mipicsi2_txccore_ulp.fsm
+        fsm/mipicsi2_txdcore_hs.fsm
+        fsm/mipicsi2_txdcore_lp.fsm
         fsm/mipicsi2_txtimer.fsm
+        fsm/mipicsi2_xgamaster.fsm
     )) {
         my $report = generate_and_validate($tempdir, $sample);
         ok($report->{ok}, "$sample passes Verilator lint and ABC-free Yosys synthesis");
