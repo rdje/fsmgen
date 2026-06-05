@@ -21,6 +21,8 @@ The public key family covers the instance shell keys:
 `instance_name`, `interface_ports`, `kind`, `module_name`,
 `parameter_overrides`, `port_bindings`, and `source_name`.
 
-Nested instance arrays such as `interface_ports[]`, `parameter_overrides[]`,
-and `port_bindings[]` are not separately advertised yet; later exact task-tree
-owners must widen those nested entry schemas deliberately.
+Nested instance `interface_ports[]` entries are now advertised separately by
+`normalized-semantic-structural-instance-interface-port-entry-schema`.
+Nested instance `parameter_overrides[]` and `port_bindings[]` entries are not
+separately advertised yet; later exact task-tree owners must widen those nested
+entry schemas deliberately.

@@ -297,8 +297,8 @@ now owns the nested `semantic.forward_ir.structural_rtl_ir` object shape
 emitted by successful public normalized semantic JSON, including the published
 structural-RTL key family shared by direct and composition roots and bounded
 `ports[]` core plus composition-top extension entry keys, plus bounded
-`nets[]`, `declared_links[]`, `resolved_links[]`, and shallow `instances[]`
-entry keys.
+`nets[]`, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, and
+nested `instances[].interface_ports[]` entry keys.
 [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm)
 now owns the nested `semantic.forward_ir.intent_hir` object shape emitted by
 successful public normalized semantic JSON, including the published core

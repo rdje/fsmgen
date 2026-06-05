@@ -14,6 +14,7 @@ use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
     normalized_semantic_structural_rtl_ir_contract_source
     normalized_semantic_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_structural_rtl_ir_instance_entry_keys
+    normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys
     normalized_semantic_structural_rtl_ir_link_entry_keys
     normalized_semantic_structural_rtl_ir_net_entry_keys
     normalized_semantic_structural_rtl_ir_presence_key_family_map
@@ -121,6 +122,16 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         'structural-rtl-ir instance shallow entry keys stay exact and ordered',
     );
     is_deeply(
+        $contract->{instance_interface_port_entry_keys},
+        normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys(),
+        'contract publishes the bounded structural-rtl-ir instance interface-port entry key family',
+    );
+    is_deeply(
+        normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys(),
+        normalized_semantic_structural_rtl_ir_port_entry_keys(),
+        'structural-rtl-ir instance interface-port keys reuse the structural port core shape',
+    );
+    is_deeply(
         $contract->{presence_key_family_map},
         normalized_semantic_structural_rtl_ir_presence_key_family_map(),
         'contract publishes the grouped structural-rtl-ir key-family map',
@@ -154,6 +165,11 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         $contract->{presence_key_family_map}{instance_entry_keys},
         normalized_semantic_structural_rtl_ir_instance_entry_keys(),
         'grouped structural-rtl-ir family map publishes instance shallow entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{instance_interface_port_entry_keys},
+        normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys(),
+        'grouped structural-rtl-ir family map publishes instance interface-port entry keys',
     );
 };
 

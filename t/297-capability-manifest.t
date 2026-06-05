@@ -171,6 +171,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
@@ -996,6 +997,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_structural_rtl_ir_instance_entry_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys(),
         'manifest records exact normalized semantic structural-rtl-ir instance shallow entry keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
+        'manifest records exact normalized semantic structural-rtl-ir instance interface-port entry keys',
     );
     ok(
         !$manifest->{semantic_exports}{normalized_semantic_json}{full_export_stable},

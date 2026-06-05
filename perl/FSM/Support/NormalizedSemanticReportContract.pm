@@ -64,6 +64,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
@@ -134,6 +135,7 @@ our @EXPORT_OK = qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
@@ -277,6 +279,8 @@ sub build_normalized_semantic_report_contract {
             normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys(),
         success_forward_ir_structural_rtl_ir_instance_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys(),
+        success_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
         success_forward_ir_structural_rtl_ir_port_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys(),
         success_forward_ir_structural_rtl_ir_port_composition_extension_keys =>
@@ -306,7 +310,7 @@ sub build_normalized_semantic_report_contract {
             'Use the grouped `forward_ir_nested_contract_source_map` to discover the deeper bounded semantic `forward_ir` shell owners without reconstructing them from parallel scalar fields.',
             'The output-drive family and rhs-enable-family key families document the current nested `semantic.forward_ir.lowered_rtl_ir.output_drive_families` entry schemas without freezing unrelated lowered-RTL payloads.',
             'The selector-conflict target, rhs-enable-family, and assertion key families document the current nested `semantic.forward_ir.lowered_rtl_ir.selector_conflict_targets` entry schemas without freezing unrelated lowered-RTL payloads.',
-            'The structural port, net, declared/resolved link, and instance shallow entry key families document the current nested `semantic.forward_ir.structural_rtl_ir.ports`, `semantic.forward_ir.structural_rtl_ir.nets`, `semantic.forward_ir.structural_rtl_ir.declared_links`, `semantic.forward_ir.structural_rtl_ir.resolved_links`, and `semantic.forward_ir.structural_rtl_ir.instances` entry schemas without freezing unrelated structural-RTL payloads.',
+            'The structural port, net, declared/resolved link, instance shallow, and nested instance interface-port entry key families document the current nested `semantic.forward_ir.structural_rtl_ir.ports`, `semantic.forward_ir.structural_rtl_ir.nets`, `semantic.forward_ir.structural_rtl_ir.declared_links`, `semantic.forward_ir.structural_rtl_ir.resolved_links`, `semantic.forward_ir.structural_rtl_ir.instances`, and `semantic.forward_ir.structural_rtl_ir.instances[].interface_ports` entry schemas without freezing unrelated structural-RTL payloads.',
             'The nested semantic forward_ir.intent_hir object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
             'The nested semantic forward_ir.lowered_rtl_ir object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',
             'The nested semantic forward_ir.structural_rtl_ir object shell stays bounded through FSM::Support::NormalizedSemanticStructuralRTLIRContract.',
@@ -410,6 +414,8 @@ sub normalized_semantic_presence_key_family_map {
             normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys(),
         success_forward_ir_structural_rtl_ir_instance_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys(),
+        success_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
         success_forward_ir_structural_rtl_ir_port_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys(),
         success_forward_ir_structural_rtl_ir_port_composition_extension_keys =>
@@ -535,6 +541,10 @@ sub normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys {
 
 sub normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys {
     return normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys {
+    return normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys();
 }
 
 sub normalized_semantic_explicit_system_contract_keys {

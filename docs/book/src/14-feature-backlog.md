@@ -3877,6 +3877,8 @@ including bounded entry keys for `selector_conflict_targets[]`, nested
 `rhs_enable_families[]`, and selector assertion metadata. The
 `semantic.forward_ir.structural_rtl_ir` contract also advertises bounded
 `ports[]` core entry keys, composition-top port extension keys, and bounded
-`nets[]`, `declared_links[]`, `resolved_links[]`, and shallow `instances[]`
-entry keys while keeping nested instance arrays and auxiliary assignments
-shell-only. The manifest is still not a full normalized semantic export.
+`nets[]`, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, and
+nested `instances[].interface_ports[]` entry keys while keeping
+`instances[].parameter_overrides[]`, `instances[].port_bindings[]`, and
+auxiliary assignments shell-only. The manifest is still not a full normalized
+semantic export.
