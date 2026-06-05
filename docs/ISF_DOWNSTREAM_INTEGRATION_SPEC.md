@@ -435,10 +435,17 @@ Activation crossing primitive:
 
 Rules:
 
-- An activation crossing owns a top-level blocking `(do child)` where `child` is
-  a transaction declared in the destination domain and the calling transaction is
+- An activation crossing owns a blocking `(do child)` where `child` is a
+  transaction declared in the destination domain and the calling transaction is
   in the source domain. The start/done handshake signals are compiler-internal,
   so only the crossing is declared (not raw event pairs).
+- The shipped blocking activation contexts are: the transaction top level,
+  directly inside a top-level `repeat` body, directly inside a top-level
+  `when`/`switch`/`while`/`until` body, directly inside a `repeat` nested in a
+  top-level `when` body or top-level `switch` branch, directly inside supported
+  nested `when` chains reached from those top-level branch bodies, and directly
+  inside a `repeat` under those supported nested `when` chains. In repeat/loop
+  contexts the same dual-CDC handshake re-runs once per iteration.
 - One activation crossing auto-generates two acknowledged-event CDC children: a
   `start` synchronizer (source → destination) and a `done` synchronizer
   (destination → source). Each reuses the no-payload acknowledged single-bit
@@ -462,8 +469,10 @@ Rules:
 - Fail-closed boundaries: a cross-domain `(do)` with no covering activation
   crossing, a declared-but-unused crossing (one whose `child` no transaction
   `(do)`es), a crossing whose `child` is not in the declared destination domain,
-  cross-domain `(spawn)`, and nested cross-domain `(do)` (inside
-  `repeat`/`when`/`switch`) all fail closed.
+  cross-domain `(spawn)`, payload CDC, auto-generated crossings,
+  repeat-contained branch contexts, nested `switch`, nested `while`, nested
+  `until`, and unsupported deeper cross-domain `(do)` placements all fail
+  closed.
 
 ## 8. Interface, Storage, Constants
 
@@ -1602,11 +1611,14 @@ Rules:
   the final `await_all` still covers both pre-do and post-do generated spawns
   before nested repeat re-entry.
 
-  Deeper branch/loop nesting and cross-domain activation remain fail-closed.
+  Deeper branch/loop nesting and unsupported cross-domain activation
+  placements remain fail-closed; the shipped blocking activation-crossing
+  contexts are the explicit CDC contexts listed in the Named domains section.
 
-  Cross-domain repeat-body `do`, broader outstanding-child semantics,
-  `stage`, `contract`, deeper branch nesting, nested `while`, and nested
-  `until` remain outside the shipped repeat-body subset.
+  Cross-domain `spawn`, generated-do mismatched-domain metadata, broader
+  outstanding-child semantics, `stage`, `contract`, deeper branch nesting,
+  nested `while`, and nested `until` remain outside the shipped repeat-body
+  subset.
 - Transaction `when`/`while`/`until` condition expressions may use local enum
   members such as `mode.BUSY` or package enum members such as
   `shared.mode.BUSY` as scalar operands. Local or package enum members may

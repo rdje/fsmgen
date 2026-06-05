@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-REMAINING-BROAD-FRONTIER.11` (this commit) — selected `.11.1`, a downstream/public contract sync for shipped nested blocking cross-domain activation contexts. `git log -1` for the hash.
-- active_work_unit: `ISF-REMAINING-BROAD-FRONTIER.11.1` pending frontier — sync `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` and `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` with the mdBook/`t/1387` nested activation boundary, with no code behavior change.
-- recently_done: `ISF-REMAINING-BROAD-FRONTIER.11`; `ISF-REMAINING-BROAD-FRONTIER.10`; `ISF-REMAINING-BROAD-FRONTIER.9.1`; `ISF-REMAINING-BROAD-FRONTIER.9`; `ISF-REMAINING-BROAD-FRONTIER.8`; `ISF-REMAINING-BROAD-FRONTIER.6`; `ISF-REMAINING-BROAD-FRONTIER.5`; `ISF-REMAINING-BROAD-FRONTIER.4`; `ISF-REMAINING-BROAD-FRONTIER.3`; `ISF-REMAINING-BROAD-FRONTIER.2.1`; `ISF-REMAINING-BROAD-FRONTIER.2`; `ISF-REMAINING-BROAD-FRONTIER.7.1`; `ISF-REMAINING-BROAD-FRONTIER.1`; `ISF-COUNTED-REPEAT-TERMINATION.4`; `ISF-PROPERTY-SAMPLED-VALUE.3`; `ISF-LOOP-EARLY-EXIT.5`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.10`.
+- latest_commit: `ISF-REMAINING-BROAD-FRONTIER.11.1` (this commit) — synced downstream/public CDC contract wording with shipped nested blocking cross-domain activation contexts. `git log -1` for the hash.
+- active_work_unit: `ISF-REMAINING-BROAD-FRONTIER.12` pending frontier — confirm whether the full-width inference terminal remains closed or a new decidable subcase exists before behavior changes.
+- recently_done: `ISF-REMAINING-BROAD-FRONTIER.11.1`; `ISF-REMAINING-BROAD-FRONTIER.11`; `ISF-REMAINING-BROAD-FRONTIER.10`; `ISF-REMAINING-BROAD-FRONTIER.9.1`; `ISF-REMAINING-BROAD-FRONTIER.9`; `ISF-REMAINING-BROAD-FRONTIER.8`; `ISF-REMAINING-BROAD-FRONTIER.6`; `ISF-REMAINING-BROAD-FRONTIER.5`; `ISF-REMAINING-BROAD-FRONTIER.4`; `ISF-REMAINING-BROAD-FRONTIER.3`; `ISF-REMAINING-BROAD-FRONTIER.2.1`; `ISF-REMAINING-BROAD-FRONTIER.2`; `ISF-REMAINING-BROAD-FRONTIER.7.1`; `ISF-REMAINING-BROAD-FRONTIER.1`; `ISF-COUNTED-REPEAT-TERMINATION.4`; `ISF-PROPERTY-SAMPLED-VALUE.3`; `ISF-LOOP-EARLY-EXIT.5`.
 - in_flight_uncommitted: none (working tree clean except unrelated untracked `fx/`, intentionally left alone).
 - blockers: none.
 
