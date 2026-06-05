@@ -133,11 +133,11 @@ remains or a real prerequisite blocker is reached.
   Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11: implement aggregate comparison operators`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`
-  Status: `pending`
+  Status: `done`
   Goal: `Broaden backend-owned struct/record default lowering policy.`
   Acceptance: `One exact aggregate-like value class is selected for backend-owned lowering or explicit fail-closed deferral, with docs and regression coverage.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: focused backend-owned typedef evidence, memory architecture, mdBook, feature-backlog status, doc path, knowledge-map, and diff checks`
+  Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12: defer struct default lowering`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`
   Status: `pending`
@@ -150,7 +150,7 @@ remains or a real prerequisite blocker is reached.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12` | `pending` | Aggregate member/index autogrowth from partial use is explicitly deferred behind a complete root-shape proof or explicit syntax prerequisite; the next Composition/type item selects a backend-owned struct/record default-lowering value class or blocker. |
+| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13` | `pending` | Backend-owned struct/record default lowering is explicitly deferred beyond exact contract-backed Verilog-family surfaces; the next Composition/type item tracks VHDL aggregate/generic-map prerequisites. |
 
 ## Selection Result
 
@@ -403,6 +403,31 @@ states this boundary in `docs/book/src/08-type-inference-and-aggregate-data.md`
 and `docs/book/src/14-feature-backlog.md`, so this leaf required no book
 source change.
 
+## Backend-Owned Struct/Record Selection Result
+
+`COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12` reviewed the closed
+`BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING` tree, the current mdBook
+backend-owned typedef boundary, the shared Verilog-family typedef renderer,
+and focused backend-owned typedef regressions.
+
+No new implementation leaf is selected from this broad Composition/type tree.
+Existing shipped surfaces already preserve stable aggregate contracts through
+backend-owned SystemVerilog packed typedefs for direct generated-module ports,
+direct internal/helper declarations, structural composition ports and nets,
+projected child aggregate carriers, bounded inferred direct targets, and ISF
+actor-owned aggregate storage after scheduled `.fsm` lowering.
+
+The remaining default-lowering backlog stays deferred until one exact
+aggregate-like value class has a complete frontend contract and a proven
+synthesizable backend contract. Deferred classes include VHDL aggregate
+lowering, ISF aggregate aliases on interface ports, transaction ports, and
+banks, backend-owned struct creation from partial member/index use,
+width-only evidence, anonymous record/list guesses, and public type/export API
+stabilization. The mdBook already states this boundary in
+`docs/book/src/08-type-inference-and-aggregate-data.md` and
+`docs/book/src/14-feature-backlog.md`, so this leaf required no book source
+change.
+
 ## Evidence To Reuse
 
 - `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`
@@ -470,12 +495,18 @@ source change.
   boundary, and focused regressions already cover complete-shape autogrowth
   sources; partial member/index use remains blocked until one exact complete
   root-shape proof or explicit syntax contract is selected.
+- `2026-06-05`: Do not select a new backend-owned struct/record
+  default-lowering implementation leaf from `.12`. The closed struct-lowering
+  audit, current book boundary, and focused regressions already cover exact
+  contract-backed Verilog-family typedef surfaces; broader default lowering
+  remains blocked until one exact value class has complete frontend and
+  backend contracts.
 
 ## Open Questions
 
-- None before the next evidence-selection leaf. Any backend-owned
-  struct/record default-lowering code must first get an exact value-class owner
-  under this tree or an existing narrower aggregate-type tree.
+- None before the next evidence-selection leaf. Any VHDL aggregate or
+  generic-map lowering code must first get an exact VHDL backend/composition
+  owner under this tree or an existing narrower backend tree.
 
 ## Blockers
 
@@ -497,6 +528,7 @@ source change.
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8` | `prove -Iperl t/1215-isf-spawn-parameter-binding.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t t/1376-isf-book-example-lowering-audit.t t/1379-isf-loop-contained-repeat-body-local-do.t t/1380-isf-loop-contained-repeat-body-generated-do.t t/1381-isf-deeper-nested-repeat-body-local-do.t t/1382-isf-deeper-nested-repeat-body-generated-do.t t/1383-isf-loop-and-deeper-repeat-body-spawn.t t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t t/1387-isf-cross-domain-activation-handshake-lowering.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` | `prove -Iperl t/279-declarative-scalar-types.t t/280-declarative-aggregate-types.t t/281-structural-declared-type-contracts.t t/282-composition-aggregate-source-expression-contracts.t t/283-composition-aggregate-path-support.t t/284-package-aggregate-path-support.t t/285-aggregate-expression-type-support.t t/288-composition-aggregate-top-expression-inference.t t/277-direct-symbol-contract-forward-ir.t t/278-composition-symbol-contract-forward-ir.t t/1333-direct-structural-rtl-ir-projection.t t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/1378-isf-enum-type-relationship.t t/1257-isf-scalar-type-aliases.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10` | `prove -Iperl t/276-direct-local-aggregate-values.t t/280-declarative-aggregate-types.t t/282-composition-aggregate-source-expression-contracts.t t/288-composition-aggregate-top-expression-inference.t t/1321-direct-aggregate-autogrowth.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
+| `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12` | `prove -Iperl t/198-systemverilog-scaffold-emitter.t t/204-enable-graph-module-planning-support.t t/280-declarative-aggregate-types.t t/167-structural-connection-expr-helpers.t t/282-composition-aggregate-source-expression-contracts.t t/1259-isf-aggregate-storage-type-aliases.t t/1321-direct-aggregate-autogrowth.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -513,6 +545,7 @@ source change.
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8: defer repeat activation widening` | `closed repeat-body child-activation selection as prerequisite-bound deferral; synced stale book wording; next frontier .9` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9: defer portable type-core widening` | `closed portable type-core selection as prerequisite-bound deferral; next frontier .10` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10: defer member autogrowth` | `closed aggregate member/index autogrowth selection as prerequisite-bound deferral; next frontier .12` |
+| `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12: defer struct default lowering` | `closed backend-owned struct/record selection as prerequisite-bound deferral; next frontier .13` |
 
 ## Changelog
 
@@ -547,3 +580,6 @@ source change.
 - `2026-06-05`: Closed aggregate member/index autogrowth selection as an
   explicit prerequisite deferral and advanced the frontier to backend-owned
   struct/record default-lowering evidence selection.
+- `2026-06-05`: Closed backend-owned struct/record default-lowering selection
+  as an explicit prerequisite deferral and advanced the frontier to VHDL
+  aggregate/generic-map prerequisite tracking.
