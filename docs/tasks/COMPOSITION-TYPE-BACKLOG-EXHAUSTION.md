@@ -112,16 +112,16 @@ remains or a real prerequisite blocker is reached.
   Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8: defer repeat activation widening`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next portable type-core contract or blocker from evidence.`
   Acceptance: `Existing portable type-core evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: focused portable-type evidence, memory architecture, mdBook, feature-backlog status, doc path, knowledge-map, and diff checks`
+  Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9: defer portable type-core widening`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`
   Status: `pending`
-  Goal: `Broaden aggregate member/index autogrowth from partial use.`
-  Acceptance: `One exact member/index autogrowth proof surface is selected, implemented or explicitly deferred, documented, and regression-covered.`
+  Goal: `Select the next aggregate member/index autogrowth proof surface or blocker from evidence.`
+  Acceptance: `Existing aggregate member/index autogrowth evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
   Verification: `pending`
   Commit: `pending`
 
@@ -150,7 +150,7 @@ remains or a real prerequisite blocker is reached.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` | `pending` | Repeat-body child-activation widening is explicitly deferred behind one exact activation, CDC, outstanding-child, or composition-wiring contract; the next Composition/type item needs portable type-core evidence selection before any code. |
+| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10` | `pending` | Portable type-core widening is explicitly deferred behind one exact frontend type, inference, backend-lowering, VHDL, or public API contract; the next Composition/type item needs aggregate member/index autogrowth evidence selection before any code. |
 
 ## Selection Result
 
@@ -348,6 +348,35 @@ more exact owner selects them. This leaf also synced stale mdBook wording so
 the book distinguishes shipped activation-crossing `do` from deferred
 deeper-nested/cross-domain-spawn/generated-domain cases.
 
+## Portable Type-Core Selection Result
+
+`COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` reviewed the closed
+`R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT`, the current mdBook type/backlog
+boundary, and focused portable-type regressions.
+
+No new implementation leaf is selected from this broad Composition/type tree.
+Existing shipped surfaces already cover scalar aliases for `bit`, `(bits N)`,
+positive symbolic widths, signed variants, explicit two-state/four-state
+intent, local/imported scalar aliases, packed list/record aliases, declared
+type identity through direct roots and composition tops, backend-owned
+SystemVerilog packed typedef emission, direct typed aggregate member/list-item
+reads and partial scalar-leaf writes, composition typed aggregate source paths
+and whole-aggregate actuals, bounded aggregate-root inference when a declared
+or safely inferred root exists, symbol-contract / `Intent HIR` /
+`Structural RTL IR` preservation, and the ISF enum/type clarity rule that enum
+families are value families rather than implicit type aliases.
+
+The remaining portable type-core backlog stays deferred until an exact
+frontend type-core, inference, member/index, backend-lowering, VHDL, public
+API, or architecture prerequisite is explicit. Deferred items include
+enum-as-type unification, fixed-size arrays, arrays of records, aggregate
+interface ports, transaction-local aggregate ports, aggregate storage banks,
+broad inference-first scalar declarations, broad aggregate member/index
+autogrowth without complete shape evidence, arbitrary subaggregate runtime
+operators, backend-neutral signedness/state-model policy across every inferred
+site, VHDL record/array/generic-map lowering, and richer public type/export
+APIs.
+
 ## Evidence To Reuse
 
 - `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`
@@ -405,12 +434,17 @@ deeper-nested/cross-domain-spawn/generated-domain cases.
   already cover the bounded shipped same-domain and top-level activation-crossing
   surfaces; broader work remains blocked until one exact activation, CDC,
   outstanding-child, or composition-wiring contract is selected.
+- `2026-06-05`: Do not select a new portable type-core implementation leaf
+  from `.9`. The R11 audit, current book boundary, and focused regressions
+  already cover the bounded shipped scalar/aggregate/type-identity surface;
+  broader work remains blocked until one exact frontend type, inference,
+  backend-lowering, VHDL, public API, or architecture contract is selected.
 
 ## Open Questions
 
-- None before the next evidence-selection leaf. Any portable type-core code
-  must first get an exact executable owner under this tree or an existing
-  narrower type/backend tree.
+- None before the next evidence-selection leaf. Any aggregate member/index
+  autogrowth code must first get an exact executable owner under this tree or
+  an existing narrower aggregate-type tree.
 
 ## Blockers
 
@@ -430,6 +464,7 @@ deeper-nested/cross-domain-spawn/generated-domain cases.
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6` | `prove -Iperl t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t t/1215-isf-spawn-parameter-binding.t t/1248-isf-rule-trigger-parameter-binding.t t/1255-isf-schedule-report-golden-matrix.t t/292-composition-generated-child-parameter-overrides.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7` | `prove -Iperl t/1215-isf-spawn-parameter-binding.t t/1248-isf-rule-trigger-parameter-binding.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1195-isf-sample-clause-boundary.t t/1181-isf-rule-action-boundary.t t/1351-isf-activation-param-package-constants.t t/1369-isf-timing-param-activation-override-gates.t t/1370-isf-data-op-activation-override-width-gate.t t/1371-isf-transaction-port-activation-override-width-gate.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8` | `prove -Iperl t/1215-isf-spawn-parameter-binding.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t t/1376-isf-book-example-lowering-audit.t t/1379-isf-loop-contained-repeat-body-local-do.t t/1380-isf-loop-contained-repeat-body-generated-do.t t/1381-isf-deeper-nested-repeat-body-local-do.t t/1382-isf-deeper-nested-repeat-body-generated-do.t t/1383-isf-loop-and-deeper-repeat-body-spawn.t t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t t/1387-isf-cross-domain-activation-handshake-lowering.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
+| `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` | `prove -Iperl t/279-declarative-scalar-types.t t/280-declarative-aggregate-types.t t/281-structural-declared-type-contracts.t t/282-composition-aggregate-source-expression-contracts.t t/283-composition-aggregate-path-support.t t/284-package-aggregate-path-support.t t/285-aggregate-expression-type-support.t t/288-composition-aggregate-top-expression-inference.t t/277-direct-symbol-contract-forward-ir.t t/278-composition-symbol-contract-forward-ir.t t/1333-direct-structural-rtl-ir-projection.t t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/1378-isf-enum-type-relationship.t t/1257-isf-scalar-type-aliases.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -444,6 +479,7 @@ deeper-nested/cross-domain-spawn/generated-domain cases.
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6: defer generated-child top widening` | `closed generated-child top selection as prerequisite-bound deferral; next frontier .7` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7: defer activation binding widening` | `closed activation parameter/value-binding selection as prerequisite-bound deferral; next frontier .8` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8: defer repeat activation widening` | `closed repeat-body child-activation selection as prerequisite-bound deferral; synced stale book wording; next frontier .9` |
+| `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9: defer portable type-core widening` | `closed portable type-core selection as prerequisite-bound deferral; next frontier .10` |
 
 ## Changelog
 
@@ -472,3 +508,6 @@ deeper-nested/cross-domain-spawn/generated-domain cases.
   prerequisite deferral, synced stale book wording for cross-domain activation
   and loop/deeper repeat-spawn status, and advanced the frontier to portable
   type-core evidence selection.
+- `2026-06-05`: Closed portable type-core selection as an explicit
+  prerequisite deferral and advanced the frontier to aggregate member/index
+  autogrowth evidence selection.
