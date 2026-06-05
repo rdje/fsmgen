@@ -365,9 +365,10 @@ subtest 'a nested cross-domain (do) fails closed with a precise deferred diagnos
         'when body'     => '(when cond (when cond (do worker)))',
         # switch->switch: likewise deferred; innermost container is a switch branch.
         'switch branch' => '(switch sel (0 (switch sel (0 (do worker)))))',
-        # when->repeat: the repeat is NOT top-level, so it stays deferred; the
-        # innermost container the diagnostic names is the repeat body.
-        'repeat body'   => '(when cond (repeat n (do worker)))',
+        # repeat->repeat: the inner repeat is NOT top-level or branch-contained,
+        # so it stays deferred; the innermost container the diagnostic names is
+        # the repeat body.
+        'repeat body'   => '(repeat n (repeat n (do worker)))',
     );
     for my $label (sort keys %context_body) {
         my $actor = parse_source(<<"ISF", "nested-$label");
@@ -519,6 +520,68 @@ ISF
         like($core, qr/parent_do_\d+\b\s*\(\s*<worker_done/, "$label: the do-state blocks on the done handshake");
         my $bus = $lowered->{files}{'branch_xdom__domain_bus.fsm'};
         like($bus, qr/worker_idle_ext\s*\(\s*<worker_start/s, "$label: the callee is gated on the start pulse");
+    }
+};
+
+subtest 'a (do child) directly inside a branch-contained repeat lowers cross-domain through the dual-CDC per iteration' => sub {
+    # ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6: a repeat nested directly inside a
+    # TOP-LEVEL `when` body or `switch` branch now owns the same blocking
+    # per-iteration cross-domain activation handshake as a top-level repeat. The
+    # still-deferred cases are deeper branch/repeat combinations and nested
+    # while/until.
+    my %context = (
+        'when->repeat'   => '(when guard (repeat iter (do worker)))',
+        'switch->repeat' => '(switch guard (1 (repeat iter (do worker))))',
+    );
+    for my $label (sort keys %context) {
+        my $guard_decl = $label =~ /^switch/
+            ? '(input guard (width 2) (domain core))'
+            : '(input guard (domain core))';
+        my $actor = parse_source(<<"ISF", "branch-repeat-xdom-$label");
+(actor branch_repeat_xdom
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus  (clock bus_clk) (reset bus_rst_n)))
+  (crossings
+    (activation worker (from core) (to bus)))
+  (interface
+    (input  start (domain core))
+    $guard_decl
+    (input  iter  (width 3) (domain core))
+    (output done  (domain core))
+    (input  din    (width 8) (domain bus))
+    (output result (width 8) (domain bus))
+    (output worker_complete (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    $context{$label}
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (sample din as snap)
+    (update result snap)
+    (complete worker_complete)))
+ISF
+        my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+        ok($lowered, "$label cross-domain (do) lowers") or diag($@);
+
+        my $core = $lowered->{files}{'branch_repeat_xdom__domain_core.fsm'};
+        ok(defined($core), "$label: the caller (core) domain module is emitted");
+        like($core, qr/-> parent_repeat_init_\d+/, "$label: the branch enters the nested repeat region");
+        like($core, qr/parent_repeat_init_\d+[\s\S]*?-> parent_do_\d+_ready/, "$label: repeat init enters the start-ready await");
+        like($core, qr/parent_do_\d+_req\b[\s\S]*?\(worker_start>\s*1\)/, "$label: a one-cycle start request is driven");
+        like($core, qr/parent_do_\d+\b\s*\(\s*<worker_done/, "$label: the do-state blocks on the done handshake");
+        like($core, qr/parent_repeat_check_\d+[\s\S]*?\(!=0 \(-> parent_do_\d+_ready\)\)/, "$label: the nested repeat loop re-runs the handshake");
+
+        my $bus = $lowered->{files}{'branch_repeat_xdom__domain_bus.fsm'};
+        ok(defined($bus), "$label: the callee (bus) domain module is emitted");
+        like($bus, qr/worker_idle_ext\s*\(\s*<worker_start/s, "$label: the callee is gated on the start pulse");
+
+        my $top = $lowered->{files}{'branch_repeat_xdom_top.fsm'};
+        ok(defined($top), "$label: the multi-domain top is emitted");
+        like($top, qr/cdc_activation_worker_start/, "$label: the top instantiates the start CDC synchronizer");
+        like($top, qr/cdc_activation_worker_done/, "$label: the top instantiates the done CDC synchronizer");
     }
 };
 

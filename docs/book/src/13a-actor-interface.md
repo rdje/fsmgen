@@ -233,19 +233,20 @@ the `done` pulse is the application-level acknowledgement. Both CDC children
 reuse the acknowledged-event primitive (the same `FSMGEN_ISF_CDC_EVENT` marker,
 generated module shape, and reset metadata shown above for event crossings).
 
-A cross-domain `(do child)` is supported at the transaction top level and directly
+A cross-domain `(do child)` is supported at the transaction top level, directly
 inside any **top-level body** — a `(repeat ...)` body or a `when` / `switch` /
-`while` / `until` branch body. The same caller restructure applies in every case
-(the branch/loop entry is redirected into the inserted start-ready await, so the
-await-ready → one-cycle-start → dual-CDC → done handshake runs when the branch is
-taken; inside a repeat or loop it re-runs each iteration and the destination worker
-returns to idle between iterations ready for the next start pulse). The remaining
-fail-closed boundaries are deliberate: a cross-domain `(do child)` with **no**
-covering activation crossing is rejected; a **declared-but-unused** crossing (one
-whose `child` no transaction actually `(do)`es) or one whose `child` is not in the
-declared destination domain is rejected; and cross-domain `(spawn)` plus
-*deeper-nested* cross-domain `(do)` (one whose container is itself nested inside
-another body, rather than a direct transaction-body clause) remain deferred.
+`while` / `until` branch body — and directly inside a `(repeat ...)` nested in a
+top-level `when` body or top-level `switch` branch. The same caller restructure
+applies in every case (the branch/loop entry or nested repeat entry is redirected
+into the inserted start-ready await, so the await-ready → one-cycle-start →
+dual-CDC → done handshake runs when the branch is taken; inside a repeat or loop it
+re-runs each iteration and the destination worker returns to idle between
+iterations ready for the next start pulse). The remaining fail-closed boundaries
+are deliberate: a cross-domain `(do child)` with **no** covering activation
+crossing is rejected; a **declared-but-unused** crossing (one whose `child` no
+transaction actually `(do)`es) or one whose `child` is not in the declared
+destination domain is rejected; and cross-domain `(spawn)` plus deeper cross-domain
+`(do)` placements beyond those shipped contexts remain deferred.
 
 Normal `?rtl` children still need externally supplied RTL; FSMGen does not
 invent module internals from a matching port list. When the marker is present,

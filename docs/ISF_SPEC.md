@@ -1492,14 +1492,16 @@ Multi-clock boundary:
   shipped CDC primitive or protocol actor must provide specified runtime
   behavior, lowering, diagnostics, and report metadata before such crossings
   are legal.
-- A `(crossings (activation child (from SRC) (to DEST)))` declaration is parsed
-  and structurally validated (SRC/DEST declared and distinct; `child` a declared
-  transaction) as the surface for a future cross-domain blocking `(do)`/`(spawn)`
-  through CDC-synchronized activation start/done. Its lowering is **not yet
-  supported**: an actor declaring an activation crossing fails closed
-  (`cross-domain activation lowering is not yet supported`) until the CDC routing
-  ships (parser-acceptance ≠ support). Cross-domain activation without such a
-  crossing continues to fail closed with the clock-domain-violation diagnostic.
+- A `(crossings (activation child (from SRC) (to DEST)))` declaration is parsed,
+  structurally validated (SRC/DEST declared and distinct; `child` a declared
+  transaction), and lowers a blocking `(do child)` through CDC-synchronized
+  activation start/done for the shipped bounded surface: transaction top level,
+  any direct top-level body (`repeat`, `when`, `switch`, `while`, `until`), and a
+  `repeat` nested directly in a top-level `when` body or top-level `switch`
+  branch. Cross-domain activation without such a crossing continues to fail
+  closed with the clock-domain-violation diagnostic; cross-domain `(spawn)`,
+  declared-but-unused or misplaced activation crossings, and deeper cross-domain
+  `(do)` placements remain fail-closed.
 - Asynchronous reset trees are not DTs. FSMGen does not use ISF DT logic to
   build arbitrary asynchronous reset gating.
 
@@ -2822,7 +2824,8 @@ Current lowering:
   prior multi-pending `await_any` observation is active before the later
   spawn; the observation leaves both pre-do and post-do generated-spawn done
   handoffs live while preserving declared ownership metadata. Deeper
-  branch/loop nesting and cross-domain activation remain fail-closed.
+  branch/loop nesting and cross-domain activation beyond the explicit
+  activation-crossing surface remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
@@ -3307,8 +3310,10 @@ same-domain `(domain NAME)` ownership metadata, those handoff ports and domain
 summaries specialize the single lexical generated do instance and are not
 per-iteration runtime values or per-iteration hardware. Samples around
 repeat-body `do` materialize at their source-order timing point before the do
-state or after the do state's done guard and before the repeat check. It still
-rejects cross-domain activation and nested placement.
+state or after the do state's done guard and before the repeat check. Generated-do
+domain metadata still rejects cross-domain activation and unsupported nested
+placement; explicit activation crossings own only the bounded blocking `(do child)`
+surface documented in the multi-domain section.
 
 Dynamic loops are ordinary persistent hardware schedule regions, not software
 processes that appear or die. They may run for data-dependent or unbounded

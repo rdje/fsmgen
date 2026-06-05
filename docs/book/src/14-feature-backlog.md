@@ -14,7 +14,7 @@ Recent surfaces added since the last consolidated walkthrough of
 this chapter:
 
 - **Targeted rejection diagnostics**: mismatched-domain generated repeat-body
-  `do` and deeper-nested cross-domain activation remain deferred with targeted
+  `do` and residual deeper-nested cross-domain activation remain deferred with targeted
   messages (`t/1372`, `t/1387`); four sub-axis activation-override
   gates — `repeat-count parameter`, `wait-count parameter`,
   `latency-bound parameter`, `watchdog-limit parameter` — each with
@@ -719,10 +719,12 @@ same declared domain as the owning transaction and child. A blocking `(do child)
 may now cross domains through an explicit `(crossings (activation child (from
 SRC)(to DST)))` contract at the transaction top level or directly inside a
 top-level body, including a top-level repeat body and the four top-level
-branch/loop bodies (see
+branch/loop bodies, and directly inside a repeat nested in a top-level `when`
+body or top-level `switch` branch (see
 [Activation Crossing](13a-actor-interface.md#activation-crossing)).
-Deeper-nested cross-domain activation, mismatched-domain generated-do metadata,
-and cross-domain `(spawn)` remain deferred.
+Deeper-nested cross-domain activation beyond those shipped contexts,
+mismatched-domain generated-do metadata, and cross-domain `(spawn)` remain
+deferred.
 
 Plain repeat-body generated-child `(do child)` is now shipped for targets
 already generated elsewhere: it creates one deterministic generated do

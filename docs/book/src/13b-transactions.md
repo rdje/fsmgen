@@ -1544,11 +1544,11 @@ cross-domain repeat-body do remains deferred`. The same diagnostic
 fires with `when-body nested repeat` or `switch-branch nested repeat`
 prefixes when the cross-domain `do` is nested inside a top-level
 `when` body or `switch` branch. This is the generated-do `(domain ...)`
-metadata path, not the explicit activation-crossing path. Top-level and
-top-level-body cross-domain blocking `do` through
-`(crossings (activation ...))` is documented in the control-flow and actor
-interface chapters; deeper-nested cross-domain activation and mismatched
-generated-do domain metadata remain deferred.
+metadata path, not the explicit activation-crossing path. Top-level,
+top-level-body, and top-level `when`/`switch` branch-contained repeat
+cross-domain blocking `do` through `(crossings (activation ...))` is documented
+in the control-flow and actor interface chapters; deeper-nested cross-domain
+activation and mismatched generated-do domain metadata remain deferred.
 A `(do TARGET (domain X))` clause without a cross-domain mismatch
 (target in the same domain as the calling transaction) keeps working
 as same-domain ownership metadata.

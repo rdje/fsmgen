@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5` (this commit) — split the bundled deeper-nesting cross-domain activation frontier into exact leaves. `git log -1` for the hash.
-- active_work_unit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6` pending. Implement top-level `when`/`switch` branch-contained `repeat` cross-domain `(do)` through the declared activation crossing; sync mdBook in the same slice.
-- recently_done: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5`; `KNOWLEDGE-MAP-ADOPT.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`; `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1`; `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`; `ISF-LOOP-EARLY-EXIT.4`.
+- latest_commit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6` (this commit) — shipped cross-domain `(do child)` inside a repeat nested in a top-level `when` body or top-level `switch` branch through the declared activation crossing. `git log -1` for the hash.
+- active_work_unit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7` pending. Select/refine the next branch->branch cross-domain `(do)` leaf before any code; keep mdBook synced if behavior changes.
+- recently_done: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5`; `KNOWLEDGE-MAP-ADOPT.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`; `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1`.
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 
