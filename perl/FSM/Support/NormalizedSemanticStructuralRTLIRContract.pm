@@ -11,6 +11,7 @@ our @EXPORT_OK = qw(
     normalized_semantic_structural_rtl_ir_collection_presence_keys
     normalized_semantic_structural_rtl_ir_contract_source
     normalized_semantic_structural_rtl_ir_declared_link_entry_keys
+    normalized_semantic_structural_rtl_ir_instance_entry_keys
     normalized_semantic_structural_rtl_ir_link_entry_keys
     normalized_semantic_structural_rtl_ir_net_entry_keys
     normalized_semantic_structural_rtl_ir_presence_key_family_map
@@ -52,6 +53,7 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             normalized_semantic_structural_rtl_ir_declared_link_entry_keys(),
         resolved_link_entry_keys =>
             normalized_semantic_structural_rtl_ir_resolved_link_entry_keys(),
+        instance_entry_keys => normalized_semantic_structural_rtl_ir_instance_entry_keys(),
         presence_key_family_map => normalized_semantic_structural_rtl_ir_presence_key_family_map(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         guidance => [
@@ -60,7 +62,8 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             'The port entry key families describe the current `ports[]` entry schema shared by direct roots and composition tops.',
             'The net entry key family describes the current `nets[]` entry schema emitted by composition tops.',
             'The declared/resolved link entry key families describe the current `declared_links[]` and `resolved_links[]` entry schema emitted by composition tops.',
-            'The deeper `instances` and `auxiliary_assignments` payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
+            'The instance entry key family describes the current shallow `instances[]` entry schema emitted by composition tops without freezing nested instance binding arrays.',
+            'The deeper `auxiliary_assignments`, instance `interface_ports`, instance `parameter_overrides`, and instance `port_bindings` payload contents remain bounded only at the current object-shell or instance-shell level unless later widened deliberately.',
             'Use the grouped presence_key_family_map to discover the bounded structural-RTL shell summary and collection key families without collecting those key-family lists separately.',
         ],
     };
@@ -172,6 +175,20 @@ sub normalized_semantic_structural_rtl_ir_resolved_link_entry_keys {
     return normalized_semantic_structural_rtl_ir_link_entry_keys();
 }
 
+sub normalized_semantic_structural_rtl_ir_instance_entry_keys {
+    return [
+        qw(
+            instance_name
+            interface_ports
+            kind
+            module_name
+            parameter_overrides
+            port_bindings
+            source_name
+        ),
+    ];
+}
+
 sub normalized_semantic_structural_rtl_ir_presence_key_family_map {
     return {
         summary_presence_keys => normalized_semantic_structural_rtl_ir_summary_presence_keys(),
@@ -184,6 +201,7 @@ sub normalized_semantic_structural_rtl_ir_presence_key_family_map {
             normalized_semantic_structural_rtl_ir_declared_link_entry_keys(),
         resolved_link_entry_keys =>
             normalized_semantic_structural_rtl_ir_resolved_link_entry_keys(),
+        instance_entry_keys => normalized_semantic_structural_rtl_ir_instance_entry_keys(),
     };
 }
 

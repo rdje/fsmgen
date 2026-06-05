@@ -32,6 +32,7 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_contract_source
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
@@ -79,6 +80,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
@@ -207,6 +209,11 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         $contract->{presence_key_family_map}{forward_ir_structural_rtl_ir_resolved_link_entry_keys},
         normalized_semantic_payload_forward_ir_structural_rtl_ir_resolved_link_entry_keys(),
         'grouped semantic-payload family map publishes structural-rtl-ir resolved-link entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{forward_ir_structural_rtl_ir_instance_entry_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_entry_keys(),
+        'grouped semantic-payload family map publishes structural-rtl-ir instance shallow entry keys',
     );
     is_deeply(
         $contract->{module_presence_keys},
@@ -399,6 +406,11 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         'contract publishes the bounded forward-ir structural-rtl-ir resolved-link entry key list',
     );
     is_deeply(
+        $contract->{forward_ir_structural_rtl_ir_instance_entry_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_entry_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir instance shallow entry key list',
+    );
+    is_deeply(
         normalized_semantic_payload_forward_ir_keys(),
         normalized_semantic_forward_ir_presence_keys(),
         'semantic payload forward-IR keys map to the nested forward-IR owner',
@@ -482,6 +494,11 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_payload_forward_ir_structural_rtl_ir_resolved_link_entry_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys(),
         'semantic payload forward-ir structural-rtl-ir resolved-link entry keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_entry_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys(),
+        'semantic payload forward-ir structural-rtl-ir instance shallow entry keys map to the nested structural-rtl-ir owner',
     );
     is_deeply(
         $contract->{symbol_contract_presence_keys},

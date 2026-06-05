@@ -34,6 +34,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
@@ -233,6 +234,10 @@ subtest 'normalized semantic report helper builders return fresh nested structur
             build => \&normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys,
         },
         {
+            label => 'forward_ir_structural_rtl_ir_instance_entry_keys',
+            build => \&normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys,
+        },
+        {
             label => 'explicit_system_contract_keys',
             build => \&normalized_semantic_explicit_system_contract_keys,
         },
@@ -359,6 +364,11 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
         $family_map->{success_forward_ir_structural_rtl_ir_resolved_link_entry_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys(),
         'structural-RTL resolved-link entry family matches helper',
+    );
+    is_deeply(
+        $family_map->{success_forward_ir_structural_rtl_ir_instance_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys(),
+        'structural-RTL instance shallow entry family matches helper',
     );
 };
 
