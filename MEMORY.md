@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.16.1` (this commit) — published bounded normalized semantic structural-RTL `instances[].interface_ports[]` entry key families through the contract chain, manifest, docs, mdBook, and knowledge map. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.17` active frontier — select the next exact backend/API or normalized semantic export hardening edge after structural instance interface-port entries.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.16.1`; `BACKEND-API-VALIDATION-FRONTIER.16`; `BACKEND-API-VALIDATION-FRONTIER.15.1`; `BACKEND-API-VALIDATION-FRONTIER.15`; `BACKEND-API-VALIDATION-FRONTIER.14.1`; `BACKEND-API-VALIDATION-FRONTIER.14`; `BACKEND-API-VALIDATION-FRONTIER.13.1`; `BACKEND-API-VALIDATION-FRONTIER.13`; `BACKEND-API-VALIDATION-FRONTIER.12.1`; `BACKEND-API-VALIDATION-FRONTIER.12`; `BACKEND-API-VALIDATION-FRONTIER.11.1`; `BACKEND-API-VALIDATION-FRONTIER.11`; `BACKEND-API-VALIDATION-FRONTIER.10.1`; `BACKEND-API-VALIDATION-FRONTIER.10`; `BACKEND-API-VALIDATION-FRONTIER.9.1`.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.17` (this commit) — selected structural-RTL `instances[].port_bindings[]` entry schemas as the next normalized semantic export hardening edge. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.17.1` active frontier — publish bounded structural-RTL `instances[].port_bindings[]` entry key families before any instance parameter override export.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.17`; `BACKEND-API-VALIDATION-FRONTIER.16.1`; `BACKEND-API-VALIDATION-FRONTIER.16`; `BACKEND-API-VALIDATION-FRONTIER.15.1`; `BACKEND-API-VALIDATION-FRONTIER.15`; `BACKEND-API-VALIDATION-FRONTIER.14.1`; `BACKEND-API-VALIDATION-FRONTIER.14`; `BACKEND-API-VALIDATION-FRONTIER.13.1`; `BACKEND-API-VALIDATION-FRONTIER.13`; `BACKEND-API-VALIDATION-FRONTIER.12.1`; `BACKEND-API-VALIDATION-FRONTIER.12`; `BACKEND-API-VALIDATION-FRONTIER.11.1`; `BACKEND-API-VALIDATION-FRONTIER.11`; `BACKEND-API-VALIDATION-FRONTIER.10.1`; `BACKEND-API-VALIDATION-FRONTIER.10`.
 - in_flight_uncommitted: none expected after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

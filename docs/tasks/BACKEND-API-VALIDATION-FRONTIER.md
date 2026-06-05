@@ -73,7 +73,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.15.1`,
     `BACKEND-API-VALIDATION-FRONTIER.16`,
     `BACKEND-API-VALIDATION-FRONTIER.16.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.17`
+    `BACKEND-API-VALIDATION-FRONTIER.17`,
+    `BACKEND-API-VALIDATION-FRONTIER.17.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -370,9 +371,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.17`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next normalized semantic export hardening edge after structural instance interface-port entry schemas.`
-  Acceptance: `Pick the next exact backend/API or normalized semantic export hardening edge from evidence, create the smallest implementation owner leaf if code or source changes are needed, keep mdBook/docs aligned, and preserve current unadvertised boundaries until selected.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.17.1`
+  Acceptance: `Selected the structural-RTL instance port_bindings[] entry schema as the next exact normalized semantic export field family. Evidence from successful composition semantic JSON shows semantic.forward_ir.structural_rtl_ir.instances[].port_bindings[] entries with connection_expr, port_name, signal_name, and optional connection_type_spec keys. parameter_overrides[] stayed empty in the selected successful probes and remains deferred to a later exact owner. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.17.1.`
+  Verification: `Selection audit/read of KNOWLEDGE_MAP.md, normalized semantic structural instance/interface-port knowledge cards, docs/book/src/11-extensions-and-embedding.md, docs/book/src/14-feature-backlog.md, perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm, and docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md; structured probes of ./bin/fsmgen --strict --emit-semantic-json fsm/apb_tb.fsm, t/corpus/composition_intent_integer_literals.fsm, t/corpus/implicit_composition_system_autowire.fsm, and t/corpus/standalone_dtc_explicit_system_autowire.fsm showed nonempty port_bindings[] entries with key sets connection_expr,port_name,signal_name and connection_expr,connection_type_spec,port_name,signal_name while parameter_overrides[] stayed empty; prove -Iperl t/341-normalized-semantic-structural-rtl-ir-contract.t t/311-normalized-semantic-report-contract.t; scripts/check_memory_architecture.sh; bash knowledge-map/scripts/check_knowledge_map.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.17.1`
+  Status: `active`
+  Goal: `Publish structural-RTL instance port-binding entry schemas in the normalized semantic export contract.`
+  Acceptance: `FSM::Support::NormalizedSemanticStructuralRTLIRContract advertises the bounded structural_rtl_ir.instances[].port_bindings[] entry keys for semantic.forward_ir.structural_rtl_ir without freezing instance parameter_overrides[] entry schemas. Payload/report contracts and capability-manifest semantic export metadata inherit the new key family where applicable. Runtime contract tests assert composition semantic JSON preserves the advertised nested port-binding key family, including typed connection metadata where present. README/live docs/mdBook explain the structural instance port-binding entry schema and focused contract/runtime/manifest/defensive-copy tests pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -417,7 +426,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 35 | `BACKEND-API-VALIDATION-FRONTIER.15.1` | `done` | Published bounded key families for structural-RTL `instances[]` shallow entries. |
 | 36 | `BACKEND-API-VALIDATION-FRONTIER.16` | `done` | Selected structural-RTL `instances[].interface_ports[]` entry schemas as the next exact normalized semantic export field family. |
 | 37 | `BACKEND-API-VALIDATION-FRONTIER.16.1` | `done` | Published bounded key families for structural-RTL `instances[].interface_ports[]` entries. |
-| 38 | `BACKEND-API-VALIDATION-FRONTIER.17` | `active` | Select the next normalized semantic export hardening edge after structural instance interface-port entry schemas. |
+| 38 | `BACKEND-API-VALIDATION-FRONTIER.17` | `done` | Selected structural-RTL `instances[].port_bindings[]` entry schemas as the next exact normalized semantic export field family. |
+| 39 | `BACKEND-API-VALIDATION-FRONTIER.17.1` | `active` | Publish bounded key families for structural-RTL `instances[].port_bindings[]` entries. |
 
 ## Decisions
 
@@ -476,6 +486,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.15.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; `prove -Iperl t/341-normalized-semantic-structural-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t t/354-normalized-semantic-child-runtime-contract-audit.t t/302-normalized-semantic-json.t t/731-hdl-generator-result-contract-semantic-keys-json-roundtrip-audit.t t/725-hdl-generator-result-contract-semantic-layer-map-json-roundtrip-audit.t`; `prove -Iperl t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t t/471-normalized-semantic-forward-ir-contract-defensive-copy-boundary-audit.t t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t t/1015-normalized-semantic-payload-contract-full-surface-json-roundtrip-audit.t t/1016-normalized-semantic-payload-contract-full-surface-defensive-copy-audit.t t/1021-normalized-semantic-forward-ir-contract-full-surface-json-roundtrip-audit.t t/1022-normalized-semantic-forward-ir-contract-full-surface-defensive-copy-audit.t t/383-contract-family-map-integrity-audit.t t/357-public-report-shell-runtime-contract-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; structural-RTL instance shallow entry schemas are now contract/manifest-visible |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.16` | Selection audit/read of `KNOWLEDGE_MAP.md`, normalized semantic structural instance knowledge card, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, normalized semantic structural-RTL contract module, and normalized semantic report tests; structured probe of `./bin/fsmgen --strict --emit-semantic-json fsm/apb_tb.fsm`; `prove -Iperl t/341-normalized-semantic-structural-rtl-ir-contract.t t/311-normalized-semantic-report-contract.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected structural-RTL instance interface-port entry schemas for `.16.1` |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.16.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; `prove -Iperl t/341-normalized-semantic-structural-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t t/354-normalized-semantic-child-runtime-contract-audit.t t/302-normalized-semantic-json.t t/731-hdl-generator-result-contract-semantic-keys-json-roundtrip-audit.t t/725-hdl-generator-result-contract-semantic-layer-map-json-roundtrip-audit.t`; `prove -Iperl t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t t/471-normalized-semantic-forward-ir-contract-defensive-copy-boundary-audit.t t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t t/1015-normalized-semantic-payload-contract-full-surface-json-roundtrip-audit.t t/1016-normalized-semantic-payload-contract-full-surface-defensive-copy-audit.t t/1021-normalized-semantic-forward-ir-contract-full-surface-json-roundtrip-audit.t t/1022-normalized-semantic-forward-ir-contract-full-surface-defensive-copy-audit.t t/383-contract-family-map-integrity-audit.t t/357-public-report-shell-runtime-contract-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; structural-RTL instance interface-port entry schemas are now contract/manifest-visible |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.17` | Selection audit/read of `KNOWLEDGE_MAP.md`, normalized semantic structural instance/interface-port knowledge cards, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, normalized semantic structural-RTL contract module, and backend/API task tree; structured probes of `./bin/fsmgen --strict --emit-semantic-json fsm/apb_tb.fsm`, `t/corpus/composition_intent_integer_literals.fsm`, `t/corpus/implicit_composition_system_autowire.fsm`, and `t/corpus/standalone_dtc_explicit_system_autowire.fsm`; `prove -Iperl t/341-normalized-semantic-structural-rtl-ir-contract.t t/311-normalized-semantic-report-contract.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected structural-RTL instance port-binding entry schemas for `.17.1` |
 
 ## Commit Log
 
@@ -518,6 +529,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.15.1` | `BACKEND-API-VALIDATION-FRONTIER.15.1: publish structural instance entries` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.16` | `BACKEND-API-VALIDATION-FRONTIER.16: select structural instance interface ports` | selected `.16.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.16.1` | `BACKEND-API-VALIDATION-FRONTIER.16.1: publish structural instance interface ports` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.17` | `BACKEND-API-VALIDATION-FRONTIER.17: select structural instance port bindings` | selected `.17.1` |
 
 ## Changelog
 
@@ -528,6 +540,9 @@ items named in the 2026-06-05 remaining-work inventory.
 - `2026-06-05`: Published bounded normalized semantic structural-RTL
   `instances[].interface_ports[]` entry key families and activated `.17` to
   select the next exact backend/API hardening edge.
+- `2026-06-05`: Selected structural-RTL `instances[].port_bindings[]` entry
+  key schemas as the next normalized semantic export edge and activated
+  `.17.1` before any implementation changes.
 - `2026-06-05`: Shipped `.2.1`, the first direct single-FSM VHDL scaffold,
   and moved the next frontier to `.3` for GHDL validation selection/blocking.
 - `2026-06-05`: Completed `.3`; `ghdl` is unavailable in the current
