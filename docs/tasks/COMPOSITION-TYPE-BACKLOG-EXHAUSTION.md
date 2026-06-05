@@ -63,11 +63,11 @@ remains or a real prerequisite blocker is reached.
   Commit: `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1: track remaining backlog owners`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the first executable Composition/type implementation or deferral leaf from evidence.`
   Acceptance: `Existing R11/R14 audit evidence and the mdBook backlog are reviewed, one bounded next behavior/doc/test slice is selected, and the selected leaf is either made executable in this tree or explicitly deferred with a prerequisite.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: memory architecture, mdBook, feature-backlog status, doc path, knowledge-map, and diff checks`
+  Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2: select aggregate equality leaf`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3`
   Status: `pending`
@@ -127,8 +127,8 @@ remains or a real prerequisite blocker is reached.
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`
   Status: `pending`
-  Goal: `Broaden aggregate runtime operators and subaggregate operand support.`
-  Acceptance: `One exact aggregate operator, runtime expression position, scalar/aggregate mixing rule, or mismatch rule is selected, implemented or explicitly deferred, documented, and regression-covered.`
+  Goal: `Implement binary semantic parameter/generic aggregate equality and inequality.`
+  Acceptance: `Direct +params, .rtlif defaults, external RTL overrides, and generated-child overrides accept binary (== A B) and (!= A B) only when both operands resolve to aggregate values with matching shape. The operators fold before HDL lowering to exact-width scalar literals 1'b1 or 1'b0. Bad arity, mixed scalar/aggregate operands, mismatched shapes, runtime direct .fsm aggregate expressions, ISF runtime aggregate expressions, VHDL aggregate lowering, scalar/aggregate mixing, and mismatched-shape operators remain fail-closed or deferred.`
   Verification: `pending`
   Commit: `pending`
 
@@ -150,7 +150,36 @@ remains or a real prerequisite blocker is reached.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` | `pending` | The broad backlog is active, but the next code-bearing slice must be selected from evidence before implementation starts. |
+| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11` | `pending` | The evidence selection picked binary semantic parameter/generic aggregate equality/inequality as the first bounded code-bearing slice. |
+
+## Selection Result
+
+`COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` selected
+`COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11` as the first executable
+Composition/type implementation leaf.
+
+The selected slice is intentionally narrow:
+
+- It stays in `FSM::ParameterValueSupport`, the existing fold-before-HDL
+  normalizer for semantic parameter/generic aggregate values.
+- It applies only to direct `+params`, `.rtlif` defaults, external RTL
+  parameter/generic overrides, and generated-child parameter overrides after
+  those values resolve to semantic payloads.
+- It adds only binary `(== A B)` and `(!= A B)` for matching aggregate
+  shapes, returning one scalar exact-width literal.
+- It does not add runtime direct `.fsm` aggregate operators, ISF runtime
+  aggregate operators, mixed scalar/aggregate operators, mismatched-shape
+  operators, VHDL aggregate lowering, or backend-rendered aggregate operators.
+
+Other candidates remain deferred for now:
+
+- VHDL aggregate and generic-map lowering are still blocked by the full VHDL
+  backend/composition target prerequisite.
+- Member/index-root autogrowth remains unsafe without a complete root-shape
+  proof source.
+- Shared-datapath, reusable-module, top-boundary, generated-child top, and
+  parameter-binding broadenings still need a more specific route/storage,
+  reusable-module, convention, or activation contract before code.
 
 ## Evidence To Reuse
 
@@ -174,11 +203,16 @@ remains or a real prerequisite blocker is reached.
   R11 audit trees explicitly deferred new implementation until a precise
   route/storage/protocol, reusable-module, portable-type, VHDL, or architecture
   contract is selected.
+- `2026-06-05`: Select binary semantic parameter/generic aggregate equality
+  and inequality as the first code-bearing leaf. This is the smallest
+  non-blocked Composition/type widening found in the evidence sweep: it uses
+  the existing aggregate value normalizer, has a precise type/shape/result
+  contract, and avoids VHDL/runtime aggregate-expression blockers.
 
 ## Open Questions
 
-- Which exact leaf is first: owned by `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`
-  and not blocking that evidence selection.
+- None for the selected next leaf. `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`
+  owns the first code-bearing slice.
 
 ## Blockers
 
@@ -190,13 +224,17 @@ remains or a real prerequisite blocker is reached.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.1` | `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
+| `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` | `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.1` | `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1: track remaining backlog owners` | `activated by the remaining-work ownership slice` |
+| `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2: select aggregate equality leaf` | `selected .11 as the first executable Composition/type implementation leaf` |
 
 ## Changelog
 
 - `2026-06-05`: Created active Composition/type backlog exhaustion tree.
+- `2026-06-05`: Selected binary semantic parameter/generic aggregate equality
+  and inequality as the first executable Composition/type implementation leaf.

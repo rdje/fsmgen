@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1` (this commit) — routed the 2026-06-05 remaining-work inventory into task-tree owners: existing active owners for immediate R14/KM frontiers; new broad owner trees for ISF, Composition/type, backend/API, and architecture debt. `git log -1` for the hash.
-- active_work_unit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION` active. Frontier: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` — select the first executable Composition/type implementation or deferral leaf from existing R11/R14 evidence and the mdBook backlog before behavior work.
-- recently_done: `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1`; `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`; `ISF-LOOP-EARLY-EXIT.4` (`loop_early_exits[]` schedule-report metadata for exit-when/continue-when); `ISF-TRIGGER-ANCHOR` (complete, `.1`–`.6c`); decisions `0008`–`0011`; `TRACE-SEVERITY-NEVER-GATED`; `DOCS-RELATIVE-PATHS`.
+- latest_commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` (this commit) — selected binary semantic parameter/generic aggregate equality/inequality as the first executable Composition/type implementation leaf after reviewing R11/R14 evidence and the mdBook backlog. `git log -1` for the hash.
+- active_work_unit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION` active. Frontier: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11` — implement `(== A B)` / `(!= A B)` for matching semantic parameter/generic aggregate values in the fold-before-HDL normalizer, with docs/tests.
+- recently_done: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`; `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1`; `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`; `ISF-LOOP-EARLY-EXIT.4`; `ISF-TRIGGER-ANCHOR` (complete, `.1`–`.6c`); decisions `0008`–`0011`; `TRACE-SEVERITY-NEVER-GATED`; `DOCS-RELATIVE-PATHS`.
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 
