@@ -784,7 +784,7 @@ sub parse_check_property($self, $cond_tok) {
             };
         }
     }
-    return $self->{expression_builder}->parse_expression($cond_tok);
+    return $self->{expression_builder}->parse_expression($cond_tok, property_value_context => 1);
 }
 
 sub parse_size_section($self, $size_ast) {

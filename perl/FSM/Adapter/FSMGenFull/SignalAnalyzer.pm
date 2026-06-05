@@ -140,6 +140,17 @@ sub _analyze_condition_references($self, $condition) {
         $self->_analyze_condition_references($condition->right) if $condition->right;
     } elsif ($condition->isa('FSM::CoreAST::UnaryOp')) {
         $self->_analyze_condition_references($condition->operand) if $condition->operand;
+    } elsif ($condition->isa('FSM::CoreAST::IndexedRef')) {
+        $self->_analyze_signal_ref_usage($condition->signal, 'CONDITION.indexed') if $condition->signal;
+        $self->_analyze_condition_references($condition->index) if $condition->index;
+    } elsif ($condition->isa('FSM::CoreAST::Concatenation')) {
+        for my $operand (@{$condition->operands || []}) {
+            $self->_analyze_condition_references($operand);
+        }
+    } elsif ($condition->isa('FSM::CoreAST::FunctionCall')) {
+        for my $argument (@{$condition->arguments || []}) {
+            $self->_analyze_condition_references($argument);
+        }
     }
 }
 
@@ -229,6 +240,12 @@ sub _analyze_expression_references($self, $expr, $context = 'RHS') {
         my $index = 0;
         for my $operand (@{$expr->operands || []}) {
             $self->_analyze_expression_references($operand, "$context.concat[$index]");
+            $index++;
+        }
+    } elsif ($expr->isa('FSM::CoreAST::FunctionCall')) {
+        my $index = 0;
+        for my $argument (@{$expr->arguments || []}) {
+            $self->_analyze_expression_references($argument, "$context.arg[$index]");
             $index++;
         }
     }

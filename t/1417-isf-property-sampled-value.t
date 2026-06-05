@@ -24,6 +24,10 @@ use FSM::Backend::GeneratedModuleEmitter;
 # =>/after antecedent/consequent. Not a `##` sequence, so they stay verilator-simulable
 # (under `ifndef SYNTHESIS`). They are property-only: in a synthesizable expression
 # position (a `when` guard) the head is unknown to the expression builder and fails closed.
+#
+# ISF-REMAINING-BROAD-FRONTIER.9.1 also admits value-returning (past SIG [N])
+# inside check-property expressions only. It renders as $past(SIG[, N]) and can
+# be used under boolean expression operators such as ==.
 
 my $tempdir = tempdir(CLEANUP => 1);
 
@@ -109,6 +113,47 @@ ISF
     is($role, 'INPUT', 'cfg (only inside (stable cfg)) is kept as an INPUT port, not pruned');
 };
 
+subtest 'past renders as a value-returning sampled expression in checks' => sub {
+    my $module = parsed_module(<<'ISF', 'pastv');
+(actor pastv
+  (interface (input start) (input data (width 8)) (output done))
+  (transaction main
+    (on start)
+    (assert (== data (past data)) "data repeats previous sample")
+    (assume (== data (past data 2)) "data repeats sample from two cycles ago")
+    (cover (== (past data) data))
+    (complete done)))
+ISF
+    my $info = module_info_for($module);
+    my %by = map { $_->{name} => $_ } @{$info->{immediate_assertions}};
+    is($by{main_assert_0}{condition_sv}, 'data == $past(data)',
+        '(== data (past data)) -> data == $past(data)');
+    is($by{main_assume_0}{condition_sv}, 'data == $past(data, 2)',
+        '(== data (past data 2)) -> data == $past(data, 2)');
+    is($by{main_cover_0}{condition_sv}, '$past(data) == data',
+        '(== (past data) data) -> $past(data) == data');
+    ok(!$by{main_assert_0}{formal_only}, '$past without ## stays verilator-simulable');
+    ok(!$by{main_assume_0}{formal_only}, '$past with literal depth stays verilator-simulable');
+
+    my @lines = FSM::Backend::GeneratedModuleEmitter->immediate_assertion_runtime_lines(
+        module_info => $info, target_language => 'systemverilog');
+    my $block = join("\n", @lines);
+    like($block, qr/`ifndef SYNTHESIS[\s\S]*\$past\(data\)/, '$past checks are under `ifndef SYNTHESIS');
+    unlike($block, qr/`ifdef FORMAL/, 'no formal-only block is needed for plain $past checks');
+};
+
+subtest 'a signal used only inside past is kept alive as a port' => sub {
+    my $module = parsed_module(<<'ISF', 'pastalive');
+(actor pastalive
+  (interface (input start) (input cfg (width 8)) (output done))
+  (transaction main (on start) (assert (== (past cfg) 0)) (complete done)))
+ISF
+    my $signals = $module->signals;
+    my $role = $signals->{cfg} && $signals->{cfg}->can('get_attribute')
+        ? $signals->{cfg}->get_attribute('signal_role') : undef;
+    is($role, 'INPUT', 'cfg (only inside (past cfg)) is kept as an INPUT port, not pruned');
+};
+
 subtest 'a sampled-value predicate with the wrong arity fails closed' => sub {
     like(lower_error(
         "(actor a (interface (input start) (output done)) "
@@ -122,13 +167,41 @@ subtest 'a sampled-value predicate with the wrong arity fails closed' => sub {
         '(rose x y) with two operands is rejected');
 };
 
+subtest 'past malformed forms fail closed' => sub {
+    like(lower_error(
+        "(actor p0 (interface (input start) (input x) (output done)) "
+        . "(transaction main (on start) (assert (== x (past))) (complete done)))", 'p0'),
+        qr/sampled-value expression requires one signal operand and an optional literal depth/,
+        '(past) with no operand is rejected');
+    like(lower_error(
+        "(actor p1 (interface (input start) (input x) (output done)) "
+        . "(transaction main (on start) (assert (== x (past x 0))) (complete done)))", 'p1'),
+        qr/sampled-value depth must be a literal integer >= 1/,
+        '(past x 0) is rejected');
+    like(lower_error(
+        "(actor p2 (interface (input start) (input x) (output done)) "
+        . "(transaction main (on start) (assert (== x (past x two))) (complete done)))", 'p2'),
+        qr/sampled-value depth must be a literal integer >= 1/,
+        '(past x two) is rejected');
+    like(lower_error(
+        "(actor p3 (interface (input start) (input x) (output done)) "
+        . "(transaction main (on start) (assert (== x (past (+ x 1)))) (complete done)))", 'p3'),
+        qr/requires a signal, bit\/slice, or aggregate leaf operand/,
+        '(past (+ x 1)) is rejected as a non-signal operand');
+};
+
 subtest 'sampled-value heads are property-only: they fail closed in a synthesizable expression position' => sub {
     # A `(when COND ...)` guard is an ordinary (synthesizable) boolean expression, not a property.
-    # The sampled-value heads are unknown to the expression builder there, so they fail closed.
+    # The sampled-value heads are unknown to the ordinary expression builder there, so they fail closed.
     my $err = lower_error(
         "(actor w (interface (input start) (input x) (output done) (output r)) "
         . "(transaction main (on start) (when (stable x) (drive r)) (complete done)))", 'w');
     isnt($err, '', '(when (stable x) ...) — a sampled-value head in a control-flow guard fails closed');
+
+    my $past_err = lower_error(
+        "(actor wp (interface (input start) (input x) (output done) (output r)) "
+        . "(transaction main (on start) (when (== x (past x)) (drive r)) (complete done)))", 'wp');
+    isnt($past_err, '', '(when (== x (past x)) ...) — past remains property-expression-only');
 };
 
 done_testing();

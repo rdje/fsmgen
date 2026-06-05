@@ -111,7 +111,7 @@ addendum) — SPECFORGE mines exactly these stability/edge predicates.
 - ID: `ISF-PROPERTY-SAMPLED-VALUE.3`
   Status: `done`
   Goal: `Close value-returning (past SIG [N]) as deferred/prerequisite-bound.`
-  Acceptance: `No implementation is selected here: (past ...) is value-returning, not a boolean property leaf, and needs expression-level property composition (for example (== data (past data))) before it can ship. The mdBook, feature matrix, and ISF_SPEC explicitly state the non-claim; future work routes through a new exact owner under the broad temporal/property frontier (ISF-REMAINING-BROAD-FRONTIER.9).`
+  Acceptance: `No implementation was selected in this narrower tree: (past ...) is value-returning, not a boolean property leaf, and needed expression-level property composition (for example (== data (past data))) before it could ship. At this tree's closure, the mdBook, feature matrix, and ISF_SPEC stated the non-claim; future work was routed through a new exact owner under the broad temporal/property frontier (ISF-REMAINING-BROAD-FRONTIER.9).`
   Verification: `passed: sampled-value docs/spec audit, t/1417, book example lowering audit, feature matrix audit, memory architecture, Knowledge Map, mdBook build, relative-path audit, and diff checks`
   Commit: `ISF-PROPERTY-SAMPLED-VALUE.3: close value-returning past deferral`
 
@@ -119,8 +119,8 @@ addendum) — SPECFORGE mines exactly these stability/edge predicates.
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection/design (this doc); task tree committed before code. |
 | 2 | `.2` | `done` | `(stable/changed/rose/fell SIG)` → `$stable/$changed/$rose/$fell(SIG)` property leaves; verilator-simulable; operand kept alive; property-only fail-closed; verilator+yosys PASS. `t/1417`; 13d/13k/ISF_SPEC synced. |
-| 3 | `.3` | `done` | Value-returning `(past SIG [N])` closed as deferred/prerequisite-bound: it needs expression-level property composition, and the public docs now state the non-claim. |
-| 4 | `closed` | `done` | Tree complete; future `(past ...)` work needs a new exact owner under `ISF-REMAINING-BROAD-FRONTIER.9` or another selected temporal/property tree. |
+| 3 | `.3` | `done` | Value-returning `(past SIG [N])` closed as deferred/prerequisite-bound in this tree: it needed expression-level property composition and was routed to a future exact owner. |
+| 4 | `closed` | `done` | Tree complete; later `(past ...)` work is owned by `ISF-REMAINING-BROAD-FRONTIER.9.1`. |
 
 ## Decisions
 
@@ -134,9 +134,9 @@ addendum) — SPECFORGE mines exactly these stability/edge predicates.
   it composes only inside a comparison (expression-level work), and `(stable)` already
   expresses the dominant "unchanged" use.
 - `2026-06-05` (`.3` close): close `(past SIG [N])` as deferred rather than widening
-  this tree. `(past ...)` is value-returning and needs expression-level property
-  composition before implementation; the book/feature matrix/spec now state the
-  non-claim, and future work routes to `ISF-REMAINING-BROAD-FRONTIER.9` or another
+  this tree. `(past ...)` is value-returning and needed expression-level property
+  composition before implementation; at closure time the book/feature matrix/spec stated
+  the non-claim, and future work routed to `ISF-REMAINING-BROAD-FRONTIER.9` or another
   exact temporal/property owner.
 
 ## Verification Log
@@ -181,8 +181,14 @@ addendum) — SPECFORGE mines exactly these stability/edge predicates.
   yosys synthesis. `t/1417` (5 subtests). Docs synced: `13d` gains a "Sampled-value
   predicates" subsection with a runnable example; `13k` row 59 (Form + Behavior);
   `ISF_SPEC` focused-test index. No ISF-layer change (the pass-through `_format_isf_expr`
-  carries the new forms verbatim). Value-returning `(past …)` stays deferred (`.3`).
+  carries the new forms verbatim). Value-returning `(past …)` stayed deferred in this
+  narrower tree (`.3`).
 - `2026-06-05`: `.3` closed value-returning `(past SIG [N])` without code. It remains
   deferred because it is not a boolean property leaf and needs expression-level property
-  composition. 13d, 13k, and ISF_SPEC now explicitly state that `(past ...)` is not part
-  of the shipped sampled-value surface.
+  composition. At closure time, 13d, 13k, and ISF_SPEC explicitly stated that
+  `(past ...)` was not part of the shipped sampled-value surface.
+- `2026-06-05`: Post-tree note: `ISF-REMAINING-BROAD-FRONTIER.9.1` later shipped
+  property-expression support for value-returning `(past SIG [N])`. The `.3` evidence
+  above remains historical closure for this narrower tree; current public behavior is
+  recorded in `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md`, `docs/book/src/13d-control-flow.md`,
+  `docs/book/src/13k-isf-feature-support-matrix.md`, and `docs/knowledge/isf-sampled-value-predicates.md`.

@@ -1008,7 +1008,7 @@ A complete, runnable example — a request that must be acknowledged 2 to 5 cycl
 > checks stay under `` `ifndef SYNTHESIS `` and are verilator-simulable. This is why
 > the simulation proofs in this book cover boolean/overlapping properties only.
 
-### Sampled-value predicates — `(stable …)` / `(changed …)` / `(rose …)` / `(fell …)`
+### Sampled-value functions — `(stable …)` / `(changed …)` / `(rose …)` / `(fell …)` / `(past …)`
 
 A property leaf may be a **SystemVerilog sampled-value function** — an edge or
 stability fact about a signal, sampled at the clock:
@@ -1019,9 +1019,11 @@ stability fact about a signal, sampled at the clock:
 | `(changed SIG)` | `$changed(SIG)` | `SIG` differs from the previous cycle |
 | `(rose SIG)`    | `$rose(SIG)`    | `SIG` went `0 → 1` this cycle |
 | `(fell SIG)`    | `$fell(SIG)`    | `SIG` went `1 → 0` this cycle |
+| `(past SIG)`    | `$past(SIG)`    | the previous sampled value of `SIG` |
+| `(past SIG N)`  | `$past(SIG, N)` | the value sampled `N` cycles ago (`N >= 1`) |
 
-Each takes exactly one signal. They are ordinary boolean leaves, so they stand alone
-or sit on either side of an implication:
+`stable` / `changed` / `rose` / `fell` each take exactly one signal. They are
+ordinary boolean leaves, so they stand alone or sit on either side of an implication:
 
 ```lisp
 (assert (stable cfg) "cfg is constant")          ;; $stable(cfg)
@@ -1033,9 +1035,18 @@ or sit on either side of an implication:
 Note `(=> (rose req) ack)` is exactly what the event anchor `(after req ack)` (below)
 spells more compactly — `after` is sugar for a `$rose` antecedent. And `(stable SIG)`
 is the everyday "unchanged" obligation (`$stable(s)` is `s == $past(s)`).
-Value-returning `(past SIG [N])` syntax is not part of the shipped ISF property
-surface yet; it needs expression-level property composition such as
-`(== data (past data))`.
+
+`past` is value-returning, so use it inside a boolean property expression:
+
+```lisp
+(assert (== data (past data)) "data repeats the previous sample")
+(assume (== data (past data 2)) "data repeats the sample from two cycles ago")
+(cover  (== (past data) data))
+```
+
+`past` accepts a signal, bit/slice, or aggregate leaf plus an optional positive
+literal depth. It is not a boolean predicate by itself; comparisons such as
+`(== data (past data))` are the normal form.
 
 A sampled-value leaf is **not** a `##` delay sequence, so — unlike `next` / `within` —
 it stays verilator-**simulable** (emitted under `` `ifndef SYNTHESIS ``); a property is
@@ -1223,10 +1234,12 @@ overlapping implication `(=> req ack)`:
     (input req)
     (input ack)
     (input len (width 8))
+    (input data (width 8))
     (output done))
   (transaction main
     (on start)
     (assert (=> req ack) "every req is acked the same cycle")
+    (assert (== data (past data)) "data repeats its previous sample")
     (assume (< len 256) "len is bounded by the protocol")
     (cover  (& req ack))
     (complete done)))

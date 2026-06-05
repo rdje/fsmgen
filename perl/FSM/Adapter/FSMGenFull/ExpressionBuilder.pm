@@ -295,7 +295,7 @@ sub build_chained_relational_expression($self, $operator, $parsed_operands) {
     return $self->finalize_nary_expression('&', \@comparisons);
 }
 
-sub parse_recursive_expression($self, $expr) {
+sub parse_recursive_expression($self, $expr, %options) {
     my ($operator, @operands) = @$expr;
     
     # Lispish often packs n-ary operands in a single array:
@@ -321,7 +321,7 @@ sub parse_recursive_expression($self, $expr) {
 
     my @parsed_operands;
     for my $operand (@operands) {
-        my $parsed = $self->parse_expression($operand);
+        my $parsed = $self->parse_expression($operand, %options);
         push @parsed_operands, $parsed if $parsed;
     }
 
@@ -478,9 +478,9 @@ sub create_binary_operator_tree($self, $operator, $operands) {
     return $result;
 }
 
-sub parse_expression($self, $expr) {
+sub parse_expression($self, $expr, %options) {
     if (!ref($expr)) {
-        return $self->parse_scalar_expression($expr);
+        return $self->parse_scalar_expression($expr, %options);
     } elsif (ref($expr) eq 'ARRAY') {
         Carp::confess
             "Malformed expression list '()'. ".
@@ -488,9 +488,14 @@ sub parse_expression($self, $expr) {
             supported_boundary_hint()
             unless @$expr;
 
+        if ($options{property_value_context}
+            && defined($expr->[0]) && !ref($expr->[0]) && $expr->[0] eq 'past') {
+            return $self->parse_property_past_expression($expr, %options);
+        }
+
         if ($self->is_recursive_expression($expr)) {
             fsm_debug("          Detected recursive expression - processing with new framework", 3);
-            return $self->parse_recursive_expression($expr);
+            return $self->parse_recursive_expression($expr, %options);
         } else {
             return $self->parse_sexpr_expression($expr);
         }
@@ -502,7 +507,7 @@ sub parse_expression($self, $expr) {
     }
 }
 
-sub parse_scalar_expression($self, $scalar) {
+sub parse_scalar_expression($self, $scalar, %options) {
     fsm_debug("        PARSE_SCALAR: Processing scalar '$scalar'", 3);
 
     if ($scalar =~ /^\[[^\]]+\](?:.*)?$/) {
@@ -566,8 +571,8 @@ sub parse_scalar_expression($self, $scalar) {
         $rhs_spec =~ s/^\s+|\s+$//g;
         $operator = '==' if $operator eq '=';
 
-        my $lhs = $self->parse_expression($lhs_spec);
-        my $rhs = $self->parse_expression($rhs_spec);
+        my $lhs = $self->parse_expression($lhs_spec, %options);
+        my $rhs = $self->parse_expression($rhs_spec, %options);
 
         $self->malformed_inline_comparison_error($scalar)
             unless $lhs && $rhs;
@@ -623,6 +628,39 @@ sub parse_scalar_expression($self, $scalar) {
             "Guard-prefixed tokens belong in condition position, not inside ordinary expressions. ".
             supported_boundary_hint();
     }
+}
+
+sub parse_property_past_expression($self, $expr, %options) {
+    my (undef, @operands) = @$expr;
+
+    if (@operands == 1 && ref($operands[0]) eq 'ARRAY') {
+        @operands = @{$operands[0]};
+    }
+
+    Carp::confess
+        "'(past SIG [N])' sampled-value expression requires one signal operand and an optional literal depth"
+        unless (@operands == 1 || @operands == 2) && defined($operands[0]);
+
+    my $sampled = $self->parse_expression($operands[0], %options);
+    Carp::confess
+        "'(past SIG [N])' sampled-value expression requires a signal, bit/slice, or aggregate leaf operand"
+        unless $sampled
+            && (
+                $sampled->isa('FSM::CoreAST::SignalRef')
+                || $sampled->isa('FSM::CoreAST::IndexedRef')
+                || $sampled->isa('FSM::CoreAST::AggregateRef')
+            );
+
+    my @arguments = ($sampled);
+    if (@operands == 2) {
+        my $depth = $operands[1];
+        Carp::confess
+            "'(past SIG N)' sampled-value depth must be a literal integer >= 1"
+            unless defined($depth) && !ref($depth) && $depth =~ /^\d+$/ && $depth + 0 >= 1;
+        push @arguments, FSM::CoreAST::Literal->new($depth + 0);
+    }
+
+    return FSM::CoreAST::FunctionCall->new('$past', @arguments);
 }
 
 sub parse_common_integer_literal($self, $scalar) {

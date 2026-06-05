@@ -6,7 +6,7 @@ answers:
   - "which book chapter covers ISF temporal properties, trigger anchors, monitors?"
   - "where do I document a new ISF property construct / did the book get synced?"
   - "which mdBook chapters do I update when I add an ISF verification feature?"
-date: 2026-06-04
+date: 2026-06-05
 status: current
 tags: [isf, verification, docs, mdbook, doc-map]
 evidence: docs/book/src/13d-control-flow.md; docs/book/src/13k-isf-feature-support-matrix.md; t/1376-isf-book-example-lowering-audit.t; t/1305-isf-book-feature-matrix-audit.t
@@ -15,8 +15,8 @@ reverify: grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-contr
 
 The ISF verification/property surface (`assert`/`assume`/`cover`, implication `=>`,
 `next`/`within`, trigger anchors `after`/`point`/`at`/`on-as`, the `(monitor (within
-S N))` bounded-eventually, and the sampled-value predicates `stable`/`changed`/`rose`/
-`fell`) is documented in **exactly two** book chapters — update both when adding a
+S N))` bounded-eventually, and the sampled-value functions `stable`/`changed`/`rose`/
+`fell`/`past`) is documented in **exactly two** book chapters — update both when adding a
 verification feature:
 
 - **`13d-control-flow.md`** — the **canonical** surface: each construct with runnable
