@@ -50,6 +50,7 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.4.6.1`,
     `BACKEND-API-VALIDATION-FRONTIER.4.7`,
     `BACKEND-API-VALIDATION-FRONTIER.5`,
+    `BACKEND-API-VALIDATION-FRONTIER.5.1`,
     `BACKEND-API-VALIDATION-FRONTIER.6`,
     `BACKEND-API-VALIDATION-FRONTIER.7`,
     `BACKEND-API-VALIDATION-FRONTIER.8`
@@ -171,9 +172,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.5`
-  Status: `active`
+  Status: `done`
   Goal: `Harden ABC mapping behavior.`
-  Acceptance: `One exact ABC mapping edge is selected, implemented or deferred, documented, and covered.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.5.1`
+  Acceptance: `Selected optional ABC executable discovery as the exact ABC mapping hardening edge. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.5.1: report optional ABC mapping tool availability in the external validation support surface and contract while keeping the shipped validation lane ABC-free, non-requiring, and still driven by Verilator plus Yosys synth -noabc.`
+  Verification: `Selection audit/read: perl/FSM/Support/HDLExternalValidation.pm, perl/FSM/Support/HDLExternalValidationContract.pm, perl/FSM/Support/BackendValidationSection.pm, t/308-systemverilog-external-validation.t, t/313-hdl-external-validation-contract.t, t/297-capability-manifest.t, README.md, docs/REGRESSION_CORPUS.md, docs/SPECFORGE_FEEDBACK_RESPONSE.md, docs/book/src/09-generated-hdl-debugging-and-inspection.md, docs/book/src/14-feature-backlog.md, and local tool probes command -v yosys, command -v yosys-abc, command -v berkeley-abc, command -v abc. Evidence: Yosys is installed, yosys-abc is installed, berkeley-abc and abc are unavailable, and the current validation/manifest/book contract intentionally uses synth -noabc with yosys_abc_enabled false.`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.5.1`
+  Status: `active`
+  Goal: `Report optional ABC executable discovery while preserving the ABC-free external validation gate.`
+  Acceptance: `The external validation support surface discovers an optional ABC mapping executable candidate without making it a required validation tool. missing_systemverilog_validation_tools() still only requires Verilator and Yosys. validate_systemverilog_file() still runs Verilator lint and Yosys synth -noabc/stat, with no standalone ABC pass. The external validation contract and capability manifest expose the required-tools versus optional-ABC distinction, docs/mdBook explain the boundary, and focused tests cover the tool-discovery and manifest contract.`
   Verification: `pending`
   Commit: `pending`
 
@@ -215,7 +224,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 11 | `BACKEND-API-VALIDATION-FRONTIER.4.6` | `done` | Selected `fsm/generic_fifo.fsm` as the next exact blocked historical validation target. |
 | 12 | `BACKEND-API-VALIDATION-FRONTIER.4.6.1` | `done` | Explicitly deferred `fsm/generic_fifo.fsm` as a regression-backed expected failure at the legacy `?define` template boundary. |
 | 13 | `BACKEND-API-VALIDATION-FRONTIER.4.7` | `done` | Explicitly deferred `fsm/lte_digital_rf.fsm` as a regression-backed expected failure at the legacy multi-module `?rtl` composition boundary. |
-| 14 | `BACKEND-API-VALIDATION-FRONTIER.5` | `active` | Select and harden the next exact ABC mapping behavior edge. |
+| 14 | `BACKEND-API-VALIDATION-FRONTIER.5` | `done` | Selected optional ABC executable discovery as the exact ABC hardening edge while preserving the ABC-free validation gate. |
+| 15 | `BACKEND-API-VALIDATION-FRONTIER.5.1` | `active` | Report optional ABC mapping tool availability in contracts/support surfaces without enabling or requiring ABC. |
 
 ## Decisions
 
@@ -250,6 +260,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.6` | Selection probes for `fsm/generic_fifo.fsm` and `fsm/lte_digital_rf.fsm`; `wc -l fsm/generic_fifo.fsm fsm/lte_digital_rf.fsm`; read leading source shapes for both files; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected `generic_fifo` for `.4.6.1` |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.6.1` | `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_generic_fifo_verify.sv fsm/generic_fifo.fsm` expected-failure probe; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t t/41-language-contract-top-level-source-kind-boundary.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; `generic_fifo` deferred as an expected-failure corpus boundary |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.7` | `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_lte_digital_rf_verify.sv fsm/lte_digital_rf.fsm` expected-failure probe; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; `lte_digital_rf` deferred as an expected-failure corpus boundary; `.4` exhausted |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.5` | Selection audit/read of the external validation support, contract, manifest, smoke test, README, regression-corpus docs, SPECFORGE response, and mdBook ABC backlog/debugging sections; local tool probes for `yosys`, `yosys-abc`, `berkeley-abc`, and `abc`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected optional ABC executable discovery for `.5.1` |
 
 ## Commit Log
 
@@ -268,6 +279,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.4.6` | `BACKEND-API-VALIDATION-FRONTIER.4.6: select generic_fifo validation target` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.4.6.1` | `BACKEND-API-VALIDATION-FRONTIER.4.6.1: defer generic_fifo template root` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.4.7` | `BACKEND-API-VALIDATION-FRONTIER.4.7: defer lte_digital_rf rtl child count` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.5` | `BACKEND-API-VALIDATION-FRONTIER.5: select ABC discovery edge` | selected `.5.1` |
 
 ## Changelog
 
@@ -327,3 +339,9 @@ items named in the 2026-06-05 remaining-work inventory.
   and a knowledge-map fact card at the multi-module `?rtl` boundary. The
   historical external-validation frontier `.4` is exhausted and the active
   frontier moves to `.5` for ABC mapping behavior.
+- `2026-06-05`: Completed `.5`; selected optional ABC executable discovery as
+  the exact ABC mapping hardening edge because local probes show `yosys-abc`
+  is installed while the current validation contract still intentionally uses
+  `synth -noabc` and advertises `yosys_abc_enabled` as false. Activated
+  `.5.1` to expose the required-tool versus optional-ABC distinction without
+  enabling or requiring ABC.
