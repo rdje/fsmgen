@@ -236,13 +236,14 @@ generated module shape, and reset metadata shown above for event crossings).
 A cross-domain `(do child)` is supported at the transaction top level, directly
 inside any **top-level body** — a `(repeat ...)` body or a `when` / `switch` /
 `while` / `until` branch body — and directly inside a `(repeat ...)` nested in a
-top-level `when` body or top-level `switch` branch. The same caller restructure
-applies in every case (the branch/loop entry or nested repeat entry is redirected
-into the inserted start-ready await, so the await-ready → one-cycle-start →
-dual-CDC → done handshake runs when the branch is taken; inside a repeat or loop it
-re-runs each iteration and the destination worker returns to idle between
-iterations ready for the next start pulse). The remaining fail-closed boundaries
-are deliberate: a cross-domain `(do child)` with **no** covering activation
+top-level `when` body or top-level `switch` branch, or directly inside a nested
+`when` chain reached from one of those top-level branch bodies. The same caller
+restructure applies in every case (the branch/loop entry, nested repeat entry, or
+inner `when` branch entry is redirected into the inserted start-ready await, so the
+await-ready → one-cycle-start → dual-CDC → done handshake runs when the branch is
+taken; inside a repeat or loop it re-runs each iteration and the destination worker
+returns to idle between iterations ready for the next start pulse). The remaining
+fail-closed boundaries are deliberate: a cross-domain `(do child)` with **no** covering activation
 crossing is rejected; a **declared-but-unused** crossing (one whose `child` no
 transaction actually `(do)`es) or one whose `child` is not in the declared
 destination domain is rejected; and cross-domain `(spawn)` plus deeper cross-domain

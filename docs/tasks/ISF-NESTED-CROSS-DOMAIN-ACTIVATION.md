@@ -170,11 +170,11 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   Commit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6: branch-contained repeat cross-domain do`
 
 - ID: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7`
-  Status: `pending`
-  Goal: `Support or explicitly close the next branch->branch deeper cross-domain (do) context.`
-  Acceptance: `Exact acceptance to be refined after .6 evidence; no code before this leaf is selected.`
-  Verification: `pending`
-  Commit: `pending`
+  Status: `done`
+  Goal: `Support a cross-domain (do child) directly inside a when body reached through one or more branch ancestors.`
+  Acceptance: `A declared activation crossing covers (when A (when B (do child))) and (switch SEL (CASE (when B (do child)))) when the parent transaction is in the source domain and child is in the destination domain. The partition classification gains an exact branch-contained-when context for a direct (do child) inside a when body whose when is nested under a top-level when body or switch branch, including longer when-chains that stay within supported nested-control syntax. The caller module redirects the inner branch entry to await-start-ready, pulses start for one cycle, waits for done, and resumes the nested branch exit path. Existing top-level, top-level-repeat, top-level-branch/loop, and branch-contained-repeat cases remain unchanged. Nested switch bodies, repeat->branch, nested while/until, and deeper branch-repeat combinations still fail closed with accurate diagnostics. t/1387 gains positive when->when and switch->when coverage and preserves deferred nested-switch / repeat-body cases.`
+  Verification: `passed: t/1387 (13 subtests), focused ISF cross-domain/control-flow sweep, full ISF no-book regression, perl -c, memory architecture, Knowledge Map, mdBook build, relative-path audit, and diff checks`
+  Commit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7: nested when cross-domain do`
 
 - ID: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8`
   Status: `pending`
@@ -200,7 +200,7 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
 | 4 | `.4` | `done` | Cross-domain `(do)` directly inside any TOP-LEVEL branch/loop body (`when`/`switch`/`while`/`until`) LOWERS through the dual-CDC. Lifted the validator (branch-body labels) + partition (`top_level_branch_body` flag); **extended the caller restructure to redirect branch/loop ENTRY references** (`true_target` / `branches[].body_start` / `loop_body_start`) into the ready-await — the missing piece for when/switch (while/until already worked via `transitions[].target`). All four contexts `--check-json` SUCCEED. Deeper nestings still defer. `t/1387` (+positive subtest). |
 | 5 | `.5` | `done` | Split the previously bundled `.5`-`.7` deeper-nesting frontier into exact executable leaves before any new implementation. |
 | 6 | `.6` | `done` | Top-level `when`/`switch` branch-contained `repeat` with a cross-domain `(do child)` now lowers through the declared activation crossing; the existing ready/req/done restructure re-runs each nested-repeat iteration. |
-| 7 | `.7` | `pending` | Next deeper branch nesting (`branch->branch`) after `.6` evidence. |
+| 7 | `.7` | `done` | Cross-domain `(do)` directly inside a supported inner `when` body reached from a top-level `when` or top-level `switch` branch now lowers through the declared activation crossing. |
 | 8 | `.8` | `pending` | Repeat-contained branch contexts (`repeat->branch`) after `.7` evidence. |
 | 9 | `.9` | `pending` | Exhaustion audit / close-out for any remaining deeper combinations. |
 
@@ -256,6 +256,13 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   re-runs await-start-ready -> one-cycle start -> await-done. Branch->branch,
   repeat->branch, nested while/until, and deeper branch-repeat combinations remain
   deferred.
+- `2026-06-05` (`.7` shipped): direct cross-domain `(do child)` inside supported
+  nested `when` chains now lowers through the explicit activation crossing. The
+  partition classification gained a `top_level_branch_when` flag for `when` bodies
+  nested under a top-level `when` body or top-level `switch` branch, propagating
+  through longer `when` chains. Nested switch bodies, repeat-contained branch
+  bodies, nested while/until, and deeper branch-repeat combinations remain
+  deferred.
 
 ## Open Questions
 
@@ -278,6 +285,7 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
 | `2026-06-01` | `.4` | Empirical spike: when/switch/while/until top-level branch-body cross-domain `(do)` all lower (ready-await reachable, one-cycle start, done block) and `--check-json` **SUCCEEDS** (clean fixtures); when→when / switch→switch / when→repeat still defer. Restructure extended to redirect `true_target`/`branches[].body_start`/`loop_body_start` (the when/switch selector fix). `prove -Iperl t/1387` (11 subtests) `t/1386 t/1247 t/1304 t/1307 t/1305 t/1376 t/1303` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-05` | `.5` | `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 | `2026-06-05` | `.6` | Failing-first `prove -Iperl t/1387-isf-cross-domain-activation-handshake-lowering.t` confirmed old deferred diagnostic for `when->repeat` / `switch->repeat`; after lift: `prove -Iperl t/1387-isf-cross-domain-activation-handshake-lowering.t` (12 subtests) PASS; focused cross-domain/control-flow sweep PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
+| `2026-06-05` | `.7` | Failing-first `prove -Iperl t/1387-isf-cross-domain-activation-handshake-lowering.t` confirmed old deferred diagnostic for `when->when`, `when->when->when`, and `switch->when`; after lift: `prove -Iperl t/1387-isf-cross-domain-activation-handshake-lowering.t` (13 subtests) PASS; focused cross-domain/control-flow sweep PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -290,6 +298,7 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
 | `.4` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.4: top-level branch-body cross-domain (do) through dual-CDC` | `ship commit (this slice)` |
 | `.5` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5: split deeper nesting frontier` | `frontier-split slice` |
 | `.6` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6: branch-contained repeat cross-domain do` | `implementation slice` |
+| `.7` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7: nested when cross-domain do` | `implementation slice` |
 
 ## Changelog
 
@@ -389,3 +398,8 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   `when` body or top-level `switch` branch. The partition recognizes only that
   branch-contained repeat shape; branch->branch, repeat->branch, nested
   while/until, and residual deeper branch-repeat shapes still defer.
+- `2026-06-05`: `.7` shipped. A cross-domain `(do child)` through a declared
+  activation crossing now lowers inside supported nested `when` chains reached
+  from a top-level `when` body or top-level `switch` branch. Nested switches,
+  repeat-contained branch contexts, nested while/until, and residual deeper
+  branch-repeat shapes still defer.

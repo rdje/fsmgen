@@ -1475,7 +1475,10 @@ branch-contained generated-spawn cases. A plain local `(do child)` and a
 cross-domain plain `(do child)` owned by an explicit activation crossing both lower
 inside a `(repeat ...)` nested directly in a top-level `when` body or top-level
 `switch` branch; the cross-domain path reruns the start-ready, one-cycle start, and
-done handshake on each nested-repeat iteration. A plain local `(do child)` and a
+done handshake on each nested-repeat iteration. The same explicit crossing path also
+lowers a direct `(do child)` inside a nested `when` chain reached from one of those
+top-level branch bodies, redirecting the inner branch entry to the start-ready
+await. A plain local `(do child)` and a
 same-domain generated `(do child (params ...))` inside a `(repeat ...)` that
 sits directly in a single `(while ...)` or `(until ...)` body now lower: they
 reuse the proven repeat schedule (`repeat_init` re-seeds the counter each loop

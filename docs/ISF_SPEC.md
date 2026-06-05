@@ -1498,10 +1498,12 @@ Multi-clock boundary:
   activation start/done for the shipped bounded surface: transaction top level,
   any direct top-level body (`repeat`, `when`, `switch`, `while`, `until`), and a
   `repeat` nested directly in a top-level `when` body or top-level `switch`
-  branch. Cross-domain activation without such a crossing continues to fail
-  closed with the clock-domain-violation diagnostic; cross-domain `(spawn)`,
-  declared-but-unused or misplaced activation crossings, and deeper cross-domain
-  `(do)` placements remain fail-closed.
+  branch, and a nested `when` chain reached from one of those top-level branch
+  bodies. Cross-domain activation without such a crossing continues to fail closed
+  with the clock-domain-violation diagnostic; cross-domain `(spawn)`,
+  declared-but-unused or misplaced activation crossings, nested switch bodies,
+  repeat-contained branch bodies, and deeper cross-domain `(do)` placements remain
+  fail-closed.
 - Asynchronous reset trees are not DTs. FSMGen does not use ISF DT logic to
   build arbitrary asynchronous reset gating.
 

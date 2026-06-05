@@ -360,9 +360,10 @@ subtest 'a nested cross-domain (do) fails closed with a precise deferred diagnos
     # deferred context accurately, not the genuinely-unused
     # "declared but ... no top-level (do)" message.
     my %context_body = (
-        # when->when: the inner when is NOT a direct transaction clause, so the do
-        # stays deferred; the innermost container the diagnostic names is a when body.
-        'when body'     => '(when cond (when cond (do worker)))',
+        # repeat->when: the inner when is NOT top-level or a supported
+        # branch-contained when-chain, so it stays deferred; the innermost
+        # container the diagnostic names is a when body.
+        'when body'     => '(repeat n (when cond (do worker)))',
         # switch->switch: likewise deferred; innermost container is a switch branch.
         'switch branch' => '(switch sel (0 (switch sel (0 (do worker)))))',
         # repeat->repeat: the inner repeat is NOT top-level or branch-contained,
@@ -579,6 +580,73 @@ ISF
         like($bus, qr/worker_idle_ext\s*\(\s*<worker_start/s, "$label: the callee is gated on the start pulse");
 
         my $top = $lowered->{files}{'branch_repeat_xdom_top.fsm'};
+        ok(defined($top), "$label: the multi-domain top is emitted");
+        like($top, qr/cdc_activation_worker_start/, "$label: the top instantiates the start CDC synchronizer");
+        like($top, qr/cdc_activation_worker_done/, "$label: the top instantiates the done CDC synchronizer");
+    }
+};
+
+subtest 'a (do child) directly inside a branch-contained when lowers cross-domain through the dual-CDC' => sub {
+    # ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7: supported branch->branch nesting uses
+    # inner `when` bodies. Nested `switch` bodies remain outside this leaf.
+    my %case = (
+        'when->when'       => {
+            body       => '(when guard (when inner (do worker)))',
+            guard_decl => '(input guard (domain core))',
+            extra_decl => '(input inner (domain core))',
+        },
+        'when->when->when' => {
+            body       => '(when guard (when inner (when deep (do worker))))',
+            guard_decl => '(input guard (domain core))',
+            extra_decl => '(input inner (domain core)) (input deep (domain core))',
+        },
+        'switch->when'     => {
+            body       => '(switch guard (1 (when inner (do worker))))',
+            guard_decl => '(input guard (width 2) (domain core))',
+            extra_decl => '(input inner (domain core))',
+        },
+    );
+    for my $label (sort keys %case) {
+        my $actor = parse_source(<<"ISF", "branch-when-xdom-$label");
+(actor branch_when_xdom
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus  (clock bus_clk) (reset bus_rst_n)))
+  (crossings
+    (activation worker (from core) (to bus)))
+  (interface
+    (input  start (domain core))
+    $case{$label}{guard_decl}
+    $case{$label}{extra_decl}
+    (output done  (domain core))
+    (input  din    (width 8) (domain bus))
+    (output result (width 8) (domain bus))
+    (output worker_complete (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    $case{$label}{body}
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (sample din as snap)
+    (update result snap)
+    (complete worker_complete)))
+ISF
+        my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+        ok($lowered, "$label cross-domain (do) lowers") or diag($@);
+
+        my $core = $lowered->{files}{'branch_when_xdom__domain_core.fsm'};
+        ok(defined($core), "$label: the caller (core) domain module is emitted");
+        like($core, qr/-> parent_do_\d+_ready/, "$label: the inner branch entry is redirected into the start-ready await");
+        like($core, qr/parent_do_\d+_req\b[\s\S]*?\(worker_start>\s*1\)/, "$label: a one-cycle start request is driven");
+        like($core, qr/parent_do_\d+\b\s*\(\s*<worker_done/, "$label: the do-state blocks on the done handshake");
+
+        my $bus = $lowered->{files}{'branch_when_xdom__domain_bus.fsm'};
+        ok(defined($bus), "$label: the callee (bus) domain module is emitted");
+        like($bus, qr/worker_idle_ext\s*\(\s*<worker_start/s, "$label: the callee is gated on the start pulse");
+
+        my $top = $lowered->{files}{'branch_when_xdom_top.fsm'};
         ok(defined($top), "$label: the multi-domain top is emitted");
         like($top, qr/cdc_activation_worker_start/, "$label: the top instantiates the start CDC synchronizer");
         like($top, qr/cdc_activation_worker_done/, "$label: the top instantiates the done CDC synchronizer");
