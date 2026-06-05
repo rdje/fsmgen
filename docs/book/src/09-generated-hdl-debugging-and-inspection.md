@@ -86,7 +86,14 @@ MIPI sample under `fsm/`, the warning-clean historical direct samples
 `fsm/trial_0.fsm` and `fsm/trial_1.fsm`, and every
 supported direct protocol actor in the regression corpus:
 `fsm/apb_requester.fsm`, `fsm/apb_completer.fsm`, and
-`fsm/amba_requester.fsm` today.
+`fsm/amba_requester.fsm` today. It also includes the supported APB
+composition protocol top, `fsm/apb_tb.fsm`.
+
+Composed generated-child tops may contain internal
+`shared_dp_unused_<instance>_<export>` sink wires. Those wires intentionally
+terminate generated-child shared-datapath export-enable pins that are not used
+by a given top-level composition, keeping Verilator's `PINMISSING` lint clean
+without changing the user-visible top interface.
 
 The AMBA requester is a useful example of why source intent and backend
 validation both matter. Its Q-named state registers must use `<-`, not `<=`,

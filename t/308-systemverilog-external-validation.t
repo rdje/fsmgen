@@ -100,6 +100,24 @@ subtest 'supported direct protocol fixtures pass external validation' => sub {
     }
 };
 
+subtest 'supported composition protocol fixtures pass external validation' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my @composition_protocols = grep {
+        ($_->{classification} || '') eq 'supported_smoke'
+            && ($_->{coverage} || '') eq 'composition_top_pipeline_cli'
+            && ($_->{source_kind} || '') eq 'composition'
+    } protocol_fixture_entries();
+
+    ok(@composition_protocols, 'regression corpus exposes supported composition protocol fixtures');
+    for my $entry (@composition_protocols) {
+        my $report = generate_and_validate($tempdir, $entry->{relpath});
+        ok(
+            $report->{ok},
+            "$entry->{id} passes Verilator lint and ABC-free Yosys synthesis",
+        ) or diag(explain($report));
+    }
+};
+
 subtest 'CLI --verify-hdl runs the external validation lane after writing SystemVerilog' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $sv_file = File::Spec->catfile($tempdir, 'lte_dif_pmaster_cli.sv');

@@ -104,6 +104,21 @@ subtest 'apb protocol top fixture compiles as a composed regression seed' => sub
     like($hdl, qr/\bmodule\s+\Q$case->{expected_top_name}\E\b/s, 'generated HDL includes the APB top module');
     like($hdl, qr/\binput\s+rst_n\b/s, 'generated APB top exposes canonical rst_n');
     like($hdl, qr/\.rst_n\(rst_n\)/s, 'generated APB top wires child resets by canonical rst_n');
+    like(
+        $hdl,
+        qr/\bwire\s+shared_dp_unused_requester_shared_dp_export_paddr_32_h0_en;/s,
+        'generated APB top declares a deterministic sink for an unused requester shared-datapath export',
+    );
+    like(
+        $hdl,
+        qr/\.shared_dp_export_paddr_32_h0_en\(shared_dp_unused_requester_shared_dp_export_paddr_32_h0_en\)/s,
+        'generated APB top binds the requester shared-datapath export to its sink',
+    );
+    like(
+        $hdl,
+        qr/\.shared_dp_export_prdata_32_h0_en\(shared_dp_unused_completer_shared_dp_export_prdata_32_h0_en\)/s,
+        'generated APB top binds the completer shared-datapath export to its sink',
+    );
 
     my $out_path = File::Spec->catfile($tempdir, "$case->{expected_top_name}.sv");
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(

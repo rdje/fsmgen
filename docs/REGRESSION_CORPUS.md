@@ -367,7 +367,8 @@ When `verilator` and `yosys` are installed, that smoke generates
 warning-clean historical direct samples
 `fsm/trial_0.fsm` and `fsm/trial_1.fsm`, plus every supported direct protocol
 actor from the corpus (`fsm/apb_requester.fsm`, `fsm/apb_completer.fsm`, and
-`fsm/amba_requester.fsm` today), validates the emitted `.sv` files with
+`fsm/amba_requester.fsm` today), and every supported composition protocol
+fixture (`fsm/apb_tb.fsm` today), validates the emitted `.sv` files with
 Verilator `--lint-only --sv`, validates ABC-free Yosys structural synthesis
 with `read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat`, and
 proves the CLI `--verify-hdl` lane invokes the same external gates. Verilator

@@ -63,6 +63,12 @@ sub source_value_enable_name ($class, $instance_name, $signal_name, $rhs_value) 
     return "${clean_instance}_${clean_signal}_${clean_rhs}_src_en";
 }
 
+sub unused_export_sink_name ($class, $instance_name, $port_name) {
+    my $clean_instance = $class->clean_enable_name_token($instance_name || 'child');
+    my $clean_port = $class->clean_enable_name_token($port_name || 'port');
+    return "shared_dp_unused_${clean_instance}_${clean_port}";
+}
+
 sub target_enable_name ($class, $signal_name) {
     my $clean_signal = $class->clean_enable_name_token($signal_name);
     return "${clean_signal}_shared_en";
@@ -229,23 +235,24 @@ sub augment_plan ($class, %args) {
     my $nets = $composition_plan->{nets} ||= [];
     $composition_plan->{auxiliary_assignments} ||= [];
     my @existing_auxiliary_assignments = @{$composition_plan->{auxiliary_assignments} || []};
-    return $composition_plan unless @{$shared_datapath_candidates || []};
 
     my %needed_exports;
-    for my $candidate (@{$shared_datapath_candidates || []}) {
-        next unless ref($candidate) eq 'HASH';
-        my $signal_name = $candidate->{signal_name} || next;
+    if (@{$shared_datapath_candidates || []}) {
+        for my $candidate (@{$shared_datapath_candidates || []}) {
+            next unless ref($candidate) eq 'HASH';
+            my $signal_name = $candidate->{signal_name} || next;
 
-        for my $family (@{$candidate->{aggregate_enable_families} || []}) {
-            next unless ref($family) eq 'HASH';
-            my $rhs_value = $family->{rhs_value};
+            for my $family (@{$candidate->{aggregate_enable_families} || []}) {
+                next unless ref($family) eq 'HASH';
+                my $rhs_value = $family->{rhs_value};
 
-            for my $contributor (@{$family->{contributors} || []}) {
-                next unless ref($contributor) eq 'HASH';
-                my $endpoint = $contributor->{endpoint} || '';
-                my ($instance_name) = $endpoint =~ /^(\w+)\./;
-                next unless defined $instance_name;
-                $needed_exports{join "\x1E", $instance_name, $signal_name, ($rhs_value // '')} = 1;
+                for my $contributor (@{$family->{contributors} || []}) {
+                    next unless ref($contributor) eq 'HASH';
+                    my $endpoint = $contributor->{endpoint} || '';
+                    my ($instance_name) = $endpoint =~ /^(\w+)\./;
+                    next unless defined $instance_name;
+                    $needed_exports{join "\x1E", $instance_name, $signal_name, ($rhs_value // '')} = 1;
+                }
             }
         }
     }
@@ -268,6 +275,9 @@ sub augment_plan ($class, %args) {
             _ensure_instance_port_binding($instance, $export->{port_name}, $source_enable_signal);
         }
     }
+    $class->_bind_unused_source_export_ports($composition_plan, $nets);
+
+    return $composition_plan unless @{$shared_datapath_candidates || []};
 
     my @helper_assignments;
     my @assertion_sections;
@@ -700,6 +710,33 @@ sub _set_instance_port_binding ($instance, $port_name, $signal_name) {
     set_signal_ref_binding($instance->{port_bindings}, $port_name, $signal_name);
 }
 
+sub _bind_unused_source_export_ports ($class, $composition_plan, $nets) {
+    return unless $composition_plan;
+
+    for my $instance (@{$composition_plan->{instances} || []}) {
+        next unless ($instance->kind || '') eq 'fsmc';
+
+        my $exports = $instance->module_info->{shared_datapath_source_exports} || [];
+        next unless @$exports;
+
+        my %bound_ports = map {
+            my $port_name = ref($_) eq 'HASH' ? ($_->{port_name} || '') : '';
+            length($port_name) ? ($port_name => 1) : ()
+        } @{$instance->{port_bindings} || []};
+
+        for my $export (@$exports) {
+            next unless ref($export) eq 'HASH';
+            my $port_name = $export->{port_name} || next;
+            next if $bound_ports{$port_name};
+
+            my $sink_name = $class->unused_export_sink_name($instance->instance_name, $port_name);
+            _ensure_composition_net($nets, $sink_name, 1);
+            _ensure_instance_port_binding($instance, $port_name, $sink_name);
+            $bound_ports{$port_name} = 1;
+        }
+    }
+}
+
 sub _composition_system_signal_names ($composition_plan) {
     my ($clock_name, $reset_name);
     for my $port (@{$composition_plan->ports || []}) {
@@ -767,6 +804,12 @@ enable signal.
 
 Returns the per-child source-enable helper signal name for one contributing
 instance and one RHS value family.
+
+=head2 unused_export_sink_name
+
+Returns the deterministic top-local sink net name for one generated-child
+source-export port whose enable signal is not consumed by the composition
+shared-datapath runtime.
 
 =head2 target_enable_name
 

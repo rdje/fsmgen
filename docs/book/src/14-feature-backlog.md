@@ -3793,7 +3793,10 @@ Status: backlog.
 Goal: make every intended sample under `fsm/` externally warning-clean under
 the supported Verilog-family validation tools.
 
-Current boundary: the regression gate uses a focused SystemVerilog smoke set.
+Current boundary: the regression gate uses a focused SystemVerilog smoke set
+covering the direct protocol/MIPI/trial samples named in
+[Generated HDL Debugging And Inspection](09-generated-hdl-debugging-and-inspection.md)
+plus the APB composition top `fsm/apb_tb.fsm`.
 
 It does not claim every historical sample in `fsm/` is externally
 warning-clean.
