@@ -77,16 +77,16 @@ remains or a real prerequisite blocker is reached.
   Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3: defer shared-datapath widening`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next reusable standalone-DT module interface/export or lookup contract or blocker from evidence.`
   Acceptance: `Existing reusable standalone-DT/module evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: focused reusable-module evidence, memory architecture, mdBook, feature-backlog status, doc path, knowledge-map, and diff checks`
+  Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4: defer reusable-module widening`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5`
   Status: `pending`
-  Goal: `Evaluate top-boundary convention widening and hidden child-to-child/public re-export policy.`
-  Acceptance: `One exact convention widening, re-export, conflict, interface-bundle, or protocol-group rule is selected, implemented or explicitly deferred, documented, and regression-covered.`
+  Goal: `Select the next top-boundary convention, re-export, conflict, interface-bundle, or protocol-group contract or blocker from evidence.`
+  Acceptance: `Existing top-boundary convention evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
   Verification: `pending`
   Commit: `pending`
 
@@ -150,7 +150,7 @@ remains or a real prerequisite blocker is reached.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4` | `pending` | Shared-datapath widening is explicitly deferred behind a precise route/storage/protocol or adjacent prerequisite; the next Composition/type item needs reusable standalone-DT evidence selection before any code. |
+| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5` | `pending` | Reusable standalone-DT widening is explicitly deferred behind a precise reusable-module, lookup, package/import, enable-control, portable-type, or architecture prerequisite; the next Composition/type item needs top-boundary evidence selection before any code. |
 
 ## Selection Result
 
@@ -220,6 +220,30 @@ protocols, dynamic scheduling, external-RTL or standalone-DT contributors,
 mixed registered/combinational runtime lifting, and broader shared-data
 movement.
 
+## Reusable Standalone-DT Selection Result
+
+`COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4` reviewed the closed
+`R11-REUSABLE-MODULE-CONTRACT-FRONTIER-AUDIT`, the current mdBook boundary,
+and the focused reusable standalone-DT/module regression suite.
+
+No new reusable-module implementation leaf is selected from this tree. The
+existing shipped contract already covers canonical `?dt:name` roots,
+compatibility aliases outside strict child-source checks, composition-facing
+`?dtc` children, explicit standalone-DT system metadata, generated-child
+lookup through embedded roots / repeated `--path DIR` roots / `FSMLIB` /
+local source context, block-enable families, grouped multi-drive target
+metadata, SystemVerilog assertion hooks, composition child exports,
+generated-child defaults and parameter overrides, CLI summaries, and
+forward-IR exports.
+
+The remaining reusable-module backlog stays deferred until an exact
+reusable-module, lookup, package/import, enable-control, portable-type,
+VHDL/backend, or architecture prerequisite is explicit. Deferred items include
+unnamed reusable roots, authored DT enable-control, declarative reusable
+packages, advanced reusable-module interface/export rules, broader lookup
+policy, external activation/deactivation, advanced same-target merge/priority,
+and debug-reporting semantics.
+
 ## Evidence To Reuse
 
 - `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`
@@ -251,10 +275,15 @@ movement.
   `.3`. The R11 audit, book boundary, and focused regressions already cover
   the bounded shipped surface; broader work remains blocked until one exact
   route/storage/protocol or adjacent prerequisite is selected.
+- `2026-06-05`: Do not select a new reusable-module implementation leaf from
+  `.4`. The R11 audit, book boundary, and focused regressions already cover
+  the bounded shipped surface; broader work remains blocked until one exact
+  reusable-module, lookup, package/import, enable-control, portable-type, or
+  architecture prerequisite is selected.
 
 ## Open Questions
 
-- None before the next evidence-selection leaf. Any reusable standalone-DT
+- None before the next evidence-selection leaf. Any top-boundary convention
   code must first get an exact executable owner under this tree.
 
 ## Blockers
@@ -270,6 +299,7 @@ movement.
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` | `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11` | `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t t/292-composition-generated-child-parameter-overrides.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3` | `prove -Iperl t/139-composition-shared-datapath-candidate-metadata.t t/140-composition-shared-datapath-drive-intent-metadata.t t/141-composition-shared-datapath-aggregate-enable-metadata.t t/142-composition-shared-datapath-assertion-metadata.t t/143-composition-shared-datapath-visibility-metadata.t t/144-composition-shared-datapath-combinational-peer-read-policy.t t/145-composition-shared-datapath-runtime-hdl.t t/146-composition-shared-datapath-lifted-register-runtime.t t/147-composition-shared-datapath-internal-lifted-register-runtime.t t/148-composition-shared-datapath-mixed-reexport-runtime.t t/149-composition-shared-datapath-combinational-runtime.t t/150-composition-shared-datapath-combinational-internal-runtime.t t/151-composition-shared-datapath-assertion-runtime-hdl.t t/152-composition-shared-datapath-public-fanout-register-runtime.t t/153-composition-shared-datapath-combinational-public-fanout-runtime.t t/159-composition-shared-datapath-forward-ir-exports.t t/178-composition-shared-datapath-support.t t/183-composition-shared-datapath-candidate-builder.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
+| `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4` | `prove -Iperl t/48-language-contract-standalone-dt-classification.t t/82-standalone-dt-root-support.t t/83-reusable-source-path-resolution.t t/85-composition-standalone-dt-children.t t/86-composition-single-child-connect-by-name.t t/130-composition-generated-child-source-shape-diagnostics.t t/133-standalone-dt-root-aliases.t t/134-standalone-dt-explicit-system-support.t t/135-composition-generated-child-default-source-names.t t/136-standalone-dt-enable-family-metadata.t t/137-standalone-dt-multi-drive-family-metadata.t t/138-composition-standalone-dt-export-metadata.t t/154-standalone-dt-assertion-runtime-hdl.t t/157-composition-standalone-dt-forward-ir-exports.t t/171-forward-lowered-rtl-ir-standalone-dt-target-helpers.t t/292-composition-generated-child-parameter-overrides.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -279,6 +309,7 @@ movement.
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2: select aggregate equality leaf` | `selected .11 as the first executable Composition/type implementation leaf` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11: implement aggregate comparison operators` | `shipped binary matching-shape aggregate equality/inequality for semantic parameter/generic values; next frontier .3` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3: defer shared-datapath widening` | `closed shared-datapath selection as prerequisite-bound deferral; next frontier .4` |
+| `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4: defer reusable-module widening` | `closed reusable standalone-DT selection as prerequisite-bound deferral; next frontier .5` |
 
 ## Changelog
 
@@ -291,3 +322,6 @@ movement.
 - `2026-06-05`: Closed shared-datapath selection as an explicit prerequisite
   deferral and advanced the frontier to reusable standalone-DT evidence
   selection.
+- `2026-06-05`: Closed reusable standalone-DT selection as an explicit
+  prerequisite deferral and advanced the frontier to top-boundary convention
+  evidence selection.
