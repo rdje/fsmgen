@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4` (this commit) — reviewed reusable standalone-DT/module evidence, confirmed the shipped bounded surface, and deferred broader widening behind a precise reusable-module, lookup, package/import, enable-control, portable-type, or architecture prerequisite. `git log -1` for the hash.
-- active_work_unit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION` active. Frontier: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5` — select the next top-boundary convention, re-export, conflict, interface-bundle, or protocol-group contract or blocker from evidence before any code.
-- recently_done: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`; `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1`; `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`; `ISF-LOOP-EARLY-EXIT.4`; `ISF-TRIGGER-ANCHOR` (complete, `.1`–`.6c`); decisions `0008`–`0011`; `TRACE-SEVERITY-NEVER-GATED`; `DOCS-RELATIVE-PATHS`.
+- latest_commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5` (this commit) — reviewed top-boundary convention evidence, confirmed the shipped bounded surface, and deferred broader widening behind one exact composition contract. `git log -1` for the hash.
+- active_work_unit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION` active. Frontier: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6` — select the next generated-child top-instantiation surface or blocker from evidence before any code.
+- recently_done: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`; `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1`; `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`; `ISF-LOOP-EARLY-EXIT.4`; `ISF-TRIGGER-ANCHOR` (complete, `.1`–`.6c`); decisions `0008`–`0011`; `TRACE-SEVERITY-NEVER-GATED`; `DOCS-RELATIVE-PATHS`.
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 
