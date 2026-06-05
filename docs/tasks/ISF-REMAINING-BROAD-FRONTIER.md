@@ -110,11 +110,11 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.8`
-  Status: `pending`
+  Status: `done`
   Goal: `Broaden transaction ports, pin access, report, and output surfaces.`
   Acceptance: `One exact port/report/output surface is selected, implemented or deferred, synchronized, and covered.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Read the ISF schedule-report additive-key knowledge card, docs/tasks/ISF-PORT-BINDING.md, docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md, docs/tasks/ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.md, docs/tasks/ISF-TRANSACTION-PORT-BINDING-*.md, docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md, docs/tasks/ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.md, docs/book/src/14-feature-backlog.md, docs/ISF_SPEC.md, docs/ISF_PUBLIC_INTERFACE_CONTRACT.md, docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md, t/1371-isf-transaction-port-activation-override-width-gate.t, and relevant LoweringIR diagnostics. Existing sources already agree that transaction port declarations/bindings, actor-pin conflict coverage, expression-valued input bindings, generated-child rule-trigger output bindings, current-timing snapshot/live assertions, endpoint/timing/authored-mode report metadata, and transaction-port width default-preserving override gates are shipped. Direct/local rule-trigger output bindings, behavior-changing snapshot/live conversion, per-activation transaction port-width specialization, arbitrary richer report fields, and broader static conflict proofs require future exact owners; no adjacent executable parser/lowering/report slice is selected here. Also repaired stale completed task metadata for ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check`
+  Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.9`
   Status: `pending`
@@ -156,7 +156,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | 6 | `ISF-REMAINING-BROAD-FRONTIER.4` | `done` | Remaining enum/type/aggregate work deferred to future exact semantic-contract owners. |
 | 7 | `ISF-REMAINING-BROAD-FRONTIER.5` | `done` | Remaining resource/arbiter widening deferred to future exact resource-ownership contracts. |
 | 8 | `ISF-REMAINING-BROAD-FRONTIER.6` | `done` | Remaining priority-resolution widening deferred to future exact conflict-policy owners. |
-| 9 | `ISF-REMAINING-BROAD-FRONTIER.8` | `pending` | Next broad item: select one exact port/report/output surface, or defer with evidence. |
+| 9 | `ISF-REMAINING-BROAD-FRONTIER.8` | `done` | Remaining port/report/output widening deferred to future exact binding/report-contract owners. |
+| 10 | `ISF-REMAINING-BROAD-FRONTIER.9` | `pending` | Next broad item: select one exact temporal/property form, or defer with evidence. |
 
 ## Decisions
 
@@ -200,6 +201,13 @@ inventory that are not already the active frontier of a narrower ISF tree.
   transaction/transaction, drive/rule, unordered, mixed-timing, and broader
   conflict-policy cases need future exact semantic owners before
   behavior-bearing implementation can be selected.
+- `2026-06-05`: Closed `.8` without behavior changes: shipped port/report
+  surfaces already cover transaction port declarations/bindings, actor-pin
+  conflict coverage, generated-child rule-trigger output bindings, expression
+  input bindings, current-timing assertions, and bounded binding report
+  metadata. Remaining direct/local rule-trigger output bindings, timing
+  conversion, per-activation port-width specialization, richer report fields,
+  and broader conflict proofs need future exact owners.
 
 ## Open Questions
 
@@ -221,6 +229,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.4` | Enum/type/aggregate audit/read: `docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md`, `docs/book/src/13j-type-enum-aggregate.md`, `docs/book/src/14-feature-backlog.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and completed Composition/type owner trees; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.5` | Resource/arbiter audit/read: `docs/tasks/ISF-RESOURCE-CATALOG.md`, `docs/tasks/ISF-RESOURCE-PRIORITY.md`, priority and round-robin resource-kind implementation trees, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `docs/book/src/14-feature-backlog.md`, and `perl/FSM/Support/ISFResourceCatalog.pm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.6` | Priority/conflict audit/read: `docs/tasks/ISF-CONFLICT-RESOLUTION.md`, `docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md`, `docs/tasks/ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.md`, `docs/tasks/ISF-RESOURCE-PRIORITY.md`, `docs/tasks/ISF-RULE-ACTIONS.md`, `docs/book/src/14-feature-backlog.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `t/1219-isf-rule-transaction-priority.t`, and priority/conflict references in `perl/FSM/Scheduler/ISF/LoweringIR.pm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
+| `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.8` | Port/report/output audit/read: `docs/knowledge/isf-schedule-report-additive-keys.md`, `docs/tasks/ISF-PORT-BINDING.md`, `docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md`, `docs/tasks/ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.md`, `docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md`, `docs/tasks/ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.md`, `docs/book/src/14-feature-backlog.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `t/1371-isf-transaction-port-activation-override-width-gate.t`, and related `LoweringIR` diagnostics; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -232,7 +241,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `ISF-REMAINING-BROAD-FRONTIER.3` | `ISF-REMAINING-BROAD-FRONTIER.3: keep IAL2 horizon` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.4` | `ISF-REMAINING-BROAD-FRONTIER.4: defer parity contracts` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.5` | `ISF-REMAINING-BROAD-FRONTIER.5: defer resource widening` | this slice |
-| `ISF-REMAINING-BROAD-FRONTIER.6` | `pending` | `pending` |
+| `ISF-REMAINING-BROAD-FRONTIER.6` | `ISF-REMAINING-BROAD-FRONTIER.6: defer priority widening` | this slice |
+| `ISF-REMAINING-BROAD-FRONTIER.8` | `pending` | `pending` |
 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `ISF-REMAINING-BROAD-FRONTIER.7.1: split loop-control dynamic waits` | this slice |
 
 ## Changelog
@@ -258,3 +268,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 - `2026-06-05`: `.6` deferred remaining priority-resolution widening to
   future exact conflict-policy owners; next frontier is port/report/output
   surface selection.
+- `2026-06-05`: `.8` deferred remaining port/report/output widening to
+  future exact binding/report-contract owners and repaired stale completed
+  task metadata for `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE`;
+  next frontier is temporal/property form selection.

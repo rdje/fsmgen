@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-27`
 - Last updated: `2026-05-27`
@@ -91,14 +91,14 @@ prevent.
   Goal: `Select the gate widening: task-tree owner, scope, boundaries, regression target, doc-sync targets.`
   Acceptance: `Task tree exists and is committed before any validator change.`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `f275b76b ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.1: select transaction port activation-override width gate`
 
 - ID: `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2`
   Status: `done`
   Goal: `Ship the gate: validator change in LoweringIR.pm, focused regression in t/1371, doc updates where transaction port width contexts describe transaction-param backing.`
   Acceptance: `Validator rejects mismatched overrides for transaction port widths across spawn, generated do, and rule trigger; same-value overrides accepted; existing wait/repeat/latency/watchdog/contract/data-op gates unchanged; t/1371 passes; ISF CI passes; doc surfaces aligned.`
   Verification: `prove -Iperl t/1371-isf-transaction-port-activation-override-width-gate.t t/1370 t/1369 t/1368 t/1250 t/1305; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `6ec9123f ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2: ship transaction port activation-override width gate`
 
 ## Current Frontier
 
@@ -140,7 +140,7 @@ prevent.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.1` | `f275b76b ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.1: select transaction port activation-override width gate` | Selection commit (task tree + live docs registration). |
-| `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2` | `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2: ship transaction port activation-override width gate` | `pending commit hash` |
+| `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2` | `6ec9123f ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.2: ship transaction port activation-override width gate` | Shipped validator gate, regression `t/1371`, and doc-surface synchronization. |
 
 ## Changelog
 
