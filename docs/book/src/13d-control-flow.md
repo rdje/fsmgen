@@ -482,14 +482,15 @@ The full same-domain support matrix (✓ = lowers; the spawn column means
 | `until` body | ✓ | ✓ | ✓ |
 
 Across clock domains the staging is narrower than the same-domain surface above, but
-it now tracks it for the top-level contexts, branch-contained repeats, and supported
-nested `when` chains. A cross-domain `(do child)` through a
+it now tracks it for the top-level contexts, branch-contained repeats, supported
+nested `when` chains, and repeats under those `when` chains. A cross-domain `(do child)` through a
 `(crossings (activation ...))` is supported at the transaction top level, directly
 inside any **top-level body** — a `(repeat ...)` body or a `when`/`switch`/`while`/
 `until` branch body — directly inside a `(repeat ...)` nested in a top-level `when`
 body or top-level `switch` branch, and directly inside a nested `when` chain reached
-from one of those top-level branch bodies (the dual-CDC handshake runs when the
-branch is taken and re-runs each iteration inside a repeat/loop; see
+from one of those top-level branch bodies, including a `(repeat ...)` under that
+nested `when` chain (the dual-CDC handshake runs when the branch is taken and
+re-runs each iteration inside a repeat/loop; see
 [Activation Crossing](13a-actor-interface.md#activation-crossing)). Cross-domain
 `(do)` placements beyond those shipped contexts still fail closed with a
 "deeper nested cross-domain activation remains deferred" diagnostic.
@@ -540,7 +541,8 @@ For cross-domain blocking `do`, the activation-crossing path described above is
 shipped for a top-level repeat body and for a repeat nested directly in a top-level
 `when` body or top-level `switch` branch. A direct `(do child)` inside a nested
 `when` chain reached from a top-level `when` body or top-level `switch` branch is
-also shipped through the explicit activation crossing. Other deeper-nested
+also shipped through the explicit activation crossing, and a repeat under that
+nested `when` chain reuses the same per-iteration handshake. Other deeper-nested
 cross-domain repeat-body `do` placements still remain deferred, and generated `do`
 with mismatched `(domain ...)` metadata is still a fail-closed same-domain-metadata
 error rather than implicit CDC.

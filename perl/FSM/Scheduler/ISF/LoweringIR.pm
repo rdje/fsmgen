@@ -2018,16 +2018,21 @@ sub _activation_do_use_context {
     # top_level_branch_when  : a `(do child)` directly inside a `when` body nested
     #                          under a TOP-LEVEL `when` body or `switch` branch,
     #                          with longer `when` chains allowed (`.7`).
+    # top_level_branch_when_repeat:
+    #                          a `(do child)` directly inside a `repeat` nested
+    #                          under that supported branch-contained `when` chain
+    #                          (`.9`).
     # nested_label           : the innermost container of a deferred nested `(do)`.
     my %out = (
-        top_level               => 0,
-        top_level_repeat        => 0,
-        top_level_branch_body   => 0,
-        top_level_branch_repeat => 0,
-        top_level_branch_when   => 0,
-        nested_label            => undef,
+        top_level                    => 0,
+        top_level_repeat             => 0,
+        top_level_branch_body        => 0,
+        top_level_branch_repeat      => 0,
+        top_level_branch_when        => 0,
+        top_level_branch_when_repeat => 0,
+        nested_label                 => undef,
     );
-    _scan_activation_do_use($clauses, $child, undef, \%out, 0, 0, 0);
+    _scan_activation_do_use($clauses, $child, undef, \%out, 0, 0, 0, 0);
     return %out;
 }
 
@@ -2040,6 +2045,7 @@ sub _scan_activation_do_use {
         $top_level_container,
         $branch_contained_repeat,
         $branch_contained_when,
+        $branch_contained_when_repeat,
     ) = @_;
     return unless ref($clauses) eq 'ARRAY';
     for my $clause (@$clauses) {
@@ -2062,6 +2068,9 @@ sub _scan_activation_do_use {
                 }
                 elsif ($branch_contained_when && $container_label eq 'when body') {
                     $out->{top_level_branch_when} = 1;
+                }
+                elsif ($branch_contained_when_repeat && $container_label eq 'repeat body') {
+                    $out->{top_level_branch_when_repeat} = 1;
                 }
             }
             else {
@@ -2091,6 +2100,9 @@ sub _scan_activation_do_use {
                         || $branch_contained_when
                     )
             ) ? 1 : 0;
+            my $child_branch_contained_when_repeat = (
+                $kw eq 'repeat' && $branch_contained_when
+            ) ? 1 : 0;
             _scan_activation_do_use(
                 [@{$clause}[2 .. $#$clause]],
                 $child,
@@ -2099,6 +2111,7 @@ sub _scan_activation_do_use {
                 $child_top_level,
                 $child_branch_contained_repeat,
                 $child_branch_contained_when,
+                $child_branch_contained_when_repeat,
             );
         }
         elsif ($kw eq 'switch') {
@@ -2111,6 +2124,7 @@ sub _scan_activation_do_use {
                     'switch branch',
                     $out,
                     $child_top_level,
+                    0,
                     0,
                     0,
                 );
@@ -2225,22 +2239,24 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
             # A top-level `(do child)`, a `(do child)` directly inside a top-level
             # `repeat` body (`.3`), OR a `(do child)` directly inside a top-level
             # branch body (`.4`: when/switch/while/until), a repeat nested directly
-            # inside a top-level when/switch branch (`.6`), OR a when body nested
-            # under a top-level when/switch branch (`.7`) is a supported, covered
-            # cross-domain activation. Other deeper nestings stay deferred.
+            # inside a top-level when/switch branch (`.6`), a when body nested
+            # under a top-level when/switch branch (`.7`), OR a repeat under that
+            # supported nested when chain (`.9`) is a supported, covered cross-domain
+            # activation. Other deeper nestings stay deferred.
             $covered = 1
                 if $use{top_level}
                 || $use{top_level_repeat}
                 || $use{top_level_branch_body}
                 || $use{top_level_branch_repeat}
-                || $use{top_level_branch_when};
+                || $use{top_level_branch_when}
+                || $use{top_level_branch_when_repeat};
             $nested_label //= $use{nested_label};
         }
         # Accurate fail-closed diagnostics: distinguish a top-level covered
         # activation (proceeds) from a NESTED use (deferred) from a genuinely
         # unused crossing.
         if (!$covered && defined($nested_label)) {
-            confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is used by a nested '(do $child)' (inside a $nested_label), but cross-domain activation is currently supported only for a top-level '(do $child)', a '(do $child)' directly inside a top-level '(repeat ...)' body, a top-level branch body ('when'/'switch'/'while'/'until'), a '(do $child)' directly inside a repeat nested in a top-level 'when' body or 'switch' branch, or a '(do $child)' directly inside a nested 'when' chain under a top-level 'when' body or 'switch' branch; deeper nested cross-domain activation remains deferred\n";
+            confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is used by a nested '(do $child)' (inside a $nested_label), but cross-domain activation is currently supported only for a top-level '(do $child)', a '(do $child)' directly inside a top-level '(repeat ...)' body, a top-level branch body ('when'/'switch'/'while'/'until'), a '(do $child)' directly inside a repeat nested in a top-level 'when' body or 'switch' branch, a '(do $child)' directly inside a nested 'when' chain under a top-level 'when' body or 'switch' branch, or a '(do $child)' directly inside a repeat under that nested 'when' chain; deeper nested cross-domain activation remains deferred\n";
         }
         confess "ISF activation crossing for child '$child' (domain '$src' -> '$dst') is declared but no transaction in domain '$src' performs a top-level '(do $child)'; an activation crossing must own a real cross-domain activation\n"
             unless $covered;

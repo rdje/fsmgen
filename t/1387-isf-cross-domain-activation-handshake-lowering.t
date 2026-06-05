@@ -653,4 +653,74 @@ ISF
     }
 };
 
+subtest 'a (do child) inside a repeat under a branch-contained when lowers cross-domain per iteration' => sub {
+    # ISF-NESTED-CROSS-DOMAIN-ACTIVATION.9: deeper branch-repeat placement is
+    # supported when the branch path is a supported nested `when` chain.
+    my %case = (
+        'when->when->repeat'       => {
+            body       => '(when guard (when inner (repeat iter (do worker))))',
+            guard_decl => '(input guard (domain core))',
+            extra_decl => '(input inner (domain core))',
+        },
+        'when->when->when->repeat' => {
+            body       => '(when guard (when inner (when deep (repeat iter (do worker)))))',
+            guard_decl => '(input guard (domain core))',
+            extra_decl => '(input inner (domain core)) (input deep (domain core))',
+        },
+        'switch->when->repeat'     => {
+            body       => '(switch guard (1 (when inner (repeat iter (do worker)))))',
+            guard_decl => '(input guard (width 2) (domain core))',
+            extra_decl => '(input inner (domain core))',
+        },
+    );
+    for my $label (sort keys %case) {
+        my $actor = parse_source(<<"ISF", "branch-when-repeat-xdom-$label");
+(actor branch_when_repeat_xdom
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus  (clock bus_clk) (reset bus_rst_n)))
+  (crossings
+    (activation worker (from core) (to bus)))
+  (interface
+    (input  start (domain core))
+    $case{$label}{guard_decl}
+    $case{$label}{extra_decl}
+    (input  iter  (width 3) (domain core))
+    (output done  (domain core))
+    (input  din    (width 8) (domain bus))
+    (output result (width 8) (domain bus))
+    (output worker_complete (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    $case{$label}{body}
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (sample din as snap)
+    (update result snap)
+    (complete worker_complete)))
+ISF
+        my $lowered = eval { FSM::Scheduler::ISF->new()->lower($actor) };
+        ok($lowered, "$label cross-domain (do) lowers") or diag($@);
+
+        my $core = $lowered->{files}{'branch_when_repeat_xdom__domain_core.fsm'};
+        ok(defined($core), "$label: the caller (core) domain module is emitted");
+        like($core, qr/-> parent_repeat_init_\d+/, "$label: the nested branch path reaches the repeat init");
+        like($core, qr/parent_repeat_init_\d+[\s\S]*?-> parent_do_\d+_ready/, "$label: repeat init enters the start-ready await");
+        like($core, qr/parent_do_\d+_req\b[\s\S]*?\(worker_start>\s*1\)/, "$label: a one-cycle start request is driven");
+        like($core, qr/parent_do_\d+\b\s*\(\s*<worker_done/, "$label: the do-state blocks on the done handshake");
+        like($core, qr/parent_repeat_check_\d+[\s\S]*?\(!=0 \(-> parent_do_\d+_ready\)\)/, "$label: the nested repeat loop re-runs the handshake");
+
+        my $bus = $lowered->{files}{'branch_when_repeat_xdom__domain_bus.fsm'};
+        ok(defined($bus), "$label: the callee (bus) domain module is emitted");
+        like($bus, qr/worker_idle_ext\s*\(\s*<worker_start/s, "$label: the callee is gated on the start pulse");
+
+        my $top = $lowered->{files}{'branch_when_repeat_xdom_top.fsm'};
+        ok(defined($top), "$label: the multi-domain top is emitted");
+        like($top, qr/cdc_activation_worker_start/, "$label: the top instantiates the start CDC synchronizer");
+        like($top, qr/cdc_activation_worker_done/, "$label: the top instantiates the done CDC synchronizer");
+    }
+};
+
 done_testing();

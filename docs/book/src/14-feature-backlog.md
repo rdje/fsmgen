@@ -721,7 +721,8 @@ SRC)(to DST)))` contract at the transaction top level or directly inside a
 top-level body, including a top-level repeat body and the four top-level
 branch/loop bodies, and directly inside a repeat nested in a top-level `when`
 body or top-level `switch` branch, or directly inside a supported nested `when`
-chain reached from one of those top-level branch bodies (see
+chain reached from one of those top-level branch bodies, including a repeat under
+that chain (see
 [Activation Crossing](13a-actor-interface.md#activation-crossing)).
 Deeper-nested cross-domain activation beyond those shipped contexts,
 mismatched-domain generated-do metadata, and cross-domain `(spawn)` remain

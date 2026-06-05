@@ -1547,9 +1547,10 @@ prefixes when the cross-domain `do` is nested inside a top-level
 metadata path, not the explicit activation-crossing path. Top-level,
 top-level-body, and top-level `when`/`switch` branch-contained repeat
 cross-domain blocking `do`, plus direct `do` inside supported nested `when`
-chains, through `(crossings (activation ...))` is documented in the control-flow
-and actor interface chapters; deeper-nested cross-domain activation and mismatched
-generated-do domain metadata remain deferred.
+chains and repeats under those chains, through `(crossings (activation ...))` is
+documented in the control-flow and actor interface chapters; deeper-nested
+cross-domain activation and mismatched generated-do domain metadata remain
+deferred.
 A `(do TARGET (domain X))` clause without a cross-domain mismatch
 (target in the same domain as the calling transaction) keeps working
 as same-domain ownership metadata.
