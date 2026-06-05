@@ -91,11 +91,11 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Broaden priority-resolution cases.`
   Acceptance: `One exact same-cycle or same-target priority case is selected, implemented or deferred, synchronized, and covered.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Read docs/tasks/ISF-CONFLICT-RESOLUTION.md, docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md, docs/tasks/ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.md, docs/tasks/ISF-RESOURCE-PRIORITY.md, docs/tasks/ISF-RULE-ACTIONS.md, docs/book/src/14-feature-backlog.md, docs/ISF_SPEC.md, docs/ISF_PUBLIC_INTERFACE_CONTRACT.md, docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md, t/1219-isf-rule-transaction-priority.t, and priority/conflict references in LoweringIR. Existing sources already agree that rule/rule same-target data priority and covered rule-over-transaction plus transaction-over-rule same-target data priority are shipped; unordered rule/transaction conflicts, mixed timing conflicts, priority cycles, transaction/transaction priority, and drive/rule arbitration policy remain deferred or fail-closed until future exact policy owners define their semantics. No adjacent executable parser/lowering slice is selected here.`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check`
+  Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.7`
   Status: `done`
@@ -155,7 +155,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | 5 | `ISF-REMAINING-BROAD-FRONTIER.3` | `done` | IAL2 remains non-R14 horizon exploration; no executable ISF slice selected. |
 | 6 | `ISF-REMAINING-BROAD-FRONTIER.4` | `done` | Remaining enum/type/aggregate work deferred to future exact semantic-contract owners. |
 | 7 | `ISF-REMAINING-BROAD-FRONTIER.5` | `done` | Remaining resource/arbiter widening deferred to future exact resource-ownership contracts. |
-| 8 | `ISF-REMAINING-BROAD-FRONTIER.6` | `pending` | Next broad item: select one exact priority-resolution case, or defer with evidence. |
+| 8 | `ISF-REMAINING-BROAD-FRONTIER.6` | `done` | Remaining priority-resolution widening deferred to future exact conflict-policy owners. |
+| 9 | `ISF-REMAINING-BROAD-FRONTIER.8` | `pending` | Next broad item: select one exact port/report/output surface, or defer with evidence. |
 
 ## Decisions
 
@@ -193,6 +194,12 @@ inventory that are not already the active frontier of a narrower ISF tree.
   users. The remaining resource kinds and arbiter policies need new exact
   ownership contracts for protocol/drive/child/resource lifetime semantics
   before behavior-bearing implementation can be selected.
+- `2026-06-05`: Closed `.6` without code: shipped priority resolution already
+  covers rule/rule same-target data conflicts plus covered
+  rule-over-transaction and transaction-over-rule same-target data conflicts. Remaining
+  transaction/transaction, drive/rule, unordered, mixed-timing, and broader
+  conflict-policy cases need future exact semantic owners before
+  behavior-bearing implementation can be selected.
 
 ## Open Questions
 
@@ -213,6 +220,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.3` | IAL2 horizon audit/read: `README.md`, `docs/tasks/R14-ASPECT-COVERAGE-AUDIT.md`, `docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md`, `docs/ISF_SPEC.md`, `docs/ISF_ATL_DESIGN_PROPOSAL.md`, `docs/book/src/13-intent-scheduling.md`, and `docs/book/src/14-feature-backlog.md`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.4` | Enum/type/aggregate audit/read: `docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md`, `docs/book/src/13j-type-enum-aggregate.md`, `docs/book/src/14-feature-backlog.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and completed Composition/type owner trees; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.5` | Resource/arbiter audit/read: `docs/tasks/ISF-RESOURCE-CATALOG.md`, `docs/tasks/ISF-RESOURCE-PRIORITY.md`, priority and round-robin resource-kind implementation trees, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `docs/book/src/14-feature-backlog.md`, and `perl/FSM/Support/ISFResourceCatalog.pm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
+| `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.6` | Priority/conflict audit/read: `docs/tasks/ISF-CONFLICT-RESOLUTION.md`, `docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md`, `docs/tasks/ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.md`, `docs/tasks/ISF-RESOURCE-PRIORITY.md`, `docs/tasks/ISF-RULE-ACTIONS.md`, `docs/book/src/14-feature-backlog.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `t/1219-isf-rule-transaction-priority.t`, and priority/conflict references in `perl/FSM/Scheduler/ISF/LoweringIR.pm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -223,7 +231,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `ISF-REMAINING-BROAD-FRONTIER.2.1` | `ISF-REMAINING-BROAD-FRONTIER.2.1: ship ATL rule triggers` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.3` | `ISF-REMAINING-BROAD-FRONTIER.3: keep IAL2 horizon` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.4` | `ISF-REMAINING-BROAD-FRONTIER.4: defer parity contracts` | this slice |
-| `ISF-REMAINING-BROAD-FRONTIER.5` | `pending` | `pending` |
+| `ISF-REMAINING-BROAD-FRONTIER.5` | `ISF-REMAINING-BROAD-FRONTIER.5: defer resource widening` | this slice |
+| `ISF-REMAINING-BROAD-FRONTIER.6` | `pending` | `pending` |
 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `ISF-REMAINING-BROAD-FRONTIER.7.1: split loop-control dynamic waits` | this slice |
 
 ## Changelog
@@ -246,3 +255,6 @@ inventory that are not already the active frontier of a narrower ISF tree.
 - `2026-06-05`: `.5` deferred remaining resource-kind and arbiter-policy
   widening to future exact resource ownership and lifetime-contract owners;
   next frontier is priority-resolution case selection.
+- `2026-06-05`: `.6` deferred remaining priority-resolution widening to
+  future exact conflict-policy owners; next frontier is port/report/output
+  surface selection.

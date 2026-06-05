@@ -66,7 +66,7 @@ first.
 | `ISF-COND` | `done` | `R14` | `closed (.1–.2; (cond …) if/else-if/else priority chain — parser desugar to a negated-guard when-chain; first true branch wins; simulation-confirmed)` | [docs/tasks/ISF-COND.md](docs/tasks/ISF-COND.md) |
 | `ISF-NESTED-COUNTED-REPEAT` | `done` | `R14` | `closed (.1–.2; nested counted (repeat M (repeat N body)) with per-instance counters — body runs M*N times; simulated + --verify-hdl clean; substrate for nested for-loops)` | [docs/tasks/ISF-NESTED-COUNTED-REPEAT.md](docs/tasks/ISF-NESTED-COUNTED-REPEAT.md) |
 | `ISF-COUNTED-REPEAT-TERMINATION` | `done` | `R14` | complete (`.1`–`.4`; check-first lowering terminates exactly-N for static/runtime/zero; `(!=0)` decision edge passes `--verify-hdl`; leading runtime waits in repeat bodies now reload/enter/zero-bypass from `repeat_check`) | [docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md](docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md) |
-| `ISF-REMAINING-BROAD-FRONTIER` | `active` | `R14` | `ISF-REMAINING-BROAD-FRONTIER.6` (`.5` deferred remaining resource-kind/arbiter widening to future exact ownership-contract owners; next broad item is priority resolution) | [docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md](docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md) |
+| `ISF-REMAINING-BROAD-FRONTIER` | `active` | `R14` | `ISF-REMAINING-BROAD-FRONTIER.8` (`.6` deferred remaining priority-resolution widening to future exact conflict-policy owners; next broad item is ports/reports/outputs) | [docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md](docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md) |
 
 ## Proposed Task Trees
 
