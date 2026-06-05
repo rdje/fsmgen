@@ -325,3 +325,8 @@ The default emitted HDL story is still:
 The future structured/non-flattened generation discussion is real, but it is
 not the shipped default path today. It is tracked in
 [Feature Backlog](14-feature-backlog.md).
+The capability manifest records that boundary through
+`embedding.hdl_generator_facade.default_generation_mode`,
+`generation_mode_names`, `structured_nonflattened_generation_enabled`, and
+`structured_nonflattened_generation_status`. There is no public
+`generation_mode` constructor option yet.

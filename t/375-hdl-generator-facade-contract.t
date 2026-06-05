@@ -20,10 +20,13 @@ use FSM::Support::HDLGeneratorFacadeContract qw(
     hdl_generator_facade_constructor_option_family_map
     hdl_generator_facade_contract_source
     hdl_generator_facade_core_constructor_option_names
+    hdl_generator_facade_default_generation_mode
     hdl_generator_facade_direct_extension_option_names
+    hdl_generator_facade_generation_mode_names
     hdl_generator_facade_method_names
     hdl_generator_facade_public_constructor_option_names
     hdl_generator_facade_public_top_level_keys
+    hdl_generator_facade_structured_nonflattened_generation_status
 );
 use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_contract_source
@@ -104,6 +107,41 @@ subtest 'contract exposes the bounded HDLGenerator facade seam' => sub {
         'contract records the bounded default target language',
     );
     is(
+        $contract->{default_generation_mode},
+        hdl_generator_facade_default_generation_mode(),
+        'contract records the current default generation mode',
+    );
+    is_deeply(
+        $contract->{generation_mode_names},
+        hdl_generator_facade_generation_mode_names(),
+        'contract publishes the bounded generation-mode family',
+    );
+    ok(
+        !$contract->{generation_mode_constructor_option_public},
+        'contract says generation_mode is not a public constructor option',
+    );
+    ok(
+        !$contract->{structured_nonflattened_generation_enabled},
+        'contract says structured non-flattened generation is not enabled',
+    );
+    is(
+        $contract->{structured_nonflattened_generation_status},
+        hdl_generator_facade_structured_nonflattened_generation_status(),
+        'contract records the structured non-flattened generation deferral status',
+    );
+    is(
+        $contract->{backend_generation_family},
+        'flattened_decision_tree_debug_first',
+        'contract records the current backend generation family',
+    );
+    ok(
+        !contains_value(
+            $contract->{public_constructor_option_names},
+            'generation_mode',
+        ),
+        'contract does not advertise generation_mode as a public constructor option',
+    );
+    is(
         $contract->{generation_argument_shape},
         'scalar filesystem path to a .fsm source root',
         'contract records the bounded generation argument shape',
@@ -175,3 +213,8 @@ subtest 'contract exposes the bounded HDLGenerator facade seam' => sub {
 };
 
 done_testing();
+
+sub contains_value {
+    my ($values, $target) = @_;
+    return grep { $_ eq $target } @{$values || []};
+}

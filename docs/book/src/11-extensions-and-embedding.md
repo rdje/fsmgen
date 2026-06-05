@@ -839,6 +839,13 @@ That bounded facade contract currently covers:
 - the accepted compatibility/presentation constructor option `quiet`
 - direct blessed-object extension injection through `extensions`
 
+The same facade contract now records the current generation-mode boundary:
+`default_generation_mode` is `flattened_debug_first`, `generation_mode_names`
+contains only `flattened_debug_first`, and
+`structured_nonflattened_generation_enabled` is false. `generation_mode` is
+not a public constructor option, so callers cannot opt into a non-flattened
+path before such a backend exists.
+
 It intentionally does not freeze the lower-level owner-injection constructor
 arguments.
 

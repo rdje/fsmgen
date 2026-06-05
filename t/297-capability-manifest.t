@@ -58,9 +58,12 @@ use FSM::Support::ExtensionContract qw(
 use FSM::Support::HDLGeneratorFacadeContract qw(
     hdl_generator_facade_constructor_option_family_map
     hdl_generator_facade_contract_source
+    hdl_generator_facade_default_generation_mode
+    hdl_generator_facade_generation_mode_names
     hdl_generator_facade_method_names
     hdl_generator_facade_public_constructor_option_names
     hdl_generator_facade_public_top_level_keys
+    hdl_generator_facade_structured_nonflattened_generation_status
 );
 use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_abc_mapping_status
@@ -1188,6 +1191,41 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the bounded HDLGenerator facade default target language',
     );
     is(
+        $manifest->{embedding}{hdl_generator_facade}{default_generation_mode},
+        hdl_generator_facade_default_generation_mode(),
+        'manifest records the current HDLGenerator facade default generation mode',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_facade}{generation_mode_names},
+        hdl_generator_facade_generation_mode_names(),
+        'manifest records the bounded HDLGenerator facade generation-mode family',
+    );
+    ok(
+        !$manifest->{embedding}{hdl_generator_facade}{generation_mode_constructor_option_public},
+        'manifest records that generation_mode is not a public constructor option',
+    );
+    ok(
+        !$manifest->{embedding}{hdl_generator_facade}{structured_nonflattened_generation_enabled},
+        'manifest records that structured non-flattened generation is not enabled',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_facade}{structured_nonflattened_generation_status},
+        hdl_generator_facade_structured_nonflattened_generation_status(),
+        'manifest records the structured non-flattened generation deferral status',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_facade}{backend_generation_family},
+        'flattened_decision_tree_debug_first',
+        'manifest records the current backend generation family',
+    );
+    ok(
+        !contains_value(
+            $manifest->{embedding}{hdl_generator_facade}{public_constructor_option_names},
+            'generation_mode',
+        ),
+        'manifest does not advertise generation_mode as a public constructor option',
+    );
+    is(
         $manifest->{embedding}{hdl_generator_facade}{result_contract_source},
         hdl_generator_result_contract_source(),
         'manifest records the HDLGenerator facade result contract owner',
@@ -1976,4 +2014,9 @@ sub assert_manifest_section_contract_sources {
 sub sorted {
     my ($values) = @_;
     return [sort @{$values || []}];
+}
+
+sub contains_value {
+    my ($values, $target) = @_;
+    return grep { $_ eq $target } @{$values || []};
 }

@@ -89,6 +89,17 @@ subtest 'manifests advertise the facade constructor unknown-option policy' => su
             !$facade->{object_injection_args_public},
             "$label still keeps internal owner-injection args non-public",
         );
+        ok(
+            !contains_value(
+                $facade->{public_constructor_option_names},
+                'generation_mode',
+            ),
+            "$label does not advertise generation_mode before a non-flattened backend path exists",
+        );
+        ok(
+            !$facade->{generation_mode_constructor_option_public},
+            "$label records generation_mode as non-public",
+        );
     }
 };
 
@@ -151,6 +162,13 @@ subtest 'HDLGenerator rejects unsupported constructor option names before lower-
                 target_lang => 'systemverilog',
             },
             expect => qr/unsupported constructor option\(s\): target_lang/s,
+        },
+        {
+            label => 'generation mode not public',
+            args => {
+                generation_mode => 'structured',
+            },
+            expect => qr/unsupported constructor option\(s\): generation_mode/s,
         },
         {
             label => 'source path typo',
@@ -252,4 +270,9 @@ sub capture_exception {
 sub sorted {
     my ($values) = @_;
     return [sort @{$values || []}];
+}
+
+sub contains_value {
+    my ($values, $target) = @_;
+    return grep { $_ eq $target } @{$values || []};
 }

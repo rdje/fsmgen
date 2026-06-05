@@ -15,10 +15,13 @@ use FSM::Support::HDLGeneratorFacadeContract qw(
     hdl_generator_facade_constructor_option_shape_map
     hdl_generator_facade_core_constructor_option_names
     hdl_generator_facade_debug_level_numeric_range
+    hdl_generator_facade_default_generation_mode
     hdl_generator_facade_direct_extension_option_names
+    hdl_generator_facade_generation_mode_names
     hdl_generator_facade_method_names
     hdl_generator_facade_public_constructor_option_names
     hdl_generator_facade_public_top_level_keys
+    hdl_generator_facade_structured_nonflattened_generation_status
     hdl_generator_facade_target_language_names
 );
 
@@ -49,6 +52,21 @@ subtest 'HDLGenerator facade contract builder returns fresh nested structures' =
         $second->{debug_level_numeric_range},
         hdl_generator_facade_debug_level_numeric_range(),
         'fresh contract debug-level range matches its helper',
+    );
+    is(
+        $second->{default_generation_mode},
+        hdl_generator_facade_default_generation_mode(),
+        'fresh contract default generation mode matches its helper',
+    );
+    is_deeply(
+        $second->{generation_mode_names},
+        hdl_generator_facade_generation_mode_names(),
+        'fresh contract generation-mode family matches its helper',
+    );
+    is(
+        $second->{structured_nonflattened_generation_status},
+        hdl_generator_facade_structured_nonflattened_generation_status(),
+        'fresh contract structured non-flattened status matches its helper',
     );
 };
 
@@ -81,6 +99,10 @@ subtest 'HDLGenerator facade helper builders return fresh nested structures' => 
         {
             label => 'target_language_names',
             build => \&hdl_generator_facade_target_language_names,
+        },
+        {
+            label => 'generation_mode_names',
+            build => \&hdl_generator_facade_generation_mode_names,
         },
         {
             label => 'constructor_option_family_map',

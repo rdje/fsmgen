@@ -3828,10 +3828,12 @@ weakening the debug-first flattened contract.
 Current boundary: flattened decision-tree generation is the shipped default
 path.
 
-Current hardening target: publish that flattened/debug-first generation-mode
-boundary in the programmatic facade contract and capability manifest while
-keeping non-flattened generation absent from public constructor options until a
-real backend path is implemented and regression-backed.
+Current shipped boundary: the programmatic facade contract and capability
+manifest publish `default_generation_mode: flattened_debug_first`,
+`generation_mode_names: ["flattened_debug_first"]`, and
+`structured_nonflattened_generation_enabled: false`. `generation_mode` remains
+absent from public constructor options until a real backend path is implemented
+and regression-backed.
 
 ## Embedding And Public APIs
 

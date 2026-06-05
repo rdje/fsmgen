@@ -25,10 +25,13 @@ our @EXPORT_OK = qw(
     hdl_generator_facade_compatibility_constructor_option_names
     hdl_generator_facade_core_constructor_option_names
     hdl_generator_facade_debug_level_numeric_range
+    hdl_generator_facade_default_generation_mode
     hdl_generator_facade_direct_extension_option_names
+    hdl_generator_facade_generation_mode_names
     hdl_generator_facade_method_names
     hdl_generator_facade_public_constructor_option_names
     hdl_generator_facade_public_top_level_keys
+    hdl_generator_facade_structured_nonflattened_generation_status
     hdl_generator_facade_target_language_names
 );
 
@@ -66,6 +69,12 @@ sub build_hdl_generator_facade_contract {
         debug_level_numeric_range => hdl_generator_facade_debug_level_numeric_range(),
         default_target_language => 'systemverilog',
         target_language_names => hdl_generator_facade_target_language_names(),
+        default_generation_mode => hdl_generator_facade_default_generation_mode(),
+        generation_mode_names => hdl_generator_facade_generation_mode_names(),
+        generation_mode_constructor_option_public => JSON::PP::false,
+        structured_nonflattened_generation_enabled => JSON::PP::false,
+        structured_nonflattened_generation_status => hdl_generator_facade_structured_nonflattened_generation_status(),
+        backend_generation_family => 'flattened_decision_tree_debug_first',
         constructor_receiver_shape => 'scalar FSM::Pipeline::HDLGenerator class name',
         generation_receiver_shape => 'blessed FSM::Pipeline::HDLGenerator object',
         generation_receiver_instance_shape => 'exact hash-backed FSM::Pipeline::HDLGenerator instance constructed by new(...) with required facade state',
@@ -88,6 +97,7 @@ sub build_hdl_generator_facade_contract {
             'Owner-injection constructor options remain non-public; if internal callers supply them, malformed values are rejected before facade state is constructed or lower-level owner methods are invoked.',
             'Use debug_level_numeric_range for the accepted facade constructor debug_level range.',
             'Use target_language_names for the accepted lower-case target-language tokens at the facade constructor boundary.',
+            'Use default_generation_mode and generation_mode_names to discover the current backend generation-mode boundary; generation_mode is not a public constructor option while structured/non-flattened generation remains deferred.',
             'Use generation_receiver_shape, generation_argument_list_shape, and generation_argument_shape for the bounded generate_hdl_from_file(...) method boundary.',
             'Direct extension objects supplied through extensions must be blessed and expose at least one real supported typed-extension hook method discoverable without extension-provided can(...) or AUTOLOAD behavior.',
             'Generation receivers must be exact hash-backed FSM::Pipeline::HDLGenerator facade instances constructed by new(...) with the required internal facade state, not subclasses or manually blessed stand-ins.',
@@ -122,6 +132,12 @@ sub hdl_generator_facade_public_top_level_keys {
             debug_level_numeric_range
             default_target_language
             target_language_names
+            default_generation_mode
+            generation_mode_names
+            generation_mode_constructor_option_public
+            structured_nonflattened_generation_enabled
+            structured_nonflattened_generation_status
+            backend_generation_family
             constructor_receiver_shape
             generation_receiver_shape
             generation_receiver_instance_shape
@@ -199,6 +215,23 @@ sub hdl_generator_facade_target_language_names {
         ),
     ];
 }
+
+sub hdl_generator_facade_default_generation_mode {
+    return 'flattened_debug_first';
+}
+
+sub hdl_generator_facade_generation_mode_names {
+    return [
+        qw(
+            flattened_debug_first
+        ),
+    ];
+}
+
+sub hdl_generator_facade_structured_nonflattened_generation_status {
+    return 'deferred_until_dedicated_backend_path';
+}
+
 sub hdl_generator_facade_constructor_option_family_map {
     return {
         core_constructor_option_names => hdl_generator_facade_core_constructor_option_names(),

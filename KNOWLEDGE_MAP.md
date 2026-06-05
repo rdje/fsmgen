@@ -3,7 +3,7 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **17** facts · **87** question keys.
+> **18** facts · **92** question keys.
 
 ## Questions → fact
 
@@ -14,11 +14,13 @@
 - "can ISF assertions reference current_state or state_active?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 - "can ISF infer two unknown assemble part widths?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
 - "can ISF infer two unknown extract field widths?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
+- "can embedders select structured generation?" -> [flattened-generation-mode-boundary](docs/knowledge/flattened-generation-mode-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/297-capability-manifest.t`
 - "do aggregate parameters support equality or inequality?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "does --language vhdl work for direct FSM roots?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-05 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "does --verify-hdl run abc?" -> [abc-discovery-validation-boundary](docs/knowledge/abc-discovery-validation-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`
 - "does .rtlif support aggregate generic comparison defaults?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "does FSMGen require ABC for Yosys validation?" -> [abc-discovery-validation-boundary](docs/knowledge/abc-discovery-validation-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`
+- "does HDLGenerator accept generation_mode?" -> [flattened-generation-mode-boundary](docs/knowledge/flattened-generation-mode-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/297-capability-manifest.t`
 - "does ISF (within …) support a lower bound / a range / F[min,max]?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
 - "does ISF support $past in assertions?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-05 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "does ISF support $stable / $rose / $fell / $changed?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-05 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
@@ -52,6 +54,7 @@
 - "is full-width inference still closed?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
 - "is generic_fifo supported?" -> [generic-fifo-template-boundary](docs/knowledge/generic-fifo-template-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t t/41-language-contract-top-level-source-kind-boundary.t`
 - "is lte_digital_rf supported?" -> [lte-digital-rf-multi-rtl-boundary](docs/knowledge/lte-digital-rf-multi-rtl-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
+- "is non-flattened generation supported?" -> [flattened-generation-mode-boundary](docs/knowledge/flattened-generation-mode-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/297-capability-manifest.t`
 - "is the ISF schedule report schema frozen or can it grow?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
 - "is trial_2 supported?" -> [trial2-legacy-ports-mapping-boundary](docs/knowledge/trial2-legacy-ports-mapping-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
 - "is yosys-abc required for external validation?" -> [abc-discovery-validation-boundary](docs/knowledge/abc-discovery-validation-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`
@@ -70,6 +73,7 @@
 - "what is the ISF to FSM to HDL pipeline?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - "what is the ISF/FSM separation rule for verification?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 - "what is the command to run all the Perl tests?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
+- "what is the default generation mode?" -> [flattened-generation-mode-boundary](docs/knowledge/flattened-generation-mode-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/297-capability-manifest.t`
 - "what is the generic_fifo ?define boundary?" -> [generic-fifo-template-boundary](docs/knowledge/generic-fifo-template-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t t/41-language-contract-top-level-source-kind-boundary.t`
 - "what is the lte_digital_rf ?rtl boundary?" -> [lte-digital-rf-multi-rtl-boundary](docs/knowledge/lte-digital-rf-multi-rtl-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
 - "what is the trial_2 ?ports mapping boundary?" -> [trial2-legacy-ports-mapping-boundary](docs/knowledge/trial2-legacy-ports-mapping-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
@@ -77,6 +81,7 @@
 - "where does (=> A B) / next / within / after / sampled-value / past get parsed and rendered to SVA?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-05 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "where does (exit-when) / (continue-when) jump to?" -> [loop-early-exit-target-hook](docs/knowledge/loop-early-exit-target-hook.md) · 2026-06-03 · reverify: `grep -n "loop_exit_target" perl/FSM/Scheduler/ISF/LoweringIR.pm`
 - "where does ISF lowering happen?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
+- "where is flattened generation mode advertised?" -> [flattened-generation-mode-boundary](docs/knowledge/flattened-generation-mode-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/297-capability-manifest.t`
 - "where is the .fsm text produced from an ISF actor?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - "where is the ISF assert/assume/cover property grammar?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-05 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "where is the ISF verification / assert / assume / cover surface documented?" -> [isf-verification-book-map](docs/knowledge/isf-verification-book-map.md) · 2026-06-05 · reverify: `grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-control-flow.md docs/book/src/13k-isf-feature-support-matrix.md`
@@ -132,6 +137,15 @@ _Direct single-FSM VHDL generation has a scoped scaffold_
 - **evidence:** `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Support/HDLExternalValidationContract.pm; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`
 - **reverify:** `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - **source:** [`docs/knowledge/direct-vhdl-scaffold.md`](docs/knowledge/direct-vhdl-scaffold.md)
+
+### flattened-generation-mode-boundary
+_HDL generation mode is flattened_debug_first and not constructor-selectable_
+
+- **answers:** is non-flattened generation supported? | does HDLGenerator accept generation_mode? | what is the default generation mode? | where is flattened generation mode advertised? | can embedders select structured generation?
+- **date:** 2026-06-05 · **status:** current
+- **evidence:** `perl/FSM/Support/HDLGeneratorFacadeContract.pm; perl/FSM/Pipeline/HDLGenerator.pm; perl/FSM/Backend/GeneratedModuleEmitter.pm; t/375-hdl-generator-facade-contract.t; t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t; t/297-capability-manifest.t; docs/book/src/09-generated-hdl-debugging-and-inspection.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`
+- **reverify:** `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/297-capability-manifest.t`
+- **source:** [`docs/knowledge/flattened-generation-mode-boundary.md`](docs/knowledge/flattened-generation-mode-boundary.md)
 
 ### full-test-suite-invocation
 _How to run the full Perl test suite (and why -j6 can get OOM-killed)_

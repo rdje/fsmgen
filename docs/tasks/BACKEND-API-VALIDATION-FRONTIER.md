@@ -196,14 +196,14 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.6.1`
-  Status: `active`
+  Status: `done`
   Goal: `Publish the flattened-default generation-mode boundary without adding a non-flattened backend path.`
-  Acceptance: `The HDLGenerator facade contract and capability manifest expose the current generation mode as flattened/debug-first, advertise the accepted generation-mode family as flattened only, and state that structured/non-flattened generation is deferred. generation_mode remains absent from public constructor options and is still rejected by FSM::Pipeline::HDLGenerator->new(...) as an unsupported constructor option. README/live docs/mdBook explain the boundary, focused tests lock the contract/manifest/constructor behavior, and no emitted HDL shape changes.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `The HDLGenerator facade contract and capability manifest expose the current generation mode as flattened_debug_first, advertise the accepted generation-mode family as flattened_debug_first only, record structured_nonflattened_generation_enabled as false, and record the deferred status. generation_mode remains absent from public constructor options and is still rejected by FSM::Pipeline::HDLGenerator->new(...) as an unsupported constructor option. README/live docs/mdBook explain the boundary, focused tests lock the contract/manifest/constructor behavior, and no emitted HDL shape changes.`
+  Verification: `perl -Iperl -c perl/FSM/Support/HDLGeneratorFacadeContract.pm; prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t t/297-capability-manifest.t; prove -Iperl t/815-capability-manifest-hdl-facade-identity-json-roundtrip-audit.t t/817-capability-manifest-hdl-facade-constructor-options-json-roundtrip-audit.t t/818-capability-manifest-hdl-facade-constructor-shapes-json-roundtrip-audit.t t/819-capability-manifest-hdl-facade-generation-boundary-json-roundtrip-audit.t t/820-capability-manifest-hdl-facade-linked-contracts-json-roundtrip-audit.t t/821-capability-manifest-hdl-facade-identity-defensive-copy-audit.t t/822-capability-manifest-hdl-facade-public-keys-defensive-copy-audit.t t/823-capability-manifest-hdl-facade-constructor-options-defensive-copy-audit.t t/824-capability-manifest-hdl-facade-constructor-shapes-defensive-copy-audit.t t/825-capability-manifest-hdl-facade-generation-boundary-defensive-copy-audit.t t/826-capability-manifest-hdl-facade-linked-contracts-defensive-copy-audit.t t/1089-hdl-generator-facade-contract-full-surface-json-roundtrip-audit.t t/1090-hdl-generator-facade-contract-full-surface-defensive-copy-audit.t t/358-capability-manifest-runtime-contract-audit.t; prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.7`
-  Status: `pending`
+  Status: `active`
   Goal: `Freeze the next programmatic embedding API surface.`
   Acceptance: `One exact embedding API surface is specified, implemented or deferred, documented, and regression-covered without exporting unstable internals.`
   Verification: `pending`
@@ -236,7 +236,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 14 | `BACKEND-API-VALIDATION-FRONTIER.5` | `done` | Selected optional ABC executable discovery as the exact ABC hardening edge while preserving the ABC-free validation gate. |
 | 15 | `BACKEND-API-VALIDATION-FRONTIER.5.1` | `done` | Reported optional ABC mapping tool availability in contracts/support surfaces without enabling or requiring ABC. |
 | 16 | `BACKEND-API-VALIDATION-FRONTIER.6` | `done` | Selected the flattened-default generation-mode contract boundary as the exact structured/non-flattened generation edge. |
-| 17 | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `active` | Publish the flattened-default generation-mode boundary without adding a non-flattened backend path. |
+| 17 | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `done` | Published the flattened-default generation-mode boundary without adding a non-flattened backend path. |
+| 18 | `BACKEND-API-VALIDATION-FRONTIER.7` | `active` | Select the next exact programmatic embedding API surface to freeze or defer. |
 
 ## Decisions
 
@@ -274,6 +275,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.5` | Selection audit/read of the external validation support, contract, manifest, smoke test, README, regression-corpus docs, SPECFORGE response, and mdBook ABC backlog/debugging sections; local tool probes for `yosys`, `yosys-abc`, `berkeley-abc`, and `abc`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected optional ABC executable discovery for `.5.1` |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.5.1` | `perl -Iperl -c perl/FSM/Support/HDLExternalValidation.pm`; `perl -Iperl -c perl/FSM/Support/HDLExternalValidationContract.pm`; `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t`; `prove -Iperl t/308-systemverilog-external-validation.t`; `prove -Iperl t/460-hdl-external-validation-contract-defensive-copy-boundary-audit.t t/1057-hdl-external-validation-contract-full-surface-json-roundtrip-audit.t t/1058-hdl-external-validation-contract-full-surface-defensive-copy-audit.t t/323-backend-validation-contract.t`; `prove -Iperl t/365-backend-validation-section-runtime-contract-audit.t t/358-capability-manifest-runtime-contract-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; optional ABC discovery is now reported without enabling or requiring ABC |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.6` | Selection audit/read of `docs/book/src/01-first-fsm.md`, `docs/book/src/09-generated-hdl-debugging-and-inspection.md`, `docs/book/src/14-feature-backlog.md`, `perl/FSM/Backend/GeneratedModuleEmitter.pm`, `perl/FSM/Pipeline/HDLGenerator.pm`, `perl/FSM/Support/HDLGeneratorFacadeContract.pm`, `t/375-hdl-generator-facade-contract.t`, `t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t`, `t/297-capability-manifest.t`, and `t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected flattened-default generation-mode contract boundary for `.6.1` |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `perl -Iperl -c perl/FSM/Support/HDLGeneratorFacadeContract.pm`; `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t t/297-capability-manifest.t`; facade manifest JSON/defensive-copy audit suite (`t/815`, `t/817`, `t/818`, `t/819`, `t/820`, `t/821`, `t/822`, `t/823`, `t/824`, `t/825`, `t/826`, `t/1089`, `t/1090`, `t/358`); `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; flattened generation mode is now contract/manifest-visible and `generation_mode` remains rejected |
 
 ## Commit Log
 
@@ -295,6 +297,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.5` | `BACKEND-API-VALIDATION-FRONTIER.5: select ABC discovery edge` | selected `.5.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.5.1` | `BACKEND-API-VALIDATION-FRONTIER.5.1: report optional ABC discovery` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.6` | `BACKEND-API-VALIDATION-FRONTIER.6: select flattened mode boundary` | selected `.6.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.6.1` | `BACKEND-API-VALIDATION-FRONTIER.6.1: publish flattened mode contract` | this slice |
 
 ## Changelog
 
@@ -371,3 +374,8 @@ items named in the 2026-06-05 remaining-work inventory.
   exposes no `generation_mode` constructor option, and the book already states
   that flattened generation is the intentional shipped default. Activated
   `.6.1` to publish that boundary without adding a non-flattened backend path.
+- `2026-06-05`: Completed `.6.1`; `embedding.hdl_generator_facade` now
+  advertises `flattened_debug_first` generation metadata while `generation_mode`
+  remains non-public and rejected. The structured/non-flattened generation
+  frontier is exhausted for this exact edge, and the active frontier moves to
+  `.7` for programmatic embedding API surface selection.

@@ -794,6 +794,9 @@ and `embedding.isf_public_interface`, owned by
 [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm),
 so callers can discover the shipped in-process runtime/facade boundaries from
 the manifest instead of inferring them from Perl implementation files.
+The facade child reports `default_generation_mode: flattened_debug_first` and
+does not expose a public `generation_mode` constructor option; structured
+non-flattened generation remains a separate backend path to implement later.
 The manifest's `diagnostics` section now follows that split too:
 [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current registry/check surfaces, while

@@ -336,6 +336,10 @@ project policies:
   top-level result-presence contract advertised through the capability
   manifest, while the raw result hash is explicitly not a JSON-safe interchange
   document;
+- `embedding.hdl_generator_facade` now advertises the current
+  `flattened_debug_first` generation mode and keeps `generation_mode` out of
+  the public constructor options until a real non-flattened backend path is
+  implemented and regression-backed;
 - typed extensions now have a bounded hook/context contract advertised through
   the capability manifest, covering explicit object/module/config loading,
   `after_parse_source`, `after_generate_result`, and the current context
