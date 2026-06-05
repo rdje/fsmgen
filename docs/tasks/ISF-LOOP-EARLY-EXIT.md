@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `ISF-LOOP-EARLY-EXIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14` (ISF — high-level language richness)
 - Created: `2026-06-01`
-- Last updated: `2026-06-03`
+- Last updated: `2026-06-05`
 - Owner: repo-local workflow
 
 ## Goal
@@ -106,7 +106,7 @@ Reads like:
 ## Task Tree
 
 - ID: `ISF-LOOP-EARLY-EXIT`
-  Status: `active`
+  Status: `done`
   Goal: `(exit-when cond) mid-loop early exit for while/until bodies.`
   Children: `.1` (select), `.2` (core lowering), `.3` (when-in-loop), `.4` (report), `.5` (docs)
 
@@ -138,6 +138,13 @@ Reads like:
   Verification: `prove -Iperl t/1389 (8 subtests) t/1116 t/1227 t/1255 PASS; perl -c (LoweringIR + Emitter/JSON + ISFPublicInterfaceContract); full prove -j6 -Iperl t/ PASS; git diff --check`
   Commit: `ship commit (this slice)`
 
+- ID: `ISF-LOOP-EARLY-EXIT.5`
+  Status: `done`
+  Goal: `Optional docs/examples consolidation (13d runnable example; feature matrix row).`
+  Acceptance: `Closed without behavior or prose churn: the existing 13d runnable examples, schedule-report subsection, feature-matrix row, ISF_SPEC, downstream/public-contract report docs, and book-example lowering audit already describe the shipped surface accurately.`
+  Verification: `passed: docs/example sync audit, t/1389, book example lowering audit, memory architecture, Knowledge Map, mdBook build, relative-path audit, and diff checks`
+  Commit: `ISF-LOOP-EARLY-EXIT.5: close loop early-exit docs consolidation`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -146,7 +153,8 @@ Reads like:
 | 2 | `.2` | `done` | `(exit-when cond)` lowers in `while`/`until` bodies to a `loop_exit_when` decision (true → loop exit target, false → next clause); fails closed elsewhere; `--check-json` + verilator/yosys PASS. `t/1389`. |
 | 3 | `.3` | `done` | `(exit-when)` inside a `when` nested in a loop exits the WHOLE loop (true edge → loop exit). `when` allow-list + `_expand_when` branch + a post-hoc `_link_states` safety check (an un-stamped `loop_exit_when` = not in a loop → fail closed). `t/1389`. |
 | 4 | `.4` | `done` | Each `(exit-when)`/`(continue-when)` site is advertised in the schedule report under a bounded `loop_early_exits[]` array (`transaction`, `kind`, `state`, `condition`, `target`); additive top-level key (schema stays v1 under `evolves_with_isf_implementation`). Report-schema docs synced (downstream spec, public contract, ISF_SPEC, 13d book). `t/1389` (+2 report subtests). |
-| 5 | `.5` | `pending` | Optional docs/examples consolidation (the per-construct docs are already thorough and in sync). |
+| 5 | `.5` | `done` | Optional docs/examples consolidation closed without behavior or prose churn; the per-construct docs, report docs, feature matrix, specs, and runnable-example audit are already in sync. |
+| 6 | `closed` | `done` | Tree complete; future loop-control constructs require a new exact task-tree owner. |
 
 ## Decisions
 
@@ -156,13 +164,15 @@ Reads like:
   to a single conditional edge. Chosen over `(for (i N) ...)` indexed loops (needs a
   loop-local variable scope model) and inline sub-transactions (needs new
   definition-site grammar + expression templating) as the first slice.
+- `2026-06-05` (`.5` close): close the optional docs/examples consolidation leaf
+  without user-facing text changes because the shipped `exit-when` and companion
+  `continue-when` surfaces are already represented in the book, feature matrix,
+  live specs, downstream/public report docs, and runnable-example audit.
 
 ## Open Questions
 
-- `.3`: whether a `(exit-when)` inside a `when` body nested in a loop can reuse the
-  same late-resolution (the `when` body states are part of the loop's
-  `loop_body_state_names`), or whether the `when` selector's exit interacts with the
-  loop exit. Resolve empirically in `.3`.
+- None for this tree. The `.3` nested-`when` question was resolved by implementation
+  and regression coverage.
 
 ## Blockers
 
@@ -176,6 +186,7 @@ Reads like:
 | `2026-06-01` | `.2` | Spike: while/until `(exit-when)` lowers (`?cond` decision: true→loop exit, false→next clause); top-level/repeat/when/bare defer; `--check-json` SUCCESS; `--verify-hdl` verilator_lint+yosys_synthesis PASS. `prove -Iperl t/1389` (5 subtests) `t/1250 t/1376` (42) `t/1305 t/1304 t/1307 t/1303` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.3` | Spike: `(while busy (when err (exit-when go))(update ...))` lowers; the when-nested exit-when true edge jumps to the WHOLE-loop exit; `until` lowers; `--check-json` SUCCESS; a top-level `(when ... (exit-when ...))` fails closed with the loop-aware safety message. `prove -Iperl t/1389` (6 subtests) `t/1376 t/1305 t/1304 t/1307` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-03` | `.4` | Report dump of `(while busy (exit-when go)(continue-when busy))` carries two `loop_early_exits[]` entries (`exit_when`/`continue_when`, distinct targets); a no-exit transaction reports an empty array. `prove -Iperl t/1389` (8 subtests) `t/1116 t/1227 t/1255` PASS; `perl -c` (LoweringIR + Emitter/JSON + ISFPublicInterfaceContract); full `prove -j6 -Iperl t/` PASS; `git diff --check` | `PASS` |
+| `2026-06-05` | `.5` | Docs/example sync audit (`13d`, `13k`, `ISF_SPEC`, downstream/public report docs, `t/1389`, `t/1376`); `prove -Iperl t/1389-isf-loop-early-exit.t t/1376-isf-book-example-lowering-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -183,8 +194,9 @@ Reads like:
 | --- | --- | --- |
 | `.1` | `ISF-LOOP-EARLY-EXIT.1: select loop early-exit (exit-when)` | `6c6db3d6` |
 | `.2` | `ISF-LOOP-EARLY-EXIT.2: (exit-when cond) mid-loop early exit in while/until bodies` | `8024666b` |
-| `.3` | `ISF-LOOP-EARLY-EXIT.3: (exit-when) inside a when nested in a loop` | `ship commit (this slice)` |
-| `.4` | `ISF-LOOP-EARLY-EXIT.4: loop_early_exits[] schedule-report metadata for exit-when/continue-when` | `ship commit (this slice)` |
+| `.3` | `ISF-LOOP-EARLY-EXIT.3: (exit-when) inside a when nested in a loop` | `13d30565` |
+| `.4` | `ISF-LOOP-EARLY-EXIT.4: loop_early_exits[] schedule-report metadata for exit-when/continue-when` | `db05bd77` |
+| `.5` | `ISF-LOOP-EARLY-EXIT.5: close loop early-exit docs consolidation` | `close-out slice` |
 
 ## Changelog
 
@@ -250,3 +262,7 @@ Reads like:
   JSON example), and `13d-control-flow.md` gains a `loop_early_exits[]` schedule-report
   subsection with a worked two-entry example. `t/1389` gains two report subtests
   (two-site report shape; empty array when there are no early exits) — 8 subtests total.
+- `2026-06-05`: `.5` closed the optional docs/examples consolidation leaf without
+  behavior or book changes. Audit found the existing 13d examples, `loop_early_exits[]`
+  report subsection, feature matrix, live specs, downstream/public contract docs, and
+  runnable-example lowering gate already describe the shipped behavior accurately.

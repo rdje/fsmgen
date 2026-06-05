@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.10` (this commit) — closed the nested cross-domain activation tree after the residual-context audit. `git log -1` for the hash.
-- active_work_unit: `ISF-LOOP-EARLY-EXIT.5` pending. Optional docs/examples consolidation; inspect the task and mdBook, then either close as already synced or consolidate docs under this existing owner.
-- recently_done: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.10`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.9`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5`; `KNOWLEDGE-MAP-ADOPT.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4`.
+- latest_commit: `ISF-LOOP-EARLY-EXIT.5` (this commit) — closed the loop early-exit docs/examples consolidation leaf after audit. `git log -1` for the hash.
+- active_work_unit: `ISF-PROPERTY-SAMPLED-VALUE.3` deferred. Audit value-returning `(past SIG [N])`; either close the tree as intentionally deferred or split/activate an exact expression-level owner before code.
+- recently_done: `ISF-LOOP-EARLY-EXIT.5`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.10`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.9`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5`; `KNOWLEDGE-MAP-ADOPT.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5`.
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 
