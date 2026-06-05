@@ -54,6 +54,7 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.6`,
     `BACKEND-API-VALIDATION-FRONTIER.6.1`,
     `BACKEND-API-VALIDATION-FRONTIER.7`,
+    `BACKEND-API-VALIDATION-FRONTIER.7.1`,
     `BACKEND-API-VALIDATION-FRONTIER.8`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
@@ -203,9 +204,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.7`
-  Status: `active`
+  Status: `done`
   Goal: `Freeze the next programmatic embedding API surface.`
-  Acceptance: `One exact embedding API surface is specified, implemented or deferred, documented, and regression-covered without exporting unstable internals.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.7.1`
+  Acceptance: `Selected the JSON-safe generation-result snapshot as the next exact programmatic embedding API surface. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.7.1: advertise FSM::Support::SerializableGenerationResultSnapshot directly under embedding.serializable_generation_result_snapshot while preserving the existing embedding.serializable_plan_reports nested reference and avoiding raw HDLGenerator result-object export.`
+  Verification: `Selection audit/read: perl/FSM/Support/SerializableGenerationResultSnapshot.pm, perl/FSM/Support/SerializablePlanReportContract.pm, perl/FSM/Support/EmbeddingContract.pm, perl/FSM/Support/EmbeddingSection.pm, t/632-serializable-generation-result-snapshot.t, t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t, t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t, t/297-capability-manifest.t, README.md, docs/book/src/11-extensions-and-embedding.md, and docs/book/src/14-feature-backlog.md. Evidence: the generation_result_snapshot builder and contract are already bounded public and JSON-safe, normalized semantic reports already embed the snapshot, README/book describe it for embedders, but embedding.section_contract currently exposes it only through the serializable_plan_reports branch rather than as a direct embedding child.`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.7.1`
+  Status: `active`
+  Goal: `Advertise the JSON-safe generation-result snapshot as a direct embedding child contract.`
+  Acceptance: `embedding.serializable_generation_result_snapshot appears in the capability manifest as the build_serializable_generation_result_snapshot_contract() payload. EmbeddingContract public/nested key lists, nested contract source map, and nested presence map include serializable_generation_result_snapshot with the snapshot's bounded public keys. Existing embedding.serializable_plan_reports.generation_result_snapshot_contract remains in place for compatibility. README/live docs/mdBook explain the direct embedding child. Focused tests cover embedding contract, manifest, JSON round-trip, defensive-copy, and existing snapshot behavior.`
   Verification: `pending`
   Commit: `pending`
 
@@ -237,7 +246,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 15 | `BACKEND-API-VALIDATION-FRONTIER.5.1` | `done` | Reported optional ABC mapping tool availability in contracts/support surfaces without enabling or requiring ABC. |
 | 16 | `BACKEND-API-VALIDATION-FRONTIER.6` | `done` | Selected the flattened-default generation-mode contract boundary as the exact structured/non-flattened generation edge. |
 | 17 | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `done` | Published the flattened-default generation-mode boundary without adding a non-flattened backend path. |
-| 18 | `BACKEND-API-VALIDATION-FRONTIER.7` | `active` | Select the next exact programmatic embedding API surface to freeze or defer. |
+| 18 | `BACKEND-API-VALIDATION-FRONTIER.7` | `done` | Selected the JSON-safe generation-result snapshot as the next exact programmatic embedding API surface. |
+| 19 | `BACKEND-API-VALIDATION-FRONTIER.7.1` | `active` | Advertise the JSON-safe generation-result snapshot as a direct embedding child contract. |
 
 ## Decisions
 
@@ -276,6 +286,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.5.1` | `perl -Iperl -c perl/FSM/Support/HDLExternalValidation.pm`; `perl -Iperl -c perl/FSM/Support/HDLExternalValidationContract.pm`; `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t`; `prove -Iperl t/308-systemverilog-external-validation.t`; `prove -Iperl t/460-hdl-external-validation-contract-defensive-copy-boundary-audit.t t/1057-hdl-external-validation-contract-full-surface-json-roundtrip-audit.t t/1058-hdl-external-validation-contract-full-surface-defensive-copy-audit.t t/323-backend-validation-contract.t`; `prove -Iperl t/365-backend-validation-section-runtime-contract-audit.t t/358-capability-manifest-runtime-contract-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; optional ABC discovery is now reported without enabling or requiring ABC |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.6` | Selection audit/read of `docs/book/src/01-first-fsm.md`, `docs/book/src/09-generated-hdl-debugging-and-inspection.md`, `docs/book/src/14-feature-backlog.md`, `perl/FSM/Backend/GeneratedModuleEmitter.pm`, `perl/FSM/Pipeline/HDLGenerator.pm`, `perl/FSM/Support/HDLGeneratorFacadeContract.pm`, `t/375-hdl-generator-facade-contract.t`, `t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t`, `t/297-capability-manifest.t`, and `t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected flattened-default generation-mode contract boundary for `.6.1` |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `perl -Iperl -c perl/FSM/Support/HDLGeneratorFacadeContract.pm`; `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t t/297-capability-manifest.t`; facade manifest JSON/defensive-copy audit suite (`t/815`, `t/817`, `t/818`, `t/819`, `t/820`, `t/821`, `t/822`, `t/823`, `t/824`, `t/825`, `t/826`, `t/1089`, `t/1090`, `t/358`); `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; flattened generation mode is now contract/manifest-visible and `generation_mode` remains rejected |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.7` | Selection audit/read of `perl/FSM/Support/SerializableGenerationResultSnapshot.pm`, `perl/FSM/Support/SerializablePlanReportContract.pm`, `perl/FSM/Support/EmbeddingContract.pm`, `perl/FSM/Support/EmbeddingSection.pm`, `t/632-serializable-generation-result-snapshot.t`, `t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t`, `t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t`, `t/297-capability-manifest.t`, `README.md`, `docs/book/src/11-extensions-and-embedding.md`, and `docs/book/src/14-feature-backlog.md`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct embedding child advertisement for `generation_result_snapshot` |
 
 ## Commit Log
 
@@ -298,6 +309,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.5.1` | `BACKEND-API-VALIDATION-FRONTIER.5.1: report optional ABC discovery` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.6` | `BACKEND-API-VALIDATION-FRONTIER.6: select flattened mode boundary` | selected `.6.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `BACKEND-API-VALIDATION-FRONTIER.6.1: publish flattened mode contract` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.7` | `BACKEND-API-VALIDATION-FRONTIER.7: select generation snapshot API` | selected `.7.1` |
 
 ## Changelog
 
@@ -379,3 +391,9 @@ items named in the 2026-06-05 remaining-work inventory.
   remains non-public and rejected. The structured/non-flattened generation
   frontier is exhausted for this exact edge, and the active frontier moves to
   `.7` for programmatic embedding API surface selection.
+- `2026-06-05`: Completed `.7`; selected the JSON-safe generation-result
+  snapshot as the next exact programmatic embedding API surface because the
+  snapshot builder/contract is already bounded public and JSON-safe, but the
+  embedding manifest currently exposes it only indirectly through
+  `serializable_plan_reports`. Activated `.7.1` to advertise it as a direct
+  embedding child without exporting raw `HDLGenerator` internals.

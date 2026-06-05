@@ -3847,6 +3847,11 @@ API.
 Current boundary: programmatic embedding exists and many bounded contracts are
 advertised, but the whole API is not promised as permanently stable.
 
+Current hardening target: advertise the JSON-safe
+`generation_result_snapshot` contract directly under the `embedding` manifest
+section, preserving the existing nested `serializable_plan_reports` reference
+while keeping raw `HDLGenerator` result objects out of the public JSON API.
+
 ### Full Normalized Semantic Export
 
 Status: backlog under `R13`.
