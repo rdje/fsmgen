@@ -133,11 +133,11 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.10`
-  Status: `pending`
+  Status: `done`
   Goal: `Broaden schedule-report storage classes and fixture/library coverage.`
   Acceptance: `One exact report class, fixture promotion, or reusable-library surface is selected, implemented or deferred, synchronized, and covered.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Read docs/knowledge/isf-schedule-report-additive-keys.md, docs/tasks/ISF-SCHEDULE-REPORT-STORAGE-ROLES.md, docs/tasks/ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.md, docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md, docs/tasks/ISF-FIXTURE-COVERAGE.md, docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md, docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md, docs/book/src/14-feature-backlog.md, docs/book/src/13k-isf-feature-support-matrix.md, docs/ISF_SPEC.md, docs/ISF_PUBLIC_INTERFACE_CONTRACT.md, docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md, checked-in isf fixtures, and fixture/schedule-report tests. Existing sources already agree that schema-version-1 additive keys, full schema freeze, golden matrix coverage, bounded storage roles, realistic fixture promotions, ATL fixture promotions, and fixed FIFO reusable-library fixture coverage are shipped. Remaining rich storage-class optimization, additional resource/debug storage roles, new realistic protocol fixtures, nested/parameter-driven reusable-library behavior, standalone library transaction/drive exports, and broader fixture promotions need future exact semantic or fixture owners; no adjacent executable report/fixture/library slice is selected here.`
+  Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.11`
   Status: `pending`
@@ -168,7 +168,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | 9 | `ISF-REMAINING-BROAD-FRONTIER.8` | `done` | Remaining port/report/output widening deferred to future exact binding/report-contract owners. |
 | 10 | `ISF-REMAINING-BROAD-FRONTIER.9` | `done` | Selected value-returning `(past SIG [N])` as the exact temporal/property form after auditing shipped property grammar, sampled-value predicates, window ranges, verification docs, and parser/render/signal-retention hooks. |
 | 11 | `ISF-REMAINING-BROAD-FRONTIER.9.1` | `done` | Property-only `(past SIG [N])` now renders to `$past`, keeps operand signals alive, stays simulable, and fails closed outside check-property expressions. |
-| 12 | `ISF-REMAINING-BROAD-FRONTIER.10` | `pending` | Next broad item: select one exact schedule-report storage class, fixture promotion, or reusable-library surface, or defer with evidence. |
+| 12 | `ISF-REMAINING-BROAD-FRONTIER.10` | `done` | Remaining schedule-report storage, fixture, and reusable-library widening deferred to future exact report/fixture/library owners. |
+| 13 | `ISF-REMAINING-BROAD-FRONTIER.11` | `pending` | Next broad item: select one exact CDC activation/payload/reset/remap surface, or defer with evidence. |
 
 ## Decisions
 
@@ -231,6 +232,13 @@ inventory that are not already the active frontier of a narrower ISF tree.
   optional positive literal depth, rendering to `$past(SIG)` or `$past(SIG, N)`.
   The hook is active only from `assert`/`assume`/`cover`; ordinary
   synthesizable expression positions still fail closed.
+- `2026-06-05`: Closed `.10` without behavior changes: the shipped
+  schedule-report and fixture/library surfaces already cover additive report
+  evolution, schema-version-1 freeze, golden-matrix coverage, bounded storage
+  roles, realistic fixture promotions, ATL fixture promotions, and the fixed
+  FIFO reusable-library fixture. Remaining rich storage/debug roles, new
+  realistic protocols, and broader reusable-library semantics need future
+  exact owners before behavior-bearing implementation can be selected.
 
 ## Open Questions
 
@@ -255,6 +263,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.8` | Port/report/output audit/read: `docs/knowledge/isf-schedule-report-additive-keys.md`, `docs/tasks/ISF-PORT-BINDING.md`, `docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md`, `docs/tasks/ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.md`, `docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md`, `docs/tasks/ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.md`, `docs/book/src/14-feature-backlog.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `t/1371-isf-transaction-port-activation-override-width-gate.t`, and related `LoweringIR` diagnostics; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.9` | Selection audit/read: `docs/knowledge/isf-property-grammar-location.md`, `docs/knowledge/isf-sampled-value-predicates.md`, `docs/knowledge/isf-bounded-window-min.md`, `docs/knowledge/isf-verification-book-map.md`, `docs/tasks/ISF-PROPERTY-SAMPLED-VALUE.md`, `docs/tasks/ISF-PROPERTY-IMPLICATION.md`, `docs/tasks/ISF-PROPERTY-WINDOW-RANGE.md`, `docs/tasks/ISF-ASSERT-CONCURRENT.md`, `docs/tasks/ISF-TRIGGER-ANCHOR.md`, `docs/book/src/14-feature-backlog.md`, `perl/FSM/Adapter/FSMGenFull/Parser.pm`, `perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`, `perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm`, `perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm`, and `t/1417-isf-property-sampled-value.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.9.1` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`; `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm`; `prove -Iperl t/1417-isf-property-sampled-value.t t/1412-isf-property-implication.t t/1418-isf-property-window-range.t t/1411-isf-assert-emit.t`; `prove -Iperl t/1376-isf-book-example-lowering-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `./bin/ci-regression isf --no-book` (294 files / 2126 tests); `mdbook build docs/book`; `scripts/check_memory_architecture.sh`; `git diff --check` | `PASS` |
+| `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.10` | Schedule-report/fixture/library audit/read: `docs/knowledge/isf-schedule-report-additive-keys.md`, `docs/tasks/ISF-SCHEDULE-REPORT-STORAGE-ROLES.md`, `docs/tasks/ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.md`, `docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md`, `docs/tasks/ISF-FIXTURE-COVERAGE.md`, `docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md`, `docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md`, `docs/book/src/14-feature-backlog.md`, `docs/book/src/13k-isf-feature-support-matrix.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, checked-in `isf/` fixtures, and fixture/schedule-report tests; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -270,6 +279,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `ISF-REMAINING-BROAD-FRONTIER.8` | `ISF-REMAINING-BROAD-FRONTIER.8: defer port surfaces` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.9` | `ISF-REMAINING-BROAD-FRONTIER.9: select past property value` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.9.1` | `ISF-REMAINING-BROAD-FRONTIER.9.1: ship past property value` | this slice |
+| `ISF-REMAINING-BROAD-FRONTIER.10` | `ISF-REMAINING-BROAD-FRONTIER.10: defer report and fixture widening` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `ISF-REMAINING-BROAD-FRONTIER.7.1: split loop-control dynamic waits` | this slice |
 
 ## Changelog
@@ -304,3 +314,6 @@ inventory that are not already the active frontier of a narrower ISF tree.
 - `2026-06-05`: `.9.1` shipped value-returning `(past SIG [N])` inside
   assertion/property expressions only, synced mdBook/spec/knowledge, and moved
   the frontier to schedule-report storage/fixture/library selection.
+- `2026-06-05`: `.10` deferred remaining schedule-report storage,
+  fixture-promotion, and reusable-library widening to future exact owners;
+  next frontier is CDC semantics.
