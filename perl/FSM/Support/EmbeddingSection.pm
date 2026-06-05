@@ -12,6 +12,7 @@ use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLGeneratorFacadeContract qw(build_hdl_generator_facade_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
 use FSM::Support::ISFPublicInterfaceContract qw(build_isf_public_interface_contract);
+use FSM::Support::SerializableGenerationResultSnapshot qw(build_serializable_generation_result_snapshot_contract);
 use FSM::Support::SerializablePlanReportContract qw(build_serializable_plan_report_contract);
 
 our @EXPORT_OK = qw(
@@ -24,6 +25,7 @@ sub build_embedding_section {
         hdl_generator_facade => build_hdl_generator_facade_contract(),
         hdl_generator_result => build_hdl_generator_result_contract(),
         isf_public_interface => build_isf_public_interface_contract(),
+        serializable_generation_result_snapshot => build_serializable_generation_result_snapshot_contract(),
         serializable_plan_reports => build_serializable_plan_report_contract(),
         typed_extensions => build_extension_contract(),
         debug_runtime => build_debug_runtime_contract(),

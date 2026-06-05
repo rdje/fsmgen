@@ -792,8 +792,15 @@ and `embedding.hdl_generator_facade`, owned by
 [perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm),
 and `embedding.isf_public_interface`, owned by
 [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm),
-so callers can discover the shipped in-process runtime/facade boundaries from
-the manifest instead of inferring them from Perl implementation files.
+and `embedding.serializable_generation_result_snapshot`, owned by
+[perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm),
+so callers can discover the shipped in-process runtime, facade, and report
+boundaries from the manifest instead of inferring them from Perl implementation
+files.
+The snapshot child advertises the JSON-safe `HDLGenerator` result summary
+contract directly, while the existing
+`embedding.serializable_plan_reports.generation_result_snapshot_contract`
+reference remains available for plan/report compatibility.
 The facade child reports `default_generation_mode: flattened_debug_first` and
 does not expose a public `generation_mode` constructor option; structured
 non-flattened generation remains a separate backend path to implement later.

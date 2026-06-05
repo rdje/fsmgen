@@ -28,6 +28,7 @@ use FSM::Support::LanguageSurfaceContract qw(build_language_surface_contract);
 use FSM::Support::ProducerContract qw(build_producer_contract);
 use FSM::Support::SemanticExportsContract qw(build_semantic_exports_contract);
 use FSM::Support::SemanticExportsSection qw(build_manifest_normalized_semantic_json_surface);
+use FSM::Support::SerializableGenerationResultSnapshot qw(build_serializable_generation_result_snapshot_contract);
 use FSM::Support::SupportAccountingContract qw(build_support_accounting_contract);
 
 my $in_process_manifest = build_capability_manifest();
@@ -113,6 +114,11 @@ subtest 'embedded exact-builder contracts stay exact at runtime' => sub {
             $manifest->{embedding}{hdl_generator_result},
             scalar(build_hdl_generator_result_contract()),
             "$label keeps embedding.hdl_generator_result as an exact builder copy",
+        );
+        assert_exact_builder_copy(
+            $manifest->{embedding}{serializable_generation_result_snapshot},
+            scalar(build_serializable_generation_result_snapshot_contract()),
+            "$label keeps embedding.serializable_generation_result_snapshot as an exact builder copy",
         );
         assert_exact_builder_copy(
             $manifest->{embedding}{typed_extensions},

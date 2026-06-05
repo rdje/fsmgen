@@ -526,6 +526,10 @@ through
 locks the published top-level plus nested contract-owner map for both
 in-process and CLI manifest output while leaving narrower result/report/typed
 extension details with their dedicated contracts.
+That map now includes `embedding.serializable_generation_result_snapshot` as a
+direct child contract for the JSON-safe `HDLGenerator` result summary, while
+the nested `embedding.serializable_plan_reports.generation_result_snapshot_contract`
+reference remains for plan/report compatibility.
 The manifest's `diagnostics` section now has the same bounded contract split
 through
 [perl/FSM/Support/DiagnosticsContract.pm](perl/FSM/Support/DiagnosticsContract.pm).

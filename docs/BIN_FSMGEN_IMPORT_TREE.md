@@ -269,13 +269,13 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm): `499`
 - [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `1053`
 - [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm): `34`
-- [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm): `267`
+- [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm): `268`
 - [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm): `62`
 - [perl/FSM/Support/SupportAccountingSection.pm](perl/FSM/Support/SupportAccountingSection.pm): `94`
 - [perl/FSM/Support/DiagnosticsSection.pm](perl/FSM/Support/DiagnosticsSection.pm): `49`
 - [perl/FSM/Support/SemanticExportsSection.pm](perl/FSM/Support/SemanticExportsSection.pm): `36`
 - [perl/FSM/Support/BackendValidationSection.pm](perl/FSM/Support/BackendValidationSection.pm): `30`
-- [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm): `34`
+- [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm): `36`
 - [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm): `107`
 - [perl/FSM/Support/DocumentationSection.pm](perl/FSM/Support/DocumentationSection.pm): `30`
 - [perl/FSM/Support/DebugRuntimeContract.pm](perl/FSM/Support/DebugRuntimeContract.pm): `184`

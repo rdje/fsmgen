@@ -204,7 +204,9 @@ use FSM::Support::ReportGeneratedOutputContract qw(
     report_generated_output_contract_source
 );
 use FSM::Support::SerializableGenerationResultSnapshot qw(
+    build_serializable_generation_result_snapshot_contract
     serializable_generation_result_snapshot_contract_source
+    serializable_generation_result_snapshot_public_top_level_keys
 );
 use FSM::Support::SerializableDiagnosticSummary qw(
     serializable_diagnostic_summary_contract_source
@@ -1091,6 +1093,21 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{embedding}{section_contract}{nested_presence_key_map},
         embedding_nested_presence_key_map(),
         'manifest records the grouped embedding child key-family map through the embedding section contract',
+    );
+    is(
+        $manifest->{embedding}{section_contract}{nested_contract_source_map}{serializable_generation_result_snapshot},
+        serializable_generation_result_snapshot_contract_source(),
+        'manifest records generation result snapshot as a direct embedding child contract owner',
+    );
+    is_deeply(
+        $manifest->{embedding}{section_contract}{nested_presence_key_map}{serializable_generation_result_snapshot},
+        serializable_generation_result_snapshot_public_top_level_keys(),
+        'manifest records generation result snapshot public keys in the embedding child key-family map',
+    );
+    is_deeply(
+        $manifest->{embedding}{serializable_generation_result_snapshot},
+        build_serializable_generation_result_snapshot_contract(),
+        'manifest embeds the direct generation result snapshot contract',
     );
     is(
         $manifest->{embedding}{composition_report}{schema_version},

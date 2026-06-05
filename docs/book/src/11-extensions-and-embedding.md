@@ -49,6 +49,13 @@ metadata, discover the advertised portable report surfaces they decoded, and
 check the public key lists for the bounded shell itself and for the normalized
 semantic and composition provenance reports those surfaces point at.
 
+The same manifest section also advertises
+`embedding.serializable_generation_result_snapshot` directly so embedders can
+discover the JSON-safe `HDLGenerator` result summary contract without traversing
+the broader plan/report branch. The existing
+`embedding.serializable_plan_reports.generation_result_snapshot_contract`
+reference remains in place for plan/report compatibility.
+
 A matching defensive-copy guard proves caller mutation of the parent public-key list does
 not pollute the next built contract, and the JSON-safe surface list has the same
 focused mutation guard.
@@ -1354,12 +1361,16 @@ per report.
 Composition plan snapshots are JSON round-trip locked for plan
 summaries, child instance names, port collections, and resolved links.
 
-The manifest surface also advertises
+The capability manifest also advertises
 [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
-as `generation_result_snapshot`, a JSON-safe summary of raw `HDLGenerator`
-results that records stable module/source/HDL-size facts, semantic-layer
-presence, and raw-shell presence/class metadata without turning the raw result
-hash into a public JSON API.
+directly as `embedding.serializable_generation_result_snapshot`, a JSON-safe
+contract for raw `HDLGenerator` result summaries. The same contract remains
+available under
+`embedding.serializable_plan_reports.generation_result_snapshot_contract` for
+plan/report compatibility. Generated reports use the object name
+`generation_result_snapshot` and record stable module/source/HDL-size facts,
+semantic-layer presence, and raw-shell presence/class metadata without turning
+the raw result hash into a public JSON API.
 
 Successful normalized semantic JSON reports now
 expose that snapshot as top-level `generation_result_snapshot`.
@@ -2315,8 +2326,8 @@ in-process `build_capability_manifest()` output exactly.
 The embedded `manifest_contract`, every `*.section_contract`, `language_surface.surface_contract`,
 `diagnostics.stable_code_registry`, and the exact embedding children
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
-`typed_extensions`, and `debug_runtime` are now treated as literal
-dedicated-builder pass-throughs.
+`serializable_generation_result_snapshot`, `typed_extensions`, and
+`debug_runtime` are now treated as literal dedicated-builder pass-throughs.
 
 Only three advertised manifest children are intentionally enriched beyond their dedicated builders:
 `diagnostics.check_json`, `semantic_exports.normalized_semantic_json`, and
@@ -2393,8 +2404,9 @@ The `embedding` section now follows the same split too:
 [perl/FSM/Support/EmbeddingContract.pm](perl/FSM/Support/EmbeddingContract.pm)
 owns the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
-serializable plan/report, facade, ISF public-interface, typed-extension, and
-debug-runtime contracts still own their deeper public promises.
+serializable generation-result snapshot, serializable plan/report, facade, ISF
+public-interface, typed-extension, and debug-runtime contracts still own their
+deeper public promises.
 
 The emitted `embedding` section itself is now built through
 [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm)
@@ -2403,9 +2415,10 @@ in-process and CLI manifest surfaces.
 
 That keeps the grouped
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
-`isf_public_interface`, `serializable_plan_reports`, `typed_extensions`, and
-`debug_runtime` child contracts in one place instead of leaving that public
-section as duplicated inline manifest assembly logic.
+`isf_public_interface`, `serializable_generation_result_snapshot`,
+`serializable_plan_reports`, `typed_extensions`, and `debug_runtime` child
+contracts in one place instead of leaving that public section as duplicated
+inline manifest assembly logic.
 
 The embedding section contract is also full-surface audited for JSON round-trip
 stability and for clean rebuilds after caller mutation, so embedders can treat
@@ -2421,8 +2434,9 @@ non-public extension-loading options.
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded child key families for
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
-`isf_public_interface`, `serializable_plan_reports`, `typed_extensions`, and
-`debug_runtime` from one place before descending into those narrower contracts.
+`isf_public_interface`, `serializable_generation_result_snapshot`,
+`serializable_plan_reports`, `typed_extensions`, and `debug_runtime` from one
+place before descending into those narrower contracts.
 
 The `diagnostics` section now follows the same split too:
 [perl/FSM/Support/DiagnosticsContract.pm](perl/FSM/Support/DiagnosticsContract.pm)

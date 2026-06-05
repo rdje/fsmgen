@@ -212,14 +212,14 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.7.1`
-  Status: `active`
+  Status: `done`
   Goal: `Advertise the JSON-safe generation-result snapshot as a direct embedding child contract.`
   Acceptance: `embedding.serializable_generation_result_snapshot appears in the capability manifest as the build_serializable_generation_result_snapshot_contract() payload. EmbeddingContract public/nested key lists, nested contract source map, and nested presence map include serializable_generation_result_snapshot with the snapshot's bounded public keys. Existing embedding.serializable_plan_reports.generation_result_snapshot_contract remains in place for compatibility. README/live docs/mdBook explain the direct embedding child. Focused tests cover embedding contract, manifest, JSON round-trip, defensive-copy, and existing snapshot behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Support/EmbeddingContract.pm; perl -Iperl -c perl/FSM/Support/EmbeddingSection.pm; perl -Iperl -c perl/FSM/Support/CapabilityManifestContract.pm; prove -Iperl t/321-embedding-contract.t t/297-capability-manifest.t t/358-capability-manifest-runtime-contract-audit.t t/366-embedding-section-runtime-contract-audit.t t/437-embedding-section-defensive-copy-boundary-audit.t t/845-capability-manifest-embedding-section-identity-json-roundtrip-audit.t t/846-capability-manifest-embedding-section-top-level-keys-json-roundtrip-audit.t t/847-capability-manifest-embedding-section-nested-source-map-json-roundtrip-audit.t t/848-capability-manifest-embedding-section-nested-presence-map-json-roundtrip-audit.t t/849-capability-manifest-embedding-section-flags-guidance-json-roundtrip-audit.t t/850-capability-manifest-embedding-section-identity-defensive-copy-audit.t t/851-capability-manifest-embedding-section-top-level-keys-defensive-copy-audit.t t/852-capability-manifest-embedding-section-nested-source-map-defensive-copy-audit.t t/853-capability-manifest-embedding-section-nested-presence-map-defensive-copy-audit.t t/854-capability-manifest-embedding-section-flags-guidance-defensive-copy-audit.t t/1061-embedding-contract-full-surface-json-roundtrip-audit.t t/1062-embedding-contract-full-surface-defensive-copy-audit.t t/632-serializable-generation-result-snapshot.t t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t t/629-serializable-plan-report-contract.t t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t; prove -Iperl t/316-capability-manifest-contract.t t/370-capability-manifest-section-discovery-audit.t t/381-contract-tested-by-provenance-audit.t t/382-contract-module-provenance-audit.t t/383-contract-family-map-integrity-audit.t t/1131-isf-public-top-level-discovery-audit.t; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.8`
-  Status: `pending`
+  Status: `active`
   Goal: `Broaden normalized semantic export.`
   Acceptance: `One exact normalized export field family is specified, implemented or deferred, documented, and regression-covered.`
   Verification: `pending`
@@ -247,7 +247,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 16 | `BACKEND-API-VALIDATION-FRONTIER.6` | `done` | Selected the flattened-default generation-mode contract boundary as the exact structured/non-flattened generation edge. |
 | 17 | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `done` | Published the flattened-default generation-mode boundary without adding a non-flattened backend path. |
 | 18 | `BACKEND-API-VALIDATION-FRONTIER.7` | `done` | Selected the JSON-safe generation-result snapshot as the next exact programmatic embedding API surface. |
-| 19 | `BACKEND-API-VALIDATION-FRONTIER.7.1` | `active` | Advertise the JSON-safe generation-result snapshot as a direct embedding child contract. |
+| 19 | `BACKEND-API-VALIDATION-FRONTIER.7.1` | `done` | Advertised the JSON-safe generation-result snapshot as a direct embedding child contract while keeping raw `HDLGenerator` objects non-public and preserving the nested `serializable_plan_reports` reference. |
+| 20 | `BACKEND-API-VALIDATION-FRONTIER.8` | `active` | Broaden normalized semantic export by selecting the next exact export field family. |
 
 ## Decisions
 
@@ -287,6 +288,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.6` | Selection audit/read of `docs/book/src/01-first-fsm.md`, `docs/book/src/09-generated-hdl-debugging-and-inspection.md`, `docs/book/src/14-feature-backlog.md`, `perl/FSM/Backend/GeneratedModuleEmitter.pm`, `perl/FSM/Pipeline/HDLGenerator.pm`, `perl/FSM/Support/HDLGeneratorFacadeContract.pm`, `t/375-hdl-generator-facade-contract.t`, `t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t`, `t/297-capability-manifest.t`, and `t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected flattened-default generation-mode contract boundary for `.6.1` |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `perl -Iperl -c perl/FSM/Support/HDLGeneratorFacadeContract.pm`; `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t t/297-capability-manifest.t`; facade manifest JSON/defensive-copy audit suite (`t/815`, `t/817`, `t/818`, `t/819`, `t/820`, `t/821`, `t/822`, `t/823`, `t/824`, `t/825`, `t/826`, `t/1089`, `t/1090`, `t/358`); `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; flattened generation mode is now contract/manifest-visible and `generation_mode` remains rejected |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.7` | Selection audit/read of `perl/FSM/Support/SerializableGenerationResultSnapshot.pm`, `perl/FSM/Support/SerializablePlanReportContract.pm`, `perl/FSM/Support/EmbeddingContract.pm`, `perl/FSM/Support/EmbeddingSection.pm`, `t/632-serializable-generation-result-snapshot.t`, `t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t`, `t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t`, `t/297-capability-manifest.t`, `README.md`, `docs/book/src/11-extensions-and-embedding.md`, and `docs/book/src/14-feature-backlog.md`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct embedding child advertisement for `generation_result_snapshot` |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.7.1` | `perl -Iperl -c perl/FSM/Support/EmbeddingContract.pm`; `perl -Iperl -c perl/FSM/Support/EmbeddingSection.pm`; `perl -Iperl -c perl/FSM/Support/CapabilityManifestContract.pm`; focused embedding/manifest/snapshot suite (`t/321`, `t/297`, `t/358`, `t/366`, `t/437`, `t/845`-`t/854`, `t/1061`, `t/1062`, `t/632`, `t/650`, `t/641`, `t/629`, `t/655`); manifest-shell/provenance/family-map audit suite (`t/316`, `t/370`, `t/381`, `t/382`, `t/383`, `t/1131`); `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; advertised `embedding.serializable_generation_result_snapshot` as a direct manifest child while preserving nested plan/report compatibility |
 
 ## Commit Log
 
@@ -310,6 +312,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.6` | `BACKEND-API-VALIDATION-FRONTIER.6: select flattened mode boundary` | selected `.6.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.6.1` | `BACKEND-API-VALIDATION-FRONTIER.6.1: publish flattened mode contract` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.7` | `BACKEND-API-VALIDATION-FRONTIER.7: select generation snapshot API` | selected `.7.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.7.1` | `BACKEND-API-VALIDATION-FRONTIER.7.1: advertise generation snapshot child` | this slice |
 
 ## Changelog
 
@@ -397,3 +400,9 @@ items named in the 2026-06-05 remaining-work inventory.
   embedding manifest currently exposes it only indirectly through
   `serializable_plan_reports`. Activated `.7.1` to advertise it as a direct
   embedding child without exporting raw `HDLGenerator` internals.
+- `2026-06-05`: Completed `.7.1`; the capability manifest now advertises
+  `embedding.serializable_generation_result_snapshot` as the direct JSON-safe
+  generation-result snapshot child, keeps the nested
+  `embedding.serializable_plan_reports.generation_result_snapshot_contract`
+  reference for compatibility, and moves the active frontier to `.8` for
+  normalized semantic export selection.

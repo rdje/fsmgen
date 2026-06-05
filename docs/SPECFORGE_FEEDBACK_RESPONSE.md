@@ -336,6 +336,11 @@ project policies:
   top-level result-presence contract advertised through the capability
   manifest, while the raw result hash is explicitly not a JSON-safe interchange
   document;
+- `embedding.serializable_generation_result_snapshot` now advertises the
+  JSON-safe `HDLGenerator` result summary contract directly while preserving
+  the existing
+  `embedding.serializable_plan_reports.generation_result_snapshot_contract`
+  reference for plan/report compatibility;
 - `embedding.hdl_generator_facade` now advertises the current
   `flattened_debug_first` generation mode and keeps `generation_mode` out of
   the public constructor options until a real non-flattened backend path is

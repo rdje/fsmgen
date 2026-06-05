@@ -230,6 +230,7 @@ sub capability_manifest_embedding_keys {
             hdl_generator_facade
             hdl_generator_result
             isf_public_interface
+            serializable_generation_result_snapshot
             serializable_plan_reports
             typed_extensions
             debug_runtime
