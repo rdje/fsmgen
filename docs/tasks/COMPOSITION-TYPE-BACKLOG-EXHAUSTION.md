@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `Composition` / `Aggregate Types And Data`
 - Created: `2026-06-05`
 - Last updated: `2026-06-05`
@@ -39,7 +39,7 @@ remains or a real prerequisite blocker is reached.
 ## Task Tree
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION`
-  Status: `active`
+  Status: `done`
   Goal: `Exhaust the Composition/type backlog through bounded task-scoped leaves.`
   Children: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.1`,
     `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`,
@@ -140,17 +140,17 @@ remains or a real prerequisite blocker is reached.
   Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12: defer struct default lowering`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13`
-  Status: `pending`
+  Status: `done`
   Goal: `Track VHDL aggregate lowering and VHDL generic-map lowering prerequisites.`
   Acceptance: `The VHDL-backed Composition/type work is either activated under a VHDL backend owner or explicitly blocked behind that prerequisite with the book and task tree synchronized.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: focused VHDL and parameter/generic deferral evidence, memory architecture, mdBook, feature-backlog status, doc path, knowledge-map, and diff checks`
+  Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13: close vhdl prerequisites`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13` | `pending` | Backend-owned struct/record default lowering is explicitly deferred beyond exact contract-backed Verilog-family surfaces; the next Composition/type item tracks VHDL aggregate/generic-map prerequisites. |
+| 1 | `closed` | `done` | The Composition/type backlog tree is exhausted. VHDL aggregate and generic-map work is blocked behind the proposed `BACKEND-API-VALIDATION-FRONTIER` VHDL backend owner. |
 
 ## Selection Result
 
@@ -428,6 +428,32 @@ stabilization. The mdBook already states this boundary in
 `docs/book/src/14-feature-backlog.md`, so this leaf required no book source
 change.
 
+## VHDL Aggregate/Generic-Map Prerequisite Result
+
+`COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13` reviewed `docs/VHDL_SCOPE.md`, the
+proposed `BACKEND-API-VALIDATION-FRONTIER` tree, the current mdBook VHDL
+backend/backlog boundary, direct VHDL not-implemented tests, composition VHDL
+target-support diagnostics, and the R11 parameter/generic frontier audit.
+
+No new Composition/type implementation leaf is selected. VHDL aggregate
+lowering and VHDL generic-map lowering are both backend-owned prerequisites:
+the CLI and facade recognize `vhdl`, but direct generation still fails at
+`FSM::HDL::FlattenedDT::generate_vhdl()` with an explicit not-implemented
+diagnostic, and composition VHDL targets fail closed before emission because
+the active composition lanes only emit SystemVerilog/Verilog tops. The
+generic-map surface is also deferred because validated parameter/generic
+overrides currently lower only to Verilog-family instance parameters.
+
+The executable owner for future VHDL work is not this Composition/type tree.
+`BACKEND-API-VALIDATION-FRONTIER.2` owns the full VHDL backend frontier, and
+`BACKEND-API-VALIDATION-FRONTIER.3` owns GHDL validation once a VHDL subset is
+executable. The mdBook already states the aggregate and generic-map VHDL
+backlog in `docs/book/src/14-feature-backlog.md` and the target-language
+boundary in `docs/book/src/10-errors-strict-mode-and-troubleshooting.md`, so
+this leaf required no book source change.
+
+No pending leaves remain under this Composition/type tree.
+
 ## Evidence To Reuse
 
 - `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`
@@ -501,17 +527,24 @@ change.
   contract-backed Verilog-family typedef surfaces; broader default lowering
   remains blocked until one exact value class has complete frontend and
   backend contracts.
+- `2026-06-05`: Do not select a VHDL aggregate or generic-map implementation
+  leaf from `.13`. The direct VHDL backend and composition VHDL target remain
+  explicit fail-closed boundaries, and the executable owner is the proposed
+  `BACKEND-API-VALIDATION-FRONTIER` VHDL backend lane, not this closed
+  Composition/type tree.
 
 ## Open Questions
 
-- None before the next evidence-selection leaf. Any VHDL aggregate or
-  generic-map lowering code must first get an exact VHDL backend/composition
-  owner under this tree or an existing narrower backend tree.
+- None in this tree. Future VHDL aggregate or generic-map lowering must be
+  activated under a VHDL backend/composition owner such as
+  `BACKEND-API-VALIDATION-FRONTIER.2`.
 
 ## Blockers
 
 - VHDL aggregate and generic-map lowering remain blocked until the full VHDL
   backend/composition target is active enough to validate generated behavior.
+  That blocker is owned outside this closed tree by the proposed
+  `BACKEND-API-VALIDATION-FRONTIER`.
 
 ## Verification Log
 
@@ -529,6 +562,7 @@ change.
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` | `prove -Iperl t/279-declarative-scalar-types.t t/280-declarative-aggregate-types.t t/281-structural-declared-type-contracts.t t/282-composition-aggregate-source-expression-contracts.t t/283-composition-aggregate-path-support.t t/284-package-aggregate-path-support.t t/285-aggregate-expression-type-support.t t/288-composition-aggregate-top-expression-inference.t t/277-direct-symbol-contract-forward-ir.t t/278-composition-symbol-contract-forward-ir.t t/1333-direct-structural-rtl-ir-projection.t t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/1378-isf-enum-type-relationship.t t/1257-isf-scalar-type-aliases.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10` | `prove -Iperl t/276-direct-local-aggregate-values.t t/280-declarative-aggregate-types.t t/282-composition-aggregate-source-expression-contracts.t t/288-composition-aggregate-top-expression-inference.t t/1321-direct-aggregate-autogrowth.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12` | `prove -Iperl t/198-systemverilog-scaffold-emitter.t t/204-enable-graph-module-planning-support.t t/280-declarative-aggregate-types.t t/167-structural-connection-expr-helpers.t t/282-composition-aggregate-source-expression-contracts.t t/1259-isf-aggregate-storage-type-aliases.t t/1321-direct-aggregate-autogrowth.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
+| `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13` | `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/272-composition-package-imports.t t/274-package-aggregate-values.t t/275-composition-top-aggregate-values.t t/292-composition-generated-child-parameter-overrides.t t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -546,6 +580,7 @@ change.
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9: defer portable type-core widening` | `closed portable type-core selection as prerequisite-bound deferral; next frontier .10` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10: defer member autogrowth` | `closed aggregate member/index autogrowth selection as prerequisite-bound deferral; next frontier .12` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12: defer struct default lowering` | `closed backend-owned struct/record selection as prerequisite-bound deferral; next frontier .13` |
+| `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.13: close vhdl prerequisites` | `closed VHDL aggregate/generic-map prerequisite tracking; tree exhausted` |
 
 ## Changelog
 
@@ -583,3 +618,6 @@ change.
 - `2026-06-05`: Closed backend-owned struct/record default-lowering selection
   as an explicit prerequisite deferral and advanced the frontier to VHDL
   aggregate/generic-map prerequisite tracking.
+- `2026-06-05`: Closed VHDL aggregate/generic-map prerequisite tracking behind
+  the proposed backend/API VHDL owner and marked the Composition/type backlog
+  exhaustion tree complete.
