@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-REMAINING-BROAD-FRONTIER`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `R14`
 - Created: `2026-06-05`
 - Last updated: `2026-06-05`
@@ -17,7 +17,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 ## Non-Goals
 
 - Do not supersede existing active ISF trees for their current frontier leaves.
-- Do not implement ISF behavior while this tree is proposed.
+- Do not implement ISF behavior before the exact leaf is selected and placed in
+  the current frontier.
 - Do not widen downstream-visible syntax, diagnostics, report keys, generated
   artifacts, or public contracts without activating a concrete leaf.
 
@@ -31,7 +32,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 ## Task Tree
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER`
-  Status: `proposed`
+  Status: `active`
   Goal: `Track broad remaining ISF/R14 backlog directions.`
   Children: `ISF-REMAINING-BROAD-FRONTIER.1`,
     `ISF-REMAINING-BROAD-FRONTIER.2`,
@@ -47,11 +48,11 @@ inventory that are not already the active frontier of a narrower ISF tree.
     `ISF-REMAINING-BROAD-FRONTIER.12`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next executable broad ISF leaf from active evidence and backlog text.`
-  Acceptance: `One broad ISF item is activated or explicitly deferred in favor of an existing narrower tree.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `Activated this broad R14 tree after the previous active ISF frontier exhausted; selected the stage/wait/loop category and split its first exact executable leaf as ISF-REMAINING-BROAD-FRONTIER.7.1.`
+  Verification: `Selection only: read docs/TASK_TREE.md, this task file, dynamic-wait backlog text, existing dynamic-wait task files, loop-control docs/tests, and LoweringIR loop_exit_when linking. No code/source behavior changed.`
+  Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.2`
   Status: `pending`
@@ -89,9 +90,14 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `pending`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.7`
-  Status: `pending`
+  Status: `active`
   Goal: `Broaden transaction stages, waits, and dynamic loop combinations.`
-  Acceptance: `One exact stage/wait/loop combination is selected, implemented or deferred, synchronized, and covered.`
+  Children: `ISF-REMAINING-BROAD-FRONTIER.7.1`
+
+- ID: `ISF-REMAINING-BROAD-FRONTIER.7.1`
+  Status: `pending`
+  Goal: `Support runtime waits immediately after loop-control decision states: (exit-when ...) / (continue-when ...) false edges must split a following runtime (wait ...) while true edges keep their exit/continue target.`
+  Acceptance: `A while/until loop body with (exit-when COND) or (continue-when COND) followed by runtime (wait COUNT) lowers with the false edge sampling/entering/bypassing the generated dynamic wait, while the true edge still exits or continues. Focused tests cover exit-when and continue-when, docs/spec/public surfaces are synchronized, and ISF gates pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -134,34 +140,44 @@ inventory that are not already the active frontier of a narrower ISF tree.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-REMAINING-BROAD-FRONTIER.1` | `pending` | Proposed owner only; not PNT-eligible until the ISF broad frontier is selected. |
+| 1 | `ISF-REMAINING-BROAD-FRONTIER.1` | `done` | Broad R14 frontier selected after the previous active ISF tree closed. |
+| 2 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `pending` | First exact executable leaf: loop-control decision states currently link before dynamic-wait predecessor splitting, so a following runtime wait needs an owned splitter slice. |
 
 ## Decisions
 
 - `2026-06-05`: Keep this tree proposed while the user-selected active focus is
   Composition/type. Immediate active ISF frontier leaves remain owned by their
   existing narrower task trees.
+- `2026-06-05`: Activated after the active ISF frontier exhausted and selected the
+  stage/wait/loop category first. Evidence: existing dynamic-wait zero-bypass owners are
+  done, but `loop_exit_when` states created by `(exit-when ...)` / `(continue-when ...)`
+  are linked before the generic dynamic-wait predecessor splitter in `LoweringIR`, making
+  a following runtime wait a small exact executable gap.
 
 ## Open Questions
 
-- None while proposed.
+- None.
 
 ## Blockers
 
-- None while proposed.
+- None.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- |
-| `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.1` | `pending` | `pending` |
+| `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.1` | Selection audit/read: `docs/TASK_TREE.md`, this task file, dynamic-wait backlog text, existing dynamic-wait task files, loop-control docs/tests, and `LoweringIR.pm` loop-control linking | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-REMAINING-BROAD-FRONTIER.1` | `pending` | `pending` |
+| `ISF-REMAINING-BROAD-FRONTIER.1` | `ISF-REMAINING-BROAD-FRONTIER.1: select loop-control dynamic waits` | this slice |
+| `ISF-REMAINING-BROAD-FRONTIER.7.1` | `pending` | `pending` |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed broad ISF frontier owner tree.
+- `2026-06-05`: `.1` activated the tree and selected `.7.1`, a loop-control
+  dynamic-wait predecessor leaf for `(exit-when ...)` / `(continue-when ...)` followed by
+  runtime `(wait ...)`.
