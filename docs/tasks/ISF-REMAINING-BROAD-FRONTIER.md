@@ -43,6 +43,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
     `ISF-REMAINING-BROAD-FRONTIER.7`,
     `ISF-REMAINING-BROAD-FRONTIER.8`,
     `ISF-REMAINING-BROAD-FRONTIER.9`,
+    `ISF-REMAINING-BROAD-FRONTIER.9.1`,
     `ISF-REMAINING-BROAD-FRONTIER.10`,
     `ISF-REMAINING-BROAD-FRONTIER.11`,
     `ISF-REMAINING-BROAD-FRONTIER.12`
@@ -117,9 +118,17 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.9`
-  Status: `pending`
+  Status: `done`
   Goal: `Broaden temporal/property forms beyond the shipped formal/simulable subsets.`
-  Acceptance: `One exact temporal/property form is selected, implemented or deferred, synchronized, and covered.`
+  Children: `ISF-REMAINING-BROAD-FRONTIER.9.1`
+  Acceptance: `Selected value-returning (past SIG [N]) inside assertion/property expressions as the exact executable temporal/property leaf.`
+  Verification: `Selection audit/read: docs/knowledge/isf-property-grammar-location.md, docs/knowledge/isf-sampled-value-predicates.md, docs/knowledge/isf-bounded-window-min.md, docs/knowledge/isf-verification-book-map.md, docs/tasks/ISF-PROPERTY-SAMPLED-VALUE.md, docs/tasks/ISF-PROPERTY-IMPLICATION.md, docs/tasks/ISF-PROPERTY-WINDOW-RANGE.md, docs/tasks/ISF-ASSERT-CONCURRENT.md, docs/tasks/ISF-TRIGGER-ANCHOR.md, docs/book/src/14-feature-backlog.md, perl/FSM/Adapter/FSMGenFull/Parser.pm, perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm, perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm, perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm, and t/1417-isf-property-sampled-value.t. Existing evidence shows (past SIG [N]) was explicitly deferred behind expression-level property composition, while parser/rendering/signal-retention hooks can support a bounded property-only value function without widening synthesizable expression positions.`
+  Commit: `this slice`
+
+- ID: `ISF-REMAINING-BROAD-FRONTIER.9.1`
+  Status: `pending`
+  Goal: `Support value-returning (past SIG [N]) inside assert/assume/cover property expressions only, rendering to $past(SIG) or $past(SIG, N) while preserving fail-closed behavior in synthesizable expression positions.`
+  Acceptance: `A check such as (assert (== data (past data))) renders condition_sv as data == $past(data); (past data 2) renders $past(data, 2); signals referenced only through past are kept alive as input ports; malformed arity, non-signal operands, and nonpositive/nonliteral depths fail closed; (past ...) remains unsupported in ordinary synthesizable expressions such as when guards. Focused tests, public docs/book, knowledge map, and required gates pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -157,7 +166,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | 7 | `ISF-REMAINING-BROAD-FRONTIER.5` | `done` | Remaining resource/arbiter widening deferred to future exact resource-ownership contracts. |
 | 8 | `ISF-REMAINING-BROAD-FRONTIER.6` | `done` | Remaining priority-resolution widening deferred to future exact conflict-policy owners. |
 | 9 | `ISF-REMAINING-BROAD-FRONTIER.8` | `done` | Remaining port/report/output widening deferred to future exact binding/report-contract owners. |
-| 10 | `ISF-REMAINING-BROAD-FRONTIER.9` | `pending` | Next broad item: select one exact temporal/property form, or defer with evidence. |
+| 10 | `ISF-REMAINING-BROAD-FRONTIER.9` | `done` | Selected value-returning `(past SIG [N])` as the exact temporal/property form after auditing shipped property grammar, sampled-value predicates, window ranges, verification docs, and parser/render/signal-retention hooks. |
+| 11 | `ISF-REMAINING-BROAD-FRONTIER.9.1` | `pending` | Implement the selected property-only `$past` value function without widening synthesizable expression positions. |
 
 ## Decisions
 
@@ -208,6 +218,13 @@ inventory that are not already the active frontier of a narrower ISF tree.
   metadata. Remaining direct/local rule-trigger output bindings, timing
   conversion, per-activation port-width specialization, richer report fields,
   and broader conflict proofs need future exact owners.
+- `2026-06-05`: Closed `.9` selection without behavior changes: the next exact
+  temporal/property leaf is value-returning `(past SIG [N])` inside
+  `assert`/`assume`/`cover` property expressions only. Existing shipped forms
+  cover boolean sampled-value predicates and formal-only `next`/`within`
+  windows; `$past` needs a property-expression value hook plus signal-retention
+  coverage, but should remain fail-closed in ordinary synthesizable expression
+  positions.
 
 ## Open Questions
 
@@ -230,6 +247,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.5` | Resource/arbiter audit/read: `docs/tasks/ISF-RESOURCE-CATALOG.md`, `docs/tasks/ISF-RESOURCE-PRIORITY.md`, priority and round-robin resource-kind implementation trees, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `docs/book/src/14-feature-backlog.md`, and `perl/FSM/Support/ISFResourceCatalog.pm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.6` | Priority/conflict audit/read: `docs/tasks/ISF-CONFLICT-RESOLUTION.md`, `docs/tasks/ISF-TRANSACTION-OVER-RULE-PRIORITY.md`, `docs/tasks/ISF-TRANSACTION-OVER-RULE-DOC-TRUTH-SYNC.md`, `docs/tasks/ISF-RESOURCE-PRIORITY.md`, `docs/tasks/ISF-RULE-ACTIONS.md`, `docs/book/src/14-feature-backlog.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `t/1219-isf-rule-transaction-priority.t`, and priority/conflict references in `perl/FSM/Scheduler/ISF/LoweringIR.pm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.8` | Port/report/output audit/read: `docs/knowledge/isf-schedule-report-additive-keys.md`, `docs/tasks/ISF-PORT-BINDING.md`, `docs/tasks/ISF-RULE-TRIGGER-GENERATED-OUTPUT-BINDINGS.md`, `docs/tasks/ISF-RULE-TRIGGER-LOCAL-OUTPUT-BINDING-DIAGNOSTIC.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-SYNTAX.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-METADATA.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-TIMING-REQUEST-METADATA.md`, `docs/tasks/ISF-TRANSACTION-PORT-BINDING-ENDPOINT-KINDS.md`, `docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md`, `docs/tasks/ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE.md`, `docs/book/src/14-feature-backlog.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `t/1371-isf-transaction-port-activation-override-width-gate.t`, and related `LoweringIR` diagnostics; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.9` | Selection audit/read: `docs/knowledge/isf-property-grammar-location.md`, `docs/knowledge/isf-sampled-value-predicates.md`, `docs/knowledge/isf-bounded-window-min.md`, `docs/knowledge/isf-verification-book-map.md`, `docs/tasks/ISF-PROPERTY-SAMPLED-VALUE.md`, `docs/tasks/ISF-PROPERTY-IMPLICATION.md`, `docs/tasks/ISF-PROPERTY-WINDOW-RANGE.md`, `docs/tasks/ISF-ASSERT-CONCURRENT.md`, `docs/tasks/ISF-TRIGGER-ANCHOR.md`, `docs/book/src/14-feature-backlog.md`, `perl/FSM/Adapter/FSMGenFull/Parser.pm`, `perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`, `perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm`, `perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm`, and `t/1417-isf-property-sampled-value.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -242,7 +260,9 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `ISF-REMAINING-BROAD-FRONTIER.4` | `ISF-REMAINING-BROAD-FRONTIER.4: defer parity contracts` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.5` | `ISF-REMAINING-BROAD-FRONTIER.5: defer resource widening` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.6` | `ISF-REMAINING-BROAD-FRONTIER.6: defer priority widening` | this slice |
-| `ISF-REMAINING-BROAD-FRONTIER.8` | `pending` | `pending` |
+| `ISF-REMAINING-BROAD-FRONTIER.8` | `ISF-REMAINING-BROAD-FRONTIER.8: defer port surfaces` | this slice |
+| `ISF-REMAINING-BROAD-FRONTIER.9` | `ISF-REMAINING-BROAD-FRONTIER.9: select past property value` | this slice |
+| `ISF-REMAINING-BROAD-FRONTIER.9.1` | `pending` | `pending` |
 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `ISF-REMAINING-BROAD-FRONTIER.7.1: split loop-control dynamic waits` | this slice |
 
 ## Changelog
@@ -272,3 +292,5 @@ inventory that are not already the active frontier of a narrower ISF tree.
   future exact binding/report-contract owners and repaired stale completed
   task metadata for `ISF-TRANSACTION-PORT-ACTIVATION-OVERRIDE-WIDTH-GATE`;
   next frontier is temporal/property form selection.
+- `2026-06-05`: `.9` selected `.9.1`, value-returning `(past SIG [N])` for
+  assertion/property expressions only, before parser/test/source changes.

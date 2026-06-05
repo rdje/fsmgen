@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `ISF-REMAINING-BROAD-FRONTIER.8` (this commit) — deferred remaining port/report/output widening to future exact binding/report-contract owners. `git log -1` for the hash.
-- active_work_unit: `ISF-REMAINING-BROAD-FRONTIER.9` pending frontier — select one exact temporal/property form, or defer with evidence before any behavior change.
-- recently_done: `ISF-REMAINING-BROAD-FRONTIER.8`; `ISF-REMAINING-BROAD-FRONTIER.6`; `ISF-REMAINING-BROAD-FRONTIER.5`; `ISF-REMAINING-BROAD-FRONTIER.4`; `ISF-REMAINING-BROAD-FRONTIER.3`; `ISF-REMAINING-BROAD-FRONTIER.2.1`; `ISF-REMAINING-BROAD-FRONTIER.2`; `ISF-REMAINING-BROAD-FRONTIER.7.1`; `ISF-REMAINING-BROAD-FRONTIER.1`; `ISF-COUNTED-REPEAT-TERMINATION.4`; `ISF-PROPERTY-SAMPLED-VALUE.3`; `ISF-LOOP-EARLY-EXIT.5`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.10`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.9`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8`; `KNOWLEDGE-MAP-ADOPT.3`.
+- latest_commit: `ISF-REMAINING-BROAD-FRONTIER.9` (this commit) — selected value-returning `(past SIG [N])` inside assertion/property expressions only as the exact temporal/property leaf. `git log -1` for the hash.
+- active_work_unit: `ISF-REMAINING-BROAD-FRONTIER.9.1` pending frontier — implement property-only `(past SIG [N])` without widening ordinary synthesizable expressions; sync tests, mdBook, knowledge map, and gates.
+- recently_done: `ISF-REMAINING-BROAD-FRONTIER.9`; `ISF-REMAINING-BROAD-FRONTIER.8`; `ISF-REMAINING-BROAD-FRONTIER.6`; `ISF-REMAINING-BROAD-FRONTIER.5`; `ISF-REMAINING-BROAD-FRONTIER.4`; `ISF-REMAINING-BROAD-FRONTIER.3`; `ISF-REMAINING-BROAD-FRONTIER.2.1`; `ISF-REMAINING-BROAD-FRONTIER.2`; `ISF-REMAINING-BROAD-FRONTIER.7.1`; `ISF-REMAINING-BROAD-FRONTIER.1`; `ISF-COUNTED-REPEAT-TERMINATION.4`; `ISF-PROPERTY-SAMPLED-VALUE.3`; `ISF-LOOP-EARLY-EXIT.5`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.10`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.9`; `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8`.
 - in_flight_uncommitted: none (working tree clean except unrelated untracked `fx/`, intentionally left alone).
 - blockers: none.
 
