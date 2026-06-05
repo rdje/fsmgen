@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-FULL-WIDTH-INFERENCE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-29`
 - Last updated: `2026-05-30`
@@ -97,7 +97,7 @@ that boundary executably (`t/1385`) and closes the tree.
   Goal: `Probe; record the fail-closed terminal; lock the boundary with t/1385; close.`
   Acceptance: `No decidable sub-case found; boundary locked; tree closed.`
   Verification: `prove -Iperl t/1385 t/1344 t/1101 t/1250; mdbook build docs/book; git diff --check`
-  Commit: `pending`
+  Commit: `ship commit (this slice)`
 
 ## Verification Log
 

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-REMAINING-BROAD-FRONTIER`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-06-05`
 - Last updated: `2026-06-05`
@@ -32,7 +32,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 ## Task Tree
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER`
-  Status: `active`
+  Status: `done`
   Goal: `Track broad remaining ISF/R14 backlog directions.`
   Children: `ISF-REMAINING-BROAD-FRONTIER.1`,
     `ISF-REMAINING-BROAD-FRONTIER.2`,
@@ -156,11 +156,11 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.12`
-  Status: `pending`
+  Status: `done`
   Goal: `Confirm whether the full-width inference terminal remains closed or a new decidable subcase exists.`
-  Acceptance: `A decidable width-inference subcase is selected for implementation or the existing fail-closed terminal is reaffirmed.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `Reaffirmed the existing fail-closed terminal: no decidable multi-unknown data-operation width inference subcase exists beyond shipped single-missing assemble/extract inference. Stale completed-tree metadata in docs/tasks/ISF-FULL-WIDTH-INFERENCE.md is repaired, and a Knowledge Map fact card records the terminal for future sessions. No code behavior changes.`
+  Verification: `Read docs/tasks/ISF-FULL-WIDTH-INFERENCE.md, t/1385-isf-multi-unknown-width-fail-closed-terminal.t, t/1200-isf-assemble-clause-boundary.t, t/1101-isf-extract-slices.t, docs/book/src/14-feature-backlog.md, docs/ISF_SPEC.md, docs/ISF_PUBLIC_INTERFACE_CONTRACT.md, and LoweringIR assemble/extract unknown-index logic. Evidence still shows only single-missing inference is decidable; multiple unknown widths remain underdetermined or non-evidence concat operands and fail closed before placeholder HDL.`
+  Commit: `this slice`
 
 ## Current Frontier
 
@@ -180,7 +180,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | 12 | `ISF-REMAINING-BROAD-FRONTIER.10` | `done` | Remaining schedule-report storage, fixture, and reusable-library widening deferred to future exact report/fixture/library owners. |
 | 13 | `ISF-REMAINING-BROAD-FRONTIER.11` | `done` | Selected `.11.1`, a downstream/public contract sync for already-shipped nested blocking cross-domain `(do)` activation contexts. |
 | 14 | `ISF-REMAINING-BROAD-FRONTIER.11.1` | `done` | Downstream/public contract wording now matches the mdBook and `t/1387` shipped nested activation boundary. |
-| 15 | `ISF-REMAINING-BROAD-FRONTIER.12` | `pending` | Next broad item: confirm whether the full-width inference terminal remains closed or a new decidable subcase exists. |
+| 15 | `ISF-REMAINING-BROAD-FRONTIER.12` | `done` | Full-width inference terminal reaffirmed: no decidable multi-unknown subcase beyond shipped single-missing assemble/extract inference. |
+| 16 | `closed` | `done` | Broad remaining ISF/R14 frontier exhausted; future behavior-bearing work needs a new exact task-tree owner. |
 
 ## Decisions
 
@@ -263,6 +264,12 @@ inventory that are not already the active frontier of a narrower ISF tree.
   preserving fail-closed boundaries for cross-domain `spawn`, payload CDC,
   auto-crossing, nested `switch`/`while`/`until`, repeat-contained branch
   prerequisites, and unsupported deeper placements.
+- `2026-06-05`: Closed `.12` without behavior changes: the completed
+  `ISF-FULL-WIDTH-INFERENCE` terminal still holds. The only decidable broader
+  inference case is already the shipped single-missing assemble/extract width
+  inference; two-or-more unknowns remain underdetermined. Repaired stale
+  completed-task metadata and added the Knowledge Map fact card
+  `docs/knowledge/isf-full-width-inference-terminal.md`.
 
 ## Open Questions
 
@@ -290,6 +297,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.10` | Schedule-report/fixture/library audit/read: `docs/knowledge/isf-schedule-report-additive-keys.md`, `docs/tasks/ISF-SCHEDULE-REPORT-STORAGE-ROLES.md`, `docs/tasks/ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.md`, `docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md`, `docs/tasks/ISF-FIXTURE-COVERAGE.md`, `docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md`, `docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md`, `docs/book/src/14-feature-backlog.md`, `docs/book/src/13k-isf-feature-support-matrix.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, checked-in `isf/` fixtures, and fixture/schedule-report tests; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.11` | CDC selection audit/read: `docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md`, `docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md`, `t/1387-isf-cross-domain-activation-handshake-lowering.t`, `docs/book/src/13a-actor-interface.md`, `docs/book/src/13d-control-flow.md`, `docs/book/src/13k-isf-feature-support-matrix.md`, `docs/book/src/14-feature-backlog.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.11.1` | Contract sync + drift scan: `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `docs/book/src/13a-actor-interface.md`, `docs/book/src/13d-control-flow.md`, `docs/book/src/13k-isf-feature-support-matrix.md`, `docs/book/src/14-feature-backlog.md`; `prove -Iperl t/1387-isf-cross-domain-activation-handshake-lowering.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.12` | Full-width terminal audit/read: `docs/tasks/ISF-FULL-WIDTH-INFERENCE.md`, `t/1385-isf-multi-unknown-width-fail-closed-terminal.t`, `t/1200-isf-assemble-clause-boundary.t`, `t/1101-isf-extract-slices.t`, `docs/book/src/14-feature-backlog.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and `perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -308,6 +316,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `ISF-REMAINING-BROAD-FRONTIER.10` | `ISF-REMAINING-BROAD-FRONTIER.10: defer report and fixture widening` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.11` | `ISF-REMAINING-BROAD-FRONTIER.11: select CDC contract sync` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.11.1` | `ISF-REMAINING-BROAD-FRONTIER.11.1: sync CDC contract boundary` | this slice |
+| `ISF-REMAINING-BROAD-FRONTIER.12` | `ISF-REMAINING-BROAD-FRONTIER.12: reaffirm width inference terminal` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `ISF-REMAINING-BROAD-FRONTIER.7.1: split loop-control dynamic waits` | this slice |
 
 ## Changelog
@@ -351,3 +360,6 @@ inventory that are not already the active frontier of a narrower ISF tree.
 - `2026-06-05`: `.11.1` synced downstream/public CDC contract wording with the
   shipped nested blocking activation boundary and moved the frontier to
   full-width inference terminal review.
+- `2026-06-05`: `.12` reaffirmed the full-width inference fail-closed terminal,
+  repaired stale metadata in `ISF-FULL-WIDTH-INFERENCE`, added a Knowledge Map
+  fact, and exhausted this broad frontier tree.

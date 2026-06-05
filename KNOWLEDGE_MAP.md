@@ -3,7 +3,7 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **10** facts · **50** question keys.
+> **11** facts · **56** question keys.
 
 ## Questions → fact
 
@@ -11,6 +11,8 @@
 - "can I add a new key to the ISF schedule report?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
 - "can I compare aggregate +params with == or !=?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "can ISF assertions reference current_state or state_active?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
+- "can ISF infer two unknown assemble part widths?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
+- "can ISF infer two unknown extract field widths?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
 - "do aggregate parameters support equality or inequality?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "does .rtlif support aggregate generic comparison defaults?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "does ISF (within …) support a lower bound / a range / F[min,max]?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
@@ -18,6 +20,7 @@
 - "does ISF support $stable / $rose / $fell / $changed?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-05 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "does ISF validate the assert condition or pass it through?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-05 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "does adding a schedule-report key need a schema_version bump?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
+- "does multi-unknown width inference have a decidable subcase?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
 - "how do I add a property combinator or operator to ISF checks?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-05 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "how do I anchor a position in ISF verification without touching the state variable?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 - "how do I assert on a rising or falling edge in ISF?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-05 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
@@ -36,6 +39,7 @@
 - "how is the loop exit target for a mid-loop early exit computed?" -> [loop-early-exit-target-hook](docs/knowledge/loop-early-exit-target-hook.md) · 2026-06-03 · reverify: `grep -n "loop_exit_target" perl/FSM/Scheduler/ISF/LoweringIR.pm`
 - "how long does the full suite take?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
 - "how were transaction_loops / loop_early_exits added without bumping the version?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
+- "is full-width inference still closed?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
 - "is the ISF schedule report schema frozen or can it grow?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
 - "the test suite got killed / SIGKILL during prove" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
 - "what does schema_version: 1 / evolves_with_isf_implementation mean for the report?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
@@ -56,6 +60,8 @@
 - "which mdBook chapters do I update when I add an ISF verification feature?" -> [isf-verification-book-map](docs/knowledge/isf-verification-book-map.md) · 2026-06-05 · reverify: `grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-control-flow.md docs/book/src/13k-isf-feature-support-matrix.md`
 - "which module parses ISF / lowers ISF / emits the schedule report?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - "why did prove exit with code 137?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
+- "why does assemble with multiple unknown parts fail closed?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
+- "why does extract with multiple unknown fields fail closed?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
 - "why doesn't (at NAME) lower to current_state == STATE?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 
 ## Facts (by id)
@@ -95,6 +101,15 @@ _ISF-originated verification references signals, never the FSM state variable_
 - **evidence:** `docs/decisions/0009; docs/decisions/0010; perl/FSM/Scheduler/ISF/LoweringIR.pm (_resolve_at_references generates a driven *_active signal)`
 - **reverify:** `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 - **source:** [`docs/knowledge/isf-fsm-verification-boundary.md`](docs/knowledge/isf-fsm-verification-boundary.md)
+
+### isf-full-width-inference-terminal
+_ISF multi-unknown data-operation width inference is intentionally fail-closed_
+
+- **answers:** is full-width inference still closed? | can ISF infer two unknown assemble part widths? | can ISF infer two unknown extract field widths? | does multi-unknown width inference have a decidable subcase? | why does assemble with multiple unknown parts fail closed? | why does extract with multiple unknown fields fail closed?
+- **date:** 2026-06-05 · **status:** current
+- **evidence:** `docs/tasks/ISF-FULL-WIDTH-INFERENCE.md; t/1385-isf-multi-unknown-width-fail-closed-terminal.t`
+- **reverify:** `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
+- **source:** [`docs/knowledge/isf-full-width-inference-terminal.md`](docs/knowledge/isf-full-width-inference-terminal.md)
 
 ### isf-lowering-pipeline
 _How an ISF actor becomes SystemVerilog — the lowering pipeline stages and where each lives_
