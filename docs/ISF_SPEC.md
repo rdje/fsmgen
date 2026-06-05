@@ -5779,6 +5779,11 @@ Focused tests:
 
 ## 12. Explicitly Deferred
 
+- Value-returning verification-property `(past SIG [N])` syntax is not part of
+  the shipped sampled-value predicate surface. The shipped property leaves are
+  boolean `(stable SIG)`, `(changed SIG)`, `(rose SIG)`, and `(fell SIG)`.
+  `(past ...)` needs expression-level property composition, for example
+  `(== data (past data))`, before it can be selected.
 - Reusable ISF library behavior beyond the shipped resolver/review-artifact,
   generated-top system binding, actor-owned fixed-storage, and expression-valued
   rule-guard/disjoint-rule/FIFO-controller-matrix/bank-access/fixed FIFO

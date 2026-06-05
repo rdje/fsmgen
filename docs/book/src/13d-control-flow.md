@@ -1033,6 +1033,9 @@ or sit on either side of an implication:
 Note `(=> (rose req) ack)` is exactly what the event anchor `(after req ack)` (below)
 spells more compactly — `after` is sugar for a `$rose` antecedent. And `(stable SIG)`
 is the everyday "unchanged" obligation (`$stable(s)` is `s == $past(s)`).
+Value-returning `(past SIG [N])` syntax is not part of the shipped ISF property
+surface yet; it needs expression-level property composition such as
+`(== data (past data))`.
 
 A sampled-value leaf is **not** a `##` delay sequence, so — unlike `next` / `within` —
 it stays verilator-**simulable** (emitted under `` `ifndef SYNTHESIS ``); a property is
