@@ -55,9 +55,17 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Broaden ATL actor-network orchestration beyond the shipped bounded v0 contract.`
+  Children: `ISF-REMAINING-BROAD-FRONTIER.2.1`
   Acceptance: `One exact ATL expansion is selected, implemented or deferred, synchronized, and covered.`
+  Verification: `Selection audit/read: ATL backlog and design-proposal shipped/deferred sections, ATL public contract, feature matrix, existing transaction-body trigger tests, and rule-trigger lowering/validation paths.`
+  Commit: `this slice`
+
+- ID: `ISF-REMAINING-BROAD-FRONTIER.2.1`
+  Status: `pending`
+  Goal: `Support rule-level qualified actor-transaction triggers: a rule action (trigger INSTANCE.TRANSACTION) should pulse the same ATL parent handoff output used by transaction-body triggers and report actor_network.transaction_triggers[] metadata with context rule_action, without widening generated ATL tops, payloads, bindings, nested trigger contexts, repeated-trigger semantics, or rule-trigger fan-in for local transactions.`
+  Acceptance: `A rule whose guard fires and whose action is (trigger worker.process) for a declared static actor instance lowers to a guarded rule DT that pulses worker_process_start for one cycle, exposes that output port, and records bounded actor_network.transaction_triggers[] metadata. Existing transaction-body trigger behavior, local rule (trigger transaction) behavior, and fail-closed boundaries for unknown instances, malformed targets, bindings/payloads, generated-top wiring, nested contexts, and repeated/fan-in semantics stay intact. Focused tests, docs/spec/public surfaces, mdBook, and ATL gates pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -142,7 +150,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | --- | --- | --- | --- |
 | 1 | `ISF-REMAINING-BROAD-FRONTIER.1` | `done` | Broad R14 frontier selected after the previous active ISF tree closed. |
 | 2 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `done` | Loop-control false fallthrough edges now split following runtime waits while preserving true exit/continue targets. |
-| 3 | `ISF-REMAINING-BROAD-FRONTIER.2` | `pending` | Next pending broad R14 item: select an exact ATL expansion leaf before any ATL behavior changes. |
+| 3 | `ISF-REMAINING-BROAD-FRONTIER.2` | `active` | Selected the next ATL expansion category and split exact implementation leaf `.2.1`. |
+| 4 | `ISF-REMAINING-BROAD-FRONTIER.2.1` | `pending` | Exact ATL leaf: rule-level qualified `(trigger INSTANCE.TRANSACTION)` parent-handoff output and report metadata. |
 
 ## Decisions
 
@@ -154,6 +163,12 @@ inventory that are not already the active frontier of a narrower ISF tree.
   done, but `loop_exit_when` states created by `(exit-when ...)` / `(continue-when ...)`
   are linked before the generic dynamic-wait predecessor splitter in `LoweringIR`, making
   a following runtime wait a small exact executable gap.
+- `2026-06-05`: Selected ATL rule-level qualified actor-transaction triggers as the next
+  exact broad-ATL leaf. Evidence: transaction-body qualified triggers and local rule
+  triggers are already shipped, while the ATL public contract explicitly reserves
+  rule-level qualified triggers as future behavior; the implementation crosses parser
+  normalization, rule-DT lowering, report metadata, and generated-top exclusion, so it
+  needs its own exact leaf before code changes.
 
 ## Open Questions
 
@@ -169,12 +184,15 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | --- | --- | --- |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.1` | Selection audit/read: `docs/TASK_TREE.md`, this task file, dynamic-wait backlog text, existing dynamic-wait task files, loop-control docs/tests, and `LoweringIR.pm` loop-control linking | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1389-isf-loop-early-exit.t t/1393-isf-loop-continue.t`; `prove -Iperl t/1376-isf-book-example-lowering-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `./bin/ci-regression isf --no-book` (294 files / 2125 tests); `mdbook build docs/book`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
+| `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.2` | Selection audit/read: `docs/book/src/14-feature-backlog.md` ATL section, `docs/ISF_ATL_DESIGN_PROPOSAL.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_SPEC.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, `docs/book/src/13k-isf-feature-support-matrix.md`, `t/1322-isf-actor-network-static.t`, and rule-trigger validation/lowering paths in `perl/FSM/Scheduler/ISF/LoweringIR.pm` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-REMAINING-BROAD-FRONTIER.1` | `ISF-REMAINING-BROAD-FRONTIER.1: select loop-control dynamic waits` | this slice |
+| `ISF-REMAINING-BROAD-FRONTIER.2` | `ISF-REMAINING-BROAD-FRONTIER.2: select ATL rule triggers` | this slice |
+| `ISF-REMAINING-BROAD-FRONTIER.2.1` | `pending` | `pending` |
 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `ISF-REMAINING-BROAD-FRONTIER.7.1: split loop-control dynamic waits` | this slice |
 
 ## Changelog
@@ -186,3 +204,6 @@ inventory that are not already the active frontier of a narrower ISF tree.
 - `2026-06-05`: `.7.1` shipped false-edge dynamic-wait splitting after
   `(exit-when ...)` / `(continue-when ...)` while preserving the true exit or
   continue target; next frontier is broad ATL leaf selection.
+- `2026-06-05`: `.2` selected `.2.1`, a rule-level qualified
+  `(trigger INSTANCE.TRANSACTION)` ATL parent-handoff leaf, before any ATL code
+  changes.
