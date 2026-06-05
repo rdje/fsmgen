@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11` (this commit) — shipped binary `(== A B)` / `(!= A B)` for matching semantic parameter/generic aggregate values on direct `+params`, `.rtlif` defaults, external RTL overrides, and generated-child overrides. `git log -1` for the hash.
-- active_work_unit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION` active. Frontier: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3` — select the next shared-datapath route/storage/protocol contract or blocker from evidence before any code.
-- recently_done: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`; `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1`; `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`; `ISF-LOOP-EARLY-EXIT.4`; `ISF-TRIGGER-ANCHOR` (complete, `.1`–`.6c`); decisions `0008`–`0011`; `TRACE-SEVERITY-NEVER-GATED`; `DOCS-RELATIVE-PATHS`.
+- latest_commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3` (this commit) — reviewed shared-datapath evidence, confirmed the shipped bounded surface, and deferred broader widening behind a precise route/storage/protocol or adjacent prerequisite. `git log -1` for the hash.
+- active_work_unit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION` active. Frontier: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4` — select the next reusable standalone-DT module interface/export or lookup contract or blocker from evidence before any code.
+- recently_done: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`; `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1`; `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`; `ISF-LOOP-EARLY-EXIT.4`; `ISF-TRIGGER-ANCHOR` (complete, `.1`–`.6c`); decisions `0008`–`0011`; `TRACE-SEVERITY-NEVER-GATED`; `DOCS-RELATIVE-PATHS`.
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 
