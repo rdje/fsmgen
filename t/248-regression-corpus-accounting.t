@@ -157,6 +157,7 @@ for my $required_id (qw(
     contract.direct_size_expression_bad_arity
     contract.direct_lhs_deconstruct_width_mismatch
     contract.unsupported_top_level_define_source
+    contract.generic_fifo_define_template_source
     contract.unsupported_top_level_clock_directive
     contract.unsupported_top_level_infix_init_form
     contract.unsupported_top_level_bare_scalar_form
@@ -434,8 +435,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    162,
-    'catalog now records one hundred sixty-two explicit expected-failure entries',
+    163,
+    'catalog now records one hundred sixty-three explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

@@ -1021,6 +1021,16 @@ my @REGRESSION_CORPUS = (
         expected_error_pattern => qr/Unsupported top-level source '\?define:legacy_template'/s,
     },
     {
+        id => 'contract.generic_fifo_define_template_source',
+        relpath => 'fsm/generic_fifo.fsm',
+        family => 'language_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'language_contract_rejection_pipeline_cli',
+        source_kind => 'unknown',
+        diagnostic_code => 'FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_SOURCE',
+        expected_error_pattern => qr/Unsupported top-level source '\?define:generic_fifo'/s,
+    },
+    {
         id => 'contract.unsupported_top_level_clock_directive',
         relpath => 't/corpus/unsupported_top_level_clock_directive.fsm',
         family => 'language_contract_fixture',

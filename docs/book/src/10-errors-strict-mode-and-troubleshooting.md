@@ -163,6 +163,12 @@ a historical legacy `?ports` mapping sample. Its first stable boundary is the
 `FSMGEN_COMPOSITION_PORT_DECLARATION_MODE` diagnostic for the
 `/data_o/{tasu_timestamp, tasu_pl_data}/` mapping directive inside `?ports`.
 
+The language-contract expected-failure catalog includes `fsm/generic_fifo.fsm`
+as a historical template sample. Its first stable boundary is the
+`FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_SOURCE` diagnostic for the
+`?define:generic_fifo` root; the later `?&generic_fifo` macro instances,
+bracket placeholders, and `?repeat` forms remain outside active support too.
+
 The maintained language-contract expected-failure corpus now includes named
 entries for unsupported top-level source wrappers, unsupported top-level
 directives, unsupported top-level FSM body forms, legacy generic/template
@@ -385,6 +391,9 @@ contract. Current out-of-support examples include:
 - unsupported tagged wrappers such as `?define:legacy_template` and other
   template roots outside the active `?fsm`, `?dt`, `?mod`, `?module`, and
   `?top` families
+- historical template files such as `fsm/generic_fifo.fsm`, whose
+  `?define:generic_fifo` root, `?&generic_fifo` macro instantiations, bracket
+  placeholders, and `?repeat` forms remain outside the active parser contract
 - bare top-level FSM content without a supported source root
 - unsupported top-level FSM body forms inside a supported root, such as
   `(tester_reset := 1)` or `(BROKEN 1)`

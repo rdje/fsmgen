@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.4.6` (this commit) — selected `fsm/generic_fifo.fsm` as the next exact blocked historical validation target. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.4.6.1` active frontier — resolve or explicitly defer the `generic_fifo` legacy `?define` / `?&` template boundary with tests/docs.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.4.6`; `BACKEND-API-VALIDATION-FRONTIER.4.5.1`; `BACKEND-API-VALIDATION-FRONTIER.4.5`; `BACKEND-API-VALIDATION-FRONTIER.4.4.1`; `BACKEND-API-VALIDATION-FRONTIER.4.4`; `BACKEND-API-VALIDATION-FRONTIER.4.3`; `BACKEND-API-VALIDATION-FRONTIER.4.2`; `BACKEND-API-VALIDATION-FRONTIER.4.1`; `BACKEND-API-VALIDATION-FRONTIER.3`; `BACKEND-API-VALIDATION-FRONTIER.2.1`; `BACKEND-API-VALIDATION-FRONTIER.1`; `ISF-REMAINING-BROAD-FRONTIER.12`; `ISF-REMAINING-BROAD-FRONTIER.11.1`; `ISF-REMAINING-BROAD-FRONTIER.11`; `ISF-REMAINING-BROAD-FRONTIER.10`.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.4.6.1` (this commit) — deferred `fsm/generic_fifo.fsm` as a regression-backed expected failure at the legacy `?define` template root boundary. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.4.7` active frontier — resolve or explicitly defer the `fsm/lte_digital_rf.fsm` legacy multi-module `?rtl` composition boundary with tests/docs.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.4.6.1`; `BACKEND-API-VALIDATION-FRONTIER.4.6`; `BACKEND-API-VALIDATION-FRONTIER.4.5.1`; `BACKEND-API-VALIDATION-FRONTIER.4.5`; `BACKEND-API-VALIDATION-FRONTIER.4.4.1`; `BACKEND-API-VALIDATION-FRONTIER.4.4`; `BACKEND-API-VALIDATION-FRONTIER.4.3`; `BACKEND-API-VALIDATION-FRONTIER.4.2`; `BACKEND-API-VALIDATION-FRONTIER.4.1`; `BACKEND-API-VALIDATION-FRONTIER.3`; `BACKEND-API-VALIDATION-FRONTIER.2.1`; `BACKEND-API-VALIDATION-FRONTIER.1`; `ISF-REMAINING-BROAD-FRONTIER.12`; `ISF-REMAINING-BROAD-FRONTIER.11.1`; `ISF-REMAINING-BROAD-FRONTIER.11`.
 - in_flight_uncommitted: none expected after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

@@ -48,6 +48,7 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.4.5.1`,
     `BACKEND-API-VALIDATION-FRONTIER.4.6`,
     `BACKEND-API-VALIDATION-FRONTIER.4.6.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.4.7`,
     `BACKEND-API-VALIDATION-FRONTIER.5`,
     `BACKEND-API-VALIDATION-FRONTIER.6`,
     `BACKEND-API-VALIDATION-FRONTIER.7`,
@@ -93,7 +94,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.4.5`,
     `BACKEND-API-VALIDATION-FRONTIER.4.5.1`,
     `BACKEND-API-VALIDATION-FRONTIER.4.6`,
-    `BACKEND-API-VALIDATION-FRONTIER.4.6.1`
+    `BACKEND-API-VALIDATION-FRONTIER.4.6.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.4.7`
   Acceptance: `One exact historical sample family or tool gate is selected, cleaned or deferred, documented, and covered.`
   Verification: `BACKEND-API-VALIDATION-FRONTIER.4.1 added fsm/trial_0.fsm, BACKEND-API-VALIDATION-FRONTIER.4.2 added fsm/mipicsi2_configreg.fsm plus fsm/mipicsi2_fifo_4x8.fsm, BACKEND-API-VALIDATION-FRONTIER.4.3 added all remaining current MIPI samples under fsm/ to the external SystemVerilog validation smoke, BACKEND-API-VALIDATION-FRONTIER.4.4.1 added fsm/apb_tb.fsm after fixing generated-child shared-datapath export-port sink binding, and BACKEND-API-VALIDATION-FRONTIER.4.5.1 made fsm/trial_2.fsm an explicit expected-failure corpus boundary; remaining blocked historical samples continue at .4.6.`
   Commit: `pending`
@@ -155,9 +157,16 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.4.6.1`
-  Status: `active`
+  Status: `done`
   Goal: `Resolve the fsm/generic_fifo.fsm legacy template validation boundary by implementing a bounded compatibility slice or recording an exact fail-closed deferral.`
-  Acceptance: `The generic_fifo legacy template shape is either advanced by one bounded, regression-backed compatibility slice or explicitly deferred with exact evidence of the unsupported syntax families and the current fail-closed diagnostic boundary. No parser or validation behavior is changed unless the slice has tests and docs. The mdBook and corpus/task-tree status stay synchronized with the selected outcome.`
+  Acceptance: `Explicitly deferred fsm/generic_fifo.fsm at the existing fail-closed legacy template boundary instead of reviving the broader historical ?define / ?& macro dialect. Added the whole file as the expected-failure corpus entry contract.generic_fifo_define_template_source with stable FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_SOURCE accounting, pipeline/CLI/check-JSON/semantic-JSON coverage, a knowledge-map fact card, and mdBook/corpus documentation. Also repaired the human regression-corpus table to include the prior contract.trial_2_ports_mapping_directive entry. No parser behavior changed.`
+  Verification: `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_generic_fifo_verify.sv fsm/generic_fifo.fsm failed as expected on unsupported top-level source ?define:generic_fifo; perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm; prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t t/41-language-contract-top-level-source-kind-boundary.t; scripts/check_memory_architecture.sh; bash knowledge-map/scripts/check_knowledge_map.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.4.7`
+  Status: `active`
+  Goal: `Resolve the fsm/lte_digital_rf.fsm legacy multi-RTL composition validation boundary by implementing a bounded compatibility slice or recording an exact fail-closed deferral.`
+  Acceptance: `The lte_digital_rf legacy multi-RTL composition shape is either advanced by one bounded, regression-backed compatibility slice or explicitly deferred with exact evidence of the unsupported syntax families and the current fail-closed diagnostic boundary. No parser or validation behavior is changed unless the slice has tests and docs. The mdBook and corpus/task-tree status stay synchronized with the selected outcome.`
   Verification: `pending`
   Commit: `pending`
 
@@ -204,7 +213,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 9 | `BACKEND-API-VALIDATION-FRONTIER.4.5` | `done` | Selected `fsm/trial_2.fsm` as the next exact blocked historical validation target. |
 | 10 | `BACKEND-API-VALIDATION-FRONTIER.4.5.1` | `done` | Explicitly deferred `fsm/trial_2.fsm` as a regression-backed expected failure at the legacy `?ports` mapping boundary. |
 | 11 | `BACKEND-API-VALIDATION-FRONTIER.4.6` | `done` | Selected `fsm/generic_fifo.fsm` as the next exact blocked historical validation target. |
-| 12 | `BACKEND-API-VALIDATION-FRONTIER.4.6.1` | `active` | Resolve or explicitly defer the `generic_fifo` legacy `?define` / `?&` template boundary with tests/docs. |
+| 12 | `BACKEND-API-VALIDATION-FRONTIER.4.6.1` | `done` | Explicitly deferred `fsm/generic_fifo.fsm` as a regression-backed expected failure at the legacy `?define` template boundary. |
+| 13 | `BACKEND-API-VALIDATION-FRONTIER.4.7` | `active` | Resolve or explicitly defer the `lte_digital_rf` legacy multi-module `?rtl` composition boundary with tests/docs. |
 
 ## Decisions
 
@@ -237,6 +247,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.5` | Selection probes for `fsm/trial_2.fsm`, `fsm/generic_fifo.fsm`, and `fsm/lte_digital_rf.fsm`; code/read audit of `perl/FSM/Composition/Parser.pm` rejection points; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS`; selected `trial_2` for `.4.5.1` |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.5.1` | `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_trial_2_verify.sv fsm/trial_2.fsm` expected-failure probe; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t t/127-composition-ports-mapping-diagnostics.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; `trial_2` deferred as an expected-failure corpus boundary |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.6` | Selection probes for `fsm/generic_fifo.fsm` and `fsm/lte_digital_rf.fsm`; `wc -l fsm/generic_fifo.fsm fsm/lte_digital_rf.fsm`; read leading source shapes for both files; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected `generic_fifo` for `.4.6.1` |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.6.1` | `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_generic_fifo_verify.sv fsm/generic_fifo.fsm` expected-failure probe; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t t/41-language-contract-top-level-source-kind-boundary.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; `generic_fifo` deferred as an expected-failure corpus boundary |
 
 ## Commit Log
 
@@ -253,6 +264,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.4.5` | `BACKEND-API-VALIDATION-FRONTIER.4.5: select trial_2 validation target` | selected `.4.5.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.4.5.1` | `BACKEND-API-VALIDATION-FRONTIER.4.5.1: defer trial_2 ports mapping` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.4.6` | `BACKEND-API-VALIDATION-FRONTIER.4.6: select generic_fifo validation target` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.4.6.1` | `BACKEND-API-VALIDATION-FRONTIER.4.6.1: defer generic_fifo template root` | this slice |
 
 ## Changelog
 
@@ -302,3 +314,8 @@ items named in the 2026-06-05 remaining-work inventory.
   remaining candidate and fails first on the unsupported `?define` / `?&`
   template surface. `fsm/lte_digital_rf.fsm` remains deferred behind the
   broader legacy multi-module `?rtl` boundary.
+- `2026-06-05`: Completed `.4.6.1`; `fsm/generic_fifo.fsm` now has an
+  explicit expected-failure corpus entry, stable diagnostic accounting, mdBook
+  coverage, and a knowledge-map fact card at the unsupported `?define` root
+  boundary. The historical validation frontier continues at `.4.7` for
+  `fsm/lte_digital_rf.fsm`.

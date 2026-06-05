@@ -120,6 +120,14 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   names, malformed computed test selectors, malformed inline compound modifier
   payloads, duplicate inline compound modifiers, malformed update-shorthand
   targets, and malformed update-shorthand tails.
+
+The historical sample `fsm/generic_fifo.fsm` is cataloged as
+`contract.generic_fifo_define_template_source` in the language-contract
+expected-failure bucket. Its current first stable boundary is the unsupported
+top-level `?define:generic_fifo` root; the later `?&generic_fifo` macro
+instantiations, bracket placeholders, and `?repeat` forms belong to the same
+broader legacy template dialect and are not interpreted by the active parser.
+
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
   intentionally rejected by the normal direct-generation contract through both
   the pipeline API and the CLI after parsing succeeds but before HDL is emitted,
@@ -620,6 +628,7 @@ manifest output while keeping the exact file lists widenable.
 | `contract.direct_runtime_modulo_exact_zero` | [t/corpus/direct_runtime_modulo_exact_zero.fsm](t/corpus/direct_runtime_modulo_exact_zero.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_lhs_deconstruct_width_mismatch` | [t/corpus/direct_lhs_deconstruct_width_mismatch.fsm](t/corpus/direct_lhs_deconstruct_width_mismatch.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.unsupported_top_level_define_source` | [t/corpus/unsupported_top_level_define_source.fsm](t/corpus/unsupported_top_level_define_source.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.generic_fifo_define_template_source` | [fsm/generic_fifo.fsm](fsm/generic_fifo.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.unsupported_top_level_clock_directive` | [t/corpus/unsupported_top_level_clock_directive.fsm](t/corpus/unsupported_top_level_clock_directive.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.unsupported_top_level_infix_init_form` | [t/corpus/unsupported_top_level_infix_init_form.fsm](t/corpus/unsupported_top_level_infix_init_form.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.unsupported_top_level_bare_scalar_form` | [t/corpus/unsupported_top_level_bare_scalar_form.fsm](t/corpus/unsupported_top_level_bare_scalar_form.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
@@ -719,6 +728,7 @@ manifest output while keeping the exact file lists widenable.
 | `contract.composition_child_item_list_dotted_rtl` | [t/corpus/composition_child_structure_dotted_rtl_top.fsm](t/corpus/composition_child_structure_dotted_rtl_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.composition_unsupported_child_kind` | [t/corpus/composition_unsupported_child_kind_top.fsm](t/corpus/composition_unsupported_child_kind_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.composition_ports_mapping_directive` | [t/corpus/composition_ports_mapping_directive_top.fsm](t/corpus/composition_ports_mapping_directive_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.trial_2_ports_mapping_directive` | [fsm/trial_2.fsm](fsm/trial_2.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.composition_duplicate_top_port` | [t/corpus/composition_duplicate_top_port_top.fsm](t/corpus/composition_duplicate_top_port_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.composition_duplicate_child_instance` | [t/corpus/composition_duplicate_child_instance_top.fsm](t/corpus/composition_duplicate_child_instance_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.composition_ports_shape_multiple_blocks` | [t/corpus/composition_ports_shape_multiple_blocks_top.fsm](t/corpus/composition_ports_shape_multiple_blocks_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
