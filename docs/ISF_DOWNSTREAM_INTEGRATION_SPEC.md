@@ -1109,8 +1109,9 @@ Rules:
   width and the predecessor-edge split is implemented. Implemented predecessor
   splits include transaction entry, sequential states, contract arm states,
   await, stage, repeat exit, repeat-check loop-back into a leading repeat-body
-  runtime wait, await_all, await_any, bank load/store states, and loop decision
-  states.
+  runtime wait, await_all, await_any, bank load/store states, loop decision
+  states, and the false fallthrough edge of loop-control `(exit-when ...)` /
+  `(continue-when ...)` states.
 - Runtime expression waits are accepted when every operand has known width and
   the expression width helper derives a positive result width.
 - Pending samples before accepted runtime waits materialize in the first

@@ -90,16 +90,16 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `pending`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.7`
-  Status: `active`
+  Status: `done`
   Goal: `Broaden transaction stages, waits, and dynamic loop combinations.`
   Children: `ISF-REMAINING-BROAD-FRONTIER.7.1`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.7.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Support runtime waits immediately after loop-control decision states: (exit-when ...) / (continue-when ...) false edges must split a following runtime (wait ...) while true edges keep their exit/continue target.`
   Acceptance: `A while/until loop body with (exit-when COND) or (continue-when COND) followed by runtime (wait COUNT) lowers with the false edge sampling/entering/bypassing the generated dynamic wait, while the true edge still exits or continues. Focused tests cover exit-when and continue-when, docs/spec/public surfaces are synchronized, and ISF gates pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1389-isf-loop-early-exit.t t/1393-isf-loop-continue.t`; `prove -Iperl t/1376-isf-book-example-lowering-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check`
+  Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.8`
   Status: `pending`
@@ -141,7 +141,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `ISF-REMAINING-BROAD-FRONTIER.1` | `done` | Broad R14 frontier selected after the previous active ISF tree closed. |
-| 2 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `pending` | First exact executable leaf: loop-control decision states currently link before dynamic-wait predecessor splitting, so a following runtime wait needs an owned splitter slice. |
+| 2 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `done` | Loop-control false fallthrough edges now split following runtime waits while preserving true exit/continue targets. |
+| 3 | `ISF-REMAINING-BROAD-FRONTIER.2` | `pending` | Next pending broad R14 item: select an exact ATL expansion leaf before any ATL behavior changes. |
 
 ## Decisions
 
@@ -167,13 +168,14 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.1` | Selection audit/read: `docs/TASK_TREE.md`, this task file, dynamic-wait backlog text, existing dynamic-wait task files, loop-control docs/tests, and `LoweringIR.pm` loop-control linking | `PASS` |
+| `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1389-isf-loop-early-exit.t t/1393-isf-loop-continue.t`; `prove -Iperl t/1376-isf-book-example-lowering-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `./bin/ci-regression isf --no-book` (294 files / 2125 tests); `mdbook build docs/book`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-REMAINING-BROAD-FRONTIER.1` | `ISF-REMAINING-BROAD-FRONTIER.1: select loop-control dynamic waits` | this slice |
-| `ISF-REMAINING-BROAD-FRONTIER.7.1` | `pending` | `pending` |
+| `ISF-REMAINING-BROAD-FRONTIER.7.1` | `ISF-REMAINING-BROAD-FRONTIER.7.1: split loop-control dynamic waits` | this slice |
 
 ## Changelog
 
@@ -181,3 +183,6 @@ inventory that are not already the active frontier of a narrower ISF tree.
 - `2026-06-05`: `.1` activated the tree and selected `.7.1`, a loop-control
   dynamic-wait predecessor leaf for `(exit-when ...)` / `(continue-when ...)` followed by
   runtime `(wait ...)`.
+- `2026-06-05`: `.7.1` shipped false-edge dynamic-wait splitting after
+  `(exit-when ...)` / `(continue-when ...)` while preserving the true exit or
+  continue target; next frontier is broad ATL leaf selection.

@@ -1043,6 +1043,22 @@ Loop decision states can also split a following runtime wait on loop exit. For
 a `while` followed by `(wait cycles)`, the true branch still loops to the
 body, while the false exit branch samples or bypasses the following wait.
 
+Loop-control states split only their false fallthrough edge when followed by a
+runtime wait. For `(exit-when stop) (wait cycles)`, the true edge still exits
+the loop, while the false edge samples, enters, or bypasses the wait:
+
+```lisp
+(main_exit_when_2
+  (<- (main_wait_3_cnt cycles) <(& (! stop) cycles))
+  (-> main_done_6 <stop)
+  (-> main_wait_3 <(& (! stop) cycles))
+  (-> main_drive_4 <(& (! stop) (== cycles 0))))
+```
+
+For `(continue-when skip) (wait cycles)`, the true edge targets the loop tail
+check instead of the loop exit, and the false edge uses the same `(! skip)`
+runtime-wait split.
+
 Runtime waits remain fail-closed when the selected zero-count successor cannot
 carry pending samples without changing timing, after predecessor states whose
 edge split is not implemented yet, and for malformed or unknown-width runtime

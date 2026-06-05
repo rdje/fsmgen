@@ -10693,7 +10693,7 @@ sub _link_states {
         elsif($s->{kind}eq'repeat_init'){_link_repeat_init_state($s,\%idx_by_name,$st,$next_state,$next,$e)}
         elsif($s->{kind}eq'switch'){_link_switch_state($s,\%idx_by_name,$st,$n,$e)}
         elsif($s->{kind}eq'loop_while'||$s->{kind}eq'loop_until'){_link_loop_state($s,\%idx_by_name,$st)}
-        elsif($s->{kind}eq'loop_exit_when'){push @{$s->{transitions}},{target=>$s->{loop_exit_target},condition=>{loop_branch=>1}}if defined $s->{loop_exit_target};push @{$s->{transitions}},{target=>$next,condition=>{loop_branch=>0}}if defined $next}
+        elsif($s->{kind}eq'loop_exit_when'){_link_loop_exit_when_state($s,$next_state,$next)}
         elsif($next_state&&$next_state->{dynamic_wait_entry}){_link_dynamic_wait_predecessor($tn,$s,$next_state)}
         elsif($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
@@ -10743,6 +10743,44 @@ sub _link_repeat_check_state {
         target    => $next_target,
         condition => { signal => $counter, op => '=', value => 0 },
     } if defined($next_target) && length($next_target);
+}
+
+sub _link_loop_exit_when_state {
+    my ($state, $next_state, $next_target) = @_;
+    my $condition = _loop_exit_when_condition_expr($state);
+
+    if ($next_state && $next_state->{dynamic_wait_entry}) {
+        $state->{loop_transitions_materialized} = 1;
+        push @{$state->{transitions}}, {
+            target    => $state->{loop_exit_target},
+            condition => { expr => $condition },
+        } if defined($state->{loop_exit_target});
+
+        _link_dynamic_wait_entry_edge(
+            $state,
+            $next_state,
+            _negated_condition_expr($condition),
+        ) if defined($next_target) && length($next_target);
+        return;
+    }
+
+    push @{$state->{transitions}}, {
+        target    => $state->{loop_exit_target},
+        condition => { loop_branch => 1 },
+    } if defined($state->{loop_exit_target});
+
+    return unless defined($next_target) && length($next_target);
+
+    push @{$state->{transitions}}, {
+        target    => $next_target,
+        condition => { loop_branch => 0 },
+    };
+}
+
+sub _loop_exit_when_condition_expr {
+    my ($state) = @_;
+    my $condition = $state->{exit_when_condition} // $state->{condition};
+    return !ref($condition) ? $condition : _format_isf_expr($condition);
 }
 
 sub _state_region_last_index {

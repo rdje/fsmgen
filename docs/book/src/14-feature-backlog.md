@@ -2559,6 +2559,10 @@ loop-back edges are preserved.
 Loop decision predecessors are shipped for the no-pending-sample subset: loop
 body entries, loop back-edges, and loop exits that target a runtime wait split
 that edge while preserving the opposite loop branch.
+Loop-control false-edge predecessors are also shipped for the
+no-pending-sample subset: `(exit-when COND)` and `(continue-when COND)` keep
+their true exit/continue target while their false fallthrough edge splits a
+following runtime wait.
 
 Successful reports expose bounded `transaction_waits[]` entries with
 transaction name, `cycles`, `count_kind`, `count_source`, entry state, exit

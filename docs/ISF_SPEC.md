@@ -3012,6 +3012,10 @@ runtime wait edge: a `while` true body-entry or back-edge, an `until` false
 back-edge, and a loop-exit edge that falls through to a following runtime wait
 can all load or bypass the generated counter while preserving the opposite
 loop branch.
+Loop-control decision states split the false fallthrough edge when
+`(exit-when COND)` or `(continue-when COND)` is immediately followed by a
+runtime wait: the true edge still exits or continues, and the false edge loads,
+enters, or zero-bypasses the generated wait under `!COND`.
 
 Runtime waits inside `when` bodies are supported when no pending sample must
 cross the dynamic wait. The branch true edge is split into positive-count

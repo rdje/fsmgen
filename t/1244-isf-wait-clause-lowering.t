@@ -2905,6 +2905,112 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_while');
 };
 
+subtest 'loop-control decisions split following runtime waits' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-after-exit-when');
+(actor wait_after_exit_when
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input busy)
+    (input stop)
+    (input cycles (width 4))
+    (output tick)
+    (output done))
+  (drive pulse
+    (tick 1))
+  (transaction main
+    (on start)
+    (while busy
+      (exit-when stop)
+      (wait cycles)
+      (drive pulse))
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_after_exit_when.fsm'};
+    my $exit_when = state_block($fsm, 'main_exit_when_2');
+    like($exit_when, qr/\(-> main_done_6 <stop\)/,
+        'exit-when true path still exits the loop');
+    like($exit_when, qr/\(<- \(main_wait_3_cnt cycles\) <\(& \(! stop\) cycles\)\)/,
+        'exit-when false positive path samples the following runtime wait count');
+    like($exit_when, qr/\(-> main_wait_3 <\(& \(! stop\) cycles\)\)/,
+        'exit-when false positive path enters the following dynamic wait');
+    like($exit_when, qr/\(-> main_drive_4 <\(& \(! stop\) \(== cycles 0\)\)\)/,
+        'exit-when false zero path bypasses to the following body state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_3',
+                exit_state     => 'main_drive_4',
+                counter_signal => 'main_wait_3_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'exit-when dynamic wait report exposes runtime count metadata',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_after_exit_when');
+
+    ($lowered, $report) = lower_source(<<'ISF', 'wait-after-continue-when');
+(actor wait_after_continue_when
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input busy)
+    (input skip)
+    (input cycles (width 4))
+    (output tick)
+    (output done))
+  (drive pulse
+    (tick 1))
+  (transaction main
+    (on start)
+    (while busy
+      (continue-when skip)
+      (wait cycles)
+      (drive pulse))
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_after_continue_when.fsm'};
+    my $continue_when = state_block($fsm, 'main_continue_when_2');
+    like($continue_when, qr/\(-> main_while_check_5 <skip\)/,
+        'continue-when true path still continues to the loop tail check');
+    like($continue_when, qr/\(<- \(main_wait_3_cnt cycles\) <\(& \(! skip\) cycles\)\)/,
+        'continue-when false positive path samples the following runtime wait count');
+    like($continue_when, qr/\(-> main_wait_3 <\(& \(! skip\) cycles\)\)/,
+        'continue-when false positive path enters the following dynamic wait');
+    like($continue_when, qr/\(-> main_drive_4 <\(& \(! skip\) \(== cycles 0\)\)\)/,
+        'continue-when false zero path bypasses to the following body state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_3',
+                exit_state     => 'main_drive_4',
+                counter_signal => 'main_wait_3_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'continue-when dynamic wait report exposes runtime count metadata',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_after_continue_when');
+};
+
 subtest 'while and until runtime scalar waits preserve pending samples' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-while-sample');
 (actor wait_dynamic_while_sample
