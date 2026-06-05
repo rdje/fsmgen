@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: bootstrap architecture maintenance
 - Created: `2026-06-05`
 - Last updated: `2026-06-05`
@@ -52,7 +52,7 @@ several recorded ISF line-count measurements are stale after recent R14 work.
 ## Task Tree
 
 - ID: `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`
-  Status: `active`
+  Status: `done`
   Goal: `Refresh stale live import-tree measurements after the June 5 bootstrap audit.`
   Children: `.1` (select), `.2` (refresh)
 
@@ -61,13 +61,13 @@ several recorded ISF line-count measurements are stale after recent R14 work.
   Goal: `Select the measurement-only refresh and record the live bootstrap audit facts.`
   Acceptance: `Task tree and TASK_TREE.md index row exist before editing the import-tree architecture note.`
   Verification: `scripts/check_memory_architecture.sh PASS; git diff --check PASS`
-  Commit: `pending`
+  Commit: `bfa83eab`
 
 - ID: `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Update docs/BIN_FSMGEN_IMPORT_TREE.md with the current stale ISF line counts and record verification.`
   Acceptance: `The import-tree note records Parser.pm=9468, Scheduler/ISF.pm=591, LoweringIR.pm=12124, Emitter/FSM.pm=547, Emitter/JSON.pm=1053, and unchanged topology.`
-  Verification: `pending`
+  Verification: `import closure total=196 pm=195; wc -l stale ISF files; stale-value rg clean; mdbook build docs/book PASS; scripts/check_memory_architecture.sh PASS; prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t PASS; git diff --check PASS`
   Commit: `pending`
 
 ## Current Frontier
@@ -75,7 +75,7 @@ several recorded ISF line-count measurements are stale after recent R14 work.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Selection and ownership created before the architecture-note edit. |
-| 2 | `.2` | `pending` | Refresh the stale measured line counts found by the bootstrap audit. |
+| 2 | `.2` | `done` | Refreshed the stale measured line counts found by the bootstrap audit; topology unchanged. |
 
 ## Decisions
 
@@ -96,12 +96,13 @@ several recorded ISF line-count measurements are stale after recent R14 work.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-05` | `.1` | `scripts/check_memory_architecture.sh`; `git diff --check` | `PASS` |
+| `2026-06-05` | `.2` | `perl -Iperl -MModule::ScanDeps=scan_deps ... bin/fsmgen` import closure; `wc -l` measured files; stale-value `rg`; `mdbook build docs/book`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t`; `git diff --check` | `PASS`; topology `total=196`, `.pm=195`; stale-value grep clean; focused tests `Files=3, Tests=413` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `pending` | `pending` |
+| `.1` | `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH.1: select June import-tree refresh` | `bfa83eab` |
 | `.2` | `pending` | `pending` |
 
 ## Changelog
@@ -109,3 +110,11 @@ several recorded ISF line-count measurements are stale after recent R14 work.
 - `2026-06-05`: Created after the session bootstrap audit remeasured the
   project-owned import topology and found stable closure counts but stale ISF
   line-count measurements in `docs/BIN_FSMGEN_IMPORT_TREE.md`.
+- `2026-06-05`: `.2` completed. Refreshed `docs/BIN_FSMGEN_IMPORT_TREE.md`
+  baseline date and the stale measured ISF line counts:
+  `perl/FSM/Adapter/ISF/Parser.pm=9468`,
+  `perl/FSM/Scheduler/ISF.pm=591`,
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm=12124`,
+  `perl/FSM/Scheduler/ISF/Emitter/FSM.pm=547`, and
+  `perl/FSM/Scheduler/ISF/Emitter/JSON.pm=1053`. The live dependency trace
+  still measures `196` project files and `195` `.pm` packages.

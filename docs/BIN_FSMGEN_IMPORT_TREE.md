@@ -11,13 +11,12 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-05-26`.
-- Startup bootstrap refreshed again on `2026-05-26`; the live static trace
+- Reviewed on `2026-06-05`.
+- Startup bootstrap refreshed again on `2026-06-05`; the live static trace
   still includes the R14 `.isf` intent-scheduling path, the topology remains
   at the same project-owned closure counts, and the selected line-count
-  measurements below were refreshed from source after the latest R14
-  same-domain generated-do prior-`await_any` plus second post-spawn
-  `await_any` repeat-body slice.
+  measurements below were refreshed from source after the recent June R14
+  verification-property and bootstrap-maintenance work.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
 - Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `196` project files total, `195` `.pm` packages.
@@ -260,13 +259,13 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm): `172`
 - [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm): `172`
 - [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm): `100`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `8078`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `9468`
 - [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm): `99`
-- [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm): `479`
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `11309`
-- [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm): `504`
+- [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm): `591`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12124`
+- [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm): `547`
 - [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm): `499`
-- [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `1001`
+- [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `1053`
 - [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm): `34`
 - [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm): `267`
 - [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm): `62`
@@ -283,21 +282,21 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Support/NormalizedSemanticReport.pm](perl/FSM/Support/NormalizedSemanticReport.pm): `383`
 
 Current largest reachable files by line count:
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `11309`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `8078`
-- [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3745`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12124`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `9468`
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3906`
 - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `2447`
 - [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm): `2431`
-- [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2032`
+- [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2026`
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm): `1827`
 - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm): `1695`
-- [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm): `1485`
+- [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm): `1501`
 - [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm): `1443`
 - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm): `1301`
 - [perl/FSM/HDL/ASTFactorization.pm](perl/FSM/HDL/ASTFactorization.pm): `1219`
 - [perl/FSM/Composition/ActualLiteralSupport.pm](perl/FSM/Composition/ActualLiteralSupport.pm): `1191`
 - [bin/fsmgen](bin/fsmgen): `1175`
-- [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm): `1064`
+- [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm): `1065`
 
 Interpretation:
 - line count alone is not the same thing as current architectural risk,
