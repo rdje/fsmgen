@@ -2362,6 +2362,16 @@ my @REGRESSION_CORPUS = (
         expected_error_pattern => qr/Composition top 'rtl_child_source_count_multi_token_top' contains '\?rtl' child 'u_uart' with 2 RTL module references, .*composition external-RTL child source count is blocked because the active composition parser currently accepts exactly one flat RTL module name after '\?rtl:instance' when an explicit instance name is needed/s,
     },
     {
+        id => 'contract.lte_digital_rf_rtl_child_source_count',
+        relpath => 'fsm/lte_digital_rf.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_COMPOSITION_RTL_CHILD_SOURCE_COUNT',
+        expected_error_pattern => qr/Composition top 'lte_digital_rf' contains '\?rtl' child 'lte_dif_iosocket' with 36 RTL module references, .*composition external-RTL child source count is blocked because the active composition parser currently accepts exactly one flat RTL module name after '\?rtl:instance' when an explicit instance name is needed/s,
+    },
+    {
         id => 'contract.invalid_rtl_system_port_direction',
         relpath => 't/corpus/invalid_rtl_system_direction_top.fsm',
         family => 'composition_contract_fixture',

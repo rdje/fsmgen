@@ -643,6 +643,12 @@ names and unsupported nested blocks are rejected before `.rtlif` metadata is
 loaded, because `?rtl` declarations describe an external module contract rather
 than raw backend text.
 
+Historical inputs such as `fsm/lte_digital_rf.fsm` used one `?rtl` child to
+carry many flat module references. For example, its `?rtl:lte_dif_iosocket`
+child currently fails as an expected-failure corpus entry because it names 36
+RTL modules in one child declaration. Keep each external RTL child to one
+semantic module contract instead.
+
 If an external RTL module is parameterized, keep that contract semantic too:
 declare supported parameter/generic names in an optional `.rtlif`
 `(params (NAME default_value) ...)` block, then override declared names on the

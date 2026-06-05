@@ -162,6 +162,9 @@ The composition-contract expected-failure catalog includes `fsm/trial_2.fsm` as
 a historical legacy `?ports` mapping sample. Its first stable boundary is the
 `FSMGEN_COMPOSITION_PORT_DECLARATION_MODE` diagnostic for the
 `/data_o/{tasu_timestamp, tasu_pl_data}/` mapping directive inside `?ports`.
+It also includes `fsm/lte_digital_rf.fsm`, whose first stable boundary is the
+`FSMGEN_COMPOSITION_RTL_CHILD_SOURCE_COUNT` diagnostic for the
+`?rtl:lte_dif_iosocket` child carrying 36 flat RTL module references.
 
 The language-contract expected-failure catalog includes `fsm/generic_fifo.fsm`
 as a historical template sample. Its first stable boundary is the

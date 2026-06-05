@@ -165,6 +165,12 @@ expected-failure bucket. Its current first stable boundary is the legacy
 that keeps it out of the external-validation smoke until a future owner takes
 on the broader legacy composition dialect.
 
+The historical sample `fsm/lte_digital_rf.fsm` is cataloged as
+`contract.lte_digital_rf_rtl_child_source_count` in the same bucket. Its current
+first stable boundary is the legacy `?rtl:lte_dif_iosocket` child carrying 36
+flat RTL module references; the active composition parser accepts one semantic
+module reference per `?rtl` child instead.
+
 ## Supported-success markers
 
 Every `supported_smoke` entry is executable at the catalog level: it must
@@ -760,6 +766,7 @@ manifest output while keeping the exact file lists widenable.
 | `contract.generated_child_source_shape_dtc` | [t/corpus/generated_child_source_shape_dtc_top.fsm](t/corpus/generated_child_source_shape_dtc_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.rtl_child_source_shape_nested` | [t/corpus/rtl_child_source_shape_nested_top.fsm](t/corpus/rtl_child_source_shape_nested_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.rtl_child_source_count_multi_token` | [t/corpus/rtl_child_source_count_multi_token_top.fsm](t/corpus/rtl_child_source_count_multi_token_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.lte_digital_rf_rtl_child_source_count` | [fsm/lte_digital_rf.fsm](fsm/lte_digital_rf.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.invalid_rtl_system_port_direction` | [t/corpus/invalid_rtl_system_direction_top.fsm](t/corpus/invalid_rtl_system_direction_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.duplicate_rtlif_port_declaration` | [t/corpus/duplicate_rtlif_port_top.fsm](t/corpus/duplicate_rtlif_port_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.invalid_rtlif_port_type` | [t/corpus/invalid_rtlif_port_type_top.fsm](t/corpus/invalid_rtlif_port_type_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
