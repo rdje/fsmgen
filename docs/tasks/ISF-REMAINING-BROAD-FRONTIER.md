@@ -77,11 +77,11 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Broaden ISF enum, type, and aggregate parity.`
   Acceptance: `One exact enum/type/aggregate parity surface is selected, implemented or deferred, synchronized, and covered.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Read docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md terminal .49 closure, its open questions/decisions, docs/book/src/13j-type-enum-aggregate.md, docs/book/src/14-feature-backlog.md ISF enum/type/aggregate section, docs/ISF_SPEC.md remaining aggregate boundary, docs/ISF_PUBLIC_INTERFACE_CONTRACT.md parity notes, and completed Composition/type owner trees. Existing sources already agree that remaining enum target/operator-position behavior, subaggregate operands/updates, additional aggregate carriers, broader field/slice/update lowering, and shape inference are future semantic-contract families requiring new exact task-tree ownership; no adjacent executable ISF parser/lowering slice is selected here.`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check`
+  Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.5`
   Status: `pending`
@@ -153,7 +153,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | 3 | `ISF-REMAINING-BROAD-FRONTIER.2` | `done` | ATL expansion category selected and the exact rule-level qualified trigger leaf closed. |
 | 4 | `ISF-REMAINING-BROAD-FRONTIER.2.1` | `done` | Rule-level qualified `(trigger INSTANCE.TRANSACTION)` now pulses parent handoff output and reports rule-action metadata. |
 | 5 | `ISF-REMAINING-BROAD-FRONTIER.3` | `done` | IAL2 remains non-R14 horizon exploration; no executable ISF slice selected. |
-| 6 | `ISF-REMAINING-BROAD-FRONTIER.4` | `pending` | Next broad item: select one exact enum/type/aggregate parity surface or defer with evidence. |
+| 6 | `ISF-REMAINING-BROAD-FRONTIER.4` | `done` | Remaining enum/type/aggregate work deferred to future exact semantic-contract owners. |
+| 7 | `ISF-REMAINING-BROAD-FRONTIER.5` | `pending` | Next broad item: select one exact resource kind or arbiter policy, or defer with evidence. |
 
 ## Decisions
 
@@ -180,6 +181,11 @@ inventory that are not already the active frontier of a narrower ISF tree.
   non-R14 until a source model introduces protocol/platform semantics above
   explicit `.isf` actor/network syntax. Current docs and prior audits already
   agree on that boundary, so no executable design slice is selected.
+- `2026-06-05`: Closed `.4` without code: the completed
+  `ISF-TYPE-AGGREGATE-PARITY` tree already exhausted adjacent ISF parity
+  widening and documented the remaining enum/aggregate work as future
+  semantic-contract families. No exact executable parser/lowering slice is
+  selected in this broad tree.
 
 ## Open Questions
 
