@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` (this commit) — reviewed portable type-core evidence and deferred broader widening behind one exact frontend type/inference/backend-lowering/VHDL/API contract. `git log -1` for the hash.
-- active_work_unit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION` active. Frontier: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10` — select the next aggregate member/index autogrowth proof surface or blocker from evidence before any code.
-- recently_done: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`; `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1`; `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`; `ISF-LOOP-EARLY-EXIT.4`; decisions `0008`–`0011`; `TRACE-SEVERITY-NEVER-GATED`; `DOCS-RELATIVE-PATHS`.
+- latest_commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10` (this commit) — reviewed aggregate member/index autogrowth evidence and deferred broader partial-use growth behind one complete root-shape proof or explicit syntax contract. `git log -1` for the hash.
+- active_work_unit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION` active. Frontier: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12` — select the next backend-owned struct/record default-lowering value class or blocker from evidence before any code.
+- recently_done: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.6`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.5`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.4`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.3`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`; `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2`; `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1`; `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`; `ISF-LOOP-EARLY-EXIT.4`; decisions `0008`–`0011`; `TRACE-SEVERITY-NEVER-GATED`; `DOCS-RELATIVE-PATHS`.
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 

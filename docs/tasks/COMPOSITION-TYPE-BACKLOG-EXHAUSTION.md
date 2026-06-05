@@ -119,11 +119,11 @@ remains or a real prerequisite blocker is reached.
   Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9: defer portable type-core widening`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next aggregate member/index autogrowth proof surface or blocker from evidence.`
   Acceptance: `Existing aggregate member/index autogrowth evidence, mdBook text, and regression coverage are reviewed; one exact executable leaf is added or activated, or the backlog item is explicitly deferred with a prerequisite. No code/test/source change may occur under this leaf unless that exact executable owner exists first.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: focused aggregate autogrowth/member-path evidence, memory architecture, mdBook, feature-backlog status, doc path, knowledge-map, and diff checks`
+  Commit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10: defer member autogrowth`
 
 - ID: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.11`
   Status: `done`
@@ -150,7 +150,7 @@ remains or a real prerequisite blocker is reached.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10` | `pending` | Portable type-core widening is explicitly deferred behind one exact frontend type, inference, backend-lowering, VHDL, or public API contract; the next Composition/type item needs aggregate member/index autogrowth evidence selection before any code. |
+| 1 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.12` | `pending` | Aggregate member/index autogrowth from partial use is explicitly deferred behind a complete root-shape proof or explicit syntax prerequisite; the next Composition/type item selects a backend-owned struct/record default-lowering value class or blocker. |
 
 ## Selection Result
 
@@ -377,6 +377,32 @@ operators, backend-neutral signedness/state-model policy across every inferred
 site, VHDL record/array/generic-map lowering, and richer public type/export
 APIs.
 
+## Aggregate Member/Index Autogrowth Selection Result
+
+`COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10` reviewed the closed
+`AGGREGATE-AUTOGROWTH-FROM-USAGE` tree, the current mdBook aggregate-growth
+boundary, and focused aggregate member/path regressions.
+
+No new implementation leaf is selected from this broad Composition/type tree.
+Existing shipped surfaces already cover declared aggregate aliases, canonical
+aggregate constants, direct typed aggregate member/list-item reads, partial
+scalar-leaf writes against declared aggregate roots, whole-signal aggregate
+contract inference from complete aggregate constant roots, list-only direct
+RHS concat target autogrowth, composition typed aggregate source paths, and
+bounded composition top-port aggregate inference when a declared or safely
+inferred root contract already exists.
+
+The remaining member/index-root autogrowth backlog stays deferred until an
+exact complete root-shape proof source or explicit syntax contract is
+selected. A partial use such as `FRAME.flag` or `in_frame.tag` proves only one
+leaf path; it does not prove the full record/list shape, record member order,
+list length, conflict policy, anonymous type name, packed layout, or backend
+lowering contract. Current diagnostics that require a declared or safely
+inferred aggregate root remain the signoff-level behavior. The mdBook already
+states this boundary in `docs/book/src/08-type-inference-and-aggregate-data.md`
+and `docs/book/src/14-feature-backlog.md`, so this leaf required no book
+source change.
+
 ## Evidence To Reuse
 
 - `R11-COMPOSITION-CONTRACT-FRONTIER-AUDIT`
@@ -439,12 +465,17 @@ APIs.
   already cover the bounded shipped scalar/aggregate/type-identity surface;
   broader work remains blocked until one exact frontend type, inference,
   backend-lowering, VHDL, public API, or architecture contract is selected.
+- `2026-06-05`: Do not select a new aggregate member/index autogrowth
+  implementation leaf from `.10`. The closed autogrowth tree, current book
+  boundary, and focused regressions already cover complete-shape autogrowth
+  sources; partial member/index use remains blocked until one exact complete
+  root-shape proof or explicit syntax contract is selected.
 
 ## Open Questions
 
-- None before the next evidence-selection leaf. Any aggregate member/index
-  autogrowth code must first get an exact executable owner under this tree or
-  an existing narrower aggregate-type tree.
+- None before the next evidence-selection leaf. Any backend-owned
+  struct/record default-lowering code must first get an exact value-class owner
+  under this tree or an existing narrower aggregate-type tree.
 
 ## Blockers
 
@@ -465,6 +496,7 @@ APIs.
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7` | `prove -Iperl t/1215-isf-spawn-parameter-binding.t t/1248-isf-rule-trigger-parameter-binding.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1195-isf-sample-clause-boundary.t t/1181-isf-rule-action-boundary.t t/1351-isf-activation-param-package-constants.t t/1369-isf-timing-param-activation-override-gates.t t/1370-isf-data-op-activation-override-width-gate.t t/1371-isf-transaction-port-activation-override-width-gate.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8` | `prove -Iperl t/1215-isf-spawn-parameter-binding.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t t/1376-isf-book-example-lowering-audit.t t/1379-isf-loop-contained-repeat-body-local-do.t t/1380-isf-loop-contained-repeat-body-generated-do.t t/1381-isf-deeper-nested-repeat-body-local-do.t t/1382-isf-deeper-nested-repeat-body-generated-do.t t/1383-isf-loop-and-deeper-repeat-body-spawn.t t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t t/1387-isf-cross-domain-activation-handshake-lowering.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 | `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` | `prove -Iperl t/279-declarative-scalar-types.t t/280-declarative-aggregate-types.t t/281-structural-declared-type-contracts.t t/282-composition-aggregate-source-expression-contracts.t t/283-composition-aggregate-path-support.t t/284-package-aggregate-path-support.t t/285-aggregate-expression-type-support.t t/288-composition-aggregate-top-expression-inference.t t/277-direct-symbol-contract-forward-ir.t t/278-composition-symbol-contract-forward-ir.t t/1333-direct-structural-rtl-ir-projection.t t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/1378-isf-enum-type-relationship.t t/1257-isf-scalar-type-aliases.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
+| `2026-06-05` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10` | `prove -Iperl t/276-direct-local-aggregate-values.t t/280-declarative-aggregate-types.t t/282-composition-aggregate-source-expression-contracts.t t/288-composition-aggregate-top-expression-inference.t t/1321-direct-aggregate-autogrowth.t`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -480,6 +512,7 @@ APIs.
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.7: defer activation binding widening` | `closed activation parameter/value-binding selection as prerequisite-bound deferral; next frontier .8` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.8: defer repeat activation widening` | `closed repeat-body child-activation selection as prerequisite-bound deferral; synced stale book wording; next frontier .9` |
 | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.9: defer portable type-core widening` | `closed portable type-core selection as prerequisite-bound deferral; next frontier .10` |
+| `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10` | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.10: defer member autogrowth` | `closed aggregate member/index autogrowth selection as prerequisite-bound deferral; next frontier .12` |
 
 ## Changelog
 
@@ -511,3 +544,6 @@ APIs.
 - `2026-06-05`: Closed portable type-core selection as an explicit
   prerequisite deferral and advanced the frontier to aggregate member/index
   autogrowth evidence selection.
+- `2026-06-05`: Closed aggregate member/index autogrowth selection as an
+  explicit prerequisite deferral and advanced the frontier to backend-owned
+  struct/record default-lowering evidence selection.
