@@ -12,6 +12,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_structural_rtl_ir_contract_source
     normalized_semantic_structural_rtl_ir_presence_key_family_map
     normalized_semantic_structural_rtl_ir_presence_keys
+    normalized_semantic_structural_rtl_ir_port_composition_extension_keys
+    normalized_semantic_structural_rtl_ir_port_entry_keys
     normalized_semantic_structural_rtl_ir_summary_presence_keys
 );
 
@@ -38,12 +40,16 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
         public_presence_keys => normalized_semantic_structural_rtl_ir_presence_keys(),
         summary_presence_keys => normalized_semantic_structural_rtl_ir_summary_presence_keys(),
         collection_presence_keys => normalized_semantic_structural_rtl_ir_collection_presence_keys(),
+        port_entry_keys => normalized_semantic_structural_rtl_ir_port_entry_keys(),
+        port_composition_extension_keys =>
+            normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),
         presence_key_family_map => normalized_semantic_structural_rtl_ir_presence_key_family_map(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested `semantic.forward_ir.structural_rtl_ir` object used by successful public normalized semantic JSON reports.},
             'The bounded public promise covers the current structural-RTL summary shared by direct roots and composition tops.',
-            'The deeper `ports`, `nets`, `instances`, `resolved_links`, `declared_links`, and `auxiliary_assignments` payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
+            'The port entry key families describe the current `ports[]` entry schema shared by direct roots and composition tops.',
+            'The deeper `nets`, `instances`, `resolved_links`, `declared_links`, and `auxiliary_assignments` payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
             'Use the grouped presence_key_family_map to discover the bounded structural-RTL shell summary and collection key families without collecting those key-family lists separately.',
         ],
     };
@@ -104,10 +110,34 @@ sub normalized_semantic_structural_rtl_ir_collection_presence_keys {
     ];
 }
 
+sub normalized_semantic_structural_rtl_ir_port_entry_keys {
+    return [
+        qw(
+            direction
+            name
+            signed
+            type
+            width
+        ),
+    ];
+}
+
+sub normalized_semantic_structural_rtl_ir_port_composition_extension_keys {
+    return [
+        qw(
+            binding_mode
+            origin_kind
+        ),
+    ];
+}
+
 sub normalized_semantic_structural_rtl_ir_presence_key_family_map {
     return {
         summary_presence_keys => normalized_semantic_structural_rtl_ir_summary_presence_keys(),
         collection_presence_keys => normalized_semantic_structural_rtl_ir_collection_presence_keys(),
+        port_entry_keys => normalized_semantic_structural_rtl_ir_port_entry_keys(),
+        port_composition_extension_keys =>
+            normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),
     };
 }
 
