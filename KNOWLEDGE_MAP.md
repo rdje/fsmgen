@@ -3,7 +3,7 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **16** facts · **82** question keys.
+> **17** facts · **87** question keys.
 
 ## Questions → fact
 
@@ -16,7 +16,9 @@
 - "can ISF infer two unknown extract field widths?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
 - "do aggregate parameters support equality or inequality?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "does --language vhdl work for direct FSM roots?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-05 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
+- "does --verify-hdl run abc?" -> [abc-discovery-validation-boundary](docs/knowledge/abc-discovery-validation-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`
 - "does .rtlif support aggregate generic comparison defaults?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
+- "does FSMGen require ABC for Yosys validation?" -> [abc-discovery-validation-boundary](docs/knowledge/abc-discovery-validation-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`
 - "does ISF (within …) support a lower bound / a range / F[min,max]?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
 - "does ISF support $past in assertions?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-05 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "does ISF support $stable / $rose / $fell / $changed?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-05 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
@@ -52,6 +54,7 @@
 - "is lte_digital_rf supported?" -> [lte-digital-rf-multi-rtl-boundary](docs/knowledge/lte-digital-rf-multi-rtl-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
 - "is the ISF schedule report schema frozen or can it grow?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
 - "is trial_2 supported?" -> [trial2-legacy-ports-mapping-boundary](docs/knowledge/trial2-legacy-ports-mapping-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
+- "is yosys-abc required for external validation?" -> [abc-discovery-validation-boundary](docs/knowledge/abc-discovery-validation-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`
 - "should legacy ?define or ?& template macros be implemented?" -> [generic-fifo-template-boundary](docs/knowledge/generic-fifo-template-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t t/41-language-contract-top-level-source-kind-boundary.t`
 - "should legacy ?ports mapping directives be implemented?" -> [trial2-legacy-ports-mapping-boundary](docs/knowledge/trial2-legacy-ports-mapping-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
 - "should legacy multi-module ?rtl children be implemented?" -> [lte-digital-rf-multi-rtl-boundary](docs/knowledge/lte-digital-rf-multi-rtl-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
@@ -63,6 +66,7 @@
 - "what blocks fsm/trial_2.fsm?" -> [trial2-legacy-ports-mapping-boundary](docs/knowledge/trial2-legacy-ports-mapping-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
 - "what does schema_version: 1 / evolves_with_isf_implementation mean for the report?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
 - "what is loop_exit_target in the ISF lowering?" -> [loop-early-exit-target-hook](docs/knowledge/loop-early-exit-target-hook.md) · 2026-06-03 · reverify: `grep -n "loop_exit_target" perl/FSM/Scheduler/ISF/LoweringIR.pm`
+- "what is the ABC mapping hardening boundary?" -> [abc-discovery-validation-boundary](docs/knowledge/abc-discovery-validation-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`
 - "what is the ISF to FSM to HDL pipeline?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - "what is the ISF/FSM separation rule for verification?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 - "what is the command to run all the Perl tests?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
@@ -85,12 +89,22 @@
 - "why does apb_tb no longer trigger Verilator PINMISSING?" -> [composition-shared-datapath-export-sinks](docs/knowledge/composition-shared-datapath-export-sinks.md) · 2026-06-05 · reverify: `prove -Iperl t/247-protocol-fixture-regression-smoke.t t/146-composition-shared-datapath-lifted-register-runtime.t t/147-composition-shared-datapath-internal-lifted-register-runtime.t t/308-systemverilog-external-validation.t`
 - "why does assemble with multiple unknown parts fail closed?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
 - "why does extract with multiple unknown fields fail closed?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
+- "why does hdl external validation report abc_mapping?" -> [abc-discovery-validation-boundary](docs/knowledge/abc-discovery-validation-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`
 - "why doesn't (at NAME) lower to current_state == STATE?" -> [isf-fsm-verification-boundary](docs/knowledge/isf-fsm-verification-boundary.md) · 2026-06-03 · reverify: `grep -n "_active" perl/FSM/Scheduler/ISF/LoweringIR.pm | head`
 - "why is generic_fifo not in external validation smoke?" -> [generic-fifo-template-boundary](docs/knowledge/generic-fifo-template-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t t/41-language-contract-top-level-source-kind-boundary.t`
 - "why is lte_digital_rf not in external validation smoke?" -> [lte-digital-rf-multi-rtl-boundary](docs/knowledge/lte-digital-rf-multi-rtl-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
 - "why is trial_2 not in external validation smoke?" -> [trial2-legacy-ports-mapping-boundary](docs/knowledge/trial2-legacy-ports-mapping-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
 
 ## Facts (by id)
+
+### abc-discovery-validation-boundary
+_ABC discovery is optional metadata, not an external validation gate_
+
+- **answers:** does --verify-hdl run abc? | is yosys-abc required for external validation? | why does hdl external validation report abc_mapping? | what is the ABC mapping hardening boundary? | does FSMGen require ABC for Yosys validation?
+- **date:** 2026-06-05 · **status:** current
+- **evidence:** `perl/FSM/Support/HDLExternalValidation.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/308-systemverilog-external-validation.t; t/313-hdl-external-validation-contract.t; t/297-capability-manifest.t; docs/book/src/09-generated-hdl-debugging-and-inspection.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`
+- **reverify:** `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`
+- **source:** [`docs/knowledge/abc-discovery-validation-boundary.md`](docs/knowledge/abc-discovery-validation-boundary.md)
 
 ### aggregate-parameter-comparison
 _Semantic parameter and generic aggregate comparison support_

@@ -25,21 +25,34 @@ use Exporter qw(import);
 use IPC::Cmd qw(can_run run);
 
 our @EXPORT_OK = qw(
+    hdl_external_validation_abc_tool_candidates
+    hdl_external_validation_required_tools
     hdl_external_validation_tools
     missing_systemverilog_validation_tools
     validate_systemverilog_file
 );
 
+sub hdl_external_validation_required_tools () {
+    return qw(verilator yosys);
+}
+
+sub hdl_external_validation_abc_tool_candidates () {
+    return qw(yosys-abc berkeley-abc abc);
+}
+
 sub hdl_external_validation_tools () {
+    my ($abc_tool, $abc_path) = _first_available_tool(hdl_external_validation_abc_tool_candidates());
     return {
         verilator => can_run('verilator'),
         yosys => can_run('yosys'),
+        abc_mapping => $abc_path,
+        abc_mapping_tool => $abc_tool,
     };
 }
 
 sub missing_systemverilog_validation_tools () {
     my $tools = hdl_external_validation_tools();
-    return sort grep { !$tools->{$_} } qw(verilator yosys);
+    return sort grep { !$tools->{$_} } hdl_external_validation_required_tools();
 }
 
 sub validate_systemverilog_file (%args) {
@@ -142,6 +155,14 @@ sub _yosys_identifier ($text) {
     return $text;
 }
 
+sub _first_available_tool (@tool_names) {
+    for my $tool_name (@tool_names) {
+        my $path = can_run($tool_name);
+        return ($tool_name, $path) if $path;
+    }
+    return (undef, undef);
+}
+
 sub _shellish ($text) {
     return "''" unless defined($text) && length($text);
     return $text if $text =~ /^[A-Za-z0-9_\/.:\-+=,\@]+\z/;
@@ -157,8 +178,23 @@ __END__
 
 =head2 hdl_external_validation_tools
 
-Returns the discovered C<verilator> and C<yosys> executable paths, or false
-values for tools that are not available on C<PATH>.
+Returns the discovered required C<verilator> and C<yosys> executable paths, or
+false values for tools that are not available on C<PATH>. It also reports the
+first optional ABC mapping executable discovered from
+C<hdl_external_validation_abc_tool_candidates> under C<abc_mapping>, plus the
+matching command spelling under C<abc_mapping_tool>. The ABC mapping tool is
+reported for planning/contract visibility only; it is not required and is not
+run by C<validate_systemverilog_file>.
+
+=head2 hdl_external_validation_required_tools
+
+Returns the tool keys that are required for the shipped external SystemVerilog
+validation lane. This remains C<verilator> and C<yosys>.
+
+=head2 hdl_external_validation_abc_tool_candidates
+
+Returns the optional ABC mapping executable command names probed by
+C<hdl_external_validation_tools>, in priority order.
 
 =head2 missing_systemverilog_validation_tools
 

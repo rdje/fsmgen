@@ -202,11 +202,14 @@ through `read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat` in
 `FSM::Support::HDLExternalValidation`. Verilator is the generated-SV validity
 gate; Yosys is the “can this become structural logic?” gate. ABC is
 deliberately disabled until a later dedicated lane handles ABC-specific
-timeout and mapping edge cases. This should be understood as a backend quality
-gate for emitted HDL, not as a replacement for FSMGen's semantic, strict-mode,
-and pre-generation checks. The lane is SystemVerilog-only for now; direct VHDL
-generation has a scaffold subset, but VHDL/GHDL validation waits for a separate
-GHDL validation lane.
+timeout and mapping edge cases. The bounded support/manifest surface now also
+reports optional ABC executable discovery candidates (`yosys-abc`,
+`berkeley-abc`, and `abc`) for planning visibility, but ABC is not a required
+tool and is not run by `--verify-hdl`. This should be understood as a backend
+quality gate for emitted HDL, not as a replacement for FSMGen's semantic,
+strict-mode, and pre-generation checks. The lane is SystemVerilog-only for now;
+direct VHDL generation has a scaffold subset, but VHDL/GHDL validation waits
+for a separate GHDL validation lane.
 
 ### 6. Reset And Clock Contract Metadata
 

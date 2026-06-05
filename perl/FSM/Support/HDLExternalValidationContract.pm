@@ -5,15 +5,22 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::HDLExternalValidation qw(
+    hdl_external_validation_abc_tool_candidates
+    hdl_external_validation_required_tools
+);
 
 our @EXPORT_OK = qw(
     build_hdl_external_validation_contract
+    hdl_external_validation_abc_mapping_status
     hdl_external_validation_contract_source
     hdl_external_validation_execution_failure_modes
     hdl_external_validation_failure_mode_family_map
     hdl_external_validation_failure_mode_names
     hdl_external_validation_failure_text_prefix_map
     hdl_external_validation_input_failure_modes
+    hdl_external_validation_optional_tool_names
+    hdl_external_validation_required_tool_names
     hdl_external_validation_success_presence_key_family_map
     hdl_external_validation_success_step_keys
     hdl_external_validation_success_step_names
@@ -22,6 +29,18 @@ our @EXPORT_OK = qw(
 
 sub hdl_external_validation_contract_source {
     return 'FSM::Support::HDLExternalValidationContract';
+}
+
+sub hdl_external_validation_required_tool_names {
+    return [hdl_external_validation_required_tools()];
+}
+
+sub hdl_external_validation_optional_tool_names {
+    return [qw(abc_mapping)];
+}
+
+sub hdl_external_validation_abc_mapping_status {
+    return 'optional_discovered_not_required_not_run';
 }
 
 sub build_hdl_external_validation_contract {
@@ -43,7 +62,12 @@ sub build_hdl_external_validation_contract {
         command_shape => './bin/fsmgen --verify-hdl path/to/file.fsm',
         alias => './bin/fsmgen --validate-hdl path/to/file.fsm',
         target_languages => [qw(systemverilog sv)],
-        tools => [qw(verilator yosys)],
+        tools => hdl_external_validation_required_tool_names(),
+        required_tools => hdl_external_validation_required_tool_names(),
+        optional_tools => hdl_external_validation_optional_tool_names(),
+        abc_tool_candidates => [hdl_external_validation_abc_tool_candidates()],
+        abc_mapping_status => hdl_external_validation_abc_mapping_status(),
+        abc_mapping_required => JSON::PP::false,
         verilator_stage => 'lint_only_sv',
         yosys_stage => 'read_verilog_sv_noautowire_synth_noabc_stat',
         yosys_abc_enabled => JSON::PP::false,
@@ -67,6 +91,7 @@ sub build_hdl_external_validation_contract {
             'Use the grouped failure_mode_family_map plus failure_text_prefix_map to recognize the bounded input-side and step-failure categories without treating the full thrown stderr/stdout payload as frozen.',
             'This lane is optional and only active when Verilator and Yosys are installed.',
             'The promise is about generated SystemVerilog lint/netlist sanity, not about VHDL validation or ABC-enabled synthesis behavior.',
+            'ABC executable discovery is optional metadata for the later mapping-hardening lane; it does not make ABC a required validation tool and does not add an ABC command to the shipped validation sequence.',
             'Direct VHDL generation has a scaffold subset, but this external validation contract remains SystemVerilog-only until a separate GHDL validation lane is runnable, documented, support-accounted, and regression-backed.',
             'The legacy vhdl_validation_deferred_until_vhdl_backend flag is retained for compatibility; prefer vhdl_validation_deferred_until_ghdl_validation_lane for the current blocker.',
         ],

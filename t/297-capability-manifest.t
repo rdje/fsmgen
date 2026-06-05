@@ -63,6 +63,9 @@ use FSM::Support::HDLGeneratorFacadeContract qw(
     hdl_generator_facade_public_top_level_keys
 );
 use FSM::Support::HDLExternalValidationContract qw(
+    hdl_external_validation_abc_mapping_status
+    hdl_external_validation_optional_tool_names
+    hdl_external_validation_required_tool_names
     hdl_external_validation_contract_source
     hdl_external_validation_failure_mode_family_map
     hdl_external_validation_failure_mode_names
@@ -938,8 +941,32 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is_deeply(
         $manifest->{backend_validation}{systemverilog_external}{tools},
-        [qw(verilator yosys)],
+        hdl_external_validation_required_tool_names(),
         'manifest records Verilator and Yosys as the external validation tools',
+    );
+    is_deeply(
+        $manifest->{backend_validation}{systemverilog_external}{required_tools},
+        hdl_external_validation_required_tool_names(),
+        'manifest records required external validation tools separately',
+    );
+    is_deeply(
+        $manifest->{backend_validation}{systemverilog_external}{optional_tools},
+        hdl_external_validation_optional_tool_names(),
+        'manifest records optional external validation-adjacent tools separately',
+    );
+    is_deeply(
+        $manifest->{backend_validation}{systemverilog_external}{abc_tool_candidates},
+        [qw(yosys-abc berkeley-abc abc)],
+        'manifest records optional ABC executable discovery candidates',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{abc_mapping_status},
+        hdl_external_validation_abc_mapping_status(),
+        'manifest records that ABC discovery is optional and not run by validation',
+    );
+    ok(
+        !$manifest->{backend_validation}{systemverilog_external}{abc_mapping_required},
+        'manifest records that ABC mapping is not required for external validation',
     );
     is_deeply(
         $manifest->{backend_validation}{systemverilog_external}{target_languages},

@@ -2248,7 +2248,10 @@ whole.
 It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes generated `.sv` and then runs
 Verilator lint plus ABC-free Yosys structural synthesis when those tools are
-installed.
+installed. The manifest separates required tools (`verilator`, `yosys`) from
+optional ABC mapping discovery (`yosys-abc`, `berkeley-abc`, `abc` candidates):
+ABC availability is reported for planning, but ABC is not required and is not
+run by the shipped validation lane.
 
 The public `support_accounting` match objects emitted by both `--check --json`
 and `--emit-semantic-json` now share one bounded nested-object owner too:

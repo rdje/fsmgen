@@ -395,7 +395,10 @@ with `read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat`, and
 proves the CLI `--verify-hdl` lane invokes the same external gates. Verilator
 is the generated-SystemVerilog validity gate; Yosys is the structural-netlist
 sanity gate. ABC is intentionally disabled until a future lane handles
-ABC-specific timeout and mapping edge cases. When the tools are absent, the
+ABC-specific timeout and mapping edge cases. The support surface can report an
+optional ABC mapping executable candidate (`yosys-abc`, `berkeley-abc`, or
+`abc`) for contract visibility, but that candidate is not required and is not
+run by the external validation smoke. When the required tools are absent, the
 test skips rather than making the baseline Perl regression suite depend on
 local EDA installs.
 

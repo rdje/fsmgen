@@ -3810,9 +3810,13 @@ validation without timeout-sensitive noise.
 
 Current boundary: the Yosys lane intentionally uses `synth -noabc`.
 
-Current hardening target: report optional ABC executable discovery in the
-external validation support and manifest surfaces while keeping ABC disabled,
+Current shipped boundary: the external validation support and manifest surfaces
+report optional ABC executable discovery candidates while keeping ABC disabled,
 non-required, and outside the shipped validation command sequence.
+
+Remaining hardening direction: any ABC-backed Yosys optimization/mapping gate
+still needs a separate opt-in lane with timeout/error policy and regression
+coverage before it can become a validation requirement.
 
 ### Structured Non-Flattened Generation
 

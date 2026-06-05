@@ -11,10 +11,14 @@ use IPC::Cmd qw(can_run);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::HDLExternalValidation qw(
+    hdl_external_validation_abc_tool_candidates
+    hdl_external_validation_required_tools
+    hdl_external_validation_tools
     missing_systemverilog_validation_tools
     validate_systemverilog_file
 );
 use FSM::Support::HDLExternalValidationContract qw(
+    hdl_external_validation_abc_mapping_status
     build_hdl_external_validation_contract
     hdl_external_validation_contract_source
     hdl_external_validation_execution_failure_modes
@@ -22,6 +26,8 @@ use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_failure_mode_names
     hdl_external_validation_failure_text_prefix_map
     hdl_external_validation_input_failure_modes
+    hdl_external_validation_optional_tool_names
+    hdl_external_validation_required_tool_names
     hdl_external_validation_success_presence_key_family_map
     hdl_external_validation_success_step_keys
     hdl_external_validation_success_step_names
@@ -49,8 +55,32 @@ subtest 'contract exposes the bounded external validation surface' => sub {
     );
     is_deeply(
         $contract->{tools},
-        [qw(verilator yosys)],
+        hdl_external_validation_required_tool_names(),
         'contract records the required tools',
+    );
+    is_deeply(
+        $contract->{required_tools},
+        hdl_external_validation_required_tool_names(),
+        'contract separately records the required external validation tools',
+    );
+    is_deeply(
+        $contract->{optional_tools},
+        hdl_external_validation_optional_tool_names(),
+        'contract records optional external validation-adjacent tools',
+    );
+    is_deeply(
+        $contract->{abc_tool_candidates},
+        [hdl_external_validation_abc_tool_candidates()],
+        'contract records optional ABC executable discovery candidates',
+    );
+    is(
+        $contract->{abc_mapping_status},
+        hdl_external_validation_abc_mapping_status(),
+        'contract records the optional ABC mapping discovery status',
+    );
+    ok(
+        !$contract->{abc_mapping_required},
+        'contract says ABC mapping is not a required validation tool',
     );
     is_deeply(
         $contract->{target_languages},
@@ -109,8 +139,50 @@ subtest 'contract exposes the bounded external validation surface' => sub {
         'contract publishes the bounded external validation failure text prefixes',
     );
     ok(!$contract->{yosys_abc_enabled}, 'contract says the ABC algorithm is disabled');
+    ok(
+        grep({ /ABC executable discovery is optional metadata/ } @{$contract->{guidance} || []}),
+        'contract guidance explains that optional ABC discovery does not enable ABC validation',
+    );
     ok($contract->{in_process_failures_throw}, 'contract says in-process failures throw');
     ok($contract->{cli_failures_exit_nonzero}, 'contract says CLI failures exit non-zero');
+};
+
+subtest 'ABC mapping executable discovery is optional and non-gating' => sub {
+    my $tools = hdl_external_validation_tools();
+
+    is_deeply(
+        [sort keys %{$tools}],
+        [qw(abc_mapping abc_mapping_tool verilator yosys)],
+        'tool discovery reports required tools plus optional ABC mapping metadata',
+    );
+    is_deeply(
+        [hdl_external_validation_required_tools()],
+        [qw(verilator yosys)],
+        'runtime required-tool list stays Verilator/Yosys only',
+    );
+    is_deeply(
+        [hdl_external_validation_abc_tool_candidates()],
+        [qw(yosys-abc berkeley-abc abc)],
+        'runtime probes the supported ABC executable names in priority order',
+    );
+
+    my $true = can_run('true') || '/usr/bin/true';
+    {
+        no warnings 'redefine';
+        local *FSM::Support::HDLExternalValidation::hdl_external_validation_tools = sub {
+            return {
+                verilator => $true,
+                yosys => $true,
+                abc_mapping => undef,
+                abc_mapping_tool => undef,
+            };
+        };
+        is_deeply(
+            [missing_systemverilog_validation_tools()],
+            [],
+            'missing-tool checks do not require optional ABC mapping discovery',
+        );
+    }
 };
 
 subtest 'deterministic in-process failures keep the bounded prefixes' => sub {

@@ -679,7 +679,7 @@ cd docs/book && mdbook serve
 - `--check --json`: run the full pipeline as a check, emit JSON diagnostics, and do not write HDL.
 - `--emit-semantic-json`: run the full pipeline, emit bounded normalized semantic JSON, and do not write HDL.
 - `--emit-schedule-json`: for `.isf` input, emit the scheduler's JSON report and exit before HDL generation.
-- `--verify-hdl`: after writing generated SystemVerilog, run Verilator lint and ABC-free Yosys structural synthesis.
+- `--verify-hdl`: after writing generated SystemVerilog, run Verilator lint and ABC-free Yosys structural synthesis; optional ABC executable discovery is reported for contract visibility but ABC is not required or run.
 - `-q, --quiet`: suppress informational output.
 
 Inputs ending in `.isf` are parsed by the intent scheduler, lowered to one or

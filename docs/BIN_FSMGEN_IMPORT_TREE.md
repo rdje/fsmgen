@@ -186,7 +186,9 @@ compatibility payloads can still carry live CoreAST/AST objects. The external
 validation support surface is intentionally post-emission and SystemVerilog-only:
 it runs Verilator lint and ABC-free Yosys structural synthesis when those tools
 are installed, while leaving VHDL/GHDL validation behind a future GHDL
-validation lane and leaving ABC-specific timeout/mapping behavior for a later lane.
+validation lane and leaving ABC-specific timeout/mapping behavior for a later
+lane. Optional ABC executable discovery is surfaced as metadata for that later
+lane, not as a required or executed validation step.
 
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](perl/FSM/Backend/GeneratedModuleEmitter.pm)

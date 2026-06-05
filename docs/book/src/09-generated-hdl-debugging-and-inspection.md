@@ -73,6 +73,10 @@ valid lint-clean SystemVerilog?” while Yosys answers “can that SystemVerilog
 lowered into structural logic?” The Yosys lane uses `synth -noabc` on purpose:
 ABC optimization/mapping can have timeout-sensitive edge cases, and those
 belong to a later dedicated hardening lane rather than this garbage-code gate.
+The support surface can also report the first optional ABC executable it finds
+from `yosys-abc`, `berkeley-abc`, and `abc`. That discovery is metadata only:
+ABC is not required for `--verify-hdl`, and the validation command sequence
+does not run a standalone ABC pass.
 
 Direct VHDL generation now has a scaffold subset, but VHDL validation with
 GHDL is intentionally deferred until a separate GHDL validation lane is
