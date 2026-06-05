@@ -941,6 +941,19 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         [qw(verilator yosys)],
         'manifest records Verilator and Yosys as the external validation tools',
     );
+    is_deeply(
+        $manifest->{backend_validation}{systemverilog_external}{target_languages},
+        [qw(systemverilog sv)],
+        'manifest records that external validation remains SystemVerilog-only',
+    );
+    ok(
+        $manifest->{backend_validation}{systemverilog_external}{vhdl_generation_scaffold_active},
+        'manifest records the active direct VHDL generation scaffold',
+    );
+    ok(
+        $manifest->{backend_validation}{systemverilog_external}{vhdl_validation_deferred_until_ghdl_validation_lane},
+        'manifest records that VHDL validation remains deferred to a GHDL validation lane',
+    );
     is(
         $manifest->{backend_validation}{systemverilog_external}{yosys_stage},
         'read_verilog_sv_noautowire_synth_noabc_stat',

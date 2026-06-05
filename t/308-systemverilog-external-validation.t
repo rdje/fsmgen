@@ -120,7 +120,7 @@ subtest 'CLI --verify-hdl is currently SystemVerilog-only' => sub {
         verbose => 0,
     );
 
-    ok(!$success, 'CLI rejects --verify-hdl for VHDL while VHDL emission is not active');
+    ok(!$success, 'CLI rejects --verify-hdl for VHDL because validation remains SystemVerilog-only');
     like(
         join('', @{$stderr_buf || []}),
         qr/--verify-hdl currently supports generated SystemVerilog only/,

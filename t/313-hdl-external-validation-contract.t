@@ -53,6 +53,27 @@ subtest 'contract exposes the bounded external validation surface' => sub {
         'contract records the required tools',
     );
     is_deeply(
+        $contract->{target_languages},
+        [qw(systemverilog sv)],
+        'contract remains bounded to SystemVerilog target spellings',
+    );
+    ok(
+        $contract->{vhdl_generation_scaffold_active},
+        'contract records that direct VHDL generation now has a scaffold subset',
+    );
+    ok(
+        $contract->{vhdl_validation_deferred_until_ghdl_validation_lane},
+        'contract records the current GHDL validation deferral boundary',
+    );
+    ok(
+        $contract->{vhdl_validation_deferred_until_vhdl_backend},
+        'contract keeps the legacy VHDL-validation deferral flag for compatibility',
+    );
+    ok(
+        grep({ /separate GHDL validation lane/ } @{$contract->{guidance} || []}),
+        'contract guidance explains that VHDL validation awaits a separate GHDL lane',
+    );
+    is_deeply(
         $contract->{success_top_level_presence_keys},
         hdl_external_validation_success_top_level_keys(),
         'contract publishes the bounded success top-level keys',

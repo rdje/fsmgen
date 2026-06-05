@@ -49,6 +49,8 @@ sub build_hdl_external_validation_contract {
         yosys_abc_enabled => JSON::PP::false,
         yosys_purpose => 'abc_free_structural_netlist_sanity',
         emits_hdl => JSON::PP::true,
+        vhdl_generation_scaffold_active => JSON::PP::true,
+        vhdl_validation_deferred_until_ghdl_validation_lane => JSON::PP::true,
         vhdl_validation_deferred_until_vhdl_backend => JSON::PP::true,
         in_process_failures_throw => JSON::PP::true,
         cli_failures_exit_nonzero => JSON::PP::true,
@@ -65,6 +67,8 @@ sub build_hdl_external_validation_contract {
             'Use the grouped failure_mode_family_map plus failure_text_prefix_map to recognize the bounded input-side and step-failure categories without treating the full thrown stderr/stdout payload as frozen.',
             'This lane is optional and only active when Verilator and Yosys are installed.',
             'The promise is about generated SystemVerilog lint/netlist sanity, not about VHDL validation or ABC-enabled synthesis behavior.',
+            'Direct VHDL generation has a scaffold subset, but this external validation contract remains SystemVerilog-only until a separate GHDL validation lane is runnable, documented, support-accounted, and regression-backed.',
+            'The legacy vhdl_validation_deferred_until_vhdl_backend flag is retained for compatibility; prefer vhdl_validation_deferred_until_ghdl_validation_lane for the current blocker.',
         ],
     };
 }

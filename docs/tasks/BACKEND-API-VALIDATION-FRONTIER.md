@@ -67,11 +67,11 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.3`
-  Status: `pending`
-  Goal: `Add GHDL validation once VHDL lowering has an executable subset.`
-  Acceptance: `A runnable GHDL validation subset exists or remains blocked behind VHDL backend support.`
-  Verification: `pending`
-  Commit: `pending`
+  Status: `done`
+  Goal: `Audit GHDL validation viability for the direct VHDL scaffold and keep external-validation contracts honest.`
+  Acceptance: `Local GHDL availability was checked and command -v ghdl returned unavailable. The existing --verify-hdl SystemVerilog-only boundary remains explicit in CLI tests, manifest contract guidance, docs, mdBook, task tree, and memory. No GHDL API or backend-validation manifest lane is advertised without a runnable tool-backed subset. The external validation contract now records the active direct VHDL generation scaffold, retains the legacy VHDL-backend deferral flag for compatibility, and adds the current vhdl_validation_deferred_until_ghdl_validation_lane flag.`
+  Verification: `perl -Iperl -c perl/FSM/Support/HDLExternalValidationContract.pm; prove -Iperl t/313-hdl-external-validation-contract.t t/1057-hdl-external-validation-contract-full-surface-json-roundtrip-audit.t t/1058-hdl-external-validation-contract-full-surface-defensive-copy-audit.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t; scripts/check_memory_architecture.sh; bash knowledge-map/scripts/check_knowledge_map.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check; command -v ghdl returned unavailable.`
+  Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.4`
   Status: `pending`
@@ -114,7 +114,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | --- | --- | --- | --- |
 | 1 | `BACKEND-API-VALIDATION-FRONTIER.1` | `done` | Backend/API tree activated after broad ISF/R14 exhaustion; selected first exact VHDL direct-root scaffold leaf. |
 | 2 | `BACKEND-API-VALIDATION-FRONTIER.2.1` | `done` | Shipped direct single-FSM VHDL scaffold through an SV-first converter while preserving composition, aggregate, GHDL, and full-parity deferrals. |
-| 3 | `BACKEND-API-VALIDATION-FRONTIER.3` | `pending` | Next VHDL-dependent frontier: decide whether GHDL validation can run now or must be blocked by unavailable tool/backend hardening. |
+| 3 | `BACKEND-API-VALIDATION-FRONTIER.3` | `done` | GHDL validation cannot run in the current environment because `ghdl` is unavailable; external-validation contracts/docs now say the lane remains SystemVerilog-only until a future GHDL validation leaf is runnable. |
+| 4 | `BACKEND-API-VALIDATION-FRONTIER.4` | `pending` | Next backend-validation frontier: select one historical sample family or tool gate for warning-clean external validation. |
 
 ## Decisions
 
@@ -129,8 +130,8 @@ items named in the 2026-06-05 remaining-work inventory.
 
 ## Blockers
 
-- GHDL validation may be blocked by local tool availability; `command -v ghdl`
-  returned unavailable during `.2.1`.
+- GHDL validation is blocked in the current environment by local tool
+  availability; `command -v ghdl` returned unavailable during `.2.1` and `.3`.
 
 ## Verification Log
 
@@ -138,13 +139,15 @@ items named in the 2026-06-05 remaining-work inventory.
 | --- | --- | --- |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.1` | Selection audit/read: `docs/TASK_TREE.md`, `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md`, `README.md`, `perl/FSM/HDL/FlattenedDT.pm`, `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `t/114-composition-target-support-diagnostics.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.2.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`; `command -v ghdl` | `PASS`; `ghdl` unavailable and remains deferred |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.3` | `perl -Iperl -c perl/FSM/Support/HDLExternalValidationContract.pm`; `prove -Iperl t/313-hdl-external-validation-contract.t t/1057-hdl-external-validation-contract-full-surface-json-roundtrip-audit.t t/1058-hdl-external-validation-contract-full-surface-defensive-copy-audit.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`; `command -v ghdl` | `PASS`; `ghdl` unavailable and GHDL validation remains deferred |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `BACKEND-API-VALIDATION-FRONTIER.1` | `BACKEND-API-VALIDATION-FRONTIER.1: select VHDL direct scaffold` | selected `.2.1` |
-| `BACKEND-API-VALIDATION-FRONTIER.2.1` | `BACKEND-API-VALIDATION-FRONTIER.2.1: ship VHDL direct scaffold` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.2.1` | `BACKEND-API-VALIDATION-FRONTIER.2.1: ship VHDL direct scaffold` | shipped direct VHDL scaffold |
+| `BACKEND-API-VALIDATION-FRONTIER.3` | `BACKEND-API-VALIDATION-FRONTIER.3: keep GHDL validation deferred` | this slice |
 
 ## Changelog
 
@@ -154,3 +157,7 @@ items named in the 2026-06-05 remaining-work inventory.
   changes.
 - `2026-06-05`: Shipped `.2.1`, the first direct single-FSM VHDL scaffold,
   and moved the next frontier to `.3` for GHDL validation selection/blocking.
+- `2026-06-05`: Completed `.3`; `ghdl` is unavailable in the current
+  environment, so no GHDL validation lane was advertised and the
+  external-validation contract/docs now state the current SystemVerilog-only
+  boundary.

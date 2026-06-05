@@ -74,11 +74,12 @@ lowered into structural logic?” The Yosys lane uses `synth -noabc` on purpose:
 ABC optimization/mapping can have timeout-sensitive edge cases, and those
 belong to a later dedicated hardening lane rather than this garbage-code gate.
 
-VHDL validation with GHDL is intentionally deferred until FSMGen has an active
-VHDL backend. The current regression gate is a focused SystemVerilog smoke,
-not yet a claim that every historical sample in `fsm/` is externally
-warning-clean. Both deferred items are tracked in
-[Feature Backlog](14-feature-backlog.md).
+Direct VHDL generation now has a scaffold subset, but VHDL validation with
+GHDL is intentionally deferred until a separate GHDL validation lane is
+runnable, documented, support-accounted, and regression-backed. The current
+regression gate is a focused SystemVerilog smoke, not yet a claim that every
+historical sample in `fsm/` is externally warning-clean. Both deferred items
+are tracked in [Feature Backlog](14-feature-backlog.md).
 
 The focused smoke currently includes `fsm/lte_dif_pmaster.fsm`, the MIPI
 byte-serial/timer examples that rely on inferred widths from slices,

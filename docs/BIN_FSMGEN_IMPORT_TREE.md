@@ -185,8 +185,8 @@ result is explicitly not advertised as a JSON-safe document because nested
 compatibility payloads can still carry live CoreAST/AST objects. The external
 validation support surface is intentionally post-emission and SystemVerilog-only:
 it runs Verilator lint and ABC-free Yosys structural synthesis when those tools
-are installed, while leaving VHDL/GHDL validation behind the future VHDL
-backend and leaving ABC-specific timeout/mapping behavior for a later lane.
+are installed, while leaving VHDL/GHDL validation behind a future GHDL
+validation lane and leaving ABC-specific timeout/mapping behavior for a later lane.
 
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](perl/FSM/Backend/GeneratedModuleEmitter.pm)

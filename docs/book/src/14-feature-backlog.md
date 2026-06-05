@@ -191,7 +191,7 @@ and lowering rule.
 
 ### VHDL Aggregate Lowering
 
-Status: backlog, behind active VHDL backend work.
+Status: backlog, behind future VHDL aggregate-lowering work.
 
 Goal: lower aggregate types and values into portable VHDL record/array forms
 for the subset that can be validated as synthesizable.
@@ -324,7 +324,7 @@ semantics remain deferred until one exact composition contract is selected.
 
 ### VHDL Generic-Map Lowering
 
-Status: backlog, behind active VHDL backend work.
+Status: backlog, behind future composition VHDL work.
 
 Goal: lower validated composition parameter/generic overrides into VHDL
 generic maps.

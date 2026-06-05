@@ -204,8 +204,9 @@ gate; Yosys is the “can this become structural logic?” gate. ABC is
 deliberately disabled until a later dedicated lane handles ABC-specific
 timeout and mapping edge cases. This should be understood as a backend quality
 gate for emitted HDL, not as a replacement for FSMGen's semantic, strict-mode,
-and pre-generation checks. The lane is SystemVerilog-only for now; VHDL/GHDL
-validation waits until FSMGen has a real VHDL backend.
+and pre-generation checks. The lane is SystemVerilog-only for now; direct VHDL
+generation has a scaffold subset, but VHDL/GHDL validation waits for a separate
+GHDL validation lane.
 
 ### 6. Reset And Clock Contract Metadata
 
