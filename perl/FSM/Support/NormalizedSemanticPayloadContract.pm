@@ -29,6 +29,7 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_contract_source
+    normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_presence_keys
@@ -74,6 +75,7 @@ our @EXPORT_OK = qw(
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_keys
@@ -156,6 +158,8 @@ sub build_normalized_semantic_payload_contract {
             normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
         forward_ir_structural_rtl_ir_contract_source => normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
         forward_ir_structural_rtl_ir_presence_keys => normalized_semantic_payload_forward_ir_structural_rtl_ir_keys(),
+        forward_ir_structural_rtl_ir_net_entry_keys =>
+            normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys(),
         forward_ir_structural_rtl_ir_port_entry_keys =>
             normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys(),
         forward_ir_structural_rtl_ir_port_composition_extension_keys =>
@@ -178,7 +182,7 @@ sub build_normalized_semantic_payload_contract {
             'Use the grouped `forward_ir_nested_contract_source_map` to discover the deeper bounded `forward_ir` shell owners without reconstructing them from parallel scalar fields.',
             'Use the grouped output-drive entry key families to inspect `forward_ir.lowered_rtl_ir.output_drive_families` without binding to unrelated lowered-RTL internals.',
             'Use the grouped selector-conflict entry key families to inspect `forward_ir.lowered_rtl_ir.selector_conflict_targets` without binding to unrelated lowered-RTL internals.',
-            'Use the grouped structural port entry key families to inspect `forward_ir.structural_rtl_ir.ports` without binding to unrelated structural-RTL collections.',
+            'Use the grouped structural port and net entry key families to inspect `forward_ir.structural_rtl_ir.ports` and `forward_ir.structural_rtl_ir.nets` without binding to unrelated structural-RTL collections.',
             'The nested `forward_ir.intent_hir` object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
             'The nested `forward_ir.lowered_rtl_ir` object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',
             'The nested `forward_ir.structural_rtl_ir` object shell stays bounded through FSM::Support::NormalizedSemanticStructuralRTLIRContract.',
@@ -246,6 +250,8 @@ sub normalized_semantic_payload_presence_key_family_map {
             normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys(),
         forward_ir_structural_rtl_ir_port_composition_extension_keys =>
             normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
+        forward_ir_structural_rtl_ir_net_entry_keys =>
+            normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys(),
     };
 }
 
@@ -315,6 +321,10 @@ sub normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys {
 
 sub normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys {
     return normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys();
+}
+
+sub normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys {
+    return normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys();
 }
 
 sub normalized_semantic_payload_explicit_system_contract_keys {

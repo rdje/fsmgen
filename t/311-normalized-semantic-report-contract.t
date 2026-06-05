@@ -77,6 +77,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_keys
@@ -112,6 +113,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_keys
@@ -577,6 +579,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'contract publishes the bounded forward-ir structural-rtl-ir port composition extension key list',
     );
     is_deeply(
+        $contract->{success_forward_ir_structural_rtl_ir_net_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir net entry key list',
+    );
+    is_deeply(
         normalized_semantic_forward_ir_keys(),
         normalized_semantic_forward_ir_presence_keys(),
         'normalized semantic forward-IR keys map to the nested forward-IR owner',
@@ -632,6 +639,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'report presence family map publishes structural-rtl-ir port composition extension keys',
     );
     is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_net_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys(),
+        'report presence family map publishes structural-rtl-ir net entry keys',
+    );
+    is_deeply(
         normalized_semantic_forward_ir_structural_rtl_ir_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_presence_keys(),
         'normalized semantic report forward-ir structural-rtl-ir keys map to the nested structural-rtl-ir owner',
@@ -680,6 +692,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         'semantic payload forward-ir structural-rtl-ir port composition extension keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys(),
+        'semantic payload forward-ir structural-rtl-ir net entry keys map to the nested structural-rtl-ir owner',
     );
     is_deeply(
         $contract->{composition_presence_keys},
@@ -1084,6 +1101,18 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         $composition_port,
         normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         'composition success structural-rtl-ir port entry keeps bounded composition extension keys',
+    );
+    my $composition_net = $decoded->{semantic}{forward_ir}{structural_rtl_ir}{nets}[0];
+    ok($composition_net, 'composition success structural-rtl-ir includes at least one net entry');
+    assert_keys_present(
+        $composition_net,
+        normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys(),
+        'composition success structural-rtl-ir net entry keeps bounded keys',
+    );
+    is(
+        ref($composition_net->{targets}),
+        'ARRAY',
+        'composition success structural-rtl-ir net entry keeps targets as a JSON array',
     );
     ok(
         exists $decoded->{semantic}{module}{composition_child_count},

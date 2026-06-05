@@ -2068,13 +2068,13 @@ The nested `semantic.forward_ir.structural_rtl_ir` summary inside that branch
 now also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm)
 owns the current structural-RTL shell keys shared by direct and composition
-roots, plus bounded `ports[]` core entry keys and composition-top port
-extension keys.
+roots, plus bounded `ports[]` core entry keys, composition-top port extension
+keys, and bounded `nets[]` entry keys.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded structural-RTL shell summary and
-collection key families, including structural port entry key families, from
-one place instead of collecting the individual key-family lists separately.
+collection key families, including structural port and net entry key families,
+from one place instead of collecting the individual key-family lists separately.
 
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded nested-object contract:

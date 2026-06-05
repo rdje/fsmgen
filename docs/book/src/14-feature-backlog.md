@@ -3876,6 +3876,6 @@ entry keys for `output_drive_families[]` and its nested
 including bounded entry keys for `selector_conflict_targets[]`, nested
 `rhs_enable_families[]`, and selector assertion metadata. The
 `semantic.forward_ir.structural_rtl_ir` contract also advertises bounded
-`ports[]` core entry keys and composition-top port extension keys while keeping
-other structural collections shell-only. The manifest is still not a full
-normalized semantic export.
+`ports[]` core entry keys, composition-top port extension keys, and bounded
+`nets[]` entry keys while keeping instances, links, and auxiliary assignments
+shell-only. The manifest is still not a full normalized semantic export.
