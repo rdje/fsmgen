@@ -43,6 +43,7 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.4.2`,
     `BACKEND-API-VALIDATION-FRONTIER.4.3`,
     `BACKEND-API-VALIDATION-FRONTIER.4.4`,
+    `BACKEND-API-VALIDATION-FRONTIER.4.4.1`,
     `BACKEND-API-VALIDATION-FRONTIER.5`,
     `BACKEND-API-VALIDATION-FRONTIER.6`,
     `BACKEND-API-VALIDATION-FRONTIER.7`,
@@ -83,7 +84,8 @@ items named in the 2026-06-05 remaining-work inventory.
   Children: `BACKEND-API-VALIDATION-FRONTIER.4.1`,
     `BACKEND-API-VALIDATION-FRONTIER.4.2`,
     `BACKEND-API-VALIDATION-FRONTIER.4.3`,
-    `BACKEND-API-VALIDATION-FRONTIER.4.4`
+    `BACKEND-API-VALIDATION-FRONTIER.4.4`,
+    `BACKEND-API-VALIDATION-FRONTIER.4.4.1`
   Acceptance: `One exact historical sample family or tool gate is selected, cleaned or deferred, documented, and covered.`
   Verification: `BACKEND-API-VALIDATION-FRONTIER.4.1 added fsm/trial_0.fsm, BACKEND-API-VALIDATION-FRONTIER.4.2 added fsm/mipicsi2_configreg.fsm plus fsm/mipicsi2_fifo_4x8.fsm, and BACKEND-API-VALIDATION-FRONTIER.4.3 added all remaining current MIPI samples under fsm/ to the external SystemVerilog validation smoke; blocked historical samples remain active under .4.4.`
   Commit: `pending`
@@ -110,9 +112,16 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.4.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next exact blocked historical validation sample after full MIPI smoke coverage.`
-  Acceptance: `Choose one remaining blocked sample family or tool gate, document the exact owner leaf, and do not change validation code until the selected target has leaf-level ownership. Current known blocked candidates are generic_fifo (?define source kind), lte_digital_rf (legacy multi-RTL composition syntax), apb_tb (composition PINMISSING warnings), and trial_2 (legacy composition ?ports mapping).`
+  Acceptance: `Selected fsm/apb_tb.fsm as the next exact blocked historical validation target because it is a supported C4 composition fixture that already parses and generates HDL, but external validation fails on unbound generated-child shared-datapath export-enable output pins. The exact implementation owner is BACKEND-API-VALIDATION-FRONTIER.4.4.1. The other blocked candidates remain deferred behind later leaves: generic_fifo (?define source kind), lte_digital_rf (legacy multi-RTL composition syntax), and trial_2 (legacy composition ?ports mapping).`
+  Verification: `Selection evidence: ./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_apb_tb_verify.sv fsm/apb_tb.fsm failed in Verilator lint with 23 PINMISSING warnings, all generated-child shared_dp_export_*_en output ports on requester/completer instances. Read fsm/apb_tb.fsm, perl/FSM/Composition/GeneratedChildRealizer.pm, perl/FSM/Composition/InterfacePortBuilder.pm, perl/FSM/Composition/SharedDatapathSupport.pm, perl/FSM/Composition/LinkedPlanBuilder.pm, and perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm; the evidence points at generated child HDL export ports being patched after structural metadata is built, while top instantiations consume the unchanged realized child interface.`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.4.4.1`
+  Status: `active`
+  Goal: `Make fsm/apb_tb.fsm warning-clean in external SystemVerilog validation by preserving generated-child shared-datapath export ports in realized composition interfaces.`
+  Acceptance: `Generated-child shared-datapath export-enable ports are represented in the realized child interface or otherwise deterministically bound in composition tops, so supported C4 compositions with generated-child export metadata instantiate every child port warning-cleanly. fsm/apb_tb.fsm passes the existing Verilator lint plus ABC-free Yosys synthesis external validation lane and is added to t/308-systemverilog-external-validation.t as a supported composition smoke. Existing shared-datapath lifted-runtime behavior remains intact. docs/REGRESSION_CORPUS.md and the mdBook generated-HDL debugging chapter list apb_tb in the focused external-validation smoke.`
   Verification: `pending`
   Commit: `pending`
 
@@ -154,7 +163,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 4 | `BACKEND-API-VALIDATION-FRONTIER.4.1` | `done` | Added the already warning-clean historical `fsm/trial_0.fsm` sample to the external SystemVerilog validation smoke; deferred `apb_tb` and `trial_2` to exact future owners based on probe failures. |
 | 5 | `BACKEND-API-VALIDATION-FRONTIER.4.2` | `done` | Added warning-clean `fsm/mipicsi2_configreg.fsm` and `fsm/mipicsi2_fifo_4x8.fsm` to the external SystemVerilog validation smoke; deferred `generic_fifo` and `lte_digital_rf` based on probe failures. |
 | 6 | `BACKEND-API-VALIDATION-FRONTIER.4.3` | `done` | Added the remaining warning-clean current MIPI samples under `fsm/` to the external SystemVerilog validation smoke. |
-| 7 | `BACKEND-API-VALIDATION-FRONTIER.4.4` | `pending` | Select the next exact blocked historical validation sample now that all warning-clean MIPI samples are covered. |
+| 7 | `BACKEND-API-VALIDATION-FRONTIER.4.4` | `done` | Selected `fsm/apb_tb.fsm` as the next exact blocked historical validation target and created `.4.4.1` as its owner leaf. |
+| 8 | `BACKEND-API-VALIDATION-FRONTIER.4.4.1` | `active` | Fix APB composition PINMISSING warnings by preserving/binding generated-child shared-datapath export ports, then add `apb_tb` to the external validation smoke. |
 
 ## Decisions
 
@@ -182,6 +192,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.1` | `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_trial_0_verify.sv fsm/trial_0.fsm`; `prove -Iperl t/308-systemverilog-external-validation.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`; selection probes for `fsm/apb_tb.fsm` and `fsm/trial_2.fsm`; removed `/tmp/fsmgen_*_verify.sv` probe artifacts | `PASS`; `apb_tb` and `trial_2` deferred to exact future owners |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.2` | `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_configreg_verify.sv fsm/mipicsi2_configreg.fsm`; `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_mipicsi2_fifo_4x8_verify.sv fsm/mipicsi2_fifo_4x8.fsm`; `prove -Iperl t/308-systemverilog-external-validation.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`; selection probes for `fsm/generic_fifo.fsm` and `fsm/lte_digital_rf.fsm`; removed `/tmp/fsmgen_*_verify.sv` probe artifacts | `PASS`; `generic_fifo` and `lte_digital_rf` deferred to exact future owners |
 | `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.3` | Probe `--verify-hdl` commands for remaining MIPI samples: `mipicsi2_laned_clog`, `mipicsi2_laned_sctrl`, `mipicsi2_rxccore_hs`, `mipicsi2_rxdcore_hs`, `mipicsi2_txccore_hs`, `mipicsi2_txccore_ulp`, `mipicsi2_txdcore_hs`, `mipicsi2_txdcore_lp`, `mipicsi2_xgamaster`; `prove -Iperl t/308-systemverilog-external-validation.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`; removed `/tmp/fsmgen_*_verify.sv` probe artifacts | `PASS` |
+| `2026-06-05` | `BACKEND-API-VALIDATION-FRONTIER.4.4` | `./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_apb_tb_verify.sv fsm/apb_tb.fsm`; code/read selection audit of `fsm/apb_tb.fsm`, `perl/FSM/Composition/GeneratedChildRealizer.pm`, `perl/FSM/Composition/InterfacePortBuilder.pm`, `perl/FSM/Composition/SharedDatapathSupport.pm`, `perl/FSM/Composition/LinkedPlanBuilder.pm`, and `perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS`; expected probe failure selected `apb_tb` for `.4.4.1` |
 
 ## Commit Log
 
@@ -193,6 +204,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.4.1` | `BACKEND-API-VALIDATION-FRONTIER.4.1: add trial_0 validation smoke` | added trial_0 smoke |
 | `BACKEND-API-VALIDATION-FRONTIER.4.2` | `BACKEND-API-VALIDATION-FRONTIER.4.2: add MIPI config fifo validation smoke` | added config/fifo MIPI smoke |
 | `BACKEND-API-VALIDATION-FRONTIER.4.3` | `BACKEND-API-VALIDATION-FRONTIER.4.3: add remaining MIPI validation smoke` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.4.4` | `BACKEND-API-VALIDATION-FRONTIER.4.4: select apb_tb validation target` | selected `.4.4.1` |
 
 ## Changelog
 
@@ -222,3 +234,6 @@ items named in the 2026-06-05 remaining-work inventory.
 - `2026-06-05`: Completed `.4.3`; every current MIPI sample under `fsm/` is
   now in the external validation smoke, and blocked historical targets remain
   for `.4.4` selection.
+- `2026-06-05`: Completed `.4.4`; selected `fsm/apb_tb.fsm` as the next
+  exact blocked historical validation target and activated `.4.4.1` for the
+  generated-child shared-datapath export-port binding fix.
