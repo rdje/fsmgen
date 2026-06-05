@@ -46,6 +46,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
     `ISF-REMAINING-BROAD-FRONTIER.9.1`,
     `ISF-REMAINING-BROAD-FRONTIER.10`,
     `ISF-REMAINING-BROAD-FRONTIER.11`,
+    `ISF-REMAINING-BROAD-FRONTIER.11.1`,
     `ISF-REMAINING-BROAD-FRONTIER.12`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.1`
@@ -140,9 +141,17 @@ inventory that are not already the active frontier of a narrower ISF tree.
   Commit: `this slice`
 
 - ID: `ISF-REMAINING-BROAD-FRONTIER.11`
-  Status: `pending`
+  Status: `done`
   Goal: `Broaden CDC semantics, including cross-domain spawn and payload movement.`
-  Acceptance: `One exact CDC activation/payload/reset/remap surface is selected, implemented or deferred, synchronized, and covered.`
+  Children: `ISF-REMAINING-BROAD-FRONTIER.11.1`
+  Acceptance: `Selected .11.1, a downstream/public contract sync for already-shipped nested blocking cross-domain (do) activation contexts through explicit activation crossings, before changing any contract text.`
+  Verification: `Selection audit/read: docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md, docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md, t/1387-isf-cross-domain-activation-handshake-lowering.t, docs/book/src/13a-actor-interface.md, docs/book/src/13d-control-flow.md, docs/book/src/13k-isf-feature-support-matrix.md, docs/book/src/14-feature-backlog.md, docs/ISF_PUBLIC_INTERFACE_CONTRACT.md, and docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md. Existing evidence shows the mdBook and test-backed task tree describe shipped nested blocking cross-domain (do) contexts, while downstream/public contract passages still carry older top-level-only/nested-fail-closed wording; this is a contract-sync repair, not new CDC behavior.`
+  Commit: `this slice`
+
+- ID: `ISF-REMAINING-BROAD-FRONTIER.11.1`
+  Status: `pending`
+  Goal: `Synchronize downstream/public CDC contract text for shipped nested blocking cross-domain (do) activation contexts.`
+  Acceptance: `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md and docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md describe the same shipped activation-crossing support boundary as the mdBook and t/1387: transaction top level, top-level repeat, top-level when/switch/while/until bodies, top-level when/switch branch-contained repeats, supported nested when chains, and repeats under those chains. They must still defer uncovered activation, declared-but-unused or mis-placed crossings, cross-domain spawn, payload CDC, auto-crossing, nested switch, repeat-contained branch, nested while/until, and unsupported deeper placements. No code behavior changes.`
   Verification: `pending`
   Commit: `pending`
 
@@ -169,7 +178,8 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | 10 | `ISF-REMAINING-BROAD-FRONTIER.9` | `done` | Selected value-returning `(past SIG [N])` as the exact temporal/property form after auditing shipped property grammar, sampled-value predicates, window ranges, verification docs, and parser/render/signal-retention hooks. |
 | 11 | `ISF-REMAINING-BROAD-FRONTIER.9.1` | `done` | Property-only `(past SIG [N])` now renders to `$past`, keeps operand signals alive, stays simulable, and fails closed outside check-property expressions. |
 | 12 | `ISF-REMAINING-BROAD-FRONTIER.10` | `done` | Remaining schedule-report storage, fixture, and reusable-library widening deferred to future exact report/fixture/library owners. |
-| 13 | `ISF-REMAINING-BROAD-FRONTIER.11` | `pending` | Next broad item: select one exact CDC activation/payload/reset/remap surface, or defer with evidence. |
+| 13 | `ISF-REMAINING-BROAD-FRONTIER.11` | `done` | Selected `.11.1`, a downstream/public contract sync for already-shipped nested blocking cross-domain `(do)` activation contexts. |
+| 14 | `ISF-REMAINING-BROAD-FRONTIER.11.1` | `pending` | Exact CDC sync leaf: align downstream/public contract wording with the mdBook and `t/1387` shipped nested activation boundary. |
 
 ## Decisions
 
@@ -239,6 +249,13 @@ inventory that are not already the active frontier of a narrower ISF tree.
   FIFO reusable-library fixture. Remaining rich storage/debug roles, new
   realistic protocols, and broader reusable-library semantics need future
   exact owners before behavior-bearing implementation can be selected.
+- `2026-06-05`: Closed `.11` selection without behavior changes: the next exact
+  CDC leaf is `.11.1`, a downstream/public contract sync for shipped nested
+  blocking cross-domain `(do child)` activation contexts through explicit
+  activation crossings. The mdBook and `t/1387` already describe support beyond
+  the top-level case, while `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` and
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` still contain older
+  nested-fail-closed wording that needs alignment without widening behavior.
 
 ## Open Questions
 
@@ -264,6 +281,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.9` | Selection audit/read: `docs/knowledge/isf-property-grammar-location.md`, `docs/knowledge/isf-sampled-value-predicates.md`, `docs/knowledge/isf-bounded-window-min.md`, `docs/knowledge/isf-verification-book-map.md`, `docs/tasks/ISF-PROPERTY-SAMPLED-VALUE.md`, `docs/tasks/ISF-PROPERTY-IMPLICATION.md`, `docs/tasks/ISF-PROPERTY-WINDOW-RANGE.md`, `docs/tasks/ISF-ASSERT-CONCURRENT.md`, `docs/tasks/ISF-TRIGGER-ANCHOR.md`, `docs/book/src/14-feature-backlog.md`, `perl/FSM/Adapter/FSMGenFull/Parser.pm`, `perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`, `perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm`, `perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm`, and `t/1417-isf-property-sampled-value.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.9.1` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`; `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm`; `prove -Iperl t/1417-isf-property-sampled-value.t t/1412-isf-property-implication.t t/1418-isf-property-window-range.t t/1411-isf-assert-emit.t`; `prove -Iperl t/1376-isf-book-example-lowering-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `./bin/ci-regression isf --no-book` (294 files / 2126 tests); `mdbook build docs/book`; `scripts/check_memory_architecture.sh`; `git diff --check` | `PASS` |
 | `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.10` | Schedule-report/fixture/library audit/read: `docs/knowledge/isf-schedule-report-additive-keys.md`, `docs/tasks/ISF-SCHEDULE-REPORT-STORAGE-ROLES.md`, `docs/tasks/ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.md`, `docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md`, `docs/tasks/ISF-FIXTURE-COVERAGE.md`, `docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md`, `docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md`, `docs/book/src/14-feature-backlog.md`, `docs/book/src/13k-isf-feature-support-matrix.md`, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, checked-in `isf/` fixtures, and fixture/schedule-report tests; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
+| `2026-06-05` | `ISF-REMAINING-BROAD-FRONTIER.11` | CDC selection audit/read: `docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md`, `docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md`, `t/1387-isf-cross-domain-activation-handshake-lowering.t`, `docs/book/src/13a-actor-interface.md`, `docs/book/src/13d-control-flow.md`, `docs/book/src/13k-isf-feature-support-matrix.md`, `docs/book/src/14-feature-backlog.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -280,6 +298,7 @@ inventory that are not already the active frontier of a narrower ISF tree.
 | `ISF-REMAINING-BROAD-FRONTIER.9` | `ISF-REMAINING-BROAD-FRONTIER.9: select past property value` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.9.1` | `ISF-REMAINING-BROAD-FRONTIER.9.1: ship past property value` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.10` | `ISF-REMAINING-BROAD-FRONTIER.10: defer report and fixture widening` | this slice |
+| `ISF-REMAINING-BROAD-FRONTIER.11` | `ISF-REMAINING-BROAD-FRONTIER.11: select CDC contract sync` | this slice |
 | `ISF-REMAINING-BROAD-FRONTIER.7.1` | `ISF-REMAINING-BROAD-FRONTIER.7.1: split loop-control dynamic waits` | this slice |
 
 ## Changelog
@@ -317,3 +336,6 @@ inventory that are not already the active frontier of a narrower ISF tree.
 - `2026-06-05`: `.10` deferred remaining schedule-report storage,
   fixture-promotion, and reusable-library widening to future exact owners;
   next frontier is CDC semantics.
+- `2026-06-05`: `.11` selected `.11.1`, a downstream/public contract-sync
+  repair for already-shipped nested blocking cross-domain activation contexts,
+  before changing contract text.
