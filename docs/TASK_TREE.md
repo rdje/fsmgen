@@ -52,6 +52,8 @@ first.
 | `MEMORY-ARCHITECTURE-ADOPTION` | `done` | infra/continuity | complete (`.1`–`.5`; durable-agent-memory standard adopted — layers A/C + tool-neutral bootstrap + E1–E4 enforcement; `MEMORY.md` demoted 38,776 → 24 lines; gates proven to bite) | [docs/tasks/MEMORY-ARCHITECTURE-ADOPTION.md](docs/tasks/MEMORY-ARCHITECTURE-ADOPTION.md) |
 | `KNOWLEDGE-MAP-ADOPT` | `active` | infra/continuity | `.1`–`.2` done — Knowledge Map retrieval layer adopted (question→fact index, two-gate hook + CI, 5 seed cards); tree left `active` only for optional later folding of high-traffic decision records into the map | [docs/tasks/KNOWLEDGE-MAP-ADOPT.md](docs/tasks/KNOWLEDGE-MAP-ADOPT.md) |
 | `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH` | `done` | bootstrap architecture maintenance | complete (`.1`–`.2`; refreshed stale ISF import-tree line counts after the 2026-06-05 bootstrap audit; topology unchanged at `196` total / `195` `.pm`) | [docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH.md](docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH.md) |
+| `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP` | `done` | roadmap maintenance | complete (`.1`; every item from the 2026-06-05 remaining-work inventory now has an existing active owner or a new broad owner tree; active focus switched to Composition/type) | [docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md](docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md) |
+| `COMPOSITION-TYPE-BACKLOG-EXHAUSTION` | `active` | Composition / Aggregate Types And Data | `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` (select the first executable Composition/type implementation or deferral leaf from evidence; `.1` done) | [docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md](docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md) |
 | `ISF-ASSERT` | `done` | `R14` | complete (`.1`–`.4`; `(assert COND [message])` verification invariant → fires-on-violation SVA via a `+assert` `.fsm` carrier; keeps assert-referenced inputs alive; 13d/13k docs) | [docs/tasks/ISF-ASSERT.md](docs/tasks/ISF-ASSERT.md) |
 | `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING` | `done` | `R14` | complete (`.1`–`.7` done; cross-domain blocking `(do)` via a declared activation crossing) | [docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md](docs/tasks/ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.md) |
 | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION` | `active` | `R14` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5` (`.1`–`.4` done) | [docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md](docs/tasks/ISF-NESTED-CROSS-DOMAIN-ACTIVATION.md) |
@@ -72,7 +74,9 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| _(none)_ | | | | |
+| `ISF-REMAINING-BROAD-FRONTIER` | `proposed` | `R14` | `ISF-REMAINING-BROAD-FRONTIER.1` (select the next executable broad ISF leaf when this lane is re-selected) | [docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md](docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md) |
+| `BACKEND-API-VALIDATION-FRONTIER` | `proposed` | Backends And Validation / Embedding And Public APIs | `BACKEND-API-VALIDATION-FRONTIER.1` (select the next executable backend/API leaf when this lane is re-selected) | [docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md](docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md) |
+| `ARCHITECTURE-DEBT-FRONTIER` | `proposed` | architecture | `ARCHITECTURE-DEBT-FRONTIER.1` (select the next executable architecture-debt leaf when this lane is re-selected) | [docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md](docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md) |
 
 ## Completed Task Trees
 
@@ -626,11 +630,11 @@ criteria.
 | mdBook backlog category | Current tracking stance |
 | --- | --- |
 | `Language Ergonomics` | `completed DYNAMIC-DIVISOR-SAFETY-FRONTIER tree for direct runtime literal-zero divisor rejection; completed INFERENCE-FIRST-SCALAR-AUTHORING tree for symbolic scalar type widths; future task tree required for broader language ergonomics behavior outside those trees` |
-| `Aggregate Types And Data` | `completed RICHER-AGGREGATE-OPERATORS tree for semantic parameter/generic aggregate operator widening; completed AGGREGATE-AUTOGROWTH-FROM-USAGE tree for bounded automatic aggregate growth; completed BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING tree for exact-contract Verilog-family structured-lowering audit; completed R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT tree for the shipped bounded portable-type frontier decision; future task tree required for broader aggregate lowering, VHDL aggregate support, portable-type implementation, or public type/export APIs outside those trees` |
-| `Composition` | `completed R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT tree for the declared top-port/connect-by-name convention frontier; covered by completed composition task trees for shipped surfaces; future task tree required for broader generated-child, VHDL generic-map, and generalized composition behavior outside active/completed trees` |
-| `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces; future task tree required for remaining deferred ISF behavior` |
-| `Backends And Validation` | `future task tree required for VHDL backend expansion, richer backend validation, and non-shipped backend targets` |
-| `Embedding And Public APIs` | `future task tree required for richer embedding, public API, and export surfaces beyond the frozen advertised contracts` |
+| `Aggregate Types And Data` | `active COMPOSITION-TYPE-BACKLOG-EXHAUSTION tree owns broader aggregate/type exhaustion; completed RICHER-AGGREGATE-OPERATORS tree for semantic parameter/generic aggregate operator widening; completed AGGREGATE-AUTOGROWTH-FROM-USAGE tree for bounded automatic aggregate growth; completed BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING tree for exact-contract Verilog-family structured-lowering audit; completed R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT tree for the shipped bounded portable-type frontier decision` |
+| `Composition` | `active COMPOSITION-TYPE-BACKLOG-EXHAUSTION tree owns broader generated-child, reusable-module, top-boundary, shared-datapath, VHDL generic-map, and generalized composition backlog; completed R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT tree for the declared top-port/connect-by-name convention frontier; covered by completed composition task trees for shipped surfaces` |
+| `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces and by proposed ISF-REMAINING-BROAD-FRONTIER for broad remaining deferred ISF behavior; existing active trees own their current immediate frontiers` |
+| `Backends And Validation` | `proposed BACKEND-API-VALIDATION-FRONTIER tree owns VHDL backend expansion, richer backend validation, warning-clean historical validation, ABC hardening, and non-shipped backend targets` |
+| `Embedding And Public APIs` | `proposed BACKEND-API-VALIDATION-FRONTIER tree owns richer embedding, public API, and export surfaces beyond the frozen advertised contracts` |
 
 ## ISF Task-Tree Rule
 

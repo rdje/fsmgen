@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH.2` (this commit) — refreshed `docs/BIN_FSMGEN_IMPORT_TREE.md` after the 2026-06-05 bootstrap audit: topology still `196` total / `195` `.pm`; stale ISF line counts updated (`Parser.pm=9468`, `Scheduler/ISF.pm=591`, `LoweringIR.pm=12124`, `Emitter/FSM.pm=547`, `Emitter/JSON.pm=1053`). `git log -1` for the hash.
-- active_work_unit: none active. `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH` `.1`–`.2` done; `KNOWLEDGE-MAP-ADOPT` `.1`–`.2` done (tree left `active` only for optional later folding of high-traffic decision records into the map). Next: pick a frontier item per `0002`/`0003`, or seed/fold more KM cards lazily.
-- recently_done: `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`; `ISF-LOOP-EARLY-EXIT.4` (`loop_early_exits[]` schedule-report metadata for exit-when/continue-when); `ISF-TRIGGER-ANCHOR` (complete, `.1`–`.6c`); decisions `0008`–`0011`; `TRACE-SEVERITY-NEVER-GATED`; `DOCS-RELATIVE-PATHS`.
+- latest_commit: `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1` (this commit) — routed the 2026-06-05 remaining-work inventory into task-tree owners: existing active owners for immediate R14/KM frontiers; new broad owner trees for ISF, Composition/type, backend/API, and architecture debt. `git log -1` for the hash.
+- active_work_unit: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION` active. Frontier: `COMPOSITION-TYPE-BACKLOG-EXHAUSTION.2` — select the first executable Composition/type implementation or deferral leaf from existing R11/R14 evidence and the mdBook backlog before behavior work.
+- recently_done: `PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.1`; `BIN-FSMGEN-IMPORT-TREE-JUN05-REFRESH`; `ISF-LOOP-EARLY-EXIT.4` (`loop_early_exits[]` schedule-report metadata for exit-when/continue-when); `ISF-TRIGGER-ANCHOR` (complete, `.1`–`.6c`); decisions `0008`–`0011`; `TRACE-SEVERITY-NEVER-GATED`; `DOCS-RELATIVE-PATHS`.
 - in_flight_uncommitted: none (working tree clean except untracked `fx/`, intentionally left alone).
 - blockers: none.
 
