@@ -750,6 +750,14 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
         normalized_semantic_forward_ir_lowered_rtl_ir_keys(),
         'direct success semantic payload keeps bounded forward-ir lowered-rtl-ir keys',
     );
+    ok(
+        exists $decoded->{semantic}{forward_ir}{lowered_rtl_ir}{selector_conflict_target_count},
+        'direct success lowered-rtl-ir payload keeps selector-conflict target count',
+    );
+    ok(
+        exists $decoded->{semantic}{forward_ir}{lowered_rtl_ir}{selector_conflict_targets},
+        'direct success lowered-rtl-ir payload keeps selector-conflict target list',
+    );
     assert_keys_present(
         $decoded->{semantic}{forward_ir}{structural_rtl_ir},
         normalized_semantic_forward_ir_structural_rtl_ir_keys(),
@@ -873,6 +881,14 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         $decoded->{semantic}{forward_ir}{lowered_rtl_ir},
         normalized_semantic_forward_ir_lowered_rtl_ir_keys(),
         'composition success semantic payload keeps bounded forward-ir lowered-rtl-ir keys',
+    );
+    ok(
+        exists $decoded->{semantic}{forward_ir}{lowered_rtl_ir}{selector_conflict_target_count},
+        'composition success lowered-rtl-ir payload keeps selector-conflict target count',
+    );
+    ok(
+        exists $decoded->{semantic}{forward_ir}{lowered_rtl_ir}{selector_conflict_targets},
+        'composition success lowered-rtl-ir payload keeps selector-conflict target list',
     );
     assert_keys_present(
         $decoded->{semantic}{forward_ir}{lowered_rtl_ir},

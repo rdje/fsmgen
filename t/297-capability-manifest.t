@@ -162,6 +162,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_optional_child_presence_keys
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
+    normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_nested_presence_key_map
     normalized_semantic_presence_key_family_map
     normalized_semantic_report_contract_source
@@ -910,6 +911,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_presence_keys} || []}) >= 7,
         'manifest advertises bounded normalized semantic forward-ir lowered-rtl-ir core key presence',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_presence_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_keys(),
+        'manifest records exact normalized semantic lowered-rtl-ir keys including selector-conflict metadata',
     );
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_optional_composition_keys} || []}) >= 7,

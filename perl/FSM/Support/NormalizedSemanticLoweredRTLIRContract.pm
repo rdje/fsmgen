@@ -41,9 +41,9 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested `semantic.forward_ir.lowered_rtl_ir` object used by successful public normalized semantic JSON reports.},
-            'The bounded public promise covers the current lowered-RTL summary shared by direct roots plus the current composition-only extension keys.',
+            'The bounded public promise covers the current lowered-RTL summary shared by direct roots, including selector-conflict metadata, plus the current composition-only extension keys.',
             'Use the grouped presence_key_family_map to discover the bounded core and composition-only lowered_rtl_ir key families without collecting those key-family lists separately.',
-            'The deeper `output_drive_families`, `standalone_dt_multi_drive_targets`, and composition candidate payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
+            'The deeper `output_drive_families`, `selector_conflict_targets`, `standalone_dt_multi_drive_targets`, and composition candidate payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
         ],
     };
 }
@@ -58,6 +58,8 @@ sub normalized_semantic_lowered_rtl_ir_presence_keys {
             module_name
             output_drive_families
             output_drive_family_count
+            selector_conflict_target_count
+            selector_conflict_targets
             source_root_kind
             standalone_dt_multi_drive_target_count
             standalone_dt_multi_drive_targets

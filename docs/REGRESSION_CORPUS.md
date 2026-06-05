@@ -288,7 +288,8 @@ family.
 [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm)
 now owns the nested `semantic.forward_ir.lowered_rtl_ir` object shape emitted
 by successful public normalized semantic JSON, including the published core
-lowered-RTL keys plus the composition-only extension-key family.
+lowered-RTL keys, selector-conflict target count/list metadata, and the
+composition-only extension-key family.
 [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm)
 now owns the nested `semantic.forward_ir.structural_rtl_ir` object shape
 emitted by successful public normalized semantic JSON, including the published

@@ -333,7 +333,8 @@ project policies:
   supported-smoke and strict-supported entries plus rejected-side coverage for
   current expected-failure entries; its contract now also advertises explicit
   optional semantic success children for `semantic.composition` and
-  `semantic.symbol_contract`;
+  `semantic.symbol_contract`, plus lowered-RTL selector-conflict target
+  count/list metadata;
 - `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` now has a bounded
   top-level result-presence contract advertised through the capability
   manifest, while the raw result hash is explicitly not a JSON-safe interchange

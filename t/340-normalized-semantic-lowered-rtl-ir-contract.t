@@ -42,6 +42,23 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
         'contract publishes the bounded lowered-rtl-ir core key list',
     );
     is_deeply(
+        normalized_semantic_lowered_rtl_ir_presence_keys(),
+        [
+            qw(
+                module_name
+                output_drive_families
+                output_drive_family_count
+                selector_conflict_target_count
+                selector_conflict_targets
+                source_root_kind
+                standalone_dt_multi_drive_target_count
+                standalone_dt_multi_drive_targets
+                target_language
+            ),
+        ],
+        'bounded lowered-rtl-ir core key list includes selector-conflict metadata',
+    );
+    is_deeply(
         $contract->{optional_composition_keys},
         normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
         'contract publishes the bounded lowered-rtl-ir composition-only key list',
