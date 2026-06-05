@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14` (ISF Multi-Clock And CDC Semantics — richer crossing primitives)
 - Created: `2026-05-31`
-- Last updated: `2026-06-01`
+- Last updated: `2026-06-05`
 - Owner: repo-local workflow
 
 ## Goal
@@ -125,7 +125,7 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
 - ID: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION`
   Status: `active`
   Goal: `Cross-domain blocking (do child) inside when/switch/repeat bodies via the activation crossing.`
-  Children: `.1` (select), `.2` (precise nested-deferred diagnostic), `.3`+ (nested support per context)
+  Children: `.1` (select), `.2` (precise nested-deferred diagnostic), `.3` (top-level repeat), `.4` (top-level branch/loop), `.5` (split deeper-nesting frontier), `.6`+ (deeper support per exact context)
 
 - ID: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.1`
   Status: `done`
@@ -155,6 +155,41 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   Verification: `Empirical spike: when/switch/while/until top-level branch-body cross-domain (do) all lower (ready-await reachable, one-cycle start, done block) and --check-json SUCCEEDS (with clean fixtures declaring only used signals). when->when / switch->switch / when->repeat still defer. prove -Iperl t/1387 (11 subtests) t/1386 t/1247 t/1304 t/1307 t/1305 t/1376 t/1303 PASS; full ./bin/ci-regression isf --no-book PASS; perl -c; mdbook build; git diff --check`
   Commit: `ship commit (this slice)`
 
+- ID: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5`
+  Status: `done`
+  Goal: `Split the bundled deeper-nesting frontier into exact executable leaves before any new implementation.`
+  Acceptance: `The prior .5-.7 frontier is no longer a broad bundle. The next executable leaf is .6: a cross-domain (do child) directly inside a repeat nested in a top-level when body or top-level switch branch, routed through the declared activation crossing. Remaining multi-level nesting stays explicit backlog. No code or user-facing behavior change is made in this split slice.`
+  Verification: `passed: memory architecture, Knowledge Map, mdBook build, relative-path audit, and diff checks`
+  Commit: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5: split deeper nesting frontier`
+
+- ID: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.6`
+  Status: `pending`
+  Goal: `Support a cross-domain (do child) directly inside a repeat nested in a TOP-LEVEL when body or TOP-LEVEL switch branch.`
+  Acceptance: `A declared activation crossing covers (when GUARD (repeat N (do child))) and (switch SEL (CASE (repeat N (do child)))) when the parent transaction is in the source domain and child is in the destination domain. The validator remains unchanged unless evidence shows a narrower gate is needed; the partition classification gains an exact top-level branch-contained repeat context and treats it as covered. The caller module reruns await-start-ready -> one-cycle start -> await-done on each nested-repeat iteration, and the callee returns to start-gated idle between iterations. Existing top-level, top-level-repeat, and top-level-branch/loop cases remain unchanged. Deeper branch->branch, repeat->branch, nested while/until, and deeper branch-repeat combinations still fail closed with an accurate deferred diagnostic. t/1387 gains positive when->repeat and switch->repeat coverage and preserves the deferred cases for the remaining contexts.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.7`
+  Status: `pending`
+  Goal: `Support or explicitly close the next branch->branch deeper cross-domain (do) context.`
+  Acceptance: `Exact acceptance to be refined after .6 evidence; no code before this leaf is selected.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.8`
+  Status: `pending`
+  Goal: `Support or explicitly close repeat->branch cross-domain (do) contexts.`
+  Acceptance: `Exact acceptance to be refined after .7 evidence; no code before this leaf is selected.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.9`
+  Status: `pending`
+  Goal: `Audit remaining deeper combinations and close the tree or create new exact owner leaves.`
+  Acceptance: `No broad bundled frontier remains; residual unsupported contexts are either shipped, accurately deferred in code/book, or routed to new task-tree-owned leaves.`
+  Verification: `pending`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -163,7 +198,11 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
 | 2 | `.2` | `done` | Precise nested-deferred diagnostic shipped (`_activation_do_use_context` recursive scan; `t/1387` covers when/switch/repeat + the genuinely-unused case). |
 | 3 | `.3` | `done` | Top-level repeat-body cross-domain `(do worker)` LOWERS through the dual-CDC per iteration. Lifted the validator (`repeat body` label) + partition (`top_level_repeat` flag → covered); the caller restructure applied UNCHANGED in the repeat region; `--check-json` SUCCEEDS. Deeper nestings still fail closed (refined diagnostic). `t/1387` (+positive subtest). |
 | 4 | `.4` | `done` | Cross-domain `(do)` directly inside any TOP-LEVEL branch/loop body (`when`/`switch`/`while`/`until`) LOWERS through the dual-CDC. Lifted the validator (branch-body labels) + partition (`top_level_branch_body` flag); **extended the caller restructure to redirect branch/loop ENTRY references** (`true_target` / `branches[].body_start` / `loop_body_start`) into the ready-await — the missing piece for when/switch (while/until already worked via `transitions[].target`). All four contexts `--check-json` SUCCEED. Deeper nestings still defer. `t/1387` (+positive subtest). |
-| 5 | `.5`–`.7` | `pending` | Deeper nestings: `when→repeat`, `switch→repeat`, `branch→branch`, `repeat→branch`, and deeper combinations. **Cross-domain top-level activation is now fully orthogonal to the same-domain top-level + repeat + branch/loop surface; only multi-level nesting remains.** Consolidate where the restructure generalizes. |
+| 5 | `.5` | `done` | Split the previously bundled `.5`-`.7` deeper-nesting frontier into exact executable leaves before any new implementation. |
+| 6 | `.6` | `pending` | First exact deeper-nesting support leaf: top-level `when`/`switch` branch-contained `repeat` with a cross-domain `(do child)`. This directly targets the currently deferred `when->repeat` / `switch->repeat` cases and should reuse the existing ready/req/done restructure. |
+| 7 | `.7` | `pending` | Next deeper branch nesting (`branch->branch`) after `.6` evidence. |
+| 8 | `.8` | `pending` | Repeat-contained branch contexts (`repeat->branch`) after `.7` evidence. |
+| 9 | `.9` | `pending` | Exhaustion audit / close-out for any remaining deeper combinations. |
 
 ## Decisions
 
@@ -200,6 +239,13 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   (unsupported even same-domain). So a covered cross-domain `(do)` directly in a
   `when`/`switch`/`while`/`until` body is now a viable supported context and becomes
   `.4` (ahead of the deeper repeat-nestings), reusing the same restructure.
+- `2026-06-05` (`.5` split): the old `.5`-`.7` frontier was too broad for the
+  task-tree gate. Split it before implementation. `.6` is the first exact deeper
+  leaf and intentionally consolidates `when->repeat` and `switch->repeat`, because
+  both are repeats directly inside one top-level branch container and should share
+  one partition classification plus the already generalized caller restructure.
+  Branch->branch, repeat->branch, and residual deeper combinations remain separate
+  pending leaves.
 
 ## Open Questions
 
@@ -220,6 +266,7 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
 | `2026-05-31` | `.2` | `prove -Iperl t/1387` (9 subtests) + clock-domain/crossing/diagnostic/spec-index/feature-matrix sweep (11 files, 451) PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.3` | Empirical spike: `(repeat 2 (do worker))` cross-domain lowers to 3 domain files; caller restructured (`parent_do_N_ready->_req->await-done`) inside the repeat loop; callee gated on `<start>`, pulses `<done>`, returns to idle; `--check-json` **SUCCEEDS**. Deferral preserved (when-body / switch→repeat / when→repeat). `prove -Iperl t/1387` (10 subtests) `t/1386 t/1247 t/1304 t/1307 t/1305 t/1376 t/1303` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
 | `2026-06-01` | `.4` | Empirical spike: when/switch/while/until top-level branch-body cross-domain `(do)` all lower (ready-await reachable, one-cycle start, done block) and `--check-json` **SUCCEEDS** (clean fixtures); when→when / switch→switch / when→repeat still defer. Restructure extended to redirect `true_target`/`branches[].body_start`/`loop_body_start` (the when/switch selector fix). `prove -Iperl t/1387` (11 subtests) `t/1386 t/1247 t/1304 t/1307 t/1305 t/1376 t/1303` PASS; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check` | `PASS` |
+| `2026-06-05` | `.5` | `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git diff --check` | `PASS` |
 
 ## Commit Log
 
@@ -230,6 +277,7 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
 | `.3` design | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3 design: scope nested cross-domain (do) to repeat-body contexts` | `e8d44e8d` |
 | `.3` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.3: top-level repeat-body cross-domain (do) through dual-CDC` | `def2156b` |
 | `.4` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.4: top-level branch-body cross-domain (do) through dual-CDC` | `ship commit (this slice)` |
+| `.5` | `ISF-NESTED-CROSS-DOMAIN-ACTIVATION.5: split deeper nesting frontier` | `frontier-split slice` |
 
 ## Changelog
 
@@ -320,3 +368,7 @@ shipped the top-level case end-to-end: parse → validate → dual-CDC lowering 
   forms (deferral-lift cascade). Cross-domain top-level activation is now fully
   orthogonal to the same-domain top-level + repeat + branch/loop surface; only
   multi-level nesting remains for `.5`+.
+- `2026-06-05`: `.5` split the multi-level frontier before any new code. The next
+  executable leaf is `.6`, covering a cross-domain `(do child)` directly inside a
+  repeat nested in a top-level `when` body or top-level `switch` branch. Remaining
+  branch->branch, repeat->branch, and residual deeper combinations stay pending.
