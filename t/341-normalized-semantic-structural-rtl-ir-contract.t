@@ -12,11 +12,14 @@ use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
     build_normalized_semantic_structural_rtl_ir_contract
     normalized_semantic_structural_rtl_ir_collection_presence_keys
     normalized_semantic_structural_rtl_ir_contract_source
+    normalized_semantic_structural_rtl_ir_declared_link_entry_keys
+    normalized_semantic_structural_rtl_ir_link_entry_keys
     normalized_semantic_structural_rtl_ir_net_entry_keys
     normalized_semantic_structural_rtl_ir_presence_key_family_map
     normalized_semantic_structural_rtl_ir_presence_keys
     normalized_semantic_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_structural_rtl_ir_port_entry_keys
+    normalized_semantic_structural_rtl_ir_resolved_link_entry_keys
     normalized_semantic_structural_rtl_ir_summary_presence_keys
 );
 
@@ -82,6 +85,31 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         'structural-rtl-ir net entry keys stay exact and ordered',
     );
     is_deeply(
+        normalized_semantic_structural_rtl_ir_link_entry_keys(),
+        [qw(origin_kind raw_token source target)],
+        'structural-rtl-ir shared link entry keys stay exact and ordered',
+    );
+    is_deeply(
+        $contract->{declared_link_entry_keys},
+        normalized_semantic_structural_rtl_ir_declared_link_entry_keys(),
+        'contract publishes the bounded structural-rtl-ir declared-link entry key family',
+    );
+    is_deeply(
+        normalized_semantic_structural_rtl_ir_declared_link_entry_keys(),
+        normalized_semantic_structural_rtl_ir_link_entry_keys(),
+        'structural-rtl-ir declared-link entry keys reuse the shared link entry shape',
+    );
+    is_deeply(
+        $contract->{resolved_link_entry_keys},
+        normalized_semantic_structural_rtl_ir_resolved_link_entry_keys(),
+        'contract publishes the bounded structural-rtl-ir resolved-link entry key family',
+    );
+    is_deeply(
+        normalized_semantic_structural_rtl_ir_resolved_link_entry_keys(),
+        normalized_semantic_structural_rtl_ir_link_entry_keys(),
+        'structural-rtl-ir resolved-link entry keys reuse the shared link entry shape',
+    );
+    is_deeply(
         $contract->{presence_key_family_map},
         normalized_semantic_structural_rtl_ir_presence_key_family_map(),
         'contract publishes the grouped structural-rtl-ir key-family map',
@@ -100,6 +128,16 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         $contract->{presence_key_family_map}{net_entry_keys},
         normalized_semantic_structural_rtl_ir_net_entry_keys(),
         'grouped structural-rtl-ir family map publishes net entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{declared_link_entry_keys},
+        normalized_semantic_structural_rtl_ir_declared_link_entry_keys(),
+        'grouped structural-rtl-ir family map publishes declared-link entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{resolved_link_entry_keys},
+        normalized_semantic_structural_rtl_ir_resolved_link_entry_keys(),
+        'grouped structural-rtl-ir family map publishes resolved-link entry keys',
     );
 };
 

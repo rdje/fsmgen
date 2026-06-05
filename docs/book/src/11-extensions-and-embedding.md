@@ -1761,7 +1761,7 @@ The direct-generation `lowered_rtl_ir` shell is audited under the same rule,
 including caller-created optional branches.
 
 The direct-generation `structural_rtl_ir` shell is audited under that rule as
-well, including structural ports and net lists.
+well, including structural ports, net lists, and structural link lists.
 
 Composition `intent_hir` shells are also audited under the same facade-reuse
 rule, including realized child summaries.
@@ -1770,7 +1770,7 @@ Composition `lowered_rtl_ir` shells follow that rule for lowered instance and
 net summaries.
 
 Composition `structural_rtl_ir` shells follow it for top ports, child
-instances, and resolved links.
+instances, declared links, and resolved links.
 
 Standalone `?dt` `intent_hir` shells follow the same facade-reuse rule for
 data-transform intent summaries.
@@ -2069,11 +2069,12 @@ now also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm)
 owns the current structural-RTL shell keys shared by direct and composition
 roots, plus bounded `ports[]` core entry keys, composition-top port extension
-keys, and bounded `nets[]` entry keys.
+keys, bounded `nets[]` entry keys, and bounded `declared_links[]` plus
+`resolved_links[]` entry keys.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded structural-RTL shell summary and
-collection key families, including structural port and net entry key families,
+collection key families, including structural port, net, and link entry key families,
 from one place instead of collecting the individual key-family lists separately.
 
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
