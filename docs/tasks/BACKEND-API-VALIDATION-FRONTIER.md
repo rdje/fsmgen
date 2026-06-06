@@ -253,7 +253,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.105.1`,
     `BACKEND-API-VALIDATION-FRONTIER.106`,
     `BACKEND-API-VALIDATION-FRONTIER.106.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.107`
+    `BACKEND-API-VALIDATION-FRONTIER.107`,
+    `BACKEND-API-VALIDATION-FRONTIER.107.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1890,10 +1891,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.106.1: lower logic input VHDL ports`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.107`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after logic input port lowering shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.107.1`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier after .106.1, current VHDL scope, mdBook backlog, direct-VHDL fact card, normalized semantic export/public API status, focused contract/backend/facade tests, maintained direct/composition VHDL sweeps, current validation environment, and current frontier rows; choose the next narrow implementation, hardening, or documented blocking owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave raw package-spec internals, VHDL package declaration/emission, GHDL validation, full normalized semantic export stabilization, broad VHDL aggregate record/array lowering, broad expression parity, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of README.md, MEMORY.md, COMMIT.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, KNOWLEDGE_MAP.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, t/386-hdl-generator-facade-target-language-boundary-audit.t, t/114-composition-target-support-diagnostics.t, t/335-normalized-semantic-symbol-contract.t, and t/297-capability-manifest.t. A temporary direct VHDL probe with interface output OUT, +size OUT 8, and (<- (OUT> 165)) generated OUT : out std_logic_vector(7 downto 0) and signal OUT_next : std_logic_vector(7 downto 0), but still emitted raw OUT_next <= 165; inside the combinational next-state assignment. command -v ghdl returned unavailable. Selected bounded direct VHDL vector output-port next-signal unsized decimal literal lowering for .107.1 before any implementation/test/source edits; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t; prove -Iperl t/335-normalized-semantic-symbol-contract.t t/297-capability-manifest.t.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.107: select vector output literal VHDL lowering`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.107.1`
+  Status: `active`
+  Goal: `Lower direct VHDL vector output next-signal decimal literal assignments.`
+  Acceptance: `Direct single-FSM VHDL generation must lower generated next-state assignments from an unsized decimal literal to a vector output-port next signal, such as OUT_next <= 165 for an 8-bit interface output, into a VHDL-typed std_logic_vector assignment through pipeline, CLI, and facade coverage. The leaf is limited to non-signed vector lvalues with literal decimal RHS values in the direct VHDL scaffold; scalar literal assignments, signed vector decimal assignment semantics, expression-wide literal conversion, aggregate record/array lowering, composition/top VHDL, package root/import behavior, GHDL validation, broad expression parity, raw package-spec internals, full normalized semantic export stabilization, and full backend parity must remain unchanged or explicitly deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map, task tree, and MEMORY stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -2117,7 +2126,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 215 | `BACKEND-API-VALIDATION-FRONTIER.105.1` | `done` | Lowered generated direct-root `input bit` and `input bit [N:0]` declarations to VHDL `std_logic` / `std_logic_vector` ports through pipeline, CLI, facade, docs, and fact-card coverage. |
 | 216 | `BACKEND-API-VALIDATION-FRONTIER.106` | `done` | Selected direct VHDL non-signed four-state logic input-port declaration lowering after probes showed typed read-only four-state direct-root signals emit `input logic [7:0] IN` and `input logic IN`, both currently rejected by the direct VHDL port parser. |
 | 217 | `BACKEND-API-VALIDATION-FRONTIER.106.1` | `done` | Lowered generated direct-root `input logic` and `input logic [N:0]` declarations to VHDL `std_logic` / `std_logic_vector` ports through pipeline, CLI, facade, docs, and fact-card coverage. |
-| 218 | `BACKEND-API-VALIDATION-FRONTIER.107` | `active` | Select the next exact backend/API edge after logic input port lowering shipped. |
+| 218 | `BACKEND-API-VALIDATION-FRONTIER.107` | `done` | Selected direct VHDL vector output-port next-signal decimal literal lowering after a probe showed an 8-bit interface output lowers to std_logic_vector ports/signals but still emits raw OUT_next <= 165. |
+| 219 | `BACKEND-API-VALIDATION-FRONTIER.107.1` | `active` | Lower the selected non-signed vector output decimal literal assignment into a VHDL-typed vector assignment through pipeline, CLI, facade, docs, and fact-card coverage. |
 
 ## Decisions
 
@@ -2528,11 +2538,17 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.105.1` | `BACKEND-API-VALIDATION-FRONTIER.105.1: lower bit input VHDL ports` | this slice; activates `.106` |
 | `BACKEND-API-VALIDATION-FRONTIER.106` | `BACKEND-API-VALIDATION-FRONTIER.106: select logic input port VHDL declarations` | selected `.106.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.106.1` | `BACKEND-API-VALIDATION-FRONTIER.106.1: lower logic input VHDL ports` | this slice; activates `.107` |
-| `BACKEND-API-VALIDATION-FRONTIER.107` | `pending` | active selector leaf |
+| `BACKEND-API-VALIDATION-FRONTIER.107` | `BACKEND-API-VALIDATION-FRONTIER.107: select vector output literal VHDL lowering` | selected `.107.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.107.1` | `pending` | active implementation leaf |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed backend/API frontier owner tree.
+- `2026-06-06`: Completed `.107`; selected direct VHDL vector output-port
+  next-signal unsized decimal literal lowering as `.107.1` after a temporary
+  interface-output probe generated `std_logic_vector` output/next-signal
+  declarations but still emitted raw `OUT_next <= 165;` in the VHDL
+  combinational assignment.
 - `2026-06-06`: Completed `.106.1`; direct VHDL now lowers generated typed
   non-signed four-state `input logic` and `input logic [N:0]` direct-root
   declarations to `std_logic` / `std_logic_vector` input ports through

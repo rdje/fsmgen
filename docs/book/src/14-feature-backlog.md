@@ -4223,9 +4223,12 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.107` selects the next exact backend/API edge
-after direct VHDL generated typed non-signed four-state input port declaration
-lowering shipped. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.107.1` lowers direct VHDL vector output-port
+next-signal assignments from unsized decimal literals into VHDL-typed vector
+assignments. Selector leaf `BACKEND-API-VALIDATION-FRONTIER.107` chose that
+edge after an 8-bit interface-output probe emitted `std_logic_vector`
+output/next-signal declarations but still wrote raw `OUT_next <= 165;`.
+Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.106.1` lowers `input logic IN` and
 `input logic [7:0] IN` to VHDL `std_logic` / `std_logic_vector` ports.
 Completed selector leaf

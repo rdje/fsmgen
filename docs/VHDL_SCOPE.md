@@ -101,6 +101,10 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - Bounded direct aggregate-output roots now lower as packed
   `std_logic_vector` ports for the two maintained fixtures; full VHDL
   record/array aggregate lowering remains deferred.
+- The active next direct VHDL implementation leaf is
+  `BACKEND-API-VALIDATION-FRONTIER.107.1`: lower non-signed vector
+  output-port next-signal assignments from unsized decimal literals into
+  VHDL-typed vector assignments. This is not broad expression-literal parity.
 - Composition/top VHDL is locked to the shipped structural-top leaves: the
   current pipeline and CLI accept `target_language => 'vhdl'` / `--language
   vhdl` only for the C3 external-RTL literal/concat fixture, the explicit
