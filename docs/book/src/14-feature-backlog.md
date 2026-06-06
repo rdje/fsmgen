@@ -4231,9 +4231,13 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.111` selects the next exact backend/API edge
-after direct VHDL signed vector output-port negative decimal literal assignment
-lowering shipped. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.111.1` owns direct VHDL non-signed vector
+output-port negative decimal literal lowering after selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.111` chose that edge. The selection probe
+generated `OUT : out std_logic_vector(7 downto 0)` and
+`signal OUT_next : std_logic_vector(7 downto 0);` for an 8-bit output shape,
+but failed before VHDL emission at arithmetic expression `'-1'`. Scalar
+negative output literals remain deferred. Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.110.1` lowers direct VHDL signed vector
 output-port next-signal assignments from negative decimal literals into
 VHDL-typed signed assignments, so the selected 8-bit signed interface-output
