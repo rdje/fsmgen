@@ -7,6 +7,9 @@ use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_child_entry_keys
+    normalized_semantic_composition_child_parameter_override_entry_keys
+    normalized_semantic_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_standalone_dt_child_entry_keys
     normalized_semantic_composition_standalone_dt_enable_family_entry_keys
@@ -19,6 +22,9 @@ our @EXPORT_OK = qw(
     build_normalized_semantic_intent_hir_contract
     normalized_semantic_intent_hir_contract_source
     normalized_semantic_intent_hir_composition_child_entry_keys
+    normalized_semantic_intent_hir_composition_child_parameter_override_entry_keys
+    normalized_semantic_intent_hir_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_intent_hir_composition_generated_child_entry_keys
     normalized_semantic_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_intent_hir_composition_standalone_dt_enable_family_entry_keys
@@ -53,6 +59,12 @@ sub build_normalized_semantic_intent_hir_contract {
         public_presence_keys => normalized_semantic_intent_hir_presence_keys(),
         optional_composition_keys => normalized_semantic_intent_hir_optional_composition_keys(),
         composition_child_entry_keys => normalized_semantic_intent_hir_composition_child_entry_keys(),
+        composition_child_parameter_override_entry_keys =>
+            normalized_semantic_intent_hir_composition_child_parameter_override_entry_keys(),
+        composition_child_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_intent_hir_composition_child_parameter_override_raw_value_extension_keys(),
+        composition_child_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
         composition_generated_child_entry_keys =>
             normalized_semantic_intent_hir_composition_generated_child_entry_keys(),
         composition_standalone_dt_child_entry_keys =>
@@ -71,7 +83,7 @@ sub build_normalized_semantic_intent_hir_contract {
         guidance => [
             q{Treat this contract as the bounded nested `semantic.forward_ir.intent_hir` object used by successful public normalized semantic JSON reports.},
             'The bounded public promise covers the current core intent-hir summary plus the current composition-only extension keys.',
-            'The composition child key families are aliases of the already bounded semantic.composition child and standalone-DT child schemas; nested child IR summaries remain delegated to their existing owners.',
+            'The composition child key families are aliases of the already bounded semantic.composition child and standalone-DT child schemas; nested child IR summaries and child parameter-override metadata remain delegated to their existing owners.',
             'Use the grouped presence_key_family_map to discover the bounded core and composition-only intent_hir key families without collecting those key-family lists separately.',
             'The nested `signal_analysis`, `explicit_system_contract`, `system_contract`, and `symbol_contract` branches remain separate public surfaces with their own owners; this contract only freezes the intent-hir object shell itself.',
         ],
@@ -129,6 +141,18 @@ sub normalized_semantic_intent_hir_composition_child_entry_keys {
     return normalized_semantic_composition_child_entry_keys();
 }
 
+sub normalized_semantic_intent_hir_composition_child_parameter_override_entry_keys {
+    return normalized_semantic_composition_child_parameter_override_entry_keys();
+}
+
+sub normalized_semantic_intent_hir_composition_child_parameter_override_raw_value_extension_keys {
+    return normalized_semantic_composition_child_parameter_override_raw_value_extension_keys();
+}
+
+sub normalized_semantic_intent_hir_composition_child_parameter_override_value_metadata_extension_keys {
+    return normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys();
+}
+
 sub normalized_semantic_intent_hir_composition_generated_child_entry_keys {
     return normalized_semantic_composition_generated_child_entry_keys();
 }
@@ -158,6 +182,12 @@ sub normalized_semantic_intent_hir_presence_key_family_map {
         public_presence_keys => normalized_semantic_intent_hir_presence_keys(),
         optional_composition_keys => normalized_semantic_intent_hir_optional_composition_keys(),
         composition_child_entry_keys => normalized_semantic_intent_hir_composition_child_entry_keys(),
+        composition_child_parameter_override_entry_keys =>
+            normalized_semantic_intent_hir_composition_child_parameter_override_entry_keys(),
+        composition_child_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_intent_hir_composition_child_parameter_override_raw_value_extension_keys(),
+        composition_child_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
         composition_generated_child_entry_keys =>
             normalized_semantic_intent_hir_composition_generated_child_entry_keys(),
         composition_standalone_dt_child_entry_keys =>

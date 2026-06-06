@@ -553,12 +553,12 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/CheckFailureDiagnosticContract.pm` — shared bounded nested-object contract for failure `diagnostic` payloads in public check JSON and normalized semantic JSON.
 - `perl/FSM/Support/CheckResultContract.pm` — bounded nested-object contract for successful public check JSON `result` payloads.
 - `perl/FSM/Support/CompositionReportContract.pm` — bounded sanitized composition provenance/report contract for semantic JSON.
-- `perl/FSM/Support/NormalizedSemanticCompositionContract.pm` — bounded nested-object contract for the `semantic.composition` summary in successful public normalized semantic JSON composition sources, including bounded `children[]`, `generated_children[]`, `standalone_dt_children[]`, and `shared_datapath_candidates[]` shallow/alias entry key families.
+- `perl/FSM/Support/NormalizedSemanticCompositionContract.pm` — bounded nested-object contract for the `semantic.composition` summary in successful public normalized semantic JSON composition sources, including bounded `children[]`, `children[].parameter_overrides[]`, `generated_children[]`, `standalone_dt_children[]`, and `shared_datapath_candidates[]` shallow/alias entry key families.
 - `perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm` — bounded nested-object contract for the `semantic.explicit_system_contract` summary in successful public normalized semantic JSON when that authored explicit contract is preserved.
 - `perl/FSM/Support/NormalizedSemanticForwardIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir` summary in successful public normalized semantic JSON.
 - `perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.lowered_rtl_ir` summary in successful public normalized semantic JSON, including output-drive, selector-conflict, standalone-DT multi-drive, and composition-only extension key families.
 - `perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.structural_rtl_ir` summary in successful public normalized semantic JSON, including bounded `auxiliary_assignments[]` scalar-string entry values, bounded `ports[]`, `nets[]`, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, nested `instances[].interface_ports[]`, nested `instances[].parameter_overrides[]` core plus optional raw-value/value-metadata extension keys, and nested `instances[].port_bindings[]` core plus typed-extension entry keys.
-- `perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.intent_hir` summary in successful public normalized semantic JSON, including its composition-only extension keys.
+- `perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.intent_hir` summary in successful public normalized semantic JSON, including its composition-only extension keys and composition-child alias key families.
 - `perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm` — bounded nested-object contract for the `semantic.signal_analysis` summary in successful public normalized semantic JSON, including the shared core signal-entry keys.
 - `perl/FSM/Support/NormalizedSemanticSystemContract.pm` — bounded nested-object contract for the `semantic.system_contract` summary in successful public normalized semantic JSON.
 - `perl/FSM/Support/NormalizedSemanticSymbolContract.pm` — bounded nested-object contract for the optional `semantic.symbol_contract` summary in successful public normalized semantic JSON symbol-rich sources.
@@ -791,9 +791,11 @@ current composition-only extension keys. For composition roots, that same owner
 also advertises bounded alias key families for
 `composition_children[]`, `composition_generated_children[]`, and
 `composition_standalone_dt_children[]` by delegating to the already bounded
-`semantic.composition` child and standalone-DT child schema owners. Nested child
-`intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries stay delegated
-to their existing bounded contracts:
+`semantic.composition` child and standalone-DT child schema owners. The
+`composition_children[].parameter_overrides[]` alias key families are likewise
+bounded and delegate to the structural instance parameter-override schema
+owner. Nested child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`
+summaries stay delegated to their existing bounded contracts:
 [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm).
 The optional `semantic.symbol_contract` summary inside that payload now also
 has its own bounded owner for symbol-rich sources:
@@ -803,15 +805,15 @@ bounded owner for the core module keys plus the current optional metric-key
 family:
 [perl/FSM/Support/NormalizedSemanticModuleContract.pm](perl/FSM/Support/NormalizedSemanticModuleContract.pm).
 The nested `semantic.composition` summary inside that payload now also has its
-own bounded owner for composition sources:
+own bounded owner for composition sources, including bounded
+`children[].parameter_overrides[]` alias key families that delegate to
+`semantic.forward_ir.structural_rtl_ir.instances[].parameter_overrides[]`:
 [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm).
 The current selected public-export hardening edge is
-`BACKEND-API-VALIDATION-FRONTIER.50.1`: publish bounded
-`semantic.composition.children[].parameter_overrides[]` and
-`semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]`
-alias key families by delegating to the already bounded structural instance
-parameter-override schema owners. The manifest is still not a full normalized
-semantic export stabilization promise.
+`BACKEND-API-VALIDATION-FRONTIER.51`: select the next exact backend/API/public-export
+edge after bounded composition child parameter-override alias schemas shipped.
+The manifest is still not a full normalized semantic export stabilization
+promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit
 bounded contract owner in
 [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](perl/FSM/Support/DiagnosticCodeRegistryContract.pm),

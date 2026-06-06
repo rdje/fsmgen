@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.50` (this commit) — selected bounded composition child parameter-override alias schemas. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.50.1` active frontier — publish semantic.composition.children[].parameter_overrides[] alias key families by delegating to structural instance parameter-override schema owners.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.50`; `BACKEND-API-VALIDATION-FRONTIER.49.1`; `BACKEND-API-VALIDATION-FRONTIER.49`; `BACKEND-API-VALIDATION-FRONTIER.48.1`; `BACKEND-API-VALIDATION-FRONTIER.48`; `BACKEND-API-VALIDATION-FRONTIER.47.1`; `BACKEND-API-VALIDATION-FRONTIER.47`; `BACKEND-API-VALIDATION-FRONTIER.46.1`; `BACKEND-API-VALIDATION-FRONTIER.46`; `BACKEND-API-VALIDATION-FRONTIER.45.1`; `BACKEND-API-VALIDATION-FRONTIER.45`; `BACKEND-API-VALIDATION-FRONTIER.44.1`; `BACKEND-API-VALIDATION-FRONTIER.44`; `BACKEND-API-VALIDATION-FRONTIER.43.1`.
-- in_flight_uncommitted: none expected after this `.50` selection commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.50.1` (this commit) — shipped bounded composition child parameter-override alias schemas. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.51` active frontier — select the next exact backend/API/public-export edge after composition child parameter-override alias schemas shipped.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.50.1`; `BACKEND-API-VALIDATION-FRONTIER.50`; `BACKEND-API-VALIDATION-FRONTIER.49.1`; `BACKEND-API-VALIDATION-FRONTIER.49`; `BACKEND-API-VALIDATION-FRONTIER.48.1`; `BACKEND-API-VALIDATION-FRONTIER.48`; `BACKEND-API-VALIDATION-FRONTIER.47.1`; `BACKEND-API-VALIDATION-FRONTIER.47`; `BACKEND-API-VALIDATION-FRONTIER.46.1`; `BACKEND-API-VALIDATION-FRONTIER.46`; `BACKEND-API-VALIDATION-FRONTIER.45.1`; `BACKEND-API-VALIDATION-FRONTIER.45`; `BACKEND-API-VALIDATION-FRONTIER.44.1`; `BACKEND-API-VALIDATION-FRONTIER.44`.
+- in_flight_uncommitted: none expected after this `.50.1` implementation commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

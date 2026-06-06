@@ -13,6 +13,9 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_contract_source
     normalized_semantic_forward_ir_intent_hir_contract_source
     normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
@@ -65,6 +68,9 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
@@ -362,6 +368,24 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
             normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys(),
             normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys(),
             FSM::Support::NormalizedSemanticReportContract::normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys(),
+        ],
+        [
+            'intent_hir_composition_child_parameter_override_entry_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_entry_keys(),
+            normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_entry_keys(),
+            FSM::Support::NormalizedSemanticReportContract::normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_entry_keys(),
+        ],
+        [
+            'intent_hir_composition_child_parameter_override_raw_value_extension_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys(),
+            normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys(),
+            FSM::Support::NormalizedSemanticReportContract::normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys(),
+        ],
+        [
+            'intent_hir_composition_child_parameter_override_value_metadata_extension_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
+            normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
+            FSM::Support::NormalizedSemanticReportContract::normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
         ],
         [
             'intent_hir_composition_generated_child_entry_keys',

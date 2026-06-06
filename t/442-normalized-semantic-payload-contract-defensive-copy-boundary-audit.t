@@ -11,6 +11,9 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     build_normalized_semantic_payload_contract
     normalized_semantic_payload_composition_child_entry_keys
+    normalized_semantic_payload_composition_child_parameter_override_entry_keys
+    normalized_semantic_payload_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_payload_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_payload_composition_generated_child_entry_keys
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -31,6 +34,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
@@ -155,6 +161,18 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
         {
             label => 'forward_ir_intent_hir_composition_child_entry_keys',
             build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_composition_child_parameter_override_entry_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_entry_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys,
         },
         {
             label => 'forward_ir_intent_hir_composition_generated_child_entry_keys',
@@ -341,6 +359,18 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
             build => \&normalized_semantic_payload_composition_child_entry_keys,
         },
         {
+            label => 'composition_child_parameter_override_entry_keys',
+            build => \&normalized_semantic_payload_composition_child_parameter_override_entry_keys,
+        },
+        {
+            label => 'composition_child_parameter_override_raw_value_extension_keys',
+            build => \&normalized_semantic_payload_composition_child_parameter_override_raw_value_extension_keys,
+        },
+        {
+            label => 'composition_child_parameter_override_value_metadata_extension_keys',
+            build => \&normalized_semantic_payload_composition_child_parameter_override_value_metadata_extension_keys,
+        },
+        {
             label => 'composition_generated_child_entry_keys',
             build => \&normalized_semantic_payload_composition_generated_child_entry_keys,
         },
@@ -427,6 +457,9 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
     is_deeply($family_map->{public_presence_keys}, normalized_semantic_payload_presence_keys(), 'public presence family entry matches helper');
     is_deeply($family_map->{optional_child_presence_keys}, normalized_semantic_payload_optional_child_presence_keys(), 'optional child family entry matches helper');
     is_deeply($family_map->{composition_child_entry_keys}, normalized_semantic_payload_composition_child_entry_keys(), 'composition child entry family matches helper');
+    is_deeply($family_map->{composition_child_parameter_override_entry_keys}, normalized_semantic_payload_composition_child_parameter_override_entry_keys(), 'composition child parameter-override core entry family matches helper');
+    is_deeply($family_map->{composition_child_parameter_override_raw_value_extension_keys}, normalized_semantic_payload_composition_child_parameter_override_raw_value_extension_keys(), 'composition child parameter-override raw-value extension family matches helper');
+    is_deeply($family_map->{composition_child_parameter_override_value_metadata_extension_keys}, normalized_semantic_payload_composition_child_parameter_override_value_metadata_extension_keys(), 'composition child parameter-override value-metadata extension family matches helper');
     is_deeply($family_map->{composition_generated_child_entry_keys}, normalized_semantic_payload_composition_generated_child_entry_keys(), 'composition generated-child entry family matches helper');
     is_deeply($family_map->{composition_standalone_dt_child_entry_keys}, normalized_semantic_payload_composition_standalone_dt_child_entry_keys(), 'composition standalone-DT child entry family matches helper');
     is_deeply($family_map->{composition_standalone_dt_enable_family_entry_keys}, normalized_semantic_payload_composition_standalone_dt_enable_family_entry_keys(), 'composition standalone-DT enable-family entry family matches helper');
@@ -457,6 +490,18 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
         [
             'forward_ir_intent_hir_composition_child_entry_keys',
             normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_child_parameter_override_entry_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
         ],
         [
             'forward_ir_intent_hir_composition_generated_child_entry_keys',

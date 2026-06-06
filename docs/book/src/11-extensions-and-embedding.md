@@ -2118,8 +2118,11 @@ keys emitted today for top roots. For composition roots, it also advertises
 bounded alias key families for `composition_children[]`,
 `composition_generated_children[]`, and `composition_standalone_dt_children[]`
 by delegating to the existing `semantic.composition` child and standalone-DT
-child schema owners. Nested child `intent_hir`, `lowered_rtl_ir`, and
-`structural_rtl_ir` summaries stay delegated to their existing bounded
+child schema owners. It also advertises
+`composition_children[].parameter_overrides[]` key families by delegating
+through the composition child alias to the structural instance
+parameter-override schema owner. Nested child `intent_hir`, `lowered_rtl_ir`,
+and `structural_rtl_ir` summaries stay delegated to their existing bounded
 contracts instead of being duplicated inside the IntentHIR alias schemas.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
@@ -2149,8 +2152,11 @@ The nested `semantic.composition` summary inside that payload now also has its
 own bounded nested-object contract for composition sources:
 [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm)
 owns the composition key family, including bounded `children[]` and
-`generated_children[]` shallow entry key families plus bounded
-`standalone_dt_children[]` shallow entries for reusable-DT child summaries.
+`children[].parameter_overrides[]` alias key families, `generated_children[]`
+shallow entry key families, and bounded `standalone_dt_children[]` shallow
+entries for reusable-DT child summaries. `children[].parameter_overrides[]`
+uses the same core, raw-value-extension, and value-metadata-extension schema as
+`semantic.forward_ir.structural_rtl_ir.instances[].parameter_overrides[]`.
 Standalone-DT child entries include the current reusable-DT names,
 enable-family metadata, module enable-family metadata, and nested multi-drive
 target metadata. The same owner also advertises `shared_datapath_candidates[]`
@@ -2160,9 +2166,9 @@ candidate schemas, while keeping nested provenance-report ownership delegated to
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded composition summary, collection,
-child-entry, generated-child-entry, standalone-DT-child, shared-datapath alias,
-and nested provenance key families from one place instead of collecting the
-individual key-family lists separately.
+child-entry, child parameter-override alias, generated-child-entry,
+standalone-DT-child, shared-datapath alias, and nested provenance key families
+from one place instead of collecting the individual key-family lists separately.
 
 The child, generated-child, and standalone-DT-child entry families describe
 only the shallow composition child summaries. Their nested `intent_hir`,
@@ -2170,6 +2176,9 @@ only the shallow composition child summaries. Their nested `intent_hir`,
 existing bounded child owners instead of being duplicated in the composition
 contract. Standalone-DT child multi-drive target metadata reuses the already
 bounded lowered-RTL standalone-DT multi-drive target and assertion shapes.
+Composition child parameter-override metadata reuses the already bounded
+structural instance parameter-override core, raw-value-extension, and
+value-metadata-extension shapes.
 Shared-datapath alias metadata reuses the already bounded lowered-RTL
 shared-datapath candidate, contributor, drive-intent, aggregate-enable,
 assertion, and bound-connection shapes.

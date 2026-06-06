@@ -10,6 +10,9 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_child_entry_keys
+    normalized_semantic_composition_child_parameter_override_entry_keys
+    normalized_semantic_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_contract_source
     normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_presence_keys
@@ -37,6 +40,9 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_contract_source
     normalized_semantic_forward_ir_intent_hir_contract_source
     normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
@@ -106,6 +112,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     build_normalized_semantic_payload_contract
     normalized_semantic_payload_contract_source
     normalized_semantic_payload_composition_child_entry_keys
+    normalized_semantic_payload_composition_child_parameter_override_entry_keys
+    normalized_semantic_payload_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_payload_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_payload_composition_generated_child_entry_keys
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -132,6 +141,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_nested_presence_key_map
     normalized_semantic_payload_forward_ir_intent_hir_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
@@ -258,6 +270,26 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_payload_composition_child_entry_keys(),
         'grouped semantic-payload family map publishes composition child entry keys',
     );
+    for my $case (
+        [
+            'composition_child_parameter_override_entry_keys',
+            normalized_semantic_payload_composition_child_parameter_override_entry_keys(),
+        ],
+        [
+            'composition_child_parameter_override_raw_value_extension_keys',
+            normalized_semantic_payload_composition_child_parameter_override_raw_value_extension_keys(),
+        ],
+        [
+            'composition_child_parameter_override_value_metadata_extension_keys',
+            normalized_semantic_payload_composition_child_parameter_override_value_metadata_extension_keys(),
+        ],
+    ) {
+        is_deeply(
+            $contract->{presence_key_family_map}{$case->[0]},
+            $case->[1],
+            "grouped semantic-payload family map publishes $case->[0]",
+        );
+    }
     is_deeply(
         $contract->{presence_key_family_map}{composition_generated_child_entry_keys},
         normalized_semantic_payload_composition_generated_child_entry_keys(),
@@ -979,6 +1011,39 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_composition_child_entry_keys(),
         'semantic payload composition child entry keys map to the nested composition owner',
     );
+    for my $case (
+        [
+            'composition_child_parameter_override_entry_keys',
+            normalized_semantic_payload_composition_child_parameter_override_entry_keys(),
+            normalized_semantic_composition_child_parameter_override_entry_keys(),
+            'core entry',
+        ],
+        [
+            'composition_child_parameter_override_raw_value_extension_keys',
+            normalized_semantic_payload_composition_child_parameter_override_raw_value_extension_keys(),
+            normalized_semantic_composition_child_parameter_override_raw_value_extension_keys(),
+            'raw-value extension',
+        ],
+        [
+            'composition_child_parameter_override_value_metadata_extension_keys',
+            normalized_semantic_payload_composition_child_parameter_override_value_metadata_extension_keys(),
+            normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys(),
+            'value-metadata extension',
+        ],
+    ) {
+        my ($field, $payload_keys, $composition_keys, $label) = @{$case};
+
+        is_deeply(
+            $contract->{$field},
+            $payload_keys,
+            "contract publishes the bounded composition child parameter-override $label key list",
+        );
+        is_deeply(
+            $payload_keys,
+            $composition_keys,
+            "semantic payload composition child parameter-override $label keys map to the nested composition owner",
+        );
+    }
     is_deeply(
         $contract->{composition_generated_child_entry_keys},
         normalized_semantic_payload_composition_generated_child_entry_keys(),
@@ -1115,6 +1180,21 @@ sub intent_hir_alias_cases {
             'forward_ir_intent_hir_composition_child_entry_keys',
             normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys(),
             normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_child_parameter_override_entry_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_entry_keys(),
+            normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys(),
+            normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
+            normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
         ],
         [
             'forward_ir_intent_hir_composition_generated_child_entry_keys',

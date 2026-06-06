@@ -140,7 +140,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.49`,
     `BACKEND-API-VALIDATION-FRONTIER.49.1`,
     `BACKEND-API-VALIDATION-FRONTIER.50`,
-    `BACKEND-API-VALIDATION-FRONTIER.50.1`
+    `BACKEND-API-VALIDATION-FRONTIER.50.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.51`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -940,9 +941,16 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.50: select child parameter overrides`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.50.1`
-  Status: `active`
+  Status: `done`
   Goal: `Publish composition child parameter-override alias schemas in the normalized semantic composition contract.`
   Acceptance: `FSM::Support::NormalizedSemanticCompositionContract advertises bounded semantic.composition.children[].parameter_overrides[] alias entry keys plus raw-value/value-metadata extension key families by delegating to the already bounded structural instance parameter-override schema helpers. The intent-HIR composition child alias, payload/report, capability-manifest, README, mdBook, knowledge-map, defensive-copy audits, and runtime contract tests inherit or describe those alias key families. The slice only covers composition child parameter_overrides[] carried by children[]/composition_children[] entries; generated_children[], standalone-DT children, unrelated structural instance payloads, and full normalized semantic export stabilization remain out of scope.`
+  Verification: `perl -Iperl -c perl/FSM/Support/NormalizedSemanticCompositionContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm; perl -Iperl -c t/333-normalized-semantic-composition-contract.t; perl -Iperl -c t/339-normalized-semantic-intent-hir-contract.t; perl -Iperl -c t/334-normalized-semantic-forward-ir-contract.t; perl -Iperl -c t/330-normalized-semantic-payload-contract.t; perl -Iperl -c t/311-normalized-semantic-report-contract.t; perl -Iperl -c t/297-capability-manifest.t; perl -Iperl -c t/354-normalized-semantic-child-runtime-contract-audit.t; perl -Iperl -c t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t; perl -Iperl -c t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t; focused normalized semantic composition child parameter-override prove bundle; broader normalized semantic contract/runtime prove bundle; manifest runtime prove bundle; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.50.1: ship child parameter override aliases`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.51`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after composition child parameter-override alias schemas shipped.`
+  Acceptance: `pending selection`
   Verification: `pending`
   Commit: `pending`
 
@@ -1054,7 +1062,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 102 | `BACKEND-API-VALIDATION-FRONTIER.49` | `done` | Selected normalized semantic intent-HIR composition child alias schemas after semantic JSON probes showed the intent-HIR composition child arrays mirror the already bounded composition child schemas. |
 | 103 | `BACKEND-API-VALIDATION-FRONTIER.49.1` | `done` | Published intent-HIR composition child alias key families by delegating to the existing composition child schema owners before any full normalized semantic export stabilization. |
 | 104 | `BACKEND-API-VALIDATION-FRONTIER.50` | `done` | Selected composition child `parameter_overrides[]` alias schemas after evidence showed child summaries mirror the already bounded structural instance parameter-override entries. |
-| 105 | `BACKEND-API-VALIDATION-FRONTIER.50.1` | `active` | Publish composition child parameter-override alias key families by delegating to the existing structural instance parameter-override schema owners. |
+| 105 | `BACKEND-API-VALIDATION-FRONTIER.50.1` | `done` | Published composition child parameter-override alias key families by delegating to the existing structural instance parameter-override schema owners. |
+| 106 | `BACKEND-API-VALIDATION-FRONTIER.51` | `active` | Select the next exact backend/API/public-export edge after composition child parameter-override alias schemas shipped. |
 
 ## Decisions
 
@@ -1180,6 +1189,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.49` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`, `perl/FSM/Support/NormalizedSemanticCompositionContract.pm`, `perl/FSM/Support/NormalizedSemanticPayloadContract.pm`, `perl/FSM/Support/NormalizedSemanticReportContract.pm`, `t/160-composition-top-forward-ir-surface.t`, `t/138-composition-standalone-dt-export-metadata.t`, `t/333-normalized-semantic-composition-contract.t`, and `t/354-normalized-semantic-child-runtime-contract-audit.t`; strict semantic JSON probes over `fsm/apb_tb.fsm` and `t/corpus/standalone_dtc_explicit_system_autowire.fsm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected intent-HIR composition child alias schemas for `.49.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.49.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; `perl -Iperl -c t/339-normalized-semantic-intent-hir-contract.t`; `perl -Iperl -c t/334-normalized-semantic-forward-ir-contract.t`; `perl -Iperl -c t/330-normalized-semantic-payload-contract.t`; `perl -Iperl -c t/311-normalized-semantic-report-contract.t`; `perl -Iperl -c t/297-capability-manifest.t`; `perl -Iperl -c t/354-normalized-semantic-child-runtime-contract-audit.t`; `perl -Iperl -c t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t`; `perl -Iperl -c t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t`; focused normalized semantic intent-HIR alias prove bundle; broader normalized semantic contract/runtime prove bundle; manifest runtime prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; bounded intent-HIR composition child alias schemas shipped through intent-HIR, forward-IR, payload/report, manifest, docs, knowledge-map, defensive-copy audits, and runtime schema audit |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.50` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `KNOWLEDGE_MAP.md`, `docs/knowledge/normalized-semantic-structural-instance-parameter-override-entry-schema.md`, `perl/FSM/Support/NormalizedSemanticCompositionContract.pm`, `perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`, `perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm`, `t/91-composition-multi-rtl-children.t`, `t/292-composition-generated-child-parameter-overrides.t`, `t/333-normalized-semantic-composition-contract.t`, and `t/339-normalized-semantic-intent-hir-contract.t`; `prove -Iperl t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t t/341-normalized-semantic-structural-rtl-ir-contract.t t/333-normalized-semantic-composition-contract.t t/339-normalized-semantic-intent-hir-contract.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected composition child parameter-override alias schemas for `.50.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.50.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticCompositionContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; edited-test syntax checks; focused normalized semantic composition child parameter-override prove bundle; broader normalized semantic contract/runtime prove bundle; manifest runtime prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; bounded composition child parameter-override alias schemas shipped through composition, intent-HIR, forward-IR, payload/report, manifest, docs, knowledge-map, defensive-copy audits, and runtime schema audit |
 
 ## Commit Log
 
@@ -1289,6 +1299,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.49` | `BACKEND-API-VALIDATION-FRONTIER.49: select intent-HIR child aliases` | selected `.49.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.49.1` | `BACKEND-API-VALIDATION-FRONTIER.49.1: ship intent-HIR child aliases` | this slice; activates `.50` |
 | `BACKEND-API-VALIDATION-FRONTIER.50` | `BACKEND-API-VALIDATION-FRONTIER.50: select child parameter overrides` | selected `.50.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.50.1` | `BACKEND-API-VALIDATION-FRONTIER.50.1: ship child parameter override aliases` | this slice; activates `.51` |
 
 ## Changelog
 
@@ -1818,3 +1829,12 @@ items named in the 2026-06-05 remaining-work inventory.
   after existing composition tests showed child summaries mirror the already
   bounded structural instance parameter-override schema families. Activated
   `.50.1` before any implementation/test/source edits.
+- `2026-06-06`: Completed `.50.1`; normalized semantic composition contracts
+  now advertise bounded `semantic.composition.children[].parameter_overrides[]`
+  and `semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]`
+  alias key families by delegating to the existing structural instance
+  parameter-override core, raw-value-extension, and value-metadata-extension
+  schemas through composition, intent-HIR, forward-IR, payload/report,
+  capability-manifest, README, mdBook, knowledge-map, defensive-copy audits,
+  and runtime schema coverage. Activated `.51` to select the next
+  backend/API/public-export edge.

@@ -16,6 +16,9 @@ use FSM::Support::CompositionReportContract qw(
 );
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_child_entry_keys
+    normalized_semantic_composition_child_parameter_override_entry_keys
+    normalized_semantic_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_presence_keys
     normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys
@@ -39,6 +42,9 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
 );
 use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_composition_child_entry_keys
+    normalized_semantic_intent_hir_composition_child_parameter_override_entry_keys
+    normalized_semantic_intent_hir_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_intent_hir_composition_generated_child_entry_keys
     normalized_semantic_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_intent_hir_composition_standalone_dt_enable_family_entry_keys
@@ -73,6 +79,9 @@ use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
     normalized_semantic_signal_analysis_presence_keys
 );
 use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys
     normalized_semantic_structural_rtl_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticSymbolContract qw(
@@ -549,6 +558,128 @@ subtest 'composition semantic payload keeps bounded child-owner contracts at run
         $semantic->{composition}{provenance_report},
         composition_report_public_top_level_keys(),
         'composition semantic.composition.provenance_report keeps bounded public keys',
+    );
+};
+
+subtest 'parameterized composition child semantic payload keeps bounded parameter-override aliases at runtime' => sub {
+    my $composition_path = write_fsm('parameterized_regular_child_semantic_schema.fsm', <<'FSM');
+(?top:parameterized_regular_child_top
+  (+constants
+    (OVERRIDE_WIDTH 16)
+  )
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (WIDTH OVERRIDE_WIDTH)
+      (RESET_VALUE 8'hA5)
+    )
+  )
+  (?wiring:wiring
+    (payload_in u_uart.data_in)
+    (u_uart.txd serial_out)
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (WIDTH 8)
+    (RESET_VALUE 8'h00)
+  )
+  core_clk:clock
+  rst_async_n:reset
+  data_in<16:data
+  txd>:data
+)
+FSM
+
+    my $decoded = run_semantic_json($composition_path);
+    my $semantic = $decoded->{semantic};
+
+    my $structural_instance = $semantic->{forward_ir}{structural_rtl_ir}{instances}[0] || {};
+    is(
+        scalar(@{$structural_instance->{parameter_overrides} || []}),
+        2,
+        'parameterized regular child structural instance exposes two parameter overrides',
+    );
+    my %structural_override_by_name =
+        map { $_->{name} => $_ } @{$structural_instance->{parameter_overrides} || []};
+    $structural_override_by_name{WIDTH} ||= {};
+    assert_keys_present(
+        $structural_override_by_name{WIDTH},
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        'structural instance WIDTH parameter override keeps bounded core keys',
+    );
+    assert_keys_present(
+        $structural_override_by_name{WIDTH},
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        'structural instance WIDTH parameter override keeps bounded raw-value extension keys',
+    );
+    assert_keys_present(
+        $structural_override_by_name{WIDTH},
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+        'structural instance WIDTH parameter override keeps bounded value-metadata extension keys',
+    );
+
+    my %composition_child_by_instance =
+        map { $_->{instance_name} => $_ } @{$semantic->{composition}{children} || []};
+    my $composition_child = $composition_child_by_instance{u_uart} || {};
+    ok($composition_child_by_instance{u_uart}, 'composition child list includes the parameterized RTL child');
+    is_deeply(
+        $composition_child->{parameter_overrides},
+        $structural_instance->{parameter_overrides},
+        'composition child parameter_overrides aliases structural instance parameter_overrides',
+    );
+    my %composition_override_by_name =
+        map { $_->{name} => $_ } @{$composition_child->{parameter_overrides} || []};
+    $composition_override_by_name{WIDTH} ||= {};
+    assert_keys_present(
+        $composition_override_by_name{WIDTH},
+        normalized_semantic_composition_child_parameter_override_entry_keys(),
+        'composition child WIDTH parameter override keeps bounded core keys',
+    );
+    assert_keys_present(
+        $composition_override_by_name{WIDTH},
+        normalized_semantic_composition_child_parameter_override_raw_value_extension_keys(),
+        'composition child WIDTH parameter override keeps bounded raw-value extension keys',
+    );
+    assert_keys_present(
+        $composition_override_by_name{WIDTH},
+        normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys(),
+        'composition child WIDTH parameter override keeps bounded value-metadata extension keys',
+    );
+
+    my %intent_child_by_instance =
+        map { $_->{instance_name} => $_ } @{$semantic->{forward_ir}{intent_hir}{composition_children} || []};
+    my $intent_child = $intent_child_by_instance{u_uart} || {};
+    ok($intent_child_by_instance{u_uart}, 'intent-HIR child list includes the parameterized RTL child');
+    is_deeply(
+        $intent_child->{parameter_overrides},
+        $composition_child->{parameter_overrides},
+        'intent-HIR composition child parameter_overrides aliases composition child parameter_overrides',
+    );
+    my %intent_override_by_name =
+        map { $_->{name} => $_ } @{$intent_child->{parameter_overrides} || []};
+    $intent_override_by_name{WIDTH} ||= {};
+    assert_keys_present(
+        $intent_override_by_name{WIDTH},
+        normalized_semantic_intent_hir_composition_child_parameter_override_entry_keys(),
+        'intent-HIR child WIDTH parameter override keeps bounded core keys',
+    );
+    assert_keys_present(
+        $intent_override_by_name{WIDTH},
+        normalized_semantic_intent_hir_composition_child_parameter_override_raw_value_extension_keys(),
+        'intent-HIR child WIDTH parameter override keeps bounded raw-value extension keys',
+    );
+    assert_keys_present(
+        $intent_override_by_name{WIDTH},
+        normalized_semantic_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
+        'intent-HIR child WIDTH parameter override keeps bounded value-metadata extension keys',
     );
 };
 

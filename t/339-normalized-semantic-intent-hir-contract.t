@@ -10,6 +10,9 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_child_entry_keys
+    normalized_semantic_composition_child_parameter_override_entry_keys
+    normalized_semantic_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_standalone_dt_child_entry_keys
     normalized_semantic_composition_standalone_dt_enable_family_entry_keys
@@ -21,6 +24,9 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     build_normalized_semantic_intent_hir_contract
     normalized_semantic_intent_hir_contract_source
     normalized_semantic_intent_hir_composition_child_entry_keys
+    normalized_semantic_intent_hir_composition_child_parameter_override_entry_keys
+    normalized_semantic_intent_hir_composition_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_intent_hir_composition_generated_child_entry_keys
     normalized_semantic_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_intent_hir_composition_standalone_dt_enable_family_entry_keys
@@ -72,6 +78,21 @@ subtest 'contract exposes the bounded normalized semantic intent-hir object' => 
             'composition_child_entry_keys',
             normalized_semantic_intent_hir_composition_child_entry_keys(),
             normalized_semantic_composition_child_entry_keys(),
+        ],
+        [
+            'composition_child_parameter_override_entry_keys',
+            normalized_semantic_intent_hir_composition_child_parameter_override_entry_keys(),
+            normalized_semantic_composition_child_parameter_override_entry_keys(),
+        ],
+        [
+            'composition_child_parameter_override_raw_value_extension_keys',
+            normalized_semantic_intent_hir_composition_child_parameter_override_raw_value_extension_keys(),
+            normalized_semantic_composition_child_parameter_override_raw_value_extension_keys(),
+        ],
+        [
+            'composition_child_parameter_override_value_metadata_extension_keys',
+            normalized_semantic_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
+            normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys(),
         ],
         [
             'composition_generated_child_entry_keys',

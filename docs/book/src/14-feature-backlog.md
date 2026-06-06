@@ -3956,9 +3956,12 @@ metadata. It also advertises bounded alias key families for
 `semantic.forward_ir.intent_hir.composition_generated_children[]`, and
 `semantic.forward_ir.intent_hir.composition_standalone_dt_children[]` by
 delegating to the existing `semantic.composition` child and standalone-DT child
-schema owners. Contributor and child `intent_hir`, `lowered_rtl_ir`, and
-`structural_rtl_ir` summaries stay delegated to their existing bounded
-contracts. The
+schema owners. It also advertises
+`semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]`
+by delegating through the composition child alias to the structural instance
+parameter-override schema owner. Contributor and child `intent_hir`,
+`lowered_rtl_ir`, and `structural_rtl_ir` summaries stay delegated to their
+existing bounded contracts. The
 `semantic.forward_ir.structural_rtl_ir` contract also advertises bounded
 `ports[]` core entry keys, composition-top port extension keys, and bounded
 `nets[]`, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, and
@@ -3966,13 +3969,14 @@ nested `instances[].interface_ports[]` plus `instances[].port_bindings[]`
 core and typed-extension entry keys. It now also advertises
 `instances[].parameter_overrides[]` core, raw-value-extension, and
 value-metadata-extension entry keys, and advertises `auxiliary_assignments[]`
-as scalar string assignment-line entries. The manifest is still not a full
-normalized semantic export.
+as scalar string assignment-line entries. The `semantic.composition` contract
+now also advertises `children[].parameter_overrides[]` as aliases of those same
+structural instance parameter-override core, raw-value-extension, and
+value-metadata-extension schemas. The manifest is still not a full normalized
+semantic export.
 
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.50.1` will publish bounded
-`semantic.composition.children[].parameter_overrides[]` and
-`semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]`
-alias key families by delegating to the already bounded structural instance
-parameter-override schema owners. Full normalized semantic export stabilization
-remains out of scope.
+`BACKEND-API-VALIDATION-FRONTIER.51` will select the next exact
+backend/API/public-export edge after bounded composition child
+parameter-override alias schemas shipped. Full normalized semantic export
+stabilization remains out of scope.
