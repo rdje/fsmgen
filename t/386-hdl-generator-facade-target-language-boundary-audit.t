@@ -761,6 +761,97 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes bounded generated-FSM aggregate generic-map VHDL behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_generated_fsmc_aggregate_generic_map_top.fsm');
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:facade_vhdl_generated_fsmc_aggregate_generic_map_top
+  (+constants
+    (LOCAL_LANES (8'hA5 8'h3C))
+    (LOCAL_FRAME ((mode 2'b10) (flag 1)))
+  )
+  (?ports:public_io
+    clk
+    rst_n
+    result_data>
+  )
+  (?fsmc:producer implicit_autowire_producer
+    (params
+      (LANES LOCAL_LANES)
+      (FRAME LOCAL_FRAME)
+    )
+  )
+  (?fsmc:consumer implicit_autowire_consumer)
+  (?wiring:wiring
+    (producer.output_data consumer.input_data)
+    (consumer.result_data result_data)
+  )
+)
+
+(?fsm:implicit_autowire_producer
+  (+params
+    (LANES (8'h00 8'h00))
+    (FRAME ((mode 2'b00) (flag 0)))
+  )
+  (+size
+    (output_data 1)
+  )
+
+  (-drive_outputs
+    (= (output_data> 1'b1))
+  )
+)
+
+(?fsm:implicit_autowire_consumer
+  (+size
+    (input_data 1)
+    (result_data 1)
+  )
+
+  (-drive_outputs
+    (= (result_data> input_data))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_vhdl_generated_fsmc_aggregate_generic_map_top\s+is\b/s,
+        'explicit VHDL facade generation emits the generated-FSM aggregate generic-map composition entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bLANES\s+:\s+std_logic_vector\(15\s+downto\s+0\)\s*:=\s*"0000000000000000"/s,
+        'explicit VHDL facade generation emits the generated child packed-list generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bFRAME\s+:\s+std_logic_vector\(2\s+downto\s+0\)\s*:=\s*"000"/s,
+        'explicit VHDL facade generation emits the generated child packed-map generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bproducer\s+:\s+entity\s+work\.implicit_autowire_producer\s+generic\s+map\s*\([^)]*\bLANES\s+=>\s+"1010010100111100"[^)]*\bFRAME\s+=>\s+"101"[^)]*\)\s+port\s+map\s*\(/s,
+        'explicit VHDL facade generation emits the generated-FSM aggregate generic map before the port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.LANES\s*\(|\.FRAME\s*\(|16'b|3'b/s,
+        'explicit VHDL generated-FSM aggregate generic-map generation does not leak SystemVerilog syntax or packed literals',
+    );
+};
+
 subtest 'facade target_language option routes bounded APB/C4 composition VHDL structural top behavior' => sub {
     my $composition_path = repo_file('fsm/apb_tb.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(

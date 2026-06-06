@@ -929,6 +929,9 @@ Multi-bit sized bitstring generic maps also emit before the generated child
 port map, such as `RESET_VALUE => "10100101"` for a source override of
 `RESET_VALUE 8'hA5`, against the child VHDL `std_logic_vector` generic
 declaration.
+Resolved packed aggregate generic maps also emit before the generated child
+port map, such as `LANES => "1010010100111100"` and `FRAME => "101"`, against
+the child VHDL `std_logic_vector` generic declarations.
 The APB/C4 generated-FSM fixture in `fsm/apb_tb.fsm` emits the APB
 requester/completer child VHDL
 entities, vector APB structural signals, deterministic shared-datapath sink
@@ -2338,13 +2341,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.81.1`, which owns the bounded C2
-generated-FSM resolved packed aggregate VHDL generic-map edge selected by
-`.81`. The target shape is a generated child with resolved packed aggregate
-overrides such as `LANES LOCAL_LANES` and `FRAME LOCAL_FRAME`, resolved before
-emission to top instance generic maps such as
-`LANES => "1010010100111100"` and `FRAME => "101"`; until that leaf commits,
-shipped VHDL behavior is unchanged.
+`BACKEND-API-VALIDATION-FRONTIER.82`, which selects the next exact backend/API
+edge after bounded C2 generated-FSM resolved packed aggregate VHDL generic-map
+actuals shipped in `.81.1`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit

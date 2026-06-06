@@ -302,11 +302,15 @@ sub _entries_match_widths ($entries, $expected_widths) {
 sub _has_only_supported_generated_fsm_generic_overrides ($instance) {
     my @overrides = @{$instance->parameter_overrides || []};
     for my $override (@overrides) {
-        return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
+        my $kind = $override->{value_kind} // 'scalar';
+        my $is_scalar = $kind eq 'scalar';
+        my $is_packed_aggregate = $kind eq 'list' || $kind eq 'map';
+        return 0 unless $is_scalar || $is_packed_aggregate;
+
         my $value = $override->{value_text};
         return 0 unless defined($value);
-        next if $value =~ /\A-?\d+\z/;
-        next if _is_scalar_integer_expression($value);
+        next if $is_scalar && $value =~ /\A-?\d+\z/;
+        next if $is_scalar && _is_scalar_integer_expression($value);
         next if _is_multi_bit_sized_bitstring_literal($value);
         return 0;
     }
