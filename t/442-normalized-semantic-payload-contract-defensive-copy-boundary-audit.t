@@ -30,6 +30,13 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
@@ -144,6 +151,34 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
         {
             label => 'forward_ir_intent_hir_optional_composition_keys',
             build => \&normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_composition_child_entry_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_composition_generated_child_entry_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_entry_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_composition_standalone_dt_child_entry_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys,
         },
         {
             label => 'forward_ir_lowered_rtl_ir_keys',
@@ -418,6 +453,42 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
         normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys(),
         'intent-HIR optional composition family entry matches helper',
     );
+    for my $case (
+        [
+            'forward_ir_intent_hir_composition_child_entry_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_generated_child_entry_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_standalone_dt_child_entry_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys(),
+        ],
+    ) {
+        is_deeply(
+            $family_map->{$case->[0]},
+            $case->[1],
+            "$case->[0] family matches helper",
+        );
+    }
     is_deeply(
         $family_map->{forward_ir_lowered_rtl_ir_optional_composition_keys},
         normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys(),

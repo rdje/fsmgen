@@ -180,6 +180,13 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_composition_standalone_dt_module_enable_family_keys
     normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys
@@ -1103,6 +1110,68 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_intent_hir_optional_composition_keys} || []}) >= 11,
         'manifest advertises bounded normalized semantic forward-ir intent-hir composition-only key presence',
     );
+    for my $case (
+        [
+            'success_forward_ir_intent_hir_composition_child_entry_keys',
+            'forward_ir_intent_hir_composition_child_entry_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys(),
+            'intent-HIR composition child entry keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_composition_generated_child_entry_keys',
+            'forward_ir_intent_hir_composition_generated_child_entry_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys(),
+            'intent-HIR composition generated-child entry keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys',
+            'forward_ir_intent_hir_composition_standalone_dt_child_entry_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys(),
+            'intent-HIR composition standalone-DT child entry keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys',
+            'forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys(),
+            'intent-HIR composition standalone-DT enable-family entry keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys',
+            'forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys(),
+            'intent-HIR composition standalone-DT module-enable-family keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys',
+            'forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys(),
+            'intent-HIR composition standalone-DT multi-drive target entry keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys',
+            'forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys(),
+            'intent-HIR composition standalone-DT multi-drive assertion keys',
+        ],
+    ) {
+        my ($report_field, $semantic_field, $expected, $label) = @{$case};
+
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{$report_field},
+            $expected,
+            "manifest records exact normalized semantic $label",
+        );
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{$report_field},
+            $expected,
+            "manifest report family map records $label",
+        );
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{semantic_presence_key_family_map}{$semantic_field},
+            $expected,
+            "manifest semantic family map records $label",
+        );
+    }
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_presence_keys} || []}) >= 7,
         'manifest advertises bounded normalized semantic forward-ir lowered-rtl-ir core key presence',

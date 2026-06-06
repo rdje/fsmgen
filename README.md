@@ -787,7 +787,13 @@ typed-extension entry keys:
 [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm).
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded owner for the current intent-hir shell plus the
-current composition-only extension keys:
+current composition-only extension keys. For composition roots, that same owner
+also advertises bounded alias key families for
+`composition_children[]`, `composition_generated_children[]`, and
+`composition_standalone_dt_children[]` by delegating to the already bounded
+`semantic.composition` child and standalone-DT child schema owners. Nested child
+`intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries stay delegated
+to their existing bounded contracts:
 [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm).
 The optional `semantic.symbol_contract` summary inside that payload now also
 has its own bounded owner for symbol-rich sources:
@@ -800,10 +806,10 @@ The nested `semantic.composition` summary inside that payload now also has its
 own bounded owner for composition sources:
 [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm).
 The current selected public-export hardening edge is
-`BACKEND-API-VALIDATION-FRONTIER.49.1`: publish bounded
-`semantic.forward_ir.intent_hir` composition child alias key families by
-delegating to the already bounded composition child schema owners. This is not
-a full normalized semantic export stabilization promise.
+`BACKEND-API-VALIDATION-FRONTIER.50`: select the next exact backend/API or
+public-export surface after the IntentHIR composition child alias schemas
+shipped. The manifest is still not a full normalized semantic export
+stabilization promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit
 bounded contract owner in
 [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](perl/FSM/Support/DiagnosticCodeRegistryContract.pm),

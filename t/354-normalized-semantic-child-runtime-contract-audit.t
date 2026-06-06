@@ -38,6 +38,13 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticIntentHIRContract qw(
+    normalized_semantic_intent_hir_composition_child_entry_keys
+    normalized_semantic_intent_hir_composition_generated_child_entry_keys
+    normalized_semantic_intent_hir_composition_standalone_dt_child_entry_keys
+    normalized_semantic_intent_hir_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_intent_hir_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_intent_hir_optional_composition_keys
     normalized_semantic_intent_hir_presence_keys
 );
@@ -479,6 +486,26 @@ subtest 'composition semantic payload keeps bounded child-owner contracts at run
         normalized_semantic_intent_hir_optional_composition_keys(),
         'composition semantic.forward_ir.intent_hir keeps composition-only keys',
     );
+    is_deeply(
+        $semantic->{forward_ir}{intent_hir}{composition_children},
+        $semantic->{composition}{children},
+        'composition semantic.forward_ir.intent_hir.composition_children aliases semantic.composition.children',
+    );
+    assert_exact_keys(
+        $semantic->{forward_ir}{intent_hir}{composition_children}[0],
+        normalized_semantic_intent_hir_composition_child_entry_keys(),
+        'composition semantic.forward_ir.intent_hir.composition_children[] entry keeps exact bounded keys',
+    );
+    is_deeply(
+        $semantic->{forward_ir}{intent_hir}{composition_generated_children},
+        $semantic->{composition}{generated_children},
+        'composition semantic.forward_ir.intent_hir.composition_generated_children aliases semantic.composition.generated_children',
+    );
+    assert_exact_keys(
+        $semantic->{forward_ir}{intent_hir}{composition_generated_children}[0],
+        normalized_semantic_intent_hir_composition_generated_child_entry_keys(),
+        'composition semantic.forward_ir.intent_hir.composition_generated_children[] entry keeps exact bounded keys',
+    );
     assert_keys_present(
         $semantic->{forward_ir}{lowered_rtl_ir},
         normalized_semantic_lowered_rtl_ir_presence_keys(),
@@ -577,6 +604,7 @@ FSM
 
     my $decoded = run_semantic_json($composition_path);
     my $composition = $decoded->{semantic}{composition};
+    my $intent_hir = $decoded->{semantic}{forward_ir}{intent_hir};
 
     assert_keys_present(
         $composition,
@@ -599,6 +627,17 @@ FSM
     );
 
     my $first_child = $composition->{standalone_dt_children}[0];
+    is_deeply(
+        $intent_hir->{composition_standalone_dt_children},
+        $composition->{standalone_dt_children},
+        'intent-HIR composition_standalone_dt_children aliases semantic.composition.standalone_dt_children',
+    );
+    my $intent_hir_first_child = $intent_hir->{composition_standalone_dt_children}[0];
+    assert_exact_keys(
+        $intent_hir_first_child,
+        normalized_semantic_intent_hir_composition_standalone_dt_child_entry_keys(),
+        'intent-HIR composition_standalone_dt_children[] entry keeps exact bounded keys',
+    );
     assert_exact_keys(
         $first_child,
         normalized_semantic_composition_standalone_dt_child_entry_keys(),
@@ -620,10 +659,22 @@ FSM
             'composition standalone-DT enable-family entry keeps exact bounded keys',
         );
     }
+    for my $family (@{$intent_hir_first_child->{standalone_dt_enable_families} || []}) {
+        assert_exact_keys(
+            $family,
+            normalized_semantic_intent_hir_composition_standalone_dt_enable_family_entry_keys(),
+            'intent-HIR standalone-DT enable-family entry keeps exact bounded keys',
+        );
+    }
     assert_exact_keys(
         $first_child->{standalone_dt_module_enable_family},
         normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
         'composition standalone-DT module-enable-family keeps exact bounded keys',
+    );
+    assert_exact_keys(
+        $intent_hir_first_child->{standalone_dt_module_enable_family},
+        normalized_semantic_intent_hir_composition_standalone_dt_module_enable_family_keys(),
+        'intent-HIR standalone-DT module-enable-family keeps exact bounded keys',
     );
     is(
         $first_child->{standalone_dt_multi_drive_target_count},
@@ -644,6 +695,17 @@ FSM
         $target->{multi_drive_assertion},
         normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
         'composition standalone-DT multi-drive assertion delegates to exact bounded keys',
+    );
+    my $intent_hir_target = $intent_hir_first_child->{standalone_dt_multi_drive_targets}[0];
+    assert_exact_keys(
+        $intent_hir_target,
+        normalized_semantic_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys(),
+        'intent-HIR standalone-DT multi-drive target entry keeps exact bounded keys',
+    );
+    assert_exact_keys(
+        $intent_hir_target->{multi_drive_assertion},
+        normalized_semantic_intent_hir_composition_standalone_dt_multi_drive_assertion_keys(),
+        'intent-HIR standalone-DT multi-drive assertion delegates to exact bounded keys',
     );
     for my $branch (qw(intent_hir lowered_rtl_ir structural_rtl_ir)) {
         ok(

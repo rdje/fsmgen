@@ -70,6 +70,13 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_presence_key_family_map
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -177,6 +184,13 @@ our @EXPORT_OK = qw(
     normalized_semantic_failure_diagnostic_support_accounting_keys
     normalized_semantic_forward_ir_keys
     normalized_semantic_forward_ir_intent_hir_keys
+    normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -326,6 +340,20 @@ sub build_normalized_semantic_report_contract {
         forward_ir_intent_hir_contract_source => normalized_semantic_forward_ir_intent_hir_contract_source(),
         success_forward_ir_intent_hir_presence_keys => normalized_semantic_forward_ir_intent_hir_keys(),
         success_forward_ir_intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        success_forward_ir_intent_hir_composition_child_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys(),
+        success_forward_ir_intent_hir_composition_generated_child_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys(),
+        success_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys(),
+        success_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys(),
+        success_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys(),
+        success_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys(),
+        success_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys(),
         forward_ir_lowered_rtl_ir_contract_source => normalized_semantic_forward_ir_lowered_rtl_ir_contract_source(),
         success_forward_ir_lowered_rtl_ir_presence_keys => normalized_semantic_forward_ir_lowered_rtl_ir_keys(),
         success_forward_ir_lowered_rtl_ir_optional_composition_keys => normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
@@ -444,6 +472,7 @@ sub build_normalized_semantic_report_contract {
             'The nested semantic composition object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
             'The nested semantic explicit_system_contract object, when present, stays bounded through FSM::Support::NormalizedSemanticExplicitSystemContract.',
             'The nested semantic forward_ir object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
+            'The success forward_ir.intent_hir composition-child alias families stay delegated to the already bounded composition child schema owners.',
             'Use the grouped nested_presence_key_map to discover the primary nested object key families without collecting those key lists one field at a time.',
             'Use the grouped presence_key_family_map to discover the shell-owned shared-report, success, and failure key families without collecting those normalized semantic field-family lists separately.',
             'Use the grouped semantic_presence_key_family_map to discover the shell-owned semantic payload and child-extension key families without reconstructing them from separate success_* fields.',
@@ -538,6 +567,20 @@ sub normalized_semantic_presence_key_family_map {
         success_forward_ir_presence_keys => normalized_semantic_forward_ir_keys(),
         success_forward_ir_intent_hir_presence_keys => normalized_semantic_forward_ir_intent_hir_keys(),
         success_forward_ir_intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        success_forward_ir_intent_hir_composition_child_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys(),
+        success_forward_ir_intent_hir_composition_generated_child_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys(),
+        success_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys(),
+        success_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys(),
+        success_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys(),
+        success_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys(),
+        success_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys(),
         success_forward_ir_lowered_rtl_ir_presence_keys => normalized_semantic_forward_ir_lowered_rtl_ir_keys(),
         success_forward_ir_lowered_rtl_ir_optional_composition_keys => normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
         success_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys =>
@@ -700,6 +743,34 @@ sub normalized_semantic_forward_ir_keys {
 
 sub normalized_semantic_forward_ir_intent_hir_keys {
     return normalized_semantic_forward_ir_intent_hir_presence_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys {
+    return normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys {
+    return normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys {
+    return normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys {
+    return normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys {
+    return normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys {
+    return normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys {
+    return normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys();
 }
 
 sub normalized_semantic_forward_ir_lowered_rtl_ir_keys {

@@ -2114,7 +2114,13 @@ The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm)
 owns the current intent-hir shell keys plus the composition-only extension
-keys emitted today for top roots.
+keys emitted today for top roots. For composition roots, it also advertises
+bounded alias key families for `composition_children[]`,
+`composition_generated_children[]`, and `composition_standalone_dt_children[]`
+by delegating to the existing `semantic.composition` child and standalone-DT
+child schema owners. Nested child `intent_hir`, `lowered_rtl_ir`, and
+`structural_rtl_ir` summaries stay delegated to their existing bounded
+contracts instead of being duplicated inside the IntentHIR alias schemas.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover those bounded `intent_hir` key families from one place
