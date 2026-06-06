@@ -4221,9 +4221,13 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.106` selects the next exact backend/API edge
-after direct VHDL generated typed two-state input port declaration lowering
-shipped. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.106.1` owns direct VHDL generated typed
+non-signed four-state input port declaration lowering for `input logic IN` and
+`input logic [7:0] IN` to VHDL `std_logic` / `std_logic_vector` ports.
+Completed selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.106` chose that exact logic-input edge after
+typed read-only direct-root probes stopped at the direct VHDL port parser.
+Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.105.1` lowers `input bit IN` and
 `input bit [7:0] IN` to VHDL `std_logic` / `std_logic_vector` ports.
 Completed selector leaf

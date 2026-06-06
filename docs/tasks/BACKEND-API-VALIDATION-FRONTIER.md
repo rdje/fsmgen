@@ -251,7 +251,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.104.1`,
     `BACKEND-API-VALIDATION-FRONTIER.105`,
     `BACKEND-API-VALIDATION-FRONTIER.105.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.106`
+    `BACKEND-API-VALIDATION-FRONTIER.106`,
+    `BACKEND-API-VALIDATION-FRONTIER.106.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1873,10 +1874,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.105.1: lower bit input VHDL ports`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.106`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after bit input port lowering shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.106.1`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier after .105.1, current VHDL scope, mdBook backlog, direct-VHDL fact card, normalized semantic export/public API status, focused contract/backend/facade tests, maintained direct/composition VHDL sweeps, current validation environment, and current frontier rows; choose the next narrow implementation, hardening, or documented blocking owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave raw package-spec internals, VHDL package declaration/emission, GHDL validation, full normalized semantic export stabilization, broad VHDL aggregate record/array lowering, broad expression parity, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of README.md, MEMORY.md, COMMIT.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, KNOWLEDGE_MAP.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, t/386-hdl-generator-facade-target-language-boundary-audit.t, t/114-composition-target-support-diagnostics.t, t/335-normalized-semantic-symbol-contract.t, and t/297-capability-manifest.t. Temporary direct VHDL probes showed typed read-only four-state direct-root signals generate input logic [7:0] IN and input logic IN SystemVerilog port declarations, and both currently fail at the direct VHDL unsupported generated port declaration guard. command -v ghdl returned unavailable. Selected direct VHDL non-signed four-state logic input-port declaration lowering for .106.1 before any implementation/test/source edits; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t; prove -Iperl t/335-normalized-semantic-symbol-contract.t t/297-capability-manifest.t.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.106: select logic input port VHDL declarations`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.106.1`
+  Status: `active`
+  Goal: `Lower direct VHDL non-signed four-state logic input-port declarations.`
+  Acceptance: `Direct single-FSM VHDL generation must accept generated SystemVerilog input port declarations such as input logic IN and input logic [7:0] IN emitted by typed read-only (four_state (bits 1)) and (four_state (bits N)) direct-root sizes, lowering them to std_logic and std_logic_vector(N-1 downto 0) input ports through pipeline, CLI, and facade coverage. Existing input wire, signed logic input, two-state bit input, output port, scalar/vector bit internal declaration, non-signed four-state internal declaration, signed declaration, arithmetic, aggregate-output, composition VHDL, package root/import, GHDL validation, broad expression, broad aggregate VHDL record/array, raw package-spec internals, full normalized semantic export stabilization, and full backend parity boundaries must remain unchanged or explicitly deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map, task tree, and MEMORY stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -2098,7 +2107,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 213 | `BACKEND-API-VALIDATION-FRONTIER.104.1` | `done` | Lowered generated direct-root vector `bit [N:0]` declarations to VHDL `std_logic_vector` through pipeline, CLI, facade, docs, and fact-card coverage. |
 | 214 | `BACKEND-API-VALIDATION-FRONTIER.105` | `done` | Selected direct VHDL two-state bit input-port declaration lowering after probes showed typed read-only two-state direct-root signals emit `input bit [7:0] IN` and `input bit IN`, both currently rejected by the direct VHDL port parser. |
 | 215 | `BACKEND-API-VALIDATION-FRONTIER.105.1` | `done` | Lowered generated direct-root `input bit` and `input bit [N:0]` declarations to VHDL `std_logic` / `std_logic_vector` ports through pipeline, CLI, facade, docs, and fact-card coverage. |
-| 216 | `BACKEND-API-VALIDATION-FRONTIER.106` | `active` | Select the next exact backend/API edge after bit input port lowering shipped. |
+| 216 | `BACKEND-API-VALIDATION-FRONTIER.106` | `done` | Selected direct VHDL non-signed four-state logic input-port declaration lowering after probes showed typed read-only four-state direct-root signals emit `input logic [7:0] IN` and `input logic IN`, both currently rejected by the direct VHDL port parser. |
+| 217 | `BACKEND-API-VALIDATION-FRONTIER.106.1` | `active` | Lower generated direct-root `input logic` and `input logic [N:0]` declarations to VHDL `std_logic` / `std_logic_vector` ports through pipeline, CLI, facade, docs, and fact-card coverage. |
 
 ## Decisions
 
@@ -2507,11 +2517,16 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.104.1` | `BACKEND-API-VALIDATION-FRONTIER.104.1: lower vector bit VHDL declarations` | this slice; activates `.105` |
 | `BACKEND-API-VALIDATION-FRONTIER.105` | `BACKEND-API-VALIDATION-FRONTIER.105: select bit input port VHDL declarations` | selected `.105.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.105.1` | `BACKEND-API-VALIDATION-FRONTIER.105.1: lower bit input VHDL ports` | this slice; activates `.106` |
-| `BACKEND-API-VALIDATION-FRONTIER.106` | `pending` | active selector leaf |
+| `BACKEND-API-VALIDATION-FRONTIER.106` | `BACKEND-API-VALIDATION-FRONTIER.106: select logic input port VHDL declarations` | selected `.106.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.106.1` | `pending` | active implementation leaf |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed backend/API frontier owner tree.
+- `2026-06-06`: Completed `.106`; selected direct VHDL non-signed four-state
+  `input logic` / `input logic [N:0]` declaration lowering as `.106.1` after
+  typed read-only direct-root probes generated unsupported direct VHDL port
+  declarations for scalar and vector logic inputs.
 - `2026-06-06`: Completed `.105.1`; direct VHDL now lowers generated typed
   two-state `input bit` and `input bit [N:0]` direct-root declarations to
   `std_logic` / `std_logic_vector` input ports through pipeline, CLI, and
