@@ -39,6 +39,10 @@ answers:
   - "does direct VHDL support signed vector subtraction?"
   - "does direct VHDL support signed multiplication?"
   - "does direct VHDL support signed vector multiplication?"
+  - "does direct VHDL support signed division?"
+  - "does direct VHDL support signed modulo?"
+  - "does direct VHDL support signed division/modulo?"
+  - "does direct VHDL support signed vector division/modulo?"
   - "does direct VHDL support scalar bit declarations?"
   - "does direct VHDL support logic declarations?"
   - "does direct VHDL support four-state declarations?"
@@ -99,8 +103,10 @@ also lower as signed VHDL arithmetic, such as `DIFF <= A - B;`, under the same
 target/operand constraints. Same-width signed vector multiplication RHS
 assignments lower as target-width resized signed VHDL arithmetic, such as
 `PROD <= resize(A * B, 8);`, under the same target/operand constraints. Other
-signed arithmetic operators, scalar signed arithmetic, and mixed
-signed/unsigned arithmetic remain outside the current direct VHDL scaffold.
+same-width signed vector division/modulo is selected as the active next
+implementation edge under `BACKEND-API-VALIDATION-FRONTIER.60.1`. Scalar
+signed arithmetic and mixed signed/unsigned arithmetic remain outside the
+current direct VHDL scaffold.
 Aggregate-output
 roots are locked as explicit fail-closed direct VHDL boundaries by focused
 pipeline and facade coverage. Composition/top VHDL is locked fail-closed by
