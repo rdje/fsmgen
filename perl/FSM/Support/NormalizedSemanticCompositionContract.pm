@@ -8,6 +8,10 @@ use JSON::PP ();
 use FSM::Support::CompositionReportContract qw(
     composition_report_contract_source
 );
+use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
+    normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
+);
 use FSM::Support::SerializableCompositionPlanSnapshot qw(
     serializable_composition_plan_snapshot_contract_source
 );
@@ -21,6 +25,11 @@ our @EXPORT_OK = qw(
     normalized_semantic_composition_nested_presence_keys
     normalized_semantic_composition_presence_key_family_map
     normalized_semantic_composition_presence_keys
+    normalized_semantic_composition_standalone_dt_child_entry_keys
+    normalized_semantic_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_composition_summary_presence_keys
 );
 
@@ -53,6 +62,15 @@ sub build_normalized_semantic_composition_contract {
         collection_keys => normalized_semantic_composition_collection_keys(),
         child_entry_keys => normalized_semantic_composition_child_entry_keys(),
         generated_child_entry_keys => normalized_semantic_composition_generated_child_entry_keys(),
+        standalone_dt_child_entry_keys => normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        standalone_dt_enable_family_entry_keys =>
+            normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+        standalone_dt_module_enable_family_keys =>
+            normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        standalone_dt_multi_drive_target_entry_keys =>
+            normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+        standalone_dt_multi_drive_assertion_keys =>
+            normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
         nested_presence_keys => normalized_semantic_composition_nested_presence_keys(),
         presence_key_family_map => normalized_semantic_composition_presence_key_family_map(),
         nested_contract_source_map => {
@@ -67,9 +85,10 @@ sub build_normalized_semantic_composition_contract {
             q{Treat this contract as the bounded nested `composition` object used inside successful public normalized semantic JSON reports for composition sources.},
             'The bounded public promise covers the lane, child/net/link, generated-child, standalone-DT-child, shared-datapath, plan-snapshot, and sanitized provenance-report keys exported for composition roots.',
             'The children[] and generated_children[] entry key families describe shallow composition-child summaries while delegating child intent_hir, lowered_rtl_ir, and structural_rtl_ir objects to their existing bounded contracts.',
+            'The standalone_dt_children[] entry key family describes shallow reusable standalone-DT child summaries while delegating child intent_hir, lowered_rtl_ir, structural_rtl_ir, and nested standalone-DT multi-drive assertion shapes to their existing bounded contracts.',
             'The nested plan_snapshot fragment stays bounded through FSM::Support::SerializableCompositionPlanSnapshot.',
             'The nested provenance_report fragment stays bounded through FSM::Support::CompositionReportContract.',
-            'Use the grouped presence_key_family_map to discover the bounded composition summary, collection, child-entry, generated-child-entry, plan-snapshot, and provenance key families without collecting those key-family lists separately.',
+            'Use the grouped presence_key_family_map to discover the bounded composition summary, collection, child-entry, generated-child-entry, standalone-DT-child, plan-snapshot, and provenance key families without collecting those key-family lists separately.',
         ],
     };
 }
@@ -159,6 +178,51 @@ sub normalized_semantic_composition_generated_child_entry_keys {
     ];
 }
 
+sub normalized_semantic_composition_standalone_dt_child_entry_keys {
+    return [
+        qw(
+            instance_name
+            module_name
+            source_name
+            standalone_dt_count
+            standalone_dt_names
+            standalone_dt_enable_families
+            standalone_dt_module_enable_family
+            standalone_dt_multi_drive_target_count
+            standalone_dt_multi_drive_targets
+            intent_hir
+            lowered_rtl_ir
+            structural_rtl_ir
+        ),
+    ];
+}
+
+sub normalized_semantic_composition_standalone_dt_enable_family_entry_keys {
+    return [
+        qw(
+            dt_name
+            enable_signal
+        ),
+    ];
+}
+
+sub normalized_semantic_composition_standalone_dt_module_enable_family_keys {
+    return [
+        qw(
+            dt_names
+            enable_signals
+        ),
+    ];
+}
+
+sub normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys {
+    return normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys();
+}
+
+sub normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys {
+    return normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys();
+}
+
 sub normalized_semantic_composition_nested_presence_keys {
     return [
         qw(
@@ -174,6 +238,15 @@ sub normalized_semantic_composition_presence_key_family_map {
         collection_keys => normalized_semantic_composition_collection_keys(),
         child_entry_keys => normalized_semantic_composition_child_entry_keys(),
         generated_child_entry_keys => normalized_semantic_composition_generated_child_entry_keys(),
+        standalone_dt_child_entry_keys => normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        standalone_dt_enable_family_entry_keys =>
+            normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+        standalone_dt_module_enable_family_keys =>
+            normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        standalone_dt_multi_drive_target_entry_keys =>
+            normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+        standalone_dt_multi_drive_assertion_keys =>
+            normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
         nested_presence_keys => normalized_semantic_composition_nested_presence_keys(),
     };
 }

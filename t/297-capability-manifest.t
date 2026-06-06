@@ -165,6 +165,11 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
 use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_composition_child_entry_keys
     normalized_semantic_composition_generated_child_entry_keys
+    normalized_semantic_composition_standalone_dt_child_entry_keys
+    normalized_semantic_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys
@@ -949,6 +954,51 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         normalized_semantic_composition_generated_child_entry_keys(),
         'manifest semantic family map records composition generated-child entry keys',
     );
+    for my $case (
+        [
+            'composition_standalone_dt_child_entry_keys',
+            normalized_semantic_composition_standalone_dt_child_entry_keys(),
+            'composition standalone-DT child entry keys',
+        ],
+        [
+            'composition_standalone_dt_enable_family_entry_keys',
+            normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+            'composition standalone-DT enable-family entry keys',
+        ],
+        [
+            'composition_standalone_dt_module_enable_family_keys',
+            normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+            'composition standalone-DT module-enable-family keys',
+        ],
+        [
+            'composition_standalone_dt_multi_drive_target_entry_keys',
+            normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+            'composition standalone-DT multi-drive target entry keys',
+        ],
+        [
+            'composition_standalone_dt_multi_drive_assertion_keys',
+            normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
+            'composition standalone-DT multi-drive assertion keys',
+        ],
+    ) {
+        my ($field, $expected, $label) = @{$case};
+
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{$field},
+            $expected,
+            "manifest records exact normalized semantic $label",
+        );
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{$field},
+            $expected,
+            "manifest report family map records $label",
+        );
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{semantic_presence_key_family_map}{$field},
+            $expected,
+            "manifest semantic family map records $label",
+        );
+    }
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{support_accounting_presence_keys} || []}) >= 1,
         'manifest advertises bounded normalized semantic common support-accounting key presence',

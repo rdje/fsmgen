@@ -553,7 +553,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/CheckFailureDiagnosticContract.pm` — shared bounded nested-object contract for failure `diagnostic` payloads in public check JSON and normalized semantic JSON.
 - `perl/FSM/Support/CheckResultContract.pm` — bounded nested-object contract for successful public check JSON `result` payloads.
 - `perl/FSM/Support/CompositionReportContract.pm` — bounded sanitized composition provenance/report contract for semantic JSON.
-- `perl/FSM/Support/NormalizedSemanticCompositionContract.pm` — bounded nested-object contract for the `semantic.composition` summary in successful public normalized semantic JSON composition sources, including bounded `children[]` and `generated_children[]` shallow entry key families.
+- `perl/FSM/Support/NormalizedSemanticCompositionContract.pm` — bounded nested-object contract for the `semantic.composition` summary in successful public normalized semantic JSON composition sources, including bounded `children[]`, `generated_children[]`, and `standalone_dt_children[]` shallow entry key families.
 - `perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm` — bounded nested-object contract for the `semantic.explicit_system_contract` summary in successful public normalized semantic JSON when that authored explicit contract is preserved.
 - `perl/FSM/Support/NormalizedSemanticForwardIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir` summary in successful public normalized semantic JSON.
 - `perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.lowered_rtl_ir` summary in successful public normalized semantic JSON, including output-drive, selector-conflict, standalone-DT multi-drive, and composition-only extension key families.
@@ -731,10 +731,13 @@ contract republishes the same family as
 `success_semantic_optional_child_presence_keys` so embedders can discover those
 optional success children without inferring them from prose.
 For composition sources, the nested `semantic.composition` owner also
-advertises bounded `children[]` and `generated_children[]` shallow entry key
-families, while each child entry's `intent_hir`, `lowered_rtl_ir`, and
-`structural_rtl_ir` summaries remain delegated to their existing bounded
-contracts:
+advertises bounded `children[]`, `generated_children[]`, and
+`standalone_dt_children[]` shallow entry key families. Standalone-DT child
+entries include the current reusable-DT names, enable-family metadata, module
+enable-family metadata, and nested multi-drive target metadata. Each child
+entry's `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries, and
+the nested standalone-DT multi-drive assertion shape, remain delegated to their
+existing bounded contracts:
 [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm).
 The nested `semantic.system_contract` summary inside that payload now also has
 its own bounded owner for the explicit clock/reset contract keys emitted today:

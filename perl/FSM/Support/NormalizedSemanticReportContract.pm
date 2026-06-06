@@ -47,6 +47,11 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_child_entry_keys
     normalized_semantic_payload_composition_generated_child_entry_keys
     normalized_semantic_payload_composition_keys
+    normalized_semantic_payload_composition_standalone_dt_child_entry_keys
+    normalized_semantic_payload_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_payload_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_payload_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_payload_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_forward_ir_nested_presence_key_map
@@ -141,6 +146,11 @@ our @EXPORT_OK = qw(
     normalized_semantic_composition_child_entry_keys
     normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_keys
+    normalized_semantic_composition_standalone_dt_child_entry_keys
+    normalized_semantic_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_explicit_system_contract_keys
     normalized_semantic_failure_diagnostic_keys
     normalized_semantic_failure_diagnostic_optional_artifact_keys
@@ -369,6 +379,16 @@ sub build_normalized_semantic_report_contract {
         composition_presence_keys => normalized_semantic_payload_composition_keys(),
         composition_child_entry_keys => normalized_semantic_composition_child_entry_keys(),
         composition_generated_child_entry_keys => normalized_semantic_composition_generated_child_entry_keys(),
+        composition_standalone_dt_child_entry_keys =>
+            normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        composition_standalone_dt_enable_family_entry_keys =>
+            normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+        composition_standalone_dt_module_enable_family_keys =>
+            normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        composition_standalone_dt_multi_drive_target_entry_keys =>
+            normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+        composition_standalone_dt_multi_drive_assertion_keys =>
+            normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
         failure_omits_semantic_payload => JSON::PP::true,
         full_report_json_safe => JSON::PP::true,
         full_export_stable => JSON::PP::false,
@@ -396,6 +416,7 @@ sub build_normalized_semantic_report_contract {
             'The composition shared-datapath candidate key families document the current nested `semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates` entry schemas, including contributor drive-intent projections and their rhs-enable-family entries, without freezing unrelated lowered-RTL payloads.',
             'The structural auxiliary-assignment value-kind, port, net, declared/resolved link, instance shallow, nested instance interface-port, nested instance parameter-override, and nested instance port-binding entry key families document the current nested `semantic.forward_ir.structural_rtl_ir.auxiliary_assignments`, `semantic.forward_ir.structural_rtl_ir.ports`, `semantic.forward_ir.structural_rtl_ir.nets`, `semantic.forward_ir.structural_rtl_ir.declared_links`, `semantic.forward_ir.structural_rtl_ir.resolved_links`, `semantic.forward_ir.structural_rtl_ir.instances`, `semantic.forward_ir.structural_rtl_ir.instances[].interface_ports`, `semantic.forward_ir.structural_rtl_ir.instances[].parameter_overrides`, and `semantic.forward_ir.structural_rtl_ir.instances[].port_bindings` entry schemas without freezing unrelated structural-RTL payloads.',
             'The composition child and generated-child entry key families document the current nested `semantic.composition.children` and `semantic.composition.generated_children` shallow entry schemas without freezing delegated child IR internals.',
+            'The composition standalone-DT child entry key families document the current nested `semantic.composition.standalone_dt_children` shallow entry schemas, enable-family metadata, and nested standalone-DT multi-drive target metadata without freezing delegated child IR internals or duplicating the lowered-RTL assertion owner.',
             'The nested semantic forward_ir.intent_hir object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
             'The nested semantic forward_ir.lowered_rtl_ir object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',
             'The nested semantic forward_ir.structural_rtl_ir object shell stays bounded through FSM::Support::NormalizedSemanticStructuralRTLIRContract.',
@@ -545,6 +566,16 @@ sub normalized_semantic_presence_key_family_map {
         composition_presence_keys => normalized_semantic_composition_keys(),
         composition_child_entry_keys => normalized_semantic_composition_child_entry_keys(),
         composition_generated_child_entry_keys => normalized_semantic_composition_generated_child_entry_keys(),
+        composition_standalone_dt_child_entry_keys =>
+            normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        composition_standalone_dt_enable_family_entry_keys =>
+            normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+        composition_standalone_dt_module_enable_family_keys =>
+            normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        composition_standalone_dt_multi_drive_target_entry_keys =>
+            normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+        composition_standalone_dt_multi_drive_assertion_keys =>
+            normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
     };
 }
 
@@ -776,6 +807,26 @@ sub normalized_semantic_composition_child_entry_keys {
 
 sub normalized_semantic_composition_generated_child_entry_keys {
     return normalized_semantic_payload_composition_generated_child_entry_keys();
+}
+
+sub normalized_semantic_composition_standalone_dt_child_entry_keys {
+    return normalized_semantic_payload_composition_standalone_dt_child_entry_keys();
+}
+
+sub normalized_semantic_composition_standalone_dt_enable_family_entry_keys {
+    return normalized_semantic_payload_composition_standalone_dt_enable_family_entry_keys();
+}
+
+sub normalized_semantic_composition_standalone_dt_module_enable_family_keys {
+    return normalized_semantic_payload_composition_standalone_dt_module_enable_family_keys();
+}
+
+sub normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys {
+    return normalized_semantic_payload_composition_standalone_dt_multi_drive_target_entry_keys();
+}
+
+sub normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys {
+    return normalized_semantic_payload_composition_standalone_dt_multi_drive_assertion_keys();
 }
 
 1;

@@ -18,6 +18,11 @@ use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_child_entry_keys
     normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_presence_keys
+    normalized_semantic_composition_standalone_dt_child_entry_keys
+    normalized_semantic_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys
 );
 use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
     normalized_semantic_explicit_system_contract_presence_keys
@@ -466,6 +471,134 @@ subtest 'composition semantic payload keeps bounded child-owner contracts at run
         composition_report_public_top_level_keys(),
         'composition semantic.composition.provenance_report keeps bounded public keys',
     );
+};
+
+subtest 'composition semantic payload keeps bounded standalone-DT child schemas at runtime' => sub {
+    my $composition_path = write_fsm('composition_standalone_dt_semantic_schema.fsm', <<'FSM');
+(?top:composition_standalone_dt_semantic_schema
+  (?ports:public_io
+    sel
+    data_a<8
+    data_b<8
+    final_out>8
+  )
+  (?dtc:router_a route_a)
+  (?dtc:router_b route_b)
+  (?wiring:wiring
+    (sel router_a.sel)
+    (data_a router_a.a)
+    (data_b router_a.b)
+    (router_a.out router_b.in)
+    (router_b.final_out final_out)
+  )
+)
+
+(?dt:route_a
+  (+size
+    (sel 1)
+    (a 8)
+    (b 8)
+    (out 8)
+  )
+  (-from_a
+    (<sel==1'b0
+      (= (out> a))
+    )
+  )
+  (-from_b
+    (<sel==1'b1
+      (= (out> b))
+    )
+  )
+)
+
+(?dt:route_b
+  (+size
+    (in 8)
+    (final_out 8)
+  )
+  (-route
+    (= (final_out> in))
+  )
+)
+FSM
+
+    my $decoded = run_semantic_json($composition_path);
+    my $composition = $decoded->{semantic}{composition};
+
+    assert_keys_present(
+        $composition,
+        normalized_semantic_composition_presence_keys(),
+        'standalone-DT composition semantic.composition keeps bounded keys',
+    );
+    is(
+        $composition->{standalone_dt_child_count},
+        2,
+        'standalone-DT composition reports two reusable DT children',
+    );
+    ok(
+        ref($composition->{standalone_dt_children}) eq 'ARRAY',
+        'standalone-DT composition emits standalone_dt_children[]',
+    );
+    is(
+        scalar(@{$composition->{standalone_dt_children} || []}),
+        $composition->{standalone_dt_child_count},
+        'standalone-DT child count matches the emitted array',
+    );
+
+    my $first_child = $composition->{standalone_dt_children}[0];
+    assert_exact_keys(
+        $first_child,
+        normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        'composition semantic.composition.standalone_dt_children[] entry keeps exact bounded keys',
+    );
+    is(
+        $first_child->{standalone_dt_count},
+        scalar(@{$first_child->{standalone_dt_names} || []}),
+        'standalone-DT child standalone_dt_count matches standalone_dt_names[]',
+    );
+    ok(
+        ref($first_child->{standalone_dt_enable_families}) eq 'ARRAY',
+        'standalone-DT child emits standalone_dt_enable_families[]',
+    );
+    for my $family (@{$first_child->{standalone_dt_enable_families} || []}) {
+        assert_exact_keys(
+            $family,
+            normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+            'composition standalone-DT enable-family entry keeps exact bounded keys',
+        );
+    }
+    assert_exact_keys(
+        $first_child->{standalone_dt_module_enable_family},
+        normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        'composition standalone-DT module-enable-family keeps exact bounded keys',
+    );
+    is(
+        $first_child->{standalone_dt_multi_drive_target_count},
+        scalar(@{$first_child->{standalone_dt_multi_drive_targets} || []}),
+        'standalone-DT child multi-drive target count matches standalone_dt_multi_drive_targets[]',
+    );
+    ok(
+        ref($first_child->{standalone_dt_multi_drive_targets}) eq 'ARRAY',
+        'standalone-DT child emits standalone_dt_multi_drive_targets[]',
+    );
+    my $target = $first_child->{standalone_dt_multi_drive_targets}[0];
+    assert_exact_keys(
+        $target,
+        normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+        'composition standalone-DT multi-drive target entry keeps exact bounded keys',
+    );
+    assert_exact_keys(
+        $target->{multi_drive_assertion},
+        normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
+        'composition standalone-DT multi-drive assertion delegates to exact bounded keys',
+    );
+    for my $branch (qw(intent_hir lowered_rtl_ir structural_rtl_ir)) {
+        ok(
+            ref($first_child->{$branch}) eq 'HASH',
+            "composition standalone-DT child delegates nested $branch as a bounded object",
+        );
+    }
 };
 
 done_testing();

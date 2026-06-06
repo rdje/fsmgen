@@ -13,6 +13,11 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_child_entry_keys
     normalized_semantic_payload_composition_generated_child_entry_keys
     normalized_semantic_payload_composition_keys
+    normalized_semantic_payload_composition_standalone_dt_child_entry_keys
+    normalized_semantic_payload_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_payload_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_payload_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_payload_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
@@ -294,6 +299,26 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
             label => 'composition_generated_child_entry_keys',
             build => \&normalized_semantic_payload_composition_generated_child_entry_keys,
         },
+        {
+            label => 'composition_standalone_dt_child_entry_keys',
+            build => \&normalized_semantic_payload_composition_standalone_dt_child_entry_keys,
+        },
+        {
+            label => 'composition_standalone_dt_enable_family_entry_keys',
+            build => \&normalized_semantic_payload_composition_standalone_dt_enable_family_entry_keys,
+        },
+        {
+            label => 'composition_standalone_dt_module_enable_family_keys',
+            build => \&normalized_semantic_payload_composition_standalone_dt_module_enable_family_keys,
+        },
+        {
+            label => 'composition_standalone_dt_multi_drive_target_entry_keys',
+            build => \&normalized_semantic_payload_composition_standalone_dt_multi_drive_target_entry_keys,
+        },
+        {
+            label => 'composition_standalone_dt_multi_drive_assertion_keys',
+            build => \&normalized_semantic_payload_composition_standalone_dt_multi_drive_assertion_keys,
+        },
     ) {
         my $first = $case->{build}->();
         mutate_structure($first);
@@ -318,6 +343,11 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
     is_deeply($family_map->{optional_child_presence_keys}, normalized_semantic_payload_optional_child_presence_keys(), 'optional child family entry matches helper');
     is_deeply($family_map->{composition_child_entry_keys}, normalized_semantic_payload_composition_child_entry_keys(), 'composition child entry family matches helper');
     is_deeply($family_map->{composition_generated_child_entry_keys}, normalized_semantic_payload_composition_generated_child_entry_keys(), 'composition generated-child entry family matches helper');
+    is_deeply($family_map->{composition_standalone_dt_child_entry_keys}, normalized_semantic_payload_composition_standalone_dt_child_entry_keys(), 'composition standalone-DT child entry family matches helper');
+    is_deeply($family_map->{composition_standalone_dt_enable_family_entry_keys}, normalized_semantic_payload_composition_standalone_dt_enable_family_entry_keys(), 'composition standalone-DT enable-family entry family matches helper');
+    is_deeply($family_map->{composition_standalone_dt_module_enable_family_keys}, normalized_semantic_payload_composition_standalone_dt_module_enable_family_keys(), 'composition standalone-DT module-enable-family family matches helper');
+    is_deeply($family_map->{composition_standalone_dt_multi_drive_target_entry_keys}, normalized_semantic_payload_composition_standalone_dt_multi_drive_target_entry_keys(), 'composition standalone-DT multi-drive target entry family matches helper');
+    is_deeply($family_map->{composition_standalone_dt_multi_drive_assertion_keys}, normalized_semantic_payload_composition_standalone_dt_multi_drive_assertion_keys(), 'composition standalone-DT multi-drive assertion family matches helper');
     is_deeply($family_map->{signal_analysis_entry_presence_keys}, normalized_semantic_payload_signal_analysis_entry_keys(), 'signal-analysis entry family entry matches helper');
     is_deeply(
         $family_map->{forward_ir_intent_hir_optional_composition_keys},

@@ -20,6 +20,11 @@ use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_nested_presence_keys
     normalized_semantic_composition_presence_key_family_map
     normalized_semantic_composition_presence_keys
+    normalized_semantic_composition_standalone_dt_child_entry_keys
+    normalized_semantic_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_composition_summary_presence_keys
 );
 use FSM::Support::SerializableCompositionPlanSnapshot qw(
@@ -139,6 +144,61 @@ subtest 'contract exposes the bounded normalized semantic composition object' =>
             ),
         ],
         'composition generated-child entry keys stay exact and ordered',
+    );
+    is_deeply(
+        $contract->{standalone_dt_child_entry_keys},
+        normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        'contract publishes the bounded composition standalone-DT child entry key family',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        [
+            qw(
+                instance_name
+                module_name
+                source_name
+                standalone_dt_count
+                standalone_dt_names
+                standalone_dt_enable_families
+                standalone_dt_module_enable_family
+                standalone_dt_multi_drive_target_count
+                standalone_dt_multi_drive_targets
+                intent_hir
+                lowered_rtl_ir
+                structural_rtl_ir
+            ),
+        ],
+        'composition standalone-DT child entry keys stay exact and ordered',
+    );
+    is_deeply(
+        $contract->{standalone_dt_enable_family_entry_keys},
+        normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+        'contract publishes the bounded composition standalone-DT enable-family entry key family',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+        [qw(dt_name enable_signal)],
+        'composition standalone-DT enable-family entry keys stay exact and ordered',
+    );
+    is_deeply(
+        $contract->{standalone_dt_module_enable_family_keys},
+        normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        'contract publishes the bounded composition standalone-DT module-enable-family key family',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        [qw(dt_names enable_signals)],
+        'composition standalone-DT module-enable-family keys stay exact and ordered',
+    );
+    is_deeply(
+        $contract->{standalone_dt_multi_drive_target_entry_keys},
+        normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+        'contract publishes the delegated standalone-DT multi-drive target key family',
+    );
+    is_deeply(
+        $contract->{standalone_dt_multi_drive_assertion_keys},
+        normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
+        'contract publishes the delegated standalone-DT multi-drive assertion key family',
     );
     is_deeply(
         $contract->{nested_presence_keys},

@@ -3924,11 +3924,13 @@ Current shipped boundary: the normalized semantic payload contract publishes
 `semantic.symbol_contract`, and the report contract republishes that list as
 `success_semantic_optional_child_presence_keys`. The
 `semantic.composition` contract also advertises bounded
-`children[]` and `generated_children[]` shallow entry key families while
-delegating child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`
-summaries to their existing bounded owners. The next selected edge is the
-same contract's `standalone_dt_children[]` shallow entry family, including its
-standalone-DT metadata and delegated child IR summaries. The
+`children[]`, `generated_children[]`, and `standalone_dt_children[]` shallow
+entry key families while delegating child `intent_hir`, `lowered_rtl_ir`, and
+`structural_rtl_ir` summaries to their existing bounded owners. The standalone-DT
+child family also advertises bounded reusable-DT enable-family metadata,
+module-enable-family metadata, and nested multi-drive target metadata while
+delegating the assertion shape to the existing lowered-RTL standalone-DT
+multi-drive assertion owner. The
 `semantic.forward_ir.lowered_rtl_ir` contract also advertises the emitted
 `output_drive_family_count` and `output_drive_families` metadata with bounded
 entry keys for `output_drive_families[]` and its nested
@@ -3960,8 +3962,7 @@ as scalar string assignment-line entries. The manifest is still not a full
 normalized semantic export.
 
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.47.1` will publish bounded
-`semantic.composition.standalone_dt_children[]` entry keys before any broader
-composition-branch shared-datapath alias or full normalized semantic export
-stabilization work. Full normalized semantic export stabilization remains out
-of scope.
+`BACKEND-API-VALIDATION-FRONTIER.48` will audit the remaining backend/API and
+public-export backlog after the composition standalone-DT child entry schemas
+shipped, then activate one exact executable child before any implementation
+edits. Full normalized semantic export stabilization remains out of scope.

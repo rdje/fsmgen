@@ -20,6 +20,11 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_composition_child_entry_keys
     normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_keys
+    normalized_semantic_composition_standalone_dt_child_entry_keys
+    normalized_semantic_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_explicit_system_contract_keys
     normalized_semantic_failure_diagnostic_keys
     normalized_semantic_failure_diagnostic_optional_artifact_keys
@@ -361,6 +366,26 @@ subtest 'normalized semantic report helper builders return fresh nested structur
             label => 'composition_generated_child_entry_keys',
             build => \&normalized_semantic_composition_generated_child_entry_keys,
         },
+        {
+            label => 'composition_standalone_dt_child_entry_keys',
+            build => \&normalized_semantic_composition_standalone_dt_child_entry_keys,
+        },
+        {
+            label => 'composition_standalone_dt_enable_family_entry_keys',
+            build => \&normalized_semantic_composition_standalone_dt_enable_family_entry_keys,
+        },
+        {
+            label => 'composition_standalone_dt_module_enable_family_keys',
+            build => \&normalized_semantic_composition_standalone_dt_module_enable_family_keys,
+        },
+        {
+            label => 'composition_standalone_dt_multi_drive_target_entry_keys',
+            build => \&normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys,
+        },
+        {
+            label => 'composition_standalone_dt_multi_drive_assertion_keys',
+            build => \&normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys,
+        },
     ) {
         my $first = $case->{build}->();
         mutate_structure($first);
@@ -395,6 +420,11 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
     );
     is_deeply($family_map->{composition_child_entry_keys}, normalized_semantic_composition_child_entry_keys(), 'composition child entry family matches helper');
     is_deeply($family_map->{composition_generated_child_entry_keys}, normalized_semantic_composition_generated_child_entry_keys(), 'composition generated-child entry family matches helper');
+    is_deeply($family_map->{composition_standalone_dt_child_entry_keys}, normalized_semantic_composition_standalone_dt_child_entry_keys(), 'composition standalone-DT child entry family matches helper');
+    is_deeply($family_map->{composition_standalone_dt_enable_family_entry_keys}, normalized_semantic_composition_standalone_dt_enable_family_entry_keys(), 'composition standalone-DT enable-family entry family matches helper');
+    is_deeply($family_map->{composition_standalone_dt_module_enable_family_keys}, normalized_semantic_composition_standalone_dt_module_enable_family_keys(), 'composition standalone-DT module-enable-family family matches helper');
+    is_deeply($family_map->{composition_standalone_dt_multi_drive_target_entry_keys}, normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(), 'composition standalone-DT multi-drive target entry family matches helper');
+    is_deeply($family_map->{composition_standalone_dt_multi_drive_assertion_keys}, normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(), 'composition standalone-DT multi-drive assertion family matches helper');
     is_deeply($family_map->{support_accounting_presence_keys}, normalized_semantic_support_accounting_keys(), 'support accounting family entry matches helper');
     is_deeply($family_map->{failure_diagnostic_presence_keys}, normalized_semantic_failure_diagnostic_keys(), 'failure diagnostic family entry matches helper');
     is_deeply(

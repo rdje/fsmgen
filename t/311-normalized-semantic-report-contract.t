@@ -65,6 +65,11 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_composition_child_entry_keys
     normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_keys
+    normalized_semantic_composition_standalone_dt_child_entry_keys
+    normalized_semantic_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_explicit_system_contract_keys
     normalized_semantic_failure_diagnostic_keys
     normalized_semantic_failure_diagnostic_support_accounting_keys
@@ -129,6 +134,11 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_child_entry_keys
     normalized_semantic_payload_composition_generated_child_entry_keys
     normalized_semantic_payload_composition_keys
+    normalized_semantic_payload_composition_standalone_dt_child_entry_keys
+    normalized_semantic_payload_composition_standalone_dt_enable_family_entry_keys
+    normalized_semantic_payload_composition_standalone_dt_module_enable_family_keys
+    normalized_semantic_payload_composition_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_payload_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_forward_ir_nested_presence_key_map
@@ -474,6 +484,31 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'semantic presence family map republishes composition generated-child entry keys',
     );
     is_deeply(
+        $contract->{semantic_presence_key_family_map}{composition_standalone_dt_child_entry_keys},
+        normalized_semantic_payload_composition_standalone_dt_child_entry_keys(),
+        'semantic presence family map republishes composition standalone-DT child entry keys',
+    );
+    is_deeply(
+        $contract->{semantic_presence_key_family_map}{composition_standalone_dt_enable_family_entry_keys},
+        normalized_semantic_payload_composition_standalone_dt_enable_family_entry_keys(),
+        'semantic presence family map republishes composition standalone-DT enable-family entry keys',
+    );
+    is_deeply(
+        $contract->{semantic_presence_key_family_map}{composition_standalone_dt_module_enable_family_keys},
+        normalized_semantic_payload_composition_standalone_dt_module_enable_family_keys(),
+        'semantic presence family map republishes composition standalone-DT module-enable-family keys',
+    );
+    is_deeply(
+        $contract->{semantic_presence_key_family_map}{composition_standalone_dt_multi_drive_target_entry_keys},
+        normalized_semantic_payload_composition_standalone_dt_multi_drive_target_entry_keys(),
+        'semantic presence family map republishes composition standalone-DT multi-drive target entry keys',
+    );
+    is_deeply(
+        $contract->{semantic_presence_key_family_map}{composition_standalone_dt_multi_drive_assertion_keys},
+        normalized_semantic_payload_composition_standalone_dt_multi_drive_assertion_keys(),
+        'semantic presence family map republishes composition standalone-DT multi-drive assertion keys',
+    );
+    is_deeply(
         $contract->{presence_key_family_map}{success_semantic_optional_child_presence_keys},
         normalized_semantic_success_semantic_optional_child_presence_keys(),
         'report presence family map publishes optional semantic children',
@@ -487,6 +522,31 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{presence_key_family_map}{composition_generated_child_entry_keys},
         normalized_semantic_composition_generated_child_entry_keys(),
         'report presence family map publishes composition generated-child entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_standalone_dt_child_entry_keys},
+        normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        'report presence family map publishes composition standalone-DT child entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_standalone_dt_enable_family_entry_keys},
+        normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+        'report presence family map publishes composition standalone-DT enable-family entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_standalone_dt_module_enable_family_keys},
+        normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        'report presence family map publishes composition standalone-DT module-enable-family keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_standalone_dt_multi_drive_target_entry_keys},
+        normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+        'report presence family map publishes composition standalone-DT multi-drive target entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_standalone_dt_multi_drive_assertion_keys},
+        normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
+        'report presence family map publishes composition standalone-DT multi-drive assertion keys',
     );
     is_deeply(
         $contract->{success_module_presence_keys},
@@ -1166,6 +1226,81 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_composition_generated_child_entry_keys(),
         FSM::Support::NormalizedSemanticCompositionContract::normalized_semantic_composition_generated_child_entry_keys(),
         'normalized semantic composition generated-child entry keys map to the nested composition owner',
+    );
+    is_deeply(
+        $contract->{composition_standalone_dt_child_entry_keys},
+        normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        'contract publishes the bounded composition standalone-DT child entry key list',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        normalized_semantic_payload_composition_standalone_dt_child_entry_keys(),
+        'normalized semantic composition standalone-DT child entry keys map to the payload owner',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        FSM::Support::NormalizedSemanticCompositionContract::normalized_semantic_composition_standalone_dt_child_entry_keys(),
+        'normalized semantic composition standalone-DT child entry keys map to the nested composition owner',
+    );
+    is_deeply(
+        $contract->{composition_standalone_dt_enable_family_entry_keys},
+        normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+        'contract publishes the bounded composition standalone-DT enable-family entry key list',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+        normalized_semantic_payload_composition_standalone_dt_enable_family_entry_keys(),
+        'normalized semantic composition standalone-DT enable-family entry keys map to the payload owner',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+        FSM::Support::NormalizedSemanticCompositionContract::normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
+        'normalized semantic composition standalone-DT enable-family entry keys map to the nested composition owner',
+    );
+    is_deeply(
+        $contract->{composition_standalone_dt_module_enable_family_keys},
+        normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        'contract publishes the bounded composition standalone-DT module-enable-family key list',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        normalized_semantic_payload_composition_standalone_dt_module_enable_family_keys(),
+        'normalized semantic composition standalone-DT module-enable-family keys map to the payload owner',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        FSM::Support::NormalizedSemanticCompositionContract::normalized_semantic_composition_standalone_dt_module_enable_family_keys(),
+        'normalized semantic composition standalone-DT module-enable-family keys map to the nested composition owner',
+    );
+    is_deeply(
+        $contract->{composition_standalone_dt_multi_drive_target_entry_keys},
+        normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+        'contract publishes the bounded composition standalone-DT multi-drive target entry key list',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+        normalized_semantic_payload_composition_standalone_dt_multi_drive_target_entry_keys(),
+        'normalized semantic composition standalone-DT multi-drive target entry keys map to the payload owner',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+        FSM::Support::NormalizedSemanticCompositionContract::normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
+        'normalized semantic composition standalone-DT multi-drive target entry keys map to the nested composition owner',
+    );
+    is_deeply(
+        $contract->{composition_standalone_dt_multi_drive_assertion_keys},
+        normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
+        'contract publishes the bounded composition standalone-DT multi-drive assertion key list',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
+        normalized_semantic_payload_composition_standalone_dt_multi_drive_assertion_keys(),
+        'normalized semantic composition standalone-DT multi-drive assertion keys map to the payload owner',
+    );
+    is_deeply(
+        normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
+        FSM::Support::NormalizedSemanticCompositionContract::normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
+        'normalized semantic composition standalone-DT multi-drive assertion keys map to the nested composition owner',
     );
 };
 
