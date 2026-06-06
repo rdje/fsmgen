@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Pipeline::HDLGenerator;
 use FSM::Support::RegressionCorpus qw(protocol_fixture_entries);
 use FSM::Support::HDLExternalValidation qw(
+    hdl_external_validation_tools
     missing_systemverilog_validation_tools
     validate_systemverilog_file
 );
@@ -42,6 +43,38 @@ subtest 'generated lte_dif_pmaster SystemVerilog passes Verilator lint and ABC-f
         $yosys_script,
         qr/(?:^|[;\s])abc[0-9]?(?:\s|;|\z)/i,
         'Yosys validation does not run a standalone ABC pass',
+    );
+};
+
+subtest 'generated lte_dif_pmaster SystemVerilog can opt into ABC-backed Yosys mapping validation' => sub {
+    my $tools = hdl_external_validation_tools();
+    plan skip_all => 'Optional ABC mapping tool is not installed'
+        unless $tools->{abc_mapping};
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $report = generate_and_validate($tempdir, 'fsm/lte_dif_pmaster.fsm', abc_mapping => 1);
+    ok($report->{ok}, 'ABC mapping opt-in validation report succeeds for lte_dif_pmaster');
+    is_deeply(
+        [map { $_->{name} } @{$report->{steps}}],
+        [qw(verilator_lint yosys_abc_synthesis)],
+        'ABC mapping opt-in runs Verilator lint before ABC-enabled Yosys synthesis',
+    );
+    my ($yosys_step) = grep { $_->{name} eq 'yosys_abc_synthesis' } @{$report->{steps}};
+    my $yosys_script = $yosys_step->{command}[2];
+    like(
+        $yosys_script,
+        qr/\bsynth\s+-top\s+lte_dif_pmaster\b/,
+        'ABC mapping opt-in uses Yosys synthesis without the -noabc guard',
+    );
+    unlike(
+        $yosys_script,
+        qr/\bsynth\s+-noabc\b/,
+        'ABC mapping opt-in does not use the default ABC-free Yosys stage',
+    );
+    like(
+        $yosys_step->{stdout} . $yosys_step->{stderr},
+        qr/\bABC\b|yosys-abc|berkeley-abc|\babc\b/i,
+        'ABC mapping opt-in Yosys output reports ABC activity',
     );
 };
 
@@ -166,7 +199,7 @@ subtest 'CLI --verify-hdl is currently SystemVerilog-only' => sub {
 done_testing();
 
 sub generate_and_validate {
-    my ($tempdir, $relative_fsm_file) = @_;
+    my ($tempdir, $relative_fsm_file, %validation_options) = @_;
     my $fsm_file = File::Spec->catfile($FindBin::Bin, '..', split('/', $relative_fsm_file));
     my ($module_name) = $relative_fsm_file =~ m{([^/]+)\.fsm\z};
     my $sv_file = File::Spec->catfile($tempdir, "$module_name.sv");
@@ -187,6 +220,7 @@ sub generate_and_validate {
     return validate_systemverilog_file(
         source_file => $sv_file,
         top_module => $result->{module_info}{module_name},
+        %validation_options,
     );
 }
 

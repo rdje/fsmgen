@@ -3862,17 +3862,16 @@ Current boundary: the Yosys lane intentionally uses `synth -noabc`.
 
 Current shipped boundary: the external validation support and manifest surfaces
 report optional ABC executable discovery candidates while keeping ABC disabled,
-non-required, and outside the shipped validation command sequence.
+non-required, and outside the shipped CLI validation command sequence. The
+in-process support API now has an explicit opt-in mapping probe:
+`FSM::Support::HDLExternalValidation::validate_systemverilog_file(...,
+abc_mapping => 1)`. That mode requires optional ABC discovery and runs Yosys
+`synth -top`, while default `--verify-hdl` remains ABC-free with
+`synth -noabc`.
 
 Remaining hardening direction: any ABC-backed Yosys optimization/mapping gate
-still needs a separate opt-in lane with timeout/error policy and regression
-coverage before it can become a validation requirement.
-
-Active next leaf: optional, non-default ABC mapping validation hardening is
-selected. The intended slice is an explicit opt-in path for generated
-SystemVerilog validation when Yosys and an ABC mapping executable are present;
-it must keep default `--verify-hdl` on the existing ABC-free `synth -noabc`
-lane and must not make ABC a required tool.
+still needs broader timeout/error policy and regression coverage before it can
+become a validation requirement or CLI default.
 
 ### Structured Non-Flattened Generation
 

@@ -19,6 +19,7 @@ use FSM::Support::HDLExternalValidation qw(
 );
 use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_abc_mapping_status
+    hdl_external_validation_abc_mapping_success_step_names
     build_hdl_external_validation_contract
     hdl_external_validation_contract_source
     hdl_external_validation_execution_failure_modes
@@ -82,6 +83,29 @@ subtest 'contract exposes the bounded external validation surface' => sub {
         !$contract->{abc_mapping_required},
         'contract says ABC mapping is not a required validation tool',
     );
+    ok(
+        $contract->{abc_mapping_opt_in_supported},
+        'contract records explicit ABC mapping opt-in support',
+    );
+    ok(
+        !$contract->{abc_mapping_default_enabled},
+        'contract records that ABC mapping is not enabled by default',
+    );
+    is(
+        $contract->{abc_mapping_invocation},
+        'FSM::Support::HDLExternalValidation::validate_systemverilog_file(..., abc_mapping => 1)',
+        'contract records the in-process ABC mapping opt-in spelling',
+    );
+    is(
+        $contract->{abc_mapping_yosys_stage},
+        'read_verilog_sv_noautowire_synth_abc_stat',
+        'contract records the ABC-enabled Yosys stage name',
+    );
+    is_deeply(
+        $contract->{abc_mapping_success_step_names},
+        hdl_external_validation_abc_mapping_success_step_names(),
+        'contract publishes the ABC mapping opt-in success step names',
+    );
     is_deeply(
         $contract->{target_languages},
         [qw(systemverilog sv)],
@@ -143,6 +167,10 @@ subtest 'contract exposes the bounded external validation surface' => sub {
         grep({ /ABC executable discovery is optional metadata/ } @{$contract->{guidance} || []}),
         'contract guidance explains that optional ABC discovery does not enable ABC validation',
     );
+    ok(
+        grep({ /abc_mapping => 1/ } @{$contract->{guidance} || []}),
+        'contract guidance records the explicit ABC mapping opt-in',
+    );
     ok($contract->{in_process_failures_throw}, 'contract says in-process failures throw');
     ok($contract->{cli_failures_exit_nonzero}, 'contract says CLI failures exit non-zero');
 };
@@ -181,6 +209,17 @@ subtest 'ABC mapping executable discovery is optional and non-gating' => sub {
             [missing_systemverilog_validation_tools()],
             [],
             'missing-tool checks do not require optional ABC mapping discovery',
+        );
+        like(
+            capture_error(sub {
+                validate_systemverilog_file(
+                    source_file => __FILE__,
+                    top_module => 'demo_top',
+                    abc_mapping => 1,
+                );
+            }),
+            qr/Missing external HDL validation tool\(s\): abc_mapping/,
+            'explicit ABC mapping opt-in requires optional ABC discovery',
         );
     }
 };

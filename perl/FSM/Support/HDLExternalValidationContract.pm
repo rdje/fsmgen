@@ -13,6 +13,7 @@ use FSM::Support::HDLExternalValidation qw(
 our @EXPORT_OK = qw(
     build_hdl_external_validation_contract
     hdl_external_validation_abc_mapping_status
+    hdl_external_validation_abc_mapping_success_step_names
     hdl_external_validation_contract_source
     hdl_external_validation_execution_failure_modes
     hdl_external_validation_failure_mode_family_map
@@ -40,7 +41,11 @@ sub hdl_external_validation_optional_tool_names {
 }
 
 sub hdl_external_validation_abc_mapping_status {
-    return 'optional_discovered_not_required_not_run';
+    return 'optional_explicit_opt_in_not_required_not_default';
+}
+
+sub hdl_external_validation_abc_mapping_success_step_names {
+    return [qw(verilator_lint yosys_abc_synthesis)];
 }
 
 sub build_hdl_external_validation_contract {
@@ -68,6 +73,11 @@ sub build_hdl_external_validation_contract {
         abc_tool_candidates => [hdl_external_validation_abc_tool_candidates()],
         abc_mapping_status => hdl_external_validation_abc_mapping_status(),
         abc_mapping_required => JSON::PP::false,
+        abc_mapping_opt_in_supported => JSON::PP::true,
+        abc_mapping_default_enabled => JSON::PP::false,
+        abc_mapping_invocation => 'FSM::Support::HDLExternalValidation::validate_systemverilog_file(..., abc_mapping => 1)',
+        abc_mapping_yosys_stage => 'read_verilog_sv_noautowire_synth_abc_stat',
+        abc_mapping_success_step_names => hdl_external_validation_abc_mapping_success_step_names(),
         verilator_stage => 'lint_only_sv',
         yosys_stage => 'read_verilog_sv_noautowire_synth_noabc_stat',
         yosys_abc_enabled => JSON::PP::false,
@@ -91,7 +101,8 @@ sub build_hdl_external_validation_contract {
             'Use the grouped failure_mode_family_map plus failure_text_prefix_map to recognize the bounded input-side and step-failure categories without treating the full thrown stderr/stdout payload as frozen.',
             'This lane is optional and only active when Verilator and Yosys are installed.',
             'The promise is about generated SystemVerilog lint/netlist sanity, not about VHDL validation or ABC-enabled synthesis behavior.',
-            'ABC executable discovery is optional metadata for the later mapping-hardening lane; it does not make ABC a required validation tool and does not add an ABC command to the shipped validation sequence.',
+            'ABC executable discovery is optional metadata for the default validation lane; it does not make ABC a required validation tool and does not add ABC to the default CLI validation sequence.',
+            'ABC mapping validation is available only through explicit in-process opt-in via abc_mapping => 1; default --verify-hdl remains ABC-free.',
             'Direct VHDL generation has a scaffold subset, but this external validation contract remains SystemVerilog-only until a separate GHDL validation lane is runnable, documented, support-accounted, and regression-backed.',
             'The legacy vhdl_validation_deferred_until_vhdl_backend flag is retained for compatibility; prefer vhdl_validation_deferred_until_ghdl_validation_lane for the current blocker.',
         ],

@@ -77,6 +77,10 @@ The support surface can also report the first optional ABC executable it finds
 from `yosys-abc`, `berkeley-abc`, and `abc`. That discovery is metadata only:
 ABC is not required for `--verify-hdl`, and the validation command sequence
 does not run a standalone ABC pass.
+In-process callers that need an explicit mapping probe can opt in with
+`FSM::Support::HDLExternalValidation::validate_systemverilog_file(...,
+abc_mapping => 1)`. That path requires optional ABC discovery and uses Yosys
+`synth -top`; the CLI remains on the ABC-free `synth -noabc` lane.
 
 Direct VHDL generation now has a scaffold subset for direct single-FSM roots,
 including delayed-pulse clock-branch lowering, generic-bearing direct-root

@@ -11,7 +11,8 @@ FSMGen still performs semantic and pre-generation checks internally; this
 support package runs Verilator and Yosys after emission. Verilator checks that
 the rendered text is valid lint-clean SystemVerilog. Yosys checks that the
 same text can be turned into a structural netlist-like design, deliberately
-without running the ABC mapping/optimization algorithm.
+without running the ABC mapping/optimization algorithm unless the caller
+explicitly opts into the bounded ABC mapping probe.
 
 =cut
 
@@ -60,12 +61,15 @@ sub validate_systemverilog_file (%args) {
         or die "[HDLExternalValidation.pm][validate_systemverilog_file()] Missing required 'source_file'";
     my $top_module = $args{top_module}
         or die "[HDLExternalValidation.pm][validate_systemverilog_file()] Missing required 'top_module'";
+    my $abc_mapping = $args{abc_mapping} ? 1 : 0;
 
     die "[HDLExternalValidation.pm][validate_systemverilog_file()] Source file does not exist: $source_file"
         unless -f $source_file;
 
     my $tools = hdl_external_validation_tools();
     my @missing = sort grep { !$tools->{$_} } qw(verilator yosys);
+    push @missing, 'abc_mapping'
+        if $abc_mapping && !$tools->{abc_mapping};
     die "[HDLExternalValidation.pm][validate_systemverilog_file()] Missing external HDL validation tool(s): "
         . join(', ', @missing)
         if @missing;
@@ -81,12 +85,15 @@ sub validate_systemverilog_file (%args) {
         ],
     );
 
+    my $yosys_stage = $abc_mapping
+        ? 'synth -top ' . _yosys_identifier($top_module)
+        : 'synth -noabc -top ' . _yosys_identifier($top_module);
     my $yosys_script = join '; ',
         'read_verilog -sv -noautowire ' . _yosys_quote($source_file),
-        'synth -noabc -top ' . _yosys_identifier($top_module),
+        $yosys_stage,
         'stat';
     push @steps, _run_step(
-        name => 'yosys_synthesis',
+        name => $abc_mapping ? 'yosys_abc_synthesis' : 'yosys_synthesis',
         command => [
             $tools->{yosys},
             '-p',
@@ -184,7 +191,7 @@ first optional ABC mapping executable discovered from
 C<hdl_external_validation_abc_tool_candidates> under C<abc_mapping>, plus the
 matching command spelling under C<abc_mapping_tool>. The ABC mapping tool is
 reported for planning/contract visibility only; it is not required and is not
-run by C<validate_systemverilog_file>.
+run by default C<validate_systemverilog_file> calls.
 
 =head2 hdl_external_validation_required_tools
 
@@ -210,5 +217,10 @@ and C<stat>. The C<-noabc> guard is intentional: this lane proves FSMGen did
 not emit garbage HDL and that Yosys can lower it into structural logic, while
 leaving ABC timeout/optimization edge cases for a later dedicated hardening
 lane.
+
+Passing C<abc_mapping =E<gt> 1> enables the explicit opt-in ABC mapping probe.
+That mode requires the optional C<abc_mapping> tool discovery to succeed and
+uses C<synth -top> instead of C<synth -noabc -top>. The default CLI validation
+path remains ABC-free.
 
 =cut

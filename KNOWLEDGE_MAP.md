@@ -184,7 +184,7 @@
 ## Facts (by id)
 
 ### abc-discovery-validation-boundary
-_ABC discovery is optional metadata, not an external validation gate_
+_ABC mapping is optional and explicit opt-in_
 
 - **answers:** does --verify-hdl run abc? | is yosys-abc required for external validation? | why does hdl external validation report abc_mapping? | what is the ABC mapping hardening boundary? | does FSMGen require ABC for Yosys validation?
 - **date:** 2026-06-06 · **status:** current

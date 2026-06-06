@@ -2303,7 +2303,12 @@ Verilator lint plus ABC-free Yosys structural synthesis when those tools are
 installed. The manifest separates required tools (`verilator`, `yosys`) from
 optional ABC mapping discovery (`yosys-abc`, `berkeley-abc`, `abc` candidates):
 ABC availability is reported for planning, but ABC is not required and is not
-run by the shipped validation lane.
+run by the shipped CLI validation lane. The same contract now advertises the
+explicit in-process opt-in
+`FSM::Support::HDLExternalValidation::validate_systemverilog_file(...,
+abc_mapping => 1)`, which runs an ABC-backed Yosys mapping step when the
+optional mapping tool is available while keeping default `--verify-hdl`
+ABC-free.
 
 The public `support_accounting` match objects emitted by both `--check --json`
 and `--emit-semantic-json` now share one bounded nested-object owner too:

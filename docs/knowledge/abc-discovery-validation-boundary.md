@@ -1,6 +1,6 @@
 ---
 id: abc-discovery-validation-boundary
-title: ABC discovery is optional metadata, not an external validation gate
+title: ABC mapping is optional and explicit opt-in
 answers:
   - "does --verify-hdl run abc?"
   - "is yosys-abc required for external validation?"
@@ -22,8 +22,9 @@ optional ABC mapping candidate found from `yosys-abc`, `berkeley-abc`, and
 capability manifest can distinguish required validation tools from later
 ABC-mapping hardening metadata.
 
-After the direct VHDL scaffold frontier reached no new direct corpus gaps,
-`BACKEND-API-VALIDATION-FRONTIER.42` selected an explicit opt-in ABC mapping
-hardening leaf. That next leaf may add a non-default ABC-backed Yosys mapping
-validation path, but it must keep `--verify-hdl` ABC-free by default and must
-not make ABC a required external validation tool.
+`FSM::Support::HDLExternalValidation::validate_systemverilog_file(...,
+abc_mapping => 1)` is now the explicit in-process opt-in for ABC-backed Yosys
+mapping validation. That path requires optional ABC discovery and runs a
+`yosys_abc_synthesis` step with `synth -top`. It does not change the default
+`--verify-hdl` CLI behavior and does not make ABC a required external
+validation tool.

@@ -208,7 +208,9 @@ deliberately disabled until a later dedicated lane handles ABC-specific
 timeout and mapping edge cases. The bounded support/manifest surface now also
 reports optional ABC executable discovery candidates (`yosys-abc`,
 `berkeley-abc`, and `abc`) for planning visibility, but ABC is not a required
-tool and is not run by `--verify-hdl`. This should be understood as a backend
+tool and is not run by `--verify-hdl`; in-process callers can explicitly opt
+into ABC-backed Yosys mapping validation with `abc_mapping => 1`. This should
+be understood as a backend
 quality gate for emitted HDL, not as a replacement for FSMGen's semantic,
 strict-mode, and pre-generation checks. The lane is SystemVerilog-only for now;
 direct VHDL generation has a scaffold subset, including delayed-pulse

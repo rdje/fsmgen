@@ -67,6 +67,7 @@ use FSM::Support::HDLGeneratorFacadeContract qw(
 );
 use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_abc_mapping_status
+    hdl_external_validation_abc_mapping_success_step_names
     hdl_external_validation_optional_tool_names
     hdl_external_validation_required_tool_names
     hdl_external_validation_contract_source
@@ -1115,6 +1116,29 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         !$manifest->{backend_validation}{systemverilog_external}{abc_mapping_required},
         'manifest records that ABC mapping is not required for external validation',
+    );
+    ok(
+        $manifest->{backend_validation}{systemverilog_external}{abc_mapping_opt_in_supported},
+        'manifest records explicit ABC mapping opt-in support',
+    );
+    ok(
+        !$manifest->{backend_validation}{systemverilog_external}{abc_mapping_default_enabled},
+        'manifest records that ABC mapping is not enabled by default',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{abc_mapping_invocation},
+        'FSM::Support::HDLExternalValidation::validate_systemverilog_file(..., abc_mapping => 1)',
+        'manifest records the in-process ABC mapping opt-in spelling',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{abc_mapping_yosys_stage},
+        'read_verilog_sv_noautowire_synth_abc_stat',
+        'manifest records the ABC-enabled Yosys stage',
+    );
+    is_deeply(
+        $manifest->{backend_validation}{systemverilog_external}{abc_mapping_success_step_names},
+        hdl_external_validation_abc_mapping_success_step_names(),
+        'manifest records the ABC mapping opt-in success step names',
     );
     is_deeply(
         $manifest->{backend_validation}{systemverilog_external}{target_languages},
