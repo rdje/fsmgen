@@ -1093,6 +1093,86 @@ FSM
     unlike($signed_cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s, 'CLI signed logic VHDL output remains VHDL-shaped');
 };
 
+subtest 'direct VHDL scaffold lowers signed scalar logic declaration shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_scalar_logic.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_scalar_logic.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_signed_scalar_logic
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_bit_t (four_state (signed (bits 1))))
+  )
+  (+size
+    (IN signed_bit_t)
+    (OUT signed_bit_t)
+  )
+  (idle
+    (OUT = IN)
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bentity\s+direct_vhdl_signed_scalar_logic\s+is\b/s, 'signed scalar logic fixture emits direct VHDL entity');
+    like($hdl, qr/\bIN\s+:\s+in\s+std_logic;?/s, 'signed scalar logic input port lowers to std_logic');
+    like($hdl, qr/\bsignal\s+OUT\s+:\s+std_logic;/s, 'signed scalar logic declaration lowers to std_logic signal');
+    like($hdl, qr/\bOUT\s+<=\s+'0';\s+if\s+\w+\s+=\s+'1'\s+then\s+OUT\s+<=\s+IN;/s, 'signed scalar logic assignment lowering remains VHDL-shaped');
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s, 'signed scalar logic VHDL output does not leak SystemVerilog declaration syntax');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for signed scalar logic declarations')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes signed scalar logic declaration VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bIN\s+:\s+in\s+std_logic;?/s, 'CLI VHDL output includes signed scalar input port lowering');
+    like($cli_hdl, qr/\bsignal\s+OUT\s+:\s+std_logic;/s, 'CLI VHDL output includes signed scalar logic declaration lowering');
+    unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s, 'CLI signed scalar logic VHDL output remains VHDL-shaped');
+
+    my $arithmetic_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_scalar_add_deferred.fsm');
+    write_file(
+        $arithmetic_path,
+        <<'FSM'
+(?fsm:direct_vhdl_signed_scalar_add_deferred
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_bit_t (four_state (signed (bits 1))))
+  )
+  (+size
+    (A signed_bit_t)
+    (B signed_bit_t)
+    (SUM signed_bit_t)
+  )
+  (idle
+    (SUM = (+ A B))
+  )
+)
+FSM
+    );
+
+    my $arithmetic_error = capture_exception(sub {
+        generate_vhdl($arithmetic_path);
+    });
+    like(
+        $arithmetic_error,
+        qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s,
+        'signed scalar arithmetic remains outside the direct VHDL scaffold boundary',
+    );
+};
+
 subtest 'direct VHDL scaffold lowers same-width signed vector addition RHS shape' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_addition.fsm');

@@ -29,6 +29,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   addition/subtraction/multiplication/division/modulo RHS assignments through
   target-width `to_signed` literal conversion, with
   multiplication/division/modulo resized to the target width.
+- The direct scaffold now includes signed scalar direct-root port/internal
+  declaration lowering for non-arithmetic one-bit signed type-alias shapes,
+  while signed scalar arithmetic remains fail-closed.
 - The direct scaffold now includes generated internal signal declaration
   lowering for scalar `bit NAME;` and signed vector
   `reg signed [MSB:LSB] NAME;` shapes, as emitted by the declarative bits
@@ -98,6 +101,8 @@ The first VHDL lane is intentionally narrow:
      addition/subtraction/multiplication/division/modulo RHS assignments, such
      as `A + 1`, `A - 1`, `A * 2`, `A / 2`, and `A mod 2`, through
      target-width `to_signed`
+   - Signed scalar direct-root ports and internal declarations for
+     non-arithmetic one-bit signed type-alias shapes, lowered as `std_logic`
    - Generated scalar `bit` internal signal declarations as `std_logic`
    - Generated signed vector internal signal declarations as VHDL `signed`
    - Generated non-signed four-state `logic` internal signal declarations as
@@ -151,14 +156,13 @@ The first VHDL lane is intentionally narrow:
   generated signed vector direct-root port declarations, same-width signed
   vector addition/subtraction/multiplication/division/modulo RHS assignments,
   signed vector numeric-literal addition/subtraction/multiplication/division/modulo
-  RHS assignments,
+  RHS assignments, signed scalar direct-root declarations,
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: implement signed scalar direct-root port/internal
-  declaration lowering under `BACKEND-API-VALIDATION-FRONTIER.63.1`;
-  scalar signed arithmetic and mixed signed/unsigned arithmetic remain
-  separate future edges.
+- Active follow-up: select the next exact backend/API/public-export edge under
+  `BACKEND-API-VALIDATION-FRONTIER.64`; scalar signed arithmetic and mixed
+  signed/unsigned arithmetic remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

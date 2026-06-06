@@ -116,8 +116,10 @@ target-width resize, such as `PROD <= resize(A * to_signed(2, 8), 8);`,
 `QUOT <= resize(A / to_signed(2, 8), 8);`, and
 `REM <= resize(A mod to_signed(2, 8), 8);`. Scalar signed arithmetic and mixed
 signed/unsigned arithmetic remain outside the current direct VHDL scaffold.
-Signed scalar direct-root port/internal declaration lowering is selected as
-the active next implementation edge under `BACKEND-API-VALIDATION-FRONTIER.63.1`.
+Signed scalar direct-root port/internal declarations for non-arithmetic
+one-bit signed type-alias shapes lower to `std_logic`, including declarations
+such as `IN : in std_logic;` and `signal OUT : std_logic;`, while signed
+scalar arithmetic remains fail-closed.
 Aggregate-output
 roots are locked as explicit fail-closed direct VHDL boundaries by focused
 pipeline and facade coverage. Composition/top VHDL is locked fail-closed by

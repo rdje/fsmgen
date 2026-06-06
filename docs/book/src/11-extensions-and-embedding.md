@@ -881,6 +881,7 @@ lowering, generic-bearing direct-root module headers with typed scalar/vector
 sized-literal defaults, scalar addition/subtraction/multiplication RHS/chain
 lowering, scalar bit, signed vector, non-signed four-state logic, and vector
 `logic signed` internal declaration lowering, signed vector direct-root ports,
+signed scalar direct-root declarations,
 same-width signed vector addition/subtraction/multiplication/division/modulo
 RHS lowering, signed vector numeric-literal
 addition/subtraction/multiplication/division/modulo, vector
@@ -2291,9 +2292,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.63.1`, which implements signed scalar
-direct-root port/internal declaration lowering after `.63` selected the
-generated one-bit signed type-alias shape.
+`BACKEND-API-VALIDATION-FRONTIER.64`, which selects the next exact backend/API
+or public-export edge after `.63.1` shipped signed scalar direct-root
+port/internal declaration lowering for non-arithmetic shapes.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic,
 mixed signed/unsigned arithmetic,

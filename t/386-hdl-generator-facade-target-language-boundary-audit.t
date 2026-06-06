@@ -899,6 +899,99 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL signed-scalar-declaration behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_scalar_logic.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_signed_scalar_logic
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_bit_t (four_state (signed (bits 1))))
+  )
+  (+size
+    (IN signed_bit_t)
+    (OUT signed_bit_t)
+  )
+  (idle
+    (OUT = IN)
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_signed_scalar_logic\s+is\b/s,
+        'explicit VHDL facade generation emits the signed scalar direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bIN\s+:\s+in\s+std_logic;?/s,
+        'explicit VHDL facade generation lowers signed scalar input ports to std_logic',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bsignal\s+OUT\s+:\s+std_logic;/s,
+        'explicit VHDL facade generation lowers signed scalar internal declarations to std_logic',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bOUT\s+<=\s+'0';\s+if\s+\w+\s+=\s+'1'\s+then\s+OUT\s+<=\s+IN;/s,
+        'explicit VHDL facade generation lowers signed scalar pass-through assignments',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s,
+        'explicit VHDL signed scalar facade generation does not leak SystemVerilog declarations',
+    );
+
+    my $arithmetic_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_scalar_add_deferred.fsm');
+    write_file(
+        $arithmetic_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_signed_scalar_add_deferred
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_bit_t (four_state (signed (bits 1))))
+  )
+  (+size
+    (A signed_bit_t)
+    (B signed_bit_t)
+    (SUM signed_bit_t)
+  )
+  (idle
+    (SUM = (+ A B))
+  )
+)
+FSM
+    );
+
+    my $error = capture_exception(sub {
+        $vhdl_pipeline->generate_hdl_from_file($arithmetic_path);
+    });
+
+    like(
+        $error,
+        qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s,
+        'explicit VHDL facade generation keeps signed scalar arithmetic fail-closed',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL scalar-addition scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_addition.fsm');

@@ -122,6 +122,11 @@ sub _parse_ports ($port_text) {
             next;
         }
 
+        if ($line =~ /^input\s+logic\s+signed\s+([A-Za-z_][A-Za-z0-9_]*)$/) {
+            push @ports, _decl_hash(name => $1, direction => 'in', signed => 1);
+            next;
+        }
+
         if ($line =~ /^input\s+wire\s+(?:\[(\d+):(\d+)\]\s+)?([A-Za-z_][A-Za-z0-9_]*)$/) {
             push @ports, _decl_hash(name => $3, direction => 'in', msb => $1, lsb => $2);
             next;
@@ -129,6 +134,11 @@ sub _parse_ports ($port_text) {
 
         if ($line =~ /^output(?:\s+(?:reg|wire|logic))?\s+signed\s+\[(\d+):(\d+)\]\s+([A-Za-z_][A-Za-z0-9_]*)$/) {
             push @ports, _decl_hash(name => $3, direction => 'out', signed => 1, msb => $1, lsb => $2);
+            next;
+        }
+
+        if ($line =~ /^output(?:\s+(?:reg|wire|logic))?\s+signed\s+([A-Za-z_][A-Za-z0-9_]*)$/) {
+            push @ports, _decl_hash(name => $1, direction => 'out', signed => 1);
             next;
         }
 
@@ -173,8 +183,6 @@ sub _parse_signal_declarations ($body, $port_names) {
         my $signed = defined $signed_keyword ? 1 : 0;
         confess _unsupported("vector bit declaration '$line' is outside the direct VHDL scaffold")
             if $kind eq 'bit' && (defined($msb) || defined($lsb));
-        confess _unsupported("signed scalar declaration '$line' is outside the direct VHDL scaffold")
-            if $signed && (!defined($msb) || !defined($lsb));
 
         my @names = map {
             my $name = $_;
@@ -659,12 +667,16 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     if (($operator eq '+' || $operator eq '-' || $operator eq '*') && $target_decl->{scalar}) {
         $unsupported->()
             unless $operator eq '*' || $operator eq '+' || $operator eq '-';
+        $unsupported->()
+            if $target_decl->{signed};
         my @scalar_operands;
         for my $operand_name (@operand_names) {
             my $operand_decl = $decls_by_name->{$operand_name}
                 or $unsupported->();
             $unsupported->()
                 unless $operand_decl->{scalar};
+            $unsupported->()
+                if $operand_decl->{signed};
             push @scalar_operands, $operand_name;
         }
         return join($operator eq '*' ? ' and ' : ' xor ', @scalar_operands);

@@ -3828,6 +3828,10 @@ non-signed four-state `logic` internal declarations, such as
 Generated internal `logic signed [MSB:LSB] NAME;` declarations now lower to
 VHDL `signed` signals. Generated signed vector direct-root port declarations,
 starting with `input logic signed [7:0] IN`, now lower to VHDL `signed` ports.
+Generated signed scalar direct-root declarations from one-bit signed type
+aliases, such as `input logic signed IN` and `logic signed OUT;`, now lower to
+VHDL `std_logic` ports/signals for non-arithmetic shapes; signed scalar
+arithmetic remains fail-closed.
 Same-width signed vector addition/subtraction/multiplication/division/modulo
 RHS assignments now lower as signed VHDL arithmetic when the target and all operands are
 same-width signed vectors, so a signed direct-root `SUM = (+ A B)` assignment
@@ -4034,9 +4038,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.63.1` implements signed scalar direct-root
-port/internal declaration lowering after `.63` selected the generated one-bit
-signed type-alias shape.
+`BACKEND-API-VALIDATION-FRONTIER.64` selects the next exact backend/API or
+public-export edge after `.63.1` shipped signed scalar direct-root
+port/internal declaration lowering for non-arithmetic shapes.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic,
 mixed signed/unsigned arithmetic,
