@@ -3788,7 +3788,7 @@ through VHDL `xor`, and generated non-signed four-state `logic` scalar/vector
 internal declarations as `std_logic` / `std_logic_vector`, plus generated
 vector `logic signed` internal declarations as VHDL `signed` signals and
 generated signed vector direct-root port declarations as VHDL `signed` ports,
-and same-width signed vector addition/subtraction/multiplication RHS
+and same-width signed vector addition/subtraction/multiplication/division/modulo RHS
 assignments as signed VHDL arithmetic.
 It is covered by direct pipeline, CLI, and facade tests.
 
@@ -3828,17 +3828,17 @@ non-signed four-state `logic` internal declarations, such as
 Generated internal `logic signed [MSB:LSB] NAME;` declarations now lower to
 VHDL `signed` signals. Generated signed vector direct-root port declarations,
 starting with `input logic signed [7:0] IN`, now lower to VHDL `signed` ports.
-Same-width signed vector addition/subtraction/multiplication RHS assignments
-now lower as signed VHDL arithmetic when the target and all operands are
+Same-width signed vector addition/subtraction/multiplication/division/modulo
+RHS assignments now lower as signed VHDL arithmetic when the target and all operands are
 same-width signed vectors, so a signed direct-root `SUM = (+ A B)` assignment
 emits `SUM <= A + B;`, a signed `DIFF = (- A B)` assignment emits
 `DIFF <= A - B;`, and a signed `PROD = (* A B)` assignment emits
-`PROD <= resize(A * B, 8);` rather than unsigned casts. Same-width signed
-vector division/modulo is the active next implementation edge under
-`BACKEND-API-VALIDATION-FRONTIER.60.1`; scalar signed arithmetic,
-mixed signed/unsigned arithmetic, composition/top VHDL, aggregate VHDL,
-packages, GHDL validation, and full backend parity remain outside the shipped
-scaffold.
+`PROD <= resize(A * B, 8);`. Signed `QUOT = (/ A B)` emits
+`QUOT <= resize(A / B, 8);`, and signed `REM = (% A B)` emits
+`REM <= resize(A mod B, 8);`, rather than unsigned casts. Scalar signed
+arithmetic, mixed signed/unsigned arithmetic, composition/top VHDL, aggregate
+VHDL, packages, GHDL validation, and full backend parity remain outside the
+shipped scaffold.
 
 ### GHDL Validation
 
@@ -4027,8 +4027,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.60.1` implements same-width signed vector
-division/modulo RHS lowering after `.60` selected that exact scaffold gap.
+`BACKEND-API-VALIDATION-FRONTIER.61` selects the next exact backend/API or
+public-export edge after `.60.1` shipped same-width signed vector
+division/modulo RHS lowering.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic,
 mixed signed/unsigned arithmetic,

@@ -160,7 +160,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.59`,
     `BACKEND-API-VALIDATION-FRONTIER.59.1`,
     `BACKEND-API-VALIDATION-FRONTIER.60`,
-    `BACKEND-API-VALIDATION-FRONTIER.60.1`
+    `BACKEND-API-VALIDATION-FRONTIER.60.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.61`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1110,10 +1111,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.60: select VHDL signed divmod`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.60.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement direct VHDL same-width signed vector division/modulo RHS lowering.`
   Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL lowers generated same-width signed vector division and modulo RHS assignments into VHDL signed arithmetic with target-width resize when the target and operands are signed vectors. Focused pipeline, CLI, and facade coverage prove direct signed A/B/QUOT and A/B/REM fixtures emit signed ports/signals and signed division/modulo assignments without std_logic_vector(resize(unsigned(...))) casts. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task tree, and memory stay synchronized. The leaf does not widen scalar signed arithmetic, mixed signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation, broad expression parity, or full backend parity.`
-  Verification: `pending implementation`
+  Verification: `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t; perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/279-declarative-scalar-types.t; prove -Iperl t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.60.1: ship VHDL signed divmod`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.61`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after direct VHDL same-width signed vector division/modulo RHS lowering shipped.`
+  Acceptance: `pending selection`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1244,7 +1252,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 122 | `BACKEND-API-VALIDATION-FRONTIER.59` | `done` | Selected same-width signed vector multiplication RHS lowering after probe evidence showed signed ports/signals still use unsigned multiplication casts. |
 | 123 | `BACKEND-API-VALIDATION-FRONTIER.59.1` | `done` | Shipped same-width signed vector multiplication RHS lowering for signed vector targets and operands without widening division/modulo, scalar signed arithmetic, or full VHDL parity. |
 | 124 | `BACKEND-API-VALIDATION-FRONTIER.60` | `done` | Selected same-width signed vector division/modulo RHS lowering after probe evidence showed signed ports/signals still use unsigned division/modulo casts. |
-| 125 | `BACKEND-API-VALIDATION-FRONTIER.60.1` | `active` | Implement same-width signed vector division/modulo RHS lowering without widening scalar signed arithmetic or full VHDL parity. |
+| 125 | `BACKEND-API-VALIDATION-FRONTIER.60.1` | `done` | Shipped same-width signed vector division/modulo RHS lowering for signed vector targets and operands without widening scalar signed arithmetic or full VHDL parity. |
+| 126 | `BACKEND-API-VALIDATION-FRONTIER.61` | `active` | Select the next exact backend/API/public-export edge after direct VHDL signed division/modulo shipped. |
 
 ## Decisions
 
@@ -1390,6 +1399,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.59` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; temporary signed A/B/PROD VHDL probe showed signed VHDL ports/signals but unsigned multiplication assignment `PROD <= std_logic_vector(resize(unsigned(A) * unsigned(B), 8));` | `PASS`; selected same-width signed vector multiplication RHS lowering for `.59.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.59.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers same-width signed vector multiplication RHS assignments as resized signed VHDL arithmetic; activated `.60` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.60` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; temporary signed A/B/QUOT and A/B/REM VHDL probes showed signed VHDL ports/signals but unsigned division/modulo assignments `QUOT <= std_logic_vector(resize(unsigned(A) / unsigned(B), 8));` and `REM <= std_logic_vector(resize(unsigned(A) mod unsigned(B), 8));` | `PASS`; selected same-width signed vector division/modulo RHS lowering for `.60.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.60.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers same-width signed vector division/modulo RHS assignments as resized signed VHDL arithmetic; activated `.61` |
 
 ## Commit Log
 
@@ -1519,6 +1529,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.59` | `BACKEND-API-VALIDATION-FRONTIER.59: select VHDL signed multiplication` | selected `.59.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.59.1` | `BACKEND-API-VALIDATION-FRONTIER.59.1: ship VHDL signed multiplication` | this slice; activates `.60` |
 | `BACKEND-API-VALIDATION-FRONTIER.60` | `BACKEND-API-VALIDATION-FRONTIER.60: select VHDL signed divmod` | selected `.60.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.60.1` | `BACKEND-API-VALIDATION-FRONTIER.60.1: ship VHDL signed divmod` | this slice; activates `.61` |
 
 ## Changelog
 
@@ -2186,3 +2197,12 @@ items named in the 2026-06-05 remaining-work inventory.
   division/modulo assignments into signed targets. Scalar signed arithmetic,
   mixed signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, GHDL
   validation, broad expression parity, and full backend parity remain deferred.
+- `2026-06-06`: Completed `.60.1`; direct VHDL now lowers same-width signed
+  vector division/modulo RHS assignments as target-width resized signed VHDL
+  arithmetic when the target and all operands are same-width signed vectors.
+  The direct pipeline, CLI, and facade tests cover signed A/B/QUOT and
+  A/B/REM fixtures and assert the unsigned cast expressions are not emitted.
+  Scalar signed arithmetic, mixed signed/unsigned arithmetic, aggregate VHDL,
+  composition/top VHDL, GHDL validation, broad expression parity, and full
+  backend parity remain deferred. Activated `.61` to select the next exact
+  backend/API/public-export edge.

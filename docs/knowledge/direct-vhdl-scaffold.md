@@ -102,9 +102,10 @@ same-width signed vectors. Same-width signed vector subtraction RHS assignments
 also lower as signed VHDL arithmetic, such as `DIFF <= A - B;`, under the same
 target/operand constraints. Same-width signed vector multiplication RHS
 assignments lower as target-width resized signed VHDL arithmetic, such as
-`PROD <= resize(A * B, 8);`, under the same target/operand constraints. Other
-same-width signed vector division/modulo is selected as the active next
-implementation edge under `BACKEND-API-VALIDATION-FRONTIER.60.1`. Scalar
+`PROD <= resize(A * B, 8);`, under the same target/operand constraints.
+Same-width signed vector division/modulo RHS assignments lower as target-width
+resized signed VHDL arithmetic, such as `QUOT <= resize(A / B, 8);` and
+`REM <= resize(A mod B, 8);`, under the same target/operand constraints. Scalar
 signed arithmetic and mixed signed/unsigned arithmetic remain outside the
 current direct VHDL scaffold.
 Aggregate-output
