@@ -3847,7 +3847,7 @@ generated-FSM scalar-autowire top for
 `t/corpus/implicit_composition_system_autowire.fsm`, plus the bounded APB/C4
 generated-FSM top for `fsm/apb_tb.fsm` with scalar integer, scalar expression,
 one-bit sized bitstring, multi-bit sized bitstring, and resolved packed
-aggregate generic maps in the same APB/C4 shape.
+aggregate plus resolved package-backed generic maps in the same APB/C4 shape.
 Still backlog beyond those exact owners: broader generated-FSM/C4 composition
 VHDL, internal-net-heavy composition tops beyond APB, composition generic maps
 beyond shipped external-RTL scalar integer, scalar integer expression,
@@ -3857,7 +3857,8 @@ resolved packed aggregate actuals and shipped generated-FSM scalar integer,
 scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and
 resolved packed aggregate actuals, plus shipped APB/C4 generated-FSM scalar
 integer, scalar expression, one-bit sized bitstring, and multi-bit sized
-bitstring actuals plus resolved packed aggregate actuals, aggregate VHDL record/array lowering,
+bitstring actuals plus resolved packed aggregate and resolved package-backed
+actuals, aggregate VHDL record/array lowering,
 VHDL package
 declaration/emission, multi-clock domains, GHDL validation, broad expression
 parity, signed scalar division/modulo,
@@ -3908,6 +3909,9 @@ VHDL `std_logic` actuals such as `ENABLE_DEFAULT => '1'`, and multi-bit sized
 bitstring actuals emitted as VHDL `std_logic_vector` actuals such as
 `RESET_VALUE => "10100101"`, and resolved packed aggregate actuals emitted as
 VHDL bit strings such as `LANES => "0011110010100101"` and `FRAME => "101"`.
+APB/C4 resolved package-backed actuals now emit resolved VHDL literals such as
+`TIMEOUT_CYCLES => 8` and `RESET_VALUE => "10100101"` without leaking
+`param_pkg`.
 The bounded C3 external-RTL
 literal/concat structural top now emits a VHDL entity/architecture with
 concurrent literal/concat assignments and an external `entity work.uart_tx`
@@ -3937,7 +3941,9 @@ scalar expression generic maps such as `TIMEOUT_CYCLES => (4 + 1)` and
 `RESET_VALUE => "10100101"` and `RESET_VALUE => "00111100"`, before the
 requester/completer port maps; resolved packed aggregate generic maps such as
 `LANES => "0011110010100101"` and `FRAME => "101"` also emit before those port
-maps. Other
+maps. Resolved package-backed generic maps such as `TIMEOUT_CYCLES => 8` and
+`RESET_VALUE => "10100101"` also emit before those port maps without leaking
+package tokens. Other
 composition/top VHDL shapes remain
 fail-closed after typed composition IR parsing, with the pipeline and CLI
 pointing users to the scoped composition target-support diagnostic.
@@ -3978,7 +3984,8 @@ actuals plus resolved packed aggregate and standalone-DT scalar integer
 actuals and generated-FSM scalar integer/scalar expression/one-bit sized
 bitstring/multi-bit sized bitstring/resolved packed aggregate actuals plus
 APB/C4 generated-FSM scalar integer/scalar expression/one-bit sized bitstring/
-multi-bit sized bitstring/resolved packed aggregate actuals, aggregate
+multi-bit sized bitstring/resolved packed aggregate/resolved package-backed
+actuals, aggregate
 VHDL, VHDL package declaration/emission, GHDL validation, and full backend
 parity remain outside the shipped
 scaffold. Signed vector numeric-literal
@@ -4191,15 +4198,17 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.95.1` locks and documents the next exact
-backend/API edge selected by `.95`: bounded APB/C4 generated-FSM resolved
-package-backed VHDL generic-map actuals.
+`BACKEND-API-VALIDATION-FRONTIER.96` selects the next exact backend/API edge
+after bounded APB/C4 generated-FSM resolved package-backed VHDL generic-map
+actuals shipped.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
 beyond scalar integer, scalar expression, one-bit sized bitstring, multi-bit
 sized bitstring, packed-list, and packed-map actuals,
-APB/C4 generic maps beyond the selected package-backed edge,
+APB/C4 generic maps beyond scalar integer, scalar expression, one-bit sized
+bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved
+package-backed actuals,
 full aggregate VHDL record/array lowering, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
 beyond APB, broader expression parity beyond the shipped AMBA wrap family, and

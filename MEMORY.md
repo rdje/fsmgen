@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.95` (this commit) — selected bounded APB/C4 generated-FSM resolved package-backed VHDL generic-map actual coverage. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.95.1` active frontier — lock and document bounded APB/C4 resolved package-backed generic-map actuals before any VHDL package declaration/emission, GHDL, or parity work.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.95`; `BACKEND-API-VALIDATION-FRONTIER.94.1`; `BACKEND-API-VALIDATION-FRONTIER.94`; `BACKEND-API-VALIDATION-FRONTIER.93.1`; `BACKEND-API-VALIDATION-FRONTIER.93`; `BACKEND-API-VALIDATION-FRONTIER.92.1`; `BACKEND-API-VALIDATION-FRONTIER.92`; `BACKEND-API-VALIDATION-FRONTIER.91.1`; `BACKEND-API-VALIDATION-FRONTIER.91`; `BACKEND-API-VALIDATION-FRONTIER.90.1`; `BACKEND-API-VALIDATION-FRONTIER.90`; `BACKEND-API-VALIDATION-FRONTIER.89.1`; `BACKEND-API-VALIDATION-FRONTIER.89`.
-- in_flight_uncommitted: none expected after this `.95` selection commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.95.1` (this commit) — locked bounded APB/C4 generated-FSM resolved package-backed VHDL generic-map actual coverage. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.96` active frontier — select the next exact backend/API edge after bounded APB/C4 package-backed generic-map coverage shipped.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.95.1`; `BACKEND-API-VALIDATION-FRONTIER.95`; `BACKEND-API-VALIDATION-FRONTIER.94.1`; `BACKEND-API-VALIDATION-FRONTIER.94`; `BACKEND-API-VALIDATION-FRONTIER.93.1`; `BACKEND-API-VALIDATION-FRONTIER.93`; `BACKEND-API-VALIDATION-FRONTIER.92.1`; `BACKEND-API-VALIDATION-FRONTIER.92`; `BACKEND-API-VALIDATION-FRONTIER.91.1`; `BACKEND-API-VALIDATION-FRONTIER.91`; `BACKEND-API-VALIDATION-FRONTIER.90.1`; `BACKEND-API-VALIDATION-FRONTIER.90`; `BACKEND-API-VALIDATION-FRONTIER.89.1`.
+- in_flight_uncommitted: none expected after this `.95.1` coverage commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

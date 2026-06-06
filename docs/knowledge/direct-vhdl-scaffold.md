@@ -33,6 +33,8 @@ answers:
   - "does composition VHDL support APB/C4 bitstring generic maps?"
   - "does composition VHDL support APB/C4 aggregate generic maps?"
   - "does composition VHDL support APB/C4 packed aggregate generic maps?"
+  - "does composition VHDL support APB/C4 package-backed generic maps?"
+  - "does composition VHDL resolve APB/C4 package constants in generic maps?"
   - "does --language vhdl work for standalone-DT composition tops?"
   - "does --language vhdl work for C2 generated-FSM composition tops?"
   - "does --language vhdl work for APB/C4 composition tops?"
@@ -230,7 +232,8 @@ unresolved package/expression actuals, standalone-DT generic maps beyond scalar
 integer/scalar expression/one-bit sized-bitstring/multi-bit sized-bitstring/
 packed-list/packed-map actuals, and APB/C4 generic maps beyond scalar integer,
 scalar expression, one-bit sized-bitstring, and multi-bit sized-bitstring
-actuals plus resolved packed aggregate actuals remain deferred for those
+actuals plus resolved packed aggregate and resolved package-backed actuals
+remain deferred for those
 families. The
 bounded C2 generated-FSM child
 composition VHDL top is also shipped for
@@ -268,7 +271,11 @@ entities keep matching `integer`, `std_logic`, or `std_logic_vector` generic
 declarations. Resolved APB/C4 packed aggregate generic maps also emit before
 the child port maps, such as `LANES => "0011110010100101"` and
 `FRAME => "101"`, against matching `std_logic_vector` generic declarations.
-APB/C4 package-backed and non-packed aggregate generic maps remain deferred.
+Qualified package constants in the same APB/C4 subset are resolved before VHDL
+emission, so `param_pkg.TIMEOUT_8` and `param_pkg.RESET_A5` emit
+`TIMEOUT_CYCLES => 8` and `RESET_VALUE => "10100101"` without leaking package
+tokens. APB/C4 VHDL package declaration/emission and non-packed aggregate
+generic maps remain deferred.
 Other composition/top VHDL shapes remain locked fail-closed by focused pipeline
 and CLI coverage: `?top` sources are parsed into typed composition IR, then unsupported
 `target_language => 'vhdl'` and `--language vhdl` shapes are rejected with the

@@ -230,7 +230,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.94`,
     `BACKEND-API-VALIDATION-FRONTIER.94.1`,
     `BACKEND-API-VALIDATION-FRONTIER.95`,
-    `BACKEND-API-VALIDATION-FRONTIER.95.1`
+    `BACKEND-API-VALIDATION-FRONTIER.95.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.96`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1695,10 +1696,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.95: select APB/C4 package-backed generic maps`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.95.1`
-  Status: `active`
+  Status: `done`
   Goal: `Lock and document resolved package-backed APB/C4 generated-FSM VHDL generic-map actuals.`
   Acceptance: `Focused pipeline, CLI, and facade/target-language coverage prove that the bounded APB/C4 generated-FSM composition top may use qualified imported package constants for scalar integer and multi-bit sized-bitstring requester/completer parameter overrides, such as TIMEOUT_CYCLES param_pkg.TIMEOUT_8 and RESET_VALUE param_pkg.RESET_A5, and that VHDL emission receives and emits resolved literal generic-map actuals such as TIMEOUT_CYCLES => 8 and RESET_VALUE => "10100101" before both requester and completer child port maps. The shipped subset is documented as resolved package-backed actuals, not VHDL package declaration/emission support, and raw package tokens must not leak into VHDL output. APB/C4 non-packed aggregate generic maps, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, and full backend parity remain deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map, task tree, and MEMORY stay synchronized.`
-  Verification: `pending implementation`
+  Verification: `perl -Iperl -c perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm; perl -Iperl -c perl/FSM/Composition/PlanBuilder.pm; perl -Iperl -c perl/FSM/Composition/GenerationOrchestrator.pm; perl -Iperl -c t/114-composition-target-support-diagnostics.t; perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/292-composition-generated-child-parameter-overrides.t t/91-composition-multi-rtl-children.t; prove -Iperl t/333-normalized-semantic-composition-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.95.1: lock APB/C4 package-backed generic maps`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.96`
+  Status: `active`
+  Goal: `Select the next exact backend/API edge after bounded APB/C4 generated-FSM resolved package-backed VHDL generic-map actuals shipped.`
+  Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave APB/C4 non-packed aggregate generic maps, aggregate VHDL record/array declarations beyond packed vectors, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1899,7 +1907,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 192 | `BACKEND-API-VALIDATION-FRONTIER.94` | `done` | Selected bounded APB/C4 generated-FSM resolved packed aggregate generic-map actuals because an APB-shaped C4 composition top with requester/completer LANES and FRAME overrides still fails at the bounded VHDL target-support gate while a direct APB requester child already emits matching packed std_logic_vector generic declarations. |
 | 193 | `BACKEND-API-VALIDATION-FRONTIER.94.1` | `done` | Shipped bounded APB/C4 generated-FSM resolved packed aggregate VHDL generic-map actuals such as `LANES => "0011110010100101"` and `FRAME => "101"` while keeping APB/C4 package-backed generic maps, package, GHDL, and parity widening deferred. |
 | 194 | `BACKEND-API-VALIDATION-FRONTIER.95` | `done` | Selected bounded APB/C4 generated-FSM resolved package-backed generic-map coverage because an APB-shaped C4 composition probe with requester/completer package-qualified TIMEOUT_CYCLES and RESET_VALUE overrides already emits resolved VHDL generic maps without package tokens. |
-| 195 | `BACKEND-API-VALIDATION-FRONTIER.95.1` | `active` | Lock and document bounded APB/C4 generated-FSM resolved package-backed VHDL generic-map actuals, leaving VHDL package declaration/emission, GHDL, and parity widening deferred. |
+| 195 | `BACKEND-API-VALIDATION-FRONTIER.95.1` | `done` | Locked and documented bounded APB/C4 generated-FSM resolved package-backed VHDL generic-map actuals such as `TIMEOUT_CYCLES => 8` and `RESET_VALUE => "10100101"` while keeping VHDL package declaration/emission, GHDL, and parity widening deferred. |
+| 196 | `BACKEND-API-VALIDATION-FRONTIER.96` | `active` | Select the next exact backend/API edge after bounded APB/C4 generated-FSM resolved package-backed generic maps shipped. |
 
 ## Decisions
 
@@ -2287,6 +2296,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.94` | `BACKEND-API-VALIDATION-FRONTIER.94: select APB/C4 aggregate generic maps` | selected `.94.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.94.1` | `BACKEND-API-VALIDATION-FRONTIER.94.1: emit APB/C4 aggregate generic maps` | this slice; activates `.95` |
 | `BACKEND-API-VALIDATION-FRONTIER.95` | `BACKEND-API-VALIDATION-FRONTIER.95: select APB/C4 package-backed generic maps` | selected `.95.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.95.1` | `BACKEND-API-VALIDATION-FRONTIER.95.1: lock APB/C4 package-backed generic maps` | this slice; activates `.96` |
 
 ## Changelog
 
@@ -2389,6 +2399,11 @@ items named in the 2026-06-05 remaining-work inventory.
   resolved package-backed VHDL generic-map coverage after an APB-shaped C4
   probe emitted `TIMEOUT_CYCLES => 8` and `RESET_VALUE => "10100101"` without
   leaking package tokens.
+- `2026-06-06`: Completed `.95.1`; bounded APB/C4 generated-FSM resolved
+  package-backed VHDL generic maps are locked through pipeline, CLI, and
+  facade coverage, emitting `TIMEOUT_CYCLES => 8` and
+  `RESET_VALUE => "10100101"` before requester/completer child port maps
+  without leaking package tokens; `.96` is active for next-edge selection.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.

@@ -16,6 +16,7 @@ my $tempdir = tempdir(CLEANUP => 1);
 my $apb_c4_one_bit_generic_map_dir = tempdir(CLEANUP => 1);
 my $apb_c4_bitstring_generic_map_dir = tempdir(CLEANUP => 1);
 my $apb_c4_aggregate_generic_map_dir = tempdir(CLEANUP => 1);
+my $apb_c4_package_generic_map_dir = tempdir(CLEANUP => 1);
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $bounded_composition_path = File::Spec->catfile(
     $repo_root,
@@ -59,6 +60,8 @@ my $apb_c4_bitstring_generic_map_path = File::Spec->catfile($apb_c4_bitstring_ge
 my $apb_c4_bitstring_generic_map_output_path = File::Spec->catfile($tempdir, 'apb_c4_bitstring_generic_map_top.vhd');
 my $apb_c4_aggregate_generic_map_path = File::Spec->catfile($apb_c4_aggregate_generic_map_dir, 'apb_c4_aggregate_generic_map_top.fsm');
 my $apb_c4_aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'apb_c4_aggregate_generic_map_top.vhd');
+my $apb_c4_package_generic_map_path = File::Spec->catfile($apb_c4_package_generic_map_dir, 'apb_c4_package_generic_map_top.fsm');
+my $apb_c4_package_generic_map_output_path = File::Spec->catfile($tempdir, 'apb_c4_package_generic_map_top.vhd');
 my $scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_scalar_generic_map_top.fsm');
 my $scalar_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_scalar_generic_map_top.vhd');
 my $package_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_package_generic_map_top.fsm');
@@ -368,6 +371,7 @@ write_apb_c4_scalar_generic_map_fixture(
 write_apb_c4_one_bit_generic_map_fixture($repo_root, $apb_c4_one_bit_generic_map_dir, $apb_c4_one_bit_generic_map_path);
 write_apb_c4_bitstring_generic_map_fixture($repo_root, $apb_c4_bitstring_generic_map_dir, $apb_c4_bitstring_generic_map_path);
 write_apb_c4_aggregate_generic_map_fixture($repo_root, $apb_c4_aggregate_generic_map_dir, $apb_c4_aggregate_generic_map_path);
+write_apb_c4_package_generic_map_fixture($repo_root, $apb_c4_package_generic_map_dir, $apb_c4_package_generic_map_path);
 write_file(
     $package_generic_map_path,
     <<'FSM'
@@ -1359,6 +1363,33 @@ unlike(
     'pipeline APB/C4 aggregate generic-map VHDL output does not leak SystemVerilog generic syntax or packed literals',
 );
 
+my $apb_c4_package_generic_map_result = $pipeline->generate_hdl_from_file($apb_c4_package_generic_map_path);
+like(
+    $apb_c4_package_generic_map_result->{hdl_code},
+    qr/\bTIMEOUT_CYCLES\s+:\s+integer\s*:=\s*4\b/s,
+    'pipeline emits the APB package-backed scalar generic declaration',
+);
+like(
+    $apb_c4_package_generic_map_result->{hdl_code},
+    qr/\bRESET_VALUE\s+:\s+std_logic_vector\(7\s+downto\s+0\)\s*:=\s*"00000000"/s,
+    'pipeline emits the APB package-backed multi-bit generic declaration',
+);
+like(
+    $apb_c4_package_generic_map_result->{hdl_code},
+    qr/\brequester\s+:\s+entity\s+work\.apb_requester\s+generic\s+map\s*\(\s*TIMEOUT_CYCLES\s+=>\s+8,\s*RESET_VALUE\s+=>\s+"10100101"\s*\)\s+port\s+map\s*\(/s,
+    'pipeline emits APB requester package-backed generic maps before the port map',
+);
+like(
+    $apb_c4_package_generic_map_result->{hdl_code},
+    qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\s+generic\s+map\s*\(\s*TIMEOUT_CYCLES\s+=>\s+8,\s*RESET_VALUE\s+=>\s+"10100101"\s*\)\s+port\s+map\s*\(/s,
+    'pipeline emits APB completer package-backed generic maps before the port map',
+);
+unlike(
+    $apb_c4_package_generic_map_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.TIMEOUT_CYCLES\s*\(|\.RESET_VALUE\s*\(|8'hA5|\bparam_pkg\b/s,
+    'pipeline APB/C4 package-backed generic-map VHDL output does not leak SystemVerilog generic syntax, raw literals, or package tokens',
+);
+
 my ($bounded_success, $bounded_error_message, $bounded_full_buf, $bounded_stdout_buf, $bounded_stderr_buf) = run(
     command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $bounded_output_path, $bounded_composition_path],
 );
@@ -2174,6 +2205,48 @@ unlike(
     'CLI APB/C4 aggregate generic-map VHDL output does not leak SystemVerilog generic syntax or packed literals',
 );
 
+my ($apb_c4_package_generic_map_success, $apb_c4_package_generic_map_error_message, $apb_c4_package_generic_map_full_buf, $apb_c4_package_generic_map_stdout_buf, $apb_c4_package_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $apb_c4_package_generic_map_output_path, $apb_c4_package_generic_map_path],
+);
+
+my $apb_c4_package_generic_map_combined_output = join(
+    '',
+    @{ $apb_c4_package_generic_map_stdout_buf || [] },
+    @{ $apb_c4_package_generic_map_stderr_buf || [] },
+    ($apb_c4_package_generic_map_error_message || ''),
+);
+
+ok($apb_c4_package_generic_map_success, 'CLI accepts bounded APB/C4 package-backed generic maps for VHDL')
+    or diag($apb_c4_package_generic_map_combined_output);
+ok(-e $apb_c4_package_generic_map_output_path, 'CLI writes APB/C4 package-backed generic-map VHDL output');
+
+my $apb_c4_package_generic_map_cli_hdl = read_file($apb_c4_package_generic_map_output_path);
+like(
+    $apb_c4_package_generic_map_cli_hdl,
+    qr/\bTIMEOUT_CYCLES\s+:\s+integer\s*:=\s*4\b/s,
+    'CLI APB/C4 package-backed generic-map output includes the scalar generic declaration',
+);
+like(
+    $apb_c4_package_generic_map_cli_hdl,
+    qr/\bRESET_VALUE\s+:\s+std_logic_vector\(7\s+downto\s+0\)\s*:=\s*"00000000"/s,
+    'CLI APB/C4 package-backed generic-map output includes the multi-bit generic declaration',
+);
+like(
+    $apb_c4_package_generic_map_cli_hdl,
+    qr/\brequester\s+:\s+entity\s+work\.apb_requester\s+generic\s+map\s*\(\s*TIMEOUT_CYCLES\s+=>\s+8,\s*RESET_VALUE\s+=>\s+"10100101"\s*\)\s+port\s+map\s*\(/s,
+    'CLI APB/C4 package-backed generic-map output includes the requester generic map',
+);
+like(
+    $apb_c4_package_generic_map_cli_hdl,
+    qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\s+generic\s+map\s*\(\s*TIMEOUT_CYCLES\s+=>\s+8,\s*RESET_VALUE\s+=>\s+"10100101"\s*\)\s+port\s+map\s*\(/s,
+    'CLI APB/C4 package-backed generic-map output includes the completer generic map',
+);
+unlike(
+    $apb_c4_package_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.TIMEOUT_CYCLES\s*\(|\.RESET_VALUE\s*\(|8'hA5|\bparam_pkg\b/s,
+    'CLI APB/C4 package-backed generic-map VHDL output does not leak SystemVerilog generic syntax, raw literals, or package tokens',
+);
+
 my $exception = eval {
     $pipeline->generate_hdl_from_file($composition_path);
     undef;
@@ -2316,5 +2389,27 @@ sub write_apb_c4_aggregate_generic_map_fixture {
         or die 'Cannot add requester aggregate overrides';
     $top =~ s/\(\?fsmc:completer apb_completer\)/(?fsmc:completer apb_completer\n$overrides  )/
         or die 'Cannot add completer aggregate overrides';
+    write_file($top_path, $top);
+}
+
+sub write_apb_c4_package_generic_map_fixture {
+    my ($repo_root, $fixture_dir, $top_path) = @_;
+
+    for my $module (qw(apb_requester apb_completer)) {
+        my $source = read_file(File::Spec->catfile($repo_root, 'fsm', "$module.fsm"));
+        $source =~ s/\(\?fsm:$module\n/(?fsm:$module\n  (+params\n    (TIMEOUT_CYCLES 4)\n    (RESET_VALUE 8'h00)\n  )\n/
+            or die "Cannot add package-backed params to $module fixture";
+        write_file(File::Spec->catfile($fixture_dir, "$module.fsm"), $source);
+    }
+
+    my $top = read_file(File::Spec->catfile($repo_root, 'fsm', 'apb_tb.fsm'));
+    $top =~ s/\(\?top:apb_tb\n/(?top:apb_tb\n  (+import param_pkg)\n/
+        or die 'Cannot add package import to APB fixture';
+    my $overrides = "    (params\n      (TIMEOUT_CYCLES param_pkg.TIMEOUT_8)\n      (RESET_VALUE param_pkg.RESET_A5)\n    )\n";
+    $top =~ s/\(\?fsmc:requester apb_requester\)/(?fsmc:requester apb_requester\n$overrides  )/
+        or die 'Cannot add requester package-backed overrides';
+    $top =~ s/\(\?fsmc:completer apb_completer\)/(?fsmc:completer apb_completer\n$overrides  )/
+        or die 'Cannot add completer package-backed overrides';
+    $top .= "\n(?pkg:param_pkg\n  (+constants\n    (TIMEOUT_8 8)\n    (RESET_A5 8'hA5)\n  )\n)\n";
     write_file($top_path, $top);
 }
