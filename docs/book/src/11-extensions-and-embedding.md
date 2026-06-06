@@ -2331,14 +2331,17 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.79`, which selects the next exact backend/API
-edge after bounded C2 generated-FSM scalar integer VHDL generic-map actuals
-shipped.
+`BACKEND-API-VALIDATION-FRONTIER.79.1`, which owns the bounded C2
+generated-FSM scalar expression VHDL generic-map edge selected by `.79`. The
+target shape is a generated child with a scalar expression override such as
+`EXPR_WIDTH (+ OVERRIDE_WIDTH 1)`, resolved before emission to a top instance
+generic map such as `EXPR_WIDTH => (16 + 1)`; until that leaf commits, shipped
+VHDL behavior is unchanged.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
-division/modulo, mixed signed/unsigned arithmetic, generated-FSM expression,
-one-bit, bitstring, and aggregate generic actuals, standalone-DT generic maps,
-APB/C4 generic maps, full aggregate VHDL record/array lowering, broader
+division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit,
+bitstring, and aggregate generic actuals, standalone-DT generic maps, APB/C4
+generic maps, full aggregate VHDL record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped
 AMBA wrap family, and full normalized semantic export stabilization remain out

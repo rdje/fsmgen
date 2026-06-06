@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.78.1` (this commit) — shipped bounded C2 generated-FSM scalar integer VHDL generic-map actuals. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.79` active frontier — select the next exact backend/API edge after generated-FSM scalar generic maps shipped.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.78.1`; `BACKEND-API-VALIDATION-FRONTIER.78`; `BACKEND-API-VALIDATION-FRONTIER.77.1`; `BACKEND-API-VALIDATION-FRONTIER.77`; `BACKEND-API-VALIDATION-FRONTIER.76.1`; `BACKEND-API-VALIDATION-FRONTIER.76`; `BACKEND-API-VALIDATION-FRONTIER.75.1`; `BACKEND-API-VALIDATION-FRONTIER.75`; `BACKEND-API-VALIDATION-FRONTIER.74.1`; `BACKEND-API-VALIDATION-FRONTIER.74`; `BACKEND-API-VALIDATION-FRONTIER.73.1`; `BACKEND-API-VALIDATION-FRONTIER.73`; `BACKEND-API-VALIDATION-FRONTIER.72.1`.
-- in_flight_uncommitted: none expected after this `.78.1` implementation commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.79` (this commit) — selected bounded C2 generated-FSM scalar expression VHDL generic-map actuals. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.79.1` active frontier — implement only the generated-FSM C2 scalar expression VHDL generic-map shape.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.79`; `BACKEND-API-VALIDATION-FRONTIER.78.1`; `BACKEND-API-VALIDATION-FRONTIER.78`; `BACKEND-API-VALIDATION-FRONTIER.77.1`; `BACKEND-API-VALIDATION-FRONTIER.77`; `BACKEND-API-VALIDATION-FRONTIER.76.1`; `BACKEND-API-VALIDATION-FRONTIER.76`; `BACKEND-API-VALIDATION-FRONTIER.75.1`; `BACKEND-API-VALIDATION-FRONTIER.75`; `BACKEND-API-VALIDATION-FRONTIER.74.1`; `BACKEND-API-VALIDATION-FRONTIER.74`; `BACKEND-API-VALIDATION-FRONTIER.73.1`; `BACKEND-API-VALIDATION-FRONTIER.73`.
+- in_flight_uncommitted: none expected after this `.79` selection commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes
