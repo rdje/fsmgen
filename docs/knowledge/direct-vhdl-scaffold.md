@@ -108,10 +108,11 @@ assignments lower as target-width resized signed VHDL arithmetic, such as
 Same-width signed vector division/modulo RHS assignments lower as target-width
 resized signed VHDL arithmetic, such as `QUOT <= resize(A / B, 8);` and
 `REM <= resize(A mod B, 8);`, under the same target/operand constraints. Signed
-vector numeric-literal addition/subtraction is selected as the active
-next implementation edge under `BACKEND-API-VALIDATION-FRONTIER.61.1`; signed
-literal multiplication/division/modulo, scalar signed arithmetic, and mixed
-signed/unsigned arithmetic remain outside the current direct VHDL scaffold.
+vector numeric-literal addition/subtraction lowers through target-width
+`to_signed`, such as `SUM <= A + to_signed(1, 8);` and
+`DIFF <= A - to_signed(1, 8);`. Signed literal multiplication/division/modulo,
+scalar signed arithmetic, and mixed signed/unsigned arithmetic remain outside
+the current direct VHDL scaffold.
 Aggregate-output
 roots are locked as explicit fail-closed direct VHDL boundaries by focused
 pipeline and facade coverage. Composition/top VHDL is locked fail-closed by

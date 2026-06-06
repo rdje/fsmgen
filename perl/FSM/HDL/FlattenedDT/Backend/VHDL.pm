@@ -672,17 +672,27 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
 
     if (($operator eq '+' || $operator eq '-' || $operator eq '*' || $operator eq '/' || $operator eq '%') && !$target_decl->{scalar} && $target_decl->{signed}) {
         my @signed_operands;
+        my $saw_signed_signal_operand = 0;
         for my $operand_name (@operand_names) {
-            $unsupported->()
-                if defined _arithmetic_literal_value($operand_name);
+            my $literal_value = _arithmetic_literal_value($operand_name);
+            if (defined $literal_value) {
+                $unsupported->()
+                    unless $operator eq '+' || $operator eq '-';
+                push @signed_operands, "to_signed($literal_value, $target_width)";
+                next;
+            }
+
             $unsupported->()
                 unless $operand_name =~ /^[A-Za-z_][A-Za-z0-9_]*$/;
             my $operand_decl = $decls_by_name->{$operand_name}
                 or $unsupported->();
             $unsupported->()
                 if $operand_decl->{scalar} || !$operand_decl->{signed} || _decl_width($operand_decl) != $target_width;
+            $saw_signed_signal_operand = 1;
             push @signed_operands, $operand_name;
         }
+        $unsupported->()
+            unless $saw_signed_signal_operand;
         my $signed_operator = $operator eq '%' ? 'mod' : $operator;
         my $signed_expression = join(" $signed_operator ", @signed_operands);
         return "resize($signed_expression, $target_width)"

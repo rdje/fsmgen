@@ -25,6 +25,8 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes generated mux arithmetic with one vector
   signal and one numeric literal operand for `+` and `-`, as emitted by the
   compound update/shorthand fixtures.
+- The direct scaffold now includes signed vector plus/minus numeric literal RHS
+  assignments through target-width `to_signed` literal conversion.
 - The direct scaffold now includes generated internal signal declaration
   lowering for scalar `bit NAME;` and signed vector
   `reg signed [MSB:LSB] NAME;` shapes, as emitted by the declarative bits
@@ -90,6 +92,8 @@ The first VHDL lane is intentionally narrow:
      as one-bit scalar `and`
    - Generated direct mux assignments with vector signal plus/minus numeric
      literal operands, such as `SRC + 2` and `byte_count + 4`
+   - Signed vector plus/minus numeric literal RHS assignments, such as
+     `A + 1` and `A - 1`, through target-width `to_signed`
    - Generated scalar `bit` internal signal declarations as `std_logic`
    - Generated signed vector internal signal declarations as VHDL `signed`
    - Generated non-signed four-state `logic` internal signal declarations as
@@ -142,11 +146,12 @@ The first VHDL lane is intentionally narrow:
   fixtures, generated vector `logic signed` internal signal declarations,
   generated signed vector direct-root port declarations, same-width signed
   vector addition/subtraction/multiplication/division/modulo RHS assignments,
+  signed vector plus/minus numeric literal RHS assignments,
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: implement signed vector numeric-literal addition/subtraction
-  RHS lowering under `BACKEND-API-VALIDATION-FRONTIER.61.1`; signed literal
+- Active follow-up: select the next exact backend/API/public-export edge under
+  `BACKEND-API-VALIDATION-FRONTIER.62`; signed literal
   multiplication/division/modulo, scalar signed arithmetic, and mixed
   signed/unsigned arithmetic remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
