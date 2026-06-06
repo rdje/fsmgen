@@ -172,7 +172,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.65`,
     `BACKEND-API-VALIDATION-FRONTIER.65.1`,
     `BACKEND-API-VALIDATION-FRONTIER.66`,
-    `BACKEND-API-VALIDATION-FRONTIER.66.1`
+    `BACKEND-API-VALIDATION-FRONTIER.66.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.67`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1212,10 +1213,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.66: select VHDL AMBA wrap arithmetic`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.66.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement bounded direct VHDL AMBA wrap nested arithmetic lowering.`
   Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL lowers the generated unsigned AMBA wrap arithmetic family used by fsm/amba_requester.fsm, including addr_q - addr_q mod (beats_total_q * addr_step_q) and the matching wrap-high expression, without claiming a general expression parser. Focused pipeline/CLI/facade coverage proves the bounded expressions lower to deterministic VHDL and preserves existing aggregate-output, mixed signed/unsigned, signed scalar arithmetic, composition/top VHDL, GHDL, and broad expression-parity boundaries. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task tree, and memory stay synchronized.`
-  Verification: `pending implementation`
+  Verification: `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t; perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t; ./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_amba_requester_vhdl_66_1.vhd fsm/amba_requester.fsm; prove -Iperl t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.66.1: lower VHDL AMBA wrap arithmetic`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.67`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after bounded direct VHDL AMBA wrap arithmetic shipped.`
+  Acceptance: `pending selection`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1358,7 +1366,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 134 | `BACKEND-API-VALIDATION-FRONTIER.65` | `done` | Selected signed scalar subtraction/multiplication arithmetic fail-closed coverage hardening after probes showed both operators already stop at the arithmetic guard. |
 | 135 | `BACKEND-API-VALIDATION-FRONTIER.65.1` | `done` | Locked signed scalar subtraction/multiplication arithmetic fail-closed coverage without widening scalar signed arithmetic. |
 | 136 | `BACKEND-API-VALIDATION-FRONTIER.66` | `done` | Selected bounded direct VHDL AMBA wrap nested arithmetic lowering after the supported direct-corpus sweep found `fsm/amba_requester.fsm` blocked at `addr_q - addr_q % (beats_total_q * addr_step_q)`. |
-| 137 | `BACKEND-API-VALIDATION-FRONTIER.66.1` | `active` | Implement the bounded AMBA wrap arithmetic expression family without widening broad expression parity. |
+| 137 | `BACKEND-API-VALIDATION-FRONTIER.66.1` | `done` | Shipped the bounded AMBA wrap arithmetic expression family without widening broad expression parity. |
+| 138 | `BACKEND-API-VALIDATION-FRONTIER.67` | `active` | Select the next exact backend/API/public-export edge after AMBA wrap arithmetic shipped. |
 
 ## Decisions
 
@@ -1516,6 +1525,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.65` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; temporary signed scalar subtraction and multiplication probes failed closed at arithmetic expressions `A - B` and `A * B` | `PASS`; selected signed scalar arithmetic fail-closed coverage hardening for `.65.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.65.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL signed scalar addition/subtraction/multiplication arithmetic is locked fail-closed; activated `.66` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.66` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `perl/FSM/Support/RegressionCorpus.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `fsm/amba_requester.fsm`; supported direct-corpus VHDL sweep; `command -v ghdl`; `./bin/fsmgen --language vhdl --quiet fsm/amba_requester.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_rhs_concat_target_autogrowth.fsm`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected bounded AMBA wrap nested arithmetic lowering for `.66.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.66.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_amba_requester_vhdl_66_1.vhd fsm/amba_requester.fsm`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers bounded generated AMBA wrap span/base/high arithmetic and activates `.67` |
 
 ## Commit Log
 
@@ -1657,6 +1667,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.65` | `BACKEND-API-VALIDATION-FRONTIER.65: select VHDL signed scalar arithmetic hardening` | selected `.65.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.65.1` | `BACKEND-API-VALIDATION-FRONTIER.65.1: lock VHDL signed scalar arithmetic` | this slice; activates `.66` |
 | `BACKEND-API-VALIDATION-FRONTIER.66` | `BACKEND-API-VALIDATION-FRONTIER.66: select VHDL AMBA wrap arithmetic` | selected `.66.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.66.1` | `BACKEND-API-VALIDATION-FRONTIER.66.1: lower VHDL AMBA wrap arithmetic` | this slice; activates `.67` |
 
 ## Changelog
 
@@ -2412,3 +2423,11 @@ items named in the 2026-06-05 remaining-work inventory.
   `addr_q - addr_q % (beats_total_q * addr_step_q)`. Existing direct aggregate
   output fixtures remain at the already locked aggregate-output fail-closed
   boundary, and GHDL remains unavailable.
+- `2026-06-06`: Completed `.66.1`; direct VHDL now lowers the bounded generated
+  AMBA wrap span/base/high arithmetic family in `fsm/amba_requester.fsm`
+  through explicit unsigned target-width resizes. Focused pipeline, CLI, and
+  facade coverage prove the shape while signed scalar arithmetic, mixed
+  signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, GHDL
+  validation, broad expression parity, and full backend parity remain
+  deferred. Activated `.67` to select the next exact backend/API/public-export
+  edge.

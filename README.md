@@ -54,7 +54,7 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 
 ## Project objective
 FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL, and now accepts `.isf` intent-scheduling sources that lower into explicit scheduled `.fsm` before HDL generation.
-Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar bit, signed scalar/vector, non-signed four-state logic, and vector `logic signed` internal declaration lowering, scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, and signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering.
+Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar bit, signed scalar/vector, non-signed four-state logic, and vector `logic signed` internal declaration lowering, scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering, and bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`.
 Scalar division/modulo and aggregate-output roots in the direct VHDL scaffold remain explicit fail-closed boundaries; composition/top VHDL is also fail-closed after typed composition IR parsing, so `--language vhdl` does not emit composition tops yet.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
@@ -843,14 +843,18 @@ signed vectors, with multiplication/division/modulo target-width resized. The
 scaffold also lowers signed vector numeric-literal addition/subtraction and
 multiplication/division/modulo RHS assignments through target-width
 `to_signed` literal conversion, with multiplication/division/modulo resized to
-the target width. The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.66.1`: implement the bounded generated AMBA
-wrap arithmetic expression family that still blocks direct VHDL generation for
-`fsm/amba_requester.fsm`. Scalar signed arithmetic remains explicitly
-fail-closed; aggregate VHDL, composition/top VHDL, packages, GHDL validation,
-broad expression parity beyond that exact AMBA wrap family, package-import
-internals, unrelated forward-IR payloads, and full normalized semantic export
-stabilization remain out of scope until later exact leaves own them.
+the target width. The direct VHDL scaffold also lowers the bounded generated
+AMBA wrap arithmetic family in `fsm/amba_requester.fsm`, including
+`beats_total_q * addr_step_q`, `addr_q - addr_q % (beats_total_q * addr_step_q)`,
+and the matching wrap-high expression, through explicit unsigned target-width
+resizes. The current active backend/API frontier is
+`BACKEND-API-VALIDATION-FRONTIER.67`: select the next exact backend/API or
+public-export edge after `.66.1` shipped bounded AMBA wrap arithmetic. Scalar
+signed arithmetic remains explicitly fail-closed; aggregate VHDL,
+composition/top VHDL, packages, GHDL validation, broad expression parity beyond
+the shipped AMBA wrap family, package-import internals, unrelated forward-IR
+payloads, and full normalized semantic export stabilization remain out of
+scope until later exact leaves own them.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit

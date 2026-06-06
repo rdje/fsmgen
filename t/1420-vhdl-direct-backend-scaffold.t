@@ -1755,6 +1755,52 @@ FSM
     unlike($cli_hdl, qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s, 'CLI signed literal modulo output avoids unsigned casts');
 };
 
+subtest 'direct VHDL scaffold lowers bounded AMBA wrap unsigned arithmetic shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $output_path = File::Spec->catfile($tempdir, 'amba_requester.vhd');
+
+    my $hdl = generate_vhdl('fsm/amba_requester.fsm');
+
+    like($hdl, qr/\bentity\s+amba_requester\s+is\b/s, 'AMBA requester fixture emits direct VHDL entity');
+    like(
+        $hdl,
+        qr/\bwrap_span_q_next\s+<=\s+std_logic_vector\(resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\);/s,
+        'AMBA wrap span lowers the bounded mixed-width product through target-width resize',
+    );
+    like(
+        $hdl,
+        qr/\bwrap_base_q_next\s+<=\s+std_logic_vector\(unsigned\(addr_q\)\s+-\s+\(unsigned\(addr_q\)\s+mod\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\)\);/s,
+        'AMBA wrap base lowers the bounded addr minus modulo product expression',
+    );
+    like(
+        $hdl,
+        qr/\bwrap_high_q_next\s+<=\s+std_logic_vector\(unsigned\(addr_q\)\s+-\s+\(unsigned\(addr_q\)\s+mod\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\)\s+\+\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\);/s,
+        'AMBA wrap high lowers the bounded base plus product expression',
+    );
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\baddr_q\s*-\s*addr_q\s*%/s, 'AMBA wrap VHDL output does not leak SystemVerilog arithmetic syntax');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, repo_file('fsm/amba_requester.fsm')],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the AMBA requester wrap arithmetic fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes AMBA requester VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like(
+        $cli_hdl,
+        qr/\bwrap_base_q_next\s+<=\s+std_logic_vector\(unsigned\(addr_q\)\s+-\s+\(unsigned\(addr_q\)\s+mod\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\)\);/s,
+        'CLI AMBA requester VHDL output includes bounded wrap-base arithmetic',
+    );
+    like(
+        $cli_hdl,
+        qr/\bwrap_high_q_next\s+<=\s+std_logic_vector\(unsigned\(addr_q\)\s+-\s+\(unsigned\(addr_q\)\s+mod\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\)\s+\+\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\);/s,
+        'CLI AMBA requester VHDL output includes bounded wrap-high arithmetic',
+    );
+};
+
 subtest 'direct VHDL scaffold keeps mismatched-width arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_mismatched_division_deferred.fsm');

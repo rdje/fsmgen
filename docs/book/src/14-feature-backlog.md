@@ -3853,6 +3853,13 @@ target-width `to_signed`, so `SUM = (+ A 1)` emits
 `REM <= resize(A mod to_signed(2, 8), 8);`. Mixed signed/unsigned vector
 numeric arithmetic is locked fail-closed rather than lowering signed operands
 through unsigned casts.
+The AMBA requester direct fixture now lowers its bounded generated wrap
+arithmetic through explicit unsigned target-width resizes: `wrap_span_q_next`
+uses the mixed-width product `beats_total_q * addr_step_q`, `wrap_base_q_next`
+uses `addr_q - addr_q % (beats_total_q * addr_step_q)`, and
+`wrap_high_q_next` adds the same wrap-span product to the computed base. This
+does not claim broad expression-parser parity; unrelated nested or
+mismatched-width arithmetic still needs exact future owners.
 
 ### GHDL Validation
 
@@ -4041,10 +4048,11 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.66.1` implements the bounded generated AMBA
-wrap arithmetic expression family that still blocks direct VHDL generation for
-`fsm/amba_requester.fsm`.
+`BACKEND-API-VALIDATION-FRONTIER.67` selects the next exact backend/API or
+public-export edge after `.66.1` shipped bounded generated AMBA wrap arithmetic
+for `fsm/amba_requester.fsm`.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, aggregate/composition
-VHDL, broader expression parity, and full normalized semantic export
-stabilization remain out of scope until later exact leaves own them.
+VHDL, broader expression parity beyond the shipped AMBA wrap family, and full
+normalized semantic export stabilization remain out of scope until later exact
+leaves own them.

@@ -33,6 +33,10 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   declaration lowering for non-arithmetic one-bit signed type-alias shapes,
   while signed scalar addition/subtraction/multiplication arithmetic is locked
   fail-closed.
+- The direct scaffold now includes the bounded generated unsigned AMBA wrap
+  arithmetic family emitted by `fsm/amba_requester.fsm`, including
+  `beats_total_q * addr_step_q`, `addr_q - addr_q % (beats_total_q * addr_step_q)`,
+  and the matching wrap-high expression.
 - The direct scaffold now includes generated internal signal declaration
   lowering for scalar `bit NAME;` and signed vector
   `reg signed [MSB:LSB] NAME;` shapes, as emitted by the declarative bits
@@ -163,13 +167,13 @@ The first VHDL lane is intentionally narrow:
   vector addition/subtraction/multiplication/division/modulo RHS assignments,
   signed vector numeric-literal addition/subtraction/multiplication/division/modulo
   RHS assignments, signed scalar direct-root declarations,
+  bounded AMBA wrap arithmetic,
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: implement the bounded generated AMBA wrap arithmetic
-  expression family under `BACKEND-API-VALIDATION-FRONTIER.66.1`; broader
-  expression parity and broader scalar signed arithmetic remain separate
-  future edges.
+- Active follow-up: select the next exact backend/API/public-export edge under
+  `BACKEND-API-VALIDATION-FRONTIER.67`; broader expression parity and broader
+  scalar signed arithmetic remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
@@ -184,6 +188,7 @@ The first VHDL lane is intentionally narrow:
   signed vector direct-root port declaration lowering,
   generic-bearing direct-root module headers, one-bit `std_logic` and
   multi-bit `std_logic_vector` sized-literal generic defaults,
+  bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`,
   mixed signed/unsigned vector numeric arithmetic fail-closed diagnostics,
   signed scalar arithmetic fail-closed diagnostics,
   mismatched-width arithmetic-expression fail-closed diagnostics, and

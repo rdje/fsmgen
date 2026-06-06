@@ -242,6 +242,43 @@ subtest 'facade target_language option routes direct VHDL numeric-literal arithm
     );
 };
 
+subtest 'facade target_language option routes direct VHDL AMBA wrap arithmetic scaffold behavior' => sub {
+    my $direct_path = repo_file('fsm/amba_requester.fsm');
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+amba_requester\s+is\b/s,
+        'explicit VHDL facade generation emits the AMBA requester direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bwrap_span_q_next\s+<=\s+std_logic_vector\(resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\);/s,
+        'explicit VHDL facade generation lowers AMBA wrap span product',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bwrap_base_q_next\s+<=\s+std_logic_vector\(unsigned\(addr_q\)\s+-\s+\(unsigned\(addr_q\)\s+mod\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\)\);/s,
+        'explicit VHDL facade generation lowers AMBA wrap base arithmetic',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bwrap_high_q_next\s+<=\s+std_logic_vector\(unsigned\(addr_q\)\s+-\s+\(unsigned\(addr_q\)\s+mod\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\)\s+\+\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\);/s,
+        'explicit VHDL facade generation lowers AMBA wrap high arithmetic',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\baddr_q\s*-\s*addr_q\s*%/s,
+        'explicit VHDL AMBA requester facade generation does not leak SystemVerilog arithmetic syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL scalar bit and signed declaration behavior' => sub {
     my $direct_path = repo_file('t/corpus/declarative_bits_symbol_widths.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(

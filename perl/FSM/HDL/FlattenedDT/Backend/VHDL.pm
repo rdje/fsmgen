@@ -625,6 +625,9 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
         confess _unsupported("arithmetic expression '$expr' is outside the direct VHDL scaffold");
     };
 
+    my $bounded_wrap = _bounded_unsigned_wrap_arithmetic_to_vhdl($expr, $ctx, $unsupported);
+    return $bounded_wrap if defined $bounded_wrap;
+
     my $operator;
     my @operators = map { lc($_) eq 'mod' ? '%' : $_ } $expr =~ /(\bmod\b|[+*^\/%]|-)/ig;
     my %operator_seen = map { $_ => 1 } @operators;
@@ -754,6 +757,81 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
         if $operator eq '*' || $operator eq '/' || $operator eq '%';
 
     return "std_logic_vector($converted_expression)";
+}
+
+sub _bounded_unsigned_wrap_arithmetic_to_vhdl ($expr, $ctx, $unsupported) {
+    my $decls_by_name = $ctx->{decls_by_name} || {};
+    my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $decls_by_name)
+        or return undef;
+    return undef if $target_decl->{scalar} || $target_decl->{signed};
+
+    my $target_width = _decl_width($target_decl);
+    my $identifier = qr/[A-Za-z_][A-Za-z0-9_]*/;
+    my $mod_operator = qr/(?:%|\bmod\b)/i;
+
+    if ($expr =~ /\A($identifier)\s*-\s*\1\s*$mod_operator\s*\(\s*($identifier)\s*\*\s*($identifier)\s*\)\s*\+\s*\2\s*\*\s*\3\z/) {
+        my ($base_name, $product_left, $product_right) = ($1, $2, $3);
+        my $base_vhdl = _bounded_unsigned_wrap_target_operand_to_vhdl($base_name, $decls_by_name, $target_width, $unsupported);
+        my $product_vhdl = _bounded_unsigned_wrap_product_to_vhdl($product_left, $product_right, $decls_by_name, $target_width, $unsupported);
+        return "std_logic_vector($base_vhdl - ($base_vhdl mod $product_vhdl) + $product_vhdl)";
+    }
+
+    if ($expr =~ /\A($identifier)\s*-\s*\1\s*$mod_operator\s*\(\s*($identifier)\s*\*\s*($identifier)\s*\)\z/) {
+        my ($base_name, $product_left, $product_right) = ($1, $2, $3);
+        my $base_vhdl = _bounded_unsigned_wrap_target_operand_to_vhdl($base_name, $decls_by_name, $target_width, $unsupported);
+        my $product_vhdl = _bounded_unsigned_wrap_product_to_vhdl($product_left, $product_right, $decls_by_name, $target_width, $unsupported);
+        return "std_logic_vector($base_vhdl - ($base_vhdl mod $product_vhdl))";
+    }
+
+    if ($expr =~ /\A($identifier)\s*\*\s*($identifier)\z/) {
+        my ($product_left, $product_right) = ($1, $2);
+        return undef
+            unless _bounded_unsigned_wrap_product_is_mixed_target_width($product_left, $product_right, $decls_by_name, $target_width);
+        my $product_vhdl = _bounded_unsigned_wrap_product_to_vhdl($product_left, $product_right, $decls_by_name, $target_width, $unsupported);
+        return "std_logic_vector($product_vhdl)";
+    }
+
+    return undef;
+}
+
+sub _bounded_unsigned_wrap_product_is_mixed_target_width ($left_name, $right_name, $decls_by_name, $target_width) {
+    my $left_decl = $decls_by_name->{$left_name} or return 0;
+    my $right_decl = $decls_by_name->{$right_name} or return 0;
+    return 0 if $left_decl->{scalar} || $right_decl->{scalar};
+    return 0 if $left_decl->{signed} || $right_decl->{signed};
+
+    my $left_width = _decl_width($left_decl);
+    my $right_width = _decl_width($right_decl);
+    return 1 if $left_width == $target_width && $right_width < $target_width;
+    return 1 if $right_width == $target_width && $left_width < $target_width;
+    return 0;
+}
+
+sub _bounded_unsigned_wrap_product_to_vhdl ($left_name, $right_name, $decls_by_name, $target_width, $unsupported) {
+    $unsupported->()
+        unless _bounded_unsigned_wrap_product_is_mixed_target_width($left_name, $right_name, $decls_by_name, $target_width);
+    my $left_vhdl = _bounded_unsigned_wrap_operand_to_vhdl($left_name, $decls_by_name, $target_width, $unsupported);
+    my $right_vhdl = _bounded_unsigned_wrap_operand_to_vhdl($right_name, $decls_by_name, $target_width, $unsupported);
+    return "resize($left_vhdl * $right_vhdl, $target_width)";
+}
+
+sub _bounded_unsigned_wrap_target_operand_to_vhdl ($operand_name, $decls_by_name, $target_width, $unsupported) {
+    my $decl = $decls_by_name->{$operand_name} or $unsupported->();
+    $unsupported->()
+        if $decl->{scalar} || $decl->{signed} || _decl_width($decl) != $target_width;
+    return "unsigned($operand_name)";
+}
+
+sub _bounded_unsigned_wrap_operand_to_vhdl ($operand_name, $decls_by_name, $target_width, $unsupported) {
+    my $decl = $decls_by_name->{$operand_name} or $unsupported->();
+    $unsupported->()
+        if $decl->{scalar} || $decl->{signed};
+
+    my $width = _decl_width($decl);
+    $unsupported->()
+        if $width > $target_width;
+    return "unsigned($operand_name)" if $width == $target_width;
+    return "resize(unsigned($operand_name), $target_width)";
 }
 
 sub _arithmetic_literal_value ($operand) {

@@ -126,12 +126,15 @@ scalar addition/subtraction/multiplication arithmetic is locked fail-closed.
 Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
 fail-closed direct VHDL boundary instead of lowering signed operands through
 unsigned casts.
-The current active backend edge is `BACKEND-API-VALIDATION-FRONTIER.66.1`,
-which implements the bounded generated AMBA wrap arithmetic expression family
-that still blocks direct VHDL generation for `fsm/amba_requester.fsm`: the
-supported SystemVerilog fixture fails VHDL on
-`addr_q - addr_q % (beats_total_q * addr_step_q)` before any broader VHDL
-expression-parity work is claimed.
+The direct VHDL scaffold now lowers the bounded generated AMBA wrap arithmetic
+family in `fsm/amba_requester.fsm`: `wrap_span_q_next` uses the mixed-width
+unsigned product `beats_total_q * addr_step_q`, `wrap_base_q_next` lowers
+`addr_q - addr_q % (beats_total_q * addr_step_q)`, and `wrap_high_q_next`
+adds the same wrap-span product to the computed base. This is a pattern-owned
+AMBA wrap family, not broad expression-parser parity.
+The current active backend edge is `BACKEND-API-VALIDATION-FRONTIER.67`, which
+selects the next exact backend/API or public-export leaf after bounded AMBA
+wrap arithmetic shipped.
 Aggregate-output
 roots are locked as explicit fail-closed direct VHDL boundaries by focused
 pipeline and facade coverage. Composition/top VHDL is locked fail-closed by
