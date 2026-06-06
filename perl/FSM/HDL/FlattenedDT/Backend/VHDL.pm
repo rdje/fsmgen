@@ -677,7 +677,11 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
             my $literal_value = _arithmetic_literal_value($operand_name);
             if (defined $literal_value) {
                 $unsupported->()
-                    unless $operator eq '+' || $operator eq '-';
+                    unless $operator eq '+'
+                    || $operator eq '-'
+                    || $operator eq '*'
+                    || $operator eq '/'
+                    || $operator eq '%';
                 push @signed_operands, "to_signed($literal_value, $target_width)";
                 next;
             }

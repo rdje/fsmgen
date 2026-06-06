@@ -752,6 +752,153 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL signed-literal-multiplication behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_literal_mul.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_signed_literal_mul
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (PROD signed_byte_t)
+  )
+  (idle
+    (PROD = (* A 2))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_signed_literal_mul\s+is\b/s,
+        'explicit VHDL facade generation emits the signed literal multiplication direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bPROD\s+<=\s+resize\(A\s+\*\s+to_signed\(2,\s+8\),\s+8\);/s,
+        'explicit VHDL facade generation lowers signed literal multiplication',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s,
+        'explicit VHDL signed literal multiplication facade generation does not use unsigned literal casts',
+    );
+};
+
+subtest 'facade target_language option routes direct VHDL signed-literal-division behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_literal_div.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_signed_literal_div
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (QUOT signed_byte_t)
+  )
+  (idle
+    (QUOT = (/ A 2))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_signed_literal_div\s+is\b/s,
+        'explicit VHDL facade generation emits the signed literal division direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bQUOT\s+<=\s+resize\(A\s+\/\s+to_signed\(2,\s+8\),\s+8\);/s,
+        'explicit VHDL facade generation lowers signed literal division',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s,
+        'explicit VHDL signed literal division facade generation does not use unsigned literal casts',
+    );
+};
+
+subtest 'facade target_language option routes direct VHDL signed-literal-modulo behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_literal_mod.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_signed_literal_mod
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (REM signed_byte_t)
+  )
+  (idle
+    (REM = (% A 2))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_signed_literal_mod\s+is\b/s,
+        'explicit VHDL facade generation emits the signed literal modulo direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bREM\s+<=\s+resize\(A\s+mod\s+to_signed\(2,\s+8\),\s+8\);/s,
+        'explicit VHDL facade generation lowers signed literal modulo',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s,
+        'explicit VHDL signed literal modulo facade generation does not use unsigned literal casts',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL scalar-addition scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_addition.fsm');

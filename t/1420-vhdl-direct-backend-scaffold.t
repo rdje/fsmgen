@@ -1418,6 +1418,141 @@ FSM
     unlike($cli_hdl, qr/std_logic_vector\(unsigned\(A\)\s+-\s+to_unsigned\(1,\s+8\)\)|to_unsigned\(1,\s+8\)/s, 'CLI signed literal subtraction output avoids unsigned casts');
 };
 
+subtest 'direct VHDL scaffold lowers signed vector numeric-literal multiplication RHS shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_literal_mul.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_literal_mul.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_signed_literal_mul
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (PROD signed_byte_t)
+  )
+  (idle
+    (PROD = (* A 2))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bA\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s, 'signed literal multiplication fixture lowers signed input port A');
+    like($hdl, qr/\bsignal\s+PROD\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed literal multiplication fixture lowers signed output signal');
+    like($hdl, qr/\bPROD\s+<=\s+resize\(A\s+\*\s+to_signed\(2,\s+8\),\s+8\);/s, 'signed vector literal multiplication lowers through resized to_signed arithmetic');
+    unlike($hdl, qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s, 'signed literal multiplication avoids unsigned casts');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for signed vector literal multiplication')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes signed vector literal multiplication VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bPROD\s+<=\s+resize\(A\s+\*\s+to_signed\(2,\s+8\),\s+8\);/s, 'CLI VHDL output includes signed literal multiplication assignment');
+    unlike($cli_hdl, qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s, 'CLI signed literal multiplication output avoids unsigned casts');
+};
+
+subtest 'direct VHDL scaffold lowers signed vector numeric-literal division RHS shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_literal_div.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_literal_div.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_signed_literal_div
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (QUOT signed_byte_t)
+  )
+  (idle
+    (QUOT = (/ A 2))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bA\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s, 'signed literal division fixture lowers signed input port A');
+    like($hdl, qr/\bsignal\s+QUOT\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed literal division fixture lowers signed output signal');
+    like($hdl, qr/\bQUOT\s+<=\s+resize\(A\s+\/\s+to_signed\(2,\s+8\),\s+8\);/s, 'signed vector literal division lowers through resized to_signed arithmetic');
+    unlike($hdl, qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s, 'signed literal division avoids unsigned casts');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for signed vector literal division')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes signed vector literal division VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bQUOT\s+<=\s+resize\(A\s+\/\s+to_signed\(2,\s+8\),\s+8\);/s, 'CLI VHDL output includes signed literal division assignment');
+    unlike($cli_hdl, qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s, 'CLI signed literal division output avoids unsigned casts');
+};
+
+subtest 'direct VHDL scaffold lowers signed vector numeric-literal modulo RHS shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_literal_mod.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_literal_mod.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_signed_literal_mod
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (REM signed_byte_t)
+  )
+  (idle
+    (REM = (% A 2))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bA\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s, 'signed literal modulo fixture lowers signed input port A');
+    like($hdl, qr/\bsignal\s+REM\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed literal modulo fixture lowers signed output signal');
+    like($hdl, qr/\bREM\s+<=\s+resize\(A\s+mod\s+to_signed\(2,\s+8\),\s+8\);/s, 'signed vector literal modulo lowers through resized to_signed arithmetic');
+    unlike($hdl, qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s, 'signed literal modulo avoids unsigned casts');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for signed vector literal modulo')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes signed vector literal modulo VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bREM\s+<=\s+resize\(A\s+mod\s+to_signed\(2,\s+8\),\s+8\);/s, 'CLI VHDL output includes signed literal modulo assignment');
+    unlike($cli_hdl, qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s, 'CLI signed literal modulo output avoids unsigned casts');
+};
+
 subtest 'direct VHDL scaffold keeps mismatched-width arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_mismatched_division_deferred.fsm');
