@@ -78,12 +78,13 @@ from `yosys-abc`, `berkeley-abc`, and `abc`. That discovery is metadata only:
 ABC is not required for `--verify-hdl`, and the validation command sequence
 does not run a standalone ABC pass.
 
-Direct VHDL generation now has a scaffold subset, but VHDL validation with
-GHDL is intentionally deferred until a separate GHDL validation lane is
-runnable, documented, support-accounted, and regression-backed. The current
-regression gate is a focused SystemVerilog smoke, not yet a claim that every
-historical sample in `fsm/` is externally warning-clean. Both deferred items
-are tracked in [Feature Backlog](14-feature-backlog.md).
+Direct VHDL generation now has a scaffold subset for direct single-FSM roots,
+including delayed-pulse clock-branch lowering, but VHDL validation with GHDL
+is intentionally deferred until a separate GHDL validation lane is runnable,
+documented, support-accounted, and regression-backed. The current regression
+gate is a focused SystemVerilog smoke, not yet a claim that every historical
+sample in `fsm/` is externally warning-clean. Both deferred items are tracked
+in [Feature Backlog](14-feature-backlog.md).
 
 The focused smoke currently includes `fsm/lte_dif_pmaster.fsm`, every current
 MIPI sample under `fsm/`, the warning-clean historical direct samples
@@ -151,7 +152,7 @@ Trace behavior:
 - `-o, --output <file>` writes generated HDL to the requested path.
 - `-l, --language <systemverilog|sv|verilog|v|vhdl>` selects the target
   language. `sv` aliases SystemVerilog, `v` aliases Verilog, and VHDL is
-  recognized by the CLI while the backend remains inactive.
+  routed through the direct single-FSM scaffold subset.
 - `-d, --debug[=N]` enables numeric trace compatibility levels `0..4`; a bare
   `--debug` means level `4`.
 - `--trace-verbosity <none|low|medium|high|debug>` selects named trace detail.

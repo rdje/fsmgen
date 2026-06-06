@@ -288,33 +288,97 @@ sub _split_if_else_assignments (@inner) {
         or confess _unsupported("unsupported generated always_ff condition '$first'");
     my $condition = $1;
 
-    my (@reset_lines, @clock_lines);
-    my $target = \@reset_lines;
+    my (@reset_raw_lines, @clock_raw_lines);
+    my $target = \@reset_raw_lines;
     my $saw_else = 0;
+    my $nested_depth = 0;
 
     for my $raw_line (@inner) {
         my $line = _trim(_strip_line_comment($raw_line));
         next unless length $line;
 
-        if ($line =~ /^end\s+else\s+begin$/) {
-            $target = \@clock_lines;
+        if (!$saw_else && $nested_depth == 0 && $line =~ /^end\s+else\s+begin$/) {
+            $target = \@clock_raw_lines;
             $saw_else = 1;
             next;
         }
 
-        last if $line eq 'end';
+        last if $saw_else && $nested_depth == 0 && $line eq 'end';
 
-        push @{$target}, _convert_sequential_assignment($line);
+        push @{$target}, $raw_line;
+        if ($line =~ /^if\s*\(.+\)\s+begin$/) {
+            $nested_depth++;
+        } elsif ($line eq 'end') {
+            $nested_depth--;
+            confess _unsupported('generated always_ff nested sequential block closed more if statements than it opened')
+                if $nested_depth < 0;
+        }
     }
 
     confess _unsupported('generated always_ff body missing else branch')
         unless $saw_else;
+    confess _unsupported('generated always_ff nested sequential block left an if statement open')
+        if $nested_depth != 0;
 
     return {
         condition => $condition,
-        reset_assigns => \@reset_lines,
-        clock_assigns => \@clock_lines,
+        reset_assigns => [ _convert_sequential_branch_statements(@reset_raw_lines) ],
+        clock_assigns => [ _convert_sequential_branch_statements(@clock_raw_lines) ],
     };
+}
+
+sub _convert_sequential_branch_statements (@raw_lines) {
+    my @out;
+
+    for (my $idx = 0; $idx <= $#raw_lines; $idx++) {
+        my $line = _trim(_strip_line_comment($raw_lines[$idx]));
+        next unless length $line;
+
+        if ($line =~ /^if\s*\((.+)\)\s+begin$/) {
+            my $condition = $1;
+            my @nested_raw_lines;
+            my $nested_depth = 1;
+            $idx++;
+
+            while ($idx <= $#raw_lines) {
+                my $nested_line = _trim(_strip_line_comment($raw_lines[$idx]));
+                if ($nested_line =~ /^end\s+else\s+begin$/) {
+                    confess _unsupported("unsupported generated nested always_ff else branch '$nested_line'");
+                }
+
+                if ($nested_line =~ /^if\s*\(.+\)\s+begin$/) {
+                    $nested_depth++;
+                    push @nested_raw_lines, $raw_lines[$idx];
+                    $idx++;
+                    next;
+                }
+
+                if ($nested_line eq 'end') {
+                    $nested_depth--;
+                    last if $nested_depth == 0;
+                    push @nested_raw_lines, $raw_lines[$idx];
+                    $idx++;
+                    next;
+                }
+
+                push @nested_raw_lines, $raw_lines[$idx];
+                $idx++;
+            }
+
+            confess _unsupported('generated nested always_ff branch left an if statement open')
+                if $nested_depth != 0;
+
+            my @nested_lines = _convert_sequential_branch_statements(@nested_raw_lines);
+            push @out, 'if ' . _sv_condition_to_vhdl($condition) . ' then';
+            push @out, map { '  ' . $_ } @nested_lines;
+            push @out, 'end if;';
+            next;
+        }
+
+        push @out, _convert_sequential_assignment($line);
+    }
+
+    return @out;
 }
 
 sub _convert_sequential_assignment ($line) {
@@ -438,10 +502,13 @@ sub _sv_expr_to_vhdl ($expr) {
     $converted =~ s/==/=/g;
     $converted =~ s/&&/ and /g;
     $converted =~ s/\|\|/ or /g;
+    $converted =~ s/\s+\|\s+/ or /g;
     $converted =~ s/(?<![<>=!])!(?=\s*[A-Za-z_]) /not /gx;
     $converted =~ s/\s*&\s*/ and /g;
     $converted =~ s/__FSMGEN_CONCAT__/&/g;
     $converted =~ s/\s+/ /g;
+    confess _unsupported("arithmetic expression '$expr' is outside the direct VHDL scaffold")
+        if $converted =~ /[+\-*\/%]/ || $converted =~ /\bmod\b/i;
     return _trim($converted);
 }
 

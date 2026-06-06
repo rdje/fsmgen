@@ -876,9 +876,9 @@ and the same strict facade object still accepts the canonical pair-form fixture.
 also proves the advertised `target_language` constructor option routes real
 direct backend behavior: the default path emits SystemVerilog forms, explicit
 `verilog` emits Verilog forms, and explicit `vhdl` emits the direct single-FSM
-VHDL scaffold for the supported subset without leaking SystemVerilog module or
-`always_*` forms. That is still a scoped scaffold, not a full VHDL backend
-promise.
+VHDL scaffold for the supported subset, including delayed-pulse clock-branch
+lowering, without leaking SystemVerilog module or `always_*` forms. That is
+still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
 also proves the advertised `debug_level` constructor option is runtime-backed

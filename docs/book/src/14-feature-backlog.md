@@ -3768,12 +3768,13 @@ Current boundary: the CLI and `FSM::Pipeline::HDLGenerator` route
 `FSM::HDL::FlattenedDT::Backend::VHDL`. The scaffold emits deterministic VHDL
 entity/architecture text for scalar/vector ports, state constants,
 continuous enable assignments, `process(all)` combinational muxes, sync-reset
-clocked processes, async-reset clocked processes, and basic concat RHS forms.
-It is covered by direct pipeline and CLI tests.
+clocked processes, async-reset clocked processes, delayed-pulse clock-branch
+nested-if lowering, and basic concat RHS forms. It is covered by direct
+pipeline, CLI, and facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
-VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
-and full feature parity with the SystemVerilog backend.
+VHDL packages, multi-clock domains, GHDL validation, arithmetic/broad
+expression parity, and full feature parity with the SystemVerilog backend.
 
 ### GHDL Validation
 

@@ -45,6 +45,63 @@ subtest 'direct VHDL scaffold preserves sync and async reset process shapes' => 
     like($async_hdl, qr/\belsif\s+rising_edge\(clk\)\s+then\s+current_state\s+<=\s+next_state;/s, 'async-reset direct fixture emits clock branch after active-low reset');
 };
 
+subtest 'direct VHDL scaffold lowers delayed-pulse clock-branch nested if shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_delayed_pulse_vhdl.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_delayed_pulse_vhdl.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_delayed_pulse_vhdl
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (GO 1)
+    (PULSE 1)
+  )
+  (idle
+    (<GO
+      (<1 (PULSE 1))
+    )
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bentity\s+direct_delayed_pulse_vhdl\s+is\b/s, 'delayed-pulse fixture emits direct VHDL entity');
+    like($hdl, qr/\bsignal\s+PULSE_pulse_delay_pipe\s+:\s+std_logic;/s, 'delayed-pulse fixture emits scalar delay pipe signal');
+    like(
+        $hdl,
+        qr/\bPULSE\s+<=\s+'0';\s+if\s+PULSE_pulse_delay_pipe\s+=\s+'1'\s+then\s+PULSE\s+<=\s+'1';\s+end if;\s+PULSE_pulse_delay_pipe\s+<=\s+\w+;/s,
+        'delayed-pulse fixture lowers the generated clock-branch nested if to VHDL sequential if syntax',
+    );
+    unlike($hdl, qr/\balways_(?:ff|comb)\b|\bif\s*\(/s, 'delayed-pulse VHDL output does not leak SystemVerilog block syntax');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the delayed-pulse scaffold fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes direct delayed-pulse VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bPULSE_pulse_delay_pipe\s+<=\s+\w+;/s, 'CLI delayed-pulse VHDL output shifts the delay pipe');
+    unlike($cli_hdl, qr/\balways_(?:ff|comb)\b|\bif\s*\(/s, 'CLI delayed-pulse VHDL output remains VHDL-shaped');
+};
+
+subtest 'direct VHDL scaffold keeps arithmetic expression parity fail-closed after delayed-pulse widening' => sub {
+    my $error = capture_exception(sub {
+        generate_vhdl('t/corpus/direct_assignment_pair_form.fsm');
+    });
+
+    like($error, qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s, 'mixed assignment fixture still fails closed on arithmetic expression parity');
+};
+
 subtest 'CLI routes direct --language vhdl through the scaffold' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $output_path = File::Spec->catfile($tempdir, 'direct_rhs_concat_pack.vhd');
@@ -93,6 +150,7 @@ sub generate_vhdl {
 
 sub repo_file {
     my ($relpath) = @_;
+    return $relpath if File::Spec->file_name_is_absolute($relpath);
     return File::Spec->catfile($repo_root, split m{/}, $relpath);
 }
 
@@ -103,6 +161,13 @@ sub read_file {
     my $content = <$fh>;
     close $fh or die "Cannot close $path: $!";
     return $content;
+}
+
+sub write_file {
+    my ($path, $content) = @_;
+    open my $fh, '>', $path or die "Cannot open $path for write: $!";
+    print {$fh} $content or die "Cannot write $path: $!";
+    close $fh or die "Cannot close $path: $!";
 }
 
 sub capture_exception {

@@ -7,8 +7,11 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - `FSM::HDL::FlattenedDT::generate_vhdl()` now routes direct single-FSM roots
   through `FSM::HDL::FlattenedDT::Backend::VHDL`, an SV-first scaffold
   converter.
-- Composition VHDL, aggregate VHDL, GHDL validation, packages, multi-clock
-  domains, and full feature parity remain deferred.
+- The direct scaffold now includes delayed-pulse clock-branch nested-if
+  lowering for the generated `<N` pulse-delay shape.
+- Composition VHDL, aggregate VHDL, arithmetic expression parity, GHDL
+  validation, packages, multi-clock domains, and full feature parity remain
+  deferred.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -36,6 +39,8 @@ The first VHDL lane is intentionally narrow:
    - Basic signal assignments
    - Basic Boolean enable expressions and concatenation RHS forms covered by
      the direct scaffold fixtures
+   - Delayed-pulse clock branches that use the generated one-level nested
+     `if (<pulse_delay_pipe>) begin ... end` shape
 
 4. **Intentionally deferred:**
    - Composition-top VHDL
@@ -60,13 +65,15 @@ The first VHDL lane is intentionally narrow:
 - Shipped for the current scaffold subset:
   SystemVerilog `always_ff` → VHDL synchronous/async-reset process,
   SystemVerilog `always_comb` → VHDL `process(all)`, port/signal type
-  mapping, module/entity conversion, and reset polarity handling.
+  mapping, module/entity conversion, reset polarity handling, and generated
+  delayed-pulse nested clock-branch lowering.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
 - Focused direct VHDL generation tests cover pipeline and CLI routing,
-  sync/async reset processes, concat lowering, and aggregate-output fail-closed
-  diagnostics.
+  sync/async reset processes, delayed-pulse clock branches, concat lowering,
+  arithmetic-expression fail-closed diagnostics, and aggregate-output
+  fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus
 - Ensure `--check --json` and `--emit-semantic-json` stay target-neutral
 - Consider external VHDL validation via GHDL

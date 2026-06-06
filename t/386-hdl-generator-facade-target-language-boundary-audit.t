@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Test::More;
 use File::Spec;
+use File::Temp qw(tempdir);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
@@ -133,6 +134,55 @@ subtest 'facade target_language option routes direct VHDL scaffold behavior' => 
     );
 };
 
+subtest 'facade target_language option routes direct VHDL delayed-pulse scaffold behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_delayed_pulse_vhdl.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_delayed_pulse_vhdl
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (GO 1)
+    (DONE 1)
+  )
+  (idle
+    (<GO
+      (<1 (DONE 1))
+    )
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_delayed_pulse_vhdl\s+is\b/s,
+        'explicit VHDL facade generation emits the delayed-pulse direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bDONE\s+<=\s+'0';\s+if\s+DONE_pulse_delay_pipe\s+=\s+'1'\s+then\s+DONE\s+<=\s+'1';\s+end if;/s,
+        'explicit VHDL facade generation lowers delayed-pulse nested clock-branch if syntax',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\balways_(?:ff|comb)\b|\bif\s*\(/s,
+        'explicit VHDL delayed-pulse facade generation does not leak SystemVerilog block syntax',
+    );
+};
+
 done_testing();
 
 sub repo_file {
@@ -149,4 +199,11 @@ sub contains_value {
     }
 
     return 0;
+}
+
+sub write_file {
+    my ($path, $content) = @_;
+    open my $fh, '>', $path or die "Cannot open $path for write: $!";
+    print {$fh} $content or die "Cannot write $path: $!";
+    close $fh or die "Cannot close $path: $!";
 }
