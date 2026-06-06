@@ -3941,9 +3941,14 @@ nested `instances[].interface_ports[]` plus `instances[].port_bindings[]`
 core and typed-extension entry keys. It now also advertises
 `instances[].parameter_overrides[]` core, raw-value-extension, and
 value-metadata-extension entry keys, and advertises `auxiliary_assignments[]`
-as scalar string assignment-line entries. The composition shared-datapath
-candidate payload remains a separate later normalized semantic export edge, and
-the manifest is still not a full normalized semantic export. The active
-task-tree frontier is `BACKEND-API-VALIDATION-FRONTIER.44`, which selects the
-next exact backend/API/public-export edge before any further implementation
-edits.
+as scalar string assignment-line entries. The manifest is still not a full
+normalized semantic export.
+
+Current selected next edge: task-tree leaf
+`BACKEND-API-VALIDATION-FRONTIER.44.1` will publish bounded key families for
+`semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[]`,
+including candidate entries, optional declared-type extensions, contributors,
+contributor connection expressions, aggregate enable families, aggregate family
+contributors, and multi/same-value assertion metadata. Nested contributor child
+IR contents remain delegated to their existing bounded contracts, and full
+normalized semantic export stabilization remains out of scope.

@@ -127,7 +127,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.42.1`,
     `BACKEND-API-VALIDATION-FRONTIER.43`,
     `BACKEND-API-VALIDATION-FRONTIER.43.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.44`
+    `BACKEND-API-VALIDATION-FRONTIER.44`,
+    `BACKEND-API-VALIDATION-FRONTIER.44.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -829,9 +830,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.43.1: ship DT multi-drive schema`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.44`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after standalone-DT multi-drive entry schemas shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.44.1`
   Acceptance: `Audit the remaining backend/API/public-export backlog and current evidence after BACKEND-API-VALIDATION-FRONTIER.43.1, then activate one exact executable child leaf before any implementation edits. The selection must keep roadmap, codebase, task-tree, knowledge-map, README, and mdBook alignment explicit.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, KNOWLEDGE_MAP.md, docs/knowledge/normalized-semantic-standalone-dt-multi-drive-entry-schema.md, perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm, t/139-composition-shared-datapath-candidate-metadata.t, t/142-composition-shared-datapath-assertion-metadata.t, t/159-composition-shared-datapath-forward-ir-exports.t, t/183-composition-shared-datapath-candidate-builder.t, and t/281-structural-declared-type-contracts.t. A temporary composition shared-datapath probe emitted candidate keys aggregate_enable_families, aggregate_enable_family_count, aggregate_target_enable_signal, contributor_count, contributors, default_lifted_visibility, interface_type, lifted_runtime_kind, lifted_runtime_next_signal, lifted_runtime_reset_active_level, lifted_runtime_reset_keyword, lifted_runtime_reset_kind, lifted_runtime_reset_value, lifted_runtime_signal, loopback_allowed, multi_value_assertion, multi_value_conflict_signal, peer_input_count, peer_input_endpoints, planned_reexport_top_output_signals, reset_value, signal_name, storage_class, top_output_signals, and width; contributor keys bound_connection_expr, bound_signal, bound_signals, drive_intent, endpoint, instance_name, intent_hir, kind, lowered_rtl_ir, module_name, output_drive_family, source_name, and structural_rtl_ir; aggregate-enable family keys aggregate_enable_signal, contributor_count, contributors, rhs_value, same_value_assertion, and same_value_conflict_signal; aggregate contributor keys driver_blocks, driver_enable_signals, endpoint, family_enable_signal, and source_enable_signal; assertion keys input_count, input_enable_signals, kind, and result_signal; and bound_connection_expr keys kind and signal_name. Typed candidate tests show optional declared_type_name and declared_type_spec on candidates and contributors.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.44: select shared-datapath schema`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.44.1`
+  Status: `active`
+  Goal: `Publish composition shared-datapath candidate entry schemas in the normalized semantic lowered-RTL contract.`
+  Acceptance: `FSM::Support::NormalizedSemanticLoweredRTLIRContract advertises bounded entry keys for semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[] top-level entries, optional declared-type extension keys, nested contributors, contributor bound_connection_expr metadata, aggregate_enable_families[] entries, aggregate family contributors, and multi/same-value assertion metadata. The forward-IR, payload/report, capability-manifest, README/live docs, mdBook, knowledge-map, and runtime contract tests inherit or describe those key families. Nested child intent_hir/lowered_rtl_ir/structural_rtl_ir contents in contributors remain delegated to their existing bounded contracts instead of duplicated, no raw Perl objects are exported, and full normalized semantic export stabilization remains out of scope.`
   Verification: `pending`
   Commit: `pending`
 
@@ -930,7 +939,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 89 | `BACKEND-API-VALIDATION-FRONTIER.42.1` | `done` | Implemented an explicit opt-in ABC-backed Yosys validation path without changing default --verify-hdl behavior. |
 | 90 | `BACKEND-API-VALIDATION-FRONTIER.43` | `done` | Selected normalized semantic lowered-RTL standalone-DT multi-drive target entry schemas as the next exact public-export edge. |
 | 91 | `BACKEND-API-VALIDATION-FRONTIER.43.1` | `done` | Published bounded `standalone_dt_multi_drive_targets[]` and nested `multi_drive_assertion` key families before any broader shared-datapath candidate payload widening. |
-| 92 | `BACKEND-API-VALIDATION-FRONTIER.44` | `active` | Select the next exact backend/API/public-export edge after standalone-DT multi-drive entry schemas shipped. |
+| 92 | `BACKEND-API-VALIDATION-FRONTIER.44` | `done` | Selected composition shared-datapath candidate entry schemas as the next normalized semantic public-export edge. |
+| 93 | `BACKEND-API-VALIDATION-FRONTIER.44.1` | `active` | Publish bounded `composition_shared_datapath_candidates[]` key families before any full normalized semantic export stabilization. |
 
 ## Decisions
 
@@ -1043,6 +1053,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.42.1` | `perl -Iperl -c perl/FSM/Support/HDLExternalValidation.pm`; `perl -Iperl -c perl/FSM/Support/HDLExternalValidationContract.pm`; `perl -Iperl -c t/313-hdl-external-validation-contract.t`; `perl -Iperl -c t/308-systemverilog-external-validation.t`; `perl -Iperl -c t/297-capability-manifest.t`; `prove -Iperl t/313-hdl-external-validation-contract.t`; `prove -Iperl t/308-systemverilog-external-validation.t`; `prove -Iperl t/297-capability-manifest.t`; `prove -Iperl t/460-hdl-external-validation-contract-defensive-copy-boundary-audit.t t/1057-hdl-external-validation-contract-full-surface-json-roundtrip-audit.t t/1058-hdl-external-validation-contract-full-surface-defensive-copy-audit.t t/323-backend-validation-contract.t`; `prove -Iperl t/365-backend-validation-section-runtime-contract-audit.t t/358-capability-manifest-runtime-contract-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; optional in-process ABC mapping validation opt-in shipped while default CLI validation remains ABC-free |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.43` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, normalized semantic lowered/forward contract modules, lowered-RTL/semantic runtime contract tests, existing normalized semantic fact cards, standalone-DT multi-drive tests, and shared-datapath candidate tests; temporary in-memory standalone-DT probe confirmed one emitted `standalone_dt_multi_drive_targets[]` entry with target keys `dt_enable_signals`, `dt_names`, `lhs_enable_signals`, `multi_drive_assertion`, `multiplexer_type`, `rhs_values`, `signal_name`, and nested assertion keys `input_count`, `input_enable_signals`, `kind`, `target_signal` | `PASS`; selected standalone-DT multi-drive target entry schemas for `.43.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.43.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; `prove -Iperl t/340-normalized-semantic-lowered-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t t/354-normalized-semantic-child-runtime-contract-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; bounded standalone-DT multi-drive target and assertion entry schemas shipped through normalized semantic contracts, manifest, docs, knowledge-map, and runtime audit |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.44` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `KNOWLEDGE_MAP.md`, `docs/knowledge/normalized-semantic-standalone-dt-multi-drive-entry-schema.md`, `perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm`, `t/139-composition-shared-datapath-candidate-metadata.t`, `t/142-composition-shared-datapath-assertion-metadata.t`, `t/159-composition-shared-datapath-forward-ir-exports.t`, `t/183-composition-shared-datapath-candidate-builder.t`, and `t/281-structural-declared-type-contracts.t`; temporary composition probe captured candidate, contributor, aggregate-enable, assertion, and bound_connection_expr key sets; typed tests show optional declared-type extension keys on candidates and contributors | `PASS`; selected shared-datapath candidate entry schemas for `.44.1` |
 
 ## Commit Log
 
@@ -1139,6 +1150,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.42.1` | `BACKEND-API-VALIDATION-FRONTIER.42.1: ship ABC validation opt-in` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.43` | `BACKEND-API-VALIDATION-FRONTIER.43: select DT multi-drive schema` | selected `.43.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.43.1` | `BACKEND-API-VALIDATION-FRONTIER.43.1: ship DT multi-drive schema` | shipped schema; activated `.44` |
+| `BACKEND-API-VALIDATION-FRONTIER.44` | `BACKEND-API-VALIDATION-FRONTIER.44: select shared-datapath schema` | selected `.44.1` |
 
 ## Changelog
 
@@ -1589,3 +1601,6 @@ items named in the 2026-06-05 remaining-work inventory.
   `multi_drive_assertion` entry schemas through forward-IR, payload/report,
   capability-manifest, README, mdBook, knowledge-map, and runtime contract
   coverage. Activated `.44` to select the next backend/API/public-export edge.
+- `2026-06-06`: Completed `.44`; selected composition shared-datapath candidate
+  entry schemas as the next normalized semantic public-export edge. Activated
+  `.44.1` before any implementation/test/source edits.
