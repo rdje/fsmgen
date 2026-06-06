@@ -3841,8 +3841,9 @@ VHDL, packages, GHDL validation, and full backend parity remain outside the
 shipped scaffold. Signed vector numeric-literal addition/subtraction also
 lowers through target-width `to_signed`, so `SUM = (+ A 1)` emits
 `SUM <= A + to_signed(1, 8);` and `DIFF = (- A 1)` emits
-`DIFF <= A - to_signed(1, 8);`. Signed literal
-multiplication/division/modulo remains a later edge.
+`DIFF <= A - to_signed(1, 8);`. Signed vector numeric-literal
+multiplication/division/modulo is the active next implementation edge under
+`BACKEND-API-VALIDATION-FRONTIER.62.1`.
 
 ### GHDL Validation
 
@@ -4031,11 +4032,11 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.62` selects the next exact backend/API or
-public-export edge after `.61.1` shipped signed vector numeric-literal
-addition/subtraction RHS lowering.
+`BACKEND-API-VALIDATION-FRONTIER.62.1` implements signed vector
+numeric-literal multiplication/division/modulo RHS lowering after `.62`
+selected that exact scaffold gap.
 Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, signed literal multiplication/division/modulo,
-scalar signed arithmetic, mixed signed/unsigned arithmetic,
+unrelated forward-IR payloads, scalar signed arithmetic,
+mixed signed/unsigned arithmetic,
 aggregate/composition VHDL, and full normalized semantic export stabilization
 remain out of scope until later exact leaves own them.

@@ -163,7 +163,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.60.1`,
     `BACKEND-API-VALIDATION-FRONTIER.61`,
     `BACKEND-API-VALIDATION-FRONTIER.61.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.62`
+    `BACKEND-API-VALIDATION-FRONTIER.62`,
+    `BACKEND-API-VALIDATION-FRONTIER.62.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1135,10 +1136,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.61.1: ship VHDL signed literal arithmetic`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.62`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL signed vector numeric-literal addition/subtraction RHS lowering shipped.`
-  Acceptance: `pending selection`
-  Verification: `pending selection`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.62.1`
+  Acceptance: `Selected direct VHDL signed vector numeric-literal multiplication/division/modulo RHS lowering as the next exact backend edge. Evidence shows .61.1 handles signed vector numeric-literal + and - through to_signed, while signed A * 2, A / 2, and A % 2 shapes still fail closed at the signed arithmetic guard because literal operands are accepted only for + and -. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.62.1 before any backend/test/source edits. The slice must handle signed vector numeric-literal multiplication/division/modulo RHS assignments without widening scalar signed arithmetic, mixed signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `Selection audit/read of README.md, docs/VHDL_SCOPE.md, docs/book/src/11-extensions-and-embedding.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, and t/386-hdl-generator-facade-target-language-boundary-audit.t; temporary signed A/PROD, A/QUOT, and A/REM VHDL probes failed closed at arithmetic expressions A * 2, A / 2, and A % 2.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.62: select VHDL signed literal divmul`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.62.1`
+  Status: `active`
+  Goal: `Implement direct VHDL signed vector numeric-literal multiplication/division/modulo RHS lowering.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL lowers generated signed vector numeric-literal multiplication, division, and modulo RHS assignments into target-width resized VHDL signed arithmetic with to_signed literal conversion when the target and signal operand are signed vectors. Focused pipeline, CLI, and facade coverage prove direct signed A/PROD, A/QUOT, and A/REM fixtures emit signed ports/signals and signed literal multiplication/division/modulo assignments without failing closed or using unsigned casts. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task tree, and memory stay synchronized. The leaf does not widen scalar signed arithmetic, mixed signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1272,7 +1281,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 125 | `BACKEND-API-VALIDATION-FRONTIER.60.1` | `done` | Shipped same-width signed vector division/modulo RHS lowering for signed vector targets and operands without widening scalar signed arithmetic or full VHDL parity. |
 | 126 | `BACKEND-API-VALIDATION-FRONTIER.61` | `done` | Selected signed vector numeric-literal addition/subtraction after probes showed `A + 1` and `A - 1` still fail closed for signed targets. |
 | 127 | `BACKEND-API-VALIDATION-FRONTIER.61.1` | `done` | Shipped signed vector plus/minus numeric literal lowering without widening other signed literal arithmetic or full VHDL parity. |
-| 128 | `BACKEND-API-VALIDATION-FRONTIER.62` | `active` | Select the next exact backend/API/public-export edge after signed vector literal addition/subtraction shipped. |
+| 128 | `BACKEND-API-VALIDATION-FRONTIER.62` | `done` | Selected signed vector numeric-literal multiplication/division/modulo after probes showed `A * 2`, `A / 2`, and `A % 2` still fail closed for signed targets. |
+| 129 | `BACKEND-API-VALIDATION-FRONTIER.62.1` | `active` | Implement signed vector numeric-literal multiplication/division/modulo lowering without widening scalar signed arithmetic or full VHDL parity. |
 
 ## Decisions
 
@@ -1421,6 +1431,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.60.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers same-width signed vector division/modulo RHS assignments as resized signed VHDL arithmetic; activated `.61` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.61` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; temporary signed A/SUM and A/DIFF VHDL probes failed closed at arithmetic expressions `A + 1` and `A - 1` | `PASS`; selected signed vector numeric-literal addition/subtraction RHS lowering for `.61.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.61.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers signed vector plus/minus numeric literal RHS assignments through target-width `to_signed` conversion; activated `.62` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.62` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; temporary signed A/PROD, A/QUOT, and A/REM VHDL probes failed closed at arithmetic expressions `A * 2`, `A / 2`, and `A % 2` | `PASS`; selected signed vector numeric-literal multiplication/division/modulo RHS lowering for `.62.1` |
 
 ## Commit Log
 
@@ -1553,6 +1564,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.60.1` | `BACKEND-API-VALIDATION-FRONTIER.60.1: ship VHDL signed divmod` | this slice; activates `.61` |
 | `BACKEND-API-VALIDATION-FRONTIER.61` | `BACKEND-API-VALIDATION-FRONTIER.61: select VHDL signed literal arithmetic` | selected `.61.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.61.1` | `BACKEND-API-VALIDATION-FRONTIER.61.1: ship VHDL signed literal arithmetic` | this slice; activates `.62` |
+| `BACKEND-API-VALIDATION-FRONTIER.62` | `BACKEND-API-VALIDATION-FRONTIER.62: select VHDL signed literal divmul` | selected `.62.1` |
 
 ## Changelog
 
@@ -2244,3 +2256,9 @@ items named in the 2026-06-05 remaining-work inventory.
   VHDL, GHDL validation, broad expression parity, and full backend parity
   remain deferred. Activated `.62` to select the next exact
   backend/API/public-export edge.
+- `2026-06-06`: Completed `.62`; selected signed vector numeric-literal
+  multiplication/division/modulo RHS lowering for `.62.1` after signed A/PROD,
+  A/QUOT, and A/REM probes failed closed at `A * 2`, `A / 2`, and `A % 2`.
+  Scalar signed arithmetic, mixed signed/unsigned arithmetic, aggregate VHDL,
+  composition/top VHDL, GHDL validation, broad expression parity, and full
+  backend parity remain deferred.

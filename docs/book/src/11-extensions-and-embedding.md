@@ -2290,12 +2290,12 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.62`, which selects the next exact backend/API
-or public-export edge after `.61.1` shipped signed vector numeric-literal
-addition/subtraction RHS lowering.
+`BACKEND-API-VALIDATION-FRONTIER.62.1`, which implements signed vector
+numeric-literal multiplication/division/modulo RHS lowering after `.62`
+selected that exact backend edge.
 Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, signed literal multiplication/division/modulo,
-scalar signed arithmetic, mixed signed/unsigned arithmetic,
+unrelated forward-IR payloads, scalar signed arithmetic,
+mixed signed/unsigned arithmetic,
 aggregate/composition VHDL, and full normalized semantic export stabilization
 remain out of scope until later exact leaves own them.
 

@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.61.1` (this commit) — shipped signed vector numeric-literal addition/subtraction RHS lowering. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.62` active frontier — select the next exact backend/API/public-export edge after signed literal addition/subtraction shipped.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.61.1`; `BACKEND-API-VALIDATION-FRONTIER.61`; `BACKEND-API-VALIDATION-FRONTIER.60.1`; `BACKEND-API-VALIDATION-FRONTIER.60`; `BACKEND-API-VALIDATION-FRONTIER.59.1`; `BACKEND-API-VALIDATION-FRONTIER.59`; `BACKEND-API-VALIDATION-FRONTIER.58.1`; `BACKEND-API-VALIDATION-FRONTIER.58`; `BACKEND-API-VALIDATION-FRONTIER.57.1`; `BACKEND-API-VALIDATION-FRONTIER.57`; `BACKEND-API-VALIDATION-FRONTIER.56.1`; `BACKEND-API-VALIDATION-FRONTIER.56`; `BACKEND-API-VALIDATION-FRONTIER.55.1`; `BACKEND-API-VALIDATION-FRONTIER.55`.
-- in_flight_uncommitted: none expected after this `.61.1` implementation commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.62` (this commit) — selected signed vector numeric-literal multiplication/division/modulo RHS lowering. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.62.1` active frontier — implement signed vector numeric-literal multiplication/division/modulo RHS lowering.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.62`; `BACKEND-API-VALIDATION-FRONTIER.61.1`; `BACKEND-API-VALIDATION-FRONTIER.61`; `BACKEND-API-VALIDATION-FRONTIER.60.1`; `BACKEND-API-VALIDATION-FRONTIER.60`; `BACKEND-API-VALIDATION-FRONTIER.59.1`; `BACKEND-API-VALIDATION-FRONTIER.59`; `BACKEND-API-VALIDATION-FRONTIER.58.1`; `BACKEND-API-VALIDATION-FRONTIER.58`; `BACKEND-API-VALIDATION-FRONTIER.57.1`; `BACKEND-API-VALIDATION-FRONTIER.57`; `BACKEND-API-VALIDATION-FRONTIER.56.1`; `BACKEND-API-VALIDATION-FRONTIER.56`; `BACKEND-API-VALIDATION-FRONTIER.55.1`.
+- in_flight_uncommitted: none expected after this `.62` selection commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes
