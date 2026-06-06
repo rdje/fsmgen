@@ -79,12 +79,12 @@ ABC is not required for `--verify-hdl`, and the validation command sequence
 does not run a standalone ABC pass.
 
 Direct VHDL generation now has a scaffold subset for direct single-FSM roots,
-including delayed-pulse clock-branch lowering and same-width vector addition
-RHS/chain lowering. VHDL validation with GHDL is intentionally deferred until a
-separate GHDL validation lane is runnable, documented, support-accounted, and
-regression-backed. The current regression gate is a focused SystemVerilog
-smoke, not yet a claim that every historical sample in `fsm/` is externally
-warning-clean. Both deferred items are tracked in
+including delayed-pulse clock-branch lowering and same-width vector
+addition/subtraction RHS/chain lowering. VHDL validation with GHDL is
+intentionally deferred until a separate GHDL validation lane is runnable,
+documented, support-accounted, and regression-backed. The current regression
+gate is a focused SystemVerilog smoke, not yet a claim that every historical
+sample in `fsm/` is externally warning-clean. Both deferred items are tracked in
 [Feature Backlog](14-feature-backlog.md).
 
 The focused smoke currently includes `fsm/lte_dif_pmaster.fsm`, every current

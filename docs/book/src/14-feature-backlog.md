@@ -3769,17 +3769,17 @@ Current boundary: the CLI and `FSM::Pipeline::HDLGenerator` route
 entity/architecture text for scalar/vector ports, state constants,
 continuous enable assignments, `process(all)` combinational muxes, sync-reset
 clocked processes, async-reset clocked processes, delayed-pulse clock-branch
-nested-if lowering, basic concat RHS forms, and same-width vector addition RHS
-and chain lowering through `numeric_std` unsigned casts. It is covered by direct
-pipeline, CLI, and facade tests.
+nested-if lowering, basic concat RHS forms, and same-width vector
+addition/subtraction RHS chain lowering through `numeric_std` unsigned casts.
+It is covered by direct pipeline, CLI, and facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
 and full feature parity with the SystemVerilog backend. Broader arithmetic
 operators, scalar arithmetic, mismatched-width arithmetic, and expression
-contexts beyond same-width vector addition RHS chains remain fail-closed at
-the scaffold boundary. Subtraction chains such as `a - b - c - d` are the
-current first arithmetic-corpus boundary.
+contexts beyond same-width vector addition/subtraction RHS chains remain
+fail-closed at the scaffold boundary. Multiplication chains such as
+`a * b * c * d` are the current first arithmetic-corpus boundary.
 
 ### GHDL Validation
 

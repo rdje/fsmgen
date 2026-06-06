@@ -534,9 +534,25 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     };
 
     $unsupported->()
-        if $expr =~ /[-*\/%]/ || $expr =~ /\bmod\b/i;
+        if $expr =~ /[*\/%]/ || $expr =~ /\bmod\b/i;
 
-    my @operand_names = split /\s*\+\s*/, $expr;
+    my $operator;
+    my @operand_names;
+    if ($expr =~ /\+/ && $expr =~ /-/) {
+        $unsupported->();
+    }
+    elsif ($expr =~ /\+/) {
+        $operator = '+';
+        @operand_names = split /\s*\+\s*/, $expr;
+    }
+    elsif ($expr =~ /-/) {
+        $operator = '-';
+        @operand_names = split /\s*-\s*/, $expr;
+    }
+    else {
+        $unsupported->();
+    }
+
     $unsupported->()
         unless @operand_names >= 2;
     for my $operand_name (@operand_names) {
@@ -561,7 +577,7 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
         push @converted_operands, "unsigned($operand_name)";
     }
 
-    return 'std_logic_vector(' . join(' + ', @converted_operands) . ')';
+    return 'std_logic_vector(' . join(" $operator ", @converted_operands) . ')';
 }
 
 sub _decl_for_lvalue ($lhs, $decls_by_name) {

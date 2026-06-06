@@ -181,6 +181,57 @@ FSM
     );
 };
 
+subtest 'direct VHDL scaffold lowers same-width vector subtraction RHS chains' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_subtraction_chain.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_subtraction_chain.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_subtraction_chain
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 8)
+    (B 8)
+    (C 8)
+    (D 8)
+    (DIFF 8)
+  )
+  (idle
+    (= (DIFF (- A B C D)))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like(
+        $hdl,
+        qr/\bDIFF\s+<=\s+std_logic_vector\(unsigned\(A\)\s+-\s+unsigned\(B\)\s+-\s+unsigned\(C\)\s+-\s+unsigned\(D\)\);/s,
+        'same-width vector subtraction chains lower through numeric_std unsigned casts',
+    );
+    unlike($hdl, qr/\balways_(?:ff|comb)\b|\bmodule\b/s, 'subtraction-chain VHDL output remains VHDL-shaped');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the same-width vector subtraction-chain fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes direct subtraction-chain VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like(
+        $cli_hdl,
+        qr/\bDIFF\s+<=\s+std_logic_vector\(unsigned\(A\)\s+-\s+unsigned\(B\)\s+-\s+unsigned\(C\)\s+-\s+unsigned\(D\)\);/s,
+        'CLI subtraction-chain VHDL output uses numeric_std unsigned casts',
+    );
+};
+
 subtest 'direct VHDL scaffold keeps broader arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_multiply_deferred.fsm');
@@ -215,7 +266,8 @@ FSM
     });
 
     unlike($corpus_error, qr/arithmetic expression 'a \+ b \+ c \+ d'/s, 'arithmetic corpus no longer fails on the same-width addition chain');
-    like($corpus_error, qr/arithmetic expression 'a - b - c - d' is outside the direct VHDL scaffold/s, 'subtraction chains remain outside the direct VHDL scaffold boundary');
+    unlike($corpus_error, qr/arithmetic expression 'a - b - c - d'/s, 'arithmetic corpus no longer fails on the same-width subtraction chain');
+    like($corpus_error, qr/arithmetic expression 'a \* b \* c \* d' is outside the direct VHDL scaffold/s, 'multiplication chains remain outside the direct VHDL scaffold boundary');
 };
 
 subtest 'CLI routes direct --language vhdl through the scaffold' => sub {

@@ -11,6 +11,7 @@ answers:
   - "does direct VHDL support delayed pulses?"
   - "does direct VHDL support arithmetic expressions?"
   - "does direct VHDL support multi-operand addition?"
+  - "does direct VHDL support subtraction chains?"
 date: 2026-06-06
 status: current
 tags: [vhdl, backend, direct-generation, validation]
@@ -25,7 +26,9 @@ combinational muxes, basic concat RHS forms, and delayed-pulse clock-branch
 nested-if lowering. The scaffold also lowers the first arithmetic RHS shape:
 same-width vector `NAME + NAME` assignments and same-width multi-operand
 addition chains become `std_logic_vector(unsigned(A) + unsigned(B) + ...)`
-expressions. Composition/top VHDL, aggregate-output VHDL, packages,
-multi-clock domains, broad expression parity, GHDL validation, and full
-SystemVerilog parity remain deferred or fail-closed. Subtraction chains such
-as `a - b - c - d` are still outside the direct VHDL scaffold boundary.
+expressions; same-width vector subtraction chains become
+`std_logic_vector(unsigned(A) - unsigned(B) - ...)` expressions.
+Composition/top VHDL, aggregate-output VHDL, packages, multi-clock domains,
+broad expression parity, GHDL validation, and full SystemVerilog parity remain
+deferred or fail-closed. Multiplication chains such as `a * b * c * d` are
+still outside the direct VHDL scaffold boundary.
