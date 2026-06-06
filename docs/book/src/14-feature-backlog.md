@@ -4231,8 +4231,10 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.115` selects the next exact backend/API edge
-after signed vector negative numeric-literal subtraction lowering shipped.
+`BACKEND-API-VALIDATION-FRONTIER.115.1` owns direct VHDL signed vector
+negative numeric-literal multiplication lowering after selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.115` chose it from adjacent fail-closed
+arithmetic probes.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.114.1` lowers
 direct VHDL signed vector subtraction with a negative decimal numeric literal
 into signed VHDL arithmetic, so the selected 8-bit signed fixture emits
@@ -4243,7 +4245,8 @@ direct VHDL signed vector addition with a negative decimal numeric literal into
 signed VHDL arithmetic, so the selected 8-bit signed fixture emits
 `SUM <= A + to_signed(-1, 8);` instead of failing at arithmetic expression
 `'A + -1'`. Unsigned negative numeric-literal arithmetic and signed negative
-numeric-literal multiplication/division/modulo remain deferred. Completed implementation
+numeric-literal division/modulo remain deferred; signed negative multiplication
+is selected by `.115.1` but not yet shipped. Completed implementation
 leaf `BACKEND-API-VALIDATION-FRONTIER.112.1` lowers direct VHDL scalar
 output-port next-signal assignments from negative decimal literals into
 `std_logic` low-bit assignments, so the selected plain scalar fixture emits
