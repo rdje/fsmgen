@@ -21,6 +21,8 @@ answers:
   - "does composition VHDL support standalone-DT packed-list generic maps?"
   - "does composition VHDL support standalone-DT map generic maps?"
   - "does composition VHDL support standalone-DT packed-map generic maps?"
+  - "does composition VHDL support standalone-DT non-packed aggregate generic maps?"
+  - "does composition VHDL support standalone non-packed aggregate generic maps?"
   - "does composition VHDL support generated-FSM children?"
   - "does composition VHDL support C2 generated-FSM children?"
   - "does composition VHDL support APB/C4 generated-FSM children?"
@@ -234,12 +236,11 @@ scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`. External-RTL
 non-packed aggregate generic maps are locked fail-closed before VHDL emission:
 aggregate/list/record actuals that do not lower to one packed literal fail
 with the packed-literal diagnostic instead of emitting VHDL record/array
-generics. Standalone-DT non-packed aggregate generic-map hardening is active
-under `BACKEND-API-VALIDATION-FRONTIER.98.1`; until that leaf ships,
-standalone-DT generic maps beyond
-integer/scalar expression/one-bit sized-bitstring/multi-bit sized-bitstring/
-packed-list/packed-map actuals remain deferred. Unresolved
-package/expression actuals and APB/C4 generic maps beyond scalar integer,
+generics. Standalone-DT non-packed aggregate generic maps are also locked
+fail-closed before VHDL emission: aggregate/list/record actuals that do not
+lower to one packed literal fail with the same diagnostic instead of emitting
+VHDL record/array generics. Unresolved package/expression actuals and APB/C4
+generic maps beyond scalar integer,
 scalar expression, one-bit sized-bitstring, and multi-bit sized-bitstring
 actuals plus resolved packed aggregate and resolved package-backed actuals
 remain deferred for those

@@ -49,6 +49,8 @@ my $standalone_dtc_list_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_s
 my $standalone_dtc_list_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_list_generic_map_top.vhd');
 my $standalone_dtc_map_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_map_generic_map_top.fsm');
 my $standalone_dtc_map_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_map_generic_map_top.vhd');
+my $standalone_dtc_nonpacked_aggregate_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_nonpacked_aggregate_generic_map_top.fsm');
+my $standalone_dtc_nonpacked_aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_nonpacked_aggregate_generic_map_top.vhd');
 my $generated_fsmc_output_path = File::Spec->catfile($tempdir, 'implicit_composition_system_autowire.vhd');
 my $apb_c4_output_path = File::Spec->catfile($tempdir, 'apb_tb.vhd');
 my $apb_c4_scalar_generic_map_path = File::Spec->catfile($tempdir, 'apb_c4_scalar_generic_map_top.fsm');
@@ -349,6 +351,42 @@ write_file(
 (?dt:standalone_route_src
   (+params
     (FRAME ((mode 2'b00) (flag 0)))
+  )
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+  (+size
+    (data_in 16)
+    (result_data 16)
+  )
+  (:= (result_data 16'0))
+  (-capture
+    (<= (result_data data_in))
+  )
+)
+FSM
+);
+write_file(
+    $standalone_dtc_nonpacked_aggregate_generic_map_path,
+    <<'FSM'
+(?top:vhdl_standalone_dtc_nonpacked_aggregate_generic_map_top
+  (?ports:public_io
+    clk
+    rst_n
+    data_in<16
+    result_data>16
+  )
+  (?dtc:router standalone_route_src
+    (params
+      (LANES ((+ 6 1) (+ 7 1)))
+    )
+  )
+)
+
+(?dt:standalone_route_src
+  (+params
+    (LANES ((+ 4 1) (+ 5 1)))
   )
   (+system
     (clock clk)
@@ -1070,6 +1108,22 @@ unlike(
     $standalone_dtc_map_generic_map_result->{hdl_code},
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.FRAME\s*\(|3'b|2'b/s,
     'pipeline standalone-DT packed-map generic-map VHDL output does not leak SystemVerilog generic syntax or packed literals',
+);
+
+my $standalone_dtc_nonpacked_aggregate_error;
+my $standalone_dtc_nonpacked_aggregate_ok = eval {
+    $pipeline->generate_hdl_from_file($standalone_dtc_nonpacked_aggregate_generic_map_path);
+    1;
+};
+$standalone_dtc_nonpacked_aggregate_error = $@;
+ok(
+    !$standalone_dtc_nonpacked_aggregate_ok,
+    'pipeline rejects standalone-DT non-packed aggregate generic maps before VHDL emission',
+);
+like(
+    $standalone_dtc_nonpacked_aggregate_error,
+    qr/aggregate parameter\/generic values must lower to one packed literal before backend emission.*malformed_payload/s,
+    'pipeline standalone-DT non-packed aggregate generic maps fail at the packed-literal boundary',
 );
 
 my $generated_fsmc_result = $pipeline->generate_hdl_from_file($generated_fsmc_composition_path);
@@ -1873,6 +1927,31 @@ unlike(
     $standalone_dtc_map_generic_map_cli_hdl,
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.FRAME\s*\(|3'b|2'b/s,
     'CLI standalone-DT packed-map generic-map VHDL output does not leak SystemVerilog generic syntax or packed literals',
+);
+
+my ($standalone_dtc_nonpacked_aggregate_generic_map_success, $standalone_dtc_nonpacked_aggregate_generic_map_error_message, $standalone_dtc_nonpacked_aggregate_generic_map_full_buf, $standalone_dtc_nonpacked_aggregate_generic_map_stdout_buf, $standalone_dtc_nonpacked_aggregate_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $standalone_dtc_nonpacked_aggregate_generic_map_output_path, $standalone_dtc_nonpacked_aggregate_generic_map_path],
+);
+
+my $standalone_dtc_nonpacked_aggregate_generic_map_combined_output = join(
+    '',
+    @{ $standalone_dtc_nonpacked_aggregate_generic_map_stdout_buf || [] },
+    @{ $standalone_dtc_nonpacked_aggregate_generic_map_stderr_buf || [] },
+    ($standalone_dtc_nonpacked_aggregate_generic_map_error_message || ''),
+);
+
+ok(
+    !$standalone_dtc_nonpacked_aggregate_generic_map_success,
+    'CLI rejects standalone-DT non-packed aggregate generic maps for VHDL',
+);
+like(
+    $standalone_dtc_nonpacked_aggregate_generic_map_combined_output,
+    qr/aggregate parameter\/generic values must lower to one packed literal before backend emission.*malformed_payload/s,
+    'CLI standalone-DT non-packed aggregate generic-map rejection names the packed-literal boundary',
+);
+ok(
+    !-e $standalone_dtc_nonpacked_aggregate_generic_map_output_path,
+    'CLI does not write standalone-DT non-packed aggregate generic-map VHDL output',
 );
 
 my ($generated_fsmc_success, $generated_fsmc_error_message, $generated_fsmc_full_buf, $generated_fsmc_stdout_buf, $generated_fsmc_stderr_buf) = run(

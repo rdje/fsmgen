@@ -398,8 +398,8 @@ The VHDL lane is intentionally narrow:
   emission and do not imply record/array VHDL generic declaration support.
   C3 external-RTL non-packed aggregate generic-map hardening is locked by
   `BACKEND-API-VALIDATION-FRONTIER.97.1` at the same packed-literal boundary.
-  C1 standalone-DT non-packed aggregate generic-map hardening is the active
-  `BACKEND-API-VALIDATION-FRONTIER.98.1` owner.
+  C1 standalone-DT non-packed aggregate generic-map hardening is locked by
+  `BACKEND-API-VALIDATION-FRONTIER.98.1` at the same packed-literal boundary.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
@@ -436,6 +436,7 @@ The VHDL lane is intentionally narrow:
   package-backed VHDL
   generic-map generation,
   external-RTL non-packed aggregate generic-map fail-closed diagnostics,
+  standalone-DT non-packed aggregate generic-map fail-closed diagnostics,
   APB/C4 non-packed aggregate generic-map fail-closed diagnostics,
   mixed signed/unsigned vector numeric arithmetic fail-closed diagnostics,
   signed scalar division/modulo and mixed signed/unsigned scalar arithmetic

@@ -236,7 +236,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.97`,
     `BACKEND-API-VALIDATION-FRONTIER.97.1`,
     `BACKEND-API-VALIDATION-FRONTIER.98`,
-    `BACKEND-API-VALIDATION-FRONTIER.98.1`
+    `BACKEND-API-VALIDATION-FRONTIER.98.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.99`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1746,10 +1747,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.98: select standalone nonpacked aggregate boundary`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.98.1`
-  Status: `active`
+  Status: `done`
   Goal: `Lock and document the standalone-DT non-packed aggregate VHDL generic-map boundary.`
   Acceptance: `Focused pipeline, CLI, and facade/target-language coverage must prove that the bounded C1 standalone-DT composition VHDL subset does not accept aggregate/list/record generic-map actuals that cannot resolve to one packed std_logic_vector literal. Non-packed aggregate actuals must remain explicit fail-closed boundaries rather than silently emitting unsupported VHDL record/array generic declarations or malformed generic maps. The leaf must not widen generated-FSM non-packed aggregate generic maps, aggregate VHDL record/array declarations beyond packed vectors, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, or full backend parity. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map if needed, task tree, and MEMORY stay synchronized.`
-  Verification: `pending implementation or hardening`
+  Verification: `perl -Iperl -c perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm; perl -Iperl -c perl/FSM/Composition/PlanBuilder.pm; perl -Iperl -c perl/FSM/Composition/GenerationOrchestrator.pm; perl -Iperl -c t/114-composition-target-support-diagnostics.t; perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/292-composition-generated-child-parameter-overrides.t t/91-composition-multi-rtl-children.t; prove -Iperl t/333-normalized-semantic-composition-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.98.1: lock standalone nonpacked aggregate boundary`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.99`
+  Status: `active`
+  Goal: `Select the next exact backend/API edge after standalone-DT non-packed aggregate generic-map hardening shipped.`
+  Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave generated-FSM non-packed aggregate generic maps, aggregate VHDL record/array declarations beyond packed vectors, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1956,7 +1964,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 198 | `BACKEND-API-VALIDATION-FRONTIER.97` | `done` | Selected external-RTL non-packed aggregate generic-map fail-closed hardening after temporary C3 external-RTL and standalone-DT probes showed aggregate actuals that do not lower to one packed literal fail before VHDL emission. |
 | 199 | `BACKEND-API-VALIDATION-FRONTIER.97.1` | `done` | Locked C3 external-RTL non-packed aggregate generic-map actuals as fail-closed before VHDL emission at the packed-literal boundary, without implementing VHDL record/array generic declarations or broader aggregate VHDL lowering. |
 | 200 | `BACKEND-API-VALIDATION-FRONTIER.98` | `done` | Selected standalone-DT non-packed aggregate generic-map fail-closed hardening after temporary standalone-DT and C2 generated-FSM probes showed aggregate actuals that do not lower to one packed literal fail before VHDL emission. |
-| 201 | `BACKEND-API-VALIDATION-FRONTIER.98.1` | `active` | Lock the C1 standalone-DT non-packed aggregate VHDL generic-map boundary without implementing VHDL record/array generic declarations or broader aggregate VHDL lowering. |
+| 201 | `BACKEND-API-VALIDATION-FRONTIER.98.1` | `done` | Locked C1 standalone-DT non-packed aggregate generic-map actuals as fail-closed before VHDL emission at the packed-literal boundary, without implementing VHDL record/array generic declarations or broader aggregate VHDL lowering. |
+| 202 | `BACKEND-API-VALIDATION-FRONTIER.99` | `active` | Select the next exact backend/API edge after standalone-DT non-packed aggregate generic-map hardening shipped. |
 
 ## Decisions
 
@@ -2350,6 +2359,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.97` | `BACKEND-API-VALIDATION-FRONTIER.97: select external nonpacked aggregate boundary` | selected `.97.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.97.1` | `BACKEND-API-VALIDATION-FRONTIER.97.1: lock external nonpacked aggregate boundary` | this slice; activates `.98` |
 | `BACKEND-API-VALIDATION-FRONTIER.98` | `BACKEND-API-VALIDATION-FRONTIER.98: select standalone nonpacked aggregate boundary` | selected `.98.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.98.1` | `BACKEND-API-VALIDATION-FRONTIER.98.1: lock standalone nonpacked aggregate boundary` | this slice; activates `.99` |
 
 ## Changelog
 
@@ -2478,6 +2488,10 @@ items named in the 2026-06-05 remaining-work inventory.
   VHDL generic-map fail-closed hardening as `.98.1` after temporary
   standalone-DT and C2 generated-FSM probes showed aggregate actuals that do
   not lower to one packed literal fail before VHDL emission and write no output.
+- `2026-06-06`: Completed `.98.1`; C1 standalone-DT aggregate generic-map
+  actuals that do not lower to one packed literal are locked fail-closed before
+  VHDL emission through pipeline, CLI, and facade coverage. `.99` is active for
+  next-edge selection.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.

@@ -987,6 +987,70 @@ FSM
     );
 };
 
+subtest 'facade target_language option rejects standalone-DT non-packed aggregate generic-map VHDL boundary' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_standalone_dtc_nonpacked_aggregate_generic_map_top.fsm');
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:facade_vhdl_standalone_dtc_nonpacked_aggregate_generic_map_top
+  (?ports:public_io
+    clk
+    rst_n
+    data_in<16
+    result_data>16
+  )
+  (?dtc:router standalone_route_src
+    (params
+      (LANES ((+ 6 1) (+ 7 1)))
+    )
+  )
+)
+
+(?dt:standalone_route_src
+  (+params
+    (LANES ((+ 4 1) (+ 5 1)))
+  )
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+  (+size
+    (data_in 16)
+    (result_data 16)
+  )
+  (:= (result_data 16'0))
+  (-capture
+    (<= (result_data data_in))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $error;
+    my $ok = eval {
+        $vhdl_pipeline->generate_hdl_from_file($composition_path);
+        1;
+    };
+    $error = $@;
+
+    ok(
+        !$ok,
+        'explicit VHDL facade generation rejects standalone-DT non-packed aggregate generic maps',
+    );
+    like(
+        $error,
+        qr/aggregate parameter\/generic values must lower to one packed literal before backend emission.*malformed_payload/s,
+        'explicit VHDL facade rejection names the standalone-DT non-packed aggregate packed-literal boundary',
+    );
+};
+
 subtest 'facade target_language option routes bounded generated-FSM composition VHDL structural top behavior' => sub {
     my $composition_path = repo_file('t/corpus/implicit_composition_system_autowire.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
