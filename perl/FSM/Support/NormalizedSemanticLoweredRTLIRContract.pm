@@ -14,6 +14,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys
@@ -76,6 +78,10 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
             normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys(),
         composition_shared_datapath_candidate_contributor_declared_type_extension_keys =>
             normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
+        composition_shared_datapath_candidate_contributor_drive_intent_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+        composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
         composition_shared_datapath_bound_connection_expr_keys =>
             normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys(),
         composition_shared_datapath_aggregate_enable_family_entry_keys =>
@@ -93,7 +99,7 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
             'The output-drive family and rhs-enable-family key families describe the current nested entry schemas emitted in output_drive_families[].',
             'The selector-conflict target, rhs-enable-family, and assertion key families describe the current nested entry schemas emitted in selector_conflict_targets[].',
             'The standalone-DT multi-drive target and assertion key families describe the current nested entry schemas emitted in standalone_dt_multi_drive_targets[].',
-            'The composition shared-datapath candidate key families describe the current nested entry schemas emitted in composition_shared_datapath_candidates[]. Nested contributor child IR summaries remain delegated to their existing bounded contracts.',
+            'The composition shared-datapath candidate key families describe the current nested entry schemas emitted in composition_shared_datapath_candidates[], including contributor drive-intent projections and their rhs-enable-family entries. Nested contributor child IR summaries remain delegated to their existing bounded contracts.',
             'Use the grouped presence_key_family_map to discover the bounded core and composition-only lowered_rtl_ir key families without collecting those key-family lists separately.',
             'Full normalized semantic export stabilization remains outside this bounded lowered-RTL contract.',
         ],
@@ -305,6 +311,26 @@ sub normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_con
     ];
 }
 
+sub normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys {
+    return [
+        qw(
+            default_value
+            driver_blocks
+            driver_count
+            driver_enable_signals
+            family_enable_signals
+            multiplexer_type
+            reset_value
+            rhs_enable_families
+            rhs_values
+        ),
+    ];
+}
+
+sub normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys {
+    return normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys();
+}
+
 sub normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys {
     return [
         qw(
@@ -378,6 +404,10 @@ sub normalized_semantic_lowered_rtl_ir_presence_key_family_map {
             normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys(),
         composition_shared_datapath_candidate_contributor_declared_type_extension_keys =>
             normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
+        composition_shared_datapath_candidate_contributor_drive_intent_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+        composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
         composition_shared_datapath_bound_connection_expr_keys =>
             normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys(),
         composition_shared_datapath_aggregate_enable_family_entry_keys =>

@@ -32,6 +32,8 @@ use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys
     normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys
@@ -306,6 +308,18 @@ FSM
                 $contributor->{output_drive_family}{rhs_enable_families}[0],
                 normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
                 "$label output_drive_family rhs_enable_families keep the existing bounded schema",
+            );
+        }
+        assert_exact_keys(
+            $contributor->{drive_intent},
+            normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+            "$label drive_intent keeps the bounded drive-intent schema",
+        );
+        if (@{$contributor->{drive_intent}{rhs_enable_families} || []}) {
+            assert_exact_keys(
+                $contributor->{drive_intent}{rhs_enable_families}[0],
+                normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
+                "$label drive_intent rhs_enable_families keep the bounded schema",
             );
         }
         assert_keys_present(

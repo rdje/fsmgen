@@ -5,6 +5,8 @@ answers:
   - "where are composition_shared_datapath_candidates entry keys advertised?"
   - "what keys are in semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates entries?"
   - "what keys are in shared-datapath candidate contributor entries?"
+  - "what keys are in shared-datapath candidate contributor drive_intent entries?"
+  - "where are shared-datapath contributor drive-intent rhs_enable_families keys advertised?"
   - "where are shared-datapath aggregate enable and assertion metadata keys advertised?"
 date: 2026-06-06
 status: current
@@ -19,11 +21,13 @@ entry schemas under
 
 The public key families cover candidate entries, optional declared-type
 extension keys, contributor entries, contributor `bound_connection_expr`
-metadata, aggregate enable-family entries, aggregate-family contributor
-entries, and multi/same-value assertion metadata. Payload/report contracts and
-the capability manifest inherit those lists through the normalized semantic
-contract helper chain, and the runtime contract audit checks a strict
-composition semantic JSON export against those exact entry schemas.
+metadata, contributor `drive_intent` entries, nested drive-intent
+`rhs_enable_families[]` entries, aggregate enable-family entries,
+aggregate-family contributor entries, and multi/same-value assertion metadata.
+Payload/report contracts and the capability manifest inherit those lists
+through the normalized semantic contract helper chain, and the runtime contract
+audit checks a strict composition semantic JSON export against those exact
+entry schemas.
 
 Contributor child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`
 summaries remain delegated to their existing bounded child contracts instead of

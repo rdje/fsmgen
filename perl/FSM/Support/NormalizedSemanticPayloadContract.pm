@@ -24,6 +24,8 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys
@@ -94,6 +96,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys
+    normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys
+    normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys
@@ -210,6 +214,10 @@ sub build_normalized_semantic_payload_contract {
             normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys(),
         forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys =>
             normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
+        forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys =>
+            normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+        forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys =>
+            normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
         forward_ir_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys =>
             normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys(),
         forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys =>
@@ -267,7 +275,7 @@ sub build_normalized_semantic_payload_contract {
             'Use the grouped output-drive entry key families to inspect `forward_ir.lowered_rtl_ir.output_drive_families` without binding to unrelated lowered-RTL internals.',
             'Use the grouped selector-conflict entry key families to inspect `forward_ir.lowered_rtl_ir.selector_conflict_targets` without binding to unrelated lowered-RTL internals.',
             'Use the grouped standalone-DT multi-drive entry key families to inspect `forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets` without binding to unrelated lowered-RTL internals.',
-            'Use the grouped composition shared-datapath candidate key families to inspect `forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates` without binding to unrelated lowered-RTL internals.',
+            'Use the grouped composition shared-datapath candidate key families to inspect `forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates`, including contributor drive-intent projections and their rhs-enable-family entries, without binding to unrelated lowered-RTL internals.',
             'Use the grouped structural auxiliary-assignment value-kind, port, net, declared/resolved link, instance shallow, nested instance interface-port, nested instance parameter-override, and nested instance port-binding entry families to inspect `forward_ir.structural_rtl_ir.auxiliary_assignments`, `forward_ir.structural_rtl_ir.ports`, `forward_ir.structural_rtl_ir.nets`, `forward_ir.structural_rtl_ir.declared_links`, `forward_ir.structural_rtl_ir.resolved_links`, `forward_ir.structural_rtl_ir.instances`, `forward_ir.structural_rtl_ir.instances[].interface_ports`, `forward_ir.structural_rtl_ir.instances[].parameter_overrides`, and `forward_ir.structural_rtl_ir.instances[].port_bindings` without binding to unrelated structural-RTL collections.',
             'The nested `forward_ir.intent_hir` object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
             'The nested `forward_ir.lowered_rtl_ir` object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',
@@ -344,6 +352,10 @@ sub normalized_semantic_payload_presence_key_family_map {
             normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys(),
         forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys =>
             normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
+        forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys =>
+            normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+        forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys =>
+            normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
         forward_ir_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys =>
             normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys(),
         forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys =>
@@ -459,6 +471,14 @@ sub normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_dat
 
 sub normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys {
     return normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys();
+}
+
+sub normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys {
+    return normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys();
+}
+
+sub normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys {
+    return normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys();
 }
 
 sub normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys {

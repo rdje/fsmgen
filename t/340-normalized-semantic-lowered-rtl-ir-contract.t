@@ -16,6 +16,8 @@ use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys
@@ -313,6 +315,45 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
         'composition shared-datapath contributor declared-type extension key list stays bounded and ordered',
     );
     is_deeply(
+        $contract->{composition_shared_datapath_candidate_contributor_drive_intent_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+        'contract publishes the bounded composition shared-datapath contributor drive-intent entry key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+        [
+            qw(
+                default_value
+                driver_blocks
+                driver_count
+                driver_enable_signals
+                family_enable_signals
+                multiplexer_type
+                reset_value
+                rhs_enable_families
+                rhs_values
+            ),
+        ],
+        'composition shared-datapath contributor drive-intent entry key list stays bounded and ordered',
+    );
+    is_deeply(
+        $contract->{composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
+        'contract publishes the bounded composition shared-datapath contributor drive-intent rhs-enable-family entry key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
+        [
+            qw(
+                driver_blocks
+                driver_enable_signals
+                family_enable_signal
+                rhs_value
+            ),
+        ],
+        'composition shared-datapath contributor drive-intent rhs-enable-family entry key list stays bounded and ordered',
+    );
+    is_deeply(
         $contract->{composition_shared_datapath_bound_connection_expr_keys},
         normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys(),
         'contract publishes the bounded composition shared-datapath contributor bound connection expression key list',
@@ -425,6 +466,16 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
         $contract->{presence_key_family_map}{composition_shared_datapath_candidate_contributor_declared_type_extension_keys},
         normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
         'grouped lowered-rtl-ir family map includes composition shared-datapath contributor declared-type extensions',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_shared_datapath_candidate_contributor_drive_intent_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+        'grouped lowered-rtl-ir family map includes composition shared-datapath contributor drive-intent entries',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
+        'grouped lowered-rtl-ir family map includes composition shared-datapath contributor drive-intent rhs-enable-family entries',
     );
     is_deeply(
         $contract->{presence_key_family_map}{composition_shared_datapath_bound_connection_expr_keys},
