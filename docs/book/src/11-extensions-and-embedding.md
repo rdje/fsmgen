@@ -2341,13 +2341,15 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.83`, which selects the next exact backend/API
-edge after bounded C2 generated-FSM one-bit sized bitstring VHDL generic-map
-actuals shipped in `.82.1`.
+`BACKEND-API-VALIDATION-FRONTIER.83.1`, which owns the bounded C3
+external-RTL one-bit sized bitstring VHDL generic-map actual edge selected by
+`.83`. Until that leaf lands, external-RTL one-bit generic actuals remain a
+documented fail-closed boundary; the active implementation target is the
+.rtlif-declared scalar one-bit shape that can emit an actual such as
+`ENABLE_DEFAULT => '1'`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
-division/modulo, mixed signed/unsigned arithmetic, external-RTL one-bit
-generic actuals, standalone-DT generic maps, APB/C4
+division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps, APB/C4
 generic maps, full aggregate VHDL record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped
