@@ -113,7 +113,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.35.1`,
     `BACKEND-API-VALIDATION-FRONTIER.36`,
     `BACKEND-API-VALIDATION-FRONTIER.36.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.37`
+    `BACKEND-API-VALIDATION-FRONTIER.37`,
+    `BACKEND-API-VALIDATION-FRONTIER.37.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -710,9 +711,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `pending`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.37`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL scalar division/modulo fail-closed hardening.`
-  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code/test/source edits occur.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.37.1`
+  Acceptance: `Selected direct VHDL aggregate-output fail-closed hardening as the next exact backend edge. The VHDL Aggregate Lowering backlog remains unshipped, and the direct aggregate-output fixture t/corpus/direct_rhs_concat_target_autogrowth.fsm still fails at the direct VHDL aggregate struct-output guard. A matching SystemVerilog probe emits inferred packed struct output types for OUT and NESTED, confirming this is the broader aggregate record/array boundary rather than a scalar/vector scaffold extension. The implementation-or-deferral owner is BACKEND-API-VALIDATION-FRONTIER.37.1; composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, and full backend parity remain deferred.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, t/1420-vhdl-direct-backend-scaffold.t, t/corpus/direct_rhs_concat_target_autogrowth.fsm, and perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm. ./bin/fsmgen --language vhdl --quiet t/corpus/direct_rhs_concat_target_autogrowth.fsm failed at aggregate struct outputs outside the direct VHDL scaffold. ./bin/fsmgen --quiet -o /tmp/fsmgen_direct_rhs_concat_target_autogrowth_select.sv t/corpus/direct_rhs_concat_target_autogrowth.fsm plus rg showed inferred typedef struct packed output types for OUT and NESTED and mux assignment OUT = {FLAG, DATA}; the temporary /tmp probe output was removed. Selected aggregate-output fail-closed hardening for .37.1 before any implementation/test edits.`
+  Commit: `pending`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.37.1`
+  Status: `active`
+  Goal: `Lock the direct VHDL aggregate-output fail-closed boundary.`
+  Acceptance: `Direct VHDL aggregate-output roots such as t/corpus/direct_rhs_concat_target_autogrowth.fsm remain explicit fail-closed boundaries with focused pipeline and facade coverage, plus README/live docs/mdBook, the direct-VHDL fact card, task-tree, and memory synchronized. The leaf does not widen aggregate VHDL record/array lowering, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity.`
   Verification: `pending`
   Commit: `pending`
 
@@ -797,7 +806,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 75 | `BACKEND-API-VALIDATION-FRONTIER.35.1` | `done` | Implemented scalar subtraction-chain RHS lowering; scalar division/modulo and broader scalar arithmetic remain fail-closed. |
 | 76 | `BACKEND-API-VALIDATION-FRONTIER.36` | `done` | Selected scalar division/modulo as an explicit direct VHDL fail-closed hardening edge after probes showed simple scalar `A / B` and `A % B` mux assignments still fail at the scalar guard. |
 | 77 | `BACKEND-API-VALIDATION-FRONTIER.36.1` | `done` | Locked scalar division/modulo fail-closed pipeline/facade coverage and documentation without widening unsafe one-bit divisor semantics. |
-| 78 | `BACKEND-API-VALIDATION-FRONTIER.37` | `active` | Select the next exact backend/API/public-export edge after scalar division/modulo fail-closed hardening. |
+| 78 | `BACKEND-API-VALIDATION-FRONTIER.37` | `done` | Selected direct VHDL aggregate-output fail-closed hardening after probes showed inferred packed struct outputs still fail at the aggregate struct-output guard. |
+| 79 | `BACKEND-API-VALIDATION-FRONTIER.37.1` | `active` | Lock aggregate-output fail-closed coverage and documentation without widening record/array VHDL lowering. |
 
 ## Decisions
 

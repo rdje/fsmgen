@@ -28,6 +28,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - Scalar division/modulo RHS forms such as `A / B` and `A % B` are locked as
   explicit fail-closed direct VHDL boundaries by focused pipeline and facade
   coverage.
+- The active direct VHDL task-tree leaf is aggregate-output fail-closed
+  hardening; aggregate-output roots remain unsupported until that boundary is
+  locked by focused pipeline/facade coverage and documentation.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
