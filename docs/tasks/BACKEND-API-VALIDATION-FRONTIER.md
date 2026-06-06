@@ -245,7 +245,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.101.1`,
     `BACKEND-API-VALIDATION-FRONTIER.102`,
     `BACKEND-API-VALIDATION-FRONTIER.102.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.103`
+    `BACKEND-API-VALIDATION-FRONTIER.103`,
+    `BACKEND-API-VALIDATION-FRONTIER.103.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1822,10 +1823,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.102.1: reconfirm GHDL validation blocker`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.103`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after GHDL validation blocker reconfirmation shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.103.1`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, current validation environment, and normalized semantic export/public API status; choose the next narrow implementation, hardening, or documented blocking owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave full VHDL record/array lowering, full VHDL package declaration/emission, broad expression parity, full composition VHDL parity, normalized semantic export stabilization, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of README.md, MEMORY.md, COMMIT.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/book/src/11-extensions-and-embedding.md, docs/knowledge/direct-vhdl-scaffold.md, KNOWLEDGE_MAP.md, perl/FSM/Support/NormalizedSemanticSymbolContract.pm, perl/FSM/Support/NormalizedSemanticPayloadContract.pm, perl/FSM/Support/NormalizedSemanticReportContract.pm, perl/FSM/IR/IntentHIRBuilder.pm, t/335-normalized-semantic-symbol-contract.t, t/277-direct-symbol-contract-forward-ir.t, t/278-composition-symbol-contract-forward-ir.t, t/311-normalized-semantic-report-contract.t, t/297-capability-manifest.t, t/313-hdl-external-validation-contract.t, t/308-systemverilog-external-validation.t, focused VHDL scaffold/composition/facade evidence, and current frontier rows; command -v ghdl remained unavailable during the prior .102.1 validation blocker leaf; runtime direct and two-child composition probes showed semantic.symbol_contract.package_imports and semantic.forward_ir.intent_hir.symbol_contract.package_imports contain scalar package-name entries such as shared_local, while current contracts only publish package_import_count/package_imports as a top-level key family. Selected bounded normalized semantic symbol-contract package-import name-list entry metadata for .103.1 before any contract/test/code edits; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.103: select package-import name-list export`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.103.1`
+  Status: `active`
+  Goal: `Publish bounded normalized semantic symbol-contract package-import name-list entry metadata.`
+  Acceptance: `FSM::Support::NormalizedSemanticSymbolContract must advertise that semantic.symbol_contract.package_imports entries are scalar package-name strings, and the semantic.forward_ir.intent_hir.symbol_contract.package_imports alias must delegate the same bounded name-list metadata through the existing symbol-contract owner. Payload/report contracts, capability-manifest semantic export metadata, README, mdBook, knowledge-map/fact card, defensive-copy audits, and runtime contract tests must inherit or describe those package-import name-list metadata fields. The leaf must not expose raw FSM::Package::Spec internals, package source AST, package symbols, VHDL package declaration/emission, unrelated constant/enum/type internals beyond already bounded families, unrelated forward-IR payloads, GHDL validation, full normalized semantic export stabilization, or full backend parity.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -2041,7 +2050,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 207 | `BACKEND-API-VALIDATION-FRONTIER.101.1` | `done` | Locked declared aggregate structural VHDL ports/nets/types as fail-closed before VHDL record/array emission through pipeline, CLI, and facade coverage. |
 | 208 | `BACKEND-API-VALIDATION-FRONTIER.102` | `done` | Selected GHDL validation blocker/documented deferral reconfirmation after the current environment still lacked `ghdl`. |
 | 209 | `BACKEND-API-VALIDATION-FRONTIER.102.1` | `done` | Reconfirmed that VHDL external validation remains blocked because `ghdl` is unavailable, while the validation contract remains SystemVerilog-only. |
-| 210 | `BACKEND-API-VALIDATION-FRONTIER.103` | `active` | Select the next exact backend/API edge after GHDL validation blocker reconfirmation shipped. |
+| 210 | `BACKEND-API-VALIDATION-FRONTIER.103` | `done` | Selected normalized semantic symbol-contract package-import name-list entry metadata after runtime direct/composition semantic JSON probes showed scalar package-name lists under semantic.symbol_contract.package_imports and the forward_ir.intent_hir alias, while the current contract only advertises package_import_count/package_imports as a top-level key family. |
+| 211 | `BACKEND-API-VALIDATION-FRONTIER.103.1` | `active` | Publish bounded package-import name-list entry metadata without exposing raw package-spec internals or full normalized semantic export stabilization. |
 
 ## Decisions
 
@@ -2444,6 +2454,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.101.1` | `BACKEND-API-VALIDATION-FRONTIER.101.1: lock aggregate structural VHDL boundary` | this slice; activates `.102` |
 | `BACKEND-API-VALIDATION-FRONTIER.102` | `BACKEND-API-VALIDATION-FRONTIER.102: select GHDL validation blocker` | selected `.102.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.102.1` | `BACKEND-API-VALIDATION-FRONTIER.102.1: reconfirm GHDL validation blocker` | this slice; activates `.103` |
+| `BACKEND-API-VALIDATION-FRONTIER.103` | `BACKEND-API-VALIDATION-FRONTIER.103: select package-import name-list export` | selected `.103.1` |
 
 ## Changelog
 
@@ -2608,6 +2619,12 @@ items named in the 2026-06-05 remaining-work inventory.
   external-validation contract tests pass, and VHDL external validation remains
   blocked behind a future runnable GHDL lane. `.103` is active for next-edge
   selection.
+- `2026-06-06`: Completed `.103`; selected bounded normalized semantic
+  symbol-contract package-import name-list entry metadata for `.103.1` after
+  direct and composition semantic JSON probes showed scalar package-name lists
+  under `semantic.symbol_contract.package_imports` and the
+  `forward_ir.intent_hir` alias. Raw package-spec internals and full normalized
+  semantic export stabilization remain deferred.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.

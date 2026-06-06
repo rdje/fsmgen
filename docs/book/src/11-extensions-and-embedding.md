@@ -2293,6 +2293,12 @@ recursive type-entry schema metadata for `semantic.symbol_contract.types` and
 `semantic.forward_ir.intent_hir.symbol_contract.types`: scalar entries carry
 `kind`, `signed`, `width`, and optional `state_model`, while aggregate entries
 carry recursive `items` or `members` plus `member_order`.
+The active symbol-contract package-import export edge
+`BACKEND-API-VALIDATION-FRONTIER.103.1` is scoped to publishing explicit
+scalar package-name entry metadata for `semantic.symbol_contract.package_imports`
+and `semantic.forward_ir.intent_hir.symbol_contract.package_imports`. It does
+not expose raw `FSM::Package::Spec` internals, package source AST, package
+symbols, or full normalized semantic export stabilization.
 
 For example, a root that declares scalar and aggregate type aliases can expose
 this normalized semantic shape:
@@ -2370,8 +2376,12 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.103`, a selection-only leaf for the next exact
-backend/API edge after GHDL blocker reconfirmation. Completed leaf
+`BACKEND-API-VALIDATION-FRONTIER.103.1`, a bounded normalized semantic
+symbol-contract package-import name-list metadata leaf. Completed leaf
+`BACKEND-API-VALIDATION-FRONTIER.103` selected that package-import name-list
+edge after runtime direct and composition semantic JSON probes showed scalar
+package-name lists under `semantic.symbol_contract.package_imports` and the
+`forward_ir.intent_hir` alias. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.102.1` reconfirms that VHDL external validation
 remains blocked because `ghdl` is unavailable. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.101.1` locks declared aggregate structural VHDL

@@ -834,6 +834,12 @@ recursive type-entry schema metadata for `semantic.symbol_contract.types` and
 `semantic.forward_ir.intent_hir.symbol_contract.types`: scalar entries carry
 `kind`, `signed`, `width`, and optional `state_model`, while aggregate entries
 carry recursive `items` or `members` plus `member_order`.
+The active symbol-contract package-import export edge
+`BACKEND-API-VALIDATION-FRONTIER.103.1` is scoped to publishing explicit
+scalar package-name entry metadata for `semantic.symbol_contract.package_imports`
+and `semantic.forward_ir.intent_hir.symbol_contract.package_imports`; it does
+not expose raw `FSM::Package::Spec` internals or full normalized semantic
+export stabilization.
 The direct VHDL scaffold now lowers generated vector `logic signed` internal
 declarations to VHDL `signed` signals and generated signed vector direct-root
 ports to VHDL `signed` ports. Same-width signed vector
@@ -924,6 +930,10 @@ GHDL validation blocker reconfirmation is locked by
 `BACKEND-API-VALIDATION-FRONTIER.102.1`: `ghdl` is unavailable in the current
 environment, so external HDL validation remains SystemVerilog-only until a
 future exact GHDL lane can run the tool.
+Current active backend/API work is
+`BACKEND-API-VALIDATION-FRONTIER.103.1`: scoped to publish bounded normalized
+semantic package-import name-list entry metadata for the symbol-contract surface
+and IntentHIR alias, without exposing raw package internals.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit
