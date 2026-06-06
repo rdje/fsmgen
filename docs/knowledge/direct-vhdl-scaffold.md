@@ -17,6 +17,7 @@ answers:
   - "does direct VHDL support XOR chains?"
   - "does direct VHDL support scalar addition?"
   - "does direct VHDL support scalar subtraction?"
+  - "does direct VHDL support scalar multiplication?"
   - "does direct VHDL support generics?"
   - "does direct VHDL support parameterized direct roots?"
   - "does direct VHDL support sized literal generic defaults?"
@@ -41,10 +42,11 @@ defaults become `std_logic` generics for one-bit defaults and
 `params_aggregate_comparison` for the scalar case and
 `params_aggregate_unary_complement` for the vector case. The
 scaffold also lowers the first arithmetic RHS shape: binary scalar
-addition/subtraction lower to one-bit truncated `xor` semantics, while
-same-width vector `NAME + NAME` assignments and same-width multi-operand
-addition chains become `std_logic_vector(unsigned(A) + unsigned(B) + ...)`
-expressions; same-width vector subtraction chains become
+addition/subtraction lower to one-bit truncated `xor` semantics, binary scalar
+multiplication lowers to one-bit `and` semantics, while same-width vector
+`NAME + NAME` assignments and same-width multi-operand addition chains become
+`std_logic_vector(unsigned(A) + unsigned(B) + ...)` expressions; same-width
+vector subtraction chains become
 `std_logic_vector(unsigned(A) - unsigned(B) - ...)` expressions.
 Same-width vector multiplication chains become
 `std_logic_vector(resize(unsigned(A) * unsigned(B) * ..., WIDTH))`

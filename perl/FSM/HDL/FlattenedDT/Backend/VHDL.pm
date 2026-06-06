@@ -642,7 +642,7 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
         or $unsupported->();
 
     my $target_width = _decl_width($target_decl);
-    if (($operator eq '+' || $operator eq '-') && $target_decl->{scalar}) {
+    if (($operator eq '+' || $operator eq '-' || $operator eq '*') && $target_decl->{scalar}) {
         $unsupported->()
             unless @operand_names == 2;
         my @scalar_operands;
@@ -653,7 +653,7 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
                 unless $operand_decl->{scalar};
             push @scalar_operands, $operand_name;
         }
-        return join(' xor ', @scalar_operands);
+        return join($operator eq '*' ? ' and ' : ' xor ', @scalar_operands);
     }
 
     my @converted_operands;

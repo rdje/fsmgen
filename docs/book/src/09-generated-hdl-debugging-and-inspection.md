@@ -81,7 +81,7 @@ does not run a standalone ABC pass.
 Direct VHDL generation now has a scaffold subset for direct single-FSM roots,
 including delayed-pulse clock-branch lowering, generic-bearing direct-root
 module headers with typed scalar/vector sized-literal defaults, binary scalar
-addition/subtraction RHS lowering, and same-width
+addition/subtraction/multiplication RHS lowering, and same-width
 addition/subtraction/multiplication, division/modulo, and XOR RHS/chain
 lowering.
 VHDL validation with GHDL is intentionally deferred until a separate GHDL

@@ -306,6 +306,54 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL scalar-multiplication scaffold behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_multiplication.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_scalar_multiplication
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (PROD 1)
+  )
+  (idle
+    (= (PROD (* A B)))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_scalar_multiplication\s+is\b/s,
+        'explicit VHDL facade generation emits the scalar-multiplication direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bPROD\s+<=\s+A\s+and\s+B;/s,
+        'explicit VHDL facade generation lowers binary scalar multiplication to one-bit and semantics',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s,
+        'explicit VHDL scalar-multiplication facade generation does not leak SystemVerilog or vector arithmetic syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL addition-chain scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_addition_chain.fsm');

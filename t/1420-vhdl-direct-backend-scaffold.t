@@ -520,7 +520,6 @@ subtest 'direct VHDL scaffold lowers binary scalar addition RHS shape' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_addition.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_addition.vhd');
-    my $scalar_multiply_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_multiplication_deferred.fsm');
     write_file(
         $fsm_path,
         <<'FSM'
@@ -536,25 +535,6 @@ subtest 'direct VHDL scaffold lowers binary scalar addition RHS shape' => sub {
   )
   (idle
     (= (SUM (+ A B)))
-  )
-)
-FSM
-    );
-    write_file(
-        $scalar_multiply_path,
-        <<'FSM'
-(?fsm:direct_vhdl_scalar_multiplication_deferred
-  (+system
-    (clock clk)
-    (sreset reset)
-  )
-  (+size
-    (A 1)
-    (B 1)
-    (PRODUCT 1)
-  )
-  (idle
-    (= (PRODUCT (* A B)))
   )
 )
 FSM
@@ -582,15 +562,6 @@ FSM
     my $cli_hdl = read_file($output_path);
     like($cli_hdl, qr/\bSUM\s+<=\s+A\s+xor\s+B;/s, 'CLI scalar-addition VHDL output uses one-bit xor lowering');
     unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s, 'CLI scalar-addition VHDL output remains scalar and VHDL-shaped');
-
-    my $scalar_multiply_error = capture_exception(sub {
-        generate_vhdl($scalar_multiply_path);
-    });
-    like(
-        $scalar_multiply_error,
-        qr/arithmetic expression 'A \* B' is outside the direct VHDL scaffold/s,
-        'scalar multiplication remains outside the direct VHDL scaffold boundary',
-    );
 };
 
 subtest 'direct VHDL scaffold lowers binary scalar subtraction RHS shape' => sub {
@@ -666,6 +637,83 @@ FSM
         $scalar_division_error,
         qr/arithmetic expression 'A \/ B' is outside the direct VHDL scaffold/s,
         'scalar division remains outside the direct VHDL scaffold boundary',
+    );
+};
+
+subtest 'direct VHDL scaffold lowers binary scalar multiplication RHS shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_multiplication.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_multiplication.vhd');
+    my $scalar_multiply_chain_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_multiplication_chain_deferred.fsm');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_scalar_multiplication
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (PROD 1)
+  )
+  (idle
+    (= (PROD (* A B)))
+  )
+)
+FSM
+    );
+    write_file(
+        $scalar_multiply_chain_path,
+        <<'FSM'
+(?fsm:direct_vhdl_scalar_multiplication_chain_deferred
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (C 1)
+    (PROD 1)
+  )
+  (idle
+    (= (PROD (* A B C)))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bentity\s+direct_vhdl_scalar_multiplication\s+is\b/s, 'scalar-multiplication fixture emits direct VHDL entity');
+    like(
+        $hdl,
+        qr/\bPROD\s+<=\s+A\s+and\s+B;/s,
+        'binary scalar multiplication lowers to one-bit VHDL and semantics',
+    );
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s, 'scalar-multiplication VHDL output remains scalar and VHDL-shaped');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the binary scalar-multiplication fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes binary scalar-multiplication VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bPROD\s+<=\s+A\s+and\s+B;/s, 'CLI scalar-multiplication VHDL output uses one-bit and lowering');
+    unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s, 'CLI scalar-multiplication VHDL output remains scalar and VHDL-shaped');
+
+    my $scalar_multiply_chain_error = capture_exception(sub {
+        generate_vhdl($scalar_multiply_chain_path);
+    });
+    like(
+        $scalar_multiply_chain_error,
+        qr/arithmetic expression 'A \* B \* C' is outside the direct VHDL scaffold/s,
+        'scalar multiplication chains remain outside the direct VHDL scaffold boundary',
     );
 };
 
