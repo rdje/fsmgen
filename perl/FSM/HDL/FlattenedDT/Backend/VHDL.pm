@@ -163,8 +163,6 @@ sub _parse_signal_declarations ($body, $port_names) {
         my $signed = defined $signed_keyword ? 1 : 0;
         confess _unsupported("vector bit declaration '$line' is outside the direct VHDL scaffold")
             if $kind eq 'bit' && (defined($msb) || defined($lsb));
-        confess _unsupported("signed logic declaration '$line' is outside the direct VHDL scaffold")
-            if $kind eq 'logic' && $signed;
         confess _unsupported("signed scalar declaration '$line' is outside the direct VHDL scaffold")
             if $signed && (!defined($msb) || !defined($lsb));
 

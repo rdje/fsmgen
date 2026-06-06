@@ -279,13 +279,14 @@ subtest 'facade target_language option routes direct VHDL scalar bit and signed 
     );
 };
 
-subtest 'facade target_language option routes direct VHDL non-signed four-state logic declaration behavior' => sub {
+subtest 'facade target_language option routes direct VHDL four-state logic declaration behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
     mkdir $libdir or die "Cannot create $libdir: $!";
 
     my $package_path = File::Spec->catfile($libdir, 'shared_cfg.fsm');
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_four_state_logic.fsm');
+    my $signed_direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_logic.fsm');
     write_file(
         $package_path,
         <<'FSM'
@@ -327,6 +328,26 @@ FSM
 )
 FSM
     );
+    write_file(
+        $signed_direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_signed_logic
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (OUT signed_byte_t)
+  )
+  (idle
+    (OUT = 8'h01)
+  )
+)
+FSM
+    );
 
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
         debug_level => 0,
@@ -356,6 +377,24 @@ FSM
         $vhdl_result->{hdl_code},
         qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\b/s,
         'explicit VHDL four-state logic facade generation does not leak SystemVerilog syntax',
+    );
+
+    my $signed_vhdl_result = $vhdl_pipeline->generate_hdl_from_file($signed_direct_path);
+
+    like(
+        $signed_vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_signed_logic\s+is\b/s,
+        'explicit VHDL facade generation emits the signed four-state logic direct entity',
+    );
+    like(
+        $signed_vhdl_result->{hdl_code},
+        qr/\bsignal\s+OUT\s+:\s+signed\(7\s+downto\s+0\);/s,
+        'explicit VHDL facade generation lowers signed vector logic declaration',
+    );
+    unlike(
+        $signed_vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s,
+        'explicit VHDL signed logic facade generation does not leak SystemVerilog syntax',
     );
 };
 

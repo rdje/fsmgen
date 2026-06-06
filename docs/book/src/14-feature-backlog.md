@@ -3785,13 +3785,14 @@ chain lowering through `numeric_std` unsigned casts, same-width vector
 multiplication/division/modulo RHS chain lowering through explicit
 target-width `numeric_std` resize, same-width scalar/vector XOR chain lowering
 through VHDL `xor`, and generated non-signed four-state `logic` scalar/vector
-internal declarations as `std_logic` / `std_logic_vector`. It is covered by
-direct pipeline, CLI, and facade tests.
+internal declarations as `std_logic` / `std_logic_vector`, plus generated
+vector `logic signed` internal declarations as VHDL `signed` signals. It is
+covered by direct pipeline, CLI, and facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
-`logic signed` declarations, signed ports, signed arithmetic semantics,
-and full feature parity with the SystemVerilog backend. Scalar division/modulo,
+signed ports, signed arithmetic semantics, and full feature parity with the
+SystemVerilog backend. Scalar division/modulo,
 broader scalar arithmetic beyond scalar addition/subtraction/multiplication
 chains, broader arithmetic operators, mismatched-width arithmetic, and
 expression contexts beyond the same-width
@@ -3821,13 +3822,10 @@ generated scalar `bit` and signed vector internal declarations, such as
 signals. Package-backed declarative `+types` fixtures now lower generated
 non-signed four-state `logic` internal declarations, such as
 `logic [7:0] ISYM;` and `logic LFLAG;`, to `std_logic_vector` and `std_logic`.
-`logic signed` declarations, signed ports, signed arithmetic semantics,
+Generated internal `logic signed [MSB:LSB] NAME;` declarations now lower to
+VHDL `signed` signals. Signed ports, signed arithmetic semantics,
 composition/top VHDL, aggregate VHDL, packages, GHDL validation, and full
 backend parity remain outside the shipped scaffold.
-Active implementation leaf `BACKEND-API-VALIDATION-FRONTIER.55.1` now owns the
-next narrow direct VHDL edge: generated internal `logic signed [MSB:LSB] NAME;`
-declarations lowering to VHDL `signed` signals. Signed ports and signed
-arithmetic semantics remain separate future edges.
 
 ### GHDL Validation
 
@@ -4015,10 +4013,10 @@ schema metadata for `semantic.symbol_contract.types` and
 `kind`, `signed`, `width`, and optional `state_model`; aggregate entries carry
 recursive `items` or `members` plus `member_order`.
 
-Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.55.1` implements direct VHDL `logic signed`
-internal declaration lowering after `.55` selected that exact scaffold gap.
-Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, signed ports, signed arithmetic semantics,
-aggregate/composition VHDL, and full normalized semantic export stabilization
-remain out of scope until later exact leaves own them.
+Current active selector: task-tree leaf `BACKEND-API-VALIDATION-FRONTIER.56`
+selects the next exact backend/API or public-export edge after direct VHDL
+`logic signed` internal declaration lowering shipped. Package-import internals,
+already bounded constant/enum/type internals, unrelated forward-IR payloads,
+signed ports, signed arithmetic semantics, aggregate/composition VHDL, and full
+normalized semantic export stabilization remain out of scope until later exact
+leaves own them.

@@ -29,6 +29,8 @@ answers:
   - "does direct VHDL support numeric literal arithmetic?"
   - "does direct VHDL support compound update arithmetic?"
   - "does direct VHDL support signed declarations?"
+  - "does direct VHDL support signed logic declarations?"
+  - "does direct VHDL support logic signed declarations?"
   - "does direct VHDL support scalar bit declarations?"
   - "does direct VHDL support logic declarations?"
   - "does direct VHDL support four-state declarations?"
@@ -57,9 +59,11 @@ defaults become `std_logic` generics for one-bit defaults and
 `params_aggregate_unary_complement` for the vector case. Generated scalar
 `bit` internal declarations lower to `std_logic`, generated signed vector
 internal declarations such as `reg signed [3:0] NIB` lower to VHDL `signed`
-signals, and generated non-signed four-state `logic` internal declarations
-lower to `std_logic` / `std_logic_vector` for package-backed declarative
-`+types` fixtures. The scaffold also lowers the first arithmetic RHS shape:
+signals, generated non-signed four-state `logic` internal declarations lower
+to `std_logic` / `std_logic_vector` for package-backed declarative `+types`
+fixtures, and generated vector `logic signed [MSB:LSB] NAME;` internal
+declarations lower to VHDL `signed` signals. The scaffold also lowers the first
+arithmetic RHS shape:
 scalar addition and subtraction RHS forms and chains lower to one-bit truncated
 `xor` semantics, and scalar multiplication plus scalar multiplication chains
 lower to one-bit `and` semantics. Generated direct mux expressions with one vector
@@ -79,8 +83,8 @@ expressions. Same-width vector division/modulo chains become
 expressions. Scalar division/modulo RHS forms such as `A / B` and `A % B`
 remain explicit fail-closed direct VHDL boundaries. Same-width scalar/vector XOR
 chains become `A xor B xor ...`
-expressions. `logic signed` declarations, signed ports, and signed arithmetic
-semantics remain outside the current direct VHDL scaffold. Aggregate-output
+expressions. Signed ports and signed arithmetic semantics remain outside the
+current direct VHDL scaffold. Aggregate-output
 roots are locked as explicit fail-closed direct VHDL boundaries by focused
 pipeline and facade coverage. Composition/top VHDL is locked fail-closed by
 focused pipeline and CLI coverage: `?top` sources are parsed into typed

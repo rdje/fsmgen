@@ -2288,9 +2288,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.55.1`, which implements direct VHDL
-`logic signed` internal declaration lowering after `.55` selected that exact
-backend edge. Package-import internals, already bounded constant/enum/type
+`BACKEND-API-VALIDATION-FRONTIER.56`, which selects the next exact backend/API
+or public-export edge after direct VHDL `logic signed` internal declaration
+lowering shipped. Package-import internals, already bounded constant/enum/type
 internals, unrelated forward-IR payloads, signed ports, signed arithmetic
 semantics, aggregate/composition VHDL, and full normalized semantic export
 stabilization remain out of scope until later exact leaves own them.

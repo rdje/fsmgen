@@ -32,10 +32,12 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes generated non-signed four-state `logic`
   internal signal declarations for scalar/vector direct-root shapes, including
   package-backed symbolic-width declarative `+types` fixtures.
+- The direct scaffold now includes generated vector `logic signed` internal
+  signal declarations, lowered to VHDL `signed` signals.
 - Composition VHDL, aggregate VHDL, broad expression parity, scalar
-  division/modulo and broader scalar arithmetic, `logic signed` declarations,
-  signed ports, signed arithmetic semantics, GHDL validation, packages,
-  multi-clock domains, and full feature parity remain deferred.
+  division/modulo and broader scalar arithmetic, signed ports, signed
+  arithmetic semantics, GHDL validation, packages, multi-clock domains, and
+  full feature parity remain deferred.
 - Scalar division/modulo RHS forms such as `A / B` and `A % B` are locked as
   explicit fail-closed direct VHDL boundaries by focused pipeline and facade
   coverage.
@@ -85,6 +87,8 @@ The first VHDL lane is intentionally narrow:
    - Generated signed vector internal signal declarations as VHDL `signed`
    - Generated non-signed four-state `logic` internal signal declarations as
      `std_logic` / `std_logic_vector`
+   - Generated vector `logic signed` internal signal declarations as VHDL
+     `signed`
    - Same-width addition, subtraction, multiplication, division, modulo, and
      XOR RHS chains in the generated direct combinational mux shape
    - Generic-bearing direct-root module headers emitted by the generated
@@ -125,12 +129,12 @@ The first VHDL lane is intentionally narrow:
   scalar `bit` and signed vector internal signal declarations from declarative
   `+types` symbolic-width fixtures, generated non-signed four-state `logic`
   internal signal declarations from package-backed declarative `+types`
-  fixtures, plus direct-root parameter blocks as VHDL
+  fixtures, generated vector `logic signed` internal signal declarations, plus
+  direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: implement direct VHDL `logic signed` internal declaration
-  lowering under `BACKEND-API-VALIDATION-FRONTIER.55.1`; signed ports and
-  signed arithmetic semantics remain separate future edges.
+- Active follow-up: select the next exact direct VHDL or backend/API edge from
+  fresh evidence.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
@@ -141,6 +145,7 @@ The first VHDL lane is intentionally narrow:
   vector numeric-literal addition/subtraction mux lowering,
   scalar `bit` and signed vector internal declaration lowering,
   non-signed four-state `logic` scalar/vector internal declaration lowering,
+  vector `logic signed` internal declaration lowering,
   generic-bearing direct-root module headers, one-bit `std_logic` and
   multi-bit `std_logic_vector` sized-literal generic defaults,
   mismatched-width arithmetic-expression fail-closed diagnostics, and
