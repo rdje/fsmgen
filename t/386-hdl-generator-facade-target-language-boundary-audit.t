@@ -404,6 +404,71 @@ FSM
     );
 };
 
+subtest 'facade target_language option keeps direct VHDL scalar division and modulo fail-closed' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+
+    my @cases = (
+        {
+            filename => 'facade_direct_vhdl_scalar_division_deferred.fsm',
+            fsm_name => 'facade_direct_vhdl_scalar_division_deferred',
+            output => 'QUOTIENT',
+            expression => '(/ A B)',
+            diagnostic => qr/arithmetic expression 'A \/ B' is outside the direct VHDL scaffold/s,
+            name => 'scalar division',
+        },
+        {
+            filename => 'facade_direct_vhdl_scalar_modulo_deferred.fsm',
+            fsm_name => 'facade_direct_vhdl_scalar_modulo_deferred',
+            output => 'REMAINDER',
+            expression => '(% A B)',
+            diagnostic => qr/arithmetic expression 'A % B' is outside the direct VHDL scaffold/s,
+            name => 'scalar modulo',
+        },
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    for my $case (@cases) {
+        my $direct_path = File::Spec->catfile($tempdir, $case->{filename});
+        my $fsm_name = $case->{fsm_name};
+        my $output = $case->{output};
+        my $expression = $case->{expression};
+        write_file(
+            $direct_path,
+            <<"FSM"
+(?fsm:$fsm_name
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    ($output 1)
+  )
+  (idle
+    (= ($output $expression))
+  )
+)
+FSM
+        );
+
+        my $error = capture_exception(sub {
+            $vhdl_pipeline->generate_hdl_from_file($direct_path);
+        });
+
+        like(
+            $error,
+            $case->{diagnostic},
+            "explicit VHDL facade generation keeps $case->{name} outside the direct scaffold boundary",
+        );
+    }
+};
+
 subtest 'facade target_language option routes direct VHDL scalar-multiplication scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_multiplication.fsm');
@@ -811,6 +876,13 @@ sub contains_value {
     }
 
     return 0;
+}
+
+sub capture_exception {
+    my ($code) = @_;
+    my $error = '';
+    eval { $code->(); 1 } or $error = $@ || 'unknown error';
+    return $error;
 }
 
 sub write_file {

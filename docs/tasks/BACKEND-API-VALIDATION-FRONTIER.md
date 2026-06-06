@@ -112,7 +112,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.35`,
     `BACKEND-API-VALIDATION-FRONTIER.35.1`,
     `BACKEND-API-VALIDATION-FRONTIER.36`,
-    `BACKEND-API-VALIDATION-FRONTIER.36.1`
+    `BACKEND-API-VALIDATION-FRONTIER.36.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.37`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -699,12 +700,19 @@ items named in the 2026-06-05 remaining-work inventory.
   Children: `BACKEND-API-VALIDATION-FRONTIER.36.1`
   Acceptance: `Selected an explicit direct VHDL scalar division/modulo fail-closed boundary as the next exact backend edge. Temporary scalar direct-root probes show generated SystemVerilog emits simple scalar mux assignments QUOTIENT = A / B and REMAINDER = A % B, while direct VHDL fails both at the scalar arithmetic guard. The existing vector numeric_std division/modulo path is not a safe scalar lowering because one-bit scalar division/modulo preserve runtime zero-divisor behavior that cannot be reduced to the existing scalar xor/and boolean semantics. The implementation-or-deferral owner is BACKEND-API-VALIDATION-FRONTIER.36.1; other scalar arithmetic, mismatched-width arithmetic, aggregate record/array VHDL, composition/top VHDL, packages, GHDL validation, and full backend parity remain deferred.`
   Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, and t/1420-vhdl-direct-backend-scaffold.t. Temporary File::Temp SystemVerilog probes for scalar direct roots with (= (QUOTIENT (/ A B))) and (= (REMAINDER (% A B))) emitted QUOTIENT = A / B and REMAINDER = A % B. Temporary File::Temp VHDL probes failed at arithmetic expression 'A / B' and arithmetic expression 'A % B' outside the direct VHDL scaffold. Selected explicit scalar division/modulo fail-closed hardening for .36.1 before any implementation/test edits.`
-  Commit: `pending`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.36: select VHDL scalar divmod boundary`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.36.1`
-  Status: `active`
+  Status: `done`
   Goal: `Lock the direct VHDL scalar division/modulo fail-closed boundary.`
   Acceptance: `Direct VHDL scalar division/modulo RHS forms such as A / B and A % B remain explicit fail-closed boundaries with focused pipeline and facade coverage, plus README/live docs/mdBook, the direct-VHDL fact card, task-tree, and memory synchronized. The leaf does not widen scalar division/modulo lowering, other scalar arithmetic, mismatched-width arithmetic, aggregate record/array VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t; prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `pending`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.37`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after direct VHDL scalar division/modulo fail-closed hardening.`
+  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code/test/source edits occur.`
   Verification: `pending`
   Commit: `pending`
 
@@ -788,7 +796,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 74 | `BACKEND-API-VALIDATION-FRONTIER.35` | `done` | Selected scalar subtraction-chain RHS lowering as the next narrow direct VHDL scaffold edge after probes showed the generated shape is a simple scalar `DIFF = A - B - C` mux assignment. |
 | 75 | `BACKEND-API-VALIDATION-FRONTIER.35.1` | `done` | Implemented scalar subtraction-chain RHS lowering; scalar division/modulo and broader scalar arithmetic remain fail-closed. |
 | 76 | `BACKEND-API-VALIDATION-FRONTIER.36` | `done` | Selected scalar division/modulo as an explicit direct VHDL fail-closed hardening edge after probes showed simple scalar `A / B` and `A % B` mux assignments still fail at the scalar guard. |
-| 77 | `BACKEND-API-VALIDATION-FRONTIER.36.1` | `active` | Lock scalar division/modulo fail-closed coverage and documentation without widening unsafe one-bit divisor semantics. |
+| 77 | `BACKEND-API-VALIDATION-FRONTIER.36.1` | `done` | Locked scalar division/modulo fail-closed pipeline/facade coverage and documentation without widening unsafe one-bit divisor semantics. |
+| 78 | `BACKEND-API-VALIDATION-FRONTIER.37` | `active` | Select the next exact backend/API/public-export edge after scalar division/modulo fail-closed hardening. |
 
 ## Decisions
 
@@ -885,6 +894,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.34.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; scalar addition chains now lower to VHDL `xor` chains while scalar subtraction chains and scalar division/modulo remain fail-closed |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.35` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, and `t/1420-vhdl-direct-backend-scaffold.t`; temporary File::Temp SystemVerilog probe for scalar direct root `(= (DIFF (- A B C)))` emitted `DIFF = A - B - C`; temporary File::Temp VHDL probe failed at `arithmetic expression 'A - B - C' is outside the direct VHDL scaffold`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected scalar subtraction-chain RHS lowering for `.35.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.35.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; scalar subtraction chains now lower to VHDL `xor` chains while scalar division/modulo remain fail-closed |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.36` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, and `t/1420-vhdl-direct-backend-scaffold.t`; temporary File::Temp SystemVerilog probes for scalar direct roots `(= (QUOTIENT (/ A B)))` and `(= (REMAINDER (% A B)))` emitted `QUOTIENT = A / B` and `REMAINDER = A % B`; temporary File::Temp VHDL probes failed at `arithmetic expression 'A / B'` and `arithmetic expression 'A % B'` outside the direct VHDL scaffold; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected scalar division/modulo fail-closed hardening for `.36.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.36.1` | `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; scalar division/modulo are locked fail-closed through direct pipeline/facade coverage and documentation |
 
 ## Commit Log
 
@@ -965,6 +976,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.34.1` | `BACKEND-API-VALIDATION-FRONTIER.34.1: ship VHDL scalar addition chains` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.35` | `BACKEND-API-VALIDATION-FRONTIER.35: select VHDL scalar subtraction chains` | selected `.35.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.35.1` | `BACKEND-API-VALIDATION-FRONTIER.35.1: ship VHDL scalar subtraction chains` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.36` | `BACKEND-API-VALIDATION-FRONTIER.36: select VHDL scalar divmod boundary` | selected `.36.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.36.1` | `BACKEND-API-VALIDATION-FRONTIER.36.1: lock VHDL scalar divmod boundary` | this slice |
 
 ## Changelog
 
@@ -1334,3 +1347,13 @@ items named in the 2026-06-05 remaining-work inventory.
   one-bit VHDL `xor` chains through pipeline, CLI, and facade tests. Scalar
   division/modulo and other scalar arithmetic remain fail-closed. Activated
   `.36` to select the next backend/API edge.
+- `2026-06-06`: Completed `.36`; selected scalar division/modulo fail-closed
+  hardening for `.36.1` after temporary direct-root probes showed scalar
+  `QUOTIENT = A / B` and `REMAINDER = A % B` mux shapes still fail at the
+  direct VHDL scalar-arithmetic guard. Other scalar arithmetic, aggregate VHDL,
+  composition VHDL, packages, GHDL validation, and full backend parity remain
+  deferred.
+- `2026-06-06`: Completed `.36.1`; scalar division/modulo is locked as an
+  explicit direct VHDL fail-closed boundary through pipeline/facade tests and
+  synced docs/fact coverage. Activated `.37` to select the next backend/API
+  edge.

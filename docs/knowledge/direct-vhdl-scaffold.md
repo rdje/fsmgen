@@ -19,6 +19,9 @@ answers:
   - "does direct VHDL support scalar addition chains?"
   - "does direct VHDL support scalar subtraction?"
   - "does direct VHDL support scalar subtraction chains?"
+  - "does direct VHDL support scalar division?"
+  - "does direct VHDL support scalar modulo?"
+  - "does direct VHDL support scalar division/modulo?"
   - "does direct VHDL support scalar multiplication?"
   - "does direct VHDL support scalar multiplication chains?"
   - "does direct VHDL support generics?"
@@ -58,7 +61,9 @@ Same-width vector multiplication chains become
 expressions. Same-width vector division/modulo chains become
 `std_logic_vector(resize(unsigned(A) / unsigned(B) / ..., WIDTH))` and
 `std_logic_vector(resize(unsigned(A) mod unsigned(B) mod ..., WIDTH))`
-expressions. Same-width scalar/vector XOR chains become `A xor B xor ...`
+expressions. Scalar division/modulo RHS forms such as `A / B` and `A % B`
+remain explicit fail-closed direct VHDL boundaries. Same-width scalar/vector XOR
+chains become `A xor B xor ...`
 expressions. Composition/top VHDL, composition generic-map lowering,
 aggregate-output VHDL, packages, multi-clock domains, broad expression parity,
 GHDL validation, and full SystemVerilog parity remain deferred or fail-closed.

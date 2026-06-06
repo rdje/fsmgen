@@ -216,7 +216,8 @@ clock-branch lowering, generic-bearing direct-root module headers with typed
 scalar/vector sized-literal defaults, scalar
 addition/subtraction/multiplication RHS/chain lowering, and same-width
 addition/subtraction/multiplication, division/modulo, and XOR RHS/chain
-lowering, but VHDL/GHDL validation waits for a separate GHDL validation lane.
+lowering. Scalar division/modulo remains fail-closed in the direct VHDL
+scaffold, and VHDL/GHDL validation waits for a separate GHDL validation lane.
 
 ### 6. Reset And Clock Contract Metadata
 

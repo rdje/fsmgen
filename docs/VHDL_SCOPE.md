@@ -25,9 +25,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - Composition VHDL, aggregate VHDL, broad expression parity, scalar
   division/modulo and broader scalar arithmetic, GHDL validation, packages,
   multi-clock domains, and full feature parity remain deferred.
-- The active direct VHDL task-tree leaf is scalar division/modulo fail-closed
-  hardening; scalar `A / B` and `A % B` forms remain unsupported until that
-  boundary is locked by focused coverage and documentation.
+- Scalar division/modulo RHS forms such as `A / B` and `A % B` are locked as
+  explicit fail-closed direct VHDL boundaries by focused pipeline and facade
+  coverage.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
