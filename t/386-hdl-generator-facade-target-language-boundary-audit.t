@@ -2371,6 +2371,107 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL scalar output decimal literal behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $scalar_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_output_decimal_literal.fsm');
+    my $signed_scalar_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_scalar_output_decimal_literal.fsm');
+    write_file(
+        $scalar_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_scalar_output_decimal_literal
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+interface
+    (output FLAG)
+  )
+  (+size
+    (FLAG 1)
+  )
+  (idle
+    (<- (FLAG> 2))
+  )
+)
+FSM
+    );
+
+    write_file(
+        $signed_scalar_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_signed_scalar_output_decimal_literal
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_bit_t (four_state (signed (bits 1))))
+  )
+  (+interface
+    (output FLAG)
+  )
+  (+size
+    (FLAG signed_bit_t)
+  )
+  (idle
+    (<- (FLAG> 3))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $scalar_result = $vhdl_pipeline->generate_hdl_from_file($scalar_path);
+    my $signed_scalar_result = $vhdl_pipeline->generate_hdl_from_file($signed_scalar_path);
+
+    like(
+        $scalar_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_scalar_output_decimal_literal\s+is\b/s,
+        'explicit VHDL facade generation emits the scalar output decimal direct entity',
+    );
+    like(
+        $scalar_result->{hdl_code},
+        qr/\bFLAG\s+:\s+out\s+std_logic;?/s,
+        'explicit VHDL facade generation lowers the scalar output port',
+    );
+    like(
+        $scalar_result->{hdl_code},
+        qr/\bFLAG_next\s+<=\s+'0';/s,
+        'explicit VHDL facade generation lowers even scalar output decimal literals to std_logic zero',
+    );
+    unlike(
+        $scalar_result->{hdl_code},
+        qr/\bFLAG_next\s+<=\s+2;|to_unsigned\(2,\s+1\)|to_signed\(2,\s+1\)|\bmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL scalar output decimal facade generation avoids raw integer assignments, vector casts, and SystemVerilog syntax',
+    );
+
+    like(
+        $signed_scalar_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_signed_scalar_output_decimal_literal\s+is\b/s,
+        'explicit VHDL facade generation emits the signed scalar output decimal direct entity',
+    );
+    like(
+        $signed_scalar_result->{hdl_code},
+        qr/\bFLAG\s+:\s+out\s+std_logic;?/s,
+        'explicit VHDL facade generation lowers the signed scalar output port',
+    );
+    like(
+        $signed_scalar_result->{hdl_code},
+        qr/\bFLAG_next\s+<=\s+'1';/s,
+        'explicit VHDL facade generation lowers odd signed scalar output decimal literals to std_logic one',
+    );
+    unlike(
+        $signed_scalar_result->{hdl_code},
+        qr/\bFLAG_next\s+<=\s+3;|to_unsigned\(3,\s+1\)|to_signed\(3,\s+1\)|\bmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL signed scalar output decimal facade generation avoids raw integer assignments, vector casts, and SystemVerilog syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL AMBA wrap arithmetic scaffold behavior' => sub {
     my $direct_path = repo_file('fsm/amba_requester.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(

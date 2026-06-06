@@ -4231,11 +4231,16 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.109.1` owns direct VHDL scalar output-port
-next-signal decimal literal lowering after selector leaf
-`BACKEND-API-VALIDATION-FRONTIER.109` chose that edge. The selection probes
-generated `FLAG : out std_logic` and `signal FLAG_next : std_logic;` for both
-plain and signed one-bit output shapes, but still wrote raw
+`BACKEND-API-VALIDATION-FRONTIER.110` selects the next exact backend/API edge
+after direct VHDL scalar output-port decimal literal assignment lowering
+shipped. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.109.1` lowers direct VHDL scalar output-port
+next-signal assignments from unsized decimal literals into `std_logic` low-bit
+literal assignments, so the selected plain scalar fixture emits
+`FLAG_next <= '0';` for `2` and the signed one-bit alias fixture emits
+`FLAG_next <= '1';` for `3` instead of raw integer assignments. Selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.109` chose that edge after the probes
+generated `std_logic` output/next-signal declarations but still wrote raw
 `FLAG_next <= 2;` in the VHDL combinational assignment. Completed
 implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.108.1` lowers direct VHDL signed vector

@@ -1932,10 +1932,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.109: select scalar output literal VHDL lowering`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.109.1`
-  Status: `active`
+  Status: `done`
   Goal: `Lower direct VHDL scalar output next-signal decimal literal assignments.`
   Acceptance: `Direct single-FSM VHDL generation must lower generated next-state assignments from an unsized non-negative decimal literal to a scalar output-port next signal, such as FLAG_next <= 2 for a one-bit interface output, into a VHDL-typed std_logic assignment through pipeline, CLI, and facade coverage. The leaf is limited to scalar lvalues with literal decimal RHS values in the direct VHDL scaffold, including signed one-bit aliases because their VHDL target is std_logic; it must preserve existing vector literal behavior and SystemVerilog one-bit truncation semantics for scalar values. Arithmetic expression literal conversion, aggregate record/array lowering, composition/top VHDL, package root/import behavior, GHDL validation, broad expression parity, raw package-spec internals, full normalized semantic export stabilization, and full backend parity must remain unchanged or explicitly deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map, task tree, and MEMORY stay synchronized.`
-  Verification: `pending implementation`
+  Verification: `Extended perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm scalar target-literal conversion so generated direct VHDL assignments such as FLAG_next <= 2 become FLAG_next <= '0'; and odd scalar assignments such as FLAG_next <= 3 become FLAG_next <= '1'; without numeric overflow. Added focused pipeline/CLI coverage in t/1420-vhdl-direct-backend-scaffold.t for plain scalar and signed one-bit alias interface outputs, and facade coverage in t/386-hdl-generator-facade-target-language-boundary-audit.t for the same shapes. Synchronized README.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, docs/TASK_TREE.md, task tree, and MEMORY.md while preserving vector literal behavior, arithmetic expression literal conversion, aggregate record/array, composition/top VHDL, package, GHDL, normalized semantic, and full backend parity deferrals. Checks: perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/114-composition-target-support-diagnostics.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.109.1: lower scalar output VHDL literals`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.110`
+  Status: `active`
+  Goal: `Select the next exact backend/API edge after scalar output decimal literal lowering shipped.`
+  Acceptance: `Selection-only leaf. Audit the backend/API frontier after .109.1, current VHDL scope, mdBook backlog, direct-VHDL fact card, normalized semantic export/public API status, focused contract/backend/facade tests, maintained direct/composition VHDL sweeps, current validation environment, and current frontier rows; choose the next narrow implementation, hardening, or documented blocking owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave broad expression-literal parity, raw package-spec internals, VHDL package declaration/emission, GHDL validation, full normalized semantic export stabilization, broad VHDL aggregate record/array lowering, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -2164,7 +2171,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 220 | `BACKEND-API-VALIDATION-FRONTIER.108` | `done` | Selected direct VHDL signed vector output-port next-signal decimal literal lowering after a probe showed an 8-bit signed interface output lowers to signed ports/signals but still emits raw OUT_next <= 5. |
 | 221 | `BACKEND-API-VALIDATION-FRONTIER.108.1` | `done` | Lowered signed vector output decimal literal assignments such as OUT_next <= 5 into VHDL-typed to_signed(5, 8) assignments through pipeline, CLI, facade, docs, and fact-card coverage. |
 | 222 | `BACKEND-API-VALIDATION-FRONTIER.109` | `done` | Selected direct VHDL scalar output-port next-signal decimal literal lowering after plain and signed one-bit probes lowered output ports/signals to std_logic but still emitted raw FLAG_next <= 2. |
-| 223 | `BACKEND-API-VALIDATION-FRONTIER.109.1` | `active` | Lower direct VHDL scalar output-port next-signal decimal literal assignments through pipeline, CLI, facade, docs, and fact-card coverage. |
+| 223 | `BACKEND-API-VALIDATION-FRONTIER.109.1` | `done` | Lowered scalar output decimal literal assignments such as FLAG_next <= 2 and signed one-bit aliases such as FLAG_next <= 3 into VHDL std_logic low-bit assignments through pipeline, CLI, facade, docs, and fact-card coverage. |
+| 224 | `BACKEND-API-VALIDATION-FRONTIER.110` | `active` | Select the next exact backend/API edge after scalar output decimal literal lowering shipped. |
 
 ## Decisions
 
@@ -2580,11 +2588,17 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.108` | `BACKEND-API-VALIDATION-FRONTIER.108: select signed vector output literal VHDL lowering` | selected `.108.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.108.1` | `BACKEND-API-VALIDATION-FRONTIER.108.1: lower signed vector output VHDL literals` | this slice; activates `.109` |
 | `BACKEND-API-VALIDATION-FRONTIER.109` | `BACKEND-API-VALIDATION-FRONTIER.109: select scalar output literal VHDL lowering` | selected `.109.1` |
-| `BACKEND-API-VALIDATION-FRONTIER.109.1` | `pending` | active implementation leaf |
+| `BACKEND-API-VALIDATION-FRONTIER.109.1` | `BACKEND-API-VALIDATION-FRONTIER.109.1: lower scalar output VHDL literals` | this slice; activates `.110` |
+| `BACKEND-API-VALIDATION-FRONTIER.110` | `pending` | active selector leaf |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed backend/API frontier owner tree.
+- `2026-06-06`: Completed `.109.1`; direct VHDL now lowers scalar
+  output-port next-signal assignments from unsized decimal literals to
+  `std_logic` low-bit literals, so the selected plain scalar fixture emits
+  `FLAG_next <= '0';` for `2` and the signed one-bit alias fixture emits
+  `FLAG_next <= '1';` for `3` instead of raw integer assignments.
 - `2026-06-06`: Completed `.109`; selected direct VHDL scalar output-port
   next-signal unsized decimal literal lowering as `.109.1` after temporary
   plain and signed one-bit interface-output probes generated `std_logic`

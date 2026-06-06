@@ -238,11 +238,11 @@ output-port next-signal decimal-literal edge: an 8-bit interface output emits
 `OUT_next <= 165;`. It also lowers the adjacent signed vector output-port
 next-signal decimal-literal edge: an 8-bit signed interface output emits
 `OUT_next <= to_signed(5, 8);` instead of raw `OUT_next <= 5;`. These leaves do
-not claim broad expression-literal parity. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.109.1` owns the adjacent scalar output-port
-next-signal decimal-literal edge: current plain and signed one-bit output
-probes lower the VHDL target to `std_logic` but still emit raw
-`FLAG_next <= 2;` until that leaf ships. Declared
+not claim broad expression-literal parity. The scaffold now lowers the adjacent
+scalar output-port next-signal decimal-literal edge too: plain and signed
+one-bit output targets lower to `std_logic` low-bit literals, so `2` emits
+`FLAG_next <= '0';` and `3` emits `FLAG_next <= '1';` instead of raw integer
+assignments. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the
