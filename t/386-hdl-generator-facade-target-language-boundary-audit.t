@@ -242,6 +242,43 @@ subtest 'facade target_language option routes direct VHDL numeric-literal arithm
     );
 };
 
+subtest 'facade target_language option routes direct VHDL scalar bit and signed declaration behavior' => sub {
+    my $direct_path = repo_file('t/corpus/declarative_bits_symbol_widths.fsm');
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+declarative_bits_symbol_widths\s+is\b/s,
+        'explicit VHDL facade generation emits the declarative bits direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bsignal\s+FLAG\s+:\s+std_logic;/s,
+        'explicit VHDL facade generation lowers scalar bit declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bsignal\s+NIB\s+:\s+signed\(3\s+downto\s+0\);/s,
+        'explicit VHDL facade generation lowers signed vector declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bFLAG\s+<=\s+'0';\s+if\s+flag_1_en\s+=\s+'1'\s+then\s+FLAG\s+<=\s+'1';/s,
+        'explicit VHDL facade generation lowers scalar bit literal assignments',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\breg\s+signed\b|\bbit\s+FLAG\b/s,
+        'explicit VHDL scalar bit and signed declaration facade generation does not leak SystemVerilog syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL scalar-addition scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_addition.fsm');

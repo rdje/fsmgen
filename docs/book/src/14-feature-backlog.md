@@ -3777,10 +3777,11 @@ clocked processes, async-reset clocked processes, delayed-pulse clock-branch
 nested-if lowering, generic-bearing direct-root module headers as VHDL integer
 generics or typed scalar/vector generics for sized-literal defaults, basic
 concat RHS forms, scalar addition/subtraction/multiplication RHS/chain
-lowering, generated mux arithmetic with vector signal plus/minus numeric
-literal operands through target-width `to_unsigned` casts, same-width vector
-addition/subtraction RHS chain lowering through `numeric_std` unsigned casts,
-same-width vector
+lowering, generated scalar `bit` internal declarations as `std_logic`,
+generated signed vector internal declarations as VHDL `signed`, generated mux
+arithmetic with vector signal plus/minus numeric literal operands through
+target-width `to_unsigned` casts, same-width vector addition/subtraction RHS
+chain lowering through `numeric_std` unsigned casts, same-width vector
 multiplication/division/modulo RHS chain lowering through explicit
 target-width `numeric_std` resize, and same-width scalar/vector XOR chain
 lowering through VHDL `xor`. It is covered by direct pipeline, CLI, and facade
@@ -3788,6 +3789,7 @@ tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
+four-state `logic` declarations, signed ports, signed arithmetic semantics,
 and full feature parity with the SystemVerilog backend. Scalar division/modulo,
 broader scalar arithmetic beyond scalar addition/subtraction/multiplication
 chains, broader arithmetic operators, mismatched-width arithmetic, and
@@ -3812,14 +3814,10 @@ composition target-support diagnostic instead of emitting a VHDL top.
 The compound update and update-shorthand fixtures now lower generated
 direct-root vector arithmetic with numeric literal operands, such as `SRC + 2`,
 `SRC - 1`, `byte_count + 4`, and `remaining - 3`, through target-width
-`to_unsigned` casts.
-
-Active next leaf: generated direct-root scalar `bit` and signed vector internal
-signal declarations, such as `bit FLAG;` and `reg signed [3:0] NIB;` from the
-declarative bits symbolic-width fixture, are selected for the next exact VHDL
-hardening slice. Four-state `logic` declarations, signed ports, signed
-arithmetic semantics, composition/top VHDL, aggregate VHDL, packages, GHDL
-validation, and full backend parity remain outside that slice.
+`to_unsigned` casts. The declarative bits symbolic-width fixture now lowers
+generated scalar `bit` and signed vector internal declarations, such as
+`bit FLAG;` and `reg signed [3:0] NIB;`, to VHDL `std_logic` and `signed`
+signals.
 
 ### GHDL Validation
 

@@ -213,9 +213,10 @@ quality gate for emitted HDL, not as a replacement for FSMGen's semantic,
 strict-mode, and pre-generation checks. The lane is SystemVerilog-only for now;
 direct VHDL generation has a scaffold subset, including delayed-pulse
 clock-branch lowering, generic-bearing direct-root module headers with typed
-scalar/vector sized-literal defaults, scalar
-addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal
-addition/subtraction emitted by compound update/shorthand forms, and same-width
+scalar/vector sized-literal defaults, scalar bit and signed vector internal
+declaration lowering, scalar addition/subtraction/multiplication RHS/chain
+lowering, vector numeric-literal addition/subtraction emitted by compound
+update/shorthand forms, and same-width
 addition/subtraction/multiplication, division/modulo, and XOR RHS/chain
 lowering. Scalar division/modulo remains fail-closed in the direct VHDL
 scaffold, aggregate-output direct roots remain fail-closed, composition/top

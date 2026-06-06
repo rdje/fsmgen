@@ -925,6 +925,33 @@ FSM
     unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s, 'CLI scalar-multiplication-chain VHDL output remains scalar and VHDL-shaped');
 };
 
+subtest 'direct VHDL scaffold lowers scalar bit and signed vector internal declarations' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $output_path = File::Spec->catfile($tempdir, 'declarative_bits_symbol_widths.vhd');
+
+    my $hdl = generate_vhdl('t/corpus/declarative_bits_symbol_widths.fsm');
+    like($hdl, qr/\bentity\s+declarative_bits_symbol_widths\s+is\b/s, 'declarative bits fixture emits direct VHDL entity');
+    like($hdl, qr/\bsignal\s+FLAG\s+:\s+std_logic;/s, 'scalar SystemVerilog bit declaration lowers to std_logic signal');
+    like($hdl, qr/\bsignal\s+NIB\s+:\s+signed\(3\s+downto\s+0\);/s, 'signed vector reg declaration lowers to numeric_std signed signal');
+    like($hdl, qr/\bsignal\s+OUT\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'unsigned vector reg declaration remains std_logic_vector signal');
+    like($hdl, qr/\bFLAG\s+<=\s+'0';\s+if\s+flag_1_en\s+=\s+'1'\s+then\s+FLAG\s+<=\s+'1';/s, 'scalar bit literal assignments lower to std_logic literals');
+    like($hdl, qr/\bNIB\s+<=\s+"0000";\s+if\s+nib__4_h7_en\s+=\s+'1'\s+then\s+NIB\s+<=\s+"0111";/s, 'signed vector literal assignments lower to deterministic bit strings');
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\breg\s+signed\b|\bbit\s+FLAG\b/s, 'declarative bits VHDL output does not leak SystemVerilog declaration syntax');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, repo_file('t/corpus/declarative_bits_symbol_widths.fsm')],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for scalar bit and signed vector declarations')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes scalar bit and signed vector declaration VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bsignal\s+FLAG\s+:\s+std_logic;/s, 'CLI VHDL output includes scalar bit declaration lowering');
+    like($cli_hdl, qr/\bsignal\s+NIB\s+:\s+signed\(3\s+downto\s+0\);/s, 'CLI VHDL output includes signed vector declaration lowering');
+    unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\breg\s+signed\b|\bbit\s+FLAG\b/s, 'CLI declarative bits VHDL output remains VHDL-shaped');
+};
+
 subtest 'direct VHDL scaffold keeps mismatched-width arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_mismatched_division_deferred.fsm');

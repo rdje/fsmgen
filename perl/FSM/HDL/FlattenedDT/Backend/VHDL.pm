@@ -161,8 +161,14 @@ sub _parse_signal_declarations ($body, $port_names) {
         $line =~ s/^\s+|\s+$//g;
         next unless length $line;
 
-        next unless $line =~ /^(reg|wire)\s+(?:\[(\d+):(\d+)\]\s+)?(.+);$/;
-        my ($kind, $msb, $lsb, $names_text) = ($1, $2, $3, $4);
+        next unless $line =~ /^(reg|wire|bit)\s+(?:(signed)\s+)?(?:\[(\d+):(\d+)\]\s+)?(.+);$/;
+        my ($kind, $signed_keyword, $msb, $lsb, $names_text) = ($1, $2, $3, $4, $5);
+        my $signed = defined $signed_keyword ? 1 : 0;
+        confess _unsupported("vector bit declaration '$line' is outside the direct VHDL scaffold")
+            if $kind eq 'bit' && (defined($msb) || defined($lsb));
+        confess _unsupported("signed scalar declaration '$line' is outside the direct VHDL scaffold")
+            if $signed && (!defined($msb) || !defined($lsb));
+
         my @names = map {
             my $name = $_;
             $name =~ s/^\s+|\s+$//g;
@@ -173,7 +179,7 @@ sub _parse_signal_declarations ($body, $port_names) {
             confess _unsupported("unsupported generated declaration name '$name'")
                 unless $name =~ /^[A-Za-z_][A-Za-z0-9_]*$/;
             next if $port_names->{$name};
-            push @signals, _decl_hash(name => $name, kind => $kind, msb => $msb, lsb => $lsb);
+            push @signals, _decl_hash(name => $name, kind => $kind, signed => $signed, msb => $msb, lsb => $lsb);
         }
     }
 
@@ -532,13 +538,14 @@ sub _decl_hash (%args) {
 
 sub _vhdl_type_for_decl ($decl) {
     return 'std_logic' if $decl->{scalar};
-    return _vhdl_type($decl->{msb}, $decl->{lsb});
+    return _vhdl_type($decl->{msb}, $decl->{lsb}, $decl->{signed});
 }
 
-sub _vhdl_type ($msb, $lsb) {
+sub _vhdl_type ($msb, $lsb, $signed = 0) {
     confess _unsupported("unsupported vector range [$msb:$lsb]")
         unless defined($msb) && defined($lsb) && $msb =~ /^\d+$/ && $lsb =~ /^\d+$/;
-    return "std_logic_vector($msb downto $lsb)";
+    my $type = $signed ? 'signed' : 'std_logic_vector';
+    return "$type($msb downto $lsb)";
 }
 
 sub _sv_lvalue_to_vhdl ($lhs) {
@@ -566,6 +573,10 @@ sub _sv_condition_to_vhdl ($expr) {
 
 sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     my $trimmed = _trim($expr);
+    my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $ctx->{decls_by_name} || {});
+    return "'$trimmed'"
+        if $target_decl && $target_decl->{scalar} && $trimmed =~ /^[01]$/;
+
     return _simple_arithmetic_to_vhdl($trimmed, $ctx)
         if _has_arithmetic_operator($trimmed);
 

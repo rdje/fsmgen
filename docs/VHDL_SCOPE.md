@@ -25,13 +25,14 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes generated mux arithmetic with one vector
   signal and one numeric literal operand for `+` and `-`, as emitted by the
   compound update/shorthand fixtures.
-- The active next direct VHDL hardening leaf is generated internal signal
-  declaration lowering for scalar `bit NAME;` and signed vector
+- The direct scaffold now includes generated internal signal declaration
+  lowering for scalar `bit NAME;` and signed vector
   `reg signed [MSB:LSB] NAME;` shapes, as emitted by the declarative bits
   symbolic-width fixture.
 - Composition VHDL, aggregate VHDL, broad expression parity, scalar
-  division/modulo and broader scalar arithmetic, GHDL validation, packages,
-  multi-clock domains, and full feature parity remain deferred.
+  division/modulo and broader scalar arithmetic, four-state `logic`
+  declarations, signed ports, signed arithmetic semantics, GHDL validation,
+  packages, multi-clock domains, and full feature parity remain deferred.
 - Scalar division/modulo RHS forms such as `A / B` and `A % B` are locked as
   explicit fail-closed direct VHDL boundaries by focused pipeline and facade
   coverage.
@@ -77,6 +78,8 @@ The first VHDL lane is intentionally narrow:
      as one-bit scalar `and`
    - Generated direct mux assignments with vector signal plus/minus numeric
      literal operands, such as `SRC + 2` and `byte_count + 4`
+   - Generated scalar `bit` internal signal declarations as `std_logic`
+   - Generated signed vector internal signal declarations as VHDL `signed`
    - Same-width addition, subtraction, multiplication, division, modulo, and
      XOR RHS chains in the generated direct combinational mux shape
    - Generic-bearing direct-root module headers emitted by the generated
@@ -113,12 +116,11 @@ The first VHDL lane is intentionally narrow:
   subtraction, multiplication, division, modulo, and XOR RHS expression chains,
   scalar addition/subtraction/multiplication RHS/chain lowering, and
   generated direct-root vector signal plus/minus numeric literal mux
-  expressions from compound update/shorthand fixtures, plus direct-root
-  parameter blocks as VHDL generics, including integer expression defaults and
-  typed scalar/vector sized-literal defaults.
-- Active follow-up: generated direct-root scalar `bit` and signed vector
-  internal signal declarations from declarative `+types` symbolic-width
-  fixtures.
+  expressions from compound update/shorthand fixtures, generated direct-root
+  scalar `bit` and signed vector internal signal declarations from declarative
+  `+types` symbolic-width fixtures, plus direct-root parameter blocks as VHDL
+  generics, including integer expression defaults and typed scalar/vector
+  sized-literal defaults.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
@@ -127,6 +129,7 @@ The first VHDL lane is intentionally narrow:
   scalar addition/subtraction/multiplication chains, same-width
   addition/subtraction/multiplication/division/modulo/XOR chain lowering,
   vector numeric-literal addition/subtraction mux lowering,
+  scalar `bit` and signed vector internal declaration lowering,
   generic-bearing direct-root module headers, one-bit `std_logic` and
   multi-bit `std_logic_vector` sized-literal generic defaults,
   mismatched-width arithmetic-expression fail-closed diagnostics, and

@@ -81,8 +81,9 @@ does not run a standalone ABC pass.
 Direct VHDL generation now has a scaffold subset for direct single-FSM roots,
 including delayed-pulse clock-branch lowering, generic-bearing direct-root
 module headers with typed scalar/vector sized-literal defaults, scalar addition,
-subtraction, and multiplication RHS/chain lowering, vector numeric-literal
-addition/subtraction emitted by compound update/shorthand forms, and same-width
+subtraction, and multiplication RHS/chain lowering, scalar bit and signed vector
+internal declaration lowering, vector numeric-literal addition/subtraction
+emitted by compound update/shorthand forms, and same-width
 addition/subtraction/multiplication, division/modulo, and XOR RHS/chain
 lowering.
 Scalar division/modulo remains an explicit fail-closed direct VHDL boundary.
