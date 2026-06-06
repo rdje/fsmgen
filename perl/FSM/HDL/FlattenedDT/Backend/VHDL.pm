@@ -644,7 +644,7 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     my $target_width = _decl_width($target_decl);
     if (($operator eq '+' || $operator eq '-' || $operator eq '*') && $target_decl->{scalar}) {
         $unsupported->()
-            unless @operand_names == 2;
+            unless $operator eq '*' || @operand_names == 2;
         my @scalar_operands;
         for my $operand_name (@operand_names) {
             my $operand_decl = $decls_by_name->{$operand_name}

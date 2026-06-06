@@ -3771,20 +3771,22 @@ continuous enable assignments, `process(all)` combinational muxes, sync-reset
 clocked processes, async-reset clocked processes, delayed-pulse clock-branch
 nested-if lowering, generic-bearing direct-root module headers as VHDL integer
 generics or typed scalar/vector generics for sized-literal defaults, basic
-concat RHS forms, binary scalar addition/subtraction/multiplication RHS
-lowering, same-width vector addition/subtraction RHS chain lowering through
-`numeric_std` unsigned casts, same-width vector multiplication/division/modulo
-RHS chain lowering through explicit target-width `numeric_std` resize, and
-same-width scalar/vector XOR chain lowering through VHDL `xor`. It is covered
-by direct pipeline, CLI, and facade tests.
+concat RHS forms, binary scalar addition/subtraction RHS lowering, scalar
+multiplication RHS/chain lowering, same-width vector addition/subtraction RHS
+chain lowering through `numeric_std` unsigned casts, same-width vector
+multiplication/division/modulo RHS chain lowering through explicit
+target-width `numeric_std` resize, and same-width scalar/vector XOR chain
+lowering through VHDL `xor`. It is covered by direct pipeline, CLI, and facade
+tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
 and full feature parity with the SystemVerilog backend. Broader scalar
-arithmetic beyond binary addition/subtraction/multiplication, broader
-arithmetic operators, mismatched-width arithmetic, and expression contexts
-beyond the same-width addition/subtraction/multiplication/division/modulo/XOR
-RHS chain family remain fail-closed at the scaffold boundary. The maintained
+arithmetic beyond binary addition/subtraction and scalar multiplication
+chains, broader arithmetic operators, mismatched-width arithmetic, and
+expression contexts beyond the same-width
+addition/subtraction/multiplication/division/modulo/XOR RHS chain family remain
+fail-closed at the scaffold boundary. The maintained
 arithmetic/XOR and runtime division/modulo corpora now lower through the direct
 VHDL scaffold for that family, and the maintained size-expression width fixture
 now lowers generated direct-root parameter blocks to VHDL integer generics.
@@ -3794,9 +3796,6 @@ fixture, and multi-bit sized-literal generic defaults now lower to typed
 `std_logic_vector` generics in the maintained aggregate unary complement
 fixture. Composition VHDL generic maps remain deferred until a composition VHDL
 leaf owns that path.
-The active next direct VHDL leaf owns only scalar multiplication-chain RHS
-lowering; scalar division/modulo and broader scalar arithmetic remain separate
-backlog.
 
 ### GHDL Validation
 
