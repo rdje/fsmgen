@@ -355,6 +355,55 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL scalar-subtraction-chain scaffold behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_subtraction_chain.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_scalar_subtraction_chain
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (C 1)
+    (DIFF 1)
+  )
+  (idle
+    (= (DIFF (- A B C)))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_scalar_subtraction_chain\s+is\b/s,
+        'explicit VHDL facade generation emits the scalar-subtraction-chain direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bDIFF\s+<=\s+A\s+xor\s+B\s+xor\s+C;/s,
+        'explicit VHDL facade generation lowers scalar subtraction chains to one-bit xor semantics',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s,
+        'explicit VHDL scalar-subtraction-chain facade generation does not leak SystemVerilog or vector arithmetic syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL scalar-multiplication scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_multiplication.fsm');

@@ -10,11 +10,10 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes delayed-pulse clock-branch nested-if
   lowering for the generated `<N` pulse-delay shape.
 - The direct scaffold now includes the first arithmetic/XOR RHS expression family:
-  scalar addition RHS forms and chains lower to one-bit truncated `xor`
-  semantics, binary scalar subtraction lowers to one-bit truncated `xor`,
-  scalar multiplication RHS forms and chains lower to one-bit `and`
-  semantics, same-width vector addition/subtraction chains lower through
-  `numeric_std` unsigned casts, and same-width vector
+  scalar addition and subtraction RHS forms and chains lower to one-bit
+  truncated `xor` semantics, scalar multiplication RHS forms and chains lower
+  to one-bit `and` semantics, same-width vector addition/subtraction chains
+  lower through `numeric_std` unsigned casts, and same-width vector
   multiplication/division/modulo chains lower through explicit target-width
   `numeric_std` resize. Same-width scalar/vector XOR chains lower to VHDL
   `xor`.
@@ -23,12 +22,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   arithmetic integer-expression defaults as `integer`, one-bit sized-literal
   defaults as `std_logic`, and multi-bit sized-literal defaults as
   `std_logic_vector` generics.
-- Composition VHDL, aggregate VHDL, broad expression parity, broader scalar
-  arithmetic, GHDL validation, packages, multi-clock domains, and full feature
-  parity remain deferred.
-- The active direct VHDL task-tree leaf is scalar subtraction-chain RHS
-  lowering; until that leaf ships, scalar subtraction chains such as `A - B - C`
-  remain fail-closed at the scaffold boundary.
+- Composition VHDL, aggregate VHDL, broad expression parity, scalar
+  division/modulo and broader scalar arithmetic, GHDL validation, packages,
+  multi-clock domains, and full feature parity remain deferred.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -58,10 +54,8 @@ The first VHDL lane is intentionally narrow:
      the direct scaffold fixtures
    - Delayed-pulse clock branches that use the generated one-level nested
      `if (<pulse_delay_pipe>) begin ... end` shape
-   - Scalar addition RHS assignments and addition chains, lowered as one-bit
-     truncated scalar `xor`
-   - Binary scalar subtraction RHS assignments, lowered as one-bit truncated
-     scalar `xor`
+   - Scalar addition and subtraction RHS assignments and chains, lowered as
+     one-bit truncated scalar `xor`
    - Scalar multiplication RHS assignments and multiplication chains, lowered
      as one-bit scalar `and`
    - Same-width addition, subtraction, multiplication, division, modulo, and
@@ -98,17 +92,16 @@ The first VHDL lane is intentionally narrow:
   mapping, module/entity conversion, reset polarity handling, and generated
   delayed-pulse nested clock-branch lowering, plus same-width addition,
   subtraction, multiplication, division, modulo, and XOR RHS expression chains,
-  scalar addition/multiplication RHS/chain lowering, binary scalar subtraction
-  RHS lowering, and direct-root parameter blocks as VHDL generics, including
-  integer expression defaults and typed scalar/vector sized-literal defaults.
+  scalar addition/subtraction/multiplication RHS/chain lowering, and
+  direct-root parameter blocks as VHDL generics, including integer expression
+  defaults and typed scalar/vector sized-literal defaults.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
 - Focused direct VHDL generation tests cover pipeline and CLI routing,
   sync/async reset processes, delayed-pulse clock branches, concat lowering,
-  scalar addition chains, binary scalar subtraction, scalar multiplication
-  chains, same-width addition/subtraction/multiplication/division/modulo/XOR
-  chain lowering,
+  scalar addition/subtraction/multiplication chains, same-width
+  addition/subtraction/multiplication/division/modulo/XOR chain lowering,
   generic-bearing direct-root module headers, one-bit `std_logic` and
   multi-bit `std_logic_vector` sized-literal generic defaults,
   mismatched-width arithmetic-expression fail-closed diagnostics, and

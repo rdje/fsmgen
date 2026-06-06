@@ -568,7 +568,6 @@ subtest 'direct VHDL scaffold lowers scalar addition RHS chains' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_addition_chain.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_addition_chain.vhd');
-    my $scalar_subtraction_chain_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_subtraction_chain_deferred.fsm');
     write_file(
         $fsm_path,
         <<'FSM'
@@ -585,26 +584,6 @@ subtest 'direct VHDL scaffold lowers scalar addition RHS chains' => sub {
   )
   (idle
     (= (SUM (+ A B C)))
-  )
-)
-FSM
-    );
-    write_file(
-        $scalar_subtraction_chain_path,
-        <<'FSM'
-(?fsm:direct_vhdl_scalar_subtraction_chain_deferred
-  (+system
-    (clock clk)
-    (sreset reset)
-  )
-  (+size
-    (A 1)
-    (B 1)
-    (C 1)
-    (DIFF 1)
-  )
-  (idle
-    (= (DIFF (- A B C)))
   )
 )
 FSM
@@ -631,15 +610,6 @@ FSM
     my $cli_hdl = read_file($output_path);
     like($cli_hdl, qr/\bSUM\s+<=\s+A\s+xor\s+B\s+xor\s+C;/s, 'CLI scalar-addition-chain VHDL output uses one-bit xor-chain lowering');
     unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s, 'CLI scalar-addition-chain VHDL output remains scalar and VHDL-shaped');
-
-    my $scalar_subtraction_chain_error = capture_exception(sub {
-        generate_vhdl($scalar_subtraction_chain_path);
-    });
-    like(
-        $scalar_subtraction_chain_error,
-        qr/arithmetic expression 'A - B - C' is outside the direct VHDL scaffold/s,
-        'scalar subtraction chains remain outside the direct VHDL scaffold boundary',
-    );
 };
 
 subtest 'direct VHDL scaffold lowers binary scalar subtraction RHS shape' => sub {
@@ -715,6 +685,83 @@ FSM
         $scalar_division_error,
         qr/arithmetic expression 'A \/ B' is outside the direct VHDL scaffold/s,
         'scalar division remains outside the direct VHDL scaffold boundary',
+    );
+};
+
+subtest 'direct VHDL scaffold lowers scalar subtraction RHS chains' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_subtraction_chain.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_subtraction_chain.vhd');
+    my $scalar_modulo_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_modulo_deferred.fsm');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_scalar_subtraction_chain
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (C 1)
+    (DIFF 1)
+  )
+  (idle
+    (= (DIFF (- A B C)))
+  )
+)
+FSM
+    );
+    write_file(
+        $scalar_modulo_path,
+        <<'FSM'
+(?fsm:direct_vhdl_scalar_modulo_deferred
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (REMAINDER 1)
+  )
+  (idle
+    (= (REMAINDER (% A B)))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bentity\s+direct_vhdl_scalar_subtraction_chain\s+is\b/s, 'scalar-subtraction-chain fixture emits direct VHDL entity');
+    like(
+        $hdl,
+        qr/\bDIFF\s+<=\s+A\s+xor\s+B\s+xor\s+C;/s,
+        'scalar subtraction chains lower to one-bit truncated VHDL xor semantics',
+    );
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s, 'scalar-subtraction-chain VHDL output remains scalar and VHDL-shaped');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the scalar-subtraction-chain fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes scalar-subtraction-chain VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bDIFF\s+<=\s+A\s+xor\s+B\s+xor\s+C;/s, 'CLI scalar-subtraction-chain VHDL output uses one-bit xor-chain lowering');
+    unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s, 'CLI scalar-subtraction-chain VHDL output remains scalar and VHDL-shaped');
+
+    my $scalar_modulo_error = capture_exception(sub {
+        generate_vhdl($scalar_modulo_path);
+    });
+    like(
+        $scalar_modulo_error,
+        qr/arithmetic expression 'A % B' is outside the direct VHDL scaffold/s,
+        'scalar modulo remains outside the direct VHDL scaffold boundary',
     );
 };
 

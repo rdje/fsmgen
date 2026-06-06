@@ -3771,9 +3771,9 @@ continuous enable assignments, `process(all)` combinational muxes, sync-reset
 clocked processes, async-reset clocked processes, delayed-pulse clock-branch
 nested-if lowering, generic-bearing direct-root module headers as VHDL integer
 generics or typed scalar/vector generics for sized-literal defaults, basic
-concat RHS forms, scalar addition/multiplication RHS/chain lowering, binary
-scalar subtraction RHS lowering, same-width vector addition/subtraction RHS
-chain lowering through `numeric_std` unsigned casts, same-width vector
+concat RHS forms, scalar addition/subtraction/multiplication RHS/chain
+lowering, same-width vector addition/subtraction RHS chain lowering through
+`numeric_std` unsigned casts, same-width vector
 multiplication/division/modulo RHS chain lowering through explicit
 target-width `numeric_std` resize, and same-width scalar/vector XOR chain
 lowering through VHDL `xor`. It is covered by direct pipeline, CLI, and facade
@@ -3781,14 +3781,12 @@ tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
-and full feature parity with the SystemVerilog backend. Broader scalar
-arithmetic beyond scalar addition/multiplication chains and binary scalar
-subtraction, broader arithmetic operators, mismatched-width arithmetic, and
+and full feature parity with the SystemVerilog backend. Scalar division/modulo,
+broader scalar arithmetic beyond scalar addition/subtraction/multiplication
+chains, broader arithmetic operators, mismatched-width arithmetic, and
 expression contexts beyond the same-width
 addition/subtraction/multiplication/division/modulo/XOR RHS chain family remain
-fail-closed at the scaffold boundary. The active next leaf is scalar
-subtraction-chain RHS lowering; until that leaf ships, scalar subtraction
-chains such as `A - B - C` remain fail-closed. The maintained
+fail-closed at the scaffold boundary. The maintained
 arithmetic/XOR and runtime division/modulo corpora now lower through the direct
 VHDL scaffold for that family, and the maintained size-expression width fixture
 now lowers generated direct-root parameter blocks to VHDL integer generics.

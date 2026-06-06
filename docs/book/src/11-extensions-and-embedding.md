@@ -878,10 +878,10 @@ direct backend behavior: the default path emits SystemVerilog forms, explicit
 `verilog` emits Verilog forms, and explicit `vhdl` emits the direct single-FSM
 VHDL scaffold for the supported subset, including delayed-pulse clock-branch
 lowering, generic-bearing direct-root module headers with typed scalar/vector
-sized-literal defaults, scalar addition/multiplication RHS/chain lowering,
-binary scalar subtraction RHS lowering, and same-width
-addition/subtraction/multiplication, division/modulo, and XOR RHS/chain
-lowering, without leaking SystemVerilog module or `always_*` forms.
+sized-literal defaults, scalar addition/subtraction/multiplication RHS/chain
+lowering, and same-width addition/subtraction/multiplication, division/modulo,
+and XOR RHS/chain lowering, without leaking SystemVerilog module or `always_*`
+forms.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
