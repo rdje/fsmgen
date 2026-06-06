@@ -12,6 +12,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_payload_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_payload_symbol_contract_constant_value_entry_keys
+    normalized_semantic_payload_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_payload_symbol_contract_enum_member_value_kinds
     normalized_semantic_payload_symbol_contract_keys
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
@@ -23,6 +25,8 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_symbol_contract_constant_value_entry_keys
+    normalized_semantic_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_symbol_contract_enum_member_value_kinds
     normalized_semantic_symbol_contract_package_import_keys
     normalized_semantic_symbol_contract_presence_key_family_map
     normalized_semantic_symbol_contract_source
@@ -101,6 +105,16 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         'contract publishes the bounded symbol-contract list constant value extension keys',
     );
     is_deeply(
+        $contract->{enum_entry_value_kinds},
+        normalized_semantic_symbol_contract_enum_entry_value_kinds(),
+        'contract publishes the bounded symbol-contract enum entry value kinds',
+    );
+    is_deeply(
+        $contract->{enum_member_value_kinds},
+        normalized_semantic_symbol_contract_enum_member_value_kinds(),
+        'contract publishes the bounded symbol-contract enum member value kinds',
+    );
+    is_deeply(
         $contract->{package_import_keys},
         normalized_semantic_symbol_contract_package_import_keys(),
         'contract publishes the bounded symbol-contract package-import key family',
@@ -126,6 +140,16 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         'grouped symbol-contract family map publishes list constant value extension keys',
     );
     is_deeply(
+        $contract->{presence_key_family_map}{enum_entry_value_kinds},
+        normalized_semantic_symbol_contract_enum_entry_value_kinds(),
+        'grouped symbol-contract family map publishes enum entry value kinds',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{enum_member_value_kinds},
+        normalized_semantic_symbol_contract_enum_member_value_kinds(),
+        'grouped symbol-contract family map publishes enum member value kinds',
+    );
+    is_deeply(
         normalized_semantic_symbol_contract_constant_value_entry_keys(),
         [qw(kind)],
         'constant value entries always advertise a bounded kind discriminator',
@@ -139,6 +163,16 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
         [qw(items)],
         'list constant values advertise the bounded items extension',
+    );
+    is_deeply(
+        normalized_semantic_symbol_contract_enum_entry_value_kinds(),
+        [qw(member_payload_map)],
+        'enum entries advertise member-payload map values',
+    );
+    is_deeply(
+        normalized_semantic_symbol_contract_enum_member_value_kinds(),
+        [qw(scalar_payload)],
+        'enum members advertise scalar payload values',
     );
     is_deeply(
         normalized_semantic_payload_symbol_contract_keys(),
@@ -161,6 +195,16 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         'semantic payload list constant value extension keys map to the nested symbol-contract owner',
     );
     is_deeply(
+        normalized_semantic_payload_symbol_contract_enum_entry_value_kinds(),
+        normalized_semantic_symbol_contract_enum_entry_value_kinds(),
+        'semantic payload symbol-contract enum entry value kinds map to the nested symbol-contract owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_symbol_contract_enum_member_value_kinds(),
+        normalized_semantic_symbol_contract_enum_member_value_kinds(),
+        'semantic payload symbol-contract enum member value kinds map to the nested symbol-contract owner',
+    );
+    is_deeply(
         normalized_semantic_symbol_contract_keys(),
         normalized_semantic_symbol_contract_presence_keys(),
         'normalized semantic report symbol-contract keys map to the nested symbol-contract owner',
@@ -179,6 +223,16 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         FSM::Support::NormalizedSemanticReportContract::normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
         normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
         'normalized semantic report list constant value extension keys map to the nested symbol-contract owner',
+    );
+    is_deeply(
+        FSM::Support::NormalizedSemanticReportContract::normalized_semantic_symbol_contract_enum_entry_value_kinds(),
+        normalized_semantic_symbol_contract_enum_entry_value_kinds(),
+        'normalized semantic report enum entry value kinds map to the nested symbol-contract owner',
+    );
+    is_deeply(
+        FSM::Support::NormalizedSemanticReportContract::normalized_semantic_symbol_contract_enum_member_value_kinds(),
+        normalized_semantic_symbol_contract_enum_member_value_kinds(),
+        'normalized semantic report enum member value kinds map to the nested symbol-contract owner',
     );
 };
 

@@ -202,6 +202,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys
@@ -241,6 +243,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_symbol_contract_constant_value_entry_keys
+    normalized_semantic_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_symbol_contract_enum_member_value_kinds
     normalized_semantic_success_semantic_optional_child_presence_keys
 );
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
@@ -975,6 +979,16 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
             normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
             'symbol-contract list constant value extension keys',
         ],
+        [
+            'symbol_contract_enum_entry_value_kinds',
+            normalized_semantic_symbol_contract_enum_entry_value_kinds(),
+            'symbol-contract enum entry value kinds',
+        ],
+        [
+            'symbol_contract_enum_member_value_kinds',
+            normalized_semantic_symbol_contract_enum_member_value_kinds(),
+            'symbol-contract enum member value kinds',
+        ],
     ) {
         my ($field, $expected, $label) = @{$case};
 
@@ -1251,6 +1265,18 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
             'forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys',
             normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
             'intent-HIR symbol-contract list constant value extension keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds',
+            'forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds(),
+            'intent-HIR symbol-contract enum entry value kinds',
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds',
+            'forward_ir_intent_hir_symbol_contract_enum_member_value_kinds',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds(),
+            'intent-HIR symbol-contract enum member value kinds',
         ],
         [
             'success_forward_ir_intent_hir_composition_child_entry_keys',

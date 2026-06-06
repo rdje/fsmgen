@@ -2202,12 +2202,16 @@ bounded scalar/list value key families for
 constant value carries `kind`; scalar values add `payload`, and list values add
 `items`. Enum/type nested schemas, package-import internals, and full
 normalized semantic export stabilization remain out of scope.
+The symbol-contract enum public-export hardening edge now publishes enum
+value-kind families for `semantic.symbol_contract.enums` and
+`semantic.forward_ir.intent_hir.symbol_contract.enums`: enum entries are
+member-payload maps, and dynamic enum members carry scalar payloads.
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.53.1`, which publishes symbol-contract enum
-map value schema metadata for `semantic.symbol_contract.enums` and
-`semantic.forward_ir.intent_hir.symbol_contract.enums`. Type nested schemas,
-package-import internals, already bounded constant internals, and full
-normalized semantic export stabilization remain out of scope.
+`BACKEND-API-VALIDATION-FRONTIER.54`, which selects the next exact
+backend/API/public-export edge after the symbol-contract enum map value schemas
+shipped. Type nested schemas, package-import internals, already bounded
+constant internals, and full normalized semantic export stabilization remain
+out of scope.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 

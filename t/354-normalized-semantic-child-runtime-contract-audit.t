@@ -62,6 +62,8 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_intent_hir_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys
+    normalized_semantic_intent_hir_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_intent_hir_symbol_contract_enum_member_value_kinds
 );
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -97,6 +99,8 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_symbol_contract_constant_value_entry_keys
+    normalized_semantic_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_symbol_contract_enum_member_value_kinds
     normalized_semantic_symbol_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticSystemContract qw(
@@ -197,9 +201,18 @@ subtest 'symbol-rich direct semantic payload keeps bounded child-owner contracts
         @{normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys()},
         @{normalized_semantic_intent_hir_symbol_contract_constant_list_value_extension_keys()},
     ];
+    my $symbol_enum_entry_value_kinds = normalized_semantic_symbol_contract_enum_entry_value_kinds();
+    my $symbol_enum_member_value_kinds = normalized_semantic_symbol_contract_enum_member_value_kinds();
+    my $intent_hir_enum_entry_value_kinds =
+        normalized_semantic_intent_hir_symbol_contract_enum_entry_value_kinds();
+    my $intent_hir_enum_member_value_kinds =
+        normalized_semantic_intent_hir_symbol_contract_enum_member_value_kinds();
     my $constants = $semantic->{symbol_contract}{constants} || {};
     my $intent_hir_constants =
         $semantic->{forward_ir}{intent_hir}{symbol_contract}{constants} || {};
+    my $enums = $semantic->{symbol_contract}{enums} || {};
+    my $intent_hir_enums =
+        $semantic->{forward_ir}{intent_hir}{symbol_contract}{enums} || {};
 
     assert_exact_keys(
         $constants->{BASE_W},
@@ -234,6 +247,39 @@ subtest 'symbol-rich direct semantic payload keeps bounded child-owner contracts
         $intent_hir_constants->{WIDTHS},
         $intent_hir_constant_list_keys,
         'symbol-rich direct intent-HIR symbol_contract.constants.WIDTHS keeps exact list value keys',
+    );
+    is_deeply(
+        $symbol_enum_entry_value_kinds,
+        [qw(member_payload_map)],
+        'symbol-contract enum entries advertise member-payload map values',
+    );
+    is_deeply(
+        $symbol_enum_member_value_kinds,
+        [qw(scalar_payload)],
+        'symbol-contract enum members advertise scalar payload values',
+    );
+    ok(ref($enums->{width_e}) eq 'HASH', 'symbol-rich direct semantic.symbol_contract.enums.width_e is a member-payload map');
+    assert_exact_keys(
+        $enums->{width_e},
+        [qw(FLAG)],
+        'symbol-rich direct semantic.symbol_contract.enums.width_e keeps exact emitted member keys',
+    );
+    ok(!ref($enums->{width_e}{FLAG}), 'symbol-rich direct semantic.symbol_contract.enums.width_e.FLAG is a scalar payload');
+    is($enums->{width_e}{FLAG}, 1, 'symbol-rich direct semantic.symbol_contract.enums.width_e.FLAG exposes the enum payload');
+    is_deeply(
+        $intent_hir_enums,
+        $enums,
+        'symbol-rich direct semantic.forward_ir.intent_hir.symbol_contract.enums aliases semantic.symbol_contract.enums',
+    );
+    is_deeply(
+        $intent_hir_enum_entry_value_kinds,
+        $symbol_enum_entry_value_kinds,
+        'intent-HIR enum entry value kinds delegate to symbol-contract owner',
+    );
+    is_deeply(
+        $intent_hir_enum_member_value_kinds,
+        $symbol_enum_member_value_kinds,
+        'intent-HIR enum member value kinds delegate to symbol-contract owner',
     );
     ok(
         !exists $semantic->{composition},

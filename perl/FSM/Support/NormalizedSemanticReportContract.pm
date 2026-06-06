@@ -92,6 +92,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -133,6 +135,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_payload_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_payload_symbol_contract_constant_value_entry_keys
+    normalized_semantic_payload_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_payload_symbol_contract_enum_member_value_kinds
     normalized_semantic_payload_symbol_contract_keys
 );
 use FSM::Support::NormalizedSemanticSystemContract qw(
@@ -224,6 +228,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -275,6 +281,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_symbol_contract_constant_value_entry_keys
+    normalized_semantic_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_symbol_contract_enum_member_value_kinds
     normalized_semantic_symbol_contract_keys
     normalized_semantic_success_only_top_level_keys
     normalized_semantic_success_semantic_optional_child_presence_keys
@@ -381,6 +389,10 @@ sub build_normalized_semantic_report_contract {
             normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
         success_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys =>
             normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
+        success_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds =>
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds(),
+        success_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds =>
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds(),
         success_forward_ir_intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
         success_forward_ir_intent_hir_composition_child_entry_keys =>
             normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys(),
@@ -484,6 +496,10 @@ sub build_normalized_semantic_report_contract {
             normalized_semantic_symbol_contract_constant_scalar_value_extension_keys(),
         symbol_contract_constant_list_value_extension_keys =>
             normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
+        symbol_contract_enum_entry_value_kinds =>
+            normalized_semantic_symbol_contract_enum_entry_value_kinds(),
+        symbol_contract_enum_member_value_kinds =>
+            normalized_semantic_symbol_contract_enum_member_value_kinds(),
         composition_presence_keys => normalized_semantic_payload_composition_keys(),
         composition_child_entry_keys => normalized_semantic_composition_child_entry_keys(),
         composition_child_parameter_override_entry_keys =>
@@ -565,7 +581,7 @@ sub build_normalized_semantic_report_contract {
             'The nested semantic module object stays bounded through FSM::Support::NormalizedSemanticModuleContract.',
             'The nested semantic signal_analysis object stays bounded through FSM::Support::NormalizedSemanticSignalAnalysisContract.',
             'The nested semantic system_contract object stays bounded through FSM::Support::NormalizedSemanticSystemContract.',
-            'The nested semantic symbol_contract and forward_ir.intent_hir.symbol_contract constant value key families stay bounded through FSM::Support::NormalizedSemanticSymbolContract.',
+            'The nested semantic symbol_contract and forward_ir.intent_hir.symbol_contract constant value key families and enum value-kind families stay bounded through FSM::Support::NormalizedSemanticSymbolContract.',
             'The nested producer object is shared with check JSON and stays bounded through FSM::Support::ReportProducerContract.',
             'The nested source object is shared with check JSON and stays bounded through FSM::Support::ReportSourceContract.',
             'The current signal-analysis bucket entries also share one bounded core entry shape through FSM::Support::NormalizedSemanticSignalAnalysisContract.',
@@ -644,6 +660,10 @@ sub normalized_semantic_presence_key_family_map {
             normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
         success_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys =>
             normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
+        success_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds =>
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds(),
+        success_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds =>
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds(),
         success_forward_ir_intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
         success_forward_ir_intent_hir_composition_child_entry_keys =>
             normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys(),
@@ -743,6 +763,10 @@ sub normalized_semantic_presence_key_family_map {
             normalized_semantic_symbol_contract_constant_scalar_value_extension_keys(),
         symbol_contract_constant_list_value_extension_keys =>
             normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
+        symbol_contract_enum_entry_value_kinds =>
+            normalized_semantic_symbol_contract_enum_entry_value_kinds(),
+        symbol_contract_enum_member_value_kinds =>
+            normalized_semantic_symbol_contract_enum_member_value_kinds(),
         composition_presence_keys => normalized_semantic_composition_keys(),
         composition_child_entry_keys => normalized_semantic_composition_child_entry_keys(),
         composition_child_parameter_override_entry_keys =>
@@ -917,6 +941,14 @@ sub normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_valu
     return normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys();
 }
 
+sub normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds {
+    return normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds {
+    return normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds();
+}
+
 sub normalized_semantic_forward_ir_lowered_rtl_ir_keys {
     return normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys();
 }
@@ -1083,6 +1115,14 @@ sub normalized_semantic_symbol_contract_constant_scalar_value_extension_keys {
 
 sub normalized_semantic_symbol_contract_constant_list_value_extension_keys {
     return normalized_semantic_payload_symbol_contract_constant_list_value_extension_keys();
+}
+
+sub normalized_semantic_symbol_contract_enum_entry_value_kinds {
+    return normalized_semantic_payload_symbol_contract_enum_entry_value_kinds();
+}
+
+sub normalized_semantic_symbol_contract_enum_member_value_kinds {
+    return normalized_semantic_payload_symbol_contract_enum_member_value_kinds();
 }
 
 sub normalized_semantic_composition_keys {

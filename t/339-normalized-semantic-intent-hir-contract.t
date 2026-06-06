@@ -45,11 +45,15 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_intent_hir_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys
+    normalized_semantic_intent_hir_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_intent_hir_symbol_contract_enum_member_value_kinds
 );
 use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_constant_list_value_extension_keys
     normalized_semantic_symbol_contract_constant_scalar_value_extension_keys
     normalized_semantic_symbol_contract_constant_value_entry_keys
+    normalized_semantic_symbol_contract_enum_entry_value_kinds
+    normalized_semantic_symbol_contract_enum_member_value_kinds
 );
 
 subtest 'contract exposes the bounded normalized semantic intent-hir object' => sub {
@@ -102,6 +106,16 @@ subtest 'contract exposes the bounded normalized semantic intent-hir object' => 
             'symbol_contract_constant_list_value_extension_keys',
             normalized_semantic_intent_hir_symbol_contract_constant_list_value_extension_keys(),
             normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
+        ],
+        [
+            'symbol_contract_enum_entry_value_kinds',
+            normalized_semantic_intent_hir_symbol_contract_enum_entry_value_kinds(),
+            normalized_semantic_symbol_contract_enum_entry_value_kinds(),
+        ],
+        [
+            'symbol_contract_enum_member_value_kinds',
+            normalized_semantic_intent_hir_symbol_contract_enum_member_value_kinds(),
+            normalized_semantic_symbol_contract_enum_member_value_kinds(),
         ],
         [
             'composition_child_entry_keys',
