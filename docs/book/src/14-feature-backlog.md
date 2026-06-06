@@ -4023,6 +4023,10 @@ VHDL scaffold as packed vectors: `NESTED` is
 `std_logic_vector(6 downto 0)`, `OUT` is `std_logic_vector(2 downto 0)`, and
 `OUT_FRAME` / `OUT_LANES` are 5-bit `std_logic_vector` ports. Full VHDL
 record/array aggregate lowering remains a future exact owner.
+Direct vector output-port next-signal assignments from unsized decimal
+literals now lower through target-width `to_unsigned`; for example an 8-bit
+interface output emits `OUT_next <= std_logic_vector(to_unsigned(165, 8));`
+instead of a raw integer-to-vector assignment.
 
 ### GHDL Validation
 
@@ -4223,11 +4227,16 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
+`BACKEND-API-VALIDATION-FRONTIER.108` selects the next exact backend/API edge
+after direct VHDL vector output-port decimal literal assignment lowering
+shipped. Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.107.1` lowers direct VHDL vector output-port
 next-signal assignments from unsized decimal literals into VHDL-typed vector
-assignments. Selector leaf `BACKEND-API-VALIDATION-FRONTIER.107` chose that
-edge after an 8-bit interface-output probe emitted `std_logic_vector`
-output/next-signal declarations but still wrote raw `OUT_next <= 165;`.
+assignments, so the selected 8-bit interface-output fixture emits
+`OUT_next <= std_logic_vector(to_unsigned(165, 8));` instead of raw
+`OUT_next <= 165;`. Selector leaf `BACKEND-API-VALIDATION-FRONTIER.107` chose
+that edge after the probe emitted `std_logic_vector` output/next-signal
+declarations but still wrote the raw integer assignment.
 Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.106.1` lowers `input logic IN` and
 `input logic [7:0] IN` to VHDL `std_logic` / `std_logic_vector` ports.

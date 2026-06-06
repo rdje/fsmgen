@@ -2156,6 +2156,54 @@ subtest 'direct VHDL scaffold lowers bounded aggregate outputs as packed vectors
     unlike($constant_cli_hdl, qr/\btypedef\b|\bstruct\b|\bmodule\b|\balways_(?:ff|comb)\b/s, 'CLI aggregate constant VHDL output does not leak SystemVerilog syntax');
 };
 
+subtest 'direct VHDL scaffold lowers vector output decimal literal assignments' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_vector_output_decimal_literal.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_vector_output_decimal_literal.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_vector_output_decimal_literal
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+interface
+    (output OUT)
+  )
+  (+size
+    (OUT 8)
+  )
+  (idle
+    (<- (OUT> 165))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bentity\s+direct_vhdl_vector_output_decimal_literal\s+is\b/s, 'vector output decimal fixture emits direct VHDL entity');
+    like($hdl, qr/\bOUT\s+:\s+out\s+std_logic_vector\(7\s+downto\s+0\);?/s, 'vector output decimal fixture lowers output port to std_logic_vector');
+    like($hdl, qr/\bsignal\s+OUT_next\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector output decimal fixture declares vector next signal');
+    like($hdl, qr/\bOUT_next\s+<=\s+std_logic_vector\(to_unsigned\(165,\s+8\)\);/s, 'vector output decimal literal lowers through target-width to_unsigned');
+    like($hdl, qr/\bOUT\s+<=\s+"00000000";/s, 'vector output decimal fixture keeps vector reset literal');
+    unlike($hdl, qr/\bOUT_next\s+<=\s+165;/s, 'vector output decimal fixture does not emit a raw integer-to-vector assignment');
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b/s, 'vector output decimal VHDL output does not leak SystemVerilog structural syntax');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for vector output decimal literal fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes vector output decimal literal VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bOUT_next\s+<=\s+std_logic_vector\(to_unsigned\(165,\s+8\)\);/s, 'CLI vector output decimal VHDL output includes typed literal assignment');
+    unlike($cli_hdl, qr/\bOUT_next\s+<=\s+165;|\bmodule\b|\balways_(?:ff|comb)\b/s, 'CLI vector output decimal VHDL output avoids raw integer assignment and SystemVerilog syntax');
+};
+
 done_testing();
 
 sub generate_vhdl {

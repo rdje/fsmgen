@@ -2260,6 +2260,60 @@ subtest 'facade target_language option routes direct VHDL numeric-literal arithm
     );
 };
 
+subtest 'facade target_language option routes direct VHDL vector output decimal literal behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_vector_output_decimal_literal.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_vector_output_decimal_literal
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+interface
+    (output OUT)
+  )
+  (+size
+    (OUT 8)
+  )
+  (idle
+    (<- (OUT> 165))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_vector_output_decimal_literal\s+is\b/s,
+        'explicit VHDL facade generation emits the vector output decimal direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bOUT\s+:\s+out\s+std_logic_vector\(7\s+downto\s+0\);?/s,
+        'explicit VHDL facade generation lowers the vector output port',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bOUT_next\s+<=\s+std_logic_vector\(to_unsigned\(165,\s+8\)\);/s,
+        'explicit VHDL facade generation lowers vector output decimal literals through numeric_std',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bOUT_next\s+<=\s+165;|\bmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL vector output decimal facade generation avoids raw integer assignments and SystemVerilog syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL AMBA wrap arithmetic scaffold behavior' => sub {
     my $direct_path = repo_file('fsm/amba_requester.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(

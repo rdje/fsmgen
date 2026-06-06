@@ -53,6 +53,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   addition/subtraction/multiplication/division/modulo RHS lowering for
   assignments where the target and all operands are signed vectors of the same
   width.
+- The direct scaffold now includes non-signed vector output-port next-signal
+  assignments from unsized decimal literals, lowered through target-width
+  `std_logic_vector(to_unsigned(VALUE, WIDTH))`.
 - Composition VHDL is shipped only for the bounded C3 external-RTL
   literal/concat structural top in
   `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
@@ -101,10 +104,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - Bounded direct aggregate-output roots now lower as packed
   `std_logic_vector` ports for the two maintained fixtures; full VHDL
   record/array aggregate lowering remains deferred.
-- The active next direct VHDL implementation leaf is
-  `BACKEND-API-VALIDATION-FRONTIER.107.1`: lower non-signed vector
-  output-port next-signal assignments from unsized decimal literals into
-  VHDL-typed vector assignments. This is not broad expression-literal parity.
+- Bounded direct vector output-port decimal literal assignments now lower
+  through target-width `to_unsigned`; this is not broad expression-literal
+  parity.
 - Composition/top VHDL is locked to the shipped structural-top leaves: the
   current pipeline and CLI accept `target_language => 'vhdl'` / `--language
   vhdl` only for the C3 external-RTL literal/concat fixture, the explicit
@@ -435,6 +437,7 @@ The VHDL lane is intentionally narrow:
   vector numeric-literal addition/subtraction mux lowering,
   scalar/vector two-state `bit` input port lowering,
   scalar/vector non-signed four-state `logic` input port lowering,
+  vector output-port decimal literal assignment lowering,
   scalar/vector two-state `bit` and signed vector internal declaration lowering,
   non-signed four-state `logic` scalar/vector internal declaration lowering,
   vector `logic signed` internal declaration lowering,

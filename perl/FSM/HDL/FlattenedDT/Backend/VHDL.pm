@@ -647,6 +647,8 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $ctx->{decls_by_name} || {});
     return "'$trimmed'"
         if $target_decl && $target_decl->{scalar} && $trimmed =~ /^[01]$/;
+    return 'std_logic_vector(to_unsigned(' . $trimmed . ', ' . _decl_width($target_decl) . '))'
+        if $target_decl && !$target_decl->{scalar} && !$target_decl->{signed} && $trimmed =~ /^\d+$/;
 
     return _simple_arithmetic_to_vhdl($trimmed, $ctx)
         if _has_arithmetic_operator($trimmed);
