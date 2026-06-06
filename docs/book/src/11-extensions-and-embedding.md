@@ -881,7 +881,8 @@ lowering, generic-bearing direct-root module headers with typed scalar/vector
 sized-literal defaults, scalar addition/subtraction/multiplication RHS/chain
 lowering, scalar bit, signed vector, non-signed four-state logic, and vector
 `logic signed` internal declaration lowering, signed vector direct-root ports,
-same-width signed vector addition/subtraction RHS lowering, vector
+same-width signed vector addition/subtraction/multiplication RHS lowering,
+vector
 numeric-literal addition/subtraction emitted by compound update/shorthand
 forms, and same-width addition/subtraction/multiplication, division/modulo, and
 XOR RHS/chain lowering, without leaking SystemVerilog module or `always_*`
@@ -2289,9 +2290,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.59.1`, which implements same-width signed
-vector multiplication RHS lowering after `.59` selected that exact backend
-edge.
+`BACKEND-API-VALIDATION-FRONTIER.60`, which selects the next exact backend/API
+or public-export edge after `.59.1` shipped same-width signed vector
+multiplication RHS lowering.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, signed arithmetic operators beyond
 same-width vector addition/subtraction/multiplication,

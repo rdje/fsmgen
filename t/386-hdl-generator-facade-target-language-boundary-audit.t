@@ -504,6 +504,56 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL signed-multiplication behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_multiplication.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_signed_multiplication
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (B signed_byte_t)
+    (PROD signed_byte_t)
+  )
+  (idle
+    (PROD = (* A B))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_signed_multiplication\s+is\b/s,
+        'explicit VHDL facade generation emits the signed multiplication direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bPROD\s+<=\s+resize\(A\s+\*\s+B,\s+8\);/s,
+        'explicit VHDL facade generation lowers signed vector multiplication',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/std_logic_vector\(resize\(unsigned\(A\)\s+\*\s+unsigned\(B\),\s+8\)\)/s,
+        'explicit VHDL signed multiplication facade generation does not use unsigned casts',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL scalar-addition scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_addition.fsm');

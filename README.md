@@ -836,12 +836,13 @@ recursive type-entry schema metadata for `semantic.symbol_contract.types` and
 carry recursive `items` or `members` plus `member_order`.
 The direct VHDL scaffold now lowers generated vector `logic signed` internal
 declarations to VHDL `signed` signals and generated signed vector direct-root
-ports to VHDL `signed` ports. Same-width signed vector addition/subtraction RHS
-assignments now lower as native signed VHDL arithmetic when the target and all
-operands are same-width signed vectors. The current active backend/API
-frontier is `BACKEND-API-VALIDATION-FRONTIER.59.1`: implement same-width
-signed vector multiplication RHS lowering after `.59` selected that exact
-backend edge. Signed division/modulo, scalar signed arithmetic, mixed
+ports to VHDL `signed` ports. Same-width signed vector
+addition/subtraction/multiplication RHS assignments now lower as native signed
+VHDL arithmetic when the target and all operands are same-width signed vectors,
+with multiplication target-width resized. The current active backend/API
+frontier is `BACKEND-API-VALIDATION-FRONTIER.60`: select the next exact
+backend/API/public-export edge after `.59.1` shipped signed multiplication.
+Signed division/modulo, scalar signed arithmetic, mixed
 signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, packages,
 GHDL validation, broad expression parity, package-import internals, unrelated
 forward-IR payloads, and full normalized semantic export stabilization remain

@@ -670,7 +670,7 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
         return join($operator eq '*' ? ' and ' : ' xor ', @scalar_operands);
     }
 
-    if (($operator eq '+' || $operator eq '-') && !$target_decl->{scalar} && $target_decl->{signed}) {
+    if (($operator eq '+' || $operator eq '-' || $operator eq '*') && !$target_decl->{scalar} && $target_decl->{signed}) {
         my @signed_operands;
         for my $operand_name (@operand_names) {
             $unsupported->()
@@ -683,7 +683,10 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
                 if $operand_decl->{scalar} || !$operand_decl->{signed} || _decl_width($operand_decl) != $target_width;
             push @signed_operands, $operand_name;
         }
-        return join(" $operator ", @signed_operands);
+        my $signed_expression = join(" $operator ", @signed_operands);
+        return "resize($signed_expression, $target_width)"
+            if $operator eq '*';
+        return $signed_expression;
     }
 
     my @converted_operands;
