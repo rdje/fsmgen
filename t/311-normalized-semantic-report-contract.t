@@ -80,6 +80,9 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
@@ -122,6 +125,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys
@@ -616,6 +622,21 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'contract publishes the bounded forward-ir structural-rtl-ir instance interface-port entry key list',
     );
     is_deeply(
+        $contract->{success_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir instance parameter-override core entry key list',
+    );
+    is_deeply(
+        $contract->{success_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir instance parameter-override raw-value extension key list',
+    );
+    is_deeply(
+        $contract->{success_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir instance parameter-override value-metadata extension key list',
+    );
+    is_deeply(
         $contract->{success_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
         'contract publishes the bounded forward-ir structural-rtl-ir instance port-binding core entry key list',
@@ -706,6 +727,21 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'report presence family map publishes structural-rtl-ir instance interface-port entry keys',
     );
     is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        'report presence family map publishes structural-rtl-ir instance parameter-override core entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        'report presence family map publishes structural-rtl-ir instance parameter-override raw-value extension keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+        'report presence family map publishes structural-rtl-ir instance parameter-override value-metadata extension keys',
+    );
+    is_deeply(
         $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
         'report presence family map publishes structural-rtl-ir instance port-binding core entry keys',
@@ -789,6 +825,21 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
         'semantic payload forward-ir structural-rtl-ir instance interface-port entry keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        'semantic payload forward-ir structural-rtl-ir instance parameter-override core entry keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        'semantic payload forward-ir structural-rtl-ir instance parameter-override raw-value extension keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+        'semantic payload forward-ir structural-rtl-ir instance parameter-override value-metadata extension keys map to the nested structural-rtl-ir owner',
     );
     is_deeply(
         normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
@@ -1272,6 +1323,119 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         exists $decoded->{semantic}{module}{composition_child_count},
         'composition success module payload exposes composition child count',
     );
+};
+
+subtest 'successful parameterized composition semantic JSON conforms to bounded structural parameter-override contracts' => sub {
+    my $parameterized_path = File::Spec->catfile($tempdir, 'semantic_contract_parameterized_rtl_top.fsm');
+    my $parameterized_out_path = File::Spec->catfile($tempdir, 'semantic_contract_parameterized_rtl_top.sv');
+
+    write_file(
+        $parameterized_path,
+        <<'FSM'
+(?top:parameterized_rtl_top
+  (+constants
+    (OVERRIDE_WIDTH 16)
+    (LOCAL_LANES (8'hA5 8'h3C))
+  )
+  (+enums
+    (frame_mode
+      (RUN 2'b10)
+    )
+  )
+  (+import
+    param_pkg
+  )
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (WIDTH OVERRIDE_WIDTH)
+      (RESET_VALUE param_pkg.RESET_A5)
+      (LANES LOCAL_LANES)
+      (FRAME ((mode frame_mode.RUN) (flag param_pkg.FLAG_ON)))
+    )
+  )
+  (?wiring:wiring
+    (payload_in u_uart.data_in)
+    (u_uart.txd serial_out)
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (WIDTH param_pkg.DEFAULT_WIDTH)
+    (RESET_VALUE param_pkg.DEFAULT_RESET)
+    (LANES param_pkg.DEFAULT_LANES)
+    (FRAME param_pkg.DEFAULT_FRAME)
+  )
+  core_clk:clock
+  rst_async_n:reset
+  data_in<16:data
+  txd>:data
+)
+
+(?pkg:param_pkg
+  (+constants
+    (DEFAULT_WIDTH 8)
+    (DEFAULT_RESET 8'h00)
+    (DEFAULT_LANES (8'h00 8'h00))
+    (DEFAULT_FRAME ((mode 2'b00) (flag 0)))
+    (RESET_A5 8'hA5)
+    (FLAG_ON 1)
+  )
+)
+FSM
+    );
+
+    my $decoded = run_semantic_json(
+        ['./bin/fsmgen', '--strict', '--emit-semantic-json', '-o', $parameterized_out_path, $parameterized_path],
+        'strict semantic JSON succeeds for parameterized RTL composition',
+    );
+
+    my $parameterized_instance = $decoded->{semantic}{forward_ir}{structural_rtl_ir}{instances}[0];
+    ok($parameterized_instance, 'parameterized composition success structural-rtl-ir includes an instance entry');
+    is(
+        scalar(@{$parameterized_instance->{parameter_overrides} || []}),
+        4,
+        'parameterized composition success structural-rtl-ir includes parameter overrides',
+    );
+    my %override_by_name =
+        map { $_->{name} => $_ } @{$parameterized_instance->{parameter_overrides} || []};
+    my $width_override = $override_by_name{WIDTH};
+    ok($width_override, 'parameterized composition structural-rtl-ir includes WIDTH parameter override');
+    assert_keys_present(
+        $width_override,
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        'parameterized composition structural-rtl-ir parameter override keeps bounded core keys',
+    );
+    assert_keys_present(
+        $width_override,
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        'parameterized composition structural-rtl-ir parameter override keeps bounded raw-value extension keys',
+    );
+    assert_keys_present(
+        $width_override,
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+        'parameterized composition structural-rtl-ir parameter override keeps bounded value-metadata extension keys',
+    );
+    my $frame_override = $override_by_name{FRAME};
+    ok($frame_override, 'parameterized composition structural-rtl-ir includes FRAME parameter override');
+    assert_keys_present(
+        $frame_override,
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        'record parameter override keeps bounded core keys',
+    );
+    assert_keys_present(
+        $frame_override,
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+        'record parameter override keeps bounded value-metadata extension keys',
+    );
+    ok(!exists $frame_override->{raw_value}, 'record parameter override is not required to carry raw_value');
 };
 
 subtest 'successful symbol-rich semantic JSON conforms to the bounded symbol-contract contract' => sub {

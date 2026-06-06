@@ -2072,13 +2072,15 @@ roots, plus bounded `ports[]` core entry keys, composition-top port extension
 keys, bounded `nets[]` entry keys, and bounded `declared_links[]` plus
 `resolved_links[]` entry keys, plus bounded shallow `instances[]` and nested
 `instances[].interface_ports[]` entry keys, plus nested
-`instances[].port_bindings[]` core and typed-extension entry keys.
+`instances[].parameter_overrides[]` core, raw-value-extension, and
+value-metadata-extension entry keys, plus nested `instances[].port_bindings[]`
+core and typed-extension entry keys.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded structural-RTL shell summary and
 collection key families, including structural port, net, link, instance
-shallow, nested instance interface-port, and nested instance port-binding key
-families,
+shallow, nested instance interface-port, nested instance parameter-override,
+and nested instance port-binding key families,
 from one place instead of collecting the individual key-family lists separately.
 
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now

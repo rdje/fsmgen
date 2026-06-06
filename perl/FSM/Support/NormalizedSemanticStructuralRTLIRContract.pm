@@ -13,6 +13,9 @@ our @EXPORT_OK = qw(
     normalized_semantic_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_structural_rtl_ir_instance_entry_keys
     normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys
     normalized_semantic_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_structural_rtl_ir_link_entry_keys
@@ -59,6 +62,12 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
         instance_entry_keys => normalized_semantic_structural_rtl_ir_instance_entry_keys(),
         instance_interface_port_entry_keys =>
             normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys(),
+        instance_parameter_override_entry_keys =>
+            normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        instance_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        instance_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
         instance_port_binding_entry_keys =>
             normalized_semantic_structural_rtl_ir_instance_port_binding_entry_keys(),
         instance_port_binding_typed_extension_keys =>
@@ -73,9 +82,12 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             'The declared/resolved link entry key families describe the current `declared_links[]` and `resolved_links[]` entry schema emitted by composition tops.',
             'The instance entry key family describes the current shallow `instances[]` entry schema emitted by composition tops without freezing nested instance binding arrays.',
             'The instance interface-port entry key family describes the current nested `instances[].interface_ports[]` entry schema emitted by composition tops.',
+            'The instance parameter-override entry key family describes the current nested `instances[].parameter_overrides[]` core entry schema emitted by parameterized composition tops.',
+            'The instance parameter-override raw-value extension key family describes optional authored-token metadata on parameter overrides where a single token survives validation.',
+            'The instance parameter-override value-metadata extension key family describes optional resolved type and packed-width metadata on parameter overrides where the value resolver provides it.',
             'The instance port-binding entry key family describes the current nested `instances[].port_bindings[]` core entry schema emitted by composition tops.',
             'The instance port-binding typed-extension key family describes optional `connection_type_spec` metadata on typed structural instance bindings.',
-            'The deeper `auxiliary_assignments` and instance `parameter_overrides` payload contents remain bounded only at the current object-shell or instance-shell level unless later widened deliberately.',
+            'The deeper `auxiliary_assignments` payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
             'Use the grouped presence_key_family_map to discover the bounded structural-RTL shell summary and collection key families without collecting those key-family lists separately.',
         ],
     };
@@ -205,6 +217,18 @@ sub normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys {
     return normalized_semantic_structural_rtl_ir_port_entry_keys();
 }
 
+sub normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys {
+    return [qw(name origin_kind raw_value_ast value_kind value_payload value_text)];
+}
+
+sub normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys {
+    return [qw(raw_value)];
+}
+
+sub normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys {
+    return [qw(value_type_spec value_width)];
+}
+
 sub normalized_semantic_structural_rtl_ir_instance_port_binding_entry_keys {
     return [qw(connection_expr port_name signal_name)];
 }
@@ -228,6 +252,12 @@ sub normalized_semantic_structural_rtl_ir_presence_key_family_map {
         instance_entry_keys => normalized_semantic_structural_rtl_ir_instance_entry_keys(),
         instance_interface_port_entry_keys =>
             normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys(),
+        instance_parameter_override_entry_keys =>
+            normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        instance_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        instance_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
         instance_port_binding_entry_keys =>
             normalized_semantic_structural_rtl_ir_instance_port_binding_entry_keys(),
         instance_port_binding_typed_extension_keys =>

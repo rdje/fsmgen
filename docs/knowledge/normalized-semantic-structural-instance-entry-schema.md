@@ -22,8 +22,7 @@ The public key family covers the instance shell keys:
 
 Nested instance `interface_ports[]` entries are now advertised separately by
 `normalized-semantic-structural-instance-interface-port-entry-schema`.
+Nested instance `parameter_overrides[]` entries are now advertised separately
+by `normalized-semantic-structural-instance-parameter-override-entry-schema`.
 Nested instance `port_bindings[]` entries are now advertised separately by
 `normalized-semantic-structural-instance-port-binding-entry-schema`.
-Nested instance `parameter_overrides[]` entries are not separately advertised
-yet; a later exact task-tree owner must widen that nested entry schema
-deliberately.

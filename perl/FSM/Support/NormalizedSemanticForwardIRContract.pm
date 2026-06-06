@@ -26,6 +26,9 @@ use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
     normalized_semantic_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_structural_rtl_ir_instance_entry_keys
     normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys
     normalized_semantic_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_structural_rtl_ir_net_entry_keys
@@ -56,6 +59,9 @@ our @EXPORT_OK = qw(
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
@@ -123,6 +129,12 @@ sub build_normalized_semantic_forward_ir_contract {
             normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys(),
         structural_rtl_ir_instance_interface_port_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
+        structural_rtl_ir_instance_parameter_override_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        structural_rtl_ir_instance_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
         structural_rtl_ir_instance_port_binding_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
         structural_rtl_ir_instance_port_binding_typed_extension_keys =>
@@ -137,7 +149,7 @@ sub build_normalized_semantic_forward_ir_contract {
             'The nested object exposes only the current sanitized forward semantic projections, not raw compiler/private pipeline state.',
             'The nested `intent_hir` branch now also has one bounded owner for its current object shell and composition-only extension keys.',
             'The nested `lowered_rtl_ir` branch now also has one bounded owner for its current direct-root shell, composition-only extension keys, output-drive entry key families, and selector-conflict entry key families.',
-            'The nested `structural_rtl_ir` branch now also has one bounded owner for its current direct-root and composition-top object shell plus structural port, net, declared/resolved link, instance shallow, nested instance interface-port, and nested instance port-binding key families.',
+            'The nested `structural_rtl_ir` branch now also has one bounded owner for its current direct-root and composition-top object shell plus structural port, net, declared/resolved link, instance shallow, nested instance interface-port, nested instance parameter-override, and nested instance port-binding key families.',
             'Use the grouped `nested_presence_key_map` to discover the bounded key families for intent_hir, lowered_rtl_ir, and structural_rtl_ir without collecting those child key lists separately.',
             'Use the grouped `presence_key_family_map` to discover the shell-owned forward_ir and child composition-only extension key families without collecting those field-family lists separately.',
             'Widen this object deliberately through one named owner plus regression coverage instead of relying on sample JSON.',
@@ -210,6 +222,12 @@ sub normalized_semantic_forward_ir_presence_key_family_map {
             normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys(),
         structural_rtl_ir_instance_interface_port_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
+        structural_rtl_ir_instance_parameter_override_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        structural_rtl_ir_instance_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
         structural_rtl_ir_instance_port_binding_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
         structural_rtl_ir_instance_port_binding_typed_extension_keys =>
@@ -287,6 +305,18 @@ sub normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys {
 
 sub normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys {
     return normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys {
+    return normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys {
+    return normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys {
+    return normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys();
 }
 
 sub normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys {

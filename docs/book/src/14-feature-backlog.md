@@ -3879,6 +3879,7 @@ including bounded entry keys for `selector_conflict_targets[]`, nested
 `ports[]` core entry keys, composition-top port extension keys, and bounded
 `nets[]`, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, and
 nested `instances[].interface_ports[]` plus `instances[].port_bindings[]`
-core and typed-extension entry keys while keeping
-`instances[].parameter_overrides[]` and auxiliary assignments shell-only. The
-manifest is still not a full normalized semantic export.
+core and typed-extension entry keys. It now also advertises
+`instances[].parameter_overrides[]` core, raw-value-extension, and
+value-metadata-extension entry keys while keeping auxiliary assignments
+shell-only. The manifest is still not a full normalized semantic export.

@@ -6,7 +6,6 @@ answers:
   - "what keys are in semantic.forward_ir.structural_rtl_ir.instances port_bindings entries?"
   - "what is the normalized semantic structural instance port binding entry schema?"
   - "are structural_rtl_ir instance port bindings entry keys advertised?"
-  - "are structural_rtl_ir instance parameter overrides entry keys advertised?"
 date: 2026-06-05
 status: current
 tags: [normalized-semantic-json, structural-rtl-ir, instances, port-bindings, public-api]
@@ -23,6 +22,5 @@ The public core key family covers `connection_expr`, `port_name`, and
 `connection_type_spec` metadata when the structural binding preserves a typed
 actual contract.
 
-Nested instance `parameter_overrides[]` entries are still not separately
-advertised; a later exact task-tree owner must widen that nested entry schema
-deliberately.
+Nested instance `parameter_overrides[]` entries are now advertised separately
+by `normalized-semantic-structural-instance-parameter-override-entry-schema`.

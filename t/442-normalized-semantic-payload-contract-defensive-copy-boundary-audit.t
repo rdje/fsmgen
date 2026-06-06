@@ -26,6 +26,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_payload_forward_ir_nested_contract_source_map
@@ -178,6 +181,18 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
             build => \&normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys,
         },
         {
+            label => 'forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys',
+            build => \&normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys,
+        },
+        {
+            label => 'forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys',
+            build => \&normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys,
+        },
+        {
+            label => 'forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys',
+            build => \&normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys,
+        },
+        {
             label => 'forward_ir_structural_rtl_ir_instance_port_binding_entry_keys',
             build => \&normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys,
         },
@@ -306,6 +321,21 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
         $family_map->{forward_ir_structural_rtl_ir_instance_interface_port_entry_keys},
         normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
         'structural-RTL instance interface-port entry family matches helper',
+    );
+    is_deeply(
+        $family_map->{forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        'structural-RTL instance parameter-override core entry family matches helper',
+    );
+    is_deeply(
+        $family_map->{forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        'structural-RTL instance parameter-override raw-value extension family matches helper',
+    );
+    is_deeply(
+        $family_map->{forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+        'structural-RTL instance parameter-override value-metadata extension family matches helper',
     );
     is_deeply(
         $family_map->{forward_ir_structural_rtl_ir_instance_port_binding_entry_keys},

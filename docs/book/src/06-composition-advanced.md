@@ -661,6 +661,14 @@ Validated values survive into the composition plan and structural RTL IR, and
 the current Verilog-family backend lowers them to SystemVerilog `#(...)`
 instance parameters by packing aggregates into one literal.
 
+Successful normalized semantic JSON reports expose those structural values
+under `semantic.forward_ir.structural_rtl_ir.instances[].parameter_overrides[]`.
+The public contract advertises the core keys `name`, `origin_kind`,
+`raw_value_ast`, `value_kind`, `value_payload`, and `value_text`; optional
+extension families advertise `raw_value` when a single authored token is
+preserved and `value_type_spec`/`value_width` when resolved value metadata is
+available.
+
 VHDL generic-map lowering is still a future backend follow-up tracked in
 [Feature Backlog](14-feature-backlog.md).
 

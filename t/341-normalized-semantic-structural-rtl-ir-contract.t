@@ -15,6 +15,9 @@ use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
     normalized_semantic_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_structural_rtl_ir_instance_entry_keys
     normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys
+    normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys
     normalized_semantic_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_structural_rtl_ir_link_entry_keys
@@ -134,6 +137,36 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         'structural-rtl-ir instance interface-port keys reuse the structural port core shape',
     );
     is_deeply(
+        $contract->{instance_parameter_override_entry_keys},
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        'contract publishes the bounded structural-rtl-ir instance parameter-override core entry key family',
+    );
+    is_deeply(
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        [qw(name origin_kind raw_value_ast value_kind value_payload value_text)],
+        'structural-rtl-ir instance parameter-override core entry keys stay exact and ordered',
+    );
+    is_deeply(
+        $contract->{instance_parameter_override_raw_value_extension_keys},
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        'contract publishes the bounded structural-rtl-ir instance parameter-override raw-value extension key family',
+    );
+    is_deeply(
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        [qw(raw_value)],
+        'structural-rtl-ir instance parameter-override raw-value extension keys stay exact and ordered',
+    );
+    is_deeply(
+        $contract->{instance_parameter_override_value_metadata_extension_keys},
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+        'contract publishes the bounded structural-rtl-ir instance parameter-override value-metadata extension key family',
+    );
+    is_deeply(
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+        [qw(value_type_spec value_width)],
+        'structural-rtl-ir instance parameter-override value-metadata extension keys stay exact and ordered',
+    );
+    is_deeply(
         $contract->{instance_port_binding_entry_keys},
         normalized_semantic_structural_rtl_ir_instance_port_binding_entry_keys(),
         'contract publishes the bounded structural-rtl-ir instance port-binding core entry key family',
@@ -192,6 +225,21 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         $contract->{presence_key_family_map}{instance_interface_port_entry_keys},
         normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys(),
         'grouped structural-rtl-ir family map publishes instance interface-port entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{instance_parameter_override_entry_keys},
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys(),
+        'grouped structural-rtl-ir family map publishes instance parameter-override core entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{instance_parameter_override_raw_value_extension_keys},
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+        'grouped structural-rtl-ir family map publishes instance parameter-override raw-value extension keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{instance_parameter_override_value_metadata_extension_keys},
+        normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+        'grouped structural-rtl-ir family map publishes instance parameter-override value-metadata extension keys',
     );
     is_deeply(
         $contract->{presence_key_family_map}{instance_port_binding_entry_keys},

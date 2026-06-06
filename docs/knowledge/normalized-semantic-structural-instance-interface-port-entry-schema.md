@@ -19,8 +19,7 @@ bounded nested entry schema under
 The public key family reuses the structural port entry schema:
 `direction`, `name`, `signed`, `type`, and `width`.
 
+Nested instance `parameter_overrides[]` entries are now advertised separately
+by `normalized-semantic-structural-instance-parameter-override-entry-schema`.
 Nested instance `port_bindings[]` entries are now advertised separately by
 `normalized-semantic-structural-instance-port-binding-entry-schema`.
-Nested instance `parameter_overrides[]` entries are still not separately
-advertised; a later exact task-tree owner must widen that nested entry schema
-deliberately.

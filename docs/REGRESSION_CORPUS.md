@@ -298,8 +298,9 @@ emitted by successful public normalized semantic JSON, including the published
 structural-RTL key family shared by direct and composition roots and bounded
 `ports[]` core plus composition-top extension entry keys, plus bounded
 `nets[]`, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, and
-nested `instances[].interface_ports[]` plus `instances[].port_bindings[]`
-core and typed-extension entry keys.
+nested `instances[].interface_ports[]` plus
+`instances[].parameter_overrides[]` core/raw-value/value-metadata entry keys
+and `instances[].port_bindings[]` core/typed-extension entry keys.
 [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm)
 now owns the nested `semantic.forward_ir.intent_hir` object shape emitted by
 successful public normalized semantic JSON, including the published core
