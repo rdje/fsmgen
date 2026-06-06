@@ -904,10 +904,12 @@ the C3 external-RTL literal/concat fixture in
 literal/concat assignments and an `entity work.uart_tx` port map. The external
 RTL C3 subset also emits scalar integer and multi-bit sized bitstring
 `generic map` actuals before the port map, such as `WIDTH => 16` and
-`RESET_VALUE => "10100101"` for `8'hA5`; qualified imported package constants
-in that same subset are resolved before VHDL emission and also emit literals,
-for example `param_pkg.WIDTH_16` and `param_pkg.RESET_A5` emit `WIDTH => 16`
-and `RESET_VALUE => "10100101"` without leaking `param_pkg` into the VHDL.
+`RESET_VALUE => "10100101"` for `8'hA5`; resolved scalar integer expressions
+also emit as VHDL expression actuals such as `EXPR_WIDTH => (16 + 1)`.
+Qualified imported package constants in that same subset are resolved before
+VHDL emission and also emit literals, for example `param_pkg.WIDTH_16` and
+`param_pkg.RESET_A5` emit `WIDTH => 16` and `RESET_VALUE => "10100101"`
+without leaking `param_pkg` into the VHDL.
 This is not VHDL package declaration/emission support. The C1
 standalone-DT passthrough fixture in
 `t/corpus/standalone_dtc_explicit_system_autowire.fsm` emits the
@@ -2322,10 +2324,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.76.1`, which implements bounded external-RTL
-C3 scalar expression VHDL generic-map actuals after literal and resolved
-package-backed scalar integer/multi-bit sized bitstring actuals shipped.
-Package declaration and VHDL package emission, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.77`, which selects the next exact backend/API
+edge after bounded external-RTL C3 scalar expression VHDL generic-map actuals
+shipped. Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, generated-FSM and
 standalone-DT generic maps, one-bit generic actuals, aggregate generic

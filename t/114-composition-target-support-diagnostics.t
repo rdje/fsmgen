@@ -39,6 +39,7 @@ my $scalar_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_scalar_
 my $package_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_package_generic_map_top.fsm');
 my $package_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_package_generic_map_top.vhd');
 my $expression_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_expression_generic_map_deferred_top.fsm');
+my $expression_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_expression_generic_map_top.vhd');
 my $one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_deferred_top.fsm');
 my $composition_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.fsm');
 my $output_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.vhd');
@@ -281,16 +282,10 @@ unlike(
     'pipeline package-backed generic-map VHDL output does not leak SystemVerilog syntax, raw literals, or package tokens',
 );
 
-my $expression_generic_exception = eval {
-    $pipeline->generate_hdl_from_file($expression_generic_map_path);
-    undef;
-};
-$expression_generic_exception = $@;
-
 like(
-    $expression_generic_exception,
-    qr/Structural VHDL composition-top scaffold unsupported: composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals/s,
-    'pipeline keeps scalar expression generic-map actuals outside the bounded VHDL scaffold',
+    $pipeline->generate_hdl_from_file($expression_generic_map_path)->{hdl_code},
+    qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*EXPR_WIDTH\s+=>\s+\(16\s+\+\s+1\)\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
+    'pipeline emits resolved scalar expression VHDL generic maps before the external RTL port map',
 );
 
 my $one_bit_generic_exception = eval {
@@ -301,7 +296,7 @@ $one_bit_generic_exception = $@;
 
 like(
     $one_bit_generic_exception,
-    qr/Structural VHDL composition-top scaffold unsupported: composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals/s,
+    qr/Structural VHDL composition-top scaffold unsupported: composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, or multi-bit sized bitstring actuals/s,
     'pipeline keeps one-bit generic-map actuals outside the bounded VHDL scaffold',
 );
 
@@ -510,6 +505,33 @@ unlike(
     $package_generic_map_cli_hdl,
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|8'hA5|\bparam_pkg\b/s,
     'CLI package-backed generic-map composition VHDL output does not leak SystemVerilog syntax, raw literals, or package tokens',
+);
+
+my ($expression_generic_map_success, $expression_generic_map_error_message, $expression_generic_map_full_buf, $expression_generic_map_stdout_buf, $expression_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $expression_generic_map_output_path, $expression_generic_map_path],
+);
+
+my $expression_generic_map_combined_output = join(
+    '',
+    @{ $expression_generic_map_stdout_buf || [] },
+    @{ $expression_generic_map_stderr_buf || [] },
+    ($expression_generic_map_error_message || ''),
+);
+
+ok($expression_generic_map_success, 'CLI accepts bounded composition --language vhdl for the scalar expression generic-map external-RTL fixture')
+    or diag($expression_generic_map_combined_output);
+ok(-e $expression_generic_map_output_path, 'CLI writes scalar expression generic-map composition VHDL output');
+
+my $expression_generic_map_cli_hdl = read_file($expression_generic_map_output_path);
+like(
+    $expression_generic_map_cli_hdl,
+    qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*EXPR_WIDTH\s+=>\s+\(16\s+\+\s+1\)\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
+    'CLI scalar expression generic-map composition VHDL output includes the resolved expression generic actual',
+);
+unlike(
+    $expression_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(/s,
+    'CLI scalar expression generic-map composition VHDL output does not leak SystemVerilog structural syntax',
 );
 
 my ($standalone_dtc_success, $standalone_dtc_error_message, $standalone_dtc_full_buf, $standalone_dtc_stdout_buf, $standalone_dtc_stderr_buf) = run(

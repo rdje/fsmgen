@@ -11,9 +11,10 @@ current leaves intentionally support only external-RTL structural instances or
 one standalone-DT child passthrough instance plus bounded generated-FSM child
 tops, direct scalar/vector top ports, VHDL-form auxiliary assignments,
 scalar/vector signal declarations, scalar integer and multi-bit sized
-bitstring generic-map actuals for external RTL instances, and port-map actuals
-whose connection expressions already render through the backend-neutral
-StructuralRTLIR expression helper.
+bitstring generic-map actuals plus simple resolved scalar integer expression
+actuals for external RTL instances, and port-map actuals whose connection
+expressions already render through the backend-neutral StructuralRTLIR
+expression helper.
 
 =cut
 
@@ -114,7 +115,7 @@ sub _render_instance_block ($instance) {
 
     my @parameter_overrides = @{$instance->{parameter_overrides} || []};
     if (@parameter_overrides) {
-        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer or sized bitstring overrides')
+        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, or sized bitstring overrides')
             unless $instance_kind eq 'rtl';
     }
 
@@ -166,19 +167,29 @@ sub _render_instance_block ($instance) {
 
 sub _vhdl_generic_actual ($override) {
     my $kind = $override->{value_kind} // 'scalar';
-    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals')
+    confess _unsupported(_generic_actual_limit())
         unless $kind eq 'scalar';
 
     my $value = $override->{value_text};
-    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals')
+    confess _unsupported(_generic_actual_limit())
         unless defined $value;
 
     return $value if $value =~ /\A-?\d+\z/;
 
+    my $expression_actual = _vhdl_scalar_integer_expression_generic_actual($value);
+    return $expression_actual if defined $expression_actual;
+
     my $literal_actual = _vhdl_sized_bitstring_generic_actual($value);
     return $literal_actual if defined $literal_actual;
 
-    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals');
+    confess _unsupported(_generic_actual_limit());
+}
+
+sub _vhdl_scalar_integer_expression_generic_actual ($value) {
+    return undef
+        unless $value =~ /\A\(\s*-?\d+(?:\s+[-+*\/]\s+-?\d+)+\s*\)\z/;
+
+    return $value;
 }
 
 sub _vhdl_sized_bitstring_generic_actual ($value) {
@@ -188,7 +199,7 @@ sub _vhdl_sized_bitstring_generic_actual ($value) {
     my ($width, $base, $digits) = ($1 + 0, lc($2), $3);
     return undef if $width <= 1;
 
-    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals')
+    confess _unsupported(_generic_actual_limit())
         if $digits =~ /[xz]/i;
     $digits =~ s/_//g;
 
@@ -203,7 +214,7 @@ sub _vhdl_sized_bitstring_generic_actual ($value) {
 }
 
 sub _vhdl_binary_digits ($digits) {
-    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals')
+    confess _unsupported(_generic_actual_limit())
         unless $digits =~ /\A[01]+\z/;
     return $digits;
 }
@@ -230,13 +241,17 @@ sub _vhdl_hex_digits_to_bits ($digits) {
 
     my $bits = join '', map {
         my $digit = lc($_);
-        confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals')
+        confess _unsupported(_generic_actual_limit())
             unless exists $hex_to_bits{$digit};
         $hex_to_bits{$digit}
     } split //, $digits;
 
     $bits =~ s/\A0+(?=.)//;
     return $bits;
+}
+
+sub _generic_actual_limit () {
+    return 'composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, or multi-bit sized bitstring actuals';
 }
 
 sub _normalize_vhdl_auxiliary_assignment ($line) {
