@@ -1590,6 +1590,46 @@ subtest 'facade target_language option routes bounded APB/C4 multi-bit generic-m
     );
 };
 
+subtest 'facade target_language option routes bounded APB/C4 aggregate generic-map VHDL behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_apb_c4_aggregate_generic_map_top.fsm');
+    write_apb_c4_aggregate_generic_map_fixture($repo_root, $tempdir, $composition_path);
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bLANES\s+:\s+std_logic_vector\(15\s+downto\s+0\)\s*:=\s*"1010010100111100"/s,
+        'explicit VHDL facade generation emits the APB packed-list generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bFRAME\s+:\s+std_logic_vector\(2\s+downto\s+0\)\s*:=\s*"000"/s,
+        'explicit VHDL facade generation emits the APB packed-map generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\brequester\s+:\s+entity\s+work\.apb_requester\s+generic\s+map\s*\(\s*LANES\s+=>\s+"0011110010100101",\s*FRAME\s+=>\s+"101"\s*\)\s+port\s+map\s*\(/s,
+        'explicit VHDL facade generation emits the APB requester aggregate generic map before the port map',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\s+generic\s+map\s*\(\s*LANES\s+=>\s+"0011110010100101",\s*FRAME\s+=>\s+"101"\s*\)\s+port\s+map\s*\(/s,
+        'explicit VHDL facade generation emits the APB completer aggregate generic map before the port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.LANES\s*\(|\.FRAME\s*\(|16'b|3'b|8'h|2'b/s,
+        'explicit VHDL APB/C4 aggregate generic-map generation does not leak SystemVerilog generic syntax or packed literals',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL delayed-pulse scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_delayed_pulse_vhdl.fsm');
@@ -3448,5 +3488,24 @@ sub write_apb_c4_bitstring_generic_map_fixture {
         or die 'Cannot add requester RESET_VALUE override';
     $top =~ s/\(\?fsmc:completer apb_completer\)/(?fsmc:completer apb_completer\n    (params\n      (RESET_VALUE 8'h3C)\n    )\n  )/
         or die 'Cannot add completer RESET_VALUE override';
+    write_file($top_path, $top);
+}
+
+sub write_apb_c4_aggregate_generic_map_fixture {
+    my ($repo_root, $fixture_dir, $top_path) = @_;
+
+    for my $module (qw(apb_requester apb_completer)) {
+        my $source = read_file(File::Spec->catfile($repo_root, 'fsm', "$module.fsm"));
+        $source =~ s/\(\?fsm:$module\n/(?fsm:$module\n  (+params\n    (LANES (8'hA5 8'h3C))\n    (FRAME ((mode 2'b00) (flag 0)))\n  )\n/
+            or die "Cannot add aggregate params to $module fixture";
+        write_file(File::Spec->catfile($fixture_dir, "$module.fsm"), $source);
+    }
+
+    my $top = read_file(File::Spec->catfile($repo_root, 'fsm', 'apb_tb.fsm'));
+    my $overrides = "    (params\n      (LANES (8'h3C 8'hA5))\n      (FRAME ((mode 2'b10) (flag 1)))\n    )\n";
+    $top =~ s/\(\?fsmc:requester apb_requester\)/(?fsmc:requester apb_requester\n$overrides  )/
+        or die 'Cannot add requester aggregate overrides';
+    $top =~ s/\(\?fsmc:completer apb_completer\)/(?fsmc:completer apb_completer\n$overrides  )/
+        or die 'Cannot add completer aggregate overrides';
     write_file($top_path, $top);
 }

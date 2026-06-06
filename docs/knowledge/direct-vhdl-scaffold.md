@@ -31,6 +31,8 @@ answers:
   - "does composition VHDL support APB/C4 one-bit generic maps?"
   - "does composition VHDL support APB/C4 multi-bit generic maps?"
   - "does composition VHDL support APB/C4 bitstring generic maps?"
+  - "does composition VHDL support APB/C4 aggregate generic maps?"
+  - "does composition VHDL support APB/C4 packed aggregate generic maps?"
   - "does --language vhdl work for standalone-DT composition tops?"
   - "does --language vhdl work for C2 generated-FSM composition tops?"
   - "does --language vhdl work for APB/C4 composition tops?"
@@ -228,7 +230,7 @@ unresolved package/expression actuals, standalone-DT generic maps beyond scalar
 integer/scalar expression/one-bit sized-bitstring/multi-bit sized-bitstring/
 packed-list/packed-map actuals, and APB/C4 generic maps beyond scalar integer,
 scalar expression, one-bit sized-bitstring, and multi-bit sized-bitstring
-actuals remain deferred for those
+actuals plus resolved packed aggregate actuals remain deferred for those
 families. The
 bounded C2 generated-FSM child
 composition VHDL top is also shipped for
@@ -263,8 +265,10 @@ overrides such as `TIMEOUT_CYCLES => (4 + 1)` and
 `ENABLE_DEFAULT => '1'`, plus multi-bit sized-bitstring overrides such as
 `RESET_VALUE => "10100101"` and `RESET_VALUE => "00111100"`, while the child
 entities keep matching `integer`, `std_logic`, or `std_logic_vector` generic
-declarations. APB/C4 packed aggregate and package-backed generic maps remain
-deferred.
+declarations. Resolved APB/C4 packed aggregate generic maps also emit before
+the child port maps, such as `LANES => "0011110010100101"` and
+`FRAME => "101"`, against matching `std_logic_vector` generic declarations.
+APB/C4 package-backed and non-packed aggregate generic maps remain deferred.
 Other composition/top VHDL shapes remain locked fail-closed by focused pipeline
 and CLI coverage: `?top` sources are parsed into typed composition IR, then unsupported
 `target_language => 'vhdl'` and `--language vhdl` shapes are rejected with the

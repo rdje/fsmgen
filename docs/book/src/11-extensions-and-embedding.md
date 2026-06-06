@@ -951,7 +951,9 @@ generic maps such as `TIMEOUT_CYCLES => (4 + 1)` and
 `TIMEOUT_CYCLES => (3 + 3)`, plus one-bit sized bitstring generic maps such as
 `ENABLE_DEFAULT => '1'`, plus multi-bit sized bitstring generic maps such as
 `RESET_VALUE => "10100101"` and `RESET_VALUE => "00111100"`, before the
-requester/completer child port maps.
+requester/completer child port maps. Resolved packed aggregate generic maps
+such as `LANES => "0011110010100101"` and `FRAME => "101"` also emit before
+those child port maps.
 Other composition/top VHDL shapes remain fail-closed after typed composition IR
 parsing, with broader generated-child/C4, internal-net-heavy, generic-map,
 package, and full-parity composition shapes rejected by the scoped composition
@@ -964,7 +966,7 @@ packed-list, and packed-map actuals; shipped C2 generated-FSM scalar integer,
 scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and
 packed aggregate actuals; and shipped APB/C4 generated-FSM scalar integer and
 scalar expression, one-bit sized bitstring, and multi-bit sized bitstring
-actuals.
+actuals plus resolved packed aggregate actuals.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
@@ -2362,14 +2364,16 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.94.1`, which implements the bounded APB/C4
-generated-FSM resolved packed aggregate VHDL generic-map edge selected by `.94`.
+`BACKEND-API-VALIDATION-FRONTIER.95`, which selects the next exact backend/API
+edge after bounded APB/C4 generated-FSM resolved packed aggregate VHDL generic
+maps shipped.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
 beyond scalar integer, scalar expression, one-bit sized bitstring, multi-bit
 sized bitstring, packed-list, and packed-map actuals, APB/C4
-generic maps beyond the selected packed aggregate edge, full aggregate VHDL
+generic maps beyond scalar integer, scalar expression, one-bit sized bitstring,
+multi-bit sized bitstring, and resolved packed aggregate actuals, full aggregate VHDL
 record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped

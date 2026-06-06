@@ -313,7 +313,7 @@ sub _is_bounded_apb_c4_vhdl_top ($composition_plan) {
         my $name = $instance->instance_name // '';
         return 0 unless ($instance->kind // '') eq 'fsmc';
         return 0 unless ($expected_instance_module{$name} // '') eq ($instance->module_name // '');
-        return 0 unless _has_only_scalar_integer_expression_or_sized_bitstring_generic_overrides($instance);
+        return 0 unless _has_only_supported_generated_fsm_generic_overrides($instance);
         delete $expected_instance_module{$name};
     }
     return 0 if keys %expected_instance_module;
@@ -372,22 +372,6 @@ sub _is_bounded_apb_c4_vhdl_top ($composition_plan) {
         },
     );
 
-    return 1;
-}
-
-sub _has_only_scalar_integer_expression_or_sized_bitstring_generic_overrides ($instance) {
-    for my $override (@{$instance->parameter_overrides || []}) {
-        return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
-        my $value = $override->{value_text};
-        return 0 unless defined($value);
-        next if $value =~ /\A-?\d+\z/;
-        next if _is_scalar_integer_expression($value);
-        next if _is_supported_generated_fsm_sized_bitstring_literal(
-            $value,
-            allow_one_bit => 1,
-        );
-        return 0;
-    }
     return 1;
 }
 
