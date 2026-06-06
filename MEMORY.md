@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.105` (this commit) — selected direct VHDL two-state `input bit` / `input bit [N:0]` port declaration lowering for `.105.1` after typed read-only direct-root probes hit the unsupported-port guard; no implementation edits yet. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.105.1` active frontier — lower generated typed two-state input bit ports to VHDL `std_logic` / `std_logic_vector` through pipeline, CLI, facade, docs, and fact-card coverage.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.105`; `BACKEND-API-VALIDATION-FRONTIER.104.1`; `BACKEND-API-VALIDATION-FRONTIER.104`; `BACKEND-API-VALIDATION-FRONTIER.103.1`; `BACKEND-API-VALIDATION-FRONTIER.103`; `BACKEND-API-VALIDATION-FRONTIER.102.1`; `BACKEND-API-VALIDATION-FRONTIER.102`; `BACKEND-API-VALIDATION-FRONTIER.101.1`; `BACKEND-API-VALIDATION-FRONTIER.101`; `BACKEND-API-VALIDATION-FRONTIER.100.1`; `BACKEND-API-VALIDATION-FRONTIER.100`; `BACKEND-API-VALIDATION-FRONTIER.99.1`; `BACKEND-API-VALIDATION-FRONTIER.99`.
-- in_flight_uncommitted: none expected after this `.105` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.105.1` (this commit) — direct VHDL now lowers generated typed two-state `input bit` / `input bit [N:0]` direct-root ports to `std_logic` / `std_logic_vector` through pipeline, CLI, facade, README/VHDL scope, mdBook, and fact-card coverage. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.106` active frontier — select the next exact backend/API edge after bit input port lowering shipped.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.105.1`; `BACKEND-API-VALIDATION-FRONTIER.105`; `BACKEND-API-VALIDATION-FRONTIER.104.1`; `BACKEND-API-VALIDATION-FRONTIER.104`; `BACKEND-API-VALIDATION-FRONTIER.103.1`; `BACKEND-API-VALIDATION-FRONTIER.103`; `BACKEND-API-VALIDATION-FRONTIER.102.1`; `BACKEND-API-VALIDATION-FRONTIER.102`; `BACKEND-API-VALIDATION-FRONTIER.101.1`; `BACKEND-API-VALIDATION-FRONTIER.101`; `BACKEND-API-VALIDATION-FRONTIER.100.1`; `BACKEND-API-VALIDATION-FRONTIER.100`; `BACKEND-API-VALIDATION-FRONTIER.99.1`.
+- in_flight_uncommitted: none expected after this `.105.1` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

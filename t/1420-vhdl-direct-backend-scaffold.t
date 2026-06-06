@@ -1008,6 +1008,66 @@ FSM
     unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bbit\s+\[7:0\]\s+OUT\b/s, 'CLI two-state vector bit VHDL output remains VHDL-shaped');
 };
 
+subtest 'direct VHDL scaffold lowers two-state bit input port declarations' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_two_state_bit_inputs.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_two_state_bit_inputs.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_two_state_bit_inputs
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t (two_state (bits 8)))
+    (type flag_t (two_state (bits 1)))
+  )
+  (+size
+    (BYTE_IN byte_t)
+    (FLAG_IN flag_t)
+    (OUT byte_t)
+    (FLAG_OUT flag_t)
+  )
+  (idle
+    (<FLAG_IN
+      (= (OUT BYTE_IN))
+      (= (FLAG_OUT FLAG_IN))
+    )
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+    my $hdl = $pipeline->generate_hdl_from_file($fsm_path)->{hdl_code};
+
+    like($hdl, qr/\bentity\s+direct_vhdl_two_state_bit_inputs\s+is\b/s, 'two-state bit input fixture emits direct VHDL entity');
+    like($hdl, qr/\bBYTE_IN\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);/s, 'generated vector input bit declaration lowers to std_logic_vector port');
+    like($hdl, qr/\bFLAG_IN\s+:\s+in\s+std_logic;?/s, 'generated scalar input bit declaration lowers to std_logic port');
+    like($hdl, qr/\bsignal\s+OUT\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'assigned vector bit remains an internal std_logic_vector signal');
+    like($hdl, qr/\bOUT\s+<=\s+BYTE_IN;/s, 'vector input bit assignment remains VHDL-shaped');
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\binput\s+bit\b/s, 'two-state bit input VHDL output does not leak SystemVerilog port syntax');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for two-state bit input ports')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes two-state bit input port VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bBYTE_IN\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);/s, 'CLI VHDL output includes vector input bit port lowering');
+    like($cli_hdl, qr/\bFLAG_IN\s+:\s+in\s+std_logic;?/s, 'CLI VHDL output includes scalar input bit port lowering');
+    unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\binput\s+bit\b/s, 'CLI two-state bit input VHDL output remains VHDL-shaped');
+};
+
 subtest 'direct VHDL scaffold lowers four-state logic internal declarations' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');

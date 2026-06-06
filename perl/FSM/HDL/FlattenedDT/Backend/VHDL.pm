@@ -126,7 +126,7 @@ sub _parse_ports ($port_text, $aggregate_type_widths = {}) {
             next;
         }
 
-        if ($line =~ /^input\s+wire\s+(?:\[(\d+):(\d+)\]\s+)?([A-Za-z_][A-Za-z0-9_]*)$/) {
+        if ($line =~ /^input\s+(?:wire|bit)\s+(?:\[(\d+):(\d+)\]\s+)?([A-Za-z_][A-Za-z0-9_]*)$/) {
             push @ports, _decl_hash(name => $3, direction => 'in', msb => $1, lsb => $2);
             next;
         }

@@ -274,6 +274,64 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL two-state bit input ports' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_two_state_bit_inputs.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_two_state_bit_inputs
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t (two_state (bits 8)))
+    (type flag_t (two_state (bits 1)))
+  )
+  (+size
+    (BYTE_IN byte_t)
+    (FLAG_IN flag_t)
+    (OUT byte_t)
+  )
+  (idle
+    (<FLAG_IN
+      (= (OUT BYTE_IN))
+    )
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_two_state_bit_inputs\s+is\b/s,
+        'explicit VHDL facade generation emits the two-state bit input direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bBYTE_IN\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);/s,
+        'explicit VHDL facade generation lowers generated vector bit input ports',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bFLAG_IN\s+:\s+in\s+std_logic;?/s,
+        'explicit VHDL facade generation lowers generated scalar bit input ports',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\binput\s+bit\b/s,
+        'explicit VHDL two-state bit input facade generation does not leak SystemVerilog port syntax',
+    );
+};
+
 subtest 'facade target_language option routes bounded composition VHDL structural top behavior' => sub {
     my $composition_path = repo_file('t/corpus/composition_intent_integer_literals.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(

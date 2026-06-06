@@ -118,6 +118,9 @@ answers:
   - "does direct VHDL support signed scalar arithmetic?"
   - "does direct VHDL support AMBA requester?"
   - "does direct VHDL support AMBA wrap arithmetic?"
+  - "does direct VHDL support bit input ports?"
+  - "does direct VHDL support input bit declarations?"
+  - "does direct VHDL support two-state bit input ports?"
   - "does direct VHDL support scalar bit declarations?"
   - "does direct VHDL support vector bit declarations?"
   - "does direct VHDL support two-state vector declarations?"
@@ -148,7 +151,9 @@ defaults become `std_logic` generics for one-bit defaults and
 `params_aggregate_unary_complement` for the vector case. Generated scalar
 `bit` internal declarations lower to `std_logic`, and generated two-state
 vector `bit [MSB:LSB]` internal declarations lower to `std_logic_vector`
-signals. Generated signed vector internal declarations such as
+signals. Typed read-only direct-root two-state ports that generate `input bit
+NAME` and `input bit [MSB:LSB] NAME` lower to VHDL `std_logic` and
+`std_logic_vector` input ports. Generated signed vector internal declarations such as
 `reg signed [3:0] NIB` lower to VHDL `signed` signals, generated non-signed
 four-state `logic` internal declarations lower to `std_logic` /
 `std_logic_vector` for package-backed declarative `+types` fixtures, and

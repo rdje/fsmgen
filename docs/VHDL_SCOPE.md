@@ -218,6 +218,8 @@ The VHDL lane is intentionally narrow:
      addition/subtraction/multiplication/division/modulo RHS assignments, such
      as `A + 1`, `A - 1`, `A * 2`, `A / 2`, and `A mod 2`, through
      target-width `to_signed`
+   - Typed read-only two-state `input bit` and `input bit [MSB:LSB]`
+     direct-root ports, lowered as `std_logic` / `std_logic_vector`
    - Signed scalar direct-root ports and internal declarations for
      non-arithmetic one-bit signed type-alias shapes, lowered as `std_logic`
    - Generated scalar `bit` internal signal declarations as `std_logic`
@@ -424,6 +426,7 @@ The VHDL lane is intentionally narrow:
   scalar addition/subtraction/multiplication chains, same-width
   addition/subtraction/multiplication/division/modulo/XOR chain lowering,
   vector numeric-literal addition/subtraction mux lowering,
+  scalar/vector two-state `bit` input port lowering,
   scalar/vector two-state `bit` and signed vector internal declaration lowering,
   non-signed four-state `logic` scalar/vector internal declaration lowering,
   vector `logic signed` internal declaration lowering,
