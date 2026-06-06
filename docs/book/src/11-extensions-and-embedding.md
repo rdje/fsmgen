@@ -2353,14 +2353,14 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.89`, which selects the next exact backend/API
-edge after bounded C1 standalone-DT packed-list VHDL generic-map actuals
-shipped in `.88.1`.
+`BACKEND-API-VALIDATION-FRONTIER.89.1`, which implements only bounded C1
+standalone-DT packed-map VHDL generic-map actuals after `.89` selected that
+exact edge.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
 beyond scalar integer, scalar expression, one-bit sized bitstring, multi-bit
-sized bitstring, and packed-list actuals, APB/C4
+sized bitstring, packed-list actuals, and the active packed-map slice, APB/C4
 generic maps, full aggregate VHDL record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped
