@@ -221,7 +221,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.89.1`,
     `BACKEND-API-VALIDATION-FRONTIER.90`,
     `BACKEND-API-VALIDATION-FRONTIER.90.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.91`
+    `BACKEND-API-VALIDATION-FRONTIER.91`,
+    `BACKEND-API-VALIDATION-FRONTIER.91.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1623,10 +1624,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.90.1: emit APB/C4 scalar generic maps`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.91`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after bounded APB/C4 generated-FSM scalar integer VHDL generic-map actuals shipped.`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave APB/C4 scalar expression, one-bit, multi-bit, packed aggregate, package-backed generic maps, standalone-DT record/non-packed aggregate generic maps, aggregate VHDL record/array declarations beyond packed vectors, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of README.md, MEMORY.md, COMMIT.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/book/src/11-extensions-and-embedding.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm, perl/FSM/Composition/GenerationOrchestrator.pm, perl/FSM/Composition/PlanBuilder.pm, fsm/apb_tb.fsm, fsm/apb_requester.fsm, fsm/apb_completer.fsm, t/114-composition-target-support-diagnostics.t, and t/386-hdl-generator-facade-target-language-boundary-audit.t; command -v ghdl returned unavailable; temporary APB/C4 scalar-expression composition probe with requester/completer TIMEOUT_CYCLES expression overrides failed at the bounded VHDL composition target-support gate; temporary direct APB requester VHDL probe emitted TIMEOUT_CYCLES : integer := 4; selected bounded APB/C4 generated-FSM scalar expression VHDL generic-map actuals for .91.1 before implementation edits.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.91: select APB/C4 expression generic maps`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.91.1`
+  Status: `active`
+  Goal: `Implement bounded APB/C4 generated-FSM VHDL generic-map lowering for scalar expression actuals.`
+  Acceptance: `The VHDL composition path accepts an APB/C4-shaped two-child generated-FSM top with the existing apb_requester/apb_completer module names, the shipped APB/C4 public port and wiring shape, child +params scalar integer declarations such as TIMEOUT_CYCLES 4, and top-level requester/completer scalar expression overrides such as TIMEOUT_CYCLES (+ 4 1) and TIMEOUT_CYCLES (+ 3 3). It emits each APB child VHDL integer generic declaration, emits requester/completer generic maps such as TIMEOUT_CYCLES => (4 + 1) and TIMEOUT_CYCLES => (3 + 3) before the child port maps, and does not leak SystemVerilog parameter syntax. Focused pipeline, CLI, and facade/target-language coverage prove the accepted APB/C4 scalar expression generic-map shape while APB/C4 one-bit, multi-bit, packed aggregate, package-backed, record/non-packed aggregate, package, GHDL, broad expression parity, and full backend parity paths remain deferred. README if public scope wording changes, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map if needed, task tree, and MEMORY stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1818,7 +1826,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 183 | `BACKEND-API-VALIDATION-FRONTIER.89.1` | `done` | Shipped bounded C1 standalone-DT packed-map aggregate VHDL generic-map actuals such as `FRAME => "101"` while keeping standalone-DT record/non-packed aggregate, APB/C4, package, GHDL, and parity widening deferred. |
 | 184 | `BACKEND-API-VALIDATION-FRONTIER.90` | `done` | Selected bounded APB/C4 generated-FSM scalar integer generic-map actuals because an APB-shaped C4 composition top with requester/completer TIMEOUT_CYCLES overrides still fails at the bounded VHDL target-support gate while a direct APB requester child already emits a matching integer generic declaration. |
 | 185 | `BACKEND-API-VALIDATION-FRONTIER.90.1` | `done` | Shipped bounded APB/C4 generated-FSM scalar integer VHDL generic-map actuals such as `TIMEOUT_CYCLES => 8` and `TIMEOUT_CYCLES => 6` while keeping APB/C4 expression/bitstring/aggregate/package-backed generic maps, package, GHDL, and parity widening deferred. |
-| 186 | `BACKEND-API-VALIDATION-FRONTIER.91` | `active` | Select the next exact backend/API edge after APB/C4 scalar integer VHDL generic-map actuals shipped. |
+| 186 | `BACKEND-API-VALIDATION-FRONTIER.91` | `done` | Selected bounded APB/C4 generated-FSM scalar expression generic-map actuals because an APB-shaped C4 composition top with requester/completer TIMEOUT_CYCLES expression overrides still fails at the bounded VHDL target-support gate while a direct APB requester child already emits a matching integer generic declaration. |
+| 187 | `BACKEND-API-VALIDATION-FRONTIER.91.1` | `active` | Implement only bounded APB/C4 generated-FSM scalar expression VHDL generic-map actuals, leaving APB/C4 bitstring/aggregate/package-backed generic maps, package, GHDL, and parity widening deferred. |
 
 ## Decisions
 
@@ -2197,6 +2206,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.89.1` | `BACKEND-API-VALIDATION-FRONTIER.89.1: emit standalone-DT map generic maps` | this slice; activates `.90` |
 | `BACKEND-API-VALIDATION-FRONTIER.90` | `BACKEND-API-VALIDATION-FRONTIER.90: select APB/C4 scalar generic maps` | selected `.90.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.90.1` | `BACKEND-API-VALIDATION-FRONTIER.90.1: emit APB/C4 scalar generic maps` | this slice; activates `.91` |
+| `BACKEND-API-VALIDATION-FRONTIER.91` | `BACKEND-API-VALIDATION-FRONTIER.91: select APB/C4 expression generic maps` | selected `.91.1` |
 
 ## Changelog
 
@@ -2264,6 +2274,10 @@ items named in the 2026-06-05 remaining-work inventory.
   integer VHDL generic maps now emit `TIMEOUT_CYCLES => 8` and
   `TIMEOUT_CYCLES => 6` before the requester/completer child port maps, and
   `.91` is active for next-edge selection.
+- `2026-06-06`: Completed `.91`; selected bounded APB/C4 generated-FSM scalar
+  expression VHDL generic maps after an APB-shaped C4 probe failed at the
+  current target-support gate while a direct APB child already emitted a
+  matching integer generic declaration.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.
