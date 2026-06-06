@@ -454,6 +454,56 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL signed-subtraction behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_subtraction.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_signed_subtraction
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (B signed_byte_t)
+    (DIFF signed_byte_t)
+  )
+  (idle
+    (DIFF = (- A B))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_signed_subtraction\s+is\b/s,
+        'explicit VHDL facade generation emits the signed subtraction direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bDIFF\s+<=\s+A\s+-\s+B;/s,
+        'explicit VHDL facade generation lowers signed vector subtraction',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/std_logic_vector\(unsigned\(A\)\s+-\s+unsigned\(B\)\)/s,
+        'explicit VHDL signed subtraction facade generation does not use unsigned casts',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL scalar-addition scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_addition.fsm');

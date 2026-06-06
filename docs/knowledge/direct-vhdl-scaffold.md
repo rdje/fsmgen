@@ -92,11 +92,11 @@ remain explicit fail-closed direct VHDL boundaries. Same-width scalar/vector XOR
 chains become `A xor B xor ...`
 expressions. Same-width signed vector addition RHS assignments lower as signed
 VHDL arithmetic, such as `SUM <= A + B;`, when the target and all operands are
-same-width signed vectors. Same-width signed vector subtraction is selected as
-the active next implementation edge under
-`BACKEND-API-VALIDATION-FRONTIER.58.1`; other signed arithmetic operators,
-scalar signed arithmetic, and mixed signed/unsigned arithmetic remain outside
-the current direct VHDL scaffold. Aggregate-output
+same-width signed vectors. Same-width signed vector subtraction RHS assignments
+also lower as signed VHDL arithmetic, such as `DIFF <= A - B;`, under the same
+target/operand constraints. Other signed arithmetic operators, scalar signed
+arithmetic, and mixed signed/unsigned arithmetic remain outside the current
+direct VHDL scaffold. Aggregate-output
 roots are locked as explicit fail-closed direct VHDL boundaries by focused
 pipeline and facade coverage. Composition/top VHDL is locked fail-closed by
 focused pipeline and CLI coverage: `?top` sources are parsed into typed

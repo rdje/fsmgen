@@ -1140,6 +1140,53 @@ FSM
     unlike($cli_hdl, qr/std_logic_vector\(unsigned\(A\)\s+\+\s+unsigned\(B\)\)/s, 'CLI signed addition output avoids unsigned casts');
 };
 
+subtest 'direct VHDL scaffold lowers same-width signed vector subtraction RHS shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_subtraction.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_subtraction.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_signed_subtraction
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (B signed_byte_t)
+    (DIFF signed_byte_t)
+  )
+  (idle
+    (DIFF = (- A B))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bA\s+:\s+in\s+signed\(7\s+downto\s+0\);/s, 'signed subtraction fixture lowers signed input port A');
+    like($hdl, qr/\bB\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s, 'signed subtraction fixture lowers signed input port B');
+    like($hdl, qr/\bsignal\s+DIFF\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed subtraction fixture lowers signed output signal');
+    like($hdl, qr/\bDIFF\s+<=\s+A\s+-\s+B;/s, 'same-width signed vector subtraction lowers as signed VHDL arithmetic');
+    unlike($hdl, qr/std_logic_vector\(unsigned\(A\)\s+-\s+unsigned\(B\)\)/s, 'signed subtraction does not use unsigned std_logic_vector casts');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for signed vector subtraction')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes signed vector subtraction VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bDIFF\s+<=\s+A\s+-\s+B;/s, 'CLI VHDL output includes signed subtraction assignment');
+    unlike($cli_hdl, qr/std_logic_vector\(unsigned\(A\)\s+-\s+unsigned\(B\)\)/s, 'CLI signed subtraction output avoids unsigned casts');
+};
+
 subtest 'direct VHDL scaffold keeps mismatched-width arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_mismatched_division_deferred.fsm');
