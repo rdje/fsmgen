@@ -132,13 +132,15 @@ unsigned product `beats_total_q * addr_step_q`, `wrap_base_q_next` lowers
 `addr_q - addr_q % (beats_total_q * addr_step_q)`, and `wrap_high_q_next`
 adds the same wrap-span product to the computed base. This is a pattern-owned
 AMBA wrap family, not broad expression-parser parity.
-The current active backend edge is `BACKEND-API-VALIDATION-FRONTIER.67.1`,
-which implements bounded direct VHDL aggregate-output packed-vector lowering
-for the two maintained direct aggregate-output fixtures; full VHDL record/array
-aggregate lowering remains a later exact owner.
-Aggregate-output
-roots are locked as explicit fail-closed direct VHDL boundaries by focused
-pipeline and facade coverage. Composition/top VHDL is locked fail-closed by
+Bounded direct aggregate-output fixtures now lower as VHDL packed vectors:
+`NESTED` is `std_logic_vector(6 downto 0)`, `OUT` is
+`std_logic_vector(2 downto 0)`, and `OUT_FRAME` / `OUT_LANES` are 5-bit
+`std_logic_vector` ports. Full VHDL record/array aggregate lowering remains a
+later exact owner.
+The current active backend edge is `BACKEND-API-VALIDATION-FRONTIER.68`, which
+selects the next exact backend/API or public-export leaf after bounded
+aggregate-output packed-vector lowering shipped.
+Composition/top VHDL is locked fail-closed by
 focused pipeline and CLI coverage: `?top` sources are parsed into typed
 composition IR, then `target_language => 'vhdl'` and `--language vhdl` are
 rejected with the scoped composition target-support diagnostic instead of

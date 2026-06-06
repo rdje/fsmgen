@@ -52,11 +52,11 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   addition/subtraction/multiplication/division/modulo RHS lowering for
   assignments where the target and all operands are signed vectors of the same
   width.
-- Composition VHDL, aggregate VHDL, broad expression parity, scalar
-  division/modulo and broader scalar arithmetic, signed arithmetic operators
-  beyond same-width vector addition/subtraction/multiplication/division/modulo,
-  GHDL validation, packages, multi-clock domains, and full feature parity
-  remain deferred.
+- Composition VHDL, full aggregate VHDL record/array lowering, broad
+  expression parity, scalar division/modulo and broader scalar arithmetic,
+  signed arithmetic operators beyond same-width vector
+  addition/subtraction/multiplication/division/modulo, GHDL validation,
+  packages, multi-clock domains, and full feature parity remain deferred.
 - Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
   fail-closed direct VHDL boundary by focused pipeline and facade coverage.
 - Signed scalar addition/subtraction/multiplication arithmetic is locked as an
@@ -65,8 +65,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - Scalar division/modulo RHS forms such as `A / B` and `A % B` are locked as
   explicit fail-closed direct VHDL boundaries by focused pipeline and facade
   coverage.
-- Aggregate-output roots are locked as explicit fail-closed direct VHDL
-  boundaries by focused pipeline and facade coverage.
+- Bounded direct aggregate-output roots now lower as packed
+  `std_logic_vector` ports for the two maintained fixtures; full VHDL
+  record/array aggregate lowering remains deferred.
 - Composition/top VHDL is locked as an explicit fail-closed boundary. Current
   pipeline and CLI composition paths parse `?top` sources into typed
   composition IR, then reject `target_language => 'vhdl'` / `--language vhdl`
@@ -171,10 +172,10 @@ The first VHDL lane is intentionally narrow:
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: implement bounded direct VHDL aggregate-output
-  packed-vector lowering under `BACKEND-API-VALIDATION-FRONTIER.67.1`; full
-  aggregate VHDL record/array lowering, broader expression parity, and broader
-  scalar signed arithmetic remain separate future edges.
+- Active follow-up: select the next exact backend/API/public-export edge under
+  `BACKEND-API-VALIDATION-FRONTIER.68`; full aggregate VHDL record/array
+  lowering, broader expression parity, and broader scalar signed arithmetic
+  remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
@@ -190,10 +191,11 @@ The first VHDL lane is intentionally narrow:
   generic-bearing direct-root module headers, one-bit `std_logic` and
   multi-bit `std_logic_vector` sized-literal generic defaults,
   bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`,
+  bounded direct aggregate-output packed-vector lowering,
   mixed signed/unsigned vector numeric arithmetic fail-closed diagnostics,
   signed scalar arithmetic fail-closed diagnostics,
   mismatched-width arithmetic-expression fail-closed diagnostics, and
-  aggregate-output plus composition/top VHDL fail-closed diagnostics.
+  composition/top VHDL fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus
 - Ensure `--check --json` and `--emit-semantic-json` stay target-neutral
 - Consider external VHDL validation via GHDL

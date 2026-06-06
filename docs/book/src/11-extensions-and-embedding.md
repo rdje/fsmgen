@@ -2296,9 +2296,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.67.1`, which implements bounded direct VHDL
-aggregate-output packed-vector lowering for the two maintained direct
-aggregate-output fixtures.
+`BACKEND-API-VALIDATION-FRONTIER.68`, which selects the next exact backend/API
+or public-export edge after `.67.1` shipped bounded direct aggregate-output
+packed-vector lowering.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
 record/array lowering, composition VHDL, broader expression parity beyond the

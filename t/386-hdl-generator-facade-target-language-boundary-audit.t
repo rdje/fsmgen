@@ -1796,8 +1796,9 @@ subtest 'facade target_language option routes direct VHDL sized-literal generic 
     );
 };
 
-subtest 'facade target_language option keeps direct VHDL aggregate outputs fail-closed' => sub {
-    my $direct_path = repo_file('t/corpus/direct_rhs_concat_target_autogrowth.fsm');
+subtest 'facade target_language option routes direct VHDL aggregate packed-vector behavior' => sub {
+    my $concat_path = repo_file('t/corpus/direct_rhs_concat_target_autogrowth.fsm');
+    my $constant_path = repo_file('t/corpus/direct_aggregate_constant_target_autogrowth.fsm');
 
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
         debug_level => 0,
@@ -1805,14 +1806,44 @@ subtest 'facade target_language option keeps direct VHDL aggregate outputs fail-
         quiet => 1,
     );
 
-    my $error = capture_exception(sub {
-        $vhdl_pipeline->generate_hdl_from_file($direct_path);
-    });
-
+    my $concat_result = $vhdl_pipeline->generate_hdl_from_file($concat_path);
     like(
-        $error,
-        qr/aggregate struct outputs are outside the direct VHDL scaffold/s,
-        'explicit VHDL facade generation keeps aggregate outputs outside the direct scaffold boundary',
+        $concat_result->{hdl_code},
+        qr/\bentity\s+direct_rhs_concat_target_autogrowth\s+is\b/s,
+        'explicit VHDL facade generation emits the aggregate concat direct entity',
+    );
+    like(
+        $concat_result->{hdl_code},
+        qr/\bNESTED\s+:\s+out\s+std_logic_vector\(6\s+downto\s+0\);/s,
+        'explicit VHDL facade generation lowers nested aggregate output to packed vector',
+    );
+    like(
+        $concat_result->{hdl_code},
+        qr/\bOUT\s+<=\s+\(FLAG\s+&\s+DATA\);/s,
+        'explicit VHDL facade generation lowers flat aggregate concat assignment',
+    );
+
+    my $constant_result = $vhdl_pipeline->generate_hdl_from_file($constant_path);
+    like(
+        $constant_result->{hdl_code},
+        qr/\bentity\s+direct_aggregate_constant_target_autogrowth\s+is\b/s,
+        'explicit VHDL facade generation emits the aggregate constant direct entity',
+    );
+    like(
+        $constant_result->{hdl_code},
+        qr/\bOUT_FRAME\s+:\s+out\s+std_logic_vector\(4\s+downto\s+0\);/s,
+        'explicit VHDL facade generation lowers record-like aggregate output to packed vector',
+    );
+    like(
+        $constant_result->{hdl_code},
+        qr/\bOUT_LANES\s+<=\s+"10101";/s,
+        'explicit VHDL facade generation lowers list-like aggregate constant assignment',
+    );
+
+    unlike(
+        $concat_result->{hdl_code} . $constant_result->{hdl_code},
+        qr/\btypedef\b|\bstruct\b|\bmodule\b|\balways_(?:ff|comb)\b|\brecord\b|\barray\b/s,
+        'explicit VHDL aggregate facade generation stays in the packed-vector scaffold',
     );
 };
 

@@ -1856,19 +1856,54 @@ subtest 'CLI routes direct --language vhdl through the scaffold' => sub {
     unlike($hdl, qr/\balways_(?:ff|comb)\b|\bmodule\b/s, 'CLI output is VHDL-shaped');
 };
 
-subtest 'direct VHDL scaffold leaves aggregate outputs fail-closed' => sub {
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        debug_level => 0,
-        target_language => 'vhdl',
-        quiet => 1,
+subtest 'direct VHDL scaffold lowers bounded aggregate outputs as packed vectors' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $concat_output_path = File::Spec->catfile($tempdir, 'direct_rhs_concat_target_autogrowth.vhd');
+    my $constant_output_path = File::Spec->catfile($tempdir, 'direct_aggregate_constant_target_autogrowth.vhd');
+
+    my $concat_hdl = generate_vhdl('t/corpus/direct_rhs_concat_target_autogrowth.fsm');
+    like($concat_hdl, qr/\bentity\s+direct_rhs_concat_target_autogrowth\s+is\b/s, 'aggregate concat fixture emits direct VHDL entity');
+    like($concat_hdl, qr/\bNESTED\s+:\s+out\s+std_logic_vector\(6\s+downto\s+0\);/s, 'nested aggregate output lowers to packed vector width');
+    like($concat_hdl, qr/\bOUT\s+:\s+out\s+std_logic_vector\(2\s+downto\s+0\)/s, 'flat aggregate output lowers to packed vector width');
+    like($concat_hdl, qr/\bNESTED\s+<=\s+\(\(FLAG\s+&\s+DATA\)\s+&\s+TAG\);/s, 'nested aggregate concat assignment lowers to VHDL concatenation');
+    like($concat_hdl, qr/\bOUT\s+<=\s+\(FLAG\s+&\s+DATA\);/s, 'flat aggregate concat assignment lowers to VHDL concatenation');
+    unlike($concat_hdl, qr/\btypedef\b|\bstruct\b|\bmodule\b|\balways_(?:ff|comb)\b|\brecord\b|\barray\b/s, 'aggregate concat VHDL output stays in the packed-vector scaffold');
+
+    my $constant_hdl = generate_vhdl('t/corpus/direct_aggregate_constant_target_autogrowth.fsm');
+    like($constant_hdl, qr/\bentity\s+direct_aggregate_constant_target_autogrowth\s+is\b/s, 'aggregate constant fixture emits direct VHDL entity');
+    like($constant_hdl, qr/\bOUT_FRAME\s+:\s+out\s+std_logic_vector\(4\s+downto\s+0\);/s, 'record-like aggregate constant output lowers to packed vector width');
+    like($constant_hdl, qr/\bOUT_LANES\s+:\s+out\s+std_logic_vector\(4\s+downto\s+0\)/s, 'list-like aggregate constant output lowers to packed vector width');
+    like($constant_hdl, qr/\bOUT_FRAME\s+<=\s+"10101";/s, 'record-like aggregate constant assignment lowers to VHDL bits');
+    like($constant_hdl, qr/\bOUT_LANES\s+<=\s+"10101";/s, 'list-like aggregate constant assignment lowers to VHDL bits');
+    unlike($constant_hdl, qr/\btypedef\b|\bstruct\b|\bmodule\b|\balways_(?:ff|comb)\b|\brecord\b|\barray\b/s, 'aggregate constant VHDL output stays in the packed-vector scaffold');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $concat_output_path, repo_file('t/corpus/direct_rhs_concat_target_autogrowth.fsm')],
     );
 
-    my $error = capture_exception(sub {
-        $pipeline->generate_hdl_from_file(repo_file('t/corpus/direct_rhs_concat_target_autogrowth.fsm'));
-    });
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for aggregate concat packed-vector fixture')
+        or diag($combined_output);
+    ok(-e $concat_output_path, 'CLI writes aggregate concat VHDL output file');
 
-    like($error, qr/Source file:\s+'.*direct_rhs_concat_target_autogrowth\.fsm'/s, 'aggregate-output VHDL failure keeps source-file context');
-    like($error, qr/aggregate struct outputs are outside the direct VHDL scaffold/s, 'aggregate-output VHDL remains outside the scaffold boundary');
+    my $cli_hdl = read_file($concat_output_path);
+    like($cli_hdl, qr/\bNESTED\s+:\s+out\s+std_logic_vector\(6\s+downto\s+0\);/s, 'CLI aggregate concat output includes packed nested port');
+    like($cli_hdl, qr/\bOUT\s+<=\s+\(FLAG\s+&\s+DATA\);/s, 'CLI aggregate concat output includes packed assignment');
+    unlike($cli_hdl, qr/\btypedef\b|\bstruct\b|\bmodule\b|\balways_(?:ff|comb)\b/s, 'CLI aggregate concat VHDL output does not leak SystemVerilog syntax');
+
+    my ($constant_success, $constant_error_message, $constant_full_buf, $constant_stdout_buf, $constant_stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $constant_output_path, repo_file('t/corpus/direct_aggregate_constant_target_autogrowth.fsm')],
+    );
+
+    my $constant_combined_output = join('', @{ $constant_stdout_buf || [] }, @{ $constant_stderr_buf || [] }, ($constant_error_message || ''));
+    ok($constant_success, 'CLI accepts direct --language vhdl for aggregate constant packed-vector fixture')
+        or diag($constant_combined_output);
+    ok(-e $constant_output_path, 'CLI writes aggregate constant VHDL output file');
+
+    my $constant_cli_hdl = read_file($constant_output_path);
+    like($constant_cli_hdl, qr/\bOUT_FRAME\s+:\s+out\s+std_logic_vector\(4\s+downto\s+0\);/s, 'CLI aggregate constant output includes packed record-like port');
+    like($constant_cli_hdl, qr/\bOUT_LANES\s+<=\s+"10101";/s, 'CLI aggregate constant output includes packed bits assignment');
+    unlike($constant_cli_hdl, qr/\btypedef\b|\bstruct\b|\bmodule\b|\balways_(?:ff|comb)\b/s, 'CLI aggregate constant VHDL output does not leak SystemVerilog syntax');
 };
 
 done_testing();

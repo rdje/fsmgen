@@ -197,11 +197,11 @@ Goal: lower aggregate types and values into portable VHDL record/array forms
 for the subset that can be validated as synthesizable.
 
 Current boundary: direct single-FSM VHDL generation has a scaffold subset for
-scalar/vector ports, basic enables, reset processes, and concat assignments.
-Aggregate VHDL lowering is still not shipped; aggregate-output direct roots
-remain fail-closed outside the scaffold. Direct aggregate-output roots are
-locked as explicit fail-closed direct VHDL boundaries by focused pipeline and
-facade coverage.
+scalar/vector ports, basic enables, reset processes, concat assignments, and
+bounded aggregate-output packed-vector lowering. Full aggregate VHDL
+record/array lowering is still not shipped. The maintained direct aggregate
+output fixtures lower their generated packed struct outputs as VHDL
+`std_logic_vector` ports while preserving flattened mux assignments.
 
 ### Public Type And Export Surfaces
 
@@ -3790,6 +3790,9 @@ vector `logic signed` internal declarations as VHDL `signed` signals and
 generated signed vector direct-root port declarations as VHDL `signed` ports,
 and same-width signed vector addition/subtraction/multiplication/division/modulo RHS
 assignments as signed VHDL arithmetic.
+Bounded direct aggregate-output fixtures now lower generated inferred packed
+struct outputs as VHDL `std_logic_vector` ports with the generated packed
+widths.
 It is covered by direct pipeline, CLI, and facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
@@ -3860,6 +3863,11 @@ uses `addr_q - addr_q % (beats_total_q * addr_step_q)`, and
 `wrap_high_q_next` adds the same wrap-span product to the computed base. This
 does not claim broad expression-parser parity; unrelated nested or
 mismatched-width arithmetic still needs exact future owners.
+The maintained direct aggregate-output fixtures now lower through the direct
+VHDL scaffold as packed vectors: `NESTED` is
+`std_logic_vector(6 downto 0)`, `OUT` is `std_logic_vector(2 downto 0)`, and
+`OUT_FRAME` / `OUT_LANES` are 5-bit `std_logic_vector` ports. Full VHDL
+record/array aggregate lowering remains a future exact owner.
 
 ### GHDL Validation
 
@@ -4048,10 +4056,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.67.1` implements bounded direct VHDL
-aggregate-output packed-vector lowering for
-`t/corpus/direct_rhs_concat_target_autogrowth.fsm` and
-`t/corpus/direct_aggregate_constant_target_autogrowth.fsm`.
+`BACKEND-API-VALIDATION-FRONTIER.68` selects the next exact backend/API or
+public-export edge after `.67.1` shipped bounded direct aggregate-output
+packed-vector lowering.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
 record/array lowering, composition VHDL, broader expression parity beyond the

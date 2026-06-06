@@ -26,11 +26,10 @@ sub generate_vhdl ($self, $fsm_module) {
 }
 
 sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
-    confess _unsupported('aggregate struct outputs are outside the direct VHDL scaffold')
-        if $sv_hdl =~ /\btypedef\s+struct\b/s;
+    my %aggregate_type_widths = _parse_packed_struct_typedef_widths($sv_hdl);
     my $module = _parse_module($sv_hdl);
     my @generics = _parse_generics($module->{parameters});
-    my @ports = _parse_ports($module->{ports});
+    my @ports = _parse_ports($module->{ports}, \%aggregate_type_widths);
     my $body = $module->{body};
     my @constants = _parse_constants($body);
     my @signals = _parse_signal_declarations($body, { map { $_->{name} => 1 } @ports });
@@ -108,7 +107,7 @@ sub _parse_generics ($parameter_text) {
     return @generics;
 }
 
-sub _parse_ports ($port_text) {
+sub _parse_ports ($port_text, $aggregate_type_widths = {}) {
     my @ports;
 
     for my $raw_line (split /\n/, $port_text) {
@@ -147,10 +146,69 @@ sub _parse_ports ($port_text) {
             next;
         }
 
+        if ($line =~ /^output\s+([A-Za-z_][A-Za-z0-9_]*)\s+([A-Za-z_][A-Za-z0-9_]*)$/) {
+            my ($type_name, $port_name) = ($1, $2);
+            my $width = $aggregate_type_widths->{$type_name}
+                or confess _unsupported("unsupported generated aggregate output type '$type_name'");
+            push @ports, _decl_hash(name => $port_name, direction => 'out', msb => $width - 1, lsb => 0);
+            next;
+        }
+
         confess _unsupported("unsupported generated port declaration '$line'");
     }
 
     return @ports;
+}
+
+sub _parse_packed_struct_typedef_widths ($sv_hdl) {
+    my %widths;
+
+    while ($sv_hdl =~ /\btypedef\s+struct\s+packed\s*\{/g) {
+        my $block = _consume_braced($sv_hdl, pos($sv_hdl) - 1, 'packed struct typedef');
+        my $after_block = _skip_ws($sv_hdl, $block->{next});
+        my $tail = substr($sv_hdl, $after_block);
+        $tail =~ /\A([A-Za-z_][A-Za-z0-9_]*)\s*;/
+            or confess _unsupported('unsupported packed struct typedef');
+        my $type_name = $1;
+        $widths{$type_name} = _packed_struct_member_width($block->{content});
+        pos($sv_hdl) = $after_block + length($&);
+    }
+
+    return %widths;
+}
+
+sub _packed_struct_member_width ($content) {
+    my $width = 0;
+    pos($content) = 0;
+
+    while (1) {
+        my $pos = _skip_ws($content, pos($content) // 0);
+        last if $pos >= length($content);
+        pos($content) = $pos;
+
+        if ($content =~ /\Gstruct\s+packed\s*\{/gc) {
+            my $block = _consume_braced($content, pos($content) - 1, 'nested packed struct member');
+            my $after_block = _skip_ws($content, $block->{next});
+            my $tail = substr($content, $after_block);
+            $tail =~ /\A[A-Za-z_][A-Za-z0-9_]*\s*;/
+                or confess _unsupported('unsupported nested packed struct member');
+            $width += _packed_struct_member_width($block->{content});
+            pos($content) = $after_block + length($&);
+            next;
+        }
+
+        if ($content =~ /\Glogic\s+(?:\[(\d+):(\d+)\]\s+)?[A-Za-z_][A-Za-z0-9_]*\s*;/gc) {
+            my ($msb, $lsb) = ($1, $2);
+            $width += defined($msb) && defined($lsb) ? abs($msb - $lsb) + 1 : 1;
+            next;
+        }
+
+        my $snippet = substr($content, $pos, 80);
+        $snippet =~ s/\s+/ /g;
+        confess _unsupported("unsupported packed struct member '$snippet'");
+    }
+
+    return $width;
 }
 
 sub _parse_constants ($body) {
@@ -1007,6 +1065,34 @@ sub _consume_parenthesized ($text, $pos, $label) {
     }
 
     confess _unsupported("unterminated generated module $label");
+}
+
+sub _consume_braced ($text, $pos, $label) {
+    substr($text, $pos, 1) eq '{'
+        or confess _unsupported("could not locate generated $label");
+
+    my $depth = 0;
+    my $start = $pos + 1;
+    for (my $idx = $pos; $idx < length($text); $idx++) {
+        my $char = substr($text, $idx, 1);
+        if ($char eq '{') {
+            $depth++;
+            next;
+        }
+        if ($char eq '}') {
+            $depth--;
+            if ($depth == 0) {
+                return {
+                    content => substr($text, $start, $idx - $start),
+                    next => $idx + 1,
+                };
+            }
+            confess _unsupported("generated $label closed more braces than it opened")
+                if $depth < 0;
+        }
+    }
+
+    confess _unsupported("unterminated generated $label");
 }
 
 sub _strip_line_comment ($line) {
