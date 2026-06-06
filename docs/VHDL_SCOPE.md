@@ -137,8 +137,9 @@ The first VHDL lane is intentionally narrow:
   parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: select the next exact direct VHDL or backend/API edge from
-  fresh evidence.
+- Active follow-up: implement same-width signed vector addition RHS lowering
+  under `BACKEND-API-VALIDATION-FRONTIER.57.1`; other signed arithmetic
+  operators remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

@@ -837,12 +837,13 @@ carry recursive `items` or `members` plus `member_order`.
 The direct VHDL scaffold now lowers generated vector `logic signed` internal
 declarations to VHDL `signed` signals and generated signed vector direct-root
 ports to VHDL `signed` ports. The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.57`: select the next exact backend/API or
-public-export edge after direct VHDL signed vector port lowering. Signed
-arithmetic semantics, scalar signed ports, aggregate VHDL, composition/top
-VHDL, packages, GHDL validation, broad expression parity, package-import
-internals, unrelated forward-IR payloads, and full normalized semantic export
-stabilization remain out of scope until later exact leaves own them.
+`BACKEND-API-VALIDATION-FRONTIER.57.1`: implement same-width signed vector
+addition RHS lowering after `.57` selected that exact backend edge. Signed
+subtraction/multiplication/division/modulo, scalar signed arithmetic, mixed
+signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, packages,
+GHDL validation, broad expression parity, package-import internals, unrelated
+forward-IR payloads, and full normalized semantic export stabilization remain
+out of scope until later exact leaves own them.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit
