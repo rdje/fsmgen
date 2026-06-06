@@ -4205,14 +4205,19 @@ schema metadata for `semantic.symbol_contract.types` and
 `kind`, `signed`, `width`, and optional `state_model`; aggregate entries carry
 recursive `items` or `members` plus `member_order`.
 
-Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.103.1` is scoped to publish bounded package-import
+Shipped symbol-contract package-import export edge: task-tree leaf
+`BACKEND-API-VALIDATION-FRONTIER.103.1` publishes bounded package-import
 name-list entry metadata for `semantic.symbol_contract.package_imports` and
-`semantic.forward_ir.intent_hir.symbol_contract.package_imports` without
-exposing raw package-spec internals. Completed leaf
-`BACKEND-API-VALIDATION-FRONTIER.103` selected that edge after runtime direct
-and composition semantic JSON probes showed scalar package-name lists in both
-branches. Completed leaf
+`semantic.forward_ir.intent_hir.symbol_contract.package_imports`.
+`package_import_entry_value_kinds` is `[scalar_package_name]`, and
+`package_import_entry_value_meaning` is `authored package-import package-name
+string`. Raw package-spec internals, package source AST, package symbols, VHDL
+package declaration/emission, and full normalized semantic export
+stabilization remain deferred.
+
+Current active backend edge: task-tree leaf
+`BACKEND-API-VALIDATION-FRONTIER.104` selects the next exact backend/API edge
+after package-import name-list metadata shipped. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.102.1` reconfirms that VHDL external validation
 remains blocked because `ghdl` is unavailable. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.101.1` locks declared aggregate structural VHDL

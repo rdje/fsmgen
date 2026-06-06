@@ -204,6 +204,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds
     normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning
     normalized_semantic_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds
     normalized_semantic_forward_ir_intent_hir_symbol_contract_type_entry_keys
     normalized_semantic_forward_ir_intent_hir_symbol_contract_type_list_extension_keys
@@ -251,6 +253,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_symbol_contract_constant_value_entry_keys
     normalized_semantic_symbol_contract_enum_entry_value_kinds
     normalized_semantic_symbol_contract_enum_member_value_kinds
+    normalized_semantic_symbol_contract_package_import_entry_value_kinds
+    normalized_semantic_symbol_contract_package_import_entry_value_meaning
     normalized_semantic_symbol_contract_type_aggregate_value_kinds
     normalized_semantic_symbol_contract_type_entry_keys
     normalized_semantic_symbol_contract_type_list_extension_keys
@@ -1002,6 +1006,16 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
             'symbol-contract enum member value kinds',
         ],
         [
+            'symbol_contract_package_import_entry_value_kinds',
+            normalized_semantic_symbol_contract_package_import_entry_value_kinds(),
+            'symbol-contract package-import entry value kinds',
+        ],
+        [
+            'symbol_contract_package_import_entry_value_meaning',
+            normalized_semantic_symbol_contract_package_import_entry_value_meaning(),
+            'symbol-contract package-import entry value meaning',
+        ],
+        [
             'symbol_contract_type_entry_keys',
             normalized_semantic_symbol_contract_type_entry_keys(),
             'symbol-contract type entry keys',
@@ -1319,6 +1333,18 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
             'forward_ir_intent_hir_symbol_contract_enum_member_value_kinds',
             normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds(),
             'intent-HIR symbol-contract enum member value kinds',
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds',
+            'forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds(),
+            'intent-HIR symbol-contract package-import entry value kinds',
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning',
+            'forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning(),
+            'intent-HIR symbol-contract package-import entry value meaning',
         ],
         [
             'success_forward_ir_intent_hir_symbol_contract_type_entry_keys',

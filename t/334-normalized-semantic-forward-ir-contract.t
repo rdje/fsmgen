@@ -30,6 +30,8 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds
     normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning
     normalized_semantic_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds
     normalized_semantic_forward_ir_intent_hir_symbol_contract_type_entry_keys
     normalized_semantic_forward_ir_intent_hir_symbol_contract_type_list_extension_keys
@@ -99,6 +101,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_list_extension_keys
@@ -420,6 +424,18 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
             normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds(),
             normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds(),
             FSM::Support::NormalizedSemanticReportContract::normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds(),
+        ],
+        [
+            'intent_hir_symbol_contract_package_import_entry_value_kinds',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds(),
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds(),
+            FSM::Support::NormalizedSemanticReportContract::normalized_semantic_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds(),
+        ],
+        [
+            'intent_hir_symbol_contract_package_import_entry_value_meaning',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning(),
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning(),
+            FSM::Support::NormalizedSemanticReportContract::normalized_semantic_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning(),
         ],
         [
             'intent_hir_symbol_contract_type_entry_keys',

@@ -14,6 +14,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_symbol_contract_constant_value_entry_keys
     normalized_semantic_payload_symbol_contract_enum_entry_value_kinds
     normalized_semantic_payload_symbol_contract_enum_member_value_kinds
+    normalized_semantic_payload_symbol_contract_package_import_entry_value_kinds
+    normalized_semantic_payload_symbol_contract_package_import_entry_value_meaning
     normalized_semantic_payload_symbol_contract_type_aggregate_value_kinds
     normalized_semantic_payload_symbol_contract_type_entry_keys
     normalized_semantic_payload_symbol_contract_type_list_extension_keys
@@ -33,6 +35,8 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_constant_value_entry_keys
     normalized_semantic_symbol_contract_enum_entry_value_kinds
     normalized_semantic_symbol_contract_enum_member_value_kinds
+    normalized_semantic_symbol_contract_package_import_entry_value_kinds
+    normalized_semantic_symbol_contract_package_import_entry_value_meaning
     normalized_semantic_symbol_contract_package_import_keys
     normalized_semantic_symbol_contract_presence_key_family_map
     normalized_semantic_symbol_contract_source
@@ -162,6 +166,16 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         'contract publishes the bounded symbol-contract package-import key family',
     );
     is_deeply(
+        $contract->{package_import_entry_value_kinds},
+        normalized_semantic_symbol_contract_package_import_entry_value_kinds(),
+        'contract publishes the bounded symbol-contract package-import entry value kinds',
+    );
+    is(
+        $contract->{package_import_entry_value_meaning},
+        normalized_semantic_symbol_contract_package_import_entry_value_meaning(),
+        'contract publishes the bounded symbol-contract package-import entry value meaning',
+    );
+    is_deeply(
         $contract->{presence_key_family_map},
         normalized_semantic_symbol_contract_presence_key_family_map(),
         'contract publishes the grouped symbol-contract key-family map',
@@ -222,6 +236,16 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         'grouped symbol-contract family map publishes type record extension keys',
     );
     is_deeply(
+        $contract->{presence_key_family_map}{package_import_entry_value_kinds},
+        normalized_semantic_symbol_contract_package_import_entry_value_kinds(),
+        'grouped symbol-contract family map publishes package-import entry value kinds',
+    );
+    is(
+        $contract->{presence_key_family_map}{package_import_entry_value_meaning},
+        normalized_semantic_symbol_contract_package_import_entry_value_meaning(),
+        'grouped symbol-contract family map publishes package-import entry value meaning',
+    );
+    is_deeply(
         normalized_semantic_symbol_contract_constant_value_entry_keys(),
         [qw(kind)],
         'constant value entries always advertise a bounded kind discriminator',
@@ -275,6 +299,16 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         normalized_semantic_symbol_contract_type_record_extension_keys(),
         [qw(member_order members)],
         'record type entries advertise member order and recursive member specs',
+    );
+    is_deeply(
+        normalized_semantic_symbol_contract_package_import_entry_value_kinds(),
+        [qw(scalar_package_name)],
+        'package-import entries advertise scalar package-name values',
+    );
+    is(
+        normalized_semantic_symbol_contract_package_import_entry_value_meaning(),
+        'authored package-import package-name string',
+        'package-import entry meaning describes the bounded scalar package-name string',
     );
     is_deeply(
         normalized_semantic_payload_symbol_contract_keys(),
@@ -337,6 +371,16 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         'semantic payload symbol-contract type record extension keys map to the nested symbol-contract owner',
     );
     is_deeply(
+        normalized_semantic_payload_symbol_contract_package_import_entry_value_kinds(),
+        normalized_semantic_symbol_contract_package_import_entry_value_kinds(),
+        'semantic payload symbol-contract package-import entry value kinds map to the nested symbol-contract owner',
+    );
+    is(
+        normalized_semantic_payload_symbol_contract_package_import_entry_value_meaning(),
+        normalized_semantic_symbol_contract_package_import_entry_value_meaning(),
+        'semantic payload symbol-contract package-import entry value meaning maps to the nested symbol-contract owner',
+    );
+    is_deeply(
         normalized_semantic_symbol_contract_keys(),
         normalized_semantic_symbol_contract_presence_keys(),
         'normalized semantic report symbol-contract keys map to the nested symbol-contract owner',
@@ -395,6 +439,16 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         FSM::Support::NormalizedSemanticReportContract::normalized_semantic_symbol_contract_type_record_extension_keys(),
         normalized_semantic_symbol_contract_type_record_extension_keys(),
         'normalized semantic report type record extension keys map to the nested symbol-contract owner',
+    );
+    is_deeply(
+        FSM::Support::NormalizedSemanticReportContract::normalized_semantic_symbol_contract_package_import_entry_value_kinds(),
+        normalized_semantic_symbol_contract_package_import_entry_value_kinds(),
+        'normalized semantic report package-import entry value kinds map to the nested symbol-contract owner',
+    );
+    is(
+        FSM::Support::NormalizedSemanticReportContract::normalized_semantic_symbol_contract_package_import_entry_value_meaning(),
+        normalized_semantic_symbol_contract_package_import_entry_value_meaning(),
+        'normalized semantic report package-import entry value meaning maps to the nested symbol-contract owner',
     );
 };
 

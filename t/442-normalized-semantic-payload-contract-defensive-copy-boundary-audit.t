@@ -54,6 +54,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_list_extension_keys
@@ -108,6 +110,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_symbol_contract_constant_value_entry_keys
     normalized_semantic_payload_symbol_contract_enum_entry_value_kinds
     normalized_semantic_payload_symbol_contract_enum_member_value_kinds
+    normalized_semantic_payload_symbol_contract_package_import_entry_value_kinds
+    normalized_semantic_payload_symbol_contract_package_import_entry_value_meaning
     normalized_semantic_payload_symbol_contract_keys
     normalized_semantic_payload_symbol_contract_type_aggregate_value_kinds
     normalized_semantic_payload_symbol_contract_type_entry_keys
@@ -249,6 +253,14 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
         {
             label => 'forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys',
             build => \&normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds,
+        },
+        {
+            label => 'forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning,
         },
         {
             label => 'forward_ir_intent_hir_symbol_contract_type_entry_keys',
@@ -437,6 +449,14 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
         {
             label => 'symbol_contract_constant_list_value_extension_keys',
             build => \&normalized_semantic_payload_symbol_contract_constant_list_value_extension_keys,
+        },
+        {
+            label => 'symbol_contract_package_import_entry_value_kinds',
+            build => \&normalized_semantic_payload_symbol_contract_package_import_entry_value_kinds,
+        },
+        {
+            label => 'symbol_contract_package_import_entry_value_meaning',
+            build => \&normalized_semantic_payload_symbol_contract_package_import_entry_value_meaning,
         },
         {
             label => 'symbol_contract_type_entry_keys',
@@ -875,6 +895,26 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
         $family_map->{forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys},
         normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys(),
         'structural-RTL instance port-binding typed extension family matches helper',
+    );
+    is_deeply(
+        $family_map->{symbol_contract_package_import_entry_value_kinds},
+        normalized_semantic_payload_symbol_contract_package_import_entry_value_kinds(),
+        'symbol-contract package-import entry value-kind family matches helper',
+    );
+    is(
+        $family_map->{symbol_contract_package_import_entry_value_meaning},
+        normalized_semantic_payload_symbol_contract_package_import_entry_value_meaning(),
+        'symbol-contract package-import entry value meaning family matches helper',
+    );
+    is_deeply(
+        $family_map->{forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds},
+        normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds(),
+        'forward-IR intent-HIR symbol-contract package-import entry value-kind family matches helper',
+    );
+    is(
+        $family_map->{forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning},
+        normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning(),
+        'forward-IR intent-HIR symbol-contract package-import entry value meaning family matches helper',
     );
 
     my $forward_ir_map = normalized_semantic_payload_forward_ir_nested_presence_key_map();

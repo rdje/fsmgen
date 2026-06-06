@@ -2293,12 +2293,30 @@ recursive type-entry schema metadata for `semantic.symbol_contract.types` and
 `semantic.forward_ir.intent_hir.symbol_contract.types`: scalar entries carry
 `kind`, `signed`, `width`, and optional `state_model`, while aggregate entries
 carry recursive `items` or `members` plus `member_order`.
-The active symbol-contract package-import export edge
-`BACKEND-API-VALIDATION-FRONTIER.103.1` is scoped to publishing explicit
-scalar package-name entry metadata for `semantic.symbol_contract.package_imports`
-and `semantic.forward_ir.intent_hir.symbol_contract.package_imports`. It does
-not expose raw `FSM::Package::Spec` internals, package source AST, package
-symbols, or full normalized semantic export stabilization.
+The symbol-contract package-import export edge now publishes explicit scalar
+package-name entry metadata for `semantic.symbol_contract.package_imports` and
+`semantic.forward_ir.intent_hir.symbol_contract.package_imports`.
+`package_import_entry_value_kinds` is `[scalar_package_name]`, and
+`package_import_entry_value_meaning` is `authored package-import package-name
+string`. It does not expose raw `FSM::Package::Spec` internals, package source
+AST, package symbols, VHDL package declaration/emission, or full normalized
+semantic export stabilization.
+
+For example, capability-manifest and report-contract consumers can discover
+the package-import list shape without traversing package internals:
+
+```json
+{
+  "symbol_contract_package_import_entry_value_kinds": [
+    "scalar_package_name"
+  ],
+  "symbol_contract_package_import_entry_value_meaning": "authored package-import package-name string",
+  "success_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds": [
+    "scalar_package_name"
+  ],
+  "success_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning": "authored package-import package-name string"
+}
+```
 
 For example, a root that declares scalar and aggregate type aliases can expose
 this normalized semantic shape:
@@ -2376,12 +2394,13 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.103.1`, a bounded normalized semantic
-symbol-contract package-import name-list metadata leaf. Completed leaf
-`BACKEND-API-VALIDATION-FRONTIER.103` selected that package-import name-list
-edge after runtime direct and composition semantic JSON probes showed scalar
-package-name lists under `semantic.symbol_contract.package_imports` and the
-`forward_ir.intent_hir` alias. Completed leaf
+`BACKEND-API-VALIDATION-FRONTIER.104`, a selector for the next exact
+backend/API edge after package-import name-list metadata shipped. Completed
+leaf `BACKEND-API-VALIDATION-FRONTIER.103.1` publishes that package-import
+name-list entry metadata after runtime direct and composition semantic JSON
+probes showed scalar package-name lists under
+`semantic.symbol_contract.package_imports` and the `forward_ir.intent_hir`
+alias. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.102.1` reconfirms that VHDL external validation
 remains blocked because `ghdl` is unavailable. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.101.1` locks declared aggregate structural VHDL

@@ -20,6 +20,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_symbol_contract_summary_presence_keys
     normalized_semantic_symbol_contract_symbol_map_keys
     normalized_semantic_symbol_contract_symbol_name_keys
+    normalized_semantic_symbol_contract_package_import_entry_value_kinds
+    normalized_semantic_symbol_contract_package_import_entry_value_meaning
     normalized_semantic_symbol_contract_package_import_keys
     normalized_semantic_symbol_contract_type_aggregate_value_kinds
     normalized_semantic_symbol_contract_type_entry_keys
@@ -72,6 +74,10 @@ sub build_normalized_semantic_symbol_contract {
         type_list_extension_keys => normalized_semantic_symbol_contract_type_list_extension_keys(),
         type_record_extension_keys => normalized_semantic_symbol_contract_type_record_extension_keys(),
         package_import_keys => normalized_semantic_symbol_contract_package_import_keys(),
+        package_import_entry_value_kinds =>
+            normalized_semantic_symbol_contract_package_import_entry_value_kinds(),
+        package_import_entry_value_meaning =>
+            normalized_semantic_symbol_contract_package_import_entry_value_meaning(),
         presence_key_family_map => normalized_semantic_symbol_contract_presence_key_family_map(),
         optional_for_symbol_free_sources => JSON::PP::true,
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
@@ -81,6 +87,7 @@ sub build_normalized_semantic_symbol_contract {
             'The constants map value key families describe the currently emitted scalar/list constant value variants only: every value has `kind`, scalar values add `payload`, and list values add `items`.',
             'The enum map value-kind families describe the currently emitted `enums` shape: each enum entry value is a member-payload map, and each dynamic member-name value is a scalar payload.',
             'The type-entry key families describe the currently emitted recursive `types` shape: every advertised entry carries `kind`, `signed`, and `width`; scalar bit/bits entries may add `state_model`; list entries add recursive `items`; record entries add recursive `members` plus `member_order`.',
+            'The package-import entry value-kind family describes the currently emitted `package_imports` list: each entry is an authored package-name string, not a package spec, package AST, or package symbol table.',
             'Use the grouped presence_key_family_map to discover the bounded symbol-contract summary, name-list, nested-map, constant-detail, constant-value, enum-value, type-entry, and package-import key families without collecting those key-family lists separately.',
         ],
     };
@@ -247,6 +254,18 @@ sub normalized_semantic_symbol_contract_package_import_keys {
     ];
 }
 
+sub normalized_semantic_symbol_contract_package_import_entry_value_kinds {
+    return [
+        qw(
+            scalar_package_name
+        ),
+    ];
+}
+
+sub normalized_semantic_symbol_contract_package_import_entry_value_meaning {
+    return 'authored package-import package-name string';
+}
+
 sub normalized_semantic_symbol_contract_presence_key_family_map {
     return {
         summary_presence_keys => normalized_semantic_symbol_contract_summary_presence_keys(),
@@ -267,6 +286,10 @@ sub normalized_semantic_symbol_contract_presence_key_family_map {
         type_list_extension_keys => normalized_semantic_symbol_contract_type_list_extension_keys(),
         type_record_extension_keys => normalized_semantic_symbol_contract_type_record_extension_keys(),
         package_import_keys => normalized_semantic_symbol_contract_package_import_keys(),
+        package_import_entry_value_kinds =>
+            normalized_semantic_symbol_contract_package_import_entry_value_kinds(),
+        package_import_entry_value_meaning =>
+            normalized_semantic_symbol_contract_package_import_entry_value_meaning(),
     };
 }
 

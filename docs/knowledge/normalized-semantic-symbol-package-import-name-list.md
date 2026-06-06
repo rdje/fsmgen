@@ -9,8 +9,8 @@ answers:
 date: 2026-06-06
 status: current
 tags: [normalized-semantic-json, symbol-contract, intent-hir, package-imports, public-api]
-evidence: perl/FSM/IR/IntentHIRBuilder.pm; perl/FSM/Support/NormalizedSemanticSymbolContract.pm; perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm; perl/FSM/Support/NormalizedSemanticForwardIRContract.pm; perl/FSM/Support/NormalizedSemanticPayloadContract.pm; perl/FSM/Support/NormalizedSemanticReportContract.pm; t/277-direct-symbol-contract-forward-ir.t; t/278-composition-symbol-contract-forward-ir.t; t/335-normalized-semantic-symbol-contract.t; t/311-normalized-semantic-report-contract.t; t/297-capability-manifest.t; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
-reverify: prove -Iperl t/277-direct-symbol-contract-forward-ir.t t/278-composition-symbol-contract-forward-ir.t t/335-normalized-semantic-symbol-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t
+evidence: perl/FSM/IR/IntentHIRBuilder.pm; perl/FSM/Support/NormalizedSemanticSymbolContract.pm; perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm; perl/FSM/Support/NormalizedSemanticForwardIRContract.pm; perl/FSM/Support/NormalizedSemanticPayloadContract.pm; perl/FSM/Support/NormalizedSemanticReportContract.pm; t/277-direct-symbol-contract-forward-ir.t; t/278-composition-symbol-contract-forward-ir.t; t/335-normalized-semantic-symbol-contract.t; t/339-normalized-semantic-intent-hir-contract.t; t/334-normalized-semantic-forward-ir-contract.t; t/330-normalized-semantic-payload-contract.t; t/311-normalized-semantic-report-contract.t; t/297-capability-manifest.t; t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t; t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
+reverify: prove -Iperl t/277-direct-symbol-contract-forward-ir.t t/278-composition-symbol-contract-forward-ir.t t/335-normalized-semantic-symbol-contract.t t/339-normalized-semantic-intent-hir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t
 ---
 
 `semantic.symbol_contract.package_imports` is a list of authored package names,
@@ -18,11 +18,13 @@ not a public package-spec object graph. The matching
 `semantic.forward_ir.intent_hir.symbol_contract.package_imports` branch carries
 the same package-name list through the IntentHIR alias.
 
-`FSM::Support::NormalizedSemanticSymbolContract` currently advertises the
-bounded top-level package-import key family through `package_import_count` and
-`package_imports`. Task-tree leaf `BACKEND-API-VALIDATION-FRONTIER.103.1` owns
-the next exact hardening step: publishing explicit scalar package-name entry
-metadata for that list and the IntentHIR alias.
+`FSM::Support::NormalizedSemanticSymbolContract` advertises the bounded
+top-level package-import key family through `package_import_count` and
+`package_imports`. It also advertises
+`package_import_entry_value_kinds` as `[scalar_package_name]` and
+`package_import_entry_value_meaning` as `authored package-import package-name
+string`. The same metadata is delegated through the IntentHIR, forward-IR,
+payload, report, and capability-manifest contract surfaces.
 
 This boundary does not expose raw `FSM::Package::Spec` internals, package source
 AST, package symbols, VHDL package emission, unrelated symbol-contract internals,
