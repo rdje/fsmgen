@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.19.1` (this commit) — published structural-RTL `auxiliary_assignments[]` scalar string entry value kinds through normalized semantic contract/report/manifest surfaces. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.20` active frontier — select the next exact backend/API/public-export edge before any further code changes.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.19.1`; `BACKEND-API-VALIDATION-FRONTIER.19`; `BACKEND-API-VALIDATION-FRONTIER.18.1`; `BACKEND-API-VALIDATION-FRONTIER.18`; `BACKEND-API-VALIDATION-FRONTIER.17.1`; `BACKEND-API-VALIDATION-FRONTIER.17`; `BACKEND-API-VALIDATION-FRONTIER.16.1`; `BACKEND-API-VALIDATION-FRONTIER.16`; `BACKEND-API-VALIDATION-FRONTIER.15.1`; `BACKEND-API-VALIDATION-FRONTIER.15`; `BACKEND-API-VALIDATION-FRONTIER.14.1`; `BACKEND-API-VALIDATION-FRONTIER.14`; `BACKEND-API-VALIDATION-FRONTIER.13.1`; `BACKEND-API-VALIDATION-FRONTIER.13`; `BACKEND-API-VALIDATION-FRONTIER.12.1`.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.20` (this commit) — selected direct VHDL delayed-pulse clock-branch nested-if lowering as the next exact backend/API leaf. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.20.1` active frontier — implement only the generated delayed-pulse nested-if clock-branch shape in the direct VHDL scaffold.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.20`; `BACKEND-API-VALIDATION-FRONTIER.19.1`; `BACKEND-API-VALIDATION-FRONTIER.19`; `BACKEND-API-VALIDATION-FRONTIER.18.1`; `BACKEND-API-VALIDATION-FRONTIER.18`; `BACKEND-API-VALIDATION-FRONTIER.17.1`; `BACKEND-API-VALIDATION-FRONTIER.17`; `BACKEND-API-VALIDATION-FRONTIER.16.1`; `BACKEND-API-VALIDATION-FRONTIER.16`; `BACKEND-API-VALIDATION-FRONTIER.15.1`; `BACKEND-API-VALIDATION-FRONTIER.15`; `BACKEND-API-VALIDATION-FRONTIER.14.1`; `BACKEND-API-VALIDATION-FRONTIER.14`; `BACKEND-API-VALIDATION-FRONTIER.13.1`; `BACKEND-API-VALIDATION-FRONTIER.13`.
 - in_flight_uncommitted: none expected after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
