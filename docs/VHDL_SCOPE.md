@@ -30,8 +30,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   target-width `to_signed` literal conversion, with
   multiplication/division/modulo resized to the target width.
 - The direct scaffold now includes signed scalar direct-root port/internal
-  declaration lowering for non-arithmetic one-bit signed type-alias shapes,
-  while signed scalar addition/subtraction/multiplication arithmetic is locked
+  declaration lowering and signed scalar addition/subtraction/multiplication
+  RHS/chain lowering for one-bit signed scalar target/operand shapes. Signed
+  scalar division/modulo and mixed signed/unsigned scalar arithmetic remain
   fail-closed.
 - The direct scaffold now includes the bounded generated unsigned AMBA wrap
   arithmetic family emitted by `fsm/amba_requester.fsm`, including
@@ -202,6 +203,7 @@ The VHDL lane is intentionally narrow:
   vector addition/subtraction/multiplication/division/modulo RHS assignments,
   signed vector numeric-literal addition/subtraction/multiplication/division/modulo
   RHS assignments, signed scalar direct-root declarations,
+  signed scalar addition/subtraction/multiplication RHS/chain lowering,
   bounded AMBA wrap arithmetic,
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
@@ -228,8 +230,9 @@ The VHDL lane is intentionally narrow:
   signals, deterministic shared-datapath sink signals, and both generated child
   entity port maps. Broader generated-FSM/C4 composition VHDL, internal
   nets/generic maps beyond the exact shipped fixtures, full aggregate VHDL
-  record/array lowering, broader expression parity, and broader scalar signed
-  arithmetic remain separate future edges.
+  record/array lowering, broader expression parity, signed scalar
+  division/modulo, and mixed signed/unsigned scalar arithmetic remain separate
+  future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
@@ -242,6 +245,7 @@ The VHDL lane is intentionally narrow:
   non-signed four-state `logic` scalar/vector internal declaration lowering,
   vector `logic signed` internal declaration lowering,
   signed vector direct-root port declaration lowering,
+  signed scalar addition/subtraction/multiplication RHS/chain lowering,
   generic-bearing direct-root module headers, one-bit `std_logic` and
   multi-bit `std_logic_vector` sized-literal generic defaults,
   bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`,
@@ -252,7 +256,8 @@ The VHDL lane is intentionally narrow:
   structural-top generation,
   bounded APB/C4 generated-FSM composition VHDL structural-top generation,
   mixed signed/unsigned vector numeric arithmetic fail-closed diagnostics,
-  signed scalar arithmetic fail-closed diagnostics,
+  signed scalar division/modulo and mixed signed/unsigned scalar arithmetic
+  fail-closed diagnostics,
   mismatched-width arithmetic-expression fail-closed diagnostics, and
   broader composition/top VHDL fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus

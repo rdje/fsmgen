@@ -1139,60 +1139,54 @@ FSM
     like($cli_hdl, qr/\bsignal\s+OUT\s+:\s+std_logic;/s, 'CLI VHDL output includes signed scalar logic declaration lowering');
     unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s, 'CLI signed scalar logic VHDL output remains VHDL-shaped');
 
-    my $arithmetic_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_scalar_add_deferred.fsm');
-    write_file(
-        $arithmetic_path,
-        <<'FSM'
-(?fsm:direct_vhdl_signed_scalar_add_deferred
-  (+system
-    (clock clk)
-    (sreset reset)
-  )
-  (+types
-    (type signed_bit_t (four_state (signed (bits 1))))
-  )
-  (+size
-    (A signed_bit_t)
-    (B signed_bit_t)
-    (SUM signed_bit_t)
-  )
-  (idle
-    (SUM = (+ A B))
-  )
-)
-FSM
-    );
-
-    my $arithmetic_error = capture_exception(sub {
-        generate_vhdl($arithmetic_path);
-    });
-    like(
-        $arithmetic_error,
-        qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s,
-        'signed scalar arithmetic remains outside the direct VHDL scaffold boundary',
-    );
-
-    my @deferred_arithmetic_cases = (
+    my @signed_scalar_arithmetic_cases = (
         {
-            name => 'direct_vhdl_signed_scalar_sub_deferred',
+            name => 'direct_vhdl_signed_scalar_add',
+            expr => '(SUM = (+ A B))',
+            output => 'SUM',
+            expected => qr/\bSUM\s+<=\s+A\s+xor\s+B;/s,
+            cli => 1,
+        },
+        {
+            name => 'direct_vhdl_signed_scalar_sub',
             expr => '(DIFF = (- A B))',
             output => 'DIFF',
-            diagnostic => qr/arithmetic expression 'A - B' is outside the direct VHDL scaffold/s,
+            expected => qr/\bDIFF\s+<=\s+A\s+xor\s+B;/s,
+            cli => 1,
         },
         {
-            name => 'direct_vhdl_signed_scalar_mul_deferred',
+            name => 'direct_vhdl_signed_scalar_mul',
             expr => '(PROD = (* A B))',
             output => 'PROD',
-            diagnostic => qr/arithmetic expression 'A \* B' is outside the direct VHDL scaffold/s,
+            expected => qr/\bPROD\s+<=\s+A\s+and\s+B;/s,
+            cli => 1,
+        },
+        {
+            name => 'direct_vhdl_signed_scalar_add_chain',
+            expr => '(SUM = (+ A B C))',
+            output => 'SUM',
+            expected => qr/\bSUM\s+<=\s+A\s+xor\s+B\s+xor\s+C;/s,
+        },
+        {
+            name => 'direct_vhdl_signed_scalar_sub_chain',
+            expr => '(DIFF = (- A B C))',
+            output => 'DIFF',
+            expected => qr/\bDIFF\s+<=\s+A\s+xor\s+B\s+xor\s+C;/s,
+        },
+        {
+            name => 'direct_vhdl_signed_scalar_mul_chain',
+            expr => '(PROD = (* A B C))',
+            output => 'PROD',
+            expected => qr/\bPROD\s+<=\s+A\s+and\s+B\s+and\s+C;/s,
         },
     );
-    for my $case (@deferred_arithmetic_cases) {
+    for my $case (@signed_scalar_arithmetic_cases) {
         my $name = $case->{name};
         my $expr = $case->{expr};
         my $output = $case->{output};
-        my $deferred_path = File::Spec->catfile($tempdir, "$name.fsm");
+        my $arithmetic_path = File::Spec->catfile($tempdir, "$name.fsm");
         write_file(
-            $deferred_path,
+            $arithmetic_path,
             <<"FSM"
 (?fsm:$name
   (+system
@@ -1205,6 +1199,7 @@ FSM
   (+size
     (A signed_bit_t)
     (B signed_bit_t)
+    (C signed_bit_t)
     ($output signed_bit_t)
   )
   (idle
@@ -1214,10 +1209,89 @@ FSM
 FSM
         );
 
-        my $deferred_error = capture_exception(sub {
-            generate_vhdl($deferred_path);
+        my $arithmetic_hdl = generate_vhdl($arithmetic_path);
+        like($arithmetic_hdl, qr/\bentity\s+\Q$name\E\s+is\b/s, "$name emits direct VHDL entity");
+        like($arithmetic_hdl, $case->{expected}, "$name lowers signed scalar arithmetic as std_logic bit-pattern logic");
+        unlike(
+            $arithmetic_hdl,
+            qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s,
+            "$name VHDL output does not leak SystemVerilog signed declarations",
+        );
+
+        next unless $case->{cli};
+        my $cli_output_path = File::Spec->catfile($tempdir, "$name.vhd");
+        my ($arith_success, $arith_error_message, $arith_full_buf, $arith_stdout_buf, $arith_stderr_buf) = run(
+            command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $cli_output_path, $arithmetic_path],
+        );
+        my $arith_combined_output = join('', @{ $arith_stdout_buf || [] }, @{ $arith_stderr_buf || [] }, ($arith_error_message || ''));
+        ok($arith_success, "CLI accepts direct --language vhdl for $name")
+            or diag($arith_combined_output);
+        ok(-e $cli_output_path, "CLI writes $name VHDL output file");
+        my $arith_cli_hdl = read_file($cli_output_path);
+        like($arith_cli_hdl, $case->{expected}, "CLI VHDL output lowers $name");
+        unlike(
+            $arith_cli_hdl,
+            qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s,
+            "CLI $name VHDL output remains VHDL-shaped",
+        );
+    }
+
+    my @fail_closed_arithmetic_cases = (
+        {
+            name => 'direct_vhdl_signed_scalar_div_deferred',
+            expr => '(QUOT = (/ A B))',
+            output => 'QUOT',
+            b_type => 'signed_bit_t',
+            diagnostic => qr/arithmetic expression 'A \/ B' is outside the direct VHDL scaffold/s,
+        },
+        {
+            name => 'direct_vhdl_signed_scalar_mod_deferred',
+            expr => '(REM = (% A B))',
+            output => 'REM',
+            b_type => 'signed_bit_t',
+            diagnostic => qr/arithmetic expression 'A % B' is outside the direct VHDL scaffold/s,
+        },
+        {
+            name => 'direct_vhdl_signed_scalar_mixed_add_deferred',
+            expr => '(SUM = (+ A B))',
+            output => 'SUM',
+            b_type => '1',
+            diagnostic => qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s,
+        },
+    );
+    for my $case (@fail_closed_arithmetic_cases) {
+        my $name = $case->{name};
+        my $expr = $case->{expr};
+        my $output = $case->{output};
+        my $b_type = $case->{b_type};
+        my $fail_closed_path = File::Spec->catfile($tempdir, "$name.fsm");
+        write_file(
+            $fail_closed_path,
+            <<"FSM"
+(?fsm:$name
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_bit_t (four_state (signed (bits 1))))
+  )
+  (+size
+    (A signed_bit_t)
+    (B $b_type)
+    ($output signed_bit_t)
+  )
+  (idle
+    $expr
+  )
+)
+FSM
+        );
+
+        my $fail_closed_error = capture_exception(sub {
+            generate_vhdl($fail_closed_path);
         });
-        like($deferred_error, $case->{diagnostic}, "$name remains outside the direct VHDL scaffold boundary");
+        like($fail_closed_error, $case->{diagnostic}, "$name remains outside the direct VHDL scaffold boundary");
     }
 };
 

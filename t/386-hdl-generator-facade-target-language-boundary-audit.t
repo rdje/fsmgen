@@ -1152,62 +1152,40 @@ FSM
         'explicit VHDL signed scalar facade generation does not leak SystemVerilog declarations',
     );
 
-    my $arithmetic_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_scalar_add_deferred.fsm');
-    write_file(
-        $arithmetic_path,
-        <<'FSM'
-(?fsm:facade_direct_vhdl_signed_scalar_add_deferred
-  (+system
-    (clock clk)
-    (sreset reset)
-  )
-  (+types
-    (type signed_bit_t (four_state (signed (bits 1))))
-  )
-  (+size
-    (A signed_bit_t)
-    (B signed_bit_t)
-    (SUM signed_bit_t)
-  )
-  (idle
-    (SUM = (+ A B))
-  )
-)
-FSM
-    );
-
-    my $error = capture_exception(sub {
-        $vhdl_pipeline->generate_hdl_from_file($arithmetic_path);
-    });
-
-    like(
-        $error,
-        qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s,
-        'explicit VHDL facade generation keeps signed scalar arithmetic fail-closed',
-    );
-
-    my @deferred_arithmetic_cases = (
+    my @signed_scalar_arithmetic_cases = (
         {
-            name => 'facade_direct_vhdl_signed_scalar_sub_deferred',
+            name => 'facade_direct_vhdl_signed_scalar_add',
+            expr => '(SUM = (+ A B))',
+            output => 'SUM',
+            expected => qr/\bSUM\s+<=\s+A\s+xor\s+B;/s,
+        },
+        {
+            name => 'facade_direct_vhdl_signed_scalar_sub',
             expr => '(DIFF = (- A B))',
             output => 'DIFF',
-            diagnostic => qr/arithmetic expression 'A - B' is outside the direct VHDL scaffold/s,
+            expected => qr/\bDIFF\s+<=\s+A\s+xor\s+B;/s,
         },
         {
-            name => 'facade_direct_vhdl_signed_scalar_mul_deferred',
+            name => 'facade_direct_vhdl_signed_scalar_mul',
             expr => '(PROD = (* A B))',
             output => 'PROD',
-            diagnostic => qr/arithmetic expression 'A \* B' is outside the direct VHDL scaffold/s,
+            expected => qr/\bPROD\s+<=\s+A\s+and\s+B;/s,
+        },
+        {
+            name => 'facade_direct_vhdl_signed_scalar_add_chain',
+            expr => '(SUM = (+ A B C))',
+            output => 'SUM',
+            expected => qr/\bSUM\s+<=\s+A\s+xor\s+B\s+xor\s+C;/s,
         },
     );
 
-    for my $case (@deferred_arithmetic_cases) {
+    for my $case (@signed_scalar_arithmetic_cases) {
         my $name = $case->{name};
         my $expr = $case->{expr};
         my $output = $case->{output};
-        my $deferred_path = File::Spec->catfile($tempdir, "$name.fsm");
+        my $arithmetic_path = File::Spec->catfile($tempdir, "$name.fsm");
         write_file(
-            $deferred_path,
+            $arithmetic_path,
             <<"FSM"
 (?fsm:$name
   (+system
@@ -1220,6 +1198,7 @@ FSM
   (+size
     (A signed_bit_t)
     (B signed_bit_t)
+    (C signed_bit_t)
     ($output signed_bit_t)
   )
   (idle
@@ -1229,12 +1208,84 @@ FSM
 FSM
         );
 
-        my $deferred_error = capture_exception(sub {
-            $vhdl_pipeline->generate_hdl_from_file($deferred_path);
+        my $arithmetic_result = $vhdl_pipeline->generate_hdl_from_file($arithmetic_path);
+
+        like(
+            $arithmetic_result->{hdl_code},
+            qr/\bentity\s+\Q$name\E\s+is\b/s,
+            "explicit VHDL facade generation emits the $name direct entity",
+        );
+        like(
+            $arithmetic_result->{hdl_code},
+            $case->{expected},
+            "explicit VHDL facade generation lowers $name",
+        );
+        unlike(
+            $arithmetic_result->{hdl_code},
+            qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s,
+            "explicit VHDL $name facade generation does not leak SystemVerilog declarations",
+        );
+    }
+
+    my @fail_closed_arithmetic_cases = (
+        {
+            name => 'facade_direct_vhdl_signed_scalar_div_deferred',
+            expr => '(QUOT = (/ A B))',
+            output => 'QUOT',
+            b_type => 'signed_bit_t',
+            diagnostic => qr/arithmetic expression 'A \/ B' is outside the direct VHDL scaffold/s,
+        },
+        {
+            name => 'facade_direct_vhdl_signed_scalar_mod_deferred',
+            expr => '(REM = (% A B))',
+            output => 'REM',
+            b_type => 'signed_bit_t',
+            diagnostic => qr/arithmetic expression 'A % B' is outside the direct VHDL scaffold/s,
+        },
+        {
+            name => 'facade_direct_vhdl_signed_scalar_mixed_add_deferred',
+            expr => '(SUM = (+ A B))',
+            output => 'SUM',
+            b_type => '1',
+            diagnostic => qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s,
+        },
+    );
+
+    for my $case (@fail_closed_arithmetic_cases) {
+        my $name = $case->{name};
+        my $expr = $case->{expr};
+        my $output = $case->{output};
+        my $b_type = $case->{b_type};
+        my $fail_closed_path = File::Spec->catfile($tempdir, "$name.fsm");
+        write_file(
+            $fail_closed_path,
+            <<"FSM"
+(?fsm:$name
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_bit_t (four_state (signed (bits 1))))
+  )
+  (+size
+    (A signed_bit_t)
+    (B $b_type)
+    ($output signed_bit_t)
+  )
+  (idle
+    $expr
+  )
+)
+FSM
+        );
+
+        my $fail_closed_error = capture_exception(sub {
+            $vhdl_pipeline->generate_hdl_from_file($fail_closed_path);
         });
 
         like(
-            $deferred_error,
+            $fail_closed_error,
             $case->{diagnostic},
             "$name remains outside the explicit VHDL facade arithmetic scaffold",
         );

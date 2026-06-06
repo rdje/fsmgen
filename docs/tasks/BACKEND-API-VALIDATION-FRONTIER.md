@@ -1314,10 +1314,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.72: select VHDL signed scalar arithmetic`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.72.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement direct VHDL signed scalar addition/subtraction/multiplication RHS lowering.`
   Acceptance: `The direct VHDL scaffold accepts one-bit signed scalar direct-root arithmetic assignments where the target and all operands are signed scalar declarations and the operator is +, -, or *. Addition and subtraction lower to VHDL std_logic xor chains, multiplication lowers to std_logic and chains, matching the existing bit-pattern semantics for non-signed one-bit scalar arithmetic. Focused pipeline, CLI, and facade coverage prove signed scalar add/sub/mul forms without leaking SystemVerilog signed declarations, while signed scalar division/modulo, mixed signed/unsigned arithmetic, vector signed arithmetic outside the shipped subset, aggregate VHDL, composition generic maps, packages, GHDL validation, broad expression parity, and full backend parity remain fail-closed or deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card if needed, task tree, and memory stay synchronized.`
-  Verification: `pending implementation`
+  Verification: `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t; perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.72.1: lower VHDL signed scalar arithmetic`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.73`
+  Status: `active`
+  Goal: `Select the next exact backend/API edge after direct VHDL signed scalar addition/subtraction/multiplication RHS lowering shipped.`
+  Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave signed scalar division/modulo, mixed signed/unsigned arithmetic, aggregate VHDL, packages, GHDL validation, broad expression parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1472,7 +1479,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 146 | `BACKEND-API-VALIDATION-FRONTIER.71` | `done` | Selected bounded APB/C4 generated-FSM child composition VHDL structural-top lowering as the next exact backend/API edge. |
 | 147 | `BACKEND-API-VALIDATION-FRONTIER.71.1` | `done` | Shipped the APB/C4 generated-FSM child VHDL top for `fsm/apb_tb.fsm`; supported composition VHDL sweep now passes 4/4. |
 | 148 | `BACKEND-API-VALIDATION-FRONTIER.72` | `done` | Selected direct VHDL signed scalar addition/subtraction/multiplication RHS lowering after focused tests still lock that exact one-bit signed scalar arithmetic family fail-closed and GHDL remains unavailable. |
-| 149 | `BACKEND-API-VALIDATION-FRONTIER.72.1` | `active` | Implement only the one-bit signed scalar +, -, and * direct VHDL RHS family before any broader scalar signed arithmetic, GHDL, aggregate, package, or full-parity work. |
+| 149 | `BACKEND-API-VALIDATION-FRONTIER.72.1` | `done` | Shipped one-bit signed scalar +, -, and * direct VHDL RHS/chain lowering as std_logic xor/and bit-pattern logic while keeping signed scalar division/modulo and mixed signed/unsigned scalar arithmetic fail-closed. |
+| 150 | `BACKEND-API-VALIDATION-FRONTIER.73` | `active` | Select the next exact backend/API edge after direct VHDL signed scalar arithmetic shipped; no implementation starts until the selected child leaf owns it. |
 
 ## Decisions
 
@@ -1642,6 +1650,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.71` | Selection audit/read of `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/TASK_TREE.md`, `MEMORY.md`, `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/Composition/PlanBuilder.pm`, `perl/FSM/Composition/GenerationOrchestrator.pm`, `perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`, `t/114-composition-target-support-diagnostics.t`, `fsm/apb_tb.fsm`, `fsm/apb_requester.fsm`, `fsm/apb_completer.fsm`, and `perl/FSM/Support/RegressionCorpus.pm`; APB systemverilog composition plan probe showed `lane=C4 ports=11 nets=31 instances=2 aux=0`, both instances `kind=fsmc params=0 hdl=1`; APB VHDL CLI probe failed closed at the scoped generated-child composition diagnostic; APB SystemVerilog CLI probe emitted the expected top with 8 APB link nets plus deterministic shared-datapath sink wires; direct VHDL probes for `fsm/apb_requester.fsm` and `fsm/apb_completer.fsm` exited 0 and emitted VHDL child entities with vector APB ports | `PASS`; selected bounded APB/C4 generated-FSM child composition VHDL structural-top lowering for `.71.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.71.1` | `perl -Iperl -c perl/FSM/Composition/PlanBuilder.pm`; `perl -Iperl -c perl/FSM/Composition/GenerationOrchestrator.pm`; `perl -Iperl -c perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/114-composition-target-support-diagnostics.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL composition/facade/direct prove bundle; APB/C3/C2 CLI VHDL probes; APB VHDL output inspection; regression-corpus contract bundle; external-validation prove bundle; supported direct-root VHDL sweep returned `entries=37 failures=0`; supported composition VHDL sweep returned `entries=4 passes=4 failures=0`; `command -v ghdl` unavailable; docs/knowledge/mdBook gates; `git diff --check` | `PASS`; bounded APB/C4 generated-FSM child composition VHDL top shipped and `.72` activated for next-edge selection |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.72` | Selection audit/read of `README.md`, `docs/TASK_TREE.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t`; `command -v ghdl`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh` | `PASS`; selected direct VHDL signed scalar addition/subtraction/multiplication RHS lowering for `.72.1`; `command -v ghdl` returned unavailable |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.72.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL signed scalar addition/subtraction/multiplication RHS/chain lowering shipped and `.73` activated for next-edge selection |
 
 ## Commit Log
 
@@ -1795,6 +1804,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.71` | `BACKEND-API-VALIDATION-FRONTIER.71: select APB C4 VHDL top` | selected `.71.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.71.1` | `BACKEND-API-VALIDATION-FRONTIER.71.1: emit APB C4 VHDL top` | this slice; activates `.72` |
 | `BACKEND-API-VALIDATION-FRONTIER.72` | `BACKEND-API-VALIDATION-FRONTIER.72: select VHDL signed scalar arithmetic` | selected `.72.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.72.1` | `BACKEND-API-VALIDATION-FRONTIER.72.1: lower VHDL signed scalar arithmetic` | this slice; activates `.73` |
 
 ## Changelog
 
@@ -2669,3 +2679,10 @@ items named in the 2026-06-05 remaining-work inventory.
   division/modulo, mixed signed/unsigned arithmetic, aggregate VHDL, packages,
   GHDL validation, broad expression parity, and full backend parity remain
   deferred.
+- `2026-06-06`: Completed `.72.1`; direct VHDL now lowers one-bit signed
+  scalar addition/subtraction RHS assignments and chains to `std_logic` `xor`
+  chains and signed scalar multiplication RHS assignments and chains to
+  `std_logic` `and` chains when the target and all operands are signed scalar
+  declarations. Signed scalar division/modulo and mixed signed/unsigned scalar
+  arithmetic remain fail-closed. Activated `.73` to select the next exact
+  backend/API edge.

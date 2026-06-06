@@ -3817,8 +3817,9 @@ generated-FSM top for `fsm/apb_tb.fsm`.
 Still backlog beyond those exact owners: broader generated-FSM/C4 composition
 VHDL, internal-net-heavy composition tops beyond APB, composition generic maps,
 aggregate VHDL record/array lowering, VHDL packages, multi-clock domains, GHDL
-validation, broad expression parity, scalar signed arithmetic,
-mixed signed/unsigned arithmetic, and full feature parity with the
+validation, broad expression parity, signed scalar division/modulo,
+mixed signed/unsigned scalar arithmetic, mixed signed/unsigned vector
+arithmetic, and full feature parity with the
 SystemVerilog backend. Scalar division/modulo,
 broader scalar arithmetic beyond scalar addition/subtraction/multiplication
 chains, broader arithmetic operators, mismatched-width arithmetic, and
@@ -3865,9 +3866,11 @@ VHDL `signed` signals. Generated signed vector direct-root port declarations,
 starting with `input logic signed [7:0] IN`, now lower to VHDL `signed` ports.
 Generated signed scalar direct-root declarations from one-bit signed type
 aliases, such as `input logic signed IN` and `logic signed OUT;`, now lower to
-VHDL `std_logic` ports/signals for non-arithmetic shapes; signed scalar
-addition/subtraction/multiplication arithmetic is locked fail-closed, and
-broader signed scalar arithmetic remains fail-closed.
+VHDL `std_logic` ports/signals. Signed scalar
+addition/subtraction/multiplication RHS assignments and chains now lower as
+one-bit `std_logic` bit-pattern logic: `+` and `-` become `xor` chains, and `*`
+becomes an `and` chain. Signed scalar division/modulo and mixed signed/unsigned
+scalar arithmetic remain fail-closed.
 Same-width signed vector addition/subtraction/multiplication/division/modulo
 RHS assignments now lower as signed VHDL arithmetic when the target and all operands are
 same-width signed vectors, so a signed direct-root `SUM = (+ A B)` assignment
@@ -3876,7 +3879,7 @@ emits `SUM <= A + B;`, a signed `DIFF = (- A B)` assignment emits
 `PROD <= resize(A * B, 8);`. Signed `QUOT = (/ A B)` emits
 `QUOT <= resize(A / B, 8);`, and signed `REM = (% A B)` emits
 `REM <= resize(A mod B, 8);`, rather than unsigned casts. Scalar signed
-arithmetic, mixed signed/unsigned arithmetic, broader generated-FSM/C4
+division/modulo, mixed signed/unsigned arithmetic, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal-net-heavy
 composition tops beyond APB, composition generic maps, aggregate VHDL,
 packages, GHDL validation, and full backend parity remain outside the shipped
@@ -4090,11 +4093,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.72.1` owns only direct VHDL signed scalar
-addition/subtraction/multiplication RHS lowering after the bounded APB/C4
-generated-FSM child composition VHDL top shipped for `fsm/apb_tb.fsm`. Until
-that leaf ships, signed scalar arithmetic still follows the documented
-fail-closed boundary. Package-import internals, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.73` selects the next exact backend/API edge
+after direct VHDL signed scalar addition/subtraction/multiplication RHS
+lowering shipped. Package-import internals, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, full aggregate VHDL
 record/array lowering, broader generated-FSM/C4 composition VHDL beyond the

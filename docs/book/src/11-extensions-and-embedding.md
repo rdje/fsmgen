@@ -882,6 +882,7 @@ sized-literal defaults, scalar addition/subtraction/multiplication RHS/chain
 lowering, scalar bit, signed vector, non-signed four-state logic, and vector
 `logic signed` internal declaration lowering, signed vector direct-root ports,
 signed scalar direct-root declarations,
+signed scalar addition/subtraction/multiplication RHS/chain lowering,
 same-width signed vector addition/subtraction/multiplication/division/modulo
 RHS lowering, signed vector numeric-literal
 addition/subtraction/multiplication/division/modulo, vector
@@ -889,11 +890,12 @@ numeric-literal addition/subtraction emitted by compound update/shorthand
 forms, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, and
 same-width addition/subtraction/multiplication, division/modulo, and XOR
 RHS/chain lowering, without leaking SystemVerilog module or `always_*` forms.
-Scalar division/modulo remains fail-closed for explicit VHDL facade generation.
+Scalar division/modulo, including signed scalar division/modulo, remains
+fail-closed for explicit VHDL facade generation.
 Mixed signed/unsigned vector numeric arithmetic also remains fail-closed for
 explicit VHDL facade generation.
-Signed scalar addition/subtraction/multiplication arithmetic remains
-fail-closed for explicit VHDL facade generation.
+Mixed signed/unsigned scalar arithmetic remains fail-closed for explicit VHDL
+facade generation.
 Aggregate-output direct roots are covered for the two maintained packed-vector
 fixtures.
 The facade also routes the shipped bounded composition VHDL structural tops:
@@ -2312,11 +2314,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.72.1`, which owns only direct VHDL signed
-scalar addition/subtraction/multiplication RHS lowering after the bounded
-APB/C4 generated-FSM child composition VHDL top shipped for `fsm/apb_tb.fsm`.
-Until that leaf ships, signed scalar arithmetic still follows the documented
-fail-closed boundary. Package-import internals, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.73`, which selects the next exact backend/API
+edge after direct VHDL signed scalar addition/subtraction/multiplication RHS
+lowering shipped. Package-import internals, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, full aggregate VHDL
 record/array lowering, broader generated-FSM/C4 composition VHDL beyond the

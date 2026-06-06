@@ -130,12 +130,15 @@ vector numeric-literal addition/subtraction lowers through target-width
 multiplication/division/modulo lowers through target-width `to_signed` and
 target-width resize, such as `PROD <= resize(A * to_signed(2, 8), 8);`,
 `QUOT <= resize(A / to_signed(2, 8), 8);`, and
-`REM <= resize(A mod to_signed(2, 8), 8);`. Scalar signed arithmetic and mixed
-signed/unsigned arithmetic remain outside the current direct VHDL scaffold.
-Signed scalar direct-root port/internal declarations for non-arithmetic
-one-bit signed type-alias shapes lower to `std_logic`, including declarations
-such as `IN : in std_logic;` and `signal OUT : std_logic;`, while signed
-scalar addition/subtraction/multiplication arithmetic is locked fail-closed.
+`REM <= resize(A mod to_signed(2, 8), 8);`.
+Signed scalar direct-root port/internal declarations for one-bit signed
+type-alias shapes lower to `std_logic`, including declarations such as
+`IN : in std_logic;` and `signal OUT : std_logic;`. Signed scalar
+addition/subtraction RHS assignments and chains lower to one-bit `xor`
+semantics, such as `SUM <= A xor B;`; signed scalar multiplication lowers to
+one-bit `and` semantics, such as `PROD <= A and B;`. Signed scalar
+division/modulo and mixed signed/unsigned scalar arithmetic remain outside the
+current direct VHDL scaffold.
 Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
 fail-closed direct VHDL boundary instead of lowering signed operands through
 unsigned casts.
