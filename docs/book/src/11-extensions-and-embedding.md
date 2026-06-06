@@ -2288,10 +2288,10 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.56.1`, which implements direct VHDL signed
-vector port declaration lowering after `.56` selected that exact backend edge.
-Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, signed arithmetic semantics,
+`BACKEND-API-VALIDATION-FRONTIER.57`, which selects the next exact backend/API
+or public-export edge after direct VHDL signed vector port declaration lowering
+shipped. Package-import internals, already bounded constant/enum/type
+internals, unrelated forward-IR payloads, signed arithmetic semantics,
 aggregate/composition VHDL, and full normalized semantic export stabilization
 remain out of scope until later exact leaves own them.
 

@@ -117,8 +117,18 @@ sub _parse_ports ($port_text) {
         $line =~ s/,\s*$//;
         next unless length $line;
 
+        if ($line =~ /^input\s+logic\s+signed\s+\[(\d+):(\d+)\]\s+([A-Za-z_][A-Za-z0-9_]*)$/) {
+            push @ports, _decl_hash(name => $3, direction => 'in', signed => 1, msb => $1, lsb => $2);
+            next;
+        }
+
         if ($line =~ /^input\s+wire\s+(?:\[(\d+):(\d+)\]\s+)?([A-Za-z_][A-Za-z0-9_]*)$/) {
             push @ports, _decl_hash(name => $3, direction => 'in', msb => $1, lsb => $2);
+            next;
+        }
+
+        if ($line =~ /^output(?:\s+(?:reg|wire|logic))?\s+signed\s+\[(\d+):(\d+)\]\s+([A-Za-z_][A-Za-z0-9_]*)$/) {
+            push @ports, _decl_hash(name => $3, direction => 'out', signed => 1, msb => $1, lsb => $2);
             next;
         }
 

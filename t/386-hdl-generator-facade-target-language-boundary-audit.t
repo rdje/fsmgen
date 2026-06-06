@@ -340,10 +340,11 @@ FSM
     (type signed_byte_t (four_state (signed (bits 8))))
   )
   (+size
+    (IN signed_byte_t)
     (OUT signed_byte_t)
   )
   (idle
-    (OUT = 8'h01)
+    (OUT = IN)
   )
 )
 FSM
@@ -385,6 +386,11 @@ FSM
         $signed_vhdl_result->{hdl_code},
         qr/\bentity\s+facade_direct_vhdl_signed_logic\s+is\b/s,
         'explicit VHDL facade generation emits the signed four-state logic direct entity',
+    );
+    like(
+        $signed_vhdl_result->{hdl_code},
+        qr/\bIN\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s,
+        'explicit VHDL facade generation lowers signed vector input port',
     );
     like(
         $signed_vhdl_result->{hdl_code},

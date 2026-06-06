@@ -1015,10 +1015,11 @@ FSM
     (type signed_byte_t (four_state (signed (bits 8))))
   )
   (+size
+    (IN signed_byte_t)
     (OUT signed_byte_t)
   )
   (idle
-    (OUT = 8'h01)
+    (OUT = IN)
   )
 )
 FSM
@@ -1055,13 +1056,18 @@ FSM
     my $signed_hdl = $pipeline->generate_hdl_from_file($signed_fsm_path)->{hdl_code};
     like(
         $signed_hdl,
+        qr/\bIN\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s,
+        'signed vector logic input port lowers to numeric_std signed port',
+    );
+    like(
+        $signed_hdl,
         qr/\bsignal\s+OUT\s+:\s+signed\(7\s+downto\s+0\);/s,
         'signed vector logic declaration lowers to numeric_std signed signal',
     );
     like(
         $signed_hdl,
-        qr/\bOUT\s+<=\s+"00000000";\s+if\s+\w+\s+=\s+'1'\s+then\s+OUT\s+<=\s+"00000001";/s,
-        'signed vector logic literal assignment lowering remains VHDL-shaped',
+        qr/\bOUT\s+<=\s+"00000000";\s+if\s+\w+\s+=\s+'1'\s+then\s+OUT\s+<=\s+IN;/s,
+        'signed vector logic input assignment lowering remains VHDL-shaped',
     );
     unlike($signed_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s, 'signed logic VHDL output does not leak SystemVerilog declaration syntax');
 
@@ -1074,6 +1080,11 @@ FSM
     ok(-e $signed_output_path, 'CLI writes signed four-state logic declaration VHDL output file');
 
     my $signed_cli_hdl = read_file($signed_output_path);
+    like(
+        $signed_cli_hdl,
+        qr/\bIN\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s,
+        'CLI VHDL output includes signed vector input port lowering',
+    );
     like(
         $signed_cli_hdl,
         qr/\bsignal\s+OUT\s+:\s+signed\(7\s+downto\s+0\);/s,

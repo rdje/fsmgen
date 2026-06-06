@@ -152,7 +152,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.55`,
     `BACKEND-API-VALIDATION-FRONTIER.55.1`,
     `BACKEND-API-VALIDATION-FRONTIER.56`,
-    `BACKEND-API-VALIDATION-FRONTIER.56.1`
+    `BACKEND-API-VALIDATION-FRONTIER.56.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.57`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1042,10 +1043,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.56: select VHDL signed ports`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.56.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement direct VHDL signed direct-root port declaration lowering.`
-  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL accepts generated direct-root signed vector input/output port declarations for explicit four_state signed scalar type aliases, including the t/279 signed input/output shape that emits input logic signed [7:0] IN and logic signed [7:0] OUT internally. Generated VHDL declares signed vector ports as numeric_std signed ranges and keeps the already shipped signed internal signal lowering intact. Focused pipeline, CLI, and facade coverage prove the shape lowers, while README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task tree, and memory stay synchronized. The leaf does not widen signed arithmetic semantics, scalar signed ports, aggregate VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity.`
-  Verification: `pending implementation`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL accepts generated direct-root signed vector input/output port declarations for explicit four_state signed scalar type aliases, including the t/279 signed input/output shape that emits input logic signed [7:0] IN and logic signed [7:0] OUT internally. Generated VHDL declares signed vector ports as numeric_std signed ranges and keeps the already shipped signed internal signal lowering intact. Focused pipeline, CLI, and facade coverage prove the shape lowers, while README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task tree, and memory are synchronized. The leaf does not widen signed arithmetic semantics, scalar signed ports, aggregate VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t; perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/279-declarative-scalar-types.t; prove -Iperl t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.56.1: ship VHDL signed ports`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.57`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after direct VHDL signed vector port declaration lowering shipped.`
+  Acceptance: `Choose one executable backend/API or public-export leaf from the remaining roadmap-aligned frontier before any implementation/test/source edits. The selection must record evidence, scope, non-goals, verification plan, and an exact child implementation owner.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1168,7 +1176,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 114 | `BACKEND-API-VALIDATION-FRONTIER.55` | `done` | Selected direct VHDL `logic signed` internal declaration lowering after existing tests and converter evidence showed it remains an explicit direct VHDL fail-closed boundary. |
 | 115 | `BACKEND-API-VALIDATION-FRONTIER.55.1` | `done` | Shipped direct VHDL `logic signed` internal declaration lowering without widening signed ports, signed arithmetic, aggregate/composition VHDL, GHDL validation, or full backend parity. |
 | 116 | `BACKEND-API-VALIDATION-FRONTIER.56` | `done` | Selected direct VHDL signed direct-root port declaration lowering after t/279/probe evidence showed `input logic signed [7:0] IN` remains outside the port parser. |
-| 117 | `BACKEND-API-VALIDATION-FRONTIER.56.1` | `active` | Implement direct VHDL signed vector port declaration lowering without widening signed arithmetic, aggregate/composition VHDL, GHDL validation, or full backend parity. |
+| 117 | `BACKEND-API-VALIDATION-FRONTIER.56.1` | `done` | Shipped direct VHDL signed vector port declaration lowering without widening signed arithmetic, aggregate/composition VHDL, GHDL validation, or full backend parity. |
+| 118 | `BACKEND-API-VALIDATION-FRONTIER.57` | `active` | Select the next exact backend/API or public-export edge after direct VHDL signed vector port declaration lowering shipped. |
 
 ## Decisions
 
@@ -1306,6 +1315,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.55` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `README.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `t/279-declarative-scalar-types.t`; focused scaffold/facade boundary evidence shows `logic signed [7:0] OUT;` remains an explicit direct VHDL fail-closed boundary after signed vector reg and non-signed logic declarations shipped | `PASS`; selected direct VHDL `logic signed` internal declaration lowering for `.55.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.55.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; composition/target-language boundary prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers generated vector `logic signed` internal declarations to VHDL `signed` signals; activated `.56` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.56` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/279-declarative-scalar-types.t`, and `t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/279-declarative-scalar-types.t t/1420-vhdl-direct-backend-scaffold.t`; temporary VHDL pipeline probe for the t/279 signed direct-root input/output shape failed at unsupported generated port declaration `input logic signed [7:0] IN` | `PASS`; selected direct VHDL signed vector port declaration lowering for `.56.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.56.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers signed vector direct-root ports to VHDL `signed` ports; activated `.57` |
 
 ## Commit Log
 
@@ -1427,6 +1437,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.55` | `BACKEND-API-VALIDATION-FRONTIER.55: select VHDL logic signed declarations` | selected `.55.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.55.1` | `BACKEND-API-VALIDATION-FRONTIER.55.1: ship VHDL logic signed declarations` | this slice; activates `.56` |
 | `BACKEND-API-VALIDATION-FRONTIER.56` | `BACKEND-API-VALIDATION-FRONTIER.56: select VHDL signed ports` | selected `.56.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.56.1` | `BACKEND-API-VALIDATION-FRONTIER.56.1: ship VHDL signed ports` | this slice; activates `.57` |
 
 ## Changelog
 
@@ -2036,3 +2047,10 @@ items named in the 2026-06-05 remaining-work inventory.
   Signed arithmetic semantics, scalar signed ports, aggregate VHDL,
   composition/top VHDL, packages, GHDL validation, broad expression parity,
   and full backend parity remain deferred.
+- `2026-06-06`: Completed `.56.1`; direct VHDL now lowers generated signed
+  vector direct-root port declarations to VHDL `signed` ports through pipeline,
+  CLI, and facade coverage, while preserving the already shipped `logic signed`
+  internal declaration lowering. Signed arithmetic semantics, scalar signed
+  ports, aggregate VHDL, composition/top VHDL, packages, GHDL validation, broad
+  expression parity, and full backend parity remain deferred. Activated `.57`
+  to select the next backend/API/public-export edge.
