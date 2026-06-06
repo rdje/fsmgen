@@ -906,10 +906,13 @@ standalone-DT passthrough fixture in
 port map. The C2 generated-FSM scalar-autowire fixture in
 `t/corpus/implicit_composition_system_autowire.fsm` emits VHDL-safe
 generated-child shared-datapath export ports/assignments, scalar structural
+signals, and both generated child entity port maps. The APB/C4 generated-FSM
+fixture in `fsm/apb_tb.fsm` emits the APB requester/completer child VHDL
+entities, vector APB structural signals, deterministic shared-datapath sink
 signals, and both generated child entity port maps. These outputs avoid
 SystemVerilog `module`, `assign`, `endmodule`, or `always_*` syntax.
 Other composition/top VHDL shapes remain fail-closed after typed composition IR
-parsing, with broader generated-child, APB/C4, internal-net-heavy, generic-map,
+parsing, with broader generated-child/C4, internal-net-heavy, generic-map,
 package, and full-parity composition shapes rejected by the scoped composition
 target-support diagnostic.
 That is still a scoped scaffold, not a full VHDL backend promise.
@@ -2309,16 +2312,15 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.71.1`, which implements only the bounded
-APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm`, after
-`BACKEND-API-VALIDATION-FRONTIER.71` selected that exact edge from the
-remaining supported composition VHDL sweep failure.
-Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
-record/array lowering, broader generated-FSM child composition VHDL, internal
-nets/generic maps beyond the APB fixture, broader expression parity beyond the
-shipped AMBA wrap family, and full normalized semantic export stabilization
-remain out of scope until later exact leaves own them.
+`BACKEND-API-VALIDATION-FRONTIER.72`, which selects the next exact edge after
+the bounded APB/C4 generated-FSM child composition VHDL top shipped for
+`fsm/apb_tb.fsm`. Package-import internals, already bounded constant/enum/type
+internals, unrelated forward-IR payloads, scalar signed arithmetic, full
+aggregate VHDL record/array lowering, broader generated-FSM/C4 composition
+VHDL beyond the exact shipped fixtures, internal nets/generic maps beyond APB,
+broader expression parity beyond the shipped AMBA wrap family, and full
+normalized semantic export stabilization remain out of scope until later exact
+leaves own them.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 

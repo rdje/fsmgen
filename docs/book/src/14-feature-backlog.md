@@ -346,8 +346,9 @@ bounded C3 external-RTL literal/concat fixture in
 standalone-DT passthrough fixture in
 `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, plus the bounded C2
 generated-FSM scalar-autowire fixture in
-`t/corpus/implicit_composition_system_autowire.fsm`; all have no parameter
-overrides. Other `?top` VHDL shapes still parse into typed composition IR and
+`t/corpus/implicit_composition_system_autowire.fsm`, plus the bounded APB/C4
+generated-FSM fixture in `fsm/apb_tb.fsm`; all have no parameter overrides.
+Other `?top` VHDL shapes still parse into typed composition IR and
 then fail closed with the scoped target-support diagnostic. Generic maps remain
 deferred until a later leaf owns that exact composition VHDL path.
 
@@ -3811,14 +3812,14 @@ for `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
 standalone-DT passthrough top for
 `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, plus the bounded C2
 generated-FSM scalar-autowire top for
-`t/corpus/implicit_composition_system_autowire.fsm`.
-The next active exact leaf is the bounded APB/C4 generated-FSM composition
-VHDL top for `fsm/apb_tb.fsm`; it is not shipped yet. Still backlog beyond
-that exact owner: broader generated-FSM child composition VHDL,
-internal-net-heavy composition tops, composition generic maps, aggregate VHDL
-record/array lowering, VHDL packages, multi-clock domains, GHDL validation,
-broad expression parity, scalar signed arithmetic, mixed signed/unsigned
-arithmetic, and full feature parity with the SystemVerilog backend. Scalar division/modulo,
+`t/corpus/implicit_composition_system_autowire.fsm`, plus the bounded APB/C4
+generated-FSM top for `fsm/apb_tb.fsm`.
+Still backlog beyond those exact owners: broader generated-FSM/C4 composition
+VHDL, internal-net-heavy composition tops beyond APB, composition generic maps,
+aggregate VHDL record/array lowering, VHDL packages, multi-clock domains, GHDL
+validation, broad expression parity, scalar signed arithmetic,
+mixed signed/unsigned arithmetic, and full feature parity with the
+SystemVerilog backend. Scalar division/modulo,
 broader scalar arithmetic beyond scalar addition/subtraction/multiplication
 chains, broader arithmetic operators, mismatched-width arithmetic, and
 expression contexts beyond the same-width
@@ -3843,7 +3844,10 @@ passthrough structural top now emits the standalone-DT child VHDL segment and a
 top-level `entity work.standalone_route_src` port map. The bounded C2
 generated-FSM scalar-autowire structural top now emits VHDL-safe generated-child
 shared-datapath export ports/assignments, scalar structural signals, and both
-generated child entity port maps. Other composition/top VHDL shapes remain
+generated child entity port maps. The bounded APB/C4 generated-FSM structural
+top now emits APB requester/completer child VHDL entities, vector APB
+structural signals, deterministic shared-datapath sink signals, and both child
+entity port maps. Other composition/top VHDL shapes remain
 fail-closed after typed composition IR parsing, with the pipeline and CLI
 pointing users to the scoped composition target-support diagnostic.
 
@@ -3872,10 +3876,11 @@ emits `SUM <= A + B;`, a signed `DIFF = (- A B)` assignment emits
 `PROD <= resize(A * B, 8);`. Signed `QUOT = (/ A B)` emits
 `QUOT <= resize(A / B, 8);`, and signed `REM = (% A B)` emits
 `REM <= resize(A mod B, 8);`, rather than unsigned casts. Scalar signed
-arithmetic, mixed signed/unsigned arithmetic, generated-FSM child composition
-VHDL, APB/C4 composition VHDL, internal-net-heavy composition tops, composition
-generic maps, aggregate VHDL, packages, GHDL validation, and full backend parity
-remain outside the shipped scaffold. Signed vector numeric-literal
+arithmetic, mixed signed/unsigned arithmetic, broader generated-FSM/C4
+composition VHDL beyond the exact shipped fixtures, internal-net-heavy
+composition tops beyond APB, composition generic maps, aggregate VHDL,
+packages, GHDL validation, and full backend parity remain outside the shipped
+scaffold. Signed vector numeric-literal
 addition/subtraction/multiplication/division/modulo also lower through
 target-width `to_signed`, so `SUM = (+ A 1)` emits
 `SUM <= A + to_signed(1, 8);`, `DIFF = (- A 1)` emits
@@ -4085,13 +4090,12 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.71.1` implements only the bounded APB/C4
-generated-FSM child composition VHDL top for `fsm/apb_tb.fsm`, after
-`BACKEND-API-VALIDATION-FRONTIER.71` selected that exact edge from the
-remaining supported composition VHDL sweep failure.
-Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
-record/array lowering, broader generated-FSM child composition VHDL, internal
-nets/generic maps beyond the APB fixture, broader expression parity beyond the
-shipped AMBA wrap family, and full normalized semantic export stabilization
-remain out of scope until later exact leaves own them.
+`BACKEND-API-VALIDATION-FRONTIER.72` selects the next exact backend/API edge
+after the bounded APB/C4 generated-FSM child composition VHDL top shipped for
+`fsm/apb_tb.fsm`. Package-import internals, already bounded constant/enum/type
+internals, unrelated forward-IR payloads, scalar signed arithmetic, full
+aggregate VHDL record/array lowering, broader generated-FSM/C4 composition
+VHDL beyond the exact shipped fixtures, internal nets/generic maps beyond APB,
+broader expression parity beyond the shipped AMBA wrap family, and full
+normalized semantic export stabilization remain out of scope until later exact
+leaves own them.

@@ -222,6 +222,8 @@ sub assert_vhdl_structural_top_candidate ($class, %args) {
 
     return
         if _is_vhdl_c2_generated_fsm_candidate($instances, $ports_blocks, $wiring_blocks);
+    return
+        if _is_vhdl_apb_c4_generated_fsm_candidate($instances, $ports_blocks, $wiring_blocks);
 
     my @generated = grep { $class->is_generated_child_kind($_->kind // '') } @$instances;
     my $generated_reason = _vhdl_generated_instance_reason(\@generated);
@@ -275,7 +277,7 @@ sub _confess_vhdl_composition_shape_blocked ($class, %args) {
 
     confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top, C1 standalone-DT passthrough structural top, and C2 generated-FSM scalar autowire structural top. ".
+        "but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar autowire structural top, and APB/C4 generated-FSM structural top. ".
         "Target language 'vhdl' is not implemented for this composition shape yet: $reason. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
@@ -289,7 +291,7 @@ sub _vhdl_generated_instance_reason ($instances) {
         if $kind{dtc} && !($kind{fsmc}) && @$instances == 1;
     return "generated-child and standalone-DT child composition VHDL are outside the first structural-top leaf"
         if $kind{dtc} && $kind{fsmc};
-    return "generated-child composition VHDL is outside the first structural-top leaf";
+    return "generated-child composition VHDL is outside the bounded C2 scalar-autowire and APB/C4 generated-FSM structural-top leaves";
 }
 
 sub _is_vhdl_c2_generated_fsm_candidate ($instances, $ports_blocks, $wiring_blocks) {
@@ -306,6 +308,72 @@ sub _is_vhdl_c2_generated_fsm_candidate ($instances, $ports_blocks, $wiring_bloc
         return 0 unless $expected_port{$port->name // ''};
         return 0 unless ($port->width // 0) == 1;
     }
+
+    return 1;
+}
+
+sub _is_vhdl_apb_c4_generated_fsm_candidate ($instances, $ports_blocks, $wiring_blocks) {
+    return 0 unless @$instances == 2;
+    return 0 unless @$ports_blocks == 1;
+    return 0 unless @$wiring_blocks == 1;
+
+    my %expected_instance_source = (
+        requester => 'apb_requester',
+        completer => 'apb_completer',
+    );
+    for my $instance (@$instances) {
+        my $name = $instance->name // '';
+        return 0 unless ($instance->kind // '') eq 'fsmc';
+        return 0 unless ($expected_instance_source{$name} // '') eq ($instance->source_name // '');
+        return 0 if @{$instance->parameter_overrides || []};
+        delete $expected_instance_source{$name};
+    }
+    return 0 if keys %expected_instance_source;
+
+    my %expected_port = (
+        clk => ['input', 1, 'explicit'],
+        rst_n => ['input', 1, 'explicit'],
+        start => ['input', 1, 'connect_by_name'],
+        req_write => ['input', 1, 'connect_by_name'],
+        req_addr => ['input', 32, 'connect_by_name'],
+        req_wdata => ['input', 32, 'connect_by_name'],
+        wait_cycles => ['input', 4, 'connect_by_name'],
+        busy => ['output', 1, 'connect_by_name'],
+        done => ['output', 1, 'connect_by_name'],
+        last_error => ['output', 1, 'connect_by_name'],
+        last_read_data => ['output', 32, 'connect_by_name'],
+    );
+    my @ports = @{$ports_blocks->[0]->ports || []};
+    return 0 unless @ports == keys %expected_port;
+    for my $port (@ports) {
+        my $name = $port->name // '';
+        my $expected = $expected_port{$name};
+        return 0 unless $expected;
+        return 0 unless ($port->direction // '') eq $expected->[0];
+        return 0 unless ($port->width // 0) == $expected->[1];
+        return 0 unless ($port->binding_mode // 'explicit') eq $expected->[2];
+        delete $expected_port{$name};
+    }
+    return 0 if keys %expected_port;
+
+    my %expected_link = map { $_ => 1 } (
+        'requester.PSEL->completer.PSEL',
+        'requester.PENABLE->completer.PENABLE',
+        'requester.PWRITE->completer.PWRITE',
+        'requester.PADDR->completer.PADDR',
+        'requester.PWDATA->completer.PWDATA',
+        'completer.PREADY->requester.PREADY',
+        'completer.PRDATA->requester.PRDATA',
+        'completer.PSLVERR->requester.PSLVERR',
+    );
+    my @links = @{$wiring_blocks->[0]->links || []};
+    return 0 unless @links == keys %expected_link;
+    for my $link (@links) {
+        my $key = ($link->source // '') . '->' . ($link->target // '');
+        return 0 unless $expected_link{$key};
+        delete $expected_link{$key};
+    }
+    return 0 if keys %expected_link;
 
     return 1;
 }

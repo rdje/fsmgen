@@ -26,9 +26,14 @@ my $generated_fsmc_composition_path = File::Spec->catfile(
     $repo_root,
     't/corpus/implicit_composition_system_autowire.fsm',
 );
+my $apb_c4_composition_path = File::Spec->catfile(
+    $repo_root,
+    'fsm/apb_tb.fsm',
+);
 my $bounded_output_path = File::Spec->catfile($tempdir, 'composition_intent_integer_literals.vhd');
 my $standalone_dtc_output_path = File::Spec->catfile($tempdir, 'standalone_dtc_explicit_system_autowire.vhd');
 my $generated_fsmc_output_path = File::Spec->catfile($tempdir, 'implicit_composition_system_autowire.vhd');
+my $apb_c4_output_path = File::Spec->catfile($tempdir, 'apb_tb.vhd');
 my $composition_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.fsm');
 my $output_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.vhd');
 
@@ -156,6 +161,68 @@ unlike(
     'pipeline generated-FSM composition VHDL output does not leak SystemVerilog syntax',
 );
 
+my $apb_c4_result = $pipeline->generate_hdl_from_file($apb_c4_composition_path);
+like(
+    $apb_c4_result->{hdl_code},
+    qr/\bentity\s+apb_requester\s+is\b/s,
+    'pipeline emits the APB requester child VHDL entity',
+);
+like(
+    $apb_c4_result->{hdl_code},
+    qr/\bshared_dp_export_paddr_32_h0_en\s+:\s+out\s+std_logic\b/s,
+    'pipeline emits APB requester shared-datapath export ports',
+);
+like(
+    $apb_c4_result->{hdl_code},
+    qr/\bentity\s+apb_completer\s+is\b/s,
+    'pipeline emits the APB completer child VHDL entity',
+);
+like(
+    $apb_c4_result->{hdl_code},
+    qr/\bentity\s+apb_tb\s+is\b/s,
+    'pipeline emits the bounded APB/C4 composition VHDL entity',
+);
+like(
+    $apb_c4_result->{hdl_code},
+    qr/\breq_addr\s+:\s+in\s+std_logic_vector\(31\s+downto\s+0\);/s,
+    'pipeline emits APB vector top input ports',
+);
+like(
+    $apb_c4_result->{hdl_code},
+    qr/\bwait_cycles\s+:\s+in\s+std_logic_vector\(3\s+downto\s+0\);/s,
+    'pipeline emits APB wait-cycle vector top input port',
+);
+like(
+    $apb_c4_result->{hdl_code},
+    qr/\bsignal\s+comp_link_requester_PADDR\s+:\s+std_logic_vector\(31\s+downto\s+0\);/s,
+    'pipeline emits APB vector internal structural signals',
+);
+like(
+    $apb_c4_result->{hdl_code},
+    qr/\brequester\s+:\s+entity\s+work\.apb_requester\b/s,
+    'pipeline emits the APB requester VHDL entity port map',
+);
+like(
+    $apb_c4_result->{hdl_code},
+    qr/\bPADDR\s+=>\s+comp_link_requester_PADDR,/s,
+    'pipeline maps requester APB address output to the structural link signal',
+);
+like(
+    $apb_c4_result->{hdl_code},
+    qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\b/s,
+    'pipeline emits the APB completer VHDL entity port map',
+);
+like(
+    $apb_c4_result->{hdl_code},
+    qr/\bPRDATA\s+=>\s+comp_link_completer_PRDATA,/s,
+    'pipeline maps completer APB read-data output to the structural link signal',
+);
+unlike(
+    $apb_c4_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b/s,
+    'pipeline APB/C4 composition VHDL output does not leak SystemVerilog syntax',
+);
+
 my ($bounded_success, $bounded_error_message, $bounded_full_buf, $bounded_stdout_buf, $bounded_stderr_buf) = run(
     command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $bounded_output_path, $bounded_composition_path],
 );
@@ -257,6 +324,43 @@ unlike(
     'CLI generated-FSM composition VHDL output does not leak SystemVerilog syntax',
 );
 
+my ($apb_c4_success, $apb_c4_error_message, $apb_c4_full_buf, $apb_c4_stdout_buf, $apb_c4_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $apb_c4_output_path, $apb_c4_composition_path],
+);
+
+my $apb_c4_combined_output = join(
+    '',
+    @{ $apb_c4_stdout_buf || [] },
+    @{ $apb_c4_stderr_buf || [] },
+    ($apb_c4_error_message || ''),
+);
+
+ok($apb_c4_success, 'CLI accepts bounded composition --language vhdl for the APB/C4 fixture')
+    or diag($apb_c4_combined_output);
+ok(-e $apb_c4_output_path, 'CLI writes bounded APB/C4 composition VHDL output');
+
+my $apb_c4_cli_hdl = read_file($apb_c4_output_path);
+like(
+    $apb_c4_cli_hdl,
+    qr/\bentity\s+apb_tb\s+is\b/s,
+    'CLI APB/C4 composition VHDL output includes the top entity',
+);
+like(
+    $apb_c4_cli_hdl,
+    qr/\bsignal\s+comp_link_requester_PWDATA\s+:\s+std_logic_vector\(31\s+downto\s+0\);/s,
+    'CLI APB/C4 composition VHDL output includes vector structural signals',
+);
+like(
+    $apb_c4_cli_hdl,
+    qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\b/s,
+    'CLI APB/C4 composition VHDL output includes the completer child instance',
+);
+unlike(
+    $apb_c4_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b/s,
+    'CLI APB/C4 composition VHDL output does not leak SystemVerilog syntax',
+);
+
 my $exception = eval {
     $pipeline->generate_hdl_from_file($composition_path);
     undef;
@@ -265,7 +369,7 @@ $exception = $@;
 
 like(
     $exception,
-    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, and C2 generated-FSM scalar autowire structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the first structural-top leaf/s,
+    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar autowire structural top, and APB\/C4 generated-FSM structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire and APB\/C4 generated-FSM structural-top leaves/s,
     'pipeline now says composition target support is blocked for unsupported composition backends',
 );
 like(
@@ -300,7 +404,7 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, and C2 generated-FSM scalar autowire structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the first structural-top leaf/s,
+    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar autowire structural top, and APB\/C4 generated-FSM structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire and APB\/C4 generated-FSM structural-top leaves/s,
     'CLI surfaces the blocked composition target-support diagnostic',
 );
 like(

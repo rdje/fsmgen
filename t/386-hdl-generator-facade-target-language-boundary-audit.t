@@ -250,6 +250,48 @@ subtest 'facade target_language option routes bounded generated-FSM composition 
     );
 };
 
+subtest 'facade target_language option routes bounded APB/C4 composition VHDL structural top behavior' => sub {
+    my $composition_path = repo_file('fsm/apb_tb.fsm');
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+apb_requester\s+is\b/s,
+        'explicit VHDL facade generation emits the APB requester child entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+apb_tb\s+is\b/s,
+        'explicit VHDL facade generation emits the APB/C4 composition entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bsignal\s+comp_link_requester_PADDR\s+:\s+std_logic_vector\(31\s+downto\s+0\);/s,
+        'explicit VHDL facade generation emits APB vector structural signals',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\brequester\s+:\s+entity\s+work\.apb_requester\b/s,
+        'explicit VHDL facade generation emits the APB requester port map',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\b/s,
+        'explicit VHDL facade generation emits the APB completer port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL APB/C4 composition generation does not leak SystemVerilog structural syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL delayed-pulse scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_delayed_pulse_vhdl.fsm');

@@ -54,8 +54,8 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 
 ## Project objective
 FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL, and now accepts `.isf` intent-scheduling sources that lower into explicit scheduled `.fsm` before HDL generation.
-Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar bit, signed scalar/vector, non-signed four-state logic, and vector `logic signed` internal declaration lowering, scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, and a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`.
-Scalar division/modulo in the direct VHDL scaffold remains an explicit fail-closed boundary; full aggregate record/array VHDL, broader generated-FSM child composition VHDL, APB/C4 composition VHDL, internal-net-heavy composition tops, generic maps, and full composition VHDL parity remain deferred.
+Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar bit, signed scalar/vector, non-signed four-state logic, and vector `logic signed` internal declaration lowering, scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm`.
+Scalar division/modulo in the direct VHDL scaffold remains an explicit fail-closed boundary; full aggregate record/array VHDL, broader generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal-net-heavy composition tops beyond APB, generic maps, and full composition VHDL parity remain deferred.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order
@@ -861,18 +861,17 @@ entity plus a top-level `entity work.standalone_route_src` port map for the
 explicit passthrough ports. The bounded C2 generated-FSM scalar-autowire top is
 also shipped for `t/corpus/implicit_composition_system_autowire.fsm`, emitting
 VHDL-safe generated-child shared-datapath export ports/assignments, scalar
-structural signals, and both generated child entity port maps. The current
-active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.71`: select the next exact backend/API edge
-after the bounded C2 generated-FSM child composition VHDL top shipped for
-`t/corpus/implicit_composition_system_autowire.fsm`. Scalar signed arithmetic
-remains explicitly fail-closed; full aggregate VHDL record/array
-lowering, broader generated-FSM child composition VHDL, APB/C4 composition
-VHDL, internal-net-heavy/bus-heavy tops beyond the shipped fixture, generic
-maps, packages, GHDL validation, broad expression parity beyond the shipped
-AMBA wrap family, package-import internals, unrelated forward-IR payloads, and
-full normalized semantic export stabilization remain out of scope until later
-exact leaves own them.
+structural signals, and both generated child entity port maps. The bounded
+APB/C4 generated-FSM top is shipped for `fsm/apb_tb.fsm`, emitting
+`apb_requester` and `apb_completer` child VHDL entities, vector APB structural
+signals, deterministic shared-datapath sink signals, and both child entity port
+maps. Scalar signed arithmetic remains explicitly fail-closed; full aggregate
+VHDL record/array lowering, broader generated-FSM/C4 composition VHDL beyond
+the exact shipped fixtures, internal-net-heavy/bus-heavy tops beyond APB,
+generic maps, packages, GHDL validation, broad expression parity beyond the
+shipped AMBA wrap family, package-import internals, unrelated forward-IR
+payloads, and full normalized semantic export stabilization remain out of scope
+until later exact leaves own them.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit

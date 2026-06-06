@@ -11,10 +11,15 @@ answers:
   - "does composition VHDL support standalone-DT children?"
   - "does composition VHDL support generated-FSM children?"
   - "does composition VHDL support C2 generated-FSM children?"
+  - "does composition VHDL support APB/C4 generated-FSM children?"
+  - "does composition VHDL support APB composition tops?"
+  - "does composition VHDL support APB/C4 composition tops?"
   - "does --language vhdl work for standalone-DT composition tops?"
   - "does --language vhdl work for C2 generated-FSM composition tops?"
+  - "does --language vhdl work for APB/C4 composition tops?"
   - "does target_language vhdl work for standalone-DT composition roots?"
   - "does target_language vhdl work for C2 generated-FSM composition roots?"
+  - "does target_language vhdl work for APB/C4 composition roots?"
   - "does direct VHDL support aggregate outputs?"
   - "is composition VHDL supported?"
   - "is GHDL validation active?"
@@ -160,11 +165,16 @@ composition VHDL top is also shipped for
 `t/corpus/implicit_composition_system_autowire.fsm`. That subset emits VHDL-safe
 generated-child shared-datapath export ports/assignments, scalar structural
 signals, and VHDL entity port maps for `implicit_autowire_producer` and
-`implicit_autowire_consumer`, without SystemVerilog structural syntax. Other
-composition/top VHDL shapes remain locked fail-closed by focused pipeline and
-CLI coverage: `?top` sources are parsed into typed composition IR, then
-unsupported `target_language => 'vhdl'` and `--language vhdl` shapes are
-rejected with the scoped composition target-support diagnostic. Broader
-generated-FSM child composition VHDL, APB/C4 composition VHDL, internal
-nets/generic maps, packages, multi-clock domains, broad expression parity, GHDL
-validation, and full SystemVerilog parity remain deferred or fail-closed.
+`implicit_autowire_consumer`, without SystemVerilog structural syntax. The
+bounded APB/C4 generated-FSM child composition VHDL top is also shipped for
+`fsm/apb_tb.fsm`. That subset emits VHDL-safe APB requester/completer child
+segments, vector APB structural signals, deterministic shared-datapath sink
+signals, and VHDL entity port maps for `apb_requester` and `apb_completer`,
+without SystemVerilog structural syntax. Other composition/top VHDL shapes
+remain locked fail-closed by focused pipeline and CLI coverage: `?top` sources
+are parsed into typed composition IR, then unsupported
+`target_language => 'vhdl'` and `--language vhdl` shapes are rejected with the
+scoped composition target-support diagnostic. Broader generated-FSM/C4
+composition VHDL beyond the exact shipped fixtures, internal nets/generic maps,
+packages, multi-clock domains, broad expression parity, GHDL validation, and
+full SystemVerilog parity remain deferred or fail-closed.

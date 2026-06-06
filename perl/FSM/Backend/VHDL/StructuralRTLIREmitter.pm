@@ -8,9 +8,9 @@ FSM::Backend::VHDL::StructuralRTLIREmitter - VHDL emitter for bounded structural
 
 Emits the bounded VHDL composition-top shapes from StructuralRTLIR. The
 current leaves intentionally support only external-RTL structural instances or
-one standalone-DT child passthrough instance plus one bounded scalar C2
-generated-FSM child top, direct scalar/vector top ports, VHDL-form auxiliary
-assignments, scalar signal declarations, and port-map actuals whose connection
+one standalone-DT child passthrough instance plus bounded generated-FSM child
+tops, direct scalar/vector top ports, VHDL-form auxiliary assignments,
+scalar/vector signal declarations, and port-map actuals whose connection
 expressions already render through the backend-neutral StructuralRTLIR
 expression helper.
 
@@ -43,9 +43,6 @@ sub emit_module ($class, $structural_rtl_ir) {
     my @nets = @{$structural->{nets} || []};
     my @instances = @{$structural->{instances} || []};
     my @auxiliary_assignments = @{$structural->{auxiliary_assignments} || []};
-
-    confess _unsupported('internal structural nets beyond scalar signals are outside the bounded composition VHDL structural-top leaves')
-        if grep { ($_->{width} // 1) != 1 } @nets;
 
     my @port_lines = _render_port_lines(\@ports);
     my @net_lines = _render_signal_lines(\@nets);
@@ -189,7 +186,7 @@ __END__
 =head2 emit_module
 
 Renders one bounded VHDL structural top from StructuralRTLIR. Anything outside
-the shipped external-RTL literal/concat, standalone-DT passthrough, and scalar
-C2 generated-FSM composition-top leaves fails closed.
+the shipped external-RTL literal/concat, standalone-DT passthrough, and exact
+generated-FSM composition-top leaves fails closed.
 
 =cut

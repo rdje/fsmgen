@@ -115,12 +115,13 @@ sub generate_from_source ($class, %args) {
     my @segments = @child_segments;
     if (($target_language // '') eq 'vhdl') {
         confess
-            "Composition target support is blocked because generated-child VHDL composition is outside the first structural-top leaf. ".
+            "Composition target support is blocked because generated-child VHDL composition is outside the bounded VHDL structural-top leaves. ".
             "Target language 'vhdl' is not implemented for this composition shape yet. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             if @child_segments
                 && !_is_bounded_standalone_dt_vhdl_top($composition_plan)
-                && !_is_bounded_generated_fsm_c2_vhdl_top($composition_plan);
+                && !_is_bounded_generated_fsm_c2_vhdl_top($composition_plan)
+                && !_is_bounded_apb_c4_vhdl_top($composition_plan);
         push @segments, FSM::Backend::VHDL::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     } else {
         push @segments, FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
@@ -201,6 +202,101 @@ sub _is_bounded_generated_fsm_c2_vhdl_top ($composition_plan) {
     }
 
     return 1;
+}
+
+sub _is_bounded_apb_c4_vhdl_top ($composition_plan) {
+    return 0 unless ($composition_plan->lane // '') eq 'C4';
+    my @instances = @{$composition_plan->instances || []};
+    my @nets = @{$composition_plan->nets || []};
+    my @ports = @{$composition_plan->ports || []};
+    return 0 unless @instances == 2;
+    return 0 unless @nets == 31;
+    return 0 unless @ports == 11;
+    return 0 if @{$composition_plan->auxiliary_assignments || []};
+
+    my %expected_instance_module = (
+        requester => 'apb_requester',
+        completer => 'apb_completer',
+    );
+    for my $instance (@instances) {
+        my $name = $instance->instance_name // '';
+        return 0 unless ($instance->kind // '') eq 'fsmc';
+        return 0 unless ($expected_instance_module{$name} // '') eq ($instance->module_name // '');
+        return 0 if @{$instance->parameter_overrides || []};
+        delete $expected_instance_module{$name};
+    }
+    return 0 if keys %expected_instance_module;
+
+    return 0 unless _entries_match_widths(
+        \@ports,
+        {
+            clk => 1,
+            rst_n => 1,
+            start => 1,
+            req_write => 1,
+            req_addr => 32,
+            req_wdata => 32,
+            wait_cycles => 4,
+            busy => 1,
+            done => 1,
+            last_error => 1,
+            last_read_data => 32,
+        },
+    );
+
+    return 0 unless _entries_match_widths(
+        \@nets,
+        {
+            comp_link_completer_PRDATA => 32,
+            comp_link_completer_PREADY => 1,
+            comp_link_completer_PSLVERR => 1,
+            comp_link_requester_PADDR => 32,
+            comp_link_requester_PENABLE => 1,
+            comp_link_requester_PSEL => 1,
+            comp_link_requester_PWDATA => 32,
+            comp_link_requester_PWRITE => 1,
+            shared_dp_unused_requester_shared_dp_export_paddr_32_h0_en => 1,
+            shared_dp_unused_requester_shared_dp_export_paddr_addr_q_en => 1,
+            shared_dp_unused_requester_shared_dp_export_penable_0_en => 1,
+            shared_dp_unused_requester_shared_dp_export_penable_1_en => 1,
+            shared_dp_unused_requester_shared_dp_export_psel_0_en => 1,
+            shared_dp_unused_requester_shared_dp_export_psel_1_en => 1,
+            shared_dp_unused_requester_shared_dp_export_pwdata_32_h0_en => 1,
+            shared_dp_unused_requester_shared_dp_export_pwdata_wdata_q_en => 1,
+            shared_dp_unused_requester_shared_dp_export_pwrite_0_en => 1,
+            shared_dp_unused_requester_shared_dp_export_pwrite_write_q_en => 1,
+            shared_dp_unused_requester_shared_dp_export_busy_0_en => 1,
+            shared_dp_unused_requester_shared_dp_export_busy_1_en => 1,
+            shared_dp_unused_requester_shared_dp_export_done_0_en => 1,
+            shared_dp_unused_requester_shared_dp_export_done_1_en => 1,
+            shared_dp_unused_requester_shared_dp_export_last_error_0_en => 1,
+            shared_dp_unused_requester_shared_dp_export_last_error_pslverr_en => 1,
+            shared_dp_unused_requester_shared_dp_export_last_read_data_prdata_en => 1,
+            shared_dp_unused_completer_shared_dp_export_prdata_32_h0_en => 1,
+            shared_dp_unused_completer_shared_dp_export_prdata_reg_data_q_en => 1,
+            shared_dp_unused_completer_shared_dp_export_pready_0_en => 1,
+            shared_dp_unused_completer_shared_dp_export_pready_1_en => 1,
+            shared_dp_unused_completer_shared_dp_export_pslverr_0_en => 1,
+            shared_dp_unused_completer_shared_dp_export_pslverr_1_en => 1,
+        },
+    );
+
+    return 1;
+}
+
+sub _entries_match_widths ($entries, $expected_widths) {
+    my %remaining = %$expected_widths;
+    return 0 unless @$entries == keys %remaining;
+
+    for my $entry (@$entries) {
+        my $name = ref($entry) eq 'HASH' ? ($entry->{name} // '') : $entry->name;
+        my $width = ref($entry) eq 'HASH' ? ($entry->{width} // 0) : $entry->width;
+        return 0 unless exists $remaining{$name};
+        return 0 unless $width == $remaining{$name};
+        delete $remaining{$name};
+    }
+
+    return keys(%remaining) == 0 ? 1 : 0;
 }
 
 1;
