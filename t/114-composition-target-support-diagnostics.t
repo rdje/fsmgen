@@ -18,7 +18,12 @@ my $bounded_composition_path = File::Spec->catfile(
     $repo_root,
     't/corpus/composition_intent_integer_literals.fsm',
 );
+my $standalone_dtc_composition_path = File::Spec->catfile(
+    $repo_root,
+    't/corpus/standalone_dtc_explicit_system_autowire.fsm',
+);
 my $bounded_output_path = File::Spec->catfile($tempdir, 'composition_intent_integer_literals.vhd');
+my $standalone_dtc_output_path = File::Spec->catfile($tempdir, 'standalone_dtc_explicit_system_autowire.vhd');
 my $composition_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.fsm');
 my $output_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.vhd');
 
@@ -87,6 +92,28 @@ unlike(
     'pipeline bounded composition VHDL output does not leak SystemVerilog syntax',
 );
 
+my $standalone_dtc_result = $pipeline->generate_hdl_from_file($standalone_dtc_composition_path);
+like(
+    $standalone_dtc_result->{hdl_code},
+    qr/\bentity\s+standalone_route_src\s+is\b/s,
+    'pipeline emits the standalone-DT child VHDL entity',
+);
+like(
+    $standalone_dtc_result->{hdl_code},
+    qr/\bentity\s+standalone_dtc_explicit_system_autowire\s+is\b/s,
+    'pipeline emits the bounded C1 standalone-DT composition VHDL entity',
+);
+like(
+    $standalone_dtc_result->{hdl_code},
+    qr/\brouter\s+:\s+entity\s+work\.standalone_route_src\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*rst_n\s+=>\s+rst_n,\s*data_in\s+=>\s+data_in,\s*result_data\s+=>\s+result_data\s*\);/s,
+    'pipeline emits the standalone-DT child VHDL entity port map',
+);
+unlike(
+    $standalone_dtc_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b/s,
+    'pipeline standalone-DT composition VHDL output does not leak SystemVerilog syntax',
+);
+
 my ($bounded_success, $bounded_error_message, $bounded_full_buf, $bounded_stdout_buf, $bounded_stderr_buf) = run(
     command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $bounded_output_path, $bounded_composition_path],
 );
@@ -119,6 +146,38 @@ unlike(
     'CLI bounded composition VHDL output does not leak SystemVerilog syntax',
 );
 
+my ($standalone_dtc_success, $standalone_dtc_error_message, $standalone_dtc_full_buf, $standalone_dtc_stdout_buf, $standalone_dtc_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $standalone_dtc_output_path, $standalone_dtc_composition_path],
+);
+
+my $standalone_dtc_combined_output = join(
+    '',
+    @{ $standalone_dtc_stdout_buf || [] },
+    @{ $standalone_dtc_stderr_buf || [] },
+    ($standalone_dtc_error_message || ''),
+);
+
+ok($standalone_dtc_success, 'CLI accepts bounded composition --language vhdl for the C1 standalone-DT fixture')
+    or diag($standalone_dtc_combined_output);
+ok(-e $standalone_dtc_output_path, 'CLI writes bounded standalone-DT composition VHDL output');
+
+my $standalone_dtc_cli_hdl = read_file($standalone_dtc_output_path);
+like(
+    $standalone_dtc_cli_hdl,
+    qr/\bentity\s+standalone_route_src\s+is\b/s,
+    'CLI standalone-DT composition VHDL output includes the child entity',
+);
+like(
+    $standalone_dtc_cli_hdl,
+    qr/\brouter\s+:\s+entity\s+work\.standalone_route_src\b/s,
+    'CLI standalone-DT composition VHDL output includes the child instance',
+);
+unlike(
+    $standalone_dtc_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b/s,
+    'CLI standalone-DT composition VHDL output does not leak SystemVerilog syntax',
+);
+
 my $exception = eval {
     $pipeline->generate_hdl_from_file($composition_path);
     undef;
@@ -127,7 +186,7 @@ $exception = $@;
 
 like(
     $exception,
-    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaf only emits the bounded C3 external-RTL literal\/concat structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the first structural-top leaf/s,
+    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top and C1 standalone-DT passthrough structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the first structural-top leaf/s,
     'pipeline now says composition target support is blocked for unsupported composition backends',
 );
 like(
@@ -162,7 +221,7 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaf only emits the bounded C3 external-RTL literal\/concat structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the first structural-top leaf/s,
+    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top and C1 standalone-DT passthrough structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the first structural-top leaf/s,
     'CLI surfaces the blocked composition target-support diagnostic',
 );
 like(

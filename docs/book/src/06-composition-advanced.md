@@ -816,7 +816,8 @@ imports, undeclared override names fail against the generated child's direct
 overrides must match the child default's aggregate shape, and current
 Verilog-family emission lowers valid generated-child overrides to
 SystemVerilog `#(...)` instance parameters. VHDL generic-map lowering remains a
-backend follow-up.
+backend follow-up; the shipped C3 external-RTL and C1 standalone-DT composition
+VHDL tops have no parameter overrides.
 
 The same bounded expression value surface is accepted for generated-child
 overrides and for the direct `+params` defaults declared in the generated child

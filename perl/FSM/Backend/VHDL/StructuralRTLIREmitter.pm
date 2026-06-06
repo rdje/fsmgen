@@ -6,11 +6,12 @@ FSM::Backend::VHDL::StructuralRTLIREmitter - VHDL emitter for bounded structural
 
 =head1 DESCRIPTION
 
-Emits the first bounded VHDL composition-top shape from StructuralRTLIR. The
-current leaf intentionally supports only external-RTL structural instances,
-direct scalar/vector top ports, VHDL-form auxiliary assignments, and port-map
-actuals whose connection expressions already render through the backend-neutral
-StructuralRTLIR expression helper.
+Emits the bounded VHDL composition-top shapes from StructuralRTLIR. The
+current leaves intentionally support only external-RTL structural instances or
+one standalone-DT child passthrough instance, direct scalar/vector top ports,
+VHDL-form auxiliary assignments, and port-map actuals whose connection
+expressions already render through the backend-neutral StructuralRTLIR
+expression helper.
 
 =cut
 
@@ -95,8 +96,11 @@ sub _render_port_lines ($ports) {
 }
 
 sub _render_instance_block ($instance) {
-    confess _unsupported('generated-child composition VHDL is outside the first structural-top leaf')
-        unless ($instance->{kind} // '') eq 'rtl';
+    my $instance_kind = $instance->{kind} // '';
+    confess _unsupported('generated-FSM child composition VHDL is outside the bounded structural-top leaves')
+        if $instance_kind eq 'fsmc';
+    confess _unsupported("child kind '$instance_kind' is outside the bounded structural-top leaves")
+        unless $instance_kind eq 'rtl' || $instance_kind eq 'dtc';
     confess _unsupported('composition VHDL generic maps are outside the first structural-top leaf')
         if @{$instance->{parameter_overrides} || []};
 
@@ -173,6 +177,7 @@ __END__
 =head2 emit_module
 
 Renders one bounded VHDL structural top from StructuralRTLIR. Anything outside
-the first external-RTL literal/concat composition-top leaf fails closed.
+the shipped external-RTL literal/concat and standalone-DT passthrough
+composition-top leaves fails closed.
 
 =cut

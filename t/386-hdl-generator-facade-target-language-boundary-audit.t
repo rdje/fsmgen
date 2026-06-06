@@ -176,6 +176,38 @@ subtest 'facade target_language option routes bounded composition VHDL structura
     );
 };
 
+subtest 'facade target_language option routes bounded standalone-DT composition VHDL structural top behavior' => sub {
+    my $composition_path = repo_file('t/corpus/standalone_dtc_explicit_system_autowire.fsm');
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+standalone_route_src\s+is\b/s,
+        'explicit VHDL facade generation emits the standalone-DT child entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+standalone_dtc_explicit_system_autowire\s+is\b/s,
+        'explicit VHDL facade generation emits the standalone-DT composition entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\brouter\s+:\s+entity\s+work\.standalone_route_src\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*rst_n\s+=>\s+rst_n,\s*data_in\s+=>\s+data_in,\s*result_data\s+=>\s+result_data\s*\);/s,
+        'explicit VHDL facade generation emits the standalone-DT passthrough port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL standalone-DT composition generation does not leak SystemVerilog structural syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL delayed-pulse scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_delayed_pulse_vhdl.fsm');

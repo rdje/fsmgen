@@ -64,6 +64,7 @@ sub build_plan ($class, %args) {
         fsm_file => $fsm_file,
         header => $header,
         instances => \@instances,
+        ports_blocks => \@ports_blocks,
         wiring_blocks => \@wiring_blocks,
     );
 
@@ -214,29 +215,54 @@ sub assert_vhdl_structural_top_candidate ($class, %args) {
     return unless $target_language eq 'vhdl';
 
     my $instances = $args{instances} || [];
+    my $ports_blocks = $args{ports_blocks} || [];
     my $wiring_blocks = $args{wiring_blocks} || [];
     my $fsm_file = $args{fsm_file};
     my $header = $args{header};
 
-    my @non_rtl = grep { ($_->kind // '') ne 'rtl' } @$instances;
-    my $non_rtl_reason = _vhdl_non_rtl_instance_reason(\@non_rtl);
+    my @generated = grep { $class->is_generated_child_kind($_->kind // '') } @$instances;
+    my $generated_reason = _vhdl_generated_instance_reason(\@generated);
     $class->_confess_vhdl_composition_shape_blocked(
         fsm_file => $fsm_file,
         header => $header,
-        reason => $non_rtl_reason,
-    ) if @non_rtl;
+        reason => $generated_reason,
+    ) if $generated_reason;
 
     $class->_confess_vhdl_composition_shape_blocked(
         fsm_file => $fsm_file,
         header => $header,
-        reason => "the first structural-top leaf requires exactly one external '?rtl' instance",
+        reason => "the bounded VHDL composition leaves require exactly one child instance",
     ) unless @$instances == 1;
 
+    my $instance_kind = $instances->[0]->kind // '';
+    if ($instance_kind eq 'rtl') {
+        $class->_confess_vhdl_composition_shape_blocked(
+            fsm_file => $fsm_file,
+            header => $header,
+            reason => "the C3 external-RTL VHDL leaf requires explicit literal/concat '?wiring'",
+        ) unless @$wiring_blocks;
+        return;
+    }
+
+    if ($instance_kind eq 'dtc') {
+        $class->_confess_vhdl_composition_shape_blocked(
+            fsm_file => $fsm_file,
+            header => $header,
+            reason => "the C1 standalone-DT VHDL leaf requires no '?wiring' blocks",
+        ) if @$wiring_blocks;
+        $class->_confess_vhdl_composition_shape_blocked(
+            fsm_file => $fsm_file,
+            header => $header,
+            reason => "the C1 standalone-DT VHDL leaf requires one explicit non-empty '?ports' block",
+        ) unless @$ports_blocks == 1 && @{$ports_blocks->[0]->ports || []};
+        return;
+    }
+
     $class->_confess_vhdl_composition_shape_blocked(
         fsm_file => $fsm_file,
         header => $header,
-        reason => "the first structural-top leaf requires explicit literal/concat '?wiring'",
-    ) unless @$wiring_blocks;
+        reason => "child kind '$instance_kind' is outside the bounded VHDL composition leaves",
+    );
 }
 
 sub _confess_vhdl_composition_shape_blocked ($class, %args) {
@@ -246,15 +272,18 @@ sub _confess_vhdl_composition_shape_blocked ($class, %args) {
 
     confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but composition target support is blocked because the current active VHDL composition leaf only emits the bounded C3 external-RTL literal/concat structural top. ".
+        "but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top and C1 standalone-DT passthrough structural top. ".
         "Target language 'vhdl' is not implemented for this composition shape yet: $reason. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
-sub _vhdl_non_rtl_instance_reason ($instances) {
+sub _vhdl_generated_instance_reason ($instances) {
+    return undef
+        unless @$instances;
+
     my %kind = map { (($_->kind // '') => 1) } @$instances;
-    return "standalone-DT child composition VHDL is outside the first structural-top leaf"
-        if $kind{dtc} && !($kind{fsmc});
+    return undef
+        if $kind{dtc} && !($kind{fsmc}) && @$instances == 1;
     return "generated-child and standalone-DT child composition VHDL are outside the first structural-top leaf"
         if $kind{dtc} && $kind{fsmc};
     return "generated-child composition VHDL is outside the first structural-top leaf";

@@ -118,7 +118,7 @@ sub generate_from_source ($class, %args) {
             "Composition target support is blocked because generated-child VHDL composition is outside the first structural-top leaf. ".
             "Target language 'vhdl' is not implemented for this composition shape yet. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            if @child_segments;
+            if @child_segments && !_is_bounded_standalone_dt_vhdl_top($composition_plan);
         push @segments, FSM::Backend::VHDL::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     } else {
         push @segments, FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
@@ -166,6 +166,16 @@ sub _clone ($value) {
     return {map { $_ => _clone($value->{$_}) } keys %$value} if ref($value) eq 'HASH';
     return dclone($value) if ref($value);
     return $value;
+}
+
+sub _is_bounded_standalone_dt_vhdl_top ($composition_plan) {
+    my @instances = @{$composition_plan->instances || []};
+    return 0 unless @instances == 1;
+    return 0 unless ($instances[0]->kind // '') eq 'dtc';
+    return 0 if @{$composition_plan->nets || []};
+    return 0 if @{$composition_plan->auxiliary_assignments || []};
+    return 0 if @{$instances[0]->parameter_overrides || []};
+    return 1;
 }
 
 1;

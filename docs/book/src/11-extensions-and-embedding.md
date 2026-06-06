@@ -896,11 +896,15 @@ Signed scalar addition/subtraction/multiplication arithmetic remains
 fail-closed for explicit VHDL facade generation.
 Aggregate-output direct roots are covered for the two maintained packed-vector
 fixtures.
-The facade also routes one bounded composition VHDL structural top: the C3
-external-RTL literal/concat fixture in
+The facade also routes the shipped bounded composition VHDL structural tops:
+the C3 external-RTL literal/concat fixture in
 `t/corpus/composition_intent_integer_literals.fsm` emits VHDL concurrent
-literal/concat assignments and an `entity work.uart_tx` port map without
-SystemVerilog `module`, `assign`, `endmodule`, or `always_*` syntax.
+literal/concat assignments and an `entity work.uart_tx` port map, and the C1
+standalone-DT passthrough fixture in
+`t/corpus/standalone_dtc_explicit_system_autowire.fsm` emits the
+`standalone_route_src` child VHDL entity plus an `entity work.standalone_route_src`
+port map. Both outputs avoid SystemVerilog `module`, `assign`, `endmodule`, or
+`always_*` syntax.
 Other composition/top VHDL shapes remain fail-closed after typed composition IR
 parsing, with generated-child, APB/C4, internal-net-heavy, generic-map, package,
 and full-parity composition shapes rejected by the scoped composition
@@ -2302,10 +2306,10 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.69.1`, which implements only the bounded C1
-standalone-DT child composition VHDL top for
-`t/corpus/standalone_dtc_explicit_system_autowire.fsm` after the first bounded
-C3 external-RTL literal/concat composition VHDL top shipped.
+`BACKEND-API-VALIDATION-FRONTIER.70`, which selects the next exact backend/API
+edge after the bounded C1 standalone-DT child composition VHDL top for
+`t/corpus/standalone_dtc_explicit_system_autowire.fsm` shipped alongside the
+bounded C3 external-RTL literal/concat composition VHDL top.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
 record/array lowering, generated-FSM child composition VHDL, APB/C4

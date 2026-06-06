@@ -54,13 +54,15 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   width.
 - Composition VHDL is shipped only for the bounded C3 external-RTL
   literal/concat structural top in
-  `t/corpus/composition_intent_integer_literals.fsm`. Standalone-DT child
-  composition VHDL, generated-FSM child composition VHDL, APB/C4 composition
-  VHDL, internal-net-heavy tops, generic maps, full aggregate VHDL record/array
-  lowering, broad expression parity, scalar division/modulo and broader scalar
-  arithmetic, signed arithmetic operators beyond same-width vector
-  addition/subtraction/multiplication/division/modulo, GHDL validation,
-  packages, multi-clock domains, and full feature parity remain deferred.
+  `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
+  standalone-DT child passthrough top in
+  `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. Generated-FSM child
+  composition VHDL, APB/C4 composition VHDL, internal-net-heavy tops, generic
+  maps, full aggregate VHDL record/array lowering, broad expression parity,
+  scalar division/modulo and broader scalar arithmetic, signed arithmetic
+  operators beyond same-width vector add/subtract/multiply/divide/modulo, GHDL
+  validation, packages, multi-clock domains, and full feature parity remain
+  deferred.
 - Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
   fail-closed direct VHDL boundary by focused pipeline and facade coverage.
 - Signed scalar addition/subtraction/multiplication arithmetic is locked as an
@@ -72,11 +74,12 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - Bounded direct aggregate-output roots now lower as packed
   `std_logic_vector` ports for the two maintained fixtures; full VHDL
   record/array aggregate lowering remains deferred.
-- Composition/top VHDL is locked to the first structural-top leaf: the current
-  pipeline and CLI accept `target_language => 'vhdl'` / `--language vhdl` only
-  for the C3 external-RTL literal/concat fixture. Other `?top` shapes still
-  parse into typed composition IR and then fail closed with the scoped
-  composition target-support diagnostic.
+- Composition/top VHDL is locked to the shipped structural-top leaves: the
+  current pipeline and CLI accept `target_language => 'vhdl'` / `--language
+  vhdl` only for the C3 external-RTL literal/concat fixture and the explicit
+  C1 standalone-DT passthrough fixture. Other `?top` shapes still parse into
+  typed composition IR and then fail closed with the scoped composition
+  target-support diagnostic.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -86,12 +89,13 @@ SystemVerilog-first-then-convert pattern already used for Verilog.
 ## Scope boundary — what the first lane covers
 The VHDL lane is intentionally narrow:
 
-1. **Direct-root scaffold plus one bounded composition structural top**
+1. **Direct-root scaffold plus two bounded composition structural tops**
    - Direct roots cover `?fsm:name` and `?dt:name`
    - Composition roots cover only the C3 external-RTL literal/concat shape in
-     `t/corpus/composition_intent_integer_literals.fsm`
-   - C1 standalone-DT child composition VHDL is the active follow-up leaf;
-     generated-FSM child composition VHDL, APB/C4 composition VHDL, internal
+     `t/corpus/composition_intent_integer_literals.fsm` and the C1
+     standalone-DT explicit-port passthrough shape in
+     `t/corpus/standalone_dtc_explicit_system_autowire.fsm`
+   - Generated-FSM child composition VHDL, APB/C4 composition VHDL, internal
      nets, and generic maps remain deferred
 
 2. **Direct-root structural conversion from SystemVerilog**
@@ -100,11 +104,14 @@ The VHDL lane is intentionally narrow:
    - Follow the same `convert_systemverilog_to_*` pattern as Verilog
 
 3. **Composition structural emission from typed structural RTL IR**
-   - Emit only the first no-net external-RTL structural top through
+   - Emit only the shipped no-net external-RTL and standalone-DT passthrough
+     structural tops through
      `FSM::Backend::VHDL::StructuralRTLIREmitter`
-   - Render VHDL concurrent auxiliary assignments and VHDL port-map actuals
-   - Reject generated-child instances, parameter overrides, declared aggregate
-     structural types, internal nets, and non-VHDL auxiliary assignments
+   - Render VHDL concurrent auxiliary assignments, generated standalone-DT
+     child VHDL segments for the bounded C1 leaf, and VHDL port-map actuals
+   - Reject generated-FSM child instances, parameter overrides, declared
+     aggregate structural types, internal nets, and non-VHDL auxiliary
+     assignments
 
 4. **Supported constructs in the first lane:**
    - Module declaration with port list
@@ -192,13 +199,16 @@ The VHDL lane is intentionally narrow:
   `BACKEND-API-VALIDATION-FRONTIER.68.1`, limited to the C3 external-RTL
   literal/concat fixture in `t/corpus/composition_intent_integer_literals.fsm`.
   It emits VHDL concurrent literal/concat assignments and an
-  `entity work.uart_tx` port map. The active follow-up is
-  `BACKEND-API-VALIDATION-FRONTIER.69.1`, which implements only the bounded C1
-  standalone-DT child composition VHDL top for
-  `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. Generated-FSM child
-  composition VHDL, APB/C4 composition VHDL, internal nets/generic maps, full
-  aggregate VHDL record/array lowering, broader expression parity, and broader
-  scalar signed arithmetic remain separate future edges.
+  `entity work.uart_tx` port map.
+- Shipped the bounded C1 standalone-DT child composition VHDL top under
+  `BACKEND-API-VALIDATION-FRONTIER.69.1`, limited to
+  `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. It emits the
+  `standalone_route_src` VHDL child segment and a top-level
+  `entity work.standalone_route_src` port map for the explicit passthrough
+  ports. Generated-FSM child composition VHDL, APB/C4 composition VHDL,
+  internal nets/generic maps, full aggregate VHDL record/array lowering,
+  broader expression parity, and broader scalar signed arithmetic remain
+  separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
