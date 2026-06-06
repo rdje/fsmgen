@@ -129,7 +129,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.43.1`,
     `BACKEND-API-VALIDATION-FRONTIER.44`,
     `BACKEND-API-VALIDATION-FRONTIER.44.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.45`
+    `BACKEND-API-VALIDATION-FRONTIER.45`,
+    `BACKEND-API-VALIDATION-FRONTIER.45.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -846,9 +847,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.44.1: ship shared-datapath schema`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.45`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after shared-datapath candidate entry schemas shipped.`
-  Acceptance: `Audit the remaining backend/API/public-export backlog and current evidence after BACKEND-API-VALIDATION-FRONTIER.44.1, then activate one exact executable child leaf before any implementation edits. The selection must keep roadmap, codebase, task-tree, knowledge-map, README, and mdBook alignment explicit.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.45.1`
+  Acceptance: `Selected the normalized semantic lowered-RTL shared-datapath contributor drive-intent entry schema as the next exact public-export hardening edge. Evidence shows BACKEND-API-VALIDATION-FRONTIER.44.1 now advertises composition_shared_datapath_candidates[] top-level entries and contributor shell keys, output_drive_family is already covered by the existing output-drive family entry schema, contributor child intent_hir/lowered_rtl_ir/structural_rtl_ir summaries are delegated to existing bounded contracts, but contributors[].drive_intent remains an emitted nested object with no dedicated bounded key family. A strict temporary composition probe emitted drive_intent keys default_value, driver_blocks, driver_count, driver_enable_signals, family_enable_signals, multiplexer_type, reset_value, rhs_enable_families, and rhs_values. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.45.1 before any contract/test/code edits. Full normalized semantic export stabilization remains out of scope.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, KNOWLEDGE_MAP.md, docs/knowledge/normalized-semantic-shared-datapath-candidate-entry-schema.md, perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm, t/139-composition-shared-datapath-candidate-metadata.t, t/159-composition-shared-datapath-forward-ir-exports.t, t/340-normalized-semantic-lowered-rtl-ir-contract.t, and t/354-normalized-semantic-child-runtime-contract-audit.t. A strict temporary composition semantic JSON probe confirmed contributor keys bound_connection_expr, bound_signal, bound_signals, drive_intent, endpoint, instance_name, intent_hir, kind, lowered_rtl_ir, module_name, output_drive_family, source_name, and structural_rtl_ir; drive_intent keys default_value, driver_blocks, driver_count, driver_enable_signals, family_enable_signals, multiplexer_type, reset_value, rhs_enable_families, and rhs_values; and output_drive_family keys default_value, driver_blocks, driver_count, driver_enable_signals, family_enable_signals, multiplexer_type, reset_value, rhs_enable_families, rhs_values, signal_name, and width.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.45: select shared-datapath drive intent`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.45.1`
+  Status: `active`
+  Goal: `Publish composition shared-datapath contributor drive-intent entry schemas in the normalized semantic lowered-RTL contract.`
+  Acceptance: `FSM::Support::NormalizedSemanticLoweredRTLIRContract advertises bounded entry keys for semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[].contributors[].drive_intent and the nested drive-intent rhs_enable_families[] entries. The forward-IR, payload/report, capability-manifest, README/live docs, mdBook, knowledge-map, and runtime contract tests inherit or describe those key families. Existing output_drive_family metadata continues to delegate to the already advertised output-drive family entry schema, contributor child intent_hir/lowered_rtl_ir/structural_rtl_ir summaries remain delegated to their existing bounded contracts, no raw Perl objects are exported, and full normalized semantic export stabilization remains out of scope.`
   Verification: `pending`
   Commit: `pending`
 
@@ -949,7 +958,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 91 | `BACKEND-API-VALIDATION-FRONTIER.43.1` | `done` | Published bounded `standalone_dt_multi_drive_targets[]` and nested `multi_drive_assertion` key families before any broader shared-datapath candidate payload widening. |
 | 92 | `BACKEND-API-VALIDATION-FRONTIER.44` | `done` | Selected composition shared-datapath candidate entry schemas as the next normalized semantic public-export edge. |
 | 93 | `BACKEND-API-VALIDATION-FRONTIER.44.1` | `done` | Published bounded `composition_shared_datapath_candidates[]` key families before any full normalized semantic export stabilization. |
-| 94 | `BACKEND-API-VALIDATION-FRONTIER.45` | `active` | Select the next exact backend/API/public-export edge after shared-datapath candidate entry schemas shipped. |
+| 94 | `BACKEND-API-VALIDATION-FRONTIER.45` | `done` | Selected shared-datapath contributor drive-intent entry schemas as the next normalized semantic public-export edge. |
+| 95 | `BACKEND-API-VALIDATION-FRONTIER.45.1` | `active` | Publish bounded `composition_shared_datapath_candidates[].contributors[].drive_intent` key families before any full normalized semantic export stabilization. |
 
 ## Decisions
 
@@ -1064,6 +1074,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.43.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; `prove -Iperl t/340-normalized-semantic-lowered-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t t/354-normalized-semantic-child-runtime-contract-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; bounded standalone-DT multi-drive target and assertion entry schemas shipped through normalized semantic contracts, manifest, docs, knowledge-map, and runtime audit |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.44` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `KNOWLEDGE_MAP.md`, `docs/knowledge/normalized-semantic-standalone-dt-multi-drive-entry-schema.md`, `perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm`, `t/139-composition-shared-datapath-candidate-metadata.t`, `t/142-composition-shared-datapath-assertion-metadata.t`, `t/159-composition-shared-datapath-forward-ir-exports.t`, `t/183-composition-shared-datapath-candidate-builder.t`, and `t/281-structural-declared-type-contracts.t`; temporary composition probe captured candidate, contributor, aggregate-enable, assertion, and bound_connection_expr key sets; typed tests show optional declared-type extension keys on candidates and contributors | `PASS`; selected shared-datapath candidate entry schemas for `.44.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.44.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; `perl -Iperl -c t/330-normalized-semantic-payload-contract.t`; `perl -Iperl -c t/311-normalized-semantic-report-contract.t`; `perl -Iperl -c t/297-capability-manifest.t`; `perl -Iperl -c t/334-normalized-semantic-forward-ir-contract.t`; `perl -Iperl -c t/354-normalized-semantic-child-runtime-contract-audit.t`; `perl -Iperl -c t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t`; `perl -Iperl -c t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t`; `prove -Iperl t/340-normalized-semantic-lowered-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t t/354-normalized-semantic-child-runtime-contract-audit.t t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t`; `prove -Iperl t/302-normalized-semantic-json.t t/731-hdl-generator-result-contract-semantic-keys-json-roundtrip-audit.t t/725-hdl-generator-result-contract-semantic-layer-map-json-roundtrip-audit.t t/471-normalized-semantic-forward-ir-contract-defensive-copy-boundary-audit.t t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t t/1015-normalized-semantic-payload-contract-full-surface-json-roundtrip-audit.t t/1016-normalized-semantic-payload-contract-full-surface-defensive-copy-audit.t t/1021-normalized-semantic-forward-ir-contract-full-surface-json-roundtrip-audit.t t/1022-normalized-semantic-forward-ir-contract-full-surface-defensive-copy-audit.t t/383-contract-family-map-integrity-audit.t t/357-public-report-shell-runtime-contract-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; bounded composition shared-datapath candidate entry schemas shipped through normalized semantic contracts, manifest, docs, knowledge-map, defensive-copy audits, and runtime schema audit |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.45` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `KNOWLEDGE_MAP.md`, `docs/knowledge/normalized-semantic-shared-datapath-candidate-entry-schema.md`, normalized semantic lowered-RTL contract module, shared-datapath candidate metadata tests, forward-IR export tests, and runtime schema audit; strict temporary composition semantic JSON probe confirmed `drive_intent` keys `default_value`, `driver_blocks`, `driver_count`, `driver_enable_signals`, `family_enable_signals`, `multiplexer_type`, `reset_value`, `rhs_enable_families`, and `rhs_values`, while `output_drive_family` keeps the already advertised output-drive family keys | `PASS`; selected shared-datapath contributor drive-intent entry schemas for `.45.1` |
 
 ## Commit Log
 
@@ -1162,6 +1173,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.43.1` | `BACKEND-API-VALIDATION-FRONTIER.43.1: ship DT multi-drive schema` | shipped schema; activated `.44` |
 | `BACKEND-API-VALIDATION-FRONTIER.44` | `BACKEND-API-VALIDATION-FRONTIER.44: select shared-datapath schema` | selected `.44.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.44.1` | `BACKEND-API-VALIDATION-FRONTIER.44.1: ship shared-datapath schema` | this slice; activates `.45` |
+| `BACKEND-API-VALIDATION-FRONTIER.45` | `BACKEND-API-VALIDATION-FRONTIER.45: select shared-datapath drive intent` | selected `.45.1` |
 
 ## Changelog
 
@@ -1623,3 +1635,9 @@ items named in the 2026-06-05 remaining-work inventory.
   payload/report, capability-manifest, README, mdBook, knowledge-map,
   defensive-copy audits, and runtime schema coverage. Activated `.45` to select
   the next backend/API/public-export edge.
+- `2026-06-06`: Completed `.45`; selected shared-datapath contributor
+  `drive_intent` entry schemas as the next normalized semantic public-export
+  edge because `.44.1` advertised contributor shell keys and delegated child IR
+  summaries, while a strict semantic JSON probe showed `drive_intent` remains an
+  emitted nested object without its own bounded key family. Activated `.45.1`
+  before any implementation/test/source edits.

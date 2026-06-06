@@ -3952,7 +3952,10 @@ as scalar string assignment-line entries. The manifest is still not a full
 normalized semantic export.
 
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.45` will audit the remaining backend/API and
-public-export backlog after the shared-datapath candidate schema shipped, then
-activate one exact executable child before any further implementation edits.
-Full normalized semantic export stabilization remains out of scope.
+`BACKEND-API-VALIDATION-FRONTIER.45.1` will publish bounded key families for
+`semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[].contributors[].drive_intent`
+and its nested `rhs_enable_families[]` entries. Existing
+`output_drive_family` metadata continues to use the already advertised
+output-drive family schema, contributor child IR summaries remain delegated to
+their existing bounded contracts, and full normalized semantic export
+stabilization remains out of scope.
