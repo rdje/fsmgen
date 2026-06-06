@@ -214,8 +214,11 @@ composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the
 SystemVerilog path emits as packed typedefs fail at the structural VHDL boundary
 before VHDL record/array declaration emission and do not write CLI output.
-The maintained supported direct-root VHDL sweep now runs clean. The first
-bounded composition VHDL structural top is also shipped for the C3 external-RTL
+The maintained supported direct-root VHDL sweep now runs clean. GHDL validation
+blocker reconfirmation is currently owned by
+`BACKEND-API-VALIDATION-FRONTIER.102.1`; until that leaf can run a real `ghdl`
+tool, external HDL validation remains SystemVerilog-only. The first bounded
+composition VHDL structural top is also shipped for the C3 external-RTL
 literal/concat fixture in `t/corpus/composition_intent_integer_literals.fsm`.
 That composition subset emits a VHDL entity/architecture with concurrent
 literal and concat assignments plus an external `entity work.uart_tx` port map,

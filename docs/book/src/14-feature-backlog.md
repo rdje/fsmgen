@@ -4026,7 +4026,9 @@ tool validation.
 
 Current boundary: validation focuses on SystemVerilog using Verilator and
 Yosys. The direct VHDL scaffold is regression-tested through deterministic
-text and CLI routing, but not externally validated by GHDL yet.
+text and CLI routing, but not externally validated by GHDL yet. The current
+blocker reconfirmation owner is
+`BACKEND-API-VALIDATION-FRONTIER.102.1`.
 
 ### Warning-Clean External Validation For Every Historical Sample
 
@@ -4204,8 +4206,8 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.102` selects the next exact backend/API edge
-after declared aggregate structural VHDL hardening. Completed leaf
+`BACKEND-API-VALIDATION-FRONTIER.102.1` reconfirms the GHDL validation blocker
+for the scoped VHDL backend. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.101.1` locks declared aggregate structural VHDL
 ports/nets/types as fail-closed before record/array emission. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.100.1` locks package roots as import-only
@@ -4236,3 +4238,6 @@ Declared aggregate structural VHDL ports/nets/types are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`; this keeps composition tops from
 emitting VHDL record/array declarations until a future exact aggregate-lowering
 leaf owns them.
+GHDL validation blocker reconfirmation is currently owned by
+`BACKEND-API-VALIDATION-FRONTIER.102.1`; until that leaf can run a real `ghdl`
+tool, external HDL validation remains SystemVerilog-only.

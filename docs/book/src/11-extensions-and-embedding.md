@@ -2370,10 +2370,10 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.102`, a selection-only leaf for the next exact
-backend/API edge after declared aggregate structural VHDL hardening. Completed
-leaf `BACKEND-API-VALIDATION-FRONTIER.101.1` locks declared aggregate structural
-VHDL ports/nets/types as fail-closed before record/array emission. Completed leaf
+`BACKEND-API-VALIDATION-FRONTIER.102.1`, which reconfirms the GHDL validation
+blocker for the scoped VHDL backend. Completed leaf
+`BACKEND-API-VALIDATION-FRONTIER.101.1` locks declared aggregate structural VHDL
+ports/nets/types as fail-closed before record/array emission. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.100.1` locks package roots as import-only
 declaration containers that do not generate standalone SystemVerilog or VHDL
 package HDL directly.
@@ -2402,6 +2402,9 @@ Declared aggregate structural VHDL ports/nets/types are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`; this keeps composition tops from
 emitting VHDL record/array declarations until a future exact aggregate-lowering
 leaf owns them.
+GHDL validation blocker reconfirmation is currently owned by
+`BACKEND-API-VALIDATION-FRONTIER.102.1`; until that leaf can run a real `ghdl`
+tool, external HDL validation remains SystemVerilog-only.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 
@@ -2876,7 +2879,8 @@ those documentation path lists.
 
 That validation lane is currently SystemVerilog-only. Direct VHDL generation
 has a scaffold subset, but VHDL/GHDL validation remains deferred until a
-separate validation leaf owns it.
+separate validation leaf can run a real `ghdl` tool. The current blocker
+reconfirmation owner is `BACKEND-API-VALIDATION-FRONTIER.102.1`.
 
 The bounded contract for that lane now has its own owner too:
 [perl/FSM/Support/HDLExternalValidationContract.pm](perl/FSM/Support/HDLExternalValidationContract.pm).
