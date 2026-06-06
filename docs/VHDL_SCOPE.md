@@ -59,13 +59,15 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes signed vector output-port next-signal
   assignments from unsized decimal literals, lowered through target-width
   `to_signed(VALUE, WIDTH)`.
+- The direct scaffold now includes signed vector output-port next-signal
+  assignments from negative decimal literals, lowered through target-width
+  `to_signed(NEGATIVE_VALUE, WIDTH)`.
 - The direct scaffold now includes scalar output-port next-signal assignments
   from unsized decimal literals, lowered to `std_logic` low-bit literals for
   plain scalar and signed one-bit alias targets.
-- Active leaf `BACKEND-API-VALIDATION-FRONTIER.110.1` owns only the adjacent
-  signed vector output-port negative decimal literal edge: current probes lower
-  the output/next-signal target to `signed(7 downto 0)` but fail at arithmetic
-  expression `'-1'` until that leaf ships.
+- Active leaf `BACKEND-API-VALIDATION-FRONTIER.111` selects the next exact
+  backend/API edge after signed vector output-port negative decimal literal
+  lowering shipped.
 - Composition VHDL is shipped only for the bounded C3 external-RTL
   literal/concat structural top in
   `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
@@ -452,6 +454,7 @@ The VHDL lane is intentionally narrow:
   scalar/vector non-signed four-state `logic` input port lowering,
   vector output-port decimal literal assignment lowering,
   signed vector output-port decimal literal assignment lowering,
+  signed vector output-port negative decimal literal assignment lowering,
   scalar output-port decimal literal assignment lowering,
   scalar/vector two-state `bit` and signed vector internal declaration lowering,
   non-signed four-state `logic` scalar/vector internal declaration lowering,

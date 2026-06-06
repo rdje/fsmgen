@@ -2254,6 +2254,56 @@ FSM
     unlike($cli_hdl, qr/\bOUT_next\s+<=\s+5;|to_unsigned\(5,\s+8\)|\bmodule\b|\balways_(?:ff|comb)\b/s, 'CLI signed vector output decimal VHDL output avoids raw integer assignment, unsigned casts, and SystemVerilog syntax');
 };
 
+subtest 'direct VHDL scaffold lowers signed vector output negative decimal literal assignments' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_vector_output_negative_decimal_literal.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_vector_output_negative_decimal_literal.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_signed_vector_output_negative_decimal_literal
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+interface
+    (output OUT)
+  )
+  (+size
+    (OUT signed_byte_t)
+  )
+  (idle
+    (<- (OUT> -1))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bentity\s+direct_vhdl_signed_vector_output_negative_decimal_literal\s+is\b/s, 'signed vector output negative decimal fixture emits direct VHDL entity');
+    like($hdl, qr/\bOUT\s+:\s+out\s+signed\(7\s+downto\s+0\);?/s, 'signed vector output negative decimal fixture lowers output port to signed');
+    like($hdl, qr/\bsignal\s+OUT_next\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed vector output negative decimal fixture declares signed next signal');
+    like($hdl, qr/\bOUT_next\s+<=\s+to_signed\(-1,\s+8\);/s, 'signed vector output negative decimal literal lowers through target-width to_signed');
+    unlike($hdl, qr/\bOUT_next\s+<=\s+-1;|to_unsigned\(-1,\s+8\)/s, 'signed vector output negative decimal fixture avoids raw integer assignments and unsigned casts');
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b/s, 'signed vector output negative decimal VHDL output does not leak SystemVerilog structural syntax');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for signed vector output negative decimal literal fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes signed vector output negative decimal literal VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bOUT_next\s+<=\s+to_signed\(-1,\s+8\);/s, 'CLI signed vector output negative decimal VHDL output includes typed literal assignment');
+    unlike($cli_hdl, qr/\bOUT_next\s+<=\s+-1;|to_unsigned\(-1,\s+8\)|\bmodule\b|\balways_(?:ff|comb)\b/s, 'CLI signed vector output negative decimal VHDL output avoids raw integer assignment, unsigned casts, and SystemVerilog syntax');
+};
+
 subtest 'direct VHDL scaffold lowers scalar output decimal literal assignments' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $scalar_fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_output_decimal_literal.fsm');

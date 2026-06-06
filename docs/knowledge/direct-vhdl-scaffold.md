@@ -241,15 +241,14 @@ output-port next-signal decimal-literal edge: an 8-bit interface output emits
 next-signal decimal-literal edge: an 8-bit signed interface output emits
 `OUT_next <= to_signed(5, 8);` instead of raw `OUT_next <= 5;`. These leaves do
 not claim broad expression-literal parity. The scaffold now lowers the adjacent
-scalar output-port next-signal decimal-literal edge too: plain and signed
-one-bit output targets lower to `std_logic` low-bit literals, so `2` emits
+signed vector output-port negative decimal-literal edge too: an 8-bit signed
+interface output assigned `-1` emits `OUT_next <= to_signed(-1, 8);` instead
+of failing at arithmetic expression `'-1'`. The scaffold also lowers scalar
+output-port next-signal decimal literals: plain and signed one-bit output
+targets lower to `std_logic` low-bit literals, so `2` emits
 `FLAG_next <= '0';` and `3` emits `FLAG_next <= '1';` instead of raw integer
-assignments. Active leaf `BACKEND-API-VALIDATION-FRONTIER.110.1` owns the
-adjacent signed vector output-port negative decimal-literal edge: a current
-8-bit signed output probe lowers the VHDL target to `signed(7 downto 0)` but
-fails before VHDL emission at arithmetic expression `'-1'`. Scalar and
-non-signed vector negative output literals remain deferred to later exact
-owners. Declared
+assignments. Scalar and non-signed vector negative output literals remain
+deferred to later exact owners. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the
