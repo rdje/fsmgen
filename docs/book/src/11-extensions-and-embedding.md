@@ -952,9 +952,9 @@ target-support diagnostic. Generic-map families outside the shipped external-RTL
 scalar integer, scalar integer expression, metadata-backed one-bit sized
 bitstring, multi-bit sized bitstring, resolved package-backed, and packed
 aggregate actuals, shipped C1 standalone-DT scalar integer, scalar expression,
-and one-bit sized bitstring actuals, and shipped C2 generated-FSM scalar integer, scalar
-expression, one-bit sized bitstring, multi-bit sized bitstring, and packed
-aggregate actuals remain deferred.
+one-bit sized bitstring, and multi-bit sized bitstring actuals, and shipped C2
+generated-FSM scalar integer, scalar expression, one-bit sized bitstring,
+multi-bit sized bitstring, and packed aggregate actuals remain deferred.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
@@ -2352,14 +2352,14 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.87.1`, which implements only bounded C1
-standalone-DT multi-bit sized-bitstring VHDL generic-map actuals after `.87`
-selected that exact edge.
+`BACKEND-API-VALIDATION-FRONTIER.88`, which selects the next exact backend/API
+edge after bounded C1 standalone-DT multi-bit sized-bitstring VHDL generic-map
+actuals shipped in `.87.1`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
-beyond scalar integer, scalar expression, one-bit sized bitstring, and the
-active multi-bit slice, APB/C4
+beyond scalar integer, scalar expression, one-bit sized bitstring, and
+multi-bit sized bitstring actuals, APB/C4
 generic maps, full aggregate VHDL record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped
