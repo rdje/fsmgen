@@ -101,7 +101,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.29.1`,
     `BACKEND-API-VALIDATION-FRONTIER.30`,
     `BACKEND-API-VALIDATION-FRONTIER.30.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.31`
+    `BACKEND-API-VALIDATION-FRONTIER.31`,
+    `BACKEND-API-VALIDATION-FRONTIER.31.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -608,9 +609,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `pending`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.31`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL scalar addition.`
-  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code/test/source edits occur.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.31.1`
+  Acceptance: `Selected direct VHDL scalar subtraction RHS lowering as the next exact backend edge. A temporary scalar direct-root probe emits the same simple generated direct mux shape as scalar addition, with scalar ports A and B and scalar assignment DIFF = A - B, but the current VHDL converter fails at the scalar arithmetic guard because scalar subtraction remains outside the scaffold. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.31.1; scalar multiplication/division/modulo, mismatched-width arithmetic, aggregate record/array VHDL, composition/top VHDL, packages, GHDL validation, and full backend parity remain deferred.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, and current direct VHDL scalar-addition tests. Temporary File::Temp VHDL probe for a scalar direct root with (= (DIFF (- A B))) failed at arithmetic expression 'A - B' outside the direct VHDL scaffold; temporary File::Temp SystemVerilog probe showed scalar ports A/B and direct mux assignment DIFF = A - B. Selected scalar subtraction RHS lowering for .31.1 before any implementation edits.`
+  Commit: `pending`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.31.1`
+  Status: `active`
+  Goal: `Support scalar subtraction RHS lowering in the direct VHDL scaffold.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL converts generated SystemVerilog scalar subtraction RHS forms such as A - B into valid VHDL for the accepted direct single-FSM scaffold, with focused pipeline, CLI, and facade coverage. The leaf does not widen scalar multiplication/division/modulo, mismatched-width arithmetic, aggregate record/array VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity. README/live docs/mdBook, the direct-VHDL fact card, task-tree, and memory are synchronized.`
   Verification: `pending`
   Commit: `pending`
 
@@ -683,7 +692,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 63 | `BACKEND-API-VALIDATION-FRONTIER.29.1` | `done` | Locked multi-bit sized-literal direct VHDL generic defaults through pipeline, CLI, and facade tests before selecting any broader aggregate or composition VHDL work. |
 | 64 | `BACKEND-API-VALIDATION-FRONTIER.30` | `done` | Selected scalar addition RHS lowering as the next narrow direct VHDL scaffold edge after probes showed the generated shape is a simple scalar `SUM = A + B` mux assignment. |
 | 65 | `BACKEND-API-VALIDATION-FRONTIER.30.1` | `done` | Implemented only binary scalar addition RHS lowering; scalar multiplication and broader scalar arithmetic remain fail-closed. |
-| 66 | `BACKEND-API-VALIDATION-FRONTIER.31` | `active` | Select the next exact backend/API/public-export edge after scalar addition. |
+| 66 | `BACKEND-API-VALIDATION-FRONTIER.31` | `done` | Selected scalar subtraction RHS lowering as the next narrow direct VHDL scaffold edge after probes showed the generated shape is a simple scalar `DIFF = A - B` mux assignment. |
+| 67 | `BACKEND-API-VALIDATION-FRONTIER.31.1` | `active` | Implement only scalar subtraction RHS lowering before selecting broader scalar arithmetic, aggregate VHDL, composition VHDL, packages, or validation work. |
 
 ## Decisions
 
@@ -770,6 +780,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.29.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_params_aggregate_unary_complement_impl_probe.vhd t/corpus/params_aggregate_unary_complement.fsm`; `sed -n '1,180p' /tmp/fsmgen_params_aggregate_unary_complement_impl_probe.vhd`; `rg -n "generic|P_NOT|OUT_LIST|OUT_RECORD|module|parameter|always_" /tmp/fsmgen_params_aggregate_unary_complement_impl_probe.vhd`; removed `/tmp/fsmgen_params_aggregate_unary_complement_impl_probe.vhd`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `./bin/fsmgen --language vhdl --quiet t/corpus/params_aggregate_unary_complement.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/params_aggregate_comparison.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_size_expression_widths.fsm`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL vector sized-literal generic defaults are now locked by pipeline, CLI, and facade coverage |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.30` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, and `t/1420-vhdl-direct-backend-scaffold.t`; temporary File::Temp VHDL probe for a scalar direct root with `(= (SUM (+ A B)))` failed at `arithmetic expression 'A + B' is outside the direct VHDL scaffold`; temporary File::Temp SystemVerilog probe showed scalar ports `A`/`B` and direct mux assignment `SUM = A + B`; `command -v ghdl` remains unavailable from prior checks; selected `.30.1` for scalar addition RHS lowering before any implementation edits | `PASS`; selected scalar addition RHS lowering for `.30.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.30.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; binary scalar addition now lowers to VHDL xor while scalar multiplication remains fail-closed |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.31` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, and `t/1420-vhdl-direct-backend-scaffold.t`; temporary File::Temp VHDL probe for a scalar direct root with `(= (DIFF (- A B)))` failed at `arithmetic expression 'A - B' is outside the direct VHDL scaffold`; temporary File::Temp SystemVerilog probe showed scalar ports `A`/`B` and direct mux assignment `DIFF = A - B`; selected `.31.1` for scalar subtraction RHS lowering before any implementation edits | `PASS`; selected scalar subtraction RHS lowering for `.31.1` |
 
 ## Commit Log
 
@@ -840,6 +851,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.29.1` | `BACKEND-API-VALIDATION-FRONTIER.29.1: lock VHDL vector generics` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.30` | `BACKEND-API-VALIDATION-FRONTIER.30: select VHDL scalar addition` | selected `.30.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.30.1` | `BACKEND-API-VALIDATION-FRONTIER.30.1: ship VHDL scalar addition` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.31` | `BACKEND-API-VALIDATION-FRONTIER.31: select VHDL scalar subtraction` | selected `.31.1` |
 
 ## Changelog
 
@@ -1159,3 +1171,9 @@ items named in the 2026-06-05 remaining-work inventory.
   one-bit truncated VHDL `xor` semantics through pipeline, CLI, and facade
   tests. Scalar multiplication and broader scalar arithmetic remain fail-closed.
   Activated `.31` to select the next backend/API edge.
+- `2026-06-06`: Completed `.31`; selected scalar subtraction RHS lowering for
+  `.31.1` after temporary direct-root probes showed the generated scalar
+  `DIFF = A - B` mux shape is simple and currently fails only at the direct
+  VHDL scalar-arithmetic guard. Scalar multiplication/division/modulo,
+  aggregate VHDL, composition VHDL, packages, GHDL validation, and full backend
+  parity remain deferred.
