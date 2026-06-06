@@ -120,6 +120,8 @@ Signed scalar direct-root port/internal declarations for non-arithmetic
 one-bit signed type-alias shapes lower to `std_logic`, including declarations
 such as `IN : in std_logic;` and `signal OUT : std_logic;`, while signed
 scalar arithmetic remains fail-closed.
+Mixed signed/unsigned vector numeric arithmetic is the active fail-closed
+hardening edge under `BACKEND-API-VALIDATION-FRONTIER.64.1`.
 Aggregate-output
 roots are locked as explicit fail-closed direct VHDL boundaries by focused
 pipeline and facade coverage. Composition/top VHDL is locked fail-closed by

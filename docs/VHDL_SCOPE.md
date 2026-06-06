@@ -160,9 +160,9 @@ The first VHDL lane is intentionally narrow:
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: select the next exact backend/API/public-export edge under
-  `BACKEND-API-VALIDATION-FRONTIER.64`; scalar signed arithmetic and mixed
-  signed/unsigned arithmetic remain separate future edges.
+- Active follow-up: harden mixed signed/unsigned vector numeric arithmetic as
+  fail-closed under `BACKEND-API-VALIDATION-FRONTIER.64.1`; scalar signed
+  arithmetic remains a separate future edge.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

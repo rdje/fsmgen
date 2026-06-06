@@ -167,7 +167,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.62.1`,
     `BACKEND-API-VALIDATION-FRONTIER.63`,
     `BACKEND-API-VALIDATION-FRONTIER.63.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.64`
+    `BACKEND-API-VALIDATION-FRONTIER.64`,
+    `BACKEND-API-VALIDATION-FRONTIER.64.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1169,10 +1170,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.63.1: ship VHDL signed scalar declarations`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.64`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL signed scalar declaration lowering shipped.`
-  Acceptance: `pending selection`
-  Verification: `pending selection`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.64.1`
+  Acceptance: `Selected direct VHDL mixed signed/unsigned vector numeric arithmetic fail-closed hardening as the next exact backend edge. Evidence shows signed-target mixed A + B already fails closed at the signed arithmetic guard, while unsigned-target mixed A + B currently passes and emits SUM <= std_logic_vector(unsigned(A) + unsigned(B)); despite mixed signed/unsigned arithmetic being documented outside the scaffold. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.64.1 before any backend/test/source edits. The slice must reject mixed signed/unsigned vector numeric arithmetic consistently without widening scalar signed arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `Selection audit/read of README.md, docs/VHDL_SCOPE.md, docs/book/src/11-extensions-and-embedding.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, and t/386-hdl-generator-facade-target-language-boundary-audit.t; temporary signed-target mixed vector addition probe failed closed at arithmetic expression A + B, while temporary unsigned-target mixed vector addition probe passed and emitted SUM <= std_logic_vector(unsigned(A) + unsigned(B)); selected fail-closed hardening to align behavior with the documented scaffold boundary.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.64: select VHDL mixed-sign hardening`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.64.1`
+  Status: `active`
+  Goal: `Harden direct VHDL mixed signed/unsigned vector numeric arithmetic as fail-closed.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL rejects generated mixed signed/unsigned vector numeric arithmetic instead of lowering signed operands through unsigned casts. Focused pipeline and facade coverage prove signed-target and unsigned-target mixed vector addition fixtures fail with the direct VHDL arithmetic-expression scaffold diagnostic, while existing all-unsigned and all-signed vector arithmetic coverage remains passing. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task tree, and memory stay synchronized. The leaf does not widen scalar signed arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1310,7 +1319,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 129 | `BACKEND-API-VALIDATION-FRONTIER.62.1` | `done` | Shipped signed vector numeric-literal multiplication/division/modulo lowering without widening scalar signed arithmetic or full VHDL parity. |
 | 130 | `BACKEND-API-VALIDATION-FRONTIER.63` | `done` | Selected signed scalar direct-root declaration lowering after probes showed generated one-bit signed type aliases fail at `input logic signed IN`. |
 | 131 | `BACKEND-API-VALIDATION-FRONTIER.63.1` | `done` | Shipped signed scalar declaration lowering while keeping signed scalar arithmetic and mixed signed/unsigned arithmetic fail-closed. |
-| 132 | `BACKEND-API-VALIDATION-FRONTIER.64` | `active` | Select the next exact backend/API/public-export edge after signed scalar declarations shipped. |
+| 132 | `BACKEND-API-VALIDATION-FRONTIER.64` | `done` | Selected mixed signed/unsigned vector numeric arithmetic fail-closed hardening after unsigned-target mixed addition still lowered through unsigned casts. |
+| 133 | `BACKEND-API-VALIDATION-FRONTIER.64.1` | `active` | Reject mixed signed/unsigned vector numeric arithmetic consistently while preserving all-signed and all-unsigned arithmetic coverage. |
 
 ## Decisions
 
@@ -1463,6 +1473,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.62.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers signed vector numeric-literal multiplication/division/modulo RHS assignments through target-width `to_signed` conversion and resize; activated `.63` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.63` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `t/279-declarative-scalar-types.t`; temporary mixed signed/unsigned vector addition probe failed closed at arithmetic expression `A + B`; temporary signed one-bit addition and pass-through probes failed at unsupported generated port declarations `input logic signed A` and `input logic signed IN` | `PASS`; selected signed scalar direct-root declaration lowering for `.63.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.63.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade/type prove bundle; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers signed scalar direct-root declarations to std_logic for non-arithmetic shapes and keeps signed scalar arithmetic fail-closed; activated `.64` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.64` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; temporary signed-target mixed vector addition probe failed closed at arithmetic expression `A + B`; temporary unsigned-target mixed vector addition probe passed and emitted `SUM <= std_logic_vector(unsigned(A) + unsigned(B));` | `PASS`; selected mixed signed/unsigned vector numeric arithmetic fail-closed hardening for `.64.1` |
 
 ## Commit Log
 
@@ -1599,6 +1610,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.62.1` | `BACKEND-API-VALIDATION-FRONTIER.62.1: ship VHDL signed literal divmul` | this slice; activates `.63` |
 | `BACKEND-API-VALIDATION-FRONTIER.63` | `BACKEND-API-VALIDATION-FRONTIER.63: select VHDL signed scalar declarations` | selected `.63.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.63.1` | `BACKEND-API-VALIDATION-FRONTIER.63.1: ship VHDL signed scalar declarations` | this slice; activates `.64` |
+| `BACKEND-API-VALIDATION-FRONTIER.64` | `BACKEND-API-VALIDATION-FRONTIER.64: select VHDL mixed-sign hardening` | selected `.64.1` |
 
 ## Changelog
 
@@ -2321,3 +2333,9 @@ items named in the 2026-06-05 remaining-work inventory.
   arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation, broad
   expression parity, and full backend parity remain deferred. Activated `.64`
   to select the next exact backend/API/public-export edge.
+- `2026-06-06`: Completed `.64`; selected mixed signed/unsigned vector numeric
+  arithmetic fail-closed hardening for `.64.1` after unsigned-target mixed
+  addition still lowered through `std_logic_vector(unsigned(A) + unsigned(B))`
+  while signed-target mixed addition already failed closed. Scalar signed
+  arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation, broad
+  expression parity, and full backend parity remain deferred.

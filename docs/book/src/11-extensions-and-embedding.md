@@ -2292,9 +2292,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.64`, which selects the next exact backend/API
-or public-export edge after `.63.1` shipped signed scalar direct-root
-port/internal declaration lowering for non-arithmetic shapes.
+`BACKEND-API-VALIDATION-FRONTIER.64.1`, which hardens mixed signed/unsigned
+vector numeric arithmetic as fail-closed after `.64` found an unsigned-target
+mixed addition path still lowering through unsigned casts.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic,
 mixed signed/unsigned arithmetic,
