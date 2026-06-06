@@ -936,11 +936,11 @@ GHDL validation blocker reconfirmation is locked by
 environment, so external HDL validation remains SystemVerilog-only until a
 future exact GHDL lane can run the tool.
 Current active backend/API work is
-`BACKEND-API-VALIDATION-FRONTIER.105`: select the next exact backend/API edge
-after direct VHDL generated two-state vector `bit [N:0]` internal declaration
-lowering shipped. The shipped vector-bit slice is narrower than broad VHDL
-expression, aggregate, package, GHDL, composition-parity, or normalized
-semantic stabilization work.
+`BACKEND-API-VALIDATION-FRONTIER.105.1`: lower direct VHDL generated typed
+two-state input port declarations such as `input bit IN` and
+`input bit [7:0] IN` to `std_logic` / `std_logic_vector` ports. The selected
+input-port slice is narrower than broad VHDL expression, aggregate, package,
+GHDL, composition-parity, or normalized semantic stabilization work.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit
