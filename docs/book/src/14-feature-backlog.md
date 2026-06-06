@@ -4111,15 +4111,16 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.76` selects the next exact backend/API edge
-after bounded resolved package-backed external-RTL C3 scalar integer and
-multi-bit sized bitstring VHDL generic-map actuals shipped. Package declaration
-and VHDL package emission, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, signed scalar division/modulo, mixed
-signed/unsigned arithmetic, generated-FSM and standalone-DT generic maps,
-scalar expressions, aggregate generic actuals, full aggregate VHDL record/array
-lowering, broader generated-FSM/C4 composition VHDL beyond the exact shipped
-fixtures, internal nets/generic maps beyond APB, broader expression parity
-beyond the shipped AMBA wrap family, and full normalized semantic export
-stabilization remain out of scope until later exact leaves own
+`BACKEND-API-VALIDATION-FRONTIER.76.1` implements bounded external-RTL C3
+scalar expression VHDL generic-map actuals after literal and resolved
+package-backed scalar integer/multi-bit sized bitstring actuals shipped.
+Package declaration and VHDL package emission, already bounded
+constant/enum/type internals, unrelated forward-IR payloads, signed scalar
+division/modulo, mixed signed/unsigned arithmetic, generated-FSM and
+standalone-DT generic maps, one-bit generic actuals, aggregate generic
+actuals, full aggregate VHDL record/array lowering, broader generated-FSM/C4
+composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
+beyond APB, broader expression parity beyond the shipped AMBA wrap family, and
+full normalized semantic export stabilization remain out of scope until later
+exact leaves own
 them.
