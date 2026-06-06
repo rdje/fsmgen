@@ -42,6 +42,14 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_optional_composition_keys
     normalized_semantic_intent_hir_presence_key_family_map
     normalized_semantic_intent_hir_presence_keys
+    normalized_semantic_intent_hir_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_intent_hir_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys
+);
+use FSM::Support::NormalizedSemanticSymbolContract qw(
+    normalized_semantic_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_symbol_contract_constant_value_entry_keys
 );
 
 subtest 'contract exposes the bounded normalized semantic intent-hir object' => sub {
@@ -80,6 +88,21 @@ subtest 'contract exposes the bounded normalized semantic intent-hir object' => 
         'contract publishes the grouped intent-hir key-family discovery map',
     );
     for my $case (
+        [
+            'symbol_contract_constant_value_entry_keys',
+            normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys(),
+            normalized_semantic_symbol_contract_constant_value_entry_keys(),
+        ],
+        [
+            'symbol_contract_constant_scalar_value_extension_keys',
+            normalized_semantic_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
+            normalized_semantic_symbol_contract_constant_scalar_value_extension_keys(),
+        ],
+        [
+            'symbol_contract_constant_list_value_extension_keys',
+            normalized_semantic_intent_hir_symbol_contract_constant_list_value_extension_keys(),
+            normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
+        ],
         [
             'composition_child_entry_keys',
             normalized_semantic_intent_hir_composition_child_entry_keys(),

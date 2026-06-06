@@ -199,6 +199,9 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys
@@ -235,6 +238,9 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_nested_presence_key_map
     normalized_semantic_presence_key_family_map
     normalized_semantic_report_contract_source
+    normalized_semantic_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_symbol_contract_constant_value_entry_keys
     normalized_semantic_success_semantic_optional_child_presence_keys
 );
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
@@ -953,6 +959,41 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         normalized_semantic_success_semantic_optional_child_presence_keys(),
         'manifest records optional semantic child keys in the report family map',
     );
+    for my $case (
+        [
+            'symbol_contract_constant_value_entry_keys',
+            normalized_semantic_symbol_contract_constant_value_entry_keys(),
+            'symbol-contract constant value core keys',
+        ],
+        [
+            'symbol_contract_constant_scalar_value_extension_keys',
+            normalized_semantic_symbol_contract_constant_scalar_value_extension_keys(),
+            'symbol-contract scalar constant value extension keys',
+        ],
+        [
+            'symbol_contract_constant_list_value_extension_keys',
+            normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
+            'symbol-contract list constant value extension keys',
+        ],
+    ) {
+        my ($field, $expected, $label) = @{$case};
+
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{$field},
+            $expected,
+            "manifest records exact normalized semantic $label",
+        );
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{$field},
+            $expected,
+            "manifest report family map records $label",
+        );
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{semantic_presence_key_family_map}{$field},
+            $expected,
+            "manifest semantic family map records $label",
+        );
+    }
     is_deeply(
         $manifest->{semantic_exports}{normalized_semantic_json}{composition_child_entry_keys},
         normalized_semantic_composition_child_entry_keys(),
@@ -1193,6 +1234,24 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest advertises bounded normalized semantic forward-ir intent-hir composition-only key presence',
     );
     for my $case (
+        [
+            'success_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys',
+            'forward_ir_intent_hir_symbol_contract_constant_value_entry_keys',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys(),
+            'intent-HIR symbol-contract constant value core keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys',
+            'forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
+            'intent-HIR symbol-contract scalar constant value extension keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys',
+            'forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
+            'intent-HIR symbol-contract list constant value extension keys',
+        ],
         [
             'success_forward_ir_intent_hir_composition_child_entry_keys',
             'forward_ir_intent_hir_composition_child_entry_keys',

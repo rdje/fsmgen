@@ -818,10 +818,17 @@ The generated-child public-export hardening edge now publishes
 parameter-override alias key families for
 `semantic.composition.generated_children[]` and
 `semantic.forward_ir.intent_hir.composition_generated_children[]`.
-The current selected public-export hardening edge is
-`BACKEND-API-VALIDATION-FRONTIER.52.1`: publish bounded scalar/list value key
-families for `semantic.symbol_contract.constants` and
-`semantic.forward_ir.intent_hir.symbol_contract.constants`.
+The symbol-contract constants public-export hardening edge now publishes
+bounded scalar/list value key families for
+`semantic.symbol_contract.constants` and
+`semantic.forward_ir.intent_hir.symbol_contract.constants`. Every advertised
+constant value carries `kind`; scalar values add `payload`, and list values add
+`items`. Enum/type nested schemas, package-import internals, and full
+normalized semantic export stabilization remain out of scope.
+The current active backend/API frontier is
+`BACKEND-API-VALIDATION-FRONTIER.53`: select the next exact
+backend/API/public-export edge after the symbol-contract constants map value
+schemas shipped.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit

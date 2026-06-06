@@ -55,6 +55,9 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_intent_hir_presence_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_contract_source
@@ -111,6 +114,9 @@ use FSM::Support::NormalizedSemanticSystemContract qw(
     normalized_semantic_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticSymbolContract qw(
+    normalized_semantic_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_symbol_contract_constant_value_entry_keys
     normalized_semantic_symbol_contract_source
     normalized_semantic_symbol_contract_presence_keys
 );
@@ -162,6 +168,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -202,6 +211,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_signal_analysis_entry_keys
     normalized_semantic_payload_signal_analysis_keys
     normalized_semantic_payload_system_contract_keys
+    normalized_semantic_payload_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_payload_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_payload_symbol_contract_constant_value_entry_keys
     normalized_semantic_payload_symbol_contract_keys
 );
 
@@ -1023,6 +1035,44 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_symbol_contract_presence_keys(),
         'semantic payload symbol-contract keys map to the nested symbol-contract owner',
     );
+    for my $case (
+        [
+            'symbol_contract_constant_value_entry_keys',
+            normalized_semantic_payload_symbol_contract_constant_value_entry_keys(),
+            normalized_semantic_symbol_contract_constant_value_entry_keys(),
+            'constant value core keys',
+        ],
+        [
+            'symbol_contract_constant_scalar_value_extension_keys',
+            normalized_semantic_payload_symbol_contract_constant_scalar_value_extension_keys(),
+            normalized_semantic_symbol_contract_constant_scalar_value_extension_keys(),
+            'scalar constant value extension keys',
+        ],
+        [
+            'symbol_contract_constant_list_value_extension_keys',
+            normalized_semantic_payload_symbol_contract_constant_list_value_extension_keys(),
+            normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
+            'list constant value extension keys',
+        ],
+    ) {
+        my ($field, $payload_keys, $symbol_keys, $label) = @{$case};
+
+        is_deeply(
+            $contract->{$field},
+            $payload_keys,
+            "contract publishes the bounded symbol-contract $label",
+        );
+        is_deeply(
+            $contract->{presence_key_family_map}{$field},
+            $payload_keys,
+            "grouped semantic-payload family map publishes symbol-contract $label",
+        );
+        is_deeply(
+            $payload_keys,
+            $symbol_keys,
+            "semantic payload symbol-contract $label map to the nested symbol-contract owner",
+        );
+    }
     is_deeply(
         $contract->{composition_presence_keys},
         normalized_semantic_composition_presence_keys(),
@@ -1241,6 +1291,21 @@ sub composition_shared_datapath_alias_cases {
 
 sub intent_hir_alias_cases {
     return (
+        [
+            'forward_ir_intent_hir_symbol_contract_constant_value_entry_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys(),
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
+        ],
         [
             'forward_ir_intent_hir_composition_child_entry_keys',
             normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys(),

@@ -3988,9 +3988,15 @@ parameter-override alias key families for
 `semantic.forward_ir.intent_hir.composition_generated_children[]`. Full
 normalized semantic export stabilization remains out of scope.
 
+Shipped symbol-contract constants export edge: task-tree leaf
+`BACKEND-API-VALIDATION-FRONTIER.52.1` publishes bounded scalar/list value key
+families for `semantic.symbol_contract.constants` and
+`semantic.forward_ir.intent_hir.symbol_contract.constants`. Every advertised
+constant value carries `kind`; scalar values add `payload`, and list values add
+`items`. Enum/type nested schemas, package-import internals, and full
+normalized semantic export stabilization remain out of scope.
+
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.52.1` will publish bounded scalar/list value
-key families for `semantic.symbol_contract.constants` and
-`semantic.forward_ir.intent_hir.symbol_contract.constants`. Enum/type nested
-schemas, package-import internals, and full normalized semantic export
-stabilization remain out of scope.
+`BACKEND-API-VALIDATION-FRONTIER.53` will select the next exact
+backend/API/public-export edge after the symbol-contract constants map value
+schemas shipped.

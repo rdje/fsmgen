@@ -20,6 +20,9 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_composition_standalone_dt_module_enable_family_keys
     normalized_semantic_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_intent_hir_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_intent_hir_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_intent_hir_optional_composition_keys
     normalized_semantic_intent_hir_presence_keys
 );
@@ -82,6 +85,9 @@ our @EXPORT_OK = qw(
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_intent_hir_presence_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -155,6 +161,12 @@ sub build_normalized_semantic_forward_ir_contract {
         presence_key_family_map => normalized_semantic_forward_ir_presence_key_family_map(),
         intent_hir_contract_source => normalized_semantic_forward_ir_intent_hir_contract_source(),
         intent_hir_presence_keys => normalized_semantic_forward_ir_intent_hir_presence_keys(),
+        intent_hir_symbol_contract_constant_value_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys(),
+        intent_hir_symbol_contract_constant_scalar_value_extension_keys =>
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
+        intent_hir_symbol_contract_constant_list_value_extension_keys =>
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
         intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
         intent_hir_composition_child_entry_keys =>
             normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys(),
@@ -255,7 +267,7 @@ sub build_normalized_semantic_forward_ir_contract {
         guidance => [
             q{Treat this contract as the bounded nested `semantic.forward_ir` object used by successful public normalized semantic JSON reports.},
             'The nested object exposes only the current sanitized forward semantic projections, not raw compiler/private pipeline state.',
-            'The nested `intent_hir` branch now also has one bounded owner for its current object shell, composition-only extension keys, composition-child alias key families, and child/generated-child parameter-override alias key families.',
+            'The nested `intent_hir` branch now also has one bounded owner for its current object shell, embedded symbol_contract constant value key families, composition-only extension keys, composition-child alias key families, and child/generated-child parameter-override alias key families.',
             'The nested `lowered_rtl_ir` branch now also has one bounded owner for its current direct-root shell, composition-only extension keys, output-drive entry key families, selector-conflict entry key families, standalone-DT multi-drive entry key families, and composition shared-datapath candidate entry key families.',
             'The nested `structural_rtl_ir` branch now also has one bounded owner for its current direct-root and composition-top object shell plus structural auxiliary-assignment value-kind, port, net, declared/resolved link, instance shallow, nested instance interface-port, nested instance parameter-override, and nested instance port-binding key families.',
             'Use the grouped `nested_presence_key_map` to discover the bounded key families for intent_hir, lowered_rtl_ir, and structural_rtl_ir without collecting those child key lists separately.',
@@ -302,6 +314,12 @@ sub normalized_semantic_forward_ir_nested_presence_key_map {
 sub normalized_semantic_forward_ir_presence_key_family_map {
     return {
         public_presence_keys => normalized_semantic_forward_ir_presence_keys(),
+        intent_hir_symbol_contract_constant_value_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys(),
+        intent_hir_symbol_contract_constant_scalar_value_extension_keys =>
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
+        intent_hir_symbol_contract_constant_list_value_extension_keys =>
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
         intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
         intent_hir_composition_child_entry_keys =>
             normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys(),
@@ -401,6 +419,18 @@ sub normalized_semantic_forward_ir_intent_hir_presence_keys {
 
 sub normalized_semantic_forward_ir_intent_hir_optional_composition_keys {
     return normalized_semantic_intent_hir_optional_composition_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys {
+    return normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys {
+    return normalized_semantic_intent_hir_symbol_contract_constant_scalar_value_extension_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys {
+    return normalized_semantic_intent_hir_symbol_contract_constant_list_value_extension_keys();
 }
 
 sub normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys {

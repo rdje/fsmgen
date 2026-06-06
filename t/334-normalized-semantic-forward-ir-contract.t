@@ -25,6 +25,9 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_forward_ir_nested_presence_key_map
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_intent_hir_presence_keys
@@ -83,6 +86,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -369,6 +375,24 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
         'contract publishes the bounded forward-ir intent-hir composition-only key list',
     );
     for my $case (
+        [
+            'intent_hir_symbol_contract_constant_value_entry_keys',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys(),
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys(),
+            FSM::Support::NormalizedSemanticReportContract::normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys(),
+        ],
+        [
+            'intent_hir_symbol_contract_constant_scalar_value_extension_keys',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
+            FSM::Support::NormalizedSemanticReportContract::normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
+        ],
+        [
+            'intent_hir_symbol_contract_constant_list_value_extension_keys',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
+            FSM::Support::NormalizedSemanticReportContract::normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
+        ],
         [
             'intent_hir_composition_child_entry_keys',
             normalized_semantic_forward_ir_intent_hir_composition_child_entry_keys(),

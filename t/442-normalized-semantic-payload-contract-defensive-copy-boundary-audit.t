@@ -49,6 +49,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
@@ -92,6 +95,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_signal_analysis_entry_keys
     normalized_semantic_payload_signal_analysis_keys
+    normalized_semantic_payload_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_payload_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_payload_symbol_contract_constant_value_entry_keys
     normalized_semantic_payload_symbol_contract_keys
     normalized_semantic_payload_system_contract_keys
 );
@@ -215,6 +221,18 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
         {
             label => 'forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys',
             build => \&normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_symbol_contract_constant_value_entry_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys',
+            build => \&normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys,
         },
         {
             label => 'forward_ir_lowered_rtl_ir_keys',
@@ -369,6 +387,18 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
             build => \&normalized_semantic_payload_symbol_contract_keys,
         },
         {
+            label => 'symbol_contract_constant_value_entry_keys',
+            build => \&normalized_semantic_payload_symbol_contract_constant_value_entry_keys,
+        },
+        {
+            label => 'symbol_contract_constant_scalar_value_extension_keys',
+            build => \&normalized_semantic_payload_symbol_contract_constant_scalar_value_extension_keys,
+        },
+        {
+            label => 'symbol_contract_constant_list_value_extension_keys',
+            build => \&normalized_semantic_payload_symbol_contract_constant_list_value_extension_keys,
+        },
+        {
             label => 'composition_keys',
             build => \&normalized_semantic_payload_composition_keys,
         },
@@ -514,12 +544,27 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
         is_deeply($family_map->{$case->[0]}, $case->[1]->(), "$case->[0] family matches helper");
     }
     is_deeply($family_map->{signal_analysis_entry_presence_keys}, normalized_semantic_payload_signal_analysis_entry_keys(), 'signal-analysis entry family entry matches helper');
+    is_deeply($family_map->{symbol_contract_constant_value_entry_keys}, normalized_semantic_payload_symbol_contract_constant_value_entry_keys(), 'symbol-contract constant value core family matches helper');
+    is_deeply($family_map->{symbol_contract_constant_scalar_value_extension_keys}, normalized_semantic_payload_symbol_contract_constant_scalar_value_extension_keys(), 'symbol-contract scalar constant value extension family matches helper');
+    is_deeply($family_map->{symbol_contract_constant_list_value_extension_keys}, normalized_semantic_payload_symbol_contract_constant_list_value_extension_keys(), 'symbol-contract list constant value extension family matches helper');
     is_deeply(
         $family_map->{forward_ir_intent_hir_optional_composition_keys},
         normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys(),
         'intent-HIR optional composition family entry matches helper',
     );
     for my $case (
+        [
+            'forward_ir_intent_hir_symbol_contract_constant_value_entry_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys(),
+        ],
         [
             'forward_ir_intent_hir_composition_child_entry_keys',
             normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys(),

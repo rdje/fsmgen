@@ -144,7 +144,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.51`,
     `BACKEND-API-VALIDATION-FRONTIER.51.1`,
     `BACKEND-API-VALIDATION-FRONTIER.52`,
-    `BACKEND-API-VALIDATION-FRONTIER.52.1`
+    `BACKEND-API-VALIDATION-FRONTIER.52.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.53`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -974,10 +975,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.52: select symbol constants schema`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.52.1`
-  Status: `active`
+  Status: `done`
   Goal: `Publish symbol-contract constants map value schemas in normalized semantic symbol contracts.`
   Acceptance: `semantic.symbol_contract.constants and semantic.forward_ir.intent_hir.symbol_contract.constants advertise bounded scalar/list constant value key families for the emitted constants map entries, including scalar payload values and list item arrays. Payload/report contracts, capability-manifest semantic export metadata, README, mdBook, knowledge-map, defensive-copy audits, and runtime contract tests inherit or describe those symbol-contract constant value key families. The slice does not widen enum/type nested schemas, package-import nested schemas, unrelated forward-IR payloads, or full normalized semantic export stabilization.`
-  Verification: `pending implementation`
+  Verification: `perl -Iperl -c perl/FSM/Support/NormalizedSemanticSymbolContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm; edited-test syntax checks; focused normalized semantic symbol-constant schema prove bundle; broader normalized semantic contract/runtime prove bundle; manifest runtime prove bundle; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.52.1: ship symbol constants schema`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.53`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after symbol-contract constants map value schemas shipped.`
+  Acceptance: `A single next executable backend/API/public-export leaf is selected from roadmap, mdBook, knowledge-map, and code/test evidence. The selected edge receives an exact implementation owner before any code/test/source/config edits, and the selection preserves the current public-export stabilization boundaries unless evidence proves a narrower safe slice.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1092,7 +1100,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 106 | `BACKEND-API-VALIDATION-FRONTIER.51` | `done` | Selected generated-child parameter-override export metadata after strict semantic JSON evidence showed generated-child mirrors omit parameter_override_count and parameter_overrides[] while the matching child summaries carry them. |
 | 107 | `BACKEND-API-VALIDATION-FRONTIER.51.1` | `done` | Published generated-child parameter-override metadata and alias key families for semantic.composition.generated_children[] and semantic.forward_ir.intent_hir.composition_generated_children[]. |
 | 108 | `BACKEND-API-VALIDATION-FRONTIER.52` | `done` | Selected symbol-contract constants map value schemas after runtime and contract evidence showed the public constants map still lacks bounded nested scalar/list value key families. |
-| 109 | `BACKEND-API-VALIDATION-FRONTIER.52.1` | `active` | Publish bounded semantic.symbol_contract.constants value schemas for scalar/list constants without widening enum/type internals or full normalized semantic export stabilization. |
+| 109 | `BACKEND-API-VALIDATION-FRONTIER.52.1` | `done` | Published bounded semantic.symbol_contract.constants value schemas for scalar/list constants without widening enum/type internals or full normalized semantic export stabilization. |
+| 110 | `BACKEND-API-VALIDATION-FRONTIER.53` | `active` | Select the next exact backend/API/public-export edge after symbol-contract constants map value schemas shipped. |
 
 ## Decisions
 
@@ -1222,6 +1231,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.51` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `KNOWLEDGE_MAP.md`, `docs/knowledge/normalized-semantic-composition-child-parameter-override-alias-schema.md`, `perl/FSM/Support/NormalizedSemanticCompositionContract.pm`, `perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`, `t/292-composition-generated-child-parameter-overrides.t`, `t/333-normalized-semantic-composition-contract.t`, `t/339-normalized-semantic-intent-hir-contract.t`, and `t/354-normalized-semantic-child-runtime-contract-audit.t`; strict temporary normalized semantic JSON probe for a canonical-wiring parameterized generated-child composition showed `semantic.composition.generated_children[]` and `semantic.forward_ir.intent_hir.composition_generated_children[]` currently omit `parameter_override_count` and `parameter_overrides[]`, while the matching `children[]` and `composition_children[]` entries expose two overrides (`WIDTH`, `LANES`); `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected generated-child parameter-override export metadata for `.51.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.51.1` | `perl -Iperl -c perl/FSM/Composition/ChildExportBuilder.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticCompositionContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; edited-test syntax checks; focused normalized semantic generated-child parameter-override prove bundle; broader normalized semantic contract/runtime prove bundle; manifest runtime prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; generated-child parameter-override metadata and alias key families shipped through composition, intent-HIR, forward-IR, payload/report, manifest, docs, knowledge-map, defensive-copy audits, and runtime schema coverage; activated `.52` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.52` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/Support/NormalizedSemanticSymbolContract.pm`, `perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`, `perl/FSM/Support/NormalizedSemanticPayloadContract.pm`, `perl/FSM/Support/NormalizedSemanticReportContract.pm`, `t/335-normalized-semantic-symbol-contract.t`, `t/354-normalized-semantic-child-runtime-contract-audit.t`, and `t/corpus/direct_size_expression_widths.fsm`; strict normalized semantic JSON probe over `t/corpus/direct_size_expression_widths.fsm` showed `semantic.symbol_contract.constants` and `semantic.forward_ir.intent_hir.symbol_contract.constants` both emit scalar values with `kind`/`payload` and list values with `kind`/`items`; `prove -Iperl t/335-normalized-semantic-symbol-contract.t t/354-normalized-semantic-child-runtime-contract-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected symbol-contract constants map value schemas for `.52.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.52.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticSymbolContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; edited-test syntax checks; focused normalized semantic symbol-constant schema prove bundle; broader normalized semantic contract/runtime prove bundle; manifest runtime prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; symbol-contract constants map value schemas shipped through symbol, intent-HIR, forward-IR, payload/report, manifest, docs, knowledge-map, defensive-copy audits, and runtime schema coverage; activated `.53` |
 
 ## Commit Log
 
@@ -1335,6 +1345,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.51` | `BACKEND-API-VALIDATION-FRONTIER.51: select generated child parameter overrides` | selected `.51.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.51.1` | `BACKEND-API-VALIDATION-FRONTIER.51.1: ship generated child parameter overrides` | this slice; activates `.52` |
 | `BACKEND-API-VALIDATION-FRONTIER.52` | `BACKEND-API-VALIDATION-FRONTIER.52: select symbol constants schema` | selected `.52.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.52.1` | `BACKEND-API-VALIDATION-FRONTIER.52.1: ship symbol constants schema` | this slice; activates `.53` |
 
 ## Changelog
 
@@ -1873,3 +1884,29 @@ items named in the 2026-06-05 remaining-work inventory.
   capability-manifest, README, mdBook, knowledge-map, defensive-copy audits,
   and runtime schema coverage. Activated `.51` to select the next
   backend/API/public-export edge.
+- `2026-06-06`: Completed `.51`; selected generated-child
+  `parameter_overrides[]` export metadata as the next exact public-export edge
+  after strict semantic JSON evidence showed generated-child summaries omitted
+  parameter override metadata while matching child summaries carried it.
+  Activated `.51.1` before any implementation/test/source edits.
+- `2026-06-06`: Completed `.51.1`; normalized semantic composition contracts
+  now advertise `parameter_override_count`, `parameter_overrides[]`, and
+  bounded parameter-override alias key families for
+  `semantic.composition.generated_children[]` and
+  `semantic.forward_ir.intent_hir.composition_generated_children[]` through
+  composition, intent-HIR, forward-IR, payload/report, capability-manifest,
+  README, mdBook, knowledge-map, defensive-copy audits, and runtime schema
+  coverage. Activated `.52` to select the next backend/API/public-export edge.
+- `2026-06-06`: Completed `.52`; selected symbol-contract constants map value
+  schemas as the next exact public-export edge after runtime evidence showed
+  scalar values use `kind`/`payload` and list values use `kind`/`items` under
+  `semantic.symbol_contract.constants` and
+  `semantic.forward_ir.intent_hir.symbol_contract.constants`. Activated
+  `.52.1` before any implementation/test/source edits.
+- `2026-06-06`: Completed `.52.1`; normalized semantic symbol contracts now
+  advertise bounded scalar/list constant value key families for
+  `semantic.symbol_contract.constants` and
+  `semantic.forward_ir.intent_hir.symbol_contract.constants` through symbol,
+  intent-HIR, forward-IR, payload/report, capability-manifest, README, mdBook,
+  knowledge-map, defensive-copy audits, and runtime schema coverage. Activated
+  `.53` to select the next backend/API/public-export edge.

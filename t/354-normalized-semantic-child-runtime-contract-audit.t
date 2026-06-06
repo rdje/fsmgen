@@ -59,6 +59,9 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_intent_hir_optional_composition_keys
     normalized_semantic_intent_hir_presence_keys
+    normalized_semantic_intent_hir_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_intent_hir_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys
 );
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -91,6 +94,9 @@ use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
     normalized_semantic_structural_rtl_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticSymbolContract qw(
+    normalized_semantic_symbol_contract_constant_list_value_extension_keys
+    normalized_semantic_symbol_contract_constant_scalar_value_extension_keys
+    normalized_semantic_symbol_contract_constant_value_entry_keys
     normalized_semantic_symbol_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticSystemContract qw(
@@ -174,6 +180,60 @@ subtest 'symbol-rich direct semantic payload keeps bounded child-owner contracts
         $semantic->{symbol_contract},
         normalized_semantic_symbol_contract_presence_keys(),
         'symbol-rich direct semantic.symbol_contract keeps bounded keys',
+    );
+    my $symbol_constant_scalar_keys = [
+        @{normalized_semantic_symbol_contract_constant_value_entry_keys()},
+        @{normalized_semantic_symbol_contract_constant_scalar_value_extension_keys()},
+    ];
+    my $symbol_constant_list_keys = [
+        @{normalized_semantic_symbol_contract_constant_value_entry_keys()},
+        @{normalized_semantic_symbol_contract_constant_list_value_extension_keys()},
+    ];
+    my $intent_hir_constant_scalar_keys = [
+        @{normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys()},
+        @{normalized_semantic_intent_hir_symbol_contract_constant_scalar_value_extension_keys()},
+    ];
+    my $intent_hir_constant_list_keys = [
+        @{normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys()},
+        @{normalized_semantic_intent_hir_symbol_contract_constant_list_value_extension_keys()},
+    ];
+    my $constants = $semantic->{symbol_contract}{constants} || {};
+    my $intent_hir_constants =
+        $semantic->{forward_ir}{intent_hir}{symbol_contract}{constants} || {};
+
+    assert_exact_keys(
+        $constants->{BASE_W},
+        $symbol_constant_scalar_keys,
+        'symbol-rich direct semantic.symbol_contract.constants.BASE_W keeps exact scalar value keys',
+    );
+    is($constants->{BASE_W}{kind}, 'scalar', 'BASE_W advertises the scalar constant value kind');
+    is($constants->{BASE_W}{payload}, 2, 'BASE_W exposes its scalar payload value');
+    assert_exact_keys(
+        $constants->{WIDTHS},
+        $symbol_constant_list_keys,
+        'symbol-rich direct semantic.symbol_contract.constants.WIDTHS keeps exact list value keys',
+    );
+    is($constants->{WIDTHS}{kind}, 'list', 'WIDTHS advertises the list constant value kind');
+    ok(ref($constants->{WIDTHS}{items}) eq 'ARRAY', 'WIDTHS exposes list constant items');
+    assert_exact_keys(
+        $constants->{WIDTHS}{items}[0],
+        $symbol_constant_scalar_keys,
+        'symbol-rich direct semantic.symbol_contract.constants.WIDTHS.items[] keeps exact scalar item keys',
+    );
+    is_deeply(
+        $intent_hir_constants,
+        $constants,
+        'symbol-rich direct semantic.forward_ir.intent_hir.symbol_contract.constants aliases semantic.symbol_contract.constants',
+    );
+    assert_exact_keys(
+        $intent_hir_constants->{BASE_W},
+        $intent_hir_constant_scalar_keys,
+        'symbol-rich direct intent-HIR symbol_contract.constants.BASE_W keeps exact scalar value keys',
+    );
+    assert_exact_keys(
+        $intent_hir_constants->{WIDTHS},
+        $intent_hir_constant_list_keys,
+        'symbol-rich direct intent-HIR symbol_contract.constants.WIDTHS keeps exact list value keys',
     );
     ok(
         !exists $semantic->{composition},
