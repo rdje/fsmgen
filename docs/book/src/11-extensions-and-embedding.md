@@ -905,7 +905,9 @@ literal/concat assignments and an `entity work.uart_tx` port map. The external
 RTL C3 subset also emits scalar integer and multi-bit sized bitstring
 `generic map` actuals before the port map, such as `WIDTH => 16` and
 `RESET_VALUE => "10100101"` for `8'hA5`; resolved scalar integer expressions
-also emit as VHDL expression actuals such as `EXPR_WIDTH => (16 + 1)`.
+also emit as VHDL expression actuals such as `EXPR_WIDTH => (16 + 1)`, and
+resolved packed aggregate actuals emit as VHDL bit strings such as
+`LANES => "1010010100111100"` and `FRAME => "101"`.
 Qualified imported package constants in that same subset are resolved before
 VHDL emission and also emit literals, for example `param_pkg.WIDTH_16` and
 `param_pkg.RESET_A5` emit `WIDTH => 16` and `RESET_VALUE => "10100101"`
@@ -2324,10 +2326,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.77.1`, which implements bounded resolved
-packed aggregate external-RTL C3 VHDL generic-map actuals after scalar
-integer, scalar expression, and multi-bit sized bitstring actuals shipped.
-Package declaration and VHDL package emission, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.78`, which selects the next exact backend/API
+edge after bounded resolved packed aggregate external-RTL C3 VHDL generic-map
+actuals shipped. Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, generated-FSM and
 standalone-DT generic maps, one-bit generic actuals, full aggregate VHDL

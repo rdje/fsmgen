@@ -371,6 +371,76 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes bounded composition VHDL aggregate generic-map behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_aggregate_generic_map_top.fsm');
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:facade_vhdl_aggregate_generic_map_top
+  (+constants
+    (LOCAL_LANES (8'hA5 8'h3C))
+  )
+  (+enums
+    (frame_mode
+      (RUN 2'b10)
+    )
+  )
+  (?ports:public_io
+    clk
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (LANES LOCAL_LANES)
+      (FRAME ((mode frame_mode.RUN) (flag 1)))
+    )
+  )
+  (?wiring:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (LANES (8'h00 8'h00))
+    (FRAME ((mode 2'b00) (flag 0)))
+  )
+  clk:clock
+  data_in<16:data
+  txd>:data
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_vhdl_aggregate_generic_map_top\s+is\b/s,
+        'explicit VHDL facade generation emits the aggregate generic-map composition entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*LANES\s+=>\s+"1010010100111100",\s*FRAME\s+=>\s+"101"\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
+        'explicit VHDL facade generation emits resolved aggregate generic maps before the port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|16'b1010010100111100|3'b101/s,
+        'explicit VHDL aggregate generic-map facade generation does not leak SystemVerilog syntax or packed literal tokens',
+    );
+};
+
 subtest 'facade target_language option routes bounded standalone-DT composition VHDL structural top behavior' => sub {
     my $composition_path = repo_file('t/corpus/standalone_dtc_explicit_system_autowire.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(

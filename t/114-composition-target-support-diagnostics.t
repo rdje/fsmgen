@@ -40,6 +40,8 @@ my $package_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_package_gener
 my $package_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_package_generic_map_top.vhd');
 my $expression_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_expression_generic_map_deferred_top.fsm');
 my $expression_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_expression_generic_map_top.vhd');
+my $aggregate_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_aggregate_generic_map_top.fsm');
+my $aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_aggregate_generic_map_top.vhd');
 my $one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_deferred_top.fsm');
 my $composition_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.fsm');
 my $output_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.vhd');
@@ -179,6 +181,47 @@ write_file(
 FSM
 );
 write_file(
+    $aggregate_generic_map_path,
+    <<'FSM'
+(?top:vhdl_aggregate_generic_map_top
+  (+constants
+    (LOCAL_LANES (8'hA5 8'h3C))
+  )
+  (+enums
+    (frame_mode
+      (RUN 2'b10)
+    )
+  )
+  (?ports:public_io
+    clk
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (LANES LOCAL_LANES)
+      (FRAME ((mode frame_mode.RUN) (flag 1)))
+    )
+  )
+  (?wiring:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (LANES (8'h00 8'h00))
+    (FRAME ((mode 2'b00) (flag 0)))
+  )
+  clk:clock
+  data_in<16:data
+  txd>:data
+)
+FSM
+);
+write_file(
     $one_bit_generic_map_path,
     <<'FSM'
 (?top:vhdl_one_bit_generic_map_deferred_top
@@ -296,8 +339,25 @@ $one_bit_generic_exception = $@;
 
 like(
     $one_bit_generic_exception,
-    qr/Structural VHDL composition-top scaffold unsupported: composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, or multi-bit sized bitstring actuals/s,
+    qr/Structural VHDL composition-top scaffold unsupported: composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, multi-bit sized bitstring, or multi-bit packed aggregate actuals/s,
     'pipeline keeps one-bit generic-map actuals outside the bounded VHDL scaffold',
+);
+
+my $aggregate_generic_map_result = $pipeline->generate_hdl_from_file($aggregate_generic_map_path);
+like(
+    $aggregate_generic_map_result->{hdl_code},
+    qr/\bentity\s+vhdl_aggregate_generic_map_top\s+is\b/s,
+    'pipeline emits the aggregate generic-map VHDL composition entity',
+);
+like(
+    $aggregate_generic_map_result->{hdl_code},
+    qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*LANES\s+=>\s+"1010010100111100",\s*FRAME\s+=>\s+"101"\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
+    'pipeline emits resolved list and record-like aggregate VHDL generic maps before the port map',
+);
+unlike(
+    $aggregate_generic_map_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|16'b1010010100111100|3'b101/s,
+    'pipeline aggregate generic-map VHDL output does not leak SystemVerilog syntax or packed literal tokens',
 );
 
 my $standalone_dtc_result = $pipeline->generate_hdl_from_file($standalone_dtc_composition_path);
@@ -532,6 +592,33 @@ unlike(
     $expression_generic_map_cli_hdl,
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(/s,
     'CLI scalar expression generic-map composition VHDL output does not leak SystemVerilog structural syntax',
+);
+
+my ($aggregate_generic_map_success, $aggregate_generic_map_error_message, $aggregate_generic_map_full_buf, $aggregate_generic_map_stdout_buf, $aggregate_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $aggregate_generic_map_output_path, $aggregate_generic_map_path],
+);
+
+my $aggregate_generic_map_combined_output = join(
+    '',
+    @{ $aggregate_generic_map_stdout_buf || [] },
+    @{ $aggregate_generic_map_stderr_buf || [] },
+    ($aggregate_generic_map_error_message || ''),
+);
+
+ok($aggregate_generic_map_success, 'CLI accepts bounded composition --language vhdl for the aggregate generic-map external-RTL fixture')
+    or diag($aggregate_generic_map_combined_output);
+ok(-e $aggregate_generic_map_output_path, 'CLI writes aggregate generic-map composition VHDL output');
+
+my $aggregate_generic_map_cli_hdl = read_file($aggregate_generic_map_output_path);
+like(
+    $aggregate_generic_map_cli_hdl,
+    qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*LANES\s+=>\s+"1010010100111100",\s*FRAME\s+=>\s+"101"\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
+    'CLI aggregate generic-map composition VHDL output includes the resolved aggregate generic actuals',
+);
+unlike(
+    $aggregate_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|16'b1010010100111100|3'b101/s,
+    'CLI aggregate generic-map composition VHDL output does not leak SystemVerilog syntax or packed literal tokens',
 );
 
 my ($standalone_dtc_success, $standalone_dtc_error_message, $standalone_dtc_full_buf, $standalone_dtc_stdout_buf, $standalone_dtc_stderr_buf) = run(

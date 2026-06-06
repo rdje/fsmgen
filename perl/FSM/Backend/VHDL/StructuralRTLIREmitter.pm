@@ -11,10 +11,10 @@ current leaves intentionally support only external-RTL structural instances or
 one standalone-DT child passthrough instance plus bounded generated-FSM child
 tops, direct scalar/vector top ports, VHDL-form auxiliary assignments,
 scalar/vector signal declarations, scalar integer and multi-bit sized
-bitstring generic-map actuals plus simple resolved scalar integer expression
-actuals for external RTL instances, and port-map actuals whose connection
-expressions already render through the backend-neutral StructuralRTLIR
-expression helper.
+bitstring generic-map actuals, simple resolved scalar integer expression
+actuals, plus resolved multi-bit packed aggregate actuals for external RTL
+instances, and port-map actuals whose connection expressions already render
+through the backend-neutral StructuralRTLIR expression helper.
 
 =cut
 
@@ -115,7 +115,7 @@ sub _render_instance_block ($instance) {
 
     my @parameter_overrides = @{$instance->{parameter_overrides} || []};
     if (@parameter_overrides) {
-        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, or sized bitstring overrides')
+        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides')
             unless $instance_kind eq 'rtl';
     }
 
@@ -167,17 +167,21 @@ sub _render_instance_block ($instance) {
 
 sub _vhdl_generic_actual ($override) {
     my $kind = $override->{value_kind} // 'scalar';
+    my $is_scalar = $kind eq 'scalar';
+    my $is_packed_aggregate = $kind eq 'list' || $kind eq 'map';
     confess _unsupported(_generic_actual_limit())
-        unless $kind eq 'scalar';
+        unless $is_scalar || $is_packed_aggregate;
 
     my $value = $override->{value_text};
     confess _unsupported(_generic_actual_limit())
         unless defined $value;
 
-    return $value if $value =~ /\A-?\d+\z/;
+    return $value if $is_scalar && $value =~ /\A-?\d+\z/;
 
-    my $expression_actual = _vhdl_scalar_integer_expression_generic_actual($value);
-    return $expression_actual if defined $expression_actual;
+    if ($is_scalar) {
+        my $expression_actual = _vhdl_scalar_integer_expression_generic_actual($value);
+        return $expression_actual if defined $expression_actual;
+    }
 
     my $literal_actual = _vhdl_sized_bitstring_generic_actual($value);
     return $literal_actual if defined $literal_actual;
@@ -251,7 +255,7 @@ sub _vhdl_hex_digits_to_bits ($digits) {
 }
 
 sub _generic_actual_limit () {
-    return 'composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, or multi-bit sized bitstring actuals';
+    return 'composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, multi-bit sized bitstring, or multi-bit packed aggregate actuals';
 }
 
 sub _normalize_vhdl_auxiliary_assignment ($line) {

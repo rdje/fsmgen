@@ -345,6 +345,8 @@ overrides to `generic map` actuals, such as `WIDTH => 16` and
 `RESET_VALUE => "10100101"` for `8'hA5`, before the instance `port map`.
 Resolved scalar integer expressions also lower to VHDL expression actuals, such
 as `EXPR_WIDTH => (16 + 1)`.
+Resolved packed aggregate actuals also lower after they become multi-bit packed
+values, such as `LANES => "1010010100111100"` and `FRAME => "101"`.
 Qualified imported package constants in that same bounded external-RTL subset
 are resolved before VHDL emission and also emit literal actuals, for example
 `param_pkg.WIDTH_16` and `param_pkg.RESET_A5` emit `WIDTH => 16` and
@@ -360,9 +362,9 @@ generated-FSM fixture in `fsm/apb_tb.fsm`. Other `?top` VHDL shapes still
 parse into typed composition IR and then fail closed with the scoped
 target-support diagnostic. Generated-FSM and standalone-DT generic maps,
 one-bit actuals that need target-type discrimination, aggregate/list/record
-actuals, unresolved package/expression actuals, VHDL package
-declaration/emission, and APB/C4 generic-map shapes remain deferred until
-later exact leaves own those paths.
+actuals that do not resolve to multi-bit packed values, unresolved
+package/expression actuals, VHDL package declaration/emission, and APB/C4
+generic-map shapes remain deferred until later exact leaves own those paths.
 
 ### Broader Generated-Child Top Instantiation
 
@@ -3829,9 +3831,10 @@ generated-FSM top for `fsm/apb_tb.fsm`.
 Still backlog beyond those exact owners: broader generated-FSM/C4 composition
 VHDL, internal-net-heavy composition tops beyond APB, composition generic maps
 beyond external-RTL scalar integer, scalar integer expression, and multi-bit
-sized bitstring literal/resolved-package-constant actuals, aggregate VHDL
-record/array lowering, VHDL package declaration/emission, multi-clock domains,
-GHDL validation, broad expression parity, signed scalar division/modulo,
+sized bitstring literal/resolved-package-constant actuals plus resolved packed
+aggregate actuals, aggregate VHDL record/array lowering, VHDL package
+declaration/emission, multi-clock domains, GHDL validation, broad expression
+parity, signed scalar division/modulo,
 mixed signed/unsigned scalar arithmetic, mixed signed/unsigned vector
 arithmetic, and full feature parity with the
 SystemVerilog backend. Scalar division/modulo,
@@ -3854,9 +3857,9 @@ VHDL ports; full VHDL record/array aggregate lowering remains deferred.
 External-RTL scalar integer and multi-bit sized bitstring composition generic
 maps now lower to VHDL `generic map` actuals before the port map, including
 qualified package constants after they resolve to scalar integer or multi-bit
-sized bitstring literals and scalar integer expressions such as `(16 + 1)`;
-broader generic-map families remain deferred until exact owner leaves select
-them. The bounded C3 external-RTL
+sized bitstring literals, scalar integer expressions such as `(16 + 1)`, and
+resolved packed aggregate values such as `16'b1010010100111100`; broader
+generic-map families remain deferred until exact owner leaves select them. The bounded C3 external-RTL
 literal/concat structural top now emits a VHDL entity/architecture with
 concurrent literal/concat assignments and an external `entity work.uart_tx`
 port map. The bounded C1 standalone-DT passthrough structural top now emits the
@@ -3902,8 +3905,9 @@ division/modulo, mixed signed/unsigned arithmetic, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal-net-heavy
 composition tops beyond APB, composition generic maps beyond external-RTL
 scalar integer, scalar integer expression, and multi-bit sized bitstring
-literal/resolved-package-constant actuals, aggregate VHDL, VHDL package
-declaration/emission, GHDL validation, and full backend parity remain outside the shipped
+literal/resolved-package-constant actuals plus resolved packed aggregate
+actuals, aggregate VHDL, VHDL package declaration/emission, GHDL validation,
+and full backend parity remain outside the shipped
 scaffold. Signed vector numeric-literal
 addition/subtraction/multiplication/division/modulo also lower through
 target-width `to_signed`, so `SUM = (+ A 1)` emits
@@ -4114,11 +4118,11 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.77.1` implements bounded resolved packed
-aggregate external-RTL C3 VHDL generic-map actuals after scalar integer, scalar
-expression, and multi-bit sized bitstring actuals shipped. Package declaration
-and VHDL package emission, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, signed scalar division/modulo, mixed
+`BACKEND-API-VALIDATION-FRONTIER.78` selects the next exact backend/API edge
+after bounded resolved packed aggregate external-RTL C3 VHDL generic-map
+actuals shipped. Package declaration and VHDL package emission, already bounded
+constant/enum/type internals, unrelated forward-IR payloads, signed scalar
+division/modulo, mixed
 signed/unsigned arithmetic, generated-FSM and standalone-DT generic maps,
 one-bit generic actuals, full aggregate VHDL record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
