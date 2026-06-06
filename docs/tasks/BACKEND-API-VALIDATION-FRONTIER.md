@@ -193,7 +193,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.75.1`,
     `BACKEND-API-VALIDATION-FRONTIER.76`,
     `BACKEND-API-VALIDATION-FRONTIER.76.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.77`
+    `BACKEND-API-VALIDATION-FRONTIER.77`,
+    `BACKEND-API-VALIDATION-FRONTIER.77.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1390,10 +1391,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.76.1: emit VHDL scalar expression generic actuals`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.77`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after external-RTL scalar expression VHDL generic-map actuals shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.77.1`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave one-bit actuals that need target-type discrimination, aggregate/list/record generic actuals, generated-FSM and standalone-DT generic maps, APB/C4 generic maps, aggregate VHDL, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of README.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/book/src/11-extensions-and-embedding.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm, perl/FSM/Composition/ParameterOverrideResolver.pm, t/91-composition-multi-rtl-children.t, t/114-composition-target-support-diagnostics.t, and t/386-hdl-generator-facade-target-language-boundary-audit.t; command -v ghdl returned unavailable; temporary list-aggregate external-RTL generic-map probe showed SystemVerilog emits .LANES(16'b1010010100111100) while VHDL fails at the scalar integer / scalar integer expression / multi-bit sized bitstring generic-actual guard because the resolved value kind is aggregate; focused composition/facade prove bundle; knowledge-map/memory/doc/mdBook gates; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.77: select VHDL aggregate generic actuals`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.77.1`
+  Status: `active`
+  Goal: `Implement bounded external-RTL VHDL generic-map lowering for resolved packed aggregate actuals.`
+  Acceptance: `The structural VHDL composition-top emitter accepts the exact C3 external-RTL aggregate generic-map shapes whose resolved parameter override value_kind is list or map and whose value_text is a multi-bit sized bitstring, emitting VHDL bit string actuals such as LANES => "1010010100111100" and FRAME => "101" before the port map. Focused pipeline, CLI, and facade/target-language coverage prove resolved list and record-like aggregate actuals without leaking SystemVerilog parameter syntax. The leaf does not widen one-bit actuals that need target-type discrimination, generated-FSM and standalone-DT generic maps, APB/C4 generic maps, aggregate VHDL record/array declarations, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, or full backend parity. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map if needed, task tree, and memory stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1557,7 +1566,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 155 | `BACKEND-API-VALIDATION-FRONTIER.75.1` | `done` | Locked resolved package-backed external-RTL scalar integer and multi-bit sized bitstring VHDL generic-map actuals through pipeline, CLI, facade, docs, mdBook, and fact-card coverage. |
 | 156 | `BACKEND-API-VALIDATION-FRONTIER.76` | `done` | Selected bounded external-RTL scalar expression VHDL generic-map actuals after probe evidence showed SystemVerilog already emits `.EXPR_WIDTH((16 + 1))` while VHDL fails at the generic-actual guard. |
 | 157 | `BACKEND-API-VALIDATION-FRONTIER.76.1` | `done` | Shipped resolved scalar expression VHDL generic-map actuals for the exact external-RTL `EXPR_WIDTH => (16 + 1)` shape. |
-| 158 | `BACKEND-API-VALIDATION-FRONTIER.77` | `active` | Select the next exact backend/API edge after scalar expression generic actuals shipped. |
+| 158 | `BACKEND-API-VALIDATION-FRONTIER.77` | `done` | Selected resolved packed aggregate external-RTL VHDL generic-map actuals after probe evidence showed SystemVerilog emits `.LANES(16'b1010010100111100)` while VHDL fails at the value-kind guard. |
+| 159 | `BACKEND-API-VALIDATION-FRONTIER.77.1` | `active` | Implement resolved multi-bit list/map aggregate generic actual lowering without widening one-bit, generated-child, APB/C4, package-emission, or full aggregate VHDL paths. |
 
 ## Decisions
 
@@ -1736,6 +1746,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.75.1` | `perl -Iperl -c t/114-composition-target-support-diagnostics.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL composition/facade prove bundle; generated-child/parameter-override composition regression bundle; facade target-language shape boundary bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; resolved package-backed scalar integer and multi-bit sized bitstring VHDL generic-map actuals are locked and documented; `.76` activated for next-edge selection |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.76` | Selection audit/read of `README.md`, `docs/TASK_TREE.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`, `perl/FSM/Composition/ParameterOverrideResolver.pm`, `t/91-composition-multi-rtl-children.t`, `t/114-composition-target-support-diagnostics.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; `command -v ghdl`; temporary scalar-expression external-RTL generic-map probe; focused composition/facade prove bundle; knowledge-map/memory/doc/mdBook gates; `git diff --check` | `PASS`; selected external-RTL scalar expression VHDL generic-map actuals for `.76.1`; `command -v ghdl` returned unavailable |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.76.1` | `perl -Iperl -c perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`; `perl -Iperl -c t/114-composition-target-support-diagnostics.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL composition/facade prove bundle; generated-child/parameter-override composition regression bundle; facade target-language shape boundary bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; resolved scalar expression VHDL generic-map actuals are shipped for the exact external-RTL expression fixture and `.77` activated for next-edge selection |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.77` | Selection audit/read of `README.md`, `docs/TASK_TREE.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`, `perl/FSM/Composition/ParameterOverrideResolver.pm`, `t/91-composition-multi-rtl-children.t`, `t/114-composition-target-support-diagnostics.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; `command -v ghdl`; temporary list-aggregate external-RTL generic-map probe; focused composition/facade prove bundle; knowledge-map/memory/doc/mdBook gates; `git diff --check` | `PASS`; selected resolved packed aggregate VHDL generic-map actuals for `.77.1`; `command -v ghdl` returned unavailable |
 
 ## Commit Log
 
@@ -1898,6 +1909,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.75.1` | `BACKEND-API-VALIDATION-FRONTIER.75.1: lock package-backed VHDL generic actuals` | this slice; activates `.76` |
 | `BACKEND-API-VALIDATION-FRONTIER.76` | `BACKEND-API-VALIDATION-FRONTIER.76: select VHDL scalar expression generic actuals` | selected `.76.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.76.1` | `BACKEND-API-VALIDATION-FRONTIER.76.1: emit VHDL scalar expression generic actuals` | this slice; activates `.77` |
+| `BACKEND-API-VALIDATION-FRONTIER.77` | `BACKEND-API-VALIDATION-FRONTIER.77: select VHDL aggregate generic actuals` | selected `.77.1` |
 
 ## Changelog
 
@@ -2841,3 +2853,10 @@ items named in the 2026-06-05 remaining-work inventory.
   package declaration/emission, GHDL validation, broad expression parity, and
   full backend parity remain deferred. Activated `.77` to select the next exact
   backend/API edge.
+- `2026-06-06`: Completed `.77`; selected bounded resolved packed aggregate
+  external-RTL VHDL generic-map actuals for `.77.1` after an exact probe showed
+  SystemVerilog emits `.LANES(16'b1010010100111100)` while VHDL still fails at
+  the generic-actual value-kind guard. One-bit actuals, generated-FSM/
+  standalone-DT generic maps, APB/C4 generic maps, aggregate VHDL record/array
+  declarations, VHDL package declaration/emission, GHDL validation, broad
+  expression parity, and full backend parity remain deferred.

@@ -4114,15 +4114,15 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.77` selects the next exact backend/API edge
-after bounded external-RTL C3 scalar expression VHDL generic-map actuals
-shipped. Package declaration and VHDL package emission, already bounded
-constant/enum/type internals, unrelated forward-IR payloads, signed scalar
-division/modulo, mixed signed/unsigned arithmetic, generated-FSM and
-standalone-DT generic maps, one-bit generic actuals, aggregate generic
-actuals, full aggregate VHDL record/array lowering, broader generated-FSM/C4
-composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
-beyond APB, broader expression parity beyond the shipped AMBA wrap family, and
-full normalized semantic export stabilization remain out of scope until later
-exact leaves own
+`BACKEND-API-VALIDATION-FRONTIER.77.1` implements bounded resolved packed
+aggregate external-RTL C3 VHDL generic-map actuals after scalar integer, scalar
+expression, and multi-bit sized bitstring actuals shipped. Package declaration
+and VHDL package emission, already bounded constant/enum/type internals,
+unrelated forward-IR payloads, signed scalar division/modulo, mixed
+signed/unsigned arithmetic, generated-FSM and standalone-DT generic maps,
+one-bit generic actuals, full aggregate VHDL record/array lowering, broader
+generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
+nets/generic maps beyond APB, broader expression parity beyond the shipped AMBA
+wrap family, and full normalized semantic export stabilization remain out of
+scope until later exact leaves own
 them.

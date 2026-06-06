@@ -2324,17 +2324,18 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.77`, which selects the next exact backend/API
-edge after bounded external-RTL C3 scalar expression VHDL generic-map actuals
-shipped. Package declaration and VHDL package emission, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.77.1`, which implements bounded resolved
+packed aggregate external-RTL C3 VHDL generic-map actuals after scalar
+integer, scalar expression, and multi-bit sized bitstring actuals shipped.
+Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, generated-FSM and
-standalone-DT generic maps, one-bit generic actuals, aggregate generic
-actuals, full aggregate VHDL record/array lowering, broader generated-FSM/C4
-composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
-beyond APB, broader expression parity beyond the shipped AMBA wrap family, and
-full normalized semantic export stabilization remain out of scope until later
-exact leaves own them.
+standalone-DT generic maps, one-bit generic actuals, full aggregate VHDL
+record/array lowering, broader generated-FSM/C4 composition VHDL beyond the
+exact shipped fixtures, internal nets/generic maps beyond APB, broader
+expression parity beyond the shipped AMBA wrap family, and full normalized
+semantic export stabilization remain out of scope until later exact leaves own
+them.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 
