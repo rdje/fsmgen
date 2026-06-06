@@ -214,7 +214,7 @@ strict-mode, and pre-generation checks. The lane is SystemVerilog-only for now;
 direct VHDL generation has a scaffold subset, including delayed-pulse
 clock-branch lowering, generic-bearing direct-root module headers with typed
 scalar/vector sized-literal defaults, binary scalar
-addition/subtraction RHS lowering, scalar multiplication RHS/chain lowering,
+subtraction RHS lowering, scalar addition/multiplication RHS/chain lowering,
 and same-width addition/subtraction/multiplication, division/modulo, and XOR
 RHS/chain lowering, but VHDL/GHDL validation waits for a separate GHDL
 validation lane.
