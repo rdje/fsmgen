@@ -30,6 +30,11 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   coverage.
 - Aggregate-output roots are locked as explicit fail-closed direct VHDL
   boundaries by focused pipeline and facade coverage.
+- Composition/top VHDL is selected as the active fail-closed hardening leaf.
+  Current pipeline and CLI composition paths parse `?top` sources into typed
+  composition IR, then reject `target_language => 'vhdl'` / `--language vhdl`
+  with the scoped composition target-support diagnostic instead of emitting a
+  VHDL top.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from

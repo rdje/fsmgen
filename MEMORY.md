@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.37.1` (this commit) — locked direct VHDL aggregate-output roots as an explicit fail-closed boundary. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.38` active frontier — select the next exact backend/API/public-export edge before any further code/test/source edits.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.37.1`; `BACKEND-API-VALIDATION-FRONTIER.37`; `BACKEND-API-VALIDATION-FRONTIER.36.1`; `BACKEND-API-VALIDATION-FRONTIER.36`; `BACKEND-API-VALIDATION-FRONTIER.35.1`; `BACKEND-API-VALIDATION-FRONTIER.35`; `BACKEND-API-VALIDATION-FRONTIER.34.1`; `BACKEND-API-VALIDATION-FRONTIER.34`; `BACKEND-API-VALIDATION-FRONTIER.33.1`; `BACKEND-API-VALIDATION-FRONTIER.33`; `BACKEND-API-VALIDATION-FRONTIER.32.1`; `BACKEND-API-VALIDATION-FRONTIER.32`; `BACKEND-API-VALIDATION-FRONTIER.31.1`; `BACKEND-API-VALIDATION-FRONTIER.31`.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.38` (this commit) — selected composition/top VHDL fail-closed hardening for `.38.1` from current composition target-support evidence. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.38.1` active frontier — lock the composition/top VHDL fail-closed boundary without implementing VHDL top emission or generic maps.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.38`; `BACKEND-API-VALIDATION-FRONTIER.37.1`; `BACKEND-API-VALIDATION-FRONTIER.37`; `BACKEND-API-VALIDATION-FRONTIER.36.1`; `BACKEND-API-VALIDATION-FRONTIER.36`; `BACKEND-API-VALIDATION-FRONTIER.35.1`; `BACKEND-API-VALIDATION-FRONTIER.35`; `BACKEND-API-VALIDATION-FRONTIER.34.1`; `BACKEND-API-VALIDATION-FRONTIER.34`; `BACKEND-API-VALIDATION-FRONTIER.33.1`; `BACKEND-API-VALIDATION-FRONTIER.33`; `BACKEND-API-VALIDATION-FRONTIER.32.1`; `BACKEND-API-VALIDATION-FRONTIER.32`; `BACKEND-API-VALIDATION-FRONTIER.31.1`.
 - in_flight_uncommitted: none expected after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
