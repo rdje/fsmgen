@@ -17,6 +17,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
     build_normalized_semantic_report_contract
+    normalized_semantic_composition_child_entry_keys
+    normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_keys
     normalized_semantic_explicit_system_contract_keys
     normalized_semantic_failure_diagnostic_keys
@@ -351,6 +353,14 @@ subtest 'normalized semantic report helper builders return fresh nested structur
             label => 'composition_keys',
             build => \&normalized_semantic_composition_keys,
         },
+        {
+            label => 'composition_child_entry_keys',
+            build => \&normalized_semantic_composition_child_entry_keys,
+        },
+        {
+            label => 'composition_generated_child_entry_keys',
+            build => \&normalized_semantic_composition_generated_child_entry_keys,
+        },
     ) {
         my $first = $case->{build}->();
         mutate_structure($first);
@@ -383,6 +393,8 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
         normalized_semantic_payload_optional_child_presence_keys(),
         'success semantic optional child helper matches payload helper',
     );
+    is_deeply($family_map->{composition_child_entry_keys}, normalized_semantic_composition_child_entry_keys(), 'composition child entry family matches helper');
+    is_deeply($family_map->{composition_generated_child_entry_keys}, normalized_semantic_composition_generated_child_entry_keys(), 'composition generated-child entry family matches helper');
     is_deeply($family_map->{support_accounting_presence_keys}, normalized_semantic_support_accounting_keys(), 'support accounting family entry matches helper');
     is_deeply($family_map->{failure_diagnostic_presence_keys}, normalized_semantic_failure_diagnostic_keys(), 'failure diagnostic family entry matches helper');
     is_deeply(

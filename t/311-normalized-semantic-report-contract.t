@@ -62,6 +62,8 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
 use FSM::Support::NormalizedSemanticReportContract qw(
     build_normalized_semantic_report_contract
     normalized_semantic_report_contract_source
+    normalized_semantic_composition_child_entry_keys
+    normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_keys
     normalized_semantic_explicit_system_contract_keys
     normalized_semantic_failure_diagnostic_keys
@@ -124,6 +126,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
 );
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_contract_source
+    normalized_semantic_payload_composition_child_entry_keys
+    normalized_semantic_payload_composition_generated_child_entry_keys
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_nested_contract_source_map
@@ -460,9 +464,29 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'semantic presence family map republishes optional payload children',
     );
     is_deeply(
+        $contract->{semantic_presence_key_family_map}{composition_child_entry_keys},
+        normalized_semantic_payload_composition_child_entry_keys(),
+        'semantic presence family map republishes composition child entry keys',
+    );
+    is_deeply(
+        $contract->{semantic_presence_key_family_map}{composition_generated_child_entry_keys},
+        normalized_semantic_payload_composition_generated_child_entry_keys(),
+        'semantic presence family map republishes composition generated-child entry keys',
+    );
+    is_deeply(
         $contract->{presence_key_family_map}{success_semantic_optional_child_presence_keys},
         normalized_semantic_success_semantic_optional_child_presence_keys(),
         'report presence family map publishes optional semantic children',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_child_entry_keys},
+        normalized_semantic_composition_child_entry_keys(),
+        'report presence family map publishes composition child entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_generated_child_entry_keys},
+        normalized_semantic_composition_generated_child_entry_keys(),
+        'report presence family map publishes composition generated-child entry keys',
     );
     is_deeply(
         $contract->{success_module_presence_keys},
@@ -1112,6 +1136,36 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_composition_keys(),
         normalized_semantic_composition_presence_keys(),
         'normalized semantic composition keys map to the nested composition owner',
+    );
+    is_deeply(
+        $contract->{composition_child_entry_keys},
+        normalized_semantic_composition_child_entry_keys(),
+        'contract publishes the bounded composition child entry key list',
+    );
+    is_deeply(
+        normalized_semantic_composition_child_entry_keys(),
+        normalized_semantic_payload_composition_child_entry_keys(),
+        'normalized semantic composition child entry keys map to the payload owner',
+    );
+    is_deeply(
+        normalized_semantic_composition_child_entry_keys(),
+        FSM::Support::NormalizedSemanticCompositionContract::normalized_semantic_composition_child_entry_keys(),
+        'normalized semantic composition child entry keys map to the nested composition owner',
+    );
+    is_deeply(
+        $contract->{composition_generated_child_entry_keys},
+        normalized_semantic_composition_generated_child_entry_keys(),
+        'contract publishes the bounded composition generated-child entry key list',
+    );
+    is_deeply(
+        normalized_semantic_composition_generated_child_entry_keys(),
+        normalized_semantic_payload_composition_generated_child_entry_keys(),
+        'normalized semantic composition generated-child entry keys map to the payload owner',
+    );
+    is_deeply(
+        normalized_semantic_composition_generated_child_entry_keys(),
+        FSM::Support::NormalizedSemanticCompositionContract::normalized_semantic_composition_generated_child_entry_keys(),
+        'normalized semantic composition generated-child entry keys map to the nested composition owner',
     );
 };
 

@@ -13,8 +13,10 @@ use FSM::Support::CompositionReportContract qw(
 );
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     build_normalized_semantic_composition_contract
+    normalized_semantic_composition_child_entry_keys
     normalized_semantic_composition_collection_keys
     normalized_semantic_composition_contract_source
+    normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_nested_presence_keys
     normalized_semantic_composition_presence_key_family_map
     normalized_semantic_composition_presence_keys
@@ -85,6 +87,58 @@ subtest 'contract exposes the bounded normalized semantic composition object' =>
         $contract->{collection_keys},
         normalized_semantic_composition_collection_keys(),
         'contract publishes the bounded composition collection key family',
+    );
+    is_deeply(
+        $contract->{child_entry_keys},
+        normalized_semantic_composition_child_entry_keys(),
+        'contract publishes the bounded composition child entry key family',
+    );
+    is_deeply(
+        normalized_semantic_composition_child_entry_keys(),
+        [
+            qw(
+                kind
+                instance_name
+                module_name
+                source_name
+                source_root_kind
+                regular_state_count
+                standalone_dt_count
+                output_drive_family_count
+                standalone_dt_multi_drive_target_count
+                parameter_override_count
+                parameter_overrides
+                intent_hir
+                lowered_rtl_ir
+                structural_rtl_ir
+            ),
+        ],
+        'composition child entry keys stay exact and ordered',
+    );
+    is_deeply(
+        $contract->{generated_child_entry_keys},
+        normalized_semantic_composition_generated_child_entry_keys(),
+        'contract publishes the bounded composition generated-child entry key family',
+    );
+    is_deeply(
+        normalized_semantic_composition_generated_child_entry_keys(),
+        [
+            qw(
+                kind
+                instance_name
+                module_name
+                source_name
+                source_root_kind
+                regular_state_count
+                standalone_dt_count
+                output_drive_family_count
+                standalone_dt_multi_drive_target_count
+                intent_hir
+                lowered_rtl_ir
+                structural_rtl_ir
+            ),
+        ],
+        'composition generated-child entry keys stay exact and ordered',
     );
     is_deeply(
         $contract->{nested_presence_keys},

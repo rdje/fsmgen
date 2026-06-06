@@ -14,8 +14,10 @@ use FSM::Support::SerializableCompositionPlanSnapshot qw(
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_composition_contract
+    normalized_semantic_composition_child_entry_keys
     normalized_semantic_composition_collection_keys
     normalized_semantic_composition_contract_source
+    normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_nested_presence_keys
     normalized_semantic_composition_presence_key_family_map
     normalized_semantic_composition_presence_keys
@@ -49,6 +51,8 @@ sub build_normalized_semantic_composition_contract {
         public_presence_keys => normalized_semantic_composition_presence_keys(),
         summary_presence_keys => normalized_semantic_composition_summary_presence_keys(),
         collection_keys => normalized_semantic_composition_collection_keys(),
+        child_entry_keys => normalized_semantic_composition_child_entry_keys(),
+        generated_child_entry_keys => normalized_semantic_composition_generated_child_entry_keys(),
         nested_presence_keys => normalized_semantic_composition_nested_presence_keys(),
         presence_key_family_map => normalized_semantic_composition_presence_key_family_map(),
         nested_contract_source_map => {
@@ -62,9 +66,10 @@ sub build_normalized_semantic_composition_contract {
         guidance => [
             q{Treat this contract as the bounded nested `composition` object used inside successful public normalized semantic JSON reports for composition sources.},
             'The bounded public promise covers the lane, child/net/link, generated-child, standalone-DT-child, shared-datapath, plan-snapshot, and sanitized provenance-report keys exported for composition roots.',
+            'The children[] and generated_children[] entry key families describe shallow composition-child summaries while delegating child intent_hir, lowered_rtl_ir, and structural_rtl_ir objects to their existing bounded contracts.',
             'The nested plan_snapshot fragment stays bounded through FSM::Support::SerializableCompositionPlanSnapshot.',
             'The nested provenance_report fragment stays bounded through FSM::Support::CompositionReportContract.',
-            'Use the grouped presence_key_family_map to discover the bounded composition summary, collection, plan-snapshot, and provenance key families without collecting those key-family lists separately.',
+            'Use the grouped presence_key_family_map to discover the bounded composition summary, collection, child-entry, generated-child-entry, plan-snapshot, and provenance key families without collecting those key-family lists separately.',
         ],
     };
 }
@@ -114,6 +119,46 @@ sub normalized_semantic_composition_collection_keys {
     ];
 }
 
+sub normalized_semantic_composition_child_entry_keys {
+    return [
+        qw(
+            kind
+            instance_name
+            module_name
+            source_name
+            source_root_kind
+            regular_state_count
+            standalone_dt_count
+            output_drive_family_count
+            standalone_dt_multi_drive_target_count
+            parameter_override_count
+            parameter_overrides
+            intent_hir
+            lowered_rtl_ir
+            structural_rtl_ir
+        ),
+    ];
+}
+
+sub normalized_semantic_composition_generated_child_entry_keys {
+    return [
+        qw(
+            kind
+            instance_name
+            module_name
+            source_name
+            source_root_kind
+            regular_state_count
+            standalone_dt_count
+            output_drive_family_count
+            standalone_dt_multi_drive_target_count
+            intent_hir
+            lowered_rtl_ir
+            structural_rtl_ir
+        ),
+    ];
+}
+
 sub normalized_semantic_composition_nested_presence_keys {
     return [
         qw(
@@ -127,6 +172,8 @@ sub normalized_semantic_composition_presence_key_family_map {
     return {
         summary_presence_keys => normalized_semantic_composition_summary_presence_keys(),
         collection_keys => normalized_semantic_composition_collection_keys(),
+        child_entry_keys => normalized_semantic_composition_child_entry_keys(),
+        generated_child_entry_keys => normalized_semantic_composition_generated_child_entry_keys(),
         nested_presence_keys => normalized_semantic_composition_nested_presence_keys(),
     };
 }

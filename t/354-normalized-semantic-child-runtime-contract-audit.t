@@ -15,6 +15,8 @@ use FSM::Support::CompositionReportContract qw(
     composition_report_public_top_level_keys
 );
 use FSM::Support::NormalizedSemanticCompositionContract qw(
+    normalized_semantic_composition_child_entry_keys
+    normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_presence_keys
 );
 use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
@@ -448,6 +450,16 @@ subtest 'composition semantic payload keeps bounded child-owner contracts at run
         $semantic->{composition},
         normalized_semantic_composition_presence_keys(),
         'composition semantic.composition keeps bounded keys',
+    );
+    assert_exact_keys(
+        $semantic->{composition}{children}[0],
+        normalized_semantic_composition_child_entry_keys(),
+        'composition semantic.composition.children[] entry keeps exact bounded keys',
+    );
+    assert_exact_keys(
+        $semantic->{composition}{generated_children}[0],
+        normalized_semantic_composition_generated_child_entry_keys(),
+        'composition semantic.composition.generated_children[] entry keeps exact bounded keys',
     );
     assert_keys_present(
         $semantic->{composition}{provenance_report},

@@ -6,7 +6,9 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::NormalizedSemanticCompositionContract qw(
+    normalized_semantic_composition_child_entry_keys
     normalized_semantic_composition_contract_source
+    normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_presence_keys
 );
 use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
@@ -129,6 +131,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_payload_signal_analysis_keys
     normalized_semantic_payload_system_contract_keys
     normalized_semantic_payload_symbol_contract_keys
+    normalized_semantic_payload_composition_child_entry_keys
+    normalized_semantic_payload_composition_generated_child_entry_keys
     normalized_semantic_payload_composition_keys
 );
 
@@ -258,6 +262,9 @@ sub build_normalized_semantic_payload_contract {
             normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         symbol_contract_presence_keys => normalized_semantic_payload_symbol_contract_keys(),
         composition_presence_keys => normalized_semantic_payload_composition_keys(),
+        composition_child_entry_keys => normalized_semantic_payload_composition_child_entry_keys(),
+        composition_generated_child_entry_keys =>
+            normalized_semantic_payload_composition_generated_child_entry_keys(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested `semantic` object used by successful public normalized semantic JSON reports.},
@@ -277,6 +284,7 @@ sub build_normalized_semantic_payload_contract {
             'Use the grouped standalone-DT multi-drive entry key families to inspect `forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets` without binding to unrelated lowered-RTL internals.',
             'Use the grouped composition shared-datapath candidate key families to inspect `forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates`, including contributor drive-intent projections and their rhs-enable-family entries, without binding to unrelated lowered-RTL internals.',
             'Use the grouped structural auxiliary-assignment value-kind, port, net, declared/resolved link, instance shallow, nested instance interface-port, nested instance parameter-override, and nested instance port-binding entry families to inspect `forward_ir.structural_rtl_ir.auxiliary_assignments`, `forward_ir.structural_rtl_ir.ports`, `forward_ir.structural_rtl_ir.nets`, `forward_ir.structural_rtl_ir.declared_links`, `forward_ir.structural_rtl_ir.resolved_links`, `forward_ir.structural_rtl_ir.instances`, `forward_ir.structural_rtl_ir.instances[].interface_ports`, `forward_ir.structural_rtl_ir.instances[].parameter_overrides`, and `forward_ir.structural_rtl_ir.instances[].port_bindings` without binding to unrelated structural-RTL collections.',
+            'Use the grouped composition child and generated-child entry families to inspect `composition.children` and `composition.generated_children` shallow entries while delegating child IR summaries to their existing owners.',
             'The nested `forward_ir.intent_hir` object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
             'The nested `forward_ir.lowered_rtl_ir` object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',
             'The nested `forward_ir.structural_rtl_ir` object shell stays bounded through FSM::Support::NormalizedSemanticStructuralRTLIRContract.',
@@ -390,6 +398,9 @@ sub normalized_semantic_payload_presence_key_family_map {
             normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
         forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys =>
             normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys(),
+        composition_child_entry_keys => normalized_semantic_payload_composition_child_entry_keys(),
+        composition_generated_child_entry_keys =>
+            normalized_semantic_payload_composition_generated_child_entry_keys(),
     };
 }
 
@@ -579,6 +590,14 @@ sub normalized_semantic_payload_symbol_contract_keys {
 
 sub normalized_semantic_payload_composition_keys {
     return normalized_semantic_composition_presence_keys();
+}
+
+sub normalized_semantic_payload_composition_child_entry_keys {
+    return normalized_semantic_composition_child_entry_keys();
+}
+
+sub normalized_semantic_payload_composition_generated_child_entry_keys {
+    return normalized_semantic_composition_generated_child_entry_keys();
 }
 
 1;

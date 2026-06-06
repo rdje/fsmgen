@@ -163,6 +163,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_optional_child_presence_keys
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
+    normalized_semantic_composition_child_entry_keys
+    normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys
@@ -916,6 +918,36 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{success_semantic_optional_child_presence_keys},
         normalized_semantic_success_semantic_optional_child_presence_keys(),
         'manifest records optional semantic child keys in the report family map',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{composition_child_entry_keys},
+        normalized_semantic_composition_child_entry_keys(),
+        'manifest records exact normalized semantic composition child entry keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{composition_child_entry_keys},
+        normalized_semantic_composition_child_entry_keys(),
+        'manifest report family map records composition child entry keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{semantic_presence_key_family_map}{composition_child_entry_keys},
+        normalized_semantic_composition_child_entry_keys(),
+        'manifest semantic family map records composition child entry keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{composition_generated_child_entry_keys},
+        normalized_semantic_composition_generated_child_entry_keys(),
+        'manifest records exact normalized semantic composition generated-child entry keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{composition_generated_child_entry_keys},
+        normalized_semantic_composition_generated_child_entry_keys(),
+        'manifest report family map records composition generated-child entry keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{semantic_presence_key_family_map}{composition_generated_child_entry_keys},
+        normalized_semantic_composition_generated_child_entry_keys(),
+        'manifest semantic family map records composition generated-child entry keys',
     );
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{support_accounting_presence_keys} || []}) >= 1,

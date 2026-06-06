@@ -9,7 +9,9 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticCompositionContract qw(
+    normalized_semantic_composition_child_entry_keys
     normalized_semantic_composition_contract_source
+    normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_presence_keys
 );
 use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
@@ -81,6 +83,8 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     build_normalized_semantic_payload_contract
     normalized_semantic_payload_contract_source
+    normalized_semantic_payload_composition_child_entry_keys
+    normalized_semantic_payload_composition_generated_child_entry_keys
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_presence_key_family_map
@@ -204,6 +208,16 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         $contract->{presence_key_family_map}{optional_child_presence_keys},
         normalized_semantic_payload_optional_child_presence_keys(),
         'grouped semantic-payload family map publishes the optional child key list',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_child_entry_keys},
+        normalized_semantic_payload_composition_child_entry_keys(),
+        'grouped semantic-payload family map publishes composition child entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_generated_child_entry_keys},
+        normalized_semantic_payload_composition_generated_child_entry_keys(),
+        'grouped semantic-payload family map publishes composition generated-child entry keys',
     );
     is_deeply(
         $contract->{presence_key_family_map}{forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys},
@@ -858,6 +872,26 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_payload_composition_keys(),
         normalized_semantic_composition_presence_keys(),
         'semantic payload composition keys map to the nested composition owner',
+    );
+    is_deeply(
+        $contract->{composition_child_entry_keys},
+        normalized_semantic_payload_composition_child_entry_keys(),
+        'contract publishes the bounded composition child entry key list',
+    );
+    is_deeply(
+        normalized_semantic_payload_composition_child_entry_keys(),
+        normalized_semantic_composition_child_entry_keys(),
+        'semantic payload composition child entry keys map to the nested composition owner',
+    );
+    is_deeply(
+        $contract->{composition_generated_child_entry_keys},
+        normalized_semantic_payload_composition_generated_child_entry_keys(),
+        'contract publishes the bounded composition generated-child entry key list',
+    );
+    is_deeply(
+        normalized_semantic_payload_composition_generated_child_entry_keys(),
+        normalized_semantic_composition_generated_child_entry_keys(),
+        'semantic payload composition generated-child entry keys map to the nested composition owner',
     );
 };
 

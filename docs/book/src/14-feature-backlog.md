@@ -3923,6 +3923,10 @@ Current shipped boundary: the normalized semantic payload contract publishes
 `optional_child_presence_keys` for `semantic.composition` and
 `semantic.symbol_contract`, and the report contract republishes that list as
 `success_semantic_optional_child_presence_keys`. The
+`semantic.composition` contract also advertises bounded
+`children[]` and `generated_children[]` shallow entry key families while
+delegating child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`
+summaries to their existing bounded owners. The
 `semantic.forward_ir.lowered_rtl_ir` contract also advertises the emitted
 `output_drive_family_count` and `output_drive_families` metadata with bounded
 entry keys for `output_drive_families[]` and its nested
@@ -3954,10 +3958,8 @@ as scalar string assignment-line entries. The manifest is still not a full
 normalized semantic export.
 
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.46.1` will publish bounded
-`semantic.composition.children[]` and
-`semantic.composition.generated_children[]` entry key families after `.46`
-selected those populated composition collections from strict semantic JSON
-evidence. Child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`
-summaries remain delegated to their existing bounded contracts. Full normalized
-semantic export stabilization remains out of scope.
+`BACKEND-API-VALIDATION-FRONTIER.47` will audit the remaining backend/API and
+public-export backlog after the composition child/generated-child entry schemas
+shipped, then activate one exact executable child before any further
+implementation edits. Full normalized semantic export stabilization remains out
+of scope.

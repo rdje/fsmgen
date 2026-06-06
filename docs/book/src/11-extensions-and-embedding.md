@@ -2142,14 +2142,20 @@ place instead of collecting the individual field-family lists separately.
 The nested `semantic.composition` summary inside that payload now also has its
 own bounded nested-object contract for composition sources:
 [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm)
-owns the composition key family while keeping nested provenance-report
-ownership delegated to
+owns the composition key family, including bounded `children[]` and
+`generated_children[]` shallow entry key families, while keeping nested
+provenance-report ownership delegated to
 [perl/FSM/Support/CompositionReportContract.pm](perl/FSM/Support/CompositionReportContract.pm).
 
 That same owner now also publishes a grouped `presence_key_family_map` so
-embedders can discover the bounded composition summary, collection, and
-nested provenance key families from one place instead of collecting the
-individual key-family lists separately.
+embedders can discover the bounded composition summary, collection,
+child-entry, generated-child-entry, and nested provenance key families from one
+place instead of collecting the individual key-family lists separately.
+
+The child and generated-child entry families describe only the shallow
+composition child summaries. Their nested `intent_hir`, `lowered_rtl_ir`, and
+`structural_rtl_ir` values remain delegated to the existing bounded child
+owners instead of being duplicated in the composition contract.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 

@@ -10,6 +10,8 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     build_normalized_semantic_payload_contract
+    normalized_semantic_payload_composition_child_entry_keys
+    normalized_semantic_payload_composition_generated_child_entry_keys
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
@@ -284,6 +286,14 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
             label => 'composition_keys',
             build => \&normalized_semantic_payload_composition_keys,
         },
+        {
+            label => 'composition_child_entry_keys',
+            build => \&normalized_semantic_payload_composition_child_entry_keys,
+        },
+        {
+            label => 'composition_generated_child_entry_keys',
+            build => \&normalized_semantic_payload_composition_generated_child_entry_keys,
+        },
     ) {
         my $first = $case->{build}->();
         mutate_structure($first);
@@ -306,6 +316,8 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
     my $family_map = normalized_semantic_payload_presence_key_family_map();
     is_deeply($family_map->{public_presence_keys}, normalized_semantic_payload_presence_keys(), 'public presence family entry matches helper');
     is_deeply($family_map->{optional_child_presence_keys}, normalized_semantic_payload_optional_child_presence_keys(), 'optional child family entry matches helper');
+    is_deeply($family_map->{composition_child_entry_keys}, normalized_semantic_payload_composition_child_entry_keys(), 'composition child entry family matches helper');
+    is_deeply($family_map->{composition_generated_child_entry_keys}, normalized_semantic_payload_composition_generated_child_entry_keys(), 'composition generated-child entry family matches helper');
     is_deeply($family_map->{signal_analysis_entry_presence_keys}, normalized_semantic_payload_signal_analysis_entry_keys(), 'signal-analysis entry family entry matches helper');
     is_deeply(
         $family_map->{forward_ir_intent_hir_optional_composition_keys},
