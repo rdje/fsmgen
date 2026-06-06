@@ -3954,8 +3954,10 @@ as scalar string assignment-line entries. The manifest is still not a full
 normalized semantic export.
 
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.46` will audit the remaining backend/API and
-public-export backlog after the shared-datapath contributor drive-intent schema
-shipped, then activate one exact executable child before any further
-implementation edits. Full normalized semantic export stabilization remains out
-of scope.
+`BACKEND-API-VALIDATION-FRONTIER.46.1` will publish bounded
+`semantic.composition.children[]` and
+`semantic.composition.generated_children[]` entry key families after `.46`
+selected those populated composition collections from strict semantic JSON
+evidence. Child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`
+summaries remain delegated to their existing bounded contracts. Full normalized
+semantic export stabilization remains out of scope.
