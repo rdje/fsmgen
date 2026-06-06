@@ -890,7 +890,8 @@ requester/completer child port maps. Qualified package constants in the same
 APB/C4 subset are resolved before VHDL emission, so `param_pkg.TIMEOUT_8` and
 `param_pkg.RESET_A5` emit `TIMEOUT_CYCLES => 8` and
 `RESET_VALUE => "10100101"` without leaking package tokens.
-Scalar signed arithmetic remains explicitly fail-closed; full aggregate
+Signed scalar division/modulo and mixed signed/unsigned scalar arithmetic
+remain explicitly fail-closed; full aggregate
 VHDL record/array lowering, broader generated-FSM/C4 composition VHDL beyond
 the exact shipped fixtures, internal-net-heavy/bus-heavy tops beyond APB,
 generic-map families outside the shipped external-RTL scalar literal/expression,

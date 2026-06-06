@@ -392,7 +392,9 @@ The VHDL lane is intentionally narrow:
   fixtures, VHDL package
   declaration/emission, full aggregate VHDL record/array lowering, broader
   expression parity, signed scalar division/modulo, and mixed signed/unsigned
-  scalar arithmetic remain separate future edges.
+  scalar arithmetic remain separate future edges. APB/C4 non-packed aggregate
+  generic-map hardening is the active `BACKEND-API-VALIDATION-FRONTIER.96.1`
+  owner and does not imply record/array VHDL generic declaration support.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

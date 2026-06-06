@@ -231,7 +231,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.94.1`,
     `BACKEND-API-VALIDATION-FRONTIER.95`,
     `BACKEND-API-VALIDATION-FRONTIER.95.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.96`
+    `BACKEND-API-VALIDATION-FRONTIER.96`,
+    `BACKEND-API-VALIDATION-FRONTIER.96.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1703,10 +1704,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.95.1: lock APB/C4 package-backed generic maps`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.96`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after bounded APB/C4 generated-FSM resolved package-backed VHDL generic-map actuals shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.96.1`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave APB/C4 non-packed aggregate generic maps, aggregate VHDL record/array declarations beyond packed vectors, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of README.md, MEMORY.md, COMMIT.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/book/src/11-extensions-and-embedding.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm, perl/FSM/Composition/GenerationOrchestrator.pm, perl/FSM/Composition/PlanBuilder.pm, fsm/apb_tb.fsm, fsm/apb_requester.fsm, fsm/apb_completer.fsm, and t/114-composition-target-support-diagnostics.t. command -v ghdl returned unavailable. The shipped APB/C4 aggregate generic-map leaves cover only resolved packed values that emit matching std_logic_vector actuals; the APB child sources do not declare record/array generic parameters, and docs/fact surfaces still name APB/C4 non-packed aggregate generic maps as deferred. Selected APB/C4 non-packed aggregate generic-map fail-closed hardening for .96.1 before implementation/test edits.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.96: select APB/C4 nonpacked aggregate boundary`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.96.1`
+  Status: `active`
+  Goal: `Lock and document the APB/C4 non-packed aggregate VHDL generic-map boundary.`
+  Acceptance: `Focused pipeline, CLI, and facade/target-language coverage must prove that the bounded APB/C4 generated-FSM composition VHDL subset does not accept aggregate generic-map shapes that cannot resolve to packed std_logic_vector actuals. Non-packed list/record aggregate generic-map actuals must remain explicit fail-closed boundaries rather than silently emitting unsupported VHDL record/array generic declarations or malformed generic maps. The leaf must not widen APB/C4 VHDL record/array generic declarations, full aggregate VHDL record/array lowering, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, or full backend parity. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map if needed, task tree, and MEMORY stay synchronized.`
+  Verification: `pending implementation or hardening`
   Commit: `pending`
 
 ## Current Frontier
@@ -1908,7 +1917,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 193 | `BACKEND-API-VALIDATION-FRONTIER.94.1` | `done` | Shipped bounded APB/C4 generated-FSM resolved packed aggregate VHDL generic-map actuals such as `LANES => "0011110010100101"` and `FRAME => "101"` while keeping APB/C4 package-backed generic maps, package, GHDL, and parity widening deferred. |
 | 194 | `BACKEND-API-VALIDATION-FRONTIER.95` | `done` | Selected bounded APB/C4 generated-FSM resolved package-backed generic-map coverage because an APB-shaped C4 composition probe with requester/completer package-qualified TIMEOUT_CYCLES and RESET_VALUE overrides already emits resolved VHDL generic maps without package tokens. |
 | 195 | `BACKEND-API-VALIDATION-FRONTIER.95.1` | `done` | Locked and documented bounded APB/C4 generated-FSM resolved package-backed VHDL generic-map actuals such as `TIMEOUT_CYCLES => 8` and `RESET_VALUE => "10100101"` while keeping VHDL package declaration/emission, GHDL, and parity widening deferred. |
-| 196 | `BACKEND-API-VALIDATION-FRONTIER.96` | `active` | Select the next exact backend/API edge after bounded APB/C4 generated-FSM resolved package-backed generic maps shipped. |
+| 196 | `BACKEND-API-VALIDATION-FRONTIER.96` | `done` | Selected APB/C4 non-packed aggregate generic-map fail-closed hardening because shipped APB/C4 aggregate maps only cover resolved packed std_logic_vector actuals and record/array aggregate declarations remain broader VHDL aggregate work. |
+| 197 | `BACKEND-API-VALIDATION-FRONTIER.96.1` | `active` | Lock the APB/C4 generated-FSM non-packed aggregate VHDL generic-map boundary without implementing VHDL record/array generic declarations or broader aggregate VHDL lowering. |
 
 ## Decisions
 
@@ -2297,6 +2307,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.94.1` | `BACKEND-API-VALIDATION-FRONTIER.94.1: emit APB/C4 aggregate generic maps` | this slice; activates `.95` |
 | `BACKEND-API-VALIDATION-FRONTIER.95` | `BACKEND-API-VALIDATION-FRONTIER.95: select APB/C4 package-backed generic maps` | selected `.95.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.95.1` | `BACKEND-API-VALIDATION-FRONTIER.95.1: lock APB/C4 package-backed generic maps` | this slice; activates `.96` |
+| `BACKEND-API-VALIDATION-FRONTIER.96` | `BACKEND-API-VALIDATION-FRONTIER.96: select APB/C4 nonpacked aggregate boundary` | selected `.96.1` |
 
 ## Changelog
 
@@ -2404,6 +2415,11 @@ items named in the 2026-06-05 remaining-work inventory.
   facade coverage, emitting `TIMEOUT_CYCLES => 8` and
   `RESET_VALUE => "10100101"` before requester/completer child port maps
   without leaking package tokens; `.96` is active for next-edge selection.
+- `2026-06-06`: Completed `.96`; selected APB/C4 generated-FSM non-packed
+  aggregate VHDL generic-map fail-closed hardening as `.96.1` because shipped
+  APB/C4 aggregate maps cover only resolved packed `std_logic_vector` actuals,
+  while record/array aggregate generic declarations belong to broader VHDL
+  aggregate lowering.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.
