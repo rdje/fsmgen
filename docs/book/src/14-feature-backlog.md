@@ -4041,10 +4041,10 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.66` selects the next exact backend/API or
-public-export edge after `.65.1` locked signed scalar
-addition/subtraction/multiplication arithmetic fail-closed coverage.
+`BACKEND-API-VALIDATION-FRONTIER.66.1` implements the bounded generated AMBA
+wrap arithmetic expression family that still blocks direct VHDL generation for
+`fsm/amba_requester.fsm`.
 Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, scalar signed arithmetic,
-aggregate/composition VHDL, and full normalized semantic export stabilization
-remain out of scope until later exact leaves own them.
+unrelated forward-IR payloads, scalar signed arithmetic, aggregate/composition
+VHDL, broader expression parity, and full normalized semantic export
+stabilization remain out of scope until later exact leaves own them.

@@ -844,14 +844,13 @@ scaffold also lowers signed vector numeric-literal addition/subtraction and
 multiplication/division/modulo RHS assignments through target-width
 `to_signed` literal conversion, with multiplication/division/modulo resized to
 the target width. The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.66`: select the next exact backend/API or
-public-export edge after `.65.1` locked signed scalar
-addition/subtraction/multiplication arithmetic fail-closed coverage. Scalar
-signed arithmetic remains explicitly fail-closed; aggregate VHDL,
-composition/top VHDL, packages, GHDL validation, broad expression parity,
-package-import internals, unrelated forward-IR payloads, and full normalized
-semantic export stabilization remain out of scope until later exact leaves own
-them.
+`BACKEND-API-VALIDATION-FRONTIER.66.1`: implement the bounded generated AMBA
+wrap arithmetic expression family that still blocks direct VHDL generation for
+`fsm/amba_requester.fsm`. Scalar signed arithmetic remains explicitly
+fail-closed; aggregate VHDL, composition/top VHDL, packages, GHDL validation,
+broad expression parity beyond that exact AMBA wrap family, package-import
+internals, unrelated forward-IR payloads, and full normalized semantic export
+stabilization remain out of scope until later exact leaves own them.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit

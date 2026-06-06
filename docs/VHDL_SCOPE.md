@@ -166,9 +166,10 @@ The first VHDL lane is intentionally narrow:
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: select the next exact backend/API/public-export edge under
-  `BACKEND-API-VALIDATION-FRONTIER.66`; broader scalar signed arithmetic
-  remains a separate future edge.
+- Active follow-up: implement the bounded generated AMBA wrap arithmetic
+  expression family under `BACKEND-API-VALIDATION-FRONTIER.66.1`; broader
+  expression parity and broader scalar signed arithmetic remain separate
+  future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
