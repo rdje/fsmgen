@@ -68,8 +68,8 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   bitstring, packed-list, and packed-map generic maps, plus bounded C2
   generated-FSM scalar integer and scalar expression, one-bit sized bitstring,
   multi-bit sized bitstring, and resolved packed aggregate generic maps, plus
-  bounded APB/C4 generated-FSM scalar integer generic maps in the shipped
-  APB/C4 shape.
+  bounded APB/C4 generated-FSM scalar integer and scalar expression generic
+  maps in the shipped APB/C4 shape.
   Broader
   generated-FSM/C4 composition VHDL beyond the exact shipped fixtures,
   internal-net-heavy tops beyond APB, generic-map families outside these
@@ -80,7 +80,7 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   bitstring, multi-bit sized bitstring, packed-list, and packed-map actuals;
   generated-FSM scalar integer, scalar expression, one-bit sized bitstring,
   multi-bit sized bitstring, and resolved packed aggregate actuals; and APB/C4
-  generated-FSM scalar integer actuals,
+  generated-FSM scalar integer and scalar expression actuals,
   VHDL package
   declaration/emission, full aggregate VHDL record/array lowering, broad
   expression parity, scalar division/modulo and broader scalar arithmetic,
@@ -111,7 +111,7 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   the C2 generated-FSM subset also accepts scalar integer, scalar expression,
   one-bit sized bitstring, multi-bit sized bitstring, and resolved packed
   aggregate generic maps, and the APB/C4 generated-FSM subset also accepts
-  scalar integer generic maps. Other `?top` shapes
+  scalar integer and scalar expression generic maps. Other `?top` shapes
   still parse into typed composition IR and then fail closed with the scoped
   composition target-support diagnostic.
 
@@ -142,7 +142,7 @@ The VHDL lane is intentionally narrow:
      bitstring, packed-list, and packed-map actuals; generated-FSM scalar
      integer, scalar expression, one-bit sized bitstring, multi-bit sized
      bitstring, and resolved packed aggregate actuals; and APB/C4
-     generated-FSM scalar integer actuals
+     generated-FSM scalar integer and scalar expression actuals
 
 2. **Direct-root structural conversion from SystemVerilog**
    - Generate SystemVerilog through the existing direct backend
@@ -166,7 +166,8 @@ The VHDL lane is intentionally narrow:
      integer / scalar integer expression / multi-bit sized bitstring /
      one-bit sized bitstring / resolved packed aggregate
      generic maps for the bounded C2 generated-FSM family, plus scalar integer
-     generic maps for the bounded APB/C4 generated-FSM family
+     and scalar expression generic maps for the bounded APB/C4 generated-FSM
+     family
    - Reject generated-FSM child instances outside exact shipped or active
      leaves, generic-map families outside these shipped sets: external-RTL
      scalar integer, scalar integer expression, metadata-backed one-bit sized
@@ -176,7 +177,7 @@ The VHDL lane is intentionally narrow:
      bitstring/packed-list/packed-map actuals; generated-FSM scalar integer,
      scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and
      resolved packed aggregate actuals; and APB/C4 generated-FSM scalar
-     integer actuals, VHDL package
+     integer/scalar expression actuals, VHDL package
      declaration/emission, declared aggregate structural types, structural nets outside exact
      scalar/vector leaves, and non-VHDL auxiliary
      assignments
@@ -377,7 +378,7 @@ The VHDL lane is intentionally narrow:
   aggregate generic-map, standalone-DT scalar-integer/scalar-expression
   generic-map, and C2 generated-FSM scalar-integer/scalar-expression/one-bit sized-bitstring/multi-bit
   sized-bitstring/resolved-packed-aggregate generic-map fixtures, APB/C4
-  scalar-integer generic-map fixtures, VHDL package
+  scalar-integer/scalar-expression generic-map fixtures, VHDL package
   declaration/emission, full aggregate VHDL record/array lowering, broader
   expression parity, signed scalar division/modulo, and mixed signed/unsigned
   scalar arithmetic remain separate future edges.
@@ -412,7 +413,8 @@ The VHDL lane is intentionally narrow:
   bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL
   generic-map generation,
   bounded APB/C4 generated-FSM composition VHDL structural-top generation,
-  bounded APB/C4 generated-FSM scalar integer VHDL generic-map generation,
+  bounded APB/C4 generated-FSM scalar integer and scalar expression VHDL
+  generic-map generation,
   mixed signed/unsigned vector numeric arithmetic fail-closed diagnostics,
   signed scalar division/modulo and mixed signed/unsigned scalar arithmetic
   fail-closed diagnostics,

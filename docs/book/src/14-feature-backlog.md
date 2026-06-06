@@ -3899,7 +3899,9 @@ one-bit sized bitstring actuals now
 emitted as `ENABLE_DEFAULT => '1'`, multi-bit sized bitstring actuals now
 emitted as `RESET_VALUE => "10100101"`, and resolved packed aggregate actuals
 now emitted as VHDL bit strings, plus bounded APB/C4 generated-FSM scalar
-integer actuals now emitted as VHDL integers such as `TIMEOUT_CYCLES => 8`.
+integer actuals now emitted as VHDL integers such as `TIMEOUT_CYCLES => 8`
+and scalar expression actuals emitted as VHDL expressions such as
+`TIMEOUT_CYCLES => (4 + 1)`.
 The bounded C3 external-RTL
 literal/concat structural top now emits a VHDL entity/architecture with
 concurrent literal/concat assignments and an external `entity work.uart_tx`
@@ -3922,8 +3924,10 @@ child port map. The bounded APB/C4 generated-FSM structural top now emits APB re
 VHDL entities, vector APB
 structural signals, deterministic shared-datapath sink signals, and both child
 entity port maps; the same bounded APB/C4 family now also emits scalar integer
-generic maps such as `TIMEOUT_CYCLES => 8` and `TIMEOUT_CYCLES => 6` before
-the requester/completer port maps. Other composition/top VHDL shapes remain
+generic maps such as `TIMEOUT_CYCLES => 8` and `TIMEOUT_CYCLES => 6`, plus
+scalar expression generic maps such as `TIMEOUT_CYCLES => (4 + 1)` and
+`TIMEOUT_CYCLES => (3 + 3)`, before the requester/completer port maps. Other
+composition/top VHDL shapes remain
 fail-closed after typed composition IR parsing, with the pipeline and CLI
 pointing users to the scoped composition target-support diagnostic.
 
@@ -3962,7 +3966,7 @@ bitstring, and multi-bit sized bitstring literal/resolved-package-constant
 actuals plus resolved packed aggregate and standalone-DT scalar integer
 actuals and generated-FSM scalar integer/scalar expression/one-bit sized
 bitstring/multi-bit sized bitstring/resolved packed aggregate actuals plus
-APB/C4 generated-FSM scalar integer actuals, aggregate
+APB/C4 generated-FSM scalar integer and scalar expression actuals, aggregate
 VHDL, VHDL package declaration/emission, GHDL validation, and full backend
 parity remain outside the shipped
 scaffold. Signed vector numeric-literal
@@ -4175,15 +4179,15 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.91.1` implements the next exact backend/API
-edge selected by `.91`: bounded APB/C4 generated-FSM scalar expression VHDL
-generic-map actuals.
+`BACKEND-API-VALIDATION-FRONTIER.92` selects the next exact backend/API edge
+after bounded APB/C4 generated-FSM scalar expression VHDL generic-map actuals
+shipped in `.91.1`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
 beyond scalar integer, scalar expression, one-bit sized bitstring, multi-bit
 sized bitstring, packed-list, and packed-map actuals,
-APB/C4 generic maps beyond the selected scalar expression edge,
+APB/C4 generic maps beyond shipped scalar expression actuals,
 full aggregate VHDL record/array lowering, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
 beyond APB, broader expression parity beyond the shipped AMBA wrap family, and

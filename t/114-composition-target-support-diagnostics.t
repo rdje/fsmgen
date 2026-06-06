@@ -48,6 +48,8 @@ my $generated_fsmc_output_path = File::Spec->catfile($tempdir, 'implicit_composi
 my $apb_c4_output_path = File::Spec->catfile($tempdir, 'apb_tb.vhd');
 my $apb_c4_scalar_generic_map_path = File::Spec->catfile($tempdir, 'apb_c4_scalar_generic_map_top.fsm');
 my $apb_c4_scalar_generic_map_output_path = File::Spec->catfile($tempdir, 'apb_c4_scalar_generic_map_top.vhd');
+my $apb_c4_expression_generic_map_path = File::Spec->catfile($tempdir, 'apb_c4_expression_generic_map_top.fsm');
+my $apb_c4_expression_generic_map_output_path = File::Spec->catfile($tempdir, 'apb_c4_expression_generic_map_top.vhd');
 my $scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_scalar_generic_map_top.fsm');
 my $scalar_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_scalar_generic_map_top.vhd');
 my $package_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_package_generic_map_top.fsm');
@@ -347,6 +349,13 @@ write_file(
 FSM
 );
 write_apb_c4_scalar_generic_map_fixture($repo_root, $tempdir, $apb_c4_scalar_generic_map_path);
+write_apb_c4_scalar_generic_map_fixture(
+    $repo_root,
+    $tempdir,
+    $apb_c4_expression_generic_map_path,
+    requester_value => '(+ 4 1)',
+    completer_value => '(+ 3 3)',
+);
 write_file(
     $package_generic_map_path,
     <<'FSM'
@@ -1235,6 +1244,28 @@ unlike(
     'pipeline APB/C4 scalar generic-map VHDL output does not leak SystemVerilog generic syntax',
 );
 
+my $apb_c4_expression_generic_map_result = $pipeline->generate_hdl_from_file($apb_c4_expression_generic_map_path);
+like(
+    $apb_c4_expression_generic_map_result->{hdl_code},
+    qr/\bentity\s+apb_requester\s+is\s+generic\s*\(\s*TIMEOUT_CYCLES\s+:\s+integer\s*:=\s*4\s*\);\s+port\s*\(/s,
+    'pipeline emits the APB requester scalar expression generic declaration',
+);
+like(
+    $apb_c4_expression_generic_map_result->{hdl_code},
+    qr/\brequester\s+:\s+entity\s+work\.apb_requester\s+generic\s+map\s*\(\s*TIMEOUT_CYCLES\s+=>\s+\(4\s+\+\s+1\)\s*\)\s+port\s+map\s*\(/s,
+    'pipeline emits APB requester scalar expression generic maps before the port map',
+);
+like(
+    $apb_c4_expression_generic_map_result->{hdl_code},
+    qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\s+generic\s+map\s*\(\s*TIMEOUT_CYCLES\s+=>\s+\(3\s+\+\s+3\)\s*\)\s+port\s+map\s*\(/s,
+    'pipeline emits APB completer scalar expression generic maps before the port map',
+);
+unlike(
+    $apb_c4_expression_generic_map_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.TIMEOUT_CYCLES\s*\(/s,
+    'pipeline APB/C4 scalar expression generic-map VHDL output does not leak SystemVerilog generic syntax',
+);
+
 my ($bounded_success, $bounded_error_message, $bounded_full_buf, $bounded_stdout_buf, $bounded_stderr_buf) = run(
     command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $bounded_output_path, $bounded_composition_path],
 );
@@ -1902,6 +1933,38 @@ unlike(
     'CLI APB/C4 scalar generic-map VHDL output does not leak SystemVerilog generic syntax',
 );
 
+my ($apb_c4_expression_generic_map_success, $apb_c4_expression_generic_map_error_message, $apb_c4_expression_generic_map_full_buf, $apb_c4_expression_generic_map_stdout_buf, $apb_c4_expression_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $apb_c4_expression_generic_map_output_path, $apb_c4_expression_generic_map_path],
+);
+
+my $apb_c4_expression_generic_map_combined_output = join(
+    '',
+    @{ $apb_c4_expression_generic_map_stdout_buf || [] },
+    @{ $apb_c4_expression_generic_map_stderr_buf || [] },
+    ($apb_c4_expression_generic_map_error_message || ''),
+);
+
+ok($apb_c4_expression_generic_map_success, 'CLI accepts bounded APB/C4 scalar expression generic maps for VHDL')
+    or diag($apb_c4_expression_generic_map_combined_output);
+ok(-e $apb_c4_expression_generic_map_output_path, 'CLI writes APB/C4 scalar expression generic-map VHDL output');
+
+my $apb_c4_expression_generic_map_cli_hdl = read_file($apb_c4_expression_generic_map_output_path);
+like(
+    $apb_c4_expression_generic_map_cli_hdl,
+    qr/\brequester\s+:\s+entity\s+work\.apb_requester\s+generic\s+map\s*\(\s*TIMEOUT_CYCLES\s+=>\s+\(4\s+\+\s+1\)\s*\)\s+port\s+map\s*\(/s,
+    'CLI APB/C4 scalar expression generic-map output includes the requester generic map',
+);
+like(
+    $apb_c4_expression_generic_map_cli_hdl,
+    qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\s+generic\s+map\s*\(\s*TIMEOUT_CYCLES\s+=>\s+\(3\s+\+\s+3\)\s*\)\s+port\s+map\s*\(/s,
+    'CLI APB/C4 scalar expression generic-map output includes the completer generic map',
+);
+unlike(
+    $apb_c4_expression_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.TIMEOUT_CYCLES\s*\(/s,
+    'CLI APB/C4 scalar expression generic-map VHDL output does not leak SystemVerilog generic syntax',
+);
+
 my $exception = eval {
     $pipeline->generate_hdl_from_file($composition_path);
     undef;
@@ -1973,7 +2036,9 @@ sub read_file {
 }
 
 sub write_apb_c4_scalar_generic_map_fixture {
-    my ($repo_root, $fixture_dir, $top_path) = @_;
+    my ($repo_root, $fixture_dir, $top_path, %args) = @_;
+    my $requester_value = $args{requester_value} // '8';
+    my $completer_value = $args{completer_value} // '6';
 
     for my $module (qw(apb_requester apb_completer)) {
         my $source = read_file(File::Spec->catfile($repo_root, 'fsm', "$module.fsm"));
@@ -1983,9 +2048,9 @@ sub write_apb_c4_scalar_generic_map_fixture {
     }
 
     my $top = read_file(File::Spec->catfile($repo_root, 'fsm', 'apb_tb.fsm'));
-    $top =~ s/\(\?fsmc:requester apb_requester\)/(?fsmc:requester apb_requester\n    (params\n      (TIMEOUT_CYCLES 8)\n    )\n  )/
+    $top =~ s/\(\?fsmc:requester apb_requester\)/(?fsmc:requester apb_requester\n    (params\n      (TIMEOUT_CYCLES $requester_value)\n    )\n  )/
         or die 'Cannot add requester TIMEOUT_CYCLES override';
-    $top =~ s/\(\?fsmc:completer apb_completer\)/(?fsmc:completer apb_completer\n    (params\n      (TIMEOUT_CYCLES 6)\n    )\n  )/
+    $top =~ s/\(\?fsmc:completer apb_completer\)/(?fsmc:completer apb_completer\n    (params\n      (TIMEOUT_CYCLES $completer_value)\n    )\n  )/
         or die 'Cannot add completer TIMEOUT_CYCLES override';
     write_file($top_path, $top);
 }
