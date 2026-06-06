@@ -849,15 +849,17 @@ AMBA wrap arithmetic family in `fsm/amba_requester.fsm`, including
 and the matching wrap-high expression, through explicit unsigned target-width
 resizes. Bounded direct aggregate-output packed-vector lowering is also shipped
 for `t/corpus/direct_rhs_concat_target_autogrowth.fsm` and
-`t/corpus/direct_aggregate_constant_target_autogrowth.fsm`. The current active
-backend/API frontier is `BACKEND-API-VALIDATION-FRONTIER.68`: select the next
-exact backend/API or public-export edge after `.67.1` shipped aggregate-output
-packed vectors. Scalar signed arithmetic remains explicitly fail-closed; full
-aggregate VHDL record/array lowering, composition/top VHDL, packages, GHDL
-validation, broad expression parity beyond the shipped AMBA wrap family,
-package-import internals, unrelated forward-IR payloads, and full normalized
-semantic export stabilization remain out of scope until later exact leaves own
-them.
+`t/corpus/direct_aggregate_constant_target_autogrowth.fsm`; the maintained
+supported direct-root VHDL sweep now runs clean. The current active backend/API
+frontier is `BACKEND-API-VALIDATION-FRONTIER.68.1`: implement only the first
+bounded composition VHDL structural top, the C3 external-RTL literal/concat
+fixture in `t/corpus/composition_intent_integer_literals.fsm`. Scalar signed
+arithmetic remains explicitly fail-closed; full aggregate VHDL record/array
+lowering, generated-child composition VHDL, APB/C4 composition VHDL, internal
+nets/generic maps, packages, GHDL validation, broad expression parity beyond
+the shipped AMBA wrap family, package-import internals, unrelated forward-IR
+payloads, and full normalized semantic export stabilization remain out of scope
+until later exact leaves own them.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit

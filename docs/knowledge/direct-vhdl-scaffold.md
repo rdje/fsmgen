@@ -137,13 +137,16 @@ Bounded direct aggregate-output fixtures now lower as VHDL packed vectors:
 `std_logic_vector(2 downto 0)`, and `OUT_FRAME` / `OUT_LANES` are 5-bit
 `std_logic_vector` ports. Full VHDL record/array aggregate lowering remains a
 later exact owner.
-The current active backend edge is `BACKEND-API-VALIDATION-FRONTIER.68`, which
-selects the next exact backend/API or public-export leaf after bounded
-aggregate-output packed-vector lowering shipped.
-Composition/top VHDL is locked fail-closed by
+The maintained supported direct-root VHDL sweep now runs clean. The current
+active backend edge is `BACKEND-API-VALIDATION-FRONTIER.68.1`, which
+implements only the first bounded composition VHDL structural top: the C3
+external-RTL literal/concat fixture in
+`t/corpus/composition_intent_integer_literals.fsm`.
+Until that leaf ships, composition/top VHDL remains locked fail-closed by
 focused pipeline and CLI coverage: `?top` sources are parsed into typed
 composition IR, then `target_language => 'vhdl'` and `--language vhdl` are
 rejected with the scoped composition target-support diagnostic instead of
-emitting a VHDL top. Composition generic-map lowering, packages, multi-clock
-domains, broad expression parity, GHDL validation, and full SystemVerilog
-parity remain deferred or fail-closed.
+emitting a VHDL top. Generated-child composition VHDL, APB/C4 composition VHDL,
+internal nets/generic maps, packages, multi-clock domains, broad expression
+parity, GHDL validation, and full SystemVerilog parity remain deferred or
+fail-closed.

@@ -172,10 +172,13 @@ The first VHDL lane is intentionally narrow:
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: select the next exact backend/API/public-export edge under
-  `BACKEND-API-VALIDATION-FRONTIER.68`; full aggregate VHDL record/array
-  lowering, broader expression parity, and broader scalar signed arithmetic
-  remain separate future edges.
+- Active follow-up: implement the first bounded composition VHDL structural-top
+  leaf under `BACKEND-API-VALIDATION-FRONTIER.68.1`, limited to the C3
+  external-RTL literal/concat fixture in
+  `t/corpus/composition_intent_integer_literals.fsm`; generated-child
+  composition VHDL, APB/C4 composition VHDL, internal nets/generic maps, full
+  aggregate VHDL record/array lowering, broader expression parity, and broader
+  scalar signed arithmetic remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

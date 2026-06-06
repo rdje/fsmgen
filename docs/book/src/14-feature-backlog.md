@@ -3813,11 +3813,13 @@ Generated sized-literal generic defaults such as `1'b1` and `1'b0` now lower
 to typed `std_logic` generics in the maintained aggregate-parameter comparison
 fixture, and multi-bit sized-literal generic defaults now lower to typed
 `std_logic_vector` generics in the maintained aggregate unary complement
-fixture. Composition VHDL generic maps remain deferred until a composition VHDL
-leaf owns that path. Aggregate-output roots are locked as explicit fail-closed
-direct VHDL boundaries. Composition/top VHDL is locked fail-closed after typed
-composition IR parsing, with the pipeline and CLI pointing users to the scoped
-composition target-support diagnostic instead of emitting a VHDL top.
+fixture. Maintained aggregate-output direct roots now lower as packed-vector
+VHDL ports; full VHDL record/array aggregate lowering remains deferred.
+Composition VHDL generic maps remain deferred until a composition VHDL leaf
+owns that path. Composition/top VHDL remains fail-closed after typed
+composition IR parsing until the active first structural-top leaf ships, with
+the pipeline and CLI pointing users to the scoped composition target-support
+diagnostic instead of emitting a VHDL top.
 
 The compound update and update-shorthand fixtures now lower generated
 direct-root vector arithmetic with numeric literal operands, such as `SRC + 2`,
@@ -4056,11 +4058,12 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.68` selects the next exact backend/API or
-public-export edge after `.67.1` shipped bounded direct aggregate-output
-packed-vector lowering.
+`BACKEND-API-VALIDATION-FRONTIER.68.1` implements only the first bounded
+composition VHDL structural top, the C3 external-RTL literal/concat fixture in
+`t/corpus/composition_intent_integer_literals.fsm`.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
-record/array lowering, composition VHDL, broader expression parity beyond the
-shipped AMBA wrap family, and full normalized semantic export stabilization
-remain out of scope until later exact leaves own them.
+record/array lowering, generated-child composition VHDL, APB/C4 composition
+VHDL, internal nets/generic maps, broader expression parity beyond the shipped
+AMBA wrap family, and full normalized semantic export stabilization remain out
+of scope until later exact leaves own them.

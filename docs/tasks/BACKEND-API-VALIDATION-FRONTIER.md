@@ -175,7 +175,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.66.1`,
     `BACKEND-API-VALIDATION-FRONTIER.67`,
     `BACKEND-API-VALIDATION-FRONTIER.67.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.68`
+    `BACKEND-API-VALIDATION-FRONTIER.68`,
+    `BACKEND-API-VALIDATION-FRONTIER.68.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1237,10 +1238,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.67.1: lower VHDL aggregate outputs`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.68`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after bounded direct VHDL aggregate-output packed-vector lowering shipped.`
-  Acceptance: `pending selection`
-  Verification: `pending selection`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.68.1`
+  Acceptance: `Selected the first bounded composition VHDL structural-top leaf after the supported direct-root VHDL sweep reached zero failures. Evidence shows all four supported composition roots still fail at the composition VHDL target-support gate. The selected first implementation leaf is BACKEND-API-VALIDATION-FRONTIER.68.1: lower only the C3 external-RTL literal/concat structural top in t/corpus/composition_intent_integer_literals.fsm to VHDL. The structural probe showed that fixture has no generated child HDL segments, no internal nets, no parameter overrides, one external RTL-interface instance, and three bit-vector literal/concat auxiliary assignments. Generated-child composition VHDL, standalone-DT child VHDL composition, APB/C4 composition VHDL, internal-net-heavy tops, parameter overrides/generic maps, packages, GHDL validation, broad expression parity, and full VHDL composition parity remain deferred behind later exact leaves.`
+  Verification: `Selection audit/read of README.md, COMMIT.md, MEMORY_ARCHITECTURE.md, MEMORY.md, docs/TASK_TREE.md, docs/decisions/INDEX.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, KNOWLEDGE_MAP.md, perl/FSM/Support/RegressionCorpus.pm, perl/FSM/Composition/PlanBuilder.pm, perl/FSM/Composition/GenerationOrchestrator.pm, perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm, perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm, and the four supported composition fixtures; supported direct-root VHDL sweep ran 37 entries with failures=0; supported composition VHDL sweep ran 4 entries and all failed at Target language 'vhdl' is not implemented for composition yet; command -v ghdl returned unavailable; structural semantic probes showed t/corpus/composition_intent_integer_literals.fsm is the narrowest supported composition VHDL first leaf because it is a C3 top with ports decimal_out/negative_out/packed_out, no nets, one uart_tx external RTL-interface instance, no parameter overrides, and literal/concat auxiliary assignments; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.68: select composition VHDL structural top`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.68.1`
+  Status: `active`
+  Goal: `Implement bounded C3 external-RTL literal/concat composition VHDL structural-top lowering.`
+  Acceptance: `The composition pipeline accepts target_language => 'vhdl' / --language vhdl for the exact structural top shape represented by t/corpus/composition_intent_integer_literals.fsm: no generated child HDL segments, no internal nets, one external RTL-interface instance, no parameter overrides, scalar/vector output ports, bit-vector literal auxiliary assignments, concat auxiliary assignments, and VHDL port-map actuals for the external instance. Focused pipeline/CLI/facade coverage proves the fixture emits deterministic VHDL without leaking SystemVerilog module/assign syntax. The leaf preserves the existing fail-closed composition VHDL diagnostics for generated-child compositions, standalone-DT child composition, APB/C4 composition, internal-net-heavy tops, parameter overrides/generic maps, packages, GHDL validation, broad expression parity, and full VHDL composition parity. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task tree, and memory stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1386,7 +1395,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 137 | `BACKEND-API-VALIDATION-FRONTIER.66.1` | `done` | Shipped the bounded AMBA wrap arithmetic expression family without widening broad expression parity. |
 | 138 | `BACKEND-API-VALIDATION-FRONTIER.67` | `done` | Selected bounded direct VHDL aggregate-output packed-vector lowering after the supported direct-corpus sweep left only the two aggregate-output fixtures at the VHDL struct boundary. |
 | 139 | `BACKEND-API-VALIDATION-FRONTIER.67.1` | `done` | Shipped packed-vector VHDL lowering for the two maintained direct aggregate-output fixtures without claiming full record/array aggregate parity. |
-| 140 | `BACKEND-API-VALIDATION-FRONTIER.68` | `active` | Select the next exact backend/API/public-export edge after direct supported-root VHDL sweep reached zero failures. |
+| 140 | `BACKEND-API-VALIDATION-FRONTIER.68` | `done` | Selected bounded C3 external-RTL literal/concat composition VHDL structural-top lowering after direct supported-root VHDL reached zero failures and supported composition roots still failed at the composition VHDL target gate. |
+| 141 | `BACKEND-API-VALIDATION-FRONTIER.68.1` | `active` | Implement only the first composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, leaving generated-child, APB/C4, nets, generic maps, and full parity deferred. |
 
 ## Decisions
 
@@ -1547,6 +1557,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.66.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_amba_requester_vhdl_66_1.vhd fsm/amba_requester.fsm`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers bounded generated AMBA wrap span/base/high arithmetic and activates `.67` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.67` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, `t/corpus/direct_rhs_concat_target_autogrowth.fsm`, and `t/corpus/direct_aggregate_constant_target_autogrowth.fsm`; supported direct-corpus VHDL sweep; `command -v ghdl`; SystemVerilog probes for the two direct aggregate-output fixtures; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected bounded direct VHDL aggregate-output packed-vector lowering for `.67.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.67.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; direct VHDL probes for both aggregate-output fixtures; supported direct-corpus VHDL sweep returned `failures=0`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers bounded aggregate-output packed vectors and activates `.68` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.68` | Selection audit/read of `README.md`, `COMMIT.md`, `MEMORY_ARCHITECTURE.md`, `MEMORY.md`, `docs/TASK_TREE.md`, `docs/decisions/INDEX.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/Support/RegressionCorpus.pm`, `perl/FSM/Composition/PlanBuilder.pm`, `perl/FSM/Composition/GenerationOrchestrator.pm`, `perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm`, `perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm`, and supported composition fixtures; supported direct-root VHDL sweep ran 37 entries with `failures=0`; supported composition VHDL sweep ran 4 entries and all failed at `Target language 'vhdl' is not implemented for composition yet`; `command -v ghdl` unavailable; structural semantic probes identified `t/corpus/composition_intent_integer_literals.fsm` as a C3 external-RTL literal/concat top with no nets or generated child HDL segments; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected bounded C3 external-RTL literal/concat composition VHDL structural-top lowering for `.68.1` |
 
 ## Commit Log
 
@@ -1691,6 +1702,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.66.1` | `BACKEND-API-VALIDATION-FRONTIER.66.1: lower VHDL AMBA wrap arithmetic` | this slice; activates `.67` |
 | `BACKEND-API-VALIDATION-FRONTIER.67` | `BACKEND-API-VALIDATION-FRONTIER.67: select VHDL aggregate outputs` | selected `.67.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.67.1` | `BACKEND-API-VALIDATION-FRONTIER.67.1: lower VHDL aggregate outputs` | this slice; activates `.68` |
+| `BACKEND-API-VALIDATION-FRONTIER.68` | `BACKEND-API-VALIDATION-FRONTIER.68: select composition VHDL structural top` | selected `.68.1` |
 
 ## Changelog
 
@@ -2470,3 +2482,14 @@ items named in the 2026-06-05 remaining-work inventory.
   composition/top VHDL, GHDL validation, broad expression parity, and full
   backend parity remain deferred. Activated `.68` to select the next exact
   backend/API/public-export edge.
+- `2026-06-06`: Completed `.68`; selected bounded C3 external-RTL
+  literal/concat composition VHDL structural-top lowering for `.68.1`. The
+  direct supported-root VHDL sweep now runs 37 entries with zero failures, while
+  all four supported composition roots still fail at the composition VHDL target
+  gate. `t/corpus/composition_intent_integer_literals.fsm` is the narrow first
+  implementation target: one external RTL-interface instance, no internal nets,
+  no generated child HDL segments, no parameter overrides, and only
+  bit-vector-literal/concat auxiliary assignments. Generated-child composition
+  VHDL, standalone-DT child composition VHDL, APB/C4 composition VHDL, nets,
+  generic maps, packages, GHDL validation, broad expression parity, and full
+  composition VHDL parity remain deferred.
