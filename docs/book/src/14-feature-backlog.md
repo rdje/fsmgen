@@ -3770,17 +3770,16 @@ entity/architecture text for scalar/vector ports, state constants,
 continuous enable assignments, `process(all)` combinational muxes, sync-reset
 clocked processes, async-reset clocked processes, delayed-pulse clock-branch
 nested-if lowering, basic concat RHS forms, and same-width vector addition RHS
-lowering through `numeric_std` unsigned casts. It is covered by direct
+and chain lowering through `numeric_std` unsigned casts. It is covered by direct
 pipeline, CLI, and facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
 and full feature parity with the SystemVerilog backend. Broader arithmetic
 operators, scalar arithmetic, mismatched-width arithmetic, and expression
-contexts beyond the same-width vector `NAME + NAME` RHS shape remain
-fail-closed at the scaffold boundary. Same-width vector multi-operand
-addition chains are the active next direct-VHDL scaffold edge, but they are
-not shipped yet.
+contexts beyond same-width vector addition RHS chains remain fail-closed at
+the scaffold boundary. Subtraction chains such as `a - b - c - d` are the
+current first arithmetic-corpus boundary.
 
 ### GHDL Validation
 

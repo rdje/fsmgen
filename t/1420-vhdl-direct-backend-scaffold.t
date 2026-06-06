@@ -130,6 +130,57 @@ subtest 'direct VHDL scaffold lowers same-width vector addition RHS shape' => su
     unlike($cli_hdl, qr/\balways_(?:ff|comb)\b|\bmodule\b/s, 'CLI addition VHDL output remains VHDL-shaped');
 };
 
+subtest 'direct VHDL scaffold lowers same-width vector addition RHS chains' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_addition_chain.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_addition_chain.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_addition_chain
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 8)
+    (B 8)
+    (C 8)
+    (D 8)
+    (SUM 8)
+  )
+  (idle
+    (= (SUM (+ A B C D)))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like(
+        $hdl,
+        qr/\bSUM\s+<=\s+std_logic_vector\(unsigned\(A\)\s+\+\s+unsigned\(B\)\s+\+\s+unsigned\(C\)\s+\+\s+unsigned\(D\)\);/s,
+        'same-width vector addition chains lower through numeric_std unsigned casts',
+    );
+    unlike($hdl, qr/\balways_(?:ff|comb)\b|\bmodule\b/s, 'addition-chain VHDL output remains VHDL-shaped');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the same-width vector addition-chain fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes direct addition-chain VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like(
+        $cli_hdl,
+        qr/\bSUM\s+<=\s+std_logic_vector\(unsigned\(A\)\s+\+\s+unsigned\(B\)\s+\+\s+unsigned\(C\)\s+\+\s+unsigned\(D\)\);/s,
+        'CLI addition-chain VHDL output uses numeric_std unsigned casts',
+    );
+};
+
 subtest 'direct VHDL scaffold keeps broader arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_multiply_deferred.fsm');
@@ -158,6 +209,13 @@ FSM
     });
 
     like($error, qr/arithmetic expression 'A \* B' is outside the direct VHDL scaffold/s, 'multiplication remains outside the direct VHDL scaffold boundary');
+
+    my $corpus_error = capture_exception(sub {
+        generate_vhdl('t/corpus/arithmetic_xor_operator_variants.fsm');
+    });
+
+    unlike($corpus_error, qr/arithmetic expression 'a \+ b \+ c \+ d'/s, 'arithmetic corpus no longer fails on the same-width addition chain');
+    like($corpus_error, qr/arithmetic expression 'a - b - c - d' is outside the direct VHDL scaffold/s, 'subtraction chains remain outside the direct VHDL scaffold boundary');
 };
 
 subtest 'CLI routes direct --language vhdl through the scaffold' => sub {

@@ -80,7 +80,7 @@ does not run a standalone ABC pass.
 
 Direct VHDL generation now has a scaffold subset for direct single-FSM roots,
 including delayed-pulse clock-branch lowering and same-width vector addition
-RHS lowering. VHDL validation with GHDL is intentionally deferred until a
+RHS/chain lowering. VHDL validation with GHDL is intentionally deferred until a
 separate GHDL validation lane is runnable, documented, support-accounted, and
 regression-backed. The current regression gate is a focused SystemVerilog
 smoke, not yet a claim that every historical sample in `fsm/` is externally

@@ -23,10 +23,9 @@ Direct single-FSM roots can now use `target_language => 'vhdl'` or
 constants, enable assignments, sync/async reset processes, `process(all)`
 combinational muxes, basic concat RHS forms, and delayed-pulse clock-branch
 nested-if lowering. The scaffold also lowers the first arithmetic RHS shape:
-same-width vector `NAME + NAME` assignments become
-`std_logic_vector(unsigned(LEFT) + unsigned(RIGHT))` expressions. Composition/top
-VHDL, aggregate-output VHDL, packages, multi-clock domains, broad expression
-parity, GHDL validation, and full SystemVerilog parity remain deferred or
-fail-closed. Same-width vector multi-operand addition chains are the active
-next direct-VHDL scaffold edge; before that ships, generated expressions such
-as `a + b + c + d` remain fail-closed.
+same-width vector `NAME + NAME` assignments and same-width multi-operand
+addition chains become `std_logic_vector(unsigned(A) + unsigned(B) + ...)`
+expressions. Composition/top VHDL, aggregate-output VHDL, packages,
+multi-clock domains, broad expression parity, GHDL validation, and full
+SystemVerilog parity remain deferred or fail-closed. Subtraction chains such
+as `a - b - c - d` are still outside the direct VHDL scaffold boundary.

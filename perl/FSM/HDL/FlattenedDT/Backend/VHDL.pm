@@ -534,26 +534,34 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     };
 
     $unsupported->()
-        unless $expr =~ /^([A-Za-z_][A-Za-z0-9_]*)\s*\+\s*([A-Za-z_][A-Za-z0-9_]*)$/;
+        if $expr =~ /[-*\/%]/ || $expr =~ /\bmod\b/i;
 
-    my ($left_name, $right_name) = ($1, $2);
+    my @operand_names = split /\s*\+\s*/, $expr;
+    $unsupported->()
+        unless @operand_names >= 2;
+    for my $operand_name (@operand_names) {
+        $unsupported->()
+            unless $operand_name =~ /^[A-Za-z_][A-Za-z0-9_]*$/;
+    }
+
     my $decls_by_name = $ctx->{decls_by_name} || {};
     my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $decls_by_name)
         or $unsupported->();
-    my $left_decl = $decls_by_name->{$left_name}
-        or $unsupported->();
-    my $right_decl = $decls_by_name->{$right_name}
-        or $unsupported->();
 
     $unsupported->()
-        if $target_decl->{scalar} || $left_decl->{scalar} || $right_decl->{scalar};
+        if $target_decl->{scalar};
 
     my $target_width = _decl_width($target_decl);
-    $unsupported->()
-        unless $target_width == _decl_width($left_decl)
-        && $target_width == _decl_width($right_decl);
+    my @converted_operands;
+    for my $operand_name (@operand_names) {
+        my $operand_decl = $decls_by_name->{$operand_name}
+            or $unsupported->();
+        $unsupported->()
+            if $operand_decl->{scalar} || $target_width != _decl_width($operand_decl);
+        push @converted_operands, "unsigned($operand_name)";
+    }
 
-    return "std_logic_vector(unsigned($left_name) + unsigned($right_name))";
+    return 'std_logic_vector(' . join(' + ', @converted_operands) . ')';
 }
 
 sub _decl_for_lvalue ($lhs, $decls_by_name) {

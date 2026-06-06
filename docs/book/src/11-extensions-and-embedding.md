@@ -877,7 +877,7 @@ also proves the advertised `target_language` constructor option routes real
 direct backend behavior: the default path emits SystemVerilog forms, explicit
 `verilog` emits Verilog forms, and explicit `vhdl` emits the direct single-FSM
 VHDL scaffold for the supported subset, including delayed-pulse clock-branch
-lowering and same-width vector addition RHS lowering, without leaking
+lowering and same-width vector addition RHS/chain lowering, without leaking
 SystemVerilog module or `always_*` forms. That is still a scoped scaffold, not
 a full VHDL backend promise.
 

@@ -9,10 +9,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   converter.
 - The direct scaffold now includes delayed-pulse clock-branch nested-if
   lowering for the generated `<N` pulse-delay shape.
-- The direct scaffold now includes the first arithmetic RHS expression shape:
-  same-width vector `NAME + NAME` lowers through `numeric_std` unsigned casts.
-- Same-width vector multi-operand addition chains are the active next direct
-  VHDL scaffold edge, but they are not shipped yet.
+- The direct scaffold now includes the first arithmetic RHS expression family:
+  same-width vector `NAME + NAME` and `NAME + NAME + ...` addition chains
+  lower through `numeric_std` unsigned casts.
 - Composition VHDL, aggregate VHDL, broad expression parity, GHDL validation,
   packages, multi-clock domains, and full feature parity remain deferred.
 
@@ -44,8 +43,8 @@ The first VHDL lane is intentionally narrow:
      the direct scaffold fixtures
    - Delayed-pulse clock branches that use the generated one-level nested
      `if (<pulse_delay_pipe>) begin ... end` shape
-   - Same-width vector `NAME + NAME` RHS assignments in the generated direct
-     combinational mux shape
+   - Same-width vector `NAME + NAME` and `NAME + NAME + ...` RHS assignments
+     in the generated direct combinational mux shape
 
 4. **Intentionally deferred:**
    - Composition-top VHDL
@@ -71,14 +70,14 @@ The first VHDL lane is intentionally narrow:
   SystemVerilog `always_ff` → VHDL synchronous/async-reset process,
   SystemVerilog `always_comb` → VHDL `process(all)`, port/signal type
   mapping, module/entity conversion, reset polarity handling, and generated
-  delayed-pulse nested clock-branch lowering, plus the first same-width vector
-  addition RHS expression shape.
+  delayed-pulse nested clock-branch lowering, plus same-width vector addition
+  RHS expression chains.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
 - Focused direct VHDL generation tests cover pipeline and CLI routing,
   sync/async reset processes, delayed-pulse clock branches, concat lowering,
-  same-width vector addition lowering, broader arithmetic-expression
+  same-width vector addition-chain lowering, broader arithmetic-expression
   fail-closed diagnostics, and aggregate-output fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus
 - Ensure `--check --json` and `--emit-semantic-json` stay target-neutral

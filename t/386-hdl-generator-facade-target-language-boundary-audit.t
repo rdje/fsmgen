@@ -210,6 +210,51 @@ subtest 'facade target_language option routes direct VHDL arithmetic scaffold be
     );
 };
 
+subtest 'facade target_language option routes direct VHDL addition-chain scaffold behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_addition_chain.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_addition_chain
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 8)
+    (B 8)
+    (C 8)
+    (D 8)
+    (SUM 8)
+  )
+  (idle
+    (= (SUM (+ A B C D)))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bSUM\s+<=\s+std_logic_vector\(unsigned\(A\)\s+\+\s+unsigned\(B\)\s+\+\s+unsigned\(C\)\s+\+\s+unsigned\(D\)\);/s,
+        'explicit VHDL facade generation lowers same-width vector addition chains through numeric_std casts',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL addition-chain facade generation does not leak SystemVerilog module or always_* forms',
+    );
+};
+
 done_testing();
 
 sub repo_file {
